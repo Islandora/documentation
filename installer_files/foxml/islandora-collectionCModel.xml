@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<foxml:digitalObject PID="islandora:collectionCModel" VERSION="1.1" xmlns:foxml="info:fedora/fedora-system:def/foxml#"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="info:fedora/fedora-system:def/foxml# http://www.fedora.info/definitions/1/0/foxml1-1.xsd">
+  <foxml:objectProperties>
+    <foxml:property NAME="info:fedora/fedora-system:def/model#state" VALUE="Active"/>
+    <foxml:property NAME="info:fedora/fedora-system:def/model#label" VALUE="Islandora Collection Content Model"/>
+    <foxml:property NAME="info:fedora/fedora-system:def/model#ownerId" VALUE="fedoraAdmin"/>
+    <foxml:property NAME="info:fedora/fedora-system:def/model#createdDate" VALUE="2009-02-17T16:49:02.191Z"/>
+    <foxml:property NAME="info:fedora/fedora-system:def/view#lastModifiedDate" VALUE="2010-09-15T11:47:31.885Z"/>
+  </foxml:objectProperties>
+  <foxml:datastream CONTROL_GROUP="X" ID="AUDIT" STATE="A" VERSIONABLE="false">
+    <foxml:datastreamVersion CREATED="2009-02-17T16:49:02.191Z"
+      FORMAT_URI="info:fedora/fedora-system:format/xml.fedora.audit" ID="AUDIT.0" LABEL="Audit Trail for this object" MIMETYPE="text/xml">
+      <foxml:xmlContent>
+        <audit:auditTrail xmlns:audit="info:fedora/fedora-system:def/audit#">
+          <audit:record ID="AUDREC1">
+            <audit:process type="Fedora API-M"/>
+            <audit:action>ingest</audit:action>
+            <audit:componentID/>
+            <audit:responsibility>fedoraAdmin</audit:responsibility>
+            <audit:date>2009-02-17T16:49:02.191Z</audit:date>
+            <audit:justification>Created with Admin GUI "New Object" command</audit:justification>
+          </audit:record>
+          <audit:record ID="AUDREC2">
+            <audit:process type="Fedora API-M"/>
+            <audit:action>modifyDatastreamByValue</audit:action>
+            <audit:componentID>DS-COMPOSITE-MODEL</audit:componentID>
+            <audit:responsibility>fedoraAdmin</audit:responsibility>
+            <audit:date>2009-02-17T16:50:04.876Z</audit:date>
+            <audit:justification/>
+          </audit:record>
+          <audit:record ID="AUDREC3">
+            <audit:process type="Fedora API-M"/>
+            <audit:action>addDatastream</audit:action>
+            <audit:componentID>ISLANDORACM</audit:componentID>
+            <audit:responsibility>ppound</audit:responsibility>
+            <audit:date>2009-02-26T17:23:07.848Z</audit:date>
+            <audit:justification>datastream added</audit:justification>
+          </audit:record>
+          <audit:record ID="AUDREC4">
+            <audit:process type="Fedora API-M"/>
+            <audit:action>purgeDatastream</audit:action>
+            <audit:componentID>ISLANDORACM</audit:componentID>
+            <audit:responsibility>ppound</audit:responsibility>
+            <audit:date>2009-02-26T17:24:28.067Z</audit:date>
+            <audit:justification>Purged . . . Purged datastream (ID=ISLANDORACM), versions ranging from the beginning of time to the end of time.  This resulted in the permanent removal of 1 datastream version(s) (2009-02-26T13:23:07.848Z) and all associated audit records.</audit:justification>
+          </audit:record>
+          <audit:record ID="AUDREC5">
+            <audit:process type="Fedora API-M"/>
+            <audit:action>addDatastream</audit:action>
+            <audit:componentID>ISLANDORACM</audit:componentID>
+            <audit:responsibility>ppound</audit:responsibility>
+            <audit:date>2009-02-26T17:27:10.814Z</audit:date>
+            <audit:justification>datastream added</audit:justification>
+          </audit:record>
+          <audit:record ID="AUDREC6">
+            <audit:process type="Fedora API-M"/>
+            <audit:action>purgeDatastream</audit:action>
+            <audit:componentID>ISLANDORACM</audit:componentID>
+            <audit:responsibility>fedoraAdmin</audit:responsibility>
+            <audit:date>2009-02-26T17:37:58.880Z</audit:date>
+            <audit:justification>DatastreamPane generated this logMessage. . . . Purged datastream (ID=ISLANDORACM), versions ranging from 2009-02-26T13:27:10.814Z to 2009-02-26T13:27:10.814Z.  This resulted in the permanent removal of 1 datastream version(s) (2009-02-26T13:27:10.814Z) and all associated audit records.</audit:justification>
+          </audit:record>
+          <audit:record ID="AUDREC7">
+            <audit:process type="Fedora API-M"/>
+            <audit:action>addDatastream</audit:action>
+            <audit:componentID>test</audit:componentID>
+            <audit:responsibility>fedoraAdmin</audit:responsibility>
+            <audit:date>2009-02-26T19:02:49.879Z</audit:date>
+            <audit:justification>DatastreamsPane generated this logMessage.</audit:justification>
+          </audit:record>
+          <audit:record ID="AUDREC8">
+            <audit:process type="Fedora API-M"/>
+            <audit:action>purgeDatastream</audit:action>
+            <audit:componentID>test</audit:componentID>
+            <audit:responsibility>fedoraAdmin</audit:responsibility>
+            <audit:date>2009-02-26T19:03:04.069Z</audit:date>
+            <audit:justification>DatastreamPane generated this logMessage. . . . Purged datastream (ID=test), versions ranging from 2009-02-26T15:02:49.879Z to 2009-02-26T15:02:49.879Z.  This resulted in the permanent removal of 1 datastream version(s) (2009-02-26T15:02:49.879Z) and all associated audit records.</audit:justification>
+          </audit:record>
+          <audit:record ID="AUDREC9">
+            <audit:process type="Fedora API-M"/>
+            <audit:action>addDatastream</audit:action>
+            <audit:componentID>ISLANDORACM</audit:componentID>
+            <audit:responsibility>ppound</audit:responsibility>
+            <audit:date>2009-02-26T19:03:36.147Z</audit:date>
+            <audit:justification>datastream added</audit:justification>
+          </audit:record>
+          <audit:record ID="AUDREC10">
+            <audit:process type="Fedora API-M"/>
+            <audit:action>addDatastream</audit:action>
+            <audit:componentID>ISLANDORACM</audit:componentID>
+            <audit:responsibility>plux</audit:responsibility>
+            <audit:date>2009-03-13T19:11:44.755Z</audit:date>
+            <audit:justification>datastream added</audit:justification>
+          </audit:record>
+          <audit:record ID="AUDREC11">
+            <audit:process type="Fedora API-M"/>
+            <audit:action>modifyDatastreamByReference</audit:action>
+            <audit:componentID>ISLANDORACM</audit:componentID>
+            <audit:responsibility>fedoraAdmin</audit:responsibility>
+            <audit:date>2010-01-26T21:10:29.212Z</audit:date>
+            <audit:justification/>
+          </audit:record>
+          <audit:record ID="AUDREC12">
+            <audit:process type="Fedora API-M"/>
+            <audit:action>modifyDatastreamByReference</audit:action>
+            <audit:componentID>ISLANDORACM</audit:componentID>
+            <audit:responsibility>fedoraAdmin</audit:responsibility>
+            <audit:date>2010-09-15T11:47:31.885Z</audit:date>
+            <audit:justification/>
+          </audit:record>
+        </audit:auditTrail>
+      </foxml:xmlContent>
+    </foxml:datastreamVersion>
+  </foxml:datastream>
+  <foxml:datastream CONTROL_GROUP="X" ID="RELS-EXT" STATE="A" VERSIONABLE="true">
+    <foxml:datastreamVersion CREATED="2009-02-17T16:49:02.248Z" FORMAT_URI="info:fedora/fedora-system:FedoraRELSExt-1.0"
+      ID="RELS-EXT1.0" LABEL="RDF Statements about this object" MIMETYPE="application/rdf+xml" SIZE="370">
+      <foxml:xmlContent>
+        <rdf:RDF xmlns:fedora-model="info:fedora/fedora-system:def/model#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+          <rdf:Description rdf:about="info:fedora/islandora:collectionCModel">
+            <fedora-model:hasModel rdf:resource="info:fedora/fedora-system:ContentModel-3.0"/>
+          </rdf:Description>
+        </rdf:RDF>
+      </foxml:xmlContent>
+    </foxml:datastreamVersion>
+  </foxml:datastream>
+  <foxml:datastream CONTROL_GROUP="X" ID="DS-COMPOSITE-MODEL" STATE="A" VERSIONABLE="true">
+    <foxml:datastreamVersion CREATED="2009-02-17T16:49:02.248Z"
+      FORMAT_URI="info:fedora/fedora-system:FedoraDSCompositeModel-1.0" ID="DS-COMPOSITE-MODEL1.0"
+      LABEL="Datastream Composite Model" MIMETYPE="text/xml" SIZE="1148">
+      <foxml:xmlContent>
+        <dsCompositeModel xmlns="info:fedora/fedora-system:def/dsCompositeModel#">
+          <comment xmlns="info:fedora/fedora-system:def/comment#">
+            This DS-COMPOSITE-MODEL datastream is included as a starting point to
+              assist in the creation of a content model. The DS-COMPOSITE-MODEL
+              should define the datastreams that are required for any objects
+              conforming to this content model.
+            For more information about content models, see:
+              $FEDORA_HOME/docs/userdocs/digitalobjects/objectModel.html#CMODEL.
+            For examples of completed content model objects, see the demonstration
+              objects included with your Fedora distribution, such as:
+              demo:CMImage, demo:UVA_STD_IMAGE, demo:DualResImageCollection,
+              demo:TEI_TO_PDFDOC, and demo:XML_TO_HTMLDOC.
+            For more information about the demonstration objects, see:
+              $FEDORA_HOME/docs/userdocs/distribution/demos.html
+          </comment>
+          <dsTypeModel ID="DSID">
+            <form MIME="text/xml"/>
+          </dsTypeModel>
+        </dsCompositeModel>
+      </foxml:xmlContent>
+    </foxml:datastreamVersion>
+    <foxml:datastreamVersion CREATED="2009-02-17T16:50:04.876Z"
+      FORMAT_URI="info:fedora/fedora-system:FedoraDSCompositeModel-1.0" ID="DS-COMPOSITE-MODEL.1"
+      LABEL="Datastream Composite Model" MIMETYPE="text/xml" SIZE="1416">
+      <foxml:xmlContent>
+        <dsCompositeModel xmlns="info:fedora/fedora-system:def/dsCompositeModel#">
+          <comment xmlns="info:fedora/fedora-system:def/comment#">
+            This DS-COMPOSITE-MODEL datastream is included as a starting point to
+              assist in the creation of a content model. The DS-COMPOSITE-MODEL
+              should define the datastreams that are required for any objects
+              conforming to this content model.
+            For more information about content models, see:
+              $FEDORA_HOME/docs/userdocs/digitalobjects/objectModel.html#CMODEL.
+            For examples of completed content model objects, see the demonstration
+              objects included with your Fedora distribution, such as:
+              demo:CMImage, demo:UVA_STD_IMAGE, demo:DualResImageCollection,
+              demo:TEI_TO_PDFDOC, and demo:XML_TO_HTMLDOC.
+            For more information about the demonstration objects, see:
+              $FEDORA_HOME/docs/userdocs/distribution/demos.html
+          </comment>
+          <dsTypeModel ID="COLLECTION_VIEW">
+            <form MIME="text/xml"/>
+          </dsTypeModel>
+          <dsTypeModel ID="COLLECTION_POLICY" ORDERED="false">
+            <form MIME="text/xml"/>
+          </dsTypeModel>
+          <dsTypeModel ID="CHILD_SECURITY" ORDERED="false">
+            <form MIME="text/xml"/>
+          </dsTypeModel>
+        </dsCompositeModel>
+      </foxml:xmlContent>
+    </foxml:datastreamVersion>
+  </foxml:datastream>
+  <foxml:datastream CONTROL_GROUP="X" ID="DC" STATE="A" VERSIONABLE="true">
+    <foxml:datastreamVersion CREATED="2009-02-17T16:49:02.191Z" FORMAT_URI="http://www.openarchives.org/OAI/2.0/oai_dc/"
+      ID="DC1.0" LABEL="Dublin Core Record for this object" MIMETYPE="text/xml" SIZE="413">
+      <foxml:xmlContent>
+        <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/"
+          xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+          <dc:title>Islandora Collection Content Model</dc:title>
+          <dc:identifier>islandora:collectionCModel</dc:identifier>
+        </oai_dc:dc>
+      </foxml:xmlContent>
+    </foxml:datastreamVersion>
+  </foxml:datastream>
+  <foxml:datastream CONTROL_GROUP="M" ID="ISLANDORACM" STATE="A" VERSIONABLE="true">
+    <foxml:datastreamVersion CREATED="2009-03-13T19:11:44.755Z" FORMAT_URI="URL" ID="ISLANDORACM.0"
+      LABEL="ISLANDORACM.xml" MIMETYPE="text/xml">
+      <foxml:contentLocation
+        REF="http://137.149.200.4:8080/fedora/get/islandora:collectionCModel/ISLANDORACM/2009-03-13T19:11:44.755Z" TYPE="INTERNAL_ID"/>
+    </foxml:datastreamVersion>
+    <foxml:datastreamVersion CREATED="2010-01-26T21:10:29.212Z" FORMAT_URI="URL" ID="ISLANDORACM.1"
+      LABEL="ISLANDORACM.xml" MIMETYPE="text/xml">
+      <foxml:contentLocation
+        REF="http://137.149.200.4:8080/fedora/get/islandora:collectionCModel/ISLANDORACM/2010-01-26T21:10:29.212Z" TYPE="INTERNAL_ID"/>
+    </foxml:datastreamVersion>
+    <foxml:datastreamVersion CREATED="2010-09-15T11:47:31.885Z" FORMAT_URI="URL" ID="ISLANDORACM.2"
+      LABEL="ISLANDORACM.xml" MIMETYPE="text/xml">
+      <foxml:contentLocation
+        REF="http://137.149.200.4:8080/fedora/get/islandora:collectionCModel/ISLANDORACM/2010-09-15T11:47:31.885Z" TYPE="INTERNAL_ID"/>
+    </foxml:datastreamVersion>
+  </foxml:datastream>
+</foxml:digitalObject>

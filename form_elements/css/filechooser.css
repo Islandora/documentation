@@ -1,0 +1,93 @@
+.carousel .jCarouselLite {
+    border: 1px solid black;
+    float: left;
+    background-color: #dfdfdf;
+    
+   /*
+    position: relative;
+    visibility: hidden;
+    left: -5000px;*/
+   
+   width: 680px;
+   height: 200px;
+   
+}
+
+.carousel li
+{
+  cursor:pointer;
+}
+
+.carousel li.selected
+{
+  background-color: #999;
+}
+
+.carousel li div
+{
+    margin: 0 0 10px 10px;
+    font-size: 80%;
+}
+
+.carousel li img.thumbnail
+{
+    width: 150px;
+    height: 118px;
+    margin: 10px 10px 0 10px;
+}
+
+.carousel li div.textplaceholder 
+{ 
+    width: 128px;
+    height: 128px;
+    margin: 10px 10px 0 10px;
+    background-image: url('../images/txt.png');
+    background-repeat:no-repeat;
+}
+
+.carousel li div.videoplaceholder 
+{ 
+    width: 128px;
+    height: 128px;
+    margin: 10px 10px 0 10px;
+    background-image: url('../images/sound.png');
+    background-repeat:no-repeat;
+}
+
+.carousel li div.audioplaceholder 
+{ 
+  width: 128px;
+  height: 128px;
+  margin: 10px 10px 0 10px;
+  background-image: url('../images/video.png');
+  background-repeat:no-repeat;
+}
+
+.carousel li div.imageplaceholder 
+{ 
+  width: 128px;
+  height: 128px;
+  margin: 10px 10px 0 10px;
+  background-image: url('../images/image.png');
+  background-repeat:no-repeat;
+}
+
+.carousel li div.applicationplaceholder 
+{ 
+  width: 128px;
+  height: 128px;
+  margin: 10px 10px 0 10px;
+  background-image: url('../images/application.png');
+  background-repeat:no-repeat;
+}
+
+
+.carousel li.loading 
+{
+  font-size: 150%;
+  margin: auto;
+  margin-top: 50px;
+  text-align: center;
+ 
+  width: 250px;
+}

@@ -1,0 +1,137 @@
+/* $Id: ife-people-admin.css,v 1.1.2.7 2009/03/20 17:51:03 pasqualle Exp $ */
+
+/* Admin form */
+
+#ife-peoplelist-table 
+{
+  margin-top: 15px;
+  width: 100%;
+}
+
+#ife-peoplelist-table .form-item {
+  margin-bottom: 5px;
+}
+#ife-peoplelist-table .form-item .description {
+  margin-top: 3px;
+}
+#ife-peoplelist-table .ife-person-name {
+  width: auto;
+  height: 125px;
+}
+
+#ife-peoplelist-table .ife-person-name label{
+  font-weight: bold;
+  float: left;
+  clear: left;
+  width: 125px;
+}
+
+
+#ife-peoplelist-table .ife-person-role {
+  width: 150px;
+  padding-right: 50px;
+}
+
+#ife-peoplelist-table .ife-person-remove {
+  width: 100px;
+}
+
+#ife-peoplelist-table .description {
+  white-space: normal;
+}
+
+
+#ife-peoplelist-table .ife-person-content .form-item .form-text {
+  width: 150px;
+}
+#ife-peoplelist-table .ife-person-view-content input.form-submit {
+  display: none;
+}
+#ife-peoplelist-table .ife-person-content {
+  display: none;
+}
+
+#ife-peoplelist-table .ife-person-remove label,
+#add-more-people-button label,
+#add-more-conf-button label,
+#add-more-org-button label {
+  font-weight: bold;
+  float: left;
+  clear: left;
+  width: auto;
+}
+
+#add-more-org-button,
+#add-more-conf-button,
+#add-more-people-button {
+  width: 150px;
+  display: block;
+  margin-top: 20px;
+  float: right;
+}
+
+
+.add-person, .add-conf, .add-org,
+#ife-peoplelist-table .delete-person {
+  display: block;
+  overflow: hidden;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  text-indent: -9999px;
+  cursor: pointer; /* hand-shaped cursor */
+  cursor: hand; /* for IE 5.x */
+}
+
+.add-person {
+  background: transparent url(../images/add_user.png) no-repeat 0 0;
+}
+.delete-person {
+  background: transparent url(../images/editdelete.png) no-repeat 0 0;
+}
+
+.add-org {
+  background: transparent url(../images/add_group.png) no-repeat 0 0;
+}
+.add-conf {
+  background: transparent url(../images/groupevent.png) no-repeat 0 0;
+}
+
+/* QT style selection form */
+
+div.ife-people-preview {
+  border: none;
+  width: 280px;
+  height: 80px;
+}
+
+#ife-people-settings .ife-people-styles .form-item {
+  width: 280px;
+  float: left;
+  margin: 0 10px 10px 0;
+  border: 1px solid #ccc;
+  background-color: #fff;
+}
+#ife-people-settings .ife-people-styles .form-item .option {
+  display: block;
+  background-color: #bfe3ff;
+  font: bold 12px/18px verdana;
+  color: #0a5793;
+}
+#ife-people-settings .ife-people-styles .form-item .option:hover {
+  background-color: #aadaff;
+  cursor: pointer;
+  color: #003863;
+}
+#ife-people-settings .ife-people-styles .form-item .option .form-radio {
+  margin-right: 5px;
+  float: left;
+  height: 15px;
+  margin-top: 2px;
+}
+#ife-people-settings .ife-people_wrapper {
+  margin: 5px;
+  font: bold 12px/170% Verdana;
+}

@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<content_model name="standard_image">
+     <mimetypes>
+        <type>image/jpeg</type>
+        <type>image/gif</type>
+        <type>image/png</type>
+         <type>image/tiff</type>
+         <type>image/tif</type>
+    </mimetypes>
+    <ingest_rules>
+        <rule>
+            <applies_to>
+                image/jpeg
+            </applies_to>
+            <applies_to>
+                image/gif
+            </applies_to>
+            <applies_to>
+                image/png
+            </applies_to>
+            <applies_to>
+                image/tiff
+            </applies_to>
+            <applies_to>
+                image/tif
+            </applies_to>
+            <!--ingest methods to call-->
+            <methods>
+                <method>
+                    <file>plugins/ImageManipulation.inc</file>
+                    <class_name>ImageManipulation</class_name>
+                     <method_name>createThumbnail</method_name>
+                    <modified_files_ext>jpg</modified_files_ext>
+                    <datastream_id>TN</datastream_id>
+                    <parameters>
+                        <parameter name="width">100</parameter>
+                        <parameter name="height">120</parameter>
+                    </parameters>
+                </method>
+                <method>
+                    <file>plugins/ImageManipulation.inc</file>
+                    <class_name>ImageManipulation</class_name>
+                    <method_name>createPNG</method_name>
+                    <modified_files_ext>png</modified_files_ext>
+                    <datastream_id>PNG</datastream_id>
+                  </method>
+                <method>
+                    <file>plugins/ImageManipulation.inc</file>
+                    <class_name>ImageManipulation</class_name>
+                    <method_name>createPreview</method_name>
+                    <modified_files_ext>jpg</modified_files_ext>
+                    <datastream_id>PRE</datastream_id>
+                    <parameters>
+                        <parameter name="width">240</parameter>
+                        <parameter name="height">300</parameter>
+                    </parameters>
+                </method>
+            </methods>
+            <disseminators>
+                <disseminator>
+                    <name>dis1</name>
+                    <parameters>
+                        <parameter name="param1">
+                           200
+                        </parameter>
+                    </parameters>
+                </disseminator>
+            </disseminators>
+        </rule>
+       </ingest_rules>a868aef684fa34923d4fe697db1e785b
+    <ingest_form dsid='QDC' page="2">
+        <form_builder_method>
+            <file>plugins/FormBuilder.inc</file>
+            <class_name>FormBuilder</class_name>
+            <method_name>buildQDCForm</method_name>
+            <form_handler>handleQDCForm</form_handler>
+            <!--need validation method as well-->
+            </form_builder_method>
+            <form_elements>
+            <element>
+                <label>Title/Caption/Object Name</label>
+                <name>dc:title</name>
+                <type>textfield</type>
+                <description>The name given to the resource</description>
+                <required>true</required>
+            </element>
+            <element>
+                <label>Creator/Photographer/Author</label>
+                <name>dc:creator</name>
+                <type>textfield</type>
+                <description>An entity primarily responsible for making the content of the resource such as a person, organization or service.</description>
+                <required>false</required>
+            </element>
+            <element>
+                <label>Subject</label>
+                <name>dc:subject</name>
+                <type>select</type>
+                <description>An entity primarily responsible for making the content of the resource such as a person, organization or service.</description>
+                <required>false</required>
+                <authoritative_list >
+                    <item>
+                        <field>experiment session</field>
+                        <value>experiment session</value>
+                    </item>
+                    <item>
+                        <field>home recording</field>
+                        <value>home recording</value>
+                    </item>
+                    <item>
+                        <field>image</field>
+                        <value>image</value>
+                    </item>
+                    <item>
+                        <field>meeting</field>
+                        <value>meeting</value>
+                    </item>
+                    <item>
+                        <field>presentation</field>
+                        <value>presentation</value>
+                    </item>
+                    <item>
+                        <field>sound</field>
+                        <value>sound</value>
+                    </item>
+                    <item>
+                        <field>text</field>
+                        <value>text</value>
+                    </item>
+                </authoritative_list>
+            </element>
+            <element>
+                <label>Description</label>
+                <name>dc:description</name>
+                <type>textarea</type>
+                <description>Examples include an abstract, table of contents, or free-text account of the content of the resource.</description>
+                <required>true</required>
+            </element>
+            <element>
+                <label>Publisher</label>
+                <name>dc:publisher</name>
+                <type>textfield</type>
+                <description>An entity, (including persons, organizations, or services), responsible for making the resource available.</description>
+                <required>false</required>
+            </element>
+            <element>
+                <label>Contributor</label>
+                <name>dc:contributor</name>
+                <type>textfield</type>
+                <description>An entity responsible for contributing to the content of the resource such as a person, organization or service.</description>
+                <required>false</required>
+            </element>
+            <element>
+                <label>Date</label>
+                <name>dc:date</name>
+                <type>textfield</type>
+                <description>Temporal scope of the content if known. Date format is YYYY-MM-DD (e.g. 1890,1910-10,or 2007-10-23)</description>
+                <required>false</required>
+            </element>
+            <element>
+                <label>Resource Type</label>
+                <name>dc:type</name>
+                <type>select</type>
+                <description>Genre of the content of the resource. Examples include: home page, novel, poem, working paper, technical report, essay, dictionary.</description>
+                <required>false</required>
+                <authoritative_list >
+                    <item>
+                        <field>none</field>
+                        <value>none</value>
+                    </item>
+                    <item>
+                        <field>collection</field>
+                        <value>collection</value>
+                    </item>
+                    <item>
+                        <field>dataset</field>
+                        <value>dataset</value>
+                    </item>
+                    <item>
+                        <field>event</field>
+                        <value>event</value>
+                    </item>
+                    <item>
+                        <field>image</field>
+                        <value>image</value>
+                    </item>
+                    <item>
+                        <field>interactive resource</field>
+                        <value>interactive resource</value>
+                    </item>
+                    <item>
+                        <field>model</field>
+                        <value>model</value>
+                    </item>
+                    <item>
+                        <field>party</field>
+                        <value>party</value>
+                    </item>
+                    <item>
+                        <field>physical object</field>
+                        <value>physical object</value>
+                    </item>
+                    <item>
+                        <field>place</field>
+                        <value>place</value>
+                    </item>
+                    <item>
+                        <field>service</field>
+                        <value>service</value>
+                    </item>
+                    <item>
+                        <field>software</field>
+                        <value>software</value>
+                    </item>
+                    <item>
+                        <field>sound</field>
+                        <value>sound</value>
+                    </item>
+                    <item>
+                        <field>text</field>
+                        <value>text</value>
+                    </item>
+                </authoritative_list>
+            </element>
+            <element>
+                <label>Source</label>
+                <name>dc:source</name>
+                <type>textfield</type>
+                <description>A reference to a resource from which the present resource is derived.</description>
+                <required>false</required>
+            </element>
+            <element>
+                <label>Identifier</label>
+                <name>dc:identifier</name>
+                <type>textfield</type>
+                <description>A unique reference to the resource; In this instance, the accession number or collection number.</description>
+                <required>false</required>
+            </element>
+            <element>
+                <label>Language</label>
+                <name>dc:language</name>
+                <type>select</type>
+                <description>The language of the intellectual content of the resource.</description>
+                <required>false</required>
+                <authoritative_list >
+                    <item>
+                        <field>eng</field>
+                        <value>English</value>
+                    </item>
+                    <item>
+                        <field>fre</field>
+                        <value>French</value>
+                    </item>
+                </authoritative_list>
+            </element>
+            <element>
+                <label>Relation</label>
+                <name>dc:relation</name>
+                <type>textfield</type>
+                <description>Reference to a related resource.</description>
+                <required>false</required>
+            </element>
+            <element>
+                <label>Rights Management</label>
+                <name>dc:rights</name>
+                <type>textarea</type>
+                <description>Information about intellectual property rights, copyright, and various property rights.</description>
+                <required>false</required>
+            </element>
+        </form_elements>
+    </ingest_form>
+  </content_model>

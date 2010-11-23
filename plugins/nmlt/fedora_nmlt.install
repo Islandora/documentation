@@ -1,0 +1,48 @@
+<?php
+
+function fedora_nmlt_install() {
+  $file = drupal_get_path('module', 'fedora_nmlt').'/cck/scorm_fedora_type.txt';
+  fedora_nmlt_import_content_type('<create>', '', $file);
+}
+
+function fedora_nmlt_enable() {
+  // Set the module weight so it can override other modules.
+  db_query("UPDATE {system} SET weight = 50 WHERE name = 'fedora_nmlt'");
+}
+
+/**
+ * Programmatically create CCK fields and types using the content copy module
+ * @param $type string
+ * content type to create, defaults to new type, if type exists, only fields will be added
+ * @param $macro array
+ * exported array from content types -&gt; export. If file is not specified, macro will be used
+ * @param $file string
+ * path to file containing content copy exported macro data structure. no escaping needed.
+ */
+function fedora_nmlt_import_content_type($type = '<create>', $macro = '', $file = '') {
+  if(!module_exists("content_copy")){
+    drupal_set_message('Programmatically creating CCK fields requires the Content Copy module. Exiting.');
+    return;
+  }
+
+  include_once( $_SERVER['DOCUMENT_ROOT'].'/'. drupal_get_path('module', 'content') .'/includes/content.admin.inc');
+  include_once( $_SERVER['DOCUMENT_ROOT'].'/'. drupal_get_path('module', 'node') .'/content_types.inc');
+
+  $values = array();
+  $values['type_name'] = $type;
+  if($file){
+    if(file_exists($file)){
+      $values['macro'] = file_get_contents($file);
+    }else{
+      drupal_set_message('Unable to read input file for import. Exiting.');
+      return;
+    }
+  }elseif($macro){
+    $values['macro'] = $macro;
+  }
+  $form_state = array();
+  $form_state['values'] = $values;
+  //drupal_set_message('<pre>DEBUG: '.print_r($values['macro'],1).'</pre>');
+  drupal_execute("content_copy_import_form", $form_state);
+  content_clear_type_cache();
+}

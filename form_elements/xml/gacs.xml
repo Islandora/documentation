@@ -1,0 +1,5562 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- The info:uri's listed below within each gac element and for the file as a whole will be used in the future to create resolvable links for each geographic area in the LOC handle server. -->
+<!--
+  Updated with code additions 04/07/2008 by J. Radebaugh 
+  
+  removed extraneous space preceding "fc" in code 'fc'  6/30/08
+-->
+
+<codelist version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="info:lc/xmlns/codelist-v1"
+  xsi:schemaLocation="info:lc/xmlns/codelist-v1 http://www.loc.gov/standards/codelists/codelist.xsd">
+
+  <codelistId>marcgac</codelistId>
+  <title>MARC Code List for Geographic Areas</title>
+  <author>Network Development and MARC Standards Office</author>
+  <uri>info:lc/vocabulary/gacs</uri>
+  <gacs>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-af</uri>
+      <name authorized="yes">Afghanistan</name>
+      <code>a-af</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f</uri>
+      <name authorized="yes">Africa</name>
+      <code>f</code>
+      <uf>
+        <name authorized="yes">Islamic countries</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Sahel</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/fc</uri>
+      <name authorized="yes">Africa, Central</name>
+      <code>fc</code>
+      <uf>
+        <name>Central Africa</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/fe</uri>
+      <name authorized="yes">Africa, Eastern</name>
+      <code>fe</code>
+      <uf>
+        <name authorized="yes">Africa, East</name>
+        <uf>
+          <name>British East Africa</name>
+        </uf>
+        <uf>
+          <name>East Africa</name>
+        </uf>
+      </uf>
+      <uf>
+        <name>Eastern Africa</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/fq</uri>
+      <name authorized="yes">Africa, French-speaking Equatorial</name>
+      <code>fq</code>
+      <uf>
+        <name authorized="yes">Chad, Lake</name>
+      </uf>
+      <uf>
+        <name>Africa, Equatorial</name>
+      </uf>
+      <uf>
+        <name>French Equatorial Africa</name>
+      </uf>
+      <uf>
+        <name>French-speaking Equatorial Africa</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/ff</uri>
+      <name authorized="yes">Africa, North</name>
+      <code>ff</code>
+      <uf>
+        <name authorized="yes">Africa, Northwest</name>
+        <uf>
+          <name>Northwest Africa</name>
+        </uf>
+      </uf>
+      <uf>
+        <name authorized="yes">Islamic Empire</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Rome</name>
+        <uf>
+          <name>Roman Empire</name>
+        </uf>
+      </uf>
+      <uf>
+        <name>North Africa</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/fh</uri>
+      <name authorized="yes">Africa, Northeast</name>
+      <code>fh</code>
+      <uf>
+        <name>Africa, Italian East</name>
+      </uf>
+      <uf>
+        <name>East African Horn</name>
+      </uf>
+      <uf>
+        <name>Italian East Africa</name>
+      </uf>
+      <uf>
+        <name>Northeast Africa</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/fs</uri>
+      <name authorized="yes">Africa, Southern</name>
+      <code>fs</code>
+      <uf>
+        <name>Southern Africa</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/fb</uri>
+      <name authorized="yes">Africa, Sub-Saharan</name>
+      <code>fb</code>
+      <uf>
+        <name>Sub-Saharan Africa</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/fw</uri>
+      <name authorized="yes">Africa, West</name>
+      <code>fw</code>
+      <uf>
+        <name authorized="yes">Africa, French-speaking West</name>
+        <uf>
+          <name>French-speaking West Africa</name>
+        </uf>
+        <uf>
+          <name>French West Africa</name>
+        </uf>
+      </uf>
+      <uf>
+        <name authorized="yes">Africa, Northwest</name>
+        <uf>
+          <name>Northwest Africa</name>
+        </uf>
+      </uf>
+      <uf>
+        <name authorized="yes">Ghana (Empire)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Mali (Empire)</name>
+      </uf>
+      <uf>
+        <name>British West Africa</name>
+      </uf>
+      <uf>
+        <name>West Africa</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-al</uri>
+      <name authorized="yes">Alabama</name>
+      <code>n-us-al</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-ak</uri>
+      <name authorized="yes">Alaska</name>
+      <code>n-us-ak</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-aa</uri>
+      <name authorized="yes">Albania</name>
+      <code>e-aa</code>
+      <uf>
+        <name>People's Socialist Republic of Albania</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-cn-ab</uri>
+      <name authorized="yes">Alberta</name>
+      <code>n-cn-ab</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-ae</uri>
+      <name authorized="yes">Algeria</name>
+      <code>f-ae</code>
+      <uf>
+        <name>People's Democratic Republic of Algeria</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/ea</uri>
+      <name authorized="yes">Alps</name>
+      <code>ea</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/sa</uri>
+      <name authorized="yes">Amazon River</name>
+      <code>sa</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/poas</uri>
+      <name authorized="yes">American Samoa</name>
+      <code>poas</code>
+      <uf>
+        <name>Samoa, American</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/aa</uri>
+      <name authorized="yes">Amur River (China and Russia)</name>
+      <code>aa</code>
+      <uf>
+        <name>Hei Ho (China and Russia)</name>
+      </uf>
+      <uf>
+        <name>Heilong Jiang (China and Russia)</name>
+      </uf>
+      <uf>
+        <name>Reka Amur (China and Russia)</name>
+      </uf>
+      <uf>
+        <name>Sakhalin Ula (China and Russia)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/sn</uri>
+      <name authorized="yes">Andes</name>
+      <code>sn</code>
+      <uf>
+        <name>Andean Area</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-an</uri>
+      <name authorized="yes">Andorra</name>
+      <code>e-an</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-ao</uri>
+      <name authorized="yes">Angola</name>
+      <code>f-ao</code>
+      <uf>
+        <name authorized="yes">Kongo Kingdom</name>
+        <uf>
+          <name>Congo (Kingdom)</name>
+        </uf>
+      </uf>
+      <uf>
+        <name>People's Republic of Angola</name>
+      </uf>
+      <uf>
+        <name>Portuguese West Africa</name>
+      </uf>
+      <uf>
+        <name>West Africa, Portuguese</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/nwxa</uri>
+      <name authorized="yes">Anguilla</name>
+      <code>nwxa</code>
+      <note>
+        <text>Coded [nwxi] (Saint Kitts and Nevis) before Mar. 1988</text>
+      </note>
+      <uf>
+        <name authorized="yes">Saint Kitts-Nevis-Anguilla</name>
+        <uf>
+          <name>St. Christopher-Nevis-Anguilla</name>
+        </uf>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-cc-an</uri>
+      <name authorized="yes">Anhui Sheng (China)</name>
+      <code>a-cc-an</code>
+      <uf>
+        <name>Anhwei Province (China)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/t</uri>
+      <name authorized="yes">Antarctic Ocean</name>
+      <code>t</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/t</uri>
+      <name authorized="yes">Antarctica</name>
+      <code>t</code>
+      <note>
+        <text>Coded also [t-ay] (Antarctica) before Mar. 1988</text>
+      </note>
+      <uf>
+        <name authorized="yes">Polar regions</name>
+      </uf>
+      <uf>
+        <name authorized="yes">South Shetland Islands (Antarctica)</name>
+        <note>
+          <text>Coded [lsfk] (Falkland Islands) before Mar. 1998</text>
+        </note>
+      </uf>
+      <uf>
+        <name>Antarctic regions</name>
+      </uf>
+      <uf>
+        <name>South Pole</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/nwaq</uri>
+      <name authorized="yes">Antigua and Barbuda</name>
+      <code>nwaq</code>
+      <uf>
+        <name authorized="yes">Antigua</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Barbuda</name>
+        <note>
+          <text>Coded [nwbc] (Barbuda) before Mar. 1988</text>
+        </note>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/nwla</uri>
+      <name authorized="yes">Antilles, Lesser</name>
+      <code>nwla</code>
+      <uf>
+        <name authorized="yes">West Indies, French</name>
+        <uf>
+          <name>French West Indies</name>
+        </uf>
+      </uf>
+      <uf>
+        <name>Lesser Antilles</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-usa</uri>
+      <name authorized="yes">Appalachian Mountains</name>
+      <code>n-usa</code>
+      <uf>
+        <name authorized="yes">Appalachian Mountains, Southern</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Appalachian Region</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Blue Ridge Mountains</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/ma</uri>
+      <name authorized="yes">Arab countries</name>
+      <code>ma</code>
+      <uf>
+        <name>Arabic countries</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/ar</uri>
+      <name authorized="yes">Arabian Peninsula</name>
+      <code>ar</code>
+      <uf>
+        <name authorized="yes">Persian Gulf States</name>
+      </uf>
+      <uf>
+        <name>Arabia</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/au</uri>
+      <name authorized="yes">Arabian Sea</name>
+      <code>au</code>
+      <uf>
+        <name authorized="yes">Oman, Gulf of</name>
+        <uf>
+          <name>Gulf of Oman</name>
+        </uf>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/r</uri>
+      <name authorized="yes">Arctic Ocean</name>
+      <code>r</code>
+      <uf>
+        <name authorized="yes">Barents Sea</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Beaufort Sea</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/r</uri>
+      <name authorized="yes">Arctic regions</name>
+      <code>r</code>
+      <uf>
+        <name authorized="yes">Polar regions</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Northeast Passage</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Northwest Passage</name>
+      </uf>
+      <uf>
+        <name>North Pole</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/s-ag</uri>
+      <name authorized="yes">Argentina</name>
+      <code>s-ag</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-az</uri>
+      <name authorized="yes">Arizona</name>
+      <code>n-us-az</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-ar</uri>
+      <name authorized="yes">Arkansas</name>
+      <code>n-us-ar</code>
+      <uf>
+        <name authorized="yes">Ozark Mountains</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-ai</uri>
+      <name authorized="yes">Armenia (Republic)</name>
+      <code>a-ai</code>
+      <note>
+        <text>Coded [e-ur-ai] (Armenia (Republic)) before June 1998</text>
+      </note>
+      <uf>
+        <name authorized="yes">Armenia</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Transcaucasia</name>
+        <note>
+          <text>Coded [e-ur-ai] (Armenia (Republic)), [e-ur-aj] (Azerbaijan), [e-ur-gs] (Georgia
+            (Republic)) before June 1998]</text>
+        </note>
+      </uf>
+      <uf>
+        <name>Armenian S.S.R.</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/nwaw</uri>
+      <name authorized="yes">Aruba</name>
+      <code>nwaw</code>
+      <note>
+        <text>Coded [nwco] (Cura&#x00E7;ao) before Sept. 2002</text>
+      </note>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/lsai</uri>
+      <name authorized="yes">Ascension Island (Atlantic Ocean)</name>
+      <code>lsai</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/u-ac</uri>
+      <name authorized="yes">Ashmore and Cartier Islands</name>
+      <code>u-ac</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a</uri>
+      <name authorized="yes">Asia</name>
+      <code>a</code>
+      <uf>
+        <name authorized="yes">Islamic countries</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Orient</name>
+        <uf>
+          <name>East</name>
+        </uf>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/ac</uri>
+      <name authorized="yes">Asia, Central</name>
+      <code>ac</code>
+      <uf>
+        <name>Central Asia</name>
+      </uf>
+      <uf>
+        <name>Soviet Central Asia</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/l</uri>
+      <name authorized="yes">Atlantic Ocean</name>
+      <code>l</code>
+      <uf>
+        <name authorized="yes">Islands of the Atlantic</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/fa</uri>
+      <name authorized="yes">Atlas Mountains</name>
+      <code>fa</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/u</uri>
+      <name authorized="yes">Australasia</name>
+      <code>u</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/u-at</uri>
+      <name authorized="yes">Australia</name>
+      <code>u-at</code>
+      <uf>
+        <name authorized="yes">Norfolk Island</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/u-at-ac</uri>
+      <name authorized="yes">Australian Capital Territory</name>
+      <code>u-at-ac</code>
+      <note>
+        <text>Coded [u-at-ne] (New South Wales) before Sept. 2002</text>
+      </note>
+      <uf>
+        <name>A.C.T.</name>
+      </uf>
+      <uf>
+        <name>Federal Capital Territory</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-au</uri>
+      <name authorized="yes">Austria</name>
+      <code>e-au</code>
+      <uf>
+        <name authorized="yes">Pannonia</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-aj</uri>
+      <name authorized="yes">Azerbaijan</name>
+      <code>a-aj</code>
+      <note>
+        <text>Coded [e-ur-aj] (Azerbaijan) before June 1998</text>
+      </note>
+      <uf>
+        <name authorized="yes">Transcaucasia</name>
+        <note>
+          <text>Coded [e-ur-ai] (Armenia (Republic)), [e-ur-aj] (Azerbaijan), [e-ur-gs] (Georgia
+            (Republic)) before June 1998]</text>
+        </note>
+      </uf>
+      <uf>
+        <name>Azerbaijan S.S.R.</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/lnaz</uri>
+      <name authorized="yes">Azores</name>
+      <code>lnaz</code>
+      <uf>
+        <name>A&#x00E7;ores</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/nwbf</uri>
+      <name authorized="yes">Bahamas</name>
+      <code>nwbf</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-ba</uri>
+      <name authorized="yes">Bahrain</name>
+      <code>a-ba</code>
+      <uf>
+        <name>Bahrein</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/ed</uri>
+      <name authorized="yes">Balkan Peninsula</name>
+      <code>ed</code>
+      <uf>
+        <name>Europe, Southeastern</name>
+      </uf>
+      <uf>
+        <name>Southeastern Europe</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/eb</uri>
+      <name authorized="yes">Baltic States</name>
+      <code>eb</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-bg</uri>
+      <name authorized="yes">Bangladesh</name>
+      <code>a-bg</code>
+      <uf>
+        <name>East Pakistan (Pakistan)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/nwbb</uri>
+      <name authorized="yes">Barbados</name>
+      <code>nwbb</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-cc-pe</uri>
+      <name authorized="yes">Beijing (China)</name>
+      <code>a-cc-pe</code>
+      <uf>
+        <name>Peiping (China)</name>
+      </uf>
+      <uf>
+        <name>Peking (China)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-bw</uri>
+      <name authorized="yes">Belarus</name>
+      <code>e-bw</code>
+      <note>
+        <text>Coded [e-ur-bw] (Belarus) before June 1998</text>
+      </note>
+      <uf>
+        <name authorized="yes">Kievan Rus</name>
+        <note>
+          <text>Coded [e-ur] (Soviet Union) before June 1998</text>
+        </note>
+      </uf>
+      <uf>
+        <name>Belorussian S.S.R.</name>
+      </uf>
+      <uf>
+        <name>Byelorussian S.S.R.</name>
+      </uf>
+      <uf>
+        <name>White Russia</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-be</uri>
+      <name authorized="yes">Belgium</name>
+      <code>e-be</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/ncbh</uri>
+      <name authorized="yes">Belize</name>
+      <code>ncbh</code>
+      <uf>
+        <name>British Honduras</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/el</uri>
+      <name authorized="yes">Benelux countries</name>
+      <code>el</code>
+      <uf>
+        <name>Low countries</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/ab</uri>
+      <name authorized="yes">Bengal, Bay of</name>
+      <code>ab</code>
+      <uf>
+        <name>Bay of Bengal</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-dm</uri>
+      <name authorized="yes">Benin</name>
+      <code>f-dm</code>
+      <uf>
+        <name>Dahomey</name>
+      </uf>
+      <uf>
+        <name>People's Republic of Benin</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/lnbm</uri>
+      <name authorized="yes">Bermuda Islands</name>
+      <code>lnbm</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-bt</uri>
+      <name authorized="yes">Bhutan</name>
+      <code>a-bt</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/mb</uri>
+      <name authorized="yes">Black Sea</name>
+      <code>mb</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-ccp</uri>
+      <name authorized="yes">Bo Hai (China)</name>
+      <code>a-ccp</code>
+      <uf>
+        <name>Bohai (China : Gulf)</name>
+      </uf>
+      <uf>
+        <name>Chihli, Gulf of (China)</name>
+      </uf>
+      <uf>
+        <name>Po Gulf (China)</name>
+      </uf>
+      <uf>
+        <name>Po Hai (China)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/s-bo</uri>
+      <name authorized="yes">Bolivia</name>
+      <code>s-bo</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/nwbn</uri>
+      <name authorized="yes">Bonaire (Netherlands Antilles)</name>
+      <code>nwbn</code>
+      <note>
+        <text>Coded [nwco] (Cura&#x00E7;ao) before Sept. 200</text>
+      </note>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-bn</uri>
+      <name authorized="yes">Borneo</name>
+      <code>a-bn</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-bn</uri>
+      <name authorized="yes">Bosnia and Hercegovina</name>
+      <code>e-bn</code>
+      <note>
+        <text>Coded [e-yu] (Yugoslavia) before Oct. 1992</text>
+      </note>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-bs</uri>
+      <name authorized="yes">Botswana</name>
+      <code>f-bs</code>
+      <uf>
+        <name>Bechuanaland</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/lsbv</uri>
+      <name authorized="yes">Bouvet Island</name>
+      <code>lsbv</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/s-bl</uri>
+      <name authorized="yes">Brazil</name>
+      <code>s-bl</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-cn-bc</uri>
+      <name authorized="yes">British Columbia</name>
+      <code>n-cn-bc</code>
+      <uf>
+        <name authorized="yes">Canada, Western</name>
+        <uf>
+          <name>Western Canada</name>
+        </uf>
+      </uf>
+      <uf>
+        <name authorized="yes">Northwest, Pacific</name>
+        <uf>
+          <name>Northwest (U.S.)</name>
+        </uf>
+        <uf>
+          <name>Pacific Northwest</name>
+        </uf>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/i-bi</uri>
+      <name authorized="yes">British Indian Ocean Territory</name>
+      <code>i-bi</code>
+      <uf>
+        <name authorized="yes">Diego Garcia (British Indian Ocean Territory)</name>
+      </uf>
+      <uf>
+        <name>Chagos Islands</name>
+      </uf>
+      <uf>
+        <name>Indian Ocean Territory, British</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/nwvb</uri>
+      <name authorized="yes">British Virgin Islands</name>
+      <code>nwvb</code>
+      <uf>
+        <name>Virgin Islands</name>
+        <note>
+          <text>Coded [nwvr] (Virgin Islands) before Mar. 1988</text>
+        </note>
+      </uf>
+      <uf>
+        <name>Virgin Islands, British</name>
+      </uf>
+      <uf>
+        <name>Virgin Islands (Great Britain)</name>
+      </uf>
+      <uf>
+        <name>Virgin Islands (Presidency)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-bx</uri>
+      <name authorized="yes">Brunei</name>
+      <code>a-bx</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-bu</uri>
+      <name authorized="yes">Bulgaria</name>
+      <code>e-bu</code>
+      <uf>
+        <name authorized="yes">Macedonia</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Macedonia (Bulgaria)</name>
+      </uf>
+      <uf>
+        <name>People's Republic of Bulgaria</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-uv</uri>
+      <name authorized="yes">Burkina Faso</name>
+      <code>f-uv</code>
+      <uf>
+        <name>Upper Volta</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-br</uri>
+      <name authorized="yes">Burma</name>
+      <code>a-br</code>
+      <uf>
+        <name authorized="yes">Shan States</name>
+      </uf>
+      <uf>
+        <name>Myanmar</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-bd</uri>
+      <name authorized="yes">Burundi</name>
+      <code>f-bd</code>
+      <uf>
+        <name authorized="yes">Ruanda-Urundi</name>
+      </uf>
+      <uf>
+        <name>German East Africa</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-ca</uri>
+      <name authorized="yes">California</name>
+      <code>n-us-ca</code>
+      <uf>
+        <name authorized="yes">Pacific States</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-cb</uri>
+      <name authorized="yes">Cambodia</name>
+      <code>a-cb</code>
+      <uf>
+        <name>Kampuchea</name>
+      </uf>
+      <uf>
+        <name>Khmer Republic</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-cm</uri>
+      <name authorized="yes">Cameroon</name>
+      <code>f-cm</code>
+      <uf>
+        <name authorized="yes">Adamawa (Emirate)</name>
+      </uf>
+      <uf>
+        <name>Cameroons, French</name>
+      </uf>
+      <uf>
+        <name>Cameroons, Southern</name>
+      </uf>
+      <uf>
+        <name>Cameroun</name>
+      </uf>
+      <uf>
+        <name>French Cameroons</name>
+      </uf>
+      <uf>
+        <name>Southern Cameroons</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-cn</uri>
+      <name authorized="yes">Canada</name>
+      <code>n-cn</code>
+      <uf>
+        <name authorized="yes">Canada, Eastern</name>
+        <uf>
+          <name>Eastern Canada</name>
+        </uf>
+      </uf>
+      <uf>
+        <name authorized="yes">Canada, Northern</name>
+        <uf>
+          <name>Northern Canada</name>
+        </uf>
+      </uf>
+      <uf>
+        <name authorized="yes">Northwest, Canadian</name>
+        <uf>
+          <name>Canadian Northwest</name>
+        </uf>
+        <uf>
+          <name>West (Canada)</name>
+        </uf>
+      </uf>
+      <uf>
+        <name authorized="yes">Saint Lawrence River</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/nccz</uri>
+      <name authorized="yes">Canal Zone</name>
+      <code>nccz</code>
+      <uf>
+        <name>Panama Canal Zone</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/lnca</uri>
+      <name authorized="yes">Canary Islands</name>
+      <code>lnca</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/lncv</uri>
+      <name authorized="yes">Cape Verde</name>
+      <code>lncv</code>
+      <uf>
+        <name>Cabo Verde</name>
+      </uf>
+      <uf>
+        <name>Republic of Cape Verde</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/cc</uri>
+      <name authorized="yes">Caribbean Area</name>
+      <code>cc</code>
+      <uf>
+        <name authorized="yes">Spanish Main</name>
+      </uf>
+      <uf>
+        <name>Caribbean Sea Region</name>
+      </uf>
+      <uf>
+        <name>Circumcaribbean</name>
+        <note>
+          <text>Coded [cr] (Circumcaribbean) before Mar. 1988</text>
+        </note>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/cc</uri>
+      <name authorized="yes">Caribbean Sea</name>
+      <code>cc</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/poci</uri>
+      <name authorized="yes">Caroline Islands</name>
+      <code>poci</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/ak</uri>
+      <name authorized="yes">Caspian Sea</name>
+      <code>ak</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-urk</uri>
+      <name authorized="yes">Caucasus</name>
+      <code>e-urk</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-urr</uri>
+      <name authorized="yes">Caucasus, Northern (Russia)</name>
+      <code>e-urr</code>
+      <uf>
+        <name>North Caucasus (Russia)</name>
+      </uf>
+      <uf>
+        <name>Northern Caucasus (Russia)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/nwcj</uri>
+      <name authorized="yes">Cayman Islands</name>
+      <code>nwcj</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-cx</uri>
+      <name authorized="yes">Central African Republic</name>
+      <code>f-cx</code>
+      <uf>
+        <name>Central African Empire</name>
+      </uf>
+      <uf>
+        <name>Ubangi Shari</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/nc</uri>
+      <name authorized="yes">Central America</name>
+      <code>nc</code>
+      <uf>
+        <name>America, Central</name>
+      </uf>
+      <uf>
+        <name>Middle America</name>
+        <note>
+          <text>Coded [cm] (Middle America) before Mar. 1988</text>
+        </note>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/u-atc</uri>
+      <name authorized="yes">Central Australia</name>
+      <code>u-atc</code>
+      <note>
+        <text>Coded [u-at] (Australia) before September 2005</text>
+      </note>
+      <uf>
+        <name>Australia, Central</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-urc</uri>
+      <name authorized="yes">Central Chernozem Region (Russia)</name>
+      <code>e-urc</code>
+      <uf>
+        <name>Central Black Earth Region (Russia)</name>
+      </uf>
+      <uf>
+        <name>Central Black Soil Region (Russia)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-cd</uri>
+      <name authorized="yes">Chad</name>
+      <code>f-cd</code>
+      <uf>
+        <name authorized="yes">Tibesti Mountains</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/s-cl</uri>
+      <name authorized="yes">Chile</name>
+      <code>s-cl</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-cc</uri>
+      <name authorized="yes">China</name>
+      <code>a-cc</code>
+      <uf>
+        <name authorized="yes">Manchuria (China)</name>
+      </uf>
+      <uf>
+        <name>Mainland China</name>
+      </uf>
+      <uf>
+        <name>People's Republic of China</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-cc-cq</uri>
+      <name authorized="yes">Chongqing (China)</name>
+      <code>a-cc-cq</code>
+      <note>
+        <text>Coded [a-cc-sz] (Szechuan Province (China)) before Sept. 2000</text>
+      </note>
+      <uf>
+        <name>Ch'ung-ch'ing shih (China)</name>
+      </uf>
+      <uf>
+        <name>Chungking (China)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/i-xa</uri>
+      <name authorized="yes">Christmas Island (Indian Ocean)</name>
+      <code>i-xa</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/i-xb</uri>
+      <name authorized="yes">Cocos (Keeling) Islands</name>
+      <code>i-xb</code>
+      <uf>
+        <name>Keeling Islands</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/q</uri>
+      <name authorized="yes">Cold regions</name>
+      <code>q</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/s-ck</uri>
+      <name authorized="yes">Colombia</name>
+      <code>s-ck</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-co</uri>
+      <name authorized="yes">Colorado</name>
+      <code>n-us-co</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/b</uri>
+      <name authorized="yes">Commonwealth countries</name>
+      <code>b</code>
+      <uf>
+        <name>British Commonwealth countries</name>
+      </uf>
+      <uf>
+        <name>British Dominions</name>
+      </uf>
+      <uf>
+        <name>Commonwealth nations</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/i-cq</uri>
+      <name authorized="yes">Comoros</name>
+      <code>i-cq</code>
+      <uf>
+        <name>Comoro Islands</name>
+      </uf>
+      <uf>
+        <name>&#x00CE;les Comores</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-cf</uri>
+      <name authorized="yes">Congo (Brazzaville)</name>
+      <code>f-cf</code>
+      <uf>
+        <name authorized="yes">Kongo Kingdom</name>
+        <uf>
+          <name>Congo (Kingdom)</name>
+        </uf>
+      </uf>
+      <uf>
+        <name>Brazzaville</name>
+      </uf>
+      <uf>
+        <name>French Congo</name>
+      </uf>
+      <uf>
+        <name>Middle Congo</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-cg</uri>
+      <name authorized="yes">Congo (Democratic Republic)</name>
+      <code>f-cg</code>
+      <uf>
+        <name authorized="yes">Kongo Kingdom</name>
+        <uf>
+          <name>Congo (Kingdom)</name>
+        </uf>
+      </uf>
+      <uf>
+        <name>Belgian Congo</name>
+      </uf>
+      <uf>
+        <name>Congo (Kinshasa)</name>
+      </uf>
+      <uf>
+        <name>Congo (Leopoldville)</name>
+      </uf>
+      <uf>
+        <name>Zaire</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/fg</uri>
+      <name authorized="yes">Congo River</name>
+      <code>fg</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-ct</uri>
+      <name authorized="yes">Connecticut</name>
+      <code>n-us-ct</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/pocw</uri>
+      <name authorized="yes">Cook Islands</name>
+      <code>pocw</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/u-cs</uri>
+      <name authorized="yes">Coral Sea Islands</name>
+      <code>u-cs</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/nccr</uri>
+      <name authorized="yes">Costa Rica</name>
+      <code>nccr</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-iv</uri>
+      <name authorized="yes">C&#x00F4;te d'Ivoire</name>
+      <code>f-iv</code>
+      <uf>
+        <name>Ivory Coast</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-ci</uri>
+      <name authorized="yes">Croatia</name>
+      <code>e-ci</code>
+      <note>
+        <text>Coded [e-yu] (Yugoslavia) before Oct. 1992]</text>
+      </note>
+      <uf>
+        <name>People's Republic of Croatia</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/nwcu</uri>
+      <name authorized="yes">Cuba</name>
+      <code>nwcu</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/nwco</uri>
+      <name authorized="yes">Cura&#x00E7;ao (Netherlands Antilles)</name>
+      <code>nwco</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-cy</uri>
+      <name authorized="yes">Cyprus</name>
+      <code>a-cy</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-xr</uri>
+      <name authorized="yes">Czech Republic [e-xr]</name>
+      <code>e-xr</code>
+      <note>
+        <text>Coded [e-cs] (Czechoslovakia) before May 1993</text>
+      </note>
+      <uf>
+        <name>Czech Socialist Republic (Czechoslovakia)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-cs</uri>
+      <name authorized="yes">Czechoslovakia</name>
+      <code>e-cs</code>
+      <note>
+        <text>Includes the Czech Republic and Slovakia treated collectively</text>
+      </note>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/eo</uri>
+      <name authorized="yes">Danube River</name>
+      <code>eo</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/zd</uri>
+      <name authorized="yes">Deep space</name>
+      <code>zd</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-de</uri>
+      <name authorized="yes">Delaware</name>
+      <code>n-us-de</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-dk</uri>
+      <name authorized="yes">Denmark</name>
+      <code>e-dk</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/dd</uri>
+      <name authorized="yes">Developed countries</name>
+      <code>dd</code>
+      <uf>
+        <name>Advanced countries</name>
+      </uf>
+      <uf>
+        <name>Economically advanced countries</name>
+      </uf>
+      <uf>
+        <name>First World</name>
+      </uf>
+      <uf>
+        <name>Industrialized countries</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/d</uri>
+      <name authorized="yes">Developing countries </name>
+      <code>d</code>
+      <uf>
+        <name>Emerging nations</name>
+      </uf>
+      <uf>
+        <name>Third World</name>
+      </uf>
+      <uf>
+        <name>Underdeveloped areas</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-ft</uri>
+      <name authorized="yes">Djibouti</name>
+      <code>f-ft</code>
+      <uf>
+        <name>Afars and Issas, French Territory of the</name>
+      </uf>
+      <uf>
+        <name>French Somaliland</name>
+      </uf>
+      <uf>
+        <name>French Territory of the Afars and Issas</name>
+      </uf>
+      <uf>
+        <name>Somaliland, French </name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/nwdq</uri>
+      <name authorized="yes">Dominica</name>
+      <code>nwdq</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/nwdr</uri>
+      <name authorized="yes">Dominican Republic</name>
+      <code>nwdr</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/x</uri>
+      <name authorized="yes">Earth</name>
+      <code>x</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-usr</uri>
+      <name authorized="yes">East (U.S.)</name>
+      <code>n-usr</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/ae</uri>
+      <name authorized="yes">East Asia</name>
+      <code>ae</code>
+      <uf>
+        <name>Asia, East</name>
+      </uf>
+      <uf>
+        <name>East (Far East)</name>
+      </uf>
+      <uf>
+        <name>Far East</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/an</uri>
+      <name authorized="yes">East China Sea</name>
+      <code>an</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-em</uri>
+      <name authorized="yes">East Timor</name>
+      <code>a-em</code>
+      <note>
+        <text>Coded [a-pt] (Portuguese Timor) before April 21, 1980; coded [a-io] (Indonesia) from
+          1980-Sept. 2002]</text>
+      </note>
+      <uf>
+        <name authorized="yes">Lesser Sunda Islands (Indonesia and East Timor)</name>
+        <uf>
+          <name>Sunda Islands, Lesser (Indonesia and East Timor)</name>
+        </uf>
+      </uf>
+      <uf>
+        <name authorized="yes">Timor Island</name>
+      </uf>
+      <uf>
+        <name>Portuguese Timor</name>
+      </uf>
+      <uf>
+        <name>Timor, East</name>
+      </uf>
+      <uf>
+        <name>Timor, Portuguese</name>
+      </uf>
+      <uf>
+        <name>Timor Timur</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/poea</uri>
+      <name authorized="yes">Easter Island</name>
+      <code>poea</code>
+      <uf>
+        <name>Isla de Pascua</name>
+      </uf>
+      <uf>
+        <name>Pascua Island</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/u-ate</uri>
+      <name authorized="yes">Eastern Australia</name>
+      <code>u-ate</code>
+      <note>
+        <text>Coded [u-at] (Australia) before September 2005</text>
+      </note>
+      <uf>
+        <name>Australia, Eastern</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/xa</uri>
+      <name authorized="yes">Eastern Hemisphere</name>
+      <code>xa</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/s-ec</uri>
+      <name authorized="yes">Ecuador</name>
+      <code>s-ec</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-ua</uri>
+      <name authorized="yes">Egypt</name>
+      <code>f-ua</code>
+      <uf>
+        <name authorized="yes">United Arab Republic</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/nces</uri>
+      <name authorized="yes">El Salvador</name>
+      <code>nces</code>
+      <uf>
+        <name>Salvador</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-uk-en</uri>
+      <name authorized="yes">England</name>
+      <code>e-uk-en</code>
+      <uf>
+        <name authorized="yes">Brownsea Island (England)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Isle of Wight (England)</name>
+        <uf>
+          <name>Wight, Isle of</name>
+        </uf>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-eg</uri>
+      <name authorized="yes">Equatorial Guinea</name>
+      <code>f-eg</code>
+      <uf>
+        <name authorized="yes">Fernando Po (Equatorial Guinea)</name>
+        <uf>
+          <name>Bioco (Equatorial Guinea)</name>
+        </uf>
+        <uf>
+          <name>Bioko (Equatorial Guinea)</name>
+        </uf>
+        <uf>
+          <name>Macias Nguema (Equatorial Guinea)</name>
+        </uf>
+      </uf>
+      <uf>
+        <name>Guinea, Equatorial</name>
+      </uf>
+      <uf>
+        <name>Guinea, Spanish</name>
+      </uf>
+      <uf>
+        <name>R&#x00ED;o Muni</name>
+      </uf>
+      <uf>
+        <name>Spanish Guinea</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-ea</uri>
+      <name authorized="yes">Eritrea</name>
+      <code>f-ea</code>
+      <note>
+        <text>Coded [f-et] (Ethiopia) before Nov. 1993</text>
+      </note>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-er</uri>
+      <name authorized="yes">Estonia</name>
+      <code>e-er</code>
+      <note>
+        <text>Coded [e-ur-er] (Estonia) before June 1998</text>
+      </note>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-et</uri>
+      <name authorized="yes">Ethiopia</name>
+      <code>f-et</code>
+      <uf>
+        <name>Abyssinia</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/me</uri>
+      <name authorized="yes">Eurasia</name>
+      <code>me</code>
+      <uf>
+        <name>Asia and Europe (treated collectively)</name>
+      </uf>
+      <uf>
+        <name>Europe and Asia (treated collectively)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e</uri>
+      <name authorized="yes">Europe</name>
+      <code>e</code>
+      <uf>
+        <name authorized="yes">European Economic Community countries</name>
+      </uf>
+      <uf>
+        <name authorized="yes">European Union countries</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Holy Roman Empire</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Rome</name>
+        <uf>
+          <name>Roman Empire</name>
+        </uf>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/ec</uri>
+      <name authorized="yes">Europe, Central</name>
+      <code>ec</code>
+      <uf>
+        <name>Central Europe</name>
+      </uf>
+      <uf>
+        <name>Europe, East Central</name>
+        <note>
+          <text>Coded [et] (Europe, East Central) before Mar. 1988</text>
+        </note>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/ee</uri>
+      <name authorized="yes">Europe, Eastern</name>
+      <code>ee</code>
+      <uf>
+        <name authorized="yes">Carpathian Mountains</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Communist countries</name>
+        <note>
+          <text>Coded [v] (Communist countries) before June 1998</text>
+        </note>
+      </uf>
+      <uf>
+        <name>Eastern Europe</name>
+      </uf>
+      <uf>
+        <name>Europe, East Central</name>
+        <note>
+          <text>Coded [et] (Europe, East Central) before Mar. 1988</text>
+        </note>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/en</uri>
+      <name authorized="yes">Europe, Northern</name>
+      <code>en</code>
+      <uf>
+        <name>Northern Europe</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/es</uri>
+      <name authorized="yes">Europe, Southern</name>
+      <code>es</code>
+      <uf>
+        <name>Southern Europe</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/ew</uri>
+      <name authorized="yes">Europe, Western</name>
+      <code>ew</code>
+      <uf>
+        <name>Western Europe</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/lsfk</uri>
+      <name authorized="yes">Falkland Islands</name>
+      <code>lsfk</code>
+      <uf>
+        <name authorized="yes">South Orkney Islands</name>
+      </uf>
+      <uf>
+        <name>Malvinas Islands</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/lnfa</uri>
+      <name authorized="yes">Faroe Islands</name>
+      <code>lnfa</code>
+      <uf>
+        <name>Faeroe Islands</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/pofj</uri>
+      <name authorized="yes">Fiji</name>
+      <code>pofj</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-fi</uri>
+      <name authorized="yes">Finland</name>
+      <code>e-fi</code>
+      <uf>
+        <name authorized="yes">Lapland</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-fr</uri>
+      <name authorized="yes">France</name>
+      <code>e-fr</code>
+      <uf>
+        <name authorized="yes">Corsica (France)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/h</uri>
+      <name authorized="yes">French Community</name>
+      <code>h</code>
+      <uf>
+        <name>Communaut&#x00E9; francaise</name>
+      </uf>
+      <uf>
+        <name>French Union</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/s-fg</uri>
+      <name authorized="yes">French Guiana</name>
+      <code>s-fg</code>
+      <uf>
+        <name>Guiana, French</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/pofp</uri>
+      <name authorized="yes">French Polynesia</name>
+      <code>pofp</code>
+      <uf>
+        <name authorized="yes">Austral Islands (French Polynesia)</name>
+        <uf>
+          <name>Tubuai Islands (French Polynesia)</name>
+        </uf>
+      </uf>
+      <uf>
+        <name authorized="yes">Gambier Islands (French Polynesia)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Marquesas Islands (French Polynesia)</name>
+        <uf>
+          <name>Archipel des Marquises (French Polynesia)</name>
+        </uf>
+        <uf>
+          <name>&#x00CE;les Marquises de Mendo&#x00E7;a (French Polynesia)</name>
+        </uf>
+        <uf>
+          <name>Islas Marquesas de Mendoza (French Polynesia)</name>
+        </uf>
+        <uf>
+          <name>Menda&#x00F1;a (French Polynesia)</name>
+        </uf>
+      </uf>
+      <uf>
+        <name authorized="yes">Society Islands (French Polynesia)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Tuamotu Archipelago (French Polynesia)</name>
+      </uf>
+      <uf>
+        <name>Oceania, French</name>
+      </uf>
+      <uf>
+        <name>Polynesia, French</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-cc-fu</uri>
+      <name authorized="yes">Fujian Sheng (China)</name>
+      <code>a-cc-fu</code>
+      <uf>
+        <name>Fukien Province (China)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-go</uri>
+      <name authorized="yes">Gabon </name>
+      <code>f-go</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/pogg</uri>
+      <name authorized="yes">Galapagos Islands</name>
+      <code>pogg</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-gm</uri>
+      <name authorized="yes">Gambia </name>
+      <code>f-gm</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-cc-ka</uri>
+      <name authorized="yes">Gansu Sheng (China) [a-cc-ka]</name>
+      <code>a-cc-ka</code>
+      <uf>
+        <name>Kansu Province (China)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/awgz</uri>
+      <name authorized="yes">Gaza Strip</name>
+      <code>awgz</code>
+      <uf>
+        <name authorized="yes">Palestine</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-ga</uri>
+      <name authorized="yes">Georgia</name>
+      <code>n-us-ga</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-gs</uri>
+      <name authorized="yes">Georgia (Republic)</name>
+      <code>a-gs</code>
+      <note>
+        <text>Coded [e-ur-gs] (Georgia (Republic)) before June 1998</text>
+      </note>
+      <uf>
+        <name authorized="yes">Transcaucasia</name>
+        <note>
+          <text>Coded [e-ur-ai] (Armenia (Republic)), [e-ur-aj] (Azerbaijan), [e-ur-gs] (Georgia
+            (Republic)) before June 1998]</text>
+        </note>
+      </uf>
+      <uf>
+        <name>Georgia (Soviet Union)</name>
+      </uf>
+      <uf>
+        <name>Georgian S.S.R.</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-gx</uri>
+      <name authorized="yes">Germany</name>
+      <code>e-gx</code>
+      <note>
+        <text>For Germany as a whole regardless of time period; includes Germany (East) and Germany
+          (West) as a whole between 1949 and 1990]</text>
+      </note>
+      <uf>
+        <name authorized="yes">Berlin (Germany)</name>
+        <note>
+          <text>Coded [e-gx] (Germany) for Berlin as a whole; [e-ge] (Germany (East)) for East
+            Berlin; or [e-gw] (Germany (West)) for West Berlin before Jan. 1991]</text>
+        </note>
+        <uf>
+          <name>East Berlin</name>
+        </uf>
+        <uf>
+          <name>West Berlin</name>
+        </uf>
+      </uf>
+      <uf>
+        <name authorized="yes">Germany, Northern</name>
+        <uf>
+          <name>Northern Germany</name>
+        </uf>
+      </uf>
+      <uf>
+        <name authorized="yes">Prussia (Germany)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Germany, Southern</name>
+        <uf>
+          <name>Southern Germany</name>
+        </uf>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-ge</uri>
+      <name authorized="yes">Germany (East)</name>
+      <code>e-ge</code>
+      <note>
+        <text>For the eastern part of Germany before 1949 or after 1990 and for the German
+          Democratic Republic between 1949-1990]</text>
+      </note>
+      <uf>
+        <name>Democratic German Republic</name>
+      </uf>
+      <uf>
+        <name>East Germany</name>
+      </uf>
+      <uf>
+        <name>German Democratic Republic</name>
+      </uf>
+      <uf>
+        <name>Germany, Eastern</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-gw</uri>
+      <name authorized="yes">Germany (West)</name>
+      <code>e-gw</code>
+      <note>
+        <text>For the western part of Germany before 1949 or after 1990 and for the Federal Republic
+          of Germany between 1949-1990</text>
+      </note>
+      <uf>
+        <name>Federal German Republic</name>
+      </uf>
+      <uf>
+        <name>German Federal Republic</name>
+      </uf>
+      <uf>
+        <name>Germany, Western</name>
+      </uf>
+      <uf>
+        <name>West Germany</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-gh</uri>
+      <name authorized="yes">Ghana</name>
+      <code>f-gh</code>
+      <uf>
+        <name authorized="yes">Togoland</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Togoland (British)</name>
+        <uf>
+          <name>British Togoland</name>
+        </uf>
+      </uf>
+      <uf>
+        <name>Ashanti</name>
+      </uf>
+      <uf>
+        <name>Gold Coast</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-gi</uri>
+      <name authorized="yes">Gibraltar</name>
+      <code>e-gi</code>
+      <uf>
+        <name authorized="yes">Gibraltar, Strait of</name>
+        <uf>
+          <name>Strait of Gibraltar</name>
+        </uf>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-uk</uri>
+      <name authorized="yes">Great Britain</name>
+      <code>e-uk</code>
+      <uf>
+        <name authorized="yes">British Isles</name>
+      </uf>
+      <uf>
+        <name>United Kingdom</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-uk-ui</uri>
+      <name authorized="yes">Great Britain Miscellaneous Island Dependencies</name>
+      <code>e-uk-ui</code>
+      <uf>
+        <name authorized="yes">Alderney (Channel Islands)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Calf of Man (Isle of Man)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Channel Islands</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Guernsey (Channel Islands)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Isle of Man</name>
+        <uf>
+          <name>Man, Isle of</name>
+        </uf>
+      </uf>
+      <uf>
+        <name authorized="yes">Jersey (Channel Islands)</name>
+      </uf>
+      <uf>
+        <name>Island Dependencies of Great Britain</name>
+      </uf>
+      <uf>
+        <name>United Kingdom Miscellaneous Island Dependencies</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/nl</uri>
+      <name authorized="yes">Great Lakes (North America)</name>
+      <code>nl</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/np</uri>
+      <name authorized="yes">Great Plains</name>
+      <code>np</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/fr</uri>
+      <name authorized="yes">Great Rift Valley</name>
+      <code>fr</code>
+      <uf>
+        <name>Rift Valley</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-gr</uri>
+      <name authorized="yes">Greece</name>
+      <code>e-gr</code>
+      <uf>
+        <name authorized="yes">Aegean Islands (Greece and Turkey)</name>
+        <uf>
+          <name>Islands of the Aegean</name>
+        </uf>
+      </uf>
+      <uf>
+        <name authorized="yes">Aegean Sea</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Crete (Greece)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Dodekanesos (Greece)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Macedonia</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Macedonia (Greece)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-gl</uri>
+      <name authorized="yes">Greenland</name>
+      <code>n-gl</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/nwgd</uri>
+      <name authorized="yes">Grenada</name>
+      <code>nwgd</code>
+      <uf>
+        <name authorized="yes">Grenadines (Saint Vincent and the Grenadines and Grenada)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/nwgp</uri>
+      <name authorized="yes">Guadeloupe</name>
+      <code>nwgp</code>
+      <uf>
+        <name authorized="yes">Marie-Galante (Guadeloupe)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Saint-Barth&#x00E9;lemy</name>
+        <note>
+          <text>Coded [nwsb] (Saint-Barthelemy) before Mar. 1988</text>
+        </note>
+        <uf>
+          <name>Saint Bartholomew</name>
+        </uf>
+        <uf>
+          <name>Saint Barts</name>
+        </uf>
+        <uf>
+          <name>St. Barth&#x00E9;l&#x00E9;my</name>
+        </uf>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/pogu</uri>
+      <name authorized="yes">Guam</name>
+      <code>pogu</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-cc-kn</uri>
+      <name authorized="yes">Guangdong Sheng (China)</name>
+      <code>a-cc-kn</code>
+      <uf>
+        <name>Kwangtung Province (China)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-cc-kc</uri>
+      <name authorized="yes">Guangxi Zhuangzu Zizhiqu (China)</name>
+      <code>a-cc-kc</code>
+      <uf>
+        <name>Kuang-hsi Chuang tsu tzu chih ch'&#x00FC; (China)</name>
+      </uf>
+      <uf>
+        <name>Kwangsi Chuang Autonomous Region</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/ncgt</uri>
+      <name authorized="yes">Guatemala</name>
+      <code>ncgt</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-gv</uri>
+      <name authorized="yes">Guinea</name>
+      <code>f-gv</code>
+      <uf>
+        <name>French Guinea</name>
+      </uf>
+      <uf>
+        <name>Guinea, French</name>
+      </uf>
+      <uf>
+        <name>Guin&#x00E9;e</name>
+      </uf>
+      <uf>
+        <name>Republique de Guin&#x00E9;e</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-pg</uri>
+      <name authorized="yes">Guinea-Bissau</name>
+      <code>f-pg</code>
+      <uf>
+        <name>Guinea, Portuguese</name>
+      </uf>
+      <uf>
+        <name>Portuguese Guinea</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-cc-kw</uri>
+      <name authorized="yes">Guizhou Sheng (China)</name>
+      <code>a-cc-kw</code>
+      <uf>
+        <name>Kweichow Province (China)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/s-gy</uri>
+      <name authorized="yes">Guyana</name>
+      <code>s-gy</code>
+      <uf>
+        <name>British Guiana</name>
+      </uf>
+      <uf>
+        <name>Guiana, British</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-cc-ha</uri>
+      <name authorized="yes">Hainan Sheng (China)</name>
+      <code>a-cc-ha</code>
+      <note>
+        <text>Coded [a-cc-kn] (Kwangtung Province (China)) before June 1998</text>
+      </note>
+      <uf>
+        <name>Hainan Island (China)</name>
+      </uf>
+      <uf>
+        <name>Hainan Province (China)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/nwht</uri>
+      <name authorized="yes">Haiti</name>
+      <code>nwht</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-hi</uri>
+      <name authorized="yes">Hawaii</name>
+      <code>n-us-hi</code>
+      <uf>
+        <name authorized="yes">Sunbelt States</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/i-hm</uri>
+      <name authorized="yes">Heard and McDonald Islands</name>
+      <code>i-hm</code>
+      <uf>
+        <name authorized="yes">Heard Island (Heard and McDonald Islands)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">McDonald Island (Heard and McDonald Islands)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-cc-hp</uri>
+      <name authorized="yes">Hebei Sheng (China)</name>
+      <code>a-cc-hp</code>
+      <uf>
+        <name>Ho-pei sheng (China)</name>
+      </uf>
+      <uf>
+        <name>Hopeh Province (China)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-cc-he</uri>
+      <name authorized="yes">Heilongjiang Sheng (China)</name>
+      <code>a-cc-he</code>
+      <uf>
+        <name>Heilungkiang Province (China)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-cc-ho</uri>
+      <name authorized="yes">Henan Sheng (China)</name>
+      <code>a-cc-ho</code>
+      <uf>
+        <name>Honan Province (China)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/ah</uri>
+      <name authorized="yes">Himalaya Mountains</name>
+      <code>ah</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/nwhi</uri>
+      <name authorized="yes">Hispaniola</name>
+      <code>nwhi</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/ncho</uri>
+      <name authorized="yes">Honduras</name>
+      <code>ncho</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-cc-hk</uri>
+      <name authorized="yes">Hong Kong (China)</name>
+      <code>a-cc-hk</code>
+      <note>
+        <text>Coded [a-hk] (Hong Kong) before June 1998</text>
+      </note>
+      <uf>
+        <name>Hong Kong</name>
+      </uf>
+      <uf>
+        <name>Hong Kong (China : Special Administrative Region)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-cc-hh</uri>
+      <name authorized="yes">Hubei Sheng (China)</name>
+      <code>a-cc-hh</code>
+      <uf>
+        <name>Hu-pei (China)</name>
+      </uf>
+      <uf>
+        <name>Hupeh Province (China)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-cnh</uri>
+      <name authorized="yes">Hudson Bay</name>
+      <code>n-cnh</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-cc-hu</uri>
+      <name authorized="yes">Hunan Sheng (China) </name>
+      <code>a-cc-hu</code>
+      <uf>
+        <name>Hunan Province (China)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-hu</uri>
+      <name authorized="yes">Hungary</name>
+      <code>e-hu</code>
+      <uf>
+        <name authorized="yes">Pannonia</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-ic</uri>
+      <name authorized="yes">Iceland</name>
+      <code>e-ic</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-id</uri>
+      <name authorized="yes">Idaho</name>
+      <code>n-us-id</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-il</uri>
+      <name authorized="yes">Illinois</name>
+      <code>n-us-il</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-ii</uri>
+      <name authorized="yes">India</name>
+      <code>a-ii</code>
+      <uf>
+        <name authorized="yes">Andaman and Nicobar Islands (India)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">French India</name>
+        <uf>
+          <name>India, French</name>
+        </uf>
+      </uf>
+      <uf>
+        <name authorized="yes">Jammu and Kashmir (India)</name>
+        <uf>
+          <name>Kashmir</name>
+        </uf>
+        <uf>
+          <name>Kashmir and Jammu (India)</name>
+        </uf>
+      </uf>
+      <uf>
+        <name authorized="yes">Lakshadweep (India)</name>
+        <uf>
+          <name>Laccadive, Minicoy, and Amindivi Islands (India)</name>
+        </uf>
+      </uf>
+      <uf>
+        <name authorized="yes">Sikkim (India)</name>
+        <note>
+          <text>Coded [a-sk] (Sikkim) before Mar. 1988</text>
+        </note>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/i</uri>
+      <name authorized="yes">Indian Ocean</name>
+      <code>i</code>
+      <uf>
+        <name authorized="yes">Islands of the Indian Ocean</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Timor Sea</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-in</uri>
+      <name authorized="yes">Indiana</name>
+      <code>n-us-in</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/ai</uri>
+      <name authorized="yes">Indochina</name>
+      <code>ai</code>
+      <uf>
+        <name>French Indochina</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-io</uri>
+      <name authorized="yes">Indonesia</name>
+      <code>a-io</code>
+      <uf>
+        <name authorized="yes">Celebes (Indonesia)</name>
+        <uf>
+          <name>Sulawesi (Indonesia)</name>
+        </uf>
+      </uf>
+      <uf>
+        <name authorized="yes">Java (Indonesia)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Kalimantan Barat (Indonesia)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Lesser Sunda Islands (Indonesia and East Timor)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Madura Island (Indonesia)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Maluku (Indonesia)</name>
+        <uf>
+          <name>Moluccas (Indonesia)</name>
+        </uf>
+      </uf>
+      <uf>
+        <name authorized="yes">Papua (Indonesia)</name>
+        <uf>
+          <name>Irian Barat (Indonesia)</name>
+        </uf>
+        <uf>
+          <name>Irian Jaya (Indonesia)</name>
+        </uf>
+        <uf>
+          <name>West Irian</name>
+        </uf>
+        <uf>
+          <name>West New Guinea</name>
+        </uf>
+      </uf>
+      <uf>
+        <name>Sunda Islands, Lesser (Indonesia and East Timor)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Sumatra (Indonesia)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Timor Island</name>
+      </uf>
+      <uf>
+        <name>Dutch East Indies</name>
+      </uf>
+      <uf>
+        <name>Netherlands East Indies</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-cc-im</uri>
+      <name authorized="yes">Inner Mongolia (China)</name>
+      <code>a-cc-im</code>
+      <uf>
+        <name>Mongolia (Inner Mongolia)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/m</uri>
+      <name authorized="yes">Intercontinental areas (Eastern Hemisphere)</name>
+      <code>m</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/c</uri>
+      <name authorized="yes">Intercontinental areas (Western Hemisphere)</name>
+      <code>c</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-ia</uri>
+      <name authorized="yes">Iowa</name>
+      <code>n-us-ia</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-ir</uri>
+      <name authorized="yes">Iran</name>
+      <code>a-ir</code>
+      <uf>
+        <name authorized="yes">Armenia</name>
+      </uf>
+      <uf>
+        <name>Persia</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-iq</uri>
+      <name authorized="yes">Iraq</name>
+      <code>a-iq</code>
+      <uf>
+        <name authorized="yes">Babylonia</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-ie</uri>
+      <name authorized="yes">Ireland</name>
+      <code>e-ie</code>
+      <uf>
+        <name authorized="yes">Aran Islands (Ireland)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">British Isles</name>
+      </uf>
+      <uf>
+        <name>Eire</name>
+      </uf>
+      <uf>
+        <name>Ireland (Eire)</name>
+      </uf>
+      <uf>
+        <name>Irish Republic</name>
+      </uf>
+      <uf>
+        <name>Republic of Ireland</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-is</uri>
+      <name authorized="yes">Israel</name>
+      <code>a-is</code>
+      <uf>
+        <name authorized="yes">Jerusalem</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Palestine</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-it</uri>
+      <name authorized="yes">Italy</name>
+      <code>e-it</code>
+      <uf>
+        <name authorized="yes">Sardinia (Italy)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Sicily (Italy)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/nwjm</uri>
+      <name authorized="yes">Jamaica</name>
+      <code>nwjm</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/lnjn</uri>
+      <name authorized="yes">Jan Mayen Island</name>
+      <code>lnjn</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-ja</uri>
+      <name authorized="yes">Japan</name>
+      <code>a-ja</code>
+      <uf>
+        <name authorized="yes">Okinawa Island (Japan)</name>
+        <note>
+          <text>Coded [a-ok] (Okinawa) before 1984]</text>
+        </note>
+      </uf>
+      <uf>
+        <name authorized="yes">Ryukyu Islands</name>
+      </uf>
+      <uf>
+        <name>Ryukyu Islands, Southern</name>
+        <note>
+          <text>Coded [pory] (Ryukyu Islands, Southern) before 1984</text>
+        </note>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-cc-ku</uri>
+      <name authorized="yes">Jiangsu Sheng (China) </name>
+      <code>a-cc-ku</code>
+      <uf>
+        <name>Kiangsu Province (China)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-cc-ki</uri>
+      <name authorized="yes">Jiangxi Sheng (China)</name>
+      <code>a-cc-ki</code>
+      <uf>
+        <name>Kiangsi Province (China)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-cc-kr</uri>
+      <name authorized="yes">Jilin Sheng (China)</name>
+      <code>a-cc-kr</code>
+      <uf>
+        <name>Kirin Province (China)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/poji</uri>
+      <name authorized="yes">Johnston Island</name>
+      <code>poji</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-jo</uri>
+      <name authorized="yes">Jordan</name>
+      <code>a-jo</code>
+      <uf>
+        <name>Transjordan</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/zju</uri>
+      <name authorized="yes">Jupiter (Planet)</name>
+      <code>zju</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-ks</uri>
+      <name authorized="yes">Kansas</name>
+      <code>n-us-ks</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-kz</uri>
+      <name authorized="yes">Kazakhstan</name>
+      <code>a-kz</code>
+      <note>
+        <text>Coded [e-ur-kz] (Kazakhstan) before June 1998</text>
+      </note>
+      <uf>
+        <name>Kazakh S.S.R.</name>
+      </uf>
+      <uf>
+        <name>Kazakstan</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-ky</uri>
+      <name authorized="yes">Kentucky </name>
+      <code>n-us-ky</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-ke</uri>
+      <name authorized="yes">Kenya</name>
+      <code>f-ke</code>
+      <uf>
+        <name>East Africa Protectorate</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/poki</uri>
+      <name authorized="yes">Kermadec Islands</name>
+      <code>poki</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/pokb</uri>
+      <name authorized="yes">Kiribati</name>
+      <code>pokb</code>
+      <note>
+        <text>Coded [pogn] (Gilbert and Ellice Islands) or [poln] (Line Islands) before Mar.
+        1988</text>
+      </note>
+      <uf>
+        <name authorized="yes">Banaba (Kiribati)</name>
+        <uf>
+          <name>Ocean Island (Kiribati)</name>
+        </uf>
+      </uf>
+      <uf>
+        <name authorized="yes">Canton and Enderbury Islands</name>
+        <note>
+          <text>Coded [pocp] (Canton and Enderbury Islands) before Mar. 1988</text>
+        </note>
+        <uf>
+          <name>Enderbury and Canton Islands</name>
+        </uf>
+      </uf>
+      <uf>
+        <name authorized="yes">Gilbert and Ellice Islands Colony</name>
+        <note>
+          <text>Coded [pogn] (Gilbert and Ellice Islands) before Mar. 1988</text>
+        </note>
+      </uf>
+      <uf>
+        <name authorized="yes">Kiritimati (Kiribati)</name>
+        <uf>
+          <name>Christmas Island (Pacific Ocean)</name>
+        </uf>
+      </uf>
+      <uf>
+        <name authorized="yes">Phoenix Islands (Kiribati)</name>
+      </uf>
+      <uf>
+        <name>Gilbert Islands</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-kr</uri>
+      <name authorized="yes">Korea</name>
+      <code>a-kr</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-kn</uri>
+      <name authorized="yes">Korea (North)</name>
+      <code>a-kn</code>
+      <uf>
+        <name>Korean People's Republic</name>
+      </uf>
+      <uf>
+        <name>North Korea</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-ko</uri>
+      <name authorized="yes">Korea (South)</name>
+      <code>a-ko</code>
+      <uf>
+        <name>Korea (Republic)</name>
+      </uf>
+      <uf>
+        <name>South Korea</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-kv</uri>
+      <name authorized="yes">Kosovo</name>
+      <code>e-kv</code>
+      <note>
+        <text>Coded [e-rb] (Serbia) before May 2008 and [e-yu] (Serbia and Montenegro) before April
+          2007</text>
+      </note>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-cck</uri>
+      <name authorized="yes">Kunlun Mountains (China and India)</name>
+      <code>a-cck</code>
+      <uf>
+        <name>Kwenlun Mountains</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-ku</uri>
+      <name authorized="yes">Kuwait </name>
+      <code>a-ku</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-kg</uri>
+      <name authorized="yes">Kyrgyzstan</name>
+      <code>a-kg</code>
+      <note>
+        <text>Coded [e-ur-kg] (Kyrgystan) before June 1998</text>
+      </note>
+      <uf>
+        <name>Kirghiz S.S.R.</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/nl</uri>
+      <name authorized="yes">Lake States</name>
+      <code>nl</code>
+      <uf>
+        <name>Great Lakes States</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-ls</uri>
+      <name authorized="yes">Laos</name>
+      <code>a-ls</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/cl</uri>
+      <name authorized="yes">Latin America</name>
+      <code>cl</code>
+      <uf>
+        <name>Neotropics</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-lv</uri>
+      <name authorized="yes">Latvia</name>
+      <code>e-lv</code>
+      <note>
+        <text>Coded [e-ur-lv] (Latvia) before June 1998</text>
+      </note>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-le</uri>
+      <name authorized="yes">Lebanon</name>
+      <code>a-le</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/nwli</uri>
+      <name authorized="yes">Leeward Islands (West Indies)</name>
+      <code>nwli</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-lo</uri>
+      <name authorized="yes">Lesotho</name>
+      <code>f-lo</code>
+      <uf>
+        <name>Basutoland</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-cc-lp</uri>
+      <name authorized="yes">Liaoning Sheng (China)</name>
+      <code>a-cc-lp</code>
+      <uf>
+        <name>Liaoning Province (China)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-lb</uri>
+      <name authorized="yes">Liberia</name>
+      <code>f-lb</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-ly</uri>
+      <name authorized="yes">Libya</name>
+      <code>f-ly</code>
+      <uf>
+        <name authorized="yes">Tibesti Mountains</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-lh</uri>
+      <name authorized="yes">Liechtenstein</name>
+      <code>e-lh</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/poln</uri>
+      <name authorized="yes">Line Islands</name>
+      <code>poln</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-li</uri>
+      <name authorized="yes">Lithuania</name>
+      <code>e-li</code>
+      <note>
+        <text>Coded [e-ur-li] (Lithuania) before March 1998</text>
+      </note>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-la</uri>
+      <name authorized="yes">Louisiana</name>
+      <code>n-us-la</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-lu</uri>
+      <name authorized="yes">Luxembourg</name>
+      <code>e-lu</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-cc-mh</uri>
+      <name authorized="yes">Macau (China : Special Administrative Region)</name>
+      <code>a-cc-mh</code>
+      <note>
+        <text>Coded [a-mh] (Macao) before May 29, 2000</text>
+      </note>
+      <uf>
+        <name>Macao</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-xn</uri>
+      <name authorized="yes">Macedonia (Republic)]</name>
+      <code>e-xn</code>
+      <note>
+        <text>Coded [e-yu] (Yugoslavia) before Oct. 1992</text>
+      </note>
+      <uf>
+        <name authorized="yes">Macedonia</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-mg</uri>
+      <name authorized="yes">Madagascar</name>
+      <code>f-mg</code>
+      <uf>
+        <name>Malagasy Republic</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/lnma</uri>
+      <name authorized="yes">Madeira Islands</name>
+      <code>lnma</code>
+      <uf>
+        <name authorized="yes">Selvagens Islands (Madeira Islands)</name>
+        <uf>
+          <name>Salvage Islands (Madeira Islands)</name>
+        </uf>
+        <uf>
+          <name>Salvages (Madeira Islands)</name>
+        </uf>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-me</uri>
+      <name authorized="yes">Maine</name>
+      <code>n-us-me</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-mw</uri>
+      <name authorized="yes">Malawi</name>
+      <code>f-mw</code>
+      <uf>
+        <name authorized="yes">Rhodesia and Nyasaland</name>
+        <uf>
+          <name>Federation of Rhodesia and Nyasaland</name>
+        </uf>
+      </uf>
+      <uf>
+        <name>Nyasaland</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/am</uri>
+      <name authorized="yes">Malaya</name>
+      <code>am</code>
+      <uf>
+        <name authorized="yes">Malay Peninsula</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-my</uri>
+      <name authorized="yes">Malaysia</name>
+      <code>a-my</code>
+      <uf>
+        <name authorized="yes">Sabah</name>
+        <uf>
+          <name>British North Borneo</name>
+        </uf>
+        <uf>
+          <name>North Borneo</name>
+        </uf>
+      </uf>
+      <uf>
+        <name authorized="yes">Sarawak</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Straits Settlements</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/i-xc</uri>
+      <name authorized="yes">Maldives</name>
+      <code>i-xc</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-ml</uri>
+      <name authorized="yes">Mali</name>
+      <code>f-ml</code>
+      <uf>
+        <name authorized="yes">Songhai Empire</name>
+      </uf>
+      <uf>
+        <name>French Sudan</name>
+      </uf>
+      <uf>
+        <name>Sudan, French</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-mm</uri>
+      <name authorized="yes">Malta</name>
+      <code>e-mm</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-cn-mb</uri>
+      <name authorized="yes">Manitoba</name>
+      <code>n-cn-mb</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/poxd</uri>
+      <name authorized="yes">Mariana Islands</name>
+      <code>poxd</code>
+      <uf>
+        <name>Commonwealth of the Northern Mariana Islands</name>
+      </uf>
+      <uf>
+        <name>Northern Mariana Islands</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-cnm</uri>
+      <name authorized="yes">Maritime Provinces</name>
+      <code>n-cnm</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/zma</uri>
+      <name authorized="yes">Mars (Planet)</name>
+      <code>zma</code>
+      <uf>
+        <name>Red Planet</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/poxe</uri>
+      <name authorized="yes">Marshall Islands</name>
+      <code>poxe</code>
+      <uf>
+        <name authorized="yes">Bikini Atoll (Marshall Islands)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/nwmq</uri>
+      <name authorized="yes">Martinique</name>
+      <code>nwmq</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-md</uri>
+      <name authorized="yes">Maryland</name>
+      <code>n-us-md</code>
+      <uf>
+        <name authorized="yes">Chesapeake Bay (Md. and Va.)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Washington Region</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-m</uri>
+      <name authorized="yes">Massachusetts</name>
+      <code>n-us-m</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-mu</uri>
+      <name authorized="yes">Mauritania</name>
+      <code>f-mu</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/i-mf</uri>
+      <name authorized="yes">Mauritius</name>
+      <code>i-mf</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/i-my</uri>
+      <name authorized="yes">Mayotte</name>
+      <code>i-my</code>
+      <note>
+        <text>Coded [i-cq] (Comoros) before Mar. 1988</text>
+      </note>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/mm</uri>
+      <name authorized="yes">Mediterranean Region</name>
+      <code>mm</code>
+      <uf>
+        <name authorized="yes">Byzantine Empire</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/mm</uri>
+      <name authorized="yes">Mediterranean Sea</name>
+      <code>mm</code>
+      <uf>
+        <name authorized="yes">Adriatic Sea</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Gibraltar, Strait of</name>
+        <uf>
+          <name>Strait of Gibraltar</name>
+        </uf>
+      </uf>
+      <uf>
+        <name authorized="yes">Islands of the Mediterranean</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/ag</uri>
+      <name authorized="yes">Mekong River</name>
+      <code>ag</code>
+      <uf>
+        <name>Dza-chu</name>
+      </uf>
+      <uf>
+        <name>Lan-ts'ang Chiang</name>
+      </uf>
+      <uf>
+        <name>Lancang Jiang</name>
+      </uf>
+      <uf>
+        <name>Song T&#x00ED;&#x00EA;n Giang</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/pome</uri>
+      <name authorized="yes">Melanesia</name>
+      <code>pome</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/zme</uri>
+      <name authorized="yes">Mercury (Planet)</name>
+      <code>zme</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-mx</uri>
+      <name authorized="yes">Mexico</name>
+      <code>n-mx</code>
+      <uf>
+        <name authorized="yes">Colorado River (Colo.-Mexico)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Colorado River Delta (Mexico)</name>
+      </uf>
+      <uf>
+        <name>Middle America</name>
+        <note>
+          <text>Coded [cm] (Middle America) before Mar. 1988</text>
+        </note>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/nm</uri>
+      <name authorized="yes">Mexico, Gulf of </name>
+      <code>nm</code>
+      <uf>
+        <name>Gulf of Mexico</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-mi</uri>
+      <name authorized="yes">Michigan</name>
+      <code>n-us-mi</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/pott</uri>
+      <name authorized="yes">Micronesia</name>
+      <code>pott</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/pomi</uri>
+      <name authorized="yes">Micronesia (Federated States)</name>
+      <code>pomi</code>
+      <note>
+        <text>Coded [pott] (Micronesia) before Mar. 1988</text>
+      </note>
+      <uf>
+        <name authorized="yes">Chuuk (Micronesia)</name>
+        <uf>
+          <name>Truk (Micronesia)</name>
+        </uf>
+      </uf>
+      <uf>
+        <name authorized="yes">Kosrae (Micronesia)</name>
+        <uf>
+          <name>Kusaie (Micronesia)</name>
+        </uf>
+      </uf>
+      <uf>
+        <name authorized="yes">Pohnpei (Micronesia)</name>
+        <uf>
+          <name>Ponape (Micronesia)</name>
+        </uf>
+      </uf>
+      <uf>
+        <name authorized="yes">Yap (Micronesia)</name>
+      </uf>
+      <uf>
+        <name>Federated States of Micronesia</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-usl</uri>
+      <name authorized="yes">Middle Atlantic States</name>
+      <code>n-usl</code>
+      <uf>
+        <name>Middle States</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/aw</uri>
+      <name authorized="yes">Middle East</name>
+      <code>aw</code>
+      <uf>
+        <name authorized="yes">Islamic Empire</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Latin Orient</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Rome</name>
+        <uf>
+          <name>Roman Empire</name>
+        </uf>
+      </uf>
+      <uf>
+        <name>Asia, Southwestern</name>
+      </uf>
+      <uf>
+        <name>Asia, Western</name>
+      </uf>
+      <uf>
+        <name>East (Near East)</name>
+      </uf>
+      <uf>
+        <name>Eastern Mediterranean</name>
+      </uf>
+      <uf>
+        <name>Levant</name>
+      </uf>
+      <uf>
+        <name>Mediterranean Region, Eastern</name>
+      </uf>
+      <uf>
+        <name>Mideast</name>
+      </uf>
+      <uf>
+        <name>Near East</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-usc</uri>
+      <name authorized="yes">Middle West</name>
+      <code>n-usc</code>
+      <uf>
+        <name authorized="yes">Northwest, Old</name>
+      </uf>
+      <uf>
+        <name>Midwest</name>
+      </uf>
+      <uf>
+        <name>North Central States</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/poxf</uri>
+      <name authorized="yes">Midway Islands</name>
+      <code>poxf</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-mn</uri>
+      <name authorized="yes">Minnesota</name>
+      <code>n-us-mn</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-ms</uri>
+      <name authorized="yes">Mississippi</name>
+      <code>n-us-ms</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-usm</uri>
+      <name authorized="yes">Mississippi River</name>
+      <code>n-usm</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-mo</uri>
+      <name authorized="yes">Missouri</name>
+      <code>n-us-mo</code>
+      <uf>
+        <name authorized="yes">Ozark Mountains</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-uss</uri>
+      <name authorized="yes">Missouri River</name>
+      <code>n-uss</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-mv</uri>
+      <name authorized="yes">Moldova</name>
+      <code>e-mv</code>
+      <note>
+        <text>Coded [e-ur-mv] (Moldova) before June 1998</text>
+      </note>
+      <uf>
+        <name authorized="yes">Moldavia</name>
+      </uf>
+      <uf>
+        <name>Moldavian S.S.R.</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-mc</uri>
+      <name authorized="yes">Monaco</name>
+      <code>e-mc</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-mp</uri>
+      <name authorized="yes">Mongolia</name>
+      <code>a-mp</code>
+      <uf>
+        <name>Mongolian People's Republic</name>
+      </uf>
+      <uf>
+        <name>Outer Mongolia</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-mt</uri>
+      <name authorized="yes">Montana</name>
+      <code>n-us-mt</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-mo</uri>
+      <name authorized="yes">Montenegro</name>
+      <code>e-mo</code>
+      <note>
+        <text>Coded [e-yu] (Yugoslavia) before April 2007</text>
+      </note>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/nwmj</uri>
+      <name authorized="yes">Montserrat</name>
+      <code>nwmj</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/zmo</uri>
+      <name authorized="yes">Moon</name>
+      <code>zmo</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-mr</uri>
+      <name authorized="yes">Morocco</name>
+      <code>f-mr</code>
+      <uf>
+        <name authorized="yes">Ifni</name>
+        <note>
+          <text>Coded [f-if] (Ifni) before Mar. 1988</text>
+        </note>
+      </uf>
+      <uf>
+        <name authorized="yes">Tangier (Morocco)</name>
+      </uf>
+      <uf>
+        <name>French Morocco</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-mz</uri>
+      <name authorized="yes">Mozambique</name>
+      <code>f-mz</code>
+      <uf>
+        <name>East Africa, Portuguese German East Africa</name>
+      </uf>
+      <uf>
+        <name>People's Republic of Mozambique</name>
+      </uf>
+      <uf>
+        <name>Portuguese East Africa</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-sx</uri>
+      <name authorized="yes">Namibia</name>
+      <code>f-sx</code>
+      <uf>
+        <name>Africa, Southwest </name>
+      </uf>
+      <uf>
+        <name>South-West Africa</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/ponu</uri>
+      <name authorized="yes">Nauru</name>
+      <code>ponu</code>
+      <uf>
+        <name>Pleasant Island</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-nb</uri>
+      <name authorized="yes">Nebraska</name>
+      <code>n-us-nb</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-np</uri>
+      <name authorized="yes">Nepal</name>
+      <code>a-np</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/zne</uri>
+      <name authorized="yes">Neptune (Planet)</name>
+      <code>zne</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-ne</uri>
+      <name authorized="yes">Netherlands</name>
+      <code>e-ne</code>
+      <uf>
+        <name>Holland</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/nwna</uri>
+      <name authorized="yes">Netherlands Antilles</name>
+      <code>nwna</code>
+      <uf>
+        <name>Dutch West Indies</name>
+      </uf>
+      <uf>
+        <name>Netherlands West Indies</name>
+      </uf>
+      <uf>
+        <name>West Indies, Dutch</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-nv</uri>
+      <name authorized="yes">Nevada</name>
+      <code>n-us-nv</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-cn-nk</uri>
+      <name authorized="yes">New Brunswick</name>
+      <code>n-cn-nk</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/ponl</uri>
+      <name authorized="yes">New Caledonia</name>
+      <code>ponl</code>
+      <uf>
+        <name authorized="yes">Loyalty Islands (New Caledonia)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-usn</uri>
+      <name authorized="yes">New England</name>
+      <code>n-usn</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-nw</uri>
+      <name authorized="yes">New Guinea</name>
+      <code>a-nw</code>
+      <uf>
+        <name>New Guinea Island</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-nh</uri>
+      <name authorized="yes">New Hampshire</name>
+      <code>n-us-nh</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-nj</uri>
+      <name authorized="yes">New Jersey</name>
+      <code>n-us-nj</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-nm</uri>
+      <name authorized="yes">New Mexico</name>
+      <code>n-us-nm</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/u-at-ne</uri>
+      <name authorized="yes">New South Wales</name>
+      <code>u-at-ne</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-ny</uri>
+      <name authorized="yes">New York (State)</name>
+      <code>n-us-ny</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/u-nz</uri>
+      <name authorized="yes">New Zealand</name>
+      <code>u-nz</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-cn-nf</uri>
+      <name authorized="yes">Newfoundland and Labrador</name>
+      <code>n-cn-nf</code>
+      <uf>
+        <name authorized="yes">Labrador (N.L.)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/ncnq</uri>
+      <name authorized="yes">Nicaragua</name>
+      <code>ncnq</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-ng</uri>
+      <name authorized="yes">Niger</name>
+      <code>f-ng</code>
+      <uf>
+        <name authorized="yes">Songhai Empire</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Tibesti Mountains</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/fi</uri>
+      <name authorized="yes">Niger River</name>
+      <code>fi</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-nr</uri>
+      <name authorized="yes">Nigeria</name>
+      <code>f-nr</code>
+      <uf>
+        <name authorized="yes">Adamawa (Emirate)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Songhai Empire</name>
+      </uf>
+      <uf>
+        <name>Biafra</name>
+        <note>
+          <text>Coded [f-by] (Biafra) before Mar. 1988</text>
+        </note>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/fl</uri>
+      <name authorized="yes">Nile River</name>
+      <code>fl</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-cc-nn</uri>
+      <name authorized="yes">Ningxia Huizu Zizhiqu (China)</name>
+      <code>a-cc-nn</code>
+      <uf>
+        <name>Ninghsia Province (China)</name>
+      </uf>
+      <uf>
+        <name>Ningsia Hui Autonomous Region (China)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/poxh</uri>
+      <name authorized="yes">Niue</name>
+      <code>poxh</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n</uri>
+      <name authorized="yes">North America</name>
+      <code>n</code>
+      <uf>
+        <name authorized="yes">America</name>
+      </uf>
+      <uf>
+        <name authorized="yes">New France</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Pacific Coast (North America)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/ln</uri>
+      <name authorized="yes">North Atlantic Ocean</name>
+      <code>ln</code>
+      <uf>
+        <name authorized="yes">Baltic Sea</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Bermuda Triangle</name>
+      </uf>
+      <uf>
+        <name authorized="yes">English Channel</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Fundy, Bay of</name>
+        <uf>
+          <name>Bay of Fundy</name>
+        </uf>
+      </uf>
+      <uf>
+        <name authorized="yes">Georges Bank</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Irish Sea</name>
+      </uf>
+      <uf>
+        <name authorized="yes">North Sea</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Norwegian Sea</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Skagerrak (Denmark and Norway)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-nc</uri>
+      <name authorized="yes">North Carolina</name>
+      <code>n-us-nc</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-nd</uri>
+      <name authorized="yes">North Dakota</name>
+      <code>n-us-nd</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/pn</uri>
+      <name authorized="yes">North Pacific Ocean</name>
+      <code>pn</code>
+      <uf>
+        <name authorized="yes">Alaska, Gulf of (Alaska)</name>
+        <uf>
+          <name>Gulf of Alaska (Alaska)</name>
+        </uf>
+      </uf>
+      <uf>
+        <name authorized="yes">Bering Sea</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Philippine Sea</name>
+      </uf>
+      <uf>
+        <name>Pacific Ocean, North</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-use</uri>
+      <name authorized="yes">Northeastern States</name>
+      <code>n-use</code>
+      <uf>
+        <name>Northeast (U.S.)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/u-atn</uri>
+      <name authorized="yes">Northern Australia</name>
+      <code>u-atn</code>
+      <note>
+        <text>Coded [u-at] (Australia) before September 2005</text>
+      </note>
+      <uf>
+        <name>Australia, Northern</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/xb</uri>
+      <name authorized="yes">Northern Hemisphere</name>
+      <code>xb</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-uk-ni</uri>
+      <name authorized="yes">Northern Ireland</name>
+      <code>e-uk-ni</code>
+      <uf>
+        <name>Ireland, Northern</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/u-at-no</uri>
+      <name authorized="yes">Northern Territory</name>
+      <code>u-at-no</code>
+      <uf>
+        <name authorized="yes">Carpentaria, Gulf of (N.T. and Qld.)</name>
+        <note>
+          <text>Coded [ps] (South Pacific Ocean) before June 1998</text>
+        </note>
+        <uf>
+          <name>Gulf of Carpentaria (N.T. and Qld.)</name>
+        </uf>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-cn-nt</uri>
+      <name authorized="yes">Northwest Territories</name>
+      <code>n-cn-nt</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-no</uri>
+      <name authorized="yes">Norway </name>
+      <code>e-no</code>
+      <uf>
+        <name authorized="yes">Lapland</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-cn-ns</uri>
+      <name authorized="yes">Nova Scotia</name>
+      <code>n-cn-ns</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-cn-nu</uri>
+      <name authorized="yes">Nunavut </name>
+      <code>n-cn-nu</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/po</uri>
+      <name authorized="yes">Oceania</name>
+      <code>po</code>
+      <uf>
+        <name>Oceanica</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-oh</uri>
+      <name authorized="yes">Ohio </name>
+      <code>n-us-oh</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-uso</uri>
+      <name authorized="yes">Ohio River</name>
+      <code>n-uso</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-ok</uri>
+      <name authorized="yes">Oklahoma</name>
+      <code>n-us-ok</code>
+      <uf>
+        <name authorized="yes">Indian Territory</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Ozark Mountains</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-mk</uri>
+      <name authorized="yes">Oman</name>
+      <code>a-mk</code>
+      <uf>
+        <name authorized="yes">Arabia, Southern</name>
+      </uf>
+      <uf>
+        <name>Muscat and Oman</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-cn-on</uri>
+      <name authorized="yes">Ontario</name>
+      <code>n-cn-on</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-or</uri>
+      <name authorized="yes">Oregon</name>
+      <code>n-us-or</code>
+      <uf>
+        <name authorized="yes">Pacific States</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/zo</uri>
+      <name authorized="yes">Outer space</name>
+      <code>zo</code>
+      <uf>
+        <name>Space, Outer</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/p</uri>
+      <name authorized="yes">Pacific Ocean</name>
+      <code>p</code>
+      <uf>
+        <name authorized="yes">Pacific Area</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-pk</uri>
+      <name authorized="yes">Pakistan</name>
+      <code>a-pk</code>
+      <uf>
+        <name authorized="yes">Azad Kashmir</name>
+        <uf>
+          <name>Azad Jammu and Kashmir</name>
+        </uf>
+        <uf>
+          <name>Kashmir</name>
+        </uf>
+      </uf>
+      <uf>
+        <name>West Pakistan</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/popl</uri>
+      <name authorized="yes">Palau</name>
+      <code>popl</code>
+      <note>
+        <text>Coded [poci] (Caroline Islands) before Mar. 1988</text>
+      </note>
+      <uf>
+        <name>Belau</name>
+      </uf>
+      <uf>
+        <name>Pelew</name>
+      </uf>
+      <uf>
+        <name>Republic of Palau</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/ncpn</uri>
+      <name authorized="yes">Panama</name>
+      <code>ncpn</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-pp</uri>
+      <name authorized="yes">Papua New Guinea</name>
+      <code>a-pp</code>
+      <uf>
+        <name authorized="yes">Admiralty Islands (Papua New Guinea)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Bismarck Archipelago (Papua New Guinea)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Bougainville Island (Papua New Guinea)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">D'Entrecasteaux Islands (Papua New Guinea)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Louisiade Archipelago (Papua New Guinea)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">New Britain Island (Papua New Guinea)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">New Guinea (Territory)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">New Ireland Island (Papua New Guinea)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Papua</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Trobriand Islands (Papua New Guinea)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Woodlark Islands (Papua New Guinea)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/aopf</uri>
+      <name authorized="yes">Paracel Islands</name>
+      <code>aopf</code>
+      <uf>
+        <name>Ho&#x00E0;ng Sa</name>
+      </uf>
+      <uf>
+        <name>Hsi-sha Islands</name>
+      </uf>
+      <uf>
+        <name>Xisha Islands</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/s-py</uri>
+      <name authorized="yes">Paraguay</name>
+      <code>s-py</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-pa</uri>
+      <name authorized="yes">Pennsylvania</name>
+      <code>n-us-pa</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/ap</uri>
+      <name authorized="yes">Persian Gulf</name>
+      <code>ap</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/s-pe</uri>
+      <name authorized="yes">Peru</name>
+      <code>s-pe</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-ph</uri>
+      <name authorized="yes">Philippines</name>
+      <code>a-ph</code>
+      <uf>
+        <name authorized="yes">Eastern Samar (Philippines)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Luzon (Philippines)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Mindanao Island (Philippines)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Negros Island (Philippines)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Northern Samar (Philippines)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Panay Island (Philippines)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Samar (Philippines)</name>
+      </uf>
+      <uf>
+        <name>Philippine Islands</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/popc</uri>
+      <name authorized="yes">Pitcairn Island</name>
+      <code>popc</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/zpl</uri>
+      <name authorized="yes">Pluto (Planet)</name>
+      <code>zpl</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-pl</uri>
+      <name authorized="yes">Poland</name>
+      <code>e-pl</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/pops</uri>
+      <name authorized="yes">Polynesia</name>
+      <code>pops</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-po</uri>
+      <name authorized="yes">Portugal</name>
+      <code>e-po</code>
+      <uf>
+        <name authorized="yes">Iberian Peninsula</name>
+        <note>
+          <text>Coded [ei] (Iberian Peninsula) before Mar. 1988</text>
+        </note>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-cnp</uri>
+      <name authorized="yes">Prairie Provinces</name>
+      <code>n-cnp</code>
+      <uf>
+        <name authorized="yes">Canada, Western</name>
+        <uf>
+          <name>Western Canada</name>
+        </uf>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-cn-pi</uri>
+      <name authorized="yes">Prince Edward Island</name>
+      <code>n-cn-pi</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/nwpr</uri>
+      <name authorized="yes">Puerto Rico</name>
+      <code>nwpr</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/ep</uri>
+      <name authorized="yes">Pyrenees</name>
+      <code>ep</code>
+      <uf>
+        <name>Pirineos </name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-qa</uri>
+      <name authorized="yes">Qatar</name>
+      <code>a-qa</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-cc-ts</uri>
+      <name authorized="yes">Qinghai Sheng (China)</name>
+      <code>a-cc-ts</code>
+      <uf>
+        <name>Tsinghai Province (China)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-cn-qu</uri>
+      <name authorized="yes">Qu&#x00E9;bec (Province)</name>
+      <code>n-cn-qu</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/u-at-qn</uri>
+      <name authorized="yes">Queensland</name>
+      <code>u-at-qn</code>
+      <uf>
+        <name authorized="yes">Carpentaria, Gulf of (N.T. and Qld.)</name>
+        <note>
+          <text>Coded [ps] (South Pacific Ocean) before June 1998</text>
+        </note>
+        <uf>
+          <name>Gulf of Carpentaria (N.T. and Qld.)</name>
+        </uf>
+      </uf>
+      <uf>
+        <name authorized="yes">Great Barrier Reef (Qld.)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Torres Strait Islands (Qld.)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/mr</uri>
+      <name authorized="yes">Red Sea</name>
+      <code>mr</code>
+      <uf>
+        <name authorized="yes">Aden, Gulf of</name>
+        <uf>
+          <name>Gulf of Aden</name>
+        </uf>
+      </uf>
+      <uf>
+        <name authorized="yes">Aqaba, Gulf of</name>
+        <uf>
+          <name>Gulf of Aqaba</name>
+        </uf>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/i-re</uri>
+      <name authorized="yes">R&#x00E9;union</name>
+      <code>i-re</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/er</uri>
+      <name authorized="yes">Rhine River</name>
+      <code>er</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-ri</uri>
+      <name authorized="yes">Rhode Island</name>
+      <code>n-us-ri</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/su</uri>
+      <name authorized="yes">Rio de la Plata (Argentina and Uruguay)</name>
+      <code>su</code>
+      <uf>
+        <name>La Plata River (Argentina and Uruguay)</name>
+      </uf>
+      <uf>
+        <name>Plata, Rio de la (Argentina and Uruguay)</name>
+      </uf>
+      <uf>
+        <name>Plate River (Argentina and Uruguay)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/nr</uri>
+      <name authorized="yes">Rocky Mountains</name>
+      <code>nr</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-rm</uri>
+      <name authorized="yes">Romania</name>
+      <code>e-rm</code>
+      <uf>
+        <name authorized="yes">Moldavia</name>
+      </uf>
+      <uf>
+        <name>Rumania</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-ru</uri>
+      <name authorized="yes">Russia (Federation) </name>
+      <code>e-ru</code>
+      <note>
+        <text>Coded [e-ur-ru] (Russia (Federation)) before June 1998</text>
+      </note>
+      <uf>
+        <name authorized="yes">Kievan Rus</name>
+        <note>
+          <text>Coded [e-ur] (Soviet Union) before June 1998</text>
+        </note>
+      </uf>
+      <name authorized="yes">Kuril Islands (Russia)</name>
+      <note>
+        <text>Coded [e-ur-ru] (Russia Federation) before June 1998</text>
+      </note>
+      <uf>
+        <name>Chishima-retto (Russia)</name>
+      </uf>
+      <uf>
+        <name>Kurile Islands (Russia)</name>
+      </uf>
+      <uf>
+        <name>Kuril'skie ostrova (Russia)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Non-Chernozem Region (Russia)</name>
+        <note>
+          <text>Coded [e-ur-ru] (Russia Federation) before June 1998</text>
+        </note>
+        <uf>
+          <name>Non-Black Earth Region (Russia)</name>
+        </uf>
+      </uf>
+      <uf>
+        <name authorized="yes">Russia, Northern</name>
+        <note>
+          <text>Coded [e-ur-ru] (Russia (Federation)) before June 1998</text>
+        </note>
+        <uf>
+          <name>Northern Russia</name>
+        </uf>
+        <uf>
+          <name>Northern Soviet Union</name>
+        </uf>
+        <uf>
+          <name>Soviet Union, Northern</name>
+        </uf>
+      </uf>
+      <uf>
+        <name authorized="yes">Sakha (Russia)</name>
+        <uf>
+          <name>&#x00C0;kutska&#x00ED;&#x00E0; A.S.S.R. (Russia)</name>
+        </uf>
+        <uf>
+          <name>Yakutia (Russia)</name>
+        </uf>
+      </uf>
+      <uf>
+        <name authorized="yes">Volgo-Viatskii Region (Russia)</name>
+        <note>
+          <text>Coded [e-urv] (Volgo-Viatskii Region, RSFSR) before Mar. 1988</text>
+        </note>
+      </uf>
+      <uf>
+        <name>R.S.F.S.R.</name>
+      </uf>
+      <uf>
+        <name>Russian Republic</name>
+      </uf>
+      <uf>
+        <name>Russian S.F.S.R.</name>
+      </uf>
+      <uf>
+        <name>Russian Soviet Federated Socialist Republic</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-urf</uri>
+      <name authorized="yes">Russian Far East (Russia)</name>
+      <code>e-urf</code>
+      <uf>
+        <name>Far East (Russia)</name>
+      </uf>
+      <uf>
+        <name>Far Eastern Region (Russia)</name>
+      </uf>
+      <uf>
+        <name>Soviet Far East (Russia)</name>
+        <note>
+          <text>Coded [e-uro] (Soviet Central Asia) before 1994</text>
+        </note>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-rw</uri>
+      <name authorized="yes">Rwanda</name>
+      <code>f-rw</code>
+      <uf>
+        <name authorized="yes">Ruanda-Urundi</name>
+      </uf>
+      <uf>
+        <name>German East Africa</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/nwsd</uri>
+      <name authorized="yes">Saba (Netherlands Antilles)</name>
+      <code>nwsd</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/fd</uri>
+      <name authorized="yes">Sahara</name>
+      <code>fd</code>
+      <uf>
+        <name>Sahara Desert</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/lsxj</uri>
+      <name authorized="yes">Saint Helena</name>
+      <code>lsxj</code>
+      <uf>
+        <name>St. Helena</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/nwxi</uri>
+      <name authorized="yes">Saint Kitts and Nevis</name>
+      <code>nwxi</code>
+      <uf>
+        <name authorized="yes">Nevis</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Saint Kitts</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Saint Kitts-Nevis-Anguilla</name>
+        <uf>
+          <name>St. Christopher-Nevis-Anguilla</name>
+        </uf>
+      </uf>
+      <uf>
+        <name>Saint Christopher and Nevis</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/nwxk</uri>
+      <name authorized="yes">Saint Lucia</name>
+      <code>nwxk</code>
+      <uf>
+        <name>St. Lucia</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/nwst</uri>
+      <name authorized="yes">Saint Martin (West Indies)</name>
+      <code>nwst</code>
+      <uf>
+        <name>Sint Maarten (West Indies)</name>
+      </uf>
+      <uf>
+        <name>St. Martin (West Indies)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-xl</uri>
+      <name authorized="yes">Saint Pierre and Miquelon</name>
+      <code>n-xl</code>
+      <uf>
+        <name authorized="yes">Miquelon</name>
+      </uf>
+      <uf>
+        <name>Iles Saint-Pierre et Miquelon</name>
+      </uf>
+      <uf>
+        <name>St. Pierre and Miquelon</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/nwxm</uri>
+      <name authorized="yes">Saint Vincent and the Grenadines</name>
+      <code>nwxm</code>
+      <uf>
+        <name authorized="yes">Grenadines (Saint Vincent and the Grenadines and Grenada)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Saint Vincent</name>
+        <uf>
+          <name>St. Vincent</name>
+        </uf>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/pows</uri>
+      <name authorized="yes">Samoa</name>
+      <code>pows</code>
+      <uf>
+        <name>Western Samoa</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/posh</uri>
+      <name authorized="yes">Samoan Islands</name>
+      <code>posh</code>
+      <uf>
+        <name>Samoa (Islands)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-sm</uri>
+      <name authorized="yes">San Marino</name>
+      <code>e-sm</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-sf</uri>
+      <name authorized="yes">Sao Tome and Principe</name>
+      <code>f-sf</code>
+      <uf>
+        <name>S&#x00E3;o Thom&#x00E9; e Pr&#x00A1;ncipe</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-cn-sn</uri>
+      <name authorized="yes">Saskatchewan</name>
+      <code>n-cn-sn</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/zsa</uri>
+      <name authorized="yes">Saturn (Planet)</name>
+      <code>zsa</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-su</uri>
+      <name authorized="yes">Saudi Arabia</name>
+      <code>a-su</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/ev</uri>
+      <name authorized="yes">Scandinavia</name>
+      <code>ev</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-uk-st</uri>
+      <name authorized="yes">Scotland </name>
+      <code>e-uk-st</code>
+      <uf>
+        <name authorized="yes">Shetland (Scotland)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Orkney (Scotland)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-sg</uri>
+      <name authorized="yes">Senegal</name>
+      <code>f-sg</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-rb</uri>
+      <name authorized="yes">Serbia</name>
+      <code>e-rb</code>
+      <note>
+        <text>Coded [e-yu] (Yugoslavia) before April 2007</text>
+      </note>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/i-se</uri>
+      <name authorized="yes">Seychelles</name>
+      <code>i-se</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-cc-ss</uri>
+      <name authorized="yes">Shaanxi Sheng (China)</name>
+      <code>a-cc-ss</code>
+      <uf>
+        <name>Shensi Province (China)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-cc-sp</uri>
+      <name authorized="yes">Shandong Sheng (China)</name>
+      <code>a-cc-sp</code>
+      <uf>
+        <name>Shantung Province (China)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-cc-sm</uri>
+      <name authorized="yes">Shanghai (China)</name>
+      <code>a-cc-sm</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-cc-sh</uri>
+      <name authorized="yes">Shanxi Sheng (China)</name>
+      <code>a-cc-sh</code>
+      <uf>
+        <name>Shansi Province (China)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-urs</uri>
+      <name authorized="yes">Siberia (Russia)</name>
+      <code>e-urs</code>
+      <uf>
+        <name authorized="yes">Siberia, Northeastern (Russia)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Siberia, Northwestern (Russia)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-ure</uri>
+      <name authorized="yes">Siberia, Eastern (Russia)</name>
+      <code>e-ure</code>
+      <uf>
+        <name>East Siberian Region (Russia)</name>
+      </uf>
+      <uf>
+        <name>Eastern Siberia (Russia)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-urw</uri>
+      <name authorized="yes">Siberia, Western (Russia)</name>
+      <code>e-urw</code>
+      <uf>
+        <name>Western Siberia (Russia)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-cc-sz</uri>
+      <name authorized="yes">Sichuan Sheng (China)</name>
+      <code>a-cc-sz</code>
+      <uf>
+        <name>Szechwan Province (China)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-sl</uri>
+      <name authorized="yes">Sierra Leone</name>
+      <code>f-sl</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-si</uri>
+      <name authorized="yes">Singapore</name>
+      <code>a-si</code>
+      <uf>
+        <name authorized="yes">Straits Settlements</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/nweu</uri>
+      <name authorized="yes">Sint Eustatius (Netherlands Antilles)</name>
+      <code>nweu</code>
+      <uf>
+        <name>Saint Eustatius (Netherlands Antilles)</name>
+      </uf>
+      <uf>
+        <name>St. Eustatius (Netherlands Antilles)</name>
+      </uf>
+      <uf>
+        <name>Statia (Netherlands Antilles)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-xo</uri>
+      <name authorized="yes">Slovakia</name>
+      <code>e-xo</code>
+      <note>
+        <text>Coded [e-cs] (Czechoslovakia) before May 1993</text>
+      </note>
+      <uf>
+        <name>Slovak Socialist Republic (Czechoslovakia)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-xv</uri>
+      <name authorized="yes">Slovenia</name>
+      <code>e-xv</code>
+      <note>
+        <text>Coded [e-yu] (Yugoslavia) before Oct. 1992</text>
+      </note>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/zs</uri>
+      <name authorized="yes">Solar system</name>
+      <code>zs</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/pobp</uri>
+      <name authorized="yes">Solomon Islands</name>
+      <code>pobp</code>
+      <note>
+        <text>Coded also [posn] (Solomon Islands) before Mar. 1988</text>
+      </note>
+      <uf>
+        <name authorized="yes">Guadalcanal (Solomon Islands)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Santa Cruz Islands (Solomon Islands)</name>
+        <note>
+          <text>Coded [posc] (Santa Cruz Islands) before Mar. 1988</text>
+        </note>
+      </uf>
+      <uf>
+        <name>British Solomon Islands</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-so</uri>
+      <name authorized="yes">Somalia</name>
+      <code>f-so</code>
+      <uf>
+        <name>British Somaliland</name>
+      </uf>
+      <uf>
+        <name>Italian Somaliland</name>
+      </uf>
+      <uf>
+        <name>Somali Republic</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-sa</uri>
+      <name authorized="yes">South Africa</name>
+      <code>f-sa</code>
+      <uf>
+        <name authorized="yes">Bophuthatswana (South Africa)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Homelands (South Africa)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Prince Edward Islands</name>
+        <uf>
+          <name>Froides, &#x00CE;les</name>
+        </uf>
+        <uf>
+          <name>&#x00CE;les Froides</name>
+        </uf>
+      </uf>
+      <uf>
+        <name>Africa, South</name>
+      </uf>
+      <uf>
+        <name>Union of South Africa</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/s</uri>
+      <name authorized="yes">South America</name>
+      <code>s</code>
+      <uf>
+        <name authorized="yes">America</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/az</uri>
+      <name authorized="yes">South Asia</name>
+      <code>az</code>
+      <uf>
+        <name authorized="yes">East Indies</name>
+        <uf>
+          <name>Indies, East</name>
+        </uf>
+      </uf>
+      <uf>
+        <name>Asia, South</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/ls</uri>
+      <name authorized="yes">South Atlantic Ocean</name>
+      <code>ls</code>
+      <uf>
+        <name authorized="yes">Guinea, Gulf of</name>
+        <uf>
+          <name>Gulf of Guinea</name>
+        </uf>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/u-at-sa</uri>
+      <name authorized="yes">South Australia</name>
+      <code>u-at-sa</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-sc</uri>
+      <name authorized="yes">South Carolina</name>
+      <code>n-us-sc</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/ao</uri>
+      <name authorized="yes">South China Sea</name>
+      <code>ao</code>
+      <uf>
+        <name authorized="yes">Islands of the South China Sea</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-sd</uri>
+      <name authorized="yes">South Dakota </name>
+      <code>n-us-sd</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/lsxs</uri>
+      <name authorized="yes">South Georgia and South Sandwich Islands</name>
+      <code>lsxs</code>
+      <note>
+        <text>Coded [lsfk] (Falkland Islands) before Oct. 1992</text>
+      </note>
+      <uf>
+        <name>Sandwich Islands, South</name>
+        <note>
+          <text>Coded [lsfk] (Falkland Islands) before Oct. 1992</text>
+        </note>
+      </uf>
+      <uf>
+        <name>South Sandwich Islands</name>
+        <note>
+          <text>Coded [lsfk] (Falkland Islands) before Oct. 1992</text>
+        </note>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/ps</uri>
+      <name>South Pacific Ocean</name>
+      <code>ps</code>
+      <uf>
+        <name authorized="yes">Arafura Sea</name>
+      </uf>
+      <uf>
+        <name>Pacific Ocean, South</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/as</uri>
+      <name authorized="yes">Southeast Asia</name>
+      <code>as</code>
+      <uf>
+        <name authorized="yes">East Indies</name>
+        <uf>
+          <name>Indies, East</name>
+        </uf>
+      </uf>
+      <uf>
+        <name authorized="yes">Malay Archipelagon</name>
+      </uf>
+      <uf>
+        <name>Asia, Southeastern</name>
+      </uf>
+      <uf>
+        <name>Southeastern Asia</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/xc</uri>
+      <name authorized="yes">Southern Hemisphere</name>
+      <code>xc</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-usu</uri>
+      <name authorized="yes">Southern States</name>
+      <code>n-usu</code>
+      <uf>
+        <name authorized="yes">Confederate States of America</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Cumberland Mountains</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Gulf States</name>
+      </uf>
+      <uf>
+        <name authorized="yes">South Atlantic States</name>
+        <uf>
+          <name>Atlantic States, South</name>
+        </uf>
+      </uf>
+      <uf>
+        <name authorized="yes">Southwest, Old</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Southwestern States</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Sunbelt States</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-ust</uri>
+      <name authorized="yes">Southwest, New</name>
+      <code>n-ust</code>
+      <uf>
+        <name authorized="yes">Southwestern States</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Sunbelt States</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-ur</uri>
+      <name authorized="yes">Soviet Union</name>
+      <code>e-ur</code>
+      <uf>
+        <name authorized="yes">Communist countries</name>
+        <note>
+          <text>Coded [v] (Communist countries) before June 1998</text>
+        </note>
+      </uf>
+      <uf>
+        <name authorized="yes">Russia</name>
+        <uf>
+          <name>Russian Empire</name>
+        </uf>
+      </uf>
+      <uf>
+        <name authorized="yes">Soviet Union, Southern</name>
+        <uf>
+          <name>Southern Soviet Union</name>
+        </uf>
+      </uf>
+      <uf>
+        <name authorized="yes">Soviet Union, Western</name>
+        <uf>
+          <name>Western Soviet Union</name>
+        </uf>
+      </uf>
+      <uf>
+        <name>Commonwealth of Independent States countries</name>
+      </uf>
+      <uf>
+        <name>Former Soviet republics</name>
+      </uf>
+      <uf>
+        <name>U.S.S.R.</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-urn</uri>
+      <name authorized="yes">Soviet Union, Northwestern</name>
+      <code>e-urn</code>
+      <uf>
+        <name>Northwestern Soviet Union</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-sp</uri>
+      <name authorized="yes">Spain</name>
+      <code>e-sp</code>
+      <uf>
+        <name authorized="yes">Balearic Islands (Spain)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Iberian Peninsula</name>
+        <note>
+          <text>Coded [ei] (Iberian Peninsula) before Mar. 1988</text>
+        </note>
+      </uf>
+      <uf>
+        <name authorized="yes">Islamic Empire</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-sh</uri>
+      <name authorized="yes">Spanish North Africa</name>
+      <code>f-sh</code>
+      <uf>
+        <name authorized="yes">Ceuta (Spain)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Melilla (Spain)</name>
+      </uf>
+      <uf>
+        <name>Spanish Territories in Northern Morocco</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/aoxp</uri>
+      <name authorized="yes">Spratly Islands</name>
+      <code>aoxp</code>
+      <uf>
+        <name>Nansha Islands</name>
+      </uf>
+      <uf>
+        <name>Shinnan Islands</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-ce</uri>
+      <name authorized="yes">Sri Lanka</name>
+      <code>a-ce</code>
+      <uf>
+        <name>Ceylon</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-sj</uri>
+      <name authorized="yes">Sudan</name>
+      <code>f-sj</code>
+      <uf>
+        <name>Anglo-Egyptian Sudan</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/fn</uri>
+      <name authorized="yes">Sudan (Region)</name>
+      <code>fn</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/fu</uri>
+      <name authorized="yes">Suez Canal (Egypt)</name>
+      <code>fu</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/zsu</uri>
+      <name authorized="yes">Sun</name>
+      <code>zsu</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/s-sr</uri>
+      <name authorized="yes">Suriname</name>
+      <code>s-sr</code>
+      <uf>
+        <name>Dutch Guiana</name>
+      </uf>
+      <uf>
+        <name>Guiana, Dutch</name>
+      </uf>
+      <uf>
+        <name>Surinam</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/lnsb</uri>
+      <name authorized="yes">Svalbard (Norway)</name>
+      <code>lnsb</code>
+      <uf>
+        <name authorized="yes">Bear Island (Norway)</name>
+        <uf>
+          <name>Bj&#x00F8;rn&#x00F8;ya (Norway)</name>
+        </uf>
+      </uf>
+      <uf>
+        <name authorized="yes">Spitsbergen Island (Norway)</name>
+        <uf>
+          <name>West Spitsbergen (Norway)</name>
+        </uf>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/nwsv</uri>
+      <name authorized="yes">Swan Islands (Honduras)</name>
+      <code>nwsv</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-sq</uri>
+      <name authorized="yes">Swaziland</name>
+      <code>f-sq</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-sw</uri>
+      <name authorized="yes">Sweden</name>
+      <code>e-sw</code>
+      <uf>
+        <name authorized="yes">Lapland</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-sz</uri>
+      <name authorized="yes">Switzerland</name>
+      <code>e-sz</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-sy</uri>
+      <name authorized="yes">Syria</name>
+      <code>a-sy</code>
+      <uf>
+        <name authorized="yes">United Arab Republic</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-ch</uri>
+      <name authorized="yes">Taiwan</name>
+      <code>a-ch</code>
+      <uf>
+        <name authorized="yes">Pescadores Islands</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Pratas Islands</name>
+      </uf>
+      <uf>
+        <name>Formosa</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-ta</uri>
+      <name authorized="yes">Tajikistan</name>
+      <code>a-ta</code>
+      <note>
+        <text>Coded [e-ur-ta] (Tajikistan) before June 1998</text>
+      </note>
+      <uf>
+        <name>Tadzik Soviet Socialist Republic</name>
+      </uf>
+      <uf>
+        <name>Tajik S.S.R.</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-tz</uri>
+      <name authorized="yes">Tanzania</name>
+      <code>f-tz</code>
+      <uf>
+        <name authorized="yes">Pemba Island (Tanzania)</name>
+        <uf>
+          <name>Huthera (Tanzania)</name>
+        </uf>
+      </uf>
+      <uf>
+        <name authorized="yes">Tanganyika</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Zanzibar</name>
+      </uf>
+      <uf>
+        <name>German East Africa </name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/u-at-tm</uri>
+      <name authorized="yes">Tasmania</name>
+      <code>u-at-tm</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-tn</uri>
+      <name authorized="yes">Tennessee</name>
+      <code>n-us-tn</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/i-fs</uri>
+      <name authorized="yes">Terres australes et antarctiques fran&#x00E7;aises</name>
+      <code>i-fs</code>
+      <uf>
+        <name authorized="yes">Kerguelen Islands</name>
+        <uf>
+          <name>Desolation Islands</name>
+        </uf>
+        <uf>
+          <name>&#x00CE;les Kergu&#x00E9;len</name>
+        </uf>
+      </uf>
+      <uf>
+        <name>French Southern and Antarctic Lands</name>
+      </uf>
+      <uf>
+        <name>French Southern Indian Ocean Islands</name>
+      </uf>
+      <uf>
+        <name>Indian Ocean Islands, French</name>
+      </uf>
+      <uf>
+        <name>T.A.A.F.</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-tx</uri>
+      <name authorized="yes">Texas</name>
+      <code>n-us-tx</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-th</uri>
+      <name authorized="yes">Thailand</name>
+      <code>a-th</code>
+      <uf>
+        <name authorized="yes">Malay Peninsula</name>
+      </uf>
+      <uf>
+        <name>Siam</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/af</uri>
+      <name authorized="yes">Thailand, Gulf of</name>
+      <code>af</code>
+      <uf>
+        <name>Gulf of Thailand</name>
+      </uf>
+      <uf>
+        <name>Siam, Gulf of</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-cc-tn</uri>
+      <name authorized="yes">Tianjin (China)</name>
+      <code>a-cc-tn</code>
+      <uf>
+        <name>Tientsin (China)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-cc-ti</uri>
+      <name authorized="yes">Tibet (China)</name>
+      <code>a-cc-ti</code>
+      <uf>
+        <name>Tibetan Autonomous Region (China)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/at</uri>
+      <name authorized="yes">Tien Shan</name>
+      <code>at</code>
+      <uf>
+        <name>Thian Shan</name>
+      </uf>
+      <uf>
+        <name>Tian Shan</name>
+      </uf>
+      <uf>
+        <name>Tien Mountains</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-tg</uri>
+      <name authorized="yes">Togo</name>
+      <code>f-tg</code>
+      <uf>
+        <name authorized="yes">Togoland</name>
+      </uf>
+      <uf>
+        <name>French Togoland</name>
+      </uf>
+      <uf>
+        <name>Togoland (French)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/potl</uri>
+      <name authorized="yes">Tokelau</name>
+      <code>potl</code>
+      <uf>
+        <name>Union Islands</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/poto</uri>
+      <name authorized="yes">Tonga</name>
+      <code>poto</code>
+      <uf>
+        <name>Friendly Islands</name>
+      </uf>
+      <uf>
+        <name>Tonga Islands</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/nwtr</uri>
+      <name authorized="yes">Trinidad and Tobago</name>
+      <code>nwtr</code>
+      <uf>
+        <name authorized="yes">Tobago</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Trinidad</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/lstd</uri>
+      <name authorized="yes">Tristan da Cunha</name>
+      <code>lstd</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/w</uri>
+      <name authorized="yes">Tropics</name>
+      <code>w</code>
+      <uf>
+        <name authorized="yes">Equator</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-ti</uri>
+      <name authorized="yes">Tunisia</name>
+      <code>f-ti</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-tu</uri>
+      <name authorized="yes">Turkey</name>
+      <code>a-tu</code>
+      <uf>
+        <name authorized="yes">Aegean Islands (Greece and Turkey)</name>
+        <uf>
+          <name>Islands of the Aegean</name>
+        </uf>
+      </uf>
+      <uf>
+        <name authorized="yes">Aegean Sea</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Armenia</name>
+      </uf>
+      <uf>
+        <name>Asia Minor</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-tk</uri>
+      <name authorized="yes">Turkmenistan</name>
+      <code>a-tk</code>
+      <note>
+        <text>Coded [e-ur-tk] (Turkmenistan) before June 1998</text>
+      </note>
+      <uf>
+        <name>Turkmen S.S.R.</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/nwtc</uri>
+      <name authorized="yes">Turks and Caicos Islands</name>
+      <code>nwtc</code>
+      <uf>
+        <name>Caicos Islands</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/potv</uri>
+      <name authorized="yes">Tuvalu</name>
+      <code>potv</code>
+      <note>
+        <text>Coded [pogn] (Gilbert and Ellice Islands) before Mar. 1988</text>
+      </note>
+      <uf>
+        <name authorized="yes">Gilbert and Ellice Islands Colony</name>
+        <note>
+          <text>Coded [pogn] (Gilbert and Ellice Islands) before Mar. 1988</text>
+        </note>
+      </uf>
+      <uf>
+        <name>Ellice Islands</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-ug</uri>
+      <name authorized="yes">Uganda</name>
+      <code>f-ug</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-un</uri>
+      <name authorized="yes">Ukraine</name>
+      <code>e-un</code>
+      <note>
+        <text>Coded [e-ur-un] (Ukraine) before June 1998</text>
+      </note>
+      <uf>
+        <name authorized="yes">Kievan Rus</name>
+        <note>
+          <text>Coded [e-ur] (Soviet Union) before June 1998</text>
+        </note>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-ts</uri>
+      <name authorized="yes">United Arab Emirates</name>
+      <code>a-ts</code>
+      <uf>
+        <name authorized="yes">Abū Ẓaby (United Arab Emirates: Emirate)</name>
+        <uf>
+          <name>Abu Dhabi (United Arab Emirates : Emirate)</name>
+        </uf>
+      </uf>
+      <uf>
+        <name authorized="yes">Dubayy (United Arab Emirates : Emirate)</name>
+        <uf>
+          <name>Dubai</name>
+        </uf>
+      </uf>
+      <uf>
+        <name>Trucial States</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us</uri>
+      <name authorized="yes">United States</name>
+      <code>n-us</code>
+      <uf>
+        <name authorized="yes">Atlantic Coast (U.S.)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Atlantic States</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Saint Lawrence River</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Snowbelt States</name>
+        <uf>
+          <name>Frostbelt (U.S.)</name>
+        </uf>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/nwuc</uri>
+      <name authorized="yes">United States Miscellaneous Caribbean Islands</name>
+      <code>nwuc</code>
+      <uf>
+        <name>Caribbean Island Dependencies of the United States</name>
+      </uf>
+      <uf>
+        <name>Island Dependencies of the United States in the Caribbean</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/poup</uri>
+      <name authorized="yes">United States Miscellaneous Pacific Islands</name>
+      <code>poup</code>
+      <note>
+        <text>Includes American Samoa, Guam, Pacific Islands (Trust Territory) treated
+        collectively</text>
+      </note>
+      <uf>
+        <name authorized="yes">Pacific Islands (Trust Territory)</name>
+        <uf>
+          <name>Pacific Islands (Ter.)</name>
+        </uf>
+        <uf>
+          <name>Trust Territory of the Pacific Islands</name>
+        </uf>
+      </uf>
+      <uf>
+        <name>Island Dependencies of the United States in the Pacific</name>
+      </uf>
+      <uf>
+        <name>Pacific Island Dependencies of the United States</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-uru</uri>
+      <name authorized="yes">Ural Mountains (Russia)</name>
+      <code>e-uru</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/zur</uri>
+      <name authorized="yes">Uranus (Planet)</name>
+      <code>zur</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/s-uy</uri>
+      <name authorized="yes">Uruguay</name>
+      <code>s-uy</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-ut</uri>
+      <name authorized="yes">Utah</name>
+      <code>n-us-ut</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-uz</uri>
+      <name authorized="yes">Uzbekistan</name>
+      <code>a-uz</code>
+      <note>
+        <text>Coded [e-ur-uz] (Uzbekistan) before June 1998</text>
+      </note>
+      <uf>
+        <name>Uzbek S.S.R.</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/ponn</uri>
+      <name authorized="yes">Vanuatu</name>
+      <code>ponn</code>
+      <uf>
+        <name authorized="yes">Banks Islands (Vanuatu)</name>
+      </uf>
+      <uf>
+        <name>New Hebrides</name>
+      </uf>
+      <uf>
+        <name>Republic of Vanuatu</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-vc</uri>
+      <name authorized="yes">Vatican City</name>
+      <code>e-vc</code>
+      <uf>
+        <name>Holy See</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/s-ve</uri>
+      <name authorized="yes">Venezuela</name>
+      <code>s-ve</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/zve</uri>
+      <name authorized="yes">Venus (Planet)</name>
+      <code>zve</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-vt</uri>
+      <name authorized="yes">Vermont</name>
+      <code>n-us-vt</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/u-at-vi</uri>
+      <name authorized="yes">Victoria</name>
+      <code>u-at-vi</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-vt</uri>
+      <name authorized="yes">Vietnam</name>
+      <code>a-vt</code>
+      <uf>
+        <name authorized="yes">Vietnam (Democratic Republic)</name>
+        <note>
+          <text>Coded [a-vn] (Vietnam, North) before Mar. 1988</text>
+        </note>
+        <uf>
+          <name>North Vietnam</name>
+        </uf>
+        <uf>
+          <name>Vietnam, North</name>
+        </uf>
+      </uf>
+      <uf>
+        <name authorized="yes">Vietnam (Republic)</name>
+        <note>
+          <text>Coded [a-vs] (Viet Nam, South) before Mar. 1988</text>
+        </note>
+        <uf>
+          <name>South Vietnam</name>
+        </uf>
+        <uf>
+          <name>Vietnam, South</name>
+        </uf>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/nwvi</uri>
+      <name authorized="yes">Virgin Islands of the United States</name>
+      <code>nwvi</code>
+      <uf>
+        <name>Virgin Islands</name>
+        <note>
+          <text>Coded [nwvr] (Virgin Islands) before Mar. 1988</text>
+        </note>
+      </uf>
+      <uf>
+        <name>Virgin Islands (American)</name>
+      </uf>
+      <uf>
+        <name>Virgin Islands (Danish)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-va</uri>
+      <name authorized="yes">Virginia</name>
+      <code>n-us-va</code>
+      <uf>
+        <name authorized="yes">Chesapeake Bay (Md. and Va.)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Washington Region</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-urp</uri>
+      <name authorized="yes">Volga River (Russia)</name>
+      <code>e-urp</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/fv</uri>
+      <name authorized="yes">Volta River (Ghana)</name>
+      <code>fv</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/powk</uri>
+      <name authorized="yes">Wake Island</name>
+      <code>powk</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-uk-wl</uri>
+      <name authorized="yes">Wales</name>
+      <code>e-uk-wl</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/powf</uri>
+      <name authorized="yes">Wallis and Futuna Islands</name>
+      <code>powf</code>
+      <uf>
+        <name authorized="yes">Futuna Islands (Wallis and Futuna Islands)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Uvea Island (Wallis and Futuna Islands)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-dc</uri>
+      <name authorized="yes">Washington (D.C.)</name>
+      <code>n-us-dc</code>
+      <uf>
+        <name authorized="yes">Washington Region</name>
+      </uf>
+      <uf>
+        <name>District of Columbia</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-wa</uri>
+      <name authorized="yes">Washington (State)</name>
+      <code>n-us-wa</code>
+      <uf>
+        <name authorized="yes">Pacific States</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-usp</uri>
+      <name authorized="yes">West (U.S.)</name>
+      <code>n-usp</code>
+      <uf>
+        <name authorized="yes">Colorado River (Colo.-Mexico)</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Great Basin</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Northwest, Pacific</name>
+        <uf>
+          <name>Northwest (U.S.)</name>
+        </uf>
+        <uf>
+          <name>Pacific Northwest</name>
+        </uf>
+      </uf>
+      <uf>
+        <name authorized="yes">Northwestern States</name>
+      </uf>
+      <uf>
+        <name>Far West (U.S.)</name>
+      </uf>
+      <uf>
+        <name>Pacific and Mountain States</name>
+      </uf>
+      <uf>
+        <name>Western States (U.S.)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/awba</uri>
+      <name authorized="yes">West Bank</name>
+      <code>awba</code>
+      <note>
+        <text>Coded [a-is] (Israel) and/or [a-jo] (Jordan) before Mar. 1988</text>
+      </note>
+      <uf>
+        <name authorized="yes">Jerusalem</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Palestine</name>
+      </uf>
+      <uf>
+        <name>Judaea and Samaria</name>
+      </uf>
+      <uf>
+        <name>West Bank of the Jordan River</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/nw</uri>
+      <name authorized="yes">West Indies</name>
+      <code>nw</code>
+      <uf>
+        <name>Antilles, Greater</name>
+        <note>
+          <text>Coded [nwga] (Greater Antilles) before Mar. 1988</text>
+        </note>
+      </uf>
+      <uf>
+        <name>Greater Antilles</name>
+        <note>
+          <text>Coded [nwga] (Greater Antilles) before Mar. 1988</text>
+        </note>
+      </uf>
+      <uf>
+        <name>Indies, West</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-wv</uri>
+      <name authorized="yes">West Virginia</name>
+      <code>n-us-wv</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/u-at-we</uri>
+      <name authorized="yes">Western Australia</name>
+      <code>u-at-we</code>
+      <uf>
+        <name>Australia, Western</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/xd</uri>
+      <name authorized="yes">Western Hemisphere</name>
+      <code>xd</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-ss</uri>
+      <name authorized="yes">Western Sahara</name>
+      <code>f-ss</code>
+      <uf>
+        <name>Spanish Sahara</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/nwwi</uri>
+      <name authorized="yes">Windward Islands (West Indies) [nwwi]</name>
+      <code>nwwi</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-wi</uri>
+      <name authorized="yes">Wisconsin</name>
+      <code>n-us-wi</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-us-wy</uri>
+      <name authorized="yes">Wyoming</name>
+      <code>n-us-wy</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-ccs</uri>
+      <name authorized="yes">Xi River (China)</name>
+      <code>a-ccs</code>
+      <uf>
+        <name>Hsi Chiang (China)</name>
+      </uf>
+      <uf>
+        <name>Si Kiang (China)</name>
+      </uf>
+      <uf>
+        <name>Si River (China)</name>
+      </uf>
+      <uf>
+        <name>West River (China)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-cc-su</uri>
+      <name authorized="yes">Xinjiang Uygur Zizhiqu (China)</name>
+      <code>a-cc-su</code>
+      <uf>
+        <name>Hsin-chiang-wei-wy-erh tzu chin ch&#x00FC; (China)</name>
+      </uf>
+      <uf>
+        <name>Sinkiang Uighur Autonomous Region (China)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-ccg</uri>
+      <name authorized="yes">Yangtze River (China)</name>
+      <code>a-ccg</code>
+      <uf>
+        <name>Chang Chiang (China)</name>
+      </uf>
+      <uf>
+        <name>Long River (China)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-ccy</uri>
+      <name authorized="yes">Yellow River (China)</name>
+      <code>a-ccy</code>
+      <uf>
+        <name>Hoang Ho (China)</name>
+      </uf>
+      <uf>
+        <name>Huang Ho (China)</name>
+      </uf>
+      <uf>
+        <name>Hwang Ho (China)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/ay</uri>
+      <name authorized="yes">Yellow Sea</name>
+      <code>ay</code>
+      <uf>
+        <name>Huang Hai</name>
+      </uf>
+      <uf>
+        <name>Kwang Sea</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-ye</uri>
+      <name authorized="yes">Yemen (Republic)</name>
+      <code>a-ye</code>
+      <uf>
+        <name authorized="yes">Aden</name>
+        <note>
+          <text>Coded [a-ys] (Yemen (People's Democratic Republic) before Oct. 1992] </text>
+        </note>
+      </uf>
+      <uf>
+        <name authorized="yes">Aden (Protectorate)</name>
+        <note>
+          <text>Coded [a-ys] (Yemen (People's Democratic Republic) before Oct. 1992</text>
+        </note>
+      </uf>
+      <uf>
+        <name authorized="yes">Arabia, Southern</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Federation of South Arabia</name>
+        <uf>
+          <name>South Arabia, Federation of</name>
+        </uf>
+      </uf>
+      <uf>
+        <name authorized="yes">Socotra (Yemen)</name>
+        <note>
+          <text>Coded [i-xo] (Socotra Island) before Mar. 1988; Coded [a-ys] (Yemen (People's
+            Democratic Republic) before Oct. 1992</text>
+        </note>
+        <uf>
+          <name>Sokotra (Yemen)</name>
+        </uf>
+      </uf>
+      <uf>
+        <name>Arab Republic of Yemen</name>
+      </uf>
+      <uf>
+        <name>People's Democratic Republic of Yemen</name>
+      </uf>
+      <uf>
+        <name>Southern Yemen</name>
+      </uf>
+      <uf>
+        <name>Yemen (Arab Republic)</name>
+      </uf>
+      <uf>
+        <name>Yemen (People's Democratic Republic)</name>
+        <note>
+          <text>Coded [a-ys] (Yemen (People's Democratic Republic) before Oct. 1992</text>
+        </note>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/e-yu</uri>
+      <name authorized="yes">Yugoslavia</name>
+      <code>e-yu</code>
+      <uf>
+        <name authorized="yes">Pannonia</name>
+      </uf>
+      <uf>
+        <name>Former Yugoslav republics</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/n-cn-yk</uri>
+      <name authorized="yes">Yukon Territory</name>
+      <code>n-cn-yk</code>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-cc-yu</uri>
+      <name authorized="yes">Yunnan Sheng (China)</name>
+      <code>a-cc-yu</code>
+      <uf>
+        <name>Yunnan Province (China)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/fz</uri>
+      <name authorized="yes">Zambezi River</name>
+      <code>fz</code>
+      <uf>
+        <name>Rio Zambezi</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-za</uri>
+      <name authorized="yes">Zambia</name>
+      <code>f-za</code>
+      <uf>
+        <name authorized="yes">Rhodesia</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Rhodesia and Nyasaland</name>
+        <uf>
+          <name>Federation of Rhodesia and Nyasaland</name>
+        </uf>
+      </uf>
+      <uf>
+        <name>Northern Rhodesia</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/a-cc-ch</uri>
+      <name authorized="yes">Zhejiang Sheng (China)</name>
+      <code>a-cc-ch</code>
+      <uf>
+        <name>Chekiang Province (China)</name>
+      </uf>
+    </gac>
+    <gac>
+      <uri>info:lc/vocabulary/gacs/f-rh</uri>
+      <name authorized="yes">Zimbabwe </name>
+      <code>f-rh</code>
+      <uf>
+        <name authorized="yes">Rhodesia</name>
+      </uf>
+      <uf>
+        <name authorized="yes">Rhodesia and Nyasaland</name>
+        <uf>
+          <name>Federation of Rhodesia and Nyasaland</name>
+        </uf>
+      </uf>
+      <uf>
+        <name>Rhodesia, Southern</name>
+      </uf>
+      <uf>
+        <name>Southern Rhodesia</name>
+      </uf>
+    </gac>
+  </gacs>
+</codelist>

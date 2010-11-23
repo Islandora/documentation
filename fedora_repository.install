@@ -1,0 +1,14 @@
+<?php
+// $Id$
+
+/**
+ * @file fedora_repository.install
+ */
+
+/**
+ * Implementation of hook_enable().
+ */
+function fedora_collections_enable() {
+  //nothing to do as we do not currently touch the drupal database.
+  //other than the variables table
+}

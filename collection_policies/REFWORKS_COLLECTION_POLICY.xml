@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<collection_policy>   
+    <!---we will define allowed mimetypes and what to do with various types as part of the content model-->
+    <contentmodels>
+        <contentmodel name="REFWORKS">
+            <pid_namespace>ir:ref</pid_namespace>
+            <pid>islandora:refworksCModel</pid>
+            <dsid>ISLANDORACM</dsid>
+        </contentmodel>
+    </contentmodels>
+</collection_policy>

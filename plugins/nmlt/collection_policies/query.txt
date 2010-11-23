@@ -1,0 +1,5 @@
+select $object $title from <#ri>
+          where ($object <dc:title> $title
+          and ($object <fedora-model:hasModel> <info:fedora/islandora:SCORMCModel>)
+          and $object <fedora-model:state> <info:fedora/fedora-system:def/model#Active>)
+          order by $title

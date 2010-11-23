@@ -1,0 +1,7 @@
+; $Id$
+name = Islandora Form Elements
+dependencies[] = fedora_repository
+description = Adds a set of form elements that extend/modify the drupal form elements available to the Ingest forms.
+package = Fedora Repository
+version = 6.1dev
+core = 6.x

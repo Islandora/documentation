@@ -1,0 +1,913 @@
+<?php
+
+
+/**
+ * Implementation of hook_elements():
+ * Register the duration widget with the Forms API and set default values.
+ */
+function islandora_form_elements_elements() {
+
+  
+  $type['fieldset'] = array(
+    '#input'=> TRUE,
+    '#process' => array('ife_fieldset_process'),
+  );
+  
+  $type['textfield'] = array(
+    '#input' => TRUE,
+    '#sticky' => FALSE,
+    '#process' => array('ife_sticky_textfield_process'),
+  );
+
+  $type['textarea'] = array( 
+    '#input'=> TRUE,
+    '#sticky ' => FALSE,
+    '#process' => array('ife_sticky_textarea_process'),
+  );
+  
+  $type['list'] = array(
+    '#input'=>TRUE,
+    '#element_validate' => array('ife_list_validate'),
+    '#process' => array('ife_list_process'),
+    '#sticky' => FALSE,
+  );
+  
+  $type['other_select'] = array(
+    '#input'=>TRUE,
+    '#process' => array('ife_other_select_process'),
+  );
+
+  
+  $type['copyright'] = array(
+    '#input' => TRUE,
+    '#process' => array('ife_copyright_process'),
+    '#element_validate' => array('ife_copyright_validate'),
+  );  
+  
+  
+  $type['filechooser'] = array(
+    '#input' => TRUE,
+    '#path' => '',
+    '#model' => '',
+    '#collection'=>'',
+    '#process' => array('ife_filechooser_process'),
+    '#element_validate' => array('ife_filechooser_validate'),
+  );
+  
+  $type['person'] = array(
+    '#input' => TRUE,
+    '#process' => array('ife_person_process'),
+    '#default_value' => array('fname'=>'', 'lname' => '', 'title' => '', 'role' => ''),
+  );
+
+  $type['organization'] = array(
+    '#input' => TRUE,
+    '#process' => array('ife_org_process'),
+    '#default_value' => array( 'organization' => '', 'conference' => ''),
+  );
+
+  $type['conference'] = array(
+    '#input' => TRUE,
+    '#process' => array('ife_conf_process'),
+    '#default_value' => array( 'conference' => ''),
+  );
+  
+  $type['people'] = array(
+    '#input' => TRUE,
+    '#process' => array('ife_people_process'),
+  );
+  
+  $type['datepicker'] = array(
+    '#input' => TRUE,
+  );
+  
+  return $type;
+}
+
+function ife_fieldset_process($element,$edit,&$form_state)
+{
+//   echo 'fieldset process '. $element['#collapsible'].'<br/>';
+
+  if (isset($element['#collapsed']) && ife_fieldset_children_has_value($element))
+  {
+    unset($element['#collapsed']);
+  }
+  return $element;
+}
+
+function ife_fieldset_children_has_value($el)
+{
+  $ret = false;
+  
+  
+  if ((isset($el['#default_value']) && !is_array($el['#default_value']) && trim($el['#default_value']) != '') ||
+      (isset($el['#value']) && trim($el['#value']) != ''))
+  {
+    $ret = true;
+  } else
+  {
+    foreach (element_children($el) as $key)
+    {
+	
+      if (!$ret) 
+      {
+	$ret = (isset($_POST[$key]) && (is_array($_POST[$key]) || trim($_POST[$key]) != '')) || ife_fieldset_children_has_value($el[$key]);
+      }
+    }
+  }
+  
+  return $ret;
+}
+
+
+function ife_people_process($element,$edit,&$form_state) 
+{
+  
+    $element['#tree'] = TRUE;
+    $element['#prefix'] = '<div class="clear-block" id="ife-people-wrapper">';
+    $element['#suffix'] = '</div>';
+  
+    $element['people'] = array(
+      '#tree' => TRUE,
+      '#prefix' => '<div id="ife-people">',
+      '#suffix' => '</div>',
+      '#theme' => 'people_items',
+    );
+
+    
+    if (isset($form_state['post'][$element['#name']]['add_from_repository']) && trim($form_state['post'][$element['#name']]['add_from_repository']) != '') {
+      
+      $people= array();
+      if (isset($form_state['storage']['people']) && !empty($form_state['storage']['people'])) {
+	foreach ($form_state['storage']['people'] as $ent) {
+	  if ( trim($ent['fname']) != '' || trim($ent['lname']) != '' || trim($ent['organization']) != '' || trim($ent['title']) != '' || trim($ent['conference']) != '' || trim($ent['role']) != '' || trim($ent['date']) != '') {
+	    $people[]=$ent;
+	  }
+	}
+      } 
+      
+      
+      $json = json_decode($form_state['post'][$element['#name']]['add_from_repository']);
+      $person=array();
+//         ob_start(); echo '<pre>'; var_dump($json); echo '</pre>'; drupal_set_message(ob_get_contents()); ob_end_clean();
+      
+      switch ($json->type)
+      {
+	case 'personal':
+	  $person['fname']=$json->given;
+	  $person['lname']=$json->family;
+	  $person['title']=$json->title;
+	  $person['role']=$json->role;
+	  $person['date']=$json->date;
+	  break;
+	case 'organization':
+	  $person['organization'] = $json->name;
+	  $person['role'] = $json->role;
+	  break;
+	case 'conference':
+	  $person['conference'] = $json->name;
+	  $person['role'] = $json->role;
+	  $person['date'] = $json->date;
+	  break;
+      }
+      
+      $people[]=$person;
+
+      $form_state['storage']['people']=$people;
+      
+      
+    } else if (!isset($form_state['storage']['people']) || empty($form_state['storage']['people']))
+    {
+      if ( (!isset($form_state['clicked_button']) || count($form_state['clicked_button']) == 0) && isset($element['#default_value']) && is_array($element['#default_value']) ) {
+	$form_state['storage']['people']=$element['#default_value'];
+	if (count($element['#default_value']) > 0)  {
+	    $element['#collapsed'] = FALSE;
+	}
+	
+      } else  {
+	$form_state['storage']['people']=array( array('fname'=>'','lname'=>'', 'title'=>'', 'role'=>'', 'date'=>''));
+      }
+    }
+    
+    $i=0;
+    foreach ($form_state['storage']['people'] as $person)
+    {
+
+      $person['delta'] = $i;
+      $type='person';
+      if (isset($person['organization']))
+      {
+	$type='organization';
+      } else if (isset($person['conference']))
+      {
+	$type='conference';
+      }
+      
+      $element['people']['entity'.$i] = array('#type'=>$type, '#default_value'=>$person);
+      $i++;
+    }
+
+  $element['add_from_repository'] = array(
+    '#type' => 'textfield',
+    '#autocomplete_path' => 'autocomplete_person/',
+    '#weight' => 4, 
+    '#size' => 30,
+    '#value' => '',
+    '#title'=> t('Add entity from repository'),
+    '#description'=>t('To add an existing entity, simply start typing the name of the person, organization or conference and select the desired name from the resulting dropdown list.')
+  );
+
+  $element['add_person'] = array(
+      '#type' => 'submit',
+      '#prefix' => '<div id="add-more-people-button">',
+      '#suffix' => '<label for="edit-tabs-more">'. t('Add Person') .'</label></div>',
+      '#value' => t('Add Person'),
+      '#attributes' => array('class' => 'add-person', 'title' => t('Click here to add a person.')),
+      '#weight' => 3,
+      '#submit' => array('ife_add_person_submit'), // If no javascript action.
+      '#ahah' => array(
+	'path' => 'ife/people_ahah',
+	'wrapper' => 'ife-people',
+	'method' => 'replace',
+	'effect' => 'fade',
+      ),
+    );
+ 
+$element['add_organization'] = array(
+      '#type' => 'submit',
+      '#prefix' => '<div id="add-more-org-button">',
+      '#suffix' => '<label for="edit-tabs-more">'. t('Add Organization') .'</label></div>',
+      '#value' => t('Add Organization'),
+      '#attributes' => array('class' => 'add-org', 'title' => t('Click here to add an organization.')),
+      '#weight' => 2,
+      '#submit' => array('ife_add_org_submit'), // If no javascript action.
+      '#ahah' => array(
+	'path' => 'ife/people_ahah',
+	'wrapper' => 'ife-people',
+	'method' => 'replace',
+	'effect' => 'fade',
+      ),
+    );
+    
+   $element['add_conference'] = array(
+      '#type' => 'submit',
+      '#prefix' => '<div id="add-more-conf-button">',
+      '#suffix' => '<label for="edit-tabs-more">'. t('Add Conference') .'</label></div>',
+      '#value' => t('Add Conference'),
+      '#attributes' => array('class' => 'add-conf', 'title' => t('Click here to add a conference.')),
+      '#weight' => 1,
+      '#submit' => array('ife_add_conf_submit'), // If no javascript action.
+      '#ahah' => array(
+	'path' => 'ife/people_ahah',
+	'wrapper' => 'ife-people',
+	'method' => 'replace',
+	'effect' => 'fade',
+      ),
+    );      
+   return $element;
+}
+
+function ife_person_process($element)
+{
+  $element['#tree'] = TRUE;
+  
+  if (!isset($element['#value']))
+  {
+    $element['#value'] = array('fname'=>'', 'lname' => '');
+  }
+  
+  
+  $element['fname'] = array(
+    '#type' => 'textfield',
+    '#title'=> t('Given Name(s)'),
+    '#size' => 30,
+    '#value' => $element['#value']['fname'],
+  );
+  
+  $element['lname'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Family Name(s)'),
+    '#size' => 30,
+    '#value' => $element['#value']['lname'],
+  );  
+  
+  $element['title'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Title'),
+    '#size' => 30,
+    '#value' => $element['#value']['title'],
+  );  
+
+  $element['date'] = array(
+  '#type' => 'datepicker',
+  '#title' => t('Date'),
+  '#size'=> 30,
+  '#value' => $element['#value']['date'],
+  '#description' => '<br/>'.t('Use this field to express birth/death dates.  You may use the date chooser, but the field is free-form')
+  );
+  
+  $element['role'] = array(
+    '#type' => 'textfield',
+    '#size'=>30,
+    '#description'=>t('The role that this person plays with regards to the object.'),
+    '#value' => $element['#value']['role'],
+    '#autocomplete_path' => 'autocomplete_marcrelator/',
+  );  
+  
+
+  $element['remove'] = array(
+    '#type' => 'submit',
+    '#prefix' => '<div>',
+    '#suffix' => '<label for="edit-remove">'. t('Delete') .'</label></div>',
+    '#value' => 'remove_'. $element['#default_value']['delta'],
+    '#submit' => array('ife_remove_person_submit'),
+    '#attributes' => array('class' => 'delete-person', 'title' => t('Click here to delete this Person.')),
+    '#ahah' => array(
+      'path' => 'ife/people_ahah',
+      'wrapper' => 'ife-people',
+      'method' => 'replace',
+      'effect' => 'fade',
+    ),
+  );
+  return $element;
+}
+
+
+function ife_org_process($element)
+{
+  $element['#tree'] = TRUE;
+  
+  if (!isset($element['#value']))
+  {
+    $element['#value'] = array('fname'=>'', 'lname' => '');
+  }
+  
+  
+
+  $element['role'] = array(
+    '#type' => 'textfield',
+    '#size'=>30,
+    '#description'=>t('The role that this organization plays with regards to the object.'),
+    '#value' => $element['#value']['role'],
+    '#autocomplete_path' => 'autocomplete_marcrelator/',
+  );  
+  
+  $element['organization'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Organization'),
+    '#size' => 30,
+    '#value' => $element['#value']['organization'],
+  );    
+
+
+  $element['remove'] = array(
+    '#type' => 'submit',
+    '#prefix' => '<div>',
+    '#suffix' => '<label for="edit-remove">'. t('Delete') .'</label></div>',
+    '#value' => 'remove_'. $element['#default_value']['delta'],
+    '#submit' => array('ife_remove_person_submit'),
+    '#attributes' => array('class' => 'delete-person', 'title' => t('Click here to delete this Person.')),
+    '#ahah' => array(
+      'path' => 'ife/people_ahah',
+      'wrapper' => 'ife-people',
+      'method' => 'replace',
+      'effect' => 'fade',
+    ),
+  );
+  return $element;
+}
+
+
+function ife_conf_process($element)
+{
+  $element['#tree'] = TRUE;
+  
+  if (!isset($element['#value']))
+  {
+    $element['#value'] = array('fname'=>'', 'lname' => '');
+  }
+  
+
+  $element['role'] = array(
+    '#type' => 'textfield',
+    '#size'=>30,
+    '#description'=>t('The role that this conference plays with regards to the object.'),
+    '#value' => $element['#value']['role'],
+    '#autocomplete_path' => 'autocomplete_marcrelator/',
+  );  
+  
+ 
+  $element['conference'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Conference'),
+    '#size' => 30,
+    '#value' => $element['#value']['conference'],
+  );    
+  
+  
+  $element['date'] = array(
+  '#type' => 'datepicker',
+  '#title' => t('Date'),
+  '#size'=> 30,
+  '#value' => $element['#value']['date']
+  );  
+
+  $element['remove'] = array(
+    '#type' => 'submit',
+    '#prefix' => '<div>',
+    '#suffix' => '<label for="edit-remove">'. t('Delete') .'</label></div>',
+    '#value' => 'remove_'. $element['#default_value']['delta'],
+    '#submit' => array('ife_remove_person_submit'),
+    '#attributes' => array('class' => 'delete-person', 'title' => t('Click here to delete this Person.')),
+    '#ahah' => array(
+      'path' => 'ife/people_ahah',
+      'wrapper' => 'ife-people',
+      'method' => 'replace',
+      'effect' => 'fade',
+    ),
+  );
+  return $element;
+}
+
+/**
+ * Our process callback to expand the control.
+ */
+function ife_sticky_textfield_process($element,$edit,&$form_state) 
+{
+
+  
+  if (isset($element['#sticky']) && $element['#sticky'] == TRUE)
+  {
+    $element['#type'] = 'sticky_textfield';
+    $stickyName = preg_replace('/\]/','',array_pop(preg_split('/\[/',$element['#name']))).'-sticky';
+  
+    if (isset($element['#post'][$stickyName]) && strtolower($element['#post'][$stickyName]) == 'on')
+    {
+	$form_state['storage'][$element['#name']]=$element['#value'];
+    } elseif (isset($form_state['storage'][$element['#name']]))
+    {
+      $element['#value'] = $form_state['storage'][$element['#name']];
+      $element['#sticky_on'] = TRUE;
+    }
+  }
+  
+  return $element;
+}
+
+
+
+/**
+ * Our process callback to expand the control.
+ */
+function ife_sticky_textarea_process($element,$edit,&$form_state) 
+{
+
+  
+  if (isset($element['#sticky']) && $element['#sticky'] == TRUE)
+  {
+    $element['#type'] = 'sticky_textarea';
+    $stickyName = preg_replace('/\]/','',array_pop(preg_split('/\[/',$element['#name']))).'-sticky';
+  
+    if (isset($element['#post'][$stickyName]) && strtolower($element['#post'][$stickyName]) == 'on')
+    {
+	$form_state['storage'][$element['#name']]=$element['#value'];
+    } elseif (isset($form_state['storage'][$element['#name']]))
+    {
+      $element['#value'] = $form_state['storage'][$element['#name']];
+      $element['#sticky_on'] = TRUE;
+    }
+  }
+  
+  return $element;
+}
+
+/**
+ * Our process callback to expand the control.
+ */
+function ife_copyright_process($element,$edit,&$form_state) {
+
+  module_load_include('inc','islandora_form_elements','includes/creative_commons');
+  
+  $element['#tree'] = TRUE;
+  
+  if (isset($element['#value']) && !is_array($element['#value'])) {
+    $matches=array();
+    if (preg_match('/by-*([a-z]+)-*([a-z]+)\/([\d\.]+)\/([a-z]*)/',$element['#value'],$matches)) {
+      $element['#value'] = array('cc_commercial' => $matches[1], 'cc_modifications' => $matches[2], 'cc_jurisdiction' => $matches[4]);  
+    } else 
+      $element['#value'] = array('cc_commercial' => '', 'cc_modifications' => '', 'cc_jurisdiction' => '');  
+  } else if (!isset($element['#value'])) {
+    $element['#value'] = array('cc_commercial' => '', 'cc_modifications' => '', 'cc_jurisdiction' => '');
+  }
+  
+  $element['cc'] = array('#type' => 'fieldset', '#title'=>$element['#title'], '#description' => '<div class="cc_preview">preview</div>' , '#collapsible' => TRUE);
+  
+  $element['cc']['cc_enable'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Use a CreativeCommons.org Licence'),
+    '#attributes' => array('class' => 'cc_enable'),
+    '#default_value' => TRUE,
+  );
+  
+  $element['cc']['cc_commercial'] =  array(
+    '#type' => 'select',
+    '#title' => t('Allow commercial uses of your work?'),
+    '#options' => array( ''=>'Yes', 'nc'=>'No'), 
+    '#attributes' => array('class' => 'cc_field cc_commercial'),
+    '#default_value' => $element['#value']['cc_commercial'],
+  );
+  $element['cc']['cc_modifications'] =  array(
+    '#type' => 'select',
+    '#title' => t('Allow modifications of your work?'),
+    '#options' => array( ''=>'Yes', 'sa'=>'Yes, as long as others share alike', 'nd'=>'No'), 
+    '#attributes' => array('class' => 'cc_field cc_modifications'),
+    '#default_value' => $element['#value']['cc_modifications'],
+  );
+  
+  $element['cc']['cc_jurisdiction'] =  array(
+    '#type' => 'select',
+    '#title' => t('Jurisdiction of your license'),
+    '#options' => CreativeCommons::$cc_jurisdiction_vals,
+    '#default_value' => $element['#value']['cc_jurisdiction'],
+    '#attributes' => array('class' => 'cc_field cc_jurisdiction'),
+  );
+  
+  $element['#title'] = '';
+  
+  return $element;
+  
+}
+
+
+/**
+ * Our process callback to expand the control.
+ */
+function ife_list_process($element,$edit,&$form_state) 
+{
+  if (is_array($element['#default_value'])) {
+    $element['#default_value']=join('; ',$element['#default_value']);
+  }
+  
+  if (is_array($element['#value'])) {
+    $element['#value']=join('; ',$element['#value']);
+  }  
+
+  if (isset($element['#sticky']) && $element['#sticky'] == TRUE)
+  {
+    $stickyName = preg_replace('/\]/','',array_pop(preg_split('/\[/',$element['#name']))).'-sticky';
+  
+    if (isset($element['#post'][$stickyName]) && strtolower($element['#post'][$stickyName]) == 'on')
+    {
+	$form_state['storage'][$element['#name']]=$element['#value'];
+    } elseif (isset($form_state['storage'][$element['#name']]))
+    {
+      $element['#value'] = $form_state['storage'][$element['#name']];
+      $element['#sticky_on'] = TRUE;
+    }
+  }
+  
+  return $element;
+}
+
+/**
+ * Implementation of hook_theme().
+ *
+ * This lets us tell Drupal about our theme functions and their arguments.
+ */
+function islandora_form_elements_theme() {
+  return array( 
+    'sticky_textfield' => array(
+      'arguments' => array('element'),
+    ),
+    'sticky_textarea' => array(
+      'arguments' => array('element'),
+    ), 
+    'filechooser' => array(
+      'arguments' => array('element'),
+      'file' => 'includes/filechooser.inc'
+    ),
+    'list' => array(
+      'arguments' => array('element'),
+    ),
+    'other_select' => array(
+      'arguments' => array('element'),
+    ),
+
+     'people' => array(
+       'arguments' => array('element'),
+       'file'=> 'includes/people.inc',
+     ),
+    'people_items' => array(
+      'arguments' => array('form' => NULL),
+      'file'=> 'includes/people.inc',
+    ),
+    'datepicker' => array(
+      'arguments' => array('element'),
+    ),
+    'copyright' => array(
+      'arguments' => array('element'),
+    ),
+  );
+}
+
+
+function ife_other_select_process($element,$edit,&$form_state)
+{
+  if (isset($element['#value']) &&  trim($element['#value']) != '' && !isset($element['#options'][$element['#value']]))
+  {
+    $element['#options'][$element['#value']]=$element['#value'];
+  } 
+  return $element;
+}
+
+function theme_copyright($element)
+{
+  $path=drupal_get_path('module','islandora_form_elements');
+  drupal_add_js($path.'/js/copyright.js');
+  drupal_add_css($path.'/css/copyright.css');
+  
+  return theme('form_element', $element, $element['#children']);
+}
+
+function theme_other_select($element)
+{
+  $path=drupal_get_path('module','islandora_form_elements');
+  drupal_add_js($path.'/js/otherselect.js');
+  $select = '';
+  $size = $element['#size'] ? ' size="'. $element['#size'] .'"' : '';
+  _form_set_class($element, array('otherSelect'));
+  return theme('form_element', $element, '<select name="'. $element['#name'] .'" '. drupal_attributes($element['#attributes']) .' id="'. $element['#id'] .'" '. $size .'>'. form_select_options($element) .'</select>');
+}
+
+function theme_list($element)
+{
+  $path=drupal_get_path('module','islandora_form_elements');
+  drupal_add_js($path.'/js/jquery.tag.editor-min.js');
+  drupal_add_js('$(document).ready(function () { $(\'#'.$element['#id'].'\').tagEditor({   separator: \';\', confirmRemoval: false, completeOnBlur: true }); }); ', 'inline');
+  drupal_add_css($path.'/css/list.css');
+  $output .= '';
+
+ //return theme('theme_form_element', $element, '<div class="container-inline mark">' . $element['#children'] . '</div>');
+  
+   $size = empty($element['#size']) ? 'size="25"' : ' size="'. $element['#size'] .'"';
+  $maxlength = empty($element['#maxlength']) ? '' : ' maxlength="'. $element['#maxlength'] .'"';
+  $class = array('form-text','listElement');
+  $extra = '';
+  $output='<div class="container-inline mark">';
+
+    if ($element['#autocomplete_path'] && menu_valid_path(array('link_path' => $element['#autocomplete_path']))) {
+   drupal_add_js('misc/autocomplete.js');
+   $class[] = 'form-autocomplete';
+   $extra =  '<input class="autocomplete" type="hidden" id="'. $element['#id'] .'-autocomplete" value="'. check_url(url($element['#autocomplete_path'], array('absolute' => TRUE))) .'" disabled="disabled" />';
+   }
+   _form_set_class($element, $class);
+   
+   if (isset($element['#field_prefix'])) {
+     $output .= '<span class="field-prefix">'. $element['#field_prefix'] .'</span> ';
+   }
+   
+   $output .= '<input type="text"'. $maxlength .' name="'. $element['#name'].'" id="'. $element['#id'] .'"'. $size .' value="'. check_plain($element['#value']) .'"'. drupal_attributes($element['#attributes']) .' />';
+   
+   if (isset($element['#field_suffix'])) {
+     $output .= ' <span class="field-suffix">'. $element['#field_suffix'] .'</span>';
+   }
+   
+    $stickyName = preg_replace('/\]/','',array_pop(preg_split('/\[/',$element['#name']))).'-sticky';
+    $output .= (isset($element['#sticky']) && $element['#sticky'] == TRUE?'<input type="checkbox" name="'.$stickyName.'"'.(isset($element['#sticky_on']) && $element['#sticky_on']==TRUE?' checked="checked"':'').'/> Sticky?':'') . '</div>';
+
+   
+   return theme('form_element', $element, $output ) . $extra;  
+  
+  
+}
+
+
+/**
+ * Format a sticky textarea.
+ *
+ * @param $element
+ *   An associative array containing the properties of the element.
+ *   Properties used: title, value, description, rows, cols, required, attributes
+ * @return
+ *   A themed HTML string representing the textarea.
+ *
+ * @ingroup themeable
+ */
+function theme_sticky_textarea($element) {
+  $class = array('form-textarea');
+
+  // Add teaser behavior (must come before resizable)
+  if (!empty($element['#teaser'])) {
+    drupal_add_js('misc/teaser.js');
+    // Note: arrays are merged in drupal_get_js().
+    drupal_add_js(array('teaserCheckbox' => array($element['#id'] => $element['#teaser_checkbox'])), 'setting');
+    drupal_add_js(array('teaser' => array($element['#id'] => $element['#teaser'])), 'setting');
+    $class[] = 'teaser';
+  }
+
+  // Add resizable behavior
+  if ($element['#resizable'] !== FALSE) {
+    drupal_add_js('misc/textarea.js');
+    $class[] = 'resizable';
+  }
+
+   $stickyName = preg_replace('/\]/','',array_pop(preg_split('/\[/',$element['#name']))).'-sticky';
+   $sticky = (isset($element['#sticky']) && $element['#sticky'] == TRUE?'<input type="checkbox" name="'.$stickyName.'"'.(isset($element['#sticky_on']) && $element['#sticky_on']==TRUE?' checked="checked"':'').'/> Sticky?':'');
+
+
+  _form_set_class($element, $class);
+  return theme('form_element', $element, '<textarea cols="'. $element['#cols'] .'" rows="'. $element['#rows'] .'" name="'. $element['#name'] .'" id="'. $element['#id'] .'" '. drupal_attributes($element['#attributes']) .'>'. check_plain($element['#value']) .'</textarea>'.$sticky);
+}
+
+
+/**
+ * Theme function to format the output.
+ *
+ * We use the container-inline class so that all three of the HTML elements
+ * are placed next to each other, rather than on separate lines.
+ */
+function theme_datepicker($element) {
+  global $base_url;
+  $path=drupal_get_path('module','islandora_form_elements');
+  drupal_add_js($path.'/js/jquery.ui.core.js');
+  drupal_add_js($path.'/js/jquery.ui.widget.js');
+  drupal_add_js($path.'/js/jquery.ui.datepicker.js');
+  drupal_add_css($path.'/css/ui-lightness/jquery-ui-1.8.4.custom.css');
+  $js = '$(document).ready(function () { $(\'#'.$element['#id'].'\').datepicker({  buttonImage: \''.$base_url.'/'.$path.'/images/date.png\', constrainInput: false, showOn: \'button\', changeMonth: true, changeYear: true }); });';
+  
+  $size = empty($element['#size']) ? '' : ' size="'. $element['#size'] .'"';
+  $maxlength = empty($element['#maxlength']) ? '' : ' maxlength="'. $element['#maxlength'] .'"';
+  $class = array('form-text','datepicker');
+  $extra = '';
+  $output= '<script type="text/javascript">'.$js.'</script>';
+  $output.='<div class="container-inline mark">';
+
+    if ($element['#autocomplete_path'] && menu_valid_path(array('link_path' => $element['#autocomplete_path']))) {
+   drupal_add_js('misc/autocomplete.js');
+   $class[] = 'form-autocomplete';
+   $extra =  '<input class="autocomplete" type="hidden" id="'. $element['#id'] .'-autocomplete" value="'. check_url(url($element['#autocomplete_path'], array('absolute' => TRUE))) .'" disabled="disabled" />';
+   }
+   _form_set_class($element, $class);
+   
+   if (isset($element['#field_prefix'])) {
+     $output .= '<span class="field-prefix">'. $element['#field_prefix'] .'</span> ';
+   }
+   
+   $output .= '<input type="text"'. $maxlength .' name="'. $element['#name'].'" id="'. $element['#id'] .'"'. $size .' value="'. check_plain($element['#value']) .'"'. drupal_attributes($element['#attributes']) .' />';
+   
+   if (isset($element['#field_suffix'])) {
+     $output .= ' <span class="field-suffix">'. $element['#field_suffix'] .'</span>';
+   }
+   
+   $stickyName = preg_replace('/\]/','',array_pop(preg_split('/\[/',$element['#name']))).'-sticky';
+   $output .= (isset($element['#sticky']) && $element['#sticky'] == TRUE?'<input type="checkbox" name="'.$stickyName.'"'.(isset($element['#sticky_on']) && $element['#sticky_on']==TRUE?' checked="checked"':'').'/> Sticky?':'') . '</div>';
+
+   
+   return theme('form_element', $element, $output ) . $extra;  
+ 
+}
+
+
+
+/**
+ * Theme function to format the output.
+ *
+ * We use the container-inline class so that all three of the HTML elements
+ * are placed next to each other, rather than on separate lines.
+ */
+function theme_sticky_textfield($element) {
+  
+  //echo '<pre>'; var_dump($element); echo '</pre>';
+  
+  //return theme('theme_form_element', $element, '<div class="container-inline mark">' . $element['#children'] . '</div>');
+  $size = empty($element['#size']) ? '' : ' size="'. $element['#size'] .'"';
+  $maxlength = empty($element['#maxlength']) ? '' : ' maxlength="'. $element['#maxlength'] .'"';
+  $class = array('form-text');
+  $extra = '';
+  $output='<div class="container-inline mark">';
+
+    if ($element['#autocomplete_path'] && menu_valid_path(array('link_path' => $element['#autocomplete_path']))) {
+   drupal_add_js('misc/autocomplete.js');
+   $class[] = 'form-autocomplete';
+   $extra =  '<input class="autocomplete" type="hidden" id="'. $element['#id'] .'-autocomplete" value="'. check_url(url($element['#autocomplete_path'], array('absolute' => TRUE))) .'" disabled="disabled" />';
+   }
+   _form_set_class($element, $class);
+   
+   if (isset($element['#field_prefix'])) {
+     $output .= '<span class="field-prefix">'. $element['#field_prefix'] .'</span> ';
+   }
+   
+   $output .= '<input type="text"'. $maxlength .' name="'. $element['#name'].'" id="'. $element['#id'] .'"'. $size .' value="'. check_plain($element['#value']) .'"'. drupal_attributes($element['#attributes']) .' />';
+   
+   if (isset($element['#field_suffix'])) {
+     $output .= ' <span class="field-suffix">'. $element['#field_suffix'] .'</span>';
+   }
+   
+   $stickyName = preg_replace('/\]/','',array_pop(preg_split('/\[/',$element['#name']))).'-sticky';
+   $output .= (isset($element['#sticky']) && $element['#sticky'] == TRUE?'<input type="checkbox" name="'.$stickyName.'"'.(isset($element['#sticky_on']) && $element['#sticky_on']==TRUE?' checked="checked"':'').'/> Sticky?':'') . '</div>';
+
+   
+   return theme('form_element', $element, $output ) . $extra;  
+ 
+}
+
+function ife_filechooser_validate($element,&$form_state)
+{
+  module_load_include('inc', 'fedora_repository', 'CollectionPolicy');
+  $cp = CollectionPolicy::loadFromCollection($form_state['storage']['collection_pid']);
+  if ($cp !== false)
+  {
+    $form_state['values'][$element['#name']] =$cp->getStagingArea().'/'.$element['#value'];
+  }
+}
+
+function ife_filechooser_process($element, $edit, &$form_state)
+{
+ $element['#model_pid']=$form_state['values']['models'];
+ 
+ return $element;
+}
+
+function islandora_form_elements_menu()
+{
+
+  module_load_include('inc','fedora_repository','ObjectHelper');
+
+  $items=array();
+
+  $items['ife/people_ahah'] = array(
+    'page callback' => 'ife_people_ahah',
+    'type' => MENU_CALLBACK,
+    'access arguments' => array(ObjectHelper::$INGEST_FEDORA_OBJECTS),
+    'file' => 'includes/people.inc',
+  );
+  
+  $items['autocomplete_marcrelator/%'] = array(
+    'title' => 'autocomplete',
+    'page callback' => 'ife_autocomplete_marcrelator',
+    'page arguments'=> array(1),
+    'type' => MENU_CALLBACK,
+    'access arguments' => array(ObjectHelper::$INGEST_FEDORA_OBJECTS),  
+    'file'=> 'includes/autocomplete.inc'
+  );    
+  
+  $items['autocomplete_gacs/%'] = array(
+    'title' => 'autocomplete',
+    'page callback' => 'ife_autocomplete_gacs',
+    'page arguments'=> array(1),
+    'type' => MENU_CALLBACK,
+    'access arguments' => array(ObjectHelper::$INGEST_FEDORA_OBJECTS),  
+    'file'=> 'includes/autocomplete.inc'
+  );  
+  
+  $items['autocomplete_language/%'] = array(
+    'title' => 'autocomplete',
+    'page callback' => 'ife_autocomplete_language',
+    'page arguments'=> array(1),
+    'type' => MENU_CALLBACK,
+    'access arguments' => array(ObjectHelper::$INGEST_FEDORA_OBJECTS),  
+    'file'=> 'includes/autocomplete.inc'
+  );
+
+  $items['autocomplete_person/%'] = array(
+    'title' => 'autocomplete',
+    'page callback' => 'ife_autocomplete_person',
+    'page arguments'=> array(1),
+    'type' => MENU_CALLBACK,
+    'access arguments' => array(ObjectHelper::$INGEST_FEDORA_OBJECTS),  
+    'file'=> 'includes/autocomplete.inc'
+  );  
+  
+  $items['autocomplete/%/%'] = array(
+    'title' => 'autocomplete',
+    'page callback' => 'ife_autocomplete',
+    'page arguments'=> array(1,2),
+    'type' => MENU_CALLBACK,
+    'access arguments' => array(ObjectHelper::$INGEST_FEDORA_OBJECTS),  
+    'file'=> 'includes/autocomplete.inc',
+  );
+
+
+  $items['filechooser/getThumbnail/%/%/%'] = array(
+    'title' => 'getThumbnail',
+    'page callback' => 'ife_filechooser_get_thumbnail',
+    'page arguments'=> array(2,3,4),
+    'type' => MENU_CALLBACK,
+    'access arguments' => array(ObjectHelper::$INGEST_FEDORA_OBJECTS),  
+    'file' => 'includes/filechooser.inc'
+  );  
+  
+  $items['filechooser/generatePreview/%/%'] = array(
+    'title' => 'generatePreview',
+    'page callback' => 'ife_filechooser_generate_thumbnails',
+    'page arguments'=> array(2,3),
+    'type' => MENU_CALLBACK,
+    'access arguments' => array(ObjectHelper::$INGEST_FEDORA_OBJECTS),  
+    'file' => 'includes/filechooser.inc'
+  );    
+
+  
+
+  return $items;
+}
+

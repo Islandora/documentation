@@ -1,0 +1,12 @@
+<?php
+
+function fedora_nmlt_menu_alter(&$items) {
+  $items["node/%node/result"] = array(
+    'title' => 'Results',
+    'page callback' => 'scorm_show_results',
+    'page arguments' => array(1),
+    'access callback' => user_access('use scorm'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+  return $items;
+}

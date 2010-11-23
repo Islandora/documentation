@@ -1,0 +1,4376 @@
+<?php
+
+
+
+
+function islandora_content_modeller_menu()
+{
+
+  $items=array();
+  
+  $items['admin/content/modeller'] = array(
+       'title' => 'Islandora Content Modeller',
+       'description' => 'Manage Islandora/Fedora Content Models',
+       'page callback' => 'islandora_content_modeller_main',
+       'access arguments' => array('administer site configuration'),
+         'type' => MENU_NORMAL_ITEM
+  );
+
+  $items['admin/content/modeller/ajax/listModels'] = array(
+    'page callback' => 'icm_ajax_model_list',
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_CALLBACK
+  );
+
+  $items['admin/content/modeller/ajax/getFiles'] = array(
+    'page callback' => 'icm_ajax_pluginFiles',
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_CALLBACK
+  );
+  
+  $items['admin/content/modeller/ajax/getClasses'] = array(
+    'page callback' => 'icm_ajax_getClasses',
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_CALLBACK
+  );
+  
+  $items['admin/content/modeller/ajax/getMethods'] = array(
+    'page callback' => 'icm_ajax_getMethods',
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_CALLBACK
+  );
+    
+  $items['admin/content/modeller/ajax/button'] = array(
+      'page callback' => 'icm_ajax_button',
+      'access arguments' => array('administer site configuration'),
+      'type' => MENU_CALLBACK
+  );
+
+  $items['admin/content/modeller/ajax/processForm/%'] = array(
+      'page callback' => 'icm_ajax_processForm',
+      'page arguments' => array(5),
+      'access arguments' => array('administer site configuration'),
+      'type' => MENU_CALLBACK
+  );
+
+  $items['admin/content/modeller/ajax/model'] = array(
+      'page callback' => 'icm_ajax_model_tree',
+      'access arguments' => array('administer site configuration'),
+      'type' => MENU_CALLBACK
+  );
+
+  $items['admin/content/modeller/ajax/collection'] = array(
+      'page callback' => 'icm_ajax_collection_tree',
+      'access arguments' => array('administer site configuration'),
+      'type' => MENU_CALLBACK
+  );
+
+  return $items;
+}
+
+function icm_get_modules()
+{
+  $files = module_rebuild_cache();
+  
+  $options=array('');
+  foreach ($files as $key=>$val)
+  {
+    if ($val->info['package'] == 'Fedora Repository') //only list islandora modules
+    {
+      $options[$key]=$key;
+    }
+  }
+  return $options;
+
+}
+
+function icm_ajax_pluginFiles()
+{
+  
+  echo '<option></option>';
+  $plugin_path = drupal_get_path('module',$_GET['module']);
+  
+  if (!$plugin_path)
+  {
+    exit();
+  }
+  
+  $plugin_path.='/plugins';
+  
+  $files = array('');
+  
+  if ( is_dir($plugin_path) && ($dir = opendir($plugin_path)) !== false)
+  {
+    while (($file = readdir($dir)) !== false)
+    {
+      if (preg_match('/\.inc$/',$file))
+      {
+        echo '<option '.(isset($_GET['file']) && $_GET['file']=='plugins/'.$file?'selected="selected"':'').'>plugins/'.$file.'</option>';
+      }
+    }
+  }
+  exit();
+}
+
+function icm_ajax_getClasses()
+{
+  echo '<option></option>';
+  $file = drupal_get_path('module',$_GET['module']);
+  if (!$file)
+  {
+    exit();
+  }
+  
+  $file.= '/'. $_GET['file'];
+
+  if (file_exists($file))
+  { 
+    // hack..  we should really enforce the class name being the same as the file name.
+    // either that or consider replacing with a plugin register call in each included plugin.
+    $before_classes = get_declared_classes();
+    require_once $file;
+    $after_classes = get_declared_classes();
+    
+    foreach ($after_classes as $class)
+    {
+      if (!in_array($class,$before_classes))
+      {
+        echo '<option '.(isset($_GET['className']) && $_GET['className'] == $class?'selected="selected"':'').'>'.$class.'</option>';
+      }
+    }
+    
+  }
+  exit();    
+}
+
+function icm_ajax_getMethods()
+{
+  echo '<option></option>';
+  $file = drupal_get_path('module',$_GET['module']);
+  if (!$file)
+  {
+    exit();
+  }
+  
+  $file.= '/'. $_GET['file'];
+  $class = $_GET['className'];
+
+  if (file_exists($file))
+  { 
+    require_once $file;
+    if (class_exists($class))
+    {
+      $methods = get_class_methods($class);
+      
+      foreach ($methods as $method) 
+      {
+        echo '<option '.(isset($_GET['method']) && $_GET['method'] == $method?' selected="selected"':'').'>'.$method.'</option>';
+      }
+    }
+    
+  }
+  exit();    
+}
+
+function icm_ajax_model_list()
+{
+    global $base_url;
+    $moduleRoot=drupal_get_path('module','islandora_content_modeller');
+    require_once($moduleRoot.'/treeview.inc');
+
+    $moduleRoot = $base_url.'/'.$moduleRoot;   
+ 
+    module_load_include('inc', 'fedora_repository', 'ContentModel');  
+    module_load_include('inc', 'fedora_repository', 'CollectionClass');
+    
+    $modelTree = new treeview('Installed Content Models','folder',' <img src="'.$moduleRoot.'/images/add.png" class="ajaxFormIcon" id="icm_model_new"/>','models');
+    
+    $collectionHelper = new CollectionClass();
+    $items = new SimpleXMLElement( $collectionHelper->getRelatedItems(variable_get('fedora_content_model_collection_pid','islandora:ContentModelCollection') ,null,null));
+    $modelCount = 0;
+    if (count($items->results->result) > 0)
+    {
+ 
+      foreach ($items->results->result as $res)
+      {
+        $child_pid=substr($res->object['uri'],strpos($res->object['uri'],'/')+1);
+        
+        if (($cm = ContentModel::loadFromModel($child_pid))!==false)
+        {
+        $modelTree->addChild('<a href="#" class="list_model" id="'.$child_pid.'">'.$child_pid.'</a>','file',' <img src="'.$moduleRoot.'/images/remove.png" class="ajaxFormIcon" id="icm_model_purge '.$child_pid.'"/>');
+          $modelCount++;
+        }
+      }
+    }
+    if ($modelCount == 0)
+    {
+        $modelTree->addChild(t('No installed content models found.'));
+    }
+    
+    echo $modelTree->buildTree('filetree');      
+}
+
+function icm_ajax_model_tree()
+{
+  global $base_url;
+  $ret =false;
+  $moduleRoot=drupal_get_path('module','islandora_content_modeller');
+  require_once($moduleRoot.'/treeview.inc');
+  $moduleRoot=$base_url.'/'.$moduleRoot;
+
+  module_load_include('inc', 'fedora_repository', 'ContentModel');
+
+  if (isset($_GET['model_pid']))
+  {
+    $cm = ContentModel::loadFromModel(trim($_GET['model_pid']));
+  } else
+    $cm = ContentModel::loadFromObject(variable_get('fedora_repository_pid', 'islandora:top'));
+
+  if ($cm !== false)
+  {
+    $cmValid = $cm->validate();
+
+    $modelTree = new treeview($cm->pid. ($cmValid?'':'!'),'folder',' <img src="'.$moduleRoot.'/images/red_info.png" class="ajaxFormIcon" id="icm_model_rollback '.$cm->pid.'"/> <img src="'.$moduleRoot.'/images/view.gif" class="ajaxFormIcon" id="icm_display_rawXml model '.$cm->pid.'"/>','models');
+     
+    if (!$cmValid)
+    {
+      //        echo '<pre>'.htmlentities($cm->dumpXml()).'</pre>';
+      $errorsEl = $modelTree->addChild('XML Errors','folder');
+       
+      foreach (ContentModel::$errors as $err)
+      {
+        $errorsEl->addChild('<b><font color="red">'.$err.'</font></b>');
+      }
+       
+    } else
+    {
+      $mimeTypesEl = $modelTree->addChild('Mimetypes','folder',' <img src="'.$moduleRoot.'/images/add.png" class="ajaxFormIcon" id="icm_model_add_mime '.$cm->pid.'"/>');
+      $mimetypes=$cm->getMimeTypes();
+      foreach ($mimetypes as $type)
+      {
+        $mimeTypesEl->addChild($type,'file', ' <img src="'.$moduleRoot.'/images/remove.png" class="ajaxButtonIcon" id="icm_model_remove_mime '.$cm->pid.' '.$type.'"/>');
+      }
+
+      $datastreams = $cm->listDatastreams();
+      $dstreamsEl = $modelTree->addChild('Datastreams','folder', ' <img src="'.$moduleRoot.'/images/add.png" class="ajaxFormIcon" id="icm_model_add_ds '.$cm->pid.'"/>');
+      
+      if (count($datastreams) > 0)
+      {
+               foreach ($datastreams as $ds)
+        {
+          $dsEl = $dstreamsEl->addChild($ds . ($cm->displayInFieldSet($ds)? '(Display in Fieldset) ':''),'file',
+              ' <img src="'.$moduleRoot.'/images/remove.png" class="ajaxButtonIcon" id="icm_model_remove_ds '.$cm->pid.' '.$ds.'"/>'.
+              ' <img src="'.$moduleRoot.'/images/view.gif" class="ajaxButtonIcon" id="icm_model_toggle_dsDisplay '.$cm->pid.' '.$ds.'"/>');
+
+          $dispMethods = $cm->getDisplayMethods($ds);
+          $dispMethEl = $dsEl->addChild('Display Methods','folder',' <img src="'.$moduleRoot.'/images/add.png" class="ajaxFormIcon" id="icm_model_add_dispmeth '.$cm->pid.' '.$ds.'"/>');
+          if ($dispMethods !== false && count($dispMethods) > 0)
+          {
+            foreach ($dispMethods as $meth)
+            {
+              $dispMethEl->addChild(($meth['default']==true?'<b>':'').$meth['file'].'<br/>'.$meth['class'].'->'.$meth['method'],'file',
+          ' <img src="'.$moduleRoot.'/images/remove.png" class="ajaxButtonIcon" id="icm_model_remove_dispmeth '.$cm->pid.' '.$ds.' '.$meth['module'].' '.$meth['file'].' '.$meth['class'].' '.$meth['method'].'"/>'.
+          ' <img src="'.$moduleRoot.'/images/edit.gif" class="ajaxButtonIcon" id="icm_model_default_dispmeth '.$cm->pid.' '.$ds.' '.$meth['module'].' '.$meth['file'].' '.$meth['class'].' '.$meth['method'].'"/>'.
+              ($meth['default']==true?'</b>':''));
+            }
+          }
+          
+          $addMethods = $cm->getAddDsMethod($ds);
+          $addMethodEl = $dsEl->addChild('<font color="green">Add Datastream Method</font>', 'file',' <img src="'.$moduleRoot.'/images/add.png" class="ajaxFormIcon" id="icm_model_edit_adddsmeth '.$cm->pid.' '.$ds.'"/>');
+          
+          
+        }
+      }
+
+      $ingestRulesEl = $modelTree->addChild('Ingest Rules','folder', ' <img src="'.$moduleRoot.'/images/add.png" class="ajaxFormIcon" id="icm_model_add_ingestRule '.$cm->pid.'"/>');
+      $rules = $cm->getIngestRules();
+      foreach ($rules as $id=>$rule)
+      {
+        $ruleEl = $ingestRulesEl->addChild('Rule '.$id,'folder', ' <img src="'.$moduleRoot.'/images/remove.png" class="ajaxButtonIcon" id="icm_model_remove_ingestRule '.$cm->pid.' '.$id.'"/>');
+        $applToEl = $ruleEl->addChild('Applies To','folder', ' <img src="'.$moduleRoot.'/images/add.png" class="ajaxFormIcon" id="icm_model_add_appliesTo '.$cm->pid.' '.$id.'"/>');
+        foreach ($rule['applies_to'] as $type)
+        {
+          $applToEl->addChild($type,'file', ' <img src="'.$moduleRoot.'/images/remove.png" class="ajaxButtonIcon" id="icm_model_remove_appliesTo '.$cm->pid.' '.$id.' '.$type.'"/>');
+        }
+         
+        $methodsEl=$ruleEl->addChild('Ingest Methods','folder', ' <img src="'.$moduleRoot.'/images/add.png" class="ajaxFormIcon" id="icm_model_add_ingestMethod '.$cm->pid.' '.$id.'"/>');
+        foreach ($rule['ingest_methods'] as $method)
+        {
+          $methodEl = $methodsEl->addChild($method['file'].'<br/>'.$method['class'].'->'.$method['method'],'file',' <img src="'.$moduleRoot.'/images/remove.png" class="ajaxButtonIcon" id="icm_model_remove_ingestMethod '.$cm->pid.' '.$id.' '.$method['module']. ' '.$method['file']. ' '.$method['class']. ' '. $method['method'].'"/>');
+          $paramEl = $methodEl->addChild('Parameters','folder','<img src="'.$moduleRoot.'/images/add.png" class="ajaxFormIcon" id="icm_model_add_ingestMethodParam '.$cm->pid.' '.$id.' '.$method['module']. ' '.$method['file']. ' '.$method['class']. ' '. $method['method'].'"/>');
+          if (count($method['parameters']) > 0)
+          {
+            foreach ($method['parameters'] as $key=>$val)
+            {
+              $paramEl->addChild($key.' = '.$val,'file', '  <img src="'.$moduleRoot.'/images/remove.png" class="ajaxButtonIcon" id="icm_model_remove_ingestMethodParam '.$cm->pid.' '.$id.' '.$method['module']. ' '.$method['file']. ' '.$method['class']. ' '. $method['method'].' '.$key.'"/>');
+            }
+          }
+        }
+         
+      }
+
+      $attr = $cm->getIngestFormAttributes();
+      $ingestFormEl =  $modelTree->addChild('Ingest Form<br/>(dsid: <b>'.$attr['dsid'].'</b> page: <b>'.$attr['page'].'</b> file_chooser: <b>'.($attr['hide_file_chooser']?'hidden':'visible').'</b> )','folder',
+     '  <img src="'.$moduleRoot.'/images/edit.gif" class="ajaxFormIcon" id="icm_model_edit_ingestForm icm_model_edit_ingestForm '.$cm->pid.' '.$attr['dsid']. ' '.$attr['page']. ' '. ($attr['hide_file_chooser']?'true':'false').'"/>');
+       
+      $builderMethod = $cm->getIngestFormBuilderMethod();
+      $ingestFormEl->addChild($builderMethod['file'].'<br/>Builder: '.$builderMethod['class'].'->'.$builderMethod['method'].'<br/>Handler: '.$builderMethod['class'].'->'.$builderMethod['handler'],'file');
+       
+      $elementsEl = $ingestFormEl->addChild('Form Elements','folder','  <img src="'.$moduleRoot.'/images/add.png" class="ajaxFormIcon" id="icm_model_add_ingestFormElement '.$cm->pid.'"/>');
+      
+      if (($elements = $cm->getIngestFormElements())!==false)
+      {
+        $j=0;
+        foreach ($elements as $element)
+        {
+          
+          $icons = ' <img src="'.$moduleRoot.'/images/remove.png" class="ajaxButtonIcon" id="icm_model_remove_ingestFormElement '.$cm->pid.' '.$element['name'].'"/>';
+          
+          if ($j > 0) 
+          {
+             $icons.=' <img src="'.$moduleRoot.'/images/blue_up.png" class="ajaxButtonIcon" id="icm_model_inc_ingestFormElement '.$cm->pid.' '.$element['name'].'"/>';
+          }
+
+          if ($j < count($elements) - 1)
+          {
+             $icons.=' <img src="'.$moduleRoot.'/images/blue_down.png" class="ajaxButtonIcon" id="icm_model_dec_ingestFormElement '.$cm->pid.' '.$element['name'].'"/>';
+          }
+          
+          $icons .= ' <img src="'.$moduleRoot.'/images/edit.gif" class="ajaxFormIcon" id="icm_model_edit_ingestFormElement '.$cm->pid.' '.$element['name'].'"/>';
+          
+          $elementEl = $elementsEl->addChild('<b>'.$element['label'] .'</b> ' . $element['name'].' ('.$element['type'].')','file',$icons);
+	  $params = $cm->getIngestFormElementParams($element['name']);
+          $paramEl = $elementEl->addChild('Parameters','folder','<img src="'.$moduleRoot.'/images/add.png" class="ajaxFormIcon" id="icm_model_add_ingestElementParam '.$cm->pid.' '.$element['name'].'"/>');
+          if (count($params) > 0)
+          {
+            foreach ($params as $key=>$val)
+            {
+              $paramEl->addChild($key.' = '.$val,'file', '  <img src="'.$moduleRoot.'/images/remove.png" class="ajaxButtonIcon" id="icm_model_remove_ingestElementParam '.$cm->pid.' '.$element['name'].' '.$key.'"/>');
+            }
+          }
+
+	  
+          if ($element['type'] == 'select' || $element['type'] == 'radio' || $element['type'] == 'other_select')
+          {
+            $authListEl = $elementEl->addChild(t('Authoritative List'),'folder','  <img src="'.$moduleRoot.'/images/add.png" class="ajaxFormIcon" id="icm_model_add_authListItem '.$cm->pid.' '.$element['name'].'"/>');
+            $i=0;
+            foreach ($element['authoritative_list'] as $value=>$label)
+            {
+              $icons = ' <img src="'.$moduleRoot.'/images/remove.png" class="ajaxButtonIcon" id="icm_model_remove_authListItem '.$cm->pid.' '.$element['name'].' '.$value.'"/>';
+              if ($i > 0)
+              {
+                $icons .= ' <img src="'.$moduleRoot.'/images/blue_up.png" class="ajaxButtonIcon" id="icm_model_inc_authListItem '.$cm->pid.' '.$element['name'].' '.$value.'"/>';
+              }
+              
+              if ($i < count($element['authoritative_list']) - 1)
+              {
+                $icons .= ' <img src="'.$moduleRoot.'/images/blue_down.png" class="ajaxButtonIcon" id="icm_model_dec_authListItem '.$cm->pid.' '.$element['name'].' '.$value.'"/>';
+              }
+              $authListEl->addChild('<b>'.$label.'</b> '.$value,'file',$icons);
+              $i++;
+            }
+          }
+          
+          $j++;
+        }
+      }
+       
+      $addIcon = '';
+      $metadataMethod = $cm->getEditMetadataMethod();
+      if ($metadataMethod == false)
+      {
+        $addIcon = '  <img src="'.$moduleRoot.'/images/add.png" class="ajaxFormIcon" id="icm_model_update_editMetadataMethod '.$cm->pid.'"/>';
+      }
+      $metaDataEl = $modelTree->addChild('Edit Metadata Method','folder',$addIcon);
+      
+      if ($metadataMethod !== false)
+      {
+        $icons = ' <img src="'.$moduleRoot.'/images/remove.png" class="ajaxButtonIcon" id="icm_model_remove_editMetadataMethod '.$cm->pid.'"/>';
+        $icons .= ' <img src="'.$moduleRoot.'/images/edit.gif" class="ajaxFormIcon" id="icm_model_update_editMetadataMethod '.$cm->pid.'"/>';
+        $metaDataEl->addChild('DSID: '.$metadataMethod['dsid'].'<br/>'.$metadataMethod['file'].'<br/>Builder: '.$metadataMethod['class'].'->'.$metadataMethod['method'].'<br/>Handler: '.$metadataMethod['class'].'->'.$metadataMethod['handler'],'file',$icons);
+      }
+      
+      
+      $modelTree->addChild('Services','folder','  <img src="'.$moduleRoot.'/images/add.png" class="ajaxFormIcon" id="icm_model_service_add '.$cm->pid.'"/>');
+      
+    }
+    
+    
+    $ret = $modelTree->buildTree('filetree');
+  }
+
+  if ($ret !== false)
+  {
+    echo $ret;
+  } else
+  echo t('Error: Unable to load content model');
+
+  exit();
+}
+
+function icm_ajax_collection_tree()
+{
+  global $base_url;
+  $ret =false;
+  $moduleRoot=drupal_get_path('module','islandora_content_modeller');
+  require_once($moduleRoot.'/treeview.inc');
+  $moduleRoot=$base_url.'/'.$moduleRoot;  
+
+  module_load_include('inc', 'fedora_repository', 'ContentModel');
+  module_load_include('inc', 'fedora_repository', 'CollectionPolicy');
+  module_load_include('inc', 'fedora_repository', 'CollectionClass');
+
+  $collectionHelper = new CollectionClass();
+
+  $pid=(!isset($_GET['collection_pid']) || strtolower($_GET['collection_pid']) == 'false')?variable_get('fedora_repository_pid', 'islandora:top'):trim($_GET['collection_pid']);
+  $cm=ContentModel::loadFromObject($pid);
+  $cp=CollectionPolicy::loadFromCollection($pid);
+
+  $cssPid = $pid;//str_replace(':','_',$pid);
+
+  if ($cm !== false && $cp !== false)
+  {
+    $cmValid = $cm->validate();
+    $cpValid = $cp->validate();
+
+    $collectionTree = new treeview($pid .($cpValid?'':'!').' ('.$cm->pid. ($cmValid?'':'!').')','folder',' <img src="'.$moduleRoot.'/images/edit.gif" class="ajaxFormIcon" id="icm_collection_edit '.$cp->pid.'"/> <img src="'.$moduleRoot.'/images/red_info.png" class="ajaxFormIcon" id="icm_collection_rollback '.$cp->pid.'"/>  <img src="'.$moduleRoot.'/images/view.gif" class="ajaxFormIcon" id="icm_display_rawXml collection '.$cp->pid.'"/>','collections');
+
+    if (!$cmValid || !$cpValid)
+    {
+      //        echo '<pre>'.htmlentities($cm->dumpXml()).'</pre>';
+      $errorsEl = $collectionTree->addChild('XML Errors','folder');
+       
+      foreach (ContentModel::$errors as $err)
+      {
+        $errorsEl->addChild('<b><font color="red">'.$err.'</font></b>');
+      }
+      foreach (CollectionPolicy::$errors as $err)
+      {
+        $errorsEl->addChild('<b><font color="red">'.$err.'</font></b>');
+      }
+    } else
+    {
+  
+      $childrenAllowed = false;
+      $contentModels = $cp->getContentModels();
+      $cm_tree = $collectionTree->addChild('Allowed Content Models','folder',' <img src="'.$moduleRoot.'/images/add.png" class="ajaxFormIcon" id="icm_collection_add_cmodel '.$cssPid.'"/>',$cssPid.'-cmodels');
+      foreach ($contentModels as $ccm)
+      {
+        if ($ccm->pid == variable_get('fedora_collection_model_pid','islandora:collectionCModel') )
+        {
+          $childrenAllowed = true;
+        }
+        
+        $cm_tree->addChild($ccm->name.' (<a href="#" class="collection_model" id="'.$ccm->pid.'">'.$ccm->pid.'</a>)',  'file', ' <img src="'.$moduleRoot.'/images/remove.png" class="ajaxButtonIcon" id="icm_collection_remove_cmodel '.$cssPid.' '.$ccm->pid.'"/>');
+      }
+
+      $dstreams=$cm->listDatastreams();
+      if (count($dstreams) > 0)
+      {
+        $ds_tree = $collectionTree->addChild('Datastreams','folder',null,$cssPid.'-dstreams');
+        foreach ($dstreams as $ds)
+        $ds_tree->addChild($ds);
+      }
+
+      $terms=$cp->getSearchTerms(true);
+      $search_tree = $collectionTree->addChild('Search Terms','folder',' <img src="'.$moduleRoot.'/images/add.png" class="ajaxFormIcon" id="icm_collection_add_term '.$cssPid.'"/>', $cssPid.'-terms');
+      if (count($terms) > 0)
+      {
+        foreach ($terms as $term)
+        {
+          $search_tree->addChild(($term['default']?'<b>':'').$term['value'].' ('.$term['field'].')'.($term['default']?'</b>':''), 'file', ' <img src="'.$moduleRoot.'/images/remove.png" class="ajaxButtonIcon" id="icm_collection_remove_term '.$cssPid.' '.$term['field'].'" alt="Remove"/> <img src="'.$moduleRoot.'/images/edit.gif" class="ajaxButtonIcon" id="icm_collection_default_term '.$cssPid.' '.$term['field'].'" alt="Set as Default"/> ');
+        }
+      }
+
+      if ($childrenAllowed)
+      {
+        $items = new SimpleXMLElement( $collectionHelper->getRelatedItems($pid,null,null));
+        $child_tree= new TreeView('Child Collections','folder',' <img src="'.$moduleRoot.'/images/add.png" class="ajaxFormIcon" id="icm_collection_new '.$cssPid.'"/>',$cssPid.'-children');
+        
+        if (count($items->results->result) > 0)
+        {
+          foreach ($items->results->result as $res)
+          {
+            $child_pid=substr($res->object['uri'],strpos($res->object['uri'],'/')+1);
+            $model_pid=substr($res->content['uri'] ,strpos($res->content['uri'],'/')+1);
+             
+            $child_cp=CollectionPolicy::loadFromCollection($child_pid);
+            if ($child_cp !== false)
+            {
+              $child_tree->addChild('<a href="#" class="collection_child" id="'.$child_pid.'">'.$child_pid.'</a> (<a href="#" class="collection_model" id="'.$model_pid.'">'.$model_pid.'</a>)','file',' <img src="'.$moduleRoot.'/images/remove.png" class="ajaxFormIcon" id="icm_collection_purge '.$child_pid.'"/>');
+            }
+          }
+        }
+        $collectionTree->addChild($child_tree);
+      }
+    }
+    $ret = $collectionTree->buildTree('filetree');
+  }
+
+  if ($ret !== false)
+  {
+    echo $ret;
+  } else
+  echo t('Error: Missing content model and/or collection policy datastream(s) for  '. $pid);
+
+  exit();
+}
+
+
+function islandora_content_modeller_main()
+{
+  global $base_url;
+  $moduleRoot=drupal_get_path('module','islandora_content_modeller');
+  drupal_add_css($moduleRoot.'/css/jquery.treeview.css');
+  drupal_add_css($moduleRoot.'/css/content_modeller.css');
+  drupal_add_css($moduleRoot.'/css/jquery.jnotify.css');
+  drupal_add_css($moduleRoot.'/css/smoothness/jquery-ui-1.8.1.custom.css');
+
+  drupal_add_js($moduleRoot.'/js/jquery.cookie.js');
+  drupal_add_js($moduleRoot.'/js/jquery.treeview.min.js');
+  drupal_add_js($moduleRoot.'/js/content_modeller.js');
+  drupal_add_js($moduleRoot.'/js/jquery.jnotify.js');
+  
+  $moduleRoot = $base_url.'/'.$moduleRoot; 
+  
+  $content = '<div class="contentModeller">';
+  $content .= '<a href="#" class="refresh">Refresh</a>&nbsp;<img src="'.$moduleRoot.'/images/ajax-loader.gif" id="ajaxBusy" alt="Loading"/><br clear="all"/>';
+  $content .= '<div class="collection"><h4>'.t('Collections').'</h4>';
+  $content .= '<div id="collection_crumbs"></div>';
+  $content .= '<div id="collection_tree"></div></div>';
+  $content .= '<div class="model"><h4>'.t('Models').'</h4>';
+  $content .= '<a href="#" class="list">List Installed Models</a>';
+  $content .= '<div id="model_crumbs"></div>';
+  $content .= '<div id="model_tree"></div>';
+  $content .= '</div></div>';
+  $content .= '<br clear="all"/><div id="Notification"></div>';
+  $content .= '<div id="ajaxForm"></div>';
+
+  return $content;
+}
+
+function icm_ajax_formExists($formName)
+{
+  $validForms = array('icm_collection_new','icm_collection_edit','icm_collection_purge','icm_model_new','icm_model_purge','icm_model_edit_ingestForm','icm_model_add_mime','icm_collection_add_term','icm_collection_add_cmodel','icm_model_add_ingestMethodParam','icm_model_add_ingestMethod','icm_model_add_ingestRule','icm_model_add_appliesTo',
+  'icm_model_add_ds','icm_model_add_dispmeth','icm_model_add_ingestFormElement','icm_model_edit_ingestFormElement','icm_model_add_authListItem','icm_model_update_editMetadataMethod','icm_model_rollback','icm_collection_rollback','icm_display_rawXml','icm_model_add_ingestElementParam',
+  'icm_model_edit_adddsmeth','icm_model_service_add');
+  return in_array($formName,$validForms);
+}
+
+function icm_ajax_processForm($formName)
+{
+  $params=null;
+  if (isset($_GET['formReq']))
+  {
+    $params=preg_split('/\s+/',trim($_GET['formReq']));
+  }
+
+  // require_once(drupal_get_path('module','islandora_content_modeller').'/ajaxForms.inc');
+  if (icm_ajax_formExists($formName))
+  {
+
+    $formContent = drupal_get_form($formName,$params);
+    echo theme_status_messages('error');  
+    echo $formContent;
+  }
+}
+
+function icm_ajax_button()
+{
+
+  module_load_include('inc', 'fedora_repository', 'CollectionPolicy');
+  module_load_include('inc', 'fedora_repository', 'ContentModel');
+        
+  $params=null;
+  if (isset($_GET['formReq']))
+  {
+    $params=preg_split('/\s+/',trim($_GET['formReq']));
+  }
+
+  switch (strtolower($params[0]))
+  {
+    case 'icm_model_remove_editmetadatamethod':
+        if (count($params) == 2)
+      {
+        $model_pid = $params[1];
+        
+        if (($cm=ContentModel::loadFromModel($model_pid))!==FALSE)
+        {
+          if (!$cm->removeEditMetadataMethod() || !$cm->saveToFedora())
+          {
+            echo t('Error: Unable to remove edit metadata method from model <b>%cm_pid</b>.',array('%cm_pid'=>$cm->pid));
+          } else
+          {
+            echo 'success:'. t('Successfully removed edit metadata method from model <b>%cm_pid</b>.',array('%cm_pid'=>$cm->pid));
+            exit();
+          }
+        } else 
+        {
+            echo t('Error: Unknown content model. Please try again.');  
+        }       
+      } else
+      {
+        echo t('Error: Missing parameters to remove edit metadata method. Please try again.');
+      }             
+      break;
+      
+     case 'icm_model_remove_authlistitem':
+      if (count($params) == 4)
+      {
+        $model_pid = $params[1];
+        $elementName = $params[2];
+        $authValue = $params[3];
+        
+        if (($cm=ContentModel::loadFromModel($model_pid))!==FALSE)
+        {
+          if (!$cm->removeAuthListItem($elementName,$authValue) || !$cm->saveToFedora())
+          {
+            echo t('Error: Unable to remove authoritative list item <b>%value</b> in model <b>%m_pid</b>.',array('%value'=>$authValue,'%m_pid'=>$cm->pid));
+          } else
+          {
+            echo 'success:'. t('Successfully removed authoritative list item <b>%value</b> in model <b>%m_pid</b>.',array('%value'=>$authValue,'%m_pid'=>$cm->pid));
+            exit();
+          }
+        } else 
+        {
+            echo t('Error: Unknown content model. Please try again.');  
+        }       
+      } else
+      {
+        echo t('Error: Missing parameters to remove authoritative list item. Please try again.');
+      }            
+      break;    
+    
+    case 'icm_model_inc_authlistitem':
+      if (count($params) == 4)
+      {
+        $model_pid = $params[1];
+        $elementName = $params[2];
+        $authValue = $params[3];
+        
+        if (($cm=ContentModel::loadFromModel($model_pid))!==FALSE)
+        {
+          if (!$cm->incAuthListItem($elementName,$authValue) || !$cm->saveToFedora())
+          {
+            echo t('Error: Unable to increment authoritative list item <b>%value</b> in model <b>%m_pid</b>.',array('%value'=>$authValue,'%m_pid'=>$cm->pid));
+          } else
+          {
+            echo 'success:'. t('Successfully incremented authoritative list item <b>%value</b> in model <b>%m_pid</b>.',array('%value'=>$authValue,'%m_pid'=>$cm->pid));
+            exit();
+          }
+        } else 
+        {
+            echo t('Error: Unknown content model. Please try again.');  
+        }       
+      } else
+      {
+        echo t('Error: Missing parameters to increment authoritative list item. Please try again.'); 
+      }            
+      break;
+
+    case 'icm_model_dec_authlistitem':
+      if (count($params) == 4)
+      {
+        $model_pid = $params[1];
+        $elementName = $params[2];
+        $authValue = $params[3];
+        
+        if (($cm=ContentModel::loadFromModel($model_pid))!==FALSE)
+        {
+          if (!$cm->decAuthListItem($elementName,$authValue) || !$cm->saveToFedora())
+          {
+            echo t('Error: Unable to decrement authoritative list item <b>%value</b> in model <b>%m_pid</b>.',array('%value'=>$authValue,'%m_pid'=>$cm->pid));
+          } else
+          {
+            echo 'success:'. t('Successfully decremented authoritative list item <b>%value</b> in model <b>%m_pid</b>.',array('%value'=>$authValue,'%m_pid'=>$cm->pid));
+            exit();
+          }
+        } else 
+        {
+            echo t('Error: Unknown content model. Please try again.');  
+        }       
+      } else
+      {
+        echo t('Error: Missing parameters to decrement authoritative list item. Please try again.'); 
+      }            
+      break;
+      
+    case 'icm_model_remove_ingestformelement':
+      if (count($params) == 3)
+      {
+        $model_pid = $params[1];
+        $name = $params[2];
+        
+        if (($cm=ContentModel::loadFromModel($model_pid))!==FALSE)
+        {
+          if (!$cm->removeIngestFormElement($name) || !$cm->saveToFedora())
+          {
+            echo t('Error: Unable to remove ingest form element <b>%name</b> from model <b>%m_pid</b>.',array('%name'=>$name,'%m_pid'=>$cm->pid));
+          } else
+          {
+            echo 'success:'. t('Successfully removed ingest form element <b>%name</b> from model <b>%m_pid</b>.',array('%name'=>$name,'%m_pid'=>$cm->pid));
+            exit();
+          }
+        } else 
+        {
+            echo t('Error: Unknown content model. Please try again.');  
+        }       
+        
+      } else
+      {
+        echo t('Error: Missing parameters to remove ingest form element. Please try again.'); 
+      }              
+      break;
+      
+    case 'icm_model_inc_ingestformelement':
+      if (count($params) == 3)
+      {
+        $model_pid = $params[1];
+        $name = $params[2];
+        
+        if (($cm=ContentModel::loadFromModel($model_pid))!==FALSE)
+        {
+          if (!$cm->incIngestFormElement($name) || !$cm->saveToFedora())
+          {
+            echo t('Error: Unable to increment ingest form element <b>%name</b> from model <b>%m_pid</b>.',array('%name'=>$name,'%m_pid'=>$cm->pid));
+          } else
+          {
+            echo 'success:'. t('Successfully incremented ingest form element <b>%name</b> from model <b>%m_pid</b>.',array('%name'=>$name,'%m_pid'=>$cm->pid));
+            exit();
+          }
+        } else 
+        {
+            echo t('Error: Unknown content model. Please try again.');  
+        }       
+        
+      } else
+      {
+        echo t('Error: Missing parameters to increment ingest form element. Please try again.'); 
+      }              
+      break;
+
+    case 'icm_model_dec_ingestformelement':
+      if (count($params) == 3)
+      {
+        $model_pid = $params[1];
+        $name = $params[2];
+        
+        if (($cm=ContentModel::loadFromModel($model_pid))!==FALSE)
+        {
+          if (!$cm->decIngestFormElement($name) || !$cm->saveToFedora())
+          {
+            echo t('Error: Unable to decrement ingest form element <b>%name</b> from model <b>%m_pid</b>.',array('%name'=>$name,'%m_pid'=>$cm->pid));
+          } else
+          {
+            echo 'success:'. t('Successfully decremented ingest form element <b>%name</b> from model <b>%m_pid</b>.',array('%name'=>$name,'%m_pid'=>$cm->pid));
+            exit();
+          }
+        } else 
+        {
+            echo t('Error: Unknown content model. Please try again.');  
+        }       
+        
+      } else
+      {
+        echo t('Error: Missing parameters to decrement ingest form element. Please try again.'); 
+      }              
+      break;      
+      
+      
+    case 'icm_model_remove_dispmeth':
+      if (count($params) == 7)
+      {
+        $model_pid = $params[1];
+        $dsid = $params[2];
+	$module = $params[3];
+        $file = $params[4];
+        $class = $params[5];
+        $method = $params[6];
+	
+        if (($cm=ContentModel::loadFromModel($model_pid))!==FALSE)
+        {
+          if (!$cm->removeDispMeth($dsid, $module, $file,$class,$method) || !$cm->saveToFedora())
+          {
+            echo t('Error: Unable to remove display method for datastream <b>%dsid</b> of model <b>%m_pid</b>.',array('%dsid'=>$dsid,'%m_pid'=>$cm->pid));
+          } else
+          {
+            echo 'success:'. t('Successfully remove display method for datastream <b>%dsid</b> of model <b>%m_pid</b>.',array('%dsid'=>$dsid, '%m_pid'=>$cm->pid));
+            exit();
+          }
+        } else 
+        {
+            echo t('Error: Unknown content model. Please try again.');  
+        }       
+        
+      } else
+      {
+        echo t('Error: Missing parameters to remove display method of datastream.'); 
+      }          
+      break;
+    
+    case 'icm_model_default_dispmeth':
+      if (count($params) == 7)
+      {
+        $model_pid = $params[1];
+        $dsid = $params[2];
+	$module = $params[3];
+        $file = $params[4];
+        $class = $params[5];
+        $method = $params[6];
+        
+        if (($cm=ContentModel::loadFromModel($model_pid))!==FALSE)
+        {
+          if (!$cm->setDefaultDispMeth($dsid,$module,$file,$class,$method) || !$cm->saveToFedora())
+          {
+            echo t('Error: Unable to set default display method for datastream <b>%dsid</b> of model <b>%m_pid</b>.',array('%dsid'=>$dsid,'%m_pid'=>$cm->pid));
+          } else
+          {
+            echo 'success:'. t('Successfully set default display method for datastream <b>%dsid</b> of model <b>%m_pid</b>.',array('%dsid'=>$dsid, '%m_pid'=>$cm->pid));
+            exit();
+          }
+        } else 
+        {
+            echo t('Error: Unknown content model. Please try again.');  
+        }       
+        
+      } else
+      {
+        echo t('Error: Missing parameters to set default display method of datastream.'); 
+      }                  
+    break;
+    
+    case 'icm_model_remove_ds':
+        if (count($params) == 3)
+      {
+        
+        $model_pid = $params[1];
+
+        if (($cm=ContentModel::loadFromModel($model_pid))!==FALSE)
+        {
+          if (!$cm->removeDs($params[2]) || !$cm->saveToFedora())
+          {
+            echo t('Error: Unable to remove datastream from model <b>%m_pid</b>.',array('%m_pid'=>$cm->pid));
+          } else
+          {
+            echo 'success:'. t('Successfully removed datastream model <b>%m_pid</b>.',array('%m_pid'=>$cm->pid));
+            exit();
+          }
+        } else 
+        {
+            echo t('Error: Unknown content model. Please try again.');  
+        }       
+        
+      } else
+      {
+        echo t('Error: Missing parameters for removal of application mimetype.'); 
+      }      
+      break;
+    case 'icm_model_remove_appliesto':
+      if (count($params) == 4)
+      {
+        
+        $model_pid = $params[1];
+        $rule_id = $params[2];
+        
+        if (($cm=ContentModel::loadFromModel($model_pid))!==FALSE)
+        {
+          if (!$cm->removeAppliesTo($rule_id,$params[3] ) || !$cm->saveToFedora())
+          {
+            echo t('Error: Unable to remove application mimetype from <b>Rule %rule_id</b> in model <b>%m_pid</b>.',array('%rule_id'=>$rule_id,'%m_pid'=>$cm->pid));
+          } else
+          {
+            echo 'success:'. t('Successfully removed application mimetype from <b>Rule %rule_id</b> in model <b>%m_pid</b>.',array('%rule_id'=>$rule_id,'%m_pid'=>$cm->pid));
+            exit();
+          }
+        } else 
+        {
+            echo t('Error: Unknown content model. Please try again.');  
+        }       
+        
+      } else
+      {
+        echo t('Error: Missing parameters for removal of application mimetype.'); 
+      }
+    break;
+    
+    
+    case 'icm_model_remove_ingestrule':
+      
+      if (count($params) == 3)
+      {
+        
+        $model_pid = $params[1];
+        $rule_id = $params[2];
+        
+        if (($cm=ContentModel::loadFromModel($model_pid))!==FALSE)
+        {
+          if (!$cm->removeIngestRule($rule_id ) || !$cm->saveToFedora())
+          {
+            echo t('Error: Unable to remove ingest <b>Rule %rule_id</b> in model <b>%m_pid</b>.',array('%rule_id'=>$rule_id,'%m_pid'=>$cm->pid));
+          } else
+          {
+            echo 'success:'. t('Successfully removed ingest <b>Rule %rule_id</b> in model <b>%m_pid</b>.',array('%rule_id'=>$rule_id,'%m_pid'=>$cm->pid));
+            exit();
+          }
+        } else 
+        {
+            echo t('Error: Unknown content model. Please try again.');  
+        }       
+        
+      } else
+      {
+        echo t('Error: Missing parameters for removal of ingest rule.'); 
+      }
+    break;
+      
+    case 'icm_model_remove_ingestmethod':
+      if (count($params) == 7)
+      {
+        
+        $model_pid = $params[1];
+        $rule_id = $params[2];
+	$module = $params[3];
+        $file = $params[4];
+        $class = $params[5];
+        $method = $params[6];
+        
+        if (($cm=ContentModel::loadFromModel($model_pid))!==FALSE)
+        {
+          if (!$cm->removeIngestMethod($rule_id, $module, $file, $class, $method) || !$cm->saveToFedora())
+          {
+            echo t('Error: Unable to remove ingest method of <b>Rule %rule_id</b> in model <b>%m_pid</b>.',array('%rule_id'=>$rule_id,'%m_pid'=>$cm->pid));
+          } else
+          {
+            echo 'success:'. t('Successfully removed ingest method of <b>Rule %rule_id</b> in model <b>%m_pid</b>.',array('%rule_id'=>$rule_id,'%m_pid'=>$cm->pid));
+            exit();
+          }
+        } else 
+        {
+            echo t('Error: Unknown content model. Please try again.');  
+        }       
+        
+      } else
+      {
+        echo t('Error: Missing parameters for removal of ingest method.'); 
+      }
+    break;
+      
+    case 'icm_model_remove_ingestmethodparam':
+    
+      if (count($params) == 8)
+      {
+        
+        $model_pid = $params[1];
+        $rule_id = $params[2];
+	$module = $params[3];
+        $file = $params[4];
+        $class = $params[5];
+        $method = $params[6];
+        $name = $params[7];
+
+	
+        if (($cm=ContentModel::loadFromModel($model_pid))!==FALSE)
+        {
+          if (!$cm->removeIngestMethodParam($rule_id, $module, $file, $class, $method, $name) || !$cm->saveToFedora())
+          {
+            echo t('Error: Unable to remove parameter of <b>Rule %rule_id</b> in model <b>%m_pid</b>.',array('%rule_id'=>$rule_id,'%m_pid'=>$cm->pid));
+          } else
+          {
+            echo 'success:'. t('Successfully removed parameter of <b>Rule %rule_id</b> in model <b>%m_pid</b>.',array('%rule_id'=>$rule_id,'%m_pid'=>$cm->pid));
+            exit();
+          }
+        } else 
+        {
+            echo t('Error: Unknown content model. Please try again.');  
+        }       
+        
+      } else
+      {
+        echo t('Error: Missing parameters for removal of ingest method parameter.'); 
+      }
+      
+      break;
+
+    case 'icm_model_remove_ingestelementparam':
+    
+      if (count($params) == 4)
+      {
+        
+        $model_pid = $params[1];
+        $element_name = $params[2];
+        $name = $params[3];
+        
+        if (($cm=ContentModel::loadFromModel($model_pid))!==FALSE)
+        {
+          if (!$cm->setIngestFormElementParam($element_name, $name, FALSE) || !$cm->saveToFedora())
+          {
+            echo t('Error: Unable to remove parameter of element <b>%element</b> in model <b>%m_pid</b>.',array('%element'=>$element_name,'%m_pid'=>$cm->pid));
+          } else
+          {
+            echo 'success:'. t('Successfully removed parameter of element <b>%element</b> in model <b>%m_pid</b>.',array('%element'=>$element_name,'%m_pid'=>$cm->pid));
+            exit();
+          }
+        } else 
+        {
+            echo t('Error: Unknown content model. Please try again.');  
+        }       
+        
+      } else
+      {
+        echo t('Error: Missing parameters for removal of form element parameter.'); 
+      }
+      
+      break;
+      
+  	case 'icm_model_toggle_dsdisplay':
+      if (isset($params[1]) && isset($params[2]))
+      {
+        if (($cm=ContentModel::loadFromModel($params[1]))!==FALSE)
+        {
+          $dsid = trim($params[2]);
+          if ($dsid == '')
+          {
+            echo t('Error: Datastream missing or not specified.  Please try again.');
+          } else if (!$cm->setDisplayInFieldset($dsid, !$cm->displayInFieldset($dsid)) || !$cm->saveToFedora())
+          {
+            echo t('Error: Unable to update datastream <b>%dsid</b> in model <b>%m_pid</b>.',array('%dsid'=>$dsid,'%m_pid'=>$cm->pid));
+          } else
+          {
+            echo 'success:'.t('Successfully updated datastream <b>%dsid</b> in model <b>%m_pid</b>',array('%dsid'=>$dsid,'%m_pid'=>$cm->pid));
+            exit();
+          }
+        } else 
+        {
+            echo t('Error: Unknown content model. Please try again.');  
+        }
+      } else
+      {
+        echo t('Error: Missing parameters for toggle datastream display in fieldset.');
+      }
+  	  break;
+  		
+    case 'icm_collection_remove_cmodel':
+
+      if (isset($params[1]) && isset($params[2]))
+      {
+        $cp = CollectionPolicy::loadFromCollection($params[1]);
+        $cm = ContentModel::loadFromModel($params[2]);
+        if ($cm !== false && $cp !== false)
+        {
+          if (!$cp->removeModel($cm) || !$cp->saveToFedora())
+          {
+            echo t('Error: Unable to remove content model <b>%m_pid</b> from collection policy of <b>%c_pid</b>.',array('%m_pid'=>$cm->pid,'%c_pid'=>$cp->pid));
+          } else
+          {
+            echo 'success:'.t('Successfully removed content model <b>%m_pid</b> from collection policy of <b>%c_pid</b>.',array('%m_pid'=>$cm->pid,'%c_pid'=>$cp->pid));
+            exit();
+          }
+        } else
+        echo t('Error: Unknown collection policy or content model.  Please try again.');
+      } else
+      echo t('Error: Unknown collection policy or content model.  Please try again.');
+      break;
+
+    case 'icm_collection_default_term':
+      $c_pid=$params[1];
+      if (($cp = CollectionPolicy::loadFromCollection(trim($c_pid)))!== FALSE)
+      {
+        $field=isset($params[2])?$params[2]:'';
+        if (trim($field) != '')
+        {
+          if (!$cp->setDefaultTerm(htmlentities($field)) || !$cp->saveToFedora())
+          {
+            echo t('Error: Unable to set default search term to <b>%field</b> in collection policy <b>%cp_id</b>.',array('%field'=>htmlentities($field),'%pc_pid'=>$cp->pid));
+          } else
+          {
+            echo 'success:'.t('Successfully set default search term <b>%field</b> in collection policy <b>%cp_id</b>.',array('%field'=>htmlentities($field),'%cp_pid'=>$cp->pid));
+            exit();
+          }
+        } else
+        {
+          echo t('Error: Unknown search term <b>%field</b> selected.  Please try again.',array('%field'=>htmlentities($field)));
+        }
+      } else
+      {
+        echo t('Error: Unknown collection policy.  Please try again.');
+      }
+      break;
+
+
+    case 'icm_collection_remove_term':
+      $c_pid=$params[1];
+      if (($cp = CollectionPolicy::loadFromCollection(trim($c_pid)))!== FALSE)
+      {
+        $field=isset($params[2])?$params[2]:'';
+        if (trim($field) != '')
+        {
+          if (!$cp->removeTerm(htmlentities($field)) || !$cp->saveToFedora())
+          {
+            echo t('Error: Unable to remove search term <b>%field</b> from collection policy <b>%cp_id</b>.',array('%field'=>htmlentities($field),'%c_pid'=>$cp->pid));
+          } else
+          {
+            echo 'success:'.t('Successfully removed search term <b>%field</b> from collection policy <b>%cp_id</b>.',array('%field'=>htmlentities($field),'%c_pid'=>$cp->pid));
+            exit();
+          }
+        } else
+        {
+          echo t('Error: Unknown search term <b>%field</b> selected for removal.  Please try again.',array('%field'=>htmlentities($field)));
+        }
+      } else
+      {
+        echo t('Error: Unknown collection policy.  Please try again.');
+      }
+      break;
+
+    case 'icm_model_remove_mime':
+      $m_pid =$params[1];
+      if (($cm = ContentModel::loadFromModel(trim($m_pid))) !== FALSE)
+      {
+        $type = isset($params[2])?trim($params[2]):'';
+        if ($type == '')
+        {
+          echo t('Error: You must specify a mimetype to remove.  Please try again.');
+        } else
+        {
+          if ($cm->removeMimetype($type) && $cm->saveToFedora())
+          {
+            echo 'success:'.t('Successfully removed mime type <b>%type</b> from content model <b>%m_pid</b>.',array('%type'=>htmlentities($type),'%m_pid'=>htmlentities($m_pid)));
+            exit();
+          } else
+          {
+            echo t('Error: Unable to remove mime type <b>%type</b> from content model <b>%m_pid</b>.  Please make sure that it isnt the only term left in the content model.',array('%type'=>htmlentities($type),'%m_pid'=>htmlentities($m_pid)));
+          }
+        }
+      } else
+      {
+        echo t('Error: Unknown content model.  Please try again.');
+      }
+      break;
+
+    default:
+      echo t('Error: Unknown action <b>%action</b>  Please try again',array('%action'=>$params[0]));
+  }
+
+}
+
+
+
+function icm_model_add_mime_validate($form,&$form_state)
+{
+  //only proceed if no errors have been found.
+  if (form_get_errors() !== NULL)
+    return;
+      
+  module_load_include('inc', 'fedora_repository', 'ContentModel');
+  if (trim($form_state['values']['addMime']['model_pid'])=='' || ($cm = ContentModel::loadFromModel(trim($form_state['values']['addMime']['model_pid']))) === FALSE)
+  {
+    form_set_error('',t('Error: Specified model could not be found.'));
+  } else if ($cm->addMimetype(trim($form_state['values']['addMime']['type'])) === FALSE || $cm->saveToFedora() === FALSE)
+  {
+    form_set_error('',t('Error: Unable to add mimetype to specified model.  Please make sure that the mimetype is not already listed in the model.'));
+  } else
+  {
+    echo 'success:'.t('Successfully added mimetype <b>%mimetype</b> to model <b>%model_name</b>',array('%model_name'=>$cm->name,'%mimetype'=>trim($form_state['values']['addMime']['type'])));
+    exit();
+  }
+}
+
+function icm_model_add_mime(&$form_state,$params=null)
+{
+
+  if (is_array($params) && isset($params[0]))
+  {
+    $model_pid = $params[0];
+  } else if (isset($form_state['post']['addMime']['model_pid']))
+  {
+    $model_pid = $form_state['post']['addMime']['model_pid'];
+  }
+
+
+  $form['addMime'] = array(
+    '#type'=>'fieldset',
+    '#title'=> t('Add Mimetype to Model <b>%model_pid</b>', array('%model_pid'=>$model_pid)),
+    '#tree'=>TRUE
+  );
+
+  $form['addMime']['type'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Mimetype'),
+    '#size' => 30,
+    '#required' => TRUE,
+    '#description' => t('A content mimetype that can be ingested using this model.'),    
+  );
+
+  $form['addMime']['model_pid'] = array('#type' => 'hidden', '#value'=> $model_pid);
+  $form['addMime']['submit'] = array('#type' => 'submit', '#value' => t('Save'));
+  $form['addMime']['cancel'] = array('#type' => 'button', '#value' => t('Cancel'), '#id'=>'cancel');
+
+  return $form;
+
+}
+
+function icm_collection_add_cmodel_validate($form,&$form_state)
+{
+  //only proceed if no errors have been found.
+  if (form_get_errors() !== NULL)
+    return;
+  
+  module_load_include('inc','fedora_repository','CollectionPolicy');
+  module_load_include('inc','fedora_repository','ContentModel');
+  
+  if (!ContentModel::validPid($form_state['values']['form']['namespace']))
+  {
+    form_set_error('form][namespace',t('Error: Invalid namespace format.'));
+  } else
+  {
+    $c_pid = $form_state['values']['form']['collection_pid'];
+    $m_pid = $form_state['values']['form']['model_pid'];
+  
+  
+    if (($cm = ContentModel::loadFromModel($m_pid))!== FALSE &&
+        ($cp = CollectionPolicy::loadFromCollection($c_pid)) !== FALSE)
+    {    
+      if ($cp->addModel($cm,trim($form_state['values']['form']['namespace'])) && $cp->saveToFedora())
+      {
+        echo 'success:'.t('Successfully added content model <b>%cm_pid%</b> to collection policy of <b>%cp_pid%</b>.',array('%cm_pid%'=>$cm->pid,'%cp_pid%'=>$cp->pid));
+        exit();
+        
+      } else
+      {
+        form_set_error('form][model_pid',t('Error: Unable to add content model <b>%cm_pid%</b> to collection policy of <b>%cp_pid%</b>.  Please make sure that the model is not already listed in the collection policy.',array('%cm_pid%'=>$cm->pid,'%cp_pid%'=>$cp->pid)));
+      }
+      
+    } else
+    {
+      form_set_error('',t('Error: Unable to load specified content model or collection policy.  Please try again.'));
+    }
+  }
+}
+
+function icm_collection_add_cmodel(&$form_state,$params=null)
+{
+
+  if (is_array($params) && isset($params[0]))
+  {
+    $collection_pid = $params[0];
+  } else if (isset($form_state['post']['form']['collection_pid']))
+  {
+    $collection_pid = $form_state['post']['form']['collection_pid'];
+  }
+
+  module_load_include('inc','fedora_repository','CollectionClass');
+  module_load_include('inc','fedora_repository','ContentModel');
+  $collectionHelper = new CollectionClass();
+
+  $options=array();
+  $items = new SimpleXMLElement( $collectionHelper->getRelatedItems(variable_get('fedora_content_model_collection_pid','islandora:ContentModelCollection') ,null,null));
+  for ($i = 0; $i < count($items->results->result); $i++)
+  {
+    list(,$pid)=preg_split('/\//',$items->results->result[$i]->object['uri']);
+
+    $cm = ContentModel::loadFromModel($pid);
+    if ($cm !== false)
+    {
+      $options[$pid] = $items->results->result[$i]->title .' ('.$pid.')';
+    }
+  }
+
+  $form['form'] = array(
+    '#type'=>'fieldset',
+    '#title'=> t('Add content model to collection <b>%collection_pid</b>', array('%collection_pid'=>$collection_pid)),
+    '#tree'=>TRUE
+  );
+
+  $form['form']['model_pid'] = array(
+    '#type' => 'select',
+    '#title' => t('Content Model'),
+    '#required' => TRUE,
+    '#options' => $options,
+    '#description' => t('A descriptive label for the field displayed on the search form.'),    
+  );
+  
+  $form['form']['namespace'] = array(
+    '#type'=> 'textfield',
+    '#title'=> t('Namespace'),
+    '#description' => t('The base namespace for objects of this type injested into the collection. eg islandora:collection '),
+    '#size' => 30,
+    '#maxSize' => 60,
+    '#required' => TRUE
+  );
+
+  $form['form']['collection_pid'] = array('#type' => 'hidden', '#value'=> $collection_pid);
+  $form['form']['submit'] = array('#type' => 'submit', '#value' => t('Save'));
+  $form['form']['cancel'] = array('#type' => 'button', '#value' => t('Cancel'), '#id'=>'cancel');
+
+  return $form;
+
+}
+
+function icm_collection_add_term_validate($form,&$form_state)
+{
+  //only proceed if no errors have been found.
+  if (form_get_errors() !== NULL)
+    return;
+      
+  module_load_include('inc', 'fedora_repository', 'CollectionPolicy');
+  if (trim($form_state['values']['form']['collection_pid'])=='' || ($cp = CollectionPolicy::loadFromCollection(trim($form_state['values']['form']['collection_pid']))) === FALSE)
+  {
+    form_set_error('',t('Error: Specified collection policy could not be found.'));
+  } else if ($cp->addTerm(trim($form_state['values']['form']['field']),trim($form_state['values']['form']['value'])) === FALSE || $cp->saveToFedora() === FALSE)
+  {
+    form_set_error('',t('Error: Unable to add search term to specified collection policy. Please make sure that the field is not already listed in the search terms.'));
+  } else
+  {
+    echo 'success:'.t('Successfully added term <b>%field</b> to collection policy <b>%cp_pid</b>',array('%cp_pid'=>$cp->pid,'%field'=>trim($form_state['values']['form']['field'])));
+    exit();
+  }
+}
+
+function icm_collection_add_term(&$form_state,$params=null)
+{
+
+  if (is_array($params) && isset($params[0]))
+  {
+    $collection_pid = $params[0];
+  } else if (isset($form_state['post']['collection_pid']))
+  {
+    $collection_pid = $form_state['post']['collection_pid'];
+  }
+
+
+  $form['form'] = array(
+    '#type'=>'fieldset',
+    '#title'=> t('Add search term to collection <b>%collection_pid</b>', array('%collection_pid'=>$collection_pid)),
+    '#tree'=>TRUE
+  );
+
+  $form['form']['field'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Field'),
+    '#size' => 30,
+    '#required' => TRUE,
+    '#description' => t('The name of the field in the DC to search.'),    
+  );
+
+  $form['form']['value'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Label'),
+    '#size' => 30,
+    '#required' => TRUE,
+    '#description' => t('A descriptive label for the field displayed on the search form.'),    
+  );
+
+  $form['form']['collection_pid'] = array('#type' => 'hidden', '#value'=> $collection_pid);
+  $form['form']['submit'] = array('#type' => 'submit', '#value' => t('Save'));
+  $form['form']['cancel'] = array('#type' => 'button', '#value' => t('Cancel'), '#id'=>'cancel');
+
+  return $form;
+
+}
+
+
+function icm_collection_rollback_validate($form,&$form_state)
+{
+ //only proceed if no errors have been found.
+  if (form_get_errors() !== NULL)
+    return;
+    
+  module_load_include('inc', 'fedora_repository', 'CollectionPolicy');
+
+   if (($cp = CollectionPolicy::loadFromCollection($form_state['values']['form']['c_pid']))!==FALSE)
+   {
+     
+     $history = $cp->getHistory();
+     $found = false;
+     foreach ($history as $key=>$ver)
+     {
+       if ($ver['versionID'] == $form_state['values']['form']['version'])
+       {
+         $found = $key;
+         break;
+       }
+     }
+     
+     if ($found === false)
+     {
+       form_set_error('',t('Error: Selected version was not found.  Please try again.'));
+     } else if ($found == 0 && $form_state['values']['form']['removeOlder'] == 0)
+     {
+        form_set_error('',t('Error: Selected version is the current version.  Nothing changed.'));
+     } else
+     {
+       $success=true; 
+       if ($found > 0)
+        {
+          $startDate = $history[$found-1]['createDate'];
+          $success = $cp->purgeVersions($history[$found-1]['createDate'],null);
+        }
+        
+        if ($form_state['values']['form']['removeOlder'] == 1 && isset($history[$found+1]))
+        {
+            $endDate = $history[$found+1]['createDate'];
+            $success = $success && $cp->purgeVersions(null,$endDate);
+        }
+        
+        if ($success)
+        {
+            echo 'success:'.t('Successfully rolled back version of collection policy <b>%c_pid</b>.',array('%c_pid'=>$cp->pid));
+	    exit();
+            
+        } else
+        {
+          form_set_error('',t('Error: Unable to roll back version.  Check watchdog logs.'));
+        }
+     }
+     
+   } else
+   {
+     form_set_error('',t('Error: Unable to load collection policy <b>%c_pid</b>.',array('%cm_pid'=>htmlentities($form_state['values']['form']['c_pid']))));
+     
+   }
+}
+
+function icm_collection_rollback(&$form_state,$params=null)
+{
+
+  if (is_array($params))
+  {
+    $c_pid = $params[0];
+  } else
+  {
+    $c_pid = $form_state['post']['form']['model_pid'];
+  }
+  
+  $form['form'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Rollback Collection Policy <b>%$c_pid</b>',array('%$c_pid'=>$c_pid)),
+      '#tree' => TRUE,
+    );
+      
+  module_load_include('inc', 'fedora_repository', 'CollectionPolicy');
+
+   if (($cp = CollectionPolicy::loadFromCollection($c_pid))!==false)
+   {
+     
+     $history = $cp->getHistory();
+
+     $options = array();
+     foreach ($history as $ver)
+     {
+       $options[$ver['versionID']] = date(DATE_RFC822,strtotime($ver['createDate']));
+     }
+
+      if ($history !== false && count($history) > 0)
+      {
+
+     
+      $form['form']['warning'] = array('#value' => '<b>Warning:</b> Rolling back a datastream will purge all versions up-to the selected datastream.');
+           
+        
+        $form['form']['cur'] = array(
+        '#type'=> 'item',
+        '#title'=> t('Current Version:'),
+        '#value'=> date(DATE_RFC822,strtotime($history[0]['createDate']))
+        );
+        
+        $form['form']['version'] = array(
+          '#type' => 'select',
+          '#title' => t('Version'),
+          '#options' => $options    
+        );
+   
+        $form['form']['removeOlder'] = array(
+          '#type' => 'checkbox',
+          '#title' => 'Purge Older Versions',
+          '#description' => 'If enabled, also purges versions of the datastream that are OLDER than the selected, effectively leaving only the selected version.'
+        );
+
+        $form['form']['submit'] = array('#type' => 'submit', '#value' => t('Save'));
+                
+      } else
+      {
+        $form['form']['version'] = array(
+        '#type'=> 'item',
+        '#title'=> t('Rollback to Version:'),
+        '#value'=> t('only one version available.')
+        );
+      }
+      
+
+        
+ } else
+ { 
+    form_set_error('',t('Error: Unable to load collection policy <b>%c_pid</b>.',array('%c_pid'=>$c_pid)));  
+ }  
+  
+  $form['form']['c_pid'] = array('#type' => 'hidden', '#value'=> $c_pid);
+  $form['form']['cancel'] = array('#type' => 'button', '#value' => t('Cancel'), '#id'=>'cancel');
+  return $form;
+}
+
+function icm_model_add_ingestMethodParam_validate($form,&$form_state)
+{
+  //only proceed if no errors have been found.
+  if (form_get_errors() !== NULL)
+    return;
+    
+   module_load_include('inc', 'fedora_repository', 'ContentModel');
+   
+   if (($cm = ContentModel::loadFromModel($form_state['values']['form']['model_pid']))!==FALSE)
+   {
+     if ($cm->addIngestMethodParam($form_state['values']['form']['rule_id'],
+				   $form_state['values']['form']['module'],
+                                   $form_state['values']['form']['file'],
+                                   $form_state['values']['form']['class'],
+                                   $form_state['values']['form']['method'],
+                                   $form_state['values']['form']['name'],
+                                   $form_state['values']['form']['value']) && $cm->saveToFedora())
+     {
+       echo 'success:'.t('Successfully added parameter to ingest method of <b>Rule %rule_id</b> for model <b>%model_pid</b>.',array('%rule_id'=>htmlentities($form_state['values']['form']['rule_id']),'%model_pid'=>$cm->pid));
+       exit(); 
+     } else 
+     {
+       form_set_error('form][name',t('Error: Unable to add parameter to ingest method of <b>Rule %rule_id</b> for model <b>%model_pid</b>.  Please make sure that the parameter is not already listed.',array('%rule_id'=>htmlentities($form_state['values']['form']['rule_id']),'%model_pid'=>$cm->pid)));
+     }
+   } else
+   {
+     form_set_error('',t('Error: Unable to load content model <b>%cm_pid</b>.',array('%cm_pid'=>htmlentities($form_state['values']['form']['model_pid']))));
+   }
+   
+}
+
+
+function icm_model_add_ingestMethodParam(&$form_state,$params=null)
+{
+  
+  if (is_array($params))
+  {
+    $model_pid = $params[0];
+    $rule_id = $params[1];
+    $module = $params[2];
+    $file = $params[3];
+    $class = $params[4];
+    $method = $params[5];
+  } else
+  {
+    $model_pid = $form_state['post']['model_id'];
+    $rule_id = $form_state['post']['rule_id'];
+    $module = $form_state['post']['module'];
+    $file = $form_state['post']['file'];
+    $class = $form_state['post']['class'];
+    $method = $form_state['post']['method'];
+  }
+  
+   $form['form'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Add Ingest Method Parameter to ingest <b>Rule %rule_id</b> of model <b>%model_pid</b>.',array('%rule_id'=>$rule_id,'%model_pid'=>$model_pid)),
+      '#tree' => TRUE,
+    );  
+    
+   $form['form']['module_label'] = array(
+        '#type'=> 'item',
+        '#title'=> t('Module'),
+        '#value' => $module
+   );
+   
+   $form['form']['file_label'] = array(
+        '#type'=> 'item',
+        '#title'=> t('Filename'),
+        '#value' => $file
+   );
+
+   $form['form']['class_label'] = array(
+        '#type'=> 'item',
+        '#title'=> t('Class'),
+        '#value' => $class
+   );
+
+   $form['form']['method_label'] = array(
+        '#type'=> 'item',
+        '#title'=> t('Method'),
+        '#value' => $method
+   );   
+
+  $form['form']['name'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Name'),
+    '#size' => 30,
+    '#required' => TRUE,
+    '#description' => t('The name of the parameter to pass along to the ingest method above.'),    
+  );
+
+  $form['form']['value'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Value'),
+    '#size' => 30,
+    '#required' => TRUE,
+    '#description' => t('The value of the parameter to pass along to the ingest method above'),    
+  );  
+   
+  $form['form']['model_pid'] = array('#type' => 'hidden', '#value'=> $model_pid);
+  $form['form']['rule_id'] = array('#type' => 'hidden', '#value'=> $rule_id);
+  $form['form']['module'] = array('#type' => 'hidden', '#value'=> $module);
+  $form['form']['file'] = array('#type' => 'hidden', '#value'=> $file);
+  $form['form']['class'] = array('#type' => 'hidden', '#value' => $class);
+  $form['form']['method'] = array('#type' => 'hidden', '#value'=> $method);
+  
+  $form['form']['submit'] = array('#type' => 'submit', '#value' => t('Save'));
+  $form['form']['cancel'] = array('#type' => 'button', '#value' => t('Cancel'), '#id'=>'cancel');
+   
+   
+   return $form;
+}
+
+
+function icm_model_add_ingestElementParam_validate($form,&$form_state)
+{
+  //only proceed if no errors have been found.
+  if (form_get_errors() !== NULL)
+    return;
+    
+   module_load_include('inc', 'fedora_repository', 'ContentModel');
+
+   if (($cm = ContentModel::loadFromModel($form_state['values']['form']['model_pid']))!==FALSE)
+   {
+     if ($cm->setIngestFormElementParam($form_state['values']['form']['element_name'],
+                                   $form_state['values']['form']['name'],
+                                   $form_state['values']['form']['value']) && $cm->saveToFedora())
+     {
+       echo 'success:'.t('Successfully added parameter to form element <b>%element_name</b> for model <b>%model_pid</b>.',array('%element_name'=>htmlentities($form_state['values']['form']['element_name']),'%model_pid'=>$cm->pid));
+       exit(); 
+     } else 
+     {
+       form_set_error('form][name',t('Error: Unable to add parameter to form element <b>%element_name</b> for model <b>%model_pid</b>.  Please make sure that the parameter is not already listed.',array('%element_name'=>htmlentities($form_state['values']['form']['element_name']),'%model_pid'=>$cm->pid)));
+     }
+   } else
+   {
+     form_set_error('',t('Error: Unable to load content model <b>%cm_pid</b>.',array('%cm_pid'=>htmlentities($form_state['values']['form']['model_pid']))));
+   }
+   
+}
+
+
+function icm_model_add_ingestElementParam(&$form_state,$params=null)
+{
+  if (is_array($params))
+  {
+    $model_pid = $params[0];
+    $element_name = $params[1];
+  } else
+  {
+    $model_pid = $form_state['post']['model_id'];
+    $element_name = $form_state['post']['element_name'];
+  }
+  
+   $form['form'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Add Ingest Form Element Parameter to element <b>%element_name</b> of model <b>%model_pid</b>.',array('%element_name'=>$element_name,'%model_pid'=>$model_pid)),
+      '#tree' => TRUE,
+    );  
+    
+  $form['form']['name'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Name'),
+    '#size' => 30,
+    '#required' => TRUE,
+    '#description' => t('The name of the parameter to pass along to the form element above.'),    
+  );
+
+  $form['form']['value'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Value'),
+    '#size' => 30,
+    '#required' => TRUE,
+    '#description' => t('The value of the parameter to pass along to the form element above'),    
+  );  
+   
+  $form['form']['model_pid'] = array('#type' => 'hidden', '#value'=> $model_pid);
+  $form['form']['element_name'] = array('#type' => 'hidden', '#value'=> $element_name);
+  
+  $form['form']['submit'] = array('#type' => 'submit', '#value' => t('Save'));
+  $form['form']['cancel'] = array('#type' => 'button', '#value' => t('Cancel'), '#id'=>'cancel');
+   
+   
+   return $form;
+}
+
+function icm_model_add_ingestMethod_validate($form,&$form_state)
+{
+  //only proceed if no errors have been found.
+  if (form_get_errors() !== NULL)
+    return;
+    
+  module_load_include('inc', 'fedora_repository', 'ContentModel');
+  
+ 
+  $module = $form_state['values']['form']['module'];
+  $file = $form_state['values']['form']['filename'];
+  $class= $form_state['values']['form']['class'];
+  $method=$form_state['values']['form']['method'];
+ 
+  $path = drupal_get_path('module',$module);
+ 
+  if (empty($path) || !file_exists($path.'/'.$file))
+  {
+    form_set_error('form][filename',t('Error: Selected plugin file not found. Please try again.'));
+  } else
+  {
+    require_once ($path.'/'.$file);
+    if (!class_exists($class))
+    {
+      form_set_error('form][class',t('Error: Specified class does not exist in the plugin.  Please try again.'));
+    } else
+    {
+        $obj = new $class;
+        if (!method_exists($obj,$method))
+        {
+          form_set_error('form][method',t('Error: Specified method does not exist in the specified class/plugin.  Please try again.'));        
+        }  
+    }
+  }
+  
+  if (!ContentModel::validDsid($form_state['values']['form']['dsid']))
+  {
+    form_set_error('form][dsid',t('Error: Invalid datastream identifier. Please try again.'));
+  }
+  
+  //only proceed if no errors have been found.
+  if (form_get_errors() !== NULL)
+    return;
+    
+   module_load_include('inc', 'fedora_repository', 'ContentModel');
+
+   if (($cm = ContentModel::loadFromModel($form_state['values']['form']['model_pid']))!==FALSE)
+   {
+     if ($cm->addIngestMethod($form_state['values']['form']['rule_id'],$module,$module,$file,$class,$method,$form_state['values']['form']['dsid'],$form_state['values']['form']['modified_files_ext']) && $cm->saveToFedora())
+     {
+       echo 'success:'.t('Successfully added ingest method to <b>Rule %rule_id</b> for model <b>%model_pid</b>.',array('%rule_id'=>htmlentities($form_state['values']['form']['rule_id']),'%model_pid'=>$cm->pid));
+       exit(); 
+     } else 
+     {
+       form_set_error('form][name',t('Error: Unable to add ingest method to <b>Rule %rule_id</b> for model <b>%model_pid</b>.',array('%rule_id'=>htmlentities($form_state['values']['form']['rule_id']),'%model_pid'=>$cm->pid)));
+     }
+   } else
+   {
+     form_set_error('',t('Error: Unable to load content model <b>%cm_pid</b>.',array('%cm_pid'=>htmlentities($form_state['values']['form']['model_pid']))));
+   }
+  
+}
+
+function icm_model_add_ingestMethod(&$form_state,$params=null)
+{
+
+  if (is_array($params))
+  {
+    $model_pid = $params[0];
+    $rule_id = $params[1];
+  } else
+  {
+    $model_pid = $form_state['post']['form']['model_pid'];
+    $rule_id = $form_state['post']['form']['rule_id'];
+  }
+
+  $form['form'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Add Ingest Method to ingest <b>Rule %rule_id</b> of model <b>%model_pid</b>',array('%rule_id'=>$rule_id,'%model_pid'=>$model_pid)),
+    '#tree' => TRUE,
+  );
+  
+  $form['form']['module'] = array(
+    '#type' => 'select',
+    '#title' => t('Module'),
+    '#element_validate' => array('icm_module_validate'),
+    '#options'=>icm_get_modules(),
+    '#required' => TRUE,
+    '#description' => t('The name of the module containing the plugin file.'), 
+  );  
+  
+  $form['form']['filename'] = array(
+    '#type' => 'textfield',
+    '#title' => t('File'),
+    '#element_validate' => array('icm_filename_validate'),
+    '#required' => TRUE,
+    '#description' => t('The relative path of the file containing the ingest method class/method.'), 
+  );
+  $form['form']['class'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Class'),
+    '#element_validate' => array('icm_class_validate'),
+    '#required' => TRUE,
+    '#size'=>30,
+    '#description' => t('The name of the ingest method class.'),    
+  );
+  $form['form']['method'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Method'),
+    '#element_validate' => array('icm_method_validate'),
+    '#size'=>30,
+    '#required' => TRUE,
+    '#description' => t('The name of the class method to call when ingesting a file.'),    
+  ); 
+
+  $form['form']['dsid'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Datastream Identifier'),
+    '#size' => 30,
+    '#maxlength' => 64,
+    '#required' => TRUE,
+    '#description' => t('The datastream ID that will store the output from this method.'),    
+  );
+
+    $form['form']['modified_files_ext'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Modified Files Extension'),
+    '#size' => 30,
+    '#required' => TRUE,
+    '#description' => t('The file extension that will be appended to the modified file.'),    
+  );
+
+  
+
+  $form['form']['model_pid'] = array('#type' => 'hidden', '#value'=> $model_pid);
+  $form['form']['rule_id'] = array('#type' => 'hidden', '#value'=> $rule_id);
+  $form['form']['submit'] = array('#type' => 'submit', '#value' => t('Save'));
+  $form['form']['cancel'] = array('#type' => 'button', '#value' => t('Cancel'), '#id'=>'cancel');
+  return $form;
+}
+
+function icm_model_add_appliesTo_validate($form,&$form_state)
+{
+  //only proceed if no errors have been found.
+  if (form_get_errors() !== NULL)
+    return;
+    
+  module_load_include('inc', 'fedora_repository', 'ContentModel');
+
+  if (($cm = ContentModel::loadFromModel($form_state['values']['form']['model_pid']))!==FALSE)
+  {
+   if ($cm->addAppliesTo($form_state['values']['form']['rule_id'],$form_state['values']['form']['appliesTo']) && $cm->saveToFedora())
+   {
+     echo 'success:'.t('Successfully added application mimetype to <b>Rule %rule_id</b> for model <b>%model_pid</b>.',array('%rule_id'=>htmlentities($form_state['values']['form']['rule_id']),'%model_pid'=>$cm->pid));
+     exit(); 
+   } else 
+   {
+     form_set_error('form][name',t('Error: Unable to add application mimetype to <b>Rule %rule_id</b> for model <b>%model_pid</b>.',array('%rule_id'=>htmlentities($form_state['values']['form']['rule_id']),'%model_pid'=>$cm->pid)));
+   }
+  } else
+  {
+   form_set_error('',t('Error: Unable to load content model <b>%cm_pid</b>.',array('%cm_pid'=>htmlentities($form_state['values']['form']['model_pid']))));
+  }  
+}
+
+function icm_model_add_appliesTo(&$form_state,$params=null)
+{
+
+  if (is_array($params))
+  {
+    $model_pid = $params[0];
+    $rule_id = $params[1];
+  } else
+  {
+    $model_pid = $form_state['post']['form']['model_pid'];
+    $rule_id = $form_state['post']['form']['rule_id'];
+  }
+
+  $form['form'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Add application mimetype to ingest <b>Rule %rule_id</b> of model <b>%model_pid</b>',array('%rule_id'=>$rule_id,'%model_pid'=>$model_pid)),
+    '#tree' => TRUE,
+  );
+  
+    $form['form']['appliesTo'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Applies To'),
+    '#size' => 30,
+    '#required' => TRUE,
+    '#description' => t('A content mimetype that this ingest rule will be applied to.'),    
+  );
+  
+
+  $form['form']['model_pid'] = array('#type' => 'hidden', '#value'=> $model_pid);
+  $form['form']['rule_id'] = array('#type' => 'hidden', '#value'=> $rule_id);
+  $form['form']['submit'] = array('#type' => 'submit', '#value' => t('Save'));
+  $form['form']['cancel'] = array('#type' => 'button', '#value' => t('Cancel'), '#id'=>'cancel');
+  return $form;
+}
+
+
+function icm_model_add_ingestRule_validate($form,&$form_state)
+{
+  //only proceed if no errors have been found.
+  if (form_get_errors() !== NULL)
+    return;
+    
+  module_load_include('inc', 'fedora_repository', 'ContentModel');
+  
+  $module = $form_state['values']['form']['module'];
+  $file = $form_state['values']['form']['filename'];
+  $class= $form_state['values']['form']['class'];
+  $method=$form_state['values']['form']['method'];
+  $path = drupal_get_path('module',$module);
+ 
+  if (empty($path) || !file_exists($path.'/'.$file))
+  {
+    form_set_error('form][filename',t('Error: Selected plugin file not found. Please try again.'));
+  } else
+  {
+    require_once ($path.'/'.$file);
+    if (!class_exists($class))
+    {
+      form_set_error('form][class',t('Error: Specified class does not exist in the plugin.  Please try again.'));
+    } else
+    {
+        $obj = new $class;
+        if (!method_exists($obj,$method))
+        {
+          form_set_error('form][method',t('Error: Specified method does not exist in the specified class/plugin.  Please try again.'));        
+        }  
+    }
+  }
+  
+  if (!ContentModel::validDsid($form_state['values']['form']['dsid']))
+  {
+    form_set_error('form][dsid',t('Error: Invalid datastream identifier. Please try again.'));
+  }
+  
+  //only proceed if no errors have been found.
+  if (form_get_errors() !== NULL)
+    return;
+    
+   module_load_include('inc', 'fedora_repository', 'ContentModel');
+
+   if (($cm = ContentModel::loadFromModel($form_state['values']['form']['model_pid']))!==FALSE)
+   {
+     if ($cm->addIngestRule($form_state['values']['form']['appliesTo'],$module,$file,$class,$method,$form_state['values']['form']['dsid'],$form_state['values']['form']['modified_files_ext']) && $cm->saveToFedora())
+     {
+       echo 'success:'.t('Successfully added ingest method to <b>Rule %rule_id</b> for model <b>%model_pid</b>.',array('%rule_id'=>htmlentities($form_state['values']['form']['rule_id']),'%model_pid'=>$cm->pid));
+       exit(); 
+     } else 
+     {
+       form_set_error('form][name',t('Error: Unable to add ingest rule for model <b>%model_pid</b>.',array('%model_pid'=>$cm->pid)));
+     }
+   } else
+   {
+     form_set_error('',t('Error: Unable to load content model <b>%cm_pid</b>.',array('%cm_pid'=>htmlentities($form_state['values']['form']['model_pid']))));
+   }
+  
+}
+
+
+
+function icm_model_add_ingestRule(&$form_state,$params=null)
+{
+
+  if (is_array($params))
+  {
+    $model_pid = $params[0];
+  } else
+  {
+    $model_pid = $form_state['post']['form']['model_pid'];
+  }
+
+  $form['form'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Add Ingest Rule to model <b>%model_pid</b>',array('%model_pid'=>$model_pid)),
+    '#tree' => TRUE,
+  );
+  
+  $form['form']['appliesTo'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Applies To'),
+    '#size' => 30,
+    '#required' => TRUE,
+    '#description' => t('A content mimetype that this ingest rule will be applied to.'),    
+  );  
+  
+   $form['form']['module'] = array(
+    '#type' => 'select',
+    '#title' => t('Module'),
+    '#element_validate' => array('icm_module_validate'),
+    '#options'=>icm_get_modules(),
+    '#required' => TRUE,
+    '#description' => t('The name of the module containing the plugin file.'), 
+  );  
+  
+  $form['form']['filename'] = array(
+    '#type' => 'textfield',
+    '#title' => t('File'),
+    '#element_validate' => array('icm_filename_validate'),
+    '#required' => TRUE,
+    '#description' => t('The relative path of the file containing the ingest method class/method.'), 
+  );
+  
+  $form['form']['class'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Class'),
+    '#element_validate' => array('icm_class_validate'),
+    '#required' => TRUE,
+    '#size'=>30,
+    '#description' => t('The name of the ingest method class.'),    
+  );
+  $form['form']['method'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Method'),
+    '#element_validate' => array('icm_method_validate'),
+    '#size'=>30,
+    '#required' => TRUE,
+    '#description' => t('The name of the class method to call when ingesting a file.'),    
+  ); 
+
+  $form['form']['dsid'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Datastream Identifier'),
+    '#size' => 30,
+    '#maxlength' => 64,
+    '#required' => TRUE,
+    '#description' => t('The datastream ID that will store the output from this method.'),    
+  );
+
+    $form['form']['modified_files_ext'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Modified Files Extension'),
+    '#size' => 30,
+    '#required' => TRUE,
+    '#description' => t('The file extension that will be appended to the modified file.'),    
+  );
+
+  
+
+  $form['form']['model_pid'] = array('#type' => 'hidden', '#value'=> $model_pid);
+  $form['form']['submit'] = array('#type' => 'submit', '#value' => t('Save'));
+  $form['form']['cancel'] = array('#type' => 'button', '#value' => t('Cancel'), '#id'=>'cancel');
+  return $form;
+}
+
+
+function icm_model_add_ds_validate($form,&$form_state)
+{
+  module_load_include('inc', 'fedora_repository', 'ContentModel');
+     
+  if (!ContentModel::validDsid($form_state['values']['form']['dsid']))
+  {
+    form_set_error('form][dsid',t('Error: Invalid datastream identifier. Please try again.'));
+  }
+  
+  //only proceed if no errors have been found.
+  if (form_get_errors() !== NULL)
+    return;
+
+   
+  if (($cm = ContentModel::loadFromModel($form_state['values']['form']['model_pid']))!==FALSE)
+   {
+     if ($cm->addDs($form_state['values']['form']['dsid'],$form_state['values']['form']['display_in_fieldset']==1) && $cm->saveToFedora())
+     {
+       echo 'success:'.t('Successfully added datastream to model <b>%model_pid</b>.',array('%model_pid'=>$cm->pid));
+       exit(); 
+     } else 
+     {
+       form_set_error('form][name',t('Error: Unable to add datastream to model <b>%model_pid</b>.',array('%model_pid'=>$cm->pid)));
+     }
+   } else
+   {
+     form_set_error('',t('Error: Unable to load content model <b>%cm_pid</b>.',array('%cm_pid'=>htmlentities($form_state['values']['form']['model_pid']))));
+   }
+  
+}
+
+function icm_model_add_ds(&$form_state,$params=null)
+{
+
+  if (is_array($params))
+  {
+    $model_pid = $params[0];
+  } else
+  {
+    $model_pid = $form_state['post']['form']['model_pid'];
+  }
+
+  $form['form'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Add Datastream to model <b>%model_pid</b>',array('%model_pid'=>$model_pid)),
+    '#tree' => TRUE,
+  );
+ 
+  $form['form']['dsid'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Datastream Identifier'),
+    '#size' => 30,
+    '#maxlength' => 64,
+    '#required' => TRUE,
+    '#description' => t('The datastream ID that will store the output from this method.'),    
+  );
+
+    $form['form']['display_in_fieldset'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Display in Fieldset'),
+    '#size' => 30,
+    '#required' => TRUE,
+    '#description' => t('Display this datastream in the fieldset for this model?'),    
+  );
+
+  
+
+  $form['form']['model_pid'] = array('#type' => 'hidden', '#value'=> $model_pid);
+  $form['form']['submit'] = array('#type' => 'submit', '#value' => t('Save'));
+  $form['form']['cancel'] = array('#type' => 'button', '#value' => t('Cancel'), '#id'=>'cancel');
+  return $form;
+}
+
+
+function icm_model_add_dispmeth_validate($form,&$form_state)
+{
+    //only proceed if no errors have been found.
+  if (form_get_errors() !== NULL)
+    return;
+    
+  module_load_include('inc', 'fedora_repository', 'ContentModel');
+  
+  $module = $form_state['values']['form']['module'];
+  $file = $form_state['values']['form']['filename'];
+  $class= $form_state['values']['form']['class'];
+  $method=$form_state['values']['form']['method'];
+  $path = drupal_get_path('module',$module);
+ 
+  if (empty($path) || !file_exists($path.'/'.$file))
+  {
+    form_set_error('form][filename',t('Error: Selected plugin file not found. Please try again.'));
+  } else
+  {
+    require_once ($path.'/'.$file);
+    if (!class_exists($class))
+    {
+      form_set_error('form][class',t('Error: Specified class does not exist in the plugin.  Please try again.'));
+    } else
+    {
+        $obj = @new $class;
+        if (!method_exists($obj,$method))
+        {
+          form_set_error('form][method',t('Error: Specified method does not exist in the specified class/plugin.  Please try again.'));        
+        }  
+    }
+  }
+  
+  if (!ContentModel::validDsid($form_state['values']['form']['dsid']))
+  {
+    form_set_error('form][dsid',t('Error: Invalid datastream identifier. Please try again.'));
+  }
+  
+  //only proceed if no errors have been found.
+  if (form_get_errors() !== NULL)
+    return;
+    
+
+   if (($cm = ContentModel::loadFromModel($form_state['values']['form']['model_pid']))!==FALSE)
+   {
+     if ($cm->addDispMeth($form_state['values']['form']['dsid'],$module,$file,$class,$method) && $cm->saveToFedora())
+     {
+       echo 'success:'.t('Successfully added display method to datastream <b>%dsid</b> of model <b>%model_pid</b>.',array('%dsid'=>htmlentities($form_state['values']['form']['dsid']),'%model_pid'=>$cm->pid));
+       exit(); 
+     } else 
+     {
+       form_set_error('form][name',t('Error: Unable to add display method to datastream <b>%dsid</b> of model <b>%model_pid</b>.',array('%dsid'=>htmlentities($form_state['values']['form']['dsid']),'%model_pid'=>$cm->pid)));
+     }
+   } else
+   {
+     form_set_error('',t('Error: Unable to load content model <b>%cm_pid</b>.',array('%cm_pid'=>htmlentities($form_state['values']['form']['model_pid']))));
+   }
+}
+
+function icm_model_add_dispmeth(&$form_state,$params=null)
+{
+
+  if (is_array($params))
+  {
+    $model_pid = $params[0];
+    $dsid = $params[1];
+  } else
+  {
+    $model_pid = $form_state['post']['form']['model_pid'];
+    $dsid = $form_state['post']['form']['dsid'];
+  }
+
+  $form['form'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Add Display Method to datastream <b>%dsid</b> of model <b>%model_pid</b>',array('%dsid'=>$dsid,'%model_pid'=>$model_pid)),
+    '#tree' => TRUE,
+  );
+  
+  $form['form']['module'] = array(
+    '#type' => 'select',
+    '#title' => t('Module'),
+    '#element_validate' => array('icm_module_validate'),
+    '#options'=>icm_get_modules(),
+    '#required' => TRUE,
+    '#description' => t('The name of the module containing the plugin file.'), 
+  );  
+  
+  $form['form']['filename'] = array(
+    '#type' => 'textfield',
+    '#title' => t('File'),
+    '#element_validate' => array('icm_filename_validate'),
+    '#required' => TRUE,
+    '#description' => t('The relative path of the file containing the ingest method class/method.'), 
+  );
+  
+  $form['form']['class'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Class'),
+    '#element_validate' => array('icm_class_validate'),
+    '#required' => TRUE,
+    '#size'=>30,
+    '#description' => t('The name of the ingest method class.'),    
+  );
+  $form['form']['method'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Method'),
+    '#element_validate' => array('icm_method_validate'),
+    '#size'=>30,
+    '#required' => TRUE,
+    '#description' => t('The name of the class method to call when displaying the datastream.'),    
+  ); 
+
+  $form['form']['model_pid'] = array('#type' => 'hidden', '#value'=> $model_pid);
+  $form['form']['dsid'] = array('#type' => 'hidden', '#value'=> $dsid);
+  $form['form']['submit'] = array('#type' => 'submit', '#value' => t('Save'));
+  $form['form']['cancel'] = array('#type' => 'button', '#value' => t('Cancel'), '#id'=>'cancel');
+  return $form;
+}
+
+
+function icm_model_edit_ingestForm_validate($form,&$form_state)
+{
+  module_load_include('inc', 'fedora_repository', 'ContentModel');
+  if (!ContentModel::validDsid($form_state['values']['form']['dsid']))
+  {
+    form_set_error('form][dsid',t('Error: Invalid datastream identifier. Please try again.'));
+  }
+
+  $module=$form_state['values']['form']['module'];
+  $file = $form_state['values']['form']['filename'];
+  $class= $form_state['values']['form']['class'];
+  $method=$form_state['values']['form']['method'];
+  $handler=$form_state['values']['form']['handler'];
+  $path = drupal_get_path('module',$module);
+ 
+  if (empty($path) || !file_exists($path.'/'.$file))
+  {
+    form_set_error('form][filename',t('Error: Selected plugin file not found. Please try again.'));
+  } else
+  {
+    require_once ($path.'/'.$file);
+    if (!class_exists($class))
+    {
+      form_set_error('form][class',t('Error: Specified class does not exist in the plugin.  Please try again.'));
+    } else
+    {
+        $obj = @new $class;
+        if (!method_exists($obj,$method))
+        {
+          form_set_error('form][method',t('Error: Specified builder method does not exist in the specified class/plugin.  Please try again.'));        
+        }  
+        if (!method_exists($obj,$handler))
+        {
+          form_set_error('form][handler',t('Error: Specified handler method does not exist in the specified class/plugin.  Please try again.'));        
+        }          
+    }
+  }    
+  
+  //only proceed if no errors have been found.
+  if (form_get_errors() !== NULL)
+    return;
+  
+  
+   if (($cm = ContentModel::loadFromModel($form_state['values']['form']['model_pid']))!==FALSE)
+   {
+     if ($cm->editIngestFormAttributes(htmlentities($form_state['values']['form']['dsid']),htmlentities($form_state['values']['form']['page']),$form_state['values']['form']['hide_file_chooser']==1,$form_state['values']['form']['redirect']==1) 
+        && $cm->editIngestFormBuilderMethod($module,$file,$class,$method,$handler) 
+        && $cm->saveToFedora())
+     {
+       echo 'success:'.t('Successfully updated ingest form of model <b>%model_pid</b>.',array('%model_pid'=>$cm->pid));
+       exit(); 
+     } else 
+     {
+       form_set_error('form][name',t('Error: Unable to update ingest form of model <b>%model_pid</b>.',array('%model_pid'=>$cm->pid)));
+     }
+   } else
+   {
+     form_set_error('',t('Error: Unable to load content model <b>%cm_pid</b>.',array('%cm_pid'=>htmlentities($form_state['values']['form']['model_pid']))));
+   }  
+}
+
+function icm_model_edit_ingestForm(&$form_state,$params=null)
+{
+
+  if (is_array($params))
+  {
+    $model_pid = $params[1];
+  } else
+  {
+    $model_pid = $form_state['post']['form']['model_pid'];
+  }
+  
+  $form['form'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Edit Ingest Form of model <b>%model_pid</b>',array('%model_pid'=>$model_pid)),
+    '#tree' => TRUE,
+  );
+  
+   module_load_include('inc', 'fedora_repository', 'ContentModel');
+   if (($cm = ContentModel::loadFromModel($model_pid))!==false)
+   {
+       
+       $attr = $cm->getIngestFormAttributes();
+        $builderMethod = $cm->getIngestFormBuilderMethod();
+       
+      $form['form']['dsid'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Datastream Identifier'),
+        '#size' => 30,
+        '#maxlength' => 64,
+        '#default_value'=>$attr['dsid'],
+        '#required' => TRUE,
+        
+        '#description' => t('The datastream ID that stores the collected metadata from the form.'),    
+      );
+      
+      $form['form']['page'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Page'),
+        '#size' => 3,
+        '#required' => TRUE,
+        '#default_value' => $attr['page'],
+        '#description' => t('??? not sure what this field is for.  Cant find a reference to it, candidate for removal. '),    
+      );
+        
+      $form['form']['hide_file_chooser'] = array(
+        '#type' => 'checkbox',
+        '#title' => t('Hide File Chooser'),
+        '#size' => 3,
+        '#required' => TRUE,
+        '#default_value' => $attr['hide_file_chooser']?1:0,
+        '#description' => t('If enabled, the file choose will not be displayed in the ingest form for this model.'),    
+      );
+      
+      $form['form']['redirect'] = array(
+        '#type' => 'checkbox',
+        '#title' => t('Redirect on Ingest'),
+        '#size' => 3,
+        '#required' => TRUE,
+        '#default_value' => $attr['redirect']?1:0,
+        '#description' => t('If enabled, the user will be redirected to the collection view on successful ingest.'),    
+      );      
+      
+      $form['form']['module'] = array(
+	'#type' => 'select',
+	'#title' => t('Module'),
+	'#element_validate' => array('icm_module_validate'),
+	'#options'=>icm_get_modules(),
+	'#required' => TRUE,
+	'#default_value'=> ($builderMethod['module']==''?'fedora_repository':$builderMethod['module']),
+	'#description' => t('The name of the module containing the plugin file.'), 
+      );  
+      
+      $form['form']['filename'] = array(
+	'#type' => 'textfield',
+	'#title' => t('File'),
+	'#element_validate' => array('icm_filename_validate'),
+	'#required' => TRUE,
+	'#default_value'=> $builderMethod['file'],
+	'#description' => t('The relative path of the file containing the builder/handler method class/method.'), 
+      );
+      
+      $form['form']['class'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Class'),
+        '#element_validate' => array('icm_class_validate'),
+        '#required' => TRUE,
+        '#default_value'=> $builderMethod['class'],
+        '#size'=>30,
+        '#description' => t('The name of the builder/handler class.'),    
+      );
+      $form['form']['method'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Form Builder Method'),
+        '#element_validate' => array('icm_method_validate'),
+        '#size'=>30,
+        '#required' => TRUE,
+        '#default_value'=> $builderMethod['method'],
+        '#description' => t('The name of the class method to build the ingest form.'),    
+      );       
+
+      $form['form']['handler'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Form Handler Method'),
+        '#element_validate' => array('icm_method_validate'),
+        '#size'=>30,
+        '#required' => TRUE,
+        '#default_value'=> $builderMethod['handler'],
+        '#description' => t('The name of the class method to handle the ingest form.'),    
+      );       
+      
+      $form['form']['model_pid'] = array('#type' => 'hidden', '#value'=> $model_pid);
+      $form['form']['submit'] = array('#type' => 'submit', '#value' => t('Save'));
+             
+   } else
+   { 
+      form_set_error('',t('Error: Unable to load content model <b>%model_pid</b>.',array('%model_pid'=>$model_pid)));  
+   }
+  
+  $form['form']['cancel'] = array('#type' => 'button', '#value' => t('Cancel'), '#id'=>'cancel');
+  
+  return $form;
+}
+
+
+function icm_model_edit_adddsmeth_validate($form,&$form_state)
+{
+  module_load_include('inc', 'fedora_repository', 'ContentModel');
+  if (!ContentModel::validDsid($form_state['values']['form']['dsid']))
+  {
+    form_set_error('form][dsid',t('Error: Invalid datastream identifier. Please try again.'));
+  }
+
+  $module = $form_state['values']['form']['module'];
+  $file = $form_state['values']['form']['filename'];
+  $class= $form_state['values']['form']['class'];
+  $method=$form_state['values']['form']['method'];
+  $handler=$form_state['values']['form']['handler'];
+  $path = drupal_get_path('module',$module);
+ 
+  if (empty($path) || !file_exists($path.'/'.$file))
+  {
+    form_set_error('form][filename',t('Error: Selected plugin file not found. Please try again.'));
+  } else
+  {
+    require_once ($path.'/'.$file);
+    if (!class_exists($class))
+    {
+      form_set_error('form][class',t('Error: Specified class does not exist in the plugin.  Please try again.'));
+    } else
+    {
+        $obj = @new $class;
+        if (!method_exists($obj,$method))
+        {
+          form_set_error('form][method',t('Error: Specified builder method does not exist in the specified class/plugin.  Please try again.'));        
+        }  
+        if (!method_exists($obj,$handler))
+        {
+          form_set_error('form][handler',t('Error: Specified handler method does not exist in the specified class/plugin.  Please try again.'));        
+        }          
+    }
+  }    
+  
+  //only proceed if no errors have been found.
+  if (form_get_errors() !== NULL)
+    return;
+  
+  
+   if (($cm = ContentModel::loadFromModel($form_state['values']['form']['model_pid']))!==FALSE)
+   {
+     if ($cm->editIngestFormAttributes(htmlentities($form_state['values']['form']['dsid']),htmlentities($form_state['values']['form']['page']),$form_state['values']['form']['hide_file_chooser']==1,$form_state['values']['form']['redirect']==1) 
+        && $cm->editIngestFormBuilderMethod($module,$file,$class,$method,$handler) 
+        && $cm->saveToFedora())
+     {
+       echo 'success:'.t('Successfully updated ingest form of model <b>%model_pid</b>.',array('%model_pid'=>$cm->pid));
+       exit(); 
+     } else 
+     {
+       form_set_error('form][name',t('Error: Unable to update ingest form of model <b>%model_pid</b>.',array('%model_pid'=>$cm->pid)));
+     }
+   } else
+   {
+     form_set_error('',t('Error: Unable to load content model <b>%cm_pid</b>.',array('%cm_pid'=>htmlentities($form_state['values']['form']['model_pid']))));
+   }  
+}
+
+function icm_model_edit_adddsmeth(&$form_state,$params=null)
+{
+
+  if (is_array($params))
+  {
+    $model_pid = $params[0];
+    $dsid = $params[1];
+  } else
+  {
+    $model_pid = $form_state['post']['form']['model_pid'];
+    $dsid = $form_state['post']['form']['dsid'];
+  }
+  
+  $form['form'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Edit Add DataStream Method of model <b>%model_pid</b> datastream <b>%dsid</b>',array('%model_pid'=>$model_pid,'%dsid'=>$dsid)),
+    '#tree' => TRUE,
+  );
+  
+  $form['form']['label'] = array('#value'=> t('This method will be called when a datastream is ingested into <b>%dsid</b>.  The resulting file generated by the method is then ingested into the specified datastream.'));
+  
+   module_load_include('inc', 'fedora_repository', 'ContentModel');
+   if (($cm = ContentModel::loadFromModel($model_pid))!==false)
+   {
+       
+      $method = $cm->getIngestFormBuilderMethod();
+       
+
+      $form['form']['module'] = array(
+	'#type' => 'select',
+	'#title' => t('Module'),
+	'#element_validate' => array('icm_module_validate'),
+	'#options'=>icm_get_modules(),
+	'#default_value'=>($method['module']==''?'fedora_repository':$method['module']),
+	'#required' => TRUE,
+	'#description' => t('The name of the module containing the plugin file.'), 
+      );  
+      
+      $form['form']['filename'] = array(
+	'#type' => 'textfield',
+	'#title' => t('File'),
+	'#element_validate' => array('icm_filename_validate'),
+	'#default_value' =>$method['file'],
+	'#required' => TRUE,
+	'#description' => t('The relative path of the file containing the ingest method class/method.'), 
+      );
+      
+      $form['form']['class'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Class'),
+        '#element_validate' => array('icm_class_validate'),
+        '#required' => TRUE,
+        '#default_value'=> $method['class'],
+        '#size'=>30,
+        '#description' => t('The name of the class.'),    
+      );
+      $form['form']['method'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Form Builder Method'),
+        '#element_validate' => array('icm_method_validate'),
+        '#size'=>30,
+        '#required' => TRUE,
+        '#default_value'=> $method['method'],
+        '#description' => t('The name of the class method called.'),    
+      );    
+      
+      
+      $form['form']['out_dsid'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Datastream Identifier'),
+        '#size' => 30,
+        '#maxlength' => 64,
+        '#default_value'=>$attr['dsid'],
+        '#required' => TRUE,
+        '#description' => t('The datastream ID that stores the resulting file from the specified method.'),    
+      );
+
+      $form['form']['modified_files_ext'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Modified Files Extension'),
+        '#size' => 30,
+        '#required' => TRUE,
+        '#description' => t('The file extension that will be appended to the modified file.'),    
+      );
+      
+      $form['form']['model_pid'] = array('#type' => 'hidden', '#value'=> $model_pid);
+      $form['form']['dsid'] = array('#type' => 'hidden', '#value'=> $dsid);
+      $form['form']['submit'] = array('#type' => 'submit', '#value' => t('Save'));
+             
+   } else
+   { 
+      form_set_error('',t('Error: Unable to load content model <b>%model_pid</b>.',array('%model_pid'=>$model_pid)));  
+   }
+  
+  $form['form']['cancel'] = array('#type' => 'button', '#value' => t('Cancel'), '#id'=>'cancel');
+  
+  return $form;
+}
+
+
+function icm_model_add_ingestFormElement_validate($form,&$form_state)
+{
+
+  //only proceed if no errors have been found.
+  if (form_get_errors() !== NULL)
+    return;
+  
+    module_load_include('inc', 'fedora_repository', 'ContentModel');
+    
+   if (($cm = ContentModel::loadFromModel($form_state['values']['form']['model_pid']))!==FALSE)
+   {
+     
+     $elements = $cm->getIngestFormElements();
+     $found = false;
+     foreach ($elements as $el)
+     {
+       if ($el['name']==$form_state['values']['form']['name'])
+       {
+         $found=true;
+         break;
+       }
+     }
+     
+     if ($found)
+     {
+       form_set_error('form][name',t('Error: The specified form element name is already listed in the ingest form.  Please edit or delete the existing form element instead.'));
+     }
+     else if ($cm->addIngestFormElement(htmlentities($form_state['values']['form']['name']),
+                                  htmlentities($form_state['values']['form']['label']),
+                                  $form_state['values']['form']['type'],
+                                  $form_state['values']['form']['required']==1,
+                                  htmlentities($form_state['values']['form']['description'])) &&
+
+              $cm->setIngestFormElementParam(htmlentities($form_state['values']['form']['name']),
+                                             '#sticky',
+                                             $form_state['values']['form']['sticky']==1?'TRUE':false) &&
+                                             
+              $cm->setIngestFormElementParam(htmlentities($form_state['values']['form']['name']),
+                               '#autocomplete_path',
+                               trim($form_state['values']['form']['autocomplete'])!=''?trim($form_state['values']['form']['autocomplete']):false)                                   
+        && $cm->saveToFedora())
+     {
+       echo 'success:'.t('Successfully added ingest form element to model <b>%model_pid</b>.',array('%model_pid'=>$cm->pid));
+       exit(); 
+     } else 
+     {
+       form_set_error('form][name',t('Error: Unable to add ingest form element to model <b>%model_pid</b>.',array('%model_pid'=>$cm->pid)));
+     }
+   } else
+   {
+     form_set_error('',t('Error: Unable to load content model <b>%cm_pid</b>.',array('%cm_pid'=>htmlentities($form_state['values']['form']['model_pid']))));
+   }     
+}
+
+function icm_model_add_ingestFormElement(&$form_state,$params=null)
+{
+  if (is_array($params))
+  {
+    $model_pid = $params[0];
+  } else
+  {
+    $model_pid = $form_state['post']['form']['model_pid'];
+  }
+  
+  $form['form'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Add element to ingest form of <b>%model_pid</b>',array('%model_pid'=>$model_pid)),
+    '#tree' => TRUE,
+  );
+  
+  $form['form']['name'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Name'),
+    '#size' => 30,
+    '#required' => TRUE,
+    '#description' => t('The name of the form element.'),    
+  );
+  
+  $form['form']['label'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Label'),
+    '#size' => 30,
+    '#description' => t('The label that will be displayed for the form element. If left blank, defaults to the element name.'),    
+  );
+  
+  $form['form']['type'] = array(
+    '#type' => 'select',
+    '#title' => t('Type'),
+    '#required'=> TRUE,
+    '#options'=> array('textfield'=>t('Textfield'),
+                       'select'=>t('Select'),
+                       'checkbox'=>t('Checkbox'),
+                       'radio'=>t('Radio'),
+                       'textarea'=>t('Textarea'),
+                       'filechooser'=>t('Ingest File Chooser'),
+                       'list'=>t('List/Tag Editor'),
+                       'fieldset'=>t('Fieldset'),
+                       'people'=>t('People List (incl. name, title, organization, conference, role)'),
+                       'other_select'=>t('Select (with \'other\' option)'),
+                       'datepicker'=>t('Datepicker'),
+                       'copyright'=>t('Creative-Commons Copyright Chooser'),
+											 'hidden'=>t('Hidden'),
+								       'file'=>t('File Upload (browse)'),
+                       ),
+    '#description'=> t('The type of form element to display.')
+  ); 
+
+  $form['form']['required'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Required'),
+    '#description' => t('If enabled, the form element will be required.'),    
+  );
+  
+  $form['form']['sticky'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Sticky'),
+    '#description' => t('If enabled, the entered value will be carried over to the next ingest.'),    
+  );
+  
+  
+  $form['form']['autocomplete'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Autocomplete Path'),
+    '#description' => t('Filled in, the field will suggest values from the current collection as the user types as listed by the specified drupal path.  Only available for textfields.'),    
+  );        
+  
+  $form['form']['description'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Description'),
+    '#size'=>30,
+    '#description' => t('A brief description that will appear next to the form element.'),    
+  );       
+  
+  $form['form']['model_pid'] = array('#type' => 'hidden', '#value'=> $model_pid);
+  $form['form']['submit'] = array('#type' => 'submit', '#value' => t('Save')); 
+  $form['form']['cancel'] = array('#type' => 'button', '#value' => t('Cancel'), '#id'=>'cancel');
+  
+  return $form;
+}
+
+
+function icm_model_edit_ingestFormElement_validate($form,&$form_state)
+{
+
+  //only proceed if no errors have been found.
+  if (form_get_errors() !== NULL)
+    return;
+  
+    module_load_include('inc', 'fedora_repository', 'ContentModel');
+    
+   if (($cm = ContentModel::loadFromModel($form_state['values']['form']['model_pid']))!==FALSE)
+   {
+     
+     $elements = $cm->getIngestFormElements();
+     $found = false;
+     foreach ($elements as $el)
+     {
+       if ($el['name']==$form_state['values']['form']['name'])
+       {
+         $found=true;
+         break;
+       }
+     }
+          
+     if (!$found)
+     {
+       form_set_error('form][name',t('Error: The specified form element was not found in the ingest form.'));
+     }
+     else if ($cm->editIngestFormElement(htmlentities($form_state['values']['form']['name']),
+                                  htmlentities($form_state['values']['form']['label']),
+                                  $form_state['values']['form']['type'],
+                                  $form_state['values']['form']['required']==1,
+                                  htmlentities($form_state['values']['form']['description'])) &&
+                                  
+              $cm->setIngestFormElementParam(htmlentities($form_state['values']['form']['name']),
+                                             '#sticky',
+                                             $form_state['values']['form']['sticky']==1?'TRUE':false) &&
+                                             
+              $cm->setIngestFormElementParam(htmlentities($form_state['values']['form']['name']),
+                               '#autocomplete_path',
+                               trim($form_state['values']['form']['autocomplete'])!=''?trim($form_state['values']['form']['autocomplete']):false) &&             
+         
+         $cm->saveToFedora())
+     {
+       echo 'success:'.t('Successfully updated ingest form element to model <b>%model_pid</b>.',array('%model_pid'=>$cm->pid));
+       exit(); 
+     } else 
+     {
+       form_set_error('form][name',t('Error: Unable to updated ingest form element to model <b>%model_pid</b>.',array('%model_pid'=>$cm->pid)));
+     }
+   } else
+   {
+     form_set_error('',t('Error: Unable to load content model <b>%cm_pid</b>.',array('%cm_pid'=>htmlentities($form_state['values']['form']['model_pid']))));
+   }     
+}
+
+function icm_model_edit_ingestFormElement(&$form_state,$params=null)
+{
+  if (is_array($params))
+  {
+    $model_pid = array_shift($params);
+    $name = join(' ',$params);
+  } else
+  {
+    $model_pid = $form_state['post']['form']['model_pid'];
+    $name = $form_state['post']['form']['name'];
+  }
+  
+   module_load_include('inc', 'fedora_repository', 'ContentModel');
+   if (($cm = ContentModel::loadFromModel($model_pid))!==false)
+   {
+      $elements = $cm->getIngestFormElements();
+      $element = false;
+      foreach ($elements as $el)
+      {
+        if ($el['name'] == $name)
+        {
+          $element=$el;
+          break;
+        }
+      }
+      
+      if ($element === false)
+      {
+        form_set_error('',t('Error: Specified ingest form element <b>"%name"</b> does not exist. Please try again.',array('%name'=>$name)));
+      } else
+      {
+        
+        $form['form'] = array(
+          '#type' => 'fieldset',
+          '#title' => t('Edit element <b>"%name"</b> in ingest form of <b>%model_pid</b>',array('%name'=>$name,'%model_pid'=>$model_pid)),
+          '#tree' => TRUE,
+        );
+        
+        $form['form']['nameDisp'] = array(
+          '#type' => 'item',
+          '#title' => t('Name'),
+          '#description' => t('The name of the form element.'),
+          '#value'=>$name    
+        );
+        
+        $form['form']['label'] = array(
+          '#type' => 'textfield',
+          '#title' => t('Label'),
+          '#size' => 30,
+          '#default_value' => ($element['label']==$name)?'':$element['label'],
+          '#description' => t('The label that will be displayed for the form element. If left blank, defaults to the element name.'),    
+        );
+        
+        $form['form']['type'] = array(
+          '#type' => 'select',
+          '#title' => t('Type'),
+          '#required'=> TRUE,
+          '#default_value'=>$element['type'],
+          '#options'=> array('textfield'=>t('Textfield'),
+                             'select'=>t('Select'),
+                             'checkbox'=>t('Checkbox'),
+                             'radio'=>t('Radio'),
+                             'textarea'=>t('Textarea'),
+                             'filechooser'=>t('Ingest File Chooser'),
+                             'list'=>t('List/Tag Editor'),
+                             'fieldset'=>t('Fieldset'),
+                             'people'=>t('People List (incl. name, title, organization, conference, role)'),
+                             'other_select'=>t('Select (with \'other\' option)'),
+                             'datepicker'=>t('Datepicker'),
+                             'copyright'=>t('Creative-Commons Copyright Chooser'),
+														 'hidden'=>t('Hidden'),
+			     'file'=>t('File Upload (browse)'),
+                             ),
+          '#description'=> t('The type of form element to display. <br/><b>Warning:</b> Changing the type from "Select" or "Radio" to anything else will cause any authoritative list to be permanently removed.')
+        ); 
+      
+        $form['form']['required'] = array(
+          '#type' => 'checkbox',
+          '#title' => t('Required'),
+          '#default_value'=> $element['required']?1:0,
+          '#description' => t('If enabled, the form element will be required.'),    
+        );
+        
+        $form['form']['sticky'] = array(
+          '#type' => 'checkbox',
+          '#title' => t('Sticky'),
+          '#default_value'=> isset($element['parameters']['#sticky']) && $element['parameters']['#sticky']?1:0,
+          '#description' => t('If enabled, the entered value will be carried over to the next ingest.'),    
+        );
+	
+	$form['form']['autocomplete'] = array(
+	    '#type' => 'textfield',
+	    '#title' => t('Autocomplete Path'),
+	    '#default_value'=> isset($element['parameters']['#autocomplete_path'])?$element['parameters']['#autocomplete_path']:'',	    
+	    '#description' => t('Filled in, the field will suggest values from the current collection as the user types as listed by the specified drupal path.  Only available for textfields.'),    
+	  );        	
+        
+        
+        $form['form']['description'] = array(
+          '#type' => 'textarea',
+          '#title' => t('Description'),
+          '#default_value' => $element['description'],
+          '#description' => t('A brief description that will appear next to the form element.'),    
+        );       
+        
+        $form['form']['model_pid'] = array('#type' => 'hidden', '#value'=> $model_pid);
+        $form['form']['name'] = array('#type' => 'hidden', '#value'=> $name);  
+        $form['form']['submit'] = array('#type' => 'submit', '#value' => t('Save')); 
+      }
+    } else { 
+      form_set_error('',t('Error: Unable to load content model <b>%model_pid</b>.',array('%model_pid'=>$model_pid)));  
+    }    
+    
+    
+    $form['form']['cancel'] = array('#type' => 'button', '#value' => t('Cancel'), '#id'=>'cancel');
+    
+  return $form;
+}
+
+
+function icm_model_add_authListItem_validate($form,&$form_state)
+{
+
+  //only proceed if no errors have been found.
+  if (form_get_errors() !== NULL)
+    return;
+  
+    module_load_include('inc', 'fedora_repository', 'ContentModel');
+    
+   if (($cm = ContentModel::loadFromModel($form_state['values']['form']['model_pid']))!==FALSE)
+   {
+     
+     $elements = $cm->getIngestFormElements();
+     $found = false;
+     foreach ($elements as $el)
+     {
+       if ($el['name']==$form_state['values']['form']['name'])
+       {
+         $found=true;
+         break;
+       }
+     }
+     
+     if (!$found)
+     {
+       form_set_error('form][name',t('Error: The specified form element was not found in the ingest form.'));
+     }
+     else if ($cm->addAuthListItem($form_state['values']['form']['name'],htmlentities($form_state['values']['form']['authValue']),htmlentities($form_state['values']['form']['authLabel'])) 
+        && $cm->saveToFedora())
+     {
+       echo 'success:'.t('Successfully added authoritative list item to ingest form element to model <b>%model_pid</b>.',array('%model_pid'=>$cm->pid));
+       exit(); 
+     } else 
+     {
+       form_set_error('form][name',t('Error: Unable to add authoritative list item to ingest form of model <b>%model_pid</b>.',array('%model_pid'=>$cm->pid)));
+     }
+   } else
+   {
+     form_set_error('',t('Error: Unable to load content model <b>%cm_pid</b>.',array('%cm_pid'=>htmlentities($form_state['values']['form']['model_pid']))));
+   }     
+}
+
+
+
+function icm_model_add_authListItem(&$form_state,$params=null)
+{
+  if (is_array($params))
+  {
+    $model_pid = array_shift($params);
+    $name = join(' ',$params);
+  } else
+  {
+    $model_pid = $form_state['post']['form']['model_pid'];
+    $name = $form_state['post']['form']['name'];
+  }
+  
+   module_load_include('inc', 'fedora_repository', 'ContentModel');
+   if (($cm = ContentModel::loadFromModel($model_pid))!==false)
+   {
+      $elements = $cm->getIngestFormElements();
+      $element = false;
+      foreach ($elements as $el)
+      {
+        if ($el['name'] == $name)
+        {
+          $element=$el;
+          break;
+        }
+      }
+      
+      if ($element === false)
+      {
+        form_set_error('',t('Error: Specified ingest form element <b>"%name"</b> does not exist. Please try again.',array('%name'=>$name)));
+      } else
+      {
+        
+        $form['form'] = array(
+          '#type' => 'fieldset',
+          '#title' => t('Add item to the authoritative list of element <b>"%name"</b> of ingest form for <b>%model_pid</b>',array('%name'=>$name,'%model_pid'=>$model_pid)),
+          '#tree' => TRUE,
+        );
+        
+        $form['form']['nameDisp'] = array(
+          '#type' => 'item',
+          '#title' => t('Element Name'),
+          '#description' => t('The name of the form element.'),
+          '#value'=>$name    
+        );
+        
+        $form['form']['labelDisp'] = array(
+          '#type' => 'item',
+          '#title' => t('Element Label'),
+          '#value' => $element['label'],
+          '#description' => t('The label that will be displayed for the form element.'),    
+        );
+          
+      
+        $form['form']['authValue'] = array(
+          '#type' => 'textfield',
+          '#title' => t('Value'),
+          '#size'=> 30,
+          '#required' => TRUE,
+          '#description' => t('Authoritative list value.'),    
+        );       
+
+        $form['form']['authLabel'] = array(
+          '#type' => 'textfield',
+          '#title' => t('Label'),
+          '#size'=> 30,
+          '#description' => t('Authoritative list label. If left blank the item\'s value will also be used as the label.'),    
+        );       
+        
+        $form['form']['model_pid'] = array('#type' => 'hidden', '#value'=> $model_pid);
+        $form['form']['name'] = array('#type' => 'hidden', '#value'=> $name);  
+        $form['form']['submit'] = array('#type' => 'submit', '#value' => t('Save')); 
+      }
+    } else { 
+      form_set_error('',t('Error: Unable to load content model <b>%model_pid</b>.',array('%model_pid'=>$model_pid)));  
+    }    
+    
+    
+    $form['form']['cancel'] = array('#type' => 'button', '#value' => t('Cancel'), '#id'=>'cancel');
+    
+  return $form;
+}
+
+
+
+function icm_model_update_editMetadataMethod_validate($form,&$form_state)
+{
+  //only proceed if no errors have been found.
+  if (form_get_errors() !== NULL)
+    return;
+    
+  module_load_include('inc', 'fedora_repository', 'ContentModel');
+  
+  $module = $form_state['values']['form']['module'];
+  $file = $form_state['values']['form']['filename'];
+  $class= $form_state['values']['form']['class'];
+  $method=$form_state['values']['form']['method'];
+  $handler=$form_state['values']['form']['handler'];
+  $path = drupal_get_path('module',$module);
+ 
+  if (empty($path) || !file_exists($path.'/'.$file))
+  {
+    form_set_error('form][filename',t('Error: Selected plugin file not found. Please try again.'));
+  } else
+  {
+    require_once ($path.'/'.$file);
+    if (!class_exists($class))
+    {
+      form_set_error('form][class',t('Error: Specified class does not exist in the plugin.  Please try again.'));
+    } else
+    {
+        $obj = new $class;
+        if (!method_exists($obj,$method))
+        {
+          form_set_error('form][method',t('Error: Specified builder method does not exist in the specified class/plugin.  Please try again.'));        
+        }  
+        if (!method_exists($obj,$handler))
+        {
+          form_set_error('form][handler',t('Error: Specified handler method does not exist in the specified class/plugin.  Please try again.'));        
+        }        
+    }
+  }
+  
+  if (!ContentModel::validDsid($form_state['values']['form']['dsid']))
+  {
+    form_set_error('form][dsid',t('Error: Invalid datastream identifier. Please try again.'));
+  }
+  
+  //only proceed if no errors have been found.
+  if (form_get_errors() !== NULL)
+    return;
+    
+   module_load_include('inc', 'fedora_repository', 'ContentModel');
+
+   if (($cm = ContentModel::loadFromModel($form_state['values']['form']['model_pid']))!==FALSE)
+   {
+     if ($cm->updateEditMetadataMethod($module,$file,$class,$method,$handler,$form_state['values']['form']['dsid']) && $cm->saveToFedora())
+     {
+       echo 'success:'.t('Successfully updated edit metadata method to model <b>%model_pid</b>.',array('%model_pid'=>$cm->pid));
+       exit(); 
+     } else 
+     {
+       form_set_error('form][name',t('Error: Unable to update edit metadata method to model <b>%model_pid</b>.',array('%model_pid'=>$cm->pid)));
+     }
+   } else
+   {
+     form_set_error('',t('Error: Unable to load content model <b>%cm_pid</b>.',array('%cm_pid'=>htmlentities($form_state['values']['form']['model_pid']))));
+   }
+  
+}
+
+function icm_model_update_editMetadataMethod(&$form_state,$params=null)
+{
+
+  if (is_array($params))
+  {
+    $model_pid = $params[0];
+  } else
+  {
+    $model_pid = $form_state['post']['form']['model_pid'];
+  }
+  
+  $form['form'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Update Edit Metadata Method to model <b>%model_pid</b>',array('%model_pid'=>$model_pid)),
+      '#tree' => TRUE,
+    );
+      
+  module_load_include('inc', 'fedora_repository', 'ContentModel');
+   if (($cm = ContentModel::loadFromModel($model_pid))!==false)
+   {
+
+      $method  = $cm->getEditMetadataMethod();
+
+        $form['form']['dsid'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Datastream Identifier'),
+        '#size' => 30,
+        '#maxlength' => 64,
+        '#default_value'=>isset($method['dsid'])?$method['dsid']:'',
+        '#required' => TRUE,
+        '#description' => t('The datastream ID that stores the collected metadata from the form.'),    
+      );
+      
+    $form['form']['module'] = array(
+	'#type' => 'select',
+	'#title' => t('Module'),
+	'#element_validate' => array('icm_module_validate'),
+	'#options'=>icm_get_modules(),
+	'#required' => TRUE,
+	'#default_value'=>isset($method['module'])?$method['module']:'',
+	'#description' => t('The name of the module containing the plugin file.'), 
+      );  
+      
+      $form['form']['filename'] = array(
+	'#type' => 'textfield',
+	'#title' => t('File'),
+	'#element_validate' => array('icm_filename_validate'),
+	'#default_value'=>isset($method['file'])?$method['file']:'',
+	'#required' => TRUE,
+	'#description' => t('The relative path of the file containing the ingest method class/method.'), 
+      );
+      
+      $form['form']['class'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Class'),
+        '#element_validate' => array('icm_class_validate'),
+        '#required' => TRUE,
+        '#size'=>30,
+        '#default_value'=>isset($method['class'])?$method['class']:'',
+        '#description' => t('The name of the ingest method class.'),    
+      );
+      $form['form']['method'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Builder Method'),
+        '#element_validate' => array('icm_method_validate'),
+        '#size'=>30,
+        '#required' => TRUE,
+        '#default_value'=>isset($method['method'])?$method['method']:'',
+        '#description' => t('The name of the class method to call when building the edit metadata form.'),    
+      ); 
+      
+      $form['form']['handler'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Handler Method'),
+        '#element_validate' => array('icm_method_validate'),
+        '#size'=>30,
+        '#required' => TRUE,
+        '#default_value'=>isset($method['handler'])?$method['handler']:'',
+        '#description' => t('The name of the class method to call to handle the edit metadata form.'),    
+      );   
+    
+      
+      $form['form']['model_pid'] = array('#type' => 'hidden', '#value'=> $model_pid);
+      $form['form']['submit'] = array('#type' => 'submit', '#value' => t('Save'));
+ } else
+ { 
+    form_set_error('',t('Error: Unable to load content model <b>%model_pid</b>.',array('%model_pid'=>$model_pid)));  
+ }  
+  
+  
+  
+  $form['form']['cancel'] = array('#type' => 'button', '#value' => t('Cancel'), '#id'=>'cancel');
+  return $form;
+}
+
+
+function icm_model_rollback_validate($form,&$form_state)
+{
+ //only proceed if no errors have been found.
+  if (form_get_errors() !== NULL)
+    return;
+    
+  module_load_include('inc', 'fedora_repository', 'ContentModel');
+
+   if (($cm = ContentModel::loadFromModel($form_state['values']['form']['model_pid']))!==FALSE)
+   {
+     
+     $history = $cm->getHistory();
+     $found = false;
+     foreach ($history as $key=>$ver)
+     {
+       if ($ver['versionID'] == $form_state['values']['form']['version'])
+       {
+         $found = $key;
+         break;
+       }
+     }
+     
+     if ($found === false)
+     {
+       form_set_error('',t('Error: Selected version was not found.  Please try again.'));
+     } else if ($found == 0 && $form_state['values']['form']['removeOlder'] == 0)
+     {
+        form_set_error('',t('Error: Selected version is the current version.  Nothing changed.'));
+     } else
+     {
+       $success=true; 
+       if ($found > 0)
+        {
+          $startDate = $history[$found-1]['createDate'];
+          $success = $cm->purgeVersions($history[$found-1]['createDate'],null);
+        }
+        
+        if ($form_state['values']['form']['removeOlder'] == 1 && isset($history[$found+1]))
+        {
+            $endDate = $history[$found+1]['createDate'];
+            $success = $success && $cm->purgeVersions(null,$endDate);
+        }
+        
+        if ($success)
+        {
+            echo 'success:'.t('Successfully rolled back version of content model <b>%cm_pid</b>',array('%cm_pid'=>$cm->pid));
+	    exit();
+            
+        } else
+        {
+          form_set_error('',t('Error: Unable to roll back version.  Check watchdog logs.'));
+        }
+     }
+     
+   } else
+   {
+     form_set_error('',t('Error: Unable to load content model <b>%cm_pid</b>.',array('%cm_pid'=>htmlentities($form_state['values']['form']['model_pid']))));
+     
+   }
+}
+
+function icm_model_rollback(&$form_state,$params=null)
+{
+
+  if (is_array($params))
+  {
+    $model_pid = $params[0];
+  } else
+  {
+    $model_pid = $form_state['post']['form']['model_pid'];
+  }
+  
+  $form['form'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Rollback Content Model <b>%model_pid</b>',array('%model_pid'=>$model_pid)),
+      '#tree' => TRUE,
+    );
+      
+  module_load_include('inc', 'fedora_repository', 'ContentModel');
+
+   if (($cm = ContentModel::loadFromModel($model_pid))!==false)
+   {
+     
+     $history = $cm->getHistory();
+
+     $options = array();
+     foreach ($history as $ver)
+     {
+       $options[$ver['versionID']] = date(DATE_RFC822,strtotime($ver['createDate']));
+     }
+
+      if ($history !== false && count($history) > 0)
+      {
+
+     
+      $form['form']['warning'] = array('#value' => '<b>Warning:</b> Rolling back a datastream will purge all versions up-to the selected datastream.');
+           
+        
+        $form['form']['cur'] = array(
+        '#type'=> 'item',
+        '#title'=> t('Current Version:'),
+        '#value'=> date(DATE_RFC822,strtotime($history[0]['createDate']))
+        );
+        
+        $form['form']['version'] = array(
+          '#type' => 'select',
+          '#title' => t('Version'),
+          '#options' => $options    
+        );
+   
+        $form['form']['removeOlder'] = array(
+          '#type' => 'checkbox',
+          '#title' => 'Purge Older Versions',
+          '#description' => 'If enabled, also purges versions of the datastream that are OLDER than the selected, effectively leaving only the selected version.'
+        );
+
+        $form['form']['submit'] = array('#type' => 'submit', '#value' => t('Save'));
+                
+      } else
+      {
+        $form['form']['version'] = array(
+        '#type'=> 'item',
+        '#title'=> t('Rollback to Version:'),
+        '#value'=> t('only one version available.')
+        );
+      }
+      
+
+        
+ } else
+ { 
+    form_set_error('',t('Error: Unable to load content model <b>%model_pid</b>.',array('%model_pid'=>$model_pid)));  
+ }  
+  
+  $form['form']['model_pid'] = array('#type' => 'hidden', '#value'=> $model_pid);
+  $form['form']['cancel'] = array('#type' => 'button', '#value' => t('Cancel'), '#id'=>'cancel');
+  return $form;
+}
+
+function icm_model_purge_validate($form,&$form_state)
+{
+  
+  if ($form_state['values']['form']['confirm'] == 0)
+  {
+    form_set_error('form][confirm',t('If you would like to purge the selected content model, please check the confirmation checkbox and try again.'));  
+  } else
+  {
+    $model_pid = $form_state['values']['form']['model_pid'];
+
+    module_load_include('inc','fedora_repository','api/fedora_item');
+    module_load_include('inc','fedora_repository','ContentModel');
+    
+    if (($cm = ContentModel::loadFromModel($model_pid))!==FALSE)
+    {
+      $fedoraItem = new Fedora_Item($model_pid);
+
+      if ($fedoraItem->purge(t('Purged using Islandora Content Modeller.')))
+      {
+        echo 'success:'.t('Successfully purged content model <b>%model_pid</b>.',array('%model_pid'=>$model_pid));
+	exit();
+	
+      } else
+      {
+        form_set_error('',t('Error: Purge failed. Please contact an administrator for assistance.')); 
+      }
+      
+    } else
+    {
+      form_set_error('',t('Error: Unable to load specified content model.'));
+    }
+    
+  }
+}
+
+function icm_model_purge(&$form_state,$params=null)
+{
+  
+  if (is_array($params))
+  {
+    $model_pid = $params[0];
+  } else
+  {
+    $model_pid = $form_state['post']['form']['model_pid'];
+  }
+  
+  $form['form'] = array(
+  '#type' => 'fieldset',
+  '#title' => t('Purge Content Model <b>%model_pid</b>',array('%model_pid'=>$model_pid)),
+  '#tree' => TRUE,
+  );
+  
+  module_load_include('inc', 'fedora_repository', 'ContentModel');
+  
+  if (($cm = ContentModel::loadFromModel($model_pid))!==false)
+  {
+    $form['form']['warning'] = array('#value' => '<b>Warning:</b> Purging a content model will affect any objects and collections that reference the model. Once purged, the entire model will be permanently deleted.');
+    
+    $form['form']['confirm'] = array('#type' => 'checkbox',
+                                     '#title' => t('Confirm purge of model <b>%model_pid</b>',array('%model_pid'=>$model_pid)),
+                                     '#default_vale' => 0,
+                                     '#required' => TRUE);
+    
+    $form['form']['submit'] = array('#type' => 'submit', '#value' => t('Save'));
+
+  } else
+  { 
+    form_set_error('',t('Error: Unable to load content model <b>%model_pid</b>.',array('%model_pid'=>$model_pid)));  
+  }  
+  
+  $form['form']['model_pid'] = array('#type' => 'hidden', '#value'=> $model_pid);
+  $form['form']['cancel'] = array('#type' => 'button', '#value' => t('Cancel'), '#id'=>'cancel');
+  return $form;
+}
+
+function icm_model_new_submit($form,&$form_state)
+{
+  
+    //save the values for the current step into the storage array
+    $form_state['storage']['values'][$form_state['storage']['step']] = $form_state['values'];
+    
+    
+    if ($form_state['storage']['step'] == 2)
+    { 
+
+        module_load_include('inc','fedora_repository','api/fedora_item');
+        module_load_include('inc','fedora_repository','ContentModel');
+        
+        $item = Fedora_Item::ingest_new_item($form_state['storage']['values'][1]['form']['pid'],'A',$form_state['storage']['values'][1]['form']['name']);
+        $item->add_relationship('fedora-model:hasModel','info:fedora/fedora-system:ContentModel-3.0',FEDORA_MODEL_URI);
+      
+        switch ($form_state['storage']['values'][1]['form']['initialize'])
+        {
+          case 'blank':
+            //($pid,$name,$modelDsid, $defaultMimetype, $ingestFormDsid, $ingestFormPage, $ingestFormHideChooser, $ingestFormFile, $ingestFormClass, $ingestFormMethod, $ingestFormHandler)
+            $cm = ContentModel::ingestBlankModel($form_state['storage']['values'][1]['form']['pid'],
+                                                 $form_state['storage']['values'][1]['form']['name'],
+                                                 ContentModel::getDefaultDSID(),
+                                                 $form_state['storage']['values'][2]['form']['type'],
+                                                 $form_state['storage']['values'][2]['form']['dsid'],
+                                                 $form_state['storage']['values'][2]['form']['page'],
+                                                 $form_state['storage']['values'][2]['form']['hide_file_chooser']==1,
+                                                 $form_state['storage']['values'][2]['from']['module'],
+                                                 $form_state['storage']['values'][2]['form']['filename'],
+                                                 $form_state['storage']['values'][2]['form']['class'],
+                                                 $form_state['storage']['values'][2]['form']['method'],
+                                                 $form_state['storage']['values'][2]['form']['handler']);            
+            break;
+            
+          case 'model':
+            $cm = ContentModel::ingestFromModel($form_state['storage']['values'][1]['form']['pid'],
+                                                $form_state['storage']['values'][1]['form']['name'],
+                                                ContentModel::getDefaultDSID(),
+                                                $form_state['storage']['values'][2]['form']['model_pid']);
+           break;
+           
+          case 'file':
+            $cm = ContentModel::ingestFromFile($form_state['storage']['values'][1]['form']['pid'],
+            $form_state['storage']['values'][1]['form']['name'],
+            ContentModel::getDefaultDSID(),
+            drupal_get_path('module','fedora_repository').'/'.$form_state['storage']['values'][2]['form']['xml_filename']);
+                       
+           
+            break;
+        }
+        
+
+        
+         if ($cm !== false)
+         {
+           echo 'success:'.t('Successfully ingested new content model.');
+           exit();
+         }else
+         {
+           echo t('Error: Unable to ingest new content model. Please try again or contact an administrator.');
+
+         }
+        
+    } else
+    {
+      // check the button that was clicked and action the step chagne
+      $form_state['storage']['step']++;
+      
+      //tell Drupal we are redrawing the same form
+      $form_state['rebuild'] = TRUE;
+      
+    }  
+}
+
+function icm_model_new_validate($form, &$form_state)
+{
+  module_load_include('inc', 'fedora_repository', 'ContentModel');
+  module_load_include('inc', 'fedora_repository', 'api/fedora_item');
+  
+  switch ($form_state['storage']['step'])
+  {
+    case 1:
+       if (!ContentModel::validPid($form_state['values']['form']['pid']))
+       {
+         form_set_error('form][pid', t('Error: Invalid persistant identifier. Please try again.'));
+       } else if (Fedora_Item::fedora_item_exists($form_state['values']['form']['pid']))
+       {
+         form_set_error('form][pid', t('Error: Specified PID already exists.  Please choose a different PID and try again.'));
+       } 
+      break;
+      
+      
+    case 2:
+      if ($form_state['storage']['values'][1]['form']['initialize'] == 'blank')
+      {
+        if (!ContentModel::validDsid($form_state['values']['form']['dsid']))
+        {
+          form_set_error('form][dsid', t('Error: Invalid datastream identifier. Please try again.'));
+        }
+        if (intval($form_state['values']['form']['page']) <= 0)
+        {
+          form_set_error('form][page', t('Error: Page must be a positive integer. Please try again.'));
+        }
+
+	$module=$form_state['values']['form']['module'];
+        $file = $form_state['values']['form']['filename'];
+        $class= $form_state['values']['form']['class'];
+        $method=$form_state['values']['form']['method'];
+        $handler=$form_state['values']['form']['handler'];
+        $path = drupal_get_path('module',$module);
+       
+        if (empty($path) || !file_exists($path.'/'.$file))
+        {
+          form_set_error('form][filename',t('Error: Selected plugin file not found. Please try again.'));
+        } else
+        {
+          require_once ($path.'/'.$file);
+          if (!class_exists($class))
+          {
+            form_set_error('form][class',t('Error: Specified class does not exist in the plugin.  Please try again.'));
+          } else
+          {
+              $obj = @new $class;
+              if (!method_exists($obj,$method))
+              {
+                form_set_error('form][method',t('Error: Specified builder method does not exist in the specified class/plugin.  Please try again.'));        
+              }  
+              if (!method_exists($obj,$handler))
+              {
+                form_set_error('form][handler',t('Error: Specified handler method does not exist in the specified class/plugin.  Please try again.'));        
+              }          
+          }
+        }    
+      }
+      break;
+      
+  } 
+  
+}
+
+function icm_model_new(&$form_state,$params=null)
+{
+  $form['#multistep']= TRUE;
+
+  $form['form'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Create/Install New Content Model'),
+      '#tree' => TRUE,
+    );
+    
+  if (empty($form_state['storage']['step'])) 
+  {
+      // we are coming in without a step, so default to step 1
+      $form_state['storage']['step'] = 1;
+  }
+
+  switch ($form_state['storage']['step'])
+  {
+    case 1: 
+  $form['form']['pid'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Persistent Identifier'),
+    '#size' => 30,
+    '#required' => TRUE,
+    '#maxsize' => 64,
+    '#description' => t('The persistent identifier that will be used to identify the new content model.  Make sure to choose a namespace that you will have access to from islandora.'),
+  );
+  
+  $form['form']['name'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Name'),
+    '#size' => 30,
+    '#required' => TRUE,
+    '#description' => t('A short human readable name for the content model.'),
+  );
+
+  $form['form']['initialize'] = array(
+    '#type' => 'select',
+    '#title' => t('Initialize Content Model'),
+    '#options' => array('blank'=>t('Start with a blank model'),
+                        'model'=>t('Clone an existing installed model'),
+                        'file'=>t('Load from a content model XML file')),
+    '#description' => t('Determines how the new content model is initialized.')
+  );
+  
+      break;
+      
+    case 2:
+      
+
+      $form['form']['#description'] = '<b>PID:</b> '.$form_state['storage']['values'][1]['form']['pid'].'<br/>'.
+                                      '<b>Name:</b> '.$form_state['storage']['values'][1]['form']['name'].'<br/><br/>';
+      
+      switch ($form_state['storage']['values'][1]['form']['initialize'])
+      {
+        case 'model':
+          $form['form']['#description'] .= t('Please select an content model below that will be used as the base for this new content model.  The model name will be updated to the value entered in the previous step.');
+          module_load_include('inc','fedora_repository','CollectionClass');
+          module_load_include('inc','fedora_repository','ContentModel');
+          $collectionHelper = new CollectionClass();
+
+          $options=array();
+          $items = new SimpleXMLElement( $collectionHelper->getRelatedItems(variable_get('fedora_content_model_collection_pid','islandora:ContentModelCollection') ,null,null));
+          for ($i = 0; $i < count($items->results->result); $i++)
+          {
+            list(,$pid)=preg_split('/\//',$items->results->result[$i]->object['uri']);
+
+            $cm = ContentModel::loadFromModel($pid);
+            if ($cm !== false)
+            {
+              $options[$pid] = $items->results->result[$i]->title .' ('.$pid.')';
+            }
+          }
+
+          $form['form']['model_pid'] = array(
+            '#type' => 'select',
+            '#title' => t('Content Model'),
+            '#required' => TRUE,
+            '#options' => $options,
+            '#description' => t('The currently installed content model to clone.'),    
+          );
+          break;
+          
+        case 'file':
+          $form['form']['#description'] .= t('Please select an ISLANDORACM XML file that will be used as the base for this new content model.');
+
+          $plugin_path = drupal_get_path('module','fedora_repository').'/content_models';
+          
+          $files = array('');
+          if ( ($dir = opendir($plugin_path)) !== false)
+          {
+            while (($file = readdir($dir)) !== false)
+            {
+              if (preg_match('/\.xml$/',$file))
+              {
+                $files['content_models/'.$file]='content_models/'.$file;
+              }
+            }
+          }
+	  
+          $form['form']['xml_filename'] = array(
+          '#type' => 'select',
+          '#title' => t('File'),
+          '#options'=>$files,
+          '#required' => TRUE,
+          '#description' => t('The relative path of the file containing the desired content model datastream.'), 
+          );         
+          
+          break;
+        
+        case 'blank':
+        default:
+
+          $form['form']['#description'] .= t('The only additional required information that a model <b>must</b> have is the ingest form method/handler.  Once the model has been added, please go in and add any additional mimetypes, datastreams and ingest rules and ingest form elements that are neccessary. ');
+
+  
+          $form['form']['type'] = array(
+            '#type' => 'textfield',
+            '#title' => t('Mimetype'),
+            '#size' => 30,
+            '#required' => TRUE,
+            '#description' => t('A content mimetype that can be ingested using this model.'),    
+          );  
+          
+          $form['form']['dsid'] = array(
+            '#type' => 'textfield',
+            '#title' => t('Datastream Identifier'),
+            '#size' => 30,
+            '#maxlength' => 64,
+            '#default_value'=>$attr['dsid'],
+            '#required' => TRUE,
+            
+            '#description' => t('The datastream ID that stores the collected metadata from the form.'),    
+          );
+          
+          $form['form']['page'] = array(
+            '#type' => 'textfield',
+            '#title' => t('Page'),
+            '#size' => 3,
+            '#required' => TRUE,
+            '#default_value' => $attr['page'],
+            '#description' => t('??? not sure what this field is for.  Cant find a reference to it, candidate for removal. '),    
+          );
+            
+          $form['form']['hide_file_chooser'] = array(
+            '#type' => 'checkbox',
+            '#title' => t('Hide File Chooser'),
+            '#size' => 3,
+            '#required' => TRUE,
+            '#default_value' => $attr['hide_file_chooser']?1:0,
+            '#description' => t('If enabled, the file choose will not be displayed in the ingest form for this model.'),    
+          );
+	  
+	  $form['form']['redirect'] = array(
+	    '#type' => 'checkbox',
+	    '#title' => t('Redirect on Ingest'),
+	    '#size' => 3,
+	    '#required' => TRUE,
+	    '#default_value' => $attr['redirect']?1:0,
+	    '#description' => t('If enabled, the user will be redirected to the collection view on successful ingest.'),    
+	  );      	  
+          
+	  $form['form']['module'] = array(
+	      '#type' => 'select',
+	      '#title' => t('Module'),
+	      '#element_validate' => array('icm_module_validate'),
+	      '#options'=>icm_get_modules(),
+	      '#required' => TRUE,
+	       '#default_value'=>$builderMethod['module'],
+	      '#description' => t('The name of the module containing the form builder plugin file.'), 
+	    );  
+	    
+	  $form['form']['filename'] = array(
+	    '#type' => 'textfield',
+	    '#title' => t('File'),
+	    '#element_validate' => array('icm_filename_validate'),
+	    '#required' => TRUE,
+	    '#default_value'=>$builderMethod['file'],
+	    '#description' => t('The relative path of the file containing the form builder/handler class/method.'), 
+	  );	  
+
+          $form['form']['class'] = array(
+            '#type' => 'textfield',
+            '#title' => t('Class'),
+            '#element_validate' => array('icm_class_validate'),
+            '#required' => TRUE,
+            '#default_value'=> $builderMethod['class'],
+            '#size'=>30,
+            '#description' => t('The name of the builder/handler class.'),    
+          );
+          $form['form']['method'] = array(
+            '#type' => 'textfield',
+            '#title' => t('Form Builder Method'),
+            '#element_validate' => array('icm_method_validate'),
+            '#size'=>30,
+            '#required' => TRUE,
+            '#default_value'=> $builderMethod['method'],
+            '#description' => t('The name of the class method to build the ingest form.'),    
+          );       
+    
+          $form['form']['handler'] = array(
+            '#type' => 'textfield',
+            '#title' => t('Form Handler Method'),
+            '#element_validate' => array('icm_method_validate'),
+            '#size'=>30,
+            '#required' => TRUE,
+            '#default_value'=> $builderMethod['handler'],
+            '#description' => t('The name of the class method to handle the ingest form.'),    
+          );            
+          
+          break;
+      }
+      
+      break;
+      
+  }
+  $form['form']['submit'] = array('#type' => 'submit', '#value' => t('Save'));    
+  $form['form']['cancel'] = array('#type' => 'button', '#value' => t('Cancel'), '#id'=>'cancel');
+  
+  return $form;
+}
+
+
+
+function icm_collection_purge_validate($form,&$form_state)
+{
+  
+  if ($form_state['values']['form']['confirm'] == 0)
+  {
+    form_set_error('form][confirm',t('If you would like to purge the selected collection, please check the confirmation checkbox and try again.'));  
+  } else
+  {
+    $cp_pid = $form_state['values']['form']['cp_pid'];
+    
+    module_load_include('inc','fedora_repository','api/fedora_item');
+    module_load_include('inc','fedora_repository','CollectionPolicy');
+    
+    if (($cp = CollectionPolicy::loadFromCollection($cp_pid))!==FALSE)
+    {
+      $fedoraItem = new Fedora_Item($cp_pid);
+      
+      if ($fedoraItem->purge(t('Purged using Islandora Content Modeller.')))
+      {
+        echo 'success:'.t('Successfully purged collection  <b>%cp_pid</b>.',array('%cp_pid'=>$cp_pid));
+	exit();
+      } else
+      {
+        form_set_error('',t('Error: Purge failed. Please contact an administrator for assistance.')); 
+      }
+      
+    } else
+    {
+      form_set_error('',t('Error: Unable to load specified collection policy.'));
+    }
+    
+  }
+}
+
+function icm_collection_purge(&$form_state,$params=null)
+{
+  
+  if (is_array($params))
+  {
+    $cp_pid = $params[0];
+  } else
+  {
+    $cp_pid = $form_state['post']['form']['cp_pid'];
+  }
+  
+  $form['form'] = array(
+  '#type' => 'fieldset',
+  '#title' => t('Purge Collection <b>%cp_pid</b>',array('%cp_pid'=>$cp_pid)),
+  '#tree' => TRUE,
+  );
+  
+  module_load_include('inc', 'fedora_repository', 'CollectionPolicy');
+  
+  if (($cm = CollectionPolicy::loadFromCollection($cp_pid))!==false)
+  {
+    $form['form']['warning'] = array('#value' => '<b>Warning:</b> Purging a collection will orphan any objects contained in the collection. This can not be undone.');
+    
+    $form['form']['confirm'] = array('#type' => 'checkbox',
+    '#title' => t('Confirm purge of collection <b>%cp_pid</b>',array('%cp_pid'=>$cp_pid)),
+                  '#default_vale' => 0,
+                  '#required' => TRUE);
+                  
+                  $form['form']['submit'] = array('#type' => 'submit', '#value' => t('Save'));
+                  
+  } else
+  { 
+    form_set_error('',t('Error: Unable to load collection <b>%cp_pid</b>.',array('%cp_pid'=>$cp_pid)));  
+  }  
+  
+  $form['form']['cp_pid'] = array('#type' => 'hidden', '#value'=> $cp_pid);
+  $form['form']['cancel'] = array('#type' => 'button', '#value' => t('Cancel'), '#id'=>'cancel');
+  return $form;
+}
+
+function icm_collection_new_submit($form,&$form_state)
+{
+  
+  //save the values for the current step into the storage array
+  $form_state['storage']['values'][$form_state['storage']['step']] = $form_state['values'];
+
+  
+  
+  if ($form_state['storage']['step'] == 2)
+  { 
+    
+    module_load_include('inc','fedora_repository','api/fedora_item');
+    module_load_include('inc','fedora_repository','CollectionPolicy');
+    
+    $cp = false;
+    if (($parent_cp = CollectionPolicy::loadFromCollection($form_state['storage']['parent'])) !== FALSE)
+    {
+      $item = Fedora_Item::ingest_new_item($form_state['storage']['values'][1]['form']['pid'],'A',$form_state['storage']['values'][1]['form']['name']);
+      $item->add_relationship('fedora-model:hasModel','info:fedora/'.variable_get('fedora_collection_model_pid','islandora:collectionCModel') ,FEDORA_MODEL_URI);
+      $item->add_relationship($parent_cp->getRelationship(),$parent_cp->pid,RELS_EXT_URI);
+      
+      switch ($form_state['storage']['values'][1]['form']['initialize'])
+      {
+        case 'blank':
+          //($pid,$name,$modelDsid, $defaultMimetype, $ingestFormDsid, $ingestFormPage, $ingestFormHideChooser, $ingestFormFile, $ingestFormClass, $ingestFormMethod, $ingestFormHandler)
+          $cp = CollectionPolicy::ingestBlankPolicy($form_state['storage']['values'][1]['form']['pid'],
+                                               $form_state['storage']['values'][1]['form']['name'],
+                                               CollectionPolicy::getDefaultDSID(),
+                                               $form_state['storage']['values'][2]['form']['model']['pid'],
+                                               $form_state['storage']['values'][2]['form']['model']['namespace'],
+                                               $form_state['storage']['values'][2]['form']['relationship'],
+                                               $form_state['storage']['values'][2]['form']['term']['field'],
+                                               $form_state['storage']['values'][2]['form']['term']['value']);            
+                                               break;
+                                               
+        case 'collection':
+          $cp = CollectionPolicy::ingestFromCollection($form_state['storage']['values'][1]['form']['pid'],
+                                              $form_state['storage']['values'][1]['form']['name'],
+                                              CollectionPolicy::getDefaultDSID(),
+                                              $form_state['storage']['values'][2]['form']['collection_pid']);
+                                              break;
+                                              
+        case 'file':
+          $cp = CollectionPolicy::ingestFromFile($form_state['storage']['values'][1]['form']['pid'],
+                                             $form_state['storage']['values'][1]['form']['name'],
+                                             CollectionPolicy::getDefaultDSID(),
+                                             drupal_get_path('module','fedora_repository').'/'.$form_state['storage']['values'][2]['form']['policy_filename']);
+                                             
+                                             
+                                             break;
+      }
+    }
+    
+    
+    if ($cp !== false)
+    {
+      echo 'success:'.t('Successfully ingested new collection.');
+      exit();
+    }else
+    {
+      echo t('Error: Unable to ingest new collection. Please try again or contact an administrator.');
+      
+    }
+    
+  } else
+  {
+    // check the button that was clicked and action the step chagne
+    $form_state['storage']['step']++;
+    
+    //tell Drupal we are redrawing the same form
+    $form_state['rebuild'] = TRUE;
+    
+  }  
+}
+
+function icm_collection_new_validate($form, &$form_state)
+{
+  module_load_include('inc', 'fedora_repository', 'CollectionPolicy');
+  module_load_include('inc', 'fedora_repository', 'ContentModel');
+  module_load_include('inc', 'fedora_repository', 'api/fedora_item');
+
+  if ($cp = CollectionPolicy::loadFromCollection($form_state['storage']['parent']) === FALSE)
+  {
+    form_set_error('',t('Error: Unable to load parent collection <b>%cp_pid</b>. Please try adding to a different collection or contact an administrator.',array('%cp_pid',$form_state['storage']['parent'])));
+  }
+  
+  switch ($form_state['storage']['step'])
+  {
+    case 1:
+      if (!CollectionPolicy::validPid($form_state['values']['form']['pid']))
+      {
+        form_set_error('form][pid', t('Error: Invalid persistant identifier. Please try again.'));
+      } else if (Fedora_Item::fedora_item_exists($form_state['values']['form']['pid']))
+      {
+        form_set_error('form][pid', t('Error: Specified PID already exists.  Please choose a different PID and try again.'));
+      } 
+      break;
+      
+      
+    case 2:
+      switch ($form_state['storage']['values'][1]['form']['initialize'] )
+      {
+        case 'blank':
+        if ($form_state['values']['form']['model']['pid'] != $form_state['storage']['values'][1]['form']['pid'] && ($cm = ContentModel::loadFromModel($form_state['values']['form']['model']['pid'])) === FALSE)
+        {
+          form_set_error('form][model][pid', t('Error: Specified content model could not be loaded. Please choose a different model or contact an administrator.'));
+        } 
+        if (!ContentModel::validPid($form_state['values']['form']['model']['namespace']))
+        {
+          form_set_error('form][model][namespace',t('Error: Invalid namespace format.'));
+        }
+        break;
+        
+        case 'collection':
+          if (!CollectionPolicy::validPid($form_state['values']['form']['collection_pid'])  || ($cp = CollectionPolicy::loadFromCollection($form_state['values']['form']['collection_pid'])) === FALSE)
+          {
+            form_set_error('form][collection_pid', t('Error: Specified collection could not be loaded. Please choose a different collection or contact an administrator.'));
+          }           
+          break;
+        
+      } 
+      break;
+      
+  } 
+  
+}
+
+function icm_collection_new(&$form_state,$params=null)
+{
+  $form['#multistep']= TRUE;
+
+  $form['form'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Create/Install New Collection'),
+      '#tree' => TRUE,
+    );
+    
+  if (empty($form_state['storage']['step'])) 
+  {
+      // we are coming in without a step, so default to step 1
+      $form_state['storage']['step'] = 1;
+      $form_state['storage']['parent'] = $params[0];
+  }
+
+  switch ($form_state['storage']['step'])
+  {
+    case 1: 
+  $form['form']['pid'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Persistent Identifier'),
+    '#size' => 30,
+    '#required' => TRUE,
+    '#maxsize' => 64,
+    '#description' => t('The persistent identifier that will be used to identify the new collection.  Make sure to choose a namespace that you will have access to from islandora.'),
+  );
+  
+  $form['form']['name'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Name'),
+    '#size' => 30,
+    '#required' => TRUE,
+    '#description' => t('A short human readable name for the collection.'),
+  );
+
+  $form['form']['initialize'] = array(
+    '#type' => 'select',
+    '#title' => t('Initialize Collection Policy'),
+    '#options' => array('blank'=>t('Start with a blank policy'),
+                        'collection'=>t('Clone the policy from an existing collection'),
+                        'file'=>t('Load from a collection policy XML file')),
+    '#description' => t('Determines how the new collection policy is initialized.')
+  );
+  
+      break;
+      
+    case 2:
+      
+
+      $form['form']['#description'] = '<b>PID:</b> '.$form_state['storage']['values'][1]['form']['pid'].'<br/>'.
+                                      '<b>Name:</b> '.$form_state['storage']['values'][1]['form']['name'].'<br/><br/>';
+      
+      switch ($form_state['storage']['values'][1]['form']['initialize'])
+      {
+        case 'collection':
+          $form['form']['#description'] .= t('Please select a collection below whose collection policy will be used as the basis for the new collection.  The collections name will be updated to the value entered in the previous step.');
+          module_load_include('inc','fedora_repository','CollectionClass');
+          module_load_include('inc','fedora_repository','ContentModel');
+
+          $form['form']['collection_pid'] = array(
+            '#type' => 'textfield',
+            '#title' => t('Collection'),
+            '#required' => TRUE,
+            '#size' => 30,
+            '#maxsize' => 64,
+            '#description' => t('The currently installed collection to clone.'),    
+          );
+          break;
+          
+        case 'file':
+          $form['form']['#description'] .= t('Please select an COLLECTION_POLICY XML file that will be used as the base for this new collection.');
+
+          $plugin_path = drupal_get_path('module','fedora_repository').'/collection_policies';
+          $files = array('');
+          if ( ($dir = opendir($plugin_path)) !== false)
+          {
+            while (($file = readdir($dir)) !== false)
+            {
+              if (preg_match('/\.xml$/',$file))
+              {
+                $files['collection_policies/'.$file]='collection_policies/'.$file;
+              }
+            }
+          }
+
+          $form['form']['policy_filename'] = array(
+          '#type' => 'select',
+          '#title' => t('File'),
+          '#options'=>$files,
+          '#required' => TRUE,
+          '#description' => t('The relative path of the file containing the desired collection policy datastream.'), 
+          );         
+          
+          break;
+        
+        case 'blank':
+        default:
+
+          $form['form']['#description'] .= t('The only additional required information that a collection <b>must</b> have is an allowed content model, relationship and default search term.  Once the collection has been added, please go in and add any content models and search terms that are neccessary. ');
+
+          module_load_include('inc','fedora_repository','CollectionClass');
+          module_load_include('inc','fedora_repository','ContentModel');
+          $collectionHelper = new CollectionClass();
+
+          $options=array($form_state['storage']['values'][1]['form']['pid']=> 'Self ('.$form_state['storage']['values'][1]['form']['pid'].')');
+          $items = new SimpleXMLElement( $collectionHelper->getRelatedItems(variable_get('icm_model_collection_pid','islandora:ContentModelCollection') ,null,null));
+          for ($i = 0; $i < count($items->results->result); $i++)
+          {
+            list(,$pid)=preg_split('/\//',$items->results->result[$i]->object['uri']);
+
+            $cm = ContentModel::loadFromModel($pid);
+            if ($cm !== false)
+            {
+              $options[$pid] = $items->results->result[$i]->title .' ('.$pid.')';
+            }
+          }
+        
+          $form['form']['relationship'] = array(
+            '#type' => 'textfield',
+            '#title'=> t('Relationship'),
+            '#size' => 30,
+            '#required' => TRUE,
+            '#description' => t('The relationship to use for objects in this collection.'),
+            '#default_value' => 'isMemberOfCollection'
+          );
+          
+          $form['form']['model'] = array(
+          '#type' => 'fieldset',
+          '#title' => t('Initial Content Model'),
+                        '#tree' => TRUE,
+                        );
+                        
+          $form['form']['model']['pid'] = array(
+            '#type' => 'select',
+            '#title' => t('Persistent Identifier'),
+            '#required' => TRUE,
+            '#options' => $options,
+            '#description' => t('The PID of the content model that can be ingested into this collection.'),    
+          );
+
+          
+          $form['form']['model']['namespace'] = array(
+          '#type'=> 'textfield',
+          '#title'=> t('Namespace'),
+          '#description' => t('The base namespace for objects of this type injested into the collection. eg islandora:collection '),
+          '#size' => 30,
+          '#maxSize' => 60,
+          '#required' => TRUE
+          );          
+          
+          $form['form']['term'] = array(
+          '#type' => 'fieldset',
+                                '#title' => t('Search Term'),
+                                '#tree' => TRUE,
+                                );
+          
+          $form['form']['term']['field'] = array(
+            '#type' => 'textfield',
+            '#title' => t('Field'),
+            '#size' => 30,
+            '#required' => TRUE,
+            '#description' => t('The name of the field in the DC to search.'),    
+          );
+
+          $form['form']['term']['value'] = array(
+            '#type' => 'textfield',
+            '#title' => t('Label'),
+            '#size' => 30,
+            '#required' => TRUE,
+            '#description' => t('A descriptive label for the field displayed on the search form.'),    
+          );    
+                  
+          
+          break;
+      }
+      
+      break;
+      
+  }
+  $form['form']['submit'] = array('#type' => 'submit', '#value' => t('Save'));    
+  $form['form']['cancel'] = array('#type' => 'button', '#value' => t('Cancel'), '#id'=>'cancel');
+  
+  return $form;
+}
+
+
+function icm_collection_edit_validate($form,&$form_state)
+{
+  //only proceed if no errors have been found.
+  if (form_get_errors() !== NULL)
+    return;
+  
+  module_load_include('inc','fedora_repository','CollectionPolicy');
+  
+  $c_pid = $form_state['values']['form']['collection_pid'];
+ 
+  if (($cp = CollectionPolicy::loadFromCollection($c_pid)) !== FALSE)
+  {    
+    if ($cp->setRelationship(trim($form_state['values']['form']['relationship'])) && $cp->setStagingArea(trim($form_state['values']['form']['staging_area'])) && $cp->saveToFedora())
+    {
+      echo 'success:'.t('Successfully updated collection policy of <b>%cp_pid%</b>.',array('%cp_pid%'=>$cp->pid));
+      exit();
+      
+    } else
+    {
+      form_set_error('',t('Error: Unable to update collection policy of <b>%cp_pid%</b>.',array('%cp_pid%'=>$cp->pid)));
+    }
+  }
+}
+
+
+function icm_collection_edit(&$form_state,$params=null)
+{
+ 
+  if (is_array($params) && isset($params[0]))
+  {
+    $collection_pid = $params[0];
+  } else if (isset($form_state['post']['form']['collection_pid']))
+  {
+    $collection_pid = $form_state['post']['form']['collection_pid'];
+  }
+  
+  $form['form'] = array(
+    '#type'=>'fieldset',
+    '#title'=> t('Edit collection <b>%collection_pid</b>', array('%collection_pid'=>$collection_pid)),
+    '#tree'=>TRUE
+  );
+    
+  module_load_include('inc','fedora_repository','CollectionPolicy');
+  if (($cp = CollectionPolicy::loadFromCollection($collection_pid))!==FALSE)
+  {
+    
+    $staging_area = $cp->getStagingArea(false);
+    if ($staging_area == false)
+    {
+      $staging_area = '';
+    }
+    
+    $form['form']['relationship'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Relationship'),
+      '#required' => TRUE,
+      '#default_value' => $cp->getRelationship(),
+      '#size' => 30,
+      '#maxSize' => 60,
+      '#description' => t('The relationship to use for members of this collection.'),    
+    );
+    
+    $form['form']['staging_area'] = array(
+      '#type'=> 'textfield',
+      '#title'=> t('Staging Area'),
+      '#default_value'=> $staging_area,
+      '#description' => t('The path to the staging area to use when ingesting files into this collection.  If left blank, the staging area of the parent collection will be used. Please do not include a trailing slash.'),
+      '#size' => 30,
+      '#maxSize' => 60
+    );
+
+    $form['form']['collection_pid'] = array('#type' => 'hidden', '#value'=> $collection_pid);
+    $form['form']['submit'] = array('#type' => 'submit', '#value' => t('Save'));
+  } else   
+  {
+    form_set_error('',t('Error: Unable to load requested collection_policy.'));
+  }
+    
+  
+  $form['form']['cancel'] = array('#type' => 'button', '#value' => t('Cancel'), '#id'=>'cancel');
+
+  return $form;
+}
+
+function /*icm*/_model_service_add(&$form_state,$params=null)
+{
+  
+  if (empty($form_state['storage']['step'])) 
+  {
+    // we are coming in without a step, so default to step 1
+    $form_state['storage']['step'] = 1;
+    $form_state['storage']['cm_pid'] = $params[0];
+  }
+  
+  $cm_pid = $form_state['storage']['cm_pid'];
+  
+  $form['#multistep']= TRUE;
+
+  $form['form'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Add Service to Content Model <b>%cm_pid</b>.',array('%cm_pid'=>$cm_pid)),
+      '#tree' => TRUE,
+    );
+    
+
+  switch ($form_state['storage']['step'])
+  {
+    case 1: 
+     
+      module_load_include('inc','fedora_repository','CollectionClass');
+      $collectionHelper = new CollectionClass();
+
+      $options=array();
+      $items = new SimpleXMLElement( $collectionHelper->getRelatedItems(variable_get('fedora_service_def_collection_pid','uofm:serviceDefCollection') ,null,null));
+      for ($i = 0; $i < count($items->results->result); $i++)
+      {
+        list(,$pid)=preg_split('/\//',$items->results->result[$i]->object['uri']);
+
+        $cm = ContentModel::loadFromModel($pid);
+        if ($cm !== false)
+        {
+          $options[$pid] = $items->results->result[$i]->title .' ('.$pid.')';
+        }
+      }
+
+      $form['form'] = array(
+        '#type'=>'fieldset',
+        '#title'=> t('Add content model to collection <b>%collection_pid</b>', array('%collection_pid'=>$collection_pid)),
+        '#tree'=>TRUE
+      );
+
+      $form['form']['model_pid'] = array(
+        '#type' => 'select',
+        '#title' => t('Content Model'),
+        '#required' => TRUE,
+        '#options' => $options,
+        '#description' => t('A descriptive label for the field displayed on the search form.'),    
+      );
+      
+      $form['form']['namespace'] = array(
+        '#type'=> 'textfield',
+        '#title'=> t('Namespace'),
+        '#description' => t('The base namespace for objects of this type injested into the collection. eg islandora:collection '),
+        '#size' => 30,
+        '#maxSize' => 60,
+        '#required' => TRUE
+      );      
+    break;
+      
+  }
+  $form['form']['submit'] = array('#type' => 'submit', '#value' => t('Save'));    
+  $form['form']['cancel'] = array('#type' => 'button', '#value' => t('Cancel'), '#id'=>'cancel');
+  
+  return $form;
+}
+
+function icm_display_rawXml(&$form_state,$params=null)
+{
+  
+  $form['form'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Display Raw XML'),
+      '#tree' => TRUE,
+    );
+  
+  if (is_array($params))
+  {
+    $type = $params[0];
+    $pid = $params[1];
+    
+    switch (strtolower($type))
+    {    
+      case 'model':
+         module_load_include('inc', 'fedora_repository', 'ContentModel');
+         if (($cm = ContentModel::loadFromModel($pid))!==false)
+           {
+              $form['form']['pid'] = array( 
+                '#type'=>'item',
+                '#title'=>t('PID'),
+                '#value'=>$pid
+              );
+              $form['form']['pre'] = array(
+                '#value'=>'<pre>'.htmlentities($cm->dumpXml()).'</pre>'
+              );
+           } else
+           {
+             form_set_error('',t('Error: Unable to load requested content model.'));
+           }
+        break;
+        
+      case 'collection':
+             module_load_include('inc', 'fedora_repository', 'CollectionPolicy');
+         if (($cp = CollectionPolicy::loadFromCollection($pid))!==false)
+           {
+              $form['form']['pid'] = array( 
+                '#type'=>'item',
+                '#title'=>t('PID'),
+                '#value'=>$pid
+              );
+              $form['form']['pre'] = array(
+                '#value'=>'<pre>'.htmlentities($cp->dumpXml()).'</pre>'
+              );
+           } else
+           {
+             form_set_error('',t('Error: Unable to load requested collection policy.'));
+           }        
+        break;
+    }
+    
+  } else
+  {
+    form_set_error('',t('Error: Unknown XML Datastream Specified.'));
+  }
+    $form['form']['cancel'] = array('#type' => 'button', '#value' => t('Close'), '#id'=>'cancel');
+    
+  return $form;
+}
+  
