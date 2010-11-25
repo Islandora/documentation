@@ -66,19 +66,19 @@ function ife_autocomplete_person($string)  {
 	    }
 	  }
 	  
+	  if ($name == null && isset($given) && isset($family)) { 
+	     $name = (isset($title)?$title.' ':'').$family.', '.$given;
+	  }
+
 	  $role =null;
 	  $roleTerm = $node->getElementsByTagName('roleTerm');
 	  if ($roleTerm->length > 0) {
 	    $role=$roleTerm->item(0)->nodeValue;
 	  }
 	  
-	  if (strpos(strtolower($given.$family.$name),$string)!==FALSE) {
-	    switch ($type)
-	    {
-	      case 'personal': $display = $title.' '.$given.' '.$family; break;
-	      default: $display = $name; break;
-	    }
-	    $matches[json_encode(array('type'=>$type,'title'=>$title,'given'=>$given,'family'=>$family,'name'=>$name,'role'=>$role,'date'=>$date))]= $display;
+	  if (strpos(strtolower($name),$string)!==FALSE) {
+	    $display = $name;
+	    $matches[json_encode(array('type'=>trim($type),'name'=>trim($name),'role'=>trim($role),'date'=>trim($date)))]= $display.' - '.$role.' '.$date;
 	  }
 	}
       }
@@ -211,12 +211,20 @@ function ife_autocomplete($field, $collection, $string='') {
   }  
   
   $docs = $results->response->docs;
-  
   $values = array();
   if ($docs != NULL) {
     foreach ($docs as $doc) {
       $resfield=$doc->getField($field);
-      $values[$resfield['value']]=$resfield['value'];
+
+      if (is_array($resfield['value'])) { 
+	foreach ($resfield['value'] as $val) { 
+	  if (preg_match('/^'.strtolower($string).'/i',$val)) {
+	    $values[$val]=$val;
+	  }
+	}
+      } else {
+	$values[$resfield['value']]=$resfield['value'];
+      }
     }
   }
 
