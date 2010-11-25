@@ -130,7 +130,7 @@ class ModsFormBuilder extends FormBuilder {
 		  case 'family': $family = $namePart->nodeValue; break;
 		  case 'termsOfAddress': $title = $namePart->nodeValue; break;
 		  case 'date': $date = $namePart->nodeValue; break;
-		  default: $orgName = $namePart->nodeValue; break; 
+		  default: $name = $namePart->nodeValue; break; 
 		}
 	      }
 	      
@@ -138,21 +138,60 @@ class ModsFormBuilder extends FormBuilder {
 	      switch ($type)
 	      {
 		case 'personal':
-		  $person['fname']=$given;
-		  $person['lname']=$family;
-		  $person['title']=$title;
+		  if (isset($given) && isset($family) && !isset($name)) { 
+		      $name = (isset($title)?$title.' ':'').$family.', '.$family;
+		  }
+		  $person['name']=$name;
 		  $person['date']=$date;
 		  break;
 		case 'organization':
-		  $person['organization'] = $orgName;
+		  $person['organization'] = $name;
 		  break;
 		case 'conference':
-		  $person['conference']=$orgName;
+		  $person['conference']=$name;
 		  $person['date']=$date;
 		  break;
 	      }
 	      $people[]=$person;
 	    }
+	    
+	    $names = $xpath->evaluate('/mods:mods/mods:subject/mods:name');
+	    foreach ($names as $mname) {
+	      
+	      $type = $mname->getAttribute('type');
+	      
+	      $nameParts = $mname->getElementsByTagName('namePart');
+	      foreach ($nameParts as $namePart)
+	      {
+		switch ($namePart->getAttribute('type')) { 
+		  case 'given': $given = $namePart->nodeValue; break;
+		  case 'family': $family = $namePart->nodeValue; break;
+		  case 'termsOfAddress': $title = $namePart->nodeValue; break;
+		  case 'date': $date = $namePart->nodeValue; break;
+		  default: $name = $namePart->nodeValue; break; 
+		}
+	      }
+	      
+	      $person=array('subject'=>1);
+	      switch ($type)
+	      {
+		case 'personal':
+		  if (isset($given) && isset($family) && !isset($name)) { 
+		      $name = (isset($title)?$title.' ':'').$family.', '.$family;
+		  }
+		  $person['name']=$name;
+		  $person['date']=$date;
+		  break;
+		case 'organization':
+		  $person['organization'] = $name;
+		  break;
+		case 'conference':
+		  $person['conference']=$name;
+		  $person['date']=$date;
+		  break;
+	      }
+	      $people[]=$person;
+	    }	    
 	    
 	    $el['#default_value'] = $people;
 	    
@@ -220,8 +259,8 @@ class ModsFormBuilder extends FormBuilder {
     }
     $this->createPolicy($collectionPid, &$dom, &$rootElement);
 
-/*       header('Content-type: application/xml');
-       echo $dom->saveXML();  exit();*/
+//        header('Content-type: application/xml');
+//        echo $dom->saveXML();  exit();
     
     try {
         $object = Fedora_Item::ingest_from_FOXML($dom);
@@ -502,22 +541,6 @@ class ModsFormBuilder extends FormBuilder {
       $subject->appendChild($titleInfo);
     }    
     
-    if (isset($form_values['mods_lname']) && trim($form_values['mods_lname']) != '') {
-      $hasSubject = TRUE;
-      $name = $dom->createElement('mods:name');
-      $name->setAttribute('type', 'personal');
-      $namePart = $dom->createElement('mods:namePart', htmlspecialchars($form_values['mods_lname']));
-      $namePart->setAttribute('type', 'family');
-      $name->appendChild($namePart);
-      
-      if (isset($form_values['mods_fname']) && trim($form_values['mods_fname']) != '') {
-        $namePart = $dom->createElement('mods:namePart', htmlspecialchars($form_values['mods_fname']));
-        $namePart->setAttribute('type', 'given');
-        $name->appendChild($namePart);
-      }
-      
-      $subject->appendChild($name);
-    }
     
     if (isset($form_values['mods_topics']) && trim($form_values['mods_topics']) != '') {
       $hasSubject = TRUE;
@@ -533,9 +556,7 @@ class ModsFormBuilder extends FormBuilder {
         $subject->appendChild($topic);
       }
     }
-    if ($hasSubject) {
-      $mods->appendChild($subject);
-    }
+ 
     
     if (isset($form_values['mods_cc']['cc']) && $form_values['mods_cc']['cc']['cc_enable']) {
 
@@ -569,9 +590,11 @@ class ModsFormBuilder extends FormBuilder {
         $name = $dom->createElement('mods:name');
       
         if (isset($val['role'])) {
-            $role = $dom->createElement('mods:roleTerm', htmlspecialchars(trim($val['role'])));
-            $role->setAttribute('type', 'text');
-            $role->setAttribute('authority', 'marcrelator');
+            $role = $dom->createElement('mods:role');
+            $roleTerm = $dom->createElement('mods:roleTerm', htmlspecialchars(trim($val['role'])));
+            $roleTerm->setAttribute('type', 'text');
+            $roleTerm->setAttribute('authority', 'marcrelator');
+            $role->appendChild($roleTerm);
             $name->appendChild($role);
         }
       
@@ -580,7 +603,6 @@ class ModsFormBuilder extends FormBuilder {
           if (trim($val['organization']) != '') {
             $namePart=$dom->createElement('mods:namePart', htmlspecialchars(trim($val['organization'])));
             $name->appendChild($namePart);
-            $mods->appendChild($name);
           }
         } 
         elseif (isset($val['conference'])) {
@@ -588,27 +610,13 @@ class ModsFormBuilder extends FormBuilder {
           if (trim($val['conference']) != '') {
             $namePart=$dom->createElement('mods:namePart', htmlspecialchars(trim($val['conference'])));
             $name->appendChild($namePart);
-            $mods->appendChild($name);
           }
         } 
         else {
           $name->setAttribute('type', 'personal');
-          if (trim($val['title']) != '') {
-            $namePart=$dom->createElement('mods:namePart', htmlspecialchars(trim($val['title'])));
-            $namePart->setAttribute('type', 'termsOfAddress');
-            $name->appendChild($namePart);      
-          }
-          
-          if (trim($val['fname']) != '' && trim($val['lname']) != '') {
-            $namePart=$dom->createElement('mods:namePart', htmlspecialchars(trim($val['fname'])));
-            $namePart->setAttribute('type', 'given');
+          if (trim($val['name']) != '') {
+            $namePart=$dom->createElement('mods:namePart', htmlspecialchars(trim($val['name'])));
             $name->appendChild($namePart);
-      
-            $namePart=$dom->createElement('mods:namePart', htmlspecialchars(trim($val['lname'])));
-            $namePart->setAttribute('type', 'family');
-            $name->appendChild($namePart);
-            
-            $mods->appendChild($name);
           }   
         }
         
@@ -617,9 +625,22 @@ class ModsFormBuilder extends FormBuilder {
 	   $namePart->setAttribute('type','date');
 	   $name->appendChild($namePart);
 	}
-        
+
+	if (isset($val['subject'])) { 
+            $subject->appendChild($name);
+	    $hasSubject=TRUE;
+	} else 
+	{
+            $mods->appendChild($name);
+	}
+
       } 
-    }        
+    }  
+    
+    if ($hasSubject) {
+      $mods->appendChild($subject);
+    }
+    
     return $mods;
   }
 
