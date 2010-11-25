@@ -129,7 +129,7 @@ function ife_add_person_submit($form, &$form_state) {
   foreach ($peopleVals['people'] as $val) {
     $people[] = $val;
   }
-  $people[] = array('fname' => '', 'lname' => '' , 'title' => '', 'role' => '');
+  $people[] = array('name' => '', 'date'=>'',  'role' => '', 'subject' => '');
   
   unset($form_state['submit_handlers']);
   form_execute_handlers('submit', $form, $form_state);
@@ -189,7 +189,7 @@ function ife_add_conf_submit($form, &$form_state) {
   foreach ($peopleVals['people'] as $val) {
     $people[] = $val;
   }
-  $people[] = array('role' => '', 'conference' => '');
+  $people[] = array('role' => '', 'conference' => '', 'subject' => '');
   
   unset($form_state['submit_handlers']);
   form_execute_handlers('submit', $form, $form_state);
@@ -232,7 +232,7 @@ function theme_people_items($form) {
       $row = array(
         'data' => array(
            array('data' => drupal_render($form[$key]['organization']), 'class' => 'ife-person-name container-inline'),
-           array('data' => drupal_render($form[$key]['role']), 'class' => 'ife-person-role'),
+           array('data' => drupal_render($form[$key]['role']).drupal_render($form[$key]['subject']), 'class' => 'ife-person-role'),
            array('data' => drupal_render($form[$key]['remove']), 'class' => 'ife-person-remove'),
         ),
       );
@@ -243,7 +243,7 @@ function theme_people_items($form) {
       $row = array(
         'data' => array(
           array('data' => drupal_render($form[$key]['conference']).'<br clear="all"/>'. drupal_render($form[$key]['date']), 'class' => 'ife-person-name container-inline' ),
-          array('data' => drupal_render($form[$key]['role']), 'class' => 'ife-person-role'),
+          array('data' => drupal_render($form[$key]['role']).drupal_render($form[$key]['subject']), 'class' => 'ife-person-role'),
           array('data' => drupal_render($form[$key]['remove']), 'class' => 'ife-person-remove'),
          ),
       );
@@ -253,8 +253,8 @@ function theme_people_items($form) {
       // Build the table row.
       $row = array(
         'data' => array(
-          array('data' => drupal_render($form[$key]['fname']) .'<br clear="all"/>'. drupal_render($form[$key]['lname']) .'<br clear="all"/>'. drupal_render($form[$key]['title']).'<br clear="all"/>'. drupal_render($form[$key]['date']), 'class' => 'ife-person-name container-inline'),
-          array('data' => drupal_render($form[$key]['role']), 'class' => 'ife-person-role'),
+          array('data' => drupal_render($form[$key]['name']) .'<br clear="all"/>'. drupal_render($form[$key]['date']), 'class' => 'ife-person-name container-inline'),
+          array('data' => drupal_render($form[$key]['role']).drupal_render($form[$key]['subject']), 'class' => 'ife-person-role'),
           array('data' => drupal_render($form[$key]['remove']), 'class' => 'ife-person-remove'),
          ),
       );
