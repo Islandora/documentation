@@ -73,7 +73,7 @@
 	</xsl:if>
   
     <!-- identifier -->
-    <xsl:apply-templates select="m:identifier[@type='local']"/>
+    <xsl:apply-templates select="m:identifier"/>
   
     <!-- titleInfo -->
     <xsl:apply-templates select="m:titleInfo"/>
@@ -254,12 +254,12 @@
   </xsl:choose>
 </xsl:template>
 
-<xsl:template match="m:identifier">  
-  <xsl:for-each select="m:identifier">
+<xsl:template match="m:identifier">
+  
 	<xsl:element name="field"><xsl:attribute name="name"><xsl:text>identifier_t</xsl:text></xsl:attribute>
 	    <xsl:value-of select="."/>
 	</xsl:element>
-    </xsl:for-each>
+
 </xsl:template>
  
 <xsl:template match="m:name">
