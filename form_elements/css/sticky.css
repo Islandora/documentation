@@ -1,0 +1,18 @@
+
+input.sticky {
+height: 18px;
+padding-left: 15px;
+background: url(../images/pushpin.png) top left no-repeat;
+  filter:alpha(opacity=50);
+        -moz-opacity:0.5;
+        -khtml-opacity:0.5;
+        opacity:0.5;
+}
+
+input.sticky:checked {
+  background-image: url(../images/pushpin.png);
+  filter:alpha(opacity=100);
+        -moz-opacity:1;
+        -khtml-opacity:1;
+        opacity:1;
+}
