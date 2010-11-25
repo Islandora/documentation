@@ -67,8 +67,9 @@ class ObjectHelper {
     }
 
     $cmDatastreams = $cm->listDatastreams();
-    if (!in_array($dsID,$cmDatastreams)) {
-      drupal_set_message(t("You do not have access to the specified datastream."), 'error');
+
+    if ( !((isset($user) && in_array('administrator',$user->roles)) || in_array($dsID,$cmDatastreams))) {
+			drupal_set_message(t("You do not have access to the specified datastream."), 'error');
       drupal_access_denied();
       return ' ';
     }
