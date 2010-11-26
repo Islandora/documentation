@@ -163,6 +163,9 @@ class MimeClass {
     "mpeg"    => "video/mpeg",
     "mpe"     => "video/mpeg",
     "mpg"     => "video/mpeg",
+    "m4v"     => "video/mp4",
+    "mp4"     => "video/mp4",
+    "ogv"     => "video/ogg",
     "qt"      => "video/quicktime",
     "mov"     => "video/quicktime",
     "mxu"     => "video/vnd.mpegurl",
@@ -170,12 +173,20 @@ class MimeClass {
     "movie"   => "video/x-sgi-movie",
     "flv"     => "video/x-flv",
     "swf"     => "application/x-shockwave-flash",
+    // audio:
+    "mp3"     => "audio/mpeg",
+    "mp4a"    => "audio/mp4",
+    "m4a"     => "audio/mp4",
+    "oga"     => "audio/ogg",
+    "ogg"     => "audio/ogg",
+    "flac"    => "audio/x-flac",
+    "wav"     => "audio/vnd.wave",
     // compressed formats: (note: http://svn.cleancode.org/svn/email/trunk/mime.types)
     "tgz"     => "application/x-gzip",
     "gz"      => "application/x-gzip",
     "tar"     => "application/x-tar",
     "gtar"    => "application/x-gtar",
-    "zip"      => "application/x-zip",
+    "zip"     => "application/x-zip",
     // others: 
     'bin'     => 'application/octet-stream',
   );
@@ -323,14 +334,3 @@ class MimeClass {
 
 }
 
-/*
-$helper = new MimeClass();
-print "get_extension('application/x-gzip'): \n";
-echo print_r( $helper->get_extension('application/x-gzip', true), true ) . "\n";
-print "get_extension('text/plain'): \n";
-echo print_r( $helper->get_extension('text/plain', true), true ) . "\n";
-print "get_mimetype('fucker/asdf.tar.gz'): \n";
-echo print_r( $helper->get_mimetype('fucker/asdf.tar.gz', true), true ) . "\n";
-print "get_mimetype('blah.tsp'): \n";
-echo print_r( $helper->get_mimetype('blah.tsp', true), true ) . "\n";
-/* */
