@@ -6,7 +6,7 @@
     <foxml:property NAME="info:fedora/fedora-system:def/model#label" VALUE="BookCModel"/>
     <foxml:property NAME="info:fedora/fedora-system:def/model#ownerId" VALUE="fedoraAdmin"/>
     <foxml:property NAME="info:fedora/fedora-system:def/model#createdDate" VALUE="2008-12-14T00:12:52.636Z"/>
-    <foxml:property NAME="info:fedora/fedora-system:def/view#lastModifiedDate" VALUE="2010-09-16T17:43:54.445Z"/>
+    <foxml:property NAME="info:fedora/fedora-system:def/view#lastModifiedDate" VALUE="2010-11-26T15:24:13.742Z"/>
   </foxml:objectProperties>
   <foxml:datastream CONTROL_GROUP="X" ID="AUDIT" STATE="A" VERSIONABLE="false">
     <foxml:datastreamVersion CREATED="2008-12-14T00:12:52.636Z"
@@ -66,15 +66,15 @@
             <audit:action>ingest</audit:action>
             <audit:componentID/>
             <audit:responsibility>fedoraAdmin</audit:responsibility>
-            <audit:date>2010-06-16T11:27:32.059Z</audit:date>
-            <audit:justification>Ingested from local file /Users/aoneill/Dropbox/fedora_repository/content_models/ilives_bookCModel.xml</audit:justification>
+            <audit:date>2010-06-15T07:01:30.019Z</audit:date>
+            <audit:justification>Ingested from local file /Users/al/fedora_repository/content_models/ilives_bookCModel.xml</audit:justification>
           </audit:record>
           <audit:record ID="AUDREC8">
             <audit:process type="Fedora API-M"/>
             <audit:action>modifyDatastreamByValue</audit:action>
             <audit:componentID>ISLANDORACM</audit:componentID>
             <audit:responsibility>fedoraAdmin</audit:responsibility>
-            <audit:date>2010-06-16T11:29:54.285Z</audit:date>
+            <audit:date>2010-06-16T08:56:09.156Z</audit:date>
             <audit:justification/>
           </audit:record>
           <audit:record ID="AUDREC9">
@@ -82,23 +82,55 @@
             <audit:action>modifyDatastreamByValue</audit:action>
             <audit:componentID>ISLANDORACM</audit:componentID>
             <audit:responsibility>fedoraAdmin</audit:responsibility>
-            <audit:date>2010-06-16T18:36:16.581Z</audit:date>
+            <audit:date>2010-06-16T08:59:35.673Z</audit:date>
             <audit:justification/>
           </audit:record>
           <audit:record ID="AUDREC10">
             <audit:process type="Fedora API-M"/>
-            <audit:action>ingest</audit:action>
-            <audit:componentID/>
+            <audit:action>modifyDatastreamByValue</audit:action>
+            <audit:componentID>ISLANDORACM</audit:componentID>
             <audit:responsibility>fedoraAdmin</audit:responsibility>
-            <audit:date>2010-06-16T16:14:12.989Z</audit:date>
-            <audit:justification>Ingested from local file /Applications/MAMP/htdocs/f3/sites/default/modules/fedora_repository/content_models/ilives_bookCModel.xml</audit:justification>
+            <audit:date>2010-06-16T08:59:52.831Z</audit:date>
+            <audit:justification/>
           </audit:record>
           <audit:record ID="AUDREC11">
+            <audit:process type="Fedora API-M"/>
+            <audit:action>addDatastream</audit:action>
+            <audit:componentID>MODS</audit:componentID>
+            <audit:responsibility>fedoraAdmin</audit:responsibility>
+            <audit:date>2010-06-16T09:13:08.428Z</audit:date>
+            <audit:justification>DatastreamsPane generated this logMessage.</audit:justification>
+          </audit:record>
+          <audit:record ID="AUDREC12">
+            <audit:process type="Fedora API-M"/>
+            <audit:action>purgeDatastream</audit:action>
+            <audit:componentID>MODS</audit:componentID>
+            <audit:responsibility>fedoraAdmin</audit:responsibility>
+            <audit:date>2010-06-16T09:13:32.732Z</audit:date>
+            <audit:justification>DatastreamPane generated this logMessage. . . . Purged datastream (ID=MODS), versions ranging from 2010-06-16T06:13:08.428Z to 2010-06-16T06:13:08.428Z.  This resulted in the permanent removal of 1 datastream version(s) (2010-06-16T06:13:08.428Z) and all associated audit records.</audit:justification>
+          </audit:record>
+          <audit:record ID="AUDREC13">
             <audit:process type="Fedora API-M"/>
             <audit:action>modifyDatastreamByValue</audit:action>
             <audit:componentID>ISLANDORACM</audit:componentID>
             <audit:responsibility>fedoraAdmin</audit:responsibility>
-            <audit:date>2010-09-16T17:43:54.445Z</audit:date>
+            <audit:date>2010-06-16T09:21:14.357Z</audit:date>
+            <audit:justification/>
+          </audit:record>
+          <audit:record ID="AUDREC14">
+            <audit:process type="Fedora API-M"/>
+            <audit:action>ingest</audit:action>
+            <audit:componentID/>
+            <audit:responsibility>fedoraAdmin</audit:responsibility>
+            <audit:date>2010-08-30T13:14:03.487Z</audit:date>
+            <audit:justification>Ingested from local file /Users/aoneill/fedora_repository/ilives/xml/ilives_bookCModel.xml</audit:justification>
+          </audit:record>
+          <audit:record ID="AUDREC15">
+            <audit:process type="Fedora API-M"/>
+            <audit:action>modifyDatastreamByValue</audit:action>
+            <audit:componentID>ISLANDORACM</audit:componentID>
+            <audit:responsibility>fedoraAdmin</audit:responsibility>
+            <audit:date>2010-11-26T15:24:13.742Z</audit:date>
             <audit:justification/>
           </audit:record>
         </audit:auditTrail>
@@ -368,7 +400,184 @@
         </content_model>
       </foxml:xmlContent>
     </foxml:datastreamVersion>
-    <foxml:datastreamVersion CREATED="2010-06-16T11:29:54.285Z" ID="ISLANDORACM.3"
+    <foxml:datastreamVersion CREATED="2010-06-16T08:56:09.156Z" ID="ISLANDORACM.3"
+      LABEL="Islandora content model information" MIMETYPE="text/xml" SIZE="2084">
+      <foxml:xmlContent>
+        <content_model name="Book">
+          <mimetypes>
+            <type>image/tiff</type>
+          </mimetypes>
+          <display_in_fieldset>
+            <datastream id="JP2">
+              <method>
+                <module>fedora_ilives</module>
+                <file>book.inc</file>
+                <class_name>IslandoraBook</class_name>
+                <method_name>showFieldSets</method_name>
+              </method>
+            </datastream>
+            <datastream id="TN"/>
+            <datastream id="DC"/>
+          </display_in_fieldset>
+          <ingest_rules>
+            <rule>
+              <applies_to>text/xml</applies_to>
+              <methods>
+                <method>
+                  <module>fedora_ilives</module>
+                  <file>book.inc</file>
+                  <class_name>IslandoraBook</class_name>
+                  <method_name>ingestBook</method_name>
+                  <datastream_id>MODS</datastream_id>
+                </method>
+              </methods>
+            </rule>
+          </ingest_rules>
+          <ingest_form dsid="MODS" page="2">
+            <form_builder_method>
+              <module>fedora_ilives</module>
+              <file>book.inc</file>
+              <class_name>IslandoraBook</class_name>
+              <method_name>buildDrupalForm</method_name>
+              <form_handler>handleIngestForm</form_handler>
+            </form_builder_method>
+          </ingest_form>
+          <edit_metadata>
+            <build_form_method dsid="MODS">
+              <module>fedora_ilives</module>
+              <file>book.inc</file>
+              <class_name>IslandoraBook</class_name>
+              <method_name>buildEditMetadataForm</method_name>
+            </build_form_method>
+            <submit_form_method dsid="MODS">
+              <module>fedora_ilives</module>
+              <file>book.inc</file>
+              <class_name>IslandoraBook</class_name>
+              <method_name>handleEditMetadataForm</method_name>
+            </submit_form_method>
+          </edit_metadata>
+        </content_model>
+      </foxml:xmlContent>
+    </foxml:datastreamVersion>
+    <foxml:datastreamVersion CREATED="2010-06-16T08:59:35.673Z" ID="ISLANDORACM.4"
+      LABEL="Islandora content model information" MIMETYPE="text/xml" SIZE="2083">
+      <foxml:xmlContent>
+        <content_model name="Book">
+          <mimetypes>
+            <type>image/tiff</type>
+          </mimetypes>
+          <display_in_fieldset>
+            <datastream id="JP2">
+              <method>
+                <module>fedora_ilives</module>
+                <file>book.inc</file>
+                <class_name>IslandoraBook</class_name>
+                <method_name>showFieldSet</method_name>
+              </method>
+            </datastream>
+            <datastream id="TN"/>
+            <datastream id="DC"/>
+          </display_in_fieldset>
+          <ingest_rules>
+            <rule>
+              <applies_to>text/xml</applies_to>
+              <methods>
+                <method>
+                  <module>fedora_ilives</module>
+                  <file>book.inc</file>
+                  <class_name>IslandoraBook</class_name>
+                  <method_name>ingestBook</method_name>
+                  <datastream_id>MODS</datastream_id>
+                </method>
+              </methods>
+            </rule>
+          </ingest_rules>
+          <ingest_form dsid="MODS" page="2">
+            <form_builder_method>
+              <module>fedora_ilives</module>
+              <file>book.inc</file>
+              <class_name>IslandoraBook</class_name>
+              <method_name>buildDrupalForm</method_name>
+              <form_handler>handleIngestForm</form_handler>
+            </form_builder_method>
+          </ingest_form>
+          <edit_metadata>
+            <build_form_method dsid="MODS">
+              <module>fedora_ilives</module>
+              <file>book.inc</file>
+              <class_name>IslandoraBook</class_name>
+              <method_name>buildEditMetadataForm</method_name>
+            </build_form_method>
+            <submit_form_method dsid="MODS">
+              <module>fedora_ilives</module>
+              <file>book.inc</file>
+              <class_name>IslandoraBook</class_name>
+              <method_name>handleEditMetadataForm</method_name>
+            </submit_form_method>
+          </edit_metadata>
+        </content_model>
+      </foxml:xmlContent>
+    </foxml:datastreamVersion>
+    <foxml:datastreamVersion CREATED="2010-06-16T08:59:52.831Z" ID="ISLANDORACM.5"
+      LABEL="Islandora content model information" MIMETYPE="text/xml" SIZE="2084">
+      <foxml:xmlContent>
+        <content_model name="Book">
+          <mimetypes>
+            <type>image/tiff</type>
+          </mimetypes>
+          <display_in_fieldset>
+            <datastream id="JP2">
+              <method>
+                <module>fedora_ilives</module>
+                <file>book.inc</file>
+                <class_name>IslandoraBook</class_name>
+                <method_name>showFieldSets</method_name>
+              </method>
+            </datastream>
+            <datastream id="TN"/>
+            <datastream id="DC"/>
+          </display_in_fieldset>
+          <ingest_rules>
+            <rule>
+              <applies_to>text/xml</applies_to>
+              <methods>
+                <method>
+                  <module>fedora_ilives</module>
+                  <file>book.inc</file>
+                  <class_name>IslandoraBook</class_name>
+                  <method_name>ingestBook</method_name>
+                  <datastream_id>MODS</datastream_id>
+                </method>
+              </methods>
+            </rule>
+          </ingest_rules>
+          <ingest_form dsid="MODS" page="2">
+            <form_builder_method>
+              <module>fedora_ilives</module>
+              <file>book.inc</file>
+              <class_name>IslandoraBook</class_name>
+              <method_name>buildDrupalForm</method_name>
+              <form_handler>handleIngestForm</form_handler>
+            </form_builder_method>
+          </ingest_form>
+          <edit_metadata>
+            <build_form_method dsid="MODS">
+              <module>fedora_ilives</module>
+              <file>book.inc</file>
+              <class_name>IslandoraBook</class_name>
+              <method_name>buildEditMetadataForm</method_name>
+            </build_form_method>
+            <submit_form_method dsid="MODS">
+              <module>fedora_ilives</module>
+              <file>book.inc</file>
+              <class_name>IslandoraBook</class_name>
+              <method_name>handleEditMetadataForm</method_name>
+            </submit_form_method>
+          </edit_metadata>
+        </content_model>
+      </foxml:xmlContent>
+    </foxml:datastreamVersion>
+    <foxml:datastreamVersion CREATED="2010-06-16T09:21:14.357Z" ID="ISLANDORACM.6"
       LABEL="Islandora content model information" MIMETYPE="text/xml" SIZE="2132">
       <foxml:xmlContent>
         <content_model name="Book">
@@ -428,71 +637,12 @@
         </content_model>
       </foxml:xmlContent>
     </foxml:datastreamVersion>
-    <foxml:datastreamVersion CREATED="2010-06-16T18:36:16.581Z" ID="ISLANDORACM.4"
-      LABEL="Islandora content model information" MIMETYPE="text/xml" SIZE="2083">
-      <foxml:xmlContent>
-        <content_model name="Book">
-          <mimetypes>
-            <type>text/xml</type>
-          </mimetypes>
-          <display_in_fieldset>
-            <datastream id="MODS">
-              <method>
-                <module>fedora_ilives</module>
-                <file>book.inc</file>
-                <class_name>IslandoraBook</class_name>
-                <method_name>showFieldSets</method_name>
-              </method>
-            </datastream>
-            <datastream id="TN"/>
-            <datastream id="DC"/>
-          </display_in_fieldset>
-          <ingest_rules>
-            <rule>
-              <applies_to>text/xml</applies_to>
-              <methods>
-                <method>
-                  <module>fedora_ilives</module>
-                  <file>book.inc</file>
-                  <class_name>IslandoraBook</class_name>
-                  <method_name>ingestBook</method_name>
-                  <datastream_id>MODS</datastream_id>
-                </method>
-              </methods>
-            </rule>
-          </ingest_rules>
-          <ingest_form dsid="MODS" page="2">
-            <form_builder_method>
-              <module>fedora_ilives</module>
-              <file>book.inc</file>
-              <class_name>IslandoraBook</class_name>
-              <method_name>buildDrupalForm</method_name>
-              <form_handler>handleIngestForm</form_handler>
-            </form_builder_method>
-          </ingest_form>
-          <edit_metadata>
-            <build_form_method dsid="MODS">
-              <module>fedora_ilives</module>
-              <file>book.inc</file>
-              <class_name>IslandoraBook</class_name>
-              <method_name>buildEditMetadataForm</method_name>
-            </build_form_method>
-            <submit_form_method dsid="MODS">
-              <module>fedora_ilives</module>
-              <file>book.inc</file>
-              <class_name>IslandoraBook</class_name>
-              <method_name>handleEditMetadataForm</method_name>
-            </submit_form_method>
-          </edit_metadata>
-        </content_model>
-      </foxml:xmlContent>
-    </foxml:datastreamVersion>
-    <foxml:datastreamVersion CREATED="2010-09-16T17:43:54.445Z" ID="ISLANDORACM.5"
-      LABEL="Islandora content model information" MIMETYPE="text/xml" SIZE="1285">
+    <foxml:datastreamVersion CREATED="2010-11-26T15:24:13.742Z" ID="ISLANDORACM.7"
+      LABEL="Islandora content model information" MIMETYPE="text/xml" SIZE="1328">
       <foxml:xmlContent>
         <content_model name="Book" xmlns="http://www.islandora.ca" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.islandora.ca http://localhost/islandoracm.xsd">
           <mimetypes>
-            <type>text/xml</type>
+            <type>image/tiff</type>
           </mimetypes>
           <ingest_rules>
             <rule>
@@ -504,10 +654,11 @@
             </rule>
           </ingest_rules>
           <datastreams>
-            <datastream dsid="MODS">
+            <datastream dsid="JP2">
               <display_method class="IslandoraBook" file="book.inc" method="showFieldSets" module="fedora_ilives"/>
             </datastream>
             <datastream dsid="TN"/>
+            <datastream dsid="MODS"/>
             <datastream dsid="DC"/>
           </datastreams>
           <ingest_form dsid="MODS" page="2">
