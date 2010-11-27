@@ -39,7 +39,7 @@ class image_resize extends Process {
     $returnValue = TRUE;
     $output = array();
 
-    $command = 'convert -resize '. $parameters['width'] .' -quality 85  '. $file . '[0] -strip '. $file . $file_suffix .' 2>&1 &';
+    $command = 'convert -resize '. $parameters['width'].(isset($parameters['height'])?'x'.$parameters['height']:'') .' -quality 85  '. $file . '[0] -strip '. $file . $file_suffix .' 2>&1 &';
     exec($command, $output, $returnValue);
     
     if (!file_exists($file . $file_suffix)) {

@@ -17,8 +17,14 @@ class ImageManipulation {
   function createPreview($parameterArray, $dsid, $file, $file_ext) {
     $system = getenv('System');
     $file_suffix = '_' . $dsid . '.' . $file_ext;
-    $height = $parameterArray['height'];
-    $width = $parameterArray['width'];
+    $width = $parameterArray['width']; 
+
+    if (!isset($parameterArray['height'])) {
+	$height = $width;
+    } else { 
+	$height = $parameterArray['height'];
+    }
+
     $returnValue = TRUE;
     $output = array();
     
@@ -29,7 +35,7 @@ class ImageManipulation {
     }
 
     if (!file_exists($destFile)) {
-      exec('convert -resize ' . $width . ' -quality 85  "' . $file . '"[0] -strip "' .$destFile . '" 2>&1 &', $output, $returnValue);
+      exec('convert -resize ' . $width . 'x'.$height.' -quality 85  "' . $file . '"[0] -strip "' .$destFile . '" 2>&1 &', $output, $returnValue);
     }
     else
       $returnValue = '0';
