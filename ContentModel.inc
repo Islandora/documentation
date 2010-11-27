@@ -1855,11 +1855,10 @@ class ContentModel extends XMLDatastream {
       $methodsEl = $rule->getElementsByTagName('ingest_methods')->item(0);
       $methods = $methodsEl->getElementsByTagName('ingest_method');
       for ($i=0; !$found && $i < $methods->length; $i++) {
-        if ($methods->item($i)->getAttribute('module') == $module && $methods->item($i)->getAttribute('file') == $file && $methods->item($i)->getAttribute('class') == $class && $methods->item($i)->getAttribute('method') == $method) {
+        if (( trim($methods->item($i)->getAttribute('module')) == $module || (trim($methods->item($i)->getAttribute('module')) == '' && $module == 'fedora_repository'))  && trim($methods->item($i)->getAttribute('file')) == $file && trim($methods->item($i)->getAttribute('class')) == $class && trim($methods->item($i)->getAttribute('method')) == $method) {
           $found = $methods->item($i);
         }
       }
-
       if ($found !== FALSE) {
         $methodEl = $found;
         $paramsEl = $found->getElementsByTagName('parameters');
