@@ -24,6 +24,12 @@ function islandora_form_elements_elements() {
     '#sticky ' => FALSE,
     '#process' => array('ife_sticky_textarea_process'),
   );
+
+  $type['select'] = array( 
+    '#input'=> TRUE,
+    '#sticky ' => FALSE,
+    '#process' => array('ife_sticky_select_process'),
+  );
   
   $type['list'] = array(
     '#input'=>TRUE,
@@ -57,19 +63,19 @@ function islandora_form_elements_elements() {
   $type['person'] = array(
     '#input' => TRUE,
     '#process' => array('ife_person_process'),
-    '#default_value' => array('fname'=>'', 'lname' => '', 'title' => '', 'role' => ''),
+    '#default_value' => array('name'=>'', 'date'=>'', 'subject'=>'', 'role' => ''),
   );
 
   $type['organization'] = array(
     '#input' => TRUE,
     '#process' => array('ife_org_process'),
-    '#default_value' => array( 'organization' => '', 'conference' => ''),
+    '#default_value' => array( 'organization' => '', 'date'=>'', 'subject'=>'', 'role' => ''),
   );
 
   $type['conference'] = array(
     '#input' => TRUE,
     '#process' => array('ife_conf_process'),
-    '#default_value' => array( 'conference' => ''),
+    '#default_value' => array( 'conference' => '', 'date'=>'', 'subject'=>'', 'role' => ''),
   );
   
   $type['people'] = array(
@@ -79,6 +85,7 @@ function islandora_form_elements_elements() {
   
   $type['datepicker'] = array(
     '#input' => TRUE,
+    '#process' => array('ife_datepicker_process'),
   );
   
   return $type;
@@ -140,7 +147,7 @@ function ife_people_process($element,$edit,&$form_state)
       $people= array();
       if (isset($form_state['storage']['people']) && !empty($form_state['storage']['people'])) {
 	foreach ($form_state['storage']['people'] as $ent) {
-	  if ( trim($ent['fname']) != '' || trim($ent['lname']) != '' || trim($ent['organization']) != '' || trim($ent['title']) != '' || trim($ent['conference']) != '' || trim($ent['role']) != '' || trim($ent['date']) != '') {
+	  if ( trim($ent['name']) != '' || trim($ent['organization']) != '' || trim($ent['conference']) != '' || trim($ent['role']) != '' || trim($ent['date']) != '') {
 	    $people[]=$ent;
 	  }
 	}
@@ -154,20 +161,21 @@ function ife_people_process($element,$edit,&$form_state)
       switch ($json->type)
       {
 	case 'personal':
-	  $person['fname']=$json->given;
-	  $person['lname']=$json->family;
-	  $person['title']=$json->title;
+	  $person['name']=$json->name;
 	  $person['role']=$json->role;
+	  $person['subject']=$json->subject;
 	  $person['date']=$json->date;
 	  break;
 	case 'organization':
 	  $person['organization'] = $json->name;
 	  $person['role'] = $json->role;
+	  $person['subject']=$json->subject;
 	  break;
 	case 'conference':
 	  $person['conference'] = $json->name;
 	  $person['role'] = $json->role;
 	  $person['date'] = $json->date;
+	  $person['subject']=$json->subject;
 	  break;
       }
       
@@ -185,7 +193,7 @@ function ife_people_process($element,$edit,&$form_state)
 	}
 	
       } else  {
-	$form_state['storage']['people']=array( array('fname'=>'','lname'=>'', 'title'=>'', 'role'=>'', 'date'=>''));
+	$form_state['storage']['people']=array( array('name'=>'', 'role'=>'', 'date'=>'', 'subject' => ''));
       }
     }
     
@@ -273,30 +281,18 @@ function ife_person_process($element)
   
   if (!isset($element['#value']))
   {
-    $element['#value'] = array('fname'=>'', 'lname' => '');
+    $element['#value'] = array('name'=>'');
   }
   
   
-  $element['fname'] = array(
+  $element['name'] = array(
     '#type' => 'textfield',
-    '#title'=> t('Given Name(s)'),
+    '#title'=> t('Name(s)'),
     '#size' => 30,
-    '#value' => $element['#value']['fname'],
+    '#value' => $element['#value']['name'],
+    '#description' => t('Please enter last name first, followed by a comma and first name.'),
   );
-  
-  $element['lname'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Family Name(s)'),
-    '#size' => 30,
-    '#value' => $element['#value']['lname'],
-  );  
-  
-  $element['title'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Title'),
-    '#size' => 30,
-    '#value' => $element['#value']['title'],
-  );  
+    
 
   $element['date'] = array(
   '#type' => 'datepicker',
@@ -312,6 +308,14 @@ function ife_person_process($element)
     '#description'=>t('The role that this person plays with regards to the object.'),
     '#value' => $element['#value']['role'],
     '#autocomplete_path' => 'autocomplete_marcrelator/',
+  );  
+
+  $element['subject'] = array(
+    '#type' => 'checkbox',
+    '#size'=>30,
+    '#description'=>t('If checked, this person will be listed as a subject term.  If selected, role field does not apply.'),
+    '#title' => t('Subject'),
+    '#value' => $element['#value']['subject'],
   );  
   
 
@@ -339,7 +343,7 @@ function ife_org_process($element)
   
   if (!isset($element['#value']))
   {
-    $element['#value'] = array('fname'=>'', 'lname' => '');
+    $element['#value'] = array('name'=>'');
   }
   
   
@@ -351,7 +355,15 @@ function ife_org_process($element)
     '#value' => $element['#value']['role'],
     '#autocomplete_path' => 'autocomplete_marcrelator/',
   );  
-  
+
+  $element['subject'] = array(
+    '#type' => 'checkbox',
+    '#size'=>30,
+    '#description'=>t('If checked, this organization will be listed as a subject term.  If selected, role field does not apply.'),
+    '#title' => t('Subject'),
+    '#value' => $element['#value']['subject'],
+  );    
+
   $element['organization'] = array(
     '#type' => 'textfield',
     '#title' => t('Organization'),
@@ -384,7 +396,7 @@ function ife_conf_process($element)
   
   if (!isset($element['#value']))
   {
-    $element['#value'] = array('fname'=>'', 'lname' => '');
+    $element['#value'] = array('name'=>'');
   }
   
 
@@ -396,6 +408,13 @@ function ife_conf_process($element)
     '#autocomplete_path' => 'autocomplete_marcrelator/',
   );  
   
+  $element['subject'] = array(
+    '#type' => 'checkbox',
+    '#size'=>30,
+    '#description'=>t('If checked, this conference will be listed as a subject term.  If selected, role field does not apply.'),
+    '#title' => t('Subject'),
+    '#value' => $element['#value']['subject'],
+  );  
  
   $element['conference'] = array(
     '#type' => 'textfield',
@@ -454,6 +473,30 @@ function ife_sticky_textfield_process($element,$edit,&$form_state)
   return $element;
 }
 
+/**
+ * Our process callback to expand the control.
+ */
+function ife_datepicker_process($element,$edit,&$form_state) 
+{
+
+  
+  if (isset($element['#sticky']) && $element['#sticky'] == TRUE)
+  {
+    $stickyName = preg_replace('/\]/','',array_pop(preg_split('/\[/',$element['#name']))).'-sticky';
+  
+    if (isset($element['#post'][$stickyName]) && strtolower($element['#post'][$stickyName]) == 'on')
+    {
+	$form_state['storage'][$element['#name']]=$element['#value'];
+    } elseif (isset($form_state['storage'][$element['#name']]))
+    {
+      $element['#value'] = $form_state['storage'][$element['#name']];
+      $element['#sticky_on'] = TRUE;
+    }
+  }
+  
+  return $element;
+}
+
 
 
 /**
@@ -481,12 +524,59 @@ function ife_sticky_textarea_process($element,$edit,&$form_state)
   return $element;
 }
 
+
+/**
+ * Our process callback to expand the control.
+ */
+function ife_sticky_select_process($element,$edit,&$form_state) 
+{
+
+  
+  if (isset($element['#sticky']) && $element['#sticky'] == TRUE)
+  {
+    $element['#type'] = 'sticky_select';
+    $stickyName = preg_replace('/\]/','',array_pop(preg_split('/\[/',$element['#name']))).'-sticky';
+  
+    if (isset($element['#post'][$stickyName]) && strtolower($element['#post'][$stickyName]) == 'on')
+    {
+	$form_state['storage'][$element['#name']]=$element['#value'];
+    } elseif (isset($form_state['storage'][$element['#name']]))
+    {
+      $element['#value'] = $form_state['storage'][$element['#name']];
+      $element['#sticky_on'] = TRUE;
+    }
+  }
+  
+  return $element;
+}
+
 /**
  * Our process callback to expand the control.
  */
 function ife_copyright_process($element,$edit,&$form_state) {
 
   module_load_include('inc','islandora_form_elements','includes/creative_commons');
+  
+  if (isset($element['#sticky']) && $element['#sticky'] == TRUE)
+  {
+    $stickyName = preg_replace('/\]/','',array_pop(preg_split('/\[/',$element['#name']))).'-sticky';
+  
+    if (isset($element['#post'][$stickyName]) && strtolower($element['#post'][$stickyName]) == 'on')
+    {
+	$form_state['storage'][$element['#name']]=$element['#value'];
+    } elseif (isset($form_state['storage'][$element['#name']]))
+    {
+      $element['#value'] = $form_state['storage'][$element['#name']];
+      $element['#sticky_on'] = TRUE;
+    }
+  }  
+
+  if ($element['#sticky']) { 
+    $path=drupal_get_path('module','islandora_form_elements');
+    drupal_add_css($path.'/css/sticky.css');
+    $stickyName = preg_replace('/\]/','',array_pop(preg_split('/\[/',$element['#name']))).'-sticky';
+    $sticky = (isset($element['#sticky']) && $element['#sticky'] == TRUE?'<input class="sticky" type="checkbox" name="'.$stickyName.'"'.(isset($element['#sticky_on']) && $element['#sticky_on']==TRUE?' checked="checked"':'').'/><br/>':'');
+  }
   
   $element['#tree'] = TRUE;
   
@@ -500,7 +590,7 @@ function ife_copyright_process($element,$edit,&$form_state) {
     $element['#value'] = array('cc_commercial' => '', 'cc_modifications' => '', 'cc_jurisdiction' => '');
   }
   
-  $element['cc'] = array('#type' => 'fieldset', '#title'=>$element['#title'], '#description' => '<div class="cc_preview">preview</div>' , '#collapsible' => TRUE);
+  $element['cc'] = array('#type' => 'fieldset', '#title'=>$element['#title'], '#description' => $sticky.'<div class="cc_preview">preview</div>' , '#collapsible' => TRUE);
   
   $element['cc']['cc_enable'] = array(
     '#type' => 'checkbox',
@@ -579,9 +669,15 @@ function islandora_form_elements_theme() {
     'sticky_textfield' => array(
       'arguments' => array('element'),
     ),
+
     'sticky_textarea' => array(
       'arguments' => array('element'),
     ), 
+
+    'sticky_select' => array(
+      'arguments' => array('element'),
+    ), 
+
     'filechooser' => array(
       'arguments' => array('element'),
       'file' => 'includes/filechooser.inc'
@@ -625,7 +721,7 @@ function theme_copyright($element)
   $path=drupal_get_path('module','islandora_form_elements');
   drupal_add_js($path.'/js/copyright.js');
   drupal_add_css($path.'/css/copyright.css');
-  
+ 
   return theme('form_element', $element, $element['#children']);
 }
 
@@ -672,11 +768,13 @@ function theme_list($element)
      $output .= ' <span class="field-suffix">'. $element['#field_suffix'] .'</span>';
    }
    
-    $stickyName = preg_replace('/\]/','',array_pop(preg_split('/\[/',$element['#name']))).'-sticky';
-    $output .= (isset($element['#sticky']) && $element['#sticky'] == TRUE?'<input type="checkbox" name="'.$stickyName.'"'.(isset($element['#sticky_on']) && $element['#sticky_on']==TRUE?' checked="checked"':'').'/> Sticky?':'') . '</div>';
+   $path=drupal_get_path('module','islandora_form_elements');
+   drupal_add_css($path.'/css/sticky.css');
+   $stickyName = preg_replace('/\]/','',array_pop(preg_split('/\[/',$element['#name']))).'-sticky';
+   $sticky = (isset($element['#sticky']) && $element['#sticky'] == TRUE?'<input class="sticky" type="checkbox" name="'.$stickyName.'"'.(isset($element['#sticky_on']) && $element['#sticky_on']==TRUE?' checked="checked"':'').'/><br/>':'');
 
    
-   return theme('form_element', $element, $output ) . $extra;  
+   return theme('form_element', $element, $output . $sticky ) . $extra;  
   
   
 }
@@ -696,6 +794,7 @@ function theme_list($element)
 function theme_sticky_textarea($element) {
   $class = array('form-textarea');
 
+
   // Add teaser behavior (must come before resizable)
   if (!empty($element['#teaser'])) {
     drupal_add_js('misc/teaser.js');
@@ -711,12 +810,41 @@ function theme_sticky_textarea($element) {
     $class[] = 'resizable';
   }
 
+   $path=drupal_get_path('module','islandora_form_elements');
+   drupal_add_css($path.'/css/sticky.css');
    $stickyName = preg_replace('/\]/','',array_pop(preg_split('/\[/',$element['#name']))).'-sticky';
-   $sticky = (isset($element['#sticky']) && $element['#sticky'] == TRUE?'<input type="checkbox" name="'.$stickyName.'"'.(isset($element['#sticky_on']) && $element['#sticky_on']==TRUE?' checked="checked"':'').'/> Sticky?':'');
+   $sticky = (isset($element['#sticky']) && $element['#sticky'] == TRUE?'<input class="sticky" type="checkbox" name="'.$stickyName.'"'.(isset($element['#sticky_on']) && $element['#sticky_on']==TRUE?' checked="checked"':'').'/><br/>':'');
 
 
   _form_set_class($element, $class);
   return theme('form_element', $element, '<textarea cols="'. $element['#cols'] .'" rows="'. $element['#rows'] .'" name="'. $element['#name'] .'" id="'. $element['#id'] .'" '. drupal_attributes($element['#attributes']) .'>'. check_plain($element['#value']) .'</textarea>'.$sticky);
+}
+
+
+
+/**
+ * Format a sticky select.
+ *
+ * @param $element
+ *   An associative array containing the properties of the element.
+ *   Properties used: title, value, description, rows, cols, required, attributes
+ * @return
+ *   A themed HTML string representing the textarea.
+ *
+ * @ingroup themeable
+ */
+function theme_sticky_select($element) {
+   $path=drupal_get_path('module','islandora_form_elements');
+   drupal_add_css($path.'/css/sticky.css');
+   $stickyName = preg_replace('/\]/','',array_pop(preg_split('/\[/',$element['#name']))).'-sticky';
+   $sticky = (isset($element['#sticky']) && $element['#sticky'] == TRUE?'<input class="sticky" type="checkbox" name="'.$stickyName.'"'.(isset($element['#sticky_on']) && $element['#sticky_on']==TRUE?' checked="checked"':'').'/><br/>':'');
+
+
+  $select = '';
+  $size = $element['#size'] ? ' size="'. $element['#size'] .'"' : '';
+  _form_set_class($element, array('form-select'));
+  $multiple = $element['#multiple'];
+  return theme('form_element', $element, '<select name="'. $element['#name'] .''. ($multiple ? '[]' : '') .'"'. ($multiple ? ' multiple="multiple" ' : '') . drupal_attributes($element['#attributes']) .' id="'. $element['#id'] .'" '. $size .'>'. form_select_options($element) .'</select>'.$sticky);
 }
 
 
@@ -759,11 +887,14 @@ function theme_datepicker($element) {
      $output .= ' <span class="field-suffix">'. $element['#field_suffix'] .'</span>';
    }
    
+   $path=drupal_get_path('module','islandora_form_elements');
+   drupal_add_css($path.'/css/sticky.css');
    $stickyName = preg_replace('/\]/','',array_pop(preg_split('/\[/',$element['#name']))).'-sticky';
-   $output .= (isset($element['#sticky']) && $element['#sticky'] == TRUE?'<input type="checkbox" name="'.$stickyName.'"'.(isset($element['#sticky_on']) && $element['#sticky_on']==TRUE?' checked="checked"':'').'/> Sticky?':'') . '</div>';
+   $sticky = (isset($element['#sticky']) && $element['#sticky'] == TRUE?'<input class="sticky" type="checkbox" name="'.$stickyName.'"'.(isset($element['#sticky_on']) && $element['#sticky_on']==TRUE?' checked="checked"':'').'/><br/>':'');
+
 
    
-   return theme('form_element', $element, $output ) . $extra;  
+   return theme('form_element', $element, $output.$sticky ) . $extra;  
  
 }
 
@@ -803,11 +934,14 @@ function theme_sticky_textfield($element) {
      $output .= ' <span class="field-suffix">'. $element['#field_suffix'] .'</span>';
    }
    
+   $path=drupal_get_path('module','islandora_form_elements');
+   drupal_add_css($path.'/css/sticky.css');
    $stickyName = preg_replace('/\]/','',array_pop(preg_split('/\[/',$element['#name']))).'-sticky';
-   $output .= (isset($element['#sticky']) && $element['#sticky'] == TRUE?'<input type="checkbox" name="'.$stickyName.'"'.(isset($element['#sticky_on']) && $element['#sticky_on']==TRUE?' checked="checked"':'').'/> Sticky?':'') . '</div>';
+   $sticky = (isset($element['#sticky']) && $element['#sticky'] == TRUE?'<input class="sticky" type="checkbox" name="'.$stickyName.'"'.(isset($element['#sticky_on']) && $element['#sticky_on']==TRUE?' checked="checked"':'').'/><br/>':'');
+
 
    
-   return theme('form_element', $element, $output ) . $extra;  
+   return theme('form_element', $element, $output . $sticky) . $extra;  
  
 }
 
