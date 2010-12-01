@@ -622,6 +622,23 @@ class Fedora_Item {
      return self::soap_call('modifyObject', $params, $quiet);
   }
   
+  function modify_datastream_by_reference($external_url, $dsid, $label, $mime_type, $force = FALSE, $logMessage = 'Modified by Islandora API',$quiet=FALSE) {
+    $params = array( 
+      'pid' => $this->pid,
+      'dsID' => $dsid,
+      'altIDs' => NULL,
+      'dsLabel' => $label,
+      'MIMEType' => $mime_type,
+      'formatURI' => NULL,
+      'dsLocation' => $external_url,
+      'checksumType' => 'DISABLED',
+      'checksum' => 'none',
+      'logMessage' => $logMessage,
+      'force' => $force
+    );
+    return self::soap_call('modifyDatastreamByReference', $params, $quiet);    
+  }
+ 
   function modify_datastream_by_value($content, $dsid, $label, $mime_type, $force = FALSE, $logMessage = 'Modified by Islandora API',$quiet=FALSE) {
     $params = array( 
       'pid' => $this->pid,
@@ -654,6 +671,7 @@ class Fedora_Item {
       case 'getNextPID':
       case 'getRelationships':
       case 'modifyDatastreamByValue':
+      case 'modifyDatastreamByReference':
       case 'purgeDatastream':
       case 'purgeObject':
       case 'modifyObject':

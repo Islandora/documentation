@@ -21,6 +21,15 @@ class IslandoraBook {
 
     // Set #cache to true to create the $form_state cache
     $form['#cache'] = TRUE;
+    
+    // Give the user an option to enter a custom PID
+    $form['custom_pid'] = array(
+      '#type' => 'textfield',
+      '#title' => 'Custom PID',
+      '#description' => 'If you want to manually specify the PID for the new object, enter it here. '.
+                        'Leave it blank for an automatically-generated PID.',
+    );
+    
     // Prompt the user to enter a record ID to be looked up in Evergreen.
     $form['unapi_url'] = array(
       '#type' => 'textfield',
@@ -90,7 +99,7 @@ class IslandoraBook {
     return TRUE;
   }
 
-  public function handleIngestForm($form_values, $form, &$form_state) {
+  public function handleIngestForm($form_values) {
     /*
      * process the metadata form
      * Create fedora object
@@ -115,16 +124,27 @@ class IslandoraBook {
 
     global $user;
     $mimetype = new MimeClass();
-    $new_item = Fedora_Item::ingest_new_item($form_values['pid'], 'A', $title,
+    
+    $new_item = Fedora_Item::ingest_new_item(!empty($form_values['custom_pid']) ? $form_values['custom_pid'] : $form_values['pid'], 'A', $title,
             $user->name);
 
     $new_item->add_datastream_from_string($form_values['mods']['mods_record'], 'MODS',
             'MODS Metadata', 'text/xml', 'X');
 
+    $dc = transform_mods_to_dc($form_values['mods']['mods_record']);
+    if ($dc) {
+      // Add the PID to a dc:identifier field.
+      $dc_doc = simplexml_load_string($dc);  
+      $dc_item = $dc_doc->xpath('/srw_dc:dcCollection/srw_dc:dc[1]');
+      foreach($dc_item as $node) {
+        $node->addChild('identifier', $new_item->pid, 'http://purl.org/dc/elements/1.1/');
+      }
+      $new_item->modify_datastream_by_value($dc_doc->saveXML(), 'DC', 'Dublin Core XML Metadata', 'text/xml');
+    }
     $new_item->add_relationship('hasModel', $form_values['content_model_pid'], FEDORA_MODEL_URI);
     $new_item->add_relationship(!empty($form_values['relationship']) ? $form_values['relationship'] : 'isMemberOfCollection', $form_values['collection_pid']);
   }
-
+  
   public function buildAddPagesForm($form = array()) {
 
   }
@@ -247,4 +267,26 @@ function ilives_add_single_page_object($book_pid, $page_file, $page_num = 1, $pa
   $page_item->add_relationship('hasModel', 'ilives:pageCModel', FEDORA_MODEL_URI);
   $page_item->add_relationship('isMemberOf', $book_pid);
   $page_item->add_datastream_from_file($page_file, 'TIFF', 'Archival TIFF', 'image/tiff', 'M');
+}
+
+function transform_mods_to_dc($mods) {
+  $xp = new XsltProcessor();
+  // create a DOM document and load the XSL stylesheet
+  $xsl = new DomDocument;
+  $xsl->load(drupal_get_path('module', 'fedora_ilives').'/xsl/MODS3-22simpleDC.xsl');
+  
+  // import the XSL styelsheet into the XSLT process
+  $xp->importStylesheet($xsl);
+  
+   // create a DOM document and load the XML datat
+  $xml_doc = new DomDocument;
+  $xml_doc->loadXML($mods);
+  
+   // transform the XML into HTML using the XSL file
+  if ($dc = $xp->transformToXML($xml_doc)) {
+    return $dc;
+  }
+  else {
+    return FALSE;
+  }
 }
