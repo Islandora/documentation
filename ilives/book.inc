@@ -121,10 +121,14 @@ class IslandoraBook {
     $new_item->add_datastream_from_string($form_values['mods']['mods_record'], 'MODS',
             'MODS Metadata', 'text/xml', 'X');
 
+    $dc = transform_mods_to_dc($form_values['mods']['mods_record']);
+    if ($dc) {
+      $new_item->modify_datastream_by_value($dc, 'DC', 'Dublin Core XML Metadata', 'text/xml');
+    }
     $new_item->add_relationship('hasModel', $form_values['content_model_pid'], FEDORA_MODEL_URI);
     $new_item->add_relationship(!empty($form_values['relationship']) ? $form_values['relationship'] : 'isMemberOfCollection', $form_values['collection_pid']);
   }
-
+  
   public function buildAddPagesForm($form = array()) {
 
   }
@@ -247,4 +251,26 @@ function ilives_add_single_page_object($book_pid, $page_file, $page_num = 1, $pa
   $page_item->add_relationship('hasModel', 'ilives:pageCModel', FEDORA_MODEL_URI);
   $page_item->add_relationship('isMemberOf', $book_pid);
   $page_item->add_datastream_from_file($page_file, 'TIFF', 'Archival TIFF', 'image/tiff', 'M');
+}
+
+function transform_mods_to_dc($mods) {
+  $xp = new XsltProcessor();
+  // create a DOM document and load the XSL stylesheet
+  $xsl = new DomDocument;
+  $xsl->load(drupal_get_path('module', 'fedora_ilives').'/xsl/MODS3-22simpleDC.xsl');
+  
+  // import the XSL styelsheet into the XSLT process
+  $xp->importStylesheet($xsl);
+  
+   // create a DOM document and load the XML datat
+  $xml_doc = new DomDocument;
+  $xml_doc->loadXML($mods);
+  
+   // transform the XML into HTML using the XSL file
+  if ($dc = $xp->transformToXML($xml_doc)) {
+    return $dc;
+  }
+  else {
+    return FALSE;
+  }
 }
