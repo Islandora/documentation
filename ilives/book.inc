@@ -21,6 +21,15 @@ class IslandoraBook {
 
     // Set #cache to true to create the $form_state cache
     $form['#cache'] = TRUE;
+    
+    // Give the user an option to enter a custom PID
+    $form['custom_pid'] = array(
+      '#type' => 'textfield',
+      '#title' => 'Custom PID',
+      '#description' => 'If you want to manually specify the PID for the new object, enter it here. '.
+                        'Leave it blank for an automatically-generated PID.',
+    );
+    
     // Prompt the user to enter a record ID to be looked up in Evergreen.
     $form['unapi_url'] = array(
       '#type' => 'textfield',
@@ -90,7 +99,7 @@ class IslandoraBook {
     return TRUE;
   }
 
-  public function handleIngestForm($form_values, $form, &$form_state) {
+  public function handleIngestForm($form_values) {
     /*
      * process the metadata form
      * Create fedora object
@@ -115,7 +124,8 @@ class IslandoraBook {
 
     global $user;
     $mimetype = new MimeClass();
-    $new_item = Fedora_Item::ingest_new_item($form_values['pid'], 'A', $title,
+    
+    $new_item = Fedora_Item::ingest_new_item(!empty($form_values['custom_pid']) ? $form_values['custom_pid'] : $form_values['pid'], 'A', $title,
             $user->name);
 
     $new_item->add_datastream_from_string($form_values['mods']['mods_record'], 'MODS',
