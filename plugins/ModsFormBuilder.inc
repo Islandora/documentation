@@ -385,6 +385,25 @@ class ModsFormBuilder extends FormBuilder {
       $mods->appendChild($titleinfo);
     }
     
+    if (isset($form_values['mods_alternative_titles']) && trim($form_values['mods_alternative_titles']) != '') { 
+      $titles=preg_split('/\s+\;\s+/',trim($form_values['mods_alternative_titles']));
+      foreach ($titles as $t) {
+	 $titleinfo = $dom->createElement('mods:titleInfo'); 
+	 $titleinfo->setAttribute('alternative') ; 
+	 $title = $dom->createElement('mods:title',$t);
+	 $titleInfo->appendChild($title);
+	 $mods->appendChild($title);
+      }
+    }
+    
+    if (isset($form_values['mods_alternative_title']) && trim($form_values['mods_alternative_title']) != '') { 
+	$titleinfo = $dom->createElement('mods:titleInfo'); 
+	$titleinfo->setAttribute('alternative') ; 
+	$title = $dom->createElement('mods:title',trim($form_values['mods_alternative_title']));
+	$titleInfo->appendChild($title);
+	$mods->appendChild($title);
+    }    
+    
     if (isset($form_values['mods_description']) && trim($form_values['mods_description']) != '') {
      $abstract = $dom->createElement('mods:abstract', htmlspecialchars(trim($form_values['mods_description'])));
      $mods->appendChild($abstract);
@@ -477,6 +496,12 @@ class ModsFormBuilder extends FormBuilder {
       $note = $dom->createElement('mods:note', htmlspecialchars(trim($form_values['mods_note'])));
       $mods->appendChild($note);
     }    
+    
+    if (isset($form_values['mods_caption']) && trim($form_values['mods_caption']) != '') {
+      $note = $dom->createElement('mods:note', htmlspecialchars(trim($form_values['mods_caption'])));
+      $note->setAttribute('type','caption');
+      $mods->appendChild($note);
+    }        
         
     if (isset($form_values['mods_format']) && trim($form_values['mods_format']) != '') {
       $typeOfResource = $dom->createElement('mods:typeOfResource', htmlspecialchars($form_values['mods_format']));
@@ -524,6 +549,13 @@ class ModsFormBuilder extends FormBuilder {
         $city = $dom->createElement('mods:city', htmlspecialchars($form_values['mods_city'])); 
         $geographic->appendChild($city);
       }
+      
+      if (isset($form_values['mods_area']) && trim($form_values['mods_area']) != '') {
+        $state = $dom->createElement('mods:area', htmlspecialchars($form_values['mods_area'])); 
+        $geographic->appendChild($state);
+      }
+      
+      
       $subject->appendChild($geographic);
     }
     
