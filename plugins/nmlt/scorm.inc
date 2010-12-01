@@ -99,26 +99,28 @@ class SCORMObject {
     //$result = db_query("SELECT * FROM {content_node_field} nf  INNER JOIN {content_node_field_instance} ni ON nf.field_name = ni.field_name WHERE nf.type='field_fedora_pid_reference'");
 
     fedora_pidfield_redirect_to_node($this);
-    module_load_include('module', 'SCORM', 'SCORM');
-    $dest_array = explode('/', urldecode(drupal_get_destination()));
-    $nid = $dest_array[count($dest_array) - 1];
-    $node = node_load($nid);
-
-    $tabset = array();
-
-    $tabset['my_tabset'] = array(
-      '#type' => 'tabset',
-    );
-
-   $tabset['my_tabset']['first_tab'] = array(
+    $tabset['my_tabset']['first_tab'] = array(
       '#type' => 'tabpage',
       '#title' => t('Description'),
     );
-    $tabset['my_tabset']['second_tab'] = array(
-        '#type' => 'tabpage',
-        '#title' => t('Results'),
-        '#content' => scorm_show_results($node),
-    );
+    if (module_load_include('module', 'SCORM', 'SCORM')) {
+      $dest_array = explode('/', urldecode(drupal_get_destination()));
+      $nid = $dest_array[count($dest_array) - 1];
+      $node = node_load($nid);
+
+      $tabset = array();
+
+      $tabset['my_tabset'] = array(
+        '#type' => 'tabset',
+      );
+      $tabset['my_tabset']['second_tab'] = array(
+          '#type' => 'tabpage',
+          '#title' => t('Results'),
+          '#content' => scorm_show_results($node),
+      );
+    }
+   
+    
     module_load_include('inc', 'fedora_repository', 'ObjectHelper');
     $obj = new ObjectHelper();
     $tabset['my_tabset']['first_tab']['tabset'] = array(
