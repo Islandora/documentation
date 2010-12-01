@@ -133,7 +133,13 @@ class IslandoraBook {
 
     $dc = transform_mods_to_dc($form_values['mods']['mods_record']);
     if ($dc) {
-      $new_item->modify_datastream_by_value($dc, 'DC', 'Dublin Core XML Metadata', 'text/xml');
+      // Add the PID to a dc:identifier field.
+      $dc_doc = simplexml_load_string($dc);  
+      $dc_item = $dc_doc->xpath('/srw_dc:dcCollection/srw_dc:dc[1]');
+      foreach($dc_item as $node) {
+        $node->addChild('identifier', $new_item->pid, 'http://purl.org/dc/elements/1.1/');
+      }
+      $new_item->modify_datastream_by_value($dc_doc->saveXML(), 'DC', 'Dublin Core XML Metadata', 'text/xml');
     }
     $new_item->add_relationship('hasModel', $form_values['content_model_pid'], FEDORA_MODEL_URI);
     $new_item->add_relationship(!empty($form_values['relationship']) ? $form_values['relationship'] : 'isMemberOfCollection', $form_values['collection_pid']);
