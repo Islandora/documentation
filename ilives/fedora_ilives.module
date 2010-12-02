@@ -430,7 +430,7 @@ function retrieve_unapi_MODS_record($url) {
   $bib_response = drupal_http_request($url);
   $bib_html = $bib_response->data;
   $bib_doc = new DOMDocument;
-  $bib_doc->loadHTML($bib_html);
+  @$bib_doc->loadHTML($bib_html);
   $links = $bib_doc->getElementsByTagName('link');
   foreach ($links as $link) {
     if ($link->getAttribute('rel') == 'unapi-server') {
