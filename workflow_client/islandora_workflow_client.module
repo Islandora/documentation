@@ -269,7 +269,7 @@ function islandora_workflow_client_cron()
   $queue='/queue/fedora.apim.update';
   $con->subscribe($queue);
   $messagesToSend=array();
-   for ($i=0;$i<500;$i++) {
+   for ($i=0;$i<100;$i++) {
     $msg = $con->readFrame();
     
     if ($msg != null) {

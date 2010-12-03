@@ -992,7 +992,8 @@ class ObjectHelper {
                              where (<info:fedora/' . $pid . '> <dc:title> $title
                              and $parentObject <fedora-model:hasModel> $content
                              and (<info:fedora/' . $pid . '> <fedora-rels-ext:isMemberOfCollection> $parentObject
-                             or <info:fedora/' . $pid . '> <fedora-rels-ext:isMemberOf> $parentObject)
+                             or <info:fedora/' . $pid . '> <fedora-rels-ext:isMemberOf> $parentObject
+                             or <info:fedora/' . $pid . '> <fedora-rels-ext:isPartOf> $parentObject)
                              and $parentObject <fedora-model:state> <info:fedora/fedora-system:def/model#Active>)
                              minus $content <mulgara:is> <info:fedora/fedora-system:FedoraObject-3.0>
                              order by $title';

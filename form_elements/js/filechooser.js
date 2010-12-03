@@ -63,7 +63,6 @@ $(document).ready(function () {
       mouseWheel: true,
       circular: false,
       speed: 750,
-      easing: "bounceout",
       visible: visibleFiles,
       scroll: visibleFiles,
       initial: selectedIndex
