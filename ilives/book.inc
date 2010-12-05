@@ -36,16 +36,17 @@ class IslandoraBook {
       '#title' => 'Catalogue item URL',
     );
     $form['unapi_url_submit'] = array(
-  '#type' => 'submit',
-  '#value' => t('Retrieve MODS record'),
-  '#submit' => array('fedora_ilives_retrieve_unapi_submit'),
-        '#ahah' => array(
-    'path' => 'fedora/ilives/retrieve_unapi/js', // path we defined in hook_menu
-    'wrapper' => 'mods-wrapper', // the HTML that wraps the element that needs to be replaced
-    'method' => 'replace', // the method we're going to use: a replace operation
-    'effect' => 'fade', // the effect used when replacing the element (try fade!)
-        )
-      );
+      '#type' => 'submit',
+      '#value' => t('Retrieve MODS record'),
+      '#submit' => array('fedora_ilives_retrieve_unapi_submit'),
+      '#ahah' => array(
+        'path' => 'fedora/ilives/retrieve_unapi/js', // path we defined in hook_menu
+        'wrapper' => 'mods-wrapper', // the HTML that wraps the element that needs to be replaced
+        'method' => 'replace', // the method we're going to use: a replace operation
+        //'effect' => 'fade', // the effect used when replacing the element (try fade!)
+      ),
+      '#suffix' => '<br/>',
+    );
     drupal_add_js('', 'inline');
     // We define a <div> wrapper. Everything in it will be replaced.
     $form['mods'] = array(
@@ -56,6 +57,7 @@ class IslandoraBook {
     $form['mods']['mods_record'] = array(
       '#type' => 'textarea',
       '#title' => 'MODS Record to Import',
+      '#rows' => 20,
       '#value' => (!empty($mods_save) ? $mods_save['mods']['mods_record'] : ''),
     );
     return $form;
