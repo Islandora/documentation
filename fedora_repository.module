@@ -91,6 +91,7 @@ function fedora_repository_collection_view($pid = NULL, $collection = NULL, $pag
 
 function fedora_repository_ingest_object($collection_pid=NULL, $collection_label = NULL, $content_model = NULL) {
   module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
+  module_load_include('inc', 'fedora_repository', 'ObjectHelper');
   if (!user_access('ingest new fedora objects')) {
     drupal_set_message(t('You do not have permission to ingest.'), 'error');
     return '';
@@ -111,6 +112,11 @@ function fedora_repository_ingest_object($collection_pid=NULL, $collection_label
     return '';
   }
   $output = drupal_get_form('fedora_repository_ingest_form', $collection_pid, $collection_label, $content_model);
+
+  $breadcrumbs = array();
+  $objectHelper = new ObjectHelper();
+  $objectHelper->getBreadcrumbs($collection_pid, $breadcrumbs);
+  drupal_set_breadcrumb(array_reverse($breadcrumbs));
 
   return $output;
 }
@@ -585,6 +591,11 @@ function fedora_repository_edit_qdc_form(&$form_state, $pid, $dsId = NULL) {
   $soapHelper = new ConnectionHelper();
   $client = $soapHelper->getSoapClient(variable_get('fedora_soap_url', 'http://localhost:8080/fedora/services/access?wsdl'));
   // Check if there is a custom edit metadata function defined in the content model.
+
+  $breadcrumbs = array();
+  $objectHelper = new ObjectHelper();
+  $objectHelper->getBreadcrumbs($pid, $breadcrumbs);
+  drupal_set_breadcrumb(array_reverse($breadcrumbs));
 
 
   $output = '';
