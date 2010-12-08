@@ -65,35 +65,39 @@ class mods_extend extends Process {
           break;
         }
       }
-          
-      $collections= $relsExtDom->getElementsByTagName('isMemberOfCollection');
-      for ($i=0; $i < $collections->length; $i++) {
-        $collection = $collections->item($i);
-        list(, $ident) = explode('/', $collection->getAttribute('rdf:resource'));
+      
+      $relationships = array('isMemberOfCollection','isMemberOf','isPartOf');
+      foreach ($relationships as $relationship) 
+      {
+	$collections= $relsExtDom->getElementsByTagName($relationship);
+	for ($i=0; $i < $collections->length; $i++) {
+	  $collection = $collections->item($i);
+	  list(, $ident) = explode('/', $collection->getAttribute('rdf:resource'));
 
-        $collection = new fedora_item($ident);
-        $dc =  new SimpleXMLElement($collection->get_datastream_dissemination('DC'), NULL, FALSE, 'http://purl.org/dc/elements/1.1/');
+	  $collection = new fedora_item($ident);
+	  $dc =  new SimpleXMLElement($collection->get_datastream_dissemination('DC'), NULL, FALSE, 'http://purl.org/dc/elements/1.1/');
 
-        $relatedItem = $modsDom->createElement('mods:relatedItem');
-        $relatedItem->setAttribute('type', 'host');
-        $titleInfo = $modsDom->createElement('mods:titleInfo');
-        $title = $modsDom->createElement('mods:title', $dc->title);
-        $titleInfo->appendChild($title);
-        $relatedItem->appendChild($titleInfo);
+	  $relatedItem = $modsDom->createElement('mods:relatedItem');
+	  $relatedItem->setAttribute('type', 'host');
+	  $titleInfo = $modsDom->createElement('mods:titleInfo');
+	  $title = $modsDom->createElement('mods:title', $dc->title);
+	  $titleInfo->appendChild($title);
+	  $relatedItem->appendChild($titleInfo);
 
-        $identifier = $modsDom->createElement('mods:identifier', $ident);
-        $identifier->setAttribute('type', 'pid');
-        $relatedItem->appendChild($identifier);
+	  $identifier = $modsDom->createElement('mods:identifier', $ident);
+	  $identifier->setAttribute('type', 'pid');
+	  $relatedItem->appendChild($identifier);
 
-        $ident = preg_replace('/^.*\:/', '10719/', $ident);
+	  $ident = preg_replace('/^.*\:/', '10719/', $ident);
 
-        $identifier = $modsDom->createElement('mods:identifier', $ident);
-        $identifier->setAttribute('type', 'hdl');
-        $relatedItem->appendChild($identifier);
+	  $identifier = $modsDom->createElement('mods:identifier', $ident);
+	  $identifier->setAttribute('type', 'hdl');
+	  $relatedItem->appendChild($identifier);
 
-        $modsRoot->appendChild($relatedItem);
+	  $modsRoot->appendChild($relatedItem);
+	}
       }
-
+      
       $identifier = $modsDom->createElement('mods:identifier', $pid);
       $identifier->setAttribute('type', 'pid');
       $modsRoot->appendChild($identifier);

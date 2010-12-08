@@ -34,11 +34,12 @@ class ObjectHelper {
 
 	/**
    * Grabs a stream from fedora sets the mimetype and returns it. $dsID is the
-   * datastream id.
+   * datastream id.   If $forceSoap is set, the function will always buffer the datastream from fedora.  Otherwise, it will 
+   * try and use a redirect if possible.
    * @param $pid String
    * @param $dsID String
    */
-  function makeObject($pid, $dsID, $asAttachment = FALSE, $label = NULL, $filePath=FALSE, $version=NULL) {
+  function makeObject($pid, $dsID, $asAttachment = FALSE, $label = NULL, $filePath=FALSE, $version=NULL, $forceSoap = FALSE) {
     global $user;
     module_load_include('inc','fedora_repository','ContentModel');
     if ($pid == NULL || $dsID == NULL) {
@@ -163,7 +164,12 @@ class ObjectHelper {
 
           header('Content-Disposition: attachment; filename="' . $suggestedFileName . '"');
         }
-        curl_exec($ch);
+        
+        if ( (isset($user) && $user->uid != 0) || $forceSoap || isset($_SERVER['HTTPS'])) {
+	  curl_exec($ch);
+	} else {
+	  header('Location: '.$url);
+	}
       }
       curl_close($ch);
     } else {
@@ -986,7 +992,8 @@ class ObjectHelper {
                              where (<info:fedora/' . $pid . '> <dc:title> $title
                              and $parentObject <fedora-model:hasModel> $content
                              and (<info:fedora/' . $pid . '> <fedora-rels-ext:isMemberOfCollection> $parentObject
-                             or <info:fedora/' . $pid . '> <fedora-rels-ext:isMemberOf> $parentObject)
+                             or <info:fedora/' . $pid . '> <fedora-rels-ext:isMemberOf> $parentObject
+                             or <info:fedora/' . $pid . '> <fedora-rels-ext:isPartOf> $parentObject)
                              and $parentObject <fedora-model:state> <info:fedora/fedora-system:def/model#Active>)
                              minus $content <mulgara:is> <info:fedora/fedora-system:FedoraObject-3.0>
                              order by $title';

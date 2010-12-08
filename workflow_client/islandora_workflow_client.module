@@ -16,43 +16,65 @@ function islandora_workflow_client_menu()
 
 function islandora_workflow_client_search_submit($form,&$form_state) 
 {
-  if (trim($form['collection_pid']['#value']) !== '')
-  {
-    drupal_goto('admin/settings/workflow_client/'.$form['process_name']['#value'].'/'.$form['collection_pid']['#value']);
-  } else
-  {
-    drupal_goto('admin/settings/workflow_client/'.$form['process_name']['#value']);
+  $url ='admin/settings/workflow_client/'.$form['process_name']['#value'];
+  if (trim($form['process_id']['#value']) !== '') {
+    $url.='/'.$form['process_id']['#value'];
+  } else {
+    $url .= '/-/';
   }
+  
+  if (trim($form['collection_pid']['#value']) !== '') {
+    $url.='/'.$form['collection_pid']['#value'];
+  } else {
+    $url .= '/-/';
+  }
+  
+  drupal_goto($url);
+  
 }
 
-function islandora_workflow_client_search()
+function islandora_workflow_client_search(&$form_state,$terms=null,$process_id=null,$collection=null)
 {
     module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
 
     $form = array();
     $form['process_name'] = array(
 	'#type' => 'textfield',
+	'#required'=> TRUE,
 	'#title' => t('Search by Process Name'),
+	'#default_value' => ($terms!=null?$terms:''),
 	'#description' => t('Returns a list of objects that match the process name(s) entered. Separate multiple names by spaces.'),
     );    
+
+    $form['process_id'] = array(
+	'#type' => 'textfield',
+	'#title' => t('Search by Process ID'),
+	'#default_value' => ($process_id!=null?$process_id:''),
+	'#description' => t('Returns only objects that match the also match the process id entered. '),
+    );    
+
 
     $form['collection_pid'] = array(
 	'#type' => 'textfield',
 	'#title' => t('Search by Collection PID'),
+	'#default_value' => ($collection!=null?$collection:''),
 	'#description' => t('Returns only objects that match the also match the collection pid(s) entered. Separate multiple PIDs by spaces.'),
     );    
         
+                
     
     $form['submit'] = array('#type' => 'submit', '#value' => t('Search'));    
     
     return $form;
 }
 
-function islandora_workflow_client_manage($terms = null, $collection = null, $queue= null, $queueProcess = null)
+function islandora_workflow_client_manage($terms = null, $process_id= null, $collection = null, $queue= null, $queueProcess = null)
 {
-  if ($collection == 'none') 
-  {
+  if ($collection == 'none' || $collection == '-')  {
     $collection = null;
+  }
+  if ($process_id == 'none' || $process_id == '-') { 
+    $process_id = null;
   }
   
   $output = '';
@@ -143,49 +165,57 @@ function islandora_workflow_client_manage($terms = null, $collection = null, $qu
 		$errCount = 0;
 		$waitCount =0;
 		$completeCount = 0;
+		$display = false;
 		foreach ($pids as $pid)
 		{
 		
 		  if ( isset($workflows[$pid]) && $workflows[$pid] !== false )
 		  {
+		    $display = true;
 		    $procs = $workflows[$pid]->getProcesses();
 		    $updated = FALSE;
 		    foreach ($procs as $id=>$n)
 		    { 
-
-		      if ($name == $n)
-		      { 
-			$proc=$workflows[$pid]->getProcess($id);
-			if (($queue == 'queue'|| ($queue =='errorQueue' && $proc['state'] == 'error')) && $queueProcess == $n)
-			{
-			  $workflows[$pid]->setState($id,'waiting');
-			  $updated=TRUE;
-			}
-			
-			
-			switch ($proc['state'])
-			{
-			  case 'completed':
-			    $completeCount++;
-			    break;
-			  case 'waiting':
-			    $waitCount++;
-			    break;
-			  case 'error':
-			    $errCount++;
-			    $errors[]=$proc;
-			    break;
+		      if ($process_id == null || $id == $process_id) 
+		      {
+			if ($name == $n)
+			{ 
+			  $proc=$workflows[$pid]->getProcess($id);
+			  if (($queue == 'queue'|| ($queue =='errorQueue' && $proc['state'] == 'error')) && $queueProcess == $n)
+			  {
+			    $workflows[$pid]->setState($id,'waiting');
+			    $updated=TRUE;
+			  }
+			  
+			  
+			  switch ($proc['state'])
+			  {
+			    case 'completed':
+			      $completeCount++;
+			      break;
+			    case 'waiting':
+			      $waitCount++;
+			      break;
+			    case 'error':
+			      $errCount++;
+			      $errors[]=$proc;
+			      break;
+			  }
 			}
 		      }
-		    }
-		    if ($updated) 
-		    {
-			$workflows[$pid]->saveToFedora();
+		      if ($updated) 
+		      {
+			  $workflows[$pid]->saveToFedora();
+		      }
 		    }
 		  }
 
 		}
-		$rows[]= array($name, $waitCount,$completeCount,$errCount,l('Add All to Queue','admin/settings/workflow_client/'.$terms.'/'.(trim($collection)==''?'none':$collection).'/queue/'.$name).'<br/>'.l('Add Errors to Queue','admin/settings/workflow_client/'.$terms.'/'.(trim($collection)==''?'none':$collection).'/errorQueue/'.$name));
+		if ($display) { 
+		  $rows[]= array($name, $waitCount,$completeCount,$errCount,
+		     l('Add All to Queue','admin/settings/workflow_client/'.$terms.'/'.(trim($process_id)==''?'none':$process_id).'/'.(trim($collection)==''?'none':$collection).'/queue/'.$name).'<br/>'.
+		  l('Add Errors to Queue','admin/settings/workflow_client/'.$terms.'/'.(trim($process_id)==''?'none':$process_id).'/'.(trim($collection)==''?'none':$collection).'/errorQueue/'.$name));
+		}
 	      }
 	      
 	      if ($queue == 'queue' || $queue == 'errorQueue')
@@ -193,7 +223,7 @@ function islandora_workflow_client_manage($terms = null, $collection = null, $qu
  		drupal_goto('admin/settings/workflow_client/'.$terms.(trim($collection)==''?'/'.$collection:''));
 	      }
 	      
-	      $output.='<h3>Search for "'.$terms.'" '.(trim($collection)!=''?'in collection(s) "'.$collection.'" ':'').'returned Processes:</h3>';
+	      $output.='<h3>Search for '.($process_id!=null?'process id '.$process_id.' with terms ':'').' "'.$terms.'" '.(trim($collection)!=''?'in collection(s) "'.$collection.'" ':'').'returned Processes:</h3>';
 	      $output.=theme('table',$headers,$rows);
 	      
 	      if (count ($errors) > 0) 
@@ -223,7 +253,7 @@ function islandora_workflow_client_manage($terms = null, $collection = null, $qu
      }
     
   }
-    $output .=  drupal_get_form('islandora_workflow_client_search');
+    $output .=  drupal_get_form('islandora_workflow_client_search',$form,NULL, $terms, $process_id, $collection);
     
     return $output;
 }
@@ -239,7 +269,7 @@ function islandora_workflow_client_cron()
   $queue='/queue/fedora.apim.update';
   $con->subscribe($queue);
   $messagesToSend=array();
-   for ($i=0;$i<50;$i++) {
+   for ($i=0;$i<100;$i++) {
     $msg = $con->readFrame();
     
     if ($msg != null) {

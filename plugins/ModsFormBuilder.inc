@@ -5,9 +5,9 @@
 module_load_include('inc', 'fedora_repository', 'plugins/FormBuilder');
 class ModsFormBuilder extends FormBuilder {
   static $MODS_NS = 'http://www.loc.gov/mods/v3';
-  private $cm;
-  private $item;
-  private $pid; 
+  protected $cm;
+  protected $item;
+  protected $pid; 
   
  function __construct($pid=null) 
  {
@@ -43,7 +43,7 @@ class ModsFormBuilder extends FormBuilder {
 	'#type' => 'fieldset',
 	'#title' => t('Edit metadata'),
       );
-      
+  
     if ($this->cm !== FALSE && $this->item != NULL) {
       $form['pid'] = array('#type'=>'hidden','#value'=>$this->pid);
       
@@ -85,9 +85,12 @@ class ModsFormBuilder extends FormBuilder {
 		$includeEl=FALSE;
 		break;
 		  
+		
 	      case '#edit_metadata_xpath':
 		$nodeList = $xpath->evaluate($val);
-// 		echo $val. ' '.$nodeList->length.' '. $nodeList. '<br/>';
+//  		echo $val. ' '.$nodeList->length.' ';
+// 		echo $nodeList->item(0)->nodeValue.' ';
+// 		echo '<br/>';
 
 		if (is_string($nodeList)) 
 		{
@@ -101,7 +104,15 @@ class ModsFormBuilder extends FormBuilder {
 		  }
 		} else if ($nodeList->length > 0) 
 		{
-		  $el['#default_value'] = $nodeList->item(0)->nodeValue;
+		  if ($el['#type'] == 'list') { 
+		    $values=array();
+		    for ($i=0;$i<$nodeList->length;$i++) { 
+		      $values[]=$nodeList->item($i)->nodeValue;
+		    }
+		    $el['#default_value']=join('; ',$values);
+		  } else {
+		    $el['#default_value'] = $nodeList->item(0)->nodeValue;
+		  }
 		}
 		break;
 	    }
@@ -385,6 +396,25 @@ class ModsFormBuilder extends FormBuilder {
       $mods->appendChild($titleinfo);
     }
     
+    if (isset($form_values['mods_alternative_titles']) && trim($form_values['mods_alternative_titles']) != '') { 
+      $titles=preg_split('/\s+\;\s+/',trim($form_values['mods_alternative_titles']));
+      foreach ($titles as $t) {
+	 $titleinfo = $dom->createElement('mods:titleInfo'); 
+	 $titleinfo->setAttribute('type','alternative') ; 
+	 $title = $dom->createElement('mods:title',$t);
+	 $titleinfo->appendChild($title);
+	 $mods->appendChild($titleinfo);
+      }
+    }
+    
+    if (isset($form_values['mods_alternative_title']) && trim($form_values['mods_alternative_title']) != '') { 
+	$titleinfo = $dom->createElement('mods:titleInfo'); 
+	$titleinfo->setAttribute('type','alternative') ; 
+	$title = $dom->createElement('mods:title',trim($form_values['mods_alternative_title']));
+	$titleinfo->appendChild($title);
+	$mods->appendChild($titleinfo);
+    }    
+    
     if (isset($form_values['mods_description']) && trim($form_values['mods_description']) != '') {
      $abstract = $dom->createElement('mods:abstract', htmlspecialchars(trim($form_values['mods_description'])));
      $mods->appendChild($abstract);
@@ -443,7 +473,8 @@ class ModsFormBuilder extends FormBuilder {
       $originInfo->appendChild($edition);
       $addOriginInfo = TRUE;
     }
-        
+   
+    
     if (isset($form_values['mods_pubinfo_date']) && trim($form_values['mods_pubinfo_date']) != '' &&
         isset($form_values['mods_pubinfo_dateType']) && trim($form_values['mods_pubinfo_dateType']) != '') {
        if (in_array($form_values['mods_pubinfo_dateType'], array('issued', 'created', 'copyright', 'captured'))) {
@@ -456,18 +487,45 @@ class ModsFormBuilder extends FormBuilder {
        }
        $originInfo->appendChild($date);
        $addOriginInfo = TRUE;
+    } else {
+      if (isset($form_values['mods_createdDate'])) {
+	$date = $dom->createElement('mods:createdDate',htmlspecialchars(trim($form_values['mods_createdDate']))); 
+	$originInfo->appendChild($date);
+        $addOriginInfo = TRUE;
+      }
+      
+      if (isset($form_values['mods_issuedDate'])) {
+	$date = $dom->createElement('mods:issuedDate',htmlspecialchars(trim($form_values['mods_issuedDate']))); 
+	$originInfo->appendChild($date);
+        $addOriginInfo = TRUE;
+      }
+      
+      if (isset($form_values['mods_copyrightDate'])) {
+	$date = $dom->createElement('mods:copyrightDate',htmlspecialchars(trim($form_values['mods_copyrightDate']))); 
+	$originInfo->appendChild($date);
+        $addOriginInfo = TRUE;
+      }
+      
+      if (isset($form_values['mods_capturedDate'])) {
+	$date = $dom->createElement('mods:capturedDate',htmlspecialchars(trim($form_values['mods_capturedDate']))); 
+	$originInfo->appendChild($date);
+        $addOriginInfo = TRUE;
+      }
+
     }
     
     if (isset($form_values['mods_pubinfo_journalFreq']) && trim($form_values['mods_pubinfo_journalFreq']) != '') {
       $frequency = $dom->createElement('mods:frequency', htmlspecialchars(trim($form_values['mods_pubinfo_journalFreq'])));
       $originInfo->appendChild($frequency);
       $issuance= $dom->createElement('mods:issuance', 'journal');
+      $originInfo->appendChild($issuance);
       $addOriginInfo = TRUE;
     } 
-    else {
+    elseif (isset($form_values['mods_pubinfo_journalFreq'])) {
       $issuance= $dom->createElement('mods:issuance', 'monographic');
+      $originInfo->appendChild($issuance);
     }
-    $originInfo->appendChild($issuance);
+    
     
     if ($addOriginInfo) {
       $mods->appendChild($originInfo);
@@ -477,6 +535,12 @@ class ModsFormBuilder extends FormBuilder {
       $note = $dom->createElement('mods:note', htmlspecialchars(trim($form_values['mods_note'])));
       $mods->appendChild($note);
     }    
+    
+    if (isset($form_values['mods_caption']) && trim($form_values['mods_caption']) != '') {
+      $note = $dom->createElement('mods:note', htmlspecialchars(trim($form_values['mods_caption'])));
+      $note->setAttribute('type','caption');
+      $mods->appendChild($note);
+    }        
         
     if (isset($form_values['mods_format']) && trim($form_values['mods_format']) != '') {
       $typeOfResource = $dom->createElement('mods:typeOfResource', htmlspecialchars($form_values['mods_format']));
@@ -524,6 +588,13 @@ class ModsFormBuilder extends FormBuilder {
         $city = $dom->createElement('mods:city', htmlspecialchars($form_values['mods_city'])); 
         $geographic->appendChild($city);
       }
+      
+      if (isset($form_values['mods_area']) && trim($form_values['mods_area']) != '') {
+        $state = $dom->createElement('mods:area', htmlspecialchars($form_values['mods_area'])); 
+        $geographic->appendChild($state);
+      }
+      
+      
       $subject->appendChild($geographic);
     }
     
