@@ -60,20 +60,6 @@ class ObjectHelper {
       drupal_access_denied();
       return ' ';
     } 
-    
-    if (($cm = ContentModel::loadFromObject($pid)) == FALSE) {
-      drupal_set_message(t("You do not have access to objects without an Islandora Content Model."), 'error');
-      drupal_access_denied();
-      return ' ';
-    }
-
-    $cmDatastreams = $cm->listDatastreams();
-
-    if ( !((isset($user) && in_array('administrator',$user->roles)) || in_array($dsID,$cmDatastreams))) {
-			drupal_set_message(t("You do not have access to the specified datastream."), 'error');
-      drupal_access_denied();
-      return ' ';
-    }
 
     module_load_include('inc', 'fedora_repository', 'api/fedora_item');
     $item = new Fedora_Item($pid);
