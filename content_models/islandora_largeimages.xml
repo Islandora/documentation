@@ -1,298 +1,358 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<foxml:digitalObject VERSION="1.1" PID="islandora:largeimages"
-xmlns:foxml="info:fedora/fedora-system:def/foxml#"
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:schemaLocation="info:fedora/fedora-system:def/foxml# http://www.fedora.info/definitions/1/0/foxml1-1.xsd">
-<foxml:objectProperties>
-<foxml:property NAME="info:fedora/fedora-system:def/model#state" VALUE="Active"/>
-<foxml:property NAME="info:fedora/fedora-system:def/model#label" VALUE="Large Image Collection"/>
-<foxml:property NAME="info:fedora/fedora-system:def/model#ownerId" VALUE="fedoraAdmin"/>
-<foxml:property NAME="info:fedora/fedora-system:def/model#createdDate" VALUE="2010-01-26T21:29:20.416Z"/>
-<foxml:property NAME="info:fedora/fedora-system:def/view#lastModifiedDate" VALUE="2010-03-11T21:01:44.921Z"/>
-</foxml:objectProperties>
-<foxml:datastream ID="AUDIT" STATE="A" CONTROL_GROUP="X" VERSIONABLE="false">
-<foxml:datastreamVersion ID="AUDIT.0" LABEL="Audit Trail for this object" CREATED="2010-01-26T21:29:20.416Z" MIMETYPE="text/xml" FORMAT_URI="info:fedora/fedora-system:format/xml.fedora.audit">
-<foxml:xmlContent>
-<audit:auditTrail xmlns:audit="info:fedora/fedora-system:def/audit#">
-<audit:record ID="AUDREC1">
-<audit:process type="Fedora API-M"/>
-<audit:action>ingest</audit:action>
-<audit:componentID></audit:componentID>
-<audit:responsibility>fedoraAdmin</audit:responsibility>
-<audit:date>2010-01-26T21:29:20.416Z</audit:date>
-<audit:justification>Created with Admin GUI &quot;New Object&quot; command</audit:justification>
-</audit:record>
-<audit:record ID="AUDREC2">
-<audit:process type="Fedora API-M"/>
-<audit:action>addDatastream</audit:action>
-<audit:componentID>COLLECTION_POLICY</audit:componentID>
-<audit:responsibility>fedoraAdmin</audit:responsibility>
-<audit:date>2010-01-26T21:30:55.607Z</audit:date>
-<audit:justification>DatastreamsPane generated this logMessage.</audit:justification>
-</audit:record>
-<audit:record ID="AUDREC3">
-<audit:process type="Fedora API-M"/>
-<audit:action>addDatastream</audit:action>
-<audit:componentID>RELS-EXT</audit:componentID>
-<audit:responsibility>fedoraAdmin</audit:responsibility>
-<audit:date>2010-01-26T21:33:14.125Z</audit:date>
-<audit:justification></audit:justification>
-</audit:record>
-<audit:record ID="AUDREC4">
-<audit:process type="Fedora API-M"/>
-<audit:action>modifyDatastreamByValue</audit:action>
-<audit:componentID>COLLECTION_POLICY</audit:componentID>
-<audit:responsibility>fedoraAdmin</audit:responsibility>
-<audit:date>2010-03-04T12:50:05.983Z</audit:date>
-<audit:justification></audit:justification>
-</audit:record>
-<audit:record ID="AUDREC5">
-<audit:process type="Fedora API-M"/>
-<audit:action>modifyDatastreamByValue</audit:action>
-<audit:componentID>COLLECTION_POLICY</audit:componentID>
-<audit:responsibility>fedoraAdmin</audit:responsibility>
-<audit:date>2010-03-11T21:01:44.921Z</audit:date>
-<audit:justification></audit:justification>
-</audit:record>
-</audit:auditTrail>
-</foxml:xmlContent>
-</foxml:datastreamVersion>
-</foxml:datastream>
-<foxml:datastream ID="DC" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">
-<foxml:datastreamVersion ID="DC1.0" LABEL="Dublin Core Record for this object" CREATED="2010-01-26T21:29:20.416Z" MIMETYPE="text/xml" FORMAT_URI="http://www.openarchives.org/OAI/2.0/oai_dc/" SIZE="396">
-<foxml:xmlContent>
-<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
-  <dc:title>Large Image Collection</dc:title>
-  <dc:identifier>islandora:largeimages</dc:identifier>
-</oai_dc:dc>
-</foxml:xmlContent>
-</foxml:datastreamVersion>
-</foxml:datastream>
-<foxml:datastream ID="COLLECTION_POLICY" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">
-<foxml:datastreamVersion ID="COLLECTION_POLICY.0" LABEL="Collection Policy.xml" CREATED="2010-01-26T21:30:55.607Z" MIMETYPE="text/xml" SIZE="1558">
-<foxml:xmlContent>
-<collection_policy>
-  <contentmodels>
-    <contentmodel name="SLIDE_CMODEL">
-      <pid_namespace>islandora:slide</pid_namespace>
-      <pid>islandora:slideCModel</pid>
-      <dsid>ISLANDORACM</dsid>
-    </contentmodel>
-  </contentmodels>
-  
-  <relationship>isMemberOfCollection</relationship>
-  <search_terms>
-    <default>dc.description</default>
-    <term>
-      <field>dc.title</field>
-      <value>dc.title</value>
-    </term>
-    <term>
-      <field>dc.creator</field>
-      <value>dc.creator</value>
-    </term>
-    <term>
-      <field>dc.description</field>
-      <value>dc.description</value>
-    </term>
-    <term>
-      <field>dc.date</field>
-      <value>dc.date</value>
-    </term>
-    <term>
-      <field>dc.identifier</field>
-      <value>dc.identifier</value>
-    </term>
-    <term>
-      <field>dc.language</field>
-      <value>dc.language</value>
-    </term>
-    <term>
-      <field>dc.publisher</field>
-      <value>dc.publisher</value>
-    </term>
-    <term>
-      <field>dc.rights</field>
-      <value>dc.rights</value>
-    </term>
-    <term>
-      <field>dc.subject</field>
-      <value>dc.subject</value>
-    </term>
-    <term>
-      <field>dc.relation</field>
-      <value>dc.relation</value>
-    </term>
-    <term>
-      <field>dcterms.temporal</field>
-      <value>dcterms.temporal</value>
-    </term>
-    <term>
-      <field>dcterms.spatial</field>
-      <value>dcterms.spatial</value>
-    </term>
-    <term>
-      <field>fgs.DS.first.text</field>
-      <value>Full Text</value>
-    </term>
-  </search_terms>
-</collection_policy>
-</foxml:xmlContent>
-</foxml:datastreamVersion>
-<foxml:datastreamVersion ID="COLLECTION_POLICY.1" LABEL="Collection Policy.xml" CREATED="2010-03-04T12:50:05.983Z" MIMETYPE="text/xml" SIZE="1739">
-<foxml:xmlContent>
-<collection_policy>
-  <contentmodels>
-    <contentmodel name="SLIDE_CMODEL">
-      <pid_namespace>islandora:slide</pid_namespace>
-      <pid>islandora:slideCModel</pid>
-      <dsid>ISLANDORACM</dsid>
-    </contentmodel>
-    <contentmodel name="HERBARIUM_CMODEL">
-      <pid_namespace>islandora:herb</pid_namespace>
-      <pid>islandora:herbCModel</pid>
-      <dsid>ISLANDORACM</dsid>
-    </contentmodel>
-  </contentmodels>
-  <relationship>isMemberOfCollection</relationship>
-  <search_terms>
-    <default>dc.description</default>
-    <term>
-      <field>dc.title</field>
-      <value>dc.title</value>
-    </term>
-    <term>
-      <field>dc.creator</field>
-      <value>dc.creator</value>
-    </term>
-    <term>
-      <field>dc.description</field>
-      <value>dc.description</value>
-    </term>
-    <term>
-      <field>dc.date</field>
-      <value>dc.date</value>
-    </term>
-    <term>
-      <field>dc.identifier</field>
-      <value>dc.identifier</value>
-    </term>
-    <term>
-      <field>dc.language</field>
-      <value>dc.language</value>
-    </term>
-    <term>
-      <field>dc.publisher</field>
-      <value>dc.publisher</value>
-    </term>
-    <term>
-      <field>dc.rights</field>
-      <value>dc.rights</value>
-    </term>
-    <term>
-      <field>dc.subject</field>
-      <value>dc.subject</value>
-    </term>
-    <term>
-      <field>dc.relation</field>
-      <value>dc.relation</value>
-    </term>
-    <term>
-      <field>dcterms.temporal</field>
-      <value>dcterms.temporal</value>
-    </term>
-    <term>
-      <field>dcterms.spatial</field>
-      <value>dcterms.spatial</value>
-    </term>
-    <term>
-      <field>fgs.DS.first.text</field>
-      <value>Full Text</value>
-    </term>
-  </search_terms>
-</collection_policy>
-</foxml:xmlContent>
-</foxml:datastreamVersion>
-<foxml:datastreamVersion ID="COLLECTION_POLICY.2" LABEL="Collection Policy.xml" CREATED="2010-03-11T21:01:44.921Z" MIMETYPE="text/xml" SIZE="1915">
-<foxml:xmlContent>
-<collection_policy>
-  <contentmodels>
-    <contentmodel name="SLIDE_CMODEL">
-      <pid_namespace>islandora:slide</pid_namespace>
-      <pid>islandora:slideCModel</pid>
-      <dsid>ISLANDORACM</dsid>
-    </contentmodel>
-  </contentmodels>
-  <relationship>isMemberOfCollection</relationship>
-  <search_terms>
-    <default>dc.description</default>
-    <term>
-      <field>dc.title</field>
-      <value>dc.title</value>
-    </term>
-    <term>
-      <field>dc.creator</field>
-      <value>dc.creator</value>
-    </term>
-    <term>
-      <field>dc.description</field>
-      <value>dc.description</value>
-    </term>
-    <term>
-      <field>dc.date</field>
-      <value>dc.date</value>
-    </term>
-    <term>
-      <field>dc.identifier</field>
-      <value>dc.identifier</value>
-    </term>
-    <term>
-      <field>dc.language</field>
-      <value>dc.language</value>
-    </term>
-    <term>
-      <field>dc.publisher</field>
-      <value>dc.publisher</value>
-    </term>
-    <term>
-      <field>dc.rights</field>
-      <value>dc.rights</value>
-    </term>
-    <term>
-      <field>dc.subject</field>
-      <value>dc.subject</value>
-    </term>
-    <term>
-      <field>dc.relation</field>
-      <value>dc.relation</value>
-    </term>
-    <term>
-      <field>dcterms.temporal</field>
-      <value>dcterms.temporal</value>
-    </term>
-    <term>
-      <field>dcterms.spatial</field>
-      <value>dcterms.spatial</value>
-    </term>
-    <term>
-      <field>fgs.DS.first.text</field>
-      <value>Full Text</value>
-    </term>
-  </search_terms>
-</collection_policy>
-</foxml:xmlContent>
-</foxml:datastreamVersion>
-</foxml:datastream>
-<foxml:datastream ID="RELS-EXT" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true">
-<foxml:datastreamVersion ID="RELS-EXT.0" LABEL="RDF Statements about this object" CREATED="2010-01-26T21:33:14.125Z" MIMETYPE="application/rdf+xml" FORMAT_URI="info:fedora/fedora-system:FedoraRELSExt-1.0" SIZE="439">
-<foxml:xmlContent>
-<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <rdf:Description rdf:about="info:fedora/islandora:largeimages">
-    <isMemberOfCollection xmlns="info:fedora/fedora-system:def/relations-external#" rdf:resource="info:fedora/islandora:demos"></isMemberOfCollection>
-    <hasModel xmlns="info:fedora/fedora-system:def/model#" rdf:resource="info:fedora/islandora:collectionCModel"></hasModel>
-  </rdf:Description>
-</rdf:RDF>
-</foxml:xmlContent>
-</foxml:datastreamVersion>
-</foxml:datastream>
+<foxml:digitalObject PID="islandora:largeimages" VERSION="1.1" xmlns:foxml="info:fedora/fedora-system:def/foxml#"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="info:fedora/fedora-system:def/foxml# http://www.fedora.info/definitions/1/0/foxml1-1.xsd">
+  <foxml:objectProperties>
+    <foxml:property NAME="info:fedora/fedora-system:def/model#state" VALUE="Active"/>
+    <foxml:property NAME="info:fedora/fedora-system:def/model#label" VALUE="Large Image Collection"/>
+    <foxml:property NAME="info:fedora/fedora-system:def/model#ownerId" VALUE="fedoraAdmin"/>
+    <foxml:property NAME="info:fedora/fedora-system:def/model#createdDate" VALUE="2010-01-26T21:29:20.416Z"/>
+    <foxml:property NAME="info:fedora/fedora-system:def/view#lastModifiedDate" VALUE="2010-12-10T17:32:17.345Z"/>
+  </foxml:objectProperties>
+  <foxml:datastream CONTROL_GROUP="X" ID="AUDIT" STATE="A" VERSIONABLE="false">
+    <foxml:datastreamVersion CREATED="2010-01-26T21:29:20.416Z"
+      FORMAT_URI="info:fedora/fedora-system:format/xml.fedora.audit" ID="AUDIT.0" LABEL="Audit Trail for this object" MIMETYPE="text/xml">
+      <foxml:xmlContent>
+        <audit:auditTrail xmlns:audit="info:fedora/fedora-system:def/audit#">
+          <audit:record ID="AUDREC1">
+            <audit:process type="Fedora API-M"/>
+            <audit:action>ingest</audit:action>
+            <audit:componentID/>
+            <audit:responsibility>fedoraAdmin</audit:responsibility>
+            <audit:date>2010-01-26T21:29:20.416Z</audit:date>
+            <audit:justification>Created with Admin GUI "New Object" command</audit:justification>
+          </audit:record>
+          <audit:record ID="AUDREC2">
+            <audit:process type="Fedora API-M"/>
+            <audit:action>addDatastream</audit:action>
+            <audit:componentID>COLLECTION_POLICY</audit:componentID>
+            <audit:responsibility>fedoraAdmin</audit:responsibility>
+            <audit:date>2010-01-26T21:30:55.607Z</audit:date>
+            <audit:justification>DatastreamsPane generated this logMessage.</audit:justification>
+          </audit:record>
+          <audit:record ID="AUDREC3">
+            <audit:process type="Fedora API-M"/>
+            <audit:action>addDatastream</audit:action>
+            <audit:componentID>RELS-EXT</audit:componentID>
+            <audit:responsibility>fedoraAdmin</audit:responsibility>
+            <audit:date>2010-01-26T21:33:14.125Z</audit:date>
+            <audit:justification/>
+          </audit:record>
+          <audit:record ID="AUDREC4">
+            <audit:process type="Fedora API-M"/>
+            <audit:action>modifyDatastreamByValue</audit:action>
+            <audit:componentID>COLLECTION_POLICY</audit:componentID>
+            <audit:responsibility>fedoraAdmin</audit:responsibility>
+            <audit:date>2010-03-04T12:50:05.983Z</audit:date>
+            <audit:justification/>
+          </audit:record>
+          <audit:record ID="AUDREC5">
+            <audit:process type="Fedora API-M"/>
+            <audit:action>modifyDatastreamByValue</audit:action>
+            <audit:componentID>COLLECTION_POLICY</audit:componentID>
+            <audit:responsibility>fedoraAdmin</audit:responsibility>
+            <audit:date>2010-03-11T21:01:44.921Z</audit:date>
+            <audit:justification/>
+          </audit:record>
+          <audit:record ID="AUDREC6">
+            <audit:process type="Fedora API-M"/>
+            <audit:action>ingest</audit:action>
+            <audit:componentID/>
+            <audit:responsibility>admin</audit:responsibility>
+            <audit:date>2010-12-10T17:29:47.073Z</audit:date>
+            <audit:justification>Fedora Object Ingested</audit:justification>
+          </audit:record>
+          <audit:record ID="AUDREC7">
+            <audit:process type="Fedora API-M"/>
+            <audit:action>addDatastream</audit:action>
+            <audit:componentID>TN</audit:componentID>
+            <audit:responsibility>admin</audit:responsibility>
+            <audit:date>2010-12-10T17:29:47.200Z</audit:date>
+            <audit:justification>Ingested object TN</audit:justification>
+          </audit:record>
+          <audit:record ID="AUDREC8">
+            <audit:process type="Fedora API-M"/>
+            <audit:action>modifyDatastreamByValue</audit:action>
+            <audit:componentID>COLLECTION_POLICY</audit:componentID>
+            <audit:responsibility>fedoraAdmin</audit:responsibility>
+            <audit:date>2010-12-10T17:32:17.345Z</audit:date>
+            <audit:justification/>
+          </audit:record>
+        </audit:auditTrail>
+      </foxml:xmlContent>
+    </foxml:datastreamVersion>
+  </foxml:datastream>
+  <foxml:datastream CONTROL_GROUP="X" ID="DC" STATE="A" VERSIONABLE="true">
+    <foxml:datastreamVersion CREATED="2010-01-26T21:29:20.416Z" FORMAT_URI="http://www.openarchives.org/OAI/2.0/oai_dc/"
+      ID="DC1.0" LABEL="Dublin Core Record for this object" MIMETYPE="text/xml" SIZE="396">
+      <foxml:xmlContent>
+        <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/"
+          xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+          <dc:title>Large Image Collection</dc:title>
+          <dc:identifier>islandora:largeimages</dc:identifier>
+        </oai_dc:dc>
+      </foxml:xmlContent>
+    </foxml:datastreamVersion>
+  </foxml:datastream>
+  <foxml:datastream CONTROL_GROUP="X" ID="COLLECTION_POLICY" STATE="A" VERSIONABLE="true">
+    <foxml:datastreamVersion CREATED="2010-01-26T21:30:55.607Z" ID="COLLECTION_POLICY.0" LABEL="Collection Policy.xml"
+      MIMETYPE="text/xml" SIZE="1558">
+      <foxml:xmlContent>
+        <collection_policy>
+          <contentmodels>
+            <contentmodel name="SLIDE_CMODEL">
+              <pid_namespace>islandora:slide</pid_namespace>
+              <pid>islandora:slideCModel</pid>
+              <dsid>ISLANDORACM</dsid>
+            </contentmodel>
+          </contentmodels>
+          <relationship>isMemberOfCollection</relationship>
+          <search_terms>
+            <default>dc.description</default>
+            <term>
+              <field>dc.title</field>
+              <value>dc.title</value>
+            </term>
+            <term>
+              <field>dc.creator</field>
+              <value>dc.creator</value>
+            </term>
+            <term>
+              <field>dc.description</field>
+              <value>dc.description</value>
+            </term>
+            <term>
+              <field>dc.date</field>
+              <value>dc.date</value>
+            </term>
+            <term>
+              <field>dc.identifier</field>
+              <value>dc.identifier</value>
+            </term>
+            <term>
+              <field>dc.language</field>
+              <value>dc.language</value>
+            </term>
+            <term>
+              <field>dc.publisher</field>
+              <value>dc.publisher</value>
+            </term>
+            <term>
+              <field>dc.rights</field>
+              <value>dc.rights</value>
+            </term>
+            <term>
+              <field>dc.subject</field>
+              <value>dc.subject</value>
+            </term>
+            <term>
+              <field>dc.relation</field>
+              <value>dc.relation</value>
+            </term>
+            <term>
+              <field>dcterms.temporal</field>
+              <value>dcterms.temporal</value>
+            </term>
+            <term>
+              <field>dcterms.spatial</field>
+              <value>dcterms.spatial</value>
+            </term>
+            <term>
+              <field>fgs.DS.first.text</field>
+              <value>Full Text</value>
+            </term>
+          </search_terms>
+        </collection_policy>
+      </foxml:xmlContent>
+    </foxml:datastreamVersion>
+    <foxml:datastreamVersion CREATED="2010-03-04T12:50:05.983Z" ID="COLLECTION_POLICY.1" LABEL="Collection Policy.xml"
+      MIMETYPE="text/xml" SIZE="1739">
+      <foxml:xmlContent>
+        <collection_policy>
+          <contentmodels>
+            <contentmodel name="SLIDE_CMODEL">
+              <pid_namespace>islandora:slide</pid_namespace>
+              <pid>islandora:slideCModel</pid>
+              <dsid>ISLANDORACM</dsid>
+            </contentmodel>
+            <contentmodel name="HERBARIUM_CMODEL">
+              <pid_namespace>islandora:herb</pid_namespace>
+              <pid>islandora:herbCModel</pid>
+              <dsid>ISLANDORACM</dsid>
+            </contentmodel>
+          </contentmodels>
+          <relationship>isMemberOfCollection</relationship>
+          <search_terms>
+            <default>dc.description</default>
+            <term>
+              <field>dc.title</field>
+              <value>dc.title</value>
+            </term>
+            <term>
+              <field>dc.creator</field>
+              <value>dc.creator</value>
+            </term>
+            <term>
+              <field>dc.description</field>
+              <value>dc.description</value>
+            </term>
+            <term>
+              <field>dc.date</field>
+              <value>dc.date</value>
+            </term>
+            <term>
+              <field>dc.identifier</field>
+              <value>dc.identifier</value>
+            </term>
+            <term>
+              <field>dc.language</field>
+              <value>dc.language</value>
+            </term>
+            <term>
+              <field>dc.publisher</field>
+              <value>dc.publisher</value>
+            </term>
+            <term>
+              <field>dc.rights</field>
+              <value>dc.rights</value>
+            </term>
+            <term>
+              <field>dc.subject</field>
+              <value>dc.subject</value>
+            </term>
+            <term>
+              <field>dc.relation</field>
+              <value>dc.relation</value>
+            </term>
+            <term>
+              <field>dcterms.temporal</field>
+              <value>dcterms.temporal</value>
+            </term>
+            <term>
+              <field>dcterms.spatial</field>
+              <value>dcterms.spatial</value>
+            </term>
+            <term>
+              <field>fgs.DS.first.text</field>
+              <value>Full Text</value>
+            </term>
+          </search_terms>
+        </collection_policy>
+      </foxml:xmlContent>
+    </foxml:datastreamVersion>
+    <foxml:datastreamVersion CREATED="2010-03-11T21:01:44.921Z" ID="COLLECTION_POLICY.2" LABEL="Collection Policy.xml"
+      MIMETYPE="text/xml" SIZE="1555">
+      <foxml:xmlContent>
+        <collection_policy>
+          <contentmodels>
+            <contentmodel name="SLIDE_CMODEL">
+              <pid_namespace>islandora:slide</pid_namespace>
+              <pid>islandora:slideCModel</pid>
+              <dsid>ISLANDORACM</dsid>
+            </contentmodel>
+          </contentmodels>
+          <relationship>isMemberOfCollection</relationship>
+          <search_terms>
+            <default>dc.description</default>
+            <term>
+              <field>dc.title</field>
+              <value>dc.title</value>
+            </term>
+            <term>
+              <field>dc.creator</field>
+              <value>dc.creator</value>
+            </term>
+            <term>
+              <field>dc.description</field>
+              <value>dc.description</value>
+            </term>
+            <term>
+              <field>dc.date</field>
+              <value>dc.date</value>
+            </term>
+            <term>
+              <field>dc.identifier</field>
+              <value>dc.identifier</value>
+            </term>
+            <term>
+              <field>dc.language</field>
+              <value>dc.language</value>
+            </term>
+            <term>
+              <field>dc.publisher</field>
+              <value>dc.publisher</value>
+            </term>
+            <term>
+              <field>dc.rights</field>
+              <value>dc.rights</value>
+            </term>
+            <term>
+              <field>dc.subject</field>
+              <value>dc.subject</value>
+            </term>
+            <term>
+              <field>dc.relation</field>
+              <value>dc.relation</value>
+            </term>
+            <term>
+              <field>dcterms.temporal</field>
+              <value>dcterms.temporal</value>
+            </term>
+            <term>
+              <field>dcterms.spatial</field>
+              <value>dcterms.spatial</value>
+            </term>
+            <term>
+              <field>fgs.DS.first.text</field>
+              <value>Full Text</value>
+            </term>
+          </search_terms>
+        </collection_policy>
+      </foxml:xmlContent>
+    </foxml:datastreamVersion>
+    <foxml:datastreamVersion CREATED="2010-12-10T17:32:17.345Z" ID="COLLECTION_POLICY.3" LABEL="Collection Policy.xml"
+      MIMETYPE="text/xml" SIZE="1152">
+      <foxml:xmlContent>
+        <collection_policy name="" xmlns="http://www.islandora.ca" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.islandora.ca http://syn.lib.umanitoba.ca/collection_policy.xsd">
+          <content_models>
+            <content_model dsid="ISLANDORACM" name="SLIDE_CMODEL" namespace="islandora:slide" pid="islandora:slideCModel"/>
+          </content_models>
+          <search_terms>
+            <term field="dc.title">dc.title</term>
+            <term field="dc.creator">dc.creator</term>
+            <term default="true" field="dc.description">dc.description</term>
+            <term field="dc.date">dc.date</term>
+            <term field="dc.identifier">dc.identifier</term>
+            <term field="dc.language">dc.language</term>
+            <term field="dc.publisher">dc.publisher</term>
+            <term field="dc.rights">dc.rights</term>
+            <term field="dc.subject">dc.subject</term>
+            <term field="dc.relation">dc.relation</term>
+            <term field="dcterms.temporal">dcterms.temporal</term>
+            <term field="dcterms.spatial">dcterms.spatial</term>
+            <term field="fgs.DS.first.text">Full Text</term>
+          </search_terms>
+          <relationship>isMemberOfCollection</relationship>
+        </collection_policy>
+      </foxml:xmlContent>
+    </foxml:datastreamVersion>
+  </foxml:datastream>
+  <foxml:datastream CONTROL_GROUP="X" ID="RELS-EXT" STATE="A" VERSIONABLE="true">
+    <foxml:datastreamVersion CREATED="2010-01-26T21:33:14.125Z" FORMAT_URI="info:fedora/fedora-system:FedoraRELSExt-1.0"
+      ID="RELS-EXT.0" LABEL="RDF Statements about this object" MIMETYPE="application/rdf+xml" SIZE="441">
+      <foxml:xmlContent>
+        <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+          <rdf:Description rdf:about="info:fedora/islandora:largeimages">
+            <isMemberOfCollection rdf:resource="info:fedora/islandora:demos" xmlns="info:fedora/fedora-system:def/relations-external#"/>
+            <hasModel rdf:resource="info:fedora/islandora:collectionCModel" xmlns="info:fedora/fedora-system:def/model#"/>
+          </rdf:Description>
+        </rdf:RDF>
+      </foxml:xmlContent>
+    </foxml:datastreamVersion>
+  </foxml:datastream>
+  <foxml:datastream CONTROL_GROUP="M" ID="TN" STATE="A" VERSIONABLE="true">
+    <foxml:datastreamVersion CREATED="2010-12-10T17:29:47.200Z" ID="TN.0" LABEL="Thumbnail.png" MIMETYPE="image/png">
+      <foxml:contentLocation REF="http://localhost:8080/fedora/get/islandora:largeimages/TN/2010-12-10T17:29:47.200Z" TYPE="INTERNAL_ID"/>
+    </foxml:datastreamVersion>
+  </foxml:datastream>
 </foxml:digitalObject>
