@@ -1242,30 +1242,32 @@ function fedora_repository_demo_objects_form() {
     }
   } else {
     $form['install_demos']['smileynote'] = array(
-        '#value' => '<p>If you install the <a href="http://www.fedora-commons.org/documentation/3.0b1/userdocs/distribution/installation.html#running.demo">Fedora demo objects</a> Islandora can display them as a collection.'
+        '#value' => '<p>If you install the '.l('fedora demo objects', 'https://wiki.duraspace.org/display/FCR30/Demonstration+Objects').' Islandora can display them as a collection.</p>'
     );
   }
 
-  if (!empty($form['install_demos']['demo_collections']['#options'])) {
-    $form['install_demos']['ingest'] = array(
-        '#type' => 'submit',
-        '#name' => 'install_demos',
-        '#value' => 'Install Selected Demos',
-    );
-  }
+  $form['install_demos']['ingest'] = array(
+      '#type' => 'submit',
+      '#name' => 'install_demos',
+      '#value' => 'Install Selected Demos',
+      '#disabled' => (empty($form['install_demos']['demo_collections']['#options'])) ? TRUE : FALSE,
+  );
 
-  $links_to_existing_demos = '<ul>';
+  $form['existing_demos'] = array(
+      '#prefix' => '<p>Demo collections already installed in this repository:</p><ul>',
+      '#suffix' => '</ul>',
+  );
+  
   if (!empty($existing_demos)) {
     foreach ($existing_demos as $pid => $demo_object) {
-      $links_to_existing_demos .= '<li><a href="' . $demo_object->url() . '">' . $demo_object->pid . '</a></li>';
+  
+      $form['existing_demos'][$demo_object->pid] = array (
+          '#prefix' => '<li>',
+          '#value' => l($demo_object->pid, $demo_object->url()),
+          '#suffix' => '</li>',
+      );
     }
   }
-
-  $links_to_existing_demos .= '</ul>';
-
-  $form['install_demos']['existing'] = array(
-      '#value' => '<p>Demo collections already installed in this repository:</p>' . $links_to_existing_demos,
-  );
 
   return $form;
 }
