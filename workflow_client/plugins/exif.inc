@@ -45,18 +45,12 @@ class exif extends Process {
     $command = '/usr/local/exif/exiftool  -X '. $file;
     exec($command, $output, $returnValue);
     
-    if (!file_exists($file . $file_suffix)) {
-      $this->setMessage('command failed: '. htmlentities($command ."\n" . join("\n", $output) ."\n return value: $returnValue"));
-      @unlink($file);
-      return FALSE;
-    }
-    
     if ($returnValue == '0') {
       if (isset($dslist[$dest_ds])) {
         $item->purge_datastream($dest_ds);
       }
       
-      $ret = $item->add_datastream_from_string(join("\n",$output), $dest_ds, $ds['label'] . $file_suffix, 'text/xml', 'X','Added by workflow process EXIF.');
+      $ret = $item->add_datastream_from_string(join("\n",$output), $dest_ds,  'EXIF_Technical_Metadata.xml' , 'text/xml', 'X','Added by workflow process EXIF.');
       @unlink($file);
       @unlink($file . $file_suffix);
       
