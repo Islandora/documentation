@@ -474,8 +474,9 @@ class ObjectHelper {
 	  $allow= fedora_fesl_check_roles($object_pid,'write');
 	}
 	if ($allow) {      
-	  $purgeObject = '<a title="' . t('Purge Object ') . $object_pid . '" href="' . base_path() . 'fedora/repository/purgeObject/' .
-              $object_pid . '"><img src="' . $base_url . '/' . $path . '/images/purge_big.png" alt="' . t('Purge Object') . '" class="icon">' . t('Purge Object') . '</a>';
+	  //$purgeObject = '<a title="' . t('Purge Object ') . $object_pid . '" href="' . base_path() . 'fedora/repository/purgeObject/' .
+              //$object_pid . '"><img src="' . $base_url . '/' . $path . '/images/purge_big.png" alt="' . t('Purge Object') . '" class="icon">' . t('Purge Object') . '</a>';
+          $purgeObject = drupal_get_form('fedora_repository_purge_object_form', $object_pid, check_plain(request_uri()));
 	}
     } else {
       $purgeObject = '&nbsp;';
