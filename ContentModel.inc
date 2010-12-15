@@ -1372,9 +1372,10 @@ class ContentModel extends XMLDatastream {
    * Executes the form handler from the <form_builder_method> element of <ingest_form>.
    *
    * @param &$formData
+   * @param &$form_state
    * @return boolean $success
    */
-  public function execFormHandler(&$data) {
+  public function execFormHandler(&$data,&$form_state) {
     $ret = FALSE;
     if ($this->validate()) {
       $method =$this->xml->getElementsByTagName('ingest_form')->item(0)->getElementsByTagName('form_builder_method')->item(0);
@@ -1396,7 +1397,7 @@ class ContentModel extends XMLDatastream {
             self::$errors[] = 'Execute Form Handler: method \''. $className .'->'. $methodName .'\' does not exist.';
           } 
           else {
-            $class->$methodName($data);
+            $class->$methodName($data,$form_state);
             $ret = TRUE;
           }
         }

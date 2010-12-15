@@ -144,7 +144,7 @@ function fedora_repository_ingest_form_submit($form, &$form_state) {
         $form_state['values']['content_model_pid'] = $contentModelPid;
         $form_state['values']['relationship'] = $relationship;
 
-        $err = (!$cm->execFormHandler($form_state['values']));
+        $err = (!$cm->execFormHandler($form_state['values'],$form_state));
 
         $_SESSION['fedora_ingest_files'] = ''; //empty this variable
 
