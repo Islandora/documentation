@@ -254,7 +254,8 @@ function fedora_repository_purge_object_form(&$form_state, $pid, $referrer) {
     $form['submit'] = array(
         '#type' => 'image_button',
         '#src' => drupal_get_path('module', 'fedora_repository').'/images/purge_big.png',
-        '#value' => t('Purge')
+        '#value' => t('Purge'),
+        '#suffix' => 'Purge this object',
     );
     if ($collectionPid == NULL) {
       $collectionPid = $_SESSION['fedora_collection'];
@@ -266,7 +267,7 @@ function fedora_repository_purge_object_form(&$form_state, $pid, $referrer) {
   else {
     // ALSO do $form definition here. Your final submit handler (after user clicks Yes, I Confirm) will only see $form_state info defined here. Form you create here passed as param1 to confirm_form
 
-    return confirm_form($form,'You Sure?', $base_url.$referrer, 'Description text','Yes, nuke it','Cancel'); //Had better luck leaving off last param 'name'
+    return confirm_form($form, 'Confirm Purge Object', $referrer, 'Are you sure you want to delete this object? This action cannot be undone.', 'Delete', 'Cancel'); //Had better luck leaving off last param 'name'
   }
   return $form;
 }
@@ -433,7 +434,7 @@ function fedora_repository_purge_object_form_submit($form, &$form_state) {
       $collectionPid = $_SESSION['fedora_collection'];
     }
     if (!empty($form_state['values']['referrer'])) {
-      $form_state['redirect'] = substr($form_state['values']['referrer'], 1);
+      $form_state['redirect'] = $form_state['values']['referrer'];
     }
     else {
       $form_state['redirect'] = "fedora/repository/$collectionPid/";
