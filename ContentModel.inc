@@ -101,7 +101,7 @@ class ContentModel extends XMLDatastream {
 
    return $ret;
   }
-  
+   
   
   /**
    * Ingests a minimum Content Model to the specified pid/dsid. 
@@ -224,7 +224,7 @@ class ContentModel extends XMLDatastream {
     parent::__construct($xmlStr, $pid, $dsid);
     $this->pid_namespace = $pid_namespace;
     
-    $this->name = $name;
+    $this->name = ($name == NULL)?'Islandora Content Model':$name;
   }
 
   /**
