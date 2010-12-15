@@ -78,7 +78,7 @@ class formClass {
             //     'access' => TRUE
     );
     $items['fedora/repository'] = array(
-//        'title' => t('Digital repository'),
+        'title' => t('Digital repository'),
         'page callback' => 'repository_page',
         'type' => MENU_NORMAL_ITEM,
         // 'page arguments'=>array(1),
