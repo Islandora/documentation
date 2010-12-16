@@ -498,8 +498,9 @@ class ObjectHelper {
 	  $allow= fedora_fesl_check_roles($object_pid,'write');
 	}
 	if ($allow) {      
-	  $purgeObject = '<a title="' . t('Purge Object ') . $object_pid . '" href="' . base_path() . 'fedora/repository/purgeObject/' .
-              $object_pid . '"><img src="' . $base_url . '/' . $path . '/images/purge_big.png" alt="' . t('Purge Object') . '" class="icon">' . t('Purge Object') . '</a>';
+	  //$purgeObject = '<a title="' . t('Purge Object ') . $object_pid . '" href="' . base_path() . 'fedora/repository/purgeObject/' .
+              //$object_pid . '"><img src="' . $base_url . '/' . $path . '/images/purge_big.png" alt="' . t('Purge Object') . '" class="icon">' . t('Purge Object') . '</a>';
+          $purgeObject = drupal_get_form('fedora_repository_purge_object_form', $object_pid, check_plain(substr(request_uri(), strlen(base_path()))));
 	}
     } else {
       $purgeObject = '&nbsp;';
@@ -731,7 +732,7 @@ class ObjectHelper {
 	  // $ingestObject = '<a title="'. t('Ingest a New object into ') . $collectionName . ' '. $collection_pid . '" href="'. base_path() .
 	    $ingestObject = '<a title="' . t('Ingest a New object into !collection_name PID !collection_pid', array('!collection_name' => $collectionName, '!collection_pid' => $collection_pid)) . '" href="' . base_path() .
 		    'fedora/ingestObject/' . $collection_pid . '/' . $collectionName . '"><img src="' . $base_url . '/' . $path .
-		    '/images/ingest.png" alt="' . t('Add a New Object') . '" class="icon">' . t('Add to this Collection') . '</a>';
+		    '/images/ingest.png" alt="' . t('Add a New Object') . '" class="icon"></a>' . t(' Add to this Collection');
 	  }
 	}
       }

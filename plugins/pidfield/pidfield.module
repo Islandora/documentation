@@ -281,7 +281,7 @@ function theme_pidfield_formatter_default($element) {
     $item = new Fedora_Item($pid);
 
     return fedora_repository_get_items($pid);
-    //return $item->objectProfile->objLabel;
+    
   }
   return null;
 }
