@@ -61,7 +61,7 @@ class ObjectHelper {
     } 
 
     
-    if (variable_get('fedora_object_restrict_datastreams', TRUE) == TRUE ) {    
+    if (variable_get('fedora_object_restrict_datastreams', FALSE) == TRUE ) {    
       if (($cm = ContentModel::loadFromObject($pid)) == FALSE) {
 	drupal_set_message(t("You do not have access to objects without an Islandora Content Model."), 'error');
 	drupal_access_denied();
