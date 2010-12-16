@@ -508,3 +508,90 @@ function fedora_ilives_retrieve_unapi_submit($form, &$form_state) {
   $form_state['rebuild'] = TRUE; // set to true to make sure the form gets rebuild
   return $mods_save;
 }
+
+function fedora_ilives_form_alter(&$form, &$form_state, $form_id) { 
+  if ($form_id == 'fedora_repository_admin') {
+    # Custom settings for book module.
+ 
+  }
+  elseif ($form_id == 'fedora_repository_demo_objects_form') {
+    if (!Fedora_Item::fedora_item_exists('ilives:bookCModel')) {
+       
+      $form['install_demos']['demo_collections']['#options']['ilives:bookCModel'] = 'Book-related content models and service objects';
+      $form['install_demos']['ingest']['#disabled'] = FALSE;
+      $form['#submit'][] = 'fedora_ilives_install_demos_form_submit';   
+    }
+    else {
+      
+      module_load_include('inc', 'fedora_repository', 'api/fedora_item');
+      $book_item = new Fedora_Item('ilives:bookCModel');
+    
+      $form['existing_demos']['ilives:bookCModel'] = array(
+          '#prefix' => '<li>',
+          '#value' => l($book_item->pid, $book_item->url()),
+          '#suffix' => '</li>',
+      );
+    }
+  }
+}
+
+function fedora_ilives_install_demos_form_submit($form, &$form_state) {
+  if ($form_state['values']['demo_collections']['ilives:bookCModel'] == 'ilives:bookCModel' ) {
+    # The ilives:bookCModel checkbox was checked
+    install_book_content_model_objects();
+
+  }
+  
+}
+
+function install_book_content_model_objects() {
+  module_load_include('inc', 'fedora_repository', 'api/fedora_item');
+  $allowed_pids_str = variable_get('fedora_pids_allowed', 'default: demo: changeme: Islandora: ilives: ');
+  $allowed_pids = explode(' ', $allowed_pids_str);
+
+  if (!in_array('ilives:', $allowed_pids)) {
+    variable_set('fedora_pids_allowed', $allowed_pids_str . ' ilives:');
+    drupal_set_message('Added ilives: to the set of allowed pidnamespaces.', 'info');
+  }
+
+  if (!Fedora_Item::fedora_item_exists('ilives:bookCModel')) {
+    Fedora_Item::ingest_from_foxml_file(drupal_get_path('module', 'fedora_ilives') . '/xml/ilives_bookCModel.xml');
+  }
+
+  if (!Fedora_Item::fedora_item_exists('ilives:pageCModel')) {
+    Fedora_Item::ingest_from_foxml_file(drupal_get_path('module', 'fedora_ilives') . '/xml/ilives_pageCModel.xml');
+  }
+
+  if (!Fedora_Item::fedora_item_exists('ilives:jp2Sdef')) {
+    Fedora_Item::ingest_from_foxml_file(drupal_get_path('module', 'fedora_ilives') . '/xml/ilives_jp2Sdef.xml');
+  }
+
+  if (!Fedora_Item::fedora_item_exists('ilives:tei2htmlSdef')) {
+    Fedora_Item::ingest_from_foxml_file(drupal_get_path('module', 'fedora_ilives') . '/xml/ilives_tei2htmlSdef.xml');
+  }
+
+  if (!Fedora_Item::fedora_item_exists('ilives:tei2htmlSdep-pageCModel')) {
+    Fedora_Item::ingest_from_foxml_file(drupal_get_path('module', 'fedora_ilives') . '/xml/ilives_tei2htmlSdep-pageCModel.xml');
+  }
+
+  if (!Fedora_Item::fedora_item_exists('ilives:viewerSdef')) {
+    Fedora_Item::ingest_from_foxml_file(drupal_get_path('module', 'fedora_ilives') . '/xml/ilives_viewerSdef.xml');
+  }
+
+  if (!Fedora_Item::fedora_item_exists('ilives:viewerSdep-bookCModel')) {
+    Fedora_Item::ingest_from_foxml_file(drupal_get_path('module', 'fedora_ilives') . '/xml/ilives_viewerSdep-bookCModel.xml');
+  }
+
+  if (!Fedora_Item::fedora_item_exists('ilives:viewerSdep-pageCModel')) {
+    Fedora_Item::ingest_from_foxml_file(drupal_get_path('module', 'fedora_ilives') . '/xml/ilives_viewerSdep-pageCModel.xml');
+  }
+
+  if (!Fedora_Item::fedora_item_exists('ilives:collection')) {
+    Fedora_Item::ingest_from_foxml_file(drupal_get_path('module', 'fedora_ilives') . '/xml/ilives_collection.xml');
+  }
+
+  if (!Fedora_Item::fedora_item_exists('ilives:CollectionModel')) {
+    Fedora_Item::ingest_from_foxml_file(drupal_get_path('module', 'fedora_ilives') . '/xml/ilives_CollectionModel.xml');
+  }
+
+}

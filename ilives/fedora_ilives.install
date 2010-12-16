@@ -11,55 +11,9 @@
  * definitions and deployment objects if necessary.
  */
 function fedora_ilives_enable() {
-  module_load_include('inc', 'fedora_repository', 'api/fedora_item');
-  $allowed_pids_str = variable_get('fedora_pids_allowed', 'default: demo: changeme: Islandora: ilives: ');
-  $allowed_pids = explode(' ', $allowed_pids_str);
-
-  if (!in_array('ilives:', $allowed_pids)) {
-    variable_set('fedora_pids_allowed', $allowed_pids_str . ' ilives:');
-    drupal_set_message('Added ilives: to the set of allowed pidnamespaces.', 'info');
-  }
-
-  if (!Fedora_Item::fedora_item_exists('ilives:bookCModel')) {
-    Fedora_Item::ingest_from_foxml_file(drupal_get_path('module', 'fedora_ilives') . '/xml/ilives_bookCModel.xml');
-  }
-
-  if (!Fedora_Item::fedora_item_exists('ilives:pageCModel')) {
-    Fedora_Item::ingest_from_foxml_file(drupal_get_path('module', 'fedora_ilives') . '/xml/ilives_pageCModel.xml');
-  }
-
-  if (!Fedora_Item::fedora_item_exists('ilives:jp2Sdef')) {
-    Fedora_Item::ingest_from_foxml_file(drupal_get_path('module', 'fedora_ilives') . '/xml/ilives_jp2Sdef.xml');
-  }
-
-  if (!Fedora_Item::fedora_item_exists('ilives:tei2htmlSdef')) {
-    Fedora_Item::ingest_from_foxml_file(drupal_get_path('module', 'fedora_ilives') . '/xml/ilives_tei2htmlSdef.xml');
-  }
-
-  if (!Fedora_Item::fedora_item_exists('ilives:tei2htmlSdep-pageCModel')) {
-    Fedora_Item::ingest_from_foxml_file(drupal_get_path('module', 'fedora_ilives') . '/xml/ilives_tei2htmlSdep-pageCModel.xml');
-  }
-
-  
-
-  if (!Fedora_Item::fedora_item_exists('ilives:viewerSdef')) {
-    Fedora_Item::ingest_from_foxml_file(drupal_get_path('module', 'fedora_ilives') . '/xml/ilives_viewerSdef.xml');
-  }
-
-  if (!Fedora_Item::fedora_item_exists('ilives:viewerSdep-bookCModel')) {
-    Fedora_Item::ingest_from_foxml_file(drupal_get_path('module', 'fedora_ilives') . '/xml/ilives_viewerSdep-bookCModel.xml');
-  }
-
-  if (!Fedora_Item::fedora_item_exists('ilives:viewerSdep-pageCModel')) {
-    Fedora_Item::ingest_from_foxml_file(drupal_get_path('module', 'fedora_ilives') . '/xml/ilives_viewerSdep-pageCModel.xml');
-  }
-
-  if (!Fedora_Item::fedora_item_exists('ilives:collection')) {
-    Fedora_Item::ingest_from_foxml_file(drupal_get_path('module', 'fedora_ilives') . '/xml/ilives_collection.xml');
-  }
-
-  if (!Fedora_Item::fedora_item_exists('ilives:CollectionModel')) {
-    Fedora_Item::ingest_from_foxml_file(drupal_get_path('module', 'fedora_ilives') . '/xml/ilives_CollectionModel.xml');
-  }
-
+ module_load_include('inc', 'fedora_reposiotry', 'api/fedora_utils');
+ if (fedora_available()) {
+   module_load_include('module', 'fedora_ilives', 'fedora_ilives');
+   install_book_content_model_objects();
+ }
 }

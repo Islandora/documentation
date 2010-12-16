@@ -62,6 +62,7 @@ function fedora_repository_purge_object($pid = NULL, $name = NULL) {
                       '%name' => $name,
                       '%pid' => $pid)
   );
+
   $output .= drupal_get_form('fedora_repository_purge_object_form', $pid);
   return $output;
 }
@@ -233,20 +234,41 @@ function fedora_repository_ingest_form(&$form_state, $collection_pid, $collectio
   return $ingestForm->createIngestForm($collection_pid, $collection_label, $form_state);
 }
 
-function fedora_repository_purge_object_form(&$form_state, $pid, $collectionPid = NULL) {
+function fedora_repository_purge_object_form(&$form_state, $pid, $referrer) {
+  global $base_url;
+  //  $form['#redirect'] = "fedora/repository/$collectionPid/";
   $form['pid'] = array(
       '#type' => 'hidden',
       '#value' => "$pid"
   );
-
-  $form['submit'] = array(
-      '#type' => 'submit',
-      '#value' => t('Purge')
-  );
-  if ($collectionPid == NULL) {
-    $collectionPid = $_SESSION['fedora_collection'];
+  if (!strstr( drupal_get_destination(), urlencode('fedora/repository'))) {
+    $form['referrer'] = array(
+        '#type' => 'hidden',
+        '#value' => $referrer,
+    );
   }
-  //  $form['#redirect'] = "fedora/repository/$collectionPid/";
+  if(!isset($form_state['storage']['confirm'])) {
+    // do your normal $form definition here
+
+
+    $form['submit'] = array(
+        '#type' => 'image_button',
+        '#src' => drupal_get_path('module', 'fedora_repository').'/images/purge_big.png',
+        '#value' => t('Purge'),
+        '#suffix' => 'Purge this object',
+    );
+    if ($collectionPid == NULL) {
+      $collectionPid = $_SESSION['fedora_collection'];
+    }
+    //$form['#redirect'] = $referrer;
+    
+    return $form;
+  } 
+  else {
+    // ALSO do $form definition here. Your final submit handler (after user clicks Yes, I Confirm) will only see $form_state info defined here. Form you create here passed as param1 to confirm_form
+
+    return confirm_form($form, 'Confirm Purge Object', $referrer, 'Are you sure you want to delete this object? This action cannot be undone.', 'Delete', 'Cancel'); //Had better luck leaving off last param 'name'
+  }
   return $form;
 }
 
@@ -384,31 +406,40 @@ function fedora_repository_purge_object_form_submit($form, &$form_state) {
   module_load_include('inc', 'fedora_repository', 'ConnectionHelper');
   //$client = getSoapClient(variable_get('fedora_soap_manage_url', 'http://localhost:8080/fedora/services/management?wsdl'));
   $pid = $form_state['values']['pid'];
-
-  $params = array(
-      "pid" => $pid,
-      "logMessage" => "Purged",
-      "force" => ""
-  );
-  try {
-    $soapHelper = new ConnectionHelper();
-    $client = $soapHelper->getSoapClient(variable_get('fedora_soap_manage_url', 'http://localhost:8080/fedora/services/management?wsdl'));
-    $object = $client->__soapCall('purgeObject', array(
-                $params
-                    )
+  if (!isset($form_state['storage']['confirm'])) {
+    $form_state['storage']['confirm'] = TRUE; // this will cause the form to be rebuilt, entering the confirm part of the form
+    $form_state['rebuild'] = TRUE; // along with this
+  } 
+  else {
+    // this is where you do your processing after they have pressed the confirm button
+    $params = array(
+        "pid" => $pid,
+        "logMessage" => "Purged",
+        "force" => ""
     );
-  } catch (exception $e) {
-    if (preg_match('/org\.fcrepo\.server\.security\.xacml\.pep\.AuthzDeniedException/',$e->getMessage())) {
-      drupal_set_message(t('Error:  Insufficient permissions to purge object.'), 'error');
-    } else {
-      drupal_set_message(t($e->getMessage()), 'error');
+    try {
+      $soapHelper = new ConnectionHelper();
+      $client = $soapHelper->getSoapClient(variable_get('fedora_soap_manage_url', 'http://localhost:8080/fedora/services/management?wsdl'));
+      $object = $client->__soapCall('purgeObject', array($params));
+      unset($form_state['storage']['confirm']);
+    } catch (exception $e) {
+      if (preg_match('/org\.fcrepo\.server\.security\.xacml\.pep\.AuthzDeniedException/', $e->getMessage())) {
+        drupal_set_message(t('Error:  Insufficient permissions to purge object.'), 'error');
+      } else {
+        drupal_set_message(t($e->getMessage()), 'error');
+      }
+      return;
     }
-    return;
+    if (empty($collectionPid)) {
+      $collectionPid = $_SESSION['fedora_collection'];
+    }
+    if (!empty($form_state['values']['referrer'])) {
+      $form_state['redirect'] = $form_state['values']['referrer'];
+    }
+    else {
+      $form_state['redirect'] = "fedora/repository/$collectionPid/";
+    }
   }
-  if (empty($collectionPid)) {
-    $collectionPid = $_SESSION['fedora_collection'];
-  }
-  $form_state['redirect'] = "fedora/repository/$collectionPid/";
 }
 
 function fedora_repository_purge_stream_form(&$form_state, $pid, $dsId) {
@@ -1242,30 +1273,32 @@ function fedora_repository_demo_objects_form() {
     }
   } else {
     $form['install_demos']['smileynote'] = array(
-        '#value' => '<p>If you install the <a href="http://www.fedora-commons.org/documentation/3.0b1/userdocs/distribution/installation.html#running.demo">Fedora demo objects</a> Islandora can display them as a collection.'
+        '#value' => '<p>If you install the '.l('fedora demo objects', 'https://wiki.duraspace.org/display/FCR30/Demonstration+Objects').' Islandora can display them as a collection.</p>'
     );
   }
 
-  if (!empty($form['install_demos']['demo_collections']['#options'])) {
-    $form['install_demos']['ingest'] = array(
-        '#type' => 'submit',
-        '#name' => 'install_demos',
-        '#value' => 'Install Selected Demos',
-    );
-  }
+  $form['install_demos']['ingest'] = array(
+      '#type' => 'submit',
+      '#name' => 'install_demos',
+      '#value' => 'Install Selected Demos',
+      '#disabled' => (empty($form['install_demos']['demo_collections']['#options'])) ? TRUE : FALSE,
+  );
 
-  $links_to_existing_demos = '<ul>';
+  $form['existing_demos'] = array(
+      '#prefix' => '<p>Demo collections already installed in this repository:</p><ul>',
+      '#suffix' => '</ul>',
+  );
+  
   if (!empty($existing_demos)) {
     foreach ($existing_demos as $pid => $demo_object) {
-      $links_to_existing_demos .= '<li><a href="' . $demo_object->url() . '">' . $demo_object->pid . '</a></li>';
+  
+      $form['existing_demos'][$demo_object->pid] = array (
+          '#prefix' => '<li>',
+          '#value' => l($demo_object->pid, $demo_object->url()),
+          '#suffix' => '</li>',
+      );
     }
   }
-
-  $links_to_existing_demos .= '</ul>';
-
-  $form['install_demos']['existing'] = array(
-      '#value' => '<p>Demo collections already installed in this repository:</p>' . $links_to_existing_demos,
-  );
 
   return $form;
 }
