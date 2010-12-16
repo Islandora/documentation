@@ -154,7 +154,7 @@ abstract class XMLDatastream {
     if ($this->valid === NULL) {
       $ret = TRUE;  
       if ($this->xml == NULL) {
-	$this->fetchXml(); 
+        $this->fetchXml(); 
       }      
       // figure out if we're dealing with a new or old schema 
       $rootEl =  $this->xml->firstChild;
@@ -187,6 +187,10 @@ printerWindow.document.write(text);
       elseif ($rootEl->attributes->getNamedItem('schemaLocation') !== NULL) {
         //figure out where the schema is located and validate.
         list(, $schemaLocation) = preg_split('/\s+/', $rootEl->attributes->getNamedItem('schemaLocation')->nodeValue);
+        $name = $rootEl->getAttribute('name');
+        if ($name !== FALSE) { 
+          $this->name = $name;
+        }
       }
      $schemaLocation = NULL;
      return TRUE;
