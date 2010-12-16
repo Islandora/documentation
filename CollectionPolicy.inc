@@ -181,6 +181,21 @@ class CollectionPolicy extends XMLDatastream {
     return $ret;
   }  
   
+
+  /**
+   * Constructor
+   * NOTE: Use the static constructor methods whenever possible.
+   *
+   * @param string $xmlStr
+   * @param string $pid
+   * @param string $dsid
+   * @return XMLDatastream $cm
+   */
+  public function __construct($xmlStr, $pid = NULL, $dsid = NULL) {
+      parent::__construct($xmlStr,$pid,$dsid);
+      $this->name= 'Collection Policy';
+  }
+  
   /**
    * Attempts to convert from the old XML schema to the new by 
    * traversing the XML DOM and building a new DOM.  When done

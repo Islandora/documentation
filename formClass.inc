@@ -77,8 +77,14 @@ class formClass {
         'access arguments' => array('view fedora collection'),
             //     'access' => TRUE
     );
+    $repository_title = variable_get('fedora_repository_title','Digital repository');
+    if (trim($repository_title)!= '') { 
+      $respository_title=t($repository_title);
+    } else {
+      $repository_title= NULL;
+    }
     $items['fedora/repository'] = array(
-//        'title' => t('Digital repository'),
+        'title' => $repository_title,
         'page callback' => 'repository_page',
         'type' => MENU_NORMAL_ITEM,
         // 'page arguments'=>array(1),
@@ -361,13 +367,22 @@ class formClass {
       );
      */
 
-		$form['fedora_object_display_title'] = array(
-			'#type' => 'select',
-			'#title' => t('Display Object Title Behaviour'),
-			'#default_value'=> variable_get('fedora_object_display_title', ObjectHelper::$DISPLAY_ALWAYS),
-			'#options' => array(ObjectHelper::$DISPLAY_ALWAYS=>t('Always'),ObjectHelper::$DISPLAY_NEVER=>t('Never'),ObjectHelper::$DISPLAY_NO_MODEL_OUTPUT=>t('Only if no Content Model display output.')),
-			'#description' => t('Determines when to display the object (or collection) title when viewing an object/collection page.'),
-		);
+    $form['fedora_repository_title'] = array(
+	    '#type' => 'textfield',
+	    '#title' => t('Fedora Repository Title'),
+	    '#default_value'=> variable_get('fedora_repository_title', 'Digital Repository'),
+	    '#description' => t('The title displayed when viewing collections and objects in  /fedora/repository. Leave blank to display no title. Note that the menus must be rebuilt after changing this variable.'),
+    );
+
+
+    $form['fedora_object_display_title'] = array(
+	    '#type' => 'select',
+	    '#title' => t('Display Object Title Behaviour'),
+	    '#default_value'=> variable_get('fedora_object_display_title', ObjectHelper::$DISPLAY_ALWAYS),
+	    '#options' => array(ObjectHelper::$DISPLAY_ALWAYS=>t('Always'),ObjectHelper::$DISPLAY_NEVER=>t('Never'),ObjectHelper::$DISPLAY_NO_MODEL_OUTPUT=>t('Only if no Content Model display output.')),
+	    '#description' => t('Determines when to display the object (or collection) title when viewing an object/collection page.'),
+    );
+
 
 
     $form['fedora_object_display_description'] = array(
@@ -377,6 +392,13 @@ class formClass {
       '#options' => array(ObjectHelper::$DISPLAY_ALWAYS=>t('Always'),ObjectHelper::$DISPLAY_NEVER=>t('Never'),ObjectHelper::$DISPLAY_NO_MODEL_OUTPUT=>t('Only if no Content Model display output.')),
       '#description' => t('Determines when to display the default object (or collection) description fieldset when viewing an object/collection page.'),
     );
+    
+    $form['fedora_object_restrict_datastreams'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Restrict Access to Fedora Object Datastreams'),
+      '#default_value'=> variable_get('fedora_object_restrict_datastreams', TRUE),
+      '#description' => t('When enabled, restricts access to fedora object datastreams that are not listed in the Islandora Content Model for the object (unless the user is an administrator).'),
+    );    
 
     $form['fedora_collection_display_list'] = array(
       '#type' => 'select',

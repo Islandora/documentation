@@ -54,25 +54,26 @@ class ObjectHelper {
       return ' ';
     }
 
-
     if (!fedora_repository_access(OBJECTHELPER :: $OBJECT_HELPER_VIEW_FEDORA, $pid, $user)) {
       drupal_set_message(t("You do not have access Fedora objects within the attempted namespace."), 'error');
       drupal_access_denied();
       return ' ';
     } 
+
     
-    if (($cm = ContentModel::loadFromObject($pid)) == FALSE) {
-      drupal_set_message(t("You do not have access to objects without an Islandora Content Model."), 'error');
-      drupal_access_denied();
-      return ' ';
-    }
+    if (variable_get('fedora_object_restrict_datastreams', TRUE) == TRUE ) {    
+      if (($cm = ContentModel::loadFromObject($pid)) == FALSE) {
+	drupal_set_message(t("You do not have access to objects without an Islandora Content Model."), 'error');
+	drupal_access_denied();
+	return ' ';
+      }
 
-    $cmDatastreams = $cm->listDatastreams();
-
-    if ( !((isset($user) && in_array('administrator',$user->roles)) || in_array($dsID,$cmDatastreams))) {
-			drupal_set_message(t("You do not have access to the specified datastream."), 'error');
-      drupal_access_denied();
-      return ' ';
+      $cmDatastreams = $cm->listDatastreams();
+      if ( !((isset($user) && in_array('administrator',$user->roles)) || in_array($dsID,$cmDatastreams))) {
+	drupal_set_message(t("You do not have access to the specified datastream."), 'error');
+	drupal_access_denied();
+	return ' ';
+      }
     }
 
     module_load_include('inc', 'fedora_repository', 'api/fedora_item');
@@ -405,11 +406,12 @@ class ObjectHelper {
    *
    */
   function get_formatted_datastream_list($object_pid, $contentModels, &$fedoraItem) {
-    global $fedoraUser, $fedoraPass, $base_url;
+    global $fedoraUser, $fedoraPass, $base_url, $user;
     module_load_include('inc', 'fedora_repository', 'ConnectionHelper');
     module_load_include('inc', 'fedora_repository', 'ObjectHelper');
     module_load_include('inc', 'fedora_repository', 'api/fedora_item');
-
+    module_load_include('inc', 'fedora_repository', 'ContentModel');
+    
     $path = drupal_get_path('module', 'fedora_repository');
     $dataStreamBody = '';
     $fedoraItem = new Fedora_Item($object_pid);
@@ -426,21 +428,29 @@ class ObjectHelper {
       $hasOBJStream = NULL;
       $hasTNStream = FALSE;
       $dataStreamBody = "<br /><table>\n";
+      
+      $cmDatastreams = array();
+      if (variable_get('fedora_object_restrict_datastreams', TRUE) == TRUE && ($cm = ContentModel::loadFromObject($object_pid)) !== FALSE) {
+				$cmDatastreams = $cm->listDatastreams();
+      }
 
       $dataStreamBody .= $this->get_parent_objects_asHTML($object_pid);
       $dataStreamBody .= '<tr><th colspan="4"><h3>' . t("!text", array('!text' => $availableDataStreamsText)) . '</h3></th></tr>';
       foreach ($object as $datastream) {
         foreach ($datastream as $datastreamValue) {
-          if ($datastreamValue->ID == 'OBJ') {
-            $hasOBJStream = '1';
-            $mainStreamLabel = $datastreamValue->label;
-            $mainStreamLabel = str_replace("_", " ", $mainStreamLabel);
-          }
-          if ($datastreamValue->ID == 'TN') {
-            $hasTNStream = TRUE;
-          }
-          //create the links to each datastream
-          $dataStreamBody .= $this->create_link_for_ds($object_pid, $datastreamValue); //"<tr><td><b>$key :</b></td><td>$value</td></tr>\n";
+          
+	  if (variable_get('fedora_object_restrict_datastreams', TRUE) == FALSE  ||  ((isset($user) && in_array('administrator',$user->roles)) || in_array($datastreamValue->ID,$cmDatastreams))) {
+	    if ($datastreamValue->ID == 'OBJ') {
+	      $hasOBJStream = '1';
+	      $mainStreamLabel = $datastreamValue->label;
+	      $mainStreamLabel = str_replace("_", " ", $mainStreamLabel);
+	    }
+	    if ($datastreamValue->ID == 'TN') {
+	      $hasTNStream = TRUE;
+	    }
+	    //create the links to each datastream
+	    $dataStreamBody .= $this->create_link_for_ds($object_pid, $datastreamValue); //"<tr><td><b>$key :</b></td><td>$value</td></tr>\n";
+	  }
         }
       }
       $dataStreamBody .= "</table>\n";

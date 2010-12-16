@@ -2684,8 +2684,9 @@ function icm_model_add_ingestFormElement(&$form_state,$params=null)
                        'other_select'=>t('Select (with \'other\' option)'),
                        'datepicker'=>t('Datepicker'),
                        'copyright'=>t('Creative-Commons Copyright Chooser'),
-											 'hidden'=>t('Hidden'),
-								       'file'=>t('File Upload (browse)'),
+                       'hidden'=>t('Hidden'),
+                       'file'=>t('File Upload (browse)'),
+                       'markup'=>t('HTML Markup (no field)'),
                        ),
     '#description'=> t('The type of form element to display.')
   ); 
@@ -2849,8 +2850,9 @@ function icm_model_edit_ingestFormElement(&$form_state,$params=null)
                              'other_select'=>t('Select (with \'other\' option)'),
                              'datepicker'=>t('Datepicker'),
                              'copyright'=>t('Creative-Commons Copyright Chooser'),
-														 'hidden'=>t('Hidden'),
-			     'file'=>t('File Upload (browse)'),
+                             'hidden'=>t('Hidden'),
+                             'file'=>t('File Upload (browse)'),
+                             'markup'=>t('HTML Markup (no field)'),
                              ),
           '#description'=> t('The type of form element to display. <br/><b>Warning:</b> Changing the type from "Select" or "Radio" to anything else will cause any authoritative list to be permanently removed.')
         ); 

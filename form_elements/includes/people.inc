@@ -40,12 +40,15 @@ function _ife_find_people_element($form, &$keys = array()) {
 }
 
 function ife_people_ahah() {
+  
+  
   if (!isset($_POST['form_build_id']))
       return;
   
   $form_state = array('storage' => NULL, 'submitted' => FALSE);
   $form_build_id = $_POST['form_build_id'];
   $form = form_get_cache($form_build_id, $form_state);
+  
   $args = $form['#parameters'];
   $form_id = array_shift($args);
   $form['#post'] = $_POST;
@@ -57,10 +60,11 @@ function ife_people_ahah() {
   $form['#post'] = $_POST;
   
   drupal_process_form($form_id, $form, $form_state);
-
+  
+//   ob_start();  echo '<pre>';   echo $_POST['form_build_id']."\n"; var_dump($form_state);   echo '</pre>';  $dump = ob_get_contents(); ob_end_clean();
+  
   $form = drupal_rebuild_form($form_id, $form_state, $args, $form_build_id);
   $qt_form = _ife_find_people_element($form);
-//    ob_start();  echo '<pre>'; echo $form_state['clicked_button']['#parents'][2]; var_dump($form_state['storage']['people']); echo'</pre>';  $dump = ob_get_contents(); ob_end_clean();
   
   unset($qt_form['#prefix'], $qt_form['#suffix']); // Prevent duplicate wrappers.
   $javascript = drupal_add_js(NULL, NULL, 'header');
@@ -105,7 +109,7 @@ function ife_remove_person_submit($form, &$form_state) {
   unset($form_state['submit_handlers']);
   form_execute_handlers('submit', $form, $form_state);
   $form_state['storage']['people'] = $people;
-  $form_state['rebuild'] = TRUE;
+  //$form_state['rebuild'] = TRUE;
 }
 
 
@@ -117,6 +121,7 @@ function ife_add_person_submit($form, &$form_state) {
   $keys = array();
   $qt_form = _ife_find_people_element($form, $keys);
   $peopleVals = &$form_state['values'];
+  
   while (count($keys) > 0) {
     $key = array_pop($keys);
     if (isset($peopleVals[$key])) {
@@ -129,12 +134,16 @@ function ife_add_person_submit($form, &$form_state) {
   foreach ($peopleVals['people'] as $val) {
     $people[] = $val;
   }
-  $people[] = array('name' => '', 'date'=>'',  'role' => '', 'subject' => '');
+  
+  //only add new person if we are not adding from repository.
+  if (!isset($form_state['post']['add_from_repository']) || trim($form_state['post']['add_from_repository']) == '') {
+    $people[] = array('name' => '', 'date'=>'',  'role' => '', 'subject' => '');
+  }
   
   unset($form_state['submit_handlers']);
   form_execute_handlers('submit', $form, $form_state);
   $form_state['storage']['people'] = $people;
-  $form_state['rebuild'] = TRUE;
+ // $form_state['rebuild'] = TRUE;
 }
 
 
@@ -147,12 +156,14 @@ function ife_add_org_submit($form, &$form_state) {
   $keys = array();
   $qt_form = _ife_find_people_element($form, $keys);
   $peopleVals = &$form_state['values'];
+  
   while (count($keys) > 0) {
     $key = array_pop($keys);
     if (isset($peopleVals[$key])) {
       $peopleVals = &$peopleVals[$key];
     }
   }
+  
   if (!is_array($peopleVals['people']))
       $peopleVals['people'] = array();
     
@@ -164,7 +175,7 @@ function ife_add_org_submit($form, &$form_state) {
   unset($form_state['submit_handlers']);
   form_execute_handlers('submit', $form, $form_state);
   $form_state['storage']['people'] = $people;
-  $form_state['rebuild'] = TRUE;
+  //$form_state['rebuild'] = TRUE;
 }
 
 
@@ -194,7 +205,7 @@ function ife_add_conf_submit($form, &$form_state) {
   unset($form_state['submit_handlers']);
   form_execute_handlers('submit', $form, $form_state);
   $form_state['storage']['people'] = $people;
-  $form_state['rebuild'] = TRUE;
+  //$form_state['rebuild'] = TRUE;
 }
 
 

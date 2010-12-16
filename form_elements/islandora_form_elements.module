@@ -129,7 +129,7 @@ function ife_fieldset_children_has_value($el)
 
 function ife_people_process($element,$edit,&$form_state) 
 {
-  
+
     $element['#tree'] = TRUE;
     $element['#prefix'] = '<div class="clear-block" id="ife-people-wrapper">';
     $element['#suffix'] = '</div>';
@@ -141,7 +141,6 @@ function ife_people_process($element,$edit,&$form_state)
       '#theme' => 'people_items',
     );
 
-    
     if (isset($form_state['post'][$element['#name']]['add_from_repository']) && trim($form_state['post'][$element['#name']]['add_from_repository']) != '') {
       
       $people= array();
@@ -156,7 +155,7 @@ function ife_people_process($element,$edit,&$form_state)
       
       $json = json_decode($form_state['post'][$element['#name']]['add_from_repository']);
       $person=array();
-//         ob_start(); echo '<pre>'; var_dump($json); echo '</pre>'; drupal_set_message(ob_get_contents()); ob_end_clean();
+         
       
       switch ($json->type)
       {

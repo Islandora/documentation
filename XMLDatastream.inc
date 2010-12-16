@@ -223,7 +223,7 @@ printerWindow.document.write(text);
     module_load_include('inc', 'Fedora_Repository', 'api/fedora_item');
     if ($this->validate()) {
       $item = new Fedora_Item($this->pid);
-      $item->modify_datastream_by_value($this->dumpXml(), $this->dsid, $this->name, NULL);
+      $item->modify_datastream_by_value($this->dumpXml(), $this->dsid, $this->name, 'application/xml');
       return TRUE; 
     }
     return FALSE;

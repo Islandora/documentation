@@ -101,7 +101,7 @@ class ContentModel extends XMLDatastream {
 
    return $ret;
   }
-  
+   
   
   /**
    * Ingests a minimum Content Model to the specified pid/dsid. 
@@ -224,7 +224,7 @@ class ContentModel extends XMLDatastream {
     parent::__construct($xmlStr, $pid, $dsid);
     $this->pid_namespace = $pid_namespace;
     
-    $this->name = $name;
+    $this->name = ($name == NULL)?'Islandora Content Model':$name;
   }
 
   /**
@@ -1372,9 +1372,10 @@ class ContentModel extends XMLDatastream {
    * Executes the form handler from the <form_builder_method> element of <ingest_form>.
    *
    * @param &$formData
+   * @param &$form_state
    * @return boolean $success
    */
-  public function execFormHandler(&$data) {
+  public function execFormHandler(&$data,&$form_state) {
     $ret = FALSE;
     if ($this->validate()) {
       $method =$this->xml->getElementsByTagName('ingest_form')->item(0)->getElementsByTagName('form_builder_method')->item(0);
@@ -1396,7 +1397,7 @@ class ContentModel extends XMLDatastream {
             self::$errors[] = 'Execute Form Handler: method \''. $className .'->'. $methodName .'\' does not exist.';
           } 
           else {
-            $class->$methodName($data);
+            $class->$methodName($data,$form_state);
             $ret = TRUE;
           }
         }
@@ -1855,11 +1856,10 @@ class ContentModel extends XMLDatastream {
       $methodsEl = $rule->getElementsByTagName('ingest_methods')->item(0);
       $methods = $methodsEl->getElementsByTagName('ingest_method');
       for ($i=0; !$found && $i < $methods->length; $i++) {
-        if ($methods->item($i)->getAttribute('module') == $module && $methods->item($i)->getAttribute('file') == $file && $methods->item($i)->getAttribute('class') == $class && $methods->item($i)->getAttribute('method') == $method) {
+        if (( trim($methods->item($i)->getAttribute('module')) == $module || (trim($methods->item($i)->getAttribute('module')) == '' && $module == 'fedora_repository'))  && trim($methods->item($i)->getAttribute('file')) == $file && trim($methods->item($i)->getAttribute('class')) == $class && trim($methods->item($i)->getAttribute('method')) == $method) {
           $found = $methods->item($i);
         }
       }
-
       if ($found !== FALSE) {
         $methodEl = $found;
         $paramsEl = $found->getElementsByTagName('parameters');

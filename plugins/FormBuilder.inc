@@ -312,12 +312,17 @@ class FormBuilder {
     );
     
     foreach ($elements as $element) {
-        $el = array(
-          '#title' => $element['label'],
-          '#required' => ($element['required'] ? 1 : 0),
-          '#description' => $element['description'],
-          '#type' => $element['type']
-        );
+      
+        if ($element['type'] == 'markup') {
+          $el = array('#value'=> $element['description']);
+        } else {
+          $el = array(
+            '#title' => $element['label'],
+            '#required' => ($element['required'] ? 1 : 0),
+            '#description' => $element['description'],
+            '#type' => $element['type']
+          );
+        }
 
         $name = explode('][', $element['name']);
         $elLocation = &$form['indicator2'];

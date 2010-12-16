@@ -27,6 +27,8 @@ class solr_index extends Process {
     }
     
     module_load_include('inc', 'fedora_repository', 'api/fedora_item');    
+		module_load_include('inc', 'fedora_repository', 'ContentModel'); 
+
     $xsltDom = NULL;
     if (isset($parameters['xslt'])) {
       list($template_pid, $template_dsid) = explode('/', $parameters['xslt']);
@@ -44,6 +46,11 @@ class solr_index extends Process {
       $xsltDom->load(drupal_get_path('module', 'islandora_workflow_client') .'/xsl/'. trim($parameters['xslt_file']));
     }
 
+		if ($xsdlDom === FALSE) { 
+			$this->setMessage(t('Unable to load xslt.')); 
+			return FALSE;
+		}
+
     $item = new fedora_item($pid);
     $dslist = $item->get_datastreams_list_as_array();    
     if (!isset($dslist[$parameters['dsid']])) {
@@ -59,9 +66,12 @@ class solr_index extends Process {
     
     $proc = new XSLTProcessor();
     $proc->importStylesheet($xsltDom);
-    $solrDoc = $proc->transformToXML($dom);  
-    
-    $solrDom = DOMDocument::loadXML($solrDoc); 
+    $solrDom = $proc->transformToDOC($dom);  
+   
+		if ($solrDoc === FALSE) { 
+			$this->setMessage(t('Document transform failed.'));
+			return FALSE;
+		}
     $doc = $solrDom->getElementsByTagName('doc');
     if ($doc->length > 0) {
       $doc=$doc->item(0);
@@ -72,13 +82,19 @@ class solr_index extends Process {
         $field->setAttribute('name', 'workflow_process_t');
         $doc->appendChild($field);
       }
-      
+    
+			if (($cm = ContentModel::loadFromObject($pid)) !== FALSE) { 
+				 $field=$solrDom->createElement('field', $cm->pid);
+				 $field->setAttribute('name', 'cmodel_t');
+				 $doc->appendChild($field);
+			}  
+		
       if (isset($dslist['DC'])) 
       {
-	$dc = $item->get_datastream('DC');
-	$field=$solrDom->createElement('field',$dc->createDate);
-	$field->setAttribute('name','created_d');
-	$doc->appendChild($field);
+				$dc = $item->get_datastream('DC');
+				$field=$solrDom->createElement('field',$dc->createDate);
+				$field->setAttribute('name','created_d');
+				$doc->appendChild($field);
       }
     }
     

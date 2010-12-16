@@ -231,9 +231,11 @@ class ModsFormBuilder extends FormBuilder {
     
  }
  
- function handleModsForm($form_values) {
+ function handleModsForm(&$form_values,&$form_state) {
     module_load_include('inc', 'fedora_repository', 'api/fedora_item');
     module_load_include('inc', 'fedora_repository', 'CollectionPolicy');
+    
+    $form_state['storage']['people']=NULL; //clears out old entities for the next run of the formbuilder. 
     
     $dom = new DomDocument("1.0", "UTF-8");
     $dom->formatOutput = TRUE;
@@ -272,7 +274,7 @@ class ModsFormBuilder extends FormBuilder {
 
 //        header('Content-type: application/xml');
 //        echo $dom->saveXML();  exit();
-    
+   
     try {
         $object = Fedora_Item::ingest_from_FOXML($dom);
         //for some reason, ingest_from_FOXML does not generate a JMS message
