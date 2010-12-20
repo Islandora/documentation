@@ -396,7 +396,7 @@ class formClass {
     $form['fedora_object_restrict_datastreams'] = array(
       '#type' => 'checkbox',
       '#title' => t('Restrict Access to Fedora Object Datastreams'),
-      '#default_value'=> variable_get('fedora_object_restrict_datastreams', TRUE),
+      '#default_value'=> variable_get('fedora_object_restrict_datastreams', FALSE),
       '#description' => t('When enabled, restricts access to fedora object datastreams that are not listed in the Islandora Content Model for the object (unless the user is an administrator).'),
     );    
 
