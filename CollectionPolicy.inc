@@ -392,13 +392,13 @@ class CollectionPolicy extends XMLDatastream {
       $ret=array();
       $content_models = $this->xml->getElementsByTagName('content_models')->item(0)->getElementsByTagName('content_model');
       for ($i=0;$i<$content_models->length;$i++) {
-  $cm=ContentModel::loadFromModel($content_models->item($i)->getAttribute('pid'),
+             $cm=ContentModel::loadFromModel($content_models->item($i)->getAttribute('pid'),
              $content_models->item($i)->getAttribute('dsid'),
              $content_models->item($i)->getAttribute('namespace'),
              $content_models->item($i)->getAttribute('name'));
-  if ($cm !== FALSE) {
-    $ret[]=$cm;
-  }
+            if ($cm !== FALSE) {
+              $ret[]=$cm;
+            }
 
       }
     }
