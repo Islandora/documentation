@@ -430,7 +430,7 @@ class ObjectHelper {
       $dataStreamBody = "<br /><table>\n";
       
       $cmDatastreams = array();
-      if (variable_get('fedora_object_restrict_datastreams', TRUE) == TRUE && ($cm = ContentModel::loadFromObject($object_pid)) !== FALSE) {
+      if (variable_get('fedora_object_restrict_datastreams', FALSE) == TRUE && ($cm = ContentModel::loadFromObject($object_pid)) !== FALSE) {
 				$cmDatastreams = $cm->listDatastreams();
       }
 
@@ -439,7 +439,7 @@ class ObjectHelper {
       foreach ($object as $datastream) {
         foreach ($datastream as $datastreamValue) {
           
-	  if (variable_get('fedora_object_restrict_datastreams', TRUE) == FALSE  ||  ((isset($user) && in_array('administrator',$user->roles)) || in_array($datastreamValue->ID,$cmDatastreams))) {
+	  if (variable_get('fedora_object_restrict_datastreams', FALSE) == FALSE  ||  ((isset($user) && in_array('administrator',$user->roles)) || in_array($datastreamValue->ID,$cmDatastreams))) {
 	    if ($datastreamValue->ID == 'OBJ') {
 	      $hasOBJStream = '1';
 	      $mainStreamLabel = $datastreamValue->label;
