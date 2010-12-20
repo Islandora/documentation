@@ -41,7 +41,6 @@ function _ife_find_people_element($form, &$keys = array()) {
 
 function ife_people_ahah() {
   
-  
   if (!isset($_POST['form_build_id']))
       return;
   
@@ -58,10 +57,9 @@ function ife_people_ahah() {
   $_POST = _dummy_post_info($form, $_POST);
   $form_state['post'] = $_POST;
   $form['#post'] = $_POST;
-  
   drupal_process_form($form_id, $form, $form_state);
   
-//   ob_start();  echo '<pre>';   echo $_POST['form_build_id']."\n"; var_dump($form_state);   echo '</pre>';  $dump = ob_get_contents(); ob_end_clean();
+   //ob_start();  echo '<pre>'; echo $_POST['form_build_id']."\n"; var_dump($form_state);   echo '</pre>';  $dump = ob_get_contents(); ob_end_clean();
   
   $form = drupal_rebuild_form($form_id, $form_state, $args, $form_build_id);
   $qt_form = _ife_find_people_element($form);
@@ -109,7 +107,7 @@ function ife_remove_person_submit($form, &$form_state) {
   unset($form_state['submit_handlers']);
   form_execute_handlers('submit', $form, $form_state);
   $form_state['storage']['people'] = $people;
-  //$form_state['rebuild'] = TRUE;
+  $form_state['rebuild'] = TRUE;
 }
 
 
@@ -136,14 +134,14 @@ function ife_add_person_submit($form, &$form_state) {
   }
   
   //only add new person if we are not adding from repository.
-  if (!isset($form_state['post']['add_from_repository']) || trim($form_state['post']['add_from_repository']) == '') {
+	$elName = isset($qt_form['entity0']['#parents'][0])?$qt_form['entity0']['#parents'][0]:null;
+  if ($elName == null || !isset($form_state['clicked_button']['#post'][$elName]['add_from_repository']) || trim($form_state['clicked_button']['#post'][$elName]['add_from_repository']) == '') {
     $people[] = array('name' => '', 'date'=>'',  'role' => '', 'subject' => '');
   }
-  
   unset($form_state['submit_handlers']);
   form_execute_handlers('submit', $form, $form_state);
   $form_state['storage']['people'] = $people;
- // $form_state['rebuild'] = TRUE;
+  $form_state['rebuild'] = TRUE;
 }
 
 
@@ -200,6 +198,7 @@ function ife_add_conf_submit($form, &$form_state) {
   foreach ($peopleVals['people'] as $val) {
     $people[] = $val;
   }
+ 
   $people[] = array('role' => '', 'conference' => '', 'subject' => '');
   
   unset($form_state['submit_handlers']);
