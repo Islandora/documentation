@@ -65,7 +65,7 @@ function export_collection($collection_pid, $relationship = 'isMemberOfCollectio
  * @param <type> $query
  * @param <type> $query_format R
  */
-function get_related_items_as_xml($collection_pid, $relationship = array('isMemberOfCollection'), $limit = 10000, $offset = 0, $active_objects_only = TRUE, $cmodel = NULL) {
+function get_related_items_as_xml($collection_pid, $relationship = array('isMemberOfCollection'), $limit = 10000, $offset = 0, $active_objects_only = TRUE, $cmodel = NULL, $orderby = '$title') {
   module_load_include('inc', 'fedora_repository', 'ObjectHelper');
   $collection_item = new Fedora_Item($collection_pid);
   
@@ -104,7 +104,7 @@ function get_related_items_as_xml($collection_pid, $relationship = array('isMemb
   
   $query_string .= ')
                     minus $content <mulgara:is> <info:fedora/fedora-system:FedoraObject-3.0>
-                    order by $title';
+                    order by '.$orderby;
                                                           
   $query_string = htmlentities(urlencode($query_string));
   
@@ -117,8 +117,8 @@ function get_related_items_as_xml($collection_pid, $relationship = array('isMemb
   return $content;
 }
 
-function get_related_items_as_array($collection_pid, $relationship = 'isMemberOfCollection', $limit = 10000, $offset = 0, $active_objects_only = TRUE, $cmodel = NULL) {
-  $content = get_related_items_as_xml($collection_pid, $relationship, $limit, $offset, $active_objects_only, $cmodel);
+function get_related_items_as_array($collection_pid, $relationship = 'isMemberOfCollection', $limit = 10000, $offset = 0, $active_objects_only = TRUE, $cmodel = NULL, $orderby = '$title') {
+  $content = get_related_items_as_xml($collection_pid, $relationship, $limit, $offset, $active_objects_only, $cmodel, $orderby);
   if (empty($content)) {
     return array();
   }
