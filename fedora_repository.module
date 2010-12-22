@@ -1802,7 +1802,7 @@ function fedora_repository_requirements($phase) {
     system('which convert', $res);
     if ($res != 0) {
       $requirements['fedora-imagemagick']['value'] = t('Not in $PATH');
-      $requirements['fedora-imagemagick']['description'] = t('Ensure that <a href="www.imagemagick.org/">ImageMagick</a> is installed and the convert command is executable by the web server user.');
+      $requirements['fedora-imagemagick']['description'] = t('Islandora will not be able to create thumbnails. Ensure that <a href="www.imagemagick.org/">ImageMagick</a> is installed and the convert command is executable by the web server user.');
       $requirements['fedora-imagemagick']['severity'] = REQUIREMENT_WARNING;
     }
     else {
