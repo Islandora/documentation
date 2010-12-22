@@ -1784,22 +1784,44 @@ function fedora_repository_requirements($phase) {
   global $base_url;
   if ($phase == 'runtime') {
     module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
-    $requirement = array();
-    $requirement['title'] = t("Fedora server");
+    $requirements = array();
+    $requirements['fedora-repository']['title'] = t("Fedora server");
     if (!fedora_available()) {
-      $requirement['value'] = ("Not available");
-      $requirement['severity'] = REQUIREMENT_ERROR;
-      $requirement['description'] = t('Ensure that Fedora is running and that the <a href="@collection-settings">collection settings</a> are correct.', 
+      $requirements['fedora-repository']['value'] = t("Not available");
+      $requirements['fedora-repository']['severity'] = REQUIREMENT_ERROR;
+      $requirements['fedora-repository']['description'] = t('Ensure that Fedora is running and that the <a href="@collection-settings">collection settings</a> are correct.', 
               array('@collection-settings' => $base_url.'/admin/settings/fedora_repository'));
     }
     else {
-      $requirement['value'] = ("Available");
-      $requirement['severity'] = REQUIREMENT_OK;
+      $requirements['fedora-repository']['value'] = t("Available");
+      $requirements['fedora-repository']['severity'] = REQUIREMENT_OK;
     }
     
+    // Check for ImageMagick
+    $requirements['fedora-imagemagick']['title'] = t("ImageMagick convert in \$PATH");
+    system('which convert', $res);
+    if ($res != 0) {
+      $requirements['fedora-imagemagick']['value'] = t('Not in $PATH');
+      $requirements['fedora-imagemagick']['description'] = t('Ensure that <a href="www.imagemagick.org/">ImageMagick</a> is installed and the convert command is executable by the web server user.');
+      $requirements['fedora-imagemagick']['severity'] = REQUIREMENT_WARNING;
+    }
+    else {
+      $requirements['fedora-imagemagick']['value'] = t("Available");
+      $requirements['fedora-imagemagick']['severity'] = REQUIREMENT_OK;
+    }
     
+    $requirements['fedora-kakadu']['title'] = 'Kakadu kdu_compress in $PATH';
+    system('which kdu_compress', $kdu_res);
+    if ($kdu_res != 0) {
+      $requirements['fedora-kakadu']['value'] = ('Not in $PATH');
+      $requirements['fedora-kakadu']['description'] = t('Islandora cannot convert TIFF image files to JPEG2000 format. Ensure <a href="http://www.kakadusoftware.com/">Kakadu</a> is installed and the kdu_compress command is executable by the web server user.');
+      $requirements['fedora-kakadu']['severity'] = REQUIREMENT_WARNING;
+    }
+    else {
+      $requirements['fedora-kakadu']['value'] = t("Available");
+      $requirements['fedora-kakadu']['severity'] = REQUIREMENT_OK;
+    }
   }
-  $requirements = array();
-  $requirements['fedora_available'] = $requirement;
+ 
   return $requirements;
 }
