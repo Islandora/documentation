@@ -145,15 +145,16 @@ function ife_people_process($element,$edit,&$form_state)
       
       $people= array();
       if (isset($form_state['storage']['people']) && !empty($form_state['storage']['people'])) {
-	foreach ($form_state['storage']['people'] as $ent) {
-	  if ( trim($ent['name']) != '' || trim($ent['organization']) != '' || trim($ent['conference']) != '' || trim($ent['role']) != '' || trim($ent['date']) != '') {
-	    $people[]=$ent;
-	  }
-	}
+				foreach ($form_state['storage']['people'] as $ent) {
+				  if ( trim($ent['name']) != '' || trim($ent['organization']) != '' || trim($ent['conference']) != '' || trim($ent['role']) != '' || trim($ent['date']) != '') {
+				    $people[]=$ent;
+				  }
+				}
       } 
       
       
       $json = json_decode($form_state['post'][$element['#name']]['add_from_repository']);
+			$form_state['post'][$element['#name']]['add_from_repository'] = ''; // clear so that if the form is processed multiple times, it does not add twice.
       $person=array();
          
       
@@ -181,7 +182,6 @@ function ife_people_process($element,$edit,&$form_state)
       $people[]=$person;
 
       $form_state['storage']['people']=$people;
-      
       
     } else if (!isset($form_state['storage']['people']) || empty($form_state['storage']['people']))
     {

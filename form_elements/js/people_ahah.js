@@ -3,11 +3,13 @@
 
 if (Drupal.jsEnabled) {
   $(document).ready(function() {
-    if (Drupal.ahah != undefined) {
+		$('#edit-mods-people-add-from-repository').blur(function () {
+      if ($('#edit-mods-people-add-from-repository').val() != '') { 
+				$('#edit-mods-people-add-person').mousedown();
+			}
+    });
 
-    $('#edit-mods-people-add-from-repository').change(function () {
-	$('#edit-mods-people-add-person').mousedown();
-      });      
+    if (Drupal.ahah != undefined) {
       
 /**
  * Override of Drupal.ahah.prototype.success. The only difference is that we

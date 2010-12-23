@@ -3,17 +3,19 @@
 // $Id$
 
 function ife_autocomplete_person($string)  {
-    $string=strtolower($string);
+    $string=trim(strtolower($string));
     
     module_load_include('inc', 'fedora_repository', 'api/fedora_item');
     module_load_include('php', 'islandora_solr_search', 'Solr/Service');
     $host = variable_get('islandora_solr_search_block_host','localhost');
     $port = variable_get('islandora_solr_search_block_port','8080');
     $appName = variable_get('islandora_solr_search_block_app_name','solr');
-    $requestHandler = variable_get("islandora_solr_search_block_request_handler",t("standard"));
-    
-    $query = 'name_personal_t:'.$string.'* OR name_organization_t:'.$string.'* OR name_conference_t:'.$string.'*';
+    $requestHandler = variable_get("islandora_solr_search_block_request_handler",t("standard"));   
+ 
     $solr = new Apache_Solr_Service($host, $port, '/'.$appName.'/');
+	  
+		$string=$solr->escape($string);
+		$query = 'name_personal_t:'.$string.'* OR name_organization_t:'.$string.'* OR name_conference_t:'.$string.'*';
     
     $additionalParams = array(
             'facet' => 'false',
@@ -129,7 +131,7 @@ function ife_autocomplete_gacs($collection, $string='') {
      $collection = FALSE;
    }
 
-   $string=ucwords($string);
+   $string=ucwords(trim($string));
    
    $dom = DOMDocument::load ( $moduleRoot .'/xml/gacs.xml' );
    $rootEl = $dom->getElementsByTagName('codelist');
@@ -159,7 +161,7 @@ function ife_autocomplete_language($collection, $string='') {
      $collection = FALSE;
    }
 
-   $string=ucwords($string);
+   $string=ucwords(trim($string));
    
    $dom = DOMDocument::load ( $moduleRoot .'/xml/languages.xml' );
    $rootEl = $dom->getElementsByTagName('codelist');
@@ -197,7 +199,7 @@ function ife_autocomplete($field, $collection, $string='') {
     'fl' => $field
   );
 
-  $query = $field .':'. $solr->escape(strtolower($string)) .'*';
+  $query = $field .':'. $solr->escape(strtolower(trim($string))) .'*';
   
   if ($collection != FALSE) {
     $query .= ' AND related_item_identifier_t:'. $solr->escape($collection);
