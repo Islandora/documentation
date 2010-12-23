@@ -1410,7 +1410,7 @@ function fedora_repository_demo_objects_form_submit($form, &$form_state) {
       try {
         $item = Fedora_Item::ingest_from_FOXML_file(drupal_get_path('module', 'fedora_repository') . '/content_models/islandora_largeimages.xml');
         $tn = $item->add_datastream_from_file(drupal_get_path('module', 'fedora_repository') . '/images/Gnome-emblem-photos.png', 'TN', 'Thumbnail.png', 'image/png', 'M');
-        drupal_set_message("Successfully installed <a href=\"" . $base_url . "/fedora/repository/islandora:largeImages\">islandora:largeImages</a>.", 'message');
+        drupal_set_message("Successfully installed <a href=\"" . $base_url . "/fedora/repository/islandora:largeimages\">islandora:largeimages</a>.", 'message');
       } catch (exception $e) {
         $error .= " - Problem ingesting islandora:largeimages collection";
       }
