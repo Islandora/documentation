@@ -40,7 +40,7 @@ class ConnectionHelper {
     return $new_url;
   }
 
-  function getSoapClient($url = NULL) {
+  function getSoapClient($url = NULL, $exceptions = TRUE) {
     if ($url == NULL) {
       $url=variable_get('fedora_soap_url', 'http://localhost:8080/fedora/services/access?wsdl');
     }
@@ -52,7 +52,7 @@ class ConnectionHelper {
         $client = new SoapClient($this->_fixURL($url, 'anonymous', 'anonymous'), array(
             'login' => 'anonymous',
             'password' => 'anonymous',
-            'exceptions' => TRUE,
+            'exceptions' => $exceptions,
         ));
       } 
       catch (SoapFault $e) {
