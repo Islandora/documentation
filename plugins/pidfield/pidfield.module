@@ -277,11 +277,7 @@ function theme_pidfield_formatter_default($element) {
   $pid = $element['#item']['safe'];
 
   if(!empty($pid)) {
-    module_load_include('inc', 'fedora_repository', 'api/fedora_item');
-    $item = new Fedora_Item($pid);
-
     return fedora_repository_get_items($pid);
-    
   }
   return null;
 }
