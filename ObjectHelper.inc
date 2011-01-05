@@ -336,7 +336,7 @@ class ObjectHelper {
         'asOfDateTime' => ""
     );
     try {
-      $object = $client->__soapCAll('getDatastreamDissemination', array(
+      $object = $client->__soapCall('getDatastreamDissemination', array(
                   'parameters' => $params
               ));
     } catch (Exception $e) {
