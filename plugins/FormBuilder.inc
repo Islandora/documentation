@@ -179,7 +179,14 @@ class FormBuilder {
 
     if (!empty( $file)) {
       $dformat = $mimetype->getType($file);
-      $fileUrl = $base_url . '/'. drupal_urlencode($file);
+      
+      $parts = explode('/', $file);
+      foreach ($parts as $n => $part) {
+        $parts[$n] = rawurlencode($part);
+      }
+      $path = implode('/', $parts);
+      $fileUrl = $base_url . '/' . $path;
+      
       $beginIndex = strrpos($fileUrl, '/');
       $dtitle = substr($fileUrl, $beginIndex + 1);
       $dtitle = urldecode($dtitle);
@@ -214,8 +221,13 @@ class FormBuilder {
 	} 
 
         $dformat = $mimetype->getType($createdFile);
-        $fileUrl = $base_url . '/'. drupal_urlencode($createdFile);
-	
+	$parts = explode('/', $createdFile);
+        foreach ($parts as $n => $part) {
+          $parts[$n] = rawurlencode($part);
+        }
+        $path = implode('/', $parts);
+        $fileUrl = $base_url . '/' . $path;
+      
         $beginIndex = strrpos($fileUrl, '/');
         $dtitle = substr($fileUrl, $beginIndex + 1);
         $dtitle = urldecode($dtitle);
