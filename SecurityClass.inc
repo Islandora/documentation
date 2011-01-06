@@ -9,7 +9,7 @@
  */
 
 class SecurityClass {
-  public static $SECURITY_CLASS_SECURITY_STREAM = 'CHILD_SECURITY';
+  public static $SECURITY_CLASS_SECURITY_STREAM = 'POLICY';
   function SecurityClass() {
     module_load_include('inc', 'SecurityClass', '');
     drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
