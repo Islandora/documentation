@@ -3420,7 +3420,7 @@ function icm_model_new_submit($form,&$form_state)
         
         $item = Fedora_Item::ingest_new_item($form_state['storage']['values'][1]['form']['pid'],'A',$form_state['storage']['values'][1]['form']['name']);
         $item->add_relationship('fedora-model:hasModel','info:fedora/fedora-system:ContentModel-3.0',FEDORA_MODEL_URI);
-      
+        $item->add_datastream_from_file(drupal_get_path('module', 'fedora_repository').'/images/Crystal_Clear_mimetype_widget_doc.png', 'TN', 'Thumbnail');
         switch ($form_state['storage']['values'][1]['form']['initialize'])
         {
           case 'blank':
