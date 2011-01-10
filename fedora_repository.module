@@ -758,7 +758,8 @@ function fedora_repository_get_items($pid = NULL, $dsId = NULL, $collection = NU
   global $user;
 
   if (!fedora_available()) {
-    return t('The Fedora repository server is currently unavailable. Please contact the site administrator.');
+    drupal_set_message('The Fedora repository server is currently unavailable. Please contact the site administrator.', 'warning', FALSE);
+    return '';
   }
   
   if ($pid &!validPid($pid)) {
