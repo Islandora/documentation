@@ -273,15 +273,9 @@ function pidfield_field_formatter_info() {
  *
  */
 function theme_pidfield_formatter_default($element) {
-  //return $element['#item']['safe'];
   $pid = $element['#item']['safe'];
-
   if(!empty($pid)) {
-    module_load_include('inc', 'fedora_repository', 'api/fedora_item');
-    $item = new Fedora_Item($pid);
-
     return fedora_repository_get_items($pid);
-    
   }
   return null;
 }

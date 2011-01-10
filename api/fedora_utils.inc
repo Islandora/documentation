@@ -69,33 +69,8 @@ function fedora_available() {
   
   $ret = do_curl(variable_get('fedora_soap_url', 'http://localhost:8080/fedora/services/management?wsdl'), 1);
   // A bit of a hack but the SOAP parser will cause a fatal error if you give it the wrong URL.
-  //return (strpos($ret, 'wsdl:definitions') != FALSE);
-      
-  module_load_include('inc', 'fedora_repository', 'ConnectionHelper');
-  
-  
-  
-    try {
-      $connection_helper = new ConnectionHelper();
-      
-      $soap_client = $connection_helper->getSoapClient( variable_get('fedora_soap_url', 'http://localhost:8080/fedora/services/access?wsdl'));
-      if (!empty($soap_client)) { 
-        
-        $result = $soap_client->__soapCall('describeRepository', array());
-      }
-      
-      print 'why am I here?';
-      return TRUE;
-    }
-    catch (SoapFault $e) {
-      print 'what now?';
-      watchdog(t("FEDORA_REPOSITORY"), t("Error trying to get SOAP client connection."));
-      
-      return FALSE;
-    
-
-  }
-  
+  // PHP SOAP is now an installation requirement so this check is all we need to do.
+  return (strpos($ret, 'wsdl:definitions') != FALSE);
 }
 
 /**
