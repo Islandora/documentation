@@ -325,31 +325,30 @@ class formClass {
         '#weight' => 0
     );
 
-    /*
-      $form['fedora_default_display_pid'] = array(
-      '#type' => 'textfield',
-      '#title' => t('Fedora Default Display Object Pid'  ),
-      '#default_value' => variable_get('fedora_default_display_pid', 'demo:10'),
-      '#description' => t('Object Pid of an Image to show if the requested pid/datastream cannot be found'),
-      '#required' => TRUE,
-      '#weight' => 0
-      );
-      $form['fedora_default_display_dsid'] = array(
-      '#type' => 'textfield',
-      '#title' => t('Fedora Default Display Datastream ID' ),
-      '#default_value' => variable_get('fedora_default_display_dsid', 'TN'),
-      '#description' => t('Object Datastream id of an Image to show if the requested pid/datastream cannot be found'),
-      '#required' => TRUE,
-      '#weight' => 0
-      );
-     */
 
-    $form['fedora_pids_allowed'] = array(
+
+    $form['fedora_namespace'] = array(
+        '#type' => 'fieldset',
+
+    );
+    $form['fedora_namespace']['fedora_namespace_restriction_enforced'] = array(
+        '#weight' => -1,
+        '#type' => 'radios',
+        '#title' => t('Enforce namespace restrictions'),
+        '#options' => array(
+            TRUE => t('Enabled'),
+            FALSE => t('Disabled')
+        ),
+        '#description' => t('Allow administrator to restrict user\'s access to the PID namepaces listed below' ),
+        '#default_value' => variable_get('fedora_namespace_restriction_enforced',TRUE)
+    );
+
+    $form['fedora_namespace']['fedora_pids_allowed'] = array(
         '#type' => 'textfield',
         '#title' => t('PID namespaces allowed in this Drupal install'),
-        '#default_value' => variable_get('fedora_pids_allowed', 'default: demo: changeme: Islandora: ilives: '),
-        '#description' => t('The PID namespaces that you are allowed to see from this Drupal install.  In reality this can be more than a namespace as it could include demo:mydemos etc.  Can be a space seperated list to include more than one PID namespace.'),
-        '#required' => TRUE,
+        '#default_value' => variable_get('fedora_pids_allowed', 'default: demo: changeme: islandora: ilives: '),
+        '#description' => t('A space separated list PID namespaces that users are permitted to access from this Drupal installation. <br /> This could be more than a simple namespace ie demo:mydemos.'),
+        
         '#weight' => 0
     );
     /*

@@ -961,6 +961,7 @@ function fedora_repository_search($op = 'search', $keys = NULL) {
  */
 function fedora_repository_search_page($resultData) {
   $path = drupal_get_path('module', 'fedora_repository');
+  $isRestricted = variable_get('fedora_namespace_restriction_enforced',TRUE);
   $proc = NULL;
   if (!$resultData[0][0]['data']) {
     return ''; //no results
@@ -986,8 +987,13 @@ function fedora_repository_search_page($resultData) {
   $proc->setParameter('', 'allowedPidNameSpaces', variable_get('fedora_pids_allowed', 'default: demo: changeme: Islandora: ilives: '));
   $proc->registerPHPFunctions();
   $xsl = new DomDocument();
-  $xsl->load($path . '/xsl/results.xsl');
-  $quimby = $xsl;
+  if($isRestricted){
+    $xsl->load($path . '/xsl/results.xsl');
+  }
+  else{
+    $xsl->load($path . '/xsl/unfilteredresults.xsl');
+  }
+  
   $input = new DomDocument();
   $didLoadOk = $input->loadXML(utf8_encode($resultData[0][0]['data']));
 
@@ -1193,6 +1199,7 @@ function theme_fedora_repository_mnpl_advanced_search_form($form) {
 function fedora_repository_mnpl_advanced_search($query, $startPage = 1) {
   module_load_include('inc', 'fedora_repository', 'SearchClass');
   $searchClass = new SearchClass();
+  $retVal = $searchClass->custom_search($query, $startPage);
   return $searchClass->custom_search($query, $startPage);
 }
 

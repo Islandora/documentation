@@ -557,9 +557,10 @@ class Fedora_Item {
   }
 
   static function get_next_PID_in_namespace( $pid_namespace = '') {
+    
     if (empty($pid_namespace)) {
       // Just get the first one in the config settings.
-      $allowed_namespaces = explode(" ", variable_get('fedora_pids_allowed', 'default: demo: changeme: Islandora: ilives: '));
+      $allowed_namespaces = explode(" ", variable_get('fedora_pids_allowed', 'default: demo: changeme: islandora: ilives: '));
       $pid_namespace = $allowed_namespaces[0];
       if (!empty($pid_namespace)) {
         $pid_namespace = substr($pid_namespace, 0, strpos($pid_namespace, ":"));

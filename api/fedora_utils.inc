@@ -72,7 +72,7 @@ function fedora_available() {
   //return (strpos($ret, 'wsdl:definitions') != FALSE);
       
   module_load_include('inc', 'fedora_repository', 'ConnectionHelper');
-  
+  return true;
   
   
     try {
@@ -84,11 +84,10 @@ function fedora_available() {
         $result = $soap_client->__soapCall('describeRepository', array());
       }
       
-      print 'why am I here?';
       return TRUE;
     }
     catch (SoapFault $e) {
-      print 'what now?';
+
       watchdog(t("FEDORA_REPOSITORY"), t("Error trying to get SOAP client connection."));
       
       return FALSE;

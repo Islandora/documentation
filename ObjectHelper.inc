@@ -606,7 +606,12 @@ class ObjectHelper {
 
   function fedora_repository_access($op, $pid) {
     global $user;
+
     $returnValue = FALSE;
+    $isRestricted = variable_get('fedora_namespace_restriction_enforced',TRUE);
+    if(!$isRestricted){
+      return TRUE;
+    }
     if ($pid == NULL) {
       $pid = variable_get('fedora_repository_pid', 'islandora:top');
     }
