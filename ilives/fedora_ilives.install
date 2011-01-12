@@ -7,13 +7,7 @@
 
 /**
  * Implementation of hook_enable()
- * Check for and install ilives book and page content models and viewer service
- * definitions and deployment objects if necessary.
  */
 function fedora_ilives_enable() {
- module_load_include('inc', 'fedora_reposiotry', 'api/fedora_utils');
- if (fedora_available()) {
-   module_load_include('module', 'fedora_ilives', 'fedora_ilives');
-   install_book_content_model_objects();
- }
+ 
 }
