@@ -257,7 +257,7 @@ function fedora_repository_purge_object_form(&$form_state, $pid, $referrer) {
         '#value' => t('Purge'),
         '#suffix' => 'Purge this object',
     );
-    if ($collectionPid == NULL) {
+    if (!empty($collectionPid)) {
       $collectionPid = $_SESSION['fedora_collection'];
     }
     //$form['#redirect'] = $referrer;
