@@ -1,0 +1,33 @@
+<?php
+
+class fedoraBookTestCase extends DrupalWebTestCase {
+  public static function getInfo() {
+    return array(
+      'name' => 'Fedora Ilives',
+      'description' => t('The Fedora repository book module.'),
+      'group' => t('fedora repository'),
+    );
+  }
+ 
+  protected function setUp() {
+    parent::setUp('fedora_ilives', 'fedora_repository');
+    
+    
+    // Create and login user.
+    $drupal_user = $this->drupalCreateUser(array('add fedora datastreams',
+                                                    'edit fedora meta data',
+                                                    'edit tags datastream',
+                                                    'ingest new fedora objects',
+                                                    'purge objects and datastreams',
+                                                    'view fedora collection'));
+
+
+    $this->drupalLogin($drupal_user);
+  }
+  
+  public function testFedoraIlives() {
+    // Initially we are just testing that the module installs successfully from a clean Drupal. ISLANDORA-165.
+    $this->pass(drupal_get_path('module', 'fedora_ilives'));
+    
+  }
+}
