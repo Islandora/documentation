@@ -26,12 +26,13 @@ class CollectionClass {
    * @param string $pid The pid of the collection to represent.
    * @return CollectionClass
    */
-  function CollectionClass($pid = NULL) {
-    drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
+  function __construct($pid = NULL) {
     if (!empty($pid)) {
       module_load_include('inc', 'fedora_repository', 'ObjectHelper');
       $this->collectionObject = new ObjectHelper($pid);
+      $this->pid = $pid;
     }
+    
   }
 
   /* gets objects related to this object.  must include offset and limit
@@ -394,6 +395,78 @@ class CollectionClass {
     }
     user_save($user, $personal_collection_pid);
     return TRUE;
+  }
+  
+  function showFieldSets() {
+    
+    global $base_url;
+
+    $tabset = array();
+
+    $tabset['my_tabset'] = array(
+      '#type' => 'tabset',
+    );
+    
+    global $user;
+    $objectHelper = new ObjectHelper();
+    $results = $this->getRelatedItems($this->pid, NULL);
+    
+    
+    
+    $html = $objectHelper->renderCollection($results, $this->pid );
+
+
+    
+    $tabset['my_tabset']['second_tab'] = array(
+//     $collection_fieldset = array (
+      '#type' => 'tabpage',
+      '#title' => t('Members'),
+      '#content' => $html
+    );
+    $tabset['my_tabset']['first_tab'] = array(
+      // #type and #title are the minimum requirements.
+      '#type' => 'tabpage',
+      '#title' => t('View'),
+      // This will be the content of the tab.
+      '#content' => 'what what',
+    );
+   $tabset['my_tabset']['third_tab'] = array(
+      '#type' => 'tabpage',
+      '#title' => t('Description'),
+    );
+    $tabset['my_tabset']['third_tab']['tabset'] = array(
+      '#type' => 'tabset',
+    );
+    
+    $tabset['my_tabset']['third_tab']['tabset']['view'] = array(
+      '#type' => 'tabpage',
+      '#title' => t('Darwin Core'),
+      '#content' => "METADATA",
+    );
+    module_load_include('inc', 'fedora_repository', 'ObjectHelper');
+/*    $obj = new ObjectHelper();
+    if (fedora_repository_access(OBJECTHELPER :: $EDIT_FEDORA_METADATA, $this->pid, $user)) {
+      $editform = drupal_get_form('fedora_repository_edit_qdc_form', $this->pid, 'DARWIN_CORE');
+      $tabset['my_tabset']['third_tab']['tabset']['edit'] = array(
+        '#type' => 'tabpage',
+        '#title' => t('Edit'),
+        '#content' => $editform,
+      );
+      $tabset['my_tabset']['third_tab']['tabset']['source'] = array(
+        '#type' => 'tabpage',
+        '#title' => t('Vew Source'),
+      );
+      $xmlsrc = $dwc->asXML();
+      $tabset['my_tabset']['third_tab']['tabset']['source']['srctext'] = array(
+        '#name' => 'source',
+        '#type' => 'textarea',
+        '#value' => $xmlsrc,
+        '#id' => 'source',
+        '#height' => 50,
+      );
+    }
+*/
+    return tabs_render($tabset);
   }
 
 }

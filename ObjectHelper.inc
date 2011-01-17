@@ -666,8 +666,127 @@ class ObjectHelper {
         $isCollection = TRUE;
       }
     }
+    //--------------------------------------------------------------------------------
+    //show the collections datastreams
+    if ($results->length > 0 || $isCollection == TRUE) {
+      //  if(strlen($objectList)>22||$contentModel=='Collection'||$contentModel=='Community')//length of empty dom still equals 22 because of <table/> etc
+      module_load_include('inc', 'Fedora_Repository', 'CollectionPolicy');
+      $collectionPolicyExists = $objectHelper->getMimeType($pid, CollectionPolicy::getDefaultDSID());
+      if (user_access(ObjectHelper :: $INGEST_FEDORA_OBJECTS) && $collectionPolicyExists) {
+        if (!empty($collectionPolicyExists)) {
+	  $allow=TRUE;
+	  if (module_exists('fedora_fesl')) {  
+	    $allow= fedora_fesl_check_roles($pid,'write');
+	  }
+	  if ($allow) {
+	  // $ingestObject = '<a title="'. t('Ingest a New object into ') . $collectionName . ' '. $collection_pid . '" href="'. base_path() .
+	    $ingestObject = '<a title="' . t('Ingest a New object into !collection_name PID !collection_pid', array('!collection_name' => $collectionName, '!collection_pid' => $collection_pid)) . '" href="' . base_path() .
+		    'fedora/ingestObject/' . $collection_pid . '/' . $collectionName . '"><img src="' . $base_url . '/' . $path .
+		    '/images/ingest.png" alt="' . t('Add a New Object') . '" class="icon"></a>' . t(' Add to this Collection');
+	  }
+	}
+      }
+      else {
+        $ingestObject = '&nbsp;';
+      }
+    }
 
-    //$label=$content;
+      $datastreams .= $ingestObject;
+
+
+    $output .= $datastreams;
+
+    $showDesc = FALSE;
+    switch (variable_get('fedora_object_display_description', ObjectHelper :: $DISPLAY_NO_MODEL_OUTPUT)) {
+      case ObjectHelper :: $DISPLAY_NEVER: break;
+      case ObjectHelper :: $DISPLAY_NO_MODEL_OUTPUT:
+        if (trim($datastreams) == '') {
+          $showDesc = TRUE;
+        }
+        break;
+
+      case ObjectHelper :: $DISPLAY_ALWAYS:
+      default:
+        $showDesc = TRUE;
+        break;
+    }
+    if ($showDesc) {
+      //just show default dc or qdc as we could not find a content model
+      $metaDataText = t('Description');
+      $body = $this->getQDC($pid);
+      $fieldset = array(
+          '#title' => t("!metaDataText", array('!metaDataText' => $metaDataText)),
+          '#collapsible' => TRUE,
+          '#collapsed' => TRUE,
+          '#value' => $body
+      );
+      $output .= theme('fieldset', $fieldset);
+    }
+
+    
+    return $output;
+  }
+
+  /**
+   * Gets the parent objects that this object is related to
+   *
+   * @param unknown_type $pid
+   * @return unknown
+   */
+  function get_parent_objects($pid) {
+    $query_string = 'select $object $title from <#ri>
+                            where ($object <dc:title> $title
+                              and <info:fedora/' . $pid . '> <fedora-rels-ext:isMemberOfCollection> $object
+                              and $object <fedora-model:state> <info:fedora/fedora-system:def/model#Active>)
+                            order by $title';
+    $objects = $this->getCollectionInfo($pid, $query_string);
+    return $objects;
+  }
+
+  function get_parent_objects_asHTML($pid) {
+    global $base_url;
+    $parent_collections = $this->get_parent_objects($pid);
+    try {
+      $parent_collections = new SimpleXMLElement($parent_collections);
+    } catch (exception $e) {
+      drupal_set_message(t('Error getting parent objects !e', array('!e' => $e->getMessage())));
+      return;
+    }
+
+    $parent_collections_HTML = '';
+    foreach ($parent_collections->results->result as $result) {
+      $collection_label = $result->title;
+      foreach ($result->object->attributes() as $a => $b) {
+        if ($a == 'uri') {
+          $uri = (string) $b;
+          $uri = $base_url . '/fedora/repository' . substr($uri, strpos($uri, '/')) . '/-/' . $collection_label;
+        }
+      }
+      $parent_collections_HTML .= '<a href="' . $uri . '">' . $collection_label . '</a><br />';
+    }
+    if (!empty($parent_collections_HTML)) {
+      $parent_collections_HTML = '<tr><td><h3>' . t("Belongs to these collections: ") . '</h3></td><td colspan="4">' . $parent_collections_HTML . '</td></tr>';
+    }
+
+    return $parent_collections_HTML;
+  }
+
+  function renderCollection($content, $pid, $dsId, $collection, $pageNumber = NULL) {
+    $path = drupal_get_path('module', 'fedora_repository');
+    global $base_url;
+    $collection_pid = $pid; //we will be changing the pid later maybe
+    //module_load_include('php', ''Fedora_Repository'', 'ObjectHelper');
+    $objectHelper = $this;
+    $parsedContent = NULL;
+    $contentModels = $objectHelper->get_content_models_list($pid);
+    $isCollection = FALSE;
+    //if this is a collection object store the $pid in the session as it will come in handy
+    //after a purge or ingest to return to the correct collection.
+
+    $fedoraItem = NULL;
+
+
+
     $collectionName = $collection;
     if (!$pageNumber) {
       $pageNumber = 1;
@@ -716,159 +835,21 @@ class ObjectHelper {
       drupal_set_message(t("No Objects in this collection or bad query."));
     }
 
-    //--------------------------------------------------------------------------------
-    //show the collections datastreams
-    if ($results->length > 0 || $isCollection == TRUE) {
-      //  if(strlen($objectList)>22||$contentModel=='Collection'||$contentModel=='Community')//length of empty dom still equals 22 because of <table/> etc
-      module_load_include('inc', 'Fedora_Repository', 'CollectionPolicy');
-      $collectionPolicyExists = $objectHelper->getMimeType($pid, CollectionPolicy::getDefaultDSID());
-      if (user_access(ObjectHelper :: $INGEST_FEDORA_OBJECTS) && $collectionPolicyExists) {
-        if (!empty($collectionPolicyExists)) {
-	  $allow=TRUE;
-	  if (module_exists('fedora_fesl')) {  
-	    $allow= fedora_fesl_check_roles($pid,'write');
-	  }
-	  if ($allow) {
-	  // $ingestObject = '<a title="'. t('Ingest a New object into ') . $collectionName . ' '. $collection_pid . '" href="'. base_path() .
-	    $ingestObject = '<a title="' . t('Ingest a New object into !collection_name PID !collection_pid', array('!collection_name' => $collectionName, '!collection_pid' => $collection_pid)) . '" href="' . base_path() .
-		    'fedora/ingestObject/' . $collection_pid . '/' . $collectionName . '"><img src="' . $base_url . '/' . $path .
-		    '/images/ingest.png" alt="' . t('Add a New Object') . '" class="icon"></a>' . t(' Add to this Collection');
-	  }
-	}
-      }
-      else {
-        $ingestObject = '&nbsp;';
-      }
 
+    $object_list_fieldset = array(
+      '#title' => t('Items in this collection'),
+      '#collapsible' => TRUE,
+      '#collapsed' => FALSE,
+      '#value' => (isset($objectList) ? $objectList : ''),);
+    $objectListOut = theme('fieldset', $object_list_fieldset);
 
-      $datastreams .= $ingestObject;
-
-      $objectListOut = '';
-      if (isset($objectList)) {
-        $object_list_fieldset = array(
-            '#title' => t('Items in this collection'),
-            '#collapsible' => TRUE,
-            '#collapsed' => FALSE,
-            '#value' => (isset($objectList) ? $objectList : ''), //collection list
-        );
-        $objectListOut = theme('fieldset', $object_list_fieldset);
-      }
-    } else {
-      //$collectionName='';
-      $collection_fieldset = array(
-          '#title' => "",
-          '#collapsible' => TRUE,
-          '#collapsed' => FALSE,
-          '#value' => $datastreams,
-      );
-      $objectListOut = ''; //no collection objects to show so don't show field set
-    }
-
-    $output = '';
-    switch (variable_get('fedora_object_display_title', ObjectHelper::$DISPLAY_ALWAYS)) {
-      case ObjectHelper :: $DISPLAY_NEVER: break;
-      case ObjectHelper :: $DISPLAY_NO_MODEL_OUTPUT:
-        if (trim($datastreams) == '') {
-          $output .= '<strong>' . $collectionName . '</strong><br/>';
-        }
-        break;
-
-      case ObjectHelper :: $DISPLAY_ALWAYS:
-      default:
-        $output .= '<strong>' . $collectionName . '</strong><br/>';
-        break;
-    }
-
-    $output .= $datastreams;
-
-    $showDesc = FALSE;
-    switch (variable_get('fedora_object_display_description', ObjectHelper :: $DISPLAY_NO_MODEL_OUTPUT)) {
-      case ObjectHelper :: $DISPLAY_NEVER: break;
-      case ObjectHelper :: $DISPLAY_NO_MODEL_OUTPUT:
-        if (trim($datastreams) == '') {
-          $showDesc = TRUE;
-        }
-        break;
-
-      case ObjectHelper :: $DISPLAY_ALWAYS:
-      default:
-        $showDesc = TRUE;
-        break;
-    }
-    if ($showDesc) {
-      //just show default dc or qdc as we could not find a content model
-      $metaDataText = t('Description');
-      $body = $this->getQDC($pid);
-      $fieldset = array(
-          '#title' => t("!metaDataText", array('!metaDataText' => $metaDataText)),
-          '#collapsible' => TRUE,
-          '#collapsed' => TRUE,
-          '#value' => $body
-      );
-      $output .= theme('fieldset', $fieldset);
-    }
-
-    switch (variable_get('fedora_collection_display_list', ObjectHelper::$DISPLAY_ALWAYS)) {
-      case ObjectHelper :: $DISPLAY_NEVER: break;
-      case ObjectHelper :: $DISPLAY_NO_MODEL_OUTPUT:
-        if (trim($datastreams) == '') {
-          $output .= $objectListOut . '<br/>';
-        }
-        break;
-
-      case ObjectHelper :: $DISPLAY_ALWAYS:
-      default:
-        $output .= $objectListOut . '<br/>';
-        break;
-    }
-
+    
+    $output .= $objectListOut . '<br/>';
+    
     return $output;
   }
 
-  /**
-   * Gets the parent objects that this object is related to
-   *
-   * @param unknown_type $pid
-   * @return unknown
-   */
-  function get_parent_objects($pid) {
-    $query_string = 'select $object $title from <#ri>
-                            where ($object <dc:title> $title
-                              and <info:fedora/' . $pid . '> <fedora-rels-ext:isMemberOfCollection> $object
-                              and $object <fedora-model:state> <info:fedora/fedora-system:def/model#Active>)
-                            order by $title';
-    $objects = $this->getCollectionInfo($pid, $query_string);
-    return $objects;
-  }
-
-  function get_parent_objects_asHTML($pid) {
-    global $base_url;
-    $parent_collections = $this->get_parent_objects($pid);
-    try {
-      $parent_collections = new SimpleXMLElement($parent_collections);
-    } catch (exception $e) {
-      drupal_set_message(t('Error getting parent objects !e', array('!e' => $e->getMessage())));
-      return;
-    }
-
-    $parent_collections_HTML = '';
-    foreach ($parent_collections->results->result as $result) {
-      $collection_label = $result->title;
-      foreach ($result->object->attributes() as $a => $b) {
-        if ($a == 'uri') {
-          $uri = (string) $b;
-          $uri = $base_url . '/fedora/repository' . substr($uri, strpos($uri, '/')) . '/-/' . $collection_label;
-        }
-      }
-      $parent_collections_HTML .= '<a href="' . $uri . '">' . $collection_label . '</a><br />';
-    }
-    if (!empty($parent_collections_HTML)) {
-      $parent_collections_HTML = '<tr><td><h3>' . t("Belongs to these collections: ") . '</h3></td><td colspan="4">' . $parent_collections_HTML . '</td></tr>';
-    }
-
-    return $parent_collections_HTML;
-  }
-
+  
   /**
    * gets a list of datastreams and related function that we should use to show datastreams in their own fieldsets
    * from the content model associated with the object
