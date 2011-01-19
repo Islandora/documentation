@@ -834,19 +834,7 @@ class ObjectHelper {
     } else {
       drupal_set_message(t("No Objects in this collection or bad query."));
     }
-
-
-    $object_list_fieldset = array(
-      '#title' => t('Items in this collection'),
-      '#collapsible' => TRUE,
-      '#collapsed' => FALSE,
-      '#value' => (isset($objectList) ? $objectList : ''),);
-    $objectListOut = theme('fieldset', $object_list_fieldset);
-
-    
-    $output = $objectListOut . '<br/>';
-    
-    return $output;
+    return $objectList;
   }
 
   
