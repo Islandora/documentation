@@ -397,7 +397,7 @@ class CollectionClass {
     return TRUE;
   }
   
-  function showFieldSets() {
+  function showFieldSets($page_number) {
     
     global $base_url;
 
@@ -413,7 +413,7 @@ class CollectionClass {
     
     
     
-    $html = $objectHelper->renderCollection($results, $this->pid );
+    $html = $objectHelper->renderCollection($results, $this->pid, NULL, NULL, $page_number );
 
 
     

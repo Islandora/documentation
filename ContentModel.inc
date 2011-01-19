@@ -1437,7 +1437,7 @@ class ContentModel extends XMLDatastream {
    * @param string $pid
    * @return string $output
    */
-  public function displayExtraFieldset($pid) {
+  public function displayExtraFieldset($pid, $page_number) {
     $output = '';
     if ($this->validate()) {
       $datastreams = $this->xml->getElementsByTagName('datastreams');
@@ -1467,7 +1467,7 @@ class ContentModel extends XMLDatastream {
                     self::$errors[] = 'Execute Form Handler: method \''. $className .'->'. $methodName .'\' does not exist.';
                   } 
                   else {
-                    $output .= $class->$methodName();
+                    $output .= $class->$methodName($page_number);
                   }
                 }
               }

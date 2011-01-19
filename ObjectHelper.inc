@@ -844,7 +844,7 @@ class ObjectHelper {
     $objectListOut = theme('fieldset', $object_list_fieldset);
 
     
-    $output .= $objectListOut . '<br/>';
+    $output = $objectListOut . '<br/>';
     
     return $output;
   }
@@ -854,7 +854,7 @@ class ObjectHelper {
    * gets a list of datastreams and related function that we should use to show datastreams in their own fieldsets
    * from the content model associated with the object
    */
-  function createExtraFieldsets($pid, $contentModel) {
+  function createExtraFieldsets($pid, $contentModel, $page_number) {
     //$models = $collectionHelper->getContentModels($collectionPid, FALSE);
     // possible problem in below if the collection policy has multiple content models
     //with different pids but same dsid we could get wrong one,  low probability and functionality
@@ -865,7 +865,7 @@ class ObjectHelper {
     $output = '';
     module_load_include('inc', 'fedora_repository', 'ContentModel');
     if (($cm = ContentModel :: loadFromModel($contentModel)) !== FALSE && $cm->validate()) {
-      $output .= $cm->displayExtraFieldset($pid);
+      $output .= $cm->displayExtraFieldset($pid, $page_number);
     }
     return $output;
   }

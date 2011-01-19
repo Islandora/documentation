@@ -808,9 +808,14 @@ function fedora_repository_get_items($pid = NULL, $dsId = NULL, $collection = NU
 
 
   $offset = $limit * $pageNumber;
-  $results = $collectionClass->getRelatedObjects($pid, $limit, $offset, NULL); //updated so we can do paging in query not in xslt
+  //$results = $collectionClass->getRelatedObjects($pid, $limit, $offset, NULL); //updated so we can do paging in query not in xslt
   //$results = $collectionClass->getRelatedItems($pid, NULL);
-  $content .= $objectHelper->parseContent($results, $pid, $dsId, $collection, $pageNumber);
+  $content_models = $objectHelper->get_content_models_list($pid);
+  foreach ($content_models as $content_model) {
+    $content .= $objectHelper->createExtraFieldsets($pid, $content_model, $pageNumber);
+  }
+  //$content .= $objectHelper
+  //$content .= $objectHelper->parseContent($results, $pid, $dsId, $collection, $pageNumber);
   //the below is for islandlives we should be able to do this in the xslt though
   //$css=$path.'/stylesheets/container-large.css';
   //drupal_add_css($css);
