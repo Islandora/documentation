@@ -411,24 +411,24 @@ class CollectionClass {
     $objectHelper = new ObjectHelper();
     $results = $this->getRelatedItems($this->pid, NULL);
     
+    $collection_items = $objectHelper->renderCollection($results, $this->pid, NULL, NULL, $page_number );
+    $show_ingest_tab = (!empty($_POST['form_id']) && $_POST['form_id'] == 'fedora_repository_ingest_form')
+                        && (!empty($_POST['op']) && $_POST['op'] == 'Next');
+    $add_to_collection = $this->getIngestInterface();
     
-    
-    $html = $objectHelper->renderCollection($results, $this->pid, NULL, NULL, $page_number );
-
-
-    
-    $tabset['my_tabset']['second_tab'] = array(
+    $tabset['my_tabset']['view_tab'] = array(
 //     $collection_fieldset = array (
       '#type' => 'tabpage',
       '#title' => t('Members'),
-      '#content' => $html
+      '#content' => $collection_items
     );
-    $tabset['my_tabset']['first_tab'] = array(
+    $tabset['my_tabset']['add_tab'] = array(
       // #type and #title are the minimum requirements.
       '#type' => 'tabpage',
-      '#title' => t('View'),
+      '#title' => t('Add / Edit'),
+      '#selected' => $show_ingest_tab,
       // This will be the content of the tab.
-      '#content' => 'what what',
+      '#content' => $add_to_collection,
     );
    $tabset['my_tabset']['third_tab'] = array(
       '#type' => 'tabpage',
@@ -469,5 +469,29 @@ class CollectionClass {
     return tabs_render($tabset);
   }
 
+  function getIngestInterface() {
+    global $base_url;
+    $objectHelper = new ObjectHelper();
+    module_load_include('inc', 'Fedora_Repository', 'CollectionPolicy');
+    $collectionPolicyExists = $objectHelper->getMimeType($this->pid, CollectionPolicy::getDefaultDSID());
+    if (user_access(ObjectHelper :: $INGEST_FEDORA_OBJECTS) && $collectionPolicyExists) {
+      if (!empty($collectionPolicyExists)) {
+        $allow=TRUE;
+        if (module_exists('fedora_fesl')) {  
+          $allow= fedora_fesl_check_roles($this->pid,'write');
+        }
+        if ($allow) {
+        // $ingestObject = '<a title="'. t('Ingest a New object into ') . $collectionName . ' '. $collection_pid . '" href="'. base_path() .
+          $ingestObject = drupal_get_form('fedora_repository_ingest_form', $this->pid, "test hello");
+          
+        }
+      }
+    }
+    else {
+      $ingestObject = '&nbsp;';
+    }
+    
+    return $ingestObject;
+  }
 }
 
