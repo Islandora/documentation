@@ -430,13 +430,12 @@ function fedora_repository_purge_object_form_submit($form, &$form_state) {
       }
       return;
     }
-    if (empty($collectionPid) && $_SESSION['fedora_collection'] != $pid) {
-      $collectionPid = $_SESSION['fedora_collection'];
-    }
     if (!empty($form_state['values']['referrer'])) {
       $form_state['redirect'] = $form_state['values']['referrer'];
     }
-    else {
+    elseif (empty($collectionPid) && $_SESSION['fedora_collection'] != $pid) {
+      $collectionPid = $_SESSION['fedora_collection'];
+      
       $form_state['redirect'] = "fedora/repository/$collectionPid/";
     }
   }
