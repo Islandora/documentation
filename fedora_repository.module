@@ -234,7 +234,7 @@ function fedora_repository_ingest_form(&$form_state, $collection_pid, $collectio
   return $ingestForm->createIngestForm($collection_pid, $collection_label, $form_state);
 }
 
-function fedora_repository_purge_object_form(&$form_state, $pid, $referrer) {
+function fedora_repository_purge_object_form(&$form_state, $pid, $referrer = NULL) {
   global $base_url;
   //  $form['#redirect'] = "fedora/repository/$collectionPid/";
   $form['pid'] = array(
