@@ -414,8 +414,7 @@ class CollectionClass {
     $collection_items = $objectHelper->renderCollection($results, $this->pid, NULL, NULL, $page_number );
     
     // Check the form post to see if we are in the middle of an ingest operation.
-    $show_ingest_tab = (!empty($_POST['form_id']) && $_POST['form_id'] == 'fedora_repository_ingest_form')
-                        && (!empty($_POST['op']) && $_POST['op'] == 'Next');
+    $show_ingest_tab = (!empty($_POST['form_id']) && $_POST['form_id'] == 'fedora_repository_ingest_form');
     $add_to_collection = $this->getIngestInterface();
     
     $tabset['my_tabset']['view_tab'] = array(
