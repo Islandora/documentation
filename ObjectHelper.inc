@@ -313,16 +313,8 @@ class ObjectHelper {
     return $content;
   }
 
-  /**
-   * Queries fedora for what we call the qualified dublin core.  Currently only dc.coverage has
-   * any qualified fields
-   * Transforms the returned xml to html
-   * This is the default metadata view.  With icons for searching a dublin core field
-   * @param $pid String
-   * @return String
-   */
-  function getQDC($pid) {
-    global $base_url;
+  function getFormattedDC($item) {
+      global $base_url;
     $path = drupal_get_path('module', 'fedora_repository');
     module_load_include('inc', 'fedora_repository', 'ConnectionHelper');
 
@@ -331,7 +323,7 @@ class ObjectHelper {
 
     $dsId = 'QDC';
     $params = array(
-        'pid' => "$pid",
+        'pid' => "$item->pid",
         'dsID' => "$dsId",
         'asOfDateTime' => ""
     );
@@ -343,7 +335,7 @@ class ObjectHelper {
       try { //probably no QDC so we will try for the DC stream.
         $dsId = 'DC';
         $params = array(
-            'pid' => "$pid",
+            'pid' => "$item->pid",
             'dsID' => "$dsId",
             'asOfDateTime' => ""
         );
@@ -377,7 +369,25 @@ class ObjectHelper {
     $xsl = $proc->importStylesheet($xsl);
     $newdom = $proc->transformToDoc($input);
     $output = $newdom->saveXML();
-    $baseUrl = base_path();
+    return $output;
+  }
+  
+  /**
+   * Queries fedora for what we call the qualified dublin core.  Currently only dc.coverage has
+   * any qualified fields
+   * Transforms the returned xml to html
+   * This is the default metadata view.  With icons for searching a dublin core field
+   * @param $pid String
+   * @return String
+   */
+  function getQDC($pid) {
+    global $base_url;
+    $item = new Fedora_Item($pid);
+    $ds_list = $item->get_datastreams_list_as_array();
+    $output = $this->getFormattedDC($item);
+    $dsid = array_key_exists('QDC', $ds_list) ? 'QDC' : 'DC';
+      
+    
     //$baseUrl=substr($baseUrl, 0, (strpos($baseUrl, "/")-1));
     if (user_access(ObjectHelper :: $EDIT_FEDORA_METADATA)) {
       $allow=TRUE;
@@ -386,7 +396,7 @@ class ObjectHelper {
       }
       if ($allow) {
 	  $output .= '<br /><a title = "' . t('Edit Meta Data') . '" href="' . $base_url . '/fedora/repository/' . 'editmetadata/' . $pid . '/' .
-	    $dsId . '"><img src="' . $base_url . '/' . $path . '/images/edit.gif" alt="' . t('Edit Meta Data') . '" /></a>';
+	    $dsid . '"><img src="' . $base_url . '/' . drupal_get_path('module', 'fedora_repository') . '/images/edit.gif" alt="' . t('Edit Meta Data') . '" /></a>';
       }
     }
     return $output;

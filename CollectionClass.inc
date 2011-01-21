@@ -431,14 +431,14 @@ class CollectionClass {
       // This will be the content of the tab.
       '#content' => $add_to_collection,
     );
-   $tabset['my_tabset']['third_tab'] = array(
+    $tabset['my_tabset']['third_tab'] = array(
       '#type' => 'tabpage',
       '#title' => t('Description'),
     );
     $tabset['my_tabset']['third_tab']['tabset'] = array(
       '#type' => 'tabset',
     );
-    $dc_html = $objectHelper->getQDC($this->pid);
+    $dc_html = $objectHelper->getFormattedDC($collection_item);
     
     $ds_list = $objectHelper->getFormattedDatastreamList($this->pid, NULL, $collection_item);
     
@@ -448,29 +448,15 @@ class CollectionClass {
       '#content' => $dc_html . $ds_list,
     );
     
-    module_load_include('inc', 'fedora_repository', 'ObjectHelper');
-/*    $obj = new ObjectHelper();
     if (fedora_repository_access(OBJECTHELPER :: $EDIT_FEDORA_METADATA, $this->pid, $user)) {
-      $editform = drupal_get_form('fedora_repository_edit_qdc_form', $this->pid, 'DARWIN_CORE');
+      $editform = drupal_get_form('fedora_repository_edit_qdc_form', $this->pid, 'DC');
       $tabset['my_tabset']['third_tab']['tabset']['edit'] = array(
         '#type' => 'tabpage',
         '#title' => t('Edit'),
         '#content' => $editform,
       );
-      $tabset['my_tabset']['third_tab']['tabset']['source'] = array(
-        '#type' => 'tabpage',
-        '#title' => t('Vew Source'),
-      );
-      $xmlsrc = $dwc->asXML();
-      $tabset['my_tabset']['third_tab']['tabset']['source']['srctext'] = array(
-        '#name' => 'source',
-        '#type' => 'textarea',
-        '#value' => $xmlsrc,
-        '#id' => 'source',
-        '#height' => 50,
-      );
+      
     }
-*/
     return tabs_render($tabset);
   }
 
