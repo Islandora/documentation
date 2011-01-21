@@ -445,7 +445,7 @@ class CollectionClass {
     $tabset['my_tabset']['third_tab']['tabset']['view'] = array(
       '#type' => 'tabpage',
       '#title' => t('View'),
-      '#content' => $dc_html . $ds_list,
+      '#content' => $dc_html . $ds_list . drupal_get_form('add_stream_form', $this->pid),
     );
     
     if (fedora_repository_access(OBJECTHELPER :: $EDIT_FEDORA_METADATA, $this->pid, $user)) {
