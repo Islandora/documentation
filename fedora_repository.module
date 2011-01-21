@@ -234,7 +234,7 @@ function fedora_repository_ingest_form(&$form_state, $collection_pid, $collectio
   return $ingestForm->createIngestForm($collection_pid, $collection_label, $form_state);
 }
 
-function fedora_repository_purge_object_form(&$form_state, $pid, $referrer) {
+function fedora_repository_purge_object_form(&$form_state, $pid, $referrer = NULL) {
   global $base_url;
   //  $form['#redirect'] = "fedora/repository/$collectionPid/";
   $form['pid'] = array(
@@ -430,13 +430,12 @@ function fedora_repository_purge_object_form_submit($form, &$form_state) {
       }
       return;
     }
-    if (empty($collectionPid) && $_SESSION['fedora_collection'] != $pid) {
-      $collectionPid = $_SESSION['fedora_collection'];
-    }
     if (!empty($form_state['values']['referrer'])) {
       $form_state['redirect'] = $form_state['values']['referrer'];
     }
-    else {
+    elseif (empty($collectionPid) && $_SESSION['fedora_collection'] != $pid) {
+      $collectionPid = $_SESSION['fedora_collection'];
+      
       $form_state['redirect'] = "fedora/repository/$collectionPid/";
     }
   }

@@ -103,6 +103,7 @@ class FedoraRepositoryTestCase extends DrupalWebTestCase {
    $this->pass("This is the PID list to purge: ". implode(", ", $pid_list) );
    foreach ($pid_list as $pid) {
      $this->drupalPost("fedora/repository/purgeObject/$pid", array(), 'Purge');
+     $this->drupalPost(NULL, array(), 'Delete');
    }
  }
 
