@@ -412,7 +412,7 @@ class CollectionClass {
     $results = $this->getRelatedItems($this->pid, NULL);
     
     $collection_items = $objectHelper->renderCollection($results, $this->pid, NULL, NULL, $page_number );
-    
+    $collection_item = new Fedora_Item($this->pid);
     // Check the form post to see if we are in the middle of an ingest operation.
     $show_ingest_tab = (!empty($_POST['form_id']) && $_POST['form_id'] == 'fedora_repository_ingest_form');
     $add_to_collection = $this->getIngestInterface();
@@ -438,12 +438,16 @@ class CollectionClass {
     $tabset['my_tabset']['third_tab']['tabset'] = array(
       '#type' => 'tabset',
     );
+    $dc_html = $objectHelper->getQDC($this->pid);
+    
+    $ds_list = $objectHelper->getFormattedDatastreamList($this->pid, NULL, $collection_item);
     
     $tabset['my_tabset']['third_tab']['tabset']['view'] = array(
       '#type' => 'tabpage',
-      '#title' => t('Darwin Core'),
-      '#content' => "METADATA",
+      '#title' => t('View'),
+      '#content' => $dc_html . $ds_list,
     );
+    
     module_load_include('inc', 'fedora_repository', 'ObjectHelper');
 /*    $obj = new ObjectHelper();
     if (fedora_repository_access(OBJECTHELPER :: $EDIT_FEDORA_METADATA, $this->pid, $user)) {
