@@ -307,9 +307,7 @@ class ObjectHelper {
       }
     }
 
-
     $content .= "<tr><td>$label</td><td>&nbsp;$view</td><td>&nbsp;$downloadVersion</td><td>&nbsp;$mimeType</td><td>&nbsp;$replaceImage&nbsp;$purgeImage</td></tr>\n";
-    //$content .= "<tr><td><b>Mime Type :</b></td><td>$mimeType</td></tr>\n";
     return $content;
   }
 
@@ -320,6 +318,10 @@ class ObjectHelper {
 
     $dsid = array_key_exists('QDC', $item->get_datastreams_list_as_array()) ? 'QDC' : 'DC';
     $xmlstr = $item->get_datastream_dissemination($dsid);
+
+    if (empty($xmlstr)) {
+      return '';
+    }
     
     try {
       $proc = new XsltProcessor();
