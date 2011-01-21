@@ -314,40 +314,13 @@ class ObjectHelper {
   }
 
   function getFormattedDC($item) {
-      global $base_url;
+    global $base_url;
     $path = drupal_get_path('module', 'fedora_repository');
     module_load_include('inc', 'fedora_repository', 'ConnectionHelper');
 
-    $soapHelper = new ConnectionHelper();
-    $client = $soapHelper->getSoapClient(variable_get('fedora_soap_url', 'http://localhost:8080/fedora/services/access?wsdl'));
-
-    $dsId = 'QDC';
-    $params = array(
-        'pid' => "$item->pid",
-        'dsID' => "$dsId",
-        'asOfDateTime' => ""
-    );
-    try {
-      $object = $client->__soapCall('getDatastreamDissemination', array(
-                  'parameters' => $params
-              ));
-    } catch (Exception $e) {
-      try { //probably no QDC so we will try for the DC stream.
-        $dsId = 'DC';
-        $params = array(
-            'pid' => "$item->pid",
-            'dsID' => "$dsId",
-            'asOfDateTime' => ""
-        );
-        $object = $client->__soapCAll('getDatastreamDissemination', array(
-                    'parameters' => $params
-                ));
-      } catch (exception $e2) {
-        drupal_set_message($e2->getMessage(), 'error');
-        return;
-      }
-    }
-    $xmlstr = $object->dissemination->stream;
+    $dsid = array_key_exists('QDC', $item->get_datastreams_list_as_array()) ? 'QDC' : 'DC';
+    $xmlstr = $item->get_datastream_dissemination($dsid);
+    
     try {
       $proc = new XsltProcessor();
     } catch (Exception $e) {
