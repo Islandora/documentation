@@ -356,7 +356,7 @@ function add_stream_form_validate($form, &$form_state) {
     return FALSE;
   }
   if (!(preg_match("/^[a-zA-Z]/", $dsid))) {
-    form_set_error('', t('Data stream ID has to start with a letter.'));
+    form_set_error('', t("Data stream ID ($dsid) has to start with a letter."));
     return FALSE;
   }
   if (strlen($dsLabel) > 64) {
