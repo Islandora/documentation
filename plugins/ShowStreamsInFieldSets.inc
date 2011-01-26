@@ -57,6 +57,7 @@ class ShowStreamsInFieldSets {
    */
   function showPDFPreview() {
     global $base_url;
+    global $base_path;
     global $user;
     module_load_include('inc', 'fedora_repository', 'api/fedora_item');
     $tabset = array();
@@ -74,14 +75,15 @@ class ShowStreamsInFieldSets {
     );
     $objectHelper = new ObjectHelper();
     $item = new Fedora_Item($this->pid);
-    $dc_html = $objectHelper->getFormattedDC($item);
     
+    $dc_html = $objectHelper->getFormattedDC($item);
+    $dl_link = l('<img src="'.$base_path.drupal_get_path('module', 'fedora_repository').'/images/Crystal_Clear_app_download_manager.png">', '/fedora/repository/'.$this->pid.'/OBJ', array('html' => TRUE));
     $ds_list = $objectHelper->getFormattedDatastreamList($this->pid, NULL, $item);
     
     $tabset['my_tabset']['first_tab']['tabset']['view'] = array(
       '#type' => 'tabpage',
       '#title' => t('View'),
-      '#content' => $dc_html . $ds_list,
+      '#content' => $dl_link . $dc_html . $ds_list,
     );
     
     if (fedora_repository_access(OBJECTHELPER :: $EDIT_FEDORA_METADATA, $this->pid, $user)) {
