@@ -57,7 +57,8 @@ class ShowStreamsInFieldSets {
    */
   function showPDFPreview() {
     global $base_url;
-
+    global $user;
+    module_load_include('inc', 'fedora_repository', 'api/fedora_item');
     $tabset = array();
 
     $tabset['my_tabset'] = array(
@@ -66,11 +67,33 @@ class ShowStreamsInFieldSets {
     $tabset['my_tabset']['first_tab'] = array(
       '#type' => 'tabpage',
       '#title' => t('Description'),
-      '#content' => $this->showQdc(),
     );
 
+    $tabset['my_tabset']['first_tab']['tabset'] = array(
+      '#type' => 'tabset',
+    );
+    $objectHelper = new ObjectHelper();
+    $item = new Fedora_Item($this->pid);
+    $dc_html = $objectHelper->getFormattedDC($item);
+    
+    $ds_list = $objectHelper->getFormattedDatastreamList($this->pid, NULL, $item);
+    
+    $tabset['my_tabset']['first_tab']['tabset']['view'] = array(
+      '#type' => 'tabpage',
+      '#title' => t('View'),
+      '#content' => $dc_html . $ds_list,
+    );
+    
+    if (fedora_repository_access(OBJECTHELPER :: $EDIT_FEDORA_METADATA, $this->pid, $user)) {
+      $editform = drupal_get_form('fedora_repository_edit_qdc_form', $this->pid, 'DC');
+      $tabset['my_tabset']['first_tab']['tabset']['edit'] = array(
+        '#type' => 'tabpage',
+        '#title' => t('Edit'),
+        '#content' => $editform,
+      );
+    }
+    
     $tabset['my_tabset']['second_tab'] = array(
-//     $collection_fieldset = array (
       '#type' => 'tabpage',
       '#title' => t('Read Online'),
       '#content' => "<iframe src=\"http://docs.google.com/viewer?url=". $base_url . '/fedora/repository/'. 
@@ -79,9 +102,6 @@ class ShowStreamsInFieldSets {
 
     // Render the tabset.
     return tabs_render($tabset);
-
-    return theme('fieldset', $collection_fieldset);
-//      . (user_access('add fedora datastreams') ? drupal_get_form('fedora_ilives_image_tagging_form', $this->pid) : '');
   }
 
 
