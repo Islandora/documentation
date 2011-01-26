@@ -397,6 +397,20 @@ class CollectionClass {
     return TRUE;
   }
   
+  /**
+   * Queries a collection object for an xslt to format how the
+   * collection of objects is displayed.
+   */
+  function getXslContent($pid, $path, $canUseDefault = TRUE) {
+    module_load_include('inc', 'fedora_repository', 'CollectionClass');
+    $collectionClass = new CollectionClass();
+    $xslContent = $collectionClass->getCollectionViewStream($pid);
+    if (!$xslContent && $canUseDefault) { //no xslt so we will use the default sent with the module
+      $xslContent = file_get_contents($path . '/xsl/sparql_to_html.xsl');
+    }
+    return $xslContent;
+  }
+  
   function showFieldSets($page_number) {
     
     global $base_url;
@@ -411,7 +425,7 @@ class CollectionClass {
     $objectHelper = new ObjectHelper();
     $results = $this->getRelatedItems($this->pid, NULL);
     
-    $collection_items = $objectHelper->renderCollection($results, $this->pid, NULL, NULL, $page_number );
+    $collection_items = $this->renderCollection($results, $this->pid, NULL, NULL, $page_number );
     $collection_item = new Fedora_Item($this->pid);
     // Check the form post to see if we are in the middle of an ingest operation.
     $show_ingest_tab = (!empty($_POST['form_id']) && $_POST['form_id'] == 'fedora_repository_ingest_form');
@@ -484,5 +498,72 @@ class CollectionClass {
     
     return $ingestObject;
   }
+  
+  function renderCollection($content, $pid, $dsId, $collection, $pageNumber = NULL) {
+    $path = drupal_get_path('module', 'fedora_repository');
+    global $base_url;
+    $collection_pid = $pid; //we will be changing the pid later maybe
+    //module_load_include('php', ''Fedora_Repository'', 'ObjectHelper');
+    $objectHelper = new ObjectHelper();
+    $parsedContent = NULL;
+    $contentModels = $objectHelper->get_content_models_list($pid);
+    $isCollection = FALSE;
+    //if this is a collection object store the $pid in the session as it will come in handy
+    //after a purge or ingest to return to the correct collection.
+
+    $fedoraItem = NULL;
+
+
+
+    $collectionName = $collection;
+    if (!$pageNumber) {
+      $pageNumber = 1;
+    }
+
+    if (!isset($collectionName)) {
+      $collectionName = variable_get('fedora_repository_name', 'Collection');
+    }
+    $xslContent = $this->getXslContent($pid, $path);
+
+    //get collection list and display using xslt-------------------------------------------
+    $objectList = '';
+    if (isset($content) && $content != FALSE) {
+      $input = new DomDocument();
+      $input->loadXML(trim($content));
+      $results = $input->getElementsByTagName('result');
+      if ($results->length > 0) {
+        try {
+          $proc = new XsltProcessor();
+          $proc->setParameter('', 'collectionPid', $collection_pid);
+          $proc->setParameter('', 'collectionTitle', $collectionName);
+          $proc->setParameter('', 'baseUrl', $base_url);
+          $proc->setParameter('', 'path', $base_url . '/' . $path);
+          $proc->setParameter('', 'hitPage', $pageNumber);
+          $proc->registerPHPFunctions();
+          $xsl = new DomDocument();
+          $xsl->loadXML($xslContent);
+          // php xsl does not seem to work with namespaces so removing it below
+          // I may have just been being stupid here
+          // $content = str_ireplace('xmlns="http://www.w3.org/2001/sw/DataAccess/rf1/result"', '', $content);
+
+          $xsl = $proc->importStylesheet($xsl);
+          $newdom = $proc->transformToDoc($input);
+
+          $objectList = $newdom->saveXML(); //is the xml transformed to html as defined in the xslt associated with the collection object
+
+          if (!$objectList) {
+            throw new Exception("Invalid XML.");
+          }
+        } catch (Exception $e) {
+          drupal_set_message(t('!e', array('!e' => $e->getMessage())), 'error');
+          return '';
+        }
+      }
+    } else {
+      drupal_set_message(t("No Objects in this collection or bad query."));
+    }
+    return $objectList;
+  }
+
 }
 

@@ -783,7 +783,7 @@ class ObjectHelper {
     $xslContent = $this->getXslContent($pid, $path);
 
     //get collection list and display using xslt-------------------------------------------
-
+    $objectList = '';
     if (isset($content) && $content != FALSE) {
       $input = new DomDocument();
       $input->loadXML(trim($content));
