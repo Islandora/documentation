@@ -77,7 +77,7 @@ class ShowStreamsInFieldSets {
     $item = new Fedora_Item($this->pid);
     
     $dc_html = $objectHelper->getFormattedDC($item);
-    $dl_link = l('<img src="'.$base_path.drupal_get_path('module', 'fedora_repository').'/images/Crystal_Clear_app_download_manager.png">', '/fedora/repository/'.$this->pid.'/OBJ', array('html' => TRUE));
+    $dl_link = l('<div  style="float:left; padding: 10px"><img src="'.$base_path.drupal_get_path('module', 'fedora_repository').'/images/Crystal_Clear_app_download_manager.png"><br />Download PDF</div>', '/fedora/repository/'.$this->pid.'/OBJ', array('html' => TRUE));
     $ds_list = $objectHelper->getFormattedDatastreamList($this->pid, NULL, $item);
     
     $tabset['my_tabset']['first_tab']['tabset']['view'] = array(
