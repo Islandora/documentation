@@ -611,7 +611,7 @@ class ObjectHelper {
     $returnValue = FALSE;
     $isRestricted = variable_get('fedora_namespace_restriction_enforced', TRUE);
     if (!$isRestricted) {
-      $returnValue = TRUE;
+      $namespaceAccess = TRUE;
     }
     if ($pid == NULL) {
       $pid = variable_get('fedora_repository_pid', 'islandora:top');
@@ -621,10 +621,10 @@ class ObjectHelper {
     foreach ($nameSpaceAllowed as $nameSpace) {
       $pos = stripos($pid, $nameSpace);
       if ($pos === 0) {
-        $returnValue = TRUE;
+        $namespaceAccess = TRUE;
       }
     }
-    if ($returnValue) {
+    if ($namespaceAccess) {
       $user_access = user_access($op);
       if ($user_access == NULL) {
         return FALSE;
