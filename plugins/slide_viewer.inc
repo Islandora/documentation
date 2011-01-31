@@ -52,8 +52,33 @@ class ShowSlideStreamsInFieldSets {
     $tabset['my_tabset']['third_tab'] = array(
       '#type' => 'tabpage',
       '#title' => t('Description'),
-      '#content' => $ssifs->showQdc(),
     );
+    
+    $tabset['my_tabset']['third_tab']['tabset'] = array(
+      '#type' => 'tabset',
+    );
+    $objectHelper = new ObjectHelper($this->pid);
+    $item = new Fedora_Item($this->pid);
+    $dc_html = $objectHelper->getFormattedDC($item);
+    
+    $ds_list = $objectHelper->getFormattedDatastreamList($this->pid, NULL, $item);
+    
+    $tabset['my_tabset']['third_tab']['tabset']['view'] = array(
+      '#type' => 'tabpage',
+      '#title' => t('View'),
+      '#content' => $dc_html . $ds_list,
+    );
+    
+    if (fedora_repository_access(OBJECTHELPER :: $EDIT_FEDORA_METADATA, $this->pid, $user)) {
+      $editform = drupal_get_form('fedora_repository_edit_qdc_form', $this->pid, 'DC');
+      $tabset['my_tabset']['third_tab']['tabset']['edit'] = array(
+        '#type' => 'tabpage',
+        '#title' => t('Edit'),
+        '#content' => $editform,
+      );
+    }
+    
+    
     // Render the tabset.
     return tabs_render($tabset);
 
