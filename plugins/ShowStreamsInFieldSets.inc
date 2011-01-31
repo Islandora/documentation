@@ -75,9 +75,15 @@ class ShowStreamsInFieldSets {
     );
     $objectHelper = new ObjectHelper();
     $item = new Fedora_Item($this->pid);
-    
+    if (key_exists('TN', $item->datastreams)) {
+      $tn_url = $base_url.'/fedora/repository/'.$item->pid.'/TN';
+    }
+    else {
+      $tn_url = $base_path.drupal_get_path('module', 'fedora_repository').'/images/Crystal_Clear_app_download_manager.png';
+    }
     $dc_html = $objectHelper->getFormattedDC($item);
-    $dl_link = l('<div  style="float:left; padding: 10px"><img src="'.$base_path.drupal_get_path('module', 'fedora_repository').'/images/Crystal_Clear_app_download_manager.png"><br />Download PDF</div>', '/fedora/repository/'.$this->pid.'/OBJ', array('html' => TRUE));
+    
+    $dl_link = l('<div  style="float:left; padding: 10px"><img src="'.$tn_url.'"><br />View Document</div>', '/fedora/repository/'.$this->pid.'/OBJ', array('html' => TRUE));
     $ds_list = $objectHelper->getFormattedDatastreamList($this->pid, NULL, $item);
     
     $tabset['my_tabset']['first_tab']['tabset']['view'] = array(
