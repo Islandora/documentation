@@ -38,18 +38,17 @@ class ShowMapStreamsInFieldSets {
     $tabset['my_tabset']['second_tab'] = array(
       '#type' => 'tabpage',
       '#title' => t('Full-size'),
-      '#content' => $html//'<div class="iiv"></div>'
+      '#content' => $html,
     );
-
+    $objectHelper = new ObjectHelper();
     $item = new Fedora_Item($this->pid);
     $tabset['my_tabset']['third_tab'] = array(
       '#type' => 'tabpage',
       '#title' => t('Description'),
-      '#content' => $item->get_dissemination('islandora:mods2htmlSdef', 'mods2html'),
+      '#content' => $item->get_dissemination('islandora:mods2htmlSdef', 'mods2html')
+        . $objectHelper->getFormattedDatastreamList($this->pid, NULL, $item),
     );
     // Render the tabset.
     return tabs_render($tabset);
-
-    return theme('fieldset', $collection_fieldset);
   }
 }
