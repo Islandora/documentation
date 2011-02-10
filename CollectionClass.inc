@@ -417,8 +417,6 @@ class CollectionClass {
 
     $tabset = array();
 
-    
-    
     global $user;
     $objectHelper = new ObjectHelper();
     $results = $this->getRelatedItems($this->pid, NULL);
