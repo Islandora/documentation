@@ -822,9 +822,9 @@ function fedora_repository_get_items($pid = NULL, $dsId = NULL, $collection = NU
       $cmodels_tabs = array_merge($cmodels_tabs, $content_model_fieldset);
     }
     else {
-      $cmodels_tabs['tabset'][$content_model->pid] = array(
+      $cmodels_tabs[$content_model->pid] = array(
         '#type' => 'tabpage',
-        '#title' => $cmodel->name,
+        '#title' => $content_model->name,
         '#content' => $content_model_fieldset,
       );
     }

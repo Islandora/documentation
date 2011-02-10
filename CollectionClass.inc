@@ -417,9 +417,7 @@ class CollectionClass {
 
     $tabset = array();
 
-    $tabset['my_tabset'] = array(
-      '#type' => 'tabset',
-    );
+    
     
     global $user;
     $objectHelper = new ObjectHelper();
@@ -431,13 +429,13 @@ class CollectionClass {
     $show_ingest_tab = (!empty($_POST['form_id']) && $_POST['form_id'] == 'fedora_repository_ingest_form');
     $add_to_collection = $this->getIngestInterface();
     
-    $tabset['my_tabset']['view_tab'] = array(
+    $tabset['view_tab'] = array(
 //     $collection_fieldset = array (
       '#type' => 'tabpage',
       '#title' => t('Members'),
       '#content' => $collection_items
     );
-    $tabset['my_tabset']['add_tab'] = array(
+    $tabset['add_tab'] = array(
       // #type and #title are the minimum requirements.
       '#type' => 'tabpage',
       '#title' => t('Add / Edit'),
@@ -445,18 +443,18 @@ class CollectionClass {
       // This will be the content of the tab.
       '#content' => $add_to_collection,
     );
-    $tabset['my_tabset']['third_tab'] = array(
+    $tabset['third_tab'] = array(
       '#type' => 'tabpage',
       '#title' => t('Description'),
     );
-    $tabset['my_tabset']['third_tab']['tabset'] = array(
+    $tabset['third_tab']['tabset'] = array(
       '#type' => 'tabset',
     );
     $dc_html = $objectHelper->getFormattedDC($collection_item);
     
     $ds_list = $objectHelper->getFormattedDatastreamList($this->pid, NULL, $collection_item);
     
-    $tabset['my_tabset']['third_tab']['tabset']['view'] = array(
+    $tabset['third_tab']['tabset']['view'] = array(
       '#type' => 'tabpage',
       '#title' => t('View'),
       '#content' => $dc_html . $ds_list,
@@ -464,14 +462,14 @@ class CollectionClass {
     
     if (fedora_repository_access(OBJECTHELPER :: $EDIT_FEDORA_METADATA, $this->pid, $user)) {
       $editform = drupal_get_form('fedora_repository_edit_qdc_form', $this->pid, 'DC');
-      $tabset['my_tabset']['third_tab']['tabset']['edit'] = array(
+      $tabset['third_tab']['tabset']['edit'] = array(
         '#type' => 'tabpage',
         '#title' => t('Edit'),
         '#content' => $editform,
       );
       
     }
-    return tabs_render($tabset);
+    return $tabset;
   }
 
   function getIngestInterface() {
