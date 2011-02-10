@@ -15,7 +15,7 @@ class FedoraObject {
     $objectHelper = new ObjectHelper();
     $tabset = array();
     $show_purge_tab = (!empty($_POST['form_id']) && $_POST['form_id'] == 'fedora_repository_purge_object_form');
-    $purge_form = drupal_get_form('fedora_repository_purge_object_form', $this->pid);
+    $purge_form = drupal_get_form('fedora_repository_purge_object_form', $this->pid, check_plain(substr(request_uri(), strlen(base_path()))));
 
     $tabset['fedora_object_details'] = array(
       '#type' => 'tabpage',
