@@ -81,12 +81,11 @@ class ShowStreamsInFieldSets {
     $dc_html = $objectHelper->getFormattedDC($item);
     
     $dl_link = l('<div  style="float:left; padding: 10px"><img src="'.$tn_url.'"><br />View Document</div>', '/fedora/repository/'.$this->pid.'/OBJ', array('html' => TRUE));
-    $ds_list = $objectHelper->getFormattedDatastreamList($this->pid, NULL, $item);
     
     $tabset['first_tab']['tabs']['view'] = array(
       '#type' => 'tabpage',
       '#title' => t('View'),
-      '#content' => $dl_link . $dc_html . $ds_list,
+      '#content' => $dl_link . $dc_html,
     );
     
     if (fedora_repository_access(OBJECTHELPER :: $EDIT_FEDORA_METADATA, $this->pid, $user)) {

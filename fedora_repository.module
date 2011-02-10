@@ -802,6 +802,7 @@ function fedora_repository_get_items($pid = NULL, $dsId = NULL, $collection = NU
   //}
 
   module_load_include('inc', 'fedora_repository', 'ContentModel');
+  module_load_include('inc', 'fedora_repository', 'plugins/fedoraObject');
   $breadcrumbs = array();
   $objectHelper->getBreadcrumbs($pid, $breadcrumbs);
   drupal_set_breadcrumb(array_reverse($breadcrumbs));
@@ -829,6 +830,12 @@ function fedora_repository_get_items($pid = NULL, $dsId = NULL, $collection = NU
       );
     }
   }
+  // Add a 'manage object' tab for all objects, where detailed list of content is shown.
+  $obj = new FedoraObject($pid);
+  $object_details = $obj->showFieldSets();
+  $cmodels_tabs = array_merge($cmodels_tabs, $object_details);
+  
+  
   //$content .= $objectHelper
   //$content .= $objectHelper->parseContent($results, $pid, $dsId, $collection, $pageNumber);
   //the below is for islandlives we should be able to do this in the xslt though

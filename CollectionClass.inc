@@ -441,32 +441,7 @@ class CollectionClass {
       // This will be the content of the tab.
       '#content' => $add_to_collection,
     );
-    $tabset['third_tab'] = array(
-      '#type' => 'tabpage',
-      '#title' => t('Description'),
-    );
-    $tabset['third_tab']['tabset'] = array(
-      '#type' => 'tabset',
-    );
-    $dc_html = $objectHelper->getFormattedDC($collection_item);
-    
-    $ds_list = $objectHelper->getFormattedDatastreamList($this->pid, NULL, $collection_item);
-    
-    $tabset['third_tab']['tabset']['view'] = array(
-      '#type' => 'tabpage',
-      '#title' => t('View'),
-      '#content' => $dc_html . $ds_list,
-    );
-    
-    if (fedora_repository_access(OBJECTHELPER :: $EDIT_FEDORA_METADATA, $this->pid, $user)) {
-      $editform = drupal_get_form('fedora_repository_edit_qdc_form', $this->pid, 'DC');
-      $tabset['third_tab']['tabset']['edit'] = array(
-        '#type' => 'tabpage',
-        '#title' => t('Edit'),
-        '#content' => $editform,
-      );
-      
-    }
+
     return $tabset;
   }
 
@@ -483,7 +458,7 @@ class CollectionClass {
         }
         if ($allow) {
         // $ingestObject = '<a title="'. t('Ingest a New object into ') . $collectionName . ' '. $collection_pid . '" href="'. base_path() .
-          $ingestObject = drupal_get_form('fedora_repository_ingest_form', $this->pid, "test hello");
+          $ingestObject = drupal_get_form('fedora_repository_ingest_form', $this->pid);
           
         }
       }

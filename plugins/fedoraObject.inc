@@ -11,8 +11,40 @@ class FedoraObject {
   }
   
   public function showFieldSets() {
-    $objHelper = new ObjectHelper();
+    global $user;
+    $objectHelper = new ObjectHelper();
+    $tabset = array();
+    $show_purge_tab = (!empty($_POST['form_id']) && $_POST['form_id'] == 'fedora_repository_purge_object_form');
+    $purge_form = drupal_get_form('fedora_repository_purge_object_form', $this->pid);
+
+    $tabset['fedora_object_details'] = array(
+      '#type' => 'tabpage',
+      '#title' => t('Object Details'),
+      '#selected' => $show_purge_tab,
+    );
+    $tabset['fedora_object_details']['tabset'] = array(
+      '#type' => 'tabset',
+    );
+    $dc_html = $objectHelper->getFormattedDC($this->item);
     
-    return $objHelper->getFormattedDatastreamList($this->pid, NULL);
+    $ds_list = $objectHelper->getFormattedDatastreamList($this->pid, NULL, $this->item);
+    
+
+    $tabset['fedora_object_details']['tabset']['view'] = array(
+      '#type' => 'tabpage',
+      '#title' => t('View'),
+      '#content' => $dc_html . $ds_list . $purge_form,
+    );
+    
+    if (fedora_repository_access(OBJECTHELPER :: $EDIT_FEDORA_METADATA, $this->pid, $user)) {
+      $editform = drupal_get_form('fedora_repository_edit_qdc_form', $this->pid, 'DC');
+      $tabset['fedora_object_details']['tabset']['edit'] = array(
+        '#type' => 'tabpage',
+        '#title' => t('Edit'),
+        '#content' => $editform,
+      );
+    }
+    
+    return $tabset;
   }
 }
