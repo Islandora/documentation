@@ -614,12 +614,12 @@ class formClass {
     if (!empty($content_models)) {
       foreach ($content_models as $content_model) {
 
-        if (($cm = ContentModel::loadFromModel($content_model)) !== FALSE) {
-          $newElements = $cm->listDatastreams();
-          if (!empty($newElements)) {
-            $available_dsids = array_merge($available_dsids, $newElements);
-          }
+
+        $newElements = $content_model->listDatastreams();
+        if (!empty($newElements)) {
+          $available_dsids = array_merge($available_dsids, $newElements);
         }
+
       }
     }
 

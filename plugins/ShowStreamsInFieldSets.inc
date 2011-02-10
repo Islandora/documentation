@@ -62,15 +62,12 @@ class ShowStreamsInFieldSets {
     module_load_include('inc', 'fedora_repository', 'api/fedora_item');
     $tabset = array();
 
-    $tabset['my_tabset'] = array(
-      '#type' => 'tabset',
-    );
-    $tabset['my_tabset']['first_tab'] = array(
+    $tabset['first_tab'] = array(
       '#type' => 'tabpage',
       '#title' => t('Description'),
     );
 
-    $tabset['my_tabset']['first_tab']['tabset'] = array(
+    $tabset['first_tab']['tabs'] = array(
       '#type' => 'tabset',
     );
     $objectHelper = new ObjectHelper();
@@ -86,7 +83,7 @@ class ShowStreamsInFieldSets {
     $dl_link = l('<div  style="float:left; padding: 10px"><img src="'.$tn_url.'"><br />View Document</div>', '/fedora/repository/'.$this->pid.'/OBJ', array('html' => TRUE));
     $ds_list = $objectHelper->getFormattedDatastreamList($this->pid, NULL, $item);
     
-    $tabset['my_tabset']['first_tab']['tabset']['view'] = array(
+    $tabset['first_tab']['tabs']['view'] = array(
       '#type' => 'tabpage',
       '#title' => t('View'),
       '#content' => $dl_link . $dc_html . $ds_list,
@@ -94,14 +91,14 @@ class ShowStreamsInFieldSets {
     
     if (fedora_repository_access(OBJECTHELPER :: $EDIT_FEDORA_METADATA, $this->pid, $user)) {
       $editform = drupal_get_form('fedora_repository_edit_qdc_form', $this->pid, 'DC');
-      $tabset['my_tabset']['first_tab']['tabset']['edit'] = array(
+      $tabset['first_tab']['tabs']['edit'] = array(
         '#type' => 'tabpage',
         '#title' => t('Edit'),
         '#content' => $editform,
       );
     }
     
-    $tabset['my_tabset']['second_tab'] = array(
+    $tabset['second_tab'] = array(
       '#type' => 'tabpage',
       '#title' => t('Read Online'),
       '#content' => "<iframe src=\"http://docs.google.com/viewer?url=". $base_url . '/fedora/repository/'. 
@@ -109,7 +106,7 @@ class ShowStreamsInFieldSets {
     );
 
     // Render the tabset.
-    return tabs_render($tabset);
+    return $tabset;
   }
 
 
