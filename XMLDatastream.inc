@@ -96,7 +96,13 @@ abstract class XMLDatastream {
     $this->dsid = $dsid;
 
     if ($xmlStr !== NULL) {
-      $this->xml = (is_object($xmlStr) && get_class($xmlStr) == DOMDocument) ? $xmlStr : DOMDocument::loadXML($xmlStr);
+      if(is_object($xmlStr) && get_class($xmlStr) == DOMDocument) {
+        $this->xml = $xmlStr;
+      }
+      else {
+        $this->xml = new DOMDocument();
+        $this->xml->loadXML($xmlStr);
+      }
     }
   }
 
