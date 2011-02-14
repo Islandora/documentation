@@ -430,7 +430,7 @@ class CollectionClass {
     $tabset['view_tab'] = array(
 //     $collection_fieldset = array (
       '#type' => 'tabpage',
-      '#title' => t($this->pid),
+      '#title' => 'View',
       '#content' => $collection_items
     );
     $tabset['add_tab'] = array(
