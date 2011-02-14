@@ -707,9 +707,8 @@ class formClass {
           '#default_value' => variable_get('feed_item_length', 'teaser'),
           '#weight' => '-1',
           '#description' => t('Datastream IDs defined by the content model.'),
-      );
-
-      $form['stream_id']['#options'] = array_combine($unused_dsids, $unused_dsids);
+      ); 
+      $form['stream_id']['#options'] = array_combine($unused_dsids, $unused_dsids); 
     } 
     else {
       $form['stream_id'] = array(
@@ -850,35 +849,5 @@ class formClass {
 
     return $form;
   }
-
-  /*
-    function createReplaceDataStreamForm($pid, $dsId, &$form_state) {
-    $form = array();
-
-    $form['#attributes']['enctype'] = 'multipart/form-data';
-    $form['file'] = array(
-    '#type' => 'file',
-    '#title' => t('Upload Document'),
-    '#description' => t('The file to upload.')
-    );
-
-    $form['pid'] = array(
-    '#type' => 'value',
-    '#value' => $pid,
-    );
-
-    $form['dsId'] = array(
-    '#type' => 'value',
-    '#value' => $dsId,
-    );
-
-    $form['submit']=array(
-    '#type' => 'submit',
-    '#value'=>t('Replace Datastream')
-    );
-
-    return $form;
-    }
-   */
 }
 
