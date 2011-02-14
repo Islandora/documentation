@@ -436,12 +436,11 @@ class CollectionClass {
     $tabset['add_tab'] = array(
       // #type and #title are the minimum requirements.
       '#type' => 'tabpage',
-      '#title' => t('Add / Edit'),
+      '#title' => t('Add'),
       '#selected' => $show_ingest_tab,
       // This will be the content of the tab.
       '#content' => $add_to_collection,
     );
-
     return $tabset;
   }
 
@@ -464,7 +463,7 @@ class CollectionClass {
       }
     }
     else {
-      $ingestObject = '&nbsp;';
+      $ingestObject = '';
     }
     
     return $ingestObject;

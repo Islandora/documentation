@@ -707,8 +707,10 @@ class formClass {
           '#default_value' => variable_get('feed_item_length', 'teaser'),
           '#weight' => '-1',
           '#description' => t('Datastream IDs defined by the content model.'),
-      ); 
-      $form['stream_id']['#options'] = array_combine($unused_dsids, $unused_dsids); 
+      );
+ 
+      $form['stream_id']['#options'] = array_combine($unused_dsids, $unused_dsids);
+ 
     } 
     else {
       $form['stream_id'] = array(
