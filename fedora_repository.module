@@ -236,7 +236,12 @@ function fedora_repository_ingest_form(&$form_state, $collection_pid, $collectio
 
 function fedora_repository_purge_object_form(&$form_state, $pid, $referrer = NULL) {
   global $base_url;
-  //  $form['#redirect'] = "fedora/repository/$collectionPid/";
+  if (!user_access('purge objects and datastreams')) {
+    return NULL;
+  }
+  if ($pid == NULL) {
+    return NULL;
+  }
   $form['pid'] = array(
       '#type' => 'hidden',
       '#value' => "$pid"

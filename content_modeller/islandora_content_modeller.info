@@ -1,7 +1,0 @@
-; $Id$
-name = Islandora Content Modeller
-dependencies[] = fedora_repository
-description = Allows you to manage and build content models for Islandora/Fedora.
-package = Fedora Repository
-version = 6.1dev
-core = 6.x

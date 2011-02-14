@@ -697,6 +697,10 @@ class formClass {
     );
 
     if (!empty($unused_dsids)) {
+       $dsidsForForm = array();
+        foreach ($unused_dsids as $dsid){
+            $dsidsForForm[$dsid]=$dsid;
+        }
       $form['stream_id'] = array(
           '#type' => 'select',
           '#title' => t('Datastream ID'),
@@ -704,6 +708,7 @@ class formClass {
           '#weight' => '-1',
           '#description' => t('Datastream IDs defined by the content model.'),
       );
+
       $form['stream_id']['#options'] = array_combine($unused_dsids, $unused_dsids);
     } 
     else {
