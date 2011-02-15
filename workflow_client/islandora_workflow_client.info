@@ -1,7 +1,0 @@
-; $Id$
-name = Islandora Workflow Client
-dependencies[] = fedora_repository
-description = A STOMP client that listens for JMS messages from Fedora.  On receiving a message, it will get the workflow datastream from the updated object and determine if any processes need to be run.  Processes must be registered as plugins to this module for them to be updated. Ensure that the apim messages are configured as a QUEUE so that the messages persist when the workflow client is not running.
-package = Fedora Repository
-version = 6.1dev
-core = 6.x

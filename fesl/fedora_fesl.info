@@ -1,7 +1,0 @@
-; $Id$ 
-name = Islandora FeSL 
-description = Provides a block that lists collections that a user can read/write based on the drupal roles that they belong to. Also includes a method used for determining when to display ingest/edit/purge icons for a specific user. 
-package = Fedora Repository
-dependencies[] = fedora_repository
-version = 6.1dev
-core = 6.x
