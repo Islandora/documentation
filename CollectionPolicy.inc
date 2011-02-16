@@ -33,7 +33,7 @@ class CollectionPolicy extends XMLDatastream {
   static function loadFromCollection($pid, $preFetch=TRUE) {
     $ret = FALSE;
     module_load_include('inc', 'fedora_repository', 'api/fedora_item');
-
+  
     try {
       if (self::validPid($pid)) {
         $dsid=CollectionPolicy::getDefaultDSID();
@@ -133,7 +133,7 @@ class CollectionPolicy extends XMLDatastream {
    */   
   public static function ingestBlankPolicy($pid, $name, $policyDsid, $model_pid, $model_namespace, $relationship, $searchField, $searchValue) {
     $ret = FALSE; 
-    if (($cp = self::loadFromCollection($pid, $modelDsid)) === FALSE) {
+    if (($cp = self::loadFromCollection($pid )) === FALSE) {   //removed second, non-existant variable
       module_load_include('inc', 'fedora_repository', 'ContentModel');
       if (($cm = ContentModel::loadFromModel($model_pid)) !== FALSE && $cm->validate()) {
         $newDom = new DOMDocument('1.0', 'utf-8');
