@@ -1026,7 +1026,7 @@ class ObjectHelper {
     }
   }
 
-  function warnIfMisconfigured($app) {
+  public static function warnIfMisconfigured($app) {
     $messMap = array(
         'Kakadu' => 'Full installation instructions for Kakadu can be found
           <a href=http://www.kakadusoftware.com/index.php?option=com_content&task=view&id=27&Itemid=23>Here</a>',
