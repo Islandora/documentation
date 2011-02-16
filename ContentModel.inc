@@ -2013,4 +2013,24 @@ class ContentModel extends XMLDatastream {
     }
     return $ret;    
   }
+
+  /**
+   *
+   * @return array
+   *    An array of form names that exist in this content model.
+   */
+  public function getFormNames() {
+    if (!$this->validate()) {
+      return FALSE;
+    }
+    $xpath = new DOMXPath($this->xml);
+    $xpath->registerNamespace('cm', 'http://www.islandora.ca');
+    $result = $xpath->query('//cm:forms/cm:form/@name'); // Select the name attribute of all forms.
+    for($i = 0; $i < $result->length; $i++) {
+      $attribute = $result->item($i);
+      $name = $attribute->value;
+      $names[$name] = $name;
+    }
+    return $names;
+  }
 }

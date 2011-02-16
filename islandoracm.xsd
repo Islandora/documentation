@@ -344,20 +344,22 @@
 								</xsd:simpleContent>
 							</xsd:complexType>
 						</xsd:element>
-						<xsd:element name="parent_path">
+						<xsd:element name="parent_path" minOccurs="0">
 							<xsd:complexType>
 								<xsd:simpleContent>
-									<xsd:extension base="xsd:normalizedString">
-										<xsd:attribute name="force_create_if_not_found"
-											type="xsd:boolean" use="required"/>
-									</xsd:extension>
+									<xsd:extension base="xsd:normalizedString"> </xsd:extension>
 								</xsd:simpleContent>
 							</xsd:complexType>
 						</xsd:element>
-						<xsd:element name="xml" type="xsd:normalizedString"/>
+						<xsd:choice>
+							<xsd:element name="xml" type="xsd:normalizedString"/>
+							<xsd:element name="element" type="xsd:normalizedString"/>
+							<xsd:element name="attribute" type="xsd:normalizedString"/>
+						</xsd:choice>
 					</xsd:sequence>
 				</xsd:complexType>
 			</xsd:element>
+			<xsd:element name="require_value" type="xsd:boolean"/>
 		</xsd:sequence>
 	</xsd:complexType>
 </xsd:schema>
