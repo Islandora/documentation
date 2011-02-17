@@ -11,6 +11,7 @@ class ContentModel extends XMLDatastream {
   private $mimes = NULL;
   public $pid_namespace;
   public $name;
+  private $xpath;
 
   /**
    * Gets the default DSID to use for ContentModel datastreams.
@@ -223,8 +224,9 @@ class ContentModel extends XMLDatastream {
   public function __construct($xmlStr, $pid = NULL, $dsid = NULL, $pid_namespace = NULL, $name = NULL) {
     parent::__construct($xmlStr, $pid, $dsid);
     $this->pid_namespace = $pid_namespace;
-    
     $this->name = ($name == NULL)?'Islandora Content Model':$name;
+    $this->xpath = new DOMXPath($this->xml);
+    $this->xpath->registerNamespace('cm', 'http://www.islandora.ca');
   }
 
   /**
@@ -2023,9 +2025,7 @@ class ContentModel extends XMLDatastream {
     if (!$this->validate()) {
       return FALSE;
     }
-    $xpath = new DOMXPath($this->xml);
-    $xpath->registerNamespace('cm', 'http://www.islandora.ca');
-    $result = $xpath->query('//cm:forms/cm:form/@name'); // Select the name attribute of all forms.
+    $result = $this->xpath->query('//cm:forms/cm:form/@name'); // Select the name attribute of all forms.
     for($i = 0; $i < $result->length; $i++) {
       $attribute = $result->item($i);
       $name = $attribute->value;
@@ -2033,4 +2033,128 @@ class ContentModel extends XMLDatastream {
     }
     return $names;
   }
+
+  /**
+   * Removes the named form.
+   *
+   * @param string $name
+   *   Name of the form to remove.
+   * 
+   * @return boolean
+   *   TRUE on success, FALSE otherwise.
+   */
+  public function removeForm($name) {
+    $result = $this->xpath->query("//cm:form[@name='$name']");
+    if ($result->length == 1) {
+      $form = $result->item(0);
+      $form->parentNode->removeChild($form);
+      return TRUE;
+    }
+    return FALSE;
+  }
+
+  /**
+   * Adds the named form.
+   *
+   * @param string $name
+   *   Name of the form to add.
+   *
+   * @return boolean
+   *   TRUE on success, FALSE otherwise.
+   */
+  public function addForm($name) {
+    $result = $this->xpath->query("//cm:form[@name='$name']");
+    if ($result->length != 0) {
+      return FALSE; // Already Exists.
+    }
+    $result = $this->xpath->query("//cm:forms");
+    if ($result->length == 0) { // Forms doesn't exist
+      $forms = $this->xml->createElement('forms');
+      $form = $this->xml->createElement('form');
+      $form->setAttribute('name', $name);
+      $forms->appendChild($form);
+      $result = $this->xpath->query("//cm:content_model");
+      $result->item(0)->appendChild($forms);
+      return TRUE;
+    }
+    else { // Forms exists just create form.
+      $form = $this->xml->createElement($name);
+      $form->setAttribute('name', $name);
+      $result->item(0)->appendChild($form);
+      return TRUE;
+    }
+  }
+
+  /**
+   *
+   * @param <type> $element_definition
+   * @param <type> $parent_element
+   * @return <type>
+   */
+  public function addElementToForm($element, $parent_element) {
+    $element = $this->xml->importNode($element, TRUE);
+    $parent_element->appendChild($element);
+    return TRUE;
+  }
+
+  /**
+   *
+   * @param <type> $element_definition
+   * @param <type> $parent_element
+   */
+  public function editFormElement($new_element, $edit_element) {
+    $new_element = $this->xml->importNode($new_element, TRUE);
+    $this->insertElementInPlace($new_element, $edit_element);
+    $edit_element->parentNode->removeChild($edit_element);
+    return TRUE;
+  }
+
+  /**
+   *
+   * @param <type> $new_element
+   * @param <type> $element
+   */
+  private function insertElementInPlace($new_element, $element) {
+    $next = $element->nextSibling;
+    if ($next) {
+      $element->parentNode->insertBefore($new_element, $next);
+    }
+    else {
+      $element->parentNode->appendChild($new_element);
+    }
+  }
+
+  /**
+   *
+   * @param <type> $form_element
+   * @return <type>
+   */
+  public function incFormElement($form_element) {
+    $prev = $form_element;
+    $name = $prev->getAttribute('name');
+    while ($prev = $prev->previousSibling) {
+      if (get_class($prev) == 'DOMElement') {
+        $form_element->parentNode->insertBefore($form_element, $prev);
+        break;
+      }
+    }
+    return TRUE;
+  }
+
+  /**
+   *
+   * @param <type> $form_element
+   * @return <type>
+   */
+  public function decFormElement($form_element) {
+    $next = $form_element;
+    while ($next = $next->nextSibling) {
+      if (get_class($next) == 'DOMElement') {
+        $this->insertElementInPlace($form_element, $next);
+        break;
+      }
+    }
+    return TRUE;
+  }
+
 }
