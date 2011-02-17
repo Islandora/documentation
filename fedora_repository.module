@@ -307,8 +307,9 @@ function add_stream_form_submit($form, &$form_state) {
   $pid = $form_state['values']['pid'];
   $dsid = $form_state['values']['stream_id'];
   $dsLabel = $form_state['values']['stream_label'] . substr($file, strrpos($file, '.')); // Add the file extention to the end of the label.;
-
-  $streamUrl = $base_url . '/' . drupal_urlencode($file);
+  $file_basename = basename($file);
+  $file_directory = dirname($file);
+  $streamUrl = $base_url . '/' . $file_directory . '/' . urlencode($file_basename);
 
   /* -----------------------------------------------------------------
    * need a better way to get mimetypes
@@ -518,7 +519,7 @@ function fedora_repository_replace_stream_form_validate($form, &$form_state) {
 }
 
 function fedora_repository_replace_stream_form_submit($form, &$form_state) {
-
+  global $base_url;
   $file = $form_state['values']['file'];
   $pid = $form_state['values']['pid'];
   $dsid = $form_state['values']['dsId'];
@@ -526,21 +527,29 @@ function fedora_repository_replace_stream_form_submit($form, &$form_state) {
   // Remove the original file extension from the label and add the new one
   $indexOfDot = strrpos($dsLabel,'.');//use strrpos to get the last dot
   if($indexOfDot !== FALSE){
-  $dsLabel = substr($dsLabel, 0, $indexOfDot);
-  $dsLabel .= substr($file->filename, strrpos($file->filename, '.')); // Add the file extention to the end of the label.;
+    $dsLabel = substr($dsLabel, 0, $indexOfDot);
+    $dsLabel .= substr($file->filename, strrpos($file->filename, '.')); // Add the file extention to the end of the label.;
   }
   module_load_include('inc', 'Fedora_Repository', 'MimeClass');
   module_load_include('inc', 'Fedora_Repository', 'ObjectHelper');
   module_load_include('inc', 'Fedora_Repository', 'ConnectionHelper');
+  module_load_include('inc', 'fedora_repository', 'api/fedora_item');
+  
+  
 
-  $streamUrl = file_create_url($file->filepath);
+  $file_basename = basename($file->filepath);
+  $file_directory = dirname($file->filepath);
+  $streamUrl = $base_url . '/' . $file_directory . '/' . urlencode($file_basename);
 
   /* -----------------------------------------------------------------
    * need a better way to get mimetypes
    */
   $mimetype = new MimeClass();
   $dformat = $mimetype->getType($file->filepath);
-
+  $item = new Fedora_Item($pid);
+  //$item->add_datastream_from_url($streamUrl, $dsid, $dsLabel, $dformat, $controlGroup);
+  $item->modify_datastream_by_reference($streamUrl, $dsid, $dsLabel, $dformat);
+  /*
   $controlGroup = "M";
   $function = 'modifyDatastreamByReference';
   $params = array(
@@ -587,7 +596,7 @@ function fedora_repository_replace_stream_form_submit($form, &$form_state) {
     drupal_set_message(t($e->getMessage()), 'error');
     return;
   }
-
+*/
   drupal_goto('fedora/repository/' . $pid . '/-/' . $dsId);
 }
 
