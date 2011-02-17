@@ -2056,33 +2056,48 @@ class ContentModel extends XMLDatastream {
   /**
    * Adds the named form.
    *
-   * @param string $name
+   * @param string $element
    *   Name of the form to add.
    *
    * @return boolean
    *   TRUE on success, FALSE otherwise.
    */
-  public function addForm($name) {
-    $result = $this->xpath->query("//cm:form[@name='$name']");
-    if ($result->length != 0) {
-      return FALSE; // Already Exists.
-    }
+  public function addForm($element) {
     $result = $this->xpath->query("//cm:forms");
     if ($result->length == 0) { // Forms doesn't exist
       $forms = $this->xml->createElement('forms');
-      $form = $this->xml->createElement('form');
-      $form->setAttribute('name', $name);
-      $forms->appendChild($form);
+      $element = $this->xml->importNode($element);
+      $forms->appendChild($element);
       $result = $this->xpath->query("//cm:content_model");
       $result->item(0)->appendChild($forms);
       return TRUE;
     }
-    else { // Forms exists just create form.
-      $form = $this->xml->createElement($name);
-      $form->setAttribute('name', $name);
-      $result->item(0)->appendChild($form);
+    else if ($result->length == 1) {
+      $element = $this->xml->importNode($element);
+      $result->item(0)->appendChild($element);
       return TRUE;
     }
+    return FALSE;
+  }
+
+
+  /**
+   * Edits a form element with attribute name='$name' from the 'forms' element.
+   *
+   * @param String $name
+   */
+  public function editForm($name, $element) {
+    if (!$this->validate()) {
+      return FALSE;
+    }
+    $result = $this->xpath->query("//cm:form[@name='$name']");
+    if($result->length == 1) {
+      $element = $this->xml->importNode($element);
+      $form = $result->item(0);
+      $form->parentNode->replaceChild($element, $form);
+      return TRUE;
+    }
+    return FALSE;
   }
 
   /**
