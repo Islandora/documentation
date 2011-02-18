@@ -71,7 +71,8 @@ class FedoraRepositoryTestCase extends DrupalWebTestCase {
    $this->drupalPost('fedora/ingestObject/islandora:top/Islandora%20Top-Level%20Collection', $ingest_form, 'Next');
    // Required fields are file location, dc:title and dc:description
    $ingest_form_step_2 = array();
-   $ingest_form_step_2['dc:title'] = $this->randomName(32);
+   $ingest_title = $this->randomName(32);
+   $ingest_form_step_2['dc:title'] = $ingest_title;
    $ingest_form_step_2['dc:description'] = $this->randomName(256);
    $ingest_form_step_2['files[ingest-file-location]'] = realpath(drupal_get_path('module', 'fedora_repository') . '/collection_policies/PDF-COLLECTION POLICY.xml');
    $this->drupalPost(NULL, $ingest_form_step_2, 'Ingest');
@@ -79,6 +80,11 @@ class FedoraRepositoryTestCase extends DrupalWebTestCase {
    $this->assertPattern('/Item .* created successfully./', "Verified item created.");
    
    $pid = $this->getIngestedPid();
+   $this->drupalGet("fedora/repository/$pid");
+   $this->assertLink('Home');
+   $this->assertLink('Digital Repository');
+   $this->assertLink($ingest_title);
+   
    $pid_list[] = $pid;
    $this->pass('Now attempting to ingest a PDF into the new collection.');
    // Now try ingesting a PDF
