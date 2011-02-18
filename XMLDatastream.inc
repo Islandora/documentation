@@ -95,14 +95,14 @@ abstract class XMLDatastream {
 
     $this->pid = $pid;
     $this->dsid = $dsid;
-    if ($xmlStr !== NULL) {
-      if(is_object($xmlStr) && get_class($xmlStr) == 'DOMDocument'){
+    if ($xmlStr !== NULL) { 
+      if(is_object($xmlStr) && get_class($xmlStr) == DOMDocument) {
         $this->xml = $xmlStr;
-      }else{
-         $this->xml = new DOMDocument('1.0', 'iso-8859-1');
-         $this->xml->loadXML($xmlStr);
       }
-      
+      else {
+        $this->xml = new DOMDocument();
+        $this->xml->loadXML($xmlStr);
+      } 
     }
   }
 
