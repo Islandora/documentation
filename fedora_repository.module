@@ -1250,10 +1250,10 @@ function fedora_repository_demo_objects_form() {
   );
 
   foreach (array(
-'islandora:collectionCModel' => 'Islandora default content models',
- 'islandora:top' => 'Islandora top-level collection',
- 'islandora:demos' => 'Islandora demos collection',
- 'islandora:largeimages' => 'Sample large image content model (requires <a href="http://sourceforge.net/projects/djatoka/">Djatoka</a> and <a href="http://www.kakadusoftware.com/index.php?option=com_content&task=view&id=26&Itemid=22">Kakadu</a>.)',
+    'islandora:collectionCModel' => 'Islandora default content models',
+    'islandora:top' => 'Islandora top-level collection',
+    'islandora:demos' => 'Islandora demos collection',
+    'islandora:largeimages' => 'Sample large image content model (requires <a href="http://sourceforge.net/projects/djatoka/">Djatoka</a> and <a href="http://www.kakadusoftware.com/index.php?option=com_content&task=view&id=26&Itemid=22">Kakadu</a>.)',
   )
   as $available_demo => $available_demo_desc) {
     try {
