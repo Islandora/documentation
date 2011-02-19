@@ -2017,6 +2017,19 @@ class ContentModel extends XMLDatastream {
   }
 
   /**
+   * Find the form element with name $name.
+   * 
+   * @param string $name
+   *   The name of the form element to find.
+   * @return DOMElement
+   *   The form element $name, if found FALSE otherwise.
+   */
+  public function getForm($name) {
+    $result = $this->xpath->query("//cm:form[@name='$name']");
+    return $result->length == 1 ? $result->item(0) : FALSE;
+  }
+
+  /**
    *
    * @return array
    *    An array of form names that exist in this content model.
