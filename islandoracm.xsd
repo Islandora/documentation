@@ -193,45 +193,46 @@
 		<xsd:choice maxOccurs="unbounded" minOccurs="0">
 			<xsd:element maxOccurs="1" minOccurs="1" name="fieldset">
 				<xsd:complexType>
-					<xsd:sequence maxOccurs="1" minOccurs="1">
+					<xsd:all maxOccurs="1" minOccurs="1">
 						<xsd:element name="title" type="xsd:normalizedString"/>
 						<xsd:element minOccurs="0" name="description" type="xsd:normalizedString"/>
 						<xsd:element default="true" minOccurs="0" name="collapsible"
 							type="xsd:boolean"/>
 						<xsd:element default="false" minOccurs="0" name="collapsed"
 							type="xsd:boolean"/>
-						<xsd:element minOccurs="0" name="form_builder" type="formBuilderControlType"/>
 						<xsd:element name="content" type="formElementType"/>
-					</xsd:sequence>
+						<xsd:element minOccurs="0" name="form_builder" type="formBuilderControlType"
+						/>
+					</xsd:all>
 				</xsd:complexType>
 			</xsd:element>
 			<xsd:element name="textfield">
 				<xsd:complexType>
-					<xsd:sequence maxOccurs="1" minOccurs="1">
+					<xsd:all maxOccurs="1" minOccurs="1">
 						<xsd:element name="title" type="xsd:normalizedString"/>
 						<xsd:element minOccurs="0" name="description" type="xsd:normalizedString"/>
 						<xsd:element minOccurs="0" name="required" type="xsd:boolean"/>
 						<xsd:element minOccurs="0" name="default_value" type="xsd:normalizedString"/>
 						<xsd:element minOccurs="0" name="form_builder" type="formBuilderControlType"
 						/>
-					</xsd:sequence>
+					</xsd:all>
 				</xsd:complexType>
 			</xsd:element>
 			<xsd:element minOccurs="1" name="textarea">
 				<xsd:complexType>
-					<xsd:sequence maxOccurs="1" minOccurs="1">
+					<xsd:all maxOccurs="1" minOccurs="1">
 						<xsd:element name="title" type="xsd:normalizedString"/>
 						<xsd:element minOccurs="0" name="description" type="xsd:normalizedString"/>
 						<xsd:element minOccurs="0" name="required" type="xsd:boolean"/>
 						<xsd:element minOccurs="0" name="default_value" type="xsd:normalizedString"/>
 						<xsd:element minOccurs="0" name="form_builder" type="formBuilderControlType"
 						/>
-					</xsd:sequence>
+					</xsd:all>
 				</xsd:complexType>
 			</xsd:element>
 			<xsd:element maxOccurs="1" minOccurs="1" name="select">
 				<xsd:complexType>
-					<xsd:sequence maxOccurs="1" minOccurs="1">
+					<xsd:all maxOccurs="1" minOccurs="1">
 						<xsd:element name="title" type="xsd:normalizedString"/>
 						<xsd:element minOccurs="0" name="description" type="xsd:normalizedString"/>
 						<xsd:element name="options" type="formControlOptionsType"/>
@@ -239,73 +240,74 @@
 						<xsd:element minOccurs="0" name="default_value" type="xsd:normalizedString"/>
 						<xsd:element minOccurs="0" name="form_builder" type="formBuilderControlType"
 						/>
-					</xsd:sequence>
+					</xsd:all>
 				</xsd:complexType>
 			</xsd:element>
-			<xsd:element minOccurs="1" name="list">
+			<xsd:element minOccurs="1" name="set">
 				<xsd:complexType>
-					<xsd:sequence maxOccurs="1" minOccurs="1">
+					<xsd:all maxOccurs="1" minOccurs="1">
 						<xsd:element name="title" type="xsd:normalizedString"/>
 						<xsd:element minOccurs="0" name="description" type="xsd:normalizedString"/>
 						<xsd:element minOccurs="0" name="required" type="xsd:boolean"/>
 						<xsd:element minOccurs="0" name="default_value" type="xsd:normalizedString"/>
 						<xsd:element minOccurs="0" name="form_builder" type="formBuilderControlType"
 						/>
-					</xsd:sequence>
+					</xsd:all>
 				</xsd:complexType>
 			</xsd:element>
 			<xsd:element minOccurs="1" name="filechooser">
 				<xsd:complexType>
-					<xsd:sequence maxOccurs="1" minOccurs="1">
+					<xsd:all maxOccurs="1" minOccurs="1">
 						<xsd:element name="title" type="xsd:normalizedString"/>
 						<xsd:element minOccurs="0" name="description" type="xsd:normalizedString"/>
 						<xsd:element minOccurs="0" name="required" type="xsd:boolean"/>
 						<xsd:element minOccurs="0" name="default_value" type="xsd:normalizedString"/>
 						<xsd:element minOccurs="0" name="form_builder" type="formBuilderControlType"
 						/>
-					</xsd:sequence>
+					</xsd:all>
 				</xsd:complexType>
 			</xsd:element>
 			<xsd:element minOccurs="1" name="datepicker">
 				<xsd:complexType>
-					<xsd:sequence maxOccurs="1" minOccurs="1">
+					<xsd:all maxOccurs="1" minOccurs="1">
 						<xsd:element name="title" type="xsd:normalizedString"/>
 						<xsd:element minOccurs="0" name="description" type="xsd:normalizedString"/>
 						<xsd:element minOccurs="0" name="required" type="xsd:boolean"/>
 						<xsd:element minOccurs="0" name="default_value" type="xsd:normalizedString"/>
 						<xsd:element minOccurs="0" name="form_builder" type="formBuilderControlType"
 						/>
-					</xsd:sequence>
+					</xsd:all>
 				</xsd:complexType>
 			</xsd:element>
 			<xsd:element maxOccurs="1" minOccurs="1" name="tabpanel">
 				<xsd:complexType>
-					<xsd:sequence maxOccurs="1" minOccurs="1">
+					<xsd:all maxOccurs="1" minOccurs="1">
 						<xsd:element name="title" type="xsd:normalizedString"/>
 						<xsd:element minOccurs="0" name="description" type="xsd:normalizedString"/>
-						<xsd:element minOccurs="0" name="form_builder" type="formBuilderControlType"/>
 						<xsd:element name="content" type="formElementType"/>
-					</xsd:sequence>
+						<xsd:element minOccurs="0" name="form_builder" type="formBuilderControlType"
+						/>
+					</xsd:all>
 				</xsd:complexType>
 			</xsd:element>
 			<xsd:element name="checkbox">
 				<xsd:complexType>
-					<xsd:sequence maxOccurs="1" minOccurs="1">
+					<xsd:all maxOccurs="1" minOccurs="1">
 						<xsd:element name="title" type="xsd:normalizedString"/>
 						<xsd:element minOccurs="0" name="description" type="xsd:normalizedString"/>
 						<xsd:element name="return_value" type="xsd:normalizedString"/>
 						<xsd:element minOccurs="0" name="form_builder" type="formBuilderControlType"
 						/>
-					</xsd:sequence>
+					</xsd:all>
 				</xsd:complexType>
 			</xsd:element>
 			<xsd:element minOccurs="1" name="hidden">
 				<xsd:complexType>
-					<xsd:sequence>
+					<xsd:all>
 						<xsd:element minOccurs="1" name="value" type="xsd:normalizedString"/>
 						<xsd:element minOccurs="0" name="form_builder" type="formBuilderControlType"
 						/>
-					</xsd:sequence>
+					</xsd:all>
 				</xsd:complexType>
 			</xsd:element>
 		</xsd:choice>

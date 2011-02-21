@@ -2105,8 +2105,13 @@ class ContentModel extends XMLDatastream {
     }
     $result = $this->xpath->query("//cm:form[@name='$name']");
     if($result->length == 1) {
-      $element = $this->xml->importNode($element);
       $form = $result->item(0);
+      $result = $this->xpath->query("child::node()", $form);
+      $element = $this->xml->importNode($element);
+      for($i = 0; $i < $result->length; $i++) {
+        $child = $result->item($i);
+        $element->appendChild($child);
+      }
       $form->parentNode->replaceChild($element, $form);
       return TRUE;
     }
@@ -2132,8 +2137,17 @@ class ContentModel extends XMLDatastream {
    */
   public function editFormElement($new_element, $edit_element) {
     $new_element = $this->xml->importNode($new_element, TRUE);
-    $this->insertElementInPlace($new_element, $edit_element);
-    $edit_element->parentNode->removeChild($edit_element);
+    $name = $new_element->tagName;
+    $result = $new_element->getElementsByTagName('content');
+    if($result->length == 1) {
+      $new_content = $result->item(0);
+      $result = $this->xpath->query("child::cm:content/child::node()", $edit_element);
+      for($i = 0; $i < $result->length; $i++) {
+        $child = $result->item($i);
+        $new_content->appendChild($child);
+      }
+    }
+    $edit_element->parentNode->replaceChild($new_element, $edit_element);
     return TRUE;
   }
 
