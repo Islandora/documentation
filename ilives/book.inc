@@ -169,7 +169,7 @@ class IslandoraBook {
     $html = '<iframe src="'. $viewer_url . '" scrolling="0" frameborder="0" style="width: 100%; height: 800px;">Errors: unable to load viewer</iframe>';
     $tabset['second_tab'] = array(
       '#type' => 'tabpage',
-      '#title' => t('Full-size'),
+      '#title' => t('Read'),
       '#content' => $html
     );
     $tabset['first_tab'] = array(
