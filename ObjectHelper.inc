@@ -566,11 +566,14 @@ class ObjectHelper {
     }
     $cmodels = array();
     foreach ($sxml->xpath('//@uri') as $uri) {
-      if (strpos($uri, 'fedora-system') != FALSE && $include_fedora_system_content_models == FALSE) {
+      if (strpos($uri, 'fedora-system:fedoraObject-3.0') != FALSE && $include_fedora_system_content_models == FALSE) {
         continue;
       }
       $cmodel_pid = substr(strstr($uri, '/'), 1);
-      $cmodels[] = ContentModel::loadFromModel($cmodel_pid);
+      $cm = ContentModel::loadFromModel($cmodel_pid);
+      if ($cm) {
+        $cmodels[] = $cm;
+      }
     }
 
     return $cmodels;

@@ -815,7 +815,6 @@ function fedora_repository_get_items($pid = NULL, $dsId = NULL, $collection = NU
   $objectHelper->getBreadcrumbs($pid, $breadcrumbs);
   drupal_set_breadcrumb(array_reverse($breadcrumbs));
 
-
   $offset = $limit * $page_number;
   //$results = $collectionClass->getRelatedObjects($pid, $limit, $offset, NULL); //updated so we can do paging in query not in xslt
   //$results = $collectionClass->getRelatedItems($pid, NULL);
