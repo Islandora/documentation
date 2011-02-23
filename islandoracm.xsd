@@ -305,8 +305,8 @@
 				<xsd:complexType>
 					<xsd:all>
 						<xsd:element minOccurs="1" name="value" type="xsd:normalizedString"/>
-						<xsd:element minOccurs="0" name="form_builder" type="formBuilderControlType"
-						/>
+						<xsd:element minOccurs="0" name="form_builder" type="formBuilderControlType"/>
+						<xsd:element minOccurs="0" name="content" type="formElementType"/>
 					</xsd:all>
 				</xsd:complexType>
 			</xsd:element>
