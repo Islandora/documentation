@@ -37,9 +37,9 @@ class ContentModel extends XMLDatastream {
       $content_models = $objectHelper->get_content_models_list($pid);
       foreach ($content_models as $content_model) {
         if ($content_model != 'fedora-system:FedoraObject-3.0') {
-          $ret = self::loadFromModel($content_model);
+          $ret = $content_model;
           break;
-  }
+        }
       }
     }
     return $ret;
@@ -1437,7 +1437,7 @@ class ContentModel extends XMLDatastream {
    * @param string $pid
    * @return string $output
    */
-  public function displayExtraFieldset($pid) {
+  public function displayExtraFieldset($pid, $page_number) {
     $output = '';
     if ($this->validate()) {
       $datastreams = $this->xml->getElementsByTagName('datastreams');
@@ -1467,7 +1467,7 @@ class ContentModel extends XMLDatastream {
                     self::$errors[] = 'Execute Form Handler: method \''. $className .'->'. $methodName .'\' does not exist.';
                   } 
                   else {
-                    $output .= $class->$methodName();
+                    $output = $class->$methodName($page_number);
                   }
                 }
               }
