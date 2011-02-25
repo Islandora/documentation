@@ -312,8 +312,9 @@ function add_stream_form_submit($form, &$form_state) {
   $pid = $form_state['values']['pid'];
   $dsid = $form_state['values']['stream_id'];
   $dsLabel = $form_state['values']['stream_label'] . substr($file, strrpos($file, '.')); // Add the file extention to the end of the label.;
-
-  $streamUrl = $base_url . '/' . drupal_urlencode($file);
+  $file_basename = basename($file);
+  $file_directory = dirname($file);
+  $streamUrl = $base_url . '/' . $file_directory . '/' . urlencode($file_basename);
 
   /* -----------------------------------------------------------------
    * need a better way to get mimetypes
@@ -337,14 +338,10 @@ function add_stream_form_submit($form, &$form_state) {
     return;
   }
   $form_state['rebuild'] = TRUE;
-  //$form_state['redirect'] = $base_url."/fedora/repository/$pid";
-  //  drupal_goto("http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
 }
 
 function add_stream_form(&$form_state, $pid) {
-  //module_load_module_load_include('hp', ''Fedora_Repository'', 'config', 'fedora_repository', '');
   module_load_include('inc', 'fedora_repository', 'formClass');
-  //$client = getSoapClient(variable_get('fedora_soap_manage_url', 'http://localhost:8080/fedora/services/management?wsdl'));
   $addDataStreamForm = new formClass();
   return $addDataStreamForm->createAddDataStreamForm($pid, $form_state);
 }
@@ -409,7 +406,6 @@ function fedora_repository_purge_stream($pid = NULL, $dsId = NULL, $name = NULL)
 
 function fedora_repository_purge_object_form_submit($form, &$form_state) {
   module_load_include('inc', 'fedora_repository', 'ConnectionHelper');
-  //$client = getSoapClient(variable_get('fedora_soap_manage_url', 'http://localhost:8080/fedora/services/management?wsdl'));
   $pid = $form_state['values']['pid'];
   if (!isset($form_state['storage']['confirm'])) {
     $form_state['storage']['confirm'] = TRUE; // this will cause the form to be rebuilt, entering the confirm part of the form
@@ -483,7 +479,7 @@ function fedora_repository_replace_stream($pid, $dsId, $dsLabel, $collectionName
     drupal_set_message(t('You must specify an pid and dsId to replace.'), 'error');
     return '';
   }
-  $output .= drupal_get_form('fedora_repository_replace_stream_form', $pid, $dsId, $dsLabel);
+  $output = drupal_get_form('fedora_repository_replace_stream_form', $pid, $dsId, $dsLabel);
 
   return $output;
 }
@@ -523,74 +519,34 @@ function fedora_repository_replace_stream_form_validate($form, &$form_state) {
 }
 
 function fedora_repository_replace_stream_form_submit($form, &$form_state) {
-
+  global $base_url;
   $file = $form_state['values']['file'];
   $pid = $form_state['values']['pid'];
   $dsid = $form_state['values']['dsId'];
-
+  $dsLabel = $form_state['values']['dsLabel'];
   // Remove the original file extension from the label and add the new one
-  $dsLabel = substr($form_state['values']['dsLabel'], 0, strrpos($form_state['values']['dsLabel'], '.'));
-  $dsLabel .= substr($file->filename, strrpos($file->filename, '.')); // Add the file extention to the end of the label.;
+  $indexOfDot = strrpos($dsLabel,'.');//use strrpos to get the last dot
+  if($indexOfDot !== FALSE){
+    $dsLabel = substr($dsLabel, 0, $indexOfDot);
+    $dsLabel .= substr($file->filename, strrpos($file->filename, '.')); // Add the file extention to the end of the label.;
+  }
   module_load_include('inc', 'Fedora_Repository', 'MimeClass');
-  module_load_include('inc', 'Fedora_Repository', 'ObjectHelper');
-  module_load_include('inc', 'Fedora_Repository', 'ConnectionHelper');
-
-  $streamUrl = file_create_url($file->filepath);
+  module_load_include('inc', 'fedora_repository', 'api/fedora_item');
+  
+  $file_basename = basename($file->filepath);
+  $file_directory = dirname($file->filepath);
+  $streamUrl = $base_url . '/' . $file_directory . '/' . urlencode($file_basename);
 
   /* -----------------------------------------------------------------
-   * need a better way to get mimetypes
+   * TODO: need a better way to get mimetypes
    */
   $mimetype = new MimeClass();
   $dformat = $mimetype->getType($file->filepath);
-
-  $controlGroup = "M";
-  $function = 'modifyDatastreamByReference';
-  $params = array(
-      'pid' => $pid,
-      'dsID' => $dsid,
-      'altIDs' => "",
-      'dsLabel' => $dsLabel,
-      'MIMEType' => $dformat,
-      'formatURI' => "URL",
-      'dsLocation' => $streamUrl,
-      'controlGroup' => "$controlGroup",
-      'dsState' => "A",
-      'checksumType' => "DISABLED",
-      'checksum' => "none",
-      'logMessage' => "datastream replaced",
-      'force' => FALSE,
-  );
-
-  if ($dformat == 'text/xml') {
-    $doc = new DOMDocument();
-    $doc->load($file->filepath);
-    $controlGroup = 'X';
-    $function = 'modifyDatastreamByValue';
-    $params['dsContent'] = $doc->saveXML();
-    unset($params['dsLocation']);
-  }
-
-  try {
-    $soapHelper = new ConnectionHelper();
-    $client = $soapHelper->getSoapClient(variable_get('fedora_soap_manage_url', 'http://localhost:8080/fedora/services/management?wsdl'));
-
-    if ($client == NULL) {
-      drupal_set_message(t('Error Getting Soap Client.'), 'error');
-      return;
-    }
-    $object = $client->__soapCall($function, array('parameters' => $params));
-
-    // Apply the add datastream rules.
-    $object_helper = new ObjectHelper();
-    $object_helper->get_and_do_datastream_rules($pid, $dsid, $file->filepath);
-
-    file_delete($file->filepath);
-  } catch (exception $e) {
-    drupal_set_message(t($e->getMessage()), 'error');
-    return;
-  }
-
-  drupal_goto('fedora/repository/' . $pid . '/-/' . $dsId);
+  $item = new Fedora_Item($pid);
+  
+  $item->modify_datastream_by_reference($streamUrl, $dsid, $dsLabel, $dformat);
+  
+  $form_state['redirect'] = 'fedora/repository/' . $pid;
 }
 
 function fedora_repository_edit_qdc_page($pid = NULL, $dsId = NULL) {

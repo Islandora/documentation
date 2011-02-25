@@ -16,7 +16,7 @@ class FedoraRepositoryTestCase extends DrupalWebTestCase {
  }
 
  function setUp() {
-   parent::setUp('fedora_repository');
+   parent::setUp('fedora_repository', 'tabs');
 
    module_load_include('inc', 'fedora_repository', 'api/fedora_item');
 
@@ -26,13 +26,51 @@ class FedoraRepositoryTestCase extends DrupalWebTestCase {
                                                     'edit tags datastream',
                                                     'ingest new fedora objects',
                                                     'purge objects and datastreams',
-                                                    'view fedora collection'));
+                                                    'view fedora collection',
+                                                    'view detailed list of content'));
 
 
    $this->drupalLogin($repository_user);
    
  }
 
+ public function testDatastreams() {
+   module_load_include('inc', 'fedora_repository', 'api/fedora_item');
+   $pid_list = array();
+   
+   // Test Add datastream form
+   $cm_item = fedora_item::ingest_new_item();
+   $cm_item->add_relationship('hasModel', 'fedora-system:ContentModel-3.0', FEDORA_MODEL_URI);
+   $cm_item->add_datastream_from_file(drupal_get_path('module', 'fedora_repository').'/content_models/STRICT_PDFCM.xml', 'ISLANDORACM');
+   $pids_list[] = $cm_item->pid;
+
+   // Ingest a new PDF object
+   $pdf_item = fedora_item::ingest_new_item();
+   $pdf_item->add_relationship('hasModel', $cm_item->pid, FEDORA_MODEL_URI);
+   $pids_list[] = $pdf_item->pid;
+   
+   // Submit the add datastream form.
+   $add_stream_form = array();
+   $add_stream_form['pid'] = $pdf_item->pid;
+   $add_stream_form['stream_label'] = $this->randomName(20);
+   $rpath = realpath(drupal_get_path('module', 'fedora_repository') . '/tests/test_files/lorem_ipsum.pdf');
+   $add_stream_form['files[add-stream-file-location]'] = $rpath;
+   $add_stream_form['stream_id'] = 'OBJ';
+   $this->drupalPost('fedora/repository/' . $pdf_item->pid, $add_stream_form, 'Add Datastream');
+   
+   // Test replace datastream form
+   $this->assertText('The datastream has been uploaded', "Add initial datastream.", 'fedora datastreams');
+   $this->drupalGet('fedora/repository/'.$pdf_item->pid);
+   $this->assertText($add_stream_form['stream_label'], 'Datastream appears in DS list.', 'fedora datastreams');
+   $replace_stream_edit = array();
+   $replace_stream_rpath = realpath(drupal_get_path('module', 'fedora_repository') . '/tests/test_files/jabberwocky.pdf');
+   $replace_stream_edit['files[file]'] = $replace_stream_rpath;
+   
+   $this->drupalPost("fedora/repository/replaceStream/$pdf_item->pid/OBJ/NewLabel", $replace_stream_edit , 'Replace Datastream' );
+   $this->assertText('NewLabel', "Replacement datastream appears in DS list.", 'fedora datastreams');
+   $this->outputScreenContents();
+ }
+ 
  /**
   * Add an item based on a content model.  Initially we will assume that the repository
   * will be populated with the default content models and collections that are
@@ -121,7 +159,7 @@ class FedoraRepositoryTestCase extends DrupalWebTestCase {
    return $matches[1];
  }
 
- private function outputScreenContents($description, $basename) {
+ private function outputScreenContents($description = '', $basename = '') {
    // This is a hack to get a directory that won't be cleaned up by SimpleTest.
    $file_dir = file_directory_path() . '../simpletest_output_pages';
    if (!is_dir($file_dir)) {
