@@ -96,7 +96,7 @@ class Fedora_Item {
       'logMessage' => ($logMessage != null)?$logMessage: 'Ingested object '. $datastream_id
     );
 
-    return $this->soap_call( 'addDataStream', $params )->datastreamID;
+    return $this->soap_call( 'addDataStream', $params );
   }
 
   function add_datastream_from_string($str, $datastream_id, $datastream_label = NULL, $datastream_mimetype = 'text/xml', $controlGroup = 'M',$logMessage = null) {

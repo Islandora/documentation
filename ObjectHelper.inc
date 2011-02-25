@@ -876,7 +876,8 @@ class ObjectHelper {
    */
   function getBreadcrumbs($pid, &$breadcrumbs, $level=10) {
     module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
-
+    // Before executing the query, we hve a base case of accessing the top-level collection
+    global $base_url;
     $query_string = 'select $parentObject $title $content from <#ri>
                              where (<info:fedora/' . $pid . '> <dc:title> $title
                              and $parentObject <fedora-model:hasModel> $content
@@ -893,18 +894,21 @@ class ObjectHelper {
     $result = preg_split('/[\r\n]+/',do_curl($url));
 		array_shift($result); // throw away first line 
     $matches =str_getcsv(join("\n",$result));
-    if ($matches !== NULL) {
+    if ($matches !== FALSE) {
 			$parent = preg_replace('/^info:fedora\//','',$matches[0]);
       $breadcrumbs[] = l($matches[1], 'fedora/repository/' . $pid);
       if ($parent == variable_get('fedora_repository_pid', 'islandora:top')) {
-        $breadcrumbs[] = l(t('Home'), ''); // l(t('Digital repository'), 'fedora/repository');
+        $breadcrumbs[] = l(t('Digital repository'), 'fedora/repository');
+        $breadcrumbs[] = l(t('Home'), $base_url);
+        
+        
       } elseif ($level > 0) {
         $this->getBreadcrumbs($parent, $breadcrumbs, $level - 1);
       }
     }
   }
 
-  function warnIfMisconfigured($app) {
+  public static function warnIfMisconfigured($app) {
     $messMap = array(
         'Kakadu' => 'Full installation instructions for Kakadu can be found
           <a href=http://www.kakadusoftware.com/index.php?option=com_content&task=view&id=27&Itemid=23>Here</a>',

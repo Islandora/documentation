@@ -38,8 +38,8 @@ class ShowSlideStreamsInFieldSets {
       '#type' => 'tabpage',
       '#title' => t('View'),
       // This will be the content of the tab.
-      '#content' => '<a href="'. $base_url . '/fedora/repository/'. $this->pid . '/FULL_JPG/"><img src="'. $base_url .
-        '/fedora/imageapi/'. $this->pid . '/JPG/JPG.jpg'. '" /></a>'. '<p>'. drupal_get_form('fedora_repository_image_tagging_form', $this->pid) . '</p>',
+      '#content' => '<img src="'. $base_url .
+        '/fedora/imageapi/'. $this->pid . '/JPG/JPG.jpg'. '" />'. '<p>'. drupal_get_form('fedora_repository_image_tagging_form', $this->pid) . '</p>',
     );
     
     return $tabset;

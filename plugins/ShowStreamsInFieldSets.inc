@@ -60,6 +60,7 @@ class ShowStreamsInFieldSets {
     global $base_path;
     global $user;
     module_load_include('inc', 'fedora_repository', 'api/fedora_item');
+
     $tabset = array();
 
     $tabset['first_tab'] = array(
