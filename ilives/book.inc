@@ -169,7 +169,7 @@ class IslandoraBook {
     $html = '<iframe src="'. $viewer_url . '" scrolling="0" frameborder="0" style="width: 100%; height: 800px;">Errors: unable to load viewer</iframe>';
     $tabset['second_tab'] = array(
       '#type' => 'tabpage',
-      '#title' => t('Full-size'),
+      '#title' => t('Read'),
       '#content' => $html
     );
     $tabset['first_tab'] = array(
@@ -179,12 +179,14 @@ class IslandoraBook {
       // This will be the content of the tab.
       '#content' => fedora_ilives_create_book_view($this->pid),
     );
-
-    $tabset['add_pages'] = array(
-      '#type' => 'tabpage',
-      '#title' => t('Add pages'),
-      '#content' => drupal_get_form('book_add_pages_form', $this->pid),
-    );
+    
+    if (user_access('ingest new fedora objects')) { 
+      $tabset['add_pages'] = array(
+        '#type' => 'tabpage',
+        '#title' => t('Add pages'),
+        '#content' => drupal_get_form('book_add_pages_form', $this->pid),
+      );
+    }
     return $tabset;
   }
 }

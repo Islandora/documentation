@@ -1,20 +1,20 @@
-
-<content_model xmlns="http://www.islandora.ca" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Collection" xsi:schemaLocation="http://www.islandora.ca http://localhost/islandoracm.xsd">
+<content_model name="Collection" xmlns="http://www.islandora.ca" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.islandora.ca http://localhost/islandoracm.xsd">
   <mimetypes>
     <type>text/xml</type>
     <type>text/plain</type>
     <type>application/xml</type>
   </mimetypes>
-  <ingest_rules></ingest_rules>
+  <ingest_rules/>
   <datastreams>
     <datastream dsid="DC">
-      <display_method class="CollectionClass" file="CollectionClass.inc" method="showFieldSets" module=""></display_method>
+      <display_method class="CollectionClass" file="CollectionClass.inc" method="showFieldSets" module=""/>
     </datastream>
-    <datastream dsid="TN"></datastream>
-    <datastream dsid="COLLECTION_POLICY"></datastream>
+    <datastream dsid="TN"/>
+    <datastream dsid="COLLECTION_POLICY"/>
   </datastreams>
   <ingest_form dsid="QDC" page="2">
-    <form_builder_method class="CollectionFormBuilder" file="plugins/CollectionFormBuilder.inc" handler="handleQDCForm" method="buildQDCForm" module=""></form_builder_method>
+    <form_builder_method class="CollectionFormBuilder" file="plugins/CollectionFormBuilder.inc" handler="handleQDCForm"
+      method="buildQDCForm" module=""/>
     <form_elements>
       <element label="Title/Caption/Object Name" name="dc:title" required="true" type="textfield">
         <description>The name given to the resource</description>

@@ -106,10 +106,6 @@ class Herbarium {
     global $base_url;
 
     $tabset = array();
-
-    $tabset['my_tabset'] = array(
-      '#type' => 'tabset',
-    );
     
     global $user;
     $qs = '';
@@ -119,13 +115,13 @@ class Herbarium {
 
     $viewer_url = variable_get('fedora_base_url', '') . '/get/'. $this->pid . '/ilives:viewerSdef/getViewer'. $qs;
     $html = '<iframe src="'. $viewer_url . '"  scrolling="no" frameborder="0" style="width: 100%; height: 800px;">Errors: unable to load viewer</iframe>';
-    $tabset['my_tabset']['second_tab'] = array(
+    $tabset['second_tab'] = array(
 //     $collection_fieldset = array (
       '#type' => 'tabpage',
       '#title' => t('Full-size'),
       '#content' => $html
     );
-    $tabset['my_tabset']['first_tab'] = array(
+    $tabset['first_tab'] = array(
       // #type and #title are the minimum requirements.
       '#type' => 'tabpage',
       '#title' => t('View'),
@@ -135,15 +131,15 @@ class Herbarium {
     );
 
     $dwc = new DarwinCore($this->item);
-    $tabset['my_tabset']['third_tab'] = array(
+    $tabset['third_tab'] = array(
       '#type' => 'tabpage',
       '#title' => t('Description'),
     );
-    $tabset['my_tabset']['third_tab']['tabset'] = array(
+    $tabset['third_tab']['tabset'] = array(
       '#type' => 'tabset',
     );
     
-    $tabset['my_tabset']['third_tab']['tabset']['view'] = array(
+    $tabset['third_tab']['tabset']['view'] = array(
       '#type' => 'tabpage',
       '#title' => t('Darwin Core'),
       '#content' => $dwc->asHTML(),
@@ -152,17 +148,17 @@ class Herbarium {
     $obj = new ObjectHelper();
     if (fedora_repository_access(OBJECTHELPER :: $EDIT_FEDORA_METADATA, $this->pid, $user)) {
       $editform = drupal_get_form('fedora_repository_edit_qdc_form', $this->pid, 'DARWIN_CORE');
-      $tabset['my_tabset']['third_tab']['tabset']['edit'] = array(
+      $tabset['third_tab']['tabset']['edit'] = array(
         '#type' => 'tabpage',
         '#title' => t('Edit'),
         '#content' => $editform,
       );
-      $tabset['my_tabset']['third_tab']['tabset']['source'] = array(
+      $tabset['third_tab']['tabset']['source'] = array(
         '#type' => 'tabpage',
         '#title' => t('Vew Source'),
       );
       $xmlsrc = $dwc->asXML();
-      $tabset['my_tabset']['third_tab']['tabset']['source']['srctext'] = array(
+      $tabset['third_tab']['tabset']['source']['srctext'] = array(
         '#name' => 'source',
         '#type' => 'textarea',
         '#value' => $xmlsrc,
@@ -170,7 +166,6 @@ class Herbarium {
         '#height' => 50,
       );
     }
-
-    return tabs_render($tabset);
+    return $tabset;
   }
 }
