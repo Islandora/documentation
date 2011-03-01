@@ -1,1 +1,39 @@
 <?php
+
+/**
+ * Implementation of hook_requried_fedora_objects()
+ */
+function islandora_newspaper_required_fedora_objects() {
+  // array( 'path-to-foxml-file', 'pid', 'dsid', 'path-to-datastream-file', int dsversion, boolean required)
+  $module_path = drupal_get_path('module', 'islandora_newspaper');
+  return array(
+    array(
+      'foxml_file' => "$module_path/newspapers_issueCModel.xml", 
+      'pid' => NULL,
+      'dsid' => NULL,
+      'datastream_file' => NULL,
+      'dsversion' => NULL,
+    ),
+    array(
+      'foxml_file' => "$module_path/newspapers_pageCModel.xml",
+      'pid' => NULL,
+      'dsid' => NULL,
+      'datastream_file' => NULL,
+      'dsversion' => NULL,
+    ),
+    array(
+      'foxml_file' => "$module_path/newspapers_viewerSdep-issueCModel.xml",
+      'pid' => NULL,
+      'dsid' => NULL,
+      'datastream_file' => NULL,
+      'dsversion' => NULL,
+    ),
+    array(
+      'foxml_file' => "$module_path/newspapers_viewerSdep-pageCModel.xml",
+      'pid' => NULL,
+      'dsid' => NULL,
+      'datastream_file' => NULL,
+      'dsversion' => NULL,
+    ),
+  );
+}

@@ -42,9 +42,9 @@ class formClass {
     );
 
     $items['admin/settings/fedora_repository/demoobjects'] = array(
-        'title' => t('Install demos'),
-        'description' => t('Install example content models and collections to get started using Islandora and Fedora.'),
-        'page callback' => 'fedora_repository_install_demos_page',
+        'title' => t('Solution Packs'),
+        'description' => t('Install content models and collections required by installed solution packs.'),
+        'page callback' => 'fedora_repository_solution_packs_page',
         'access arguments' => array('add fedora datastreams'),
         'type' => MENU_LOCAL_TASK,
     );
