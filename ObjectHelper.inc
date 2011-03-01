@@ -39,7 +39,7 @@ class ObjectHelper {
    * @param $pid String
    * @param $dsID String
    */
-  function makeObject($pid, $dsID, $asAttachment = FALSE, $label = NULL, $filePath=FALSE, $version=NULL, $forceSoap = FALSE) {
+  function makeObject($pid, $dsID, $asAttachment = FALSE, $label = NULL, $filePath=FALSE, $version=NULL, $forceSoap = TRUE) {
     global $user;
     module_load_include('inc','fedora_repository','ContentModel');
     if ($pid == NULL || $dsID == NULL) {
