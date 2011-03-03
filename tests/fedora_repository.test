@@ -98,6 +98,37 @@ class FedoraRepositoryTestCase extends DrupalWebTestCase {
     $this->cleanUpRepository($pid_list);
   }
 
+  public function testPidSpaceRestriction() {
+
+    // give user full permissions
+
+    $admin_tester = $this->drupalCreateUser(array('administer site configuration', 'view fedora collection'));
+    $this->drupalLogin($admin_tester);
+    $pageContent = $this->drupalGet('admin/settings/fedora_repository');
+    $hasOption = preg_match('/Enforce namespace restrictions/', $pageContent);
+
+    
+    if (!$hasOption) {
+      $this->pass('Removal of namespace restrictions is disabled');
+    }
+    else {
+      $this->pass('Removal of namespace restrictions is enabled');
+      $inVal['fedora_namespace_restriction_enforced'] = TRUE;
+      $inVal['fedora_pids_allowed'] = 'simpletest:';
+      $this->drupalPost('admin/settings/fedora_repository', $inVal, 'Save configuration');
+      $this->assertPattern('/The configuration options have been saved./', 'The configuration options have been saved.');
+
+      $this->drupalGet('fedora/repository/islandora:largeimages/');
+      $this->assertPattern('/Access denied/', 'No access to Large image Collection Collection');
+      $inVal['fedora_namespace_restriction_enforced'] = 0;
+      $this->drupalPost('admin/settings/fedora_repository', $inVal, 'Save configuration');
+      $this->assertPattern('/The configuration options have been saved./', 'The configuration options have been saved.');
+      $this->drupalLogin($this->repository_user);
+      $this->drupalGet('fedora/repository/islandora:largeimages/');
+      $this->assertPattern('/Large Images Collection/', 'Access to Large Images Collection');
+    }
+  }
+
   private function cleanUpRepository($pid_list = array()) {
     $this->pass("This is the PID list to purge: " . implode(", ", $pid_list));
     foreach ($pid_list as $pid) {
@@ -152,99 +183,3 @@ class FedoraRepositoryTestCase extends DrupalWebTestCase {
 
 }
 
-class FedoraRepositoryClosedNameSpaceTestCase extends DrupalWebTestCase {
-
-  public static function getInfo() {
-    return array(
-      'name' => 'Fedora Repository with closed name space',
-      'description' => t('Fails if allow_open_namespace has been set to TRUE in settings.php.'),
-      'group' => t('fedora repository'),
-    );
-  }
-
-  function setUp() {
-    parent::setUp('fedora_repository');
-  }
-
-  function testRestrictedNamePage() {
-    $admin_tester = $this->drupalCreateUser(array('administer site configuration', 'view fedora collection'));
-    $this->drupalLogin($admin_tester);
-    $this->drupalGet('admin/settings/fedora_repository');
-    $this->assertNoText('Enforce namespace restrictions:');
-  }
-
-}
-
-class FedoraRepositoryOpenNameSpaceTestCase extends DrupalWebTestCase {
-
-  public static function getInfo() {
-    return array(
-      'name' => 'Fedora Repository with open name space',
-      'description' => t('Fails if allow_open_namespace has been set to FALSE in settings.php.'),
-      'group' => t('fedora repository'),
-    );
-  }
-
-  function setUp() {
-    parent::setUp('fedora_repository');
-
-    module_load_include('inc', 'fedora_repository', 'api/fedora_item');
-
-    // Create and login user.
-    $repository_user = $this->drupalCreateFedoraUser(array('add fedora datastreams',
-          'edit fedora meta data',
-          'edit tags datastream',
-          'ingest new fedora objects',
-          'purge objects and datastreams',
-          'view fedora collection'));
-
-    $this->repository_user = $repository_user;
-  }
-
-  public function testPidSpaceRestriction() {
-
-    // give user full permissions
-    $admin_tester = $this->drupalCreateUser(array('administer site configuration', 'view fedora collection'));
-    $this->drupalLogin($admin_tester);
-    $inVal['fedora_namespace_restriction_enforced'] = TRUE;
-    $inVal['fedora_pids_allowed'] = 'simpletest:';
-    $this->drupalPost('admin/settings/fedora_repository', $inVal, 'Save configuration');
-    $this->assertPattern('/The configuration options have been saved./', 'The configuration options have been saved.');
-
-    $this->drupalGet('fedora/repository/demo:SmileyStuff/');
-    $this->assertPattern('/Access denied/', 'No access to SmileyStuff Collection');
-    $inVal['fedora_namespace_restriction_enforced'] = 0;
-    $this->drupalPost('admin/settings/fedora_repository', $inVal, 'Save configuration');
-    $this->assertPattern('/The configuration options have been saved./', 'The configuration options have been saved.');
-    $this->drupalLogin($this->repository_user);
-    $this->drupalGet('fedora/repository/demo:SmileyStuff/');
-    $this->assertPattern('/Collection of Smiley Stuff/', 'Access to SmileyStuff Collection');
-  }
-
-  protected function drupalCreateFedoraUser($permissions = array('access comments', 'access content', 'post comments', 'post comments without approval')) {
-    // Create a role with the given permission set.
-    if (!($rid = $this->drupalCreateRole($permissions))) {
-      return FALSE;
-    }
-
-    // Create a user assigned to that role.
-    $edit = array();
-    $edit['name'] = 'simpletestuser';
-    $edit['mail'] = $edit['name'] . '@example.com';
-    $edit['roles'] = array($rid => $rid);
-    $edit['pass'] = 'simpletestpass';
-    $edit['status'] = 1;
-
-    $account = user_save('', $edit);
-
-    $this->assertTrue(!empty($account->uid), t('User created with name %name and pass %pass', array('%name' => $edit['name'], '%pass' => $edit['pass'])), t('User login'));
-    if (empty($account->uid)) {
-      return FALSE;
-    }
-
-    // Add the raw password so that we can log in as this user.
-    $account->pass_raw = $edit['pass'];
-    return $account;
-  }
-
-}
