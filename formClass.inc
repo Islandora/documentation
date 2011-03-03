@@ -652,8 +652,8 @@ class formClass {
         '#description' => t('Datastream IDs defined by the content model.'),
       );
 
-      $form['stream_id']['#options'] = $dsidsForForm;
-    } 
+      $form['stream_id']['#options'] = $unused_dsids;
+    }
 
     else {
       $form['stream_id'] = array(
