@@ -94,26 +94,3 @@ function fedora_repository_requirements($phase) {
  
   return $requirements;
 }
-
-/**
- * Invokes a hook to any dependent modules asking them if their installations require
- * any fedora objects to be present. Modules implementing this hook should return an array
- * of arrays of the form:
- * 
- * array( 'pid', 'path-to-foxml-file', 'dsid', 'path-to-datastream-file', int dsversion)
- * 
- * where the last three options are optional. A module can either point to a simple
- * foxml file to install, or can specify a datastreamstream to check for, with a 
- * path to load the datastream from if it isn't there. Optionally a version number
- * can be included, to enable updating of content model or collection policy streams
- * that may have been updated. THis is a simple whole number that should be incremented
- * when changed.  This value appears in as an attribute of the topmost element of the stream, 
- * e.g.,:
- * 
- * <?xml version="1.0" encoding="utf-8"?> <content_model name="Collection" version="2" ...
- * 
- * Datastreams which don't have this element are assumed to be at version 0.
- */
-function fedora_repository_check_for_required_fedora_objects() {
-  $required_objects = module_invoke_all('required_fedora_objects');
-}
