@@ -14,10 +14,12 @@
  * @see system_settings_form().                                           
  */
 function fedora_attach_admin() {
-  $options = drupal_map_assoc(explode(" ", variable_get('fedora_pids_allowed', 'default: demo: changeme: Islandora: ilives: ')));
+  $options = drupal_map_assoc(explode(" ", variable_get('fedora_pids_allowed', 'default: demo: changeme: islandora: ilives: ')));
   $default_value = variable_get('fedora_attach_pid_namespace', 'default:');
+  $isRestricted = variable_get('fedora_namespace_restriction_enforced',TRUE);
 
-  if (!in_array($default_value, $options)) {
+
+  if (!in_array($default_value, $options) && $isRestricted) {
     drupal_set_message( "The value last set here ($default_value) is not in the list of available PID namespaces (perhaps it has changed?).  Please choose a valid option from the list.", 'warning' );
   }
 

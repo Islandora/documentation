@@ -548,6 +548,7 @@ function install_book_content_model_objects() {
   module_load_include('inc', 'fedora_repository', 'api/fedora_item');
   $allowed_pids_str = variable_get('fedora_pids_allowed', 'default: demo: changeme: Islandora: ilives: ');
   $allowed_pids = explode(' ', $allowed_pids_str);
+  
 
   if (!in_array('ilives:', $allowed_pids)) {
     variable_set('fedora_pids_allowed', $allowed_pids_str . ' ilives:');
