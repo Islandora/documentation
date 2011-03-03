@@ -1753,24 +1753,31 @@ function fedora_repository_solution_packs_page() {
   $enabled_solution_packs = module_invoke_all('required_fedora_objects');
   $output = '';
   foreach ($enabled_solution_packs as $solution_pack_name => $objects) {
-    
+    $output .= drupal_get_form('fedora_repository_solution_pack_form', $solution_pack_name, $objects);
   }
-  return theme('fedora_repository_solution_packs_list', $required_objects);
+  return $output;
 }
 
 /**
  * Check for installed objects and add a 'Update' or 'Install' button if some objects are missing.
  * @param array $solution_pack 
  */
-function fedora_repository_solution_pack_form($form, &$form_state, $solution_pack_name, $objects = array()) {
+function fedora_repository_solution_pack_form($form, $solution_pack_name, $objects = array()) {
   // Check each object to see if it is in the repository.
-  
-  $form['name'] = array(
-    '#value' => $solution_pack_name,
+  module_load_include('inc', 'fedora_repository', 'api/fedora_item');
+  $form = array();
+  $form['solution_pack'] = array(
+    '#type' => 'fieldset',
+    '#title' => "Objects",
+   // '#tree' => TRUE,
+    '#collapsed' => TRUE,
+    '#collapsible' => TRUE,
   );
   $needs_update = FALSE;
   $needs_install = FALSE;
-  
+  $form['solution_pack']['objects'] = array(
+
+  );
   foreach($objects as $object) {
     if (isset($object['pid'])) {
       $pid = $object['pid'];
@@ -1789,14 +1796,27 @@ function fedora_repository_solution_pack_form($form, &$form_state, $solution_pac
           $object['update'] = TRUE;
         }
       }
-      $row .= "<span class=\"$class\">$icon</span>";
-      $row .= "Object: $pid<span class=\"current\">" . t('Installed') . "</span>";
-      $row .= "</div>";
-      $output .= $row;
+      $form['solution_pack']['objects'][$object['pid']] = array(
+        '#title' => $object['pid'],
+        '#value' => $object['pid'],
+        '#type' => 'item',
+      );
+      
     }
   }
+  return $form;
 }
 
+/**
+ * Content model, collection view and collection policy datastreams may now optionally define a version
+ * number in their top-level XML element as an attribute, as in:
+ *   <content_model name="Collection" version="2" ...
+ * 
+ * @param Fedora_Item $item
+ * @param string $dsid
+ * @param string $datastream_file
+ * @return int, or NULL if no version attribute was found. 
+ */
 function fedora_repository_get_islandora_datastream_version($item = NULL, $dsid = NULL, $datastream_file = NULL) {
   $return = NULL;
   if (isset($item)) {
