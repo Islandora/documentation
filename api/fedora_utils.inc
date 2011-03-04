@@ -66,11 +66,8 @@ function do_curl($url, $return_to_variable = 1, $number_of_post_vars = 0, $post 
 }
 
 function fedora_available() {
-  
-  $ret = do_curl(variable_get('fedora_soap_url', 'http://localhost:8080/fedora/services/management?wsdl'), 1);
-  // A bit of a hack but the SOAP parser will cause a fatal error if you give it the wrong URL.
-  // PHP SOAP is now an installation requirement so this check is all we need to do.
-  return (strpos($ret, 'wsdl:definitions') != FALSE);
+  $response = drupal_http_request(variable_get('fedora_base_url', 'http://localhost:8080/fedora').'/describe');
+  return ($response->code == 200);
 }
 
 /**

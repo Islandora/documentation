@@ -15,13 +15,8 @@ class ConnectionHelper {
   }
 
   function _fixURL($url, $_name, $_pass) {
-    if ($url == NULL) {
+    if (empty($url)) {
       $url=variable_get('fedora_soap_url', 'http://localhost:8080/fedora/services/access?wsdl');
-    }
-
-    if ($_name == '' || $_pass == '') {
-      drupal_set_message(t('No credentials provided.'));
-      return NULL;
     }
 
     $creds = urlencode($_name) . ':'. urlencode($_pass);
@@ -36,14 +31,15 @@ class ConnectionHelper {
       drupal_set_message(t('Invalid URL: !url', array('!url' => $url)));
       return NULL;
     }
-
+    
     return $new_url;
   }
 
   function getSoapClient($url = NULL, $exceptions = TRUE) {
-    if ($url == NULL) {
+    if (empty($url)) {
       $url=variable_get('fedora_soap_url', 'http://localhost:8080/fedora/services/access?wsdl');
     }
+    
     global $user;
     if ($user->uid == 0) {
       //anonymous user.  We will need an entry in the fedora users.xml file
