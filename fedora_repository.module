@@ -1768,15 +1768,17 @@ function fedora_repository_solution_pack_form($form, $solution_pack_name, $objec
   $form = array();
   $form['solution_pack'] = array(
     '#type' => 'fieldset',
-    '#title' => "Objects",
-   // '#tree' => TRUE,
-    '#collapsed' => TRUE,
-    '#collapsible' => TRUE,
+    '#title' => $solution_pack_name,
   );
   $needs_update = FALSE;
   $needs_install = FALSE;
   $form['solution_pack']['objects'] = array(
-
+    '#type' => 'fieldset',
+    '#title' => "Objects",
+   // '#tree' => TRUE,
+    '#attributes' => array('class' => 'collapsed'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
   );
   foreach($objects as $object) {
     if (isset($object['pid'])) {
