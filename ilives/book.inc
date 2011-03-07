@@ -58,8 +58,12 @@ class IslandoraBook {
       '#type' => 'textarea',
       '#title' => 'MODS Record to Import',
       '#rows' => 20,
-      '#value' => (!empty($mods_save) ? $mods_save['mods']['mods_record'] : ''),
+      
     );
+    
+    if (!empty($mods_save)) {
+      $form['mods']['mods_record']['#value'] = $mods_save['mods']['mods_record'];
+    }
     return $form;
   }
 
@@ -101,7 +105,7 @@ class IslandoraBook {
     return TRUE;
   }
 
-  public function handleIngestForm($form_values) {
+  public function handleIngestForm($form_values, &$form_state) {
     /*
      * process the metadata form
      * Create fedora object
@@ -113,33 +117,38 @@ class IslandoraBook {
       return;
     }
 
-
     $mods_simple = simplexml_load_string($form_values['mods']['mods_record']);
     $title = '';
-    foreach ($mods_simple->children('http://www.loc.gov/mods/v3')->mods[0]->titleInfo[0]->children() as $child) {
-      if ($child->getName() == 'subTitle') {
-        // We don't care about subtitles for creating the item label.
-        continue;
-      }
-      $title .= $child;
-    }
-
+    
+    $mods_simple->registerXPathNamespace('mods', 'http://www.loc.gov/mods/v3');
+    $mods_records = $mods_simple->xpath('//mods:mods');
+    $mods_record = $mods_records[0];
+    $titles = $mods_simple->xpath('//mods:title');
+    $title = (string) $titles[0];
+    $mods_dom = dom_import_simplexml($mods_record);
+    $mods_dom->name = 'mods';
+    $mods_text = $mods_dom->ownerDocument->saveXML();
+    $mods_doc = new DOMDocument();
+    $new_node = $mods_doc->importNode($mods_dom, TRUE);
+    $mods_doc->documentElement->appendChild($new_node);
+    $mods_text = $mods_doc->saveXML();
     global $user;
     $mimetype = new MimeClass();
     
     $new_item = Fedora_Item::ingest_new_item(!empty($form_values['custom_pid']) ? $form_values['custom_pid'] : $form_values['pid'], 'A', $title,
             $user->name);
 
-    $new_item->add_datastream_from_string($form_values['mods']['mods_record'], 'MODS',
+    $new_item->add_datastream_from_string($mods_text, 'MODS',
             'MODS Metadata', 'text/xml', 'X');
 
-    $dc = transform_mods_to_dc($form_values['mods']['mods_record']);
+    $dc = transform_mods_to_dc($mods_text);
     if ($dc) {
       // Add the PID to a dc:identifier field.
-      $dc_doc = simplexml_load_string($dc);  
-      $dc_item = $dc_doc->xpath('/srw_dc:dcCollection/srw_dc:dc[1]');
+      $dc_doc = simplexml_load_string($dc);
+      $dc_doc->registerXPathNamespace('oai_dc', 'http://www.openarchives.org/OAI/2.0/oai_dc/');
+      $dc_item = $dc_doc->xpath('//oai_dc:dc');
       foreach($dc_item as $node) {
-        $node->addChild('identifier', $new_item->pid, 'http://purl.org/dc/elements/1.1/');
+        $node->addChild('dc:identifier', $new_item->pid, 'http://purl.org/dc/elements/1.1/');
       }
       $new_item->modify_datastream_by_value($dc_doc->saveXML(), 'DC', 'Dublin Core XML Metadata', 'text/xml');
     }
