@@ -123,6 +123,13 @@ class IslandoraBook {
     $mods_item = $mods_list_doc->getElementsByTagNameNS('http://www.loc.gov/mods/v3', 'mods')->item(0);
     $new_mods_item = $mods_item_doc->importNode($mods_item, TRUE);
     $mods_item_doc->appendChild($new_mods_item);
+    
+    $title_info = $mods_item_doc->getElementsByTagNameNS('http://www.loc.gov/mods/v3', 'titleInfo')->item(0);
+    $title = '';
+    foreach(array('nonSort', 'title') as $title_field) {
+      $title .= $title_info->getElementsByTagNameNS('http://www.loc.gov/mods/v3', $title_field)->item(0)->nodeValue;
+    }
+    
     $mods_text = $mods_item_doc->saveXML();
     global $user;
     $mimetype = new MimeClass();
