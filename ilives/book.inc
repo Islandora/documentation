@@ -136,7 +136,7 @@ class IslandoraBook {
     
     $new_item = Fedora_Item::ingest_new_item(!empty($form_values['custom_pid']) ? $form_values['custom_pid'] : $form_values['pid'], 'A', $title,
             $user->name);
-
+    
     $new_item->add_datastream_from_string($mods_text, 'MODS',
             'MODS Metadata', 'text/xml', 'X');
 
@@ -153,7 +153,10 @@ class IslandoraBook {
     }
     $new_item->add_relationship('hasModel', $form_values['content_model_pid'], FEDORA_MODEL_URI);
     $new_item->add_relationship(!empty($form_values['relationship']) ? $form_values['relationship'] : 'isMemberOfCollection', $form_values['collection_pid']);
+    drupal_set_message(t("Item !pid created successfully.", array('!pid' => l($new_item->pid, 'fedora/repository/'. $new_item->pid))), "status");
+
   }
+  
   
   public function buildAddPagesForm($form = array()) {
 
