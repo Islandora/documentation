@@ -117,21 +117,13 @@ class IslandoraBook {
       return;
     }
 
-    $mods_simple = simplexml_load_string($form_values['mods']['mods_record']);
-    $title = '';
-    
-    $mods_simple->registerXPathNamespace('mods', 'http://www.loc.gov/mods/v3');
-    $mods_records = $mods_simple->xpath('//mods:mods');
-    $mods_record = $mods_records[0];
-    $titles = $mods_simple->xpath('//mods:title');
-    $title = (string) $titles[0];
-    $mods_dom = dom_import_simplexml($mods_record);
-    $mods_dom->name = 'mods';
-    $mods_text = $mods_dom->ownerDocument->saveXML();
-    $mods_doc = new DOMDocument();
-    $new_node = $mods_doc->importNode($mods_dom, TRUE);
-    $mods_doc->documentElement->appendChild($new_node);
-    $mods_text = $mods_doc->saveXML();
+    $mods_list_doc = new DomDocument();
+    $mods_list_doc->loadXML($form_values['mods']['mods_record']);
+    $mods_item_doc = new DomDocument();
+    $mods_item = $mods_list_doc->getElementsByTagNameNS('http://www.loc.gov/mods/v3', 'mods')->item(0);
+    $new_mods_item = $mods_item_doc->importNode($mods_item, TRUE);
+    $mods_item_doc->appendChild($new_mods_item);
+    $mods_text = $mods_item_doc->saveXML();
     global $user;
     $mimetype = new MimeClass();
     
