@@ -1776,6 +1776,7 @@ function fedora_repository_solution_pack_form($form, $solution_pack_name, $objec
     '#type' => 'fieldset',
     '#title' => "Objects",
    // '#tree' => TRUE,
+    '#weight' => 10,
     '#attributes' => array('class' => 'collapsed'),
     '#collapsible' => TRUE,
     '#collapsed' => TRUE,
@@ -1806,6 +1807,20 @@ function fedora_repository_solution_pack_form($form, $solution_pack_name, $objec
       
     }
   }
+  $form['install'] = array(
+    '#name' => 'install',
+    '#value' => t('Install'),
+    '#disabled' => !$needs_install,
+    '#type' => 'button',
+    '#action' => 'install',
+  );
+  $form['update'] = array(
+    '#name' => 'update',
+    '#value' => t('Update'),
+    '#disabled' => !$needs_update,
+    '#type' => 'button',
+    '#action' => 'update',
+  );
   return $form;
 }
 
