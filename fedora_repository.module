@@ -1131,6 +1131,11 @@ function fedora_repository_theme() {
               'element' => NULL
           ),
       ),
+      'fedora_repository_solution_packs_list' => array(
+        'arguments' => array(
+          'solution_packs' => NULL,
+        ),
+      ),
   );
 }
 
@@ -1731,3 +1736,141 @@ function fedora_repository_display_schema($file) {
   return;
 }
 
+
+/**
+ * Invokes a hook to any dependent modules asking them if their installations require
+ * any fedora objects to be present. Modules implementing this hook should return an array
+ * of arrays of the form:
+ * 
+ * array( 'pid', 'path-to-foxml-file', 'dsid', 'path-to-datastream-file', int dsversion)
+ * 
+ * where the last three options are optional. A module can either point to a simple
+ * foxml file to install, or can specify a datastreamstream to check for, with a 
+ * path to load the datastream from if it isn't there. Optionally a version number
+ * can be included, to enable updating of content model or collection policy streams
+ * that may have been updated. THis is a simple whole number that should be incremented
+ * when changed.  This value appears in as an attribute of the topmost element of the stream, 
+ * e.g.,:
+ * 
+ * <?xml version="1.0" encoding="utf-8"?> <content_model name="Collection" version="2" ...
+ * 
+ * Datastreams which don't have this element are assumed to be at version 0.
+ */
+function fedora_repository_solution_packs_page() {
+  $enabled_solution_packs = module_invoke_all('required_fedora_objects');
+  $output = '';
+  foreach ($enabled_solution_packs as $solution_pack_name => $objects) {
+    $output .= drupal_get_form('fedora_repository_solution_pack_form', $solution_pack_name, $objects);
+  }
+  return $output;
+}
+
+/**
+ * Check for installed objects and add a 'Update' or 'Install' button if some objects are missing.
+ * @param array $solution_pack 
+ */
+function fedora_repository_solution_pack_form($form, $solution_pack_name, $objects = array()) {
+  // Check each object to see if it is in the repository.
+  module_load_include('inc', 'fedora_repository', 'api/fedora_item');
+  $form = array();
+  $form['solution_pack'] = array(
+    '#type' => 'fieldset',
+    '#title' => $solution_pack_name,
+  );
+  $needs_update = FALSE;
+  $needs_install = FALSE;
+  $form['solution_pack']['objects'] = array(
+    '#type' => 'fieldset',
+    '#title' => "Objects",
+   // '#tree' => TRUE,
+    '#weight' => 10,
+    '#attributes' => array('class' => 'collapsed'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+  );
+  foreach($objects as $object) {
+    if (isset($object['pid'])) {
+      $pid = $object['pid'];
+      
+      $item = new Fedora_Item($pid);
+      if (!$item->exists()) {
+        $needs_install = TRUE;
+        $object['install'] = TRUE;
+      }
+      elseif (isset($object['dsid']) && isset($object['datastream_file']) && isset($object['dsversion'])) {
+        // Check if the datastream is versioned and needs updating.
+        $installed_version = fedora_repository_get_islandora_datastream_version($item, $object['dsid']);
+        $available_version = fedora_repository_get_islandora_datastream_version(NULL, NULL, $object['datastream_file']);
+        if ($available_version > $installed_version) {
+          $needs_update = TRUE;
+          $object['update'] = TRUE;
+        }
+      }
+      $form['solution_pack']['objects'][$object['pid']] = array(
+        '#title' => $object['pid'],
+        '#value' => $object['pid'],
+        '#type' => 'item',
+      );
+      
+    }
+  }
+  $form['install'] = array(
+    '#name' => 'install',
+    '#value' => t('Install'),
+    '#disabled' => !$needs_install,
+    '#type' => 'button',
+    '#action' => 'install',
+  );
+  $form['update'] = array(
+    '#name' => 'update',
+    '#value' => t('Update'),
+    '#disabled' => !$needs_update,
+    '#type' => 'button',
+    '#action' => 'update',
+  );
+  return $form;
+}
+
+/**
+ * Content model, collection view and collection policy datastreams may now optionally define a version
+ * number in their top-level XML element as an attribute, as in:
+ *   <content_model name="Collection" version="2" ...
+ * 
+ * @param Fedora_Item $item
+ * @param string $dsid
+ * @param string $datastream_file
+ * @return int, or NULL if no version attribute was found. 
+ */
+function fedora_repository_get_islandora_datastream_version($item = NULL, $dsid = NULL, $datastream_file = NULL) {
+  $return = NULL;
+  if (isset($item)) {
+    $doc = simplexml_load_string($item->get_datastream_dissemination($dsid));
+  } elseif (isset($datastream_file)) {
+    $doc = simplexml_load_file($datastream_file);
+  }
+  
+  if (!empty($doc)) {
+    $attrs = $doc->attributes();
+    foreach($attrs as $name => $value) {
+      if ($name == 'version') {
+        $return = (int) $value;
+        break;
+      }
+    }
+  }
+  return $return;
+}
+  
+function theme_fedora_repository_solution_packs_list($solution_packs) {
+  module_load_include('inc', 'fedora_repository', 'api/fedora_item');
+  module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
+  $output = '';
+  $header = array();
+  $rows = array();
+  
+  
+    
+  
+  drupal_add_css(drupal_get_path('module', 'update') .'/update.css');
+  return $output;
+}
