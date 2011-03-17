@@ -1850,7 +1850,50 @@ function fedora_repository_solution_pack_form($form, $solution_pack_module, $sol
 
 function fedora_repository_solution_pack_form_submit($form, &$form_state) {
   $what = $form_state;
+  $module_name = $form_state['values']['solution_pack_module'];
+  $solution_pack_info = call_user_func($module_name . '_required_fedora_objects');
+  $batch = array(
+    'title' => t('Installing / updating solution pack objects'),
+    'file' => drupal_get_path('module', 'fedora_repository') . '/fedora_repository.module',
+    'operations' => array(),
+  );
 
+ 
+  foreach ($solution_pack_info[$module_name]['objects'] as $object) {
+    // Add this object to the batch job queue.
+    $batch['operations'][] = array('fedora_repository_batch_reingest_object', array($object));
+  }
+  batch_set($batch);
+  batch_process();
+}
+
+function fedora_repository_batch_reingest_object($object, &$context) {
+  module_load_include('inc', 'fedora_repository', 'api/fedora_item');
+  module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
+  if (!empty($object) && is_array($object)) {
+    $pid = $object['pid'];
+    if (!validPid($pid)) {
+      return NULL;
+    }
+    // Does the object exist? If so, purge it.
+    $item = new Fedora_Item($pid);
+    if ($item->exists()) {
+      $item->purge(t('Remove during re-install batch job'), TRUE);
+    }
+
+    // Ingest the object from the source file.
+    if (!empty($object['foxml_file'])) {
+      $foxml_file = $object['foxml_file'];
+      $new_item = Fedora_Item::ingest_from_FOXML_file($foxml_file);
+      if ($new_item->exists()) {
+        // Batch operation was successful.
+        $context['message'][] = "$new_item->pid installed.";
+      }
+    }
+    elseif (!empty($object['dsid'])) {
+
+    }
+  }
 }
 
 /**
