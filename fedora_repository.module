@@ -1759,9 +1759,21 @@ function fedora_repository_display_schema($file) {
 function fedora_repository_solution_packs_page() {
   $enabled_solution_packs = module_invoke_all('required_fedora_objects');
   $output = '';
-  foreach ($enabled_solution_packs as $solution_pack_name => $objects) {
-    $output .= drupal_get_form('fedora_repository_solution_pack_form', $solution_pack_name, $objects);
+  foreach ($enabled_solution_packs as $solution_pack_module => $solution_pack_info) {
+    $objects = array();
+    foreach ($solution_pack_info as $field => $value) {
+      switch ($field) {
+        case 'title':
+          $solution_pack_name = $value;
+          break;
+        case 'objects':
+          $objects = $value;
+          break;
+      }
+    }
+    $output .= drupal_get_form('fedora_repository_solution_pack_form', $solution_pack_module, $solution_pack_name, $objects);
   }
+
   return $output;
 }
 
@@ -1769,7 +1781,7 @@ function fedora_repository_solution_packs_page() {
  * Check for installed objects and add a 'Update' or 'Install' button if some objects are missing.
  * @param array $solution_pack 
  */
-function fedora_repository_solution_pack_form($form, $solution_pack_name, $objects = array()) {
+function fedora_repository_solution_pack_form($form, $solution_pack_module, $solution_pack_name, $objects = array()) {
   // Check each object to see if it is in the repository.
   module_load_include('inc', 'fedora_repository', 'api/fedora_item');
   $form = array();
@@ -1779,23 +1791,32 @@ function fedora_repository_solution_pack_form($form, $solution_pack_name, $objec
   );
   $needs_update = FALSE;
   $needs_install = FALSE;
+  $form['solution_pack_module'] = array(
+    '#type' => 'hidden',
+    '#value' => $solution_pack_module,
+  );
   $form['solution_pack']['objects'] = array(
     '#type' => 'fieldset',
     '#title' => "Objects",
-   // '#tree' => TRUE,
     '#weight' => 10,
     '#attributes' => array('class' => 'collapsed'),
     '#collapsible' => TRUE,
     '#collapsed' => TRUE,
   );
+  $table_header = array('PID', 'Status');
+  $table_rows = array();
+  
+  
   foreach($objects as $object) {
     if (isset($object['pid'])) {
       $pid = $object['pid'];
       
       $item = new Fedora_Item($pid);
+      $table_row = array($object['pid']);
+      $object_status = t('Up-to-date');
       if (!$item->exists()) {
+        $object_status = 'Missing';
         $needs_install = TRUE;
-        $object['install'] = TRUE;
       }
       elseif (isset($object['dsid']) && isset($object['datastream_file']) && isset($object['dsversion'])) {
         // Check if the datastream is versioned and needs updating.
@@ -1803,32 +1824,33 @@ function fedora_repository_solution_pack_form($form, $solution_pack_name, $objec
         $available_version = fedora_repository_get_islandora_datastream_version(NULL, NULL, $object['datastream_file']);
         if ($available_version > $installed_version) {
           $needs_update = TRUE;
-          $object['update'] = TRUE;
+          $object_status = 'Out of date';
         }
       }
-      $form['solution_pack']['objects'][$object['pid']] = array(
-        '#title' => $object['pid'],
-        '#value' => $object['pid'],
-        '#type' => 'item',
-      );
-      
+      array_push($table_row, $object_status);
+
+      $table_rows[] = $table_row;
+
     }
   }
+  $form['solution_pack']['objects']['table'] = array(
+      '#type' => 'markup',
+          '#value' => theme_table($table_header, $table_rows),
+      );
   $form['install'] = array(
     '#name' => 'install',
     '#value' => t('Install'),
     '#disabled' => !$needs_install,
-    '#type' => 'button',
+    '#type' => 'submit',
     '#action' => 'install',
   );
-  $form['update'] = array(
-    '#name' => 'update',
-    '#value' => t('Update'),
-    '#disabled' => !$needs_update,
-    '#type' => 'button',
-    '#action' => 'update',
-  );
+
   return $form;
+}
+
+function fedora_repository_solution_pack_form_submit($form, &$form_state) {
+  $what = $form_state;
+
 }
 
 /**

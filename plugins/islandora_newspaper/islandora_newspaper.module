@@ -7,34 +7,38 @@ function islandora_newspaper_required_fedora_objects() {
   // array( 'path-to-foxml-file', 'pid', 'dsid', 'path-to-datastream-file', int dsversion, boolean required)
   $module_path = drupal_get_path('module', 'islandora_newspaper');
   return array(
-    'Islandora Newspapers' => array(
-      array(
-        'foxml_file' => "$module_path/newspapers_issueCModel.xml", 
-        'pid' => 'newspapers:issueCModel',
-        'dsid' => NULL,
-        'datastream_file' => NULL,
-        'dsversion' => NULL,
-      ),
-      array(
-        'foxml_file' => "$module_path/newspapers_pageCModel.xml",
-        'pid' => 'newspapers:pageCModel',
-        'dsid' => NULL,
-        'datastream_file' => NULL,
-        'dsversion' => NULL,
-      ),
-      array(
-        'foxml_file' => "$module_path/newspapers_viewerSdep-issueCModel.xml",
-        'pid' => 'newspapers:viewerSdep-issueCModel',
-        'dsid' => NULL,
-        'datastream_file' => NULL,
-        'dsversion' => NULL,
-      ),
-      array(
-        'foxml_file' => "$module_path/newspapers_viewerSdep-pageCModel.xml",
-        'pid' => 'newspapers:viewerSdep-pageCModel',
-        'dsid' => NULL,
-        'datastream_file' => NULL,
-        'dsversion' => NULL,
+    'islandora_newspaper' => array(
+      'module' => 'islandora_newspaper',
+      'title' => 'Islandora Newspaper',
+      'objects' => array(
+        array(
+          'foxml_file' => "$module_path/newspapers_issueCModel.xml",
+          'pid' => 'newspapers:issueCModel',
+          'dsid' => NULL,
+          'datastream_file' => NULL,
+          'dsversion' => NULL,
+        ),
+        array(
+          'foxml_file' => "$module_path/newspapers_pageCModel.xml",
+          'pid' => 'newspapers:pageCModel',
+          'dsid' => NULL,
+          'datastream_file' => NULL,
+          'dsversion' => NULL,
+        ),
+        array(
+          'foxml_file' => "$module_path/newspapers_viewerSdep-issueCModel.xml",
+          'pid' => 'newspapers:viewerSdep-issueCModel',
+          'dsid' => NULL,
+          'datastream_file' => NULL,
+          'dsversion' => NULL,
+        ),
+        array(
+          'foxml_file' => "$module_path/newspapers_viewerSdep-pageCModel.xml",
+          'pid' => 'newspapers:viewerSdep-pageCModel',
+          'dsid' => NULL,
+          'datastream_file' => NULL,
+          'dsversion' => NULL,
+        ),
       ),
     ),
   );

@@ -70,6 +70,7 @@ function fedora_available() {
   return strstr($response, 'Repository Information HTML Presentation') !== FALSE;
 }
 
+
 /**
  * Returns a UTF-8-encoded transcripiton of the string given in $in_str.
  * @param string $in_str
