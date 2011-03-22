@@ -57,7 +57,6 @@ class ShowStreamsInFieldSets {
    */
   function showPDFPreview() {
     global $base_url;
-
     $tabset = array();
 
     $tabset['my_tabset'] = array(
