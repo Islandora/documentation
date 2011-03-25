@@ -213,6 +213,8 @@
 						<xsd:element minOccurs="0" name="description" type="xsd:normalizedString"/>
 						<xsd:element minOccurs="0" name="required" type="xsd:boolean"/>
 						<xsd:element minOccurs="0" name="default_value" type="xsd:normalizedString"/>
+						<xsd:element minOccurs="0" name="autocomplete_path"
+							type="xsd:normalizedString"/>
 						<xsd:element minOccurs="0" name="form_builder" type="formBuilderControlType"
 						/>
 					</xsd:all>
@@ -250,6 +252,8 @@
 						<xsd:element minOccurs="0" name="description" type="xsd:normalizedString"/>
 						<xsd:element minOccurs="0" name="required" type="xsd:boolean"/>
 						<xsd:element minOccurs="0" name="default_value" type="xsd:normalizedString"/>
+						<xsd:element minOccurs="0" name="autocomplete_path"
+							type="xsd:normalizedString"/>
 						<xsd:element minOccurs="0" name="form_builder" type="formBuilderControlType"
 						/>
 					</xsd:all>
@@ -284,6 +288,10 @@
 					<xsd:all maxOccurs="1" minOccurs="1">
 						<xsd:element name="title" type="xsd:normalizedString"/>
 						<xsd:element minOccurs="0" name="description" type="xsd:normalizedString"/>
+						<xsd:element default="true" minOccurs="0" name="collapsible"
+							type="xsd:boolean"/>
+						<xsd:element default="false" minOccurs="0" name="collapsed"
+							type="xsd:boolean"/>
 						<xsd:element name="content" type="formElementType"/>
 						<xsd:element minOccurs="0" name="form_builder" type="formBuilderControlType"
 						/>
