@@ -21,10 +21,10 @@ class ConnectionHelper {
 
     $creds = urlencode($_name) . ':'. urlencode($_pass);
 
-    if (strpos($url, 'http://') == 0) {
+    if (strpos($url, 'http://') === 0) {
       $new_url = 'http://'. $creds . '@'. substr($url, 7);
     } 
-    elseif (strpos($url, 'https://') == 0) {
+    elseif (strpos($url, 'https://') === 0) {
       $new_url = 'https://'. $creds . '@'. substr($url, 8);
     } 
     else {

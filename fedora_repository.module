@@ -1353,9 +1353,16 @@ function fedora_repository_demo_objects_form_submit($form, &$form_state) {
       $smiley_stuff->add_relationship('isMemberOfCollection', 'info:fedora/islandora:demos');
       $tn = $smiley_stuff->add_datastream_from_file(drupal_get_path('module', 'fedora_repository') . '/images/smileytn.png', 'TN', 'Thumbnail.png', 'image/png', 'M');
       $cp = $smiley_stuff->add_datastream_from_file(drupal_get_path('module', 'fedora_repository') . '/collection_policies/JPG-COLLECTION POLICY.xml', 'COLLECTION_POLICY', 'Collection Policy.xml', 'application/xml', 'X');
+      
       $cm = new Fedora_Item('demo:DualResImage');
       try {
         $cmstream = $cm->add_datastream_from_file(drupal_get_path('module', 'fedora_repository') . '/content_models/STANDARD JPG.xml', 'ISLANDORACM', 'Content Model.xml', 'application/xml', 'X');
+      } catch (exception $e) {
+
+      }
+      $dual_res_image_collection_cmodel = new Fedora_Item('demo:DualResImageCollection');
+      try {
+        $cmstream = $dual_res_image_collection_cmodel->add_datastream_from_file(drupal_get_path('module', 'fedora_repository') . '/content_models/COLLECTIONCM.xml', 'ISLANDORACM', 'Islandora Content Model.xml', 'application/xml', 'X');
         drupal_set_message("Successfully installed <a href=\"" . $base_url . "/fedora/repository/demo:SmileyStuff\">demo:SmileyStuff</a> collection view.", 'message');
       } catch (exception $e) {
 
