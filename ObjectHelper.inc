@@ -1018,7 +1018,8 @@ class ObjectHelper {
     $matches =str_getcsv(join("\n",$result));
     if ($matches !== FALSE) {
 			$parent = preg_replace('/^info:fedora\//','',$matches[0]);
-      $breadcrumbs[] = l($matches[1], 'fedora/repository/' . $pid);
+      $text = isset($matches[1]) ? $matches[1] : '';
+      $breadcrumbs[] = l($text, 'fedora/repository/' . $pid);
       if ($parent == variable_get('fedora_repository_pid', 'islandora:top')) {
         $breadcrumbs[] = l(t('Digital repository'), 'fedora/repository');
         $breadcrumbs[] = l(t('Home'), $base_url);
