@@ -48,7 +48,7 @@ function fedora_repository_solution_packs_page() {
 function fedora_repository_solution_pack_form(&$form_state, $solution_pack_module, $solution_pack_name, $objects = array()) {
   // Check each object to see if it is in the repository.
   module_load_include('inc', 'fedora_repository', 'api/fedora_item');
-
+  global $base_path;
   $needs_update = FALSE;
   $needs_install = FALSE;
   $form = array();
@@ -58,7 +58,12 @@ function fedora_repository_solution_pack_form(&$form_state, $solution_pack_modul
   );
 
   if (!$form_state['submitted']) {
-
+    $form['soluction_pack_name'] = array(
+      '#type' => 'markup',
+      '#value' => t($solution_pack_name),
+      '#prefix' => '<h3>',
+      '#suffix' => '</h3>',
+    );
     $form['objects'] = array(
       '#type' => 'fieldset',
       '#title' => "Objects",
@@ -102,13 +107,24 @@ function fedora_repository_solution_pack_form(&$form_state, $solution_pack_modul
       '#value' => theme_table($table_header, $table_rows),
     );
   }
+
+  $form['install_status'] = array(
+    '#type' => 'markup',
+    '#prefix' => '<strong>' . t('Object status:') . '&nbsp;</strong>',
+    '#suffix' => '&nbsp;',
+  );
+  if (!$needs_install) {
+    $form['install_status']['#value'] = theme_image('misc/watchdog-ok.png') . t('All required objects are installed and up-to-date.');
+  }
+  else {
+    $form['install_status']['#value'] = theme_image('misc/watchdog-warning.png') . t('Some objects must be re-ingested. See Objects list for details.');
+  }
   $form['submit'] = array(
     '#value' => t('Install'),
     '#disabled' => !$needs_install,
     '#type' => 'submit',
     '#name' => 'ingest',
   );
-
   return $form;
 }
 
