@@ -67,8 +67,8 @@ function do_curl($url, $return_to_variable = 1, $number_of_post_vars = 0, $post 
 
 function fedora_available() {
 
-  $response = drupal_http_request(variable_get('fedora_base_url', 'http://localhost:8080/fedora').'/describe');
-  return ($response->code == 200);
+  $response = do_curl(variable_get('fedora_base_url', 'http://localhost:8080/fedora').'/describe');
+  return strstr($response, 'Repository Information HTML Presentation') !== FALSE;
 
 }
 
