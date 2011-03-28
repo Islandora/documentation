@@ -16,7 +16,7 @@ function islandora_newspaper_required_fedora_objects() {
           'pid' => 'newspapers:issueCModel',
           'dsid' => 'ISLANDORACM',
           'cmodel' => 'fedora-system:ContentModel-3.0',
-          'datastream_file' => "$module_path/islandora_issueCModel_islandoracm.xml",
+          'datastream_file' => "$module_path/newspapers_issueCModel_islandoracm.xml",
           'dsversion' => 2,
         ),
         array(
