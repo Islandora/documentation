@@ -101,6 +101,12 @@ function fedora_repository_solution_pack_form(&$form_state, $solution_pack_modul
           }
           if (!empty($datastreams) && is_array($datastreams)) {
             foreach ($datastreams as $ds) {
+              $ds_list = $item->get_datastreams_list_as_array();
+              if (!array_key_exists($ds['dsid'], $ds_list)) {
+                $needs_update = TRUE;
+                $object_status = 'Missing datastream';
+                break;
+              }
               if (isset($ds['dsversion'])) {
                 // Check if the datastream is versioned and needs updating.
                 $installed_version = fedora_repository_get_islandora_datastream_version($item, $ds['dsid']);
@@ -108,14 +114,14 @@ function fedora_repository_solution_pack_form(&$form_state, $solution_pack_modul
                 if ($available_version > $installed_version) {
                   $needs_update = TRUE;
                   $object_status = 'Out of date';
+                  break;
                 }
               }
             }
-          }
-          array_push($table_row, $object_status);
-
-          $table_rows[] = $table_row;
+          }  
         }
+        array_push($table_row, $object_status);
+        $table_rows[] = $table_row;
       }
     }
     $form['objects']['table'] = array(
