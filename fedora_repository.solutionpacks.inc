@@ -76,7 +76,8 @@ function fedora_repository_solution_pack_form(&$form_state, $solution_pack_modul
     $table_rows = array();
 
 
-    foreach($objects as $object) {
+    foreach ($objects as $object) {
+      $datastreams = NULL;
       if (isset($object['pid'])) {
         $pid = $object['pid'];
 
@@ -86,20 +87,35 @@ function fedora_repository_solution_pack_form(&$form_state, $solution_pack_modul
         if (!$item->exists()) {
           $object_status = 'Missing';
           $needs_install = TRUE;
-        }
-        elseif (isset($object['dsid']) && isset($object['datastream_file']) && isset($object['dsversion'])) {
-          // Check if the datastream is versioned and needs updating.
-          $installed_version = fedora_repository_get_islandora_datastream_version($item, $object['dsid']);
-          $available_version = fedora_repository_get_islandora_datastream_version(NULL, NULL, $object['datastream_file']);
-          if ($available_version > $installed_version) {
-            $needs_update = TRUE;
-            $object_status = 'Out of date';
+        } else {
+          if (isset($object['dsid']) && isset($object['datastream_file']) && isset($object['dsversion'])) {
+            $datastreams = array(
+              array(
+                'dsid' => $object['dsid'],
+                'datastream_file' => $object['datastream_file'],
+                'dsversion' => $object['dsversion'],
+              ),
+            );
+          } elseif (!empty($object['datastreams'])) {
+            $datastreams = $object['datastreams'];
           }
+          if (!empty($datastreams) && is_array($datastreams)) {
+            foreach ($datastreams as $ds) {
+              if (isset($ds['dsversion'])) {
+                // Check if the datastream is versioned and needs updating.
+                $installed_version = fedora_repository_get_islandora_datastream_version($item, $ds['dsid']);
+                $available_version = fedora_repository_get_islandora_datastream_version(NULL, NULL, $ds['datastream_file']);
+                if ($available_version > $installed_version) {
+                  $needs_update = TRUE;
+                  $object_status = 'Out of date';
+                }
+              }
+            }
+          }
+          array_push($table_row, $object_status);
+
+          $table_rows[] = $table_row;
         }
-        array_push($table_row, $object_status);
-
-        $table_rows[] = $table_row;
-
       }
     }
     $form['objects']['table'] = array(
@@ -113,19 +129,18 @@ function fedora_repository_solution_pack_form(&$form_state, $solution_pack_modul
     '#prefix' => '<strong>' . t('Object status:') . '&nbsp;</strong>',
     '#suffix' => '&nbsp;',
   );
-  if (!$needs_install) {
+  if (!$needs_install && !$needs_update) {
     $form['install_status']['#value'] = theme_image('misc/watchdog-ok.png') . t('All required objects are installed and up-to-date.');
-  }
-  else {
+  } else {
     $form['install_status']['#value'] = theme_image('misc/watchdog-warning.png') . t('Some objects must be re-ingested. See Objects list for details.');
   }
   $form['submit'] = array(
     '#value' => t('Install'),
-    '#disabled' => !$needs_install,
+    '#disabled' => !$needs_install && !$needs_update,
     '#type' => 'submit',
     '#name' => $solution_pack_module,
   );
-  
+
   $form['#submit'] = array(
     'fedora_repository_solution_pack_form_submit',
   );

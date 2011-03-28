@@ -1413,7 +1413,7 @@ function fedora_repository_required_fedora_objects() {
           'label' => 'Islandora Collection Content Model',
           'dsid' => 'ISLANDORACM',
           'datastream_file' => "$module_path/content_models/COLLECTIONCM.xml",
-          'dsversion' => NULL,
+          'dsversion' => 2,
           'cmodel' => 'fedora-system:ContentModel-3.0',
         ),
         array (
@@ -1421,7 +1421,6 @@ function fedora_repository_required_fedora_objects() {
           'label' => 'Islandora strict PDF content model',
           'dsid' => 'ISLANDORACM',
           'datastream_file' => "$module_path/content_models/STRICT_PDFCM.xml",
-          'dsversion' => NULL,
           'cmodel' => 'fedora-system:ContentModel-3.0',
         ),
         array(
