@@ -1409,33 +1409,92 @@ function fedora_repository_required_fedora_objects() {
       'title' => 'Islandora Core',
       'objects' => array (
         array (
-          'foxml_file' => "$module_path",
           'pid' => 'islandora:collectionCModel',
+          'label' => 'Islandora Collection Content Model',
           'dsid' => 'ISLANDORACM',
           'datastream_file' => "$module_path/content_models/COLLECTIONCM.xml",
           'dsversion' => NULL,
-          ''
+          'cmodel' => 'fedora-system:ContentModel-3.0',
         ),
         array (
-          'foxml_file' => "$module_path/newspapers_pageCModel.xml",
-          'pid' => 'newspapers:pageCModel',
-          'dsid' => NULL,
-          'datastream_file' => NULL,
+          'pid' => 'islandora:strict_pdf',
+          'label' => 'Islandora strict PDF content model',
+          'dsid' => 'ISLANDORACM',
+          'datastream_file' => "$module_path/content_models/STRICT_PDFCM.xml",
           'dsversion' => NULL,
+          'cmodel' => 'fedora-system:ContentModel-3.0',
         ),
         array(
-          'foxml_file' => "$module_path/newspapers_viewerSdep-issueCModel.xml",
-          'pid' => 'newspapers:viewerSdep-issueCModel',
-          'dsid' => NULL,
-          'datastream_file' => NULL,
-          'dsversion' => NULL,
+          'pid' => 'islandora:top',
+          'label' => 'Islandora Top-level Collection',
+          'cmodel' => 'islandora:collectionCModel',
+          'datastreams' => array (
+            array (
+              'dsid' => 'COLLECTION_POLICY',
+              'datastream_file' => "$module_path/collection_policies/COLLECTION-COLLECTION POLICY.xml",
+            ),
+            array (
+              'dsid' => 'TN',
+              'datastream_file' => "$module_path/images/Gnome-emblem-photos.png",
+              'mimetype' => 'image/png',
+            ),
+          ), 
         ),
-        array(
-          'foxml_file' => "$module_path/newspapers_viewerSdep-pageCModel.xml",
-          'pid' => 'newspapers:viewerSdep-pageCModel',
-          'dsid' => NULL,
-          'datastream_file' => NULL,
-          'dsversion' => NULL,
+        array (
+          'pid' => 'islandora:ContentModelCollection',
+          'label' => 'Collection of installed content models',
+          'cmodel' => 'islandora:collectionCModel',
+          'parent' => 'islandora:top',
+          'datastreams' => array (
+            array (
+              'dsid' => 'COLLECTION_VIEW',
+              'datastream_file' => "$module_path/collection_views/simple_list_view.xml",
+            ),
+            array (
+              'dsid' => 'TN',
+              'datastream_file' => "$module_path/images/contentModel.jpg",
+              'mimetype' => 'image/jpeg',
+            ),
+            array (
+              'dsid' => 'QUERY',
+              'datastream_file' => "$module_path/collection_views/cmodel_collection_query.txt",
+              'mimetype' => 'text/plain',
+            ),
+          ),
+        ),
+        array (
+          'pid' => 'islandora:demos',
+          'label' => 'Islandora demos collection',
+          'cmodel' => 'islandora:collectionCModel',
+          'parent' => 'islandora:top',
+          'datastreams' => array (
+            array (
+              'dsid' => 'TN',
+              'datastream_file' => "$module_path/images/Gnome-emblem-photos.png",
+              'mimetype' => 'image/png',
+            ),
+            array (
+              'dsid' => 'COLLECTION_POLICY',
+              'datastream_file' => "$module_path/collection_policies/COLLECTION-COLLECTION POLICY.xml",
+            ),
+          ),
+        ),
+        array (
+          'pid' => 'islandora:pdf_collection',
+          'label' => 'Islandora Demo PDF Collection',
+          'cmodel' => 'islandora:collectionCModel',
+          'parent' => 'islandora:demos',
+          'datastreams' => array (
+            array (
+              'dsid' => 'TN',
+              'datastream_file' => "$module_path/images/Crystal_Clear_mimetype_pdf.png",
+              'mimetype' => 'image/png',
+            ),
+            array (
+              'dsid' => 'COLLECTION_POLICY',
+              'datastream_file' => "$module_path/collection_policies/PDF-COLLECTION POLICY.xml",
+            ),
+          ),
         ),
       ),
     ),
@@ -1803,8 +1862,30 @@ function fedora_repository_batch_reingest_object($object, &$context) {
         $context['message'][] = "$new_item->pid installed.";
       }
     }
-    elseif (!empty($object['dsid'])) {
-
+    elseif (!empty($object['dsid']) && !empty($object['datastream_file'])) {
+      $datastreams = array (
+        array (
+          'dsid' => $object['dsid'],
+          'datastream_file' => $object['datastream_file'],
+        )
+      );
+    }
+    elseif (!empty($object['datastreams'])) {
+      $datastreams = $object['datastreams'];
+    }
+    
+    if (!empty($datastreams) && is_array($datastreams)) {
+      $label = !empty($object['label']) ? $object['label'] : '';
+      $new_item = Fedora_Item::ingest_new_item($object['pid'], 'A', $label);
+      if (!empty($object['cmodel'])) {
+        $new_item->add_relationship('hasModel', $object['cmodel'], FEDORA_MODEL_URI);  
+      }
+      if (!empty($object['parent'])) {
+        $new_item->add_relationship('isMemberOfCollection', $object['parent']);
+      }
+      foreach($datastreams as $ds) {
+        $new_item->add_datastream_from_file($ds['datastream_file'], $ds['dsid'], !empty($ds['label']) ? $ds['label'] : '', !empty($ds['mimetype']) ? $ds['mimetype'] : 'text/xml');
+      }
     }
   }
 }
