@@ -2048,6 +2048,42 @@ class ContentModel extends XMLDatastream {
   }
 
   /**
+   *
+   * @return array
+   *    An array of form names that exist in this content model.
+   */
+  public function getIngestFormNames() {
+    if (!$this->validate()) {
+      return FALSE;
+    }
+    $result = $this->xpath->query('//cm:forms/cm:form[@ingest_class and @ingest_file and @ingest_module]/@name'); // Select the name attribute of all forms.
+    for($i = 0; $i < $result->length; $i++) {
+      $attribute = $result->item($i);
+      $name = $attribute->value;
+      $names[$name] = $name;
+    }
+    return $names;
+  }
+
+  /**
+   *
+   * @return array
+   *    An array of form names that exist in this content model.
+   */
+  public function getEditFormNames() {
+    if (!$this->validate()) {
+      return FALSE;
+    }
+    $result = $this->xpath->query('//cm:forms/cm:form[@edit_class and @edit_file and @edit_module]/@name'); // Select the name attribute of all forms.
+    for($i = 0; $i < $result->length; $i++) {
+      $attribute = $result->item($i);
+      $name = $attribute->value;
+      $names[$name] = $name;
+    }
+    return $names;
+  }
+
+  /**
    * Removes the named form.
    *
    * @param string $name
