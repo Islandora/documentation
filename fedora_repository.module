@@ -1852,3 +1852,18 @@ function theme_fedora_repository_solution_packs_list($solution_packs) {
   drupal_add_css(drupal_get_path('module', 'update') .'/update.css');
   return $output;
 }
+
+/**
+ * Implementation of hook_forms()
+ * @param string $form_id
+ * @return array 
+ */
+function fedora_repository_forms($form_id) {
+  $forms = array();
+  if (strpos($form_id, 'fedora_repository_solution_pack_form_') === 0) {
+    $forms[$form_id] = array(
+      'callback' => 'fedora_repository_solution_pack_form',
+    );
+  }
+  return $forms;
+}

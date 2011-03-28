@@ -35,7 +35,7 @@ function fedora_repository_solution_packs_page() {
           break;
       }
     }
-    $output .= drupal_get_form('fedora_repository_solution_pack_form', $solution_pack_module, $solution_pack_name, $objects);
+    $output .= drupal_get_form('fedora_repository_solution_pack_form_' . $solution_pack_module, $solution_pack_module, $solution_pack_name, $objects);
   }
 
   return $output;
@@ -123,7 +123,11 @@ function fedora_repository_solution_pack_form(&$form_state, $solution_pack_modul
     '#value' => t('Install'),
     '#disabled' => !$needs_install,
     '#type' => 'submit',
-    '#name' => 'ingest',
+    '#name' => $solution_pack_module,
+  );
+  
+  $form['#submit'] = array(
+    'fedora_repository_solution_pack_form_submit',
   );
   return $form;
 }
