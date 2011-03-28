@@ -122,7 +122,7 @@ class Newspaper {
     $tabset['my_tabset']['add_pages'] = array(
       '#type' => 'tabpage',
       '#title' => t('Add pages'),
-      '#content' => drupal_get_form('book_add_pages_form', $this->pid),
+      '#content' => drupal_get_form('book_add_pages_form', $this->pid, 'newspapers:pageCModel'),
     );
     return tabs_render($tabset);
   }

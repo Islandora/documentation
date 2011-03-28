@@ -1849,7 +1849,7 @@ function fedora_repository_batch_reingest_object($object, &$context) {
     // Does the object exist? If so, purge it.
     $item = new Fedora_Item($pid);
     if ($item->exists()) {
-      $item->purge(t('Remove during re-install batch job'), TRUE);
+      $item->purge(t('Remove during re-install batch job'));
     }
 
     // Ingest the object from the source file.
