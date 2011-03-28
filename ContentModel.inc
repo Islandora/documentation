@@ -2038,6 +2038,7 @@ class ContentModel extends XMLDatastream {
     if (!$this->validate()) {
       return FALSE;
     }
+    $names = FALSE;
     $result = $this->xpath->query('//cm:forms/cm:form/@name'); // Select the name attribute of all forms.
     for($i = 0; $i < $result->length; $i++) {
       $attribute = $result->item($i);
