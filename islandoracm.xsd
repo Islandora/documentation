@@ -182,10 +182,16 @@
 		<xsd:complexContent>
 			<xsd:extension base="formElementType">
 				<xsd:attribute name="name" type="xsd:normalizedString" use="required"/>
-				<xsd:attribute name="module" type="xsd:normalizedString" use="required"/>
-				<xsd:attribute name="file" type="xsd:normalizedString" use="required"/>
-				<xsd:attribute name="class" type="xsd:normalizedString" use="required"/>
 				<xsd:attribute name="dsid" type="xsd:normalizedString" use="required"/>
+				<xsd:attribute name="ingest_module" type="xsd:normalizedString"/>
+				<xsd:attribute name="ingest_file" type="xsd:normalizedString"/>
+				<xsd:attribute name="ingest_class" type="xsd:normalizedString"/>
+				<xsd:attribute name="edit_module" type="xsd:normalizedString" use="required"/>
+				<xsd:attribute name="edit_file" type="xsd:normalizedString" use="required"/>
+				<xsd:attribute name="edit_class" type="xsd:normalizedString" use="required"/>
+				<xsd:attribute name="document_module" type="xsd:normalizedString"/>
+				<xsd:attribute name="document_file" type="xsd:normalizedString"/>
+				<xsd:attribute name="document_class" type="xsd:normalizedString"/>
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
