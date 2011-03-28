@@ -68,7 +68,7 @@ function fedora_repository_requirements($phase) {
     
     // Check for ImageMagick
     $requirements['fedora-imagemagick']['title'] = t("ImageMagick convert in \$PATH");
-    system('which convert', $res);
+    system('which -s convert', $res);
     if ($res != 0) {
       $requirements['fedora-imagemagick']['value'] = t('Not in $PATH');
       $requirements['fedora-imagemagick']['description'] = t('Islandora will not be able to create thumbnails. Ensure that <a href="www.imagemagick.org/">ImageMagick</a> is installed and the convert command is executable by the web server user.');
@@ -80,7 +80,7 @@ function fedora_repository_requirements($phase) {
     }
     
     $requirements['fedora-kakadu']['title'] = 'Kakadu kdu_compress in $PATH';
-    system('which kdu_compress', $kdu_res);
+    system('which -s kdu_compress', $kdu_res);
     if ($kdu_res != 0) {
       $requirements['fedora-kakadu']['value'] = ('Not in $PATH');
       $requirements['fedora-kakadu']['description'] = t('Islandora cannot convert TIFF image files to JPEG2000 format. Ensure <a href="http://www.kakadusoftware.com/">Kakadu</a> is installed and the kdu_compress command is executable by the web server user.');
