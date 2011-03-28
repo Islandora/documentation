@@ -1,4 +1,4 @@
-<content_model name="Newspaper" xmlns="http://www.islandora.ca" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.islandora.ca http://localhost/islandoracm.xsd">
+<content_model name="Newspaper" xmlns="http://www.islandora.ca" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.islandora.ca http://localhost/islandoracm.xsd" version="2">
   <mimetypes>
     <type>text/xml</type>
   </mimetypes>

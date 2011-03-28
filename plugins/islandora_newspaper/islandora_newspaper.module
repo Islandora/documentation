@@ -12,11 +12,12 @@ function islandora_newspaper_required_fedora_objects() {
       'title' => 'Islandora Newspaper',
       'objects' => array(
         array(
-          'foxml_file' => "$module_path/newspapers_issueCModel.xml",
+          //'foxml_file' => "$module_path/newspapers_issueCModel.xml",
           'pid' => 'newspapers:issueCModel',
-          'dsid' => NULL,
-          'datastream_file' => NULL,
-          'dsversion' => NULL,
+          'dsid' => 'ISLANDORACM',
+          'cmodel' => 'fedora-system:ContentModel-3.0',
+          'datastream_file' => "$module_path/islandora_issueCModel_islandoracm.xml",
+          'dsversion' => 2,
         ),
         array(
           'foxml_file' => "$module_path/newspapers_pageCModel.xml",
