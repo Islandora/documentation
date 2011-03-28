@@ -513,7 +513,7 @@ class ObjectHelper {
     }
     $content .= $addObject;
 
-    return '<div class="fedora_datastream_content">' . $content . '</div>';
+    return '<div class="fedora-datastream-content">' . $content . '</div>';
   }
 
   /**
