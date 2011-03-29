@@ -80,6 +80,11 @@ class CollectionClass {
                              minus $content <mulgara:is> <info:fedora/fedora-system:FedoraObject-3.0>
                              order by $title';
       }
+   
+    }   
+    else {
+      // Replace %parent_collection% with the actual collection PID
+      $query_string = preg_replace("/\%parent_collection\%/", "<info:fedora/$pid>", $query_string);
     }
 
     $query_string = htmlentities(urlencode($query_string));

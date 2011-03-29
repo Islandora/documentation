@@ -1,0 +1,7 @@
+select $collTitle $collDesc $member $memberTitle $memberDesc
+from   <#ri>
+where  %parent_collection%            <dc:title>                   $collTitle
+and    %parent_collection%            <dc:description>             $collDesc
+and    $member                        <fedora-rels-ext:isMemberOf> %parent_collection%
+and    $member                        <dc:title>                   $memberTitle
+and    $member                        <dc:description>             $memberDesc

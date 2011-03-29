@@ -42,6 +42,7 @@ function islandora_newspaper_required_fedora_objects() {
         ),
         array (
           'pid' => 'newspapers:collection',
+          'label' => 'Newspapers Collection',
           'cmodel' => 'islandora:collectionCModel',
           'parent' => 'islandora:demos',
           'datastreams' => array (

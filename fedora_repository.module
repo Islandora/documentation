@@ -1495,6 +1495,67 @@ function fedora_repository_required_fedora_objects() {
             ),
           ),
         ),
+        array (
+          'pid' => 'demo:DualResImage',
+          'foxml_file' => "$module_path/content_models/demo_DualResImage.xml",
+          'datastreams' => array(
+            array (
+              'dsid' => 'ISLANDORACM',
+              'datastream_file' => "$module_path/content_models/STANDARD JPG.xml",
+            ),
+          ),
+        ),
+        array (
+          'pid' => 'demo:DualResImageCollection',
+          'foxml_file' => "$module_path/content_models/demo_DualResImageCollection.xml",
+          'datastreams' => array(
+            array(
+              'dsid' => 'ISLANDORACM',
+              'datastream_file' => "$module_path/content_models/COLLECTIONCM.xml",
+            ),
+          ),
+        ),
+        array (
+          'pid' => 'demo:DualResolution',
+          'foxml_file' => "$module_path/content_models/demo_DualResolution.xml",
+        ),
+        array (
+          'pid' => 'demo:DualResImageImpl',
+          'foxml_file' => "$module_path/content_models/demo_DualResImageImpl.xml",
+        ),
+        array (
+          'pid' => 'demo:CollectionImpl',
+          'foxml_file' => "$module_path/content_models/demo_CollectionImpl.xml",
+        ),
+        array (
+          'pid' => 'demo:Collection',
+          'foxml_file' => "$module_path/content_models/demo_Collection.xml",
+        ),
+        array (
+          'pid' => 'islandora:demo_image_collection',
+          'label' => 'Demo Image Collection',
+          'cmodel' => 'demo:DualResImageCollection',
+          'parent' => 'islandora:demos',
+          'datastreams' => array (
+            array (
+              'dsid' => 'COLLECTION_POLICY',
+              'datastream_file' => "$module_path/collection_policies/JPG-COLLECTION POLICY.xml",
+            ),
+            array (
+              'dsid' => 'TN',
+              'datastream_file' => "$module_path/images/Gnome-emblem-photos.png",
+              'mimetype' => 'image/png',
+            ),
+            array (
+              'dsid' => 'COLLECTION_VIEW',
+              'datastream_file' => "$module_path/collection_views/SmileyStuff-COLLECTION_VIEW.xml",
+            ),
+            array (
+              'dsid' => 'QUERY',
+              'datastream_file' => "$module_path/collection_views/standard_jpeg_collection_query.txt",
+            ),
+          ), 
+        ),
       ),
     ),
   );
@@ -1861,7 +1922,7 @@ function fedora_repository_batch_reingest_object($object, &$context) {
         $context['message'][] = "$new_item->pid installed.";
       }
     }
-    elseif (!empty($object['dsid']) && !empty($object['datastream_file'])) {
+    if (!empty($object['dsid']) && !empty($object['datastream_file'])) {
       $datastreams = array (
         array (
           'dsid' => $object['dsid'],
@@ -1875,7 +1936,9 @@ function fedora_repository_batch_reingest_object($object, &$context) {
     
     if (!empty($datastreams) && is_array($datastreams)) {
       $label = !empty($object['label']) ? $object['label'] : '';
-      $new_item = Fedora_Item::ingest_new_item($object['pid'], 'A', $label);
+      if (empty($object['foxml_file']) && !defined($new_item)) {
+        $new_item = Fedora_Item::ingest_new_item($object['pid'], 'A', $label);
+      }
       if (!empty($object['cmodel'])) {
         $new_item->add_relationship('hasModel', $object['cmodel'], FEDORA_MODEL_URI);  
       }
