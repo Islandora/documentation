@@ -299,7 +299,7 @@ class Fedora_Item {
       $content = trim($content);
     }
     else {
-      $content = "";
+      $content = NULL;
     }
     return $content;
   }

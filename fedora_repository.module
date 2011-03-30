@@ -223,7 +223,6 @@ function fedora_repository_ingest_form_validate($form, &$form_state) {
 
 function fedora_repository_ingest_form(&$form_state, $collection_pid, $collection_label = NULL, $content_model = NULL) {
   module_load_include('inc', 'fedora_repository', 'formClass');
-  //$client = getSoapClient(variable_get('fedora_soap_manage_url', 'http://localhost:8080/fedora/services/management?wsdl'));
   // For the sake of easily maintaining the module in different core versions create our own form_values variable.
   if (empty($form_state['storage']['step'])) {
     $form_state['storage']['step'] = 1;
@@ -358,7 +357,7 @@ function add_stream_form_validate($form, &$form_state) {
     return FALSE;
   }
   if (!(preg_match("/^[a-zA-Z]/", $dsid))) {
-    form_set_error('', t('Data stream ID has to start with a letter.'));
+    form_set_error('', t("Data stream ID ($dsid) has to start with a letter."));
     return FALSE;
   }
   if (strlen($dsLabel) > 64) {
@@ -434,10 +433,13 @@ function fedora_repository_purge_object_form_submit($form, &$form_state) {
     if (!empty($form_state['values']['referrer'])) {
       $form_state['redirect'] = $form_state['values']['referrer'];
     }
-    elseif (empty($collectionPid) && $_SESSION['fedora_collection'] != $pid) {
+    elseif (empty($collectionPid) && !empty($_SESSION['fedora_collection']) && $_SESSION['fedora_collection'] != $pid) {
       $collectionPid = $_SESSION['fedora_collection'];
       
       $form_state['redirect'] = "fedora/repository/$collectionPid/";
+    }
+    else {
+      $form_state['redirect'] = 'fedora/repository/';
     }
   }
 }
@@ -712,7 +714,7 @@ function makeObject($pid, $dsID) {
  * if there is no query datastream falls back to the query shipped with the module.
  * @return String
  */
-function fedora_repository_get_items($pid = NULL, $dsId = NULL, $collection = NULL, $pageNumber = NULL, $limit = NULL) {
+function fedora_repository_get_items($pid = NULL, $dsId = NULL, $collection = NULL, $page_number = NULL, $limit = NULL) {
   module_load_include('inc', 'fedora_repository', 'ObjectHelper');
   module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
   global $user;
@@ -762,19 +764,46 @@ function fedora_repository_get_items($pid = NULL, $dsId = NULL, $collection = NU
   //    $limit=20;
   //}
 
+  module_load_include('inc', 'fedora_repository', 'ContentModel');
+  module_load_include('inc', 'fedora_repository', 'plugins/fedoraObject');
   $breadcrumbs = array();
   $objectHelper->getBreadcrumbs($pid, $breadcrumbs);
   drupal_set_breadcrumb(array_reverse($breadcrumbs));
 
-
-  $offset = $limit * $pageNumber;
-  $results = $collectionClass->getRelatedObjects($pid, $limit, $offset, NULL); //updated so we can do paging in query not in xslt
+  $offset = $limit * $page_number;
+  //$results = $collectionClass->getRelatedObjects($pid, $limit, $offset, NULL); //updated so we can do paging in query not in xslt
   //$results = $collectionClass->getRelatedItems($pid, NULL);
-  $content .= $objectHelper->parseContent($results, $pid, $dsId, $collection, $pageNumber);
+  $content_models = $objectHelper->get_content_models_list($pid);
+  // Each content model may return either a tabset array or plain HTML. If it's HTML, stick it in a tab.
+  $cmodels_tabs = array(
+    '#type' => 'tabset',
+  );
+  foreach ($content_models as $content_model) {
+    //$content_model_fieldsets = $objectHelper->createExtraFieldsets($pid, $content_model, $pageNumber);
+    $content_model_fieldset = $content_model->displayExtraFieldset($pid, $page_number);
+    if (is_array($content_model_fieldset)) {
+      $cmodels_tabs = array_merge($cmodels_tabs, $content_model_fieldset);
+    }
+    else {
+      $cmodels_tabs[$content_model->pid] = array(
+        '#type' => 'tabpage',
+        '#title' => $content_model->name,
+        '#content' => $content_model_fieldset,
+      );
+    }
+  }
+  // Add a 'manage object' tab for all objects, where detailed list of content is shown.
+  $obj = new FedoraObject($pid);
+  $object_details = $obj->showFieldSets();
+  $cmodels_tabs = array_merge($cmodels_tabs, $object_details);
+  
+  
+  //$content .= $objectHelper
+  //$content .= $objectHelper->parseContent($results, $pid, $dsId, $collection, $pageNumber);
   //the below is for islandlives we should be able to do this in the xslt though
   //$css=$path.'/stylesheets/container-large.css';
   //drupal_add_css($css);
-  return $content . '</div>';
+  return tabs_render($cmodels_tabs) . '</div>';
 }
 
 function fedora_repository_urlencode_string($str) {
@@ -1548,11 +1577,16 @@ function fedora_repository_required_fedora_objects() {
             ),
             array (
               'dsid' => 'COLLECTION_VIEW',
-              'datastream_file' => "$module_path/collection_views/SmileyStuff-COLLECTION_VIEW.xml",
+              'datastream_file' => "$module_path/collection_views/standard_jpeg_collection_view.xml",
             ),
             array (
               'dsid' => 'QUERY',
               'datastream_file' => "$module_path/collection_views/standard_jpeg_collection_query.txt",
+              'mimetype' => 'text/plain',
+            ),
+            array (
+              'dsid' => 'DC',
+              'datastream_file' => "$module_path/collection_views/demo_image_collection_dc_record.xml",
             ),
           ), 
         ),
@@ -1946,7 +1980,12 @@ function fedora_repository_batch_reingest_object($object, &$context) {
         $new_item->add_relationship('isMemberOfCollection', $object['parent']);
       }
       foreach($datastreams as $ds) {
-        $new_item->add_datastream_from_file($ds['datastream_file'], $ds['dsid'], !empty($ds['label']) ? $ds['label'] : '', !empty($ds['mimetype']) ? $ds['mimetype'] : 'text/xml');
+        if ($ds['dsid'] == 'DC') {
+          $new_item->modify_datastream_by_value(file_get_contents($ds['datastream_file']), $ds['dsid'], $ds['label'], 'text/xml');
+        }
+        else {
+          $new_item->add_datastream_from_file($ds['datastream_file'], $ds['dsid'], !empty($ds['label']) ? $ds['label'] : '', !empty($ds['mimetype']) ? $ds['mimetype'] : 'text/xml');
+        }
       }
     }
   }

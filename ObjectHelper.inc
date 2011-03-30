@@ -307,55 +307,22 @@ class ObjectHelper {
       }
     }
 
-
     $content .= "<tr><td>$label</td><td>&nbsp;$view</td><td>&nbsp;$downloadVersion</td><td>&nbsp;$mimeType</td><td>&nbsp;$replaceImage&nbsp;$purgeImage</td></tr>\n";
-    //$content .= "<tr><td><b>Mime Type :</b></td><td>$mimeType</td></tr>\n";
     return $content;
   }
 
-  /**
-   * Queries fedora for what we call the qualified dublin core.  Currently only dc.coverage has
-   * any qualified fields
-   * Transforms the returned xml to html
-   * This is the default metadata view.  With icons for searching a dublin core field
-   * @param $pid String
-   * @return String
-   */
-  function getQDC($pid) {
+  function getFormattedDC($item) {
     global $base_url;
     $path = drupal_get_path('module', 'fedora_repository');
     module_load_include('inc', 'fedora_repository', 'ConnectionHelper');
 
-    $soapHelper = new ConnectionHelper();
-    $client = $soapHelper->getSoapClient(variable_get('fedora_soap_url', 'http://localhost:8080/fedora/services/access?wsdl'));
+    $dsid = array_key_exists('QDC', $item->get_datastreams_list_as_array()) ? 'QDC' : 'DC';
+    $xmlstr = $item->get_datastream_dissemination($dsid);
 
-    $dsId = 'QDC';
-    $params = array(
-        'pid' => "$pid",
-        'dsID' => "$dsId",
-        'asOfDateTime' => ""
-    );
-    try {
-      $object = $client->__soapCall('getDatastreamDissemination', array(
-                  'parameters' => $params
-              ));
-    } catch (Exception $e) {
-      try { //probably no QDC so we will try for the DC stream.
-        $dsId = 'DC';
-        $params = array(
-            'pid' => "$pid",
-            'dsID' => "$dsId",
-            'asOfDateTime' => ""
-        );
-        $object = $client->__soapCAll('getDatastreamDissemination', array(
-                    'parameters' => $params
-                ));
-      } catch (exception $e2) {
-        drupal_set_message($e2->getMessage(), 'error');
-        return;
-      }
+    if (empty($xmlstr)) {
+      return '';
     }
-    $xmlstr = $object->dissemination->stream;
+    
     try {
       $proc = new XsltProcessor();
     } catch (Exception $e) {
@@ -377,7 +344,25 @@ class ObjectHelper {
     $xsl = $proc->importStylesheet($xsl);
     $newdom = $proc->transformToDoc($input);
     $output = $newdom->saveXML();
-    $baseUrl = base_path();
+    return $output;
+  }
+  
+  /**
+   * Queries fedora for what we call the qualified dublin core.  Currently only dc.coverage has
+   * any qualified fields
+   * Transforms the returned xml to html
+   * This is the default metadata view.  With icons for searching a dublin core field
+   * @param $pid String
+   * @return String
+   */
+  function getQDC($pid) {
+    global $base_url;
+    $item = new Fedora_Item($pid);
+    $ds_list = $item->get_datastreams_list_as_array();
+    $output = $this->getFormattedDC($item);
+    $dsid = array_key_exists('QDC', $ds_list) ? 'QDC' : 'DC';
+      
+    
     //$baseUrl=substr($baseUrl, 0, (strpos($baseUrl, "/")-1));
     if (user_access(ObjectHelper :: $EDIT_FEDORA_METADATA)) {
       $allow=TRUE;
@@ -386,12 +371,68 @@ class ObjectHelper {
       }
       if ($allow) {
 	  $output .= '<br /><a title = "' . t('Edit Meta Data') . '" href="' . $base_url . '/fedora/repository/' . 'editmetadata/' . $pid . '/' .
-	    $dsId . '"><img src="' . $base_url . '/' . $path . '/images/edit.gif" alt="' . t('Edit Meta Data') . '" /></a>';
+	    $dsid . '"><img src="' . $base_url . '/' . drupal_get_path('module', 'fedora_repository') . '/images/edit.gif" alt="' . t('Edit Meta Data') . '" /></a>';
       }
     }
     return $output;
   }
 
+  function getFormattedDatastreamList($object_pid, $contentModels, &$fedoraItem) {
+    if (user_access(ObjectHelper :: $VIEW_DETAILED_CONTENT_LIST)) {
+      $availableDataStreamsText = 'Detailed List of Content';
+      //$metaDataText='Description';
+      $mainStreamLabel = NULL;
+      $object = $fedoraItem->get_datastreams_list_as_SimpleXML();
+      if (!isset($object)) {
+        drupal_set_message(t("No datastreams available"));
+        return ' ';
+      }
+      $hasOBJStream = NULL;
+      $hasTNStream = FALSE;
+      $dataStreamBody = "<br /><table>\n";
+
+      $cmDatastreams = array();
+      if (variable_get('fedora_object_restrict_datastreams', FALSE) == TRUE && ($cm = ContentModel::loadFromObject($object_pid)) !== FALSE) {
+                                $cmDatastreams = $cm->listDatastreams();
+      }
+
+      $dataStreamBody .= $this->get_parent_objects_asHTML($object_pid);
+      $dataStreamBody .= '<tr><th colspan="4"><h3>' . t("!text", array('!text' => $availableDataStreamsText)) . '</h3></th></tr>';
+      foreach ($object as $datastream) {
+        foreach ($datastream as $datastreamValue) {
+
+          if (variable_get('fedora_object_restrict_datastreams', FALSE) == FALSE  ||  ((isset($user) && in_array('administrator',$user->roles)) || in_array($datastreamValue->ID,$cmDatastreams))) {
+            if ($datastreamValue->ID == 'OBJ') {
+              $hasOBJStream = '1';
+              $mainStreamLabel = $datastreamValue->label;
+              $mainStreamLabel = str_replace("_", " ", $mainStreamLabel);
+            }
+            if ($datastreamValue->ID == 'TN') {
+              $hasTNStream = TRUE;
+            }
+            //create the links to each datastream
+            $dataStreamBody .= $this->create_link_for_ds($object_pid, $datastreamValue); //"<tr><td><b>$key :</b></td><td>$value</td></tr>\n";
+          }
+        }
+      }
+      $dataStreamBody .= "</table>\n";
+      //if they have access let them add a datastream
+      if (user_access(ObjectHelper :: $ADD_FEDORA_STREAMS)) {
+        $allow=TRUE;
+        if (module_exists('fedora_fesl')) { 
+          $allow= fedora_fesl_check_roles($object_pid,'write');
+        }
+        if ($allow) {
+          $dataStreamBody .= drupal_get_form('add_stream_form', $object_pid);
+        }
+      }
+
+      $dataStreamBody = '<div class = "fedora_detailed_list">' . $dataStreamBody . '</div>';
+      return $dataStreamBody;
+    }
+    return '';
+  }
+  
   /**
    * Gets a list of datastreams from an object using its pid
    *
@@ -416,62 +457,8 @@ class ObjectHelper {
     $dataStreamBody = '';
     $fedoraItem = new Fedora_Item($object_pid);
 
-    if (user_access(ObjectHelper :: $VIEW_DETAILED_CONTENT_LIST)) {
-      $availableDataStreamsText = 'Detailed List of Content';
-      //$metaDataText='Description';
-      $mainStreamLabel = NULL;
-      $object = $fedoraItem->get_datastreams_list_as_SimpleXML();
-      if (!isset($object)) {
-        drupal_set_message(t("No datastreams available"));
-        return ' ';
-      }
-      $hasOBJStream = NULL;
-      $hasTNStream = FALSE;
-      $dataStreamBody = "<br /><table>\n";
-      
-      $cmDatastreams = array();
-      if (variable_get('fedora_object_restrict_datastreams', FALSE) == TRUE && ($cm = ContentModel::loadFromObject($object_pid)) !== FALSE) {
-				$cmDatastreams = $cm->listDatastreams();
-      }
 
-      $dataStreamBody .= $this->get_parent_objects_asHTML($object_pid);
-      $dataStreamBody .= '<tr><th colspan="4"><h3>' . t("!text", array('!text' => $availableDataStreamsText)) . '</h3></th></tr>';
-      foreach ($object as $datastream) {
-        foreach ($datastream as $datastreamValue) {
-          
-	  if (variable_get('fedora_object_restrict_datastreams', FALSE) == FALSE  ||  ((isset($user) && in_array('administrator',$user->roles)) || in_array($datastreamValue->ID,$cmDatastreams))) {
-	    if ($datastreamValue->ID == 'OBJ') {
-	      $hasOBJStream = '1';
-	      $mainStreamLabel = $datastreamValue->label;
-	      $mainStreamLabel = str_replace("_", " ", $mainStreamLabel);
-	    }
-	    if ($datastreamValue->ID == 'TN') {
-	      $hasTNStream = TRUE;
-	    }
-	    //create the links to each datastream
-	    $dataStreamBody .= $this->create_link_for_ds($object_pid, $datastreamValue); //"<tr><td><b>$key :</b></td><td>$value</td></tr>\n";
-	  }
-        }
-      }
-      $dataStreamBody .= "</table>\n";
-      //if they have access let them add a datastream
-      if (user_access(ObjectHelper :: $ADD_FEDORA_STREAMS)) {
-	$allow=TRUE;
-	if (module_exists('fedora_fesl')) { 
-	  $allow= fedora_fesl_check_roles($object_pid,'write');
-	}
-	if ($allow) {
-	  $dataStreamBody .= drupal_get_form('add_stream_form', $object_pid);
-	}
-      }
-      $fieldset = array(
-          '#title' => t("!text", array('!text' => $availableDataStreamsText)),
-          '#collapsible' => TRUE,
-          '#collapsed' => TRUE,
-          '#value' => $dataStreamBody
-      );
-      $dataStreamBody = '<div class = "fedora_detailed_list">' . theme('fieldset', $fieldset) . '</div>';
-    }
+    $dataStreamBody = $this->getFormattedDatastreamList($object_pid, $contentModels, $fedoraItem);
     $content = '';
 
     if (empty($contentModels)) {
@@ -516,19 +503,7 @@ class ObjectHelper {
     return '<div class="fedora_datastream_content">' . $content . '</div>';
   }
 
-  /**
-   * Queries a collection object for an xslt to format how the
-   * collection of objects is displayed.
-   */
-  function getXslContent($pid, $path, $canUseDefault = TRUE) {
-    module_load_include('inc', 'fedora_repository', 'CollectionClass');
-    $collectionClass = new CollectionClass();
-    $xslContent = $collectionClass->getCollectionViewStream($pid);
-    if (!$xslContent && $canUseDefault) { //no xslt so we will use the default sent with the module
-      $xslContent = file_get_contents($path . '/xsl/sparql_to_html.xsl');
-    }
-    return $xslContent;
-  }
+
 
   /**
    * returns a stream from a fedora object given a pid and dsid
@@ -589,15 +564,19 @@ class ObjectHelper {
     if (!isset($sxml)) {
       return $pids;
     }
-
+    $cmodels = array();
     foreach ($sxml->xpath('//@uri') as $uri) {
-      if (strpos($uri, 'fedora-system') != FALSE && $include_fedora_system_content_models == FALSE) {
+      if (strpos($uri, 'fedora-system:fedoraObject-3.0') != FALSE && $include_fedora_system_content_models == FALSE) {
         continue;
       }
-      $pids[] = substr(strstr($uri, '/'), 1);
+      $cmodel_pid = substr(strstr($uri, '/'), 1);
+      $cm = ContentModel::loadFromModel($cmodel_pid);
+      if ($cm) {
+        $cmodels[] = $cm;
+      }
     }
 
-    return $pids;
+    return $cmodels;
   }
 
   /*
@@ -666,56 +645,6 @@ class ObjectHelper {
         $isCollection = TRUE;
       }
     }
-
-    //$label=$content;
-    $collectionName = $collection;
-    if (!$pageNumber) {
-      $pageNumber = 1;
-    }
-
-    if (!isset($collectionName)) {
-      $collectionName = variable_get('fedora_repository_name', 'Collection');
-    }
-    $xslContent = $this->getXslContent($pid, $path);
-
-    //get collection list and display using xslt-------------------------------------------
-
-    if (isset($content) && $content != FALSE) {
-      $input = new DomDocument();
-      $input->loadXML(trim($content));
-      $results = $input->getElementsByTagName('result');
-      if ($results->length > 0) {
-        try {
-          $proc = new XsltProcessor();
-          $proc->setParameter('', 'collectionPid', $collection_pid);
-          $proc->setParameter('', 'collectionTitle', $collectionName);
-          $proc->setParameter('', 'baseUrl', $base_url);
-          $proc->setParameter('', 'path', $base_url . '/' . $path);
-          $proc->setParameter('', 'hitPage', $pageNumber);
-          $proc->registerPHPFunctions();
-          $xsl = new DomDocument();
-          $xsl->loadXML($xslContent);
-          // php xsl does not seem to work with namespaces so removing it below
-          // I may have just been being stupid here
-          // $content = str_ireplace('xmlns="http://www.w3.org/2001/sw/DataAccess/rf1/result"', '', $content);
-
-          $xsl = $proc->importStylesheet($xsl);
-          $newdom = $proc->transformToDoc($input);
-
-          $objectList = $newdom->saveXML(); //is the xml transformed to html as defined in the xslt associated with the collection object
-
-          if (!$objectList) {
-            throw new Exception("Invalid XML.");
-          }
-        } catch (Exception $e) {
-          drupal_set_message(t('!e', array('!e' => $e->getMessage())), 'error');
-          return '';
-        }
-      }
-    } else {
-      drupal_set_message(t("No Objects in this collection or bad query."));
-    }
-
     //--------------------------------------------------------------------------------
     //show the collections datastreams
     if ($results->length > 0 || $isCollection == TRUE) {
@@ -739,45 +668,10 @@ class ObjectHelper {
       else {
         $ingestObject = '&nbsp;';
       }
-
+    }
 
       $datastreams .= $ingestObject;
 
-      $objectListOut = '';
-      if (isset($objectList)) {
-        $object_list_fieldset = array(
-            '#title' => t('Items in this collection'),
-            '#collapsible' => TRUE,
-            '#collapsed' => FALSE,
-            '#value' => (isset($objectList) ? $objectList : ''), //collection list
-        );
-        $objectListOut = theme('fieldset', $object_list_fieldset);
-      }
-    } else {
-      //$collectionName='';
-      $collection_fieldset = array(
-          '#title' => "",
-          '#collapsible' => TRUE,
-          '#collapsed' => FALSE,
-          '#value' => $datastreams,
-      );
-      $objectListOut = ''; //no collection objects to show so don't show field set
-    }
-
-    $output = '';
-    switch (variable_get('fedora_object_display_title', ObjectHelper::$DISPLAY_ALWAYS)) {
-      case ObjectHelper :: $DISPLAY_NEVER: break;
-      case ObjectHelper :: $DISPLAY_NO_MODEL_OUTPUT:
-        if (trim($datastreams) == '') {
-          $output .= '<strong>' . $collectionName . '</strong><br/>';
-        }
-        break;
-
-      case ObjectHelper :: $DISPLAY_ALWAYS:
-      default:
-        $output .= '<strong>' . $collectionName . '</strong><br/>';
-        break;
-    }
 
     $output .= $datastreams;
 
@@ -808,20 +702,7 @@ class ObjectHelper {
       $output .= theme('fieldset', $fieldset);
     }
 
-    switch (variable_get('fedora_collection_display_list', ObjectHelper::$DISPLAY_ALWAYS)) {
-      case ObjectHelper :: $DISPLAY_NEVER: break;
-      case ObjectHelper :: $DISPLAY_NO_MODEL_OUTPUT:
-        if (trim($datastreams) == '') {
-          $output .= $objectListOut . '<br/>';
-        }
-        break;
-
-      case ObjectHelper :: $DISPLAY_ALWAYS:
-      default:
-        $output .= $objectListOut . '<br/>';
-        break;
-    }
-
+    
     return $output;
   }
 
@@ -868,12 +749,12 @@ class ObjectHelper {
 
     return $parent_collections_HTML;
   }
-
+  
   /**
    * gets a list of datastreams and related function that we should use to show datastreams in their own fieldsets
    * from the content model associated with the object
    */
-  function createExtraFieldsets($pid, $contentModel) {
+  function createExtraFieldsets($pid, $contentModel, $page_number) {
     //$models = $collectionHelper->getContentModels($collectionPid, FALSE);
     // possible problem in below if the collection policy has multiple content models
     //with different pids but same dsid we could get wrong one,  low probability and functionality
@@ -884,7 +765,7 @@ class ObjectHelper {
     $output = '';
     module_load_include('inc', 'fedora_repository', 'ContentModel');
     if (($cm = ContentModel :: loadFromModel($contentModel)) !== FALSE && $cm->validate()) {
-      $output .= $cm->displayExtraFieldset($pid);
+      $output .= $cm->displayExtraFieldset($pid, $page_number);
     }
     return $output;
   }
