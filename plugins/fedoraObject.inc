@@ -27,7 +27,7 @@ class FedoraObject {
     );
     $dc_html = $objectHelper->getFormattedDC($this->item);
     
-    $ds_list = $objectHelper->getFormattedDatastreamList($this->pid, NULL, $this->item);
+    $ds_list = $objectHelper->get_formatted_datastream_list($this->pid, NULL, $this->item);
     
 
     $tabset['fedora_object_details']['tabset']['view'] = array(

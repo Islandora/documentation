@@ -66,8 +66,10 @@ function do_curl($url, $return_to_variable = 1, $number_of_post_vars = 0, $post 
 }
 
 function fedora_available() {
+
   $response = do_curl(variable_get('fedora_base_url', 'http://localhost:8080/fedora').'/describe');
   return strstr($response, 'Repository Information HTML Presentation') !== FALSE;
+
 }
 
 
