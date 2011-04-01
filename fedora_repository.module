@@ -314,7 +314,7 @@ function add_stream_form_submit($form, &$form_state) {
   $dsLabel = $form_state['values']['stream_label'] . substr($file, strrpos($file, '.')); // Add the file extention to the end of the label.;
   $file_basename = basename($file);
   $file_directory = dirname($file);
-  $streamUrl = $base_url . '/' . $file_directory . '/' . urlencode($file_basename);
+  $streamUrl = $base_url . '/' . $file_directory . '/' . drupal_urlencode($file_basename);
 
   /* -----------------------------------------------------------------
    * need a better way to get mimetypes
