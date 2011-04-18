@@ -1,9 +1,0 @@
-; $Id$
-name = Islandora NMLT
-description = Provides SCORM learning object support for Islandora
-package = Fedora Repository
-dependencies[] = fedora_repository
-dependencies[] = content_copy
-dependencies[] = SCORM
-version = 6.1dev
-core = 6.x
