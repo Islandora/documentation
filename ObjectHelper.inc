@@ -345,7 +345,7 @@ class ObjectHelper {
     }
     $xsl = $proc->importStylesheet($xsl);
     $newdom = $proc->transformToDoc($input);
-    $output = $newdom->saveXML();
+    $output = $newdom->saveHTML();
     return $output;
   }
   
