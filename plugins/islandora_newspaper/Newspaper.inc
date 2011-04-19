@@ -93,7 +93,7 @@ class Newspaper {
 
     $tabset = array();
 
-    $tabset['my_tabset'] = array(
+    $tabset = array(
       '#type' => 'tabset',
     );
 
@@ -106,25 +106,26 @@ class Newspaper {
     $viewer_url = variable_get('fedora_base_url', '') . '/get/'. $this->pid . '/ilives:viewerSdef/getViewer'. $qs;
     $html = '<iframe src="'. $viewer_url . '"  scrolling="no" frameborder="0" style="width: 100%; height: 800px;">Errors: unable to load viewer</iframe>';
 
-    $tabset['my_tabset']['first_tab'] = array(
+    $tabset['read'] = array(
       '#type' => 'tabpage',
       '#title' => t('Read'),
+      '#weight' => -1,
       '#content' => $html
     );
 
     $item = new Fedora_Item($this->pid);
     
-    $tabset['my_tabset']['second_tab'] = array(
+    $tabset['description'] = array(
       '#type' => 'tabpage',
       '#title' => 'Description',
       '#content' => $item->get_dissemination('islandora:mods2htmlSdef', 'mods2html'),
     );
-    $tabset['my_tabset']['add_pages'] = array(
+    $tabset['add_pages'] = array(
       '#type' => 'tabpage',
       '#title' => t('Add pages'),
       '#content' => drupal_get_form('book_add_pages_form', $this->pid, 'newspapers:pageCModel', 'isPartOf'),
     );
-    return tabs_render($tabset);
+    return $tabset;
   }
 
   public function showPageFieldSets() {
@@ -133,7 +134,7 @@ class Newspaper {
 
     $tabset = array();
 
-    $tabset['my_tabset'] = array(
+    $tabset = array(
       '#type' => 'tabset',
     );
 
@@ -146,7 +147,7 @@ class Newspaper {
     $viewer_url = variable_get('fedora_base_url', '') . '/get/'. $this->pid . '/ilives:viewerSdef/getViewer'. $qs;
     $html = '<iframe src="'. $viewer_url . '" frameborder="0" style="width: 100%; height: 800px;">Errors: unable to load viewer</iframe>';
 
-    $tabset['my_tabset']['first_tab'] = array(
+    $tabset['first_tab'] = array(
       '#type' => 'tabpage',
       '#title' => t('Read'),
       '#content' => $html
@@ -164,12 +165,12 @@ class Newspaper {
       }      
     }    
     $parent_item = new Fedora_Item($parent_pid);
-    $tabset['my_tabset']['second_tab'] = array(
+    $tabset['second_tab'] = array(
       '#type' => 'tabpage',
       '#title' => 'Description',
       '#content' => $parent_item->get_dissemination('islandora:mods2htmlSdef', 'mods2html'),
     );
 
-    return tabs_render($tabset);
+    return $tabset;
   }
 }
