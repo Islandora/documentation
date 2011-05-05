@@ -850,34 +850,37 @@ class ObjectHelper {
     module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
     // Before executing the query, we hve a base case of accessing the top-level collection
     global $base_url;
-    $query_string = 'select $parentObject $title $content from <#ri>
-                             where (<info:fedora/' . $pid . '> <dc:title> $title
-                             and $parentObject <fedora-model:hasModel> $content
-                             and (<info:fedora/' . $pid . '> <fedora-rels-ext:isMemberOfCollection> $parentObject
-                             or <info:fedora/' . $pid . '> <fedora-rels-ext:isMemberOf> $parentObject
-                             or <info:fedora/' . $pid . '> <fedora-rels-ext:isPartOf> $parentObject)
-                             and $parentObject <fedora-model:state> <info:fedora/fedora-system:def/model#Active>)
-                             minus $content <mulgara:is> <info:fedora/fedora-system:FedoraObject-3.0>
-                             order by $title';
-    $query_string = htmlentities(urlencode($query_string));
-
-    $url = variable_get('fedora_repository_url', 'http://localhost:8080/fedora/risearch');
-    $url .= "?type=tuples&flush=TRUE&format=CSV&limit=1&offset=0&lang=itql&stream=on&query=" . $query_string;
-
-    $result = preg_split('/[\r\n]+/',do_curl($url));
-		array_shift($result); // throw away first line 
-    $matches =str_getcsv(join("\n",$result));
-    if ($matches !== FALSE) {
-			$parent = preg_replace('/^info:fedora\//','',$matches[0]);
-
-      $breadcrumbs[] = l($matches[1], 'fedora/repository/' . $pid);
-      if ($parent == variable_get('fedora_repository_pid', 'islandora:top')) {
+    if ($pid == variable_get('fedora_repository_pid', 'islandora:top')){
         $breadcrumbs[] = l(t('Digital repository'), 'fedora/repository');
         $breadcrumbs[] = l(t('Home'), $base_url);
-        
-        
-      } elseif ($level > 0) {
-        $this->getBreadcrumbs($parent, $breadcrumbs, $level - 1);
+    } else {
+      $query_string = 'select $parentObject $title $content from <#ri>
+                               where (<info:fedora/' . $pid . '> <dc:title> $title
+                               and $parentObject <fedora-model:hasModel> $content
+                               and (<info:fedora/' . $pid . '> <fedora-rels-ext:isMemberOfCollection> $parentObject
+                               or <info:fedora/' . $pid . '> <fedora-rels-ext:isMemberOf> $parentObject
+                               or <info:fedora/' . $pid . '> <fedora-rels-ext:isPartOf> $parentObject)
+                               and $parentObject <fedora-model:state> <info:fedora/fedora-system:def/model#Active>)
+                               minus $content <mulgara:is> <info:fedora/fedora-system:FedoraObject-3.0>
+                               order by $title';
+      $query_string = htmlentities(urlencode($query_string));
+
+      $url = variable_get('fedora_repository_url', 'http://localhost:8080/fedora/risearch');
+      $url .= "?type=tuples&flush=TRUE&format=CSV&limit=1&offset=0&lang=itql&stream=on&query=" . $query_string;
+
+      $result = preg_split('/[\r\n]+/',do_curl($url));
+      array_shift($result); // throw away first line
+      $matches =str_getcsv(join("\n",$result));
+      if ($matches !== FALSE) {
+        $parent = preg_replace('/^info:fedora\//','',$matches[0]);
+
+        $breadcrumbs[] = l($matches[1], 'fedora/repository/' . $pid);
+        if ($parent == variable_get('fedora_repository_pid', 'islandora:top')) {
+          $breadcrumbs[] = l(t('Digital repository'), 'fedora/repository');
+          $breadcrumbs[] = l(t('Home'), $base_url);
+        } elseif ($level > 0) {
+          $this->getBreadcrumbs($parent, $breadcrumbs, $level - 1);
+        }
       }
     }
   }
