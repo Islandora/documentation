@@ -32,7 +32,6 @@ class CollectionClass {
       $this->collectionObject = new ObjectHelper($pid);
       $this->pid = $pid;
     }
-    
   }
 
   /* gets objects related to this object.  must include offset and limit
@@ -81,8 +80,7 @@ class CollectionClass {
                              minus $content <mulgara:is> <info:fedora/fedora-system:FedoraObject-3.0>
                              order by $title';
       }
-   
-    }   
+    }
     else {
       // Replace %parent_collection% with the actual collection PID
       $query_string = preg_replace("/\%parent_collection\%/", "<info:fedora/$pid>", $query_string);
@@ -312,33 +310,33 @@ class CollectionClass {
     $fullpath = $file;
     //	$form = array();
     $form['step'] = array(
-        '#type' => 'hidden',
-        '#value' => (isset($form_state['values']['step']) ? $form_state['values']['step'] : 0) + 1,
+      '#type' => 'hidden',
+      '#value' => (isset($form_state['values']['step']) ? $form_state['values']['step'] : 0) + 1,
     );
     $form['ingest-file-location'] = array(
-        '#type' => 'hidden',
-        '#value' => $file,
+      '#type' => 'hidden',
+      '#value' => $file,
     );
 
     $form['content_model_name'] = array(
-        '#type' => 'hidden',
-        '#value' => $contentModelDsid
+      '#type' => 'hidden',
+      '#value' => $contentModelDsid
     );
     $form['models'] = array(//content models available
-        '#type' => 'hidden',
-        '#value' => $form_state['values']['models'],
+      '#type' => 'hidden',
+      '#value' => $form_state['values']['models'],
     );
     $form['fullpath'] = array(
-        '#type' => 'hidden',
-        '#value' => $fullpath,
+      '#type' => 'hidden',
+      '#value' => $fullpath,
     );
 
     $form['#attributes']['enctype'] = 'multipart/form-data';
     $form['indicator']['ingest-file-location'] = array(
-        '#type' => 'file',
-        '#title' => t('Upload Document'),
-        '#size' => 48,
-        '#description' => t('Full text'),
+      '#type' => 'file',
+      '#title' => t('Upload Document'),
+      '#size' => 48,
+      '#description' => t('Full text'),
     );
     if ($xml->ingest_form->hide_file_chooser == 'TRUE') {
       $form['indicator']['ingest-file-location']['#type'] = 'hidden';
@@ -366,7 +364,7 @@ class CollectionClass {
       return;
     }
     $username = array(
-        'name' => variable_get('fedora_admin_user', 'fedoraAdmin')
+      'name' => variable_get('fedora_admin_user', 'fedoraAdmin')
     );
     $admin_user = user_load($username);
     module_load_include('inc', 'fedora_repository', 'ConnectionHelper');
@@ -376,12 +374,12 @@ class CollectionClass {
       $pidNameSpace = variable_get('fedora_repository_pid', 'vre:');
       $pidNameSpace = substr($pidNameSpace, 0, strpos($pidNameSpace, ":"));
       $params = array(
-          'numPIDs' => '',
-          'pidNamespace' => $pidNameSpace
+        'numPIDs' => '',
+        'pidNamespace' => $pidNameSpace
       );
       $object = $soapClient->__soapCall('getNextPID', array(
-                  $params
-              ));
+            $params
+          ));
     } catch (exception $e) {
       drupal_set_message(t('Error getting Next PID: !e', array('!e' => $e->getMessage())), 'error');
       return FALSE;
@@ -390,7 +388,7 @@ class CollectionClass {
     $pidNumber = strstr($pid, ":");
     $pid = $pidNameSpace . ':' . 'USER-' . $user->name . '-' . substr($pidNumber, 1);
     $personal_collection_pid = array(
-        'fedora_personal_pid' => $pid
+      'fedora_personal_pid' => $pid
     );
     module_load_include('inc', 'fedora_repository', 'plugins/PersonalCollectionClass');
     $personalCollectionClass = new PersonalCollectionClass();
@@ -401,7 +399,7 @@ class CollectionClass {
     user_save($user, $personal_collection_pid);
     return TRUE;
   }
-  
+
   /**
    * Queries a collection object for an xslt to format how the
    * collection of objects is displayed.
@@ -415,7 +413,7 @@ class CollectionClass {
     }
     return $xslContent;
   }
-  
+
   function showFieldSets($page_number) {
     module_load_include('inc', 'fedora_repository', 'api/fedora_item');
     global $base_url;
@@ -426,19 +424,18 @@ class CollectionClass {
     $objectHelper = new ObjectHelper();
     $item = new Fedora_Item($this->pid);
     $query = NULL;
-    if ($item->exists()) {
+    if ($item->exists() && array_key_exists('QUERY', $item->datastreams)) {
       $query = $item->get_datastream_dissemination('QUERY');
     }
     $results = $this->getRelatedItems($this->pid, $query);
-    
-    $collection_items = $this->renderCollection($results, $this->pid, NULL, NULL, $page_number );
+
+    $collection_items = $this->renderCollection($results, $this->pid, NULL, NULL, $page_number);
     $collection_item = new Fedora_Item($this->pid);
     // Check the form post to see if we are in the middle of an ingest operation.
     $show_ingest_tab = (!empty($_POST['form_id']) && $_POST['form_id'] == 'fedora_repository_ingest_form');
     $add_to_collection = $this->getIngestInterface();
-    
+
     $tabset['view_tab'] = array(
-//     $collection_fieldset = array (
       '#type' => 'tabpage',
       '#title' => 'View',
       '#content' => $collection_items
@@ -461,29 +458,26 @@ class CollectionClass {
     $collectionPolicyExists = $objectHelper->getMimeType($this->pid, CollectionPolicy::getDefaultDSID());
     if (user_access(ObjectHelper :: $INGEST_FEDORA_OBJECTS) && $collectionPolicyExists) {
       if (!empty($collectionPolicyExists)) {
-        $allow=TRUE;
-        if (module_exists('fedora_fesl')) {  
-          $allow= fedora_fesl_check_roles($this->pid,'write');
+        $allow = TRUE;
+        if (module_exists('fedora_fesl')) {
+          $allow = fedora_fesl_check_roles($this->pid, 'write');
         }
         if ($allow) {
-        // $ingestObject = '<a title="'. t('Ingest a New object into ') . $collectionName . ' '. $collection_pid . '" href="'. base_path() .
           $ingestObject = drupal_get_form('fedora_repository_ingest_form', $this->pid);
-          
         }
       }
     }
     else {
       $ingestObject = '';
     }
-    
+
     return $ingestObject;
   }
-  
+
   function renderCollection($content, $pid, $dsId, $collection, $pageNumber = NULL) {
     $path = drupal_get_path('module', 'fedora_repository');
     global $base_url;
     $collection_pid = $pid; //we will be changing the pid later maybe
-    //module_load_include('php', ''Fedora_Repository'', 'ObjectHelper');
     $objectHelper = new ObjectHelper();
     $parsedContent = NULL;
     $contentModels = $objectHelper->get_content_models_list($pid);
@@ -539,7 +533,8 @@ class CollectionClass {
           return '';
         }
       }
-    } else {
+    }
+    else {
       drupal_set_message(t("No Objects in this collection or bad query."));
     }
     return $objectList;
