@@ -510,7 +510,7 @@ class ObjectHelper {
     $pids = array();
     $query = 'select $object from <#ri>
             where <info:fedora/' . $pid . '> <fedora-model:hasModel> $object
-            and $object <fedora-model:state> <info:fedora/Fedora-system:def/model#Active>';
+            and $object <fedora-model:state> <info:fedora/fedora-system:def/model#Active>';
     $content_models = $collectionHelper->getRelatedItems($pid, $query);
 
     if (empty($content_models)) {
@@ -529,7 +529,7 @@ class ObjectHelper {
     }
     $cmodels = array();
     foreach ($sxml->xpath('//@uri') as $uri) {
-      if (strpos($uri, 'fedora-system:fedoraObject-3.0') != FALSE && $include_fedora_system_content_models == FALSE) {
+      if (strpos($uri, 'fedora-system:FedoraObject-3.0') != FALSE && $include_fedora_system_content_models == FALSE) {
         continue;
       }
       $cmodel_pid = substr(strstr($uri, '/'), 1);
