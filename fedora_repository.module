@@ -22,9 +22,7 @@ function fedora_repository_admin() {
   return $adminForm->createAdminForm();
 }
 
-function fedora_repository_admin_settings_submit($form, $form_values) {
-  drupal_set_message("Custom form handler.");
-}
+
 
 /**
  * drupal hook

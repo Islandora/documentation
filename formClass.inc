@@ -380,8 +380,7 @@ class formClass {
 
     $form['#attributes'] = array('enctype' => "multipart/form-data");
 
-    // Additional form handling for file uploads.
-    $form['#submit'][] = 'fedora_repository_admin_settings_submit';
+
     return system_settings_form($form);
   }
 
