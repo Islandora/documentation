@@ -4,5 +4,5 @@ dependencies[] = imageapi
 dependencies[] = tabs
 description = Shows a list of items in a fedora collection.
 package = Fedora Repository
-version = 6.1dev
+version = 6.x-11.1.0
 core = 6.x
