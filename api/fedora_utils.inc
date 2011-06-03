@@ -88,20 +88,41 @@ function fix_encoding($in_str) {
   }
 } 
 
-  function validPid($pid) {
-    $valid = FALSE;
-    if (strlen(trim($pid)) <= 64 && preg_match('/^([A-Za-z0-9]|-|\.)+:(([A-Za-z0-9])|-|\.|~|_|(%[0-9A-F]{2}))+$/', trim($pid))) {
-      $valid = TRUE;
-    }
-
-    return $valid;
+function validPid($pid) {
+  $valid = FALSE;
+  if (strlen(trim($pid)) <= 64 && preg_match('/^([A-Za-z0-9]|-|\.)+:(([A-Za-z0-9])|-|\.|~|_|(%[0-9A-F]{2}))+$/', trim($pid))) {
+    $valid = TRUE;
   }
 
- function validDsid($dsid) {
-    $valid = FALSE;
-    if (strlen(trim($dsid)) <= 64 && preg_match('/^[a-zA-Z0-9\_\-\.]+$/', trim($dsid))) {
-      $valid = TRUE;
-    }
+  return $valid;
+}
 
-    return $valid;
+function validDsid($dsid) {
+  $valid = FALSE;
+  if (strlen(trim($dsid)) <= 64 && preg_match('/^[a-zA-Z0-9\_\-\.]+$/', trim($dsid))) {
+    $valid = TRUE;
   }
+
+  return $valid;
+}
+
+function fixDsid($dsid) {
+  $new_dsid = trim($dsid);
+
+  $find = '/[^a-zA-Z0-9\.\_\-]/';
+  $replace = '';
+  $new_dsid = preg_replace($find, $replace, $new_dsid);
+
+  if( strlen($new_dsid) > 63 )
+    $new_dsid = substr($new_dsid, -63);
+
+  if( preg_match('/^[^a-zA-Z]/', $dsid ) )
+    $new_dsid = 'x' . $new_dsid;
+
+  if( strlen($new_dsid) == 0 )
+    $new_dsid = 'item' . rand(1, 100);
+
+  return $new_dsid;
+
+}
+

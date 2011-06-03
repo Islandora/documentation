@@ -46,7 +46,7 @@ class ShowMapStreamsInFieldSets {
       '#type' => 'tabpage',
       '#title' => t('Description'),
       '#content' => $item->get_dissemination('islandora:mods2htmlSdef', 'mods2html')
-        . $objectHelper->getFormattedDatastreamList($this->pid, NULL, $item),
+        . $objectHelper->get_formatted_datastream_list($this->pid, NULL, $item),
     );
     // Render the tabset.
     return tabs_render($tabset);
