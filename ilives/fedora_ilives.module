@@ -1,7 +1,8 @@
 <?php
+
 // $Id$
 
-/* 
+/*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -14,7 +15,7 @@ function fedora_ilives_menu() {
     'type' => MENU_CALLBACK,
     'access arguments' => array('view fedora collection'),
   );
-   $items['fedora/ilives_book_viewer'] = array(
+  $items['fedora/ilives_book_viewer'] = array(
     'title' => t('Book viewer'),
     'page callback' => 'fedora_ilives_book_viewer',
     'type' => MENU_CALLBACK,
@@ -41,14 +42,9 @@ function fedora_ilives_menu() {
   return $items;
 }
 
-
-
 //function fedora_ilives_book_search($query) {
-
 //}
-
 //function fedora_ilives_page_search($query) {
-
 //}
 
 function fedora_ilives_block($op = 'list', $delta = 0, $edit = array()) {
@@ -59,13 +55,13 @@ function fedora_ilives_block($op = 'list', $delta = 0, $edit = array()) {
       // This is used to provide a list of possible blocks to the administrator,
       // end users will not see these descriptions.
       $blocks[0] = array(
-        'info'       => t('Book search block'),
+        'info' => t('Book search block'),
       );
       $blocks[1] = array(
         'info' => t('Image rotator and tagger'),
       );
       $blocks[2] = array(
-          'info' => t('Simple book search block'),
+        'info' => t('Simple book search block'),
       );
 
       return $blocks;
@@ -74,7 +70,7 @@ function fedora_ilives_block($op = 'list', $delta = 0, $edit = array()) {
       // configuration form. The $delta parameter tells us which block is being
       // configured. In this example, we'll allow the administrator to customize
       // the text of the first block.
-              // If $op is "configure", we need to provide the administrator with a
+      // If $op is "configure", we need to provide the administrator with a
       // configuration form. The $delta parameter tells us which block is being
       // configured. In this example, we'll allow the administrator to customize
       // the text of the first block.
@@ -83,7 +79,7 @@ function fedora_ilives_block($op = 'list', $delta = 0, $edit = array()) {
         case 0:
           // All we need to provide is a text field, Drupal will take care of
           // the other block configuration options and the save button.
-         $form['fedora_ilives_book_search_block_repeat'] = array(
+          $form['fedora_ilives_book_search_block_repeat'] = array(
             '#type' => 'textfield',
             '#title' => t('Number of times to repeat search fields'),
             '#size' => 5,
@@ -103,10 +99,10 @@ and $object <fedora-model:state> <info:fedora/fedora-system:def/model#Active>
 and $object <dc:title> $title'),
           );
           break;
-          case 2:
+        case 2:
           // All we need to provide is a text field, Drupal will take care of
           // the other block configuration options and the save button.
-         $form['fedora_ilives_simple_book_search_block_title'] = array(
+          $form['fedora_ilives_simple_book_search_block_title'] = array(
             '#type' => 'textfield',
             '#title' => t('Title'),
             '#size' => 15,
@@ -129,7 +125,7 @@ and $object <dc:title> $title'),
         case 1:
           variable_set('fedora_ilives_image_rotator_tagger_block_query', $edit['fedora_ilives_image_rotator_block_query']);
           break;
-          case 2:
+        case 2:
           // Have Drupal save the string to the database.
           variable_set('fedora_ilives_simple_book_search_block_title', $edit['fedora_ilives_simple_book_search_block_title']);
           break;
@@ -152,7 +148,7 @@ and $object <dc:title> $title'),
           $block['subject'] = t('Random repository image');
           $block['content'] = _fedora_image_rotator_tagger_block_content();
           break;
-          case 2:
+        case 2:
           // The subject is displayed at the top of the block. Note that it
           // should be passed through t() for translation.
           $block['subject'] = t('Simple Book Search');
@@ -166,32 +162,30 @@ and $object <dc:title> $title'),
   }
 }
 
-
-
 function fedora_ilives_book_viewer($pid) {
   global $user;
-    $qs = '';
-    if ($user->uid != 0) {
+  $qs = '';
+  if ($user->uid != 0) {
 //      $qs = '?uid=' . base64_encode($user->name . ':' . $user->sid);
-      $qs = '?uid=' . base64_encode($user->name . ':' . $user->pass);
-    }
+    $qs = '?uid=' . base64_encode($user->name . ':' . $user->pass);
+  }
 
-    $viewer_url = variable_get('fedora_base_url', '') . '/get/' . $pid . '/ilives:viewerSdef/getViewer' . $qs;
-    $html = '<iframe src="' . $viewer_url .'" frameborder="0" scrolling="no" style="width: 100%; height: 800px;">Errors: unable to load viewer</iframe>';
-    $fieldset = array(
-      '#title' => t('Viewer - ') . $pid,
-      '#collapsible' => TRUE,
-      '#collapsed' => FALSE,
-      '#value' => $html);
-    drupal_add_css(path_to_theme() . '/header-viewer.css', 'theme');
-    return theme('fieldset', $fieldset);
-  
+  $viewer_url = variable_get('fedora_base_url', '') . '/get/' . $pid . '/ilives:viewerSdef/getViewer' . $qs;
+  $html = '<iframe src="' . $viewer_url . '" frameborder="0" scrolling="no" style="width: 100%; height: 800px;">Errors: unable to load viewer</iframe>';
+  $fieldset = array(
+    '#title' => t('Viewer - ') . $pid,
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+    '#value' => $html);
+  drupal_add_css(path_to_theme() . '/header-viewer.css', 'theme');
+  return theme('fieldset', $fieldset);
 }
+
 //loads an xslt for the main book page uses mods for most of the display.  if there is a $query parameter
 // it will execute it against the book.
 function fedora_ilives_create_book_view($pid, $query = NULL) {
   global $user;
-  module_load_include('inc', 'fedora_repository', 'ObjectHelper' );
+  module_load_include('inc', 'fedora_repository', 'ObjectHelper');
   $path = drupal_get_path('module', 'Fedora_Repository');
   $objectHelper = new ObjectHelper;
   $xml = $objectHelper->getStream($pid, 'MODS');
@@ -237,7 +231,7 @@ function fedora_ilives_create_book_view($pid, $query = NULL) {
 
   $input = new DomDocument();
   $didLoadOk = $input->loadXML($xml);
-  $output=NULL;
+  $output = NULL;
   if (!isset($didLoadOk)) {
     drupal_set_message(t('Error loading Book View XML.'));
     return t('Error loading Book View XML.');
@@ -251,7 +245,7 @@ function fedora_ilives_create_book_view($pid, $query = NULL) {
     module_load_include('inc', 'fedora_repository', 'SearchClass');
     $searchClass = new SearchClass();
     $pageQuery = convert_query_to_page_query($query, $pid);
-    $output .= '<div>'. $searchClass->custom_search($pageQuery, $startPage, '/ilives/xsl/pageResults.xsl', 500) . '</div>'; //limit results to 500 pages of a book since there is no paging if we enable paging in xslt this can be changed
+    $output .= '<div>' . $searchClass->custom_search($pageQuery, $startPage, '/ilives/xsl/pageResults.xsl', 500) . '</div>'; //limit results to 500 pages of a book since there is no paging if we enable paging in xslt this can be changed
     //return $output."<div>used this query to find this page $query and new query = $pageQuery</div>";
 
     return $output;
@@ -262,16 +256,16 @@ function fedora_ilives_create_book_view($pid, $query = NULL) {
 }
 
 function convert_query_to_page_query($query, $pid) {
-  $newQuery= substr($query, 0, strlen($query) - 23);
+  $newQuery = substr($query, 0, strlen($query) - 23);
   $pid = str_replace(':', '?', $pid);
-  $newQuery = $newQuery ." AND PID:$pid* AND dc.type:Text";
+  $newQuery = $newQuery . " AND PID:$pid* AND dc.type:Text";
   //$newQuery=htmlentities(urlencode($newQuery));
   return $newQuery;
 }
 
 /**
-* Custom form element to do our nice images.
-*/
+ * Custom form element to do our nice images.
+ */
 function fedora_ilives_elements() {  // Change this line
   $type['imagebutton'] = array(
     '#input' => TRUE,
@@ -284,7 +278,7 @@ function fedora_ilives_elements() {  // Change this line
 }
 
 function theme_imagebutton($element) {
-  return '<input  style="background:url(\'\'); border:0px; width:10px; padding:0px,0px,0px,0px;" type="image" class="form-'. $element['#button_type'] . '" name="'. $element['#name'] . '" id="'. $element['#id'] . '" value="'. check_plain($element['#default_value']) . '" '. drupal_attributes($element['#attributes']) . ' src="' . $element['#image'] . '" alt="' . $element['#title'] . '" title="' . $element['#title'] . "\" />\n";
+  return '<input  style="background:url(\'\'); border:0px; width:10px; padding:0px,0px,0px,0px;" type="image" class="form-' . $element['#button_type'] . '" name="' . $element['#name'] . '" id="' . $element['#id'] . '" value="' . check_plain($element['#default_value']) . '" ' . drupal_attributes($element['#attributes']) . ' src="' . $element['#image'] . '" alt="' . $element['#title'] . '" title="' . $element['#title'] . "\" />\n";
 }
 
 /**
@@ -313,7 +307,7 @@ function fedora_ilives_theme() {
 function theme_fedora_ilives_book_search_form($form) {
   module_load_include('inc', 'fedora_repository', 'SearchClass');
   $advanced_search_form = new SearchClass();
-  $repeats = variable_get('fedora_ilives_book_search_block_repeat',  t('3'));
+  $repeats = variable_get('fedora_ilives_book_search_block_repeat', t('3'));
   return $advanced_search_form->theme_advanced_search_form($form, $repeats);
 }
 
@@ -321,14 +315,14 @@ function fedora_ilives_simple_book_search_form($form) {
   $form = array();
   $form['search_type']['type1'] = array(
     '#title' => t(''),
-    '#type' => 'hidden', 
+    '#type' => 'hidden',
     '#default_value' => 'tei.fullText'
   );
   $form['fedora_terms1'] = array(
     '#size' => '24',
     '#type' => 'textfield',
-    '#title' => t(''), 
-    '#required' => TRUE ,
+    '#title' => t(''),
+    '#required' => TRUE,
     '#default_value' => ''
   );
   $form['submit'] = array(
@@ -341,23 +335,23 @@ function fedora_ilives_simple_book_search_form($form) {
 function fedora_ilives_simple_book_search_form_submit($form, &$form_state) {
   $type_id = $form_state['values']['type'];
 
-  $searchString = $form_state['values']['type1'] . ':'. $form_state['values']['fedora_terms1'];
-       
+  $searchString = $form_state['values']['type1'] . ':' . $form_state['values']['fedora_terms1'];
+
   $searchString = trim($searchString) . '+AND+dc.type:collection';
-  $form_state['redirect']="fedora/ilives_book_search/$searchString";
+  $form_state['redirect'] = "fedora/ilives_book_search/$searchString";
   //drupal_goto("fedora/ilives_book_search/$searchString");
 }
 
 function fedora_ilives_book_search_form() {
   module_load_include('inc', 'fedora_repository', 'SearchClass');
   $searchClass = new SearchClass();
-  $repeats = variable_get('fedora_ilives_book_search_block_repeat',  t('3'));
+  $repeats = variable_get('fedora_ilives_book_search_block_repeat', t('3'));
   $path = drupal_get_path('module', 'Fedora_Repository') . '/ilives';
   $query = NULL;
   if (arg(1) == 'ilives_book_search' && arg(2) != 'dc.type:ingested') {
     $length = strlen(arg(2));
     if (($test = strpos(arg(2), 'dc.type:collection')) > 0) {
-      $length=$test - 5; //get rid of the AND
+      $length = $test - 5; //get rid of the AND
     }
     $query = trim(substr(arg(2), 0, $length));
   }
@@ -366,65 +360,29 @@ function fedora_ilives_book_search_form() {
 
 function fedora_ilives_book_search_form_submit($form, &$form_state) {
   $type_id = $form_state['values']['type'];
-  $repeat = variable_get('fedora_ilives_book_search_block_repeat',  t('3'));
-  $searchString = $form_state['values']['type1'] . ':'. $form_state['values']['fedora_terms1'];
+  $repeat = variable_get('fedora_ilives_book_search_block_repeat', t('3'));
+  $searchString = $form_state['values']['type1'] . ':' . $form_state['values']['fedora_terms1'];
   if ($form_state['values']['fedora_terms2'] != '') {
-    $searchString .= '+'. $form_state['values']['andor1'] . '+'. $form_state['values']['type2'] . ':'. $form_state['values']['fedora_terms2'];
+    $searchString .= '+' . $form_state['values']['andor1'] . '+' . $form_state['values']['type2'] . ':' . $form_state['values']['fedora_terms2'];
   }
   if ($repeat > 2 && $repeat < 9) {
     for ($i = 3; $i < $repeat + 1; $i++) {
-      $t=$i-1;
+      $t = $i - 1;
       if ($form_state['values']["fedora_terms$i"] != '') {
-        $searchString .= '+'. $form_state['values']["andor$t"] . '+'. $form_state['values']["type$i"] . ':'. $form_state['values']["fedora_terms$i"];
+        $searchString .= '+' . $form_state['values']["andor$t"] . '+' . $form_state['values']["type$i"] . ':' . $form_state['values']["fedora_terms$i"];
       }
     }
-   }
-   $searchString = trim($searchString) . '+AND+dc.type:collection';
-   $form_state['redirect']="fedora/ilives_book_search/$searchString";
-   //drupal_goto("fedora/ilives_book_search/$searchString");
+  }
+  $searchString = trim($searchString) . '+AND+dc.type:collection';
+  $form_state['redirect'] = "fedora/ilives_book_search/$searchString";
+  //drupal_goto("fedora/ilives_book_search/$searchString");
 }
 
-    function fedora_ilives_book_search($query, $startPage = 1) {
-         module_load_include('inc', 'fedora_repository', 'SearchClass');
-        $searchClass = new SearchClass();
-        return $searchClass->custom_search($query, $startPage, '/ilives/xsl/results.xsl', 10);
-    }
-
-    /*function custom_search($query) {
-        module_load_include('inc', 'fedora_repository', 'ObjectHelper');
-        module_load_include('inc', 'fedora_repository', 'SearchClass');
-        if (user_access('view fedora collection')) {
-            $numberOfHistPerPage = '1000';//hack for IR they do not want next button
-            $luceneQuery = NULL;
-            //demo search string ?operation=gfindObjects&indexName=DemoOnLucene&query=fgs.DS.first.text%3Achristmas&hitPageStart=11&hitPageSize=10
-
-
-            $indexName = variable_get('fedora_index_name', 'DemoOnLucene');
-            $query.=$query.'+dc.type:collection';
-            $query=htmlentities(urlencode($query));
-
-            $searchUrl = variable_get('fedora_fgsearch_url', 'http://localhost:8080/fedoragsearch/rest');
-            $searchString = '?operation=gfindObjects&indexName=' . $indexName . '&restXslt=copyXml&query=' . $query;
-            $searchString .= '&hitPageSize='.$numberOfHistPerPage.'&hitPageStart=1';
-            //$searchString = htmlentities($searchString);
-            $searchUrl .= $searchString;
-
-            $objectHelper = new ObjectHelper();
-
-            $resultData = $objectHelper->doCurl($searchUrl,1);
-            //var_dump($resultData);exit(0);
-            //	$doc = new DOMDocument();
-            //	$doc->loadXML($resultData);
-            $searchClass = new SearchClass();
-            $output.=$searchClass->applyLuceneXSLT($resultData);
-
-            return $output;
-
-        }
-    }*/
-
-
-
+function fedora_ilives_book_search($query, $startPage = 1) {
+  module_load_include('inc', 'fedora_repository', 'SearchClass');
+  $searchClass = new SearchClass();
+  return $searchClass->custom_search($query, $startPage, '/ilives/xsl/results.xsl', 10);
+}
 
 function retrieve_unapi_MODS_record($url) {
   $bib_response = drupal_http_request($url);
@@ -441,7 +399,7 @@ function retrieve_unapi_MODS_record($url) {
   $attrs = $bib_doc->getElementsByTagName('abbr');
   foreach ($attrs as $attr) {
     if ($attr->getAttribute('class') == 'unapi-id') {
-      
+
       $unapi_id = $attr->getAttribute('title');
       break;
     }
@@ -449,14 +407,13 @@ function retrieve_unapi_MODS_record($url) {
   $mods_url = "$unapi_server?id=$unapi_id&format=mods3";
   $mods_resp = drupal_http_request($mods_url);
   $mods_data = $mods_resp->data;
-  return $mods_data;  
+  return $mods_data;
 }
-
 
 /**
  * AHAH callback for the 'match type' select.
  * This function handles the actual replace and sets the $form and $form_state arrays.
- **/
+ * */
 function fedora_ilives_button_retrieve_unapi_ahah() {
 
   // this part is used to set up $form_state.
@@ -470,7 +427,7 @@ function fedora_ilives_button_retrieve_unapi_ahah() {
   $form['#post'] = $_POST;
   $form['#redirect'] = FALSE;
   $form['#programmed'] = FALSE;
-  
+
   $form_state['post'] = $_POST;
   drupal_process_form($form_id, $form, $form_state);
   $form_state['storage']['step'] = 2;
@@ -480,21 +437,21 @@ function fedora_ilives_button_retrieve_unapi_ahah() {
   // part through the json call. In this case we want to rebuild the 'kind' <div> wrapper and the
   // select box it contains
   $changed_elements = $form['mods']['mods_record'];
-  
+
 
   unset($changed_elements['#prefix'], $changed_elements['suffix']); // we'll unset the div to make sure it won't be repeated!
   // the actual JSON call
   $javascript = drupal_add_js(NULL, NULL, 'header');
   drupal_json(array(
-    'status'   => TRUE,
-    'data'     => theme('status_messages') . drupal_render($changed_elements), // rebuild just the part that needs to be changed
+    'status' => TRUE,
+    'data' => theme('status_messages') . drupal_render($changed_elements), // rebuild just the part that needs to be changed
     'settings' => call_user_func_array('array_merge_recursive', $javascript['setting']),
   ));
 }
 
 /**
  * This is the handler for the 'type' box: pressing this will refresh the <div> kind wrapper.
- **/
+ * */
 function fedora_ilives_retrieve_unapi_submit($form, &$form_state) {
 
   unset($form_state['submit_handlers']); // unset all the submit handlers in the form
@@ -509,90 +466,35 @@ function fedora_ilives_retrieve_unapi_submit($form, &$form_state) {
   return $mods_save;
 }
 
-function fedora_ilives_form_alter(&$form, &$form_state, $form_id) { 
+function fedora_ilives_form_alter(&$form, &$form_state, $form_id) {
   if ($form_id == 'fedora_repository_admin') {
     # Custom settings for book module.
- 
   }
   elseif ($form_id == 'fedora_repository_demo_objects_form') {
     if (!Fedora_Item::fedora_item_exists('ilives:bookCModel')) {
-       
+
       $form['install_demos']['demo_collections']['#options']['ilives:bookCModel'] = 'Book-related content models and service objects';
       $form['install_demos']['ingest']['#disabled'] = FALSE;
-      $form['#submit'][] = 'fedora_ilives_install_demos_form_submit';   
+      $form['#submit'][] = 'fedora_ilives_install_demos_form_submit';
     }
     else {
-      
+
       module_load_include('inc', 'fedora_repository', 'api/fedora_item');
       $book_item = new Fedora_Item('ilives:bookCModel');
-    
+
       $form['existing_demos']['ilives:bookCModel'] = array(
-          '#prefix' => '<li>',
-          '#value' => l($book_item->pid, $book_item->url()),
-          '#suffix' => '</li>',
+        '#prefix' => '<li>',
+        '#value' => l($book_item->pid, $book_item->url()),
+        '#suffix' => '</li>',
       );
     }
   }
 }
 
 function fedora_ilives_install_demos_form_submit($form, &$form_state) {
-  if ($form_state['values']['demo_collections']['ilives:bookCModel'] == 'ilives:bookCModel' ) {
+  if ($form_state['values']['demo_collections']['ilives:bookCModel'] == 'ilives:bookCModel') {
     # The ilives:bookCModel checkbox was checked
     install_book_content_model_objects();
-
-  }
-  
-}
-
-function install_book_content_model_objects() {
-  module_load_include('inc', 'fedora_repository', 'api/fedora_item');
-  $allowed_pids_str = variable_get('fedora_pids_allowed', 'default: demo: changeme: Islandora: ilives: ');
-  $allowed_pids = explode(' ', $allowed_pids_str);
-  
-
-  if (!in_array('ilives:', $allowed_pids)) {
-    variable_set('fedora_pids_allowed', $allowed_pids_str . ' ilives:');
-    drupal_set_message('Added ilives: to the set of allowed pidnamespaces.', 'info');
-  }
-
-  if (!Fedora_Item::fedora_item_exists('ilives:bookCModel')) {
-    Fedora_Item::ingest_from_foxml_file(drupal_get_path('module', 'fedora_ilives') . '/xml/ilives_bookCModel.xml');
-  }
-
-  if (!Fedora_Item::fedora_item_exists('ilives:pageCModel')) {
-    Fedora_Item::ingest_from_foxml_file(drupal_get_path('module', 'fedora_ilives') . '/xml/ilives_pageCModel.xml');
-  }
-
-  if (!Fedora_Item::fedora_item_exists('ilives:jp2Sdef')) {
-    Fedora_Item::ingest_from_foxml_file(drupal_get_path('module', 'fedora_ilives') . '/xml/ilives_jp2Sdef.xml');
-  }
-
-  if (!Fedora_Item::fedora_item_exists('ilives:tei2htmlSdef')) {
-    Fedora_Item::ingest_from_foxml_file(drupal_get_path('module', 'fedora_ilives') . '/xml/ilives_tei2htmlSdef.xml');
-  }
-
-  if (!Fedora_Item::fedora_item_exists('ilives:tei2htmlSdep-pageCModel')) {
-    Fedora_Item::ingest_from_foxml_file(drupal_get_path('module', 'fedora_ilives') . '/xml/ilives_tei2htmlSdep-pageCModel.xml');
-  }
-
-  if (!Fedora_Item::fedora_item_exists('ilives:viewerSdef')) {
-    Fedora_Item::ingest_from_foxml_file(drupal_get_path('module', 'fedora_ilives') . '/xml/ilives_viewerSdef.xml');
-  }
-
-  if (!Fedora_Item::fedora_item_exists('ilives:viewerSdep-bookCModel')) {
-    Fedora_Item::ingest_from_foxml_file(drupal_get_path('module', 'fedora_ilives') . '/xml/ilives_viewerSdep-bookCModel.xml');
-  }
-
-  if (!Fedora_Item::fedora_item_exists('ilives:viewerSdep-pageCModel')) {
-    Fedora_Item::ingest_from_foxml_file(drupal_get_path('module', 'fedora_ilives') . '/xml/ilives_viewerSdep-pageCModel.xml');
-  }
-
-  if (!Fedora_Item::fedora_item_exists('ilives:collection')) {
-    Fedora_Item::ingest_from_foxml_file(drupal_get_path('module', 'fedora_ilives') . '/xml/ilives_collection.xml');
-  }
-
-  if (!Fedora_Item::fedora_item_exists('ilives:CollectionModel')) {
-    Fedora_Item::ingest_from_foxml_file(drupal_get_path('module', 'fedora_ilives') . '/xml/ilives_CollectionModel.xml');
   }
 }
 
@@ -626,7 +528,7 @@ function fedora_ilives_requirements($phase) {
     if (!_fedora_ilives_viewer_available()) {
       $requirements['iiv-war']['value'] = ("Not available");
       $requirements['iiv-war']['severity'] = REQUIREMENT_ERROR;
-      $requirements['iiv-war']['description'] = t('Ensure that Fedora is running and that the <a href="@iiv-home">IIV</a> app is deployed.', 
+      $requirements['iiv-war']['description'] = t('Ensure that Fedora is running and that the <a href="@iiv-home">IIV</a> app is deployed.',
               array('@iiv-home' => 'http://github.com/islandora/iiv'));
     }
     else {
@@ -642,4 +544,206 @@ function _fedora_ilives_viewer_available() {
   $fedora_host = ("{$url['scheme']}://{$url['host']}" . (!empty($url['port']) ? ":{$url['port']}/" : '/'));
   $response = drupal_http_request("$fedora_host/iiv/images/loading.gif");
   return empty($response->error);
+}
+
+function fedora_ilives_required_fedora_objects() {
+  // array( 'path-to-foxml-file', 'pid', 'dsid', 'path-to-datastream-file', int dsversion, boolean required)
+  $module_path = drupal_get_path('module', 'fedora_ilives');
+  return array(
+    'fedora_ilives' => array(
+      'module' => 'fedora_ilives',
+      'title' => 'Island Lives Books',
+      'objects' => array(
+        array(
+          'foxml_file' => "$module_path/xml/ilives_pageCModel.xml",
+          'pid' => 'ilives:pageCModel',
+          'dsid' => NULL,
+          'datastream_file' => NULL,
+          'dsversion' => NULL,
+        ),
+        array(
+          'foxml_file' => "$module_path/xml/ilives_bookCModel.xml",
+          'pid' => 'ilives:bookCModel',
+          'dsid' => NULL,
+          'datastream_file' => NULL,
+          'dsversion' => NULL,
+        ),
+        array(
+          'foxml_file' => "$module_path/xml/ilives_jp2Sdef.xml",
+          'pid' => 'ilives:jp2Sdef',
+          'dsid' => NULL,
+          'datastream_file' => NULL,
+          'dsversion' => NULL,
+        ),
+        array(
+          'foxml_file' => "$module_path/xml/ilives_viewerSdef.xml",
+          'pid' => 'ilives:viewerSdef',
+          'dsid' => NULL,
+          'datastream_file' => NULL,
+          'dsversion' => NULL,
+        ),
+        array(
+          'foxml_file' => "$module_path/xml/ilives_viewerSdep-bookCModel.xml",
+          'pid' => 'ilives:viewerSdep-bookCModel',
+          'dsid' => NULL,
+          'datastream_file' => NULL,
+          'dsversion' => NULL,
+        ),
+        array(
+          'foxml_file' => "$module_path/xml/ilives_viewerSdep-pageCModel.xml",
+          'pid' => 'ilives:viewerSdep-pageCModel',
+          'dsid' => NULL,
+          'datastream_file' => NULL,
+          'dsversion' => NULL,
+        ),
+        array(
+          'foxml_file' => "$module_path/xml/ilives_tei2htmlSdef.xml",
+          'pid' => 'ilives:tei2htmlSdef',
+          'dsid' => NULL,
+          'datastream_file' => NULL,
+          'dsversion' => NULL,
+        ),
+        array(
+          'foxml_file' => "$module_path/xml/ilives_tei2htmlSdep-pageCModel.xml",
+          'pid' => 'ilives:tei2htmlSdep-pageCModel',
+          'dsid' => NULL,
+          'datastream_file' => NULL,
+          'dsversion' => NULL,
+        ),
+        array(
+          'foxml_file' => "$module_path/xml/ilives_collection.xml",
+          'pid' => 'ilives:collection',
+          'dsid' => NULL,
+          'datastream_file' => NULL,
+          'dsversion' => NULL,
+        ),
+        array(
+          'foxml_file' => "$module_path/xml/ilives_CollectionModel.xml",
+          'pid' => 'ilives:CollectionModel',
+          'dsid' => NULL,
+          'datastream_file' => NULL,
+          'dsversion' => NULL,
+        ),
+        array(
+          'pid' => 'books:collection',
+          'label' => 'Book Collection',
+          'cmodel' => 'islandora:collectionCModel',
+          'parent' => 'islandora:demos',
+          'datastreams' => array(
+            array(
+              'dsid' => 'COLLECTION_POLICY',
+              'datastream_file' => "$module_path/xml/book_collection_policy.xml",
+            ),
+            array(
+              'dsid' => 'TN',
+              'datastream_file' => "$module_path/Crystal_Clear_mimetype_man.png",
+              'mimetype' => 'image/png',
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+function fedora_ilives_purge_pages_form(&$form_state, $pid, $referrer = NULL) {
+  global $base_url;
+  if (!user_access('purge objects and datastreams')) {
+    return NULL;
+  }
+  if ($pid == NULL) {
+    return NULL;
+  }
+  $form['pid'] = array(
+    '#type' => 'hidden',
+    '#value' => "$pid"
+  );
+  if (!strstr(drupal_get_destination(), urlencode('fedora/repository'))) {
+    $form['referrer'] = array(
+      '#type' => 'hidden',
+      '#value' => $referrer,
+    );
+  }
+  if (!isset($form_state['storage']['confirm'])) {
+    // do your normal $form definition here
+
+
+    $form['submit'] = array(
+      '#type' => 'image_button',
+      '#src' => drupal_get_path('module', 'fedora_repository') . '/images/purge_big.png',
+      '#value' => t('Purge'),
+      '#suffix' => 'Purge all pages associated with this book',
+    );
+
+    return $form;
+  }
+  else {
+    // ALSO do $form definition here. Your final submit handler (after user clicks Yes, I Confirm) will only see $form_state info defined here. Form you create here passed as param1 to confirm_form
+
+    return confirm_form($form, 'Confirm Purge ALL pages?', $referrer, 'Are you sure you want to delete these objects? This action cannot be undone.', 'Purge Pages', 'Cancel'); //Had better luck leaving off last param 'name'
+  }
+  return $form;
+}
+
+function fedora_ilives_purge_pages_form_submit($form, &$form_state) {
+  module_load_include('inc', 'fedora_repository', 'ConnectionHelper');
+  $pid = $form_state['values']['pid'];
+  if (!isset($form_state['storage']['confirm'])) {
+    $form_state['storage']['confirm'] = TRUE; // this will cause the form to be rebuilt, entering the confirm part of the form
+    $form_state['rebuild'] = TRUE; // along with this
+  }
+  else {
+
+    $query = <<<XML
+select \$object \$title from <#ri>
+	where (\$object <dc:title> \$title
+		and \$object <fedora-rels-ext:isMemberOf> <info:fedora/$pid>
+		and \$object <fedora-model:state> <info:fedora/fedora-system:def/model#Active>)
+	order by \$title
+
+XML;
+
+    // this is where you do your processing after they have pressed the confirm button
+    module_load_include('inc', 'fedora_repoitory', 'CollectionClass');
+    $collection = new CollectionClass($pid);
+    $contents = $collection->getRelatedItems($pid, $query);
+    $results_xml = simplexml_load_string($contents);
+    $resultsarray = array();
+    foreach ($results_xml->results->result as $result) {
+      $pid_to_delete = str_replace('info:fedora/', '', $result->object->attributes()->uri);
+
+      //parse contents
+
+      $params = array(
+        "pid" => $pid_to_delete,
+        "logMessage" => "Purged",
+        "force" => ""
+      );
+      try {
+        $soapHelper = new ConnectionHelper();
+        $client = $soapHelper->getSoapClient(variable_get('fedora_soap_manage_url', 'http://localhost:8080/fedora/services/management?wsdl'));
+        $object = $client->__soapCall('purgeObject', array($params));
+        unset($form_state['storage']['confirm']);
+      } catch (exception $e) {
+        if (preg_match('/org\.fcrepo\.server\.security\.xacml\.pep\.AuthzDeniedException/', $e->getMessage())) {
+          drupal_set_message(t('Error:  Insufficient permissions to purge object.'), 'error');
+        }
+        else {
+          drupal_set_message(t($e->getMessage()), 'error');
+        }
+        return;
+      }
+    }
+    if (!empty($form_state['values']['referrer'])) {
+      $form_state['redirect'] = $form_state['values']['referrer'];
+    }
+    elseif (empty($collectionPid) && !empty($_SESSION['fedora_collection']) && $_SESSION['fedora_collection'] != $pid) {
+      $collectionPid = $_SESSION['fedora_collection'];
+
+      $form_state['redirect'] = "fedora/repository/$collectionPid/";
+    }
+    else {
+      $form_state['redirect'] = 'fedora/repository/';
+    }
+  }
 }
