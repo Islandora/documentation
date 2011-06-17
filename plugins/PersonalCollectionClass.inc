@@ -1,6 +1,9 @@
 <?php
 
-
+/**
+ * @file 
+ * 
+ */
 
 class PersonalCollectionClass {
 
@@ -50,7 +53,7 @@ class PersonalCollectionClass {
     try {
       $xml = new SimpleXMLElement($collectionTemplate);
     } catch (Exception $e) {
-      watchdog(t("Fedora_Repository"), t("Problem creating personal collection policy, could not parse collection policy stream."), NULL, WATCHDOG_ERROR);
+      watchdog(t("Fedora_Repository"), "Problem creating personal collection policy, could not parse collection policy stream.", NULL, WATCHDOG_ERROR);
       drupal_set_message(t('Problem creating personal collection policy, could not parse collection policy stream: !e', array('!e' => $e->getMessage())), 'error');
       return FALSE;
     }
@@ -58,7 +61,7 @@ class PersonalCollectionClass {
 
     if (!$policyElement) {
       drupal_set_message(t('Error parsing policy stream.'));
-      watchdog(t("Fedora_Repository"), t("Error parsing policy stream, could not parse policy stream."), NULL, WATCHDOG_NOTICE);
+      watchdog(t("Fedora_Repository"), "Error parsing policy stream, could not parse policy stream.", NULL, WATCHDOG_NOTICE);
       return FALSE;
     }
     $dom->importNode($policyElement, TRUE);
@@ -66,7 +69,7 @@ class PersonalCollectionClass {
     $value = $policyElement->appendXML($collectionTemplate);
     if (!$value) {
       drupal_set_message(t('Error creating collection policy stream.'));
-      watchdog(t("Fedora_Repository"), t("Error creating collection policy stream, could not parse collection policy template file."), NULL, WATCHDOG_NOTICE);
+      watchdog(t("Fedora_Repository"), "Error creating collection policy stream, could not parse collection policy template file.", NULL, WATCHDOG_NOTICE);
       return FALSE;
     }
 

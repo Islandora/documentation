@@ -7,7 +7,7 @@ PrinterTool.print = function (tagID) {
     var target = document.getElementById(tagID);
     var title = document.title;
     if(!target || target.childNodes.length === 0) {
-        alert("Nothing to Print");
+        alert(t("Nothing to Print"));
         return;
     }
     var content = target.innerHTML;

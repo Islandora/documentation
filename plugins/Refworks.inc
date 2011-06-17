@@ -2,7 +2,8 @@
 
 
 
-/*
+/**
+ * @file
  * Created on 26-Feb-08
  *
  * To change the template for this generated file go to
@@ -71,7 +72,7 @@ class Refworks {
       //$dom = dom_import_simplexml($xml);//test to see if it behaves better
       //$xml = new SimpleXMLElement(trim(file_get_contents($file)));
     } catch (Exception $e) {
-      drupal_set_message(t('Error processing Refworks file: ') . $e->getMessage());
+      drupal_set_message(t('Error processing Refworks file:') . $e->getMessage());
       return FALSE;
     }
     $this->referenceList = array();
@@ -267,13 +268,13 @@ class Refworks {
 
         if ($client == NULL) {
           drupal_set_message(t('Error getting SOAP client.'), 'error');
-          watchdog(t("FEDORA_REPOSITORY"), t("Error getting SOAP client: !e", array('!e' => $e)), NULL, WATCHDOG_ERROR);
+          watchdog(t("FEDORA_REPOSITORY"), "Error getting SOAP client: !e", array('!e' => $e), NULL, WATCHDOG_ERROR);
           return;
         }
         $object = $client->__soapCall('ingest', array(
             $params
           ));
-        watchdog(t("FEDORA_REPOSITORY"), t("Successfully added repository item !pid - !it", array('!pid' => $pid, '!it' => $item_title)), NULL, WATCHDOG_INFO);
+        watchdog(t("FEDORA_REPOSITORY"), "Successfully added repository item !pid - !it", array('!pid' => $pid, '!it' => $item_title), NULL, WATCHDOG_INFO);
         $deleteFiles = $form_values['delete_file']; //remove files from drupal file system
 
         if ($deleteFiles > 0) {
@@ -282,7 +283,7 @@ class Refworks {
       } catch (exception $e) {
         $errors++;
         $errorMessage = 'yes';
-        watchdog(t("FEDORA_REPOSITORY"), t("Error during ingest !it !e", array('!it' => $item_title, '!e' => $e)), NULL, WATCHDOG_ERROR);
+        watchdog(t("FEDORA_REPOSITORY"), "Error during ingest !it !e", array('!it' => $item_title, '!e' => $e), NULL, WATCHDOG_ERROR);
       }
       $success++;
     }

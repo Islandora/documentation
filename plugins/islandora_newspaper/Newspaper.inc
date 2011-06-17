@@ -1,6 +1,8 @@
 <?php
 
-
+/* @file
+ * News Paper Plugin for Fedora Repository module.
+ */
 
 class Newspaper {
 

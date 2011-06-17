@@ -720,7 +720,7 @@ function fedora_repository_get_items($pid = NULL, $dsId = NULL, $collection = NU
 
 
   if (!fedora_available()) {
-    drupal_set_message('The Fedora repository server is currently unavailable. Please contact the site administrator.', 'warning', FALSE);
+    drupal_set_message(t('The Fedora repository server is currently unavailable. Please contact the site administrator.'), 'warning', FALSE);
     return '';
   }
 
@@ -1365,7 +1365,7 @@ function fedora_repository_demo_objects_form_submit($form, &$form_state) {
         $cmodel_collection->add_relationship('hasModel', 'islandora:collectionCModel', FEDORA_MODEL_URI);
         $cmodel_collection->add_datastream_from_file(drupal_get_path('module', 'fedora_repository') . '/collection_views/simple_list_view.xml', 'COLLECTION_VIEW', 'Collection View', 'text/xml', 'X');
         $cmodel_collection->add_datastream_from_file(drupal_get_path('module', 'fedora_repository') . '/images/contentModel.jpg', 'TN', 'Thumbnail', 'image/jpg', 'M');
-        drupal_set_message("Successfully installed <a href=\"" . $base_url . "/fedora/repository/islandora:ContentModelCollection\">islandora:ContentModelCollection</a>.", 'message');
+        drupal_set_message(t("Successfully installed <a href=\"" . $base_url . "/fedora/repository/islandora:ContentModelCollection\">islandora:ContentModelCollection</a>."), 'message');
       } catch (exception $e) {
         
       }
@@ -1377,7 +1377,7 @@ function fedora_repository_demo_objects_form_submit($form, &$form_state) {
       $cp = $new_item->add_datastream_from_file(drupal_get_path('module', 'fedora_repository') . '/collection_policies/COLLECTION-COLLECTION POLICY.xml', 'COLLECTION_POLICY', 'Collection Policy', 'text/xml', 'X');
       try {
         $tn = $new_item->add_datastream_from_file(drupal_get_path('module', 'fedora_repository') . '/images/Gnome-emblem-photos.png', 'TN', 'Thumbnail.png', 'image/png', 'M');
-        drupal_set_message("Successfully installed <a href=\"" . $base_url . "/fedora/repository/islandora:top\">islandora:top</a>.", 'message');
+        drupal_set_message(t("Successfully installed <a href=\"" . $base_url . "/fedora/repository/islandora:top\">islandora:top</a>."), 'message');
       } catch (exception $e) {
         
       }
@@ -1397,7 +1397,7 @@ function fedora_repository_demo_objects_form_submit($form, &$form_state) {
         $new_item->add_relationship('hasModel', 'islandora:collectionCModel', FEDORA_MODEL_URI);
         $cp = $new_item->add_datastream_from_file(drupal_get_path('module', 'fedora_repository') . '/collection_policies/PDF-COLLECTION POLICY.xml', 'COLLECTION_POLICY', 'Collection Policy', 'text/xml', 'X');
         $tn = $new_item->add_datastream_from_file(drupal_get_path('module', 'fedora_repository') . '/images/Crystal_Clear_mimetype_pdf.png', 'TN', 'Thumbnail.png', 'image/png', 'M');
-        drupal_set_message("Successfully installed <a href=\"" . $base_url . "/fedora/repository/islandora:demos\">islandora:demos</a>.", 'message');
+        drupal_set_message(t("Successfully installed <a href=\"" . $base_url . "/fedora/repository/islandora:demos\">islandora:demos</a>."), 'message');
       } catch (exception $e) {
 
       }
@@ -1419,7 +1419,7 @@ function fedora_repository_demo_objects_form_submit($form, &$form_state) {
       $dual_res_image_collection_cmodel = new Fedora_Item('demo:DualResImageCollection');
       try {
         $cmstream = $dual_res_image_collection_cmodel->add_datastream_from_file(drupal_get_path('module', 'fedora_repository') . '/content_models/COLLECTIONCM.xml', 'ISLANDORACM', 'Islandora Content Model.xml', 'application/xml', 'X');
-        drupal_set_message("Successfully installed <a href=\"" . $base_url . "/fedora/repository/demo:SmileyStuff\">demo:SmileyStuff</a> collection view.", 'message');
+        drupal_set_message(t("Successfully installed <a href=\"" . $base_url . "/fedora/repository/demo:SmileyStuff\">demo:SmileyStuff</a> collection view."), 'message');
       } catch (exception $e) {
 
       }
@@ -1438,14 +1438,14 @@ function fedora_repository_demo_objects_form_submit($form, &$form_state) {
       try {
         $item = Fedora_Item::ingest_from_FOXML_file(drupal_get_path('module', 'fedora_repository') . '/content_models/islandora_largeimages.xml');
         $tn = $item->add_datastream_from_file(drupal_get_path('module', 'fedora_repository') . '/images/Gnome-emblem-photos.png', 'TN', 'Thumbnail.png', 'image/png', 'M');
-        drupal_set_message("Successfully installed <a href=\"" . $base_url . "/fedora/repository/islandora:largeimages\">islandora:largeimages</a>.", 'message');
+        drupal_set_message(t("Successfully installed <a href=\"" . $base_url . "/fedora/repository/islandora:largeimages\">islandora:largeimages</a>."), 'message');
       } catch (exception $e) {
         $error .= " - Problem ingesting islandora:largeimages collection";
       }
     }
 
     if (!empty($error)) {
-      drupal_set_message('Some problems occurred: ' . $error);
+      drupal_set_message(t('Some problems occurred: ' . $error));
     }
   }
 }
@@ -1893,7 +1893,7 @@ function _fedora_repository_empty_basket() {
 
 function fedora_repository_add_to_basket($pid, $warn = TRUE, $searchResultsFlag = FALSE) {
   if ($warn && _is_added_to_basket($pid)) {
-    drupal_set_message("Object already in basket");
+    drupal_set_message(t("Object already in basket"));
   }
 
   if (!isset($_SESSION['basket'])) {

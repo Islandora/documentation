@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file 
+ * 
+ */
+
 class FedoraObject {
 
   function __construct($pid = '') {
