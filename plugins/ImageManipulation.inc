@@ -1,6 +1,6 @@
 <?php
 
-// $Id$
+
 
 /*
  *
@@ -17,25 +17,26 @@ class ImageManipulation {
   function createPreview($parameterArray, $dsid, $file, $file_ext) {
     $system = getenv('System');
     $file_suffix = '_' . $dsid . '.' . $file_ext;
-    $width = $parameterArray['width']; 
+    $width = $parameterArray['width'];
 
     if (!isset($parameterArray['height'])) {
-	$height = $width;
-    } else { 
-	$height = $parameterArray['height'];
+      $height = $width;
+    }
+    else {
+      $height = $parameterArray['height'];
     }
 
     $returnValue = TRUE;
     $output = array();
-    
-    $destDir  = dirname($file).'/work';
-    $destFile = $destDir .'/'. basename($file) . $file_suffix;
-    if (!is_dir($destDir)) { 
+
+    $destDir = dirname($file) . '/work';
+    $destFile = $destDir . '/' . basename($file) . $file_suffix;
+    if (!is_dir($destDir)) {
       @mkdir($destDir);
     }
 
     if (!file_exists($destFile)) {
-      exec('convert -resize ' . $width . 'x'.$height.' -quality 85  "' . $file . '"[0] -strip "' .$destFile . '" 2>&1 &', $output, $returnValue);
+      exec('convert -resize ' . $width . 'x' . $height . ' -quality 85  "' . $file . '"[0] -strip "' . $destFile . '" 2>&1 &', $output, $returnValue);
     }
     else
       $returnValue = '0';

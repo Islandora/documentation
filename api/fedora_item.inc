@@ -1,6 +1,6 @@
 <?php
 
-// $Id$
+
 
 define('RELS_EXT_URI', 'info:fedora/fedora-system:def/relations-external#');
 define("FEDORA_MODEL_URI", 'info:fedora/fedora-system:def/model#');
@@ -55,7 +55,7 @@ class Fedora_Item {
     return (!empty($this->objectProfile));
   }
 
-  function add_datastream_from_file($datastream_file, $datastream_id, $datastream_label = NULL, $datastream_mimetype = '', $controlGroup = 'M', $logMessage = null) {
+  function add_datastream_from_file($datastream_file, $datastream_id, $datastream_label = NULL, $datastream_mimetype = '', $controlGroup = 'M', $logMessage = NULL) {
     module_load_include('inc', 'fedora_repository', 'MimeClass');
     if (empty($datastream_mimetype)) {
       // Get mime type from the file extension.
@@ -76,7 +76,7 @@ class Fedora_Item {
     return $return_value;
   }
 
-  function add_datastream_from_url($datastream_url, $datastream_id, $datastream_label = NULL, $datastream_mimetype = '', $controlGroup = 'M', $logMessage = null) {
+  function add_datastream_from_url($datastream_url, $datastream_id, $datastream_label = NULL, $datastream_mimetype = '', $controlGroup = 'M', $logMessage = NULL) {
     if (empty($datastream_label)) {
       $datastream_label = $datastream_id;
     }
@@ -94,15 +94,14 @@ class Fedora_Item {
       'dsState' => 'A',
       'checksumType' => 'DISABLED',
       'checksum' => 'none',
-      'logMessage' => ($logMessage != null) ? $logMessage : 'Ingested object ' . $datastream_id
+      'logMessage' => ($logMessage != NULL) ? $logMessage : 'Ingested object ' . $datastream_id
     );
 
 
-    return $this->soap_call( 'addDataStream', $params );
-
+    return $this->soap_call('addDataStream', $params);
   }
 
-  function add_datastream_from_string($str, $datastream_id, $datastream_label = NULL, $datastream_mimetype = 'text/xml', $controlGroup = 'M', $logMessage = null) {
+  function add_datastream_from_string($str, $datastream_id, $datastream_label = NULL, $datastream_mimetype = 'text/xml', $controlGroup = 'M', $logMessage = NULL) {
     $dir = sys_get_temp_dir();
     $tmpfilename = tempnam($dir, 'fedoratmp');
     $tmpfile = fopen($tmpfilename, 'w');
@@ -265,7 +264,7 @@ class Fedora_Item {
       }
       $cursor += count($resultelements->resultList->objectFields);
       if (count($resultelements->resultList->objectFields) < $max_results
-          || count($resultelements->resultList->objectFields) == 0) {
+        || count($resultelements->resultList->objectFields) == 0) {
         $done = TRUE;
       }
       foreach ($resultelements->resultList->objectFields as $obj) {
@@ -332,7 +331,7 @@ class Fedora_Item {
     return $ret;
   }
 
-  function get_dissemination($service_definition_pid, $method_name, $parameters = array(), $as_of_date_time = null) {
+  function get_dissemination($service_definition_pid, $method_name, $parameters = array(), $as_of_date_time = NULL) {
     $params = array(
       'pid' => $this->pid,
       'serviceDefinitionPid' => $service_definition_pid,
@@ -512,7 +511,7 @@ class Fedora_Item {
     // Verify the array format and that it isn't empty.
     if (!empty($relationships)) {
       $relsextxml = '<rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:fedora="info:fedora/fedora-system:def/relations-external#" xmlns:fedora-model="info:fedora/fedora-system:def/model#" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">'
-          . '<rdf:description rdf:about="' . $this->pid . '">';
+        . '<rdf:description rdf:about="' . $this->pid . '">';
 
       foreach ($relationships as $rel) {
         if (empty($rel['subject']) || empty($rel['predicate']) || empty($rel['object']) || $rel['subject'] != 'info:fedora/' . $this->pid) {
@@ -612,7 +611,7 @@ class Fedora_Item {
     closedir($dir_handle);
   }
 
-  function modify_object($label = '', $state = null, $ownerId = null, $logMessage = 'Modified by Islandora API', $quiet=TRUE) {
+  function modify_object($label = '', $state = NULL, $ownerId = NULL, $logMessage = 'Modified by Islandora API', $quiet=TRUE) {
 
     $params = array(
       'pid' => $this->pid,

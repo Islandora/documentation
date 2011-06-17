@@ -1,6 +1,6 @@
 <?php
 
-// $Id$
+
 
 class DarwinCore {
 
@@ -8,7 +8,7 @@ class DarwinCore {
     module_load_include('inc', 'fedora_repository', 'api/fedora_item');
     if (!empty($item)) {
       $this->owner = $item;
-      if ( array_key_exists('DARWIN_CORE', $item->get_datastreams_list_as_array())) {
+      if (array_key_exists('DARWIN_CORE', $item->get_datastreams_list_as_array())) {
         $dwc = $item->get_datastream_dissemination('DARWIN_CORE');
         if (!empty($dwc)) {
           $this->darwinCoreXML = $dwc;
@@ -18,9 +18,9 @@ class DarwinCore {
   }
 
   public function buildDrupalForm($form = array()) {
-        
+
     $dwc_xml = $this->darwinCoreXML;
-        
+
     $dwc = DOMDocument::loadXML($dwc_xml);
 
     $form['dc:type'] = array(
@@ -162,12 +162,12 @@ class DarwinCore {
     $date = $dwc->getElementsByTagNameNS('http://rs.tdwg.org/dwc/terms/', 'eventDate')->item(0)->nodeValue;
     $format = 'Y-m-d H:i:s';
     $form['dwceventDate'] = array(
-       '#type' => 'date_popup', // types 'date_text' and 'date_timezone' are also supported. See .inc file.
-       '#title' => 'select a date',
-       '#default_value' => $date,
-       '#date_format' => $format,
-       '#date_label_position' => 'within', // See other available attributes and what they do in date_api_elements.inc
-       '#date_increment' => 15, // Optional, used by the date_select and date_popup elements to increment minutes and seconds.
+      '#type' => 'date_popup', // types 'date_text' and 'date_timezone' are also supported. See .inc file.
+      '#title' => 'select a date',
+      '#default_value' => $date,
+      '#date_format' => $format,
+      '#date_label_position' => 'within', // See other available attributes and what they do in date_api_elements.inc
+      '#date_increment' => 15, // Optional, used by the date_select and date_popup elements to increment minutes and seconds.
       '#description' => '',
     );
     return $form;
@@ -213,7 +213,7 @@ class DarwinCore {
   }
 
   public function asHTML() {
-    $path=drupal_get_path('module', 'Fedora_Repository');
+    $path = drupal_get_path('module', 'Fedora_Repository');
     module_load_include('inc', 'fedora_repository', 'ObjectHelper');
     module_load_include('inc', 'fedora_repository', 'CollectionClass');
 
@@ -226,8 +226,7 @@ class DarwinCore {
 
     try {
       $proc = new XsltProcessor();
-    }
-    catch (Exception $e) {
+    } catch (Exception $e) {
       drupal_set_message(t("!e", array('!e' => $e->getMessage())), 'error');
       return " ";
     }
@@ -238,7 +237,7 @@ class DarwinCore {
     $input->loadXML(trim($xmlstr));
     $xsl = $proc->importStylesheet($xsl);
     $newdom = $proc->transformToDoc($input);
-    $content=$newdom->saveXML();
+    $content = $newdom->saveXML();
 
     return $content;
   }
@@ -256,9 +255,7 @@ class DarwinCore {
       'MachineObservation' => 'MachineObservation',
       'NomenclaturalChecklist' => 'NomenclaturalChecklist',
     ),
-    
   );
-
   public $dwcFields = array(
     'dc:type',
     'dc:language',
@@ -283,8 +280,6 @@ class DarwinCore {
     'dwc:eventDate',
     'dwc:eventTime',
   );
-
-
   public $darwinCoreXML = '
 <SimpleDarwinRecordSet xmlns="http://rs.tdwg.org/dwc/xsd/simpledarwincore/" xmlns:dc="http://purl.org/dc/terms/" xmlns:dwc="http://rs.tdwg.org/dwc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://rs.tdwg.org/dwc/xsd/simpledarwincore/ http://rs.tdwg.org/dwc/xsd/tdwg_dwc_simple.xsd">
   <SimpleDarwinRecord>

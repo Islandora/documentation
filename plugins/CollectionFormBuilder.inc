@@ -1,5 +1,6 @@
 <?php
-// $Id$
+
+
 
 module_load_include('inc', 'fedora_repository', 'plugins/FormBuilder');
 /*
@@ -9,7 +10,9 @@ module_load_include('inc', 'fedora_repository', 'plugins/FormBuilder');
  * implements methods from content model ingest form xml
  * builds a dc metadata form
  */
+
 class CollectionFormBuilder extends FormBuilder {
+
   function CollectionFormBuilder() {
     module_load_include('inc', 'CollectionFormBuilder', '');
     drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
@@ -21,17 +24,17 @@ class CollectionFormBuilder extends FormBuilder {
 
     $mimetype = new MimeClass();
     $server = NULL;
-    $file=$form_values['ingest-file-location'];
+    $file = $form_values['ingest-file-location'];
     $dformat = $mimetype->getType($file);
-    $fileUrl = $base_url . '/'. drupal_urlencode($file);
+    $fileUrl = $base_url . '/' . drupal_urlencode($file);
     $beginIndex = strrpos($fileUrl, '/');
     $dtitle = substr($fileUrl, $beginIndex + 1);
-    $dtitle =  substr($dtitle, 0, strpos($dtitle, "."));
+    $dtitle = substr($dtitle, 0, strpos($dtitle, "."));
     $ds1 = $dom->createElement("foxml:datastream");
     $ds1->setAttribute("ID", "COLLECTION_POLICY"); //set the ID
     $ds1->setAttribute("STATE", "A");
     $ds1->setAttribute("CONTROL_GROUP", "M");
-    $ds1v= $dom->createElement("foxml:datastreamVersion");
+    $ds1v = $dom->createElement("foxml:datastreamVersion");
     $ds1v->setAttribute("ID", "COLLECTION_POLICY.0");
     $ds1v->setAttribute("MIMETYPE", "$dformat");
     $ds1v->setAttribute("LABEL", "$dtitle");
@@ -42,4 +45,5 @@ class CollectionFormBuilder extends FormBuilder {
     $ds1v->appendChild($ds1content);
     $rootElement->appendChild($ds1);
   }
+
 }

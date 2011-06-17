@@ -1,6 +1,6 @@
 <?php
 
-// $Id$
+
 
 /*
  * Created on Feb 1, 2008
@@ -85,7 +85,8 @@ class ObjectHelper {
       if ($label == NULL) {
         $label = $item->datastreams[$dsID]['label'];
       }
-    } else {
+    }
+    else {
       drupal_not_found();
       exit();
     }
@@ -95,7 +96,8 @@ class ObjectHelper {
       $fedoraUser = 'anonymous';
       $fedoraPass = 'anonymous';
       $contentSize = 0;
-    } else {
+    }
+    else {
       $fedoraUser = $user->name;
       $fedoraPass = $user->pass;
       $dataStreamInfo = $item->get_datastream_info($dsID);
@@ -135,7 +137,8 @@ class ObjectHelper {
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_exec($ch);
         fclose($fp);
-      } else {
+      }
+      else {
 
         header("Content-type: $mimeType");
         if ($contentSize > 0) {
@@ -168,12 +171,14 @@ class ObjectHelper {
 
         if ((isset($user) && $user->uid != 0) || $forceSoap || isset($_SERVER['HTTPS'])) {
           curl_exec($ch);
-        } else {
+        }
+        else {
           header('Location: ' . $url);
         }
       }
       curl_close($ch);
-    } else {
+    }
+    else {
       drupal_set_message(t('No curl support.'), 'error');
     }
   }
@@ -264,10 +269,11 @@ class ObjectHelper {
       }
       if ($allow) {
         $purgeImage = '<a title="purge datastream ' . $dataStreamValue->label . '" href="' . $base_url . '/fedora/repository/purgeStream/' .
-            $pid . '/' . $dataStreamValue->ID . '/' . $dataStreamValue->label . '"><img src="' . $base_url . '/' . $path .
-            '/images/purge.gif" alt="purge datastream" /></a>';
+          $pid . '/' . $dataStreamValue->ID . '/' . $dataStreamValue->label . '"><img src="' . $base_url . '/' . $path .
+          '/images/purge.gif" alt="purge datastream" /></a>';
       }
-    } else {
+    }
+    else {
       $purgeImage = '&nbsp;';
     }
     $fullPath = base_path() . $path;
@@ -292,7 +298,7 @@ class ObjectHelper {
     $mimeType = $dataStreamValue->MIMEType;
 
     $view = '<a href="' . $base_url . '/fedora/repository/' . drupal_urlencode($pid) . '/' . $id . '/' . drupal_urlencode($label) .
-        '" target="_blank" >' . t('View') . '</a>';
+      '" target="_blank" >' . t('View') . '</a>';
     $action = "$base_url/fedora/repository/object_download/" . drupal_urlencode($pid) . '/' . $id . '/' . drupal_urlencode(preg_replace('/\//i', '${1}_', $label)); // Necessary to handle the case of Datastream labels that contain slashes. Ugh.
     $downloadVersion = '<form method="GET" action="' . $action . '"><input type="submit" value="' . t('Download') . '"></form>';
     if (user_access(ObjectHelper :: $EDIT_FEDORA_METADATA)) {
@@ -322,9 +328,8 @@ class ObjectHelper {
 
     if (empty($xmlstr)) {
       return '';
-
     }
-    
+
     try {
       $proc = new XsltProcessor();
     } catch (Exception $e) {
@@ -348,7 +353,7 @@ class ObjectHelper {
     $output = $newdom->saveHTML();
     return $output;
   }
-  
+
   /**
    * Queries fedora for what we call the qualified dublin core.  Currently only dc.coverage has
    * any qualified fields
@@ -364,7 +369,7 @@ class ObjectHelper {
     $output = $this->getFormattedDC($item);
     $dsid = array_key_exists('QDC', $ds_list) ? 'QDC' : 'DC';
     $path = drupal_get_path('module', 'fedora_repository');
-    
+
     //$baseUrl=substr($baseUrl, 0, (strpos($baseUrl, "/")-1));
     if (user_access(ObjectHelper :: $EDIT_FEDORA_METADATA)) {
       $allow = TRUE;
@@ -374,13 +379,11 @@ class ObjectHelper {
       if ($allow) {
 
         $output .= '<br /><a title = "' . t('Edit Meta Data') . '" href="' . $base_url . '/fedora/repository/' . 'editmetadata/' . $pid . '/' .
-            $dsid . '"><img src="' . $base_url . '/' . $path . '/images/edit.gif" alt="' . t('Edit Meta Data') . '" /></a>';
-
+          $dsid . '"><img src="' . $base_url . '/' . $path . '/images/edit.gif" alt="' . t('Edit Meta Data') . '" /></a>';
       }
     }
     return $output;
   }
-
 
   /**
    * Gets a list of datastreams from an object using its pid
@@ -465,8 +468,6 @@ class ObjectHelper {
     }
     return '';
   }
-  
-
 
   /**
    * returns a stream from a fedora object given a pid and dsid
@@ -572,7 +573,8 @@ class ObjectHelper {
         return FALSE;
       }
       return $user_access;
-    } else {
+    }
+    else {
       return FALSE;
     }
   }
@@ -629,17 +631,17 @@ class ObjectHelper {
           if ($allow) {
             // $ingestObject = '<a title="'. t('Ingest a New object into ') . $collectionName . ' '. $collection_pid . '" href="'. base_path() .
             $ingestObject = '<a title="' . t('Ingest a New object into !collection_name PID !collection_pid', array('!collection_name' => $collectionName, '!collection_pid' => $collection_pid)) . '" href="' . base_path() .
-                'fedora/ingestObject/' . $collection_pid . '/' . $collectionName . '"><img src="' . $base_url . '/' . $path .
-                '/images/ingest.png" alt="' . t('Add a New Object') . '" class="icon"></a>' . t(' Add to this Collection');
+              'fedora/ingestObject/' . $collection_pid . '/' . $collectionName . '"><img src="' . $base_url . '/' . $path .
+              '/images/ingest.png" alt="' . t('Add a New Object') . '" class="icon"></a>' . t(' Add to this Collection');
           }
         }
-      } else {
+      }
+      else {
         $ingestObject = '&nbsp;';
       }
-
     }
 
-      $datastreams .= $ingestObject;
+    $datastreams .= $ingestObject;
 
 
     $output .= $datastreams;
@@ -671,7 +673,7 @@ class ObjectHelper {
       $output .= theme('fieldset', $fieldset);
     }
 
-    
+
     return $output;
   }
 
@@ -718,7 +720,7 @@ class ObjectHelper {
 
     return $parent_collections_HTML;
   }
-  
+
   /**
    * gets a list of datastreams and related function that we should use to show datastreams in their own fieldsets
    * from the content model associated with the object
@@ -794,10 +796,10 @@ class ObjectHelper {
     // Get pid, title and description for children of object $pid
     $query_string = 'select $o $title from <#ri> ' .
 //    $query_string = 'select $o $title $desc from <#ri> '.
-        'where $s <info:fedora/fedora-system:def/relations-external#hasMember> $o ' .
-        'and $o <dc:title> $title ' .
+      'where $s <info:fedora/fedora-system:def/relations-external#hasMember> $o ' .
+      'and $o <dc:title> $title ' .
 //    'and $o <dc:description> $desc '.
-        'and ( ';
+      'and ( ';
 
     foreach ($pids as $pid) {
       $query_string .= '$s <mulgara:is> <info:fedora/' . $pid . '> or ';
@@ -850,10 +852,11 @@ class ObjectHelper {
     module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
     // Before executing the query, we hve a base case of accessing the top-level collection
     global $base_url;
-    if ($pid == variable_get('fedora_repository_pid', 'islandora:top')){
-        $breadcrumbs[] = l(t('Digital repository'), 'fedora/repository');
-        $breadcrumbs[] = l(t('Home'), $base_url);
-    } else {
+    if ($pid == variable_get('fedora_repository_pid', 'islandora:top')) {
+      $breadcrumbs[] = l(t('Digital repository'), 'fedora/repository');
+      $breadcrumbs[] = l(t('Home'), $base_url);
+    }
+    else {
       $query_string = 'select $parentObject $title $content from <#ri>
                                where (<info:fedora/' . $pid . '> <dc:title> $title
                                and $parentObject <fedora-model:hasModel> $content
@@ -868,17 +871,18 @@ class ObjectHelper {
       $url = variable_get('fedora_repository_url', 'http://localhost:8080/fedora/risearch');
       $url .= "?type=tuples&flush=TRUE&format=CSV&limit=1&offset=0&lang=itql&stream=on&query=" . $query_string;
 
-      $result = preg_split('/[\r\n]+/',do_curl($url));
+      $result = preg_split('/[\r\n]+/', do_curl($url));
       array_shift($result); // throw away first line
-      $matches =str_getcsv(join("\n",$result));
+      $matches = str_getcsv(join("\n", $result));
       if ($matches !== FALSE) {
-        $parent = preg_replace('/^info:fedora\//','',$matches[0]);
+        $parent = preg_replace('/^info:fedora\//', '', $matches[0]);
 
         $breadcrumbs[] = l($matches[1], 'fedora/repository/' . $pid);
         if ($parent == variable_get('fedora_repository_pid', 'islandora:top')) {
           $breadcrumbs[] = l(t('Digital repository'), 'fedora/repository');
           $breadcrumbs[] = l(t('Home'), $base_url);
-        } elseif ($level > 0) {
+        }
+        elseif ($level > 0) {
           $this->getBreadcrumbs($parent, $breadcrumbs, $level - 1);
         }
       }

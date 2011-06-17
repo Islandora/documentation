@@ -1,6 +1,6 @@
 <?php
 
-// $Id$
+
 
 /*
  * Tests the functions of the Fedora Repository module.
@@ -23,17 +23,17 @@ class FedoraRepositoryTestCase extends DrupalWebTestCase {
 
     // Create and login user.
     $repository_user = $this->drupalCreateFedoraUser(array('add fedora datastreams',
-          'edit fedora meta data',
-          'edit tags datastream',
-          'ingest new fedora objects',
-          'purge objects and datastreams',
-          'view fedora collection',
-          'view detailed list of content'));
+        'edit fedora meta data',
+        'edit tags datastream',
+        'ingest new fedora objects',
+        'purge objects and datastreams',
+        'view fedora collection',
+        'view detailed list of content'));
 
     $this->repository_user = $repository_user;
     $this->drupalLogin($repository_user);
   }
- 
+
   /**
    * Add an item based on a content model.  Initially we will assume that the repository
    * will be populated with the default content models and collections that are
@@ -108,7 +108,7 @@ class FedoraRepositoryTestCase extends DrupalWebTestCase {
     $pageContent = $this->drupalGet('admin/settings/fedora_repository');
     $hasOption = preg_match('/Enforce namespace restrictions/', $pageContent);
 
-    
+
     if (!$hasOption) {
       $this->pass('Removal of namespace restrictions is disabled');
     }

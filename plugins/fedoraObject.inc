@@ -1,7 +1,8 @@
 <?php
 
 class FedoraObject {
-  function  __construct($pid = '') {
+
+  function __construct($pid = '') {
     module_load_include('inc', 'fedora_repository', 'api/fedora_item');
     if (!empty($pid)) {
 
@@ -9,7 +10,7 @@ class FedoraObject {
       $this->item = new Fedora_Item($pid);
     }
   }
-  
+
   public function showFieldSets() {
     global $user;
     $objectHelper = new ObjectHelper();
@@ -26,16 +27,16 @@ class FedoraObject {
       '#type' => 'tabset',
     );
     $dc_html = $objectHelper->getFormattedDC($this->item);
-    
+
     $ds_list = $objectHelper->get_formatted_datastream_list($this->pid, NULL, $this->item);
-    
+
 
     $tabset['fedora_object_details']['tabset']['view'] = array(
       '#type' => 'tabpage',
       '#title' => t('View'),
       '#content' => $dc_html . $ds_list . $purge_form,
     );
-    
+
     if (fedora_repository_access(OBJECTHELPER :: $EDIT_FEDORA_METADATA, $this->pid, $user)) {
       $editform = drupal_get_form('fedora_repository_edit_qdc_form', $this->pid, 'DC');
       $tabset['fedora_object_details']['tabset']['edit'] = array(
@@ -44,7 +45,8 @@ class FedoraObject {
         '#content' => $editform,
       );
     }
-    
+
     return $tabset;
   }
+
 }

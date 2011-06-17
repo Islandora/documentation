@@ -1,5 +1,6 @@
 <?php
-// $Id$
+
+
 
 /*
  * @file tagging.inc
@@ -11,6 +12,7 @@
  * @author aoneill
  */
 class TagSet {
+
   public $tags = array();
   public $item = NULL;
   public $tagsDSID = 'TAGS';
@@ -23,7 +25,7 @@ class TagSet {
   }
 
   function load() {
-    $tagsxml = isset($this->item->datastreams[$this->tagsDSID])? $this->item->get_datastream_dissemination($this->tagsDSID) : NULL;
+    $tagsxml = isset($this->item->datastreams[$this->tagsDSID]) ? $this->item->get_datastream_dissemination($this->tagsDSID) : NULL;
     if (empty($tagsxml)) {
       $this->tags = array();
       return FALSE;
@@ -59,11 +61,11 @@ class TagSet {
       else {
         $this->item->modify_datastream_by_value($tagdoc->saveXML(), $this->tagsDSID, 'Tags', 'text/xml', 'X');
       }
-    } 
-    catch (exception $e) {
+    } catch (exception $e) {
       drupal_set_message('There was an error saving the tags datastream: !e', array('!e' => $e), 'error');
       return FALSE;
     }
     return TRUE;
   }
+
 }

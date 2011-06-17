@@ -1,8 +1,10 @@
 <?php
-// $Id$
+
+
 
 class ShowQtStreamsInFieldSets {
-  private $pid =NULL;
+
+  private $pid = NULL;
 
   function ShowQtStreamsInFieldSets($pid) {
     $this->pid = $pid;
@@ -16,26 +18,27 @@ class ShowQtStreamsInFieldSets {
     $data = $defaults;
 
     try {
-    $src = ObjectHelper::getStream($this->pid, $dsid);
+      $src = ObjectHelper::getStream($this->pid, $dsid);
 
-    $doc = new SimpleXMLElement($src);
-    $doc->registerXPathNamespace('File', 'http://ns.exiftool.ca/File/1.0/');
-    $doc->registerXPathNamespace('Composite', 'http://ns.exiftool.ca/Composite/1.0/');
-    $mime = reset($doc->xpath('//File:MIMEType'));
-    $data['mime'] = $mime;
-    if(strpos($mime, 'audio/') !== false) {
-      $data['width'] = 300;
-      $data['height'] = 0;
-    } else {
-      $size = reset($doc->xpath('//Composite:ImageSize/text()'));
-      list($width, $height) = explode('x', $size);
-      $data['width'] = $width;
-      $data['height'] = $height;
-    }
+      $doc = new SimpleXMLElement($src);
+      $doc->registerXPathNamespace('File', 'http://ns.exiftool.ca/File/1.0/');
+      $doc->registerXPathNamespace('Composite', 'http://ns.exiftool.ca/Composite/1.0/');
+      $mime = reset($doc->xpath('//File:MIMEType'));
+      $data['mime'] = $mime;
+      if (strpos($mime, 'audio/') !== FALSE) {
+        $data['width'] = 300;
+        $data['height'] = 0;
+      }
+      else {
+        $size = reset($doc->xpath('//Composite:ImageSize/text()'));
+        list($width, $height) = explode('x', $size);
+        $data['width'] = $width;
+        $data['height'] = $height;
+      }
 
-    $data['doc'] = $src;
-    } catch(Exception $e) {
-    $data = $defaults;
+      $data['doc'] = $src;
+    } catch (Exception $e) {
+      $data = $defaults;
     }
 
     return $data;
@@ -43,27 +46,27 @@ class ShowQtStreamsInFieldSets {
 
   function getPosterFrameDatastreamInfo($dsid = 'FULL_SIZE') {
     $p = ObjectHelper::getDatastreamInfo($this->pid, $dsid);
-    if(empty($p) || $p == ' ' || $p === false) {
-      return false;
+    if (empty($p) || $p == ' ' || $p === FALSE) {
+      return FALSE;
     }
     return $p;
   }
 
   function getMediaDatastreamInfo($dsid = 'OBJ', $alt = array('')) {
     $p = ObjectHelper::getDatastreamInfo($this->pid, $dsid);
-    if(empty($p) || $p == ' ' || $p === false) {
-      if(!empty($alt)) {
-       $ds = array_shift($alt);
-       return $this->getMediaDatastreamInfo($ds, $alt);
+    if (empty($p) || $p == ' ' || $p === FALSE) {
+      if (!empty($alt)) {
+        $ds = array_shift($alt);
+        return $this->getMediaDatastreamInfo($ds, $alt);
       }
-      return false;
+      return FALSE;
     }
 
     return $p;
   }
 
   function enableDownload() {
-    return false;
+    return FALSE;
   }
 
   function showQt() {
@@ -77,32 +80,32 @@ class ShowQtStreamsInFieldSets {
 
     $pframe = $this->getPosterFrameDatastreamInfo();
     $media = $this->getMediaDatastreamInfo('PROXY', array('OBJ'));
-    if($media === false ) {
+    if ($media === FALSE) {
       return '';
     }
     global $base_url;
     $path = drupal_get_path('module', 'Fedora_Repository');
-    $fullPath=base_path().$path;
-    $content= '';
-    $pathTojs = drupal_get_path('module', 'Fedora_Repository').'/js/AC_Quicktime.js';
+    $fullPath = base_path() . $path;
+    $content = '';
+    $pathTojs = drupal_get_path('module', 'Fedora_Repository') . '/js/AC_Quicktime.js';
     drupal_add_js($pathTojs);
 
-    $divid = 'player'.md5($this->pid).'MOV';
-    $content .= '<div  class="player"  id="' . $divid .'">';
-    if($pframe !== false) {
-      $content .= '<div class="poster" style="cursor: pointer; position: relative; width: ' . $width .'px; min-height: ' . ($height) . 'px;">';
-      $content .= '<img src="' . base_path().'fedora/repository/'.$this->pid.'/'. $pframe->ID . '/poster.jpg' . '" />';
+    $divid = 'player' . md5($this->pid) . 'MOV';
+    $content .= '<div  class="player"  id="' . $divid . '">';
+    if ($pframe !== FALSE) {
+      $content .= '<div class="poster" style="cursor: pointer; position: relative; width: ' . $width . 'px; min-height: ' . ($height) . 'px;">';
+      $content .= '<img src="' . base_path() . 'fedora/repository/' . $this->pid . '/' . $pframe->ID . '/poster.jpg' . '" />';
       $content .= '<div class="play" style="font-size: 128px; color: white; position: absolute; top: 50%; left: 50%; margin-top: -0.085em; margin-left: -0.33em; opacity: 0.9; ">▶</div>';
       $content .= '</div>';
     }
     $content .= '</div>';
-    if($this->enableDownload()) {
-    $url = base_path().'fedora/repository/'.$this->pid.'/OBJ/MOV.mov';
+    if ($this->enableDownload()) {
+      $url = base_path() . 'fedora/repository/' . $this->pid . '/OBJ/MOV.mov';
       $content .= '<a class="download" href="' . $url . '">Download Media File</a>';
     }
-    $src = base_path().'fedora/repository/'.$this->pid.'/' . $media->ID. '/MOV.mov';
-$qtparams = '';
-  $qtparams .= "'autostart', '" . ($pframe !== false ? 'true' : 'false') . "', ";
+    $src = base_path() . 'fedora/repository/' . $this->pid . '/' . $media->ID . '/MOV.mov';
+    $qtparams = '';
+    $qtparams .= "'autostart', '" . ($pframe !== FALSE ? 'true' : 'false') . "', ";
     $init = <<<EOD
      $(function() { 
        src = "$src";
@@ -111,12 +114,12 @@ $qtparams = '';
        }
      	str = QT_GenerateOBJECTText_XHTML(src, "$width", ($height+15), '', 
 		$qtparams
-       		'postdomevents', 'true',
-      		'EnableJavaScript', 'true',
+       		'postdomevents', 'TRUE',
+      		'EnableJavaScript', 'TRUE',
        		'bgcolor', 'black',
-       		'controller', 'true',
+       		'controller', 'TRUE',
        		'SCALE', 'aspect',
-       		'LOOP', 'false'
+       		'LOOP', 'FALSE'
        	);		
 	if($('.poster', '#$divid').length ==0) {
       	$('#$divid').append(str);
@@ -126,13 +129,14 @@ $qtparams = '';
     });
 EOD;
 
-     drupal_add_js($init, 'inline', 'footer');
+    drupal_add_js($init, 'inline', 'footer');
 
-     $collection_fieldset = array(
-       	 '#title' => t('Quicktime'),
-       	 '#collapsible' => TRUE,
-       	 '#collapsed' => FALSE,
-       	 '#value' => $content);
-     return theme('fieldset',$collection_fieldset);
-   }
+    $collection_fieldset = array(
+      '#title' => t('Quicktime'),
+      '#collapsible' => TRUE,
+      '#collapsed' => FALSE,
+      '#value' => $content);
+    return theme('fieldset', $collection_fieldset);
+  }
+
 }

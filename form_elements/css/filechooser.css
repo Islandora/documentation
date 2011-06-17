@@ -2,25 +2,25 @@
     border: 1px solid black;
     float: left;
     background-color: #dfdfdf;
-    
-   /*
-    position: relative;
-    visibility: hidden;
-    left: -5000px;*/
-   
-   width: 680px;
-   height: 200px;
-   
+
+    /*
+     position: relative;
+     visibility: hidden;
+     left: -5000px;*/
+
+    width: 680px;
+    height: 200px;
+
 }
 
 .carousel li
 {
-  cursor:pointer;
+    cursor:pointer;
 }
 
 .carousel li.selected
 {
-  background-color: #999;
+    background-color: #999;
 }
 
 .carousel li div
@@ -56,38 +56,38 @@
 
 .carousel li div.audioplaceholder 
 { 
-  width: 128px;
-  height: 128px;
-  margin: 10px 10px 0 10px;
-  background-image: url('../images/video.png');
-  background-repeat:no-repeat;
+    width: 128px;
+    height: 128px;
+    margin: 10px 10px 0 10px;
+    background-image: url('../images/video.png');
+    background-repeat:no-repeat;
 }
 
 .carousel li div.imageplaceholder 
 { 
-  width: 128px;
-  height: 128px;
-  margin: 10px 10px 0 10px;
-  background-image: url('../images/image.png');
-  background-repeat:no-repeat;
+    width: 128px;
+    height: 128px;
+    margin: 10px 10px 0 10px;
+    background-image: url('../images/image.png');
+    background-repeat:no-repeat;
 }
 
 .carousel li div.applicationplaceholder 
 { 
-  width: 128px;
-  height: 128px;
-  margin: 10px 10px 0 10px;
-  background-image: url('../images/application.png');
-  background-repeat:no-repeat;
+    width: 128px;
+    height: 128px;
+    margin: 10px 10px 0 10px;
+    background-image: url('../images/application.png');
+    background-repeat:no-repeat;
 }
 
 
 .carousel li.loading 
 {
-  font-size: 150%;
-  margin: auto;
-  margin-top: 50px;
-  text-align: center;
- 
-  width: 250px;
+    font-size: 150%;
+    margin: auto;
+    margin-top: 50px;
+    text-align: center;
+
+    width: 250px;
 }

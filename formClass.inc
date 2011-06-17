@@ -1,6 +1,6 @@
 <?php
 
-// $Id$
+
 
 /*
  * Created on Jan 22, 2008
@@ -37,12 +37,12 @@ class formClass {
     );
 
     $items['admin/settings/fedora_repository/demoobjects'] = array(
-        'title' => t('Solution Packs'),
-        'description' => t('Install content models and collections required by installed solution packs.'),
-        'page callback' => 'fedora_repository_solution_packs_page',
-        'access arguments' => array('add fedora datastreams'),
-        'file' => 'fedora_repository.solutionpacks.inc',
-        'type' => MENU_LOCAL_TASK,
+      'title' => t('Solution Packs'),
+      'description' => t('Install content models and collections required by installed solution packs.'),
+      'page callback' => 'fedora_repository_solution_packs_page',
+      'access arguments' => array('add fedora datastreams'),
+      'file' => 'fedora_repository.solutionpacks.inc',
+      'type' => MENU_LOCAL_TASK,
     );
 
     $items['islandoracm.xsd'] = array(
@@ -78,7 +78,7 @@ class formClass {
       'page callback' => 'repository_page',
       'type' => MENU_NORMAL_ITEM,
       'access arguments' => array('view fedora collection'),
-        // 'access' => TRUE
+      // 'access' => TRUE
     );
 
     $items['fedora/repository/service'] = array(
@@ -242,7 +242,7 @@ class formClass {
       '#type' => 'textfield',
       '#title' => t('Fedora RISearch URL'),
       '#default_value' => variable_get('fedora_repository_url',
-          'http://localhost:8080/fedora/risearch'),
+        'http://localhost:8080/fedora/risearch'),
       '#description' => t('The url of the Fedora server'), '#required' => TRUE,
       '#weight' => 0
     );
@@ -577,7 +577,6 @@ class formClass {
         if (!empty($newElements)) {
           $available_dsids = array_merge($available_dsids, $newElements);
         }
-
       }
     }
 
@@ -640,19 +639,19 @@ class formClass {
     );
 
     if (!empty($unused_dsids)) {
-       $dsidsForForm = array();
-        foreach ($unused_dsids as $dsid){
-            $dsidsForForm[$dsid]=$dsid;
-        }
+      $dsidsForForm = array();
+      foreach ($unused_dsids as $dsid) {
+        $dsidsForForm[$dsid] = $dsid;
+      }
       $form['stream_id'] = array(
         '#type' => 'select',
         '#title' => t('Datastream ID'),
         '#default_value' => variable_get('feed_item_length', 'teaser'),
         '#weight' => '-1',
         '#description' => t('Datastream IDs defined by the content model.'),
-      ); 
+      );
       $form['stream_id']['#options'] = array_combine($unused_dsids, $unused_dsids);
-    } 
+    }
     else {
       $form['stream_id'] = array(
         '#title' => 'Datastream ID',

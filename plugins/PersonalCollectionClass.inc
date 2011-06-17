@@ -1,11 +1,13 @@
 <?php
-// $Id$
+
+
 
 class PersonalCollectionClass {
+
   function PersonalCollectionClass() {
     drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
   }
-  
+
   function createCollection($theUser, $pid, $soapClient) {
     $dom = new DomDocument("1.0", "UTF-8");
     $dom->formatOutput = TRUE;
@@ -23,22 +25,20 @@ class PersonalCollectionClass {
     $value = $this->createPolicyStream($theUser, $dom, $rootElement);
 
     if (!$value) {
-      return FALSE;//error should already be logged.
+      return FALSE; //error should already be logged.
     }
     $this->createCollectionPolicyStream($theUser, $dom, $rootElement);
     try {
       $params = array(
-          'objectXML' => $dom->saveXML(),
-          'format' => "foxml1.0",
-          'logMessage' => "Fedora object ingested",
+        'objectXML' => $dom->saveXML(),
+        'format' => "foxml1.0",
+        'logMessage' => "Fedora object ingested",
       );
 
       $object = $soapClient->__soapCall('ingest', array(
           $params
-      ));
-
-    }
-    catch (exception $e) {
+        ));
+    } catch (exception $e) {
       drupal_set_message(t('Error ingesting personal collection object: !e', array('!e' => $e->getMessage())), 'error');
       return FALSE;
     }
@@ -49,8 +49,7 @@ class PersonalCollectionClass {
     $collectionTemplate = file_get_contents(drupal_get_path('module', 'Fedora_Repository') . '/collection_policies/PERSONAL-COLLECTION-POLICY.xml');
     try {
       $xml = new SimpleXMLElement($collectionTemplate);
-    }
-    catch (Exception $e) {
+    } catch (Exception $e) {
       watchdog(t("Fedora_Repository"), t("Problem creating personal collection policy, could not parse collection policy stream."), NULL, WATCHDOG_ERROR);
       drupal_set_message(t('Problem creating personal collection policy, could not parse collection policy stream: !e', array('!e' => $e->getMessage())), 'error');
       return FALSE;
@@ -113,7 +112,7 @@ class PersonalCollectionClass {
     $content->appendChild($policyStream);
     return $this->createChildPolicyStream($dom, $rootElement, $policyStream->cloneNode(TRUE));
   }
-  
+
   //right now this is the same as the policy stream for this object, may change
   //objects in this collection will reference this datastream as their own POLICY stream
   function createChildPolicyStream($dom, $rootElement, $policyStream) {
@@ -136,7 +135,7 @@ class PersonalCollectionClass {
   }
 
   function createStandardFedoraStuff($user, & $dom, & $rootElement) {
-    /*foxml object properties section */
+    /* foxml object properties section */
     $objproperties = $dom->createElement("foxml:objectProperties");
     $prop1 = $dom->createElement("foxml:property");
     $prop1->setAttribute("NAME", "http://www.w3.org/1999/02/22-rdf-syntax-ns#type");

@@ -1,5 +1,6 @@
 <?php
-// $Id$
+
+
 
 module_load_include('inc', 'fedora_repository', 'plugins/FormBuilder');
 /*
@@ -9,7 +10,9 @@ module_load_include('inc', 'fedora_repository', 'plugins/FormBuilder');
  * implements methods from content model ingest form xml
  * builds a dc metadata form
  */
+
 class DemoFormBuilder extends FormBuilder {
+
   function DemoFormBuilder() {
     module_load_include('inc', 'fedora_repository', 'plugins/FormBuilder');
     drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
@@ -21,11 +24,11 @@ class DemoFormBuilder extends FormBuilder {
     global $base_url;
     $mimetype = new MimeClass();
     $server = NULL;
-    $file=$form_values['ingest-file-location'];
+    $file = $form_values['ingest-file-location'];
 
     if (!empty($file)) {
       $dformat = $mimetype->getType($file);
-      $fileUrl = $base_url .'/'. drupal_urlencode($file);
+      $fileUrl = $base_url . '/' . drupal_urlencode($file);
       $beginIndex = strrpos($fileUrl, '/');
       $dtitle = substr($fileUrl, $beginIndex + 1);
       $dtitle = urldecode($dtitle);
@@ -50,7 +53,7 @@ class DemoFormBuilder extends FormBuilder {
       foreach ($_SESSION['fedora_ingest_files'] as $dsid => $createdFile) {
         $createdFile = strstr($createdFile, $file);
         $dformat = $mimetype->getType($createdFile);
-        $fileUrl = $base_url .'/'. drupal_urlencode( $createdFile );
+        $fileUrl = $base_url . '/' . drupal_urlencode($createdFile);
         $beginIndex = strrpos($fileUrl, '/');
         $dtitle = substr($fileUrl, $beginIndex + 1);
         $dtitle = urldecode($dtitle);
@@ -60,7 +63,7 @@ class DemoFormBuilder extends FormBuilder {
         $ds1->setAttribute("ID", "$dsid");
         $ds1->setAttribute("STATE", "A");
         $ds1->setAttribute("CONTROL_GROUP", "M");
-        $ds1v= $dom->createElement("foxml:datastreamVersion");
+        $ds1v = $dom->createElement("foxml:datastreamVersion");
         $ds1v->setAttribute("ID", "$dsid.0");
         $ds1v->setAttribute("MIMETYPE", "$dformat");
         $ds1v->setAttribute("LABEL", "$dtitle");
@@ -73,5 +76,6 @@ class DemoFormBuilder extends FormBuilder {
       }
     }
   }
+
 }
 

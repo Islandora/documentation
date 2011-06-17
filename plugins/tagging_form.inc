@@ -1,7 +1,8 @@
 <?php
-// $Id$
 
-/* 
+
+
+/*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -15,7 +16,7 @@ function _show_subject_tags($pid) {
   if (!empty($tags->tags)) {
     $output = "<ul>";
     foreach ($tags->tags as $tag) {
-      $output .= "<li title=". $tag['creator'] . '>'. $tag['name'] . '</li> ';
+      $output .= "<li title=" . $tag['creator'] . '>' . $tag['name'] . '</li> ';
     }
     $output .= "</ul>";
   }
@@ -29,7 +30,7 @@ function fedora_repository_image_tagging_form($form_state, $pid) {
   global $base_url;
 
   if (!empty($form_state['post']['pid'])) {
-      $pid = $form_state['post']['pid'];
+    $pid = $form_state['post']['pid'];
   }
   $obj = new Fedora_Item($pid);
   $form['tags-wrapper'] = array(
@@ -49,8 +50,8 @@ function fedora_repository_image_tagging_form($form_state, $pid) {
       '#prefix' => '<li>',
       '#suffix' => '</li>',
     );
-      $form['tags-wrapper']['tags'][$tag['name']]['tag'] = array(
-      '#prefix' => '<a title="Added by '. $tag['creator'] . '" href="'. $base_url . '/fedora/repository/mnpl_advanced_search/tag:'. $tag['name'] . '">',
+    $form['tags-wrapper']['tags'][$tag['name']]['tag'] = array(
+      '#prefix' => '<a title="Added by ' . $tag['creator'] . '" href="' . $base_url . '/fedora/repository/mnpl_advanced_search/tag:' . $tag['name'] . '">',
       '#value' => $tag['name'],
       '#suffix' => '</a>',
     );
@@ -58,7 +59,7 @@ function fedora_repository_image_tagging_form($form_state, $pid) {
       // Delete button for each existing tag.
       $form['tags-wrapper']['tags'][$tag['name']]['delete'] = array(
         '#type' => 'imagebutton',
-        '#image' => $base_url . '/'. drupal_get_path('module', 'fedora_repository') . '/images/remove_icon.png',
+        '#image' => $base_url . '/' . drupal_get_path('module', 'fedora_repository') . '/images/remove_icon.png',
         '#default_value' => $tag['name'],
         '#title' => t('Delete this tag'),
       );
@@ -84,7 +85,7 @@ function fedora_repository_image_tagging_form($form_state, $pid) {
   if (empty($form_state['pid'])) {
     $form_state['pid'] = $pid;
   }
-  
+
   return $form;
 }
 
@@ -110,7 +111,7 @@ function fedora_repository_image_tagging_form_submit($form, &$form_state) {
     array_push($tagset->tags, array('name' => $form_state['values']['addtag'], 'creator' => $user->name));
   }
   elseif (!empty($form_state['values']['delete'])) {
-    for ( $i=0; $i < count($tagset->tags); $i++ ) {
+    for ($i = 0; $i < count($tagset->tags); $i++) {
       if ($tagset->tags[$i]['name'] == $form_state['clicked_button']['#value']) {
         unset($tagset->tags[$i]);
       }

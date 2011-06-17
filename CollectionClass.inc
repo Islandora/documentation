@@ -1,6 +1,6 @@
 <?php
 
-// $Id$
+
 
 /*
  * Created on 18-Feb-08
@@ -378,8 +378,8 @@ class CollectionClass {
         'pidNamespace' => $pidNameSpace
       );
       $object = $soapClient->__soapCall('getNextPID', array(
-            $params
-          ));
+          $params
+        ));
     } catch (exception $e) {
       drupal_set_message(t('Error getting Next PID: !e', array('!e' => $e->getMessage())), 'error');
       return FALSE;

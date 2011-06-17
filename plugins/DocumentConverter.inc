@@ -1,13 +1,12 @@
 <?php
 
-// $Id$
+
 
 /**
  *
  * This class implements document (doc, odt, pdf, etc.) conversion for a generic
  * multi-format document collection.
  */
-
 class DocumentConverter {
 
   private $converter_service_url = "http://localhost:8080/converter/service";
@@ -32,7 +31,7 @@ class DocumentConverter {
     $outputType = $helper->get_mimetype($output_ext);
     $inputData = file_get_contents($file);
 
-    $outputFile = $file ."_". $dsid .".". $output_ext;
+    $outputFile = $file . "_" . $dsid . "." . $output_ext;
 
     #debug:
     #drupal_set_message("inputType: $inputType", 'status');
@@ -40,8 +39,8 @@ class DocumentConverter {
     #drupal_set_message("outputFile: $outputFile", 'status');
 
     $ch = curl_init($this->converter_service_url);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array( "Content-Type: $inputType", "Accept: $outputType" ) );
-    curl_setopt($ch, CURLOPT_POST, 1 );
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: $inputType", "Accept: $outputType"));
+    curl_setopt($ch, CURLOPT_POST, 1);
     curl_setopt($ch, CURLOPT_TIMEOUT, 120); // times out after 2 minutes 
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); // return into a variable 
     curl_setopt($ch, CURLOPT_POSTFIELDS, $inputData); // add POST fields 
@@ -52,28 +51,29 @@ class DocumentConverter {
 
     $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-    if (200 == $code) { 
+    if (200 == $code) {
 
       $returnValue = file_put_contents($outputFile, $data);
       if ($returnValue > 0) {
         drupal_set_message("Conversion successful.", 'status');
         $_SESSION['fedora_ingest_files']["$dsid"] = $outputFile;
         return $outputFile;
-      } 
+      }
       else {
         return $returnValue; // a.k.a. FALSE.
       }
-    } 
+    }
     else {
       drupal_set_message("Conversion Failed. Webservice returned $code.", 'status');
       return FALSE;
     }
   }
+
 }
 
 /*
-$documentConverter = new DocumentConverter();
-$inputFile = "document.docx";
-$outputType = "txt";
-$documentConverter->convert( null, 'TXT', $inputFile, $outputType);
-/* */
+  $documentConverter = new DocumentConverter();
+  $inputFile = "document.docx";
+  $outputType = "txt";
+  $documentConverter->convert( NULL, 'TXT', $inputFile, $outputType);
+  /* */

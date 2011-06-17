@@ -9,24 +9,24 @@
             images = [images];
         }
 
-	if (!(images instanceof Array)) {
-	    ids = [ids];
-	}
+        if (!(images instanceof Array)) {
+            ids = [ids];
+        }
         
         var imagesLength = images.length;
         var loadedCounter = 0;
         	
         for (var i=0; i < imagesLength; i++) {
-	    var cacheImage = document.createElement('img');
-	    //set the onload method before the src is called otherwise will fail to be called in IE
+            var cacheImage = document.createElement('img');
+            //set the onload method before the src is called otherwise will fail to be called in IE
             cacheImage.onload = function(){
                 loadedCounter++;
                 if ($.isFunction(callback)) {
-                        callback(this);
+                    callback(this);
                 }
             }
             cacheImage.src = images[i];
-	    cacheImage.id = '#'+ids[i];
+            cacheImage.id = '#'+ids[i];
             cache.push(cacheImage);
         }
     }
