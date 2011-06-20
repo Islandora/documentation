@@ -37,12 +37,12 @@ class formClass {
     );
 
     $items['admin/settings/fedora_repository/demoobjects'] = array(
-        'title' => t('Solution Packs'),
-        'description' => t('Install content models and collections required by installed solution packs.'),
-        'page callback' => 'fedora_repository_solution_packs_page',
-        'access arguments' => array('add fedora datastreams'),
-        'file' => 'fedora_repository.solutionpacks.inc',
-        'type' => MENU_LOCAL_TASK,
+      'title' => t('Solution Packs'),
+      'description' => t('Install content models and collections required by installed solution packs.'),
+      'page callback' => 'fedora_repository_solution_packs_page',
+      'access arguments' => array('add fedora datastreams'),
+      'file' => 'fedora_repository.solutionpacks.inc',
+      'type' => MENU_LOCAL_TASK,
     );
 
     $items['islandoracm.xsd'] = array(
@@ -241,8 +241,7 @@ class formClass {
     $form['fedora_repository_url'] = array(
       '#type' => 'textfield',
       '#title' => t('Fedora RISearch URL'),
-      '#default_value' => variable_get('fedora_repository_url',
-          'http://localhost:8080/fedora/risearch'),
+      '#default_value' => variable_get('fedora_repository_url', 'http://localhost:8080/fedora/risearch'),
       '#description' => t('The url of the Fedora server'), '#required' => TRUE,
       '#weight' => 0
     );
@@ -500,6 +499,10 @@ class formClass {
       $modelsForForm["$identifier"] = "$name";
     }
 
+    if (module_exists('islandora_content_model_forms') && isset($contentModels[0])) {
+      $form_names = islandora_content_model_get_form_names($contentModels[0]->pid);
+    }
+
     switch ($form_state['storage']['step']) {
       case 1:
         $form['indicator'] = array(
@@ -514,14 +517,36 @@ class formClass {
           //'#description' => t('Content models available in this collection.  A content model defines what is allowed in a collection and what to do with a file when it is uploaded (An example may creating a thumbnail from an image.).')
           '#description' => t('Content models define datastream composition, relationships between this and other content models, and the mandatory behaviors associated with each digital object.<br /> Additional information may be found <a href="https://wiki.duraspace.org/display/FEDORACREATE/Content+Models+Overview">here.</a> ')
         );
+        if (isset($form_names) && count($form_names) >= 1) {
+          $form['indicator']['forms'] = array(
+            '#type' => 'select',
+            '#title' => t('Forms'),
+            '#options' => $form_names,
+            '#description' => t('Select the form to populate the metadata of the new object.')
+          );
+        }
         break;
 
       case 2:
         module_load_include('inc', 'fedora_repository', 'MimeClass'); // Why this include? --Zac, 2010-09-17
         $contentModelPid = ContentModel::getPidFromIdentifier($form_state['values']['models']);
         $contentModelDsid = ContentModel::getDSIDFromIdentifier($form_state['values']['models']);
-
-        if (($cm = ContentModel::loadFromModel($contentModelPid, $contentModelDsid)) !== FALSE) {
+        if (isset($form_state['values']['forms'])) {
+          module_load_include('inc', 'xml_form_api', 'XMLForm');
+          $xml_form = new XMLForm($form_state);
+          if (!$xml_form->isInitialized()) {
+            module_load_include('inc', 'xml_form_api', 'XMLFormDefinition');
+            module_load_include('inc', 'xml_form_builder', 'FormBuilder');
+            $form_name = $form_state['values']['forms'];
+            $definition = FormBuilder::GetFormDefinition($form_name);
+            $form = XMLFormDefinition::GetDrupalForm($definition);
+            $properties = XMLFormDefinition::GetFormProperties($definition);
+            $document = new XMLDocument($properties['document']['root'], $properties['document']['namespaces'], $properties['document']['schema']);
+            $xml_form->initialize($form, $document);
+          }
+          $form = $xml_form->toArray();
+        }
+        else if (($cm = ContentModel::loadFromModel($contentModelPid, $contentModelDsid)) !== FALSE) {
           $form = $cm->buildIngestForm($form, $form_state);
           if ($form === FALSE) {
 
@@ -577,7 +602,6 @@ class formClass {
         if (!empty($newElements)) {
           $available_dsids = array_merge($available_dsids, $newElements);
         }
-
       }
     }
 
@@ -640,19 +664,19 @@ class formClass {
     );
 
     if (!empty($unused_dsids)) {
-       $dsidsForForm = array();
-        foreach ($unused_dsids as $dsid){
-            $dsidsForForm[$dsid]=$dsid;
-        }
+      $dsidsForForm = array();
+      foreach ($unused_dsids as $dsid) {
+        $dsidsForForm[$dsid] = $dsid;
+      }
       $form['stream_id'] = array(
         '#type' => 'select',
         '#title' => t('Datastream ID'),
         '#default_value' => variable_get('feed_item_length', 'teaser'),
         '#weight' => '-1',
         '#description' => t('Datastream IDs defined by the content model.'),
-      ); 
+      );
       $form['stream_id']['#options'] = array_combine($unused_dsids, $unused_dsids);
-    } 
+    }
     else {
       $form['stream_id'] = array(
         '#title' => 'Datastream ID',
