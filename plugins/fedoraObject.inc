@@ -15,6 +15,7 @@ class FedoraObject {
     $objectHelper = new ObjectHelper();
     $tabset = array();
     $show_purge_tab = (!empty($_POST['form_id']) && $_POST['form_id'] == 'fedora_repository_purge_object_form');
+    $show_edit_tab = (!empty($_POST['form_id']) && $_POST['form_id'] == 'fedora_repository_edit_qdc_form');
     $purge_form = drupal_get_form('fedora_repository_purge_object_form', $this->pid, check_plain(substr(request_uri(), strlen(base_path()))));
 
     $tabset['fedora_object_details'] = array(
@@ -41,6 +42,7 @@ class FedoraObject {
       $tabset['fedora_object_details']['tabset']['edit'] = array(
         '#type' => 'tabpage',
         '#title' => t('Edit'),
+        '#selected' => $show_edit_tab,
         '#content' => $editform,
       );
     }
