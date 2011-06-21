@@ -485,7 +485,6 @@ class formClass {
       return FALSE;
     }
 
-
     $contentModels = $cp->getContentModels();
 
     if (!$contentModels) {
@@ -531,9 +530,10 @@ class formClass {
         module_load_include('inc', 'fedora_repository', 'MimeClass'); // Why this include? --Zac, 2010-09-17
         $contentModelPid = ContentModel::getPidFromIdentifier($form_state['values']['models']);
         $contentModelDsid = ContentModel::getDSIDFromIdentifier($form_state['values']['models']);
-        if (isset($form_state['values']['forms'])) {
-          module_load_include('inc', 'xml_form_api', 'XMLForm');
-          $xml_form = new XMLForm($form_state);
+        // XML Forms
+        module_load_include('inc', 'xml_form_api', 'XMLForm');
+        $xml_form = new XMLForm($form_state);
+        if (isset($form_state['values']['forms']) || $xml_form->isInitialized()) {
           if (!$xml_form->isInitialized()) {
             module_load_include('inc', 'xml_form_api', 'XMLFormDefinition');
             module_load_include('inc', 'xml_form_builder', 'FormBuilder');
@@ -546,6 +546,7 @@ class formClass {
           }
           $form = $xml_form->toArray();
         }
+        // End XML forms
         else if (($cm = ContentModel::loadFromModel($contentModelPid, $contentModelDsid)) !== FALSE) {
           $form = $cm->buildIngestForm($form, $form_state);
           if ($form === FALSE) {
