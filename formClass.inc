@@ -735,7 +735,18 @@ class formClass {
               $definition = FormBuilder::GetFormDefinition($form_name);
               $form = XMLFormDefinition::GetDrupalForm($definition);
               $properties = XMLFormDefinition::GetFormProperties($definition);
-              $document = new XMLDocument($properties['document']['root'], $properties['document']['namespaces'], $properties['document']['schema']);
+              // XML
+              $dsid = islandora_content_model_get_dsid($content_model->pid, $form_name);
+              $params = array('pid' => "$pid", 'dsID' => "$dsid", 'asOfDateTime' => "");
+              try {
+                $object = $client->__soapCAll('getDatastreamDissemination', array('parameters' => $params));
+              } catch (Exception $e) {
+                return array(); // Empty form?
+              }
+              $xml = $object->dissemination->stream;
+              $xml = trim($xml);
+              // XML
+              $document = new XMLDocument($properties['document']['root'], $properties['document']['namespaces'], $properties['document']['schema'], $xml);
               $xml_form->initialize($form, $document);
             }
             return $xml_form->toArray();
