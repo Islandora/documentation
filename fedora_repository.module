@@ -22,8 +22,6 @@ function fedora_repository_admin() {
   return $adminForm->createAdminForm();
 }
 
-
-
 /**
  * drupal hook
  * calls the fedora_repositorys_admin form
@@ -55,10 +53,9 @@ function fedora_repository_purge_object($pid = NULL, $name = NULL) {
     drupal_set_message(t('You must specify an object pid to purge an object.'), 'error');
     return '';
   }
-  $output = t('Are you sure you wish to purge object %name %pid!<br /><b>This cannot be undone</b><br />',
-          array(
-            '%name' => $name,
-            '%pid' => $pid)
+  $output = t('Are you sure you wish to purge object %name %pid!<br /><b>This cannot be undone</b><br />', array(
+    '%name' => $name,
+    '%pid' => $pid)
   );
 
   $output .= drupal_get_form('fedora_repository_purge_object_form', $pid);
@@ -122,42 +119,52 @@ function fedora_repository_ingest_object($collection_pid=NULL, $collection_label
 
 function fedora_repository_ingest_form_submit($form, &$form_state) {
   //only validate the form if the submit button was pressed (other buttons may be used for AHAH
-  if ($form_state['clicked_button']['#id'] == 'edit-submit') {
-    global $base_url;
-    module_load_include('inc', 'fedora_repository', 'CollectionClass');
-    module_load_include('inc', 'fedora_repository', 'CollectionPolicy');
-    module_load_include('inc', 'fedora_repository', 'ContentModel');
+  if (module_exists('xml_form_api')) {
+    module_load_include('inc', 'xml_form_api', 'XMLForm');
+    $form = new XMLForm($form_state);
+    $doc = $form->submit($drupal_form, $form_state);
+    $document = $doc->document;
+    dom_document_pretty_print($document);
+    exit();
+  }
+  else {
+    if ($form_state['clicked_button']['#id'] == 'edit-submit') {
+      global $base_url;
+      module_load_include('inc', 'fedora_repository', 'CollectionClass');
+      module_load_include('inc', 'fedora_repository', 'CollectionPolicy');
+      module_load_include('inc', 'fedora_repository', 'ContentModel');
 
-    $contentModelPid = ContentModel::getPidFromIdentifier($form_state['values']['models']);
-    $contentModelDsid = ContentModel::getDSIDFromIdentifier($form_state['values']['models']);
-    $err = TRUE;
-    $redirect = TRUE;
-    if (($cp = CollectionPolicy::loadFromCollection($form_state['values']['collection_pid'])) !== FALSE) {
-      $relationship = $cp->getRelationship();
+      $contentModelPid = ContentModel::getPidFromIdentifier($form_state['values']['models']);
+      $contentModelDsid = ContentModel::getDSIDFromIdentifier($form_state['values']['models']);
+      $err = TRUE;
+      $redirect = TRUE;
+      if (($cp = CollectionPolicy::loadFromCollection($form_state['values']['collection_pid'])) !== FALSE) {
+        $relationship = $cp->getRelationship();
 
-      if (($cm = ContentModel::loadFromModel($contentModelPid, $contentModelDsid)) !== FALSE) {
-        $pid = $cp->getNextPid($contentModelDsid);
-        global $user;
-        $form_state['values']['user_id'] = $user->name;
-        $form_state['values']['pid'] = $pid;
-        $form_state['values']['content_model_pid'] = $contentModelPid;
-        $form_state['values']['relationship'] = $relationship;
+        if (($cm = ContentModel::loadFromModel($contentModelPid, $contentModelDsid)) !== FALSE) {
+          $pid = $cp->getNextPid($contentModelDsid);
+          global $user;
+          $form_state['values']['user_id'] = $user->name;
+          $form_state['values']['pid'] = $pid;
+          $form_state['values']['content_model_pid'] = $contentModelPid;
+          $form_state['values']['relationship'] = $relationship;
 
-        $err = (!$cm->execFormHandler($form_state['values'], $form_state));
+          $err = (!$cm->execFormHandler($form_state['values'], $form_state));
 
-        $_SESSION['fedora_ingest_files'] = ''; //empty this variable
+          $_SESSION['fedora_ingest_files'] = ''; //empty this variable
 
-        $attr = $cm->getIngestFormAttributes();
-        $redirect = $attr['redirect'];
+          $attr = $cm->getIngestFormAttributes();
+          $redirect = $attr['redirect'];
 
-        if ($redirect) {
-          $form_state['storage'] = NULL;
+          if ($redirect) {
+            $form_state['storage'] = NULL;
+          }
         }
       }
-    }
 
-    if ($redirect) {
-      $form_state['redirect'] = ($err) ? ' ' : $base_url . "/fedora/repository/{$form_state['values']['collection_pid']}";
+      if ($redirect) {
+        $form_state['redirect'] = ($err) ? ' ' : $base_url . "/fedora/repository/{$form_state['values']['collection_pid']}";
+      }
     }
   }
 }
@@ -172,7 +179,12 @@ function fedora_repository_ingest_form_validate($form, &$form_state) {
         break;
 
       case 2:
-
+        // XML based form.
+        if (module_exists('xml_form_api')) {
+          module_load_include('inc', 'xml_form_api', 'XMLForm');
+          $xml_form = new XMLForm($form_state);
+          $xml_form->validate($form, $form_state);
+        }
         // Get the uploaded file.
         $validators = array();
 
@@ -394,9 +406,8 @@ function fedora_repository_purge_stream($pid = NULL, $dsId = NULL, $name = NULL)
     return ' ';
   }
 
-  $output = t('Are you sure you wish to purge this datastream %name<br />',
-          array(
-            '%name' => $name)
+  $output = t('Are you sure you wish to purge this datastream %name<br />', array(
+    '%name' => $name)
   );
   $output .= drupal_get_form('fedora_repository_purge_stream_form', $pid, $dsId);
   return $output;
@@ -435,7 +446,7 @@ function fedora_repository_purge_object_form_submit($form, &$form_state) {
     }
     elseif (empty($collectionPid) && !empty($_SESSION['fedora_collection']) && $_SESSION['fedora_collection'] != $pid) {
       $collectionPid = $_SESSION['fedora_collection'];
-      
+
       $form_state['redirect'] = "fedora/repository/$collectionPid/";
     }
     else {
@@ -527,14 +538,14 @@ function fedora_repository_replace_stream_form_submit($form, &$form_state) {
   $dsid = $form_state['values']['dsId'];
   $dsLabel = $form_state['values']['dsLabel'];
   // Remove the original file extension from the label and add the new one
-  $indexOfDot = strrpos($dsLabel,'.');//use strrpos to get the last dot
-  if($indexOfDot !== FALSE){
+  $indexOfDot = strrpos($dsLabel, '.'); //use strrpos to get the last dot
+  if ($indexOfDot !== FALSE) {
     $dsLabel = substr($dsLabel, 0, $indexOfDot);
     $dsLabel .= substr($file->filename, strrpos($file->filename, '.')); // Add the file extention to the end of the label.;
   }
   module_load_include('inc', 'Fedora_Repository', 'MimeClass');
   module_load_include('inc', 'fedora_repository', 'api/fedora_item');
-  
+
   $file_basename = basename($file->filepath);
   $file_directory = dirname($file->filepath);
   $streamUrl = $base_url . '/' . $file_directory . '/' . urlencode($file_basename);
@@ -546,11 +557,10 @@ function fedora_repository_replace_stream_form_submit($form, &$form_state) {
   $dformat = $mimetype->getType($file->filepath);
 
   $item = new Fedora_Item($pid);
-  
-  $item->modify_datastream_by_reference($streamUrl, $dsid, $dsLabel, $dformat);
-  
-  $form_state['redirect'] = 'fedora/repository/' . $pid;
 
+  $item->modify_datastream_by_reference($streamUrl, $dsid, $dsLabel, $dformat);
+
+  $form_state['redirect'] = 'fedora/repository/' . $pid;
 }
 
 function fedora_repository_edit_qdc_page($pid = NULL, $dsId = NULL) {
@@ -608,7 +618,7 @@ function fedora_repository_edit_qdc_form(&$form_state, $pid, $dsId = NULL) {
 }
 
 function fedora_repository_edit_qdc_form_validate($form, &$form_state) {
-
+  
 }
 
 /**
@@ -726,8 +736,8 @@ function fedora_repository_get_items($pid = NULL, $dsId = NULL, $collection = NU
     drupal_set_message('The Fedora repository server is currently unavailable. Please contact the site administrator.', 'warning', FALSE);
     return '';
   }
-  
-  if ($pid &!validPid($pid)) {
+
+  if ($pid & !validPid($pid)) {
 
     drupal_set_message(t("Invalid PID!"), 'error');
     return ' ';
@@ -806,8 +816,8 @@ function fedora_repository_get_items($pid = NULL, $dsId = NULL, $collection = NU
   $obj = new FedoraObject($pid);
   $object_details = $obj->showFieldSets();
   $cmodels_tabs = array_merge($cmodels_tabs, $object_details);
-  
-  
+
+
   //$content .= $objectHelper
   //$content .= $objectHelper->parseContent($results, $pid, $dsId, $collection, $pageNumber);
   //the below is for islandlives we should be able to do this in the xslt though
@@ -1180,7 +1190,6 @@ function fedora_repository_theme() {
       'arguments' => array(
         'element' => NULL
       ),
-
       'fedora_repository_solution_packs_list' => array(
         'arguments' => array(
           'solution_packs' => NULL,
@@ -1263,10 +1272,10 @@ function fedora_repository_demo_objects_form() {
   );
 
   foreach (array(
-    'islandora:collectionCModel' => 'Islandora default content models',
-    'islandora:top' => 'Islandora top-level collection',
-    'islandora:demos' => 'Islandora demos collection',
-    'islandora:largeimages' => 'Sample large image content model (requires <a href="http://sourceforge.net/projects/djatoka/">Djatoka</a> and <a href="http://www.kakadusoftware.com/index.php?option=com_content&task=view&id=26&Itemid=22">Kakadu</a>.)',
+'islandora:collectionCModel' => 'Islandora default content models',
+ 'islandora:top' => 'Islandora top-level collection',
+ 'islandora:demos' => 'Islandora demos collection',
+ 'islandora:largeimages' => 'Sample large image content model (requires <a href="http://sourceforge.net/projects/djatoka/">Djatoka</a> and <a href="http://www.kakadusoftware.com/index.php?option=com_content&task=view&id=26&Itemid=22">Kakadu</a>.)',
   )
   as $available_demo => $available_demo_desc) {
     try {
@@ -1403,7 +1412,7 @@ function fedora_repository_demo_objects_form_submit($form, &$form_state) {
         $tn = $new_item->add_datastream_from_file(drupal_get_path('module', 'fedora_repository') . '/images/Crystal_Clear_mimetype_pdf.png', 'TN', 'Thumbnail.png', 'image/png', 'M');
         drupal_set_message("Successfully installed <a href=\"" . $base_url . "/fedora/repository/islandora:demos\">islandora:demos</a>.", 'message');
       } catch (exception $e) {
-
+        
       }
     }
 
@@ -1413,19 +1422,19 @@ function fedora_repository_demo_objects_form_submit($form, &$form_state) {
       $smiley_stuff->add_relationship('isMemberOfCollection', 'info:fedora/islandora:demos');
       $tn = $smiley_stuff->add_datastream_from_file(drupal_get_path('module', 'fedora_repository') . '/images/smileytn.png', 'TN', 'Thumbnail.png', 'image/png', 'M');
       $cp = $smiley_stuff->add_datastream_from_file(drupal_get_path('module', 'fedora_repository') . '/collection_policies/JPG-COLLECTION POLICY.xml', 'COLLECTION_POLICY', 'Collection Policy.xml', 'application/xml', 'X');
-      
+
       $cm = new Fedora_Item('demo:DualResImage');
       try {
         $cmstream = $cm->add_datastream_from_file(drupal_get_path('module', 'fedora_repository') . '/content_models/STANDARD JPG.xml', 'ISLANDORACM', 'Content Model.xml', 'application/xml', 'X');
       } catch (exception $e) {
-
+        
       }
       $dual_res_image_collection_cmodel = new Fedora_Item('demo:DualResImageCollection');
       try {
         $cmstream = $dual_res_image_collection_cmodel->add_datastream_from_file(drupal_get_path('module', 'fedora_repository') . '/content_models/COLLECTIONCM.xml', 'ISLANDORACM', 'Islandora Content Model.xml', 'application/xml', 'X');
         drupal_set_message("Successfully installed <a href=\"" . $base_url . "/fedora/repository/demo:SmileyStuff\">demo:SmileyStuff</a> collection view.", 'message');
       } catch (exception $e) {
-
+        
       }
     }
 
@@ -1454,16 +1463,15 @@ function fedora_repository_demo_objects_form_submit($form, &$form_state) {
   }
 }
 
-
 function fedora_repository_required_fedora_objects() {
   // array( 'path-to-foxml-file', 'pid', 'dsid', 'path-to-datastream-file', int dsversion, boolean required)
   $module_path = drupal_get_path('module', 'fedora_repository');
-  return array (
+  return array(
     'fedora_repository' => array(
       'module' => 'fedora_repository',
       'title' => 'Islandora Core',
-      'objects' => array (
-        array (
+      'objects' => array(
+        array(
           'pid' => 'islandora:collectionCModel',
           'label' => 'Islandora Collection Content Model',
           'dsid' => 'ISLANDORACM',
@@ -1471,7 +1479,7 @@ function fedora_repository_required_fedora_objects() {
           'dsversion' => 2,
           'cmodel' => 'fedora-system:ContentModel-3.0',
         ),
-        array (
+        array(
           'pid' => 'islandora:strict_pdf',
           'label' => 'Islandora strict PDF content model',
           'dsid' => 'ISLANDORACM',
@@ -1482,85 +1490,85 @@ function fedora_repository_required_fedora_objects() {
           'pid' => 'islandora:top',
           'label' => 'Islandora Top-level Collection',
           'cmodel' => 'islandora:collectionCModel',
-          'datastreams' => array (
-            array (
+          'datastreams' => array(
+            array(
               'dsid' => 'COLLECTION_POLICY',
               'datastream_file' => "$module_path/collection_policies/COLLECTION-COLLECTION POLICY.xml",
             ),
-            array (
+            array(
               'dsid' => 'TN',
               'datastream_file' => "$module_path/images/Gnome-emblem-photos.png",
               'mimetype' => 'image/png',
             ),
-          ), 
+          ),
         ),
-        array (
+        array(
           'pid' => 'islandora:ContentModelCollection',
           'label' => 'Collection of installed content models',
           'cmodel' => 'islandora:collectionCModel',
           'parent' => 'islandora:top',
-          'datastreams' => array (
-            array (
+          'datastreams' => array(
+            array(
               'dsid' => 'COLLECTION_VIEW',
               'datastream_file' => "$module_path/collection_views/simple_list_view.xml",
             ),
-            array (
+            array(
               'dsid' => 'TN',
               'datastream_file' => "$module_path/images/contentModel.jpg",
               'mimetype' => 'image/jpeg',
             ),
-            array (
+            array(
               'dsid' => 'QUERY',
               'datastream_file' => "$module_path/collection_views/cmodel_collection_query.txt",
               'mimetype' => 'text/plain',
             ),
           ),
         ),
-        array (
+        array(
           'pid' => 'islandora:demos',
           'label' => 'Islandora demos collection',
           'cmodel' => 'islandora:collectionCModel',
           'parent' => 'islandora:top',
-          'datastreams' => array (
-            array (
+          'datastreams' => array(
+            array(
               'dsid' => 'TN',
               'datastream_file' => "$module_path/images/Gnome-emblem-photos.png",
               'mimetype' => 'image/png',
             ),
-            array (
+            array(
               'dsid' => 'COLLECTION_POLICY',
               'datastream_file' => "$module_path/collection_policies/COLLECTION-COLLECTION POLICY.xml",
             ),
           ),
         ),
-        array (
+        array(
           'pid' => 'islandora:pdf_collection',
           'label' => 'Islandora Demo PDF Collection',
           'cmodel' => 'islandora:collectionCModel',
           'parent' => 'islandora:demos',
-          'datastreams' => array (
-            array (
+          'datastreams' => array(
+            array(
               'dsid' => 'TN',
               'datastream_file' => "$module_path/images/Crystal_Clear_mimetype_pdf.png",
               'mimetype' => 'image/png',
             ),
-            array (
+            array(
               'dsid' => 'COLLECTION_POLICY',
               'datastream_file' => "$module_path/collection_policies/PDF-COLLECTION POLICY.xml",
             ),
           ),
         ),
-        array (
+        array(
           'pid' => 'demo:DualResImage',
           'foxml_file' => "$module_path/content_models/demo_DualResImage.xml",
           'datastreams' => array(
-            array (
+            array(
               'dsid' => 'ISLANDORACM',
               'datastream_file' => "$module_path/content_models/STANDARD JPG.xml",
             ),
           ),
         ),
-        array (
+        array(
           'pid' => 'demo:DualResImageCollection',
           'foxml_file' => "$module_path/content_models/demo_DualResImageCollection.xml",
           'datastreams' => array(
@@ -1570,51 +1578,51 @@ function fedora_repository_required_fedora_objects() {
             ),
           ),
         ),
-        array (
+        array(
           'pid' => 'demo:DualResolution',
           'foxml_file' => "$module_path/content_models/demo_DualResolution.xml",
         ),
-        array (
+        array(
           'pid' => 'demo:DualResImageImpl',
           'foxml_file' => "$module_path/content_models/demo_DualResImageImpl.xml",
         ),
-        array (
+        array(
           'pid' => 'demo:CollectionImpl',
           'foxml_file' => "$module_path/content_models/demo_CollectionImpl.xml",
         ),
-        array (
+        array(
           'pid' => 'demo:Collection',
           'foxml_file' => "$module_path/content_models/demo_Collection.xml",
         ),
-        array (
+        array(
           'pid' => 'islandora:demo_image_collection',
           'label' => 'Demo Image Collection',
           'cmodel' => 'demo:DualResImageCollection',
           'parent' => 'islandora:demos',
-          'datastreams' => array (
-            array (
+          'datastreams' => array(
+            array(
               'dsid' => 'COLLECTION_POLICY',
               'datastream_file' => "$module_path/collection_policies/JPG-COLLECTION POLICY.xml",
             ),
-            array (
+            array(
               'dsid' => 'TN',
               'datastream_file' => "$module_path/images/Gnome-emblem-photos.png",
               'mimetype' => 'image/png',
             ),
-            array (
+            array(
               'dsid' => 'COLLECTION_VIEW',
               'datastream_file' => "$module_path/collection_views/standard_jpeg_collection_view.xml",
             ),
-            array (
+            array(
               'dsid' => 'QUERY',
               'datastream_file' => "$module_path/collection_views/standard_jpeg_collection_query.txt",
               'mimetype' => 'text/plain',
             ),
-            array (
+            array(
               'dsid' => 'DC',
               'datastream_file' => "$module_path/collection_views/demo_image_collection_dc_record.xml",
             ),
-          ), 
+          ),
         ),
       ),
     ),
@@ -1792,7 +1800,7 @@ function theme_fedora_repository_basket_form($form) {
 }
 
 function fedora_repository_basket_form_validate($form, &$form_state) {
-
+  
 }
 
 function fedora_repository_basket_form_submit($form, &$form_state) {
@@ -1939,9 +1947,7 @@ function theme_add_to_basket_link($pid, $type = 'object') {
    */
   if (!_is_added_to_basket($pid)) {
     return l(
-        theme('image', drupal_get_path('module', 'Fedora_Repository') . '/images/' . $save, t("Add to basket"), t("Add this @object to my basket", array('@object' => $object))),
-        "fedora/repository/addToBasket/" . $path,
-        array('html' => TRUE)
+        theme('image', drupal_get_path('module', 'Fedora_Repository') . '/images/' . $save, t("Add to basket"), t("Add this @object to my basket", array('@object' => $object))), "fedora/repository/addToBasket/" . $path, array('html' => TRUE)
     );
   }
 
@@ -1963,7 +1969,6 @@ function fedora_repository_display_schema($file) {
   }
   return;
 }
-
 
 function fedora_repository_batch_reingest_object($object, &$context) {
   module_load_include('inc', 'fedora_repository', 'api/fedora_item');
@@ -1989,8 +1994,8 @@ function fedora_repository_batch_reingest_object($object, &$context) {
       }
     }
     if (!empty($object['dsid']) && !empty($object['datastream_file'])) {
-      $datastreams = array (
-        array (
+      $datastreams = array(
+        array(
           'dsid' => $object['dsid'],
           'datastream_file' => $object['datastream_file'],
         )
@@ -1999,19 +2004,19 @@ function fedora_repository_batch_reingest_object($object, &$context) {
     elseif (!empty($object['datastreams'])) {
       $datastreams = $object['datastreams'];
     }
-    
+
     if (!empty($datastreams) && is_array($datastreams)) {
       $label = !empty($object['label']) ? $object['label'] : '';
       if (empty($object['foxml_file']) && !defined($new_item)) {
         $new_item = Fedora_Item::ingest_new_item($object['pid'], 'A', $label);
       }
       if (!empty($object['cmodel'])) {
-        $new_item->add_relationship('hasModel', $object['cmodel'], FEDORA_MODEL_URI);  
+        $new_item->add_relationship('hasModel', $object['cmodel'], FEDORA_MODEL_URI);
       }
       if (!empty($object['parent'])) {
         $new_item->add_relationship('isMemberOfCollection', $object['parent']);
       }
-      foreach($datastreams as $ds) {
+      foreach ($datastreams as $ds) {
         if ($ds['dsid'] == 'DC') {
           $new_item->modify_datastream_by_value(file_get_contents($ds['datastream_file']), $ds['dsid'], $ds['label'], 'text/xml');
         }
@@ -2037,13 +2042,14 @@ function fedora_repository_get_islandora_datastream_version($item = NULL, $dsid 
   $return = NULL;
   if (isset($item)) {
     $doc = simplexml_load_string($item->get_datastream_dissemination($dsid));
-  } elseif (isset($datastream_file)) {
+  }
+  elseif (isset($datastream_file)) {
     $doc = simplexml_load_file($datastream_file);
   }
-  
+
   if (!empty($doc)) {
     $attrs = $doc->attributes();
-    foreach($attrs as $name => $value) {
+    foreach ($attrs as $name => $value) {
       if ($name == 'version') {
         $return = (int) $value;
         break;
@@ -2052,18 +2058,18 @@ function fedora_repository_get_islandora_datastream_version($item = NULL, $dsid 
   }
   return $return;
 }
-  
+
 function theme_fedora_repository_solution_packs_list($solution_packs) {
   module_load_include('inc', 'fedora_repository', 'api/fedora_item');
   module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
   $output = '';
   $header = array();
   $rows = array();
-  
-  
-    
-  
-  drupal_add_css(drupal_get_path('module', 'update') .'/update.css');
+
+
+
+
+  drupal_add_css(drupal_get_path('module', 'update') . '/update.css');
   return $output;
 }
 

@@ -531,23 +531,26 @@ class formClass {
         $contentModelPid = ContentModel::getPidFromIdentifier($form_state['values']['models']);
         $contentModelDsid = ContentModel::getDSIDFromIdentifier($form_state['values']['models']);
         // XML Forms
-        module_load_include('inc', 'xml_form_api', 'XMLForm');
-        $xml_form = new XMLForm($form_state);
-        if (isset($form_state['values']['forms']) || $xml_form->isInitialized()) {
-          if (!$xml_form->isInitialized()) {
-            module_load_include('inc', 'xml_form_api', 'XMLFormDefinition');
-            module_load_include('inc', 'xml_form_builder', 'FormBuilder');
-            $form_name = $form_state['values']['forms'];
-            $definition = FormBuilder::GetFormDefinition($form_name);
-            $form = XMLFormDefinition::GetDrupalForm($definition);
-            $properties = XMLFormDefinition::GetFormProperties($definition);
-            $document = new XMLDocument($properties['document']['root'], $properties['document']['namespaces'], $properties['document']['schema']);
-            $xml_form->initialize($form, $document);
+        if (module_exists('xml_form_api')) {
+          module_load_include('inc', 'xml_form_api', 'XMLForm');
+          $xml_form = new XMLForm($form_state);
+          if (isset($form_state['values']['forms']) || $xml_form->isInitialized()) {
+            if (!$xml_form->isInitialized()) {
+              module_load_include('inc', 'xml_form_api', 'XMLFormDefinition');
+              module_load_include('inc', 'xml_form_builder', 'FormBuilder');
+              $form_name = $form_state['values']['forms'];
+              $definition = FormBuilder::GetFormDefinition($form_name);
+              $form = XMLFormDefinition::GetDrupalForm($definition);
+              $properties = XMLFormDefinition::GetFormProperties($definition);
+              $document = new XMLDocument($properties['document']['root'], $properties['document']['namespaces'], $properties['document']['schema']);
+              $xml_form->initialize($form, $document);
+            }
+            $form = $xml_form->toArray();
+            break;
           }
-          $form = $xml_form->toArray();
         }
         // End XML forms
-        else if (($cm = ContentModel::loadFromModel($contentModelPid, $contentModelDsid)) !== FALSE) {
+        if (($cm = ContentModel::loadFromModel($contentModelPid, $contentModelDsid)) !== FALSE) {
           $form = $cm->buildIngestForm($form, $form_state);
           if ($form === FALSE) {
 
