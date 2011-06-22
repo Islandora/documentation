@@ -1,6 +1,9 @@
 <?php
 
-
+/**
+ * @file 
+ * 
+ */
 
 class SearchClass {
 
@@ -17,7 +20,7 @@ class SearchClass {
     try {
       $implementation = new $solrClass();
     } catch (Exception $e) {
-      watchdog(t("Fedora_Repository"), t("Error getting solr search results class: !message", array('!message' => $e->getMessage())), NULL, WATCHDOG_ERROR);
+      watchdog(t("Fedora_Repository"), "Error getting solr search results class: !message", array('!message' => $e->getMessage()), NULL, WATCHDOG_ERROR);
       return 'Error getting solr search results class.  Check watchdog for more info.';
     }
     return $implementation->$solrFunction($query, $startPage, $fq, $dismax);
@@ -363,7 +366,7 @@ class SearchClass {
     try {
       $proc = new XsltProcessor();
     } catch (Exception $e) {
-      drupal_set_message(t('Error loading results xslt! ') . $e->getMessage());
+      drupal_set_message(t('Error loading results xslt!') . " " . $e->getMessage());
       return ' ';
     }
 

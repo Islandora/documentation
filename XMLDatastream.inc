@@ -1,6 +1,9 @@
 <?php
 
-
+/**
+ * @file 
+ * 
+ */
 
 abstract class XMLDatastream {
 
@@ -23,7 +26,7 @@ abstract class XMLDatastream {
   }
 
   /**
-   * validPid
+   * valid_pid
    * Validates a fedora PID based on the regexp provided in the fedora 
    * 3.3 documentation.  
    * http://www.fedora-commons.org/confluence/display/FCR30/Fedora+Identifiers
@@ -31,7 +34,7 @@ abstract class XMLDatastream {
    * @param String $pid
    * @return boolean $valid
    */
-  public static function validPid($pid) {
+  public static function valid_pid($pid) {
     $valid = FALSE;
     if (strlen(trim($pid)) <= 64 && preg_match('/^([A-Za-z0-9]|-|\.)+:(([A-Za-z0-9])|-|\.|~|_|(%[0-9A-F]{2}))+$/', trim($pid))) {
       $valid = TRUE;
@@ -41,7 +44,7 @@ abstract class XMLDatastream {
   }
 
   /**
-   * validDsid
+   * valid_dsid
    * Validates a fedora Dsid based on the the allowed XML standard NCName. 
    * The regexp is a "regular" subset of names allowed, it excludes some extended hex characters that are
    * technically permitted.
@@ -50,7 +53,7 @@ abstract class XMLDatastream {
    * @param String $pid
    * @return boolean $valid
    */
-  public static function validDsid($dsid) {
+  public static function valid_dsid($dsid) {
     $valid = FALSE;
     if (strlen(trim($dsid)) <= 64 && preg_match('/^[a-zA-Z0-9\_\-\.]+$/', trim($dsid))) {
       $valid = TRUE;

@@ -1,6 +1,10 @@
 <?php
 
 
+/**
+ * @file 
+ * 
+ */
 
 define('RELS_EXT_URI', 'info:fedora/fedora-system:def/relations-external#');
 define("FEDORA_MODEL_URI", 'info:fedora/fedora-system:def/model#');
@@ -475,7 +479,7 @@ class Fedora_Item {
     try {
       $relsext = $this->get_datastream_dissemination('RELS-EXT');
     } catch (exception $e) {
-      drupal_set_message("Error retrieving RELS-EXT of object $pid", 'error');
+      drupal_set_message(t("Error retrieving RELS-EXT of object $pid"), 'error');
       return $relationships;
     }
 
@@ -516,7 +520,7 @@ class Fedora_Item {
       foreach ($relationships as $rel) {
         if (empty($rel['subject']) || empty($rel['predicate']) || empty($rel['object']) || $rel['subject'] != 'info:fedora/' . $this->pid) {
           // drupal_set_message should use parameterized variables, not interpolated.
-          drupal_set_message("Error with relationship format: " . $rel['subject'] . " - " . $rel['predicate'] . ' - ' . $rel['object'], "error");
+          drupal_set_message(t("Error with relationship format: " . $rel['subject'] . " - " . $rel['predicate'] . ' - ' . $rel['object']), "error");
           return FALSE;
         }
       }
@@ -683,7 +687,7 @@ class Fedora_Item {
             $result = $soap_client->__soapCall($function_name, array('parameters' => $params_array));
           }
           else {
-            watchdog(t("FEDORA_REPOSITORY"), t("Error trying to get SOAP client connection."));
+            watchdog(t("FEDORA_REPOSITORY"), "Error trying to get SOAP client connection.");
             return NULL;
           }
         } catch (exception $e) {
@@ -696,7 +700,7 @@ class Fedora_Item {
               drupal_set_message(t("Error trying to call SOAP function $function_name. Check watchdog logs for more information."), 'error');
             }
 
-            watchdog(t("FEDORA_REPOSITORY"), t("Error Trying to call SOAP function !fn: !e", array('!fn' => $function_name, '!e' => $e)), NULL, WATCHDOG_ERROR);
+            watchdog(t("FEDORA_REPOSITORY"), "Error Trying to call SOAP function !fn: !e", array('!fn' => $function_name, '!e' => $e), NULL, WATCHDOG_ERROR);
           }
           return NULL;
         }
@@ -709,13 +713,13 @@ class Fedora_Item {
             $result = $soap_client->__soapCall($function_name, array('parameters' => $params_array));
           }
           else {
-            watchdog(t("FEDORA_REPOSITORY"), t("Error trying to get SOAP client connection."));
+            watchdog(t("FEDORA_REPOSITORY"), "Error trying to get SOAP client connection.");
             return NULL;
           }
         } catch (exception $e) {
 
           if (!$quiet) {
-            watchdog(t("FEDORA_REPOSITORY"), t("Error trying to call SOAP function !fn: !e", array('!fn' => $function_name, '!e' => $e)), NULL, WATCHDOG_ERROR);
+            watchdog(t("FEDORA_REPOSITORY"), "Error trying to call SOAP function !fn: !e", array('!fn' => $function_name, '!e' => $e), NULL, WATCHDOG_ERROR);
           }
           return NULL;
         }

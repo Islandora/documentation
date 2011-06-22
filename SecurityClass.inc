@@ -3,8 +3,8 @@
 
 
 /*
+ * @file 
  * Created on 22-Oct-08
- *
  * To change the template for this generated file go to
  * Window - Preferences - PHPeclipse - PHP - Code Templates
  */
@@ -58,7 +58,7 @@ class SecurityClass {
     try {
       $xml = new SimpleXMLElement($policyStream);
     } catch (Exception $e) {
-      watchdog(t("Fedora_Repository"), t("No roles found in security policy, could not parse policy stream."), NULL, WATCHDOG_ERROR);
+      watchdog(t("Fedora_Repository"), "No roles found in security policy, could not parse policy stream.", NULL, WATCHDOG_ERROR);
       //we may not want to send this to the screen.
       drupal_set_message(t('No roles found in security policy, could not parse policy stream: !message', array('!message' => $e->getMessage())), 'error');
       return NULL;
@@ -104,7 +104,7 @@ class SecurityClass {
     try {
       $doc->load(drupal_get_path('module', 'Fedora_Repository') . '/policies/noObjectEditPolicy.xml');
     } catch (exception $e) {
-      watchdog(t("Fedora_Repository"), t("Problem loading policy file."), NULL, WATCHDOG_ERROR);
+      watchdog(t("Fedora_Repository"), "Problem loading policy file.", NULL, WATCHDOG_ERROR);
     }
     $conditions = $doc->getElementsByTagName('Condition');
     foreach ($conditions as $condition) {

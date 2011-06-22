@@ -1,6 +1,7 @@
 <?php
 
 /**
+ * @file
  * Invokes a hook to any dependent modules asking them if their installations require
  * any fedora objects to be present. Modules implementing this hook should return an array
  * of arrays of the form:

@@ -1,6 +1,9 @@
 <?php
 
-
+/**
+ * @file 
+ * 
+ */
 
 module_load_include('inc', 'fedora_repository', 'XMLDatastream');
 
@@ -34,7 +37,7 @@ class CollectionPolicy extends XMLDatastream {
     module_load_include('inc', 'fedora_repository', 'api/fedora_item');
 
     try {
-      if (self::validPid($pid)) {
+      if (self::valid_pid($pid)) {
         $dsid = CollectionPolicy::getDefaultDSID();
 
         if ($preFetch) {
@@ -357,7 +360,7 @@ class CollectionPolicy extends XMLDatastream {
    */
   public function getNextPid($dsid) {
     $ret = FALSE;
-    if (self::validDsid($dsid) && $this->validate()) {
+    if (self::valid_dsid($dsid) && $this->validate()) {
       $content_models = $this->xml->getElementsByTagName('content_models')->item(0)->getElementsByTagName('content_model');
       $namespace = FALSE;
       for ($i = 0; $namespace === FALSE && $i < $content_models->length; $i++) {
@@ -568,7 +571,7 @@ class CollectionPolicy extends XMLDatastream {
 
   function addModel($cm, $namespace) {
     $ret = FALSE;
-    if (self::validPid($namespace) && $this->validate() && $cm->validate()) {
+    if (self::valid_pid($namespace) && $this->validate() && $cm->validate()) {
       $contentmodelsEl = $this->xml->getElementsByTagName('content_models');
       $models = $contentmodelsEl->item(0)->getElementsByTagName('content_model');
       $found = FALSE;

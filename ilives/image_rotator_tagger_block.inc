@@ -2,7 +2,7 @@
 
 
 
-/*
+/**
  * @file image_rotator_tagger_block.inc
  */
 
@@ -67,8 +67,12 @@ function _fedora_image_rotator_tagger_block_content() {
     $image_item = new Fedora_Item($result['pid']);
   }
   if (!empty($result)) {
+    
+    $image = theme_image( . $base_url . '/fedora/imageapi/' . $result['pid'] . '/JPG?op=scale&height=500&width=300');
+    
     return '<p>'
     . l('<img src="' . $base_url . '/fedora/imageapi/' . $result['pid'] . '/JPG?op=scale&height=500&width=300" />', 'fedora/repository/' . $result['pid'], array('html' => TRUE, 'alias' => TRUE))
+    //. l(t("!image", array(image => $image))
     . '<p>This image is from ' . l($result['title'], 'fedora/ilives_book_viewer/' . substr($image_item->pid, 0, strrpos($image_item->pid, '-')), array('html' => TRUE, 'alias' => TRUE)) . '.'
     . drupal_get_form('fedora_repository_image_tagging_form', $result['pid']) . '</p>';
   }

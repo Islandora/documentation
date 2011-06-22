@@ -3,6 +3,7 @@
 
 
 /*
+ * @file
  * Created on Jan 22, 2008
  */
 
@@ -442,7 +443,7 @@ class formClass {
     try {
       $object = $client->__soapCall('ModifyDatastreamByValue', array($params));
     } catch (exception $e) {
-      drupal_set_message(t("Error updating metadata ") . $e->getMessage(), 'error');
+      drupal_set_message(t("Error updating metadata") . " " . $e->getMessage(), 'error');
     }
   }
 
@@ -512,7 +513,7 @@ class formClass {
           '#title' => t('Content models available'),
           '#options' => $modelsForForm,
           //'#description' => t('Content models available in this collection.  A content model defines what is allowed in a collection and what to do with a file when it is uploaded (An example may creating a thumbnail from an image.).')
-          '#description' => t('Content models define datastream composition, relationships between this and other content models, and the mandatory behaviors associated with each digital object.<br /> Additional information may be found <a href="https://wiki.duraspace.org/display/FEDORACREATE/Content+Models+Overview">here.</a> ')
+          '#description' => t('Content models define datastream composition, relationships between this and other content models, and the mandatory behaviors associated with each digital object.<br /> Additional information may be found <a href="https://wiki.duraspace.org/display/FEDORACREATE/Content+Models+Overview">here.</a>')
         );
         break;
 

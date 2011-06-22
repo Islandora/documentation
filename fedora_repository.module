@@ -94,8 +94,8 @@ function fedora_repository_ingest_object($collection_pid=NULL, $collection_label
     return '';
   }
 
-  if (!validPid($collection_pid)) {
-    if (validPid(urldecode($collection_pid))) {
+  if (!valid_pid($collection_pid)) {
+    if (valid_pid(urldecode($collection_pid))) {
       $collection_pid = urldecode($collection_pid);
     }
     else {
@@ -275,7 +275,7 @@ function fedora_repository_purge_object_form(&$form_state, $pid, $referrer = NUL
 
 function add_stream($collection_pid=NULL, $collectionName=NULL) {
   module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
-  if (!validPid($collection_pid)) {
+  if (!valid_pid($collection_pid)) {
     drupal_set_message(t("This PID is not valid!"), 'error');
     return ' ';
   }
@@ -680,12 +680,12 @@ function fedora_repository_access($op, $node, $account) {
  */
 function makeObject($pid, $dsID) {
   module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
-  if (!validPid($pid)) {
+  if (!valid_pid($pid)) {
     drupal_set_message(t("Invalid PID!"), 'error');
     return ' ';
   }
 
-  if (!validDsid($dsID)) {
+  if (!valid_dsid($dsID)) {
     drupal_set_message(t("Invalid dsID!"), 'error');
     return ' ';
   }
@@ -724,13 +724,13 @@ function fedora_repository_get_items($pid = NULL, $dsId = NULL, $collection = NU
     return '';
   }
 
-  if ($pid & !validPid($pid)) {
+  if ($pid & !valid_pid($pid)) {
 
     drupal_set_message(t("Invalid PID!"), 'error');
     return ' ';
   }
 
-  if ($dsId & !validDsid($dsId)) {
+  if ($dsId & !valid_dsid($dsId)) {
     drupal_set_message(t("Invalid dsID!"), 'error');
     return ' ';
   }
@@ -1964,7 +1964,7 @@ function fedora_repository_batch_reingest_object($object, &$context) {
   module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
   if (!empty($object) && is_array($object)) {
     $pid = $object['pid'];
-    if (!validPid($pid)) {
+    if (!valid_pid($pid)) {
       return NULL;
     }
     // Does the object exist? If so, purge it.

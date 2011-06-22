@@ -3,8 +3,8 @@
 
 
 /*
+ * @file
  * Created on Feb 1, 2008
- *
  * To change the template for this generated file go to
  * Window - Preferences - PHPeclipse - PHP - Code Templates
  */
@@ -48,7 +48,7 @@ class ObjectHelper {
     }
     $headers = module_invoke_all('file_download', "/fedora/repository/$pid/$dsID");
     if (in_array(-1, $headers)) {
-      drupal_set_message('hello');
+      drupal_set_message(t('hello'));
       drupal_access_denied();
 
       return ' ';
@@ -346,7 +346,7 @@ class ObjectHelper {
       $input = new DomDocument();
       $input->loadXML(trim($xmlstr));
     } catch (exception $e) {
-      watchdog(t("Fedora_Repository"), t("Problem loading XSL file: !e", array('!e' => $e)), NULL, WATCHDOG_ERROR);
+      watchdog(t("Fedora_Repository"), "Problem loading XSL file: !e", array('!e' => $e), NULL, WATCHDOG_ERROR);
     }
     $xsl = $proc->importStylesheet($xsl);
     $newdom = $proc->transformToDoc($input);
@@ -521,7 +521,7 @@ class ObjectHelper {
     try {
       $sxml = new SimpleXMLElement($content_models);
     } catch (exception $e) {
-      watchdog(t("Fedora_Repository"), t("Could not find a parent object for %s", $pid), NULL, WATCHDOG_ERROR);
+      watchdog(t("Fedora_Repository"), "Could not find a parent object for %s", $pid, NULL, WATCHDOG_ERROR);
       return $pids;
     }
 
@@ -632,7 +632,7 @@ class ObjectHelper {
             // $ingestObject = '<a title="'. t('Ingest a New object into ') . $collectionName . ' '. $collection_pid . '" href="'. base_path() .
             $ingestObject = '<a title="' . t('Ingest a New object into !collection_name PID !collection_pid', array('!collection_name' => $collectionName, '!collection_pid' => $collection_pid)) . '" href="' . base_path() .
               'fedora/ingestObject/' . $collection_pid . '/' . $collectionName . '"><img src="' . $base_url . '/' . $path .
-              '/images/ingest.png" alt="' . t('Add a New Object') . '" class="icon"></a>' . t(' Add to this Collection');
+              '/images/ingest.png" alt="' . t('Add a New Object') . '" class="icon"></a> ' . t('Add to this Collection');
           }
         }
       }
@@ -715,7 +715,7 @@ class ObjectHelper {
       $parent_collections_HTML .= '<a href="' . $uri . '">' . $collection_label . '</a><br />';
     }
     if (!empty($parent_collections_HTML)) {
-      $parent_collections_HTML = '<tr><td><h3>' . t("Belongs to these collections: ") . '</h3></td><td colspan="4">' . $parent_collections_HTML . '</td></tr>';
+      $parent_collections_HTML = '<tr><td><h3>' . t("Belongs to these collections:") . ' </h3></td><td colspan="4">' . $parent_collections_HTML . '</td></tr>';
     }
 
     return $parent_collections_HTML;
@@ -899,8 +899,8 @@ class ObjectHelper {
 
     $warnMess = "Creation of one or more datastreams failed.<hr  width='40%' align = 'left'/>";
     $configMess = "Please ensure that %app is installed and configured for this site. ";
-    drupal_set_message($warnMess, 'warning', false);
-    drupal_set_message(t($configMess . "<br />" . $messMap[$app] . "<hr  width='40%' align = 'left'/>", array('%app' => $app)), 'warning', false);
+    drupal_set_message($warnMess, 'warning', FALSE);
+    drupal_set_message(t($configMess . "<br />" . $messMap[$app] . "<hr  width='40%' align = 'left'/>", array('%app' => $app)), 'warning', FALSE);
   }
 
 }

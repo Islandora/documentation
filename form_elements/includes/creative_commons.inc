@@ -1,6 +1,11 @@
 <?php
 
-class CreativeCommons {
+/**
+ * @file 
+ * 
+ */
+ 
+ class CreativeCommons {
 
   public static $cc_jurisdiction_vals = array(
     '' => 'International',

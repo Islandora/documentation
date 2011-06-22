@@ -1,6 +1,9 @@
 <?php
 
-
+/**
+ * @file 
+ * 
+ */
 
 function ife_autocomplete_person($string) {
   $string = trim(strtolower($string));
@@ -9,23 +12,23 @@ function ife_autocomplete_person($string) {
   module_load_include('php', 'islandora_solr_search', 'Solr/Service');
   $host = variable_get('islandora_solr_search_block_host', 'localhost');
   $port = variable_get('islandora_solr_search_block_port', '8080');
-  $appName = variable_get('islandora_solr_search_block_app_name', 'solr');
-  $requestHandler = variable_get("islandora_solr_search_block_request_handler", t("standard"));
+  $app_name = variable_get('islandora_solr_search_block_app_name', 'solr');
+  $request_handler = variable_get("islandora_solr_search_block_request_handler", t("standard"));
 
-  $solr = new Apache_Solr_Service($host, $port, '/' . $appName . '/');
+  $solr = new Apache_Solr_Service($host, $port, '/' . $app_name . '/');
 
   $string = $solr->escape($string);
   $query = 'name_personal_t:' . $string . '* OR name_organization_t:' . $string . '* OR name_conference_t:' . $string . '*';
 
-  $additionalParams = array(
+  $additional_params = array(
     'facet' => 'false',
-    'qt' => $requestHandler,
+    'qt' => $request_handler,
   );
 
   try {
-    $results = $solr->search($query, 0, 10, $additionalParams);
+    $results = $solr->search($query, 0, 10, $additional_params);
   } catch (Exception $e) {
-    drupal_set_message(t('error searching ') . $e->getMessage());
+    drupal_set_message(t('error searching') ." " . $e->getMessage());
   }
   if (empty($results)) {
     drupal_set_message(t('Error searching solr index. Is the solr search block configured properly?'), 'error');
@@ -41,15 +44,15 @@ function ife_autocomplete_person($string) {
 
     $mods = $item->get_datastream_dissemination('MODS');
     if (trim($mods) != '') {
-      $modsDom = new DomDocument();
-      $modsDom->loadXML($mods);
+      $mods_dom = new DomDocument();
+      $mods_dom->loadXML($mods);
 
-      $xpath = new DOMXPath($modsDom);
+      $xpath = new DOMXPath($mods_dom);
       $xpath->registerNamespace("php", "http://php.net/xpath");
       $xpath->registerPHPFunctions();
 //  	echo $mods;
-      $nodeList = $xpath->evaluate('/mods:mods/mods:name');
-      foreach ($nodeList as $node) {
+      $node_list = $xpath->evaluate('/mods:mods/mods:name');
+      foreach ($node_list as $node) {
 
         $type = $node->getAttribute('type');
         $title = NULL;
@@ -57,8 +60,8 @@ function ife_autocomplete_person($string) {
         $given = NULL;
         $family = NULL;
         $date = NULL;
-        $nameParts = $node->getElementsByTagName('namePart');
-        foreach ($nameParts as $part) {
+        $name_parts = $node->getElementsByTagName('namePart');
+        foreach ($name_parts as $part) {
           switch ($part->getAttribute('type')) {
             case 'given': $given = $part->nodeValue;
               break;
@@ -78,9 +81,9 @@ function ife_autocomplete_person($string) {
         }
 
         $role = NULL;
-        $roleTerm = $node->getElementsByTagName('roleTerm');
-        if ($roleTerm->length > 0) {
-          $role = $roleTerm->item(0)->nodeValue;
+        $role_term = $node->getElementsByTagName('roleTerm');
+        if ($role_term->length > 0) {
+          $role = $role_term->item(0)->nodeValue;
         }
 
         if (strpos(strtolower($name), $string) !== FALSE) {
@@ -95,7 +98,7 @@ function ife_autocomplete_person($string) {
 }
 
 function ife_autocomplete_marcrelator($collection, $string='') {
-  $moduleRoot = drupal_get_path('module', 'islandora_form_elements');
+  $module_root = drupal_get_path('module', 'islandora_form_elements');
 
   if ($string == '') {
     $string = $collection;
@@ -104,30 +107,30 @@ function ife_autocomplete_marcrelator($collection, $string='') {
 
   $string = ucfirst(trim($string));
 
-  $dom = DOMDocument::load($moduleRoot . '/xml/relators.rdf');
-  $rootEl = $dom->getElementsByTagName('RDF');
-  if ($rootEl->length > 0) {
-    $rootEl = $rootEl->item(0);
+  $dom = DOMDocument::load($module_root . '/xml/relators.rdf');
+  $root_el = $dom->getElementsByTagName('RDF');
+  if ($root_el->length > 0) {
+    $root_el = $root_el->item(0);
 
     $xpath = new DOMXPath($dom);
-    $xpath->registerNamespace('skos', $rootEl->getAttribute('xmlns:skos'));
-    $xpath->registerNamespace('rdf', $rootEl->getAttribute('xmlns:rdf'));
+    $xpath->registerNamespace('skos', $root_el->getAttribute('xmlns:skos'));
+    $xpath->registerNamespace('rdf', $root_el->getAttribute('xmlns:rdf'));
 
 
     $result = $xpath->query('/rdf:RDF/rdf:Description[starts-with(skos:prefLabel, "' . $string . '")]');
 
     $terms = array();
     foreach ($result as $term) {
-      $termVal = $term->getElementsByTagName('prefLabel')->item(0)->nodeValue;
-      $termVal = preg_replace('/\s+/', ' ', $termVal);
-      $terms[$term->getElementsByTagName('notation')->item(0)->nodeValue] = $termVal;
+      $term_val = $term->getElementsByTagName('prefLabel')->item(0)->nodeValue;
+      $term_val = preg_replace('/\s+/', ' ', $term_val);
+      $terms[$term->getElementsByTagName('notation')->item(0)->nodeValue] = $term_val;
     }
     echo drupal_json($terms);
   }
 }
 
 function ife_autocomplete_gacs($collection, $string='') {
-  $moduleRoot = drupal_get_path('module', 'islandora_form_elements');
+  $module_root = drupal_get_path('module', 'islandora_form_elements');
 
   if ($string == '') {
     $string = $collection;
@@ -136,13 +139,13 @@ function ife_autocomplete_gacs($collection, $string='') {
 
   $string = ucwords(trim($string));
 
-  $dom = DOMDocument::load($moduleRoot . '/xml/gacs.xml');
-  $rootEl = $dom->getElementsByTagName('codelist');
-  if ($rootEl->length > 0) {
-    $rootEl = $rootEl->item(0);
+  $dom = DOMDocument::load($module_root . '/xml/gacs.xml');
+  $root_el = $dom->getElementsByTagName('codelist');
+  if ($root_el->length > 0) {
+    $root_el = $root_el->item(0);
 
     $xpath = new DOMXPath($dom);
-    $xpath->registerNamespace('a', $rootEl->getAttribute('xmlns'));
+    $xpath->registerNamespace('a', $root_el->getAttribute('xmlns'));
 
     $result = $xpath->query('/a:codelist/a:gacs/a:gac[starts-with(a:name, "' . $string . '")]');
 
@@ -155,7 +158,7 @@ function ife_autocomplete_gacs($collection, $string='') {
 }
 
 function ife_autocomplete_language($collection, $string='') {
-  $moduleRoot = drupal_get_path('module', 'islandora_form_elements');
+  $module_root = drupal_get_path('module', 'islandora_form_elements');
 
   if ($string == '') {
     $string = $collection;
@@ -164,13 +167,13 @@ function ife_autocomplete_language($collection, $string='') {
 
   $string = ucwords(trim($string));
 
-  $dom = DOMDocument::load($moduleRoot . '/xml/languages.xml');
-  $rootEl = $dom->getElementsByTagName('codelist');
-  if ($rootEl->length > 0) {
-    $rootEl = $rootEl->item(0);
+  $dom = DOMDocument::load($module_root . '/xml/languages.xml');
+  $root_el = $dom->getElementsByTagName('codelist');
+  if ($root_el->length > 0) {
+    $root_el = $root_el->item(0);
 
     $xpath = new DOMXPath($dom);
-    $xpath->registerNamespace('a', $rootEl->getAttribute('xmlns'));
+    $xpath->registerNamespace('a', $root_el->getAttribute('xmlns'));
 
     $result = $xpath->query('/a:codelist/a:languages/a:language[starts-with(a:name, "' . $string . '")]');
 
@@ -192,10 +195,10 @@ function ife_autocomplete($field, $collection, $string='') {
   module_load_include('php', 'islandora_solr_search', 'Solr/Service');
   $host = variable_get('islandora_solr_search_block_host', 'localhost');
   $port = variable_get('islandora_solr_search_block_port', '8080');
-  $appName = variable_get('islandora_solr_search_block_app_name', 'solr');
-  $solr = new Apache_Solr_Service($host, $port, '/' . $appName . '/');
+  $app_name = variable_get('islandora_solr_search_block_app_name', 'solr');
+  $solr = new Apache_Solr_Service($host, $port, '/' . $app_name . '/');
 
-  $additionalParams = array(
+  $additional_params = array(
     'fl' => $field
   );
 
@@ -206,9 +209,9 @@ function ife_autocomplete($field, $collection, $string='') {
   }
 
   try {
-    $results = $solr->search($query, 0, 10, $additionalParams);
+    $results = $solr->search($query, 0, 10, $additional_params);
   } catch (Exception $e) {
-    drupal_set_message(t('error searching ') . $e->getMessage());
+    drupal_set_message(t('error searching') . " " . $e->getMessage());
   }
 
   $docs = $results->response->docs;

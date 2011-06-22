@@ -72,7 +72,7 @@ class Refworks {
       //$dom = dom_import_simplexml($xml);//test to see if it behaves better
       //$xml = new SimpleXMLElement(trim(file_get_contents($file)));
     } catch (Exception $e) {
-      drupal_set_message(t('Error processing Refworks file:') . $e->getMessage());
+      drupal_set_message(t('Error processing Refworks file:') . " " . $e->getMessage());
       return FALSE;
     }
     $this->referenceList = array();

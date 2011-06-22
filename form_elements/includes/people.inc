@@ -1,11 +1,15 @@
 <?php
 
-
-// this is a bit of a hack.  It iterates through the 
-// form and assigns a dummy value to any field in the $post 
-// data that is marked as #required.  This is so that the 
-// AHAH method can still function with required fields that 
-// are first passed to the core form validation function.
+/**
+* @file 
+* 
+*
+* this is a bit of a hack.  It iterates through the 
+* form and assigns a dummy value to any field in the $post 
+* data that is marked as #required.  This is so that the 
+* AHAH method can still function with required fields that 
+* are first passed to the core form validation function.
+*/
 function _dummy_post_info($form, $post, $key = '') {
   $children = element_children($form);
   if (count($children) > 0) {
@@ -82,17 +86,17 @@ function ife_remove_person_submit($form, &$form_state) {
   $keys = array();
   $qt_form = _ife_find_people_element($form, $keys);
 
-  $peopleVals = &$form_state['values'];
+  $people_vals = &$form_state['values'];
   while (count($keys) > 0) {
     $key = array_pop($keys);
-    if (isset($peopleVals[$key])) {
-      $peopleVals = &$peopleVals[$key];
+    if (isset($people_vals[$key])) {
+      $people_vals = &$people_vals[$key];
     }
   }
 
   $people = array();
   $i = 0;
-  foreach ($peopleVals['people'] as $key => $val) {
+  foreach ($people_vals['people'] as $key => $val) {
     if ($key != $delta) {
       $people[] = $val;
     }
@@ -115,24 +119,24 @@ function ife_add_person_submit($form, &$form_state) {
   $people = array();
   $keys = array();
   $qt_form = _ife_find_people_element($form, $keys);
-  $peopleVals = &$form_state['values'];
+  $people_vals = &$form_state['values'];
 
   while (count($keys) > 0) {
     $key = array_pop($keys);
-    if (isset($peopleVals[$key])) {
-      $peopleVals = &$peopleVals[$key];
+    if (isset($people_vals[$key])) {
+      $people_vals = &$people_vals[$key];
     }
   }
-  if (!is_array($peopleVals['people']))
-    $peopleVals['people'] = array();
+  if (!is_array($people_vals['people']))
+    $people_vals['people'] = array();
 
-  foreach ($peopleVals['people'] as $val) {
+  foreach ($people_vals['people'] as $val) {
     $people[] = $val;
   }
 
   //only add new person if we are not adding from repository.
-  $elName = isset($qt_form['entity0']['#parents'][0]) ? $qt_form['entity0']['#parents'][0] : NULL;
-  if ($elName == NULL || !isset($form_state['clicked_button']['#post'][$elName]['add_from_repository']) || trim($form_state['clicked_button']['#post'][$elName]['add_from_repository']) == '') {
+  $el_name = isset($qt_form['entity0']['#parents'][0]) ? $qt_form['entity0']['#parents'][0] : NULL;
+  if ($el_name == NULL || !isset($form_state['clicked_button']['#post'][$el_name]['add_from_repository']) || trim($form_state['clicked_button']['#post'][$el_name]['add_from_repository']) == '') {
     $people[] = array('name' => '', 'date' => '', 'role' => '', 'subject' => '');
   }
   unset($form_state['submit_handlers']);
@@ -148,19 +152,19 @@ function ife_add_org_submit($form, &$form_state) {
   $people = array();
   $keys = array();
   $qt_form = _ife_find_people_element($form, $keys);
-  $peopleVals = &$form_state['values'];
+  $people_vals = &$form_state['values'];
 
   while (count($keys) > 0) {
     $key = array_pop($keys);
-    if (isset($peopleVals[$key])) {
-      $peopleVals = &$peopleVals[$key];
+    if (isset($people_vals[$key])) {
+      $people_vals = &$people_vals[$key];
     }
   }
 
-  if (!is_array($peopleVals['people']))
-    $peopleVals['people'] = array();
+  if (!is_array($people_vals['people']))
+    $people_vals['people'] = array();
 
-  foreach ($peopleVals['people'] as $val) {
+  foreach ($people_vals['people'] as $val) {
     $people[] = $val;
   }
   $people[] = array('role' => '', 'organization' => '');
@@ -178,17 +182,17 @@ function ife_add_conf_submit($form, &$form_state) {
   $people = array();
   $keys = array();
   $qt_form = _ife_find_people_element($form, $keys);
-  $peopleVals = &$form_state['values'];
+  $people_vals = &$form_state['values'];
   while (count($keys) > 0) {
     $key = array_pop($keys);
-    if (isset($peopleVals[$key])) {
-      $peopleVals = &$peopleVals[$key];
+    if (isset($people_vals[$key])) {
+      $people_vals = &$people_vals[$key];
     }
   }
-  if (!is_array($peopleVals['people']))
-    $peopleVals['people'] = array();
+  if (!is_array($people_vals['people']))
+    $people_vals['people'] = array();
 
-  foreach ($peopleVals['people'] as $val) {
+  foreach ($people_vals['people'] as $val) {
     $people[] = $val;
   }
 

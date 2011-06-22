@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @file 
+ * 
+ */
 
 
 function theme_filechooser($element) {
@@ -15,7 +19,7 @@ function theme_filechooser($element) {
   drupal_add_css($path . '/css/filechooser.css');
 
   module_load_include('inc', 'fedora_repository', 'ContentModel');
-  $contentModelPid = ContentModel::getPidFromIdentifier($element['#model_pid']);
+  $content_model_pid = ContentModel::getPidFromIdentifier($element['#model_pid']);
 
 
   $output = '<div class="carousel">
@@ -26,7 +30,7 @@ function theme_filechooser($element) {
       </div>
   <br clear="all"/>
   <a href="#" class="prev">Prev</a> <a href="#" class="next">Next</a>
-  <input type="hidden" id="model_pid" value="' . $contentModelPid . '"/>
+  <input type="hidden" id="model_pid" value="' . $content_model_pid . '"/>
   <input type="hidden" name="' . $element['#name'] . '" value="' . check_plain($element['#value']) . '" id="fileField"/></div>';
   return theme('form_element', $element, $output);
 }
@@ -36,7 +40,7 @@ function ife_filechooser_get_thumbnail($cp_pid, $cm_pid, $file) {
   module_load_include('inc', 'fedora_repository', 'ContentModel');
   module_load_include('inc', 'fedora_repository', 'MimeClass');
 
-  $mimeClass = new MimeClass();
+  $mime_class = new MimeClass();
 
   $cm = ContentModel::loadFromModel($cm_pid);
   $cp = CollectionPolicy::loadFromCollection($cp_pid);
@@ -45,7 +49,7 @@ function ife_filechooser_get_thumbnail($cp_pid, $cm_pid, $file) {
   if ($cm !== FALSE && $cp !== FALSE) {
     if (is_file($path . $file)) {
 
-      $mime = $mimeClass->getType($path . $file);
+      $mime = $mime_class->getType($path . $file);
 
       $allowed_types = $cm->getMimetypes();
 
@@ -57,7 +61,7 @@ function ife_filechooser_get_thumbnail($cp_pid, $cm_pid, $file) {
           $thumbnail = $_SESSION['fedora_ingest_files']['TN'];
         }
 
-        $thumbmime = $mimeClass->getType($thumbnail);
+        $thumbmime = $mime_class->getType($thumbnail);
 
         header('Pragma: no-cache');
         header('Content-Type: ' . $thumbmime);
@@ -85,7 +89,7 @@ function ife_filechooser_generate_thumbnails($cp_pid, $cm_pid) {
     exit();
   }
 
-  $mimeClass = new MimeClass();
+  $mime_class = new MimeClass();
   $path = $cp->getStagingArea() . '/';
   $start = isset($_GET['start']) ? intval($_GET['start']) : 0;
   $end = isset($_GET['end']) ? intval($_GET['end']) : 50;
@@ -97,7 +101,7 @@ function ife_filechooser_generate_thumbnails($cp_pid, $cm_pid) {
       $dir = opendir($path);
       for ($i = $start; $i < $end && ($file = readdir($dir)) !== FALSE;) {
         if (is_file($path . $file)) {
-          $mime = $mimeClass->getType($path . $file);
+          $mime = $mime_class->getType($path . $file);
           if (in_array($mime, $allowed_types)) {
 
             $thumbnail = FALSE;
