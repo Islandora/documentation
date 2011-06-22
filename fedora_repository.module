@@ -119,52 +119,52 @@ function fedora_repository_ingest_object($collection_pid=NULL, $collection_label
 
 function fedora_repository_ingest_form_submit($form, &$form_state) {
 //only validate the form if the submit button was pressed (other buttons may be used for AHAH
-  if (module_exists('xml_form_api')) {
+  if ($form_state['storage']['xml']) {
     module_load_include('inc', 'xml_form_api', 'XMLForm');
-    $form = new XMLForm($form_state);
-    $doc = $form->submit($drupal_form, $form_state);
-    $document = $doc->document;
-    dom_document_pretty_print($document);
-    exit();
+    $xml_form = new XMLForm($form_state);
+    if ($xml_form->isInitialized()) {
+      $doc = $form->submit($drupal_form, $form_state);
+      $document = $doc->document;
+      dom_document_pretty_print($document);
+      exit();
+    }
   }
-  else {
-    if ($form_state['clicked_button']['#id'] == 'edit-submit') {
-      global $base_url;
-      module_load_include('inc', 'fedora_repository', 'CollectionClass');
-      module_load_include('inc', 'fedora_repository', 'CollectionPolicy');
-      module_load_include('inc', 'fedora_repository', 'ContentModel');
+  else if ($form_state['clicked_button']['#id'] == 'edit-submit') {
+    global $base_url;
+    module_load_include('inc', 'fedora_repository', 'CollectionClass');
+    module_load_include('inc', 'fedora_repository', 'CollectionPolicy');
+    module_load_include('inc', 'fedora_repository', 'ContentModel');
 
-      $contentModelPid = ContentModel::getPidFromIdentifier($form_state['values']['models']);
-      $contentModelDsid = ContentModel::getDSIDFromIdentifier($form_state['values']['models']);
-      $err = TRUE;
-      $redirect = TRUE;
-      if (($cp = CollectionPolicy::loadFromCollection($form_state['values']['collection_pid'])) !== FALSE) {
-        $relationship = $cp->getRelationship();
+    $contentModelPid = ContentModel::getPidFromIdentifier($form_state['values']['models']);
+    $contentModelDsid = ContentModel::getDSIDFromIdentifier($form_state['values']['models']);
+    $err = TRUE;
+    $redirect = TRUE;
+    if (($cp = CollectionPolicy::loadFromCollection($form_state['values']['collection_pid'])) !== FALSE) {
+      $relationship = $cp->getRelationship();
 
-        if (($cm = ContentModel::loadFromModel($contentModelPid, $contentModelDsid)) !== FALSE) {
-          $pid = $cp->getNextPid($contentModelDsid);
-          global $user;
-          $form_state['values']['user_id'] = $user->name;
-          $form_state['values']['pid'] = $pid;
-          $form_state['values']['content_model_pid'] = $contentModelPid;
-          $form_state['values']['relationship'] = $relationship;
+      if (($cm = ContentModel::loadFromModel($contentModelPid, $contentModelDsid)) !== FALSE) {
+        $pid = $cp->getNextPid($contentModelDsid);
+        global $user;
+        $form_state['values']['user_id'] = $user->name;
+        $form_state['values']['pid'] = $pid;
+        $form_state['values']['content_model_pid'] = $contentModelPid;
+        $form_state['values']['relationship'] = $relationship;
 
-          $err = (!$cm->execFormHandler($form_state['values'], $form_state));
+        $err = (!$cm->execFormHandler($form_state['values'], $form_state));
 
-          $_SESSION['fedora_ingest_files'] = ''; //empty this variable
+        $_SESSION['fedora_ingest_files'] = ''; //empty this variable
 
-          $attr = $cm->getIngestFormAttributes();
-          $redirect = $attr['redirect'];
+        $attr = $cm->getIngestFormAttributes();
+        $redirect = $attr['redirect'];
 
-          if ($redirect) {
-            $form_state['storage'] = NULL;
-          }
+        if ($redirect) {
+          $form_state['storage'] = NULL;
         }
       }
+    }
 
-      if ($redirect) {
-        $form_state['redirect'] = ($err) ? ' ' : $base_url . "/fedora/repository/{$form_state['values']['collection_pid']}";
-      }
+    if ($redirect) {
+      $form_state['redirect'] = ($err) ? ' ' : $base_url . "/fedora/repository/{$form_state['values']['collection_pid']}";
     }
   }
 }
@@ -180,7 +180,7 @@ function fedora_repository_ingest_form_validate($form, &$form_state) {
 
       case 2:
 // XML based form.
-        if (module_exists('xml_form_api')) {
+        if ($form_state['storage']['xml']) {
           module_load_include('inc', 'xml_form_api', 'XMLForm');
           $xml_form = new XMLForm($form_state);
           $xml_form->validate($form, $form_state);
@@ -618,9 +618,16 @@ function fedora_repository_edit_qdc_form(&$form_state, $pid, $dsId = NULL) {
 }
 
 function fedora_repository_edit_qdc_form_validate($form, &$form_state) {
-  if (isset($form_state['storage']['step']) && $form_state['storage']['step'] == 1) {
-    $form_state['storage']['step']++;
-    $form_state['rebuild'] = TRUE;
+  if (isset($form_state['storage']['step'])) {
+    if ($form_state['storage']['step'] == 1) {
+      $form_state['storage']['step']++;
+      $form_state['rebuild'] = TRUE;
+    }
+    else {
+      module_load_include('inc', 'xml_form_api', 'XMLForm');
+      $xml_form = new XMLForm($form_state);
+      $xml_form->validate($form, $form_state);
+    }
   }
 }
 
@@ -634,8 +641,15 @@ function fedora_repository_edit_qdc_form_validate($form, &$form_state) {
  * @return
  */
 function fedora_repository_edit_qdc_form_submit($form, &$form_state) {
-  if (true) {
-    
+  if ($form_state['storage']['xml']) {
+    module_load_include('inc', 'xml_form_api', 'XMLForm');
+    $xml_form = new XMLForm($form_state);
+    if ($xml_form->isInitialized()) {
+      $doc = $form->submit($drupal_form, $form_state);
+      $document = $doc->document;
+      dom_document_pretty_print($document);
+      exit();
+    }
   }
   else {
     module_load_include('inc', 'fedora_repository', 'ConnectionHelper');

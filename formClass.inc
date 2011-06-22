@@ -502,6 +502,8 @@ class formClass {
       $form_names = islandora_content_model_get_form_names($contentModels[0]->pid);
     }
 
+    $form_state['storage']['xml'] = false;
+
     switch ($form_state['storage']['step']) {
       case 1:
         $form['indicator'] = array(
@@ -535,6 +537,7 @@ class formClass {
           module_load_include('inc', 'xml_form_api', 'XMLForm');
           $xml_form = new XMLForm($form_state);
           if (isset($form_state['values']['forms']) || $xml_form->isInitialized()) {
+            $form_state['storage']['xml'] = true;
             if (!$xml_form->isInitialized()) {
               module_load_include('inc', 'xml_form_api', 'XMLFormDefinition');
               module_load_include('inc', 'xml_form_builder', 'FormBuilder');
@@ -749,6 +752,7 @@ class formClass {
               $document = new XMLDocument($properties['document']['root'], $properties['document']['namespaces'], $properties['document']['schema'], $xml);
               $xml_form->initialize($form, $document);
             }
+            $form_state['storage']['xml'] = true;
             return $xml_form->toArray();
           }
           break;
