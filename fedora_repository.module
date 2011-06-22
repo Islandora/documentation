@@ -122,12 +122,10 @@ function fedora_repository_ingest_form_submit($form, &$form_state) {
   if ($form_state['storage']['xml']) {
     module_load_include('inc', 'xml_form_api', 'XMLForm');
     $xml_form = new XMLForm($form_state);
-    if ($xml_form->isInitialized()) {
-      $doc = $form->submit($drupal_form, $form_state);
-      $document = $doc->document;
-      dom_document_pretty_print($document);
-      exit();
-    }
+    $doc = $xml_form->submit($form, $form_state);
+    $document = $doc->document;
+    dom_document_pretty_print($document);
+    exit();
   }
   else if ($form_state['clicked_button']['#id'] == 'edit-submit') {
     global $base_url;
@@ -644,12 +642,10 @@ function fedora_repository_edit_qdc_form_submit($form, &$form_state) {
   if ($form_state['storage']['xml']) {
     module_load_include('inc', 'xml_form_api', 'XMLForm');
     $xml_form = new XMLForm($form_state);
-    if ($xml_form->isInitialized()) {
-      $doc = $form->submit($drupal_form, $form_state);
-      $document = $doc->document;
-      dom_document_pretty_print($document);
-      exit();
-    }
+    $doc = $xml_form->submit($form, $form_state);
+    $document = $doc->document;
+    dom_document_pretty_print($document);
+    exit();
   }
   else {
     module_load_include('inc', 'fedora_repository', 'ConnectionHelper');

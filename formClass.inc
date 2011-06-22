@@ -705,6 +705,7 @@ class formClass {
       $content_model = ContentModel::loadFromObject($pid);
       $form_names = islandora_content_model_get_form_names($content_model->pid);
     }
+    $form_state['storage']['xml'] = false;
     if (isset($form_state['storage']['step']) || (isset($form_names) && count($form_names) > 0)) {
       // Form Exists...
       $form_state['storage']['step'] = isset($form_state['storage']['step']) ? $form_state['storage']['step'] : 1;
