@@ -124,8 +124,43 @@ function fedora_repository_ingest_form_submit($form, &$form_state) {
     $xml_form = new XMLForm($form_state);
     $doc = $xml_form->submit($form, $form_state);
     $document = $doc->document;
-    dom_document_pretty_print($document);
-    exit();
+    // Get Hidden Values.
+    $dsid = $form_state['values']['dsid'];
+    $collection_pid = $form_state['values']['collection_pid'];
+    $content_model_pid = $form_state['values']['content_model_pid'];
+    $content_model_dsid = $form_state['values']['content_model_dsid'];
+    //
+    module_load_include('inc', 'fedora_repository', 'CollectionPolicy');
+    $error = TRUE;
+    $should_redirect = TRUE;
+    $collection_policy = CollectionPolicy::loadFromCollection($collection_pid);
+    if ($collection_policy !== FALSE) {
+      module_load_include('inc', 'fedora_repository', 'ContentModel');
+      $relationship = $collection_policy->getRelationship();
+      $content_model = ContentModel::loadFromModel($content_model_pid, $content_model_dsid);
+      if ($content_model !== FALSE) {
+        module_load_include('inc', 'islandora_content_model_forms', 'FOXML');
+        $label = 'test'; //$form['#post']['form_builder'][0]; // use mods title as label
+        if (empty($form['#post']['active-toggle'])) {
+          $state = 'A';
+        }
+        else {
+          $state = $form['#post']['active-toggle'] ? 'A' : 'I';
+        }
+        $pid = $collection_policy->getNextPid($content_model_dsid);
+        $ingest_file_location = isset($form_state['values']['ingest-file-location']) ? $form_state['values']['ingest-file-location'] : NULL;
+        // hack
+        $transform = drupal_get_path('module', 'islandora_content_model_forms') . '/transforms/mods_to_dc.xsl';
+        $foxml = new FOXML($label, $pid, $dsid, $content_model_pid, $collection_pid, $relationship, $ingest_file_location, $document, $transform, $state);
+        $error = $foxml->ingest();
+        $_SESSION['fedora_ingest_files'] = ''; //empty this variable
+        $form_state['storage'] = NULL;
+      }
+    }
+    if ($should_redirect) {
+      global $base_url;
+      $form_state['redirect'] = ($error) ? '' : $base_url . "/fedora/repository/{$collection_pid}";
+    }
   }
   else if ($form_state['clicked_button']['#id'] == 'edit-submit') {
     global $base_url;
@@ -193,7 +228,7 @@ function fedora_repository_ingest_form_validate($form, &$form_state) {
           $form_state['values']['ingest-file-location'] = $fileObject->filepath;
         }
 
-        if (file_exists($form_state['values']['ingest-file-location'])) {
+        if (isset($form_state['values']['ingest-file-location']) && file_exists($form_state['values']['ingest-file-location'])) {
           module_load_include('inc', 'fedora_repository', 'ContentModel');
           module_load_include('inc', 'fedora_repository', 'MimeClass');
 

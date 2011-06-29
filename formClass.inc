@@ -461,11 +461,14 @@ class formClass {
     global $user;
     module_load_include('inc', 'fedora_repository', 'CollectionPolicy');
     // drupal_add_js("function _imce_ingest_ImceFinish(path, w, h, s, imceWin) {imceWin.close(); document.getElementById('edit-ingest-file-location').value = path;}",'inline','header');
+    $content_model_pid = isset($form_state['values']['content_model_pid']) ? $form_state['values']['content_model_pid'] : NULL;
+    $content_model_dsid = isset($form_state['values']['content_model_dsid']) ? $form_state['values']['content_model_dsid'] : NULL;
 
     if (!user_access('ingest new fedora objects')) {
       drupal_set_message(t('You do not have permission to ingest.'), 'error');
       return '';
     }
+
     if (empty($form_state['storage']['step'])) {
       // we are coming in without a step, so default to step 1
       $form_state['storage']['step'] = 1;
@@ -530,8 +533,8 @@ class formClass {
 
       case 2:
         module_load_include('inc', 'fedora_repository', 'MimeClass'); // Why this include? --Zac, 2010-09-17
-        $contentModelPid = ContentModel::getPidFromIdentifier($form_state['values']['models']);
-        $contentModelDsid = ContentModel::getDSIDFromIdentifier($form_state['values']['models']);
+        $content_model_pid = ContentModel::getPidFromIdentifier($form_state['values']['models']);
+        $content_model_dsid = ContentModel::getDSIDFromIdentifier($form_state['values']['models']);
         // XML Forms
         if (module_exists('xml_form_api')) {
           module_load_include('inc', 'xml_form_api', 'XMLForm');
@@ -549,11 +552,17 @@ class formClass {
               $xml_form->initialize($form, $document);
             }
             $form = $xml_form->toArray();
+            $form['dsid'] = array(
+              '#type' => 'hidden',
+              '#value' => isset($form_state['values']['dsid']) ?
+                  $form_state['values']['dsid'] :
+                  islandora_content_model_get_dsid($content_model_pid, $form_name)
+            );
             break;
           }
         }
         // End XML forms
-        if (($cm = ContentModel::loadFromModel($contentModelPid, $contentModelDsid)) !== FALSE) {
+        if (($cm = ContentModel::loadFromModel($content_model_pid, $content_model_dsid)) !== FALSE) {
           $form = $cm->buildIngestForm($form, $form_state);
           if ($form === FALSE) {
 
@@ -570,6 +579,14 @@ class formClass {
     $form['collection_pid'] = array(
       '#type' => 'hidden',
       '#value' => $collection_pid
+    );
+    $form['content_model_pid'] = array(
+      '#type' => 'hidden',
+      '#value' => $content_model_pid
+    );
+    $form['content_model_dsid'] = array(
+      '#type' => 'hidden',
+      '#value' => $content_model_dsid
     );
 
     if ($form_state['storage']['step'] < 2) {
