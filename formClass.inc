@@ -445,9 +445,6 @@ class formClass {
     }
   }
 
-  // queries the collection object for a childsecurity datastream and if found parses it
-  // to determine if this user is allowed to ingest in this collection
-  // we assume if they are able to modify objects in the collection they can ingest as well.
   function can_ingest_here($collection_pid) {
     module_load_include('inc', 'fedora_repository', 'SecurityClass');
     $securityClass = new SecurityClass();
@@ -455,155 +452,160 @@ class formClass {
   }
 
   /**
-   * Create a multi step form (wizard) for ingesting objects into Fedora
+   * Drupal's permissions at this point no xacml yet. xacml decisions are made by fedora
+   *
+   * @param type $collection_pid
+   * @return type 
    */
-  function createIngestForm($collection_pid, $collection_label, &$form_state) {
-    global $user;
-    module_load_include('inc', 'fedora_repository', 'CollectionPolicy');
-    // drupal_add_js("function _imce_ingest_ImceFinish(path, w, h, s, imceWin) {imceWin.close(); document.getElementById('edit-ingest-file-location').value = path;}",'inline','header');
-    $content_model_pid = isset($form_state['values']['content_model_pid']) ? $form_state['values']['content_model_pid'] : NULL;
-    $content_model_dsid = isset($form_state['values']['content_model_dsid']) ? $form_state['values']['content_model_dsid'] : NULL;
-
+  function canShowIngestForm($collection_pid) {
     if (!user_access('ingest new fedora objects')) {
       drupal_set_message(t('You do not have permission to ingest.'), 'error');
-      return '';
+      return FALSE;
     }
-
-    if (empty($form_state['storage']['step'])) {
-      // we are coming in without a step, so default to step 1
-      $form_state['storage']['step'] = 1;
-    }
-    //this uses drupal's permissions at this point no xacml yet. xacml decisions are made by fedora
-    if (!$this->can_ingest_here($collection_pid)) {
+    module_load_include('inc', 'fedora_repository', 'SecurityClass');
+    $security_class = new SecurityClass();
+    if (!$security_class->canIngestHere($collection_pid)) {
+      // Queries the collection object for a child security datastream and if found parses it
+      // to determine if this user is allowed to ingest in this collection
+      // we assume if they are able to modify objects in the collection they can ingest as well.
       drupal_set_message(t('You do not have premission to ingest here.'));
-      return '';
+      return FALSE;
     }
-
     if ($collection_pid == NULL) {
       drupal_set_message(t('You must specify an collection object pid to ingest an object.'), 'error');
       return FALSE;
     }
-    if (($cp = CollectionPolicy::loadFromCollection($collection_pid)) === FALSE) {
+    return TRUE;
+  }
+
+  /**
+   * Creates the first page of the ingest form for editing QDC.
+   * 
+   * @param string $collection_pid
+   * @param string $collection_label
+   * @param array $form_state
+   * 
+   * @return array
+   */
+  function createQDCIngestFormPageOne($collection_pid, $collection_label, array &$form_state) {
+    if (($collection_policy = CollectionPolicy::loadFromCollection($collection_pid)) === FALSE) {
       drupal_set_message(t('Unable to load collection policy \'' . $collection_pid . '\'.'));
       return FALSE;
     }
-
-    $contentModels = $cp->getContentModels();
-
-    if (!$contentModels) {
+    if (!($content_models = $collection_policy->getContentModels())) {
       drupal_set_message(t('No content models associated with this collection: !collection_label. Please contact your administrator.', array('!collection_label' => $collection_label)), 'error');
       return FALSE;
     }
-    $modelsForForm = array();
-    foreach ($contentModels as $contentModel) {
-      $identifier = $contentModel->getIdentifier();
-      $name = $contentModel->name;
-      $modelsForForm["$identifier"] = "$name";
+    $potential_models = array();
+    foreach ($content_models as $content_model) {
+      $identifier = $content_model->getIdentifier();
+      $name = $content_model->name;
+      $potential_models["$identifier"] = "$name";
     }
-
-    if (module_exists('islandora_content_model_forms') && isset($contentModels[0])) {
-      $form_names = islandora_content_model_get_form_names($contentModels[0]->pid);
-    }
-
-    $form_state['storage']['xml'] = false;
-
-    switch ($form_state['storage']['step']) {
-      case 1:
-        $form['indicator'] = array(
-          '#type' => 'fieldset',
-          '#title' => t('Ingest digital object into collection_pid !collection_label Step #1', array('collection_pid' => $collection_pid, '!collection_label' => $collection_label))
-        );
-
-        $form['indicator']['models'] = array(// content models available
+    list($identifier, $name) = array_peek($potential_models);
+    $selected_model = isset($form_state['values']['models']) ? $form_state['values']['models'] : $identifier;
+    return array(
+      'indicator' => array(
+        '#type' => 'fieldset',
+        '#title' => t('Ingest digital object into collection_pid !collection_label Step #1', array('collection_pid' => $collection_pid, '!collection_label' => $collection_label)),
+        'models' => array(
           '#type' => 'select',
           '#title' => t('Content models available'),
-          '#options' => $modelsForForm,
-          //'#description' => t('Content models available in this collection.  A content model defines what is allowed in a collection and what to do with a file when it is uploaded (An example may creating a thumbnail from an image.).')
-          '#description' => t('Content models define datastream composition, relationships between this and other content models, and the mandatory behaviors associated with each digital object.<br /> Additional information may be found <a href="https://wiki.duraspace.org/display/FEDORACREATE/Content+Models+Overview">here.</a> ')
-        );
-        if (isset($form_names) && count($form_names) >= 1) {
-          $form['indicator']['forms'] = array(
-            '#type' => 'select',
-            '#title' => t('Forms'),
-            '#options' => $form_names,
-            '#description' => t('Select the form to populate the metadata of the new object.')
-          );
-        }
-        break;
+          '#options' => $potential_models,
+          '#default_value' => $selected_model, 
+          '#description' => t('Content models define datastream composition, relationships between this and other content models, and the mandatory behaviors associated with each digital object.<br /> Additional information may be found <a href="https://wiki.duraspace.org/display/FEDORACREATE/Content+Models+Overview">here.</a> '),
+        ),
+      ),
+      'collection_pid' => array(
+        '#type' => 'hidden',
+        '#value' => $collection_pid
+      ),
+      'submit' => array(
+        '#type' => 'submit',
+        '#submit' => array('fedora_repository_ingest_form_submit'),
+        '#value' => t('Next')
+      ),
+    );
+  }
 
-      case 2:
-        module_load_include('inc', 'fedora_repository', 'MimeClass'); // Why this include? --Zac, 2010-09-17
-        $content_model_pid = ContentModel::getPidFromIdentifier($form_state['values']['models']);
-        $content_model_dsid = ContentModel::getDSIDFromIdentifier($form_state['values']['models']);
-        // XML Forms
-        if (module_exists('xml_form_api')) {
-          module_load_include('inc', 'xml_form_api', 'XMLForm');
-          $xml_form = new XMLForm($form_state);
-          if (isset($form_state['values']['forms']) || $xml_form->isInitialized()) {
-            $form_state['storage']['xml'] = true;
-            if (!$xml_form->isInitialized()) {
-              module_load_include('inc', 'xml_form_api', 'XMLFormDefinition');
-              module_load_include('inc', 'xml_form_builder', 'FormBuilder');
-              $form_name = $form_state['values']['forms'];
-              $definition = FormBuilder::GetFormDefinition($form_name);
-              $form = XMLFormDefinition::GetDrupalForm($definition);
-              $properties = XMLFormDefinition::GetFormProperties($definition);
-              $document = new XMLDocument($properties['document']['root'], $properties['document']['namespaces'], $properties['document']['schema']);
-              $xml_form->initialize($form, $document);
-            }
-            $form = $xml_form->toArray();
-            $form['dsid'] = array(
-              '#type' => 'hidden',
-              '#value' => isset($form_state['values']['dsid']) ?
-                  $form_state['values']['dsid'] :
-                  islandora_content_model_get_dsid($content_model_pid, $form_name)
-            );
-            break;
-          }
+  /**
+   * Create the second page of the ingest form for editing QDC
+   * 
+   * @param string $collection_pid
+   * @param string $collection_label
+   * @param array $form_state
+   * 
+   * @return array
+   */
+  function createQDCIngestFormPageTwo($collection_pid, $collection_label, array &$form_state) {
+    module_load_include('inc', 'fedora_repository', 'ContentModel');
+    $form = array();
+    $content_model_pid = ContentModel::getPidFromIdentifier($form_state['values']['models']);
+    $content_model_dsid = ContentModel::getDSIDFromIdentifier($form_state['values']['models']);
+    if (($content_model = ContentModel::loadFromModel($content_model_pid, $content_model_dsid)) !== FALSE) {
+      $form = $content_model->buildIngestForm($form, $form_state);
+      if ($form === FALSE) {
+        drupal_set_message(t("Error Building Ingest Form."), 'error');
+        foreach (ContentModel::$errors as $error) {
+          drupal_set_message($error, 'error');
         }
-        // End XML forms
-        if (($cm = ContentModel::loadFromModel($content_model_pid, $content_model_dsid)) !== FALSE) {
-          $form = $cm->buildIngestForm($form, $form_state);
-          if ($form === FALSE) {
-
-            drupal_set_message(t("Error Building Ingest Form."), 'error');
-            foreach (ContentModel::$errors as $err) {
-              drupal_set_message($err, 'error');
-            }
-          }
-        }
-
-        break;
+      }
+      $form['collection_pid'] = array(
+        '#type' => 'hidden',
+        '#value' => $collection_pid
+      );
+      $form['submit'] = array(
+        '#type' => 'submit',
+        '#submit' => array('fedora_repository_ingest_form_submit'),
+        '#value' => t('Ingest')
+      );
     }
+    return $form;
+  }
 
-    $form['collection_pid'] = array(
-      '#type' => 'hidden',
-      '#value' => $collection_pid
-    );
-    $form['content_model_pid'] = array(
-      '#type' => 'hidden',
-      '#value' => $content_model_pid
-    );
-    $form['content_model_dsid'] = array(
-      '#type' => 'hidden',
-      '#value' => $content_model_dsid
-    );
-
-    if ($form_state['storage']['step'] < 2) {
-      $button_name = t('Next');
+  /**
+   * Create the QDC Ingest Form.
+   * 
+   * @param type $collection_pid
+   * @param type $collection_label
+   * @param array $form_state 
+   * 
+   * @return array
+   */
+  function createQDCIngestForm($collection_pid, $collection_label, array &$form_state) {
+    module_load_include('inc', 'fedora_repository', 'CollectionPolicy');
+    $form_state['storage']['step'] = empty($form_state['storage']['step']) ? 1 : $form_state['storage']['step'];
+    if ($form_state['storage']['step'] == 1) {
+      return $this->createQDCIngestFormPageOne($collection_pid, $collection_label, $form_state);
     }
     else {
-      $prefix = t('Please be patient. Once you click next there may be a number of files created.  Depending on your content model this could take a few minutes to process.<br />');
-      $button_name = t('Ingest');
+      return $this->createQDCIngestFormPageTwo($collection_pid, $collection_label, $form_state);
     }
+  }
 
-    $form['submit'] = array(
-      '#type' => 'submit',
-      '#submit' => array('fedora_repository_ingest_form_submit'),
-      '#value' => $button_name
-    );
-
-    return $form;
+  /**
+   * Create a multi step form (wizard) for ingesting objects into Fedora
+   * 
+   * @param string $collection_pid
+   * @param string $collection_label
+   * @param array $form_state
+   * 
+   * @return array 
+   */
+  function createIngestForm($collection_pid, $collection_label, array &$form_state) {
+    if (!$this->canShowIngestForm($collection_pid)) {
+      return FALSE;
+    }
+    if (module_exists('islandora_content_model_forms')) {
+      module_load_include('inc', 'islandora_content_model_forms', 'IngestObjectMetadataForm');
+      try {
+        $form = new IngestObjectMetadataForm();
+        return $form->create($collection_pid, $collection_label, $form_state);
+      } catch (Exception $e) {
+        $form_state['storage']['xml'] = false; // An error occured revert back to the QDC Form.
+      }
+    }
+    return $this->createQDCIngestForm($collection_pid, $collection_label, $form_state);
   }
 
   // this function may not be being used
