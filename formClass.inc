@@ -512,7 +512,7 @@ class formClass {
           '#type' => 'select',
           '#title' => t('Content models available'),
           '#options' => $potential_models,
-          '#default_value' => $selected_model, 
+          '#default_value' => $selected_model,
           '#description' => t('Content models define datastream composition, relationships between this and other content models, and the mandatory behaviors associated with each digital object.<br /> Additional information may be found <a href="https://wiki.duraspace.org/display/FEDORACREATE/Content+Models+Overview">here.</a> '),
         ),
       ),
@@ -716,155 +716,109 @@ class formClass {
   }
 
   /**
-   * Creates a drupal form to edit either the QDC or DC datastream
+   * Create edit form.
+   * 
+   * @param string $pid
+   * @param string $dsid
+   * @param object $client
+   * @param array $form_state
+   * 
+   * @return string 
    */
-  function createMetaDataForm($pid, $dsId = NULL, $client, &$form_state) {
-    if (module_exists('islandora_content_model_forms')) {
-      // Get the content model.
-      $content_model = ContentModel::loadFromObject($pid);
-      $form_names = islandora_content_model_get_form_names($content_model->pid);
+  function createQDCEditForm($pid, $dsid, $client, &$form_state) {
+    $dsid = empty($dsid) ? 'QDC' : $dsid;
+    try {
+      $params = array('pid' => "$pid", 'dsID' => "$dsid", 'asOfDateTime' => "");
+      $object = $client->__soapCall('getDatastreamDissemination', array('parameters' => $params));
+    } catch (Exception $e) {
+      return array();
     }
-    $form_state['storage']['xml'] = false;
-    if (isset($form_state['storage']['step']) || (isset($form_names) && count($form_names) > 0)) {
-      // Form Exists...
-      $form_state['storage']['step'] = isset($form_state['storage']['step']) ? $form_state['storage']['step'] : 1;
-      switch ($form_state['storage']['step']) {
-        case 1:
-          $form['indicator'] = array(
-            '#type' => 'fieldset',
-            '#title' => t('Choose edit form.')
-          );
-          $form['indicator']['forms'] = array(
-            '#type' => 'select',
-            '#title' => t('Forms'),
-            '#options' => $form_names,
-            '#description' => t('Select the form to populate the metadata of the new object.')
-          );
-          $form['submit'] = array(
-            '#type' => 'submit',
-            '#submit' => array('fedora_repository_edit_qdc_form_submit'),
-            '#value' => 'Next'
-          );
-          return $form;
-        case 2:
-          // XML Forms
-          module_load_include('inc', 'xml_form_api', 'XMLForm');
-          $xml_form = new XMLForm($form_state);
-          if (isset($form_state['values']['forms']) || $xml_form->isInitialized()) {
-            if (!$xml_form->isInitialized()) {
-              module_load_include('inc', 'xml_form_api', 'XMLFormDefinition');
-              module_load_include('inc', 'xml_form_builder', 'FormBuilder');
-              $form_name = $form_state['values']['forms'];
-              $definition = FormBuilder::GetFormDefinition($form_name);
-              $form = XMLFormDefinition::GetDrupalForm($definition);
-              $properties = XMLFormDefinition::GetFormProperties($definition);
-              // XML
-              $dsid = islandora_content_model_get_dsid($content_model->pid, $form_name);
-              $params = array('pid' => "$pid", 'dsID' => "$dsid", 'asOfDateTime' => "");
-              try {
-                $object = $client->__soapCAll('getDatastreamDissemination', array('parameters' => $params));
-              } catch (Exception $e) {
-                return array(); // Empty form?
-              }
-              $xml = $object->dissemination->stream;
-              $xml = trim($xml);
-              // XML
-              $document = new XMLDocument($properties['document']['root'], $properties['document']['namespaces'], $properties['document']['schema'], $xml);
-              $xml_form->initialize($form, $document);
-            }
-            $form_state['storage']['xml'] = true;
-            return $xml_form->toArray();
-          }
-          break;
-      }
+    $content = $object->dissemination->stream;
+    $content = trim($content);
+    $doc = new DOMDocument();
+    if (!$doc->loadXML($content)) {
+      echo "error loading xml";
     }
-    else {
-      if (!isset($dsId)) {
-        $dsId = 'QDC';
+    $oai_dc = $doc->getElementsByTagName('dc');
+    $dcItems = $oai_dc->item(0)->getElementsByTagName('*');
+    $form = array();
+    for ($i = 0; $i < $dcItems->length; $i++) {
+      $name = $dcItems->item($i)->nodeName;
+      if ($name == 'dc:description') {
+        $form["$name" . '-' . "$i"] = array(
+          '#title' => $name,
+          '#type' => 'textarea',
+          '#default_value' => $dcItems->item($i)->nodeValue,
+          '#description' => 'Dublin Core ' . substr($dcItems->item($i)->nodeName, 3)
+        );
       }
-      //$client = getSoapClient(variable_get('fedora_soap_url', 'http://localhost:8080/fedora/services/access?wsdl'));
-      $params = array('pid' => "$pid", 'dsID' => "$dsId", 'asOfDateTime' => "");
-      try {
-        $object = $client->__soapCAll('getDatastreamDissemination', array('parameters' => $params));
-      } catch (Exception $e) {
-        return array();
+      elseif ($name == 'dc:title') {
+        $form["$name" . '-' . "$i"] = array(
+          '#title' => $name,
+          '#type' => 'textfield',
+          '#required' => 'TRUE',
+          '#default_value' => $dcItems->item($i)->nodeValue,
+          '#description' => 'Dublin Core ' . substr($dcItems->item($i)->nodeName, 3)
+        );
       }
-
-      $content = $object->dissemination->stream;
-      $content = trim($content);
-      $doc = new DOMDocument();
-      if (!$doc->loadXML($content)) {
-        echo "error loading xml";
-      }
-
-      $oai_dc = $doc->getElementsByTagName('dc');
-
-      $dcItems = $oai_dc->item(0)->getElementsByTagName('*');
-      $form = array();
-      for ($i = 0; $i < $dcItems->length; $i++) {
-        $name = $dcItems->item($i)->nodeName;
-        if ($name == 'dc:description') {
-          $form["$name" . '-' . "$i"] = array(
-            '#title' => $name,
-            '#type' => 'textarea',
-            '#default_value' => $dcItems->item($i)->nodeValue,
-            '#description' => 'Dublin Core ' . substr($dcItems->item($i)->nodeName, 3)
-          );
-        }
-        elseif ($name == 'dc:title') {
-          $form["$name" . '-' . "$i"] = array(
+      else {
+        if ($oai_dc->item(0)->nodeName != $dcItems->item($i)->parentNode->nodeName) {
+          $description = strstr($name, ':');
+          $form['app_' . "$name" . '-' . "$i"] = array(
             '#title' => $name,
             '#type' => 'textfield',
-            '#required' => 'TRUE',
             '#default_value' => $dcItems->item($i)->nodeValue,
-            '#description' => 'Dublin Core ' . substr($dcItems->item($i)->nodeName, 3)
+            '#description' => 'Dublin Core ' . substr($description, 1)
           );
         }
         else {
-          if ($oai_dc->item(0)->nodeName != $dcItems->item($i)->parentNode->nodeName) {
-            $description = strstr($name, ':');
-            $form['app_' . "$name" . '-' . "$i"] = array(
-              '#title' => $name,
-              '#type' => 'textfield',
-              '#default_value' => $dcItems->item($i)->nodeValue,
-              '#description' => 'Dublin Core ' . substr($description, 1)
-            );
+          $field_type = 'textfield';
+          $value = $dcItems->item($i)->nodeValue;
+          if ($name == 'dc:coverage') {
+            $value = '';
           }
-          else {
-            $field_type = 'textfield';
-            $value = $dcItems->item($i)->nodeValue;
-            if ($name == 'dc:coverage') {
-              $value = '';
-            }
-            if ($name == 'dc:rights') {
-              $field_type = 'textarea';
-            }
-            $description = strstr($name, ':');
-            $form["$name" . '-' . "$i"] = array(
-              '#title' => $name,
-              '#type' => $field_type,
-              '#default_value' => $value,
-              '#description' => 'Dublin Core ' . substr($description, 1)
-            );
+          if ($name == 'dc:rights') {
+            $field_type = 'textarea';
           }
+          $description = strstr($name, ':');
+          $form["$name" . '-' . "$i"] = array(
+            '#title' => $name,
+            '#type' => $field_type,
+            '#default_value' => $value,
+            '#description' => 'Dublin Core ' . substr($description, 1)
+          );
         }
       }
-
-      $form['pid'] = array(
-        '#type' => 'hidden',
-        '#value' => "$pid"
-      );
-      $form['dsid'] = array(
-        '#type' => 'hidden',
-        '#value' => "$dsId"
-      );
-      $form['submit'] = array(
-        '#type' => 'submit',
-        '#value' => t('Update Metadata'),
-      );
-
-      return $form;
     }
+    $form['pid'] = array(
+      '#type' => 'hidden',
+      '#value' => "$pid"
+    );
+    $form['dsid'] = array(
+      '#type' => 'hidden',
+      '#value' => "$dsid"
+    );
+    $form['submit'] = array(
+      '#type' => 'submit',
+      '#value' => t('Update Metadata'),
+    );
+    return $form;
+  }
+
+  /**
+   * Creates a drupal form to edit either the QDC or DC datastream
+   */
+  function createMetaDataForm($pid, $dsid, $client, &$form_state) {
+    if (module_exists('islandora_content_model_forms')) {
+      module_load_include('inc', 'islandora_content_model_forms', 'EditObjectMetadataForm');
+      try {
+        $form = new EditObjectMetadataForm($form_state);
+        return $form->create($pid, $client, $form_state);
+      } catch (Exception $e) {
+        $form_state['storage']['xml'] = false; // An error occured revert back to the QDC Form.
+      }
+    }
+    return $this->createQDCEditForm($pid, $dsid, $client, $form_state);
   }
 
   /**
