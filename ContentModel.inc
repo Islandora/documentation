@@ -1162,6 +1162,7 @@ class ContentModel extends XMLDatastream {
         module_load_include('inc', 'fedora_repository', 'formClass');
         $metaDataForm = new formClass();
         $ret = $metaDataForm->updateMetaData($form_state['values']['form_id'], $form_state['values'], $soap_client);
+        $form_state['storage'] = NULL;
         $form_state['redirect'] = $base_url . '/fedora/repository/' . $form_state['values']['pid'];
 
       }

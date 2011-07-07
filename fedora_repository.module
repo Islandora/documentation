@@ -615,16 +615,14 @@ function fedora_repository_edit_qdc_form(&$form_state, $pid, $dsId = NULL) {
 }
 
 function fedora_repository_edit_qdc_form_validate($form, &$form_state) {
-  if (isset($form_state['storage']['step'])) {
+  if ($form_state['storage']['xml']) {
     if ($form_state['storage']['step'] == 1) {
       $form_state['storage']['step']++;
       $form_state['rebuild'] = TRUE;
     }
-    else if ($form_state['storage']['xml']) {
-      module_load_include('inc', 'xml_form_api', 'XMLForm');
-      $xml_form = new XMLForm($form_state);
-      $xml_form->validate($form, $form_state);
-    }
+    module_load_include('inc', 'xml_form_api', 'XMLForm');
+    $xml_form = new XMLForm($form_state);
+    $xml_form->validate($form, $form_state);
   }
 }
 
@@ -663,6 +661,7 @@ function fedora_repository_edit_qdc_form_submit($form, &$form_state) {
       module_load_include('inc', 'fedora_repository', 'formClass');
       $metaDataForm = new formClass();
       $return_value = $metaDataForm->updateMetaData($form_state['values']['form_id'], $form_state['values'], $client);
+      $form_state['storage'] = NULL;
       $form_state['redirect'] = $base_url . '/fedora/repository/' . $form_state['values']['pid'];
 
       return $return_value;
