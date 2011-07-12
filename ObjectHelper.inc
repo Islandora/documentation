@@ -107,14 +107,13 @@ class ObjectHelper {
     if ((!isset($user)) || $user->uid == 0) {
       $fedoraUser = 'anonymous';
       $fedoraPass = 'anonymous';
-      $contentSize = 0;
-    }
-    else {
+    } else {
       $fedoraUser = $user->name;
       $fedoraPass = $user->pass;
-      $dataStreamInfo = $item->get_datastream_info($dsID);
-      $contentSize = $dataStreamInfo->datastream->size;
     }
+    
+    $dataStreamInfo = $item->get_datastream_info($dsID);
+    $contentSize = $dataStreamInfo->datastream->size;
 
     if (function_exists("curl_init")) {
       if (!isset($mimeType)) {
