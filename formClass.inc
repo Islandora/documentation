@@ -502,7 +502,7 @@ class formClass {
       $name = $content_model->name;
       $potential_models["$identifier"] = "$name";
     }
-    list($identifier, $name) = array_peek($potential_models);
+    $identifier = key($potential_models);
     $selected_model = isset($form_state['values']['models']) ? $form_state['values']['models'] : $identifier;
     return array(
       'indicator' => array(
