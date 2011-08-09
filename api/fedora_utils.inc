@@ -6,6 +6,7 @@
  * @file
  * Base utilities used by the Islandora fedora module.
  */
+
 /*
  * Functions that emulate php5.3 functionality for backwards compatiablity
  */
