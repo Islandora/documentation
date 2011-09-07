@@ -534,7 +534,7 @@ function fedora_repository_replace_stream_form_submit($form, &$form_state) {
   $pid = $form_state['values']['pid'];
   $dsid = $form_state['values']['dsId'];
   $dsLabel = $form_state['values']['dsLabel'];
-// Remove the original file extension from the label and add the new one
+  // Remove the original file extension from the label and add the new one
   $indexOfDot = strrpos($dsLabel, '.'); //use strrpos to get the last dot
   if ($indexOfDot !== FALSE) {
     $dsLabel = substr($dsLabel, 0, $indexOfDot);
@@ -742,16 +742,20 @@ function makeObject($pid, $dsID) {
 function fedora_repository_get_items($pid = NULL, $dsId = NULL, $collection = NULL, $page_number = NULL, $limit = NULL) {
   module_load_include('inc', 'fedora_repository', 'ObjectHelper');
   module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
+  module_load_include('inc', 'fedora_repository', 'api/fedora_item');
   global $user;
-
 
   if (!fedora_available()) {
     drupal_set_message('The Fedora repository server is currently unavailable. Please contact the site administrator.', 'warning', FALSE);
     return '';
   }
 
-  if ($pid & !validPid($pid)) {
+  $item = new fedora_item($pid);
+  if (!$item->exists()) {
+    drupal_not_found();
+  }
 
+  if ($pid & !validPid($pid)) {
     drupal_set_message(t("Invalid PID!"), 'error');
     return ' ';
   }
@@ -761,8 +765,6 @@ function fedora_repository_get_items($pid = NULL, $dsId = NULL, $collection = NU
     return ' ';
   }
   if (!fedora_repository_access(OBJECTHELPER::$OBJECT_HELPER_VIEW_FEDORA, $pid, $user)) {
-//drupal_set_message(t("You do not have access to Fedora objects within the attempted namespace or access to Fedora denied"), 'error');
-
     if (user_access('access administration pages')) {
       drupal_set_message(t("PIDs may be added to allowed namespaces, or all namespace restrictions removed !here", array('!here' => l('here', 'admin/settings/fedora_repository'))), 'warning');
     }
@@ -790,13 +792,6 @@ function fedora_repository_get_items($pid = NULL, $dsId = NULL, $collection = NU
 
   module_load_include('inc', 'fedora_repository', 'CollectionClass');
   $collectionClass = new CollectionClass();
-//if(!isset($pageNumber)){
-//    $pageNumber=0;
-//}
-//if(!isset($limit)){
-//    $limit=20;
-//}
-
   module_load_include('inc', 'fedora_repository', 'ContentModel');
   module_load_include('inc', 'fedora_repository', 'plugins/fedoraObject');
   $breadcrumbs = array();
@@ -804,15 +799,12 @@ function fedora_repository_get_items($pid = NULL, $dsId = NULL, $collection = NU
   drupal_set_breadcrumb(array_reverse($breadcrumbs));
 
   $offset = $limit * $page_number;
-//$results = $collectionClass->getRelatedObjects($pid, $limit, $offset, NULL); //updated so we can do paging in query not in xslt
-//$results = $collectionClass->getRelatedItems($pid, NULL);
   $content_models = $objectHelper->get_content_models_list($pid);
 // Each content model may return either a tabset array or plain HTML. If it's HTML, stick it in a tab.
   $cmodels_tabs = array(
     '#type' => 'tabset',
   );
   foreach ($content_models as $content_model) {
-//$content_model_fieldsets = $objectHelper->createExtraFieldsets($pid, $content_model, $pageNumber);
     $content_model_fieldset = $content_model->displayExtraFieldset($pid, $page_number);
     if (is_array($content_model_fieldset)) {
       $cmodels_tabs = array_merge($cmodels_tabs, $content_model_fieldset);
@@ -829,13 +821,6 @@ function fedora_repository_get_items($pid = NULL, $dsId = NULL, $collection = NU
   $obj = new FedoraObject($pid);
   $object_details = $obj->showFieldSets();
   $cmodels_tabs = array_merge($cmodels_tabs, $object_details);
-
-
-//$content .= $objectHelper
-//$content .= $objectHelper->parseContent($results, $pid, $dsId, $collection, $pageNumber);
-//the below is for islandlives we should be able to do this in the xslt though
-//$css=$path.'/stylesheets/container-large.css';
-//drupal_add_css($css);
   return tabs_render($cmodels_tabs);
 }
 
