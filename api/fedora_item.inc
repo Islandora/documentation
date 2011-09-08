@@ -800,7 +800,7 @@ class Fedora_Item {
 
   function set_datastream_state($dsid, $state, $log_message = 'Modified by Islandora API', $quiet = FALSE) {
     $valid_states = array('A', 'D', 'I');
-    if (key_exists($state, $valid_states)) {
+    if (array_search($state, $valid_states) !== FALSE) {
       $params = array(
         'pid' => $this->pid,
         'dsID' => $dsid,
