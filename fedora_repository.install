@@ -78,18 +78,6 @@ function fedora_repository_requirements($phase) {
         $requirements['dom']['serenity'] = REQUIREMENT_OK;
     }
     
-    // Test for XSLT
-    $requirements['xslt']['title'] = "PHP XSLT extension library";
-    if ( ! function_exists('xslt_process') ) {
-        $requirements['xslt']['value'] = t("Not installed");
-        $requirements['xslt']['severity'] = REQUIREMENT_ERROR;
-        $requirements['xslt']['description'] = t("Ensure that the PHP XSLT extension is installed.");
-    } 
-    else {
-        $requirements['xslt']['value'] = t("Installed");
-        $requirements['xslt']['serenity'] = REQUIREMENT_OK;
-    }
-    
     // Test for Imagick
     $requirements['imagick']['title'] = t("Image Magick library");
     //if ( ! class_exists('Imagick') ) {
