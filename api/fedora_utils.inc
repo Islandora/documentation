@@ -6,7 +6,6 @@
  * @file
  * Base utilities used by the Islandora fedora module.
  */
-
 /*
  * Functions that emulate php5.3 functionality for backwards compatiablity
  */
@@ -156,3 +155,79 @@ function fix_dsid($dsid) {
   return $new_dsid;
 }
 
+/**
+ * Function: get_collections_as_option_array
+ *
+ * Description: Returns an associative array of all collection objects in Fedora instance
+ *
+ * @return array
+ */
+function get_collections_as_option_array() {
+  module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
+  $query = 'select $object $title from <#ri>
+                            where ($object <dc:title> $title
+                              and $object <info:fedora/fedora-system:def/model#hasModel> <info:fedora/islandora:collectionCModel>
+                              and $object <fedora-model:state> <info:fedora/fedora-system:def/model#Active>)
+                            order by $title';
+  $url = variable_get('fedora_repository_url', 'http://localhost:8080/fedora/risearch');
+  $url .= "?type=tuples&flush=true&format=csv&limit=1000&lang=itql&stream=on&query=";
+  $content = do_curl($url . htmlentities(urlencode($query)));
+  $list = explode("\n", $content);
+  array_shift($list);
+  $list = preg_replace('/info:fedora\//', '', $list);
+  $options = array();
+  foreach ($list as $item) {   //removes  blanks
+    if ($item) {
+      $parts = explode(',', $item);
+      $options[$parts[0]] = $parts[1];
+    }
+  }
+  unset($options['islandora:ContentModelCollection']);
+  return $options;
+}
+
+/**
+ * Function: get_content_models_as_option_array
+ *
+ * Description: Returns an associative array of all collection objects in Fedora instance
+ *
+ * @return array
+ */
+function get_content_models_as_option_array() {
+  module_load_include('inc', 'fedora_repository', 'api/fedora_item');
+  module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
+  $restricted = variable_get('fedora_namespace_restriction_enforced', true);
+  $allowed_string = variable_get('fedora_pids_allowed', 'default: demo: changeme: islandora:');
+  $namespaces = explode(':', $allowed_string);
+  foreach ($namespaces as $namespace) {
+    if ($namespace) {
+      $allowed[] = trim($namespace);
+    }
+  }
+  $query = 'select $object $title from <#ri>
+          where ($object <dc:title> $title
+          and ($object <fedora-model:hasModel> <info:fedora/fedora-system:ContentModel-3.0>
+          or $object <fedora-rels-ext:isMemberOfCollection> <info:fedora/islandora:ContentModelsCollection>)
+          and $object <fedora-model:state> <info:fedora/fedora-system:def/model#Active>)
+          order by $title';
+
+  $url = variable_get('fedora_repository_url', 'http://localhost:8080/fedora/risearch');
+  $url .= "?type=tuples&flush=true&format=csv&limit=1000&lang=itql&stream=on&query=";
+  $content = do_curl($url . htmlentities(urlencode($query)));
+  $list = explode("\n", $content);
+  array_shift($list);
+  $list = preg_replace('/info:fedora\//', '', $list);
+  foreach ($list as $item) {   //removes  blanks
+    if ($item) {
+      $parts = explode(',', $item);
+      $item = new fedora_item($parts[0]);
+      $nameparts = explode(':', $parts[0]);
+      if (!$restricted || in_array($nameparts[0], $allowed))
+        if ($item->get_datastream_dissemination('ISLANDORACM')) {
+          $options[$parts[0]] = $parts[1];
+        }
+    }
+  }
+
+  return $options;
+}
