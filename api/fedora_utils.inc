@@ -7,11 +7,17 @@
  * Base utilities used by the Islandora fedora module.
  */
 
-/*
- * Functions that emulate php5.3 functionality for backwards compatiablity
- */
 if (!function_exists('str_getcsv')) {
 
+  /**
+   * Functions that emulate php5.3 functionality for backwards compatiablity
+   * @param type $input
+   * @param type $delimiter
+   * @param type $enclosure
+   * @param type $escape
+   * @param type $eol
+   * @return type 
+   */
   function str_getcsv($input, $delimiter=',', $enclosure='"', $escape=NULL, $eol=NULL) {
     $temp = fopen("php://memory", "rw");
     fwrite($temp, $input);
@@ -22,14 +28,6 @@ if (!function_exists('str_getcsv')) {
   }
 
 }
-
-/*
- * Functions that emulate php5.3 functionality for backwards compatiablity
- */
-
-/*
- * Static functions used by the Fedora PHP API.
- */
 
 /**
  * do curl
