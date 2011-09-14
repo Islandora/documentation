@@ -5,4 +5,4 @@ dependencies[] = tabs
 description = Shows a list of items in a fedora collection.
 package = Islandora
 version = 6.1
-core = 6.1
+core = 6.x
