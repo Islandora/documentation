@@ -1,14 +1,5 @@
 <?php
 
-// $Id$
-
-/*
- * Created on Aug 10, 2007
- *
- * To change the template for this generated file go to
- * Window - Preferences - PHPeclipse - PHP - Code Templates
- */
-
 /**
  * Drupal hook for admin form
  * fedora_repository_name is the name of the top level collection this module will query
@@ -34,6 +25,10 @@ function fedora_repository_menu() {
 
 /**
  * drupal hook to show help
+ *
+ * @param type $path
+ * @param type $arg
+ * @return type 
  */
 function fedora_repository_help($path, $arg) {
   switch ($path) {
@@ -44,6 +39,12 @@ function fedora_repository_help($path, $arg) {
   }
 }
 
+/**
+ * fedora repository purge object
+ * @param type $pid
+ * @param type $name
+ * @return type 
+ */
 function fedora_repository_purge_object($pid = NULL, $name = NULL) {
   if (!user_access('purge objects and datastreams')) {
     drupal_set_message(t('You do not have access to add a datastream to this object.'), 'error');
@@ -63,6 +64,14 @@ function fedora_repository_purge_object($pid = NULL, $name = NULL) {
   return $output;
 }
 
+/**
+ * fedora repository collection view
+ * @global type $user
+ * @param type $pid
+ * @param type $collection
+ * @param type $pageNumber
+ * @return type 
+ */
 function fedora_repository_collection_view($pid = NULL, $collection = NULL, $pageNumber = NULL) {
   module_load_include('inc', 'fedora_repository', 'ObjectHelper');
   global $user;
@@ -86,6 +95,13 @@ function fedora_repository_collection_view($pid = NULL, $collection = NULL, $pag
   return $content;
 }
 
+/**
+ * fedora repository ingest object
+ * @param type $collection_pid
+ * @param type $collection_label
+ * @param type $content_model
+ * @return type 
+ */
 function fedora_repository_ingest_object($collection_pid=NULL, $collection_label = NULL, $content_model = NULL) {
   module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
   module_load_include('inc', 'fedora_repository', 'ObjectHelper');
@@ -118,6 +134,13 @@ function fedora_repository_ingest_object($collection_pid=NULL, $collection_label
   return $output;
 }
 
+/**
+ * fedora repository ingest form submit
+ * @global type $base_url
+ * @global type $user
+ * @param array $form
+ * @param array $form_state 
+ */
 function fedora_repository_ingest_form_submit(array $form, array &$form_state) {
 //only validate the form if the submit button was pressed (other buttons may be used for AHAH
   if ($form_state['storage']['xml']) {
@@ -167,6 +190,12 @@ function fedora_repository_ingest_form_submit(array $form, array &$form_state) {
   }
 }
 
+/**
+ * fedora repository ingest form validate
+ * @param type $form
+ * @param type $form_state
+ * @return type 
+ */
 function fedora_repository_ingest_form_validate($form, &$form_state) {
 //only validate the form if the submit button was pressed (other buttons may be used for AHAH
   if ($form_state['clicked_button']['#id'] == 'edit-submit') {
@@ -230,6 +259,14 @@ function fedora_repository_ingest_form_validate($form, &$form_state) {
   }
 }
 
+/**
+ * fedora repository ingest form
+ * @param type $form_state
+ * @param type $collection_pid
+ * @param type $collection_label
+ * @param type $content_model
+ * @return type 
+ */
 function fedora_repository_ingest_form(&$form_state, $collection_pid, $collection_label = NULL, $content_model = NULL) {
   module_load_include('inc', 'fedora_repository', 'formClass');
 // For the sake of easily maintaining the module in different core versions create our own form_values variable.
@@ -242,6 +279,14 @@ function fedora_repository_ingest_form(&$form_state, $collection_pid, $collectio
   return $ingestForm->createIngestForm($collection_pid, $collection_label, $form_state);
 }
 
+/**
+ * fedora repository purge object form
+ * @global type $base_url
+ * @param type $form_state
+ * @param type $pid
+ * @param type $referrer
+ * @return type 
+ */
 function fedora_repository_purge_object_form(&$form_state, $pid, $referrer = NULL) {
   global $base_url;
   if (!user_access('purge objects and datastreams')) {
@@ -285,6 +330,12 @@ function fedora_repository_purge_object_form(&$form_state, $pid, $referrer = NUL
   return $form;
 }
 
+/**
+ * add stream
+ * @param type $collection_pid
+ * @param type $collectionName
+ * @return type 
+ */
 function add_stream($collection_pid=NULL, $collectionName=NULL) {
   module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
   if (!valid_pid($collection_pid)) {
@@ -304,6 +355,13 @@ function add_stream($collection_pid=NULL, $collectionName=NULL) {
   return $output;
 }
 
+/**
+ * add stream form submit
+ * @global type $base_url
+ * @param type $form
+ * @param type $form_state
+ * @return type 
+ */
 function add_stream_form_submit($form, &$form_state) {
   global $base_url;
   if (!empty($form_state['submit']) && $form_state['submit'] == 'OK') {
@@ -348,12 +406,24 @@ function add_stream_form_submit($form, &$form_state) {
   $form_state['rebuild'] = TRUE;
 }
 
+/**
+ * add stream form
+ * @param type $form_state
+ * @param type $pid
+ * @return type 
+ */
 function add_stream_form(&$form_state, $pid) {
   module_load_include('inc', 'fedora_repository', 'formClass');
   $addDataStreamForm = new formClass();
   return $addDataStreamForm->createAddDataStreamForm($pid, $form_state);
 }
 
+/**
+ * add stream form validate
+ * @param type $form
+ * @param type $form_state
+ * @return type 
+ */
 function add_stream_form_validate($form, &$form_state) {
   if ($form_state['clicked_button']['#value'] == 'OK') {
     $form_state['rebuild'] = TRUE;
@@ -392,6 +462,14 @@ function add_stream_form_validate($form, &$form_state) {
   $form_state['rebuild'] = FALSE;
 }
 
+/**
+ * fedora repository purge stream
+ * @global type $user
+ * @param type $pid
+ * @param type $dsId
+ * @param type $name
+ * @return type 
+ */
 function fedora_repository_purge_stream($pid = NULL, $dsId = NULL, $name = NULL) {
   module_load_include('inc', 'fedora_repository', 'ObjectHelper');
   global $user;
@@ -412,6 +490,12 @@ function fedora_repository_purge_stream($pid = NULL, $dsId = NULL, $name = NULL)
   return $output;
 }
 
+/**
+ * fedora repository purge object form submit
+ * @param type $form
+ * @param type $form_state
+ * @return type 
+ */
 function fedora_repository_purge_object_form_submit($form, &$form_state) {
   module_load_include('inc', 'fedora_repository', 'ConnectionHelper');
   $pid = $form_state['values']['pid'];
@@ -454,6 +538,13 @@ function fedora_repository_purge_object_form_submit($form, &$form_state) {
   }
 }
 
+/**
+ * fedora repository purge stream form
+ * @param type $form_state
+ * @param type $pid
+ * @param type $dsId
+ * @return type 
+ */
 function fedora_repository_purge_stream_form(&$form_state, $pid, $dsId) {
   $form['pid'] = array(
     '#type' => 'hidden',
@@ -471,6 +562,12 @@ function fedora_repository_purge_stream_form(&$form_state, $pid, $dsId) {
   return $form;
 }
 
+/**
+ * fedora repository purge stream form submit
+ * @global type $base_url
+ * @param type $form
+ * @param array $form_state 
+ */
 function fedora_repository_purge_stream_form_submit($form, &$form_state) {
   global $base_url;
   module_load_include('inc', 'fedora_repository', 'api/fedora_item');
@@ -486,6 +583,14 @@ function fedora_repository_purge_stream_form_submit($form, &$form_state) {
   $form_state['redirect'] = $base_url . "/fedora/repository/$pid";
 }
 
+/**
+ * fedora repository replace stream
+ * @param type $pid
+ * @param type $dsId
+ * @param type $dsLabel
+ * @param type $collectionName
+ * @return type 
+ */
 function fedora_repository_replace_stream($pid, $dsId, $dsLabel, $collectionName = NULL) {
   if ($pid == NULL || $dsId == NULL) {
     drupal_set_message(t('You must specify an pid and dsId to replace.'), 'error');
@@ -496,6 +601,14 @@ function fedora_repository_replace_stream($pid, $dsId, $dsLabel, $collectionName
   return $output;
 }
 
+/**
+ * fedora repository replace stream form
+ * @param type $form_state
+ * @param type $pid
+ * @param type $dsId
+ * @param type $dsLabel
+ * @return type 
+ */
 function fedora_repository_replace_stream_form(&$form_state, $pid, $dsId, $dsLabel) {
 //module_load_module_load_include('hp', ''Fedora_Repository'', 'config', 'fedora_repository', '');
   module_load_include('inc', 'Fedora_Repository', 'formClass');
@@ -504,6 +617,12 @@ function fedora_repository_replace_stream_form(&$form_state, $pid, $dsId, $dsLab
   return $replaceDataStreamForm->createReplaceDataStreamForm($pid, $dsId, $dsLabel, $form_state);
 }
 
+/**
+ * fedora repository replace stream form validate
+ * @param type $form
+ * @param type $form_state
+ * @return type 
+ */
 function fedora_repository_replace_stream_form_validate($form, &$form_state) {
 // If a file was uploaded, process it.
   if (isset($_FILES['files']) && is_uploaded_file($_FILES['files']['tmp_name']['file'])) {
@@ -530,6 +649,12 @@ function fedora_repository_replace_stream_form_validate($form, &$form_state) {
   }
 }
 
+/**
+ * fedora repository replace stream form submit
+ * @global type $base_url
+ * @param type $form
+ * @param array $form_state 
+ */
 function fedora_repository_replace_stream_form_submit($form, &$form_state) {
   global $base_url;
   $file = $form_state['values']['file'];
@@ -562,6 +687,13 @@ function fedora_repository_replace_stream_form_submit($form, &$form_state) {
   $form_state['redirect'] = 'fedora/repository/' . $pid;
 }
 
+/**
+ * fedora repository edit qdc page
+ * @global type $user
+ * @param type $pid
+ * @param type $dsId
+ * @return type 
+ */
 function fedora_repository_edit_qdc_page($pid = NULL, $dsId = NULL) {
   module_load_include('inc', 'fedora_repository', 'ObjectHelper');
   global $user;
@@ -578,6 +710,14 @@ function fedora_repository_edit_qdc_page($pid = NULL, $dsId = NULL) {
   return $output;
 }
 
+/**
+ * fedora repository edit qdc form 
+ * @global type $user
+ * @param type $form_state
+ * @param type $pid
+ * @param type $dsId
+ * @return type 
+ */
 function fedora_repository_edit_qdc_form(&$form_state, $pid, $dsId = NULL) {
   module_load_include('inc', 'fedora_repository', 'ContentModel');
   module_load_include('inc', 'fedora_repository', 'ObjectHelper');
@@ -616,6 +756,11 @@ function fedora_repository_edit_qdc_form(&$form_state, $pid, $dsId = NULL) {
   return $output;
 }
 
+/**
+ * fedora repository edit qdc form validate
+ * @param type $form
+ * @param boolean $form_state 
+ */
 function fedora_repository_edit_qdc_form_validate($form, &$form_state) {
   if ($form_state['storage']['xml']) {
     if ($form_state['storage']['step'] == 1) {
@@ -692,7 +837,10 @@ function fedora_repository_perm() {
  * drupal hook
  * determines if a user has access to what they are asking for
  *
- *
+ * @param type $op
+ * @param type $node
+ * @param type $account
+ * @return type 
  */
 function fedora_repository_access($op, $node, $account) {
   module_load_include('inc', 'fedora_repository', 'ObjectHelper');
@@ -739,7 +887,14 @@ function makeObject($pid, $dsID) {
  * Sends an ITQL query to the Fedora Resource index (can only communicate with Kowari or mulgara)
  * Reads the pid and datastream id as url parameters.  Queries the collection object for the query
  * if there is no query datastream falls back to the query shipped with the module.
- * @return String
+ *
+ * @global type $user
+ * @param type $pid
+ * @param type $dsId
+ * @param type $collection
+ * @param type $page_number
+ * @param type $limit
+ * @return type 
  */
 function fedora_repository_get_items($pid = NULL, $dsId = NULL, $collection = NULL, $page_number = NULL, $limit = NULL) {
   module_load_include('inc', 'fedora_repository', 'ObjectHelper');
@@ -830,6 +985,11 @@ function fedora_repository_get_items($pid = NULL, $dsId = NULL, $collection = NU
   return tabs_render($cmodels_tabs);
 }
 
+/**
+ * fedora repository urlencode string
+ * @param type $str
+ * @return type 
+ */
 function fedora_repository_urlencode_string($str) {
   return htmlentities($str);
 }
@@ -838,6 +998,12 @@ function fedora_repository_urlencode_string($str) {
  * Uses makeobject to get a stream.  Sets the Content Disposition in the header so it suggests a filename
  * and sends it as an attachment.  This should prompt for a download of the object.
  *
+ * @global type $user
+ * @param type $pid
+ * @param type $dsId
+ * @param type $label
+ * @param type $version
+ * @return type 
  */
 function fedora_object_as_attachment($pid, $dsId, $label=NULL, $version=NULL) {
   global $user;
@@ -852,12 +1018,28 @@ function fedora_object_as_attachment($pid, $dsId, $label=NULL, $version=NULL) {
   $objectHelper->makeObject($pid, $dsId, 1, $label, FALSE, $version);
 }
 
+/**
+ * repository page
+ * @param type $pid
+ * @param type $dsId
+ * @param type $collection
+ * @param type $pageNumber
+ * @return type 
+ */
 function repository_page($pid = NULL, $dsId = NULL, $collection = NULL, $pageNumber = NULL) {
 //do security check at fedora_repository_get_items function as it has to be called there in case
 //someone trys to come in a back door.
   return fedora_repository_get_items($pid, $dsId, $collection, $pageNumber);
 }
 
+/**
+ * repository service
+ * @global type $user
+ * @param type $pid
+ * @param type $servicePid
+ * @param type $serviceMethod
+ * @return type 
+ */
 function repository_service($pid = NULL, $servicePid = NULL, $serviceMethod = NULL) {
   module_load_include('inc', 'fedora_repository', 'api/fedora_item');
   module_load_include('inc', 'fedora_repository', 'ObjectHelper');
@@ -900,6 +1082,9 @@ function repository_service($pid = NULL, $servicePid = NULL, $serviceMethod = NU
  * RI index to get a list of results without authorization but to view any
  * datastreams users must be authorized.
  *
+ * @param type $op
+ * @param type $keys
+ * @return array 
  */
 function fedora_repository_search($op = 'search', $keys = NULL) {
   module_load_include('inc', 'fedora_repository', 'ObjectHelper');
@@ -980,6 +1165,9 @@ function fedora_repository_search($op = 'search', $keys = NULL) {
 /**
  * Implementation of hook_search_page().
  * Display the search results
+ *
+ * @param type $resultData
+ * @return array 
  */
 function fedora_repository_search_page($resultData) {
   $path = drupal_get_path('module', 'fedora_repository');
@@ -1054,6 +1242,10 @@ function fedora_repository_search_page($resultData) {
 /**
  * Implementation of hook_form_alter().
  * allows the advanced search form in drupal
+ *
+ * @param type $form
+ * @param type $form_state
+ * @param type $form_id 
  */
 function fedora_repository_form_alter(&$form, &$form_state, $form_id) {
 // Advanced node search form
@@ -1108,6 +1300,8 @@ function fedora_repository_form_alter(&$form, &$form_state, $form_id) {
 /**
  * Implementation of hook_search_validate()
  *
+ * @param type $form
+ * @param type $form_state 
  */
 function fedora_repository_search_validate($form, &$form_state) {
 // Initialise using any existing basic search keywords.
@@ -1125,6 +1319,13 @@ function fedora_repository_search_validate($form, &$form_state) {
   }
 }
 
+/**
+ * fedora repository block
+ * @param type $op
+ * @param type $delta
+ * @param type $edit
+ * @return type 
+ */
 function fedora_repository_block($op = 'list', $delta = 0, $edit = array()) {
 // The $op parameter determines what piece of information is being requested.
   switch ($op) {
@@ -1183,6 +1384,10 @@ function fedora_repository_block($op = 'list', $delta = 0, $edit = array()) {
   }
 }
 
+/**
+ * fedora repository theme
+ * @return type 
+ */
 function fedora_repository_theme() {
   return array(
     'fedora_repository_mnpl_advanced_search_form' => array(
@@ -1205,6 +1410,11 @@ function fedora_repository_theme() {
 
 /**
  * Get a list of terms from a lucene index
+ *
+ * @param type $field
+ * @param type $startTerm
+ * @param type $displayName
+ * @return type 
  */
 function fedora_repository_list_terms($field, $startTerm = NULL, $displayName = NULL) {
   module_load_include('inc', 'fedora_repository', 'SearchClass');
@@ -1212,18 +1422,33 @@ function fedora_repository_list_terms($field, $startTerm = NULL, $displayName = 
   return $searchClass->getTerms($field, $startTerm, $displayName);
 }
 
+/**
+ * fedora repository mnpl advanced search form
+ * @return type 
+ */
 function fedora_repository_mnpl_advanced_search_form() {
   module_load_include('inc', 'fedora_repository', 'SearchClass');
   $searchClass = new SearchClass();
   return $searchClass->build_advanced_search_form();
 }
 
+/**
+ * theme fedora repository mnpl advanced search form 
+ * @param type $form
+ * @return type 
+ */
 function theme_fedora_repository_mnpl_advanced_search_form($form) {
   module_load_include('inc', 'fedora_repository', 'SearchClass');
   $advanced_search_form = new SearchClass();
   return $advanced_search_form->theme_advanced_search_form($form);
 }
 
+/**
+ * fedora repository mnpl advanced search
+ * @param type $query
+ * @param type $startPage
+ * @return type 
+ */
 function fedora_repository_mnpl_advanced_search($query, $startPage = 1) {
   module_load_include('inc', 'fedora_repository', 'SearchClass');
   $searchClass = new SearchClass();
@@ -1231,6 +1456,11 @@ function fedora_repository_mnpl_advanced_search($query, $startPage = 1) {
   return $searchClass->custom_search($query, $startPage);
 }
 
+/**
+ * fedora repository mnpl_advanced search form submit
+ * @param type $form
+ * @param type $form_state 
+ */
 function fedora_repository_mnpl_advanced_search_form_submit($form, &$form_state) {
   $type_id = $form_state['values']['type'];
   $repeat = variable_get('fedora_repository_advanced_block_repeat', t('3'));
@@ -1249,11 +1479,19 @@ function fedora_repository_mnpl_advanced_search_form_submit($form, &$form_state)
   drupal_goto("fedora/repository/mnpl_advanced_search/$searchString");
 }
 
+/**
+ * fedora repository install demo page
+ * @return type 
+ */
 function fedora_repository_install_demos_page() {
   $output = drupal_get_form('fedora_repository_demo_objects_form');
   return $output;
 }
 
+/**
+ * fedora repository demo objects form
+ * @return string 
+ */
 function fedora_repository_demo_objects_form() {
   module_load_include('inc', 'fedora_repository', 'ObjectHelper');
   module_load_include('inc', 'fedora_repository', 'api/fedora_item');
@@ -1341,6 +1579,12 @@ function fedora_repository_demo_objects_form() {
   return $form;
 }
 
+/**
+ * fedora repository demo objects form submit
+ * @global type $base_url
+ * @param type $form
+ * @param type $form_state 
+ */
 function fedora_repository_demo_objects_form_submit($form, &$form_state) {
   module_load_include('inc', 'fedora_repository', 'api/fedora_item');
   module_load_include('inc', 'fedora_repository', 'api/dublin_core');
@@ -1467,6 +1711,10 @@ function fedora_repository_demo_objects_form_submit($form, &$form_state) {
   }
 }
 
+/**
+ * fedora repository required fedora objects
+ * @return type 
+ */
 function fedora_repository_required_fedora_objects() {
 // array( 'path-to-foxml-file', 'pid', 'dsid', 'path-to-datastream-file', int dsversion, boolean required)
   $module_path = drupal_get_path('module', 'fedora_repository');
@@ -1633,10 +1881,9 @@ function fedora_repository_required_fedora_objects() {
   );
 }
 
-/*
+/**
  * Functions to create a time selector form element type.
  */
-
 function fedora_repository_elements() {
   $type['fedora_repository_time'] = array(
     "#input" => TRUE,
@@ -1646,6 +1893,11 @@ function fedora_repository_elements() {
   return $type;
 }
 
+/**
+ * fedora repository expand time
+ * @param type $element
+ * @return string 
+ */
 function fedora_repository_expand_time($element) {
 // Default to current time, check default_value but set value so that if
 // default value is present it will override value
@@ -1684,11 +1936,21 @@ function fedora_repository_expand_time($element) {
   return $element;
 }
 
+/**
+ * fedora repository time
+ * @param type $element
+ * @return type 
+ */
 function fedora_repository_time($element) {
   $output = '<div class="container-inline">' . $element['#children'] . '</div>';
   return theme('form_element', $element, $output);
 }
 
+/**
+ * theme fedora repository time
+ * @param type $element
+ * @return type 
+ */
 function theme_fedora_repository_time($element) {
   $output = '<div class="container-inline">' . $element['#children'] . '</div>';
   return theme('form_element', $element, $output);
@@ -1696,6 +1958,10 @@ function theme_fedora_repository_time($element) {
 
 /* Export (basket) functionality */
 
+/**
+ * fedora repository remove item from basket
+ * @param type $pid 
+ */
 function fedora_repository_remove_item_from_basket($pid) {
 
   module_load_include('inc', 'fedora_repository', 'ObjectHelper');
@@ -1717,6 +1983,10 @@ function fedora_repository_remove_item_from_basket($pid) {
   }
 }
 
+/**
+ * fedora repository basket
+ * @return type 
+ */
 function fedora_repository_basket() {
   $pids = _fedora_repository_get_basket_pids();
   $output = drupal_get_form('fedora_repository_basket_form', $pids);
@@ -1773,6 +2043,11 @@ function fedora_repository_basket_form($form_state, $pids) {
   return $form;
 }
 
+/**
+ * theme fedora repository basket form
+ * @param type $form
+ * @return string 
+ */
 function theme_fedora_repository_basket_form($form) {
   $header = array(
     theme('table_select_header_cell'),
@@ -1803,10 +2078,22 @@ function theme_fedora_repository_basket_form($form) {
   return $output;
 }
 
+/**
+ * fedora repository basket form validate
+ * @param type $form
+ * @param type $form_state 
+ */
 function fedora_repository_basket_form_validate($form, &$form_state) {
   
 }
 
+/**
+ * fedora repository basket form submit
+ * @global type $user
+ * @param type $form
+ * @param type $form_state
+ * @return type 
+ */
 function fedora_repository_basket_form_submit($form, &$form_state) {
   if ($form_state['values']['op'] == $form_state['values']['remove_submit']) {
     $pids = $form_state['clicked_button']['#post']['remove'];
@@ -1873,10 +2160,11 @@ function fedora_repository_basket_form_submit($form, &$form_state) {
   return;
 }
 
-/*
+/**
  * Get all pids saved to the basket. 
+ *
+ * @return type 
  */
-
 function _fedora_repository_get_basket_pids() {
 
 // Set empty defaults if basket elements are missing
@@ -1904,10 +2192,19 @@ function _fedora_repository_get_basket_pids() {
   return $pids;
 }
 
+/**
+ * fedora repository empty basket
+ */
 function _fedora_repository_empty_basket() {
   unset($_SESSION['basket']);
 }
 
+/**
+ * fedora repository add to basket
+ * @param type $pid
+ * @param type $warn
+ * @param type $searchResultsFlag 
+ */
 function fedora_repository_add_to_basket($pid, $warn = TRUE, $searchResultsFlag = FALSE) {
   if ($warn && _is_added_to_basket($pid)) {
     drupal_set_message(t("Object already in basket"));
@@ -1926,6 +2223,11 @@ function fedora_repository_add_to_basket($pid, $warn = TRUE, $searchResultsFlag 
   }
 }
 
+/**
+ * fedora repository remove from basket
+ * @param type $pid
+ * @return type 
+ */
 function fedora_repository_remove_from_basket($pid) {
   if (isset($_SESSION['basket']['unprocessed'][$pid])) {
     unset($_SESSION['basket']['unprocessed'][$pid]);
@@ -1937,6 +2239,12 @@ function fedora_repository_remove_from_basket($pid) {
   return;
 }
 
+/**
+ * theme add to basket link
+ * @param type $pid
+ * @param type $type
+ * @return type 
+ */
 function theme_add_to_basket_link($pid, $type = 'object') {
   $object = t($type);
   $path = drupal_urlencode($pid);
@@ -1960,11 +2268,22 @@ function theme_add_to_basket_link($pid, $type = 'object') {
   return theme('image', drupal_get_path('module', 'Fedora_Repository') . '/images/' . $saved, t("In basket"), t("This @object is already in your basket", array('@object' => $object)));
 }
 
+/**
+ * is added to basket
+ * @param type $pid
+ * @param type $account
+ * @return type 
+ */
 function _is_added_to_basket($pid, $account = NULL) {
   return isset($_SESSION['basket']['unprocessed'][$pid]) || isset($_SESSION['basket']['processed'][$pid]);
 //  return db_result(db_query("SELECT uid FROM {repository_basket} WHERE uid = %d AND pid = '%s'", $account->uid, $pid));
 }
 
+/**
+ * fedora repository display schema
+ * @param type $file
+ * @return type 
+ */
 function fedora_repository_display_schema($file) {
   $path = drupal_get_path('module', 'fedora_repository');
   if (strtolower(substr($file, -3)) == 'xsd' && file_exists($path . '/' . $file)) {
@@ -1976,6 +2295,12 @@ function fedora_repository_display_schema($file) {
   return;
 }
 
+/**
+ * fedora repository batch reingest object
+ * @param type $object
+ * @param type $context
+ * @return type 
+ */
 function fedora_repository_batch_reingest_object($object, &$context) {
   module_load_include('inc', 'fedora_repository', 'api/fedora_item');
   module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
@@ -2065,6 +2390,11 @@ function fedora_repository_get_islandora_datastream_version($item = NULL, $dsid 
   return $return;
 }
 
+/**
+ * theme fedora repository solution pack list
+ * @param type $solution_packs
+ * @return string 
+ */
 function theme_fedora_repository_solution_packs_list($solution_packs) {
   module_load_include('inc', 'fedora_repository', 'api/fedora_item');
   module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
