@@ -1,7 +1,5 @@
 <?php
 
-// $Id$
-
 /**
  * @file
  * Operations that affect a Fedora repository at a collection level.

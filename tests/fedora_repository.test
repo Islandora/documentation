@@ -9,9 +9,9 @@ class FedoraRepositoryTestCase extends DrupalWebTestCase {
 
   public static function getInfo() {
     return array(
-      'name' => 'Fedora Repository',
-      'description' => t('The Fedora repository content models.'),
-      'group' => t('fedora repository'),
+      'name' => 'Digital Repository',
+      'description' => t('The Digital repository content models.'),
+      'group' => t('digital repository'),
     );
   }
 
@@ -144,7 +144,7 @@ class FedoraRepositoryTestCase extends DrupalWebTestCase {
     return $matches[1];
   }
 
-  private function outputScreenContents($description = "Screen contents", $basename = 'Fedora Repository') {
+  private function outputScreenContents($description = "Screen contents", $basename = 'Digital Repository') {
     // This is a hack to get a directory that won't be cleaned up by SimpleTest.
     $file_dir = file_directory_path() . '../simpletest_output_pages';
     if (!is_dir($file_dir)) {
