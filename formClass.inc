@@ -242,7 +242,6 @@ class formClass {
       '#weight' => -2
     );
 
-
     $form['fedora_repository_url'] = array(
       '#type' => 'textfield',
       '#title' => t('Fedora RISearch URL'),
@@ -251,16 +250,6 @@ class formClass {
       '#weight' => 0
     );
 
-
-    $form['fedora_soap_url'] = array(
-      '#type' => 'textfield',
-      '#title' => t('Fedora SOAP Url'),
-      '#default_value' => variable_get('fedora_soap_url', 'http://localhost:8080/fedora/services/access?wsdl'),
-      '#description' => t('The URL to use for SOAP connections'),
-      '#required' => TRUE,
-      '#weight' => 0,
-      '#suffix' => '<p>' . (fedora_available() ? '<img src="' . url('misc/watchdog-ok.png') . '"/>' . t('Successfully connected to Fedora server at !fedora_soap_url', array('!fedora_soap_url' => variable_get('fedora_soap_url', ''))) : '<img src="' . url('misc/watchdog-error.png') . '"/> ' . t('Unable to connect to Fedora server at !fedora_soap_url</p>', array('!fedora_soap_url' => variable_get('fedora_soap_url', '')))),
-    );
     $form['fedora_base_url'] = array(
       '#type' => 'textfield',
       '#title' => t('Fedora base URL'),
@@ -277,7 +266,16 @@ class formClass {
       '#required' => TRUE,
       '#weight' => 0
     );
-
+    
+    $form['fedora_soap_url'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Fedora SOAP Url'),
+      '#default_value' => variable_get('fedora_soap_url', 'http://localhost:8080/fedora/services/access?wsdl'),
+      '#description' => t('The URL to use for SOAP connections'),
+      '#required' => TRUE,
+      '#weight' => 0,
+      '#suffix' => '<p>' . (fedora_available() ? '<img src="' . url('misc/watchdog-ok.png') . '"/>' . t('Successfully connected to Fedora server at !fedora_soap_url', array('!fedora_soap_url' => variable_get('fedora_soap_url', ''))) : '<img src="' . url('misc/watchdog-error.png') . '"/> ' . t('Unable to connect to Fedora server at !fedora_soap_url</p>', array('!fedora_soap_url' => variable_get('fedora_soap_url', '')))),
+    );
 
 // will allow admin user to remove namepsace restrictions if not explicitly disallowed  in settings.php
     if (variable_get('allow_open_namespace', TRUE)) {
