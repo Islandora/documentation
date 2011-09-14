@@ -1731,15 +1731,9 @@ function fedora_repository_required_fedora_objects() {
           'dsversion' => 2,
           'cmodel' => 'fedora-system:ContentModel-3.0',
         ),
+
         array(
-          'pid' => 'islandora:strict_pdf',
-          'label' => 'Islandora strict PDF content model',
-          'dsid' => 'ISLANDORACM',
-          'datastream_file' => "$module_path/content_models/STRICT_PDFCM.xml",
-          'cmodel' => 'fedora-system:ContentModel-3.0',
-        ),
-        array(
-          'pid' => 'islandora:top',
+          'pid' => 'islandora:root',
           'label' => 'Islandora Top-level Collection',
           'cmodel' => 'islandora:collectionCModel',
           'datastreams' => array(
@@ -1753,129 +1747,7 @@ function fedora_repository_required_fedora_objects() {
               'mimetype' => 'image/png',
             ),
           ),
-        ),
-        array(
-          'pid' => 'islandora:ContentModelCollection',
-          'label' => 'Collection of installed content models',
-          'cmodel' => 'islandora:collectionCModel',
-          'parent' => 'islandora:top',
-          'datastreams' => array(
-            array(
-              'dsid' => 'COLLECTION_VIEW',
-              'datastream_file' => "$module_path/collection_views/simple_list_view.xml",
-            ),
-            array(
-              'dsid' => 'TN',
-              'datastream_file' => "$module_path/images/contentModel.jpg",
-              'mimetype' => 'image/jpeg',
-            ),
-            array(
-              'dsid' => 'QUERY',
-              'datastream_file' => "$module_path/collection_views/cmodel_collection_query.txt",
-              'mimetype' => 'text/plain',
-            ),
-          ),
-        ),
-        array(
-          'pid' => 'islandora:demos',
-          'label' => 'Islandora demos collection',
-          'cmodel' => 'islandora:collectionCModel',
-          'parent' => 'islandora:top',
-          'datastreams' => array(
-            array(
-              'dsid' => 'TN',
-              'datastream_file' => "$module_path/images/Gnome-emblem-photos.png",
-              'mimetype' => 'image/png',
-            ),
-            array(
-              'dsid' => 'COLLECTION_POLICY',
-              'datastream_file' => "$module_path/collection_policies/COLLECTION-COLLECTION POLICY.xml",
-            ),
-          ),
-        ),
-        array(
-          'pid' => 'islandora:pdf_collection',
-          'label' => 'Islandora Demo PDF Collection',
-          'cmodel' => 'islandora:collectionCModel',
-          'parent' => 'islandora:demos',
-          'datastreams' => array(
-            array(
-              'dsid' => 'TN',
-              'datastream_file' => "$module_path/images/Crystal_Clear_mimetype_pdf.png",
-              'mimetype' => 'image/png',
-            ),
-            array(
-              'dsid' => 'COLLECTION_POLICY',
-              'datastream_file' => "$module_path/collection_policies/PDF-COLLECTION POLICY.xml",
-            ),
-          ),
-        ),
-        array(
-          'pid' => 'demo:DualResImage',
-          'foxml_file' => "$module_path/content_models/demo_DualResImage.xml",
-          'datastreams' => array(
-            array(
-              'dsid' => 'ISLANDORACM',
-              'datastream_file' => "$module_path/content_models/STANDARD JPG.xml",
-            ),
-          ),
-        ),
-        array(
-          'pid' => 'demo:DualResImageCollection',
-          'foxml_file' => "$module_path/content_models/demo_DualResImageCollection.xml",
-          'datastreams' => array(
-            array(
-              'dsid' => 'ISLANDORACM',
-              'datastream_file' => "$module_path/content_models/COLLECTIONCM.xml",
-            ),
-          ),
-        ),
-        array(
-          'pid' => 'demo:DualResolution',
-          'foxml_file' => "$module_path/content_models/demo_DualResolution.xml",
-        ),
-        array(
-          'pid' => 'demo:DualResImageImpl',
-          'foxml_file' => "$module_path/content_models/demo_DualResImageImpl.xml",
-        ),
-        array(
-          'pid' => 'demo:CollectionImpl',
-          'foxml_file' => "$module_path/content_models/demo_CollectionImpl.xml",
-        ),
-        array(
-          'pid' => 'demo:Collection',
-          'foxml_file' => "$module_path/content_models/demo_Collection.xml",
-        ),
-        array(
-          'pid' => 'islandora:demo_image_collection',
-          'label' => 'Demo Image Collection',
-          'cmodel' => 'demo:DualResImageCollection',
-          'parent' => 'islandora:demos',
-          'datastreams' => array(
-            array(
-              'dsid' => 'COLLECTION_POLICY',
-              'datastream_file' => "$module_path/collection_policies/JPG-COLLECTION POLICY.xml",
-            ),
-            array(
-              'dsid' => 'TN',
-              'datastream_file' => "$module_path/images/Gnome-emblem-photos.png",
-              'mimetype' => 'image/png',
-            ),
-            array(
-              'dsid' => 'COLLECTION_VIEW',
-              'datastream_file' => "$module_path/collection_views/standard_jpeg_collection_view.xml",
-            ),
-            array(
-              'dsid' => 'QUERY',
-              'datastream_file' => "$module_path/collection_views/standard_jpeg_collection_query.txt",
-              'mimetype' => 'text/plain',
-            ),
-            array(
-              'dsid' => 'DC',
-              'datastream_file' => "$module_path/collection_views/demo_image_collection_dc_record.xml",
-            ),
-          ),
-        ),
+        ), 
       ),
     ),
   );
