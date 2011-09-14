@@ -82,7 +82,7 @@ class formClass {
       'page callback' => 'repository_page',
       'type' => MENU_NORMAL_ITEM,
       'access arguments' => array('view fedora collection'),
-      // 'access' => TRUE
+        // 'access' => TRUE
     );
 
     $items['fedora/repository/service'] = array(
@@ -246,19 +246,11 @@ class formClass {
     $form['fedora_repository_url'] = array(
       '#type' => 'textfield',
       '#title' => t('Fedora RISearch URL'),
-      '#default_value' => variable_get('fedora_repository_url',
-        'http://localhost:8080/fedora/risearch'),
+      '#default_value' => variable_get('fedora_repository_url', 'http://localhost:8080/fedora/risearch'),
       '#description' => t('The url of the Fedora server'), '#required' => TRUE,
       '#weight' => 0
     );
-    $form['fedora_fgsearch_url'] = array(
-      '#type' => 'textfield',
-      '#title' => t('Fedora Lucene search URL'),
-      '#default_value' => variable_get('fedora_fgsearch_url', 'http://localhost:8080/fedoragsearch/rest'),
-      '#description' => t('The url of the Lucene Fedora server'),
-      '#required' => TRUE,
-      '#weight' => 0
-    );
+
     $form['fedora_index_name'] = array(
       '#type' => 'textfield',
       '#title' => t('Fedora Lucene index name'),
@@ -342,8 +334,14 @@ class formClass {
       '#default_value' => variable_get('fedora_repository_title', 'Digital Repository'),
       '#description' => t('The title displayed when viewing collections and objects in  /fedora/repository. Leave blank to display no title. Note that the menus must be rebuilt after changing this variable.'),
     );
-
-    $form['fedora_object_display_title'] = array(
+    $form['advanced'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Advanced configuration option'),
+      '#description' => t('Advanced configuration.  Under normal circumstances these will not be touched'),
+      '#collapsable' => true,
+      '#collapsed' => true,
+    );
+    $form['advanced']['fedora_object_display_title'] = array(
       '#type' => 'select',
       '#title' => t('Display Object Title Behaviour'),
       '#default_value' => variable_get('fedora_object_display_title', ObjectHelper::$DISPLAY_ALWAYS),
@@ -351,7 +349,7 @@ class formClass {
       '#description' => t('Determines when to display the object (or collection) title when viewing an object/collection page.'),
     );
 
-    $form['fedora_object_display_description'] = array(
+    $form['advanced']['fedora_object_display_description'] = array(
       '#type' => 'select',
       '#title' => t('Display Object Description Behaviour'),
       '#default_value' => variable_get('fedora_object_display_description', ObjectHelper::$DISPLAY_ALWAYS),
@@ -359,14 +357,14 @@ class formClass {
       '#description' => t('Determines when to display the default object (or collection) description fieldset when viewing an object/collection page.'),
     );
 
-    $form['fedora_object_restrict_datastreams'] = array(
+    $form['advanced']['fedora_object_restrict_datastreams'] = array(
       '#type' => 'checkbox',
       '#title' => t('Restrict Access to Fedora Object Datastreams'),
       '#default_value' => variable_get('fedora_object_restrict_datastreams', FALSE),
       '#description' => t('When enabled, restricts access to fedora object datastreams that are not listed in the Islandora Content Model for the object (unless the user is an administrator).'),
     );
 
-    $form['fedora_collection_display_list'] = array(
+    $form['advanced']['fedora_collection_display_list'] = array(
       '#type' => 'select',
       '#title' => t('Display Collection List Behaviour'),
       '#default_value' => variable_get('fedora_collection_display_list', ObjectHelper::$DISPLAY_ALWAYS),
@@ -375,7 +373,7 @@ class formClass {
     );
 
     //Export functionality
-    $form['module']['export_area'] = array(
+    $form['advanced']['module']['export_area'] = array(
       '#type' => 'textfield',
       '#title' => t('Export area'),
       '#default_value' => variable_get('export_area', file_directory_path() . '/fedora_export_area'),
