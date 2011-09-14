@@ -209,33 +209,33 @@ class formClass {
     $form = array();
     $form['fedora_repository_name'] = array(
       '#type' => 'textfield',
-      '#title' => t('Default collection name'),
+      '#title' => t('Root Collection Name'),
       '#default_value' => variable_get('fedora_repository_name', 'Islandora demos collection'),
-      '#description' => t('The Name of the collection to grab the list of items from'),
+      '#description' => t('The Name of the Root Collection Object'),
       '#required' => TRUE,
       '#weight' => -2
     );
     $form['fedora_repository_pid'] = array(
       '#type' => 'textfield',
-      '#title' => t('Default collection PID'),
+      '#title' => t('Root Collection PID'),
       '#default_value' => variable_get('fedora_repository_pid', 'islandora:root'),
-      '#description' => t('The PID of the collection object to grab the list of items from'),
+      '#description' => t('The PID of the Root Collection Object'),
       '#required' => TRUE,
       '#weight' => -2
     );
 
     $form['fedora_collection_model_pid'] = array(
       '#type' => 'textfield',
-      '#title' => t('Default Collection Model PID'),
+      '#title' => t('Root Collection Model PID'),
       '#default_value' => variable_get('fedora_collection_model_pid', 'islandora:collectionCModel'),
-      '#description' => t('The PID of the default Collection Model Object'),
+      '#description' => t('The PID of the Root Collection Model Object'),
       '#required' => TRUE,
       '#weight' => -2
     );
 
     $form['fedora_content_model_collection_pid'] = array(
       '#type' => 'textfield',
-      '#title' => t('Default Content Model Collection PID'),
+      '#title' => t('Root Content Model Collection PID'),
       '#default_value' => variable_get('fedora_content_model_collection_pid', 'islandora:ContentModelCollection'),
       '#description' => t('The PID of the Content Model Collection Object'),
       '#required' => TRUE,
