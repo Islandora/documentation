@@ -38,8 +38,12 @@ class CollectionClass {
   /**
    * gets objects related to this object.  must include offset and limit
    * calls getRelatedItems but enforces limit and offset
+   * @param type $pid
+   * @param type $limit
+   * @param type $offset
+   * @param type $itqlquery
+   * @return type 
    */
-
   function getRelatedObjects($pid, $limit, $offset, $itqlquery=NULL) {
     module_load_include('inc', 'fedora_repository', 'ObjectHelper');
     $objectHelper = new ObjectHelper();
@@ -249,7 +253,7 @@ class CollectionClass {
   }
 
   /**
-   *
+   * get Allowed Mime Types
    * @param type $contentModelPid
    * @param type $contentModel_dsid
    * @return type 
