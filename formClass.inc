@@ -282,7 +282,7 @@ class formClass {
         '#type' => 'textfield',
         '#title' => t('PID namespaces allowed in this Drupal install'),
         '#default_value' => variable_get('fedora_pids_allowed', 'default: demo: changeme: islandora: ilives: '),
-        '#description' => t('A space separated list PID namespaces that users are permitted to access from this Drupal installation. <br /> This could be more than a simple namespace ie demo:mydemos.'),
+        '#description' => t('A space separated list of PID namespaces that users are permitted to access from this Drupal installation. <br /> This could be more than a simple namespace ie demo:mydemos.'),
         '#weight' => 0
       );
     }
@@ -291,7 +291,7 @@ class formClass {
         '#type' => 'textfield',
         '#title' => t('PID namespaces allowed in this Drupal install'),
         '#default_value' => variable_get('fedora_pids_allowed', 'default: demo: changeme: islandora: ilives: '),
-        '#description' => t('A space separated list PID namespaces that users are permitted to access from this Drupal installation. <br /> This could be more than a simple namespace ie demo:mydemos.'),
+        '#description' => t('A space separated list of PID namespaces that users are permitted to access from this Drupal installation. <br /> This could be more than a simple namespace ie demo:mydemos.'),
         '#weight' => 0
       );
     }
