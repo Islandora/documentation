@@ -1,8 +1,0 @@
-; $Id$
-name = PID Field
-description = Defines a field type for referencing a Fedora item from a node.
-dependencies[] = content
-dependencies[] = fedora_repository
-package = Fedora Repository
-core = 6.x
-
