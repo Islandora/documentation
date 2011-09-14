@@ -1,8 +1,7 @@
-; $Id$
 name = Fedora ImageAPI
 description = Adds image manipulation support through a REST interface
-package = Fedora Repository
+package = Islandora
 dependencies[] = fedora_repository
 dependencies[] = imageapi
-version = 6.1dev
-core = 6.x
+version = 6.1
+core = 6.1
