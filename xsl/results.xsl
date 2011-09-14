@@ -199,9 +199,7 @@
             <td valign="top">
                 <a>
                     <xsl:attribute name="href">
-                        <xsl:copy-of select="$OBJECTSPAGE"/>fedora/repository/
-                        <xsl:copy-of select="$PIDVALUE"/>/-/
-                        <xsl:value-of select="$CLEANTITLE"/>
+                        <xsl:copy-of select="$OBJECTSPAGE"/>fedora/repository/<xsl:copy-of select="$PIDVALUE"/>/-/<xsl:value-of select="$CLEANTITLE"/>
                     </xsl:attribute>
 			<!--<xsl:attribute name="href"><xsl:copy-of select="$OBJECTSPAGE"/><![CDATA[&pid=]]><xsl:value-of select="$PIDVALUE"/><![CDATA[&collection=object]]>
 
@@ -234,9 +232,7 @@
 							<!--<xsl:attribute name="href"><![CDATA[http://localhost/drupal-5.1/?q=node/7&pid=]]><xsl:value-of select="$PIDVALUE"/><![CDATA[&collection=object]]>-->
 							<!--<xsl:attribute name="href"><xsl:copy-of select="$OBJECTSPAGE"/><![CDATA[&pid=]]><xsl:value-of select="$PIDVALUE"/><![CDATA[&collection=object]]>-->
                                 <xsl:attribute name="href">
-                                    <xsl:copy-of select="$OBJECTSPAGE"/>fedora/repository/
-                                    <xsl:value-of select="$PIDVALUE"/>/-/
-                                    <xsl:value-of select="$CLEANTITLE"/>
+                                    <xsl:copy-of select="$OBJECTSPAGE"/>fedora/repository/<xsl:value-of select="$PIDVALUE"/>/-/<xsl:value-of select="$CLEANTITLE"/>
 
                                 </xsl:attribute>
 
@@ -253,9 +249,7 @@
 								<!--<xsl:attribute name="href"><xsl:copy-of select="$OBJECTSPAGE"/><![CDATA[&pid=]]><xsl:value-of select="$PIDVALUE"/><![CDATA[&collection=object]]>-->
                                 
                                     <xsl:attribute name="href">
-                                        <xsl:copy-of select="$OBJECTSPAGE"/>fedora/repository/
-                                        <xsl:value-of select="$PIDVALUE"/>/-/
-                                        <xsl:value-of select="$CLEANTITLE"/>
+                                        <xsl:copy-of select="$OBJECTSPAGE"/>fedora/repository/<xsl:value-of select="$PIDVALUE"/>/-/<xsl:value-of select="$CLEANTITLE"/>
 
                                     </xsl:attribute>
                                     <xsl:value-of select="field[@name='dc.title']/node()" disable-output-escaping="yes"/>

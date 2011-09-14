@@ -42,10 +42,7 @@
                                         <li class="pager-previous">
                                             <a>
                                                 <xsl:attribute name="href">
-                                                    <xsl:value-of select="$BASEURL"/>/fedora/repository/
-                                                    <xsl:value-of select="$thisPid"/>/-/
-                                                    <xsl:value-of select="$thisTitle"/>/
-                                                    <xsl:value-of select="$page - 1"/>
+                                                    <xsl:value-of select="$BASEURL"/>/fedora/repository/<xsl:value-of select="$thisPid"/>/-/<xsl:value-of select="$thisTitle"/>/<xsl:value-of select="$page - 1"/>
                                                 </xsl:attribute>
       &lt;Prev
                                             </a>
@@ -60,10 +57,7 @@
                                         <li class="pager-next">
                                             <a>
                                                 <xsl:attribute name="href">
-                                                    <xsl:value-of select="$BASEURL"/>/fedora/repository/
-                                                    <xsl:value-of select="$thisPid"/>/-/
-                                                    <xsl:value-of select="$thisTitle"/>/
-                                                    <xsl:value-of select="$page + 1"/>
+                                                    <xsl:value-of select="$BASEURL"/>/fedora/repository/<xsl:value-of select="$thisPid"/>/-/<xsl:value-of select="$thisTitle"/>/<xsl:value-of select="$page + 1"/>
                                                 </xsl:attribute>
       Next>
                                             </a>
@@ -235,16 +229,12 @@
         <xsl:variable name="linkUrl">
             <xsl:choose>
                 <xsl:when test="($CONTENTMODEL='islandora:collectionCModel')">
-                    <xsl:value-of select="$BASEURL"/>/fedora/repository/
-                    <xsl:copy-of select="$PID"/>/-/
-                    <xsl:value-of select="$cleanTitle"/>
+                    <xsl:value-of select="$BASEURL"/>/fedora/repository/<xsl:copy-of select="$PID"/>/-/<xsl:value-of select="$cleanTitle"/>
                 </xsl:when>
                 <xsl:otherwise>
      <!--the below is an example of going straight to a datastream instead of the details page.  
      <xsl:value-of select="$BASEURL"/>/fedora/repository/<xsl:copy-of select="$PID"/>/OBJ/<xsl:value-of select="s:title"/>-->
-                    <xsl:value-of select="$BASEURL"/>/fedora/repository/
-                    <xsl:copy-of select="$PID"/>/-/
-                    <xsl:value-of select="$cleanTitle"/>
+                    <xsl:value-of select="$BASEURL"/>/fedora/repository/<xsl:copy-of select="$PID"/>/-/<xsl:value-of select="$cleanTitle"/>
                 </xsl:otherwise>
             </xsl:choose>
             <xsl:value-of select="s:content"/>
@@ -256,8 +246,7 @@
                 </xsl:attribute>
                 <img>
                     <xsl:attribute name="src">
-                        <xsl:value-of select="$BASEURL"/>/fedora/repository/
-                        <xsl:value-of select="$PID"/>/TN
+                        <xsl:value-of select="$BASEURL"/>/fedora/repository/<xsl:value-of select="$PID"/>/TN
                     </xsl:attribute>
                     <xsl:attribute name="alt">
                         <xsl:value-of select="$newTitle" disable-output-escaping="yes"/>
