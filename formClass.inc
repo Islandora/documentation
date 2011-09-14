@@ -338,7 +338,7 @@ class formClass {
       '#type' => 'fieldset',
       '#title' => t('Advanced configuration option'),
       '#description' => t('Advanced configuration.  Under normal circumstances these will not be touched'),
-      '#collapsable' => true,
+      '#collapsible' => true,
       '#collapsed' => true,
     );
     $form['advanced']['fedora_object_display_title'] = array(
