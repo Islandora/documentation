@@ -224,21 +224,22 @@ class formClass {
       '#weight' => -18
     );
 
-    $form['fedora_repository_url'] = array(
-      '#type' => 'textfield',
-      '#title' => t('Fedora RISearch URL'),
-      '#default_value' => variable_get('fedora_repository_url', 'http://localhost:8080/fedora/risearch'),
-      '#description' => t('The url of the Fedora server'), '#required' => TRUE,
-      '#weight' => -16
-    );
-
     $form['fedora_base_url'] = array(
       '#type' => 'textfield',
       '#title' => t('Fedora base URL'),
       '#default_value' => variable_get('fedora_base_url', 'http://localhost:8080/fedora'),
       '#description' => t('The URL to use for REST-type connections'),
       '#required' => TRUE,
-      '#weight' => -14,
+      '#weight' => -16,
+    );
+    
+
+    $form['fedora_repository_url'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Fedora RISearch URL'),
+      '#default_value' => variable_get('fedora_repository_url', 'http://localhost:8080/fedora/risearch'),
+      '#description' => t('The url of the Fedora server'), '#required' => TRUE,
+      '#weight' => -14
     );
     
     $form['fedora_soap_url'] = array(
@@ -250,7 +251,7 @@ class formClass {
       '#weight' => -12,
       '#suffix' => '<p>' . (fedora_available() ? '<img src="' . url('misc/watchdog-ok.png') . '"/>' . t('Successfully connected to Fedora server at !fedora_soap_url', array('!fedora_soap_url' => variable_get('fedora_soap_url', ''))) : '<img src="' . url('misc/watchdog-error.png') . '"/> ' . t('Unable to connect to Fedora server at !fedora_soap_url</p>', array('!fedora_soap_url' => variable_get('fedora_soap_url', '')))),
     );
-
+    
     $form['fedora_soap_manage_url'] = array(
       '#type' => 'textfield',
       '#title' => t('Fedora SOAP management URL'),
@@ -258,7 +259,7 @@ class formClass {
       '#required' => TRUE,
       '#weight' => -10
     );
-    
+        
 // will allow admin user to remove namepsace restrictions if not explicitly disallowed  in settings.php
     if (variable_get('allow_open_namespace', TRUE)) {
       $form['fedora_namespace'] = array(
