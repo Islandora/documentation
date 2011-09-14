@@ -57,6 +57,12 @@ class CollectionClass {
   /**
    * Gets objects related to this item.  It will query the object for a Query stream and use that as a itql query
    * or if there is no query stream it will use the default.  If you pass a query to this method it will use the passed in query no matter what
+   * @global type $user
+   * @param type $pid
+   * @param type $itqlquery
+   * @param int $limit
+   * @param int $offset
+   * @return type 
    */
   function getRelatedItems($pid, $itqlquery = NULL, $limit = NULL, $offset = NULL) {
     module_load_include('inc', 'fedora_repository', 'ObjectHelper');
@@ -103,7 +109,7 @@ class CollectionClass {
   }
 
   /**
-   *
+   * get Collection Policy Stream ?
    * @param type $collection_pid
    * @return type 
    */
@@ -116,7 +122,7 @@ class CollectionClass {
   }
 
   /**
-   *
+   * get Relationship element ?
    * @param type $collection_pid
    * @return type 
    */
@@ -133,7 +139,7 @@ class CollectionClass {
   }
 
   /**
-   *
+   * get Collection View Stream ?
    * @param type $collection_pid
    * @return type 
    */
@@ -143,7 +149,7 @@ class CollectionClass {
   }
 
   /**
-   *
+   * get Stream ?
    * @param type $pid
    * @param type $dsid
    * @param type $showError
@@ -156,7 +162,7 @@ class CollectionClass {
   }
 
   /**
-   *
+   * get Pid name space ?
    * @param type $pid
    * @param type $dsid
    * @return type 
@@ -182,6 +188,9 @@ class CollectionClass {
 
   /**
    * gets a list of content models from a collection policy
+   * @param type $collection_pid
+   * @param type $showError
+   * @return ContentModel 
    */
   function getContentModels($collection_pid, $showError = TRUE) {
     module_load_include('inc', 'Fedora_Repository', 'ContentModel');
@@ -275,6 +284,12 @@ class CollectionClass {
   /**
    * Grabs the rules from the content model stream
    * file the file that has been uploaded
+   *
+   * @param type $file
+   * @param type $mimetype
+   * @param type $pid
+   * @param type $dsid
+   * @return type 
    */
   function getAndDoRules($file, $mimetype, $pid, $dsid) {
     if (!user_access('ingest new fedora objects')) {
@@ -302,6 +317,10 @@ class CollectionClass {
 
   /**
    * calls the methods defined in the content model rules .xml file stored in a Fedora object
+   *
+   * @param type $file
+   * @param type $methods
+   * @return type 
    */
   function callMethods($file, $methods) {
     foreach ($methods as $method) {
@@ -334,6 +353,12 @@ class CollectionClass {
   /**
    * grabs a xml form definition from a content model and builds
    * the form using drupals forms api
+   *
+   * @param type $form
+   * @param type $form_state
+   * @param type $contentModelPid
+   * @param type $contentModelDsid
+   * @return type 
    */
   function build_ingest_form(&$form, &$form_state, $contentModelPid, $contentModelDsid) {
     $stream = $this->getContentModelStream($contentModelPid, $contentModelDsid);
@@ -400,6 +425,7 @@ class CollectionClass {
   /**
    * this will also create a personal collection for an existing user if they don't have one
    * not using this function currently
+   * 
    * @param type $user
    * @return type 
    */
@@ -447,6 +473,11 @@ class CollectionClass {
   /**
    * Queries a collection object for an xslt to format how the
    * collection of objects is displayed.
+   *
+   * @param type $pid
+   * @param type $path
+   * @param type $canUseDefault
+   * @return type 
    */
   function getXslContent($pid, $path, $canUseDefault = TRUE) {
     module_load_include('inc', 'fedora_repository', 'CollectionClass');
@@ -459,7 +490,7 @@ class CollectionClass {
   }
 
   /**
-   *
+   * show field sets ?
    * @global type $base_url
    * @global type $user
    * @param type $page_number
@@ -515,7 +546,7 @@ class CollectionClass {
   }
 
   /**
-   *
+   * get Ingest Interface ??
    * @global type $base_url
    * @return string 
    */
@@ -542,6 +573,16 @@ class CollectionClass {
     return $ingestObject;
   }
 
+  /**
+   * render collection
+   * @global type $base_url
+   * @param type $content
+   * @param type $pid
+   * @param type $dsId
+   * @param type $collection
+   * @param int $pageNumber
+   * @return type 
+   */
   function renderCollection($content, $pid, $dsId, $collection, $pageNumber = NULL) {
     $path = drupal_get_path('module', 'fedora_repository');
     global $base_url;
@@ -611,7 +652,7 @@ class CollectionClass {
 }
 
 /**
- *
+ * collection creation form ?
  * @param type $form_state
  * @param type $parent_collection_pid
  * @return type 
@@ -692,7 +733,7 @@ function collection_creation_form(&$form_state, $parent_collection_pid) {
 }
 
 /**
- *
+ * collection creation form validate ?
  * @param type $form
  * @param type $form_state
  * @return type 
@@ -708,7 +749,7 @@ function collection_creation_form_validate($form, &$form_state) {
 }
 
 /**
- *
+ * collection creation form submit
  * @global type $user
  * @param type $form
  * @param type $form_state 
