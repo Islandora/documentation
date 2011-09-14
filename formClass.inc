@@ -251,14 +251,7 @@ class formClass {
       '#weight' => 0
     );
 
-    $form['fedora_index_name'] = array(
-      '#type' => 'textfield',
-      '#title' => t('Fedora Lucene index name'),
-      '#default_value' => variable_get('fedora_index_name', 'BasicIndex'),
-      '#description' => t('The name of the Lucene index to search'),
-      '#required' => TRUE,
-      '#weight' => 0
-    );
+
     $form['fedora_soap_url'] = array(
       '#type' => 'textfield',
       '#title' => t('Fedora SOAP Url'),
@@ -285,13 +278,6 @@ class formClass {
       '#weight' => 0
     );
 
-    $form['fedora_solr_search_url'] = array(
-      '#type' => 'textfield',
-      '#title' => t('Fedora Solr search URL'),
-      '#default_value' => variable_get('fedora_solr_search_url', 'http://localhost:8080/solr'), '#description' => t('The URL to use for Solr searching'),
-      '#required' => TRUE,
-      '#weight' => 0
-    );
 
 // will allow admin user to remove namepsace restrictions if not explicitly disallowed  in settings.php
     if (variable_get('allow_open_namespace', TRUE)) {
@@ -336,7 +322,7 @@ class formClass {
     );
     $form['advanced'] = array(
       '#type' => 'fieldset',
-      '#title' => t('Advanced configuration option'),
+      '#title' => t('Advanced configuration options'),
       '#description' => t('Advanced configuration.  Under normal circumstances these will not be touched'),
       '#collapsible' => true,
       '#collapsed' => true,
