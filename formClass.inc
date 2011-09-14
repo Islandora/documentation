@@ -233,15 +233,6 @@ class formClass {
       '#weight' => 3
     );
 
-    $form['fedora_content_model_collection_pid'] = array(
-      '#type' => 'textfield',
-      '#title' => t('Root Content Model Collection PID'),
-      '#default_value' => variable_get('fedora_content_model_collection_pid', 'islandora:ContentModelCollection'),
-      '#description' => t('The PID of the Content Model Collection Object'),
-      '#required' => TRUE,
-      '#weight' => 4
-    );
-
     $form['fedora_repository_url'] = array(
       '#type' => 'textfield',
       '#title' => t('Fedora RISearch URL'),
