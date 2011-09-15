@@ -710,10 +710,6 @@ function collection_creation_form(&$form_state, $parent_collection_pid) {
     '#type' => 'hidden',
     '#value' => $parent_collection_pid,
   );
-  $form['all_content_models'] = array(
-    '#type' => 'hidden',
-    '#value' => implode('~~~',$content_models),
-  );
 
   $form['content_models'] = array(
     '#title' => "Choose allowable content models for this collection",
@@ -762,7 +758,7 @@ function collection_creation_form_submit($form, &$form_state) {
   $collection_pid = $form_state['values']['collection_pid'];
   $collection_name = $form_state['values']['collection_name'];
   $parent_collection = $form_state['values']['parent_collection'];
-  $all_cModels = explode('~~~', $form_state['values']['all_content_models']);
+  $all_cModels = get_content_models_as_option_array();
   $collection_policy = '<?xml version="1.0" encoding="UTF-8"?>
 <collection_policy xmlns="http://www.islandora.ca" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="" xsi:schemaLocation="http://www.islandora.ca http://syn.lib.umanitoba.ca/collection_policy.xsd">
     <content_models>
