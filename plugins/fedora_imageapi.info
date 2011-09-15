@@ -1,6 +1,6 @@
 name = Fedora ImageAPI
 description = Adds image manipulation support through a REST interface
-package = Islandora
+package = Islandora Dependencies
 dependencies[] = fedora_repository
 dependencies[] = imageapi
 version = 11.2.beta1
