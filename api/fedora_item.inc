@@ -76,6 +76,11 @@ class Fedora_Item {
    */
   function add_datastream_from_file($datastream_file, $datastream_id, $datastream_label = NULL, $datastream_mimetype = '', $controlGroup = 'M', $logMessage = NULL) {
     module_load_include('inc', 'fedora_repository', 'MimeClass');
+    if (!is_file($datastream_file)){
+      drupal_set_message("$datastream_file not found<br />", 'warning');
+      return;
+
+    }
     if (empty($datastream_mimetype)) {
       // Get mime type from the file extension.
       $mimetype_helper = new MimeClass();
