@@ -515,6 +515,7 @@ class CollectionClass {
     // Check the form post to see if we are in the middle of an ingest operation.
     $show_ingest_tab = (!empty($_POST['form_id']) && $_POST['form_id'] == 'fedora_repository_ingest_form');
     $add_to_collection = $this->getIngestInterface();
+
     $show_batch_tab = TRUE;
     $policy = CollectionPolicy::loadFromCollection($this->pid, TRUE);
     $content_models = $policy->getContentModels();
@@ -524,6 +525,10 @@ class CollectionClass {
     if (!$show_ingest_tab) {
       $view_selected = true;
     }
+
+    $view_selected = !$show_ingest_tab;
+    drupal_set_message();
+
 
 
     $tabset['view_tab'] = array(

@@ -601,7 +601,7 @@ class ObjectHelper {
       $namespaceAccess = TRUE;
     }
     if ($pid == NULL) {
-      $pid = variable_get('fedora_repository_pid', 'islandora:top');
+      $pid = variable_get('fedora_repository_pid', 'islandora:root');
     }
     $nameSpaceAllowed = explode(" ", variable_get('fedora_pids_allowed', 'default: demo: changeme: islandora: ilives: islandora-book: books: newspapers: '));
     $pos = NULL;
@@ -923,7 +923,7 @@ class ObjectHelper {
     module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
     // Before executing the query, we hve a base case of accessing the top-level collection
     global $base_url;
-    if ($pid == variable_get('fedora_repository_pid', 'islandora:top')) {
+    if ($pid == variable_get('fedora_repository_pid', 'islandora:root')) {
       $breadcrumbs[] = l(t('Digital repository'), 'fedora/repository');
       $breadcrumbs[] = l(t('Home'), $base_url);
     }
@@ -949,7 +949,7 @@ class ObjectHelper {
         $parent = preg_replace('/^info:fedora\//', '', $matches[0]);
 
         $breadcrumbs[] = l($matches[1], 'fedora/repository/' . $pid);
-        if ($parent == variable_get('fedora_repository_pid', 'islandora:top')) {
+        if ($parent == variable_get('fedora_repository_pid', 'islandora:root')) {
           $breadcrumbs[] = l(t('Digital repository'), 'fedora/repository');
           $breadcrumbs[] = l(t('Home'), $base_url);
         }
