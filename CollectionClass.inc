@@ -498,6 +498,7 @@ class CollectionClass {
    */
   function showFieldSets($page_number) {
     module_load_include('inc', 'fedora_repository', 'api/fedora_item');
+    module_load_include('inc', 'fedora_repository', 'CollectionManagement');
     global $base_url;
     $tabset = array();
     global $user;
@@ -514,10 +515,15 @@ class CollectionClass {
     // Check the form post to see if we are in the middle of an ingest operation.
     $show_ingest_tab = (!empty($_POST['form_id']) && $_POST['form_id'] == 'fedora_repository_ingest_form');
     $add_to_collection = $this->getIngestInterface();
+    $show_batch_tab = TRUE;
+    $policy = CollectionPolicy::loadFromCollection($this->pid, TRUE);
+    $content_models = $policy->getContentModels();
+    if (count($content_models) == 1 && $content_models[0]->pid == "islandora:collectionCModel") {
+      $show_batch_tab = FALSE;
+    }
     if (!$show_ingest_tab) {
       $view_selected = true;
     }
-    drupal_set_message();
 
 
     $tabset['view_tab'] = array(
@@ -534,14 +540,24 @@ class CollectionClass {
       // This will be the content of the tab.
       '#content' => $add_to_collection,
     );
-
-    $tabset['add_collection_tab'] = array(
-      // #type and #title are the minimum requirements.
-      '#type' => 'tabpage',
-      '#title' => t('Add Child Collection'),
-      // This will be the content of the tab.
-      '#content' => drupal_get_form('collection_creation_form', $this->pid),
-    );
+    if (user_access('manage collections')) {
+      $tabset['add_collection_tab'] = array(
+        // #type and #title are the minimum requirements.
+        '#type' => 'tabpage',
+        '#title' => t('Manage This Collection'),
+        // This will be the content of the tab.
+        '#content' => drupal_get_form('collection_management_form', $this->pid, $content_models),
+      );
+    }
+    if ($show_batch_tab) {
+      $tabset['batch_ingest_tab'] = array(
+        // #type and #title are the minimum requirements.
+        '#type' => 'tabpage',
+        '#title' => t('Batch Ingest'),
+        // This will be the content of the tab.
+        '#content' => drupal_get_form('batch_creation_form', $this->pid, $content_models),
+      );
+    }
     return $tabset;
   }
 
@@ -651,74 +667,55 @@ class CollectionClass {
 
 }
 
-/**
- * collection creation form ?
- * @param type $form_state
- * @param type $parent_collection_pid
- * @return type 
- */
-function collection_creation_form(&$form_state, $parent_collection_pid) {
+function batch_creation_form(&$form_state, $collection_pid, $content_models) {
   module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
-  $restricted = FALSE;
-  if (variable_get('fedora_namespace_restriction_enforced', true)) {
-    $restricted = true;
-    $allowed_string = variable_get('fedora_pids_allowed', 'default: demo: changeme: islandora:');
-    $namespaces = explode(':', $allowed_string);
-    foreach ($namespaces as $namespace) {
-      if ($namespace) {
-        $allowed[trim($namespace)] = trim($namespace);
-      }
+  module_load_include('inc', 'fedora_repository', 'CollectionPolicy');
+  $cm_options = array();
+  $name_mappings = array();
+  foreach ($content_models as $content_model) {
+    if ($content_model->pid != "islandora:collectionCModel") {
+      $cm_options[$content_model->pid] = $content_model->name;
+      $name_mappings[] = $content_model->pid . '^' . $content_model->pid_namespace;
     }
   }
+  $mappings = implode('~~~', $name_mappings);
+  $form['#attributes']['enctype'] = 'multipart/form-data';
 
-  $content_models = get_content_models_as_option_array();
   $form['titlebox'] = array(
     '#type' => 'item',
-    '#value' => t("Create New Child Collection within $collection_pid"),
+    '#value' => t("Batch ingest into $collection_pid"),
   );
 
-  $form['collection_name'] = array(
-    '#title' => "Collection Name",
-    '#type' => 'textfield',
-    '#description' => t("Human readable name for this collection"),
-  );
-  $form['collection_pid'] = array(
-    '#title' => "Collection PID",
-    '#type' => 'textfield',
-    '#size' => 15,
-    '#description' => t("Unique PID for this collection.  <br />Pids take the general form of namespace:collection eg islandora:pamphlets"),
-  );
-  if (!$restricted) {
-    $form['collection_namespace'] = array(
-      '#title' => "Collection Namespace",
-      '#type' => 'textfield',
-      '#size' => 15,
-      '#default_value' => 'default',
-      '#description' => t("Namespace for objects in this collection."),
-    );
-  }
-  else {
-    $form['collection_namespace'] = array(
-      '#title' => "Collection Namespace",
-      '#type' => 'select',
-      '#options' => $allowed,
-      '#default_value' => 'default',
-      '#description' => t("Namespace for objects in this collection."),
-    );
-  }
   $form['parent_collection'] = array(
     '#type' => 'hidden',
-    '#value' => $parent_collection_pid,
+    '#value' => $collection_pid,
   );
-
-  $form['content_models'] = array(
-    '#title' => "Choose allowable content models for this collection",
-    '#type' => 'checkboxes',
-    '#options' => $content_models,
+  $form['namespace_mappings'] = array(
+    '#type' => 'hidden',
+    '#value' => $mappings,
+  );
+  $form['metadata_type'] = array(
+    '#title' => "Choose Metadata Type",
+    '#type' => 'radios',
+    '#options' => array('MODS' => 'MODS', "DC" => "DUBLIN CORE"),
+    '#required' => true,
+    '#description' => t("Select primary metadata schema"),
+  );
+  $form['content_model'] = array(
+    '#title' => "Choose content model to be associated with objects ingested",
+    '#type' => 'select',
+    '#options' => $cm_options,
     '#required' => true,
     '#description' => t("Content models describe the behaviours of objects with which they are associated."),
   );
-
+  $form['indicator']['file-location'] = array(
+    '#type' => 'file',
+    '#title' => t('Upload zipped folder'),
+    '#size' => 48,
+    '#description' => t('The zipped folder should contain all files necessary to build objects.<br .>
+      Related files must have the same filename, but with diffening extensions to indicate mimetypes.<br />
+      ie. <em>myFile.xml</em> and <em>myFile.jpg</em>'),
+  );
 
   $form['submit'] = array(
     '#type' => 'submit',
@@ -729,68 +726,130 @@ function collection_creation_form(&$form_state, $parent_collection_pid) {
   return($form);
 }
 
-/**
- * collection creation form validate ?
- * @param type $form
- * @param type $form_state
- * @return type 
- */
-function collection_creation_form_validate($form, &$form_state) {
-  module_load_include('inc', 'fedora_repository', 'api/fedora_item');
-  module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
-  $pid = $form_state['values']['collection_pid'];
-  $item = new fedora_item($pid);
-  if ($item->exists()) {
-    form_set_error('', t("$pid already exists within your repository. the PID must be unique"));
-    return;
+function batch_creation_form_validate($form, &$form_state) {
+
+  $fieldName = 'file-location';
+  if (isset($_FILES['files']) && is_uploaded_file($_FILES['files']['tmp_name'][$fieldName])) {
+    $file = file_save_upload($fieldName);
+    if ($file->filemime != 'application/zip') {
+      form_set_error($fieldName, 'Input file must be a .zip file');
+      return;
+    }
+    if (!$file) {
+      form_set_error($fieldName, 'Error uploading file.');
+      return;
+    }
+    $form_state['values']['file'] = $file;
   }
-  if (!valid_pid($pid)){
-     form_set_error('', t("$pid is not a valid identifier"));
-     return;
+  else {
+    // set error
+    form_set_error($fieldName, 'Error uploading file.');
+    return;
   }
 }
 
-/**
- * collection creation form submit
- * @global type $user
- * @param type $form
- * @param type $form_state 
- */
-function collection_creation_form_submit($form, &$form_state) {
+function batch_creation_form_submit($form, &$form_state) {
+  module_load_include('inc', 'fedora_repository', 'ContentModel');
   global $user;
-  module_load_include('inc', 'fedora_repository', 'api/fedora_item');
-  module_load_include('inc', 'fedora_repository', 'api/dublin_core');
-  $module_path = drupal_get_path('module', 'fedora_repository');
-  $thumbnail = drupal_get_path('module', 'Fedora_Repository') . '/images/Crystal_Clear_filesystem_folder_grey.png';
-  $collection_pid = $form_state['values']['collection_pid'];
-  $new_collection_label = $form_state['values']['collection_name'];
-  $parent_collection = $form_state['values']['parent_collection'];
-  $pid_namespace = $form_state['values']['collection_namespace'];
-  $all_cModels = get_content_models_as_option_array();
-  $collection_policy = '<?xml version="1.0" encoding="UTF-8"?>
-<collection_policy xmlns="http://www.islandora.ca" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="" xsi:schemaLocation="http://www.islandora.ca http://syn.lib.umanitoba.ca/collection_policy.xsd">
-    <content_models>
-    </content_models>
-    <search_terms>
-    </search_terms>
-    <staging_area></staging_area>
-    <relationship>isMemberOfCollection</relationship>
-</collection_policy>';
-  $content_models = $form_state['values']['content_models'];
-  $collection_policy_xml = simplexml_load_string($collection_policy);
-  foreach ($content_models as $content_model) {
-    if ($content_model) {
-      $node = $collection_policy_xml->content_models->addChild('content_model');
-      $node->addAttribute('dsid', 'ISLANDORACM');
-      $node->addAttribute('name', $all_cModels[$content_model]);
-      $node->addAttribute('namespace', $pid_namespace . ':1');
-      $node->addAttribute('pid', $content_model);
+  $namespace_mappings = array();
+  $content_model = $form_state['values']['content_model'];
+  $metadata = $form_state['values']['meta_data_type'];
+  $namespace_process = explode('~~~', $form_state['values']['namespace_mappings']);
+  foreach ($namespace_process as $line) {
+    $line_parts = explode('^', $line);
+    $namespace_mappings[$line_parts[0]] = $line_parts[1];
+  }
+  $namespace = $namespace_mappings[$content_model];
+  $dirName = "temp" . $user->uid;
+  $tmpDir = file_directory_path() . '/' . $dirName . '/';
+  mkdir($tmpDir);
+  $file = $form_state['values']['file'];
+  $fileName = $file->filepath;
+  $file_list = array();
+  $cmdString = "unzip -q -o -d $tmpDir \"$fileName\"";
+  system($cmdString, $retVal);
+  $dirs = array();
+  $doNotAdd = array('.', '..', '__MACOSX');
+  array_push($dirs, $tmpDir);
+  $files = scandir($tmpDir);
+  foreach ($files as $file) {
+    if (is_dir("$tmpDir/$file") & !in_array($file, $doNotAdd)) {
+      array_push($dirs, $tmpDir . $file);
     }
   }
-  $item = fedora_item::ingest_new_item($collection_pid, 'A', $new_collection_label, $user->name);
-  $item->add_relationship('isMemberOfCollection', $parent_collection, RELS_EXT_URI);
-  $item->add_relationship('hasModel', 'islandora:collectionCModel', FEDORA_MODEL_URI);
-  $item->add_datastream_from_string($collection_policy_xml->saveXML(), 'COLLECTION_POLICY');
-  $item->add_datastream_from_file($thumbnail, 'TN');
-  drupal_goto("/fedora/repository/$collection_pid");
+
+  foreach ($dirs as $directory) {
+    if ($inputs = opendir($directory)) {
+      while (FALSE !== ($file_name = readdir($inputs))) {
+        if (!in_array($file_name, $doNotAdd)) {
+          $ext = strrchr($file_name, '.');
+          $base = preg_replace("/$ext$/", '', $file_name);
+          $ext = substr($ext, 1);
+          $file_list[$base][$ext] = "$directory" . $file_name;
+        }
+      }
+      closedir($inputs);
+    }
+  }
+
+  /**
+   * use the content model class to construct a class representing the selected content model
+   * call execIngestmethods on each mimetype passed in
+   */
+  create_fedora_batch($file_list, $content_model, $metadata, $namespace);
 }
+
+function create_fedora_batch($file_list, $content_model, $metadata, $namespace) {
+  module_load_include('inc', 'fedora_repository', 'api/fedora_item');
+  if (($cm = ContentModel::loadFromModel($content_model, 'ISLANDORACM')) !== FALSE) {
+    $allowedMimeTypes = $cm->getMimetypes();
+
+    if (!in_array($dformat, $allowedMimeTypes)) {
+      form_set_error('ingest-file-location', t('The uploaded file\'s mimetype (' . $dformat . ') is not associated with this Content Model. The allowed types are ' .
+              implode(' ', $allowedMimeTypes)));
+      return;
+    }
+    elseif (!$cm->execIngestRules($file, $dformat)) {
+      drupal_set_message(t('Error following Content Model Rules'), 'error');
+      foreach (ContentModel::$errors as $err) {
+        drupal_set_message($err, 'error');
+      }
+    }
+  }
+
+  $batch = array(
+    'title' => 'Ingesting Objects',
+    'operations' => array(),
+    'file' => drupal_get_path('module', 'fedora_repository') . '/CollectionClass.inc',
+  );
+
+
+  foreach ($file_list as $label => $object_files) {
+
+    $batch['operations'][] = array('create_fedora_objects', array($label, $content_model, $object_files, $collection_pid, $metadata));
+  }
+
+  batch_set($batch);
+}
+
+function create_fedora_objects($lable, $content_model, $object_files, $collection_pid, $namespace, $metadata, $content_model) {
+  $namespace = preg_replace('/:.*/', '', $namespace);
+  $pid = fedora_item::get_next_PID_in_namespace($namespace);
+  module_load_include('inc', 'fedora_reppository', 'api/fedora_item');
+  $item = Fedora_item::ingest_new_item($pid, 'A', $label, $owner);
+  $item->add_relationship('hasModel', $content_model, FEDORA_MODEL_URI);
+  if ($metadata == 'DC') {
+    $dc_xml = file_get_contents($object_files['xml']);
+    $object_files['xml'] = null;
+    $item->modify_datastream_by_value($dc_xml, 'DC', "Dublin Core", 'tex/xml');
+  }
+  if ($metadata == 'MODS') {
+    $item->add_datastream_from_file($object_files['xml'], 'MODS');
+    //add crosswalk to dc logic
+  }
+
+  foreach ($object_files as $file) {
+    
+  }
+}
+
