@@ -499,6 +499,7 @@ class CollectionClass {
   function showFieldSets($page_number) {
     module_load_include('inc', 'fedora_repository', 'api/fedora_item');
     module_load_include('inc', 'fedora_repository', 'CollectionManagement');
+    module_load_include('inc', 'fedora_repository', 'BatchIngest');
     global $base_url;
     $tabset = array();
     global $user;
@@ -525,23 +526,24 @@ class CollectionClass {
     if (!$show_ingest_tab) {
       $view_selected = true;
     }
-
+    if(!$collection_items){
+      $view_selected = false;
+      $add_selected = true;
+    }
     $view_selected = !$show_ingest_tab;
-    drupal_set_message();
-
 
 
     $tabset['view_tab'] = array(
       '#type' => 'tabpage',
       '#title' => 'View',
       '#selected' => $view_selected,
-      '#content' => $collection_items
+      '#content' => $collection_items,
+     
     );
     $tabset['add_tab'] = array(
-      // #type and #title are the minimum requirements.
       '#type' => 'tabpage',
       '#title' => t('Add'),
-      '#selected' => $show_ingest_tab,
+      '#selected' => $add_selected,
       // This will be the content of the tab.
       '#content' => $add_to_collection,
     );
@@ -552,9 +554,10 @@ class CollectionClass {
         '#title' => t('Manage This Collection'),
         // This will be the content of the tab.
         '#content' => drupal_get_form('collection_management_form', $this->pid, $content_models),
+        '#selected' => false,
       );
     }
-    if ($show_batch_tab) {
+    if ($show_batch_tab && user_access('create batch process')) {
       $tabset['batch_ingest_tab'] = array(
         // #type and #title are the minimum requirements.
         '#type' => 'tabpage',
@@ -670,191 +673,5 @@ class CollectionClass {
     return $objectList;
   }
 
-}
-
-function batch_creation_form(&$form_state, $collection_pid, $content_models) {
-  module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
-  module_load_include('inc', 'fedora_repository', 'CollectionPolicy');
-  $cm_options = array();
-  $name_mappings = array();
-  foreach ($content_models as $content_model) {
-    if ($content_model->pid != "islandora:collectionCModel") {
-      $cm_options[$content_model->pid] = $content_model->name;
-      $name_mappings[] = $content_model->pid . '^' . $content_model->pid_namespace;
-    }
-  }
-  $mappings = implode('~~~', $name_mappings);
-  $form['#attributes']['enctype'] = 'multipart/form-data';
-
-  $form['titlebox'] = array(
-    '#type' => 'item',
-    '#value' => t("Batch ingest into $collection_pid"),
-  );
-
-  $form['parent_collection'] = array(
-    '#type' => 'hidden',
-    '#value' => $collection_pid,
-  );
-  $form['namespace_mappings'] = array(
-    '#type' => 'hidden',
-    '#value' => $mappings,
-  );
-  $form['metadata_type'] = array(
-    '#title' => "Choose Metadata Type",
-    '#type' => 'radios',
-    '#options' => array('MODS' => 'MODS', "DC" => "DUBLIN CORE"),
-    '#required' => true,
-    '#description' => t("Select primary metadata schema"),
-  );
-  $form['content_model'] = array(
-    '#title' => "Choose content model to be associated with objects ingested",
-    '#type' => 'select',
-    '#options' => $cm_options,
-    '#required' => true,
-    '#description' => t("Content models describe the behaviours of objects with which they are associated."),
-  );
-  $form['indicator']['file-location'] = array(
-    '#type' => 'file',
-    '#title' => t('Upload zipped folder'),
-    '#size' => 48,
-    '#description' => t('The zipped folder should contain all files necessary to build objects.<br .>
-      Related files must have the same filename, but with diffening extensions to indicate mimetypes.<br />
-      ie. <em>myFile.xml</em> and <em>myFile.jpg</em>'),
-  );
-
-  $form['submit'] = array(
-    '#type' => 'submit',
-    '#value' => t('Submit')
-  );
-
-
-  return($form);
-}
-
-function batch_creation_form_validate($form, &$form_state) {
-
-  $fieldName = 'file-location';
-  if (isset($_FILES['files']) && is_uploaded_file($_FILES['files']['tmp_name'][$fieldName])) {
-    $file = file_save_upload($fieldName);
-    if ($file->filemime != 'application/zip') {
-      form_set_error($fieldName, 'Input file must be a .zip file');
-      return;
-    }
-    if (!$file) {
-      form_set_error($fieldName, 'Error uploading file.');
-      return;
-    }
-    $form_state['values']['file'] = $file;
-  }
-  else {
-    // set error
-    form_set_error($fieldName, 'Error uploading file.');
-    return;
-  }
-}
-
-function batch_creation_form_submit($form, &$form_state) {
-  module_load_include('inc', 'fedora_repository', 'ContentModel');
-  global $user;
-  $namespace_mappings = array();
-  $content_model = $form_state['values']['content_model'];
-  $metadata = $form_state['values']['meta_data_type'];
-  $namespace_process = explode('~~~', $form_state['values']['namespace_mappings']);
-  foreach ($namespace_process as $line) {
-    $line_parts = explode('^', $line);
-    $namespace_mappings[$line_parts[0]] = $line_parts[1];
-  }
-  $namespace = $namespace_mappings[$content_model];
-  $dirName = "temp" . $user->uid;
-  $tmpDir = file_directory_path() . '/' . $dirName . '/';
-  mkdir($tmpDir);
-  $file = $form_state['values']['file'];
-  $fileName = $file->filepath;
-  $file_list = array();
-  $cmdString = "unzip -q -o -d $tmpDir \"$fileName\"";
-  system($cmdString, $retVal);
-  $dirs = array();
-  $doNotAdd = array('.', '..', '__MACOSX');
-  array_push($dirs, $tmpDir);
-  $files = scandir($tmpDir);
-  foreach ($files as $file) {
-    if (is_dir("$tmpDir/$file") & !in_array($file, $doNotAdd)) {
-      array_push($dirs, $tmpDir . $file);
-    }
-  }
-
-  foreach ($dirs as $directory) {
-    if ($inputs = opendir($directory)) {
-      while (FALSE !== ($file_name = readdir($inputs))) {
-        if (!in_array($file_name, $doNotAdd)) {
-          $ext = strrchr($file_name, '.');
-          $base = preg_replace("/$ext$/", '', $file_name);
-          $ext = substr($ext, 1);
-          $file_list[$base][$ext] = "$directory" . $file_name;
-        }
-      }
-      closedir($inputs);
-    }
-  }
-
-  /**
-   * use the content model class to construct a class representing the selected content model
-   * call execIngestmethods on each mimetype passed in
-   */
-  create_fedora_batch($file_list, $content_model, $metadata, $namespace);
-}
-
-function create_fedora_batch($file_list, $content_model, $metadata, $namespace) {
-  module_load_include('inc', 'fedora_repository', 'api/fedora_item');
-  if (($cm = ContentModel::loadFromModel($content_model, 'ISLANDORACM')) !== FALSE) {
-    $allowedMimeTypes = $cm->getMimetypes();
-
-    if (!in_array($dformat, $allowedMimeTypes)) {
-      form_set_error('ingest-file-location', t('The uploaded file\'s mimetype (' . $dformat . ') is not associated with this Content Model. The allowed types are ' .
-              implode(' ', $allowedMimeTypes)));
-      return;
-    }
-    elseif (!$cm->execIngestRules($file, $dformat)) {
-      drupal_set_message(t('Error following Content Model Rules'), 'error');
-      foreach (ContentModel::$errors as $err) {
-        drupal_set_message($err, 'error');
-      }
-    }
-  }
-
-  $batch = array(
-    'title' => 'Ingesting Objects',
-    'operations' => array(),
-    'file' => drupal_get_path('module', 'fedora_repository') . '/CollectionClass.inc',
-  );
-
-
-  foreach ($file_list as $label => $object_files) {
-
-    $batch['operations'][] = array('create_fedora_objects', array($label, $content_model, $object_files, $collection_pid, $metadata));
-  }
-
-  batch_set($batch);
-}
-
-function create_fedora_objects($lable, $content_model, $object_files, $collection_pid, $namespace, $metadata, $content_model) {
-  $namespace = preg_replace('/:.*/', '', $namespace);
-  $pid = fedora_item::get_next_PID_in_namespace($namespace);
-  module_load_include('inc', 'fedora_reppository', 'api/fedora_item');
-  $item = Fedora_item::ingest_new_item($pid, 'A', $label, $owner);
-  $item->add_relationship('hasModel', $content_model, FEDORA_MODEL_URI);
-  if ($metadata == 'DC') {
-    $dc_xml = file_get_contents($object_files['xml']);
-    $object_files['xml'] = null;
-    $item->modify_datastream_by_value($dc_xml, 'DC', "Dublin Core", 'tex/xml');
-  }
-  if ($metadata == 'MODS') {
-    $item->add_datastream_from_file($object_files['xml'], 'MODS');
-    //add crosswalk to dc logic
-  }
-
-  foreach ($object_files as $file) {
-    
-  }
 }
 

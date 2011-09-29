@@ -21,6 +21,7 @@ class ObjectHelper {
   public static $VIEW_DETAILED_CONTENT_LIST = 'view detailed list of content';
   public static $MANAGE_COLLECTIONS = 'manage collections';
   public static $DELETE_ENTIRE_COLLECTIONS = 'delete entire collections';
+  public static $CREATE_BATCH_PROCESS = 'create batch process';
   public static $DISPLAY_ALWAYS = 0;
   public static $DISPLAY_NEVER = 1;
   public static $DISPLAY_NO_MODEL_OUTPUT = 2;

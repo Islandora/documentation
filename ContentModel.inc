@@ -4,7 +4,6 @@
  * @file 
  * 
  */
-
 /**
  * @file 
  * Content Model Class
@@ -396,12 +395,12 @@ class ContentModel extends XMLDatastream {
     $rootEl->appendChild($ingest_formEl);
 
     if (isset($sXml->edit_metadata) &&
-      trim($sXml->edit_metadata->build_form_method->module) != '' &&
-      trim($sXml->edit_metadata->build_form_method->file) != '' &&
-      trim($sXml->edit_metadata->build_form_method->class_name) != '' &&
-      trim($sXml->edit_metadata->build_form_method->method_name) != '' &&
-      trim($sXml->edit_metadata->submit_form_method->method_name) != '' &&
-      trim($sXml->edit_metadata->build_form_method['dsid']) != ''
+        trim($sXml->edit_metadata->build_form_method->module) != '' &&
+        trim($sXml->edit_metadata->build_form_method->file) != '' &&
+        trim($sXml->edit_metadata->build_form_method->class_name) != '' &&
+        trim($sXml->edit_metadata->build_form_method->method_name) != '' &&
+        trim($sXml->edit_metadata->submit_form_method->method_name) != '' &&
+        trim($sXml->edit_metadata->build_form_method['dsid']) != ''
     ) {
       $edit_metadata_methodEl = $newDom->createElement('edit_metadata_method');
       $edit_metadata_methodEl->setAttribute('module', $sXml->edit_metadata->build_form_method->module);
@@ -489,6 +488,23 @@ class ContentModel extends XMLDatastream {
       }
     }
     return $ret;
+  }
+
+  /**
+   * Gets the DSID of the default datastream
+   * from the <datastreams> element of the schema.
+   * Returns FALSE on failure.
+   *
+   * @return String
+   */
+
+  public function getDatastreamNameDSID() {
+    $datastreams = $this->xml->getElementsByTagName('datastreams');
+    $datastream = $datastreams->item(0);
+    if ($datastreams->length > 0) {
+      $datastream = $datastreams->item(0)->getElementsByTagName('datastream');
+      return $datastream->item(0)->getAttribute('dsid');
+    }
   }
 
   /**
@@ -1677,9 +1693,9 @@ class ContentModel extends XMLDatastream {
       $dispMethods = $ds->getElementsByTagName('display_method');
       for ($i = 0; !$found && $i < $dispMethods->length; $i++) {
         if ($module == ($dispMethods->item($i)->getAttribute('module') == '' ? 'fedora_repository' : $dispMethods->item($i)->getAttribute('module')) &&
-          $file == $dispMethods->item($i)->getAttribute('file') &&
-          $class == $dispMethods->item($i)->getAttribute('class') &&
-          $method == $dispMethods->item($i)->getAttribute('method')) {
+            $file == $dispMethods->item($i)->getAttribute('file') &&
+            $class == $dispMethods->item($i)->getAttribute('class') &&
+            $method == $dispMethods->item($i)->getAttribute('method')) {
           $found = $dispMethods->item($i);
         }
       }
@@ -1715,9 +1731,9 @@ class ContentModel extends XMLDatastream {
       $dispMethods = $ds->getElementsByTagName('display_method');
       for ($i = 0; !$found && $i < $dispMethods->length; $i++) {
         if ($module == ($dispMethods->item($i)->getAttribute('module') == '' ? 'fedora_repository' : $dispMethods->item($i)->getAttribute('module') == '') &&
-          $file == $dispMethods->item($i)->getAttribute('file') &&
-          $class == $dispMethods->item($i)->getAttribute('class') &&
-          $method == $dispMethods->item($i)->getAttribute('method')) {
+            $file == $dispMethods->item($i)->getAttribute('file') &&
+            $class == $dispMethods->item($i)->getAttribute('class') &&
+            $method == $dispMethods->item($i)->getAttribute('method')) {
           $found = $dispMethods->item($i);
         }
       }
@@ -1919,9 +1935,9 @@ class ContentModel extends XMLDatastream {
       $found = FALSE;
       for ($i = 0; $found === FALSE && $i < $methods->length; $i++) {
         if (($methods->item($i)->getAttribute('module') == '' ? 'fedora_repository' : $methods->item($i)->getAttribute('module')) == $module &&
-          $methods->item($i)->getAttribute('file') == $file &&
-          $methods->item($i)->getAttribute('class') == $class &&
-          $methods->item($i)->getAttribute('method') == $method) {
+            $methods->item($i)->getAttribute('file') == $file &&
+            $methods->item($i)->getAttribute('class') == $class &&
+            $methods->item($i)->getAttribute('method') == $method) {
           $found = $methods->item($i);
         }
       }

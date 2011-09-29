@@ -7,7 +7,7 @@
  * @param string $content_models
  * @return array
  */
-function collection_management_form(&$form_state, $parent_collection_pid, $content_models) {
+function collection_management_form(&$form_state, $this_collection_pid, $content_models) {
   module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
   $restricted = FALSE;
   if (variable_get('fedora_namespace_restriction_enforced', true)) {
@@ -22,7 +22,7 @@ function collection_management_form(&$form_state, $parent_collection_pid, $conte
   }
   module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
   module_load_include('inc', 'fedora_repository', 'CollectionPolicy');
-  $item = new Fedora_Item($parent_collection_pid);
+  $item = new Fedora_Item($this_collection_pid);
   $collection_name = $item->objectProfile->objLabel;
   $new_content_models = get_content_models_as_option_array();
   $cm_options = array();
@@ -43,7 +43,7 @@ function collection_management_form(&$form_state, $parent_collection_pid, $conte
 
   $form['child_creation']['titlebox'] = array(
     '#type' => 'item',
-    '#value' => t("Create New Child Collection within $parent_collection_pid"),
+    '#value' => t("Create New Child Collection within $this_collection_pid"),
   );
 
   $form['child_creation']['collection_name'] = array(
@@ -75,11 +75,14 @@ function collection_management_form(&$form_state, $parent_collection_pid, $conte
       '#description' => t("Namespace for objects in this collection."),
     );
   }
-  $form['child_creation']['parent_collection'] = array(
+  $form['parent_collection'] = array(
     '#type' => 'hidden',
-    '#value' => $parent_collection_pid,
+    '#value' => $this_collection_pid,
   );
-
+  $form['collection_pid'] = array(
+    '#type' => 'hidden',
+    '#value' => $this_collection_pid,
+  );
   $form['child_creation']['content_models'] = array(
     '#title' => "Choose allowable content models for this collection",
     '#type' => 'checkboxes',
@@ -101,7 +104,7 @@ function collection_management_form(&$form_state, $parent_collection_pid, $conte
   );
   $form['change_cmodel']['titlebox'] = array(
     '#type' => 'item',
-    '#value' => t("Change Content Models within $parent_collection_pid"),
+    '#value' => t("Change Content Models within $this_collection_pid"),
   );
 
   $form['change_cmodel']['current_content_model'] = array(
@@ -118,7 +121,7 @@ function collection_management_form(&$form_state, $parent_collection_pid, $conte
   );
   $form['change_cmodel']['collection_pid'] = array(
     '#type' => 'hidden',
-    '#value' => $parent_collection_pid,
+    '#value' => $this_collection_pid,
   );
   $form['change_cmodel']['submit'] = array(
     '#type' => 'submit',
@@ -129,7 +132,7 @@ function collection_management_form(&$form_state, $parent_collection_pid, $conte
     $form['delete_collection'] = array(
       '#title' => "Permanently Delete $collection_name",
       '#type' => 'fieldset',
-      '#description' => t("Clicking this button will delete $collection_name and all objects within. <br /> <strong>This action cannot be undone.</strong>"),
+      '#description' => t("Clicking this button will delete all objects within $collection_name. <br /> <strong>This action cannot be undone.</strong>"),
       '#collapsible' => TRUE,
       '#collapsed' => TRUE,
     );
@@ -263,14 +266,34 @@ function collection_management_form_submit($form, &$form_state) {
   }
 
   if ($form_state['clicked_button']['#id'] == 'delete_collection') {
-    $name = $user->name;
-    $objects = get_related_items_as_array($collection_pid, $relationship);
-    $objects[] = $collection_pid;
-    foreach ($objects as $object) {
-      $item_to_delete = new Fedora_Item($object);
-      $item_to_delete->purge("$object purged by $name");
+    $collection_name = $form_state['values']['collection_name'];
+    $pids = get_related_items_as_array($collection_pid, 'isMemberOfCollection');
+
+    $batch = array(
+      'title' => "Deleting Objects from  $name",
+      'operations' => array(),
+      'file' => drupal_get_path('module', 'fedora_repository') . '/CollectionManagement.inc',
+    );
+
+
+    foreach ($pids as $pid) {
+
+      $batch['operations'][] = array('delete_objects_as_batch', array($pid));
     }
-    drupal_goto('fedora/repository');
+
+    batch_set($batch);
+    batch_process('/fedora/repository');
   }
 }
 
+function delete_objects_as_batch($pid) {
+  module_load_include('inc', 'fedora_repository', 'api/fedora_item');
+  $name = $user->name;
+  $item_to_delete = new Fedora_Item($pid);
+  $models = $item_to_delete->get_models();
+  foreach ($models as $model) {
+    if ($model['object'] != 'islandora:collectionCModel') {
+      $item_to_delete->purge("$object purged by $name");
+    }
+  }
+}
