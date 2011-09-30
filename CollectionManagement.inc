@@ -29,7 +29,9 @@ function collection_management_form(&$form_state, $this_collection_pid, $content
   $name_mappings = array();
   foreach ($content_models as $content_model) {
     if ($content_model->pid != "islandora:collectionCModel") {
-      $cm_options[$content_model->pid] = $content_model->name;
+      $item = new fedora_item($content_model->pid);
+      $cm_name = $item->objectProfile->objLabel;
+      $cm_options[$content_model->pid] = $cm_name;
     }
   }
 
@@ -285,7 +287,10 @@ function collection_management_form_submit($form, &$form_state) {
     batch_process('/fedora/repository');
   }
 }
-
+/**
+ * deletes PID if pid is not collection
+ * @param <type> $pid
+ */
 function delete_objects_as_batch($pid) {
   module_load_include('inc', 'fedora_repository', 'api/fedora_item');
   $name = $user->name;

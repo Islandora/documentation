@@ -1,5 +1,13 @@
 <?php
 
+
+/**
+ * batch creation form submit
+ * @global type $user
+ * @param array $form
+ * @param array $form_state
+ * @param array $content_models
+*/
 function batch_creation_form(&$form_state, $collection_pid, $content_models) {
   module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
   module_load_include('inc', 'fedora_repository', 'CollectionPolicy');
@@ -58,6 +66,11 @@ function batch_creation_form(&$form_state, $collection_pid, $content_models) {
 
   return($form);
 }
+
+/**
+ * @param array $form
+ * @param array $form_state
+*/
 
 function batch_creation_form_validate($form, &$form_state) {
 
@@ -129,10 +142,6 @@ function batch_creation_form_submit($form, &$form_state) {
     }
   }
 
-  /**
-   * use the content model class to construct a class representing the selected content model
-   * call execIngestmethods on each mimetype passed in
-   */
   if (($cm = ContentModel::loadFromModel($content_model, 'ISLANDORACM')) === FALSE) {
     drupal_set_message("$content_model not found", "error");
     return;
@@ -154,6 +163,17 @@ function batch_creation_form_submit($form, &$form_state) {
   batch_set($batch);
   batch_process();
 }
+
+/**
+ *
+ * @param <string> $label
+ * @param <string> $content_model
+ * @param <array> $object_files
+ * @param <string> $collection_pid
+ * @param <string> $namespace
+ * @param <string> $metadata
+ */
+
 
 function create_batch_objects($label, $content_model, $object_files, $collection_pid, $namespace, $metadata) {
   module_load_include('inc', 'fedora_repository', 'ContentModel');
@@ -198,6 +218,14 @@ function create_batch_objects($label, $content_model, $object_files, $collection
   }
 }
 
+/**
+ * transforms mods to dc
+ * @param <string> $mods_xml
+ * @return <string>
+ */
+
+
+
 function batch_create_dc_from_mods($mods_xml) {
   $path = drupal_get_path('module', 'fedora_repository');
   module_load_include('inc', 'fedora_repository', 'ObjectHelper');
@@ -225,7 +253,11 @@ function batch_create_dc_from_mods($mods_xml) {
   return $dc_xml;
 }
 
-
+/**
+ *
+ * @param <string> $dir
+ * @return <boolean>
+ */
 function recursive_directory_delete($dir) {
   if (!file_exists($dir))
     return true;
