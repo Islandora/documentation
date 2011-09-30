@@ -203,6 +203,9 @@ class ContentModel extends XMLDatastream {
     try {
       if (self::valid_pid($pid)) {
         $fedoraItem = new Fedora_Item($pid);
+        if (!$name) {
+          $name = $fedoraItem->objectProfile->objLabel;
+        }
         $dsid = ($dsid != NULL && self::valid_dsid($dsid)) ? $dsid : ContentModel::getDefaultDSID();
         $ds = $fedoraItem->get_datastream_dissemination($dsid);
         if (!empty($ds)) {
@@ -497,7 +500,6 @@ class ContentModel extends XMLDatastream {
    *
    * @return String
    */
-
   public function getDatastreamNameDSID() {
     $datastreams = $this->xml->getElementsByTagName('datastreams');
     $datastream = $datastreams->item(0);
