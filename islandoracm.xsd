@@ -48,14 +48,14 @@
     </xsd:complexType>
     <xsd:complexType name="form_builder_methodType">
         <xsd:attribute name="file" type="xsd:normalizedString" use="required"/>
-        <xsd:attribute name="module" type="xsd:normalizedString" default="islandora_repository"/>
+        <xsd:attribute name="module" type="xsd:normalizedString" default="fedora_repository"/>
         <xsd:attribute name="class" type="xsd:normalizedString" use="required"/>
         <xsd:attribute name="method" type="xsd:normalizedString" use="required"/>
         <xsd:attribute name="handler" type="xsd:normalizedString" use="required"/>
     </xsd:complexType>
     <xsd:complexType name="edit_metadata_methodType">
         <xsd:attribute name="file" type="xsd:normalizedString" use="required"/>
-        <xsd:attribute name="module" type="xsd:normalizedString" default="islandora_repository"/>
+        <xsd:attribute name="module" type="xsd:normalizedString" default="fedora_repository"/>
         <xsd:attribute name="class" type="xsd:normalizedString" use="required"/>
         <xsd:attribute name="method" type="xsd:normalizedString" use="required"/>
         <xsd:attribute name="handler" type="xsd:normalizedString" use="required"/>
@@ -118,7 +118,7 @@
         </xsd:all>
 
         <xsd:attribute name="file" type="xsd:normalizedString" use="required"/>
-        <xsd:attribute name="module" type="xsd:normalizedString" default="islandora_repository"/>
+        <xsd:attribute name="module" type="xsd:normalizedString" default="fedora_repository"/>
         <xsd:attribute name="class" type="xsd:normalizedString" use="required"/>
         <xsd:attribute name="method" type="xsd:normalizedString" use="required"/>
         <xsd:attribute name="dsid" type="xsd:normalizedString" use="required"/>
@@ -149,7 +149,7 @@
             <xsd:element name="parameters" type="parametersType" minOccurs="0"/>
         </xsd:all>
         <xsd:attribute name="file" type="xsd:normalizedString" use="required"/>
-        <xsd:attribute name="module" type="xsd:normalizedString" default="islandora_repository"/>
+        <xsd:attribute name="module" type="xsd:normalizedString" default="fedora_repository"/>
         <xsd:attribute name="class" type="xsd:normalizedString" use="required"/>
         <xsd:attribute name="method" type="xsd:normalizedString" use="required"/>
         <xsd:attribute name="dsid" type="xsd:normalizedString" use="required"/>
@@ -171,7 +171,7 @@
         <xsd:complexContent>
             <xsd:restriction base="xsd:anyType">
                 <xsd:attribute name="file" type="xsd:normalizedString" use="required"/>
-                <xsd:attribute name="module" type="xsd:normalizedString" default="islandora_repository"/>
+                <xsd:attribute name="module" type="xsd:normalizedString" default="fedora_repository"/>
                 <xsd:attribute name="class" type="xsd:normalizedString" use="required"/>
                 <xsd:attribute name="method" type="xsd:normalizedString" use="required"/>
                 <xsd:attribute name="default" type="xsd:boolean" default="false"/>

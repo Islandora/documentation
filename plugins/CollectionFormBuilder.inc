@@ -7,7 +7,7 @@
  * Collection Form Builder
  */
 
-module_load_include('inc', 'islandora_repository', 'plugins/FormBuilder');
+module_load_include('inc', 'fedora_repository', 'plugins/FormBuilder');
 
 /**
  * implements methods from content model ingest form xml
@@ -32,7 +32,7 @@ class CollectionFormBuilder extends FormBuilder {
    * @param type $rootElement 
    */
   function createFedoraDataStreams($form_values, &$dom, &$rootElement) {
-    module_load_include('inc', 'islandora_repository', 'MimeClass');
+    module_load_include('inc', 'fedora_repository', 'MimeClass');
     global $base_url;
 
     $mimetype = new MimeClass();

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @file islandora_repository.install
+ * @file fedora_repository.install
  */
 
 /**
@@ -33,7 +33,7 @@ function fedora_collections_enable() {
  * @see _update_message_text()
  * @see _update_cron_notify()
  */
-function islandora_repository_requirements($phase) {
+function fedora_repository_requirements($phase) {
   global $base_url;
 
   $requirements = array();
@@ -89,13 +89,13 @@ function islandora_repository_requirements($phase) {
     }
   }
   elseif ($phase == 'runtime') {
-    module_load_include('inc', 'islandora_repository', 'api/fedora_utils');
+    module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
 
     $requirements['fedora-repository']['title'] = t("Fedora server");
     if (!fedora_available()) {
       $requirements['fedora-repository']['value'] = t("Not available");
       $requirements['fedora-repository']['severity'] = REQUIREMENT_ERROR;
-      $requirements['fedora-repository']['description'] = t('Ensure that Fedora is running and that the <a href="@collection-settings">collection settings</a> are correct.', array('@collection-settings' => $base_url . '/admin/settings/islandora_repository'));
+      $requirements['fedora-repository']['description'] = t('Ensure that Fedora is running and that the <a href="@collection-settings">collection settings</a> are correct.', array('@collection-settings' => $base_url . '/admin/settings/fedora_repository'));
     }
     else {
       $requirements['fedora-repository']['value'] = t("Available");

@@ -6,7 +6,7 @@ function fedora_imageapi_menu() {
   $items = array();
   $items['fedora/imageapi'] = array(
     'title' => t('Image manipulation functions'),
-    'page callback' => 'islandora_repository_image_manip',
+    'page callback' => 'fedora_repository_image_manip',
     'type' => MENU_CALLBACK,
     'access arguments' => array('view fedora collection'),
   );
@@ -21,7 +21,7 @@ function fedora_imageapi_menu() {
  * @param string $op
  * @param string $params
  */
-function islandora_repository_image_manip($pid = '', $dsid = '', $op = '', $params = '') {
+function fedora_repository_image_manip($pid = '', $dsid = '', $op = '', $params = '') {
   module_load_include('inc', 'Fedora_Repository', 'ObjectHelper');
   module_load_include('module', 'imageapi');
   $obj = new ObjectHelper();
@@ -30,7 +30,7 @@ function islandora_repository_image_manip($pid = '', $dsid = '', $op = '', $para
   $op = (!empty($_GET['op']) ? $_GET['op'] : '');
   $safe_pid = str_replace(':', '_', $pid);
 
-  $cache_key = 'islandora_repository_image_manip_' . md5($safe_pid . '_' . $dsid . '_' . $ext . '_' . $op . (isset($_GET['width']) ? '_' . $_GET['width'] : '') . (isset($_GET['height']) ? '_' . $_GET['height'] : ''));
+  $cache_key = 'fedora_repository_image_manip_' . md5($safe_pid . '_' . $dsid . '_' . $ext . '_' . $op . (isset($_GET['width']) ? '_' . $_GET['width'] : '') . (isset($_GET['height']) ? '_' . $_GET['height'] : ''));
   if (($file = cache_get($cache_key)) === 0) {
     //added the slash as sys_get_temp_dir in linux does not seem to include the slash
     $tmp_file_name = sys_get_temp_dir() . '/' . $safe_pid . '_' . $dsid . '.' . $ext;
@@ -83,7 +83,7 @@ function islandora_repository_image_manip($pid = '', $dsid = '', $op = '', $para
   function fedora_imageapi_form_alter( &$form, $form_state, $form_id) {
 
   switch ( $form_id ) {
-  case 'islandora_repository_admin':
+  case 'fedora_repository_admin':
 
   $fedora_base_url = $form['fedora_base_url']['#default_value'];
 

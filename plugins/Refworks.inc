@@ -7,7 +7,7 @@
  * Refworks class
  */
 
-module_load_include('inc', 'islandora_repository', 'SecurityClass');
+module_load_include('inc', 'fedora_repository', 'SecurityClass');
 
 /**
  * Refworks class ???
@@ -222,9 +222,9 @@ class Refworks {
    */
   function handleForm(&$form_values) {
     $errorMessage = NULL;
-    module_load_include('inc', 'islandora_repository', 'CollectionClass');
-    module_load_include('inc', 'islandora_repository', 'ContentModel');
-    module_load_include('inc', 'islandora_repository', 'api/fedora_item');
+    module_load_include('inc', 'fedora_repository', 'CollectionClass');
+    module_load_include('inc', 'fedora_repository', 'ContentModel');
+    module_load_include('inc', 'fedora_repository', 'api/fedora_item');
     $contentModelPid = ContentModel::getPidFromIdentifier($form_values['models']);
     $contentModelDsid = ContentModel::getDSIDFromIdentifier($form_values['models']);
     $collectionHelper = new CollectionClass();
@@ -238,7 +238,7 @@ class Refworks {
     $collection_item = new Fedora_Item($collection_pid);
     $this->collectionPolicyStream = $collection_item->get_datastream_dissemination('CHILD_SECURITY');
     if (empty($this->collectionPolicyStream)) {
-      $this->collectionPolicyStream = file_get_contents(drupal_get_path('module', 'islandora_repository') . '/policies/noObjectEditPolicy.xml');
+      $this->collectionPolicyStream = file_get_contents(drupal_get_path('module', 'fedora_repository') . '/policies/noObjectEditPolicy.xml');
     }
     $success = 0;
     $errors = 0;
@@ -388,7 +388,7 @@ class Refworks {
    */
   function createFedoraDataStreams($form_values, &$dom, &$rootElement, $reference) {
     global $base_url;
-    module_load_include('inc', 'islandora_repository', 'MimeClass');
+    module_load_include('inc', 'fedora_repository', 'MimeClass');
     $mimetype = new MimeClass();
     $server = NULL;
     $this->createRomeoDataStream($dom, $rootElement);

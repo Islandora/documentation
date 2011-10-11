@@ -87,7 +87,7 @@ class ShowStreamsInFieldSets {
     global $base_url;
     global $base_path;
     global $user;
-    module_load_include('inc', 'islandora_repository', 'api/fedora_item');
+    module_load_include('inc', 'fedora_repository', 'api/fedora_item');
 
     $tabset = array();
 
@@ -105,7 +105,7 @@ class ShowStreamsInFieldSets {
       $tn_url = $base_url . '/fedora/repository/' . $item->pid . '/TN';
     }
     else {
-      $tn_url = $base_path . drupal_get_path('module', 'islandora_repository') . '/images/Crystal_Clear_app_download_manager.png';
+      $tn_url = $base_path . drupal_get_path('module', 'fedora_repository') . '/images/Crystal_Clear_app_download_manager.png';
     }
     $dc_html = $objectHelper->getFormattedDC($item);
 
@@ -117,8 +117,8 @@ class ShowStreamsInFieldSets {
       '#content' => $dl_link . $dc_html,
     );
 
-    if (islandora_repository_access(OBJECTHELPER :: $EDIT_FEDORA_METADATA, $this->pid, $user)) {
-      $editform = drupal_get_form('islandora_repository_edit_qdc_form', $this->pid, 'DC');
+    if (fedora_repository_access(OBJECTHELPER :: $EDIT_FEDORA_METADATA, $this->pid, $user)) {
+      $editform = drupal_get_form('fedora_repository_edit_qdc_form', $this->pid, 'DC');
       $tabset['first_tab']['tabs']['edit'] = array(
         '#type' => 'tabpage',
         '#title' => t('Edit'),
@@ -142,7 +142,7 @@ class ShowStreamsInFieldSets {
    * @return type 
    */
   function showQdc() {
-    module_load_include('inc', 'islandora_repository', 'ObjectHelper');
+    module_load_include('inc', 'fedora_repository', 'ObjectHelper');
     $objectHelper = new ObjectHelper();
     $content = $objectHelper->getQDC($this->pid);
     $collection_fieldset = array(
@@ -161,7 +161,7 @@ class ShowStreamsInFieldSets {
    */
   function showOBJLink() {
     global $base_url;
-    module_load_include('inc', 'islandora_repository', 'api/fedora_item');
+    module_load_include('inc', 'fedora_repository', 'api/fedora_item');
     $item = new Fedora_Item($this->pid);
     $streams = $item->get_datastreams_list_as_array();
     return "<a href='" . $base_url . "/fedora/repository/" . $this->pid . "/OBJ/" . $streams['OBJ']['label'] . "'>" . $streams['OBJ']['label'] . "</a>";
@@ -172,8 +172,8 @@ class ShowStreamsInFieldSets {
    * @return type 
    */
   function showRefworks() {
-    $path = drupal_get_path('module', 'islandora_repository');
-    module_load_include('inc', 'islandora_repository', 'ObjectHelper');
+    $path = drupal_get_path('module', 'fedora_repository');
+    module_load_include('inc', 'fedora_repository', 'ObjectHelper');
     $collectionHelper = new CollectionClass();
     $xmlstr = $collectionHelper->getStream($this->pid, "refworks");
     html_entity_decode($xmlstr);
@@ -226,7 +226,7 @@ class ShowStreamsInFieldSets {
    */
   function showRomeo($collapsed = FALSE) {
     $path = drupal_get_path('module', 'Fedora_Repository');
-    module_load_include('inc', 'islandora_repository', 'CollectionClass');
+    module_load_include('inc', 'fedora_repository', 'CollectionClass');
     $collectionHelper = new CollectionClass();
     $xmlstr = $collectionHelper->getStream($this->pid, "ROMEO", 0);
 

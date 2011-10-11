@@ -21,7 +21,7 @@ $FEDORA_HOME/server/config/fedora-users.xml:
       </attribute>
     </user>
 
-If you look in the islandora_repository.test file we see that we are creating
+If you look in the fedora_repository.test file we see that we are creating
 a user with a password set to 'simpletestpass'. Fedora requires the hashed
 version of this password to do a servlet filter-based authentication.
 

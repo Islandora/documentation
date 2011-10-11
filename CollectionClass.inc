@@ -29,7 +29,7 @@ class CollectionClass {
    */
   function __construct($pid = NULL) {
     if (!empty($pid)) {
-      module_load_include('inc', 'islandora_repository', 'ObjectHelper');
+      module_load_include('inc', 'fedora_repository', 'ObjectHelper');
       $this->collectionObject = new ObjectHelper($pid);
       $this->pid = $pid;
     }
@@ -45,7 +45,7 @@ class CollectionClass {
    * @return type 
    */
   function getRelatedObjects($pid, $limit, $offset, $itqlquery=NULL) {
-    module_load_include('inc', 'islandora_repository', 'ObjectHelper');
+    module_load_include('inc', 'fedora_repository', 'ObjectHelper');
     $objectHelper = new ObjectHelper();
     if (!isset($itqlquery)) {
       // $query_string = $objectHelper->getStream($pid, 'QUERY', 0);
@@ -65,8 +65,8 @@ class CollectionClass {
    * @return type 
    */
   function getRelatedItems($pid, $itqlquery = NULL, $limit = NULL, $offset = NULL) {
-    module_load_include('inc', 'islandora_repository', 'ObjectHelper');
-    module_load_include('inc', 'islandora_repository', 'api/fedora_utils');
+    module_load_include('inc', 'fedora_repository', 'ObjectHelper');
+    module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
     if (!isset($limit)) {
       $limit = 1000;
     }
@@ -74,7 +74,7 @@ class CollectionClass {
       $offset = 0;
     }
     global $user;
-    if (!islandora_repository_access(OBJECTHELPER :: $OBJECT_HELPER_VIEW_FEDORA, $pid, $user)) {
+    if (!fedora_repository_access(OBJECTHELPER :: $OBJECT_HELPER_VIEW_FEDORA, $pid, $user)) {
       drupal_set_message(t("You do not have access to Fedora objects within the attempted namespace or access to Fedora denied."), 'error');
       return ' ';
     }
@@ -101,7 +101,7 @@ class CollectionClass {
     $query_string = htmlentities(urlencode($query_string));
 
     $content = '';
-    $url = variable_get('islandora_repository_url', 'http://localhost:8080/fedora/risearch');
+    $url = variable_get('fedora_repository_url', 'http://localhost:8080/fedora/risearch');
     $url .= "?type=tuples&flush=TRUE&format=Sparql&limit=$limit&offset=$offset&lang=itql&stream=on&query=" . $query_string;
     $content .= do_curl($url);
 
@@ -156,7 +156,7 @@ class CollectionClass {
    * @return type 
    */
   function getStream($pid, $dsid, $showError = 1) {
-    module_load_include('inc', 'islandora_repository', 'api/fedora_item');
+    module_load_include('inc', 'fedora_repository', 'api/fedora_item');
     $item = new fedora_item($pid);
     return isset($item->datastreams[$dsid]) ? $item->get_datastream_dissemination($dsid) : NULL;
   }
@@ -223,7 +223,7 @@ class CollectionClass {
     module_load_include('inc', 'Fedora_Repository', 'ConnectionHelper');
     $pidNameSpace = $this->getPidNameSpace($pid, $dsid);
     $pname = substr($pidNameSpace, 0, strpos($pidNameSpace, ":"));
-    module_load_include('inc', 'islandora_repository', 'api/fedora_item');
+    module_load_include('inc', 'fedora_repository', 'api/fedora_item');
     return Fedora_Item::get_next_pid_in_namespace($pname);
   }
 
@@ -339,7 +339,7 @@ class CollectionClass {
         }
       }
       // module_load_include( $phpFile, 'Fedora_Repository', ' ');
-      require_once(drupal_get_path('module', 'islandora_repository') . '/' . $phpFile);
+      require_once(drupal_get_path('module', 'fedora_repository') . '/' . $phpFile);
       $thisClass = new $phpClass ();
       $returnValue = $thisClass->$phpMethod($parametersArray, $dsid, $file, $file_ext);
       if (!$returnValue) {
@@ -409,7 +409,7 @@ class CollectionClass {
     $ingest_form = $xml->ingest_form; //should only be one
     $drupal_module = strip_tags($ingest_form->form_builder_method->module->asXML());
     if (empty($drupal_module)) {
-      $drupal_module = 'islandora_repository';
+      $drupal_module = 'fedora_repository';
     }
     $phpFile = strip_tags($ingest_form->form_builder_method->file->asXML());
     $phpClass = strip_tags($ingest_form->form_builder_method->class_name->asXML());
@@ -437,11 +437,11 @@ class CollectionClass {
       'name' => variable_get('fedora_admin_user', 'fedoraAdmin')
     );
     $admin_user = user_load($username);
-    module_load_include('inc', 'islandora_repository', 'ConnectionHelper');
+    module_load_include('inc', 'fedora_repository', 'ConnectionHelper');
     $connectionHelper = new ConnectionHelper();
     try {
       $soapClient = $connectionHelper->getSoapClient(variable_get('fedora_soap_manage_url', 'http://localhost:8080/fedora/services/management?wsdl'));
-      $pidNameSpace = variable_get('islandora_repository_pid', 'vre:');
+      $pidNameSpace = variable_get('fedora_repository_pid', 'vre:');
       $pidNameSpace = substr($pidNameSpace, 0, strpos($pidNameSpace, ":"));
       $params = array(
         'numPIDs' => '',
@@ -460,7 +460,7 @@ class CollectionClass {
     $personal_collection_pid = array(
       'fedora_personal_pid' => $pid
     );
-    module_load_include('inc', 'islandora_repository', 'plugins/PersonalCollectionClass');
+    module_load_include('inc', 'fedora_repository', 'plugins/PersonalCollectionClass');
     $personalCollectionClass = new PersonalCollectionClass();
     if (!$personalCollectionClass->createCollection($user, $pid, $soapClient)) {
       drupal_set_message("Did not create a personal collection object for !u", array('!u' => $user->name));
@@ -480,7 +480,7 @@ class CollectionClass {
    * @return type 
    */
   function getXslContent($pid, $path, $canUseDefault = TRUE) {
-    module_load_include('inc', 'islandora_repository', 'CollectionClass');
+    module_load_include('inc', 'fedora_repository', 'CollectionClass');
     $collectionClass = new CollectionClass();
     $xslContent = $collectionClass->getCollectionViewStream($pid);
     if (!$xslContent && $canUseDefault) { //no xslt so we will use the default sent with the module
@@ -497,9 +497,9 @@ class CollectionClass {
    * @return string 
    */
   function showFieldSets($page_number) {
-    module_load_include('inc', 'islandora_repository', 'api/fedora_item');
-    module_load_include('inc', 'islandora_repository', 'CollectionManagement');
-    module_load_include('inc', 'islandora_repository', 'BatchIngest');
+    module_load_include('inc', 'fedora_repository', 'api/fedora_item');
+    module_load_include('inc', 'fedora_repository', 'CollectionManagement');
+    module_load_include('inc', 'fedora_repository', 'BatchIngest');
     global $base_url;
     $tabset = array();
     global $user;
@@ -514,7 +514,7 @@ class CollectionClass {
     $collection_items = $this->renderCollection($results, $this->pid, NULL, NULL, $page_number);
     $collection_item = new Fedora_Item($this->pid);
     // Check the form post to see if we are in the middle of an ingest operation.
-    $show_ingest_tab = (!empty($_POST['form_id']) && $_POST['form_id'] == 'islandora_repository_ingest_form');
+    $show_ingest_tab = (!empty($_POST['form_id']) && $_POST['form_id'] == 'fedora_repository_ingest_form');
     $add_to_collection = $this->getIngestInterface();
 
     $show_batch_tab = TRUE;
@@ -586,7 +586,7 @@ class CollectionClass {
           $allow = fedora_fesl_check_roles($this->pid, 'write');
         }
         if ($allow) {
-          $ingestObject = drupal_get_form('islandora_repository_ingest_form', $this->pid);
+          $ingestObject = drupal_get_form('fedora_repository_ingest_form', $this->pid);
         }
       }
     }
@@ -608,7 +608,7 @@ class CollectionClass {
    * @return type 
    */
   function renderCollection($content, $pid, $dsId, $collection, $pageNumber = NULL) {
-    $path = drupal_get_path('module', 'islandora_repository');
+    $path = drupal_get_path('module', 'fedora_repository');
     global $base_url;
     $collection_pid = $pid; //we will be changing the pid later maybe
     $objectHelper = new ObjectHelper();
@@ -628,7 +628,7 @@ class CollectionClass {
     }
 
     if (!isset($collectionName)) {
-      $collectionName = variable_get('islandora_repository_name', 'Collection');
+      $collectionName = variable_get('fedora_repository_name', 'Collection');
     }
     $xslContent = $this->getXslContent($pid, $path);
 

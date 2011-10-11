@@ -6,7 +6,7 @@
  * @file
  * FLVFormBuilder
  */
-module_load_include('inc', 'islandora_repository', 'plugins/FormBuilder');
+module_load_include('inc', 'fedora_repository', 'plugins/FormBuilder');
 
 /**
  * implements methods from content model ingest form xml
@@ -19,7 +19,7 @@ class FlvFormBuilder extends FormBuilder {
    * Constructor
    */
   function FlvFormBuilder() {
-    module_load_include('inc', 'islandora_repository', 'plugins/FormBuilder');
+    module_load_include('inc', 'fedora_repository', 'plugins/FormBuilder');
     drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
   }
 
@@ -32,7 +32,7 @@ class FlvFormBuilder extends FormBuilder {
    */
 
   function createFedoraDataStreams($form_values, &$dom, &$rootElement) {
-    module_load_include('inc', 'islandora_repository', 'MimeClass');
+    module_load_include('inc', 'fedora_repository', 'MimeClass');
     global $base_url;
     $mimetype = new MimeClass();
     $server = NULL;

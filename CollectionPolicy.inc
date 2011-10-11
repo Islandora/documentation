@@ -4,7 +4,7 @@
  * @file 
  * Collection Policy Class
  */
-module_load_include('inc', 'islandora_repository', 'XMLDatastream');
+module_load_include('inc', 'fedora_repository', 'XMLDatastream');
 
 /**
  * Collection Policy class ??
@@ -36,7 +36,7 @@ class CollectionPolicy extends XMLDatastream {
    */
   static function loadFromCollection($pid, $preFetch=TRUE) {
     $ret = FALSE;
-    module_load_include('inc', 'islandora_repository', 'api/fedora_item');
+    module_load_include('inc', 'fedora_repository', 'api/fedora_item');
 
     try {
       if (self::valid_pid($pid)) {
@@ -80,7 +80,7 @@ class CollectionPolicy extends XMLDatastream {
       $rootEl = $cp->xml->getElementsByTagName('collection_policy')->item(0);
       $rootEl->setAttribute('name', $name);
 
-      module_load_include('inc', 'islandora_repository', 'api/fedora_item');
+      module_load_include('inc', 'fedora_repository', 'api/fedora_item');
       $fedoraItem = new Fedora_Item($pid);
       $fedoraItem->add_datastream_from_string($cp->dumpXml(), $cpDsid, $name, 'text/xml', 'X');
       $ret = $cp;
@@ -110,7 +110,7 @@ class CollectionPolicy extends XMLDatastream {
 
       $cp = new CollectionPolicy($newDom, $pid, $cpDsid);
 
-      module_load_include('inc', 'islandora_repository', 'api/fedora_item');
+      module_load_include('inc', 'fedora_repository', 'api/fedora_item');
       $fedoraItem = new Fedora_Item($pid);
       $fedoraItem->add_datastream_from_string($cp->dumpXml(), $cpDsid, $name, 'text/xml', 'X');
       $ret = $cp;
@@ -137,7 +137,7 @@ class CollectionPolicy extends XMLDatastream {
   public static function ingestBlankPolicy($pid, $name, $policyDsid, $model_pid, $model_namespace, $relationship, $searchField, $searchValue) {
     $ret = FALSE;
     if (($cp = self::loadFromCollection($pid)) === FALSE) {   //removed second, non-existant variable
-      module_load_include('inc', 'islandora_repository', 'ContentModel');
+      module_load_include('inc', 'fedora_repository', 'ContentModel');
       if (($cm = ContentModel::loadFromModel($model_pid)) !== FALSE && $cm->validate()) {
         $newDom = new DOMDocument('1.0', 'utf-8');
         $newDom->formatOutput = TRUE;
@@ -171,7 +171,7 @@ class CollectionPolicy extends XMLDatastream {
 
         $cp = new CollectionPolicy($newDom, $pid, $policyDsid);
 
-        module_load_include('inc', 'islandora_repository', 'api/fedora_item');
+        module_load_include('inc', 'fedora_repository', 'api/fedora_item');
 
 
         $fedoraItem = new Fedora_Item($pid);
@@ -299,7 +299,7 @@ class CollectionPolicy extends XMLDatastream {
           $this->staging_area = trim($stagingEl->item(0)->nodeValue);
         }
         elseif ($recurse) {
-          module_load_include('inc', 'islandora_repository', 'api/fedora_item');
+          module_load_include('inc', 'fedora_repository', 'api/fedora_item');
           $item = new Fedora_Item($this->pid);
           $rels = $item->get_relationships();
           if (count($rels) > 0) {
@@ -373,7 +373,7 @@ class CollectionPolicy extends XMLDatastream {
 
       $pname = substr($namespace, 0, strpos($namespace, ":"));
 
-      module_load_include('inc', 'islandora_repository', 'api/fedora_item');
+      module_load_include('inc', 'fedora_repository', 'api/fedora_item');
       $ret = Fedora_Item::get_next_pid_in_namespace($pname);
     }
     return $ret;
@@ -443,7 +443,7 @@ class CollectionPolicy extends XMLDatastream {
 
 
         if ($recurse && count($ret) == 0) {
-          module_load_include('inc', 'islandora_repository', 'api/fedora_item');
+          module_load_include('inc', 'fedora_repository', 'api/fedora_item');
           $item = new Fedora_Item($this->pid);
           $rels = $item->get_relationships();
           if (count($rels) > 0) {

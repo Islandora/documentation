@@ -16,7 +16,7 @@
 class Herbarium {
 
   function __construct($pid = '') {
-    module_load_include('inc', 'islandora_repository', 'api/fedora_item');
+    module_load_include('inc', 'fedora_repository', 'api/fedora_item');
     if (!empty($pid)) {
       $this->pid = $pid;
       $this->item = new Fedora_Item($pid);
@@ -32,7 +32,7 @@ class Herbarium {
   public function buildDrupalForm($form = array(), $form_state = array()) {
     // We don't need to add anything beyond the standard Darwin Core form so just pass this through
     // If we wanted to we could add other fields.
-    module_load_include('inc', 'islandora_repository', 'plugins/DarwinCore');
+    module_load_include('inc', 'fedora_repository', 'plugins/DarwinCore');
 
     $dwc = new DarwinCore($this->item);
     return $dwc->buildDrupalForm($form);
@@ -73,9 +73,9 @@ class Herbarium {
      * Process the metadata form
      * Update the datastreams
      */
-    module_load_include('inc', 'islandora_repository', 'api/fedora_item');
-    module_load_include('inc', 'islandora_repository', 'plugins/DarwinCore');
-    module_load_include('inc', 'islandora_repository', 'MimeClass');
+    module_load_include('inc', 'fedora_repository', 'api/fedora_item');
+    module_load_include('inc', 'fedora_repository', 'plugins/DarwinCore');
+    module_load_include('inc', 'fedora_repository', 'MimeClass');
     global $user;
     $mimetype = new MimeClass();
     $dwc = new DarwinCore($this->item);
@@ -97,9 +97,9 @@ class Herbarium {
      * Create fedora object
      * Add the datastreams
      */
-    module_load_include('inc', 'islandora_repository', 'MimeClass');
-    module_load_include('inc', 'islandora_repository', 'api/fedora_item');
-    module_load_include('inc', 'islandora_repository', 'plugins/DarwinCore');
+    module_load_include('inc', 'fedora_repository', 'MimeClass');
+    module_load_include('inc', 'fedora_repository', 'api/fedora_item');
+    module_load_include('inc', 'fedora_repository', 'plugins/DarwinCore');
     global $user;
     $mimetype = new MimeClass();
     $dwc = new DarwinCore();
@@ -141,8 +141,8 @@ class Herbarium {
    * @return string 
    */
   public function showFieldSets() {
-    module_load_include('inc', 'islandora_repository', 'plugins/tagging_form');
-    module_load_include('inc', 'islandora_repository', 'plugins/DarwinCore');
+    module_load_include('inc', 'fedora_repository', 'plugins/tagging_form');
+    module_load_include('inc', 'fedora_repository', 'plugins/DarwinCore');
     global $base_url;
 
     $tabset = array();
@@ -167,7 +167,7 @@ class Herbarium {
       '#title' => t('View'),
       // This will be the content of the tab.
       '#content' => '<a href="' . $base_url . '/fedora/repository/' . $this->pid . '/FULL_JPG/"><img src="' . $base_url . '/fedora/imageapi/' .
-      $this->pid . '/JPG/JPG.jpg' . '" /></a>' . '<p>' . drupal_get_form('islandora_repository_image_tagging_form', $this->pid) . '</p>',
+      $this->pid . '/JPG/JPG.jpg' . '" /></a>' . '<p>' . drupal_get_form('fedora_repository_image_tagging_form', $this->pid) . '</p>',
     );
 
     $dwc = new DarwinCore($this->item);
@@ -184,10 +184,10 @@ class Herbarium {
       '#title' => t('Darwin Core'),
       '#content' => $dwc->asHTML(),
     );
-    module_load_include('inc', 'islandora_repository', 'ObjectHelper');
+    module_load_include('inc', 'fedora_repository', 'ObjectHelper');
     $obj = new ObjectHelper();
-    if (islandora_repository_access(OBJECTHELPER :: $EDIT_FEDORA_METADATA, $this->pid, $user)) {
-      $editform = drupal_get_form('islandora_repository_edit_qdc_form', $this->pid, 'DARWIN_CORE');
+    if (fedora_repository_access(OBJECTHELPER :: $EDIT_FEDORA_METADATA, $this->pid, $user)) {
+      $editform = drupal_get_form('fedora_repository_edit_qdc_form', $this->pid, 'DARWIN_CORE');
       $tabset['third_tab']['tabset']['edit'] = array(
         '#type' => 'tabpage',
         '#title' => t('Edit'),

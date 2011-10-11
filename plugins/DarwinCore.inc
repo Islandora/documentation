@@ -21,7 +21,7 @@ class DarwinCore {
    * @param type $item 
    */
   function __construct($item = NULL) {
-    module_load_include('inc', 'islandora_repository', 'api/fedora_item');
+    module_load_include('inc', 'fedora_repository', 'api/fedora_item');
     if (!empty($item)) {
       $this->owner = $item;
       if (array_key_exists('DARWIN_CORE', $item->get_datastreams_list_as_array())) {
@@ -200,7 +200,7 @@ class DarwinCore {
    * @param type $form_values 
    */
   public function handleForm($form_values) {
-    module_load_include('inc', 'islandora_repository', 'api/fedora_item');
+    module_load_include('inc', 'fedora_repository', 'api/fedora_item');
     global $user;
     //$new_item = Fedora_Item::ingest_new_item($form_values['pid'], 'A', $form_values['dwc:institutionCode'].':'.$form_values['dwc:collectionCode'].':'.$form_values['dwc:catalogNumber'], $user->name);
     //$new_item->add_datastream_from_string($this->darwinCoreXML, 'DARWIN_CORE', 'Darwin Core Metadata', 'text/xml', 'X');
@@ -248,8 +248,8 @@ class DarwinCore {
    */
   public function asHTML() {
     $path = drupal_get_path('module', 'Fedora_Repository');
-    module_load_include('inc', 'islandora_repository', 'ObjectHelper');
-    module_load_include('inc', 'islandora_repository', 'CollectionClass');
+    module_load_include('inc', 'fedora_repository', 'ObjectHelper');
+    module_load_include('inc', 'fedora_repository', 'CollectionClass');
 
     $xmlstr = $this->darwinCoreXML;
     html_entity_decode($xmlstr);

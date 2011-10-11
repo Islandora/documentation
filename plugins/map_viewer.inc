@@ -29,9 +29,9 @@ class ShowMapStreamsInFieldSets {
    * @return type 
    */
   function showJPG() {
-    module_load_include('inc', 'islandora_repository', 'plugins/tagging_form');
-    module_load_include('inc', 'islandora_repository', 'plugins/ShowStreamsInFieldSets');
-    module_load_include('inc', 'islandora_repository', 'api/fedora_item');
+    module_load_include('inc', 'fedora_repository', 'plugins/tagging_form');
+    module_load_include('inc', 'fedora_repository', 'plugins/ShowStreamsInFieldSets');
+    module_load_include('inc', 'fedora_repository', 'api/fedora_item');
 
     global $base_url;
 
@@ -51,8 +51,8 @@ class ShowMapStreamsInFieldSets {
     $html = '<iframe src="' . $viewer_url . '"  scrolling="no" frameborder="0" style="width: 100%; height: 800px;">Errors: unable to load viewer</iframe>';
 
     drupal_add_css(path_to_theme() . '/header-viewer.css', 'theme');
-    drupal_add_css(drupal_get_path('module', 'islandora_repository') . '/js/iiv/css/jquery-ui/smoothness/jquery-ui-1.7.2.custom.css');
-    drupal_add_css(drupal_get_path('module', 'islandora_repository') . '/js/iiv/css/iiv.css');
+    drupal_add_css(drupal_get_path('module', 'fedora_repository') . '/js/iiv/css/jquery-ui/smoothness/jquery-ui-1.7.2.custom.css');
+    drupal_add_css(drupal_get_path('module', 'fedora_repository') . '/js/iiv/css/iiv.css');
 
 
     $tabset['my_tabset']['second_tab'] = array(
