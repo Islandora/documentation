@@ -168,7 +168,7 @@ abstract class XMLDatastream {
         //$tmpname = substr($this->pid, strpos($this->pid, ':') + 1);
         $tmpname = user_password(10);
         $this->convertFromOldSchema();
-        drupal_add_js("fedora_repository_print_new_schema_$tmpname = function(tagID) {
+        drupal_add_js("islandora_repository_print_new_schema_$tmpname = function(tagID) {
         var target = document.getElementById(tagID);
         var content = target.innerHTML;
         var text = '<html><head><title>Title'   +
@@ -179,7 +179,7 @@ abstract class XMLDatastream {
         }", 'inline');
 
         if (user_access('administer site configuration')) {
-          drupal_set_message('<span id="new_schema_' . $tmpname . '" style="display: none;">' . htmlentities($this->xml->saveXML()) . '</span>Warning: XMLDatastream performed conversion of \'' . $this->getIdentifier() . '\' from old schema.  Please update the datastream. The new datastream contents are <a href="javascript:fedora_repository_print_new_schema_' . $tmpname . '(\'new_schema_' . $tmpname . '\')">here.</a> ');
+          drupal_set_message('<span id="new_schema_' . $tmpname . '" style="display: none;">' . htmlentities($this->xml->saveXML()) . '</span>Warning: XMLDatastream performed conversion of \'' . $this->getIdentifier() . '\' from old schema.  Please update the datastream. The new datastream contents are <a href="javascript:islandora_repository_print_new_schema_' . $tmpname . '(\'new_schema_' . $tmpname . '\')">here.</a> ');
         }
 
         $rootEl = $this->xml->firstChild;
@@ -246,7 +246,7 @@ abstract class XMLDatastream {
    * @return boolean $valid
    */
   public function purgeVersions($start_date, $end_date = NULL) {
-    module_load_include('inc', 'fedora_repository', 'api/fedora_item');
+    module_load_include('inc', 'islandora_repository', 'api/fedora_item');
     $fedora_item = new Fedora_Item($this->pid);
     return $fedora_item->purge_datastream($this->dsid, $start_date, $end_date);
   }
@@ -258,7 +258,7 @@ abstract class XMLDatastream {
    * @return string[] $ret
    */
   public function getHistory() {
-    module_load_include('inc', 'fedora_repository', 'api/fedora_item');
+    module_load_include('inc', 'islandora_repository', 'api/fedora_item');
     $fedora_item = new Fedora_Item($this->pid);
     $history = $fedora_item->get_datastream_history($this->dsid);
 
