@@ -22,7 +22,7 @@ class Exiftool {
   function __construct($pid) {
     //drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
     $this->pid = $pid;
-    module_load_include('inc', 'fedora_repository', 'api/fedora_item');
+    module_load_include('inc', 'islandora_repository', 'api/fedora_item');
     $this->item = new Fedora_Item($this->pid);
   }
 

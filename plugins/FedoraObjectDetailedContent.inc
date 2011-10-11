@@ -19,7 +19,7 @@ class FedoraObjectDetailedContent {
    * @param type $pid 
    */
   function __construct($pid = '') {
-    module_load_include('inc', 'fedora_repository', 'api/fedora_item');
+    module_load_include('inc', 'islandora_repository', 'api/fedora_item');
     if (!empty($pid)) {
 
       $this->pid = $pid;
@@ -36,9 +36,9 @@ class FedoraObjectDetailedContent {
     global $user;
     $objectHelper = new ObjectHelper();
     $tabset = array();
-    $show_purge_tab = (!empty($_POST['form_id']) && $_POST['form_id'] == 'fedora_repository_purge_object_form');
-    $show_edit_tab = (!empty($_POST['form_id']) && $_POST['form_id'] == 'fedora_repository_edit_qdc_form');
-    $purge_form = drupal_get_form('fedora_repository_purge_object_form', $this->pid, check_plain(substr(request_uri(), strlen(base_path()))));
+    $show_purge_tab = (!empty($_POST['form_id']) && $_POST['form_id'] == 'islandora_repository_purge_object_form');
+    $show_edit_tab = (!empty($_POST['form_id']) && $_POST['form_id'] == 'islandora_repository_edit_qdc_form');
+    $purge_form = drupal_get_form('islandora_repository_purge_object_form', $this->pid, check_plain(substr(request_uri(), strlen(base_path()))));
 
     $tabset['fedora_object_details'] = array(
       '#type' => 'tabpage',
@@ -59,8 +59,8 @@ class FedoraObjectDetailedContent {
       '#content' => $dc_html . $ds_list . $purge_form,
     );
 
-    if (fedora_repository_access(OBJECTHELPER :: $EDIT_FEDORA_METADATA, $this->pid, $user)) {
-      $editform = drupal_get_form('fedora_repository_edit_qdc_form', $this->pid, 'DC');
+    if (islandora_repository_access(OBJECTHELPER :: $EDIT_FEDORA_METADATA, $this->pid, $user)) {
+      $editform = drupal_get_form('islandora_repository_edit_qdc_form', $this->pid, 'DC');
       $tabset['fedora_object_details']['tabset']['edit'] = array(
         '#type' => 'tabpage',
         '#title' => t('Edit'),

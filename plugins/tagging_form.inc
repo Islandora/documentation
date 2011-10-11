@@ -13,9 +13,9 @@
  * @return string 
  */
 function _show_subject_tags($pid) {
-  module_load_include('inc', 'fedora_repository', 'api/fedora_item');
-  module_load_include('inc', 'fedora_repository', 'api/dublin_core');
-  module_load_include('inc', 'fedora_repository', 'api/tagging');
+  module_load_include('inc', 'islandora_repository', 'api/fedora_item');
+  module_load_include('inc', 'islandora_repository', 'api/dublin_core');
+  module_load_include('inc', 'islandora_repository', 'api/tagging');
   $obj = new Fedora_Item($pid);
   $tags = new TagSet($obj);
   if (!empty($tags->tags)) {
@@ -35,10 +35,10 @@ function _show_subject_tags($pid) {
  * @param type $pid
  * @return type 
  */
-function fedora_repository_image_tagging_form($form_state, $pid) {
-  module_load_include('inc', 'fedora_repository', 'api/fedora_item');
-  module_load_include('inc', 'fedora_repository', 'api/dublin_core');
-  module_load_include('inc', 'fedora_repository', 'api/tagging');
+function islandora_repository_image_tagging_form($form_state, $pid) {
+  module_load_include('inc', 'islandora_repository', 'api/fedora_item');
+  module_load_include('inc', 'islandora_repository', 'api/dublin_core');
+  module_load_include('inc', 'islandora_repository', 'api/tagging');
   global $base_url;
 
   if (!empty($form_state['post']['pid'])) {
@@ -71,7 +71,7 @@ function fedora_repository_image_tagging_form($form_state, $pid) {
       // Delete button for each existing tag.
       $form['tags-wrapper']['tags'][$tag['name']]['delete'] = array(
         '#type' => 'imagebutton',
-        '#image' => $base_url . '/' . drupal_get_path('module', 'fedora_repository') . '/images/remove_icon.png',
+        '#image' => $base_url . '/' . drupal_get_path('module', 'islandora_repository') . '/images/remove_icon.png',
         '#default_value' => $tag['name'],
         '#title' => t('Delete this tag'),
       );
@@ -122,9 +122,9 @@ function hook_imagebutton_process($form) {
  * @param type $form
  * @param type $form_state 
  */
-function fedora_repository_image_tagging_form_submit($form, &$form_state) {
-  module_load_include('inc', 'fedora_repository', 'api/fedora_item');
-  module_load_include('inc', 'fedora_repository', 'api/tagging');
+function islandora_repository_image_tagging_form_submit($form, &$form_state) {
+  module_load_include('inc', 'islandora_repository', 'api/fedora_item');
+  module_load_include('inc', 'islandora_repository', 'api/tagging');
   global $user;
 
   $item = new Fedora_Item($form_state['values']['pid']);

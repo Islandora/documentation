@@ -6,7 +6,7 @@
  * @file
  * ModsFormBuilder class
  */
-module_load_include('inc', 'fedora_repository', 'plugins/FormBuilder');
+module_load_include('inc', 'islandora_repository', 'plugins/FormBuilder');
 
 /**
  * ModsFormBuilder class ???
@@ -25,8 +25,8 @@ class ModsFormBuilder extends FormBuilder {
   function __construct($pid=NULL) {
     parent::__construct();
     if ($pid !== NULL) {
-      module_load_include('inc', 'fedora_repository', 'ContentModel');
-      module_load_include('inc', 'fedora_repository', 'api/fedora_item');
+      module_load_include('inc', 'islandora_repository', 'ContentModel');
+      module_load_include('inc', 'islandora_repository', 'api/fedora_item');
 
       $this->pid = $pid;
       $this->cm = ContentModel::loadFromObject($pid);
@@ -241,7 +241,7 @@ class ModsFormBuilder extends FormBuilder {
 
         $form['submit'] = array(
           '#type' => 'submit',
-          '#submit' => array('fedora_repository_edit_qdc_form_submit'),
+          '#submit' => array('islandora_repository_edit_qdc_form_submit'),
           '#value' => 'Save Metadata'
         );
 
@@ -256,8 +256,8 @@ class ModsFormBuilder extends FormBuilder {
    * @param &$form_state
    */
   function handleModsForm(&$form_values, &$form_state) {
-    module_load_include('inc', 'fedora_repository', 'api/fedora_item');
-    module_load_include('inc', 'fedora_repository', 'CollectionPolicy');
+    module_load_include('inc', 'islandora_repository', 'api/fedora_item');
+    module_load_include('inc', 'islandora_repository', 'CollectionPolicy');
 
     $form_state['storage']['people'] = NULL; //clears out old entities for the next run of the formbuilder.
 
@@ -329,7 +329,7 @@ class ModsFormBuilder extends FormBuilder {
    * @param &$rootElement
    */
   function createCollectionPolicy($form_values, &$dom, &$rootElement) {
-    module_load_include('inc', 'fedora_repository', 'api/fedora_item');
+    module_load_include('inc', 'islandora_repository', 'api/fedora_item');
     $model = new fedora_item($form_values['content_model_pid']);
     $ds_list = $model->get_datastreams_list_as_array();
     if (isset($ds_list['COLLECTION_POLICY_TMPL'])) {
@@ -364,7 +364,7 @@ class ModsFormBuilder extends FormBuilder {
    * @param &$rootElement
    */
   function createWorkflowStream($form_values, &$dom, &$rootElement) {
-    module_load_include('inc', 'fedora_repository', 'api/fedora_item');
+    module_load_include('inc', 'islandora_repository', 'api/fedora_item');
     $model = new fedora_item($form_values['content_model_pid']);
     $ds_list = $model->get_datastreams_list_as_array();
     if (isset($ds_list['WORKFLOW_TMPL'])) {

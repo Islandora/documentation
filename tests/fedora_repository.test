@@ -16,9 +16,9 @@ class FedoraRepositoryTestCase extends DrupalWebTestCase {
   }
 
   function setUp() {
-    parent::setUp('tabs', 'fedora_repository');
+    parent::setUp('tabs', 'islandora_repository');
 
-    module_load_include('inc', 'fedora_repository', 'api/fedora_item');
+    module_load_include('inc', 'islandora_repository', 'api/fedora_item');
 
     // Create and login user.
     $repository_user = $this->drupalCreateFedoraUser(array('add fedora datastreams',
@@ -57,11 +57,11 @@ class FedoraRepositoryTestCase extends DrupalWebTestCase {
     $ingest_form_step_2['dc:title'] = $this->randomName(32);
     $ingest_form_step_2['dc:description'] = $this->randomName(256);
 
-    $ingest_form_step_2['files[ingest-file-location]'] = realpath(drupal_get_path('module', 'fedora_repository') . '/tests/test_files/lorem_ipsum.pdf');
+    $ingest_form_step_2['files[ingest-file-location]'] = realpath(drupal_get_path('module', 'islandora_repository') . '/tests/test_files/lorem_ipsum.pdf');
     $this->drupalPost(NULL, $ingest_form_step_2, 'Ingest');
     $this->assertText('mimetype (application/pdf) is not associated with this Content Model', 'PDF mime type not accepted in collection content model.', 'message');
 
-    $this->outputScreenContents('Initial ingest form submit step 2', 'fedora_repository');
+    $this->outputScreenContents('Initial ingest form submit step 2', 'islandora_repository');
 
     // Now try ingesting a proper collection policy.
     $ingest_form = array();
@@ -72,9 +72,9 @@ class FedoraRepositoryTestCase extends DrupalWebTestCase {
     $ingest_form_step_2 = array();
     $ingest_form_step_2['dc:title'] = $this->randomName(32);
     $ingest_form_step_2['dc:description'] = $this->randomName(256);
-    $ingest_form_step_2['files[ingest-file-location]'] = realpath(drupal_get_path('module', 'fedora_repository') . '/collection_policies/PDF-COLLECTION POLICY.xml');
+    $ingest_form_step_2['files[ingest-file-location]'] = realpath(drupal_get_path('module', 'islandora_repository') . '/collection_policies/PDF-COLLECTION POLICY.xml');
     $this->drupalPost(NULL, $ingest_form_step_2, 'Ingest');
-    //$this->outputScreenContents('Initial ingest form submit step 2 - PDF collection', 'fedora_repository');
+    //$this->outputScreenContents('Initial ingest form submit step 2 - PDF collection', 'islandora_repository');
     $this->assertPattern('/Item .* created successfully./', "Verified item created.");
 
     $pid = $this->getIngestedPid();
@@ -88,7 +88,7 @@ class FedoraRepositoryTestCase extends DrupalWebTestCase {
     $ingest_form_step_2 = array();
     $ingest_form_step_2['dc:title'] = "Lorem Ipsum";
     $ingest_form_step_2['dc:description'] = $this->randomName(256);
-    $ingest_form_step_2['files[ingest-file-location]'] = realpath(drupal_get_path('module', 'fedora_repository') . '/tests/test_files/lorem_ipsum.pdf');
+    $ingest_form_step_2['files[ingest-file-location]'] = realpath(drupal_get_path('module', 'islandora_repository') . '/tests/test_files/lorem_ipsum.pdf');
     $this->drupalPost(NULL, $ingest_form_step_2, 'Ingest');
     $pid = $this->getIngestedPid();
     $pid_list[] = $pid;
@@ -104,7 +104,7 @@ class FedoraRepositoryTestCase extends DrupalWebTestCase {
 
     $admin_tester = $this->drupalCreateUser(array('administer site configuration', 'view fedora collection'));
     $this->drupalLogin($admin_tester);
-    $pageContent = $this->drupalGet('admin/settings/fedora_repository');
+    $pageContent = $this->drupalGet('admin/settings/islandora_repository');
     $hasOption = preg_match('/Enforce namespace restrictions/', $pageContent);
 
 
@@ -115,13 +115,13 @@ class FedoraRepositoryTestCase extends DrupalWebTestCase {
       $this->pass('Removal of namespace restrictions is enabled');
       $inVal['fedora_namespace_restriction_enforced'] = TRUE;
       $inVal['fedora_pids_allowed'] = 'simpletest:';
-      $this->drupalPost('admin/settings/fedora_repository', $inVal, 'Save configuration');
+      $this->drupalPost('admin/settings/islandora_repository', $inVal, 'Save configuration');
       $this->assertPattern('/The configuration options have been saved./', 'The configuration options have been saved.');
 
       $this->drupalGet('fedora/repository/islandora:largeimages/');
       $this->assertPattern('/Access denied/', 'No access to Large image Collection Collection');
       $inVal['fedora_namespace_restriction_enforced'] = 0;
-      $this->drupalPost('admin/settings/fedora_repository', $inVal, 'Save configuration');
+      $this->drupalPost('admin/settings/islandora_repository', $inVal, 'Save configuration');
       $this->assertPattern('/The configuration options have been saved./', 'The configuration options have been saved.');
       $this->drupalLogin($this->repository_user);
       $this->drupalGet('fedora/repository/islandora:largeimages/');

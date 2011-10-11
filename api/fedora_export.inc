@@ -41,7 +41,7 @@ function export_to_export_area($pid, $foxml_dir, $ob_dir, &$log = array()) {
  * @return string 
  */
 function export_objects_for_pid($pid, $dir, &$log) {
-  module_load_include('inc', 'fedora_repository', 'api/fedora_item');
+  module_load_include('inc', 'islandora_repository', 'api/fedora_item');
   $item = new Fedora_Item($pid);
   if (!$object = $item->get_datastreams_list_as_SimpleXML($pid)) {
     $log[] = log_line(t("Failed to get datastream %dsid for pid %pid", array('%dsid' => $ds->ID, '%pid' => $pid)), 'error');
@@ -85,7 +85,7 @@ function export_objects_for_pid($pid, $dir, &$log) {
  * @return type 
  */
 function export_foxml_for_pid($pid, $dir, $paths, &$log, $format = FOXML_11, $remove_islandora = FALSE) {
-  module_load_include('inc', 'fedora_repository', 'ObjectHelper');
+  module_load_include('inc', 'islandora_repository', 'ObjectHelper');
   $ob_helper = new ObjectHelper();
   if (!$object_xml = $ob_helper->getObject($pid, 'migrate', $format)) {
     $log[] = log_line(t("Failed to get foxml for %pid", array('%pid' => $pid)), 'error');

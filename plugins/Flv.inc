@@ -138,7 +138,7 @@ class FormBuilder {
    * @param type $rootElement 
    */
   function createFedoraDataStreams($form_values, &$dom, &$rootElement) {
-    module_load_include('inc', 'fedora_repository', 'MimeClass');
+    module_load_include('inc', 'islandora_repository', 'MimeClass');
     $mimetype = new MimeClass();
     $server = NULL;
     $file = $form_values['ingest-file-location'];

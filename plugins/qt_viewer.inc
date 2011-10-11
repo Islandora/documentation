@@ -112,9 +112,9 @@ class ShowQtStreamsInFieldSets {
    * @return type 
    */
   function showQt() {
-    module_load_include('inc', 'fedora_repository', 'plugins/tagging_form');
-    module_load_include('inc', 'fedora_repository', 'plugins/ShowStreamsInFieldSets');
-    module_load_include('inc', 'fedora_repository', 'api/fedora_item');
+    module_load_include('inc', 'islandora_repository', 'plugins/tagging_form');
+    module_load_include('inc', 'islandora_repository', 'plugins/ShowStreamsInFieldSets');
+    module_load_include('inc', 'islandora_repository', 'api/fedora_item');
 
     $info = $this->technicalMetadata(array('width' => 640, 'height' => 480));
     $width = $info['width'];
