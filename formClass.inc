@@ -25,7 +25,7 @@ class formClass {
     $items = array();
 
     $items['admin/settings/islandora_repository'] = array(
-      'title' => t('Configure Islandora'),
+      'title' => t('Islandora Configure'),
       'description' => t('Enter the Islandora Collection information here'),
       'page callback' => 'drupal_get_form',
       'page arguments' => array('islandora_repository_admin'),
