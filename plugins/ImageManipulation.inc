@@ -211,7 +211,7 @@ class ImageManipulation {
     }
     elseif (stristr($_SERVER['SERVER_SOFTWARE'], 'unix')) {
       // Use this for Mac OS X (MAMP)
-      $cmdline = "sips -s format jpeg \"$file\" -z $height $height --out \"$file$file_suffix\" >/dev/null";
+      $cmdline = "sips -s format jpeg \"$file\" -z $height $height --out \"$file$file_suffix\" >/dev/NULL";
     }
     else {
       $cmdline = "convert \"$file\"\[0\] -colorspace RGB -thumbnail " . $width . "x" . $height . " \"$file$file_suffix\"";
