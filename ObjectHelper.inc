@@ -750,7 +750,7 @@ class ObjectHelper {
     try {
       $parent_collections = new SimpleXMLElement($parent_collections);
     } catch (exception $e) {
-      drupal_set_message(t('Error getting parent objects !e', array('!e' => $e->getMessage())));
+      drupal_set_message(t('Error getting parent objects !e', array('!e' => check_plain($e->getMessage()))));
       return;
     }
 
