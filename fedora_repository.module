@@ -1657,7 +1657,7 @@ function fedora_repository_demo_objects_form_submit($form, &$form_state) {
     }
 
     if (!empty($error)) {
-      drupal_set_message(t('Some problems occurred: ' . $error));
+      drupal_set_message(t('Some problems occurred: @error', array('@error' => $error)));
     }
   }
 }
