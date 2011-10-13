@@ -115,7 +115,7 @@ function fedora_repository_ingest_object($collection_pid=NULL, $collection_label
       $collection_pid = urldecode($collection_pid);
     }
     else {
-      drupal_set_message(t("This collection PID $collection_pid is not valid"), 'error');
+      drupal_set_message(t("This collection PID @collection_pid is not valid", check_plain($collection_pid )), 'error');
       return ' ';
     }
   }
