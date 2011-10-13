@@ -229,7 +229,7 @@ function batch_create_dc_from_mods($mods_xml) {
   try {
     $proc = new XsltProcessor();
   } catch (Exception $e) {
-    drupal_set_message(t("!e", array('!e' => check_plain($e->getMessage()))), 'error');
+    drupal_set_message(t('@e', array('@e' => check_plain($e->getMessage()))), 'error');
     return " ";
   }
 
