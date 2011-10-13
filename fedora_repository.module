@@ -399,7 +399,7 @@ function add_stream_form_submit($form, &$form_state) {
 
     file_delete($file);
   } catch (exception $e) {
-    drupal_set_message(t(check_plain($e->getMessage())), 'error');
+    drupal_set_message(t('@message', check_plain($e->getMessage())), 'error');
     return;
   }
   $form_state['rebuild'] = TRUE;
@@ -518,7 +518,7 @@ function fedora_repository_purge_object_form_submit($form, &$form_state) {
         drupal_set_message(t('Error:  Insufficient permissions to purge object.'), 'error');
       }
       else {
-        drupal_set_message(t($e->getMessage()), 'error');
+        drupal_set_message(t('@message', check_plain($e->getMessage())), 'error');
       }
       return;
     }
@@ -576,7 +576,7 @@ function fedora_repository_purge_stream_form_submit($form, &$form_state) {
   try {
     $item->purge_datastream($dsid);
   } catch (exception $e) {
-    drupal_set_message(t($e->getMessage()), 'error');
+    drupal_set_message(t('@message', check_plain($e->getMessage())), 'error');
   }
   $form_state['redirect'] = $base_url . "/fedora/repository/$pid";
 }
@@ -934,7 +934,7 @@ function fedora_repository_get_items($pid = NULL, $dsId = NULL, $collection = NU
   }
   if (!fedora_repository_access(OBJECTHELPER::$OBJECT_HELPER_VIEW_FEDORA, $pid, $user)) {
     if (user_access('access administration pages')) {
-      drupal_set_message(t("PIDs may be added to allowed namespaces, or all namespace restrictions removed !here", array('!here' => l('here', 'admin/settings/fedora_repository'))), 'warning');
+      drupal_set_message(t("PIDs may be added to allowed namespaces, or all namespace restrictions removed @here", array('@here' => l('here', 'admin/settings/fedora_repository'))), 'warning');
     }
     drupal_access_denied();
     exit;
