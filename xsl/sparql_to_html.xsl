@@ -34,7 +34,7 @@
      of <xsl:value-of select="$count"/>&#160;<br />
        <li class="pager-previous">
      <a>
-      <xsl:attribute name="href"><xsl:value-of select="$BASEURL"/>/fedora/repository/<xsl:value-of select="$thisPid"/>/-/<xsl:value-of select="$thisTitle"/>/<xsl:value-of select="$page - 1"/>
+      <xsl:attribute name="href"><xsl:value-of select="$BASEURL"/>/fedora/repository/<xsl:value-of select="$thisPid"/>/-/Collection/<xsl:value-of select="$page - 1"/>
       </xsl:attribute>
       &lt;Prev
      </a></li>
@@ -44,7 +44,7 @@
      of <xsl:value-of select="$count"/>&#160;<br />
      <li class="pager-next">
      <a>
-      <xsl:attribute name="href"><xsl:value-of select="$BASEURL"/>/fedora/repository/<xsl:value-of select="$thisPid"/>/-/<xsl:value-of select="$thisTitle"/>/<xsl:value-of select="$page + 1"/>
+      <xsl:attribute name="href"><xsl:value-of select="$BASEURL"/>/fedora/repository/<xsl:value-of select="$thisPid"/>/-/Collection/<xsl:value-of select="$page + 1"/>
       </xsl:attribute>
       Next>
      </a></li>
@@ -54,13 +54,13 @@
      of <xsl:value-of select="$count"/>&#160;<br />
      <li class="pager-previous">
      <a>
-      <xsl:attribute name="href"><xsl:value-of select="$BASEURL"/>/fedora/repository/<xsl:value-of select="$thisPid"/>/-/<xsl:value-of select="$thisTitle"/>/<xsl:value-of select="$page - 1"/>
+      <xsl:attribute name="href"><xsl:value-of select="$BASEURL"/>/fedora/repository/<xsl:value-of select="$thisPid"/>/-/Collection/<xsl:value-of select="$page - 1"/>
       </xsl:attribute>
       &lt;Prev
      </a>&#160;</li>
      <li class="pager-next">
      <a>
-      <xsl:attribute name="href"><xsl:value-of select="$BASEURL"/>/fedora/repository/<xsl:value-of select="$thisPid"/>/-/<xsl:value-of select="$thisTitle"/>/<xsl:value-of select="$page + 1"/>
+      <xsl:attribute name="href"><xsl:value-of select="$BASEURL"/>/fedora/repository/<xsl:value-of select="$thisPid"/>/-/Collection/<xsl:value-of select="$page + 1"/>
       </xsl:attribute>
       Next>
      </a></li>
@@ -106,7 +106,7 @@
      of <xsl:value-of select="$count"/>&#160;<br />
        <li class="pager-previous">
      <a>
-      <xsl:attribute name="href"><xsl:value-of select="$BASEURL"/>/fedora/repository/<xsl:value-of select="$thisPid"/>/-/<xsl:value-of select="$thisTitle"/>/<xsl:value-of select="$page - 1"/>
+      <xsl:attribute name="href"><xsl:value-of select="$BASEURL"/>/fedora/repository/<xsl:value-of select="$thisPid"/>/-/Collection/<xsl:value-of select="$page - 1"/>
       </xsl:attribute>
       &lt;Prev
      </a></li>
@@ -116,7 +116,7 @@
      of <xsl:value-of select="$count"/>&#160;<br />
      <li class="pager-next">
      <a>
-      <xsl:attribute name="href"><xsl:value-of select="$BASEURL"/>/fedora/repository/<xsl:value-of select="$thisPid"/>/-/<xsl:value-of select="$thisTitle"/>/<xsl:value-of select="$page + 1"/>
+      <xsl:attribute name="href"><xsl:value-of select="$BASEURL"/>/fedora/repository/<xsl:value-of select="$thisPid"/>/-/Collection/<xsl:value-of select="$page + 1"/>
       </xsl:attribute>
       Next>
      </a></li>
@@ -126,13 +126,13 @@
      of <xsl:value-of select="$count"/>&#160;<br />
      <li class="pager-previous">
      <a>
-      <xsl:attribute name="href"><xsl:value-of select="$BASEURL"/>/fedora/repository/<xsl:value-of select="$thisPid"/>/-/<xsl:value-of select="$thisTitle"/>/<xsl:value-of select="$page - 1"/>
+      <xsl:attribute name="href"><xsl:value-of select="$BASEURL"/>/fedora/repository/<xsl:value-of select="$thisPid"/>/-/Collection/<xsl:value-of select="$page - 1"/>
       </xsl:attribute>
       &lt;Prev
      </a>&#160;</li>
      <li class="pager-next">
      <a>
-      <xsl:attribute name="href"><xsl:value-of select="$BASEURL"/>/fedora/repository/<xsl:value-of select="$thisPid"/>/-/<xsl:value-of select="$thisTitle"/>/<xsl:value-of select="$page + 1"/>
+      <xsl:attribute name="href"><xsl:value-of select="$BASEURL"/>/fedora/repository/<xsl:value-of select="$thisPid"/>/-/Collection/<xsl:value-of select="$page + 1"/>
       </xsl:attribute>
       Next>
      </a></li>
