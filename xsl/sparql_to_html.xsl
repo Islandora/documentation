@@ -8,7 +8,6 @@
   <xsl:value-of select="$path"/>
  </xsl:variable>
  <xsl:variable name="thisPid" select="$collectionPid"/>
- <xsl:variable name="thisTitle" select="Collection"/>
  <xsl:variable name="size"  select="20"/>
  <xsl:variable name="page" select="$hitPage"/>
  <xsl:variable name="start" select="((number($page) - 1) * number($size)) + 1"/>
