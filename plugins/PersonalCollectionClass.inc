@@ -1,5 +1,7 @@
 <?php
 
+
+
 /**
  * @file
  * PersonalCollectionClass class
@@ -7,7 +9,6 @@
 
 /**
  * Personal Collection Class
- * @deprecated
  */
 class PersonalCollectionClass {
 

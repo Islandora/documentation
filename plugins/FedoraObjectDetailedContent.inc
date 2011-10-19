@@ -1,5 +1,7 @@
 <?php
 
+
+
 /**
  * @file
  * FedoraObjectDetailedContent class
@@ -9,7 +11,6 @@
  * Fedora Object. This class is a plugin called from content models to display a detailed list of 
  * content of the Fedora Item. This is hard coded into Islandora core, and it can also be called
  * from the IslandoraCM stream.
- * @deprecated
  */
 class FedoraObjectDetailedContent {
 

@@ -1,5 +1,7 @@
 <?php
 
+
+
 /**
  * @file
  * Tagging Form???
@@ -9,7 +11,6 @@
  * Show subject tags ???
  * @param type $pid
  * @return string 
- * @deprecated
  */
 function _show_subject_tags($pid) {
   module_load_include('inc', 'fedora_repository', 'api/fedora_item');
@@ -33,7 +34,6 @@ function _show_subject_tags($pid) {
  * @param type $form_state
  * @param type $pid
  * @return type 
- * @deprecated
  */
 function fedora_repository_image_tagging_form($form_state, $pid) {
   module_load_include('inc', 'fedora_repository', 'api/fedora_item');
@@ -105,7 +105,6 @@ function fedora_repository_image_tagging_form($form_state, $pid) {
  * Hook image button process ???
  * @param type $form
  * @return string 
- * @deprecated
  */
 function hook_imagebutton_process($form) {
   $form['op_x'] = array(
@@ -122,7 +121,6 @@ function hook_imagebutton_process($form) {
  * @global type $user
  * @param type $form
  * @param type $form_state 
- * @deprecated
  */
 function fedora_repository_image_tagging_form_submit($form, &$form_state) {
   module_load_include('inc', 'fedora_repository', 'api/fedora_item');

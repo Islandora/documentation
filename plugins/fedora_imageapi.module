@@ -1,9 +1,7 @@
 <?php
 
-/**
- * fedora imageapi menu 
- * @return string 
- */
+
+
 function fedora_imageapi_menu() {
   $items = array();
   $items['fedora/imageapi'] = array(

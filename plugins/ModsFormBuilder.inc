@@ -1,5 +1,7 @@
 <?php
 
+
+
 /**
  * @file
  * ModsFormBuilder class
@@ -7,8 +9,7 @@
 module_load_include('inc', 'fedora_repository', 'plugins/FormBuilder');
 
 /**
- * ModsFormBuilder class
- * @deprecated
+ * ModsFormBuilder class ???
  */
 class ModsFormBuilder extends FormBuilder {
 
