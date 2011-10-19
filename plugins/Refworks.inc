@@ -10,7 +10,8 @@
 module_load_include('inc', 'fedora_repository', 'SecurityClass');
 
 /**
- * Refworks class ???
+ * Refworks class
+ * @deprecated
  */
 class Refworks {
 

@@ -1,7 +1,5 @@
 <?php
 
-// $Id$
-
 /**
  * @file
  * QTFormBuilder class
@@ -11,6 +9,7 @@ module_load_include('inc', 'fedora_repository', 'plugins/FormBuilder');
 /**
  * Implements methods from content model ingest form xml
  *  builds a dc metadata form
+ * @deprecated
  */
 class QtFormBuilder extends FormBuilder {
 

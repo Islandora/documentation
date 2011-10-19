@@ -1,14 +1,13 @@
 <?php
 
-
-
 /**
  * @file
  * ShowMapStreamsInFieldSets class
  */
 
 /**
- * Show Map Streams in Field Sets Class ??
+ * Show Map Streams in Field Sets Class
+ * @deprecated
  */
 class ShowMapStreamsInFieldSets {
 

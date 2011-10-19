@@ -1,20 +1,20 @@
 <?php
 
 /**
- * @file 
- * 
- */
-
-/**
  * @file
  * Herbarium class
  */
 
 /**
- * Herbarium ???
+ * Herbarium Class
+ * @deprecated
  */
 class Herbarium {
 
+  /**
+   * Constructor
+   * @param type $pid 
+   */
   function __construct($pid = '') {
     module_load_include('inc', 'fedora_repository', 'api/fedora_item');
     if (!empty($pid)) {

@@ -1,7 +1,5 @@
 <?php
 
-
-
 /**
  * @file
  * Ffmpeg wrapper class
@@ -11,6 +9,7 @@
  * FFMpeg wrapper class for generating movie thumbnails
  * 
  * This Class implements the methods defined in the STANDARD_QT content model
+ * @deprecated
  */
 class Ffmpeg {
 

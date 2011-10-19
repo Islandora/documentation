@@ -8,7 +8,8 @@
  */
 
 /**
- * Show Demo Streams in Field Sets ???
+ * Show Demo Streams in Field Sets
+ * @deprecated
  */
 class ShowDemoStreamsInFieldSets {
 

@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * @file
  * Document Converter Class
@@ -9,6 +8,7 @@
 /**
  * This class implements document (doc, odt, pdf, etc.) conversion for a generic
  * multi-format document collection.
+ * @deprecated
  */
 class DocumentConverter {
 

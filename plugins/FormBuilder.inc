@@ -1,7 +1,5 @@
 <?php
 
-
-
 /**
  * @file
  * FormBuilder class
@@ -10,6 +8,7 @@
 /**
  * implements methods from content model ingest form xml
  * builds a dc metadata form
+ * @deprecated
  */
 class FormBuilder {
 

@@ -1,7 +1,5 @@
 <?php
 
-
-
 /**
  * @file
  * ShowQTStreamsInFieldSets class
@@ -9,6 +7,7 @@
 
 /**
  * Show QT Stream in Field Sets
+ * @deprecated
  */
 class ShowQtStreamsInFieldSets {
 

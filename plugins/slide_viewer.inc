@@ -1,14 +1,13 @@
 <?php
 
-
-
 /**
  * @file
  * ShowSlideStreamsInFieldSets class
  */
 
 /**
- * ShowSlideStreamInFieldSets ??????
+ * ShowSlideStreamInFieldSets
+ * @deprecated
  */
 class ShowSlideStreamsInFieldSets {
 

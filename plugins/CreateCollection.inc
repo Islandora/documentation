@@ -9,6 +9,7 @@
 
 /**
  * This Class implements the methods defined in the STANDARD_IMAGE content model
+ * @deprecated
  */
 class CreateCollection {
 

@@ -1,7 +1,5 @@
 <?php
 
-
-
 /**
  * @file
  * Image Manipulation class
@@ -9,6 +7,7 @@
 
 /**
  * This Class implements the methods defined in the STANDARD_IMAGE content model
+ * @deprecated
  */
 class ImageManipulation {
 

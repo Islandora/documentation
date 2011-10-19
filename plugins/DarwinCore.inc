@@ -1,18 +1,13 @@
 <?php
 
-/* @file
-
-
-
-*/
-
 /**
  * @file
  * Darwin Core class
  */
 
 /**
- * Darwin Core ???
+ * Darwin Core
+ * @deprecated
  */
 class DarwinCore {
 
