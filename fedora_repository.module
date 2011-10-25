@@ -55,8 +55,8 @@ function fedora_repository_purge_object($pid = NULL, $name = NULL) {
     return '';
   }
   $output = t('Are you sure you wish to purge object %name %pid!<br /><b>This cannot be undone</b><br />', array(
-    '%name' => $name,
-    '%pid' => $pid)
+        '%name' => $name,
+        '%pid' => $pid)
   );
 
   $output .= drupal_get_form('fedora_repository_purge_object_form', $pid);
@@ -435,7 +435,7 @@ function add_stream_form_validate($form, &$form_state) {
     return FALSE;
   }
   if (!(preg_match("/^[a-zA-Z]/", $dsid))) {
-    form_set_error('', t("Data stream ID (@dsid) has to start with a letter.", array( '@dsid' => check_plain($dsid))));
+    form_set_error('', t("Data stream ID (@dsid) has to start with a letter.", array('@dsid' => check_plain($dsid))));
     return FALSE;
   }
   if (strlen($dsLabel) > 64) {
@@ -482,7 +482,7 @@ function fedora_repository_purge_stream($pid = NULL, $dsId = NULL, $name = NULL)
   }
 
   $output = t('Are you sure you wish to purge this datastream %name<br />', array(
-    '%name' => $name)
+        '%name' => $name)
   );
   $output .= drupal_get_form('fedora_repository_purge_stream_form', $pid, $dsId);
   return $output;
@@ -995,8 +995,9 @@ function fedora_repository_get_items($pid = NULL, $dsId = NULL, $collection = NU
       }
     }
   }
-  $cmodels_tabs = array_merge($cmodels_tabs, $object_details);
 
+  $hook_tabs = module_invoke_all('islandora_tabs', $content_models, $pid);
+  $cmodels_tabs = array_merge($cmodels_tabs, $object_details, $hook_tabs);
 
   return tabs_render($cmodels_tabs);
 }
