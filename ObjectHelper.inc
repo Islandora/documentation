@@ -546,6 +546,7 @@ class ObjectHelper {
    */
   function get_content_models_list($pid, $include_fedora_system_content_models = FALSE) {
     module_load_include('inc', 'fedora_repository', 'CollectionClass');
+    module_load_include('inc', 'fedora_repository', 'ContentModel');
     $collectionHelper = new CollectionClass();
     $pids = array();
     $query = 'select $object from <#ri>

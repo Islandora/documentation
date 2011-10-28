@@ -317,7 +317,7 @@ function fedora_repository_purge_object_form(&$form_state, $pid, $referrer = NUL
     if (!empty($collectionPid)) {
       $collectionPid = $_SESSION['fedora_collection'];
     }
-//$form['#redirect'] = $referrer;
+//$form['#rebuild'] = $false;
 
     return $form;
   }
@@ -989,7 +989,7 @@ function fedora_repository_get_items($pid = NULL, $dsId = NULL, $collection = NU
   $obj = new FedoraObjectDetailedContent($pid);
   $object_details = $obj->showFieldSets();
   if ($object_details['fedora_object_details']['#selected'] == TRUE) {
-    foreach ($cmodels_tabs as $cmodel_tab) {
+    foreach ($cmodels_tabs as &$cmodel_tab) {
       if (is_array($cmodel_tab)) {
         $cmodel_tab['#selected'] = FALSE;
       }
