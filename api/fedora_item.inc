@@ -43,7 +43,7 @@ class Fedora_Item {
       }
 
       $raw_objprofile = $this->soap_call('getObjectProfile', array('pid' => $this->pid, 'asOfDateTime' => ""));
-
+      
       if (!empty($raw_objprofile)) {
         $this->objectProfile = $raw_objprofile->objectProfile;
         $this->datastreams = $this->get_datastreams_list_as_array();
@@ -297,18 +297,17 @@ class Fedora_Item {
       $i++;
       $url = variable_get('fedora_base_url', 'http://localhost:8080/fedora');
       if ($cursor == 0) {
-        $url .= "/objects?query=$field~$pattern&pid=TRUE&title=TRUE&resultFormat=xml&maxResults=$max_results";
+        $url .= "/objects?query=$field~$pattern&pid=true&title=TRUE&resultFormat=xml&maxResults=$max_results";
       }
       else {
-        $url .= "/objects?pid=TRUE&title=TRUEsessionToken=$session_token&resultFormat=xml&maxResults=$max_results";
+        $url .= "/objects?pid=true&title=true&sessionToken=$session_token&resultFormat=xml&maxResults=$max_results";
       }
 
       if (count($resultFields) > 0) {
-        $url .= '&' . join('=TRUE&', $resultFields) . '=TRUE';
+        $url .= '&' . join('=true&', $resultFields) . '=true';
       }
 
       $resultxml = do_curl($url);
-
       libxml_use_internal_errors(TRUE);
       $resultelements = simplexml_load_string($resultxml);
       if ($resultelements === FALSE) {
