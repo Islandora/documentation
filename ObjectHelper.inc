@@ -1,6 +1,6 @@
 <?php
 
-// $Id$
+
 /**
  * @file 
  * Object Helper Class
@@ -19,9 +19,6 @@ class ObjectHelper {
   public static $INGEST_FEDORA_OBJECTS = 'ingest new fedora objects';
   public static $EDIT_TAGS_DATASTREAM = 'edit tags datastream';
   public static $VIEW_DETAILED_CONTENT_LIST = 'view detailed list of content';
-  public static $MANAGE_COLLECTIONS = 'manage collections';
-  public static $DELETE_ENTIRE_COLLECTIONS = 'delete entire collections';
-  public static $CREATE_BATCH_PROCESS = 'create batch process';
   public static $DISPLAY_ALWAYS = 0;
   public static $DISPLAY_NEVER = 1;
   public static $DISPLAY_NO_MODEL_OUTPUT = 2;
@@ -387,7 +384,7 @@ class ObjectHelper {
       $input = new DomDocument();
       $input->loadXML(trim($xmlstr));
     } catch (exception $e) {
-      watchdog(t("Fedora_Repository"), "Problem loading XSL file: !e", array('!e' => $e), NULL, WATCHDOG_ERROR);
+      watchdog(t("Fedora_Repository"), "Problem loading XSL file: @e", array('@e' => $e), NULL, WATCHDOG_ERROR);
     }
     $xsl = $proc->importStylesheet($xsl);
     $newdom = $proc->transformToDoc($input);
@@ -550,6 +547,7 @@ class ObjectHelper {
    */
   function get_content_models_list($pid, $include_fedora_system_content_models = FALSE) {
     module_load_include('inc', 'fedora_repository', 'CollectionClass');
+    module_load_include('inc', 'fedora_repository', 'ContentModel');
     $collectionHelper = new CollectionClass();
     $pids = array();
     $query = 'select $object from <#ri>
@@ -751,7 +749,7 @@ class ObjectHelper {
     try {
       $parent_collections = new SimpleXMLElement($parent_collections);
     } catch (exception $e) {
-      drupal_set_message(t('Error getting parent objects !e', array('!e' => $e->getMessage())));
+      drupal_set_message(t('Error getting parent objects @e', array('@e' => check_plain($e->getMessage()))));
       return;
     }
 
@@ -836,7 +834,7 @@ class ObjectHelper {
       and $o <mulgara:is> <info:fedora/' . $pid . '>';
 
     $url = variable_get('fedora_repository_url', 'http://localhost:8080/fedora/risearch');
-    $url .= "?type=tuples&flush=true&format=csv&limit=1000&lang=itql&stream=on&query=";
+    $url .= "?type=tuples&flush=TRUE&format=csv&limit=1000&lang=itql&stream=on&query=";
     $content = do_curl($url . htmlentities(urlencode($query_string)));
 
     $rows = explode("\n", $content);
@@ -870,7 +868,7 @@ class ObjectHelper {
     $query_string = substr($query_string, 0, -3) . ' )';
 
     $url = variable_get('fedora_repository_url', 'http://localhost:8080/fedora/risearch');
-    $url .= "?type=tuples&flush=true&format=csv&limit=1000&lang=itql&stream=on&query=";
+    $url .= "?type=tuples&flush=TRUE&format=csv&limit=1000&lang=itql&stream=on&query=";
     $url .= htmlentities(urlencode($query_string));
     $content = $this->doCurl($url);
 
@@ -938,18 +936,22 @@ class ObjectHelper {
                                or <info:fedora/' . $pid . '> <fedora-rels-ext:isPartOf> $parentObject)
                                and $parentObject <fedora-model:state> <info:fedora/fedora-system:def/model#Active>)
                                minus $content <mulgara:is> <info:fedora/fedora-system:FedoraObject-3.0>
-                               order by $title';
+                               order by $title desc';
       $query_string = htmlentities(urlencode($query_string));
 
       $url = variable_get('fedora_repository_url', 'http://localhost:8080/fedora/risearch');
       $url .= "?type=tuples&flush=TRUE&format=CSV&limit=1&offset=0&lang=itql&stream=on&query=" . $query_string;
-
+      
       $result = preg_split('/[\r\n]+/', do_curl($url));
       array_shift($result); // throw away first line
       $matches = str_getcsv(join("\n", $result));
-      if ($matches !== FALSE) {
+      if (count($matches) >= 2) {
         $parent = preg_replace('/^info:fedora\//', '', $matches[0]);
 
+        if (0 == strlen($matches[1])) {
+          $matches[1] = "Unlabeled Object";
+        }
+        
         $breadcrumbs[] = l($matches[1], 'fedora/repository/' . $pid);
         if ($parent == variable_get('fedora_repository_pid', 'islandora:root')) {
           $breadcrumbs[] = l(t('Digital repository'), 'fedora/repository');
@@ -958,6 +960,10 @@ class ObjectHelper {
         elseif ($level > 0) {
           $this->getBreadcrumbs($parent, $breadcrumbs, $level - 1);
         }
+      }
+      
+      else {
+        $breadcrumbs[] = l("Path Calculation Error", 'fedora/repository/' . $pid);
       }
     }
   }

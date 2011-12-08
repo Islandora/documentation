@@ -1,12 +1,11 @@
 <?php
 
-// $Id$
+
 
 /**
  * @file
  * Base utilities used by the Islandora fedora module.
  */
-
 if (!function_exists('str_getcsv')) {
 
   /**
@@ -96,9 +95,8 @@ function do_curl($url, $return_to_variable = 1, $number_of_post_vars = 0, $post 
  */
 function do_curl_ext($url, $return_to_variable = 1, $number_of_post_vars = 0, $post = NULL) {
   global $user;
-  
+
   // Check if we are inside Drupal and there is a valid user.
-  
   // If the user is not valid for a Fedora call curl will throw an exception.
   if ((!isset($user)) || $user->uid == 0) {
     $fedora_user = 'anonymous';
@@ -126,14 +124,13 @@ function do_curl_ext($url, $return_to_variable = 1, $number_of_post_vars = 0, $p
       curl_setopt($ch, CURLOPT_POST, $number_of_post_vars);
       curl_setopt($ch, CURLOPT_POSTFIELDS, "$post");
     }
-    
+
     $ret_val = curl_exec($ch);
-    
+
     $error_code = curl_errno($ch);
     $error_string = curl_error($ch);
-    return array ($ret_val, $error_code, $error_string);
+    return array($ret_val, $error_code, $error_string);
   }
-  
   else {
     if (function_exists(drupal_set_message)) {
       drupal_set_message(t('No curl support.'), 'error');
@@ -159,9 +156,8 @@ function fedora_available() {
 function risearch_available() {
 
   $response = do_curl_ext(variable_get('fedora_repository_url', 'http://localhost:8080/fedora/risearch'));
-  return ($response != NULL) ? ($response[1] == 0): FALSE;
+  return ($response != NULL) ? ($response[1] == 0) : FALSE;
 }
-
 
 /**
  * Returns a UTF-8-encoded transcripiton of the string given in $in_str.
@@ -239,13 +235,14 @@ function fix_dsid($dsid) {
  */
 function get_collections_as_option_array() {
   module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
+  $restricted = variable_get('fedora_namespace_restriction_enforced', TRUE);
   $query = 'select $object $title from <#ri>
                             where ($object <dc:title> $title
                               and $object <info:fedora/fedora-system:def/model#hasModel> <info:fedora/islandora:collectionCModel>
                               and $object <fedora-model:state> <info:fedora/fedora-system:def/model#Active>)
                             order by $title';
   $url = variable_get('fedora_repository_url', 'http://localhost:8080/fedora/risearch');
-  $url .= "?type=tuples&flush=true&format=csv&limit=1000&lang=itql&stream=on&query=";
+  $url .= "?type=tuples&flush=TRUE&format=csv&limit=1000&lang=itql&stream=on&query=";
   $content = do_curl($url . htmlentities(urlencode($query)));
   $list = explode("\n", $content);
   array_shift($list);
@@ -264,45 +261,46 @@ function get_collections_as_option_array() {
 /**
  * Function: get_content_models_as_option_array
  *
- * Description: Returns an associative array of all collection objects in Fedora instance
+ * Description: Returns an associative array of all available content models in Fedora instance
  *
  * @return array
  */
 function get_content_models_as_option_array() {
-  module_load_include('inc', 'fedora_repository', 'api/fedora_item');
-  module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
-  $restricted = variable_get('fedora_namespace_restriction_enforced', true);
-  $allowed_string = variable_get('fedora_pids_allowed', 'default: demo: changeme: islandora:');
-  $namespaces = explode(':', $allowed_string);
-  foreach ($namespaces as $namespace) {
-    if ($namespace) {
-      $allowed[] = trim($namespace);
+    module_load_include('inc', 'fedora_repository', 'api/fedora_item');
+    module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
+    $restricted = variable_get('fedora_namespace_restriction_enforced', TRUE);
+    $allowed_string = variable_get('fedora_pids_allowed', 'default: demo: changeme: islandora:');
+    $namespaces = explode(':', $allowed_string);
+    foreach ($namespaces as $namespace) {
+        if ($namespace) {
+            $allowed[] = trim($namespace);
+        }
     }
-  }
-  $query = 'select $object $title from <#ri>
+    $query = 'select $object $title from <#ri>
           where ($object <dc:title> $title
           and ($object <fedora-model:hasModel> <info:fedora/fedora-system:ContentModel-3.0>
           or $object <fedora-rels-ext:isMemberOfCollection> <info:fedora/islandora:ContentModelsCollection>)
           and $object <fedora-model:state> <info:fedora/fedora-system:def/model#Active>)
           order by $title';
 
-  $url = variable_get('fedora_repository_url', 'http://localhost:8080/fedora/risearch');
-  $url .= "?type=tuples&flush=true&format=csv&limit=1000&lang=itql&stream=on&query=";
-  $content = do_curl($url . htmlentities(urlencode($query)));
-  $list = explode("\n", $content);
-  array_shift($list);
-  $list = preg_replace('/info:fedora\//', '', $list);
-  foreach ($list as $item) {   //removes  blanks
-    if ($item) {
-      $parts = explode(',', $item);
-      $item = new fedora_item($parts[0]);
-      $nameparts = explode(':', $parts[0]);
-      if (!$restricted || in_array($nameparts[0], $allowed))
-        if ($item->get_datastream_dissemination('ISLANDORACM')) {
-          $options[$parts[0]] = $parts[1]. ' ~ ' . $parts[0] ;
+    $url = variable_get('fedora_repository_url', 'http://localhost:8080/fedora/risearch');
+    $url .= "?type=tuples&flush=TRUE&format=csv&limit=1000&lang=itql&stream=on&query=";
+    $content = do_curl($url . htmlentities(urlencode($query)));
+    $list = explode("\n", $content);
+    array_shift($list);
+    $list = preg_replace('/info:fedora\//', '', $list);
+    foreach ($list as $item) {   //removes  blanks
+        if ($item) {
+            $parts = explode(',', $item);
+            $nameparts = explode(':', $parts[0]);
+            if (!$restricted || in_array($nameparts[0], $allowed)) {
+
+                if (!preg_match('/fedora-system/', $nameparts[0])) {
+                    $options[$parts[0]] = $parts[1] . ' ~ ' . $parts[0];
+                }
+            }
         }
     }
-  }
 
-  return $options;
+    return $options;
 }

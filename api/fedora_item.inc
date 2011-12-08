@@ -43,7 +43,7 @@ class Fedora_Item {
       }
 
       $raw_objprofile = $this->soap_call('getObjectProfile', array('pid' => $this->pid, 'asOfDateTime' => ""));
-
+      
       if (!empty($raw_objprofile)) {
         $this->objectProfile = $raw_objprofile->objectProfile;
         $this->datastreams = $this->get_datastreams_list_as_array();
@@ -297,10 +297,10 @@ class Fedora_Item {
       $i++;
       $url = variable_get('fedora_base_url', 'http://localhost:8080/fedora');
       if ($cursor == 0) {
-        $url .= "/objects?query=$field~$pattern&pid=true&title=true&resultFormat=xml&maxResults=$max_results";
+        $url .= "/objects?query=$field~$pattern&pid=true&title=TRUE&resultFormat=xml&maxResults=$max_results";
       }
       else {
-        $url .= "/objects?pid=true&title=truesessionToken=$session_token&resultFormat=xml&maxResults=$max_results";
+        $url .= "/objects?pid=true&title=true&sessionToken=$session_token&resultFormat=xml&maxResults=$max_results";
       }
 
       if (count($resultFields) > 0) {
@@ -308,7 +308,6 @@ class Fedora_Item {
       }
 
       $resultxml = do_curl($url);
-
       libxml_use_internal_errors(TRUE);
       $resultelements = simplexml_load_string($resultxml);
       if ($resultelements === FALSE) {
@@ -885,7 +884,7 @@ class Fedora_Item {
               drupal_set_message(t("Error trying to call SOAP function $function_name. Check watchdog logs for more information."), 'error');
             }
 
-            watchdog(t("FEDORA_REPOSITORY"), "Error Trying to call SOAP function !fn: !e", array('!fn' => $function_name, '!e' => $e), NULL, WATCHDOG_ERROR);
+            watchdog(t("FEDORA_REPOSITORY"), "Error Trying to call SOAP function @fn: @e", array('@fn' => $function_name, '@e' => $e), NULL, WATCHDOG_ERROR);
           }
           return NULL;
         }
@@ -904,7 +903,7 @@ class Fedora_Item {
         } catch (exception $e) {
 
           if (!$quiet) {
-            watchdog(t("FEDORA_REPOSITORY"), "Error trying to call SOAP function !fn: !e", array('!fn' => $function_name, '!e' => $e), NULL, WATCHDOG_ERROR);
+            watchdog(t("FEDORA_REPOSITORY"), "Error trying to call SOAP function @fn: @e", array('@fn' => $function_name, '@e' => $e), NULL, WATCHDOG_ERROR);
           }
           return NULL;
         }

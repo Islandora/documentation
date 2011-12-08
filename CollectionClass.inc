@@ -131,7 +131,7 @@ class CollectionClass {
     try {
       $xml = new SimpleXMLElement($stream);
     } catch (Exception $e) {
-      drupal_set_message(t('Error getting relationship element from policy stream !e', array('!e' => $e->getMessage())), 'error');
+      drupal_set_message(t('Error getting relationship element from policy stream @e', array('@e' => check_plain($e->getMessage()))), 'error');
       return;
     }
     $relationship = $xml->relationship[0];
@@ -172,7 +172,7 @@ class CollectionClass {
     try {
       $xml = new SimpleXMLElement($stream);
     } catch (Exception $e) {
-      drupal_set_message(t('Error getting PID namespace !e', array('!e' => $e->getMessage())), 'error');
+      drupal_set_message(t('Error getting PID namespace @e', array('@e' => check_plain($e->getMessage()))), 'error');
       return;
     }
     foreach ($xml->contentmodels->contentmodel as $contentModel) {
@@ -199,7 +199,7 @@ class CollectionClass {
       $xml = new SimpleXMLElement($collection_stream);
     } catch (Exception $e) {
       if ($showError) {
-        drupal_set_message(t("!e", array('!e' => $e->getMessage())), 'error');
+        drupal_set_message(t('@e', array('@e' => check_plain($e->getMessage()))), 'error');
       }
       return NULL;
     }
@@ -239,7 +239,7 @@ class CollectionClass {
     try {
       $xml = new SimpleXMLElement($stream);
     } catch (Exception $e) {
-      drupal_set_message(t('Error Getting FormHandler: !e', array('!e' => $e->getMessage())), 'error');
+      drupal_set_message(t('Error Getting FormHandler: @e', array('@e' => check_plain($e->getMessage()))), 'error');
       return NULL;
     }
     $formHandler = $xml->ingest_form;
@@ -272,7 +272,7 @@ class CollectionClass {
     try {
       $xml = new SimpleXMLElement($stream);
     } catch (Exception $e) {
-      drupal_set_message(t('Error getting content model stream for mime types !e', array('!e' => $e->getMessage())), 'error');
+      drupal_set_message(t('Error getting content model stream for mime types @e', array('@e' => check_plain($e->getMessage()))), 'error');
       return;
     }
     foreach ($xml->mimetypes->type as $type) {
@@ -302,7 +302,7 @@ class CollectionClass {
     try {
       $xml = new SimpleXMLElement($stream);
     } catch (Exception $e) {
-      drupal_set_message(t('Error getting content model stream !e', array('!e' => $e->getMessage())), 'error');
+      drupal_set_message(t('Error getting content model stream @e', array('@e' => check_plain($e->getMessage()))), 'error');
       return FALSE;
     }
     foreach ($xml->ingest_rules->rule as $rule) {
@@ -365,7 +365,7 @@ class CollectionClass {
     try {
       $xml = new SimpleXMLElement($stream);
     } catch (Exception $e) {
-      drupal_set_message(t('Error getting ingest form stream !e', array('!e' => $e->getMessage())), 'error');
+      drupal_set_message(t('Error getting ingest form stream @e', array('@e' => check_plain($e->getMessage()))), 'error');
       return FALSE;
     }
     $docRoot = $_SERVER['DOCUMENT_ROOT'];
@@ -451,7 +451,7 @@ class CollectionClass {
             $params
           ));
     } catch (exception $e) {
-      drupal_set_message(t('Error getting Next PID: !e', array('!e' => $e->getMessage())), 'error');
+      drupal_set_message(t('Error getting Next PID: @e', array('@e' => check_plain($e->getMessage()))), 'error');
       return FALSE;
     }
     $pid = implode(get_object_vars($object));
@@ -517,18 +517,21 @@ class CollectionClass {
     $show_ingest_tab = (!empty($_POST['form_id']) && $_POST['form_id'] == 'fedora_repository_ingest_form');
     $add_to_collection = $this->getIngestInterface();
 
-    $show_batch_tab = TRUE;
+    $show_batch_tab = FALSE;
     $policy = CollectionPolicy::loadFromCollection($this->pid, TRUE);
-    $content_models = $policy->getContentModels();
+
+    if(!empty($policy)){
+      $content_models = $policy->getContentModels();
+    }
     if (count($content_models) == 1 && $content_models[0]->pid == "islandora:collectionCModel") {
       $show_batch_tab = FALSE;
     }
     if (!$show_ingest_tab) {
-      $view_selected = true;
+      $view_selected = TRUE;
     }
-    if(!$collection_items){
-      $view_selected = false;
-      $add_selected = true;
+    if (!$collection_items) {
+      $view_selected = FALSE;
+      $add_selected = TRUE;
     }
     $view_selected = !$show_ingest_tab;
 
@@ -538,7 +541,6 @@ class CollectionClass {
       '#title' => 'View',
       '#selected' => $view_selected,
       '#content' => $collection_items,
-     
     );
     $tabset['add_tab'] = array(
       '#type' => 'tabpage',
@@ -547,16 +549,7 @@ class CollectionClass {
       // This will be the content of the tab.
       '#content' => $add_to_collection,
     );
-    if (user_access('manage collections')) {
-      $tabset['add_collection_tab'] = array(
-        // #type and #title are the minimum requirements.
-        '#type' => 'tabpage',
-        '#title' => t('Manage This Collection'),
-        // This will be the content of the tab.
-        '#content' => drupal_get_form('collection_management_form', $this->pid, $content_models),
-        '#selected' => false,
-      );
-    }
+
     if ($show_batch_tab && user_access('create batch process')) {
       $tabset['batch_ingest_tab'] = array(
         // #type and #title are the minimum requirements.
@@ -623,6 +616,7 @@ class CollectionClass {
 
 
     $collectionName = $collection;
+
     if (!$pageNumber) {
       $pageNumber = 1;
     }
@@ -662,7 +656,7 @@ class CollectionClass {
             throw new Exception("Invalid XML.");
           }
         } catch (Exception $e) {
-          drupal_set_message(t('!e', array('!e' => $e->getMessage())), 'error');
+          drupal_set_message(t('@e', array('@e' => check_plain($e->getMessage()))), 'error');
           return '';
         }
       }
