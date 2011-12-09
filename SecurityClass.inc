@@ -95,7 +95,6 @@ class SecurityClass {
     $usersAndRoles['users'] = $allowedUsers;
     $usersAndRoles['roles'] = $allowedRoles;
 
-    dd($usersAndRoles);
     return $usersAndRoles;
   }
 
