@@ -55,8 +55,8 @@ function fedora_repository_purge_object($pid = NULL, $name = NULL) {
     return '';
   }
   $output = t('Are you sure you wish to purge object %name %pid!<br /><b>This cannot be undone</b><br />', array(
-    '%name' => $name,
-    '%pid' => $pid)
+        '%name' => $name,
+        '%pid' => $pid)
   );
 
   $output .= drupal_get_form('fedora_repository_purge_object_form', $pid);
@@ -142,6 +142,10 @@ function fedora_repository_ingest_object($collection_pid=NULL, $collection_label
  */
 function fedora_repository_ingest_form_submit(array $form, array &$form_state) {
 //only validate the form if the submit button was pressed (other buttons may be used for AHAH
+  if ($form_state['ahah_submission']) {
+    $form_state['submitted'] = false;
+    return;
+  }
   if ($form_state['storage']['xml']) {
     if (module_exists('islandora_content_model_forms')) {
       module_load_include('inc', 'islandora_content_model_forms', 'IngestObjectMetadataForm');
@@ -197,7 +201,11 @@ function fedora_repository_ingest_form_submit(array $form, array &$form_state) {
  */
 function fedora_repository_ingest_form_validate($form, &$form_state) {
 //only validate the form if the submit button was pressed (other buttons may be used for AHAH
-  if ($form_state['clicked_button']['#id'] == 'edit-submit') {
+  if ($form_state['ahah_submission']) {
+    $form_state['submitted'] = false;
+    return;
+  }
+  if ($form_state['clicked_button']['#id'] == 'edit-submit' && $form_state['ahah_submission'] != 1) {
     switch ($form_state['storage']['step']) {
       case 1:
         $form_state['storage']['step']++;
@@ -317,7 +325,7 @@ function fedora_repository_purge_object_form(&$form_state, $pid, $referrer = NUL
     if (!empty($collectionPid)) {
       $collectionPid = $_SESSION['fedora_collection'];
     }
-//$form['#redirect'] = $referrer;
+//$form['#rebuild'] = $false;
 
     return $form;
   }
@@ -435,7 +443,7 @@ function add_stream_form_validate($form, &$form_state) {
     return FALSE;
   }
   if (!(preg_match("/^[a-zA-Z]/", $dsid))) {
-    form_set_error('', t("Data stream ID (@dsid) has to start with a letter.", array( '@dsid' => check_plain($dsid))));
+    form_set_error('', t("Data stream ID (@dsid) has to start with a letter.", array('@dsid' => check_plain($dsid))));
     return FALSE;
   }
   if (strlen($dsLabel) > 64) {
@@ -447,9 +455,9 @@ function add_stream_form_validate($form, &$form_state) {
     return FALSE;
   }
   $validators = array(
-      //    'file_validate_is_image' => array(),
-      //    'file_validate_image_resolution' => array('85x85'),
-      //    'file_validate_size' => array(30 * 1024),
+//    'file_validate_is_image' => array(),
+//    'file_validate_image_resolution' => array('85x85'),
+//    'file_validate_size' => array(30 * 1024),
   );
 
   $fileObject = file_save_upload('add-stream-file-location', $validators);
@@ -482,10 +490,27 @@ function fedora_repository_purge_stream($pid = NULL, $dsId = NULL, $name = NULL)
   }
 
   $output = t('Are you sure you wish to purge this datastream %name<br />', array(
-    '%name' => $name)
+        '%name' => $name)
   );
   $output .= drupal_get_form('fedora_repository_purge_stream_form', $pid, $dsId);
   return $output;
+}
+
+function fedora_repository_purge_object_form_validate($form, &$form_state) {
+  module_load_include('inc', 'fedora_repository', 'api/fedora_collection');
+  $pid = $form_state['values']['pid'];
+
+  $objectHelper = new ObjectHelper();
+  $contentModels = $objectHelper->get_content_models_list($pid);
+  foreach ($contentModels as $contentModel) {
+    if ($contentModel->pid == 'islandora:collectionCModel') {
+      $member_pids = get_related_items_as_array($pid, 'isMemberOfCollection');
+      if (is_array($member_pids) && ! empty($member_pids)){
+      form_set_error('new_collection_pid', t("Please purge all members of this collection before deleting the collection itself."));
+      return;
+      }
+    }
+  }
 }
 
 /**
@@ -659,7 +684,7 @@ function fedora_repository_replace_stream_form_submit($form, &$form_state) {
   $pid = $form_state['values']['pid'];
   $dsid = $form_state['values']['dsId'];
   $dsLabel = $form_state['values']['dsLabel'];
-  // Remove the original file extension from the label and add the new one
+// Remove the original file extension from the label and add the new one
   $indexOfDot = strrpos($dsLabel, '.'); //use strrpos to get the last dot
   if ($indexOfDot !== FALSE) {
     $dsLabel = substr($dsLabel, 0, $indexOfDot);
@@ -732,6 +757,7 @@ function fedora_repository_edit_qdc_form(&$form_state, $pid, $dsId = NULL) {
   module_load_include('inc', 'fedora_repository', 'ConnectionHelper');
   $soapHelper = new ConnectionHelper();
   $client = $soapHelper->getSoapClient(variable_get('fedora_soap_url', 'http://localhost:8080/fedora/services/access?wsdl'));
+ 
 // Check if there is a custom edit metadata function defined in the content model.
 
   $breadcrumbs = array();
@@ -828,9 +854,6 @@ function fedora_repository_perm() {
     OBJECTHELPER::$INGEST_FEDORA_OBJECTS,
     OBJECTHELPER::$EDIT_TAGS_DATASTREAM,
     OBJECTHELPER::$VIEW_DETAILED_CONTENT_LIST,
-    OBJECTHELPER::$MANAGE_COLLECTIONS,
-    OBJECTHELPER::$DELETE_ENTIRE_COLLECTIONS,
-    OBJECTHELPER::$CREATE_BATCH_PROCESS,
   );
 }
 
@@ -989,14 +1012,15 @@ function fedora_repository_get_items($pid = NULL, $dsId = NULL, $collection = NU
   $obj = new FedoraObjectDetailedContent($pid);
   $object_details = $obj->showFieldSets();
   if ($object_details['fedora_object_details']['#selected'] == TRUE) {
-    foreach ($cmodels_tabs as $cmodel_tab) {
+    foreach ($cmodels_tabs as &$cmodel_tab) {
       if (is_array($cmodel_tab)) {
         $cmodel_tab['#selected'] = FALSE;
       }
     }
   }
-  $cmodels_tabs = array_merge($cmodels_tabs, $object_details);
 
+  $hook_tabs = module_invoke_all('islandora_tabs', $content_models, $pid);
+  $cmodels_tabs = array_merge($cmodels_tabs, $object_details, $hook_tabs);
 
   return tabs_render($cmodels_tabs);
 }
@@ -1548,14 +1572,14 @@ function fedora_repository_demo_objects_form_submit($form, &$form_state) {
         $collectioncm->add_relationship('hasModel', 'fedora-system:ContentModel-3.0', FEDORA_MODEL_URI);
         $collectioncm->add_datastream_from_file(drupal_get_path('module', 'fedora_repository') . '/content_models/COLLECTIONCM.xml', 'ISLANDORACM', 'Islandora Content Model.xml', 'application/xml', 'X');
       } catch (exception $e) {
-        
+
       }
       try {
         $strictpdfcm = Fedora_Item::ingest_new_item('islandora:strict_pdf', 'A', 'Strict PDF Content Model');
         $strictpdfcm->add_relationship('hasModel', 'fedora-system:ContentModel-3.0', FEDORA_MODEL_URI);
         $strictpdfcm->add_datastream_from_file(drupal_get_path('module', 'fedora_repository') . '/content_models/STRICT_PDFCM.xml', 'ISLANDORACM', 'Islandora Content Model.xml', 'application/xml', 'X');
       } catch (exception $e) {
-        
+
       }
 
 // Install a collection object that points to all content model objects
@@ -1579,7 +1603,7 @@ function fedora_repository_demo_objects_form_submit($form, &$form_state) {
         $cmodel_collection->add_datastream_from_file(drupal_get_path('module', 'fedora_repository') . '/images/contentModel.jpg', 'TN', 'Thumbnail', 'image/jpg', 'M');
         drupal_set_message(t("Successfully installed <a href=\"@base_url/fedora/repository/islandora:ContentModelCollection\">islandora:ContentModelCollection</a>.", array('@base_url' => check_plain($base_url))), 'message');
       } catch (exception $e) {
-        
+
       }
     }
 
@@ -1591,7 +1615,7 @@ function fedora_repository_demo_objects_form_submit($form, &$form_state) {
         $tn = $new_item->add_datastream_from_file(drupal_get_path('module', 'fedora_repository') . '/images/Gnome-emblem-photos.png', 'TN', 'Thumbnail.png', 'image/png', 'M');
         drupal_set_message(t("Successfully installed <a href=\"@base_url/fedora/repository/islandora:root\">islandora:root</a>.", array('@base_url' => check_plain($base_url))), 'message');
       } catch (exception $e) {
-        
+
       }
     }
 
@@ -1906,7 +1930,7 @@ function theme_fedora_repository_basket_form($form) {
  * @param type $form_state 
  */
 function fedora_repository_basket_form_validate($form, &$form_state) {
-  
+
 }
 
 /**
