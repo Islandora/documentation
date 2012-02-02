@@ -62,7 +62,7 @@ class Fedora_Item {
    * Removes this object from the static list of $instantiated_pids
    */
   function forget() {
-    unset(Fedora_Item::$instantiated_pids[$pid]);
+    unset(Fedora_Item::$instantiated_pids[$this->pid]);
   }
 
   /**
