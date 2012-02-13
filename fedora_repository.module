@@ -247,8 +247,8 @@ function fedora_repository_ingest_form_validate($form, &$form_state) {
             if (!empty($file)) {
               if (!in_array($dformat, $allowedMimeTypes)) {
                 form_set_error('ingest-file-location', 
-                    t('The uploaded file\'s mimetype ') . 
-                    '(' . $dformat . ') ' .
+                    t('The uploaded file\'s mimetype') . 
+                    ' (' . $dformat . ') ' .
                     t('is not associated with this Content Model. The allowed types are') . 
                     ' ' . implode(' ', $allowedMimeTypes));
                 file_delete($file);
