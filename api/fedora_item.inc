@@ -6,6 +6,7 @@
  */
 define('RELS_EXT_URI', 'info:fedora/fedora-system:def/relations-external#');
 define("FEDORA_MODEL_URI", 'info:fedora/fedora-system:def/model#');
+define("ISLANDORA_PAGE_URI", 'info:islandora/islandora-system:def/pageinfo#');
 
 /**
  * Fedora Item Class
@@ -164,7 +165,6 @@ class Fedora_Item {
     return $returnvalue;
   }
 
-  
   /**
    * Wrapper to add new or modify existing datastream 
    * @global url $base_url
@@ -269,6 +269,10 @@ class Fedora_Item {
       case "hasModel":
         $relationship = "hasModel";
         $namespaceURI = FEDORA_MODEL_URI;
+        break;
+      case "isPageNumber":
+        $relationship = "isPageNumber";
+        $namespaceURI = ISLANDORA_PAGE_URI;
         break;
     }
 
