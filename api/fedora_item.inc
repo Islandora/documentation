@@ -934,21 +934,23 @@ class Fedora_Item {
         variable_get('fedora_soap_url', 'http://localhost:8080/fedora/services/access?wsdl');
     try {
       $soap_client = self::$connection_helper->getSoapClient($url);
-      if (empty($soap_client)) {
+      if (isset($soap_client)) {
+        $result = $soap_client->__soapCall($function, array('parameters' => $parameters));
+      }
+      else {
         if (!$quiet) {
-          drupal_set_message(t('Error trying to get SOAP client connection.'));
+          drupal_set_message(t('Error trying to get SOAP client connection'));
         }
         watchdog('fedora_repository', 'Error trying to get SOAP client connection.');
         return NULL;
       }
-      $result = $soap_client->__soapCall($function, array('parameters' => $parameters));
     } catch (Exception $e) {
       if (!$quiet) {
         preg_match('/org\.fcrepo\.server\.security\.xacml\.pep\.AuthzDeniedException/', $e->getMessage()) ?
                 drupal_set_message(t('Insufficient permissions to call SOAP function "%func".', array('%func' => $function)), 'error') :
                 drupal_set_message(t('Error trying to call SOAP function "%func". Check watchdog logs for more information.', array('%func' => $function)), 'error');
       }
-      watchdog('fedora_repository', 'Error Trying to call SOAP function "%func". Exception Occured: @e', array('%func' => $function, '@e' => $e->getMessage()), NULL, WATCHDOG_ERROR);
+      watchdog('fedora_repository', 'Error Trying to call SOAP function "%func". Exception: @e in @f(@l)\n@t', array('%func' => $function, '@e' => $e->getMessage(), '@f' => $e->getFile(), '@l' => $e->getLine(), '@t' => $e->getTraceAsString()), NULL, WATCHDOG_ERROR);
       return NULL;
     }
     return $result;
