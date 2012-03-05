@@ -200,3 +200,54 @@ function solution_pack_add_form_association($content_model, $form_name) {
   }
 }
 
+/**
+ * Solution pack install helper 
+ * @param type $mods_form_name The MODS form name "Islandora Docs MODS Form"
+ * @param type $mods_form_file The MODS form file name relative to the module (solutionpack/xml/mods_article.xml)
+ * @param type $content_model The Content Model (islandora:docs_sp_cm)
+ */
+function solution_pack_installer($mods_form_name, $mods_form_file, $content_model)
+{
+    module_load_include('inc', 'xml_form_builder', 'XMLFormDatabase');
+    
+    if (!XMLFormDatabase::Exists($mods_form_name)) {
+        //$module_path = drupal_get_path('module', ISLANDORA_SP_MODULE_NAME);
+        $definition = new DOMDocument();
+        $definition->load($mods_form_file);
+        XMLFormDatabase::Create($mods_form_name, $definition);
+    }
+  
+    // Associates the form with the content model
+    $result = db_result(db_query('Select content_model from {islandora_content_model_forms} where  content_model = "%s" and form_name = "%s"', $content_model, $mods_form_name));
+    
+    if (!$result) {
+        $object = new stdClass();
+        $object->content_model = $content_model;
+        $object->form_name = $mods_form_name;
+        $object->dsid = 'MODS';
+        $object->title_field = "['titleInfo']['title']";
+        $object->transform = 'mods_to_dc.xsl';
+        $result = drupal_write_record('islandora_content_model_forms', $object);
+    }
+}
+
+/**
+ * Solution Pack Uninstall Helper 
+ * @param type $mods_form_name The MODS form name "Islandora Docs MODS Form"
+ * @param type $mods_form_file The MODS form file name relative to the module (solutionpack/xml/mods_article.xml)
+ * @param type $content_model The Content Model (islandora:docs_sp_cm)
+ */
+function solution_pack_uninstaller($mods_form_name, $mods_form_name, $content_model)
+{
+    module_load_include('inc', 'xml_form_builder', 'XMLFormDatabase');
+
+    if (XMLFormDatabase::Exists($mods_form_name)) {
+        XMLFormDatabase::Delete($mods_form_name);
+    }
+    
+    $result = db_result(db_query('Select content_model from {islandora_content_model_forms} where content_model = "%s" and form_name = "%s"', $content_model, $mods_form_name));
+    
+    if (!$result) {
+        db_query('DELETE FROM {islandora_content_model_forms} WHERE content_model = "%s" and form_name = "%s"', $content_model, $mods_form_name);
+    }    
+}
