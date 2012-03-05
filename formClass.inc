@@ -48,7 +48,16 @@ class formClass {
       'file' => 'fedora_repository.solutionpacks.inc',
       'type' => MENU_LOCAL_TASK,
     );
-
+    
+    $items['admin/settings/fedora_repository/newsp'] = array(
+      'title' => t('New Solution Packs'),
+      'description' => t('Install content models and collections required by installed solution packs.'),
+      'page callback' => 'fedora_repository_newsp_page',
+      'access arguments' => array('add fedora datastreams'),
+      'file' => 'fedora_repository.newsp.inc',
+      'type' => MENU_LOCAL_TASK,
+    );
+    
     $items['islandoracm.xsd'] = array(
       'title' => t('Islandora Content Model XML Schema Definition'),
       'page callback' => 'fedora_repository_display_schema',
