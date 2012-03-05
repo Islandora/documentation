@@ -205,16 +205,28 @@ function solution_pack_add_form_association($content_model, $form_name) {
  * @param type $mods_form_name The MODS form name "Islandora Docs MODS Form"
  * @param type $mods_form_file The MODS form file name relative to the module (solutionpack/xml/mods_article.xml)
  * @param type $content_model The Content Model (islandora:docs_sp_cm)
+ * @param boolean $force Force a reinstall
  */
-function solution_pack_register_form($mods_form_name, $mods_form_file, $content_model)
+function solution_pack_register_form($mods_form_name, $mods_form_file, $content_model, $force=false)
 {
+    // Load the form builder database
     module_load_include('inc', 'xml_form_builder', 'XMLFormDatabase');
+  
+    // Load the form
+    $definition = new DOMDocument();
+    $definition->load($mods_form_file);
     
-    if (!XMLFormDatabase::Exists($mods_form_name)) {
-        //$module_path = drupal_get_path('module', ISLANDORA_SP_MODULE_NAME);
-        $definition = new DOMDocument();
-        $definition->load($mods_form_file);
+    // If it doesn't exist
+    if (!XMLFormDatabase::Exists($mods_form_name) ) {
+
+        // Create the form
         XMLFormDatabase::Create($mods_form_name, $definition);
+   
+    // Force Update of an existing form
+    } elseif ( $force == true ) {
+        
+        // Update the form
+        XMLFormDatabase::Update($mods_form_name, $definition);
     }
   
     // Associates the form with the content model
@@ -234,10 +246,9 @@ function solution_pack_register_form($mods_form_name, $mods_form_file, $content_
 /**
  * Solution pack unregister form
  * @param type $mods_form_name The MODS form name "Islandora Docs MODS Form"
- * @param type $mods_form_file The MODS form file name relative to the module (solutionpack/xml/mods_article.xml)
  * @param type $content_model The Content Model (islandora:docs_sp_cm)
  */
-function solution_pack_unregister_form($mods_form_name, $mods_form_name, $content_model)
+function solution_pack_unregister_form($mods_form_name, $content_model)
 {
     module_load_include('inc', 'xml_form_builder', 'XMLFormDatabase');
 
