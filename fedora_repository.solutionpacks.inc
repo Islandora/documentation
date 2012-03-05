@@ -181,7 +181,7 @@ function solution_pack_add_form($form_name, $form_xml) {
     $object->name = $form_name;
     $object->form = $form_xml;
     $result = drupal_write_record('xml_forms', $object);
-    drupal_set_message(t("Added @name", array("@name" => $name)));
+    drupal_set_message(t("Added @name", array("@name" => $form_name)));
   }
 }
 
@@ -196,7 +196,7 @@ function solution_pack_add_form_association($content_model, $form_name) {
     $object->title_field = "['titleInfo']['title']";
     $object->transform = 'mods_to_dc.xsl';
     $result = drupal_write_record('islandora_content_model_forms', $object);
-    drupal_set_message(t("Added association between @cm@name", array("@cm" => $content_model, "@name"=>$name)));
+    drupal_set_message(t("Added association between @cm@name", array("@cm" => $content_model, "@name"=>$form_name)));
   }
 }
 
@@ -204,52 +204,90 @@ function solution_pack_add_form_association($content_model, $form_name) {
  * Solution pack register form 
  * @param type $mods_form_name The MODS form name "Islandora Docs MODS Form"
  * @param type $mods_form_file The MODS form file name relative to the module (solutionpack/xml/mods_article.xml)
- * @param type $content_model The Content Model (islandora:docs_sp_cm)
- * @param boolean $force Force a reinstall
+ * @return int 0 = Ok and 1 = Unable to load file
  */
-function solution_pack_register_form($mods_form_name, $mods_form_file, $content_model, $force=false)
+function solution_pack_register_form($mods_form_name, $mods_form_file, $force=false)
 {
-    // Load the form builder database
-    module_load_include('inc', 'xml_form_builder', 'XMLFormDatabase');
-      
-    // If it doesn't exist
-    if (!XMLFormDatabase::Exists($mods_form_name) ) {
-        
-        // Load the form
-        $definition = new DOMDocument();
-        $definition->load($mods_form_file);
-
-        // Create the form
-        XMLFormDatabase::Create($mods_form_name, $definition);
-   
-    // Force Update of an existing form
-    } elseif ( $force == true ) {
-
-        // Load the form
-        $definition = new DOMDocument();
-        $definition->load($mods_form_file);
-        
-        // Update the form
-        XMLFormDatabase::Update($mods_form_name, $definition);
-    }
-  
-    // Check to see if the form has already been registered
-    $result = db_result(db_query('Select content_model from {islandora_content_model_forms} where content_model = "%s" and form_name = "%s"', $content_model, $mods_form_name));
+    // Lookup the form
+    $results = db_result(db_query('Select name from {xml_forms} where name = "%s"', $mods_form_name));
     
-    // Check for results
-    if (!$result) {
+    // Check to see if there is anything to do
+    if ( $results && $force==false) {
         
-        // Create a model for the database 
-        $object = new stdClass();
-        $object->content_model = $content_model;
-        $object->form_name = $mods_form_name;
-        $object->dsid = 'MODS';
-        $object->title_field = "['titleInfo']['title']";
-        $object->transform = 'mods_to_dc.xsl';
-        
-        // Write the association
-        $result = drupal_write_record('islandora_content_model_forms', $object);
+        // Nothing to do so early out
+        return 0;
     }
+    
+    // Get the contents of the file
+    $mods_form_data = file_get_contents($mods_form_file);
+    
+    // Didn't load the file
+    if ( ! $mods_form_data ) {
+        
+        // Return an error
+        return 1;
+    }
+    
+    // Create the data model
+    $object = new stdClass();
+    $object->name = $mods_form_name;
+    $object->form = $mods_form_data;
+    
+    // Are we adding the form
+    if ( ! $results ) {
+        
+        // Add the model to the database
+        $result = drupal_write_record('xml_forms', $object);
+        
+    } else {
+        
+        // Update the model in the database
+        $result = drupal_write_record('xml_forms', $object, array("name" => $mods_form_name));
+    }
+
+    // Log the action
+    drupal_set_message(t("Added @name", array("@name" => $mods_form_name)));
+}
+
+/**
+ * Solution pack register form 
+ * @param type $mods_form_name The MODS form name "Islandora Docs MODS Form"
+ * @param type $content_model The Content Model (islandora:docs_sp_cm)
+ */
+function solution_pack_register_form_association($mods_form_name, $content_model, $force=false) {
+    
+    // Query the database for previous associations
+    $results = db_result(db_query('Select content_model from {islandora_content_model_forms} where content_model = "%s" and form_name = "%s"',
+              $content_model, $mods_form_name));
+    
+    // Check to see if there is anything to do
+    if ( $results && $force==false) {
+        
+        // Nothing to do so early out
+        return;
+    }
+
+    // Create a model for the database 
+    $object = new stdClass();
+    $object->content_model = $content_model;
+    $object->form_name = $mods_form_name;
+    $object->dsid = 'MODS';
+    $object->title_field = "['titleInfo']['title']";
+    $object->transform = 'mods_to_dc.xsl';
+
+    // Are we adding the form association
+    if ( ! $results ) {
+        
+        // Add the association
+        $result = drupal_write_record('islandora_content_model_forms', $object);
+    } else {
+        
+        // Update the association
+        $result = drupal_write_record('islandora_content_model_forms', $object, array("content_model" => $content_model));
+    }
+
+    // Log the action
+    drupal_set_message(t("Added association between @cm@name", array("@cm" => $content_model, "@name"=>$mods_form_name)));
 }
 
 /**
@@ -259,23 +297,5 @@ function solution_pack_register_form($mods_form_name, $mods_form_file, $content_
  */
 function solution_pack_unregister_form($mods_form_name, $content_model)
 {
-    // Load the form builders xmlformdatabase
-    module_load_include('inc', 'xml_form_builder', 'XMLFormDatabase');
-
-    // Check to see if the form exists
-    if (XMLFormDatabase::Exists($mods_form_name)) {
-        
-        // Delete the form
-        XMLFormDatabase::Delete($mods_form_name);
-    }
-
-    // Check to see if the form has already been registered
-    $result = db_result(db_query('Select content_model from {islandora_content_model_forms} where content_model = "%s" and form_name = "%s"', $content_model, $mods_form_name));
-
-    // Is there anything to delete
-    if ($result) {
-        
-        // Delete the association
-        db_query('DELETE FROM {islandora_content_model_forms} WHERE content_model = "%s" and form_name = "%s"', $content_model, $mods_form_name);
-    }    
+ 
 }
