@@ -293,9 +293,18 @@ function solution_pack_register_form_association($mods_form_name, $content_model
 /**
  * Solution pack unregister form
  * @param type $mods_form_name The MODS form name "Islandora Docs MODS Form"
+ */
+function solution_pack_unregister_form($mods_form_name)
+{
+ 
+}
+
+/**
+ * Solution pack unregister form
+ * @param type $mods_form_name The MODS form name "Islandora Docs MODS Form"
  * @param type $content_model The Content Model (islandora:docs_sp_cm)
  */
-function solution_pack_unregister_form($mods_form_name, $content_model)
+function solution_pack_unregister_form_association($mods_form_name, $content_model)
 {
  
 }
