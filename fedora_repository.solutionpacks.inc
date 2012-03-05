@@ -201,12 +201,12 @@ function solution_pack_add_form_association($content_model, $form_name) {
 }
 
 /**
- * Solution pack install helper 
+ * Solution pack register form 
  * @param type $mods_form_name The MODS form name "Islandora Docs MODS Form"
  * @param type $mods_form_file The MODS form file name relative to the module (solutionpack/xml/mods_article.xml)
  * @param type $content_model The Content Model (islandora:docs_sp_cm)
  */
-function solution_pack_installer($mods_form_name, $mods_form_file, $content_model)
+function solution_pack_register_form($mods_form_name, $mods_form_file, $content_model)
 {
     module_load_include('inc', 'xml_form_builder', 'XMLFormDatabase');
     
@@ -232,12 +232,12 @@ function solution_pack_installer($mods_form_name, $mods_form_file, $content_mode
 }
 
 /**
- * Solution Pack Uninstall Helper 
+ * Solution pack unregister form
  * @param type $mods_form_name The MODS form name "Islandora Docs MODS Form"
  * @param type $mods_form_file The MODS form file name relative to the module (solutionpack/xml/mods_article.xml)
  * @param type $content_model The Content Model (islandora:docs_sp_cm)
  */
-function solution_pack_uninstaller($mods_form_name, $mods_form_name, $content_model)
+function solution_pack_unregister_form($mods_form_name, $mods_form_name, $content_model)
 {
     module_load_include('inc', 'xml_form_builder', 'XMLFormDatabase');
 
