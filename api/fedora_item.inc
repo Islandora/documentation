@@ -669,12 +669,14 @@ class Fedora_Item {
     {
       $this->set_datastream_state($dsid, 'D');
     }
-    
+        
     // Create a message to mark the object deleted
     $params = array(
       'pid' => $this->pid,
       'state' => 'D',
-      'logMessage' => $logMessage
+      'logMessage' => $logMessage,
+      'label' => $this->objectProfile->objLabel,
+      'ownerId' => null,
     );
 
     // Send message to mark the object deleted
