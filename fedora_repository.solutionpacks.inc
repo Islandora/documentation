@@ -182,9 +182,6 @@ function fedora_repository_solution_pack_form_submit($form, &$form_state) {
     // Add this object to the batch job queue.
     $batch['operations'][] = array('fedora_repository_batch_reingest_object', array($object));
   }
-  foreach($batch['operations'] as $key => $value) {
-      //var_dump($value);
-  }
   batch_set($batch);
 }
 
