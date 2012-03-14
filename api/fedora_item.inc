@@ -611,6 +611,35 @@ class Fedora_Item {
     return $relationships;
   }
 
+  function get_rdf_relationships() {
+
+    $relationships = array();
+    try {
+      $relsext = $this->get_datastream_dissemination('RELS-EXT');
+    } catch (exception $e) {
+      drupal_set_message(t("Error retrieving RELS-EXT of object $pid"), 'error');
+      return $relationships;
+    }
+
+    // Parse the RELS-EXT into an associative array.
+    $relsextxml = new DOMDocument();
+    $relsextxml->loadXML($relsext);
+    $relsextxml->normalizeDocument();
+    $allTags = array();
+    $allTags[] = $relsextxml->getElementsByTagNameNS(RELS_EXT_URI, '*');
+    $allTags[] = $relsextxml->getElementsByTagNameNS(FEDORA_MODEL_URI, '*');
+    $allTags[] = $relsextxml->getElementsByTagNameNS(ISLANDORA_PAGE_URI, '*');
+    foreach ($allTags as $tags) {
+      foreach ($tags as $child) {
+        $value = preg_replace('/info:fedora\//','',$child->getAttributeNS('http://www.w3.org/1999/02/22-rdf-syntax-ns#', 'resource'));
+        
+        $relationships[$child->tagName][] = $value;
+      }
+    }
+
+    return $relationships;
+  }
+
   function get_models() {
     $relationships = array();
     try {

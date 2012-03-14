@@ -143,13 +143,21 @@ function fedora_repository_solution_pack_form(&$form_state, $solution_pack_modul
   else {
     $form['install_status']['#value'] = theme_image('misc/watchdog-warning.png') . t('Some objects must be re-ingested. See Objects list for details.');
   }
-  $form['submit'] = array(
-    '#value' => t('Install'),
-    '#disabled' => !$needs_install && !$needs_update,
-    '#type' => 'submit',
-    '#name' => $solution_pack_module,
-  );
-
+  if ($need_install || $needs_update) {
+    $form['submit'] = array(
+      '#value' => t('Install'),
+      '#type' => 'submit',
+      '#name' => $solution_pack_module,
+    );
+  }
+  else {
+    $form['force_submit'] = array(
+      '#value' => t('Forced Reinstall'),
+      '#attributes' => array('title' => ('Installs all fedora objects, reverting any changes made since installation.  Use with caution.')),
+      '#type' => 'submit',
+      '#name' => $solution_pack_module,
+    );
+  }
   $form['#submit'] = array(
     'fedora_repository_solution_pack_form_submit',
   );
