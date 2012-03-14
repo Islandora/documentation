@@ -143,7 +143,7 @@ function fedora_repository_solution_pack_form(&$form_state, $solution_pack_modul
   else {
     $form['install_status']['#value'] = theme_image('misc/watchdog-warning.png') . t('Some objects must be re-ingested. See Objects list for details.');
   }
-  if ($need_install || $needs_update) {
+  if ($needs_install || $needs_update) {
     $form['submit'] = array(
       '#value' => t('Install'),
       '#type' => 'submit',
