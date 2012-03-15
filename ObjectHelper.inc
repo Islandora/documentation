@@ -383,8 +383,8 @@ class ObjectHelper {
       $xsl->load($path . '/xsl/convertQDC.xsl');
       $input = new DomDocument();
       $input->loadXML(trim($xmlstr));
-    } catch (exception $e) {
-      watchdog(t("Fedora_Repository"), "Problem loading XSL file: @e", array('@e' => $e), NULL, WATCHDOG_ERROR);
+    } catch (Exception $e) {
+      watchdog('fedora_repository', "Problem loading XSL file: @e", array('@e' => $e->getMessage()), NULL, WATCHDOG_ERROR);
     }
     $xsl = $proc->importStylesheet($xsl);
     $newdom = $proc->transformToDoc($input);
@@ -729,7 +729,7 @@ class ObjectHelper {
    */
   function get_parent_objects($pid) {
     $query_string = 'select $object $title from <#ri>
-                            where ($object <dc:title> $title
+                            where ($object <fedora-model:label> $title
                               and <info:fedora/' . $pid . '> <fedora-rels-ext:isMemberOfCollection> $object
                               and $object <fedora-model:state> <info:fedora/fedora-system:def/model#Active>)
                             order by $title';
@@ -829,7 +829,7 @@ class ObjectHelper {
 
     // Get title and descriptions for $pid 
     $query_string = 'select $title $desc from <#ri> 
-      where $o <dc:title> $title
+      where $o <fedora-model:label> $title
       and $o <dc:description> $desc
       and $o <mulgara:is> <info:fedora/' . $pid . '>';
 
@@ -858,7 +858,7 @@ class ObjectHelper {
     $query_string = 'select $o $title from <#ri> ' .
 //    $query_string = 'select $o $title $desc from <#ri> '.
         'where $s <info:fedora/fedora-system:def/relations-external#hasMember> $o ' .
-        'and $o <dc:title> $title ' .
+        'and $o <fedora-model:label> $title ' .
 //    'and $o <dc:description> $desc '.
         'and ( ';
 
@@ -929,7 +929,7 @@ class ObjectHelper {
     }
     else {
       $query_string = 'select $parentObject $title $content from <#ri>
-                               where (<info:fedora/' . $pid . '> <dc:title> $title
+                               where (<info:fedora/' . $pid . '> <fedora-model:label> $title
                                and $parentObject <fedora-model:hasModel> $content
                                and (<info:fedora/' . $pid . '> <fedora-rels-ext:isMemberOfCollection> $parentObject
                                or <info:fedora/' . $pid . '> <fedora-rels-ext:isMemberOf> $parentObject
@@ -963,7 +963,7 @@ class ObjectHelper {
       }
       
       else {
-        $breadcrumbs[] = l("Path Calculation Error", 'fedora/repository/' . $pid);
+        $breadcrumbs[] = l(t("Path Calculation Error"), 'fedora/repository/' . $pid);
       }
     }
   }

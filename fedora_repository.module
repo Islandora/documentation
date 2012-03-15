@@ -143,7 +143,7 @@ function fedora_repository_ingest_object($collection_pid=NULL, $collection_label
 function fedora_repository_ingest_form_submit(array $form, array &$form_state) {
 //only validate the form if the submit button was pressed (other buttons may be used for AHAH
   if ($form_state['ahah_submission']) {
-    $form_state['submitted'] = false;
+    $form_state['submitted'] = FALSE;
     return;
   }
   if ($form_state['storage']['xml']) {
@@ -202,7 +202,7 @@ function fedora_repository_ingest_form_submit(array $form, array &$form_state) {
 function fedora_repository_ingest_form_validate($form, &$form_state) {
 //only validate the form if the submit button was pressed (other buttons may be used for AHAH
   if ($form_state['ahah_submission']) {
-    $form_state['submitted'] = false;
+    $form_state['submitted'] = FALSE;
     return;
   }
   if ($form_state['clicked_button']['#id'] == 'edit-submit' && $form_state['ahah_submission'] != 1) {
@@ -246,8 +246,11 @@ function fedora_repository_ingest_form_validate($form, &$form_state) {
 
             if (!empty($file)) {
               if (!in_array($dformat, $allowedMimeTypes)) {
-                form_set_error('ingest-file-location', t('The uploaded file\'s mimetype (' . $dformat . ') is not associated with this Content Model. The allowed types are ' .
-                        implode(' ', $allowedMimeTypes)));
+                form_set_error('ingest-file-location', 
+                    t('The uploaded file\'s mimetype') . 
+                    ' (' . $dformat . ') ' .
+                    t('is not associated with this Content Model. The allowed types are') . 
+                    ' ' . implode(' ', $allowedMimeTypes));
                 file_delete($file);
                 return;
               }
@@ -505,7 +508,7 @@ function fedora_repository_purge_object_form_validate($form, &$form_state) {
   foreach ($contentModels as $contentModel) {
     if ($contentModel->pid == 'islandora:collectionCModel') {
       $member_pids = get_related_items_as_array($pid, 'isMemberOfCollection');
-      if (is_array($member_pids) && ! empty($member_pids)){
+      if (is_array($member_pids) && ! empty($member_pids)) {
       form_set_error('new_collection_pid', t("Please purge all members of this collection before deleting the collection itself."));
       return;
       }
@@ -1008,6 +1011,7 @@ function fedora_repository_get_items($pid = NULL, $dsId = NULL, $collection = NU
       );
     }
   }
+  
 // Add a 'manage object' tab for all objects, where detailed list of content is shown.
   $obj = new FedoraObjectDetailedContent($pid);
   $object_details = $obj->showFieldSets();
@@ -1592,7 +1596,7 @@ function fedora_repository_demo_objects_form_submit($form, &$form_state) {
         $dc->set_element('dc:title', array('Installed Content Model'));
         $dc->save();
         $cmodel_collection->add_datastream_from_string('select $object $title from <#ri>
-          where ($object <dc:title> $title
+          where ($object <fedora-model:label> $title
           and ($object <fedora-model:hasModel> <info:fedora/fedora-system:ContentModel-3.0>
           or $object <fedora-rels-ext:isMemberOfCollection> <info:fedora/islandora:ContentModelsCollection>)
           and $object <fedora-model:state> <info:fedora/fedora-system:def/model#Active>)
@@ -2146,13 +2150,16 @@ function fedora_repository_display_schema($file) {
  * @return type 
  */
 function fedora_repository_batch_reingest_object($object, &$context) {
+    
   module_load_include('inc', 'fedora_repository', 'api/fedora_item');
   module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
+  
   if (!empty($object) && is_array($object)) {
     $pid = $object['pid'];
     if (!valid_pid($pid)) {
       return NULL;
     }
+    
 // Does the object exist? If so, purge it.
     $item = new Fedora_Item($pid);
     if ($item->exists()) {
@@ -2168,6 +2175,7 @@ function fedora_repository_batch_reingest_object($object, &$context) {
         $context['message'][] = "$new_item->pid installed.";
       }
     }
+    
     if (!empty($object['dsid']) && !empty($object['datastream_file'])) {
       $datastreams = array(
         array(
@@ -2181,10 +2189,13 @@ function fedora_repository_batch_reingest_object($object, &$context) {
     }
 
     if (!empty($datastreams) && is_array($datastreams)) {
+        
       $label = !empty($object['label']) ? $object['label'] : '';
+      
       if (empty($object['foxml_file']) && !isset($new_item)) {
         $new_item = Fedora_Item::ingest_new_item($object['pid'], 'A', $label);
       }
+      
       if (!empty($object['cmodel'])) {
         $new_item->add_relationship('hasModel', $object['cmodel'], FEDORA_MODEL_URI);
       }

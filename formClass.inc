@@ -48,7 +48,6 @@ class formClass {
       'file' => 'fedora_repository.solutionpacks.inc',
       'type' => MENU_LOCAL_TASK,
     );
-
     $items['islandoracm.xsd'] = array(
       'title' => t('Islandora Content Model XML Schema Definition'),
       'page callback' => 'fedora_repository_display_schema',
@@ -379,7 +378,13 @@ class formClass {
 
     // DC elements
     $previousElement = NULL; // Used in case we have to nest elements for qualified dublin core.
+    
+    $label = null;
     foreach ($form_values as $key => $value) {
+      //echo ($key);
+      if ($key == 'dc:title-0') {
+        $label = $value;
+      } 
       $index = strrpos($key, '-');
       $key = substr($key, 0, $index);
       $test = substr($key, 0, 2);
@@ -400,6 +405,13 @@ class formClass {
       }
     }
 
+    // Save the title
+    if ( $label != null )
+    {
+      $object = new Fedora_Item($form_values['pid']);
+      $object->modify_object($label);
+    } 
+    
     $dom->appendChild($oai);
 
     if (!$client) {
@@ -498,7 +510,7 @@ class formClass {
           '#title' => t('Content models available'),
           '#options' => $potential_models,
           '#default_value' => $selected_model,
-          '#description' => t('Content models define datastream composition, relationships between this and other content models, and the mandatory behaviors associated with each digital object.<br /> Additional information may be found <a href="https://wiki.duraspace.org/display/FEDORACREATE/Content+Models+Overview">here.</a> '),
+          '#description' => t('Content models define datastream composition, relationships between this and other content models, and the mandatory behaviors associated with each digital object.<br /> Additional information may be found <a href="https://wiki.duraspace.org/display/FEDORACREATE/Content+Models+Overview">here.</a>'),
         ),
       ),
       'collection_pid' => array(
@@ -581,6 +593,8 @@ class formClass {
     if (!$this->canShowIngestForm($collection_pid)) {
       return FALSE;
     }
+    
+    drupal_set_title($collection_label);
     if (module_exists('islandora_content_model_forms')) {
       module_load_include('inc', 'islandora_content_model_forms', 'IngestObjectMetadataForm');
       try {
