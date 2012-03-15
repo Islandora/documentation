@@ -153,13 +153,6 @@ function fedora_repository_solution_pack_form(&$form_state, $solution_pack_modul
     '#type' => 'submit',
     '#name' => $solution_pack_module,
   );
-  $form['forcesubmit'] = array(
-    '#value' => t('Force Reinstall'),
-    //'#disabled' => !$needs_install && !$needs_update,
-    '#type' => 'submit',
-    '#name' => $solution_pack_module,
-  );
-
 
   $form['#submit'] = array(
     'fedora_repository_solution_pack_form_submit',
