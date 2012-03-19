@@ -212,7 +212,7 @@ class Fedora_Item {
    * @param type $namespaceURI
    */
   function add_relationship($relationship, $object, $namespaceURI = RELS_EXT_URI) {
-    dd($this, 'The Fedora_Item');
+    //dd($this, 'The Fedora_Item');
     $ds_list = $this->get_datastreams_list_as_array();
     $f_prefix = 'info:fedora/';
     if (!array_key_exists('RELS-EXT', $ds_list)) {
@@ -222,14 +222,14 @@ class Fedora_Item {
           </rdf:Description>
         </rdf:RDF>
 RDF;
-      dd($rdf_string, 'RELS-EXT RDF being added');
+      //dd($rdf_string, 'RELS-EXT RDF being added');
       $this->add_datastream_from_string($rdf_string, 'RELS-EXT', 'Fedora object-to-object relationship metadata', 'application/rdf+xml', 'X');
-      dd('Added');
+      //dd('Added');
     }
 
-    dd('Getting RELS-EXT');
+    //dd('Getting RELS-EXT');
     $relsext = $this->get_datastream_dissemination('RELS-EXT');
-    dd('Got RELS-EXT');
+    //dd('Got RELS-EXT');
     
     if (substr($object, 0, strlen($f_prefix)) !== $f_prefix) {
       $object = $f_prefix . $object;
@@ -835,7 +835,7 @@ RDF;
       'logMessage' => 'Fedora Object Ingested'
     );
     $object = self::soap_call('ingest', $params);
-    dd($object, 'Soap return');
+    //dd($object, 'Soap return');
     return new Fedora_Item($object->objectPID);
   }
 
