@@ -211,27 +211,39 @@ class Fedora_Item {
    * @param type $namespaceURI
    */
   function add_relationship($relationship, $object, $namespaceURI = RELS_EXT_URI) {
+    dd($this, 'The Fedora_Item');
     $ds_list = $this->get_datastreams_list_as_array();
-
-    if (empty($ds_list['RELS-EXT'])) {
-      $this->add_datastream_from_string('        <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-          <rdf:Description rdf:about="info:fedora/' . $this->pid . '">
+    $f_prefix = 'info:fedora/';
+    if (!array_key_exists('RELS-EXT', $ds_list)) {
+      $rdf_string = <<<RDF
+        <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+          <rdf:Description rdf:about="$f_prefix{$this->pid}">
           </rdf:Description>
-        </rdf:RDF>', 'RELS-EXT', 'Fedora object-to-object relationship metadata', 'text/xml', 'X');
+        </rdf:RDF>
+RDF;
+      dd($rdf_string, 'RELS-EXT RDF being added');
+      $this->add_datastream_from_string($rdf_string, 'RELS-EXT', 'Fedora object-to-object relationship metadata', 'application/rdf+xml', 'X');
+      dd('Added');
     }
 
+    dd('Getting RELS-EXT');
     $relsext = $this->get_datastream_dissemination('RELS-EXT');
-
-    if (substr($object, 0, 12) != 'info:fedora/') {
-      $object = "info:fedora/$object";
+    dd('Got RELS-EXT');
+    
+    if (substr($object, 0, strlen($f_prefix)) !== $f_prefix) {
+      $object = $f_prefix . $object;
     }
 
-    $relsextxml = new DomDocument();
+    $relsextxml = new DOMDocument();
 
     $relsextxml->loadXML($relsext);
     $description = $relsextxml->getElementsByTagNameNS('http://www.w3.org/1999/02/22-rdf-syntax-ns#', 'Description');
     if ($description->length == 0) {
+      //XXX: This really shouldn't be done; lower case d doesn't fit the schema.  Warn users to fix the data and generators, pending deprecation.
       $description = $relsextxml->getElementsByTagNameNS('http://www.w3.org/1999/02/22-rdf-syntax-ns#', 'description');
+      if ($description->length > 0) {
+        drupal_set_message(t('RDF with lower case "d" in "description" encountered.  Should be uppercase! PID: %pid', array('%pid' => $this->pid)), 'warning');
+      }
     }
     $description = $description->item(0);
 
@@ -241,7 +253,7 @@ class Fedora_Item {
     $newrel->setAttribute('rdf:resource', $object);
 
     $description->appendChild($newrel);
-    $this->modify_datastream_by_value($relsextxml->saveXML(), 'RELS-EXT', "Fedora Object-to-Object Relationship Metadata", 'text/xml');
+    $this->modify_datastream_by_value($relsextxml->saveXML(), 'RELS-EXT', "Fedora Object-to-Object Relationship Metadata", 'application/rdf+xml');
     //print ($description->dump_node());
     /*
       $params = array( 'pid' => $this->pid,
@@ -287,7 +299,7 @@ class Fedora_Item {
         break;
     }
 
-    if (substr($object, 0, 12) != 'info:fedora/') {
+    if (!empty($object) && substr($object, 0, 12) != 'info:fedora/') {
       $object = "info:fedora/$object";
     }
 
@@ -297,7 +309,7 @@ class Fedora_Item {
     $rels = $relsextxml->getElementsByTagNameNS($namespaceURI, $relationship);
     if (!empty($rels)) {
       foreach ($rels as $rel) {
-        if ($rel->getAttributeNS('http://www.w3.org/1999/02/22-rdf-syntax-ns#', 'resource') == $object) {
+        if (empty($object) || $rel->getAttributeNS('http://www.w3.org/1999/02/22-rdf-syntax-ns#', 'resource') == $object) {
           $rel->parentNode->removeChild($rel);
           $modified = TRUE;
         }
@@ -307,7 +319,6 @@ class Fedora_Item {
       $this->modify_datastream_by_value($relsextxml->saveXML(), 'RELS-EXT', "Fedora Object-to-Object Relationship Metadata", 'text/xml');
     }
     return $modified;
-    //print ($description->dump_node());
   }
 
   /**
@@ -743,8 +754,9 @@ class Fedora_Item {
    * @return type
    */
   function url() {
-    global $base_url;
-    return $base_url . '/fedora/repository/' . $this->pid . (!empty($this->objectProfile) ? '/-/' . drupal_urlencode($this->objectProfile->objLabel) : '');
+    return url('fedora/repository/' . $this->pid . (!empty($this->objectProfile) ? '/-/' . drupal_urlencode($this->objectProfile->objLabel) : ''), array(
+      'absolute' => TRUE
+    ));
   }
 
   /**
@@ -780,9 +792,14 @@ class Fedora_Item {
    * @param type $foxml
    * @return Fedora_Item
    */
-  static function ingest_from_FOXML($foxml) {
-    $params = array('objectXML' => $foxml->saveXML(), 'format' => "info:fedora/fedora-system:FOXML-1.1", 'logMessage' => "Fedora Object Ingested");
+  static function ingest_from_FOXML(DOMDocument $foxml) {
+    $params = array(
+      'objectXML' => $foxml->saveXML(),
+      'format' => 'info:fedora/fedora-system:FOXML-1.1',
+      'logMessage' => 'Fedora Object Ingested'
+    );
     $object = self::soap_call('ingest', $params);
+    dd($object, 'Soap return');
     return new Fedora_Item($object->objectPID);
   }
 
@@ -982,25 +999,23 @@ class Fedora_Item {
       }
     }
 
-    $root_element = $foxml->createElement("foxml:digitalObject");
+    $root_element = $foxml->createElementNS("info:fedora/fedora-system:def/foxml#", "foxml:digitalObject");
     $root_element->setAttribute("VERSION", "1.1");
     $root_element->setAttribute("PID", $pid);
-    $root_element->setAttribute("xmlns:foxml", "info:fedora/fedora-system:def/foxml#");
-    $root_element->setAttribute("xmlns:xsl", "http://www.w3.org/2001/XMLSchema-instance");
-    $root_element->setAttribute("xsl:schemaLocation", "info:fedora/fedora-system:def/foxml# http://www.fedora.info/definitions/1/0/foxml1-1.xsd");
+    $root_element->setAttributeNS("http://www.w3.org/2001/XMLSchema-instance", "xsi:schemaLocation", "info:fedora/fedora-system:def/foxml# http://www.fedora.info/definitions/1/0/foxml1-1.xsd");
     $foxml->appendChild($root_element);
 
     // FOXML object properties section
-    $object_properties = $foxml->createElement("foxml:objectProperties");
-    $state_property = $foxml->createElement("foxml:property");
+    $object_properties = $foxml->createElementNS("info:fedora/fedora-system:def/foxml#", "foxml:objectProperties");
+    $state_property = $foxml->createElementNS("info:fedora/fedora-system:def/foxml#", "foxml:property");
     $state_property->setAttribute("NAME", "info:fedora/fedora-system:def/model#state");
     $state_property->setAttribute("VALUE", $state);
 
-    $label_property = $foxml->createElement("foxml:property");
+    $label_property = $foxml->createElementNS("info:fedora/fedora-system:def/foxml#", "foxml:property");
     $label_property->setAttribute("NAME", "info:fedora/fedora-system:def/model#label");
     $label_property->setAttribute("VALUE", $label);
 
-    $owner_property = $foxml->createElement("foxml:property");
+    $owner_property = $foxml->createElementNS("info:fedora/fedora-system:def/foxml#", "foxml:property");
     $owner_property->setAttribute("NAME", "info:fedora/fedora-system:def/model#ownerId");
     $owner_property->setAttribute("VALUE", $owner);
 
@@ -1009,7 +1024,7 @@ class Fedora_Item {
     $object_properties->appendChild($owner_property);
     $root_element->appendChild($object_properties);
     $foxml->appendChild($root_element);
-
+    //dd($foxml->saveXML(), 'XML to ingest');  Worked on 2012/01/16
     return $foxml;
   }
 

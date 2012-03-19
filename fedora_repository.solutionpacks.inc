@@ -109,7 +109,7 @@ function fedora_repository_solution_pack_form(&$form_state, $solution_pack_modul
                 $object_status = 'Missing datastream';
                 break;
               }
-              if (isset($ds['dsversion'])) {
+              elseif (isset($ds['dsversion'])) {
                 // Check if the datastream is versioned and needs updating.
                 $installed_version = fedora_repository_get_islandora_datastream_version($item, $ds['dsid']);
                 $available_version = fedora_repository_get_islandora_datastream_version(NULL, NULL, $ds['datastream_file']);
