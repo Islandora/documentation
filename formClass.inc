@@ -25,8 +25,8 @@ class formClass {
     $items = array();
 
     $items['admin/settings/fedora_repository'] = array(
-      'title' => t('Islandora Configure'),
-      'description' => t('Enter the Islandora Collection information here'),
+      'title' => t('Islandora Configuration'),
+      'description' => t("Configure Islandora's interaction with Fedora"),
       'page callback' => 'drupal_get_form',
       'page arguments' => array('fedora_repository_admin'),
       'access arguments' => array('administer site configuration'),
@@ -48,7 +48,6 @@ class formClass {
       'file' => 'fedora_repository.solutionpacks.inc',
       'type' => MENU_LOCAL_TASK,
     );
-
     $items['islandoracm.xsd'] = array(
       'title' => t('Islandora Content Model XML Schema Definition'),
       'page callback' => 'fedora_repository_display_schema',

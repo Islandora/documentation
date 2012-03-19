@@ -949,7 +949,8 @@ class ObjectHelper {
     // Before executing the query, we hve a base case of accessing the top-level collection
     global $base_url;
     if ($pid == variable_get('fedora_repository_pid', 'islandora:root')) {
-      $breadcrumbs[] = l(t('Digital repository'), 'fedora/repository');
+      //$breadcrumbs[] = l(t('Digital repository'), 'fedora/repository');
+      $breadcrumbs[] = l(variable_get('fedora_repository_title', 'Digital repository'), 'fedora/repository');
       $breadcrumbs[] = l(t('Home'), $base_url);
     }
     else {
@@ -979,7 +980,8 @@ class ObjectHelper {
         
         $breadcrumbs[] = l($matches[1], 'fedora/repository/' . $pid);
         if ($parent == variable_get('fedora_repository_pid', 'islandora:root')) {
-          $breadcrumbs[] = l(t('Digital repository'), 'fedora/repository');
+          //$breadcrumbs[] = l(t('Digital repository'), 'fedora/repository');
+          $breadcrumbs[] = l(variable_get('fedora_repository_title', 'Digital repository'), 'fedora/repository');
           $breadcrumbs[] = l(t('Home'), $base_url);
         }
         elseif ($level > 0) {

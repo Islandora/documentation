@@ -2149,15 +2149,17 @@ function fedora_repository_display_schema($file) {
  * @return type 
  */
 function fedora_repository_batch_reingest_object($object, &$context) {
+    
   module_load_include('inc', 'fedora_repository', 'api/fedora_item');
   module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
-  dd($object, 'Object array');
+
   if (!empty($object) && is_array($object)) {
     $pid = $object['pid'];
     if (!valid_pid($pid)) {
       return NULL;
     }
-// Does the object exist? If so, purge it.
+    
+    // Does the object exist? If so, purge it.
     dd("About to test existence of PID: $pid");
     $item = new Fedora_Item($pid);
     if ($item->exists()) {
@@ -2175,15 +2177,14 @@ function fedora_repository_batch_reingest_object($object, &$context) {
       $new_item = Fedora_Item::ingest_from_FOXML_file($foxml_file);
       if ($new_item->exists()) {
 // Batch operation was successful; can still add additional DSs, though
-        $context['message'][] = "$new_item->pid installed.";
+        $context['message'][] = "{$new_item->pid} installed.";
       }
     }
+    
     if (!empty($object['dsid']) && !empty($object['datastream_file'])) {
-      $datastreams = array(
-        array(
-          'dsid' => $object['dsid'],
-          'datastream_file' => $object['datastream_file'],
-        )
+      $datastreams[] = array(
+        'dsid' => $object['dsid'],
+        'datastream_file' => $object['datastream_file'],
       );
     }
     elseif (!empty($object['datastreams'])) {
@@ -2211,7 +2212,7 @@ function fedora_repository_batch_reingest_object($object, &$context) {
         $new_item->add_relationship('isMemberOfCollection', $object['parent']);
         dd('  parent added');
       }
-      foreach ($datastreams as $ds) {
+      foreach ((array)$datastreams as $ds) {
         dd("trying to add ds: {$ds['dsid']}");
         if ($ds['dsid'] == 'DC') {
           $new_item->modify_datastream_by_value(file_get_contents($ds['datastream_file']), $ds['dsid'], $ds['label'], 'text/xml');

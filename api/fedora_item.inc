@@ -6,6 +6,7 @@
  */
 define('RELS_EXT_URI', 'info:fedora/fedora-system:def/relations-external#');
 define("FEDORA_MODEL_URI", 'info:fedora/fedora-system:def/model#');
+define("ISLANDORA_PAGE_URI", 'info:islandora/islandora-system:def/pageinfo#');
 
 /**
  * Fedora Item Class
@@ -296,6 +297,10 @@ RDF;
       case "hasModel":
         $relationship = "hasModel";
         $namespaceURI = FEDORA_MODEL_URI;
+        break;
+      case "isPageNumber":
+        $relationship = "isPageNumber";
+        $namespaceURI = ISLANDORA_PAGE_URI;
         break;
     }
 
@@ -633,6 +638,35 @@ RDF;
     return $relationships;
   }
 
+  function get_rdf_relationships() {
+
+    $relationships = array();
+    try {
+      $relsext = $this->get_datastream_dissemination('RELS-EXT');
+    } catch (exception $e) {
+      drupal_set_message(t("Error retrieving RELS-EXT of object $pid"), 'error');
+      return $relationships;
+    }
+
+    // Parse the RELS-EXT into an associative array.
+    $relsextxml = new DOMDocument();
+    $relsextxml->loadXML($relsext);
+    $relsextxml->normalizeDocument();
+    $allTags = array();
+    $allTags[] = $relsextxml->getElementsByTagNameNS(RELS_EXT_URI, '*');
+    $allTags[] = $relsextxml->getElementsByTagNameNS(FEDORA_MODEL_URI, '*');
+    $allTags[] = $relsextxml->getElementsByTagNameNS(ISLANDORA_PAGE_URI, '*');
+    foreach ($allTags as $tags) {
+      foreach ($tags as $child) {
+        $value = preg_replace('/info:fedora\//','',$child->getAttributeNS('http://www.w3.org/1999/02/22-rdf-syntax-ns#', 'resource'));
+        
+        $relationships[$child->tagName][] = $value;
+      }
+    }
+
+    return $relationships;
+  }
+
   function get_models() {
     $relationships = array();
     try {
@@ -698,7 +732,9 @@ RDF;
     $params = array(
       'pid' => $this->pid,
       'state' => 'D',
-      'logMessage' => $logMessage
+      'logMessage' => $logMessage,
+      'label' => $this->objectProfile->objLabel,
+      'ownerId' => null,
     );
 
     // Send message to mark the object deleted
