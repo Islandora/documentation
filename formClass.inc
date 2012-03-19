@@ -602,6 +602,7 @@ class formClass {
         $form = new IngestObjectMetadataForm();
         return $form->create($collection_pid, $collection_label, $form_state);
       } catch (Exception $e) {
+        dd('An error occured; reverting to QDC form...');
         $form_state['storage']['xml'] = FALSE; // An error occured revert back to the QDC Form.
       }
     }
