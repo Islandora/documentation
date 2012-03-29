@@ -2178,7 +2178,7 @@ function fedora_repository_batch_reingest_object($object, &$context) {
       $new_item = Fedora_Item::ingest_from_FOXML_file($foxml_file);
       if ($new_item->exists()) {
 // Batch operation was successful; can still add additional DSs, though
-        $context['message'][] = "{$new_item->pid} installed.";
+        $context['message'][] = t('%pid installed.', array('%pid' => $new_item->pid));
       }
     }
     
@@ -2238,22 +2238,17 @@ function fedora_repository_batch_reingest_object($object, &$context) {
  */
 function fedora_repository_get_islandora_datastream_version($item = NULL, $dsid = NULL, $datastream_file = NULL) {
   $return = NULL;
-  if (isset($item)) {
+  if (!empty($item) && !empty($dsid)) {
     $doc = simplexml_load_string($item->get_datastream_dissemination($dsid));
   }
-  elseif (isset($datastream_file)) {
+  elseif (!empty($datastream_file)) {
     $doc = simplexml_load_file($datastream_file);
   }
-
-  if (!empty($doc)) {
-    $attrs = $doc->attributes();
-    foreach ($attrs as $name => $value) {
-      if ($name == 'version') {
-        $return = (int) $value;
-        break;
-      }
-    }
+  
+  if (!empty($doc) && $version = (int)$doc->attributes()->version) {
+    $return = $version;
   }
+  
   return $return;
 }
 
