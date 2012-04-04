@@ -122,8 +122,7 @@ class ObjectHelper {
         $dsID = variable_get('fedora_default_display_dsid', 'TN');
         $mimeType = 'image/jpeg';
       }
-
-      $url = variable_get('fedora_base_url', 'http://localhost:8080/fedora') . '/get/' . $pid . '/' . $dsID;
+      $url = variable_get('fedora_base_url', 'http://localhost:8080/fedora') . '/objects/' . $pid . '/datastreams/' . $dsID . '/content';
       if ($version) {
         $url .= '/' . $version; //drupal_urlencode($version);
       }
@@ -383,8 +382,8 @@ class ObjectHelper {
       $xsl->load($path . '/xsl/convertQDC.xsl');
       $input = new DomDocument();
       $input->loadXML(trim($xmlstr));
-    } catch (exception $e) {
-      watchdog(t("Fedora_Repository"), "Problem loading XSL file: @e", array('@e' => $e), NULL, WATCHDOG_ERROR);
+    } catch (Exception $e) {
+      watchdog('fedora_repository', "Problem loading XSL file: @e", array('@e' => $e->getMessage()), NULL, WATCHDOG_ERROR);
     }
     $xsl = $proc->importStylesheet($xsl);
     $newdom = $proc->transformToDoc($input);
@@ -729,7 +728,7 @@ class ObjectHelper {
    */
   function get_parent_objects($pid) {
     $query_string = 'select $object $title from <#ri>
-                            where ($object <dc:title> $title
+                            where ($object <fedora-model:label> $title
                               and <info:fedora/' . $pid . '> <fedora-rels-ext:isMemberOfCollection> $object
                               and $object <fedora-model:state> <info:fedora/fedora-system:def/model#Active>)
                             order by $title';
@@ -829,7 +828,7 @@ class ObjectHelper {
 
     // Get title and descriptions for $pid 
     $query_string = 'select $title $desc from <#ri> 
-      where $o <dc:title> $title
+      where $o <fedora-model:label> $title
       and $o <dc:description> $desc
       and $o <mulgara:is> <info:fedora/' . $pid . '>';
 
@@ -858,7 +857,7 @@ class ObjectHelper {
     $query_string = 'select $o $title from <#ri> ' .
 //    $query_string = 'select $o $title $desc from <#ri> '.
         'where $s <info:fedora/fedora-system:def/relations-external#hasMember> $o ' .
-        'and $o <dc:title> $title ' .
+        'and $o <fedora-model:label> $title ' .
 //    'and $o <dc:description> $desc '.
         'and ( ';
 
@@ -924,12 +923,13 @@ class ObjectHelper {
     // Before executing the query, we hve a base case of accessing the top-level collection
     global $base_url;
     if ($pid == variable_get('fedora_repository_pid', 'islandora:root')) {
-      $breadcrumbs[] = l(t('Digital repository'), 'fedora/repository');
+      //$breadcrumbs[] = l(t('Digital repository'), 'fedora/repository');
+      $breadcrumbs[] = l(variable_get('fedora_repository_title', 'Digital repository'), 'fedora/repository');
       $breadcrumbs[] = l(t('Home'), $base_url);
     }
     else {
       $query_string = 'select $parentObject $title $content from <#ri>
-                               where (<info:fedora/' . $pid . '> <dc:title> $title
+                               where (<info:fedora/' . $pid . '> <fedora-model:label> $title
                                and $parentObject <fedora-model:hasModel> $content
                                and (<info:fedora/' . $pid . '> <fedora-rels-ext:isMemberOfCollection> $parentObject
                                or <info:fedora/' . $pid . '> <fedora-rels-ext:isMemberOf> $parentObject
@@ -954,7 +954,8 @@ class ObjectHelper {
         
         $breadcrumbs[] = l($matches[1], 'fedora/repository/' . $pid);
         if ($parent == variable_get('fedora_repository_pid', 'islandora:root')) {
-          $breadcrumbs[] = l(t('Digital repository'), 'fedora/repository');
+          //$breadcrumbs[] = l(t('Digital repository'), 'fedora/repository');
+          $breadcrumbs[] = l(variable_get('fedora_repository_title', 'Digital repository'), 'fedora/repository');
           $breadcrumbs[] = l(t('Home'), $base_url);
         }
         elseif ($level > 0) {
@@ -963,7 +964,7 @@ class ObjectHelper {
       }
       
       else {
-        $breadcrumbs[] = l("Path Calculation Error", 'fedora/repository/' . $pid);
+        $breadcrumbs[] = l(t("Path Calculation Error"), 'fedora/repository/' . $pid);
       }
     }
   }
