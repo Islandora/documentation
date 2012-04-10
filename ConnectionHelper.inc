@@ -95,10 +95,10 @@ class ConnectionHelper {
       try {
         //we need to make a call to set the cookie this extra call would only happen once per session
         $client->__soapCall('describeRepository', array());
+        $_SESSION['islandora_soapcookies'] = $client->_cookies;
       } catch (exception $e) {
         //connection is tested elsewhere so eat this for now here we just want the cookie
       }
-      $_SESSION['islandora_soapcookies'] = $client->_cookies;
     }
 
 
