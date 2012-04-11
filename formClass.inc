@@ -301,6 +301,22 @@ class formClass {
       '#default_value' => variable_get('fedora_repository_title', 'Digital Repository'),
       '#description' => t('The title displayed when viewing collections and objects in  /fedora/repository. Leave blank to display no title. Note that the menus must be rebuilt after changing this variable.'),
     );
+    
+    $form['tabs'] = array(//have tabs options (like disable)
+      '#type' => 'fieldset',
+      '#title' => t('Tabs Configuration'),
+      '#description' => t('Configure the tabs avaialble when viewing Fedora objects.'),
+      '#collapsible' => TRUE,
+      '#collapsed' => TRUE,
+    );
+
+    $form['tabs']['fedora_repository_show_object_details_tab'] = array(//when checked show object details tab
+      '#type' => 'checkbox',
+      '#title' => t('Show Object Details Tab'),
+      '#default_value' => variable_get('fedora_repository_show_object_details_tab', TRUE),
+      '#description' => t("When enabled, the 'Object Details' tab will be visible when visiting objects if the user has the correct permissions."),
+    );
+    
     $form['advanced'] = array(
       '#type' => 'fieldset',
       '#title' => t('Advanced configuration options'),
