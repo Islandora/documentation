@@ -883,6 +883,13 @@ RDF;
    *
    *  First tries to treat the passed in value as a filename, tries using as contents second.
    *  Coerces the data into what is required, and passes it on to the relevant function.
+   *
+   * @param $filename_or_content  Either a filename to add, or an string of content.
+   * @param $dsid                 The DSID to update
+   * @param $label                A label to withwhich to update the datastream
+   * @param $mime_type            Mimetype for the data being pushed into the datastream
+   * @param $force                Dunno, refer to underlying functions/SOAP interface.  We just pass it like a chump.
+   * @param $logMessage           A message for the audit log.
    */
   function modify_datastream($filename_or_content, $dsid, $label, $mime_type, $force = FALSE, $logMessage='Modified by Islandora API') {
     //Determine if it's inline xml; if it is, modify by value
@@ -902,25 +909,24 @@ RDF;
       $file = '';
       $created_temp = FALSE;
       if (is_file($filename_or_content) && is_readable($filename_or_content)) {
-        $file = $filename_or_content;
+        $file = $filename_or_content;     
+        $original_path = $file;
+        // Temporarily move file to a web-accessible location.
+        file_copy($file, file_directory_path());
+        $created_temp = ($original_path != $file);
       }
       else {
-        //Get Drupal temp file
-        $file = file_directory_path();
-        $file = tempnam($file, 'fedora_modification'); //Be careful...  Does this return the full path to the file?
-        //Push contents to file
-        file_put_contents($file, $filename_or_content);
+        //Push contents to a web-accessible file
+        $file = file_save_data($filename_or_content, file_directory_path());
         $created_temp = TRUE;
       }
       
-      $file_url = url($file, array(
-        'absolute' => TRUE,
-      ));
+      $file_url = file_create_url($file);
       
       $this->modify_datastream_by_reference($file_url, $dsid, $label, $mime_type, $force, $logMessage);
       
       if ($created_temp && is_file($file) && is_writable($file)) {
-        unlink($file);
+        file_delete($file);
       }
     }
   }
