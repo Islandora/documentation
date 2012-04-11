@@ -879,17 +879,25 @@ RDF;
   }
 
   /**
+   *  Wrap modify by value and reference
+   *
    *  Wrap modify by value and reference, so that the proper one gets called in the correct instance. (value if inline XML, reference otherwise)
    *
    *  First tries to treat the passed in value as a filename, tries using as contents second.
    *  Coerces the data into what is required, and passes it on to the relevant function.
    *
-   * @param $filename_or_content  Either a filename to add, or an string of content.
-   * @param $dsid                 The DSID to update
-   * @param $label                A label to withwhich to update the datastream
-   * @param $mime_type            Mimetype for the data being pushed into the datastream
-   * @param $force                Dunno, refer to underlying functions/SOAP interface.  We just pass it like a chump.
-   * @param $logMessage           A message for the audit log.
+   * @param string $filename_or_content
+   *   Either a filename to add, or an string of content.
+   * @param string $dsid
+   *   The DSID to update
+   * @param string $label
+   *   A label to withwhich to update the datastream
+   * @param string $mime_type
+   *   Mimetype for the data being pushed into the datastream
+   * @param boolean $force                
+   *   Dunno, refer to underlying functions/SOAP interface.  We just pass it like a chump.
+   * @param string $logMessage
+   *   A message for the audit log.
    */
   function modify_datastream($filename_or_content, $dsid, $label, $mime_type, $force = FALSE, $logMessage='Modified by Islandora API') {
     //Determine if it's inline xml; if it is, modify by value
