@@ -69,19 +69,12 @@ class formClass {
       'type' => MENU_CALLBACK,
       'access arguments' => array('view fedora collection'),
     );
-    $repository_title = variable_get('fedora_repository_title', 'Digital repository');
-    if (trim($repository_title) != '') {
-      $respository_title = t($repository_title);
-    }
-    else {
-      $repository_title = NULL;
-    }
     $items['fedora/repository'] = array(
-      'title' => $repository_title,
+      'title callback' => 'variable_get',
+      'title arguments' => array('fedora_repository_title', 'Digital Repository'),
       'page callback' => 'repository_page',
       'type' => MENU_NORMAL_ITEM,
       'access arguments' => array('view fedora collection'),
-        // 'access' => TRUE
     );
 
     $items['fedora/repository/service'] = array(
@@ -100,8 +93,6 @@ class formClass {
     $items['fedora/repository/editmetadata'] = array(
       'title' => t('Edit metadata'),
       'page callback' => 'fedora_repository_edit_qdc_page',
-      // 'page arguments' => array(1),
-      //'type' =>  MENU_LOCAL_TASK,
       'type' => MENU_CALLBACK,
       'access arguments' => array('edit fedora meta data')
     );
@@ -123,7 +114,6 @@ class formClass {
     $items['fedora/repository/purgeObject'] = array(
       'title' => t('Purge object'),
       'page callback' => 'fedora_repository_purge_object',
-      // 'type' =>  MENU_LOCAL_TASK,
       'type' => MENU_CALLBACK,
       'access arguments' => array('purge objects and datastreams')
     );
@@ -131,7 +121,6 @@ class formClass {
     $items['fedora/repository/addStream'] = array(
       'title' => t('Add stream'),
       'page callback' => 'add_stream',
-      // 'type' => MENU_LOCAL_TASK,
       'type' => MENU_CALLBACK,
       'access arguments' => array('add fedora datastreams')
     );
