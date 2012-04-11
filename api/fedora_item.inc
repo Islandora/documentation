@@ -103,9 +103,14 @@ class Fedora_Item {
   function add_datastream_from_file($datastream_file, $datastream_id, $datastream_label = NULL, $datastream_mimetype = '', $controlGroup = 'M', $logMessage = NULL) {
     module_load_include('inc', 'fedora_repository', 'MimeClass');
     if (!is_file($datastream_file)) {
-      drupal_set_message("$datastream_file not found<br />", 'warning');
+      drupal_set_message(t('The datastream file %datastream_file could not found! (or is not a regular file...)', array('%datastream_file' => $datastream_file)), 'warning');
       return;
     }
+    elseif (!is_readable($datastream_file)) {
+      drupal_set_message(t('The datastream file %datastream_file could not be read! (likely due to permissions...)', array('%datastream_file' => $datastream_file)), 'warning');
+      return;
+    }
+    
     if (empty($datastream_mimetype)) {
       // Get mime type from the file extension.
       $mimetype_helper = new MimeClass();
@@ -434,7 +439,7 @@ RDF;
    * @param type $as_of_date_time
    * @return type
    */
-  function get_datastream($dsid, $as_of_date_time = "") {
+  function get_datastream($dsid, $as_of_date_time = '') {
     $params = array(
       'pid' => $this->pid,
       'dsID' => $dsid,
@@ -530,7 +535,7 @@ RDF;
    * @return datastream object
    * get the mimetype size etc. in one shot.  instead of iterating throught the datastream list for what we need
    */
-  function get_datastream_info($dsid, $as_of_date_time = "") {
+  function get_datastream_info($dsid, $as_of_date_time = '') {
     $params = array(
       'pid' => $this->pid,
       'dsID' => $dsid,
@@ -563,7 +568,7 @@ RDF;
       // datastream, instead of returning it as an array, only
       // the single item will be returned directly. We have to
       // check for this.
-      if (count($this->datastreams_list->datastreamDef) >= 2) {
+      if (count($this->datastreams_list->datastreamDef) > 1) {
         foreach ($this->datastreams_list->datastreamDef as $ds) {
           if (!is_object($ds)) {
             print_r($ds);
@@ -644,7 +649,7 @@ RDF;
     try {
       $relsext = $this->get_datastream_dissemination('RELS-EXT');
     } catch (exception $e) {
-      drupal_set_message(t("Error retrieving RELS-EXT of object $pid"), 'error');
+      drupal_set_message(t('Error retrieving RELS-EXT of object %pid.', array('%pid' => $pid)), 'error');
       return $relationships;
     }
 
@@ -668,30 +673,8 @@ RDF;
   }
 
   function get_models() {
-    $relationships = array();
-    try {
-      $relsext = $this->get_datastream_dissemination('RELS-EXT');
-    } catch (exception $e) {
-      drupal_set_message(t("Error retrieving RELS-EXT of object $pid"), 'error');
-      return $relationships;
-    }
-
-    // Parse the RELS-EXT into an associative array.
-    $relsextxml = new DOMDocument();
-    $relsextxml->loadXML($relsext);
-    $relsextxml->normalizeDocument();
-    $mods = $relsextxml->getElementsByTagNameNS(FEDORA_MODEL_URI, '*');
-    foreach ($mods as $child) {
-      if (empty($relationship) || preg_match("/$relationship/", $child->tagName)) {
-        $relationships[] = array(
-          'subject' => $this->pid,
-          'predicate' => $child->tagName,
-          'object' => substr($child->getAttributeNS('http://www.w3.org/1999/02/22-rdf-syntax-ns#', 'resource'), 12),
-        );
-      }
-    }
-
-    return $relationships;
+    //This is/was formerly just a copy/paste jobbie, without the parameter being passable...
+    return $this->get_relationships();
   }
 
   /**
@@ -896,6 +879,53 @@ RDF;
   }
 
   /**
+   *  Wrap modify by value and reference, so that the proper one gets called in the correct instance. (value if inline XML, reference otherwise)
+   *
+   *  First tries to treat the passed in value as a filename, tries using as contents second.
+   *  Coerces the data into what is required, and passes it on to the relevant function.
+   */
+  function modify_datastream($filename_or_content, $dsid, $label, $mime_type, $force = FALSE, $logMessage='Modified by Islandora API') {
+    //Determine if it's inline xml; if it is, modify by value
+    if ($this->get_datastream($dsid)->controlGroup === 'X') {
+      $content = '<null/>';
+      if (is_file($filename_or_content) && is_readable($filename_or_content)) {
+        $content = file_get_contents($filename_or_content);
+      }
+      else {
+        $content = $filename_or_content;
+      }
+      
+      $this->modify_datastream_by_value($content, $dsid, $label, $mime_type, $force, $logMessage);
+    }
+    //Otherwise, write to web-accessible temp file and modify by reference.
+    else {
+      $file = '';
+      $created_temp = FALSE;
+      if (is_file($filename_or_content) && is_readable($filename_or_content)) {
+        $file = $filename_or_content;
+      }
+      else {
+        //Get Drupal temp file
+        $file = file_directory_path();
+        $file = tempnam($file, 'fedora_modification'); //Be careful...  Does this return the full path to the file?
+        //Push contents to file
+        file_put_contents($file, $filename_or_content);
+        $created_temp = TRUE;
+      }
+      
+      $file_url = url($file, array(
+        'absolute' => TRUE,
+      ));
+      
+      $this->modify_datastream_by_reference($file_url, $dsid, $label, $mime_type, $force, $logMessage);
+      
+      if ($created_temp && is_file($file) && is_writable($file)) {
+        unlink($file);
+      }
+    }
+  }
+  
+  /**
    * Modify datastream by reference
    * @param type $external_url
    * @param type $dsid
@@ -982,9 +1012,11 @@ RDF;
       module_load_include('inc', 'fedora_repository', 'ConnectionHelper');
       self::$connection_helper = new ConnectionHelper();
     }
-    $url = (array_search($function, self::$SoapManagedFunctions) !== FALSE) ?
-        variable_get('fedora_soap_manage_url', 'http://localhost:8080/fedora/services/management?wsdl') :
-        variable_get('fedora_soap_url', 'http://localhost:8080/fedora/services/access?wsdl');
+    $url = (
+      in_array($function, self::$SoapManagedFunctions)?
+        variable_get('fedora_soap_manage_url', 'http://localhost:8080/fedora/services/management?wsdl'):
+        variable_get('fedora_soap_url', 'http://localhost:8080/fedora/services/access?wsdl')
+    );
     try {
       $soap_client = self::$connection_helper->getSoapClient($url);
       if (isset($soap_client)) {
