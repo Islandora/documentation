@@ -762,13 +762,6 @@ function fedora_repository_edit_qdc_form(&$form_state, $pid, $dsId = NULL) {
   $client = $soapHelper->getSoapClient(variable_get('fedora_soap_url', 'http://localhost:8080/fedora/services/access?wsdl'));
  
 // Check if there is a custom edit metadata function defined in the content model.
-
-  $breadcrumbs = array();
-  $objectHelper = new ObjectHelper();
-  $objectHelper->getBreadcrumbs($pid, $breadcrumbs);
-  drupal_set_breadcrumb(array_reverse($breadcrumbs));
-
-
   $output = '';
   if (($cm = ContentModel::loadFromObject($pid)) !== FALSE) {
     $output = $cm->buildEditMetadataForm($pid, $dsId);
@@ -1031,6 +1024,7 @@ function fedora_repository_get_items($pid = NULL, $dsId = NULL, $collection = NU
 
 /**
  * fedora repository urlencode string
+ * FIXME:  URL-encoding is not the same as HTML/XML encoding...
  * @param type $str
  * @return type 
  */
