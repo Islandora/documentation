@@ -70,8 +70,9 @@ class formClass {
       'access arguments' => array('view fedora collection'),
     );
     $items['fedora/repository'] = array(
+      'title' => '',
       'title callback' => 'variable_get',
-      'title arguments' => array('fedora_repository_title', 'Digital Repository'),
+      'title arguments' => array('fedora_repository_name', 'Digital Repository'),
       'page callback' => 'repository_page',
       'type' => MENU_NORMAL_ITEM,
       'access arguments' => array('view fedora collection'),
