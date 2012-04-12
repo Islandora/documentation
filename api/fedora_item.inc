@@ -211,7 +211,9 @@ class Fedora_Item {
 
   /**
    * Add a relationship string to this object's RELS-EXT.
+   *
    * does not support rels-int yet.
+   *
    * @param string $relationship
    *   The predicate/relationship tag to add
    * @param string $object
@@ -285,7 +287,51 @@ RDF;
   }
 
   /**
+   * Purge/delete relationships string from this object's RELS-EXT.
+   *
+   * does not support rels-int yet.
+   *
+   * @param string $relationship
+   *   The predicate/relationship tag to add
+   * @param string $object
+   *   The object to be related to. (NULL/value for which empty() evaluates to true will remove all relations of the given type, ignoring $literal_value)
+   * @param string $namespaceURI
+   *   The predicate namespace.
+   * @param boolean $literal_value
+   *   Whether or not the object should be added as a URI (FALSE) or a literal (TRUE).
+   */
+  function purge_relationships($relationship, $object, $namespaceURI = RELS_EXT_URI, $literal_value = FALSE) {
+    $relsext = $this->get_datastream_dissemination('RELS-EXT');
+    
+    $relsextxml = new DomDocument();
+    $relsextxml->loadXML($relsext);
+    $modified = FALSE;
+    $rels = $relsextxml->getElementsByTagNameNS($namespaceURI, $relationship);
+    if (!empty($rels)) {
+      foreach ($rels as $rel) {
+        if (  //If either no object is specified, or the object matches (in either the literal or URI case), remove this node from it's parent, and mark as changed.
+          empty($object) || 
+          (!$literal_value && $rel->getAttributeNS('http://www.w3.org/1999/02/22-rdf-syntax-ns#', 'resource') == $object) ||
+          ($literal_value && $rel->textContent == $object)) {
+          $rel->parentNode->removeChild($rel);
+          $modified = TRUE;
+        }
+      }
+    }
+    
+    //Save changes.
+    if ($modified) {
+      $this->modify_datastream($relsextxml->saveXML(), 'RELS-EXT', "Fedora Object-to-Object Relationship Metadata", 'text/xml');
+    }
+    
+    //Return whether or not we've introduced any changes.
+    return $modified;
+  }
+  
+  /**
    * Removes the given relationship from the item's RELS-EXT and re-saves it.
+   * @deprecated
+   *   Dropped in favour of purge_relationships, which follows the same paradigm as add_relationship.  This function tries to figure out the predicate URI based on the prefix/predicate given, which requires specific naming...
    * @param string $relationship
    * @param string $object
    */
@@ -337,7 +383,7 @@ RDF;
       }
     }
     if ($modified) {
-      $this->modify_datastream_by_value($relsextxml->saveXML(), 'RELS-EXT', "Fedora Object-to-Object Relationship Metadata", 'text/xml');
+      $this->modify_datastream($relsextxml->saveXML(), 'RELS-EXT', "Fedora Object-to-Object Relationship Metadata", 'text/xml');
     }
     return $modified;
   }
