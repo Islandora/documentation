@@ -234,14 +234,10 @@ class Fedora_Item {
           </rdf:Description>
         </rdf:RDF>
 RDF;
-      //dd($rdf_string, 'RELS-EXT RDF being added');
       $this->add_datastream_from_string($rdf_string, 'RELS-EXT', 'Fedora object-to-object relationship metadata', 'application/rdf+xml', 'X');
-      //dd('Added');
     }
 
-    //dd('Getting RELS-EXT');
     $relsext = $this->get_datastream_dissemination('RELS-EXT');
-    //dd('Got RELS-EXT');
     
     if (!$literal_value && strpos($object, $f_prefix) !== 0) {
       $object = $f_prefix . $object;
@@ -292,13 +288,15 @@ RDF;
    * does not support rels-int yet.
    *
    * @param string $relationship
-   *   The predicate/relationship tag to add
+   *   The predicate/relationship tag to delete
    * @param string $object
    *   The object to be related to. (NULL/value for which empty() evaluates to true will remove all relations of the given type, ignoring $literal_value)
    * @param string $namespaceURI
    *   The predicate namespace.
    * @param boolean $literal_value
-   *   Whether or not the object should be added as a URI (FALSE) or a literal (TRUE).
+   *   Whether or not the object should be looked for as a URI (FALSE) or a literal (TRUE).
+   * @return boolean
+   *   Whether or not this operation has produced any changes in the RELS-EXT
    */
   function purge_relationships($relationship, $object, $namespaceURI = RELS_EXT_URI, $literal_value = FALSE) {
     $relsext = $this->get_datastream_dissemination('RELS-EXT');
@@ -330,6 +328,7 @@ RDF;
   
   /**
    * Removes the given relationship from the item's RELS-EXT and re-saves it.
+   *
    * @deprecated
    *   Dropped in favour of purge_relationships, which follows the same paradigm as add_relationship.  This function tries to figure out the predicate URI based on the prefix/predicate given, which requires specific naming...
    * @param string $relationship
@@ -1165,7 +1164,6 @@ RDF;
     $object_properties->appendChild($owner_property);
     $root_element->appendChild($object_properties);
     $foxml->appendChild($root_element);
-    //dd($foxml->saveXML(), 'XML to ingest');  Worked on 2012/01/16
     return $foxml;
   }
 
