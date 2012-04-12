@@ -1702,12 +1702,12 @@ function fedora_repository_required_fedora_objects() {
           'dsid' => 'ISLANDORACM',
           'datastream_file' => "./$module_path/content_models/COLLECTIONCM.xml",
           'dsversion' => 2,
-          'cmodel' => 'info:fedora/fedora-system:ContentModel-3.0',
+          'cmodel' => 'fedora-system:ContentModel-3.0',
         ),
         array(
           'pid' => 'islandora:root',
           'label' => 'Islandora Top-level Collection',
-          'cmodel' => 'info:fedora/islandora:collectionCModel',
+          'cmodel' => 'islandora:collectionCModel',
           'datastreams' => array(
             array(
               'dsid' => 'COLLECTION_POLICY',
