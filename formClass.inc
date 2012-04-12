@@ -314,7 +314,7 @@ class formClass {
       '#type' => 'checkbox',
       '#title' => t('Show Object Details Tab'),
       '#default_value' => variable_get('fedora_repository_show_object_details_tab', TRUE),
-      '#description' => t("When enabled, the 'Object Details' tab will be visible when visiting objects if the user has the correct permissions."),
+      '#description' => t("When enabled, the 'Object Details' tab will be visible to users with the correct permissions when viewing an object in the repository"),
     );
     
     $form['advanced'] = array(
