@@ -909,8 +909,10 @@ RDF;
    *   Dunno, refer to underlying functions/SOAP interface.  We just pass it like a chump.
    * @param string $logMessage
    *   A message for the audit log.
+   * @param boolean $quiet
+   *   Error suppression?  Refer to soap_call for usage (just passed along here).
    */
-  function modify_datastream($filename_or_content, $dsid, $label, $mime_type, $force = FALSE, $logMessage='Modified by Islandora API') {
+  function modify_datastream($filename_or_content, $dsid, $label, $mime_type, $force = FALSE, $logMessage='Modified by Islandora API', $quiet=FALSE) {
     //Determine if it's inline xml; if it is, modify by value
     if ($this->get_datastream($dsid)->controlGroup === 'X') {
       $content = '<null/>';
