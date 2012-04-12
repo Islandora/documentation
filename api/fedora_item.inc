@@ -212,11 +212,16 @@ class Fedora_Item {
   /**
    * Add a relationship string to this object's RELS-EXT.
    * does not support rels-int yet.
-   * @param type $relationship
-   * @param type $object
-   * @param type $namespaceURI
+   * @param string $relationship
+   *   The predicate/relationship tag to add
+   * @param string $object
+   *   The object to be related to.
+   * @param string $namespaceURI
+   *   The predicate namespace.
+   * @param boolean $literal_value
+   *   Whether or not the object should be added as a URI (FALSE) or a literal (TRUE).
    */
-  function add_relationship($relationship, $object, $namespaceURI = RELS_EXT_URI) {
+  function add_relationship($relationship, $object, $namespaceURI = RELS_EXT_URI, $literal_value = FALSE) {
     //dd($this, 'The Fedora_Item');
     $ds_list = $this->get_datastreams_list_as_array();
     $f_prefix = 'info:fedora/';
@@ -236,7 +241,7 @@ RDF;
     $relsext = $this->get_datastream_dissemination('RELS-EXT');
     //dd('Got RELS-EXT');
     
-    if (substr($object, 0, strlen($f_prefix)) !== $f_prefix) {
+    if (!$literal_value && strpos($object, $f_prefix) !== 0) {
       $object = $f_prefix . $object;
     }
 
@@ -256,10 +261,16 @@ RDF;
     // Create the new relationship node.
     $newrel = $relsextxml->createElementNS($namespaceURI, $relationship);
 
-    $newrel->setAttribute('rdf:resource', $object);
+    if ($literal_value) {
+      $newrel->appendChild($relsextxml->createTextNode($object));
+    }
+    else {
+      $newrel->setAttribute('rdf:resource', $object);
+    }
 
     $description->appendChild($newrel);
-    $this->modify_datastream_by_value($relsextxml->saveXML(), 'RELS-EXT', "Fedora Object-to-Object Relationship Metadata", 'application/rdf+xml');
+    
+    $this->modify_datastream($relsextxml->saveXML(), 'RELS-EXT', "Fedora Object-to-Object Relationship Metadata", 'application/rdf+xml');
     //print ($description->dump_node());
     /*
       $params = array( 'pid' => $this->pid,
