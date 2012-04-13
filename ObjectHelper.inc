@@ -955,14 +955,14 @@ class ObjectHelper {
     }
     else {
       $query_string = 'select $parentObject $title $content from <#ri>
-                               where (<info:fedora/' . $pid . '> <fedora-model:label> $title
-                               and $parentObject <fedora-model:hasModel> $content
-                               and (<info:fedora/' . $pid . '> <fedora-rels-ext:isMemberOfCollection> $parentObject
-                               or <info:fedora/' . $pid . '> <fedora-rels-ext:isMemberOf> $parentObject
-                               or <info:fedora/' . $pid . '> <fedora-rels-ext:isPartOf> $parentObject)
-                               and $parentObject <fedora-model:state> <info:fedora/fedora-system:def/model#Active>)
-                               minus $content <mulgara:is> <info:fedora/fedora-system:FedoraObject-3.0>
-                               order by $title desc';
+                       where (<info:fedora/' . $pid . '> <fedora-model:label> $title
+                       and $parentObject <fedora-model:hasModel> $content
+                       and (<info:fedora/' . $pid . '> <fedora-rels-ext:isMemberOfCollection> $parentObject
+                       or <info:fedora/' . $pid . '> <fedora-rels-ext:isMemberOf> $parentObject
+                       or <info:fedora/' . $pid . '> <fedora-rels-ext:isPartOf> $parentObject)
+                       and $parentObject <fedora-model:state> <info:fedora/fedora-system:def/model#Active>)
+                       minus $content <mulgara:is> <info:fedora/fedora-system:FedoraObject-3.0>
+                       order by $title desc';
       $query_string = htmlentities(urlencode($query_string));
 
       $url = variable_get('fedora_repository_url', 'http://localhost:8080/fedora/risearch');
