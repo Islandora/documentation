@@ -538,7 +538,7 @@ function fedora_repository_purge_object_form_submit($form, &$form_state) {
     );
     try {
       $soapHelper = new ConnectionHelper();
-      $client = $soapHelper->getSoapClient(variable_get('fedora_soap_manage_url', 'http://localhost:8080/fedora/services/management?wsdl'));
+      $client = $soapHelper->getSoapClient(variable_get('fedora_soap_manage_url', 'http://localhost:8080/fedora/wsdl?api=API-M'));
       $object = $client->__soapCall('purgeObject', array($params));
       unset($form_state['storage']['confirm']);
     } catch (exception $e) {
@@ -597,7 +597,6 @@ function fedora_repository_purge_stream_form(&$form_state, $pid, $dsId) {
 function fedora_repository_purge_stream_form_submit($form, &$form_state) {
   global $base_url;
   module_load_include('inc', 'fedora_repository', 'api/fedora_item');
-//$client = getSoapClient(variable_get('fedora_soap_manage_url', 'http://localhost:8080/fedora/services/management?wsdl'));
   $pid = $form_state['values']['pid'];
   $item = new Fedora_Item($pid);
   $dsid = $form_state['values']['dsid'];
@@ -636,9 +635,7 @@ function fedora_repository_replace_stream($pid, $dsId, $dsLabel = '', $collectio
  * @return type 
  */
 function fedora_repository_replace_stream_form(&$form_state, $pid, $dsId, $dsLabel) {
-//module_load_module_load_include('hp', ''Fedora_Repository'', 'config', 'fedora_repository', '');
   module_load_include('inc', 'Fedora_Repository', 'formClass');
-//$client = getSoapClient(variable_get('fedora_soap_manage_url', 'http://localhost:8080/fedora/services/management?wsdl'));
   $replaceDataStreamForm = new formClass();
   return $replaceDataStreamForm->createReplaceDataStreamForm($pid, $dsId, $dsLabel, $form_state);
 }
@@ -832,11 +829,10 @@ function fedora_repository_edit_qdc_form_submit($form, &$form_state) {
     global $base_url;
     if (strstr($form_state['clicked_button']['#id'], 'edit-submit')) {
 
-//$client = getSoapClient(variable_get('fedora_soap_manage_url', 'http://localhost:8080/fedora/services/management?wsdl'));
       $soap_helper = new ConnectionHelper();
-      $client = $soap_helper->getSoapClient(variable_get('fedora_soap_manage_url', 'http://localhost:8080/fedora/services/management?wsdl'));
+      $client = $soap_helper->getSoapClient(variable_get('fedora_soap_manage_url', 'http://localhost:8080/fedora/wsdl?api=API-M'));
 
-// Check the content model for a custom edit metadata form submit function.
+      // Check the content model for a custom edit metadata form submit function.
       if (isset($form_state['values']['pid'])) {
         module_load_include('inc', 'fedora_repository', 'ContentModel');
         if (($cm = ContentModel::loadFromObject($form_state['values']['pid'])) !== FALSE) {

@@ -977,7 +977,7 @@ class Fedora_Item {
       self::$connection_helper = new ConnectionHelper();
     }
     $url = (array_search($function, self::$SoapManagedFunctions) !== FALSE) ?
-        variable_get('fedora_soap_manage_url', 'http://localhost:8080/fedora/services/management?wsdl') :
+        variable_get('fedora_soap_manage_url', 'http://localhost:8080/fedora/wsdl?api=API-M') :
         variable_get('fedora_soap_url', 'http://localhost:8080/fedora/services/access?wsdl');
     try {
       $soap_client = self::$connection_helper->getSoapClient($url);

@@ -255,7 +255,7 @@ class formClass {
     $form['fedora_soap_manage_url'] = array(
       '#type' => 'textfield',
       '#title' => t('Fedora SOAP management URL'),
-      '#default_value' => variable_get('fedora_soap_manage_url', 'http://localhost:8080/fedora/services/management?wsdl'), '#description' => t('The URL to use for SOAP API-M connections'),
+      '#default_value' => variable_get('fedora_soap_manage_url', 'http://localhost:8080/fedora/wsdl?api=API-M'), '#description' => t('The URL to use for SOAP API-M connections'),
       '#required' => TRUE,
       '#weight' => -10
     );
