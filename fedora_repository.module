@@ -538,7 +538,7 @@ function fedora_repository_purge_object_form_submit($form, &$form_state) {
     );
     try {
       $soapHelper = new ConnectionHelper();
-      $client = $soapHelper->getSoapClient(variable_get('fedora_soap_manage_url', 'http://localhost:8080/fedora/services/management?wsdl'));
+      $client = $soapHelper->getSoapClient(variable_get('fedora_soap_manage_url', 'http://localhost:8080/fedora/wsdl?api=API-M'));
       $object = $client->__soapCall('purgeObject', array($params));
       unset($form_state['storage']['confirm']);
     } catch (exception $e) {
@@ -597,7 +597,6 @@ function fedora_repository_purge_stream_form(&$form_state, $pid, $dsId) {
 function fedora_repository_purge_stream_form_submit($form, &$form_state) {
   global $base_url;
   module_load_include('inc', 'fedora_repository', 'api/fedora_item');
-//$client = getSoapClient(variable_get('fedora_soap_manage_url', 'http://localhost:8080/fedora/services/management?wsdl'));
   $pid = $form_state['values']['pid'];
   $item = new Fedora_Item($pid);
   $dsid = $form_state['values']['dsid'];
@@ -617,7 +616,7 @@ function fedora_repository_purge_stream_form_submit($form, &$form_state) {
  * @param type $collectionName
  * @return type 
  */
-function fedora_repository_replace_stream($pid, $dsId, $dsLabel, $collectionName = NULL) {
+function fedora_repository_replace_stream($pid, $dsId, $dsLabel = '', $collectionName = NULL) {
   if ($pid == NULL || $dsId == NULL) {
     drupal_set_message(t('You must specify an pid and dsId to replace.'), 'error');
     return '';
@@ -636,9 +635,7 @@ function fedora_repository_replace_stream($pid, $dsId, $dsLabel, $collectionName
  * @return type 
  */
 function fedora_repository_replace_stream_form(&$form_state, $pid, $dsId, $dsLabel) {
-//module_load_module_load_include('hp', ''Fedora_Repository'', 'config', 'fedora_repository', '');
   module_load_include('inc', 'Fedora_Repository', 'formClass');
-//$client = getSoapClient(variable_get('fedora_soap_manage_url', 'http://localhost:8080/fedora/services/management?wsdl'));
   $replaceDataStreamForm = new formClass();
   return $replaceDataStreamForm->createReplaceDataStreamForm($pid, $dsId, $dsLabel, $form_state);
 }
@@ -707,8 +704,20 @@ function fedora_repository_replace_stream_form_submit($form, &$form_state) {
   $dformat = $mimetype->getType($file->filepath);
 
   $item = new Fedora_Item($pid);
+  $info = $item->get_datastream_info($dsid);
 
-  $item->modify_datastream_by_reference($streamUrl, $dsid, $dsLabel, $dformat);
+  if($info->datastream->controlGroup == 'M') {
+    $item->modify_datastream_by_reference($streamUrl, $dsid, $dsLabel, $dformat);
+  } elseif ($info->datastream->controlGroup == 'X') {
+    if($dformat == 'text/xml') {
+      $item->modify_datastream_by_value(file_get_contents($file->filepath), $dsid, $dsLabel, $dformat);
+    }
+    else {
+      drupal_set_message('File must be of mimetype text/xml in order to replace inline XML datastream.', 'error');
+    }
+  } else {
+    drupal_set_message('Cannot replace Redirect or Managed Datastream.', 'error');
+  }
 
   $form_state['redirect'] = 'fedora/repository/' . $pid;
 }
@@ -813,11 +822,10 @@ function fedora_repository_edit_qdc_form_submit($form, &$form_state) {
     global $base_url;
     if (strstr($form_state['clicked_button']['#id'], 'edit-submit')) {
 
-//$client = getSoapClient(variable_get('fedora_soap_manage_url', 'http://localhost:8080/fedora/services/management?wsdl'));
       $soap_helper = new ConnectionHelper();
-      $client = $soap_helper->getSoapClient(variable_get('fedora_soap_manage_url', 'http://localhost:8080/fedora/services/management?wsdl'));
+      $client = $soap_helper->getSoapClient(variable_get('fedora_soap_manage_url', 'http://localhost:8080/fedora/wsdl?api=API-M'));
 
-// Check the content model for a custom edit metadata form submit function.
+      // Check the content model for a custom edit metadata form submit function.
       if (isset($form_state['values']['pid'])) {
         module_load_include('inc', 'fedora_repository', 'ContentModel');
         if (($cm = ContentModel::loadFromObject($form_state['values']['pid'])) !== FALSE) {
@@ -875,6 +883,7 @@ function fedora_repository_access($op, $node, $account) {
  * @param $dsID String
  */
 function makeObject($pid, $dsID) {
+  module_load_include('inc', 'fedora_repository', 'ObjectHelper');
   module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
   if (!valid_pid($pid)) {
     drupal_set_message(t("Invalid PID!"), 'error');
@@ -1007,13 +1016,20 @@ function fedora_repository_get_items($pid = NULL, $dsId = NULL, $collection = NU
   
 // Add a 'manage object' tab for all objects, where detailed list of content is shown.
   $obj = new FedoraObjectDetailedContent($pid);
-  $object_details = $obj->showFieldSets();
-  if ($object_details['fedora_object_details']['#selected'] == TRUE) {
-    foreach ($cmodels_tabs as &$cmodel_tab) {
-      if (is_array($cmodel_tab)) {
-        $cmodel_tab['#selected'] = FALSE;
-      }
-    }
+  
+  //can disable showing the object details tab in admin UI
+  if (variable_get('fedora_repository_show_object_details_tab', TRUE)) {
+   $object_details = $obj->showFieldSets();
+   if ($object_details['fedora_object_details']['#selected'] == TRUE) {
+     foreach ($cmodels_tabs as &$cmodel_tab) {
+       if (is_array($cmodel_tab)) {
+         $cmodel_tab['#selected'] = FALSE;
+       }
+     }
+   }
+  }
+  else {
+   $object_details = array();
   }
 
   $hook_tabs = module_invoke_all('islandora_tabs', $content_models, $pid);

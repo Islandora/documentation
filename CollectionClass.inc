@@ -1,4 +1,4 @@
-<?php
+/<?php
 
 /**
  * @file
@@ -447,7 +447,7 @@ class CollectionClass {
     module_load_include('inc', 'fedora_repository', 'ConnectionHelper');
     $connectionHelper = new ConnectionHelper();
     try {
-      $soapClient = $connectionHelper->getSoapClient(variable_get('fedora_soap_manage_url', 'http://localhost:8080/fedora/services/management?wsdl'));
+      $soapClient = $connectionHelper->getSoapClient(variable_get('fedora_soap_manage_url', 'http://localhost:8080/fedora/wsdl?api=API-M'));
       $pidNameSpace = variable_get('fedora_repository_pid', 'vre:');
       $pidNameSpace = substr($pidNameSpace, 0, strpos($pidNameSpace, ":"));
       $params = array(

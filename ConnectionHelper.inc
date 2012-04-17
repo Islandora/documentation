@@ -1,7 +1,5 @@
 <?php
 
-
-
 /**
  * @file 
  * Connection Helper Class
@@ -90,6 +88,23 @@ class ConnectionHelper {
         return NULL;
       }
     }
+    if (isset($_SESSION['islandora_soapcookies'])) {
+
+      // just set the cookies
+
+      $client->_cookies = ($_SESSION['islandora_soapcookies']);
+    }
+    else {
+      try {
+        //we need to make a call to set the cookie this extra call would only happen once per session
+        $client->__soapCall('describeRepository', array());
+        $_SESSION['islandora_soapcookies'] = $client->_cookies;
+      } catch (exception $e) {
+        //connection is tested elsewhere so eat this for now here we just want the cookie
+      }
+    }
+
+
     return $client;
   }
 

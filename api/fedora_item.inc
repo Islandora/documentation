@@ -59,7 +59,7 @@ class Fedora_Item {
         self::$connection_helper = new ConnectionHelper();
       }
 
-      $raw_objprofile = $this->soap_call('getObjectProfile', array('pid' => $this->pid, 'asOfDateTime' => ""));
+      $raw_objprofile = $this->soap_call('getObjectProfile', array('pid' => $this->pid, 'asOfDateTime' => ""), TRUE);
 
       if (!empty($raw_objprofile)) {
         $this->objectProfile = $raw_objprofile->objectProfile;
@@ -141,8 +141,16 @@ class Fedora_Item {
    * @return type
    */
   function add_datastream_from_url($datastream_url, $datastream_id, $datastream_label = NULL, $datastream_mimetype = '', $controlGroup = 'M', $logMessage = NULL) {
+    global $base_url;
+
     if (empty($datastream_label)) {
       $datastream_label = $datastream_id;
+    }
+
+    // Fedora has some problems getting files from HTTPS connections sometimes, so if we are getting a file
+    // from the local drupal, we try to pass a HTTP url instead of a HTTPS one.
+    if(stripos($datastream_url, 'https://') !== FALSE && stripos($datastream_url, $base_url) !== FALSE) {
+      $datastream_url = str_ireplace('https://', 'http://', $datastream_url);
     }
 
     $params = array(
@@ -470,15 +478,18 @@ RDF;
    * Get datastream dissemination
    * @param type $dsid
    * @param type $as_of_date_time
-   * @return string
+   * @param type $quiet
+   * @return null 
    */
-  function get_datastream_dissemination($dsid, $as_of_date_time = "") {
+  function get_datastream_dissemination($dsid, $as_of_date_time = "", $quiet=TRUE) {
     $params = array(
       'pid' => $this->pid,
       'dsID' => $dsid,
       'asOfDateTime' => $as_of_date_time,
     );
-    $object = self::soap_call('getDataStreamDissemination', $params);
+    
+    // Make soap call with quite
+    $object = self::soap_call('getDataStreamDissemination', $params, $quiet);
     if (!empty($object)) {
       $content = $object->dissemination->stream;
       $content = trim($content);
@@ -1086,7 +1097,7 @@ RDF;
     }
     $url = (
       in_array($function, self::$SoapManagedFunctions)?
-        variable_get('fedora_soap_manage_url', 'http://localhost:8080/fedora/services/management?wsdl'):
+        variable_get('fedora_soap_manage_url', 'http://localhost:8080/fedora/wsdl?api=API-M') :
         variable_get('fedora_soap_url', 'http://localhost:8080/fedora/services/access?wsdl')
     );
     try {

@@ -286,7 +286,7 @@ class Refworks {
 
       try {
         $soapHelper = new ConnectionHelper();
-        $client = $soapHelper->getSoapClient(variable_get('fedora_soap_manage_url', 'http://localhost:8080/fedora/services/management?wsdl'));
+        $client = $soapHelper->getSoapClient(variable_get('fedora_soap_manage_url', 'http://localhost:8080/fedora/wsdl?api=API-M'));
 
         if ($client == NULL) {
           drupal_set_message(t('Error getting SOAP client.'), 'error');
