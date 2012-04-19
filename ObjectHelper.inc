@@ -1028,13 +1028,14 @@ class ObjectHelper {
    * @param $offset int
    *   An integer, used to offset the results (results should be ordered, to
    *   maintain consistency.
+   * 
    * @return array
    *   Indexed (numerical) array, containing a number of associative arrays,
    *   with keys being the same as the variable names in the query.
    *   URIs beginning with 'info:fedora/' will have this beginning stripped
    *   off, to facilitate their use as PIDs.
    */
-  protected static function _perform_ri_query($query, $type = 'itql', $limit = -1, $offset = 0) {
+static function perform_ri_query($query, $type = 'itql', $limit = -1, $offset = 0) {
     //Setup the query options...
     $options = array(
       'type' => 'tuples',
@@ -1078,7 +1079,7 @@ class ObjectHelper {
         
         $attrs = $element->attributes();
         if (!empty($attrs['uri'])) {
-          $val = self::_pid_uri_to_bare_pid((string)$attrs['uri']);
+          $val = self::pid_uri_to_bare_pid((string)$attrs['uri']);
         }
         else {
           $val = (string)$element;
@@ -1099,7 +1100,7 @@ class ObjectHelper {
    * @see self::_perform_ri_query()
    */
   public static function perform_itql_query($query, $limit = -1, $offset = 0) {
-    return self::_perform_ri_query($query, 'itql', $limit, $offset);
+    return self::perform_ri_query($query, 'itql', $limit, $offset);
   }
   /**
    * Thin wrapper for self::_perform_ri_query().
@@ -1107,7 +1108,7 @@ class ObjectHelper {
    * @see self::_perform_ri_query()
    */
   public static function perform_sparql_query($query, $limit = -1, $offset = 0) {
-    return self::_perform_ri_query($query, 'sparql', $limit, $offset);
+    return self::perform_ri_query($query, 'sparql', $limit, $offset);
   }
   /**
    * Utility function used in self::_perform_ri_query().
@@ -1116,11 +1117,12 @@ class ObjectHelper {
    *
    * @param $uri string
    *   A string containing a URI.
+   *
    * @return string
    *   The input string less the 'info:fedora/' prefix (if it has it).
    *   The original string otherwise.
    */
-  protected static function _pid_uri_to_bare_pid($uri) {
+  protected static function pid_uri_to_bare_pid($uri) {
     $chunk = 'info:fedora/';
     $pos = strpos($uri, $chunk);
     if ($pos === 0) { //Remove info:fedora/ chunk
