@@ -1016,6 +1016,48 @@ class ObjectHelper {
   }
 
   /**
+   * Parse the passed in Sparql XML string into a more easily usable format.
+   *
+   * @param $sparql string
+   *   A string containing Sparql result XML.
+   * @return array
+   *   Indexed (numerical) array, containing a number of associative arrays,
+   *   with keys being the same as the variable names in the query.
+   *   URIs beginning with 'info:fedora/' will have this beginning stripped
+   *   off, to facilitate their use as PIDs.
+   */
+  public static function parse_sparql_results($sparql) {
+    //Load the results into a SimpleXMLElement
+    $doc = new SimpleXMLElement($sparql, 0, FALSE, 'http://www.w3.org/2001/sw/DataAccess/rf1/result');
+    
+    $results = array(); //Storage.
+    
+    //Build the results.
+    foreach ($doc->results->children() as $result) {
+      //Built a single result.
+      $r = array();
+      foreach ($result->children() as $element) {
+        $val = NULL;
+        
+        $attrs = $element->attributes();
+        if (!empty($attrs['uri'])) {
+          $val = self::_pid_uri_to_bare_pid((string)$attrs['uri']);
+        }
+        else {
+          $val = (string)$element;
+        }
+        
+        //Map the name to the value in the array.
+        $r[$element->getName()] = $val;
+      }
+      
+      //Add the single result to the set to return.
+      $results[] = $r;
+    }
+    return $results;
+  }
+  
+  /**
    * Performs the given Resource Index query and return the results.
    *
    * @param $query string
@@ -1064,34 +1106,8 @@ static function perform_ri_query($query, $type = 'itql', $limit = -1, $offset = 
       return FALSE;
     }
     
-    //Load the results into a SimpleXMLElement
-    $doc = new SimpleXMLElement($curl_result[0], 0, FALSE, 'http://www.w3.org/2001/sw/DataAccess/rf1/result');
-    
-    $results = array(); //Storage.
-    
-    //Build the results.
-    foreach ($doc->results->children() as $result) {
-      //Built a single result.
-      $r = array();
-      foreach ($result->children() as $element) {
-        $val = NULL;
-        
-        $attrs = $element->attributes();
-        if (!empty($attrs['uri'])) {
-          $val = self::pid_uri_to_bare_pid((string)$attrs['uri']);
-        }
-        else {
-          $val = (string)$element;
-        }
-        
-        //Map the name to the value in the array.
-        $r[$element->getName()] = $val;
-      }
-      
-      //Add the single result to the set to return.
-      $results[] = $r;
-    }
-    return $results;
+    //Pass the query's results off to a decent parser.
+    return self::parse_sparql_results($curl_result[0]);
   }
   /**
    * Thin wrapper for self::_perform_ri_query().
