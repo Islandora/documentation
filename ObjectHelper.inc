@@ -425,7 +425,6 @@ class ObjectHelper {
       ),
     );
     $rows = array();
-    dsm($xmlstr);
     foreach ($simplexml->getNamespaces(TRUE) as $ns) {
       foreach ($simplexml->children($ns) as $child) {
         $rows[] = array(
