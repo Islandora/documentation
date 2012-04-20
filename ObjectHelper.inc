@@ -324,7 +324,7 @@ class ObjectHelper {
         $allow = fedora_fesl_check_roles($pid, 'write');
       }
       if ($allow) {
-        $purge_text = t("purge datastream @label", array('@label' => $dataStreamValue->label));
+        $purge_text = t('Purge datastream "@label"', array('@label' => $dataStreamValue->label));
         $purge_path = "fedora/repository/purgeStream/$pid/{$dataStreamValue->ID}/{$dataStreamValue->label}";
         $purge_image = l(theme('image', "$path/images/purge.gif", $purge_text, $purge_text, NULL, FALSE), $purge_path, array(
           'html' => TRUE,
