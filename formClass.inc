@@ -13,8 +13,8 @@
 class formClass {
 
   function formClass() {
-    module_load_include('inc', 'formClass', '');
     drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
+    module_load_include('inc', 'fedora_repository', 'ObjectHelper');
   }
 
   /**
@@ -128,7 +128,8 @@ class formClass {
       'title' => t('Collection view'),
       'page callback' => 'fedora_collection_view',
       'type' => MENU_CALLBACK,
-      'access argruments' => array('view fedora collection')
+      'access callback' => 'fedora_repository_access',
+      'access argruments' => array(OBJECTHELPER::$OBJECT_HELPER_VIEW_FEDORA),
     );
     
     //new for mnpl******************************************

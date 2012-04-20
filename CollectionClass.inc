@@ -39,6 +39,36 @@ class CollectionClass {
       $this->pid = $pid;
     }
   }
+  
+  static function get_collection_query($pid) {
+    if ($query = self::_get_collection_query_from_stream($pid)) {
+      return $query;
+    }
+    else {
+      return self::_get_default_collection_query($pid);
+    }
+  }
+  
+  static function _get_collection_query_from_stream($pid) {
+    module_load_include('inc', 'fedora_repository', 'api/fedora_item');
+    $item = new Fedora_Item($pid);
+    if ($item->exists() && array_key_exists('QUERY', $item->datastreams)) {
+      return $item->get_datastream_dissemination('QUERY');
+    }
+    else {
+      return FALSE;
+    }
+  }
+  static function _get_default_collection_query($pid) {
+    return 'select $object $title $content from <#ri>
+             where ($object <fedora-model:label> $title
+             and $object <fedora-model:hasModel> $content
+             and ($object <fedora-rels-ext:isMemberOfCollection> <info:fedora/' . $pid . '>
+             or $object <fedora-rels-ext:isMemberOf> <info:fedora/' . $pid . '>)
+             and $object <fedora-model:state> <info:fedora/fedora-system:def/model#Active>)
+             minus $content <mulgara:is> <info:fedora/fedora-system:FedoraObject-3.0>
+             order by $title';
+  }
 
   /**
    * gets objects related to this object.  must include offset and limit
@@ -49,15 +79,11 @@ class CollectionClass {
    * @param type $itqlquery
    * @return type 
    */
-  function getRelatedObjects($pid, $limit, $offset, $itqlquery=NULL) {
+  static function getRelatedObjects($pid, $limit, $offset, $itqlquery=NULL) {
     if (!isset($itqlquery)) {
-      module_load_include('inc', 'fedora_repository', 'api/fedora_item');
-      $item = new Fedora_Item($pid);
-      if ($item->exists() && array_key_exists('QUERY', $item->datastreams)) {
-        $itqlquery = $item->get_datastream_dissemination('QUERY');
-      }
+      $itqlquery = self::get_collection_query($pid);
     }
-    return $this->getRelatedItems($pid, $itqlquery, $limit, $offset);
+    return self::getRelatedItems($pid, $itqlquery, $limit, $offset);
   }
 
   /**
@@ -70,7 +96,7 @@ class CollectionClass {
    * @param int $offset
    * @return type 
    */
-  function getRelatedItems($pid, $itqlquery = NULL, $limit = NULL, $offset = NULL) {
+  static function getRelatedItems($pid, $itqlquery = NULL, $limit = NULL, $offset = NULL) {
     module_load_include('inc', 'fedora_repository', 'ObjectHelper');
     module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
     if (!isset($offset)) {
@@ -84,26 +110,11 @@ class CollectionClass {
     $objectHelper = new ObjectHelper();
     $query_string = $itqlquery;
     if (!isset($query_string)) {
-      $query_string = NULL;
-      $item = new Fedora_Item($pid);
-      if ($item->exists() && array_key_exists('QUERY', $item->datastreams)) {
-        $query_string = $item->get_datastream_dissemination('QUERY');
-      }
-      if ($query_string == NULL) {
-        $query_string = 'select $object $title $content from <#ri>
-                             where ($object <fedora-model:label> $title
-                             and $object <fedora-model:hasModel> $content
-                             and ($object <fedora-rels-ext:isMemberOfCollection> <info:fedora/' . $pid . '>
-                             or $object <fedora-rels-ext:isMemberOf> <info:fedora/' . $pid . '>)
-                             and $object <fedora-model:state> <info:fedora/fedora-system:def/model#Active>)
-                             minus $content <mulgara:is> <info:fedora/fedora-system:FedoraObject-3.0>
-                             order by $title';
-      }
+      $query_string = self::get_collection_query($pid);
     }
-    else {
-      // Replace %parent_collection% with the actual collection PID
-      $query_string = preg_replace("/\%parent_collection\%/", "<info:fedora/$pid>", $query_string);
-    }
+    
+    // Replace %parent_collection% with the actual collection PID
+    $query_string = preg_replace("/\%parent_collection\%/", "<info:fedora/$pid>", $query_string);
 
     $query_string = htmlentities(urlencode($query_string));
 
