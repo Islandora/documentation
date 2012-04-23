@@ -1079,7 +1079,7 @@ class ObjectHelper {
    *   URIs beginning with 'info:fedora/' will have this beginning stripped
    *   off, to facilitate their use as PIDs.
    */
-static function perform_ri_query($query, $type = 'itql', $limit = -1, $offset = 0) {
+  static function perform_ri_query($query, $type = 'itql', $limit = -1, $offset = 0) {
     //Setup the query options...
     $options = array(
       'type' => 'tuples',
