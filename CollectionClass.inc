@@ -6,11 +6,6 @@
  * Collection Class Class
  */
  
-if (!defined('PHP_VERSION_ID')) { //XXX: This should go elsewhere
-  $version = explode('.', PHP_VERSION);
-  define('PHP_VERSION_ID', ($version[0] * 10000 + $version[1] * 100 + $version[2]));
-}
-
 /**
  * This CLASS caches the streams so once you call a getstream once it will always return
  * the same stream as long as you are using the instance of this class. Cached to
@@ -742,14 +737,7 @@ class CollectionClass {
               'hitPage' => $pageNumber,
             );
             
-            if (defined('PHP_VERSION_ID') && PHP_VERSION_ID >= 50100) {
-              $proc->setParameter('', $options);
-            }
-            else {
-              foreach ($options as $name => $value) {
-                $proc->setParameter('', $name, $value);
-              }
-            }
+            $proc->setParameter('', $options);
 
             $proc->registerPHPFunctions();
             $xsl = new DomDocument();
