@@ -14,7 +14,6 @@ class formClass {
 
   function formClass() {
     drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
-    module_load_include('inc', 'fedora_repository', 'ObjectHelper');
   }
 
   /**
