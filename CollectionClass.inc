@@ -35,16 +35,16 @@ class CollectionClass {
     }
   }
   
-  static function get_collection_query($pid) {
-    if ($query = self::_get_collection_query_from_stream($pid)) {
+  public static function getCollectionQuery($pid) {
+    if ($query = self::getCollectionQueryFromStream($pid)) {
       return $query;
     }
     else {
-      return self::_get_default_collection_query($pid);
+      return self::getDefaultCollectionQuery($pid);
     }
   }
   
-  static function _get_collection_query_from_stream($pid) {
+  protected static function getCollectionQueryFromStream($pid) {
     module_load_include('inc', 'fedora_repository', 'api/fedora_item');
     $item = new Fedora_Item($pid);
     if ($item->exists() && array_key_exists('QUERY', $item->datastreams)) {
@@ -55,7 +55,7 @@ class CollectionClass {
     }
   }
   
-  static function _get_default_collection_query($pid) {
+  protected static function getDefaultCollectionQuery($pid) {
     return 'select $object $title $content from <#ri>
              where ($object <fedora-model:label> $title
              and $object <fedora-model:hasModel> $content
@@ -87,7 +87,7 @@ class CollectionClass {
    * Gets objects related to this item.
    *
    * Query the resource index using the provided iTQL query.  If no query is 
-   * provided, one should be obtained via self::get_collection_query() which
+   * provided, one should be obtained via self::getCollectionQuery() which
    * grabs the child objects.
    *
    * @param $pid string
@@ -112,7 +112,7 @@ class CollectionClass {
     }
 
     if ($query_string === NULL) {
-      $query_string = self::get_collection_query($pid);
+      $query_string = self::getCollectionQuery($pid);
     }
 
     // Replace %parent_collection% with the actual collection PID
@@ -616,12 +616,45 @@ class CollectionClass {
    * Unfortunate function, I know...
    *
    * Does just what it says:  Hacks the default Drupal pager such that it might
-   * be rendered. 
+   * be rendered, likely with: theme('pager', array(), $per_page, $pager_name)
+   * (I reccomend seeing the real documentation for more detail, but the first
+   * array can be a list of the tags to use for first, previous, next and last
+   * (text in the pager), I don't believe per_page is actually used in the theme
+   * function, and $pager_name is an integer used to identify the pager (such 
+   * that there can be more than one--that is, tracking different lists of 
+   * content on a single page.  You can render the exact same pager multiple 
+   * times, say if you want one at the top and bottom of a list, using the same 
+   * ID/pager_name.
+   *
+   * @global $pager_total array
+   *   Numerically indexed array, where keys are the $pager_names and values
+   *   are the number of pages in the given set, based on: ceil($total_items/$per_page);
+   * @global $pager_page_array array
+   *   Numerically indexed array, where keys are the $pager_names and values
+   *   are the page selected in the relevant set.
+   * @param $pager_name int
+   *   An integer to identify the pager to affect.  Do note that paging in using
+   *   this function will add the 'page' HTTP GET parameter to the URL, with 
+   *   the value containing a comma-separated list with max($pager_name + 1)
+   *   values--that is, if you create a single pager named '10', the 'next'
+   *   link will look something like: 0,0,0,0,0,0,0,0,0,0,1
+   * @param $per_page int
+   *   An integer representing the number of items per page.
+   * @param $total_items int
+   *   An integer representing the total number of items in the set.
+   * @return int
+   *   An integer representing what the current page should be.
    */
-  protected static function _hack_pager($pager_name, $per_page, $total_items) {
+  protected static function hackPager($pager_name, $per_page = NULL, $total_items = NULL) {
     global $pager_total, $pager_page_array;
-    $pager_total[$pager_name] = ceil($total_items / $per_page);
     
+    if ($per_page !== NULL && $total_items !== NULL) {
+      $pager_total[$pager_name] = ceil($total_items / $per_page);
+    }
+    
+    //XXX: Don't know that this is neccessary, to try to load all the time, or
+    //  whether Drupal will load it automatically somewhere...  Docs seems a
+    //  a little sparse.
     $page_info = explode(',', isset($_GET['page']) ? $_GET['page'] : '');
     $page = $page_info[$pager_name];
     if ($page < 0) {
@@ -676,7 +709,7 @@ class CollectionClass {
         $per_page = 20; //XXX:  Make this configurable.
         $pager_name = 0;
         $total = count($intermediate_results);
-        $pager_page = self::_hack_pager($pager_name, $per_page, $total);
+        $pager_page = self::hackPager($pager_name, $per_page, $total);
 
         $results = array();
         foreach (array_slice($intermediate_results, $per_page * $pager_page, $per_page) as $result) {

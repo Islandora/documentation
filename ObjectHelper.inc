@@ -759,7 +759,7 @@ class ObjectHelper {
    * @return string
    *   A string containing an iTQL query, selecting something into $object and $title 
    */
-  static function _parent_query($pid) {
+  static function parentQuery($pid) {
     return 'select $object $title from <#ri>
             where ($object <fedora-model:label> $title
               and <info:fedora/' . $pid . '> <fedora-rels-ext:isMemberOfCollection> $object
@@ -773,10 +773,10 @@ class ObjectHelper {
    * @param $pid string
    *   A string containing a Fedora PID to find the parents for.
    * @return string
-   *   A string containing Sparql XML (the results of the self::_parent_query())
+   *   A string containing Sparql XML (the results of the self::parentQuery())
    */
   function get_parent_objects($pid) {
-    $query_string = self::_parent_query();
+    $query_string = self::parentQuery();
     module_load_include('inc', 'fedora_repository', 'CollectionClass');
     $collection_class = new CollectionClass($pid);
     $objects = CollectionClass::getRelatedItems($pid, $query_string);
@@ -791,7 +791,7 @@ class ObjectHelper {
    */
   function get_parent_objects_asHTML($pid) {
     module_load_include('inc', 'fedora_repository', 'CollectionClass');
-    $results = self::perform_itql_query(self::_parent_query($pid));
+    $results = self::performItqlQuery(self::parentQuery($pid));
 
     $parent_collections = array();
     foreach ($results as $result) {
@@ -874,7 +874,7 @@ class ObjectHelper {
       and $o <dc:description> $desc
       and $o <mulgara:is> <info:fedora/' . $pid . '>';
     
-    $results = self::perform_itql_query($query_string);
+    $results = self::performItqlQuery($query_string);
     
     $pids = array();
     //There should only be one...  Anyway.
@@ -905,7 +905,7 @@ class ObjectHelper {
         'and $o <fedora-model:label> $title ' .
         'and ( ' . implode(' or ', $query_chunks) . ' )';
     
-    $results = self::perform_itql_query($query_string);
+    $results = self::performItqlQuery($query_string);
 
     $child_pids = array();
     if ($results) {
@@ -979,7 +979,7 @@ class ObjectHelper {
                         minus $content <mulgara:is> <info:fedora/fedora-system:FedoraObject-3.0>
                         order by $title desc';
 
-      if (count($results = self::perform_itql_query($query_string)) > 0  && $level > 0) {
+      if (count($results = self::performItqlQuery($query_string)) > 0  && $level > 0) {
         $parent = $results[0]['parentObject'];
         $this_title = $results[0]['title'];
 
@@ -1029,7 +1029,7 @@ class ObjectHelper {
    *   URIs beginning with 'info:fedora/' will have this beginning stripped
    *   off, to facilitate their use as PIDs.
    */
-  public static function parse_sparql_results($sparql) {
+  public static function parseSparqlResults($sparql) {
     //Load the results into a SimpleXMLElement
     $doc = new SimpleXMLElement($sparql, 0, FALSE, 'http://www.w3.org/2001/sw/DataAccess/rf1/result');
     
@@ -1044,7 +1044,7 @@ class ObjectHelper {
         
         $attrs = $element->attributes();
         if (!empty($attrs['uri'])) {
-          $val = self::pid_uri_to_bare_pid((string)$attrs['uri']);
+          $val = self::pidUriToBarePid((string)$attrs['uri']);
         }
         else {
           $val = (string)$element;
@@ -1079,7 +1079,7 @@ class ObjectHelper {
    *   URIs beginning with 'info:fedora/' will have this beginning stripped
    *   off, to facilitate their use as PIDs.
    */
-  static function perform_ri_query($query, $type = 'itql', $limit = -1, $offset = 0) {
+  static function performRiQuery($query, $type = 'itql', $limit = -1, $offset = 0) {
     //Setup the query options...
     $options = array(
       'type' => 'tuples',
@@ -1110,26 +1110,26 @@ class ObjectHelper {
     }
     
     //Pass the query's results off to a decent parser.
-    return self::parse_sparql_results($curl_result[0]);
+    return self::parseSparqlResults($curl_result[0]);
   }
   /**
-   * Thin wrapper for self::_perform_ri_query().
+   * Thin wrapper for self::_performRiQuery().
    *
-   * @see self::_perform_ri_query()
+   * @see self::performRiQuery()
    */
-  public static function perform_itql_query($query, $limit = -1, $offset = 0) {
-    return self::perform_ri_query($query, 'itql', $limit, $offset);
+  public static function performItqlQuery($query, $limit = -1, $offset = 0) {
+    return self::performRiQuery($query, 'itql', $limit, $offset);
   }
   /**
-   * Thin wrapper for self::_perform_ri_query().
+   * Thin wrapper for self::performRiQuery().
    *
-   * @see self::_perform_ri_query()
+   * @see self::_performRiQuery()
    */
-  public static function perform_sparql_query($query, $limit = -1, $offset = 0) {
-    return self::perform_ri_query($query, 'sparql', $limit, $offset);
+  public static function performSparqlQuery($query, $limit = -1, $offset = 0) {
+    return self::performRiQuery($query, 'sparql', $limit, $offset);
   }
   /**
-   * Utility function used in self::_perform_ri_query().
+   * Utility function used in self::performRiQuery().
    *
    * Strips off the 'info:fedora/' prefix from the passed in string.
    *
@@ -1140,7 +1140,7 @@ class ObjectHelper {
    *   The input string less the 'info:fedora/' prefix (if it has it).
    *   The original string otherwise.
    */
-  protected static function pid_uri_to_bare_pid($uri) {
+  protected static function pidUriToBarePid($uri) {
     $chunk = 'info:fedora/';
     $pos = strpos($uri, $chunk);
     if ($pos === 0) { //Remove info:fedora/ chunk
