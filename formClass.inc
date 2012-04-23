@@ -128,8 +128,7 @@ class formClass {
       'title' => t('Collection view'),
       'page callback' => 'fedora_collection_view',
       'type' => MENU_CALLBACK,
-      'access callback' => 'fedora_repository_access',
-      'access argruments' => array(OBJECTHELPER::$OBJECT_HELPER_VIEW_FEDORA),
+      'access argruments' => array('view fedora collection'),
     );
     
     //new for mnpl******************************************
