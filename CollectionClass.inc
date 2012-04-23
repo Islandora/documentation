@@ -689,14 +689,12 @@ class CollectionClass {
           $obj_path = "fedora/repository/{$result['object']}";
           $thumbnail = theme('image', "$obj_path/TN", $title, $title, array(), FALSE);
           $results[] = array(
-            array(
-              'data' => l($thumbnail, $obj_path, array(
-                'html' => TRUE,
-              )),
-            ),
-            array(
-              'data' => l($title, $obj_path),
-            ),
+            'data' => l($thumbnail, $obj_path, array(
+              'html' => TRUE,
+              'attributes' => array(
+                'class' => 'results-image',
+              ),
+            )) . l($title, $obj_path, array('attributes' => array('class' => 'results-text'))),
           );
         }
         if (!$results) {
@@ -707,13 +705,16 @@ class CollectionClass {
           $last = (($total - $first) > $per_page)?
             ($first + $per_page):
             $total;
-          $objectList = '<h3>' . t('Results @first to @last of @total', array(
+          $results_range_text = t('Results @first to @last of @total', array(
             '@first' => $first + 1,
             '@last' => $last,
             '@total' => $total,
-          )) . '</h3>'; 
+          ));
+          //$objectList = '<h3>' . $results_range_text . '</h3>'; 
           $objectList .= theme('pager', array(), $per_page, $pager_name);
-          $objectList .= theme('table', NULL, $results);
+          $objectList .= theme('item_list', $results, $result_range_text, 'ul', array(
+            'class' => 'islandora-collection-results-list',
+          ));
           $objectList .= theme('pager', array(), $per_page, $pager_name);
         }
       }
