@@ -778,6 +778,7 @@ class ObjectHelper {
   function get_parent_objects($pid) {
     $query_string = self::_parent_query();
     module_load_include('inc', 'fedora_repository', 'CollectionClass');
+    $collection_class = new CollectionClass($pid);
     $objects = CollectionClass::getRelatedItems($pid, $query_string);
     return $objects;
   }
@@ -1043,7 +1044,7 @@ class ObjectHelper {
         
         $attrs = $element->attributes();
         if (!empty($attrs['uri'])) {
-          $val = self::_pid_uri_to_bare_pid((string)$attrs['uri']);
+          $val = self::pid_uri_to_bare_pid((string)$attrs['uri']);
         }
         else {
           $val = (string)$element;

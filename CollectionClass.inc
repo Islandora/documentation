@@ -54,6 +54,7 @@ class CollectionClass {
       return FALSE;
     }
   }
+  
   static function _get_default_collection_query($pid) {
     return 'select $object $title $content from <#ri>
              where ($object <fedora-model:label> $title
@@ -78,8 +79,8 @@ class CollectionClass {
    * @param type $itqlquery
    * @return type 
    */
-  static function getRelatedObjects($pid, $limit, $offset, $itqlquery=NULL) {
-    return self::getRelatedItems($pid, $itqlquery, $limit, $offset);
+  function getRelatedObjects($pid, $limit, $offset, $itqlquery=NULL) {
+    return $this->getRelatedItems($pid, $itqlquery, $limit, $offset);
   }
 
   /**
@@ -92,7 +93,7 @@ class CollectionClass {
    * @param $pid string
    *   A string containing a PID which may be substituted into the query,
    *   in place of the %parent_collection% placeholder.
-   * @param $itqlquery string
+   * @param $query_string string
    *   An optional iTQL query.
    * @param $limit int
    *   An optional integer to limit the number of results returned.
@@ -102,15 +103,13 @@ class CollectionClass {
    * @return string
    *   Sparql XML results from the resource index.
    */
-  static function getRelatedItems($pid, $query_string = NULL, $limit = NULL, $offset = NULL) {
-    module_load_include('inc', 'fedora_repository', 'ObjectHelper');
+  function getRelatedItems($pid, $query_string = NULL, $limit = NULL, $offset = NULL) {
     module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
 
     if (!fedora_repository_access(OBJECTHELPER :: $OBJECT_HELPER_VIEW_FEDORA, $pid)) {
       drupal_set_message(t("You do not have access to Fedora objects within the attempted namespace or access to Fedora denied."), 'error');
       return ' ';
     }
-    $objectHelper = new ObjectHelper();
 
     if ($query_string === NULL) {
       $query_string = self::get_collection_query($pid);
@@ -593,10 +592,8 @@ class CollectionClass {
    * @return string 
    */
   function getIngestInterface() {
-    global $base_url;
-    $objectHelper = new ObjectHelper();
     module_load_include('inc', 'Fedora_Repository', 'CollectionPolicy');
-    $collectionPolicyExists = $objectHelper->getMimeType($this->pid, CollectionPolicy::getDefaultDSID());
+    $collectionPolicyExists = $this->collectionObject->getMimeType($this->pid, CollectionPolicy::getDefaultDSID());
     if (user_access(ObjectHelper :: $INGEST_FEDORA_OBJECTS) && $collectionPolicyExists) {
       if (!empty($collectionPolicyExists)) {
         $allow = TRUE;
@@ -656,9 +653,8 @@ class CollectionClass {
     $path = drupal_get_path('module', 'fedora_repository');
     global $base_url;
     $collection_pid = $pid; //we will be changing the pid later maybe
-    $objectHelper = new ObjectHelper();
     $parsedContent = NULL;
-    $contentModels = $objectHelper->get_content_models_list($pid);
+    $contentModels = $this->collectionObject->get_content_models_list($pid);
     $isCollection = FALSE;
     //if this is a collection object store the $pid in the session as it will come in handy
     //after a purge or ingest to return to the correct collection.
@@ -674,7 +670,6 @@ class CollectionClass {
     $objectList = '';
     if (isset($content) && $content != FALSE) {
       if (!$xslContent) { //Didn't find an XSLT.
-        module_load_include('inc', 'fedora_repository', 'ObjectHelper');
         $intermediate_results = ObjectHelper::parse_sparql_results($content);
         unset($content);
         
