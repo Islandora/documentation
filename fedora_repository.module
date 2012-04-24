@@ -646,27 +646,27 @@ function fedora_repository_replace_stream_form(&$form_state, $pid, $dsId, $dsLab
  * @return type 
  */
 function fedora_repository_replace_stream_form_validate($form, &$form_state) {
-// If a file was uploaded, process it.
+  // If a file was uploaded, process it.
   if (isset($_FILES['files']) && is_uploaded_file($_FILES['files']['tmp_name']['file'])) {
 
-// attempt to save the uploaded file
+    // attempt to save the uploaded file
     $file = file_save_upload('file', array(), file_directory_path());
 
-// set error is file was not uploaded
+    // set error is file was not uploaded
     if (!$file) {
       form_set_error('file', 'Error uploading file.');
       return;
     }
-
-    $doc = new DOMDocument();
-    module_load_include('inc', 'Fedora_Repository', 'MimeClass');
+    
+    module_load_include('inc', 'fedora_repository', 'MimeClass');
     $mime = new MimeClass();
-    if ($mime->getType($file->filepath) == 'text/xml' && !$doc->load($file->filepath)) {
+    
+    if ($mime->getType($file->filepath) == 'text/xml' && !DOMDocument::load($file->filepath)) {
       form_set_error('file', 'Invalid XML format.');
       return;
     }
 
-// set files to form_state, to process when form is submitted
+    // set files to form_state, to process when form is submitted
     $form_state['values']['file'] = $file;
   }
 }
@@ -683,39 +683,32 @@ function fedora_repository_replace_stream_form_submit($form, &$form_state) {
   $pid = $form_state['values']['pid'];
   $dsid = $form_state['values']['dsId'];
   $dsLabel = $form_state['values']['dsLabel'];
-// Remove the original file extension from the label and add the new one
+  
+  // Remove the original file extension from the label and add the new one
   $indexOfDot = strrpos($dsLabel, '.'); //use strrpos to get the last dot
   if ($indexOfDot !== FALSE) {
     $dsLabel = substr($dsLabel, 0, $indexOfDot);
     $dsLabel .= substr($file->filename, strrpos($file->filename, '.')); // Add the file extention to the end of the label.;
   }
-  module_load_include('inc', 'Fedora_Repository', 'MimeClass');
-  module_load_include('inc', 'fedora_repository', 'api/fedora_item');
 
-  $file_basename = basename($file->filepath);
-  $file_directory = dirname($file->filepath);
-  $streamUrl = $base_url . '/' . $file_directory . '/' . urlencode($file_basename);
+  $streamUrl = url($file->filepath, array(
+    'absolute' => TRUE,
+  ));
 
   /* -----------------------------------------------------------------
    * TODO: need a better way to get mimetypes
    */
+  module_load_include('inc', 'fedora_repository', 'MimeClass');
   $mimetype = new MimeClass();
   $dformat = $mimetype->getType($file->filepath);
 
+  module_load_include('inc', 'fedora_repository', 'api/fedora_item');
   $item = new Fedora_Item($pid);
-  $info = $item->get_datastream_info($dsid);
-
-  if($info->datastream->controlGroup == 'M') {
-    $item->modify_datastream_by_reference($streamUrl, $dsid, $dsLabel, $dformat);
-  } elseif ($info->datastream->controlGroup == 'X') {
-    if($dformat == 'text/xml') {
-      $item->modify_datastream_by_value(file_get_contents($file->filepath), $dsid, $dsLabel, $dformat);
-    }
-    else {
-      drupal_set_message('File must be of mimetype text/xml in order to replace inline XML datastream.', 'error');
-    }
+  
+  if(in_array($info->datastream->controlGroup, array('M', 'X'))) {
+    $item->modify_datastream($streamUrl, $dsid, $dsLabel, $dformat);
   } else {
-    drupal_set_message('Cannot replace Redirect or Managed Datastream.', 'error');
+    drupal_set_message(t('Cannot replace Redirect or Managed Datastream.'), 'error');
   }
 
   $form_state['redirect'] = 'fedora/repository/' . $pid;
