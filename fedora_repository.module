@@ -388,7 +388,7 @@ function add_stream_form_submit($form, &$form_state) {
 
   try {
     $item = new Fedora_Item($pid);
-    $item->add_datastream_from_url($form_state['storage']['stream_url'], $dsid, $dsLabel, $form_state['storage']['ds_mimetype'], $form_state['values']['control_group']);
+    $item->add_datastream_from_url($form_state['storage']['stream_url'], $dsid, $dsLabel, $form_state['storage']['ds_mimetype'], $form_state['storage']['control_group']);
 
     if ($file = $form_state['values']['add-stream-file-location']) {
       $object_helper = new ObjectHelper();
@@ -450,14 +450,12 @@ function add_stream_form_validate($form, &$form_state) {
 //    'file_validate_image_resolution' => array('85x85'),
 //    'file_validate_size' => array(30 * 1024),
   );
-
-  $mimetype = new MimeClass();
-  $controlGroup = $form_state['values']['control_group'];
-  if (in_array($controlGroup, array('X', 'M')) && ($fileObject = file_save_upload('add-stream-file-location', $validators)) !== 0) {
+  
+  $controlGroup = $form_state['storage']['control_group'] = $form_state['values']['control_group'];
+  if ((($controlGroup && in_array($controlGroup, array('X', 'M'))) || !$controlGroup) && (($fileObject = file_save_upload('add-stream-file-location', $validators)) !== 0)) {
     // Move the uploaded file to Drupal's files directory.
     file_move($fileObject->filepath, 0, 'FILE_EXISTS_RENAME');
     $form_state['values']['add-stream-file-location'] = $fileObject->filepath;
-    $form_state['storage']['ds_mimetype'] = $mimetype->getType($fileObject->filepath);
     
     $file_basename = basename($fileObject->filepath);
     $file_directory = dirname($fileObject->filepath);
@@ -466,12 +464,23 @@ function add_stream_form_validate($form, &$form_state) {
       'absolute' => TRUE,
     ));
   }
-  elseif (in_array($controlGroup, array('M', 'R', 'E')) && ($ref = $form_state['values']['ds_reference'])) {
-    $form_state['storage']['ds_mimetype'] = $mimetype->getType($ref);
+  elseif ($controlGroup && in_array($controlGroup, array('M', 'R', 'E')) && ($ref = $form_state['values']['ds_reference'])) {
     $form_state['storage']['stream_url'] = $form_state['values']['ds_reference'];
   }
   else {
     form_set_error('', t('No file given when "X" or "M", or no reference given when "M", "R" or "E".'));
+  }
+  
+  $mimeClass = new MimeClass();
+  $mimetype = $form_state['storage']['ds_mimetype'] = $mimeClass->getType($form_state['storage']['stream_url']);
+  
+  if (!$controlGroup) {
+    if ($mimetype == 'text/xml') {
+      $form_state['storage']['control_group'] = 'X';
+    }
+    else {
+      $form_state['storage']['control_group'] = 'M';
+    }
   }
   
   // TODO: Add error checking here.
@@ -665,10 +674,14 @@ function fedora_repository_replace_stream_form_validate($form, &$form_state) {
       return;
     }
     
+    /* -----------------------------------------------------------------
+     * TODO: need a better way to get mimetypes
+     */
     module_load_include('inc', 'fedora_repository', 'MimeClass');
     $mime = new MimeClass();
+    $mimetype = $form_state['storage']['mime_type'] = $mime->getType($file->filepath);
     
-    if ($mime->getType($file->filepath) == 'text/xml' && !DOMDocument::load($file->filepath)) {
+    if ($mimetype == 'text/xml' && !DOMDocument::load($file->filepath)) {
       form_set_error('file', 'Invalid XML format.');
       return;
     }
@@ -685,37 +698,28 @@ function fedora_repository_replace_stream_form_validate($form, &$form_state) {
  * @param array $form_state 
  */
 function fedora_repository_replace_stream_form_submit($form, &$form_state) {
-  global $base_url;
   $file = $form_state['values']['file'];
-  
-  if ($file !== NULL) {
-    $file = $form_state['values']['reference'];
-  }
-  
+
   $pid = $form_state['values']['pid'];
   $dsid = $form_state['values']['dsId'];
   $dsLabel = $form_state['values']['dsLabel'];
   
+  $streamUrl = ($file !== NULL) ? 
+    url($file->filepath, array('absolute' => TRUE)):
+    url($form_state['values']['reference'], array('absolute' => TRUE));
+    
   // Remove the original file extension from the label and add the new one
-  $indexOfDot = strrpos($dsLabel, '.'); //use strrpos to get the last dot
-  if ($indexOfDot !== FALSE) {
-    $dsLabel = substr($dsLabel, 0, $indexOfDot);
-    $dsLabel .= substr($file->filename, strrpos($file->filename, '.')); // Add the file extention to the end of the label.;
+  // use strrpos to get the last dot
+  if (($indexOfDot = strrpos($dsLabel, '.')) !== FALSE) {
+    $dsLabel = substr($dsLabel, 0, $indexOfDot) .
+      substr($streamUrl, strrpos($streamUrl, '.')); // Add the file extention to the end of the label.
   }
 
-  $streamUrl = url($file->filepath, array(
-    'absolute' => TRUE,
-  ));
+  
 
-  /* -----------------------------------------------------------------
-   * TODO: need a better way to get mimetypes
-   */
-  module_load_include('inc', 'fedora_repository', 'MimeClass');
-  $mimetype = new MimeClass();
-  $dformat = $mimetype->getType($file->filepath);
+  $dformat = $form_state['storage']['mime_type'];
 
   $item = new Fedora_Item($pid);
-  
   $item->modify_datastream($streamUrl, $dsid, $dsLabel, $dformat);
 
   $form_state['redirect'] = 'fedora/repository/' . $pid;
