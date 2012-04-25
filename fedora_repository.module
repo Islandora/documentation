@@ -388,7 +388,7 @@ function add_stream_form_submit($form, &$form_state) {
 
   try {
     $item = new Fedora_Item($pid);
-    $item->add_datastream_from_url($form_state['storage']['stream_url'], $dsid, $dsLabel, $form_state['storage']['ds_mimetype'], $form_state['values']['control_group']);
+    $item->add_datastream_from_url($form_state['storage']['stream_url'], $dsid, $dsLabel, $form_state['storage']['ds_mimetype'], $form_state['storage']['control_group']);
 
     if ($file = $form_state['values']['add-stream-file-location']) {
       $object_helper = new ObjectHelper();
@@ -450,14 +450,12 @@ function add_stream_form_validate($form, &$form_state) {
 //    'file_validate_image_resolution' => array('85x85'),
 //    'file_validate_size' => array(30 * 1024),
   );
-
-  $mimetype = new MimeClass();
-  $controlGroup = $form_state['values']['control_group'];
-  if (in_array($controlGroup, array('X', 'M')) && ($fileObject = file_save_upload('add-stream-file-location', $validators)) !== 0) {
+  
+  $controlGroup = $form_state['storage']['control_group'] = $form_state['values']['control_group'];
+  if ((($controlGroup && in_array($controlGroup, array('X', 'M'))) || !$controlGroup) && (($fileObject = file_save_upload('add-stream-file-location', $validators)) !== 0)) {
     // Move the uploaded file to Drupal's files directory.
     file_move($fileObject->filepath, 0, 'FILE_EXISTS_RENAME');
     $form_state['values']['add-stream-file-location'] = $fileObject->filepath;
-    $form_state['storage']['ds_mimetype'] = $mimetype->getType($fileObject->filepath);
     
     $file_basename = basename($fileObject->filepath);
     $file_directory = dirname($fileObject->filepath);
@@ -466,12 +464,23 @@ function add_stream_form_validate($form, &$form_state) {
       'absolute' => TRUE,
     ));
   }
-  elseif (in_array($controlGroup, array('M', 'R', 'E')) && ($ref = $form_state['values']['ds_reference'])) {
-    $form_state['storage']['ds_mimetype'] = $mimetype->getType($ref);
+  elseif ($controlGroup && in_array($controlGroup, array('M', 'R', 'E')) && ($ref = $form_state['values']['ds_reference'])) {
     $form_state['storage']['stream_url'] = $form_state['values']['ds_reference'];
   }
   else {
     form_set_error('', t('No file given when "X" or "M", or no reference given when "M", "R" or "E".'));
+  }
+  
+  $mimeClass = new MimeClass();
+  $mimetype = $form_state['storage']['ds_mimetype'] = $mimeClass->getType($form_state['storage']['stream_url']);
+  
+  if (!$controlGroup) {
+    if ($mimetype == 'text/xml') {
+      $form_state['storage']['control_group'] = 'X';
+    }
+    else {
+      $form_state['storage']['control_group'] = 'M';
+    }
   }
   
   // TODO: Add error checking here.

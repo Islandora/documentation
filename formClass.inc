@@ -331,6 +331,13 @@ class formClass {
       '#options' => array(ObjectHelper::$DISPLAY_ALWAYS => t('Always'), ObjectHelper::$DISPLAY_NEVER => t('Never'), ObjectHelper::$DISPLAY_NO_MODEL_OUTPUT => t('Only if no Content Model display output.')),
       '#description' => t('Determines when to display the list of objects when viewing a collection page.'),
     );
+    
+    $form['advanced']['fedora_control_group_control_during_ingest'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Allow control groups select in datastream ingest'),
+      '#description' => t('Whether or not we should allow the user to select which control group to ingest a stream as, or to follow the old paradigm--to add stream IDed as XML as inline, and everything else as managed.'),
+      '#default_value' => variable_get('fedora_control_group_control_during_ingest', FALSE),
+    );
 
     //Export functionality
     $form['advanced']['module']['export_area'] = array(
@@ -685,12 +692,16 @@ class formClass {
       // '#required'=>'TRUE',
       '#description' => t('The file to upload. (Only for Managed and Inline)')
     );
-    $form['fieldset']['ds_reference'] = array(
-      '#type' => 'textfield',
-      '#title' => t('Datastream reference'),
-      '#size' => 48,
-      '#description' => t('A URL reference to resolve for the contents of the datastream.  (Required for External and Redirect, but will still work for Managed and Inline.)'),
-    );
+    
+    if (variable_get('fedora_control_group_control_during_ingest', FALSE)) {
+      $form['fieldset']['ds_reference'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Datastream reference'),
+        '#size' => 48,
+        '#description' => t('A URL reference to resolve for the contents of the datastream.  (Required for External and Redirect, but will still work for Managed and Inline.)'),
+      );
+    }
+    
     $form['#redirect'] = "fedora/repository/$pid/";
     $form['fieldset']['submit'] = array(
       '#type' => 'submit',
@@ -716,18 +727,21 @@ class formClass {
         '#weight' => -1,
       );
     }
-    $form['fieldset']['control_group'] = array(
-      '#type' => 'select',
-      '#title' => t('Control group'),
-      '#options' => array(
-        'X' => t('Inline XML'),
-        'M' => t('Managed datastream'),
-        'E' => t('Externally Referenced/managed datastream'),
-        'R' => t('Redirect datastream'),
-      ),
-      '#description' => t('The manner in which the datastream will be stored.  "Inline XML" must be XML and will be placed directly into the FOXML for the object.  "Managed" datastreams are made to live on the filesystem as discrete files in the Fedora data directory.  Both "Redirect" and "External" streams are URL references; the difference being the redirect stream instruct clients to perform an HTTP redirect, such that the data does not pass though Fedora (useful for streaming). External streams are mediated (by which I mean loaded and streamed from) the Fedora server.'),
-      '#weight' => 0,
-    );
+    
+    if (variable_get('fedora_control_group_control_during_ingest', FALSE)) {
+      $form['fieldset']['control_group'] = array(
+        '#type' => 'select',
+        '#title' => t('Control group'),
+        '#options' => array(
+          'X' => t('Inline XML'),
+          'M' => t('Managed datastream'),
+          'E' => t('Externally Referenced/managed datastream'),
+          'R' => t('Redirect datastream'),
+        ),
+        '#description' => t('The manner in which the datastream will be stored.  "Inline XML" must be XML and will be placed directly into the FOXML for the object.  "Managed" datastreams are made to live on the filesystem as discrete files in the Fedora data directory.  Both "Redirect" and "External" streams are URL references; the difference being the redirect stream instruct clients to perform an HTTP redirect, such that the data does not pass though Fedora (useful for streaming). External streams are mediated (by which I mean loaded and streamed from) the Fedora server.'),
+        '#weight' => 0,
+      );
+    }
     return $form;
   }
 
