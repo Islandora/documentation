@@ -377,37 +377,25 @@ function add_stream_form_submit($form, &$form_state) {
     $form_state['rebuild'] = TRUE;
     return;
   }
-  module_load_include('inc', 'fedora_repository', 'MimeClass');
+  
   module_load_include('inc', 'fedora_repository', 'ObjectHelper');
   module_load_include('inc', 'fedora_repository', 'api/fedora_item');
   $pathToModule = drupal_get_path('module', 'fedora_repository');
 
-  $file = $form_state['values']['add-stream-file-location'];
-
   $pid = $form_state['values']['pid'];
   $dsid = $form_state['values']['stream_id'];
   $dsLabel = $form_state['values']['stream_label'] . substr($file, strrpos($file, '.')); // Add the file extention to the end of the label.;
-  $file_basename = basename($file);
-  $file_directory = dirname($file);
-  $streamUrl = $base_url . '/' . $file_directory . '/' . drupal_urlencode($file_basename);
 
-  /* -----------------------------------------------------------------
-   * need a better way to get mimetypes
-   */
-  $mimetype = new MimeClass();
-  $dformat = $mimetype->getType($file);
-  $controlGroup = "M";
-  if ($dformat == 'text/xml') {
-    $controlGroup = 'X';
-  }
   try {
     $item = new Fedora_Item($pid);
-    $item->add_datastream_from_url($streamUrl, $dsid, $dsLabel, $dformat, $controlGroup);
+    $item->add_datastream_from_url($form_state['storage']['stream_url'], $dsid, $dsLabel, $form_state['storage']['ds_mimetype'], $form_state['values']['control_group']);
 
-    $object_helper = new ObjectHelper();
-    $object_helper->get_and_do_datastream_rules($pid, $dsid, $file);
+    if ($file = $form_state['values']['add-stream-file-location']) {
+      $object_helper = new ObjectHelper();
+      $object_helper->get_and_do_datastream_rules($pid, $dsid, $file);
 
-    file_delete($file);
+      file_delete($file);
+    }
   } catch (exception $e) {
     drupal_set_message(t('@message', array('@message' => check_plain($e->getMessage()))), 'error');
     return;
@@ -434,6 +422,7 @@ function add_stream_form(&$form_state, $pid) {
  * @return type 
  */
 function add_stream_form_validate($form, &$form_state) {
+  module_load_include('inc', 'fedora_repository', 'MimeClass');
   if ($form_state['clicked_button']['#value'] == 'OK') {
     $form_state['rebuild'] = TRUE;
     return;
@@ -444,15 +433,15 @@ function add_stream_form_validate($form, &$form_state) {
     form_set_error('', t('Data stream ID cannot be more than 64 characters.'));
     return FALSE;
   }
-  if (!(preg_match("/^[a-zA-Z]/", $dsid))) {
-    form_set_error('', t("Data stream ID (@dsid) has to start with a letter.", array('@dsid' => check_plain($dsid))));
+  elseif (!(preg_match("/^[a-zA-Z]/", $dsid))) {
+    form_set_error('', t("Data stream ID (@dsid) has to start with a letter.", array('@dsid' => $dsid)));
     return FALSE;
   }
-  if (strlen($dsLabel) > 64) {
+  elseif (strlen($dsLabel) > 64) {
     form_set_error('', t('Data stream Label cannot be more than 64 characters.'));
     return FALSE;
   }
-  if (strpos($dsLabel, '/')) {
+  elseif (strpos($dsLabel, '/') !== FALSE) {
     form_set_error('', t('Data stream Label cannot contain a "/".'));
     return FALSE;
   }
@@ -462,12 +451,30 @@ function add_stream_form_validate($form, &$form_state) {
 //    'file_validate_size' => array(30 * 1024),
   );
 
-  $fileObject = file_save_upload('add-stream-file-location', $validators);
-
-// Move the uploaded file to Drupal's files directory.
-  file_move($fileObject->filepath, 0, 'FILE_EXISTS_RENAME');
-  $form_state['values']['add-stream-file-location'] = $fileObject->filepath;
-// TODO: Add error checking here.
+  $mimetype = new MimeClass();
+  $controlGroup = $form_state['values']['control_group'];
+  if (in_array($controlGroup, array('X', 'M')) && ($fileObject = file_save_upload('add-stream-file-location', $validators)) !== 0) {
+    // Move the uploaded file to Drupal's files directory.
+    file_move($fileObject->filepath, 0, 'FILE_EXISTS_RENAME');
+    $form_state['values']['add-stream-file-location'] = $fileObject->filepath;
+    $form_state['storage']['ds_mimetype'] = $mimetype->getType($fileObject->filepath);
+    
+    $file_basename = basename($fileObject->filepath);
+    $file_directory = dirname($fileObject->filepath);
+    
+    $form_state['storage']['stream_url'] = url($file_directory . '/' . drupal_urlencode($file_basename), array(
+      'absolute' => TRUE,
+    ));
+  }
+  elseif (in_array($controlGroup, array('M', 'R', 'E')) && ($ref = $form_state['values']['ds_reference'])) {
+    $form_state['storage']['ds_mimetype'] = $mimetype->getType($ref);
+    $form_state['storage']['stream_url'] = $form_state['values']['ds_reference'];
+  }
+  else {
+    form_set_error('', t('No file given when "X" or "M", or no reference given when "M", "R" or "E".'));
+  }
+  
+  // TODO: Add error checking here.
   $form_state['rebuild'] = FALSE;
 }
 
@@ -680,6 +687,11 @@ function fedora_repository_replace_stream_form_validate($form, &$form_state) {
 function fedora_repository_replace_stream_form_submit($form, &$form_state) {
   global $base_url;
   $file = $form_state['values']['file'];
+  
+  if ($file !== NULL) {
+    $file = $form_state['values']['reference'];
+  }
+  
   $pid = $form_state['values']['pid'];
   $dsid = $form_state['values']['dsId'];
   $dsLabel = $form_state['values']['dsLabel'];
@@ -702,14 +714,9 @@ function fedora_repository_replace_stream_form_submit($form, &$form_state) {
   $mimetype = new MimeClass();
   $dformat = $mimetype->getType($file->filepath);
 
-  module_load_include('inc', 'fedora_repository', 'api/fedora_item');
   $item = new Fedora_Item($pid);
   
-  if(in_array($info->datastream->controlGroup, array('M', 'X'))) {
-    $item->modify_datastream($streamUrl, $dsid, $dsLabel, $dformat);
-  } else {
-    drupal_set_message(t('Cannot replace Redirect or Managed Datastream.'), 'error');
-  }
+  $item->modify_datastream($streamUrl, $dsid, $dsLabel, $dformat);
 
   $form_state['redirect'] = 'fedora/repository/' . $pid;
 }
@@ -1052,7 +1059,6 @@ function fedora_repository_urlencode_string($str) {
  * @return type 
  */
 function fedora_object_as_attachment($pid, $dsId, $label=NULL, $version=NULL) {
-  global $user;
   module_load_include('inc', 'fedora_repository', 'ObjectHelper');
 
   if ($pid == NULL || $dsId == NULL) {
@@ -1061,7 +1067,7 @@ function fedora_object_as_attachment($pid, $dsId, $label=NULL, $version=NULL) {
   }
 
   $objectHelper = new ObjectHelper();
-  $objectHelper->makeObject($pid, $dsId, 1, $label, FALSE, $version);
+  $objectHelper->makeObject($pid, $dsId, TRUE, $label, FALSE, $version);
 }
 
 /**
