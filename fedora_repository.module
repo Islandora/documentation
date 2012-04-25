@@ -2272,9 +2272,6 @@ function theme_fedora_repository_solution_packs_list($solution_packs) {
   $header = array();
   $rows = array();
 
-
-
-
   drupal_add_css(drupal_get_path('module', 'update') . '/update.css');
   return $output;
 }

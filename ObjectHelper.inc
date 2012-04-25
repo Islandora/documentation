@@ -72,7 +72,6 @@ class ObjectHelper {
       return ' ';
     }
 
-
     if (variable_get('fedora_object_restrict_datastreams', FALSE) == TRUE) {
       if (($cm = ContentModel::loadFromObject($pid)) == FALSE) {
         drupal_set_message(t("You do not have access to objects without an Islandora Content Model."), 'error');
@@ -90,7 +89,6 @@ class ObjectHelper {
 
     module_load_include('inc', 'fedora_repository', 'api/fedora_item');
     $item = new Fedora_Item($pid);
-
 
     if (isset($item->datastreams[$dsID])) {
       $mimeType = $item->datastreams[$dsID]['MIMEType'];
@@ -123,8 +121,14 @@ class ObjectHelper {
         $mimeType = 'image/jpeg';
       }
       $url = variable_get('fedora_base_url', 'http://localhost:8080/fedora') . '/objects/' . $pid . '/datastreams/' . $dsID . '/content';
+      $query_options = array();
       if ($version) {
-        $url .= '/' . $version; //drupal_urlencode($version);
+        $query_options['asOfDateTime'] = $version; //drupal_urlencode($version);
+      }
+      if ($query_options) {
+        $url = url($url, array(
+          'query' => $query_options,
+        ));
       }
       $ch = curl_init();
       $user_agent = "Mozilla/4.0 pp(compatible; MSIE 5.01; Windows NT 5.0)";
@@ -184,7 +188,6 @@ class ObjectHelper {
         $curl_out = curl_exec($ch);
         if ($curl_out !== FALSE) {
           $info = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
-          //dd($info, 'effective URL');
           if ($url !== $info) { //Handle redirect streams (the final URL is not the same as the Fedora URL)
           
             //Add the parameters passed to Drupal, leaving out the 'q'
@@ -195,7 +198,7 @@ class ObjectHelper {
             }
             
             header('HTTP/1.1 307 Moved Temporarily');
-            header('Location: ' . $info . '?' . http_build_query($query)); //Fedora seems to discard the query portion.
+            header('Location: ' . url($info, array('query' => $query)));
           }
           elseif ((isset($user) && $user->uid != 0) || $forceSoap || isset($_SERVER['HTTPS'])) { //If not anonymous, soap is force or we're using HTTPS
             //Have the webserver mediate the transfer (download and restream)
@@ -211,6 +214,7 @@ class ObjectHelper {
         }
         else {
           //Curl error...
+          watchdog('fedora_repository', 'Curl error.  Info: @info', array('@info' => print_r(curl_getinfo($ch), TRUE)), WATCHDOG_WARNING);
         }   
       }
       curl_close($ch);
