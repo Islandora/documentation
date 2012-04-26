@@ -426,16 +426,35 @@ class ObjectHelper {
     $rows = array();
     foreach ($simplexml->getNamespaces(TRUE) as $ns) {
       foreach ($simplexml->children($ns) as $child) {
-        $rows[] = array(
-          array(
-            'data' => $child->getName(),
-            'class' => 'dc-tag-name',
-          ),
-          array(
-            'data' => (string)$child,
-            'class' => 'dc-content',
-          ),
-        );
+        $data = array();
+        $rendered_data = '';
+        if ($grand_children = $child->children()) {
+          foreach($grand_children as $grand_child) {
+            $data[] = $grand_child->tagName() . ' = ' . (string)$grand_child;
+          }
+        }
+        else {
+          $rendered_data = (string)$child;
+        }
+        
+        if ($data) {
+          $rendered_data = theme('item_list', $data);
+        }
+        
+        if ($rendered_data) {
+          $rows[] = array(
+            array(
+              'data' => $child->getName(),
+              'class' => 'dc-tag-name',
+            ),
+            array(
+              'data' => $rendered_data,
+              'class' => 'dc-content',
+            ),
+          );
+        }
+        
+        
       }
     }
 
