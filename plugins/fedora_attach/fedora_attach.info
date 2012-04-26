@@ -1,8 +1,0 @@
-; $Id$ 
-name = Fedora Attach
-description = Allows users to attach files to node content which then get ingested into Fedora.
-package = Fedora Repository
-dependencies[] = fedora_repository
-dependencies[] = upload
-version = 6.1dev
-core = 6.x

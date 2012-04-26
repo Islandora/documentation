@@ -1,27 +1,39 @@
 <?php
-// $Id$
 
-/*
- * Created on 22-Oct-08
- *
- * To change the template for this generated file go to
- * Window - Preferences - PHPeclipse - PHP - Code Templates
+
+
+/**
+ * @file 
+ * SecurityClass Class
  */
 
+/**
+ * SecurityClass ??
+ */
 class SecurityClass {
+
   public static $SECURITY_CLASS_SECURITY_STREAM = 'POLICY';
+
+  /**
+   * Constructor
+   */
   function SecurityClass() {
     module_load_include('inc', 'SecurityClass', '');
     drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
   }
 
+  /**
+   * canIngestHere ??
+   * @global type $user
+   * @param type $collection_pid
+   * @return type 
+   */
   function canIngestHere($collection_pid) {
     global $user;
     module_load_include('inc', 'fedora_repository', 'ObjectHelper');
     $objectHelper = new ObjectHelper();
     // get the childsecurity policy from the collection.
     $policyStream = $objectHelper->getStream($collection_pid, SECURITYCLASS :: $SECURITY_CLASS_SECURITY_STREAM, FALSE);
-
     if ($policyStream == NULL) {
       // no child policy stream so collection is wide open to anyone to ingest, that has the permission ingest in Drupal.
       // maybe we should return FALSE here?? would be more secure.
@@ -47,63 +59,58 @@ class SecurityClass {
     return FALSE;
   }
 
-  //parses our simple xacml policies checking for users or roles that are allowed to ingest
+  /**
+   * parses our simple xacml policies checking for users or roles that are allowed to ingest
+   * @param type $policyStream
+   * @return type 
+   */
   function getAllowedUsersAndRoles($policyStream) {
     $allowedRoles = array();
     $allowedUsers = array();
     $usersAndRoles = array();
     try {
       $xml = new SimpleXMLElement($policyStream);
-    } 
-    catch (Exception $e) {
-      watchdog(t("Fedora_Repository"), t("No roles found in security policy, could not parse policy stream."), NULL, WATCHDOG_ERROR);
+    } catch (Exception $e) {
+      watchdog(t("Fedora_Repository"), "No roles found in security policy, could not parse policy stream.", NULL, WATCHDOG_ERROR);
       //we may not want to send this to the screen.
-      drupal_set_message(t('No roles found in security policy, could not parse policy stream: !message', array('!message' => $e->getMessage())), 'error');
+      drupal_set_message(t('No roles found in security policy, could not parse policy stream: !message', array('!message' => check_plain($e->getMessage()))), 'error');
       return NULL;
     }
     $xml->registerXPathNamespace('default', 'urn:oasis:names:tc:xacml:1.0:policy');
 
-    $conditions = $xml->xpath("//default:Condition");
+    $roles = $xml->xpath('//default:SubjectAttributeDesignator[@AttributeId="fedoraRole"]/../default:Apply/default:AttributeValue');
+    $users = $xml->xpath('//default:SubjectAttributeDesignator[@AttributeId="urn:fedora:names:fedora:2.1:subject:loginId"]/../default:Apply/default:AttributeValue');
 
-    foreach ($conditions as $condition) {
-      $designator = $condition->Apply->SubjectAttributeDesignator;
-      if (empty($designator)) {//$disignator may be wrapped by an or
-        $designator=$condition->Apply->Apply->SubjectAttributeDesignator;
-      }
-      $attributeId = strip_tags($designator['AttributeId']);
-
-      if ($attributeId == "fedoraRole") {
-        foreach ($condition->Apply->Apply->AttributeValue as $attributeValue) {
-          $allowedRoles[] = strip_tags($attributeValue->asXML());
-        }
-        foreach ($condition->Apply->Apply->Apply->AttributeValue as $attributeValue) {
-          $allowedRoles[] = strip_tags($attributeValue->asXML());
-        }
-      }
-      if ($attributeId == "urn:fedora:names:fedora:2.1:subject:loginId") {
-        foreach ($condition->Apply->Apply->AttributeValue as $attributeValue) {
-          $allowedUsers[] = strip_tags($attributeValue->asXML());
-        }
-        foreach ($condition->Apply->Apply->Apply->AttributeValue as $attributeValue) {
-          $allowedUsers[] = strip_tags($attributeValue->asXML());
-        }
+    if($roles) {
+      foreach($roles as $role) {
+        $allowedRoles[] = (string)$role;
       }
     }
+    if($users) {
+      foreach($users as $user) {
+        $allowedUsers[] = (string)$user;
+      }
+    }
+
     $usersAndRoles['users'] = $allowedUsers;
     $usersAndRoles['roles'] = $allowedRoles;
-    return $usersAndRoles;
 
+    return $usersAndRoles;
   }
-  // When a user's profile is saved in drupal we will attempt to create a collection for them in Fedora
-  // this will be their personal space.  In the IR it is editable by users with the same role in the VRE
-  // it probably would not be.
+
+  /**
+   * When a user's profile is saved in drupal we will attempt to create a collection for them in Fedora
+   * this will be their personal space.  In the IR it is editable by users with the same role in the VRE
+   * it probably would not be.
+   * @param type $user
+   * @return DOMDocument 
+   */
   function createPersonalPolicy($user) {
     $doc = new DOMDocument();
     try {
       $doc->load(drupal_get_path('module', 'Fedora_Repository') . '/policies/noObjectEditPolicy.xml');
-    }
-    catch (exception $e) {
-      watchdog(t("Fedora_Repository"), t("Problem loading policy file."), NULL, WATCHDOG_ERROR);
+    } catch (exception $e) {
+      watchdog(t("Fedora_Repository"), "Problem loading policy file.", NULL, WATCHDOG_ERROR);
     }
     $conditions = $doc->getElementsByTagName('Condition');
     foreach ($conditions as $condition) {
@@ -117,7 +124,7 @@ class SecurityClass {
             if ($functionId == 'urn:oasis:names:tc:xacml:1.0:function:string-bag') {
               foreach ($user->roles as $role) {
                 if (!($role == 'authenticated user' || $role == 'administrator')) { //don't want authenticated user included administrator already is included'
-                  $newAttributeValue=$doc->createElement('AttributeValue', '<![CDATA['. $role . ']]>');
+                  $newAttributeValue = $doc->createElement('AttributeValue', '<![CDATA[' . $role . ']]>');
                   $newAttributeValue->setAttribute('DataType', 'http://www.w3.org/2001/XMLSchema#string');
                   // $newAttributeValue->setAttribute('MustBePresent', 'FALSE');
                   $apply->appendChild($newAttributeValue);
@@ -132,7 +139,7 @@ class SecurityClass {
           foreach ($applies as $apply) {
             $functionId = $apply->getAttribute('FunctionId');
             if ($functionId == 'urn:oasis:names:tc:xacml:1.0:function:string-bag') {
-              $newAttributeValue=$doc->createElement('AttributeValue', $user->name);
+              $newAttributeValue = $doc->createElement('AttributeValue', $user->name);
               $newAttributeValue->setAttribute('DataType', 'http://www.w3.org/2001/XMLSchema#string');
               //$newAttributeValue->setAttribute('MustBePresent', 'FALSE');
               $apply->appendChild($newAttributeValue);
@@ -145,7 +152,7 @@ class SecurityClass {
     return $doc; //NULL; //$xml;
   }
 
- /**
+  /**
    * Add a list of allowed users and roles to the given policy stream and return it.
    *
    * @param string $policy_stream
@@ -170,7 +177,7 @@ class SecurityClass {
             if ($functionId == 'urn:oasis:names:tc:xacml:1.0:function:string-bag') {
               foreach ($allowed_roles as $role) {
                 if (!($role == 'authenticated user' || $role == 'administrator')) { //don't want authenticated user included administrator already is included'
-                  $newAttributeValue=$dom->createElement('AttributeValue', $role);
+                  $newAttributeValue = $dom->createElement('AttributeValue', $role);
                   $newAttributeValue->setAttribute('DataType', 'http://www.w3.org/2001/XMLSchema#string');
                   //$newAttributeValue->setAttribute('MustBePresent', 'FALSE');
                   $apply->appendChild($newAttributeValue);
@@ -186,8 +193,8 @@ class SecurityClass {
           foreach ($applies as $apply) {
             $functionId = $apply->getAttribute('FunctionId');
             if ($functionId == 'urn:oasis:names:tc:xacml:1.0:function:string-bag') {
-              foreach ( $allowed_users as $username ) {
-                $newAttributeValue=$dom->createElement('AttributeValue', $username );
+              foreach ($allowed_users as $username) {
+                $newAttributeValue = $dom->createElement('AttributeValue', $username);
                 $newAttributeValue->setAttribute('DataType', 'http://www.w3.org/2001/XMLSchema#string');
                 //$newAttributeValue->setAttribute('MustBePresent', 'FALSE');
                 $apply->appendChild($newAttributeValue);
@@ -200,4 +207,5 @@ class SecurityClass {
     // $this->collection_policy_stream = $dom->saveXML();
     return $dom->saveXML();
   }
+
 }

@@ -1,7 +1,18 @@
 <?php
 
-// $Id$
+/**
+ * @file 
+ * 
+ */
 
+/**
+ * @file 
+ * XMLDatastream Abstract Class
+ */
+
+/**
+ * XMLDatastream class ??
+ */
 abstract class XMLDatastream {
 
   static $XMLNS = 'http://www.islandora.ca';
@@ -23,7 +34,7 @@ abstract class XMLDatastream {
   }
 
   /**
-   * validPid
+   * valid_pid
    * Validates a fedora PID based on the regexp provided in the fedora 
    * 3.3 documentation.  
    * http://www.fedora-commons.org/confluence/display/FCR30/Fedora+Identifiers
@@ -31,7 +42,7 @@ abstract class XMLDatastream {
    * @param String $pid
    * @return boolean $valid
    */
-  public static function validPid($pid) {
+  public static function valid_pid($pid) {
     $valid = FALSE;
     if (strlen(trim($pid)) <= 64 && preg_match('/^([A-Za-z0-9]|-|\.)+:(([A-Za-z0-9])|-|\.|~|_|(%[0-9A-F]{2}))+$/', trim($pid))) {
       $valid = TRUE;
@@ -41,7 +52,7 @@ abstract class XMLDatastream {
   }
 
   /**
-   * validDsid
+   * valid_dsid
    * Validates a fedora Dsid based on the the allowed XML standard NCName. 
    * The regexp is a "regular" subset of names allowed, it excludes some extended hex characters that are
    * technically permitted.
@@ -50,7 +61,7 @@ abstract class XMLDatastream {
    * @param String $pid
    * @return boolean $valid
    */
-  public static function validDsid($dsid) {
+  public static function valid_dsid($dsid) {
     $valid = FALSE;
     if (strlen(trim($dsid)) <= 64 && preg_match('/^[a-zA-Z0-9\_\-\.]+$/', trim($dsid))) {
       $valid = TRUE;
@@ -91,18 +102,18 @@ abstract class XMLDatastream {
    * @return XMLDatastream $cm
    */
   public function __construct($xmlStr, $pid = NULL, $dsid = NULL) {
-    libxml_use_internal_errors(true);
+    libxml_use_internal_errors(TRUE);
 
     $this->pid = $pid;
     $this->dsid = $dsid;
-    if ($xmlStr !== NULL) { 
-      if(is_object($xmlStr) && get_class($xmlStr) == DOMDocument) {
+    if ($xmlStr !== NULL) {
+      if (is_object($xmlStr) && get_class($xmlStr) == DOMDocument) {
         $this->xml = $xmlStr;
       }
       else {
         $this->xml = new DOMDocument();
         $this->xml->loadXML($xmlStr);
-      } 
+      }
     }
   }
 
@@ -180,7 +191,8 @@ abstract class XMLDatastream {
         // a subclass.
         $vars = get_class_vars(get_class($this));
         $schemaLocation = $vars['SCHEMA_URI'];
-      } elseif ($rootEl->attributes->getNamedItem('schemaLocation') !== NULL) {
+      }
+      elseif ($rootEl->attributes->getNamedItem('schemaLocation') !== NULL) {
         //figure out where the schema is located and validate.
         list(, $schemaLocation) = preg_split('/\s+/', $rootEl->attributes->getNamedItem('schemaLocation')->nodeValue);
       }
@@ -193,10 +205,12 @@ abstract class XMLDatastream {
           foreach ($errors as $err) {
             self::$errors[] = 'XML Error: Line ' . $err->line . ': ' . $err->message;
           }
-        } else {
+        }
+        else {
           $this->name = $rootEl->attributes->getNamedItem('name')->nodeValue;
         }
-      } else {
+      }
+      else {
         $ret = FALSE;
         self::$errors[] = 'Unable to load schema.';
       }
@@ -239,7 +253,7 @@ abstract class XMLDatastream {
 
   /**
    * Gets the history of the datastream from fedora.
-   * Returns false on failure.
+   * Returns FALSE on failure.
    *
    * @return string[] $ret
    */

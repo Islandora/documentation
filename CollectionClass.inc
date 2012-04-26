@@ -1,16 +1,17 @@
 <?php
 
-// $Id$
-
-/*
- * Created on 18-Feb-08
- *
- * To change the template for this generated file go to
- * Window - Preferences - PHPeclipse - PHP - Code Templates
+/**
+ * @file
+ * 
+ * Collection Class Class
  */
-// module_load_include('nc', 'CollectionClass', '');
-// This CLASS caches the streams so once you call a getstream once it will always return the same stream as long as you are using the
-// instance of this class.  Cached to prevent mutiple hits to fedora.  maybe a bit confusing though if this class is used in a different context.
+ 
+/**
+ * This CLASS caches the streams so once you call a getstream once it will always return
+ * the same stream as long as you are using the instance of this class. Cached to
+ * prevent mutiple hits to fedora.  maybe a bit confusing though if this class is used in 
+ * a different context.
+ */
 class CollectionClass {
 
   public static $COLLECTION_CLASS_COLLECTION_POLICY_STREAM = 'COLLECTION_POLICY';
@@ -33,69 +34,118 @@ class CollectionClass {
       $this->pid = $pid;
     }
   }
-
-  /* gets objects related to this object.  must include offset and limit
-   * calls getRelatedItems but enforces limit and offset
-   */
-
-  function getRelatedObjects($pid, $limit, $offset, $itqlquery=NULL) {
-    module_load_include('inc', 'fedora_repository', 'ObjectHelper');
-    $objectHelper = new ObjectHelper();
-    if (!isset($itqlquery)) {
-      // $query_string = $objectHelper->getStream($pid, 'QUERY', 0);
-      $itqlquery = $objectHelper->getStream($pid, 'QUERY', 0);
+  
+  public static function getCollectionQuery($pid) {
+    if ($query = self::getCollectionQueryFromStream($pid)) {
+      return $query;
     }
+    else {
+      return self::getDefaultCollectionQuery($pid);
+    }
+  }
+  
+  protected static function getCollectionQueryFromStream($pid) {
+    module_load_include('inc', 'fedora_repository', 'api/fedora_item');
+    $item = new Fedora_Item($pid);
+    if ($item->exists() && array_key_exists('QUERY', $item->datastreams)) {
+      return $item->get_datastream_dissemination('QUERY');
+    }
+    else {
+      return FALSE;
+    }
+  }
+  
+  protected static function getDefaultCollectionQuery($pid) {
+    return 'select $object $title $content from <#ri>
+             where ($object <fedora-model:label> $title
+             and $object <fedora-model:hasModel> $content
+             and ($object <fedora-rels-ext:isMemberOfCollection> <info:fedora/' . $pid . '>
+             or $object <fedora-rels-ext:isMemberOf> <info:fedora/' . $pid . '>)
+             and $object <fedora-model:state> <info:fedora/fedora-system:def/model#Active>)
+             minus $content <mulgara:is> <info:fedora/fedora-system:FedoraObject-3.0>
+             order by $title';
+  }
+
+  /**
+   * Gets objects related to this object.  Must include offset and limit!
+   *
+   * Calls self::getRelatedItems() but requires limit and offset.
+   *
+   * @param $pid string
+   *   A string containing a Fedora PID.
+   * @param $limit
+   *   An integer
+   * @param type $offset
+   * @param type $itqlquery
+   * @return type 
+   */
+  function getRelatedObjects($pid, $limit, $offset, $itqlquery=NULL) {
     return $this->getRelatedItems($pid, $itqlquery, $limit, $offset);
   }
 
   /**
-   * Gets objects related to this item.  It will query the object for a Query stream and use that as a itql query
-   * or if there is no query stream it will use the default.  If you pass a query to this method it will use the passed in query no matter what
+   * Gets objects related to this item.
+   *
+   * Query the resource index using the provided iTQL query.  If no query is 
+   * provided, one should be obtained via self::getCollectionQuery() which
+   * grabs the child objects.
+   *
+   * @param $pid string
+   *   A string containing a PID which may be substituted into the query,
+   *   in place of the %parent_collection% placeholder.
+   * @param $query_string string
+   *   An optional iTQL query.
+   * @param $limit int
+   *   An optional integer to limit the number of results returned.
+   * @param int $offset
+   *   An optional integer used to offset the results returned. (Query should
+   *   involve a sort to maintain consistency.
+   * @return string
+   *   Sparql XML results from the resource index.
    */
-  function getRelatedItems($pid, $itqlquery = NULL, $limit = NULL, $offset = NULL) {
-    module_load_include('inc', 'fedora_repository', 'ObjectHelper');
+  function getRelatedItems($pid, $query_string = NULL, $limit = NULL, $offset = NULL) {
     module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
-    if (!isset($limit)) {
-      $limit = 1000;
-    }
-    if (!isset($offset)) {
-      $offset = 0;
-    }
-    global $user;
-    if (!fedora_repository_access(OBJECTHELPER :: $OBJECT_HELPER_VIEW_FEDORA, $pid, $user)) {
+
+    if (!fedora_repository_access(OBJECTHELPER :: $OBJECT_HELPER_VIEW_FEDORA, $pid)) {
       drupal_set_message(t("You do not have access to Fedora objects within the attempted namespace or access to Fedora denied."), 'error');
       return ' ';
     }
-    $objectHelper = new ObjectHelper();
-    $query_string = $itqlquery;
-    if (!isset($query_string)) {
-      $query_string = $objectHelper->getStream($pid, 'QUERY', 0);
-      if ($query_string == NULL) {
-        $query_string = 'select $object $title $content from <#ri>
-                             where ($object <dc:title> $title
-                             and $object <fedora-model:hasModel> $content
-                             and ($object <fedora-rels-ext:isMemberOfCollection> <info:fedora/' . $pid . '>
-                             or $object <fedora-rels-ext:isMemberOf> <info:fedora/' . $pid . '>)
-                             and $object <fedora-model:state> <info:fedora/fedora-system:def/model#Active>)
-                             minus $content <mulgara:is> <info:fedora/fedora-system:FedoraObject-3.0>
-                             order by $title';
-      }
-    }
-    else {
-      // Replace %parent_collection% with the actual collection PID
-      $query_string = preg_replace("/\%parent_collection\%/", "<info:fedora/$pid>", $query_string);
+
+    if ($query_string === NULL) {
+      $query_string = self::getCollectionQuery($pid);
     }
 
-    $query_string = htmlentities(urlencode($query_string));
+    // Replace %parent_collection% with the actual collection PID
+    $query_string = preg_replace("/\%parent_collection\%/", "<info:fedora/$pid>", $query_string);
 
-    $content = '';
     $url = variable_get('fedora_repository_url', 'http://localhost:8080/fedora/risearch');
-    $url .= "?type=tuples&flush=TRUE&format=Sparql&limit=$limit&offset=$offset&lang=itql&stream=on&query=" . $query_string;
-    $content .= do_curl($url);
+    
+    $settings = array(
+      'type' => 'tuples',
+      'flush' => TRUE,
+      'format' => 'Sparql',
+      'lang' => 'itql',
+      'stream' => 'on',
+      'query' => $query_string
+    );
 
+    if ($limit > 0) {
+      $settings['limit'] = $limit;
+    }
+    if ($offset > 0) {
+      $settings['offset'] = $offset;
+    }
+    
+    $url .= '?' . http_build_query($settings, NULL, '&');
+    $content = do_curl($url);
     return $content;
   }
 
+  /**
+   * get Collection Policy Stream ?
+   * @param type $collection_pid
+   * @return type 
+   */
   function getCollectionPolicyStream($collection_pid) {
     if ($this->collectionPolicyStream != NULL) {
       return $this->collectionPolicyStream;
@@ -104,35 +154,58 @@ class CollectionClass {
     return $this->collectionPolicyStream;
   }
 
+  /**
+   * get Relationship element ?
+   * @param type $collection_pid
+   * @return type 
+   */
   function getRelationshipElement($collection_pid) {
     $stream = $this->getCollectionPolicyStream($collection_pid);
     try {
       $xml = new SimpleXMLElement($stream);
     } catch (Exception $e) {
-      drupal_set_message(t('Error getting relationship element from policy stream !e', array('!e' => $e->getMessage())), 'error');
+      drupal_set_message(t('Error getting relationship element from policy stream @e', array('@e' => check_plain($e->getMessage()))), 'error');
       return;
     }
     $relationship = $xml->relationship[0];
     return $relationship;
   }
 
+  /**
+   * get Collection View Stream ?
+   * @param type $collection_pid
+   * @return type 
+   */
   function getCollectionViewStream($collection_pid) {
     $this->collectionViewStream = $this->getStream($collection_pid, CollectionClass :: $COLLECTION_CLASS_COLLECTION_VIEW_STREAM, 0);
     return $this->collectionViewStream;
   }
 
+  /**
+   * get Stream ?
+   * @param type $pid
+   * @param type $dsid
+   * @param type $showError
+   * @return type 
+   */
   function getStream($pid, $dsid, $showError = 1) {
     module_load_include('inc', 'fedora_repository', 'api/fedora_item');
     $item = new fedora_item($pid);
     return isset($item->datastreams[$dsid]) ? $item->get_datastream_dissemination($dsid) : NULL;
   }
 
+  /**
+   * get Pid name space ?
+   * @param type $pid
+   * @param type $dsid
+   * @return type 
+   */
   function getPidNameSpace($pid, $dsid) {
     $stream = $this->getCollectionPolicyStream($pid);
     try {
       $xml = new SimpleXMLElement($stream);
     } catch (Exception $e) {
-      drupal_set_message(t('Error getting PID namespace !e', array('!e' => $e->getMessage())), 'error');
+      drupal_set_message(t('Error getting PID namespace @e', array('@e' => check_plain($e->getMessage()))), 'error');
       return;
     }
     foreach ($xml->contentmodels->contentmodel as $contentModel) {
@@ -148,6 +221,9 @@ class CollectionClass {
 
   /**
    * gets a list of content models from a collection policy
+   * @param type $collection_pid
+   * @param type $showError
+   * @return ContentModel 
    */
   function getContentModels($collection_pid, $showError = TRUE) {
     module_load_include('inc', 'Fedora_Repository', 'ContentModel');
@@ -156,7 +232,7 @@ class CollectionClass {
       $xml = new SimpleXMLElement($collection_stream);
     } catch (Exception $e) {
       if ($showError) {
-        drupal_set_message(t("!e", array('!e' => $e->getMessage())), 'error');
+        drupal_set_message(t('@e', array('@e' => check_plain($e->getMessage()))), 'error');
       }
       return NULL;
     }
@@ -196,7 +272,7 @@ class CollectionClass {
     try {
       $xml = new SimpleXMLElement($stream);
     } catch (Exception $e) {
-      drupal_set_message(t('Error Getting FormHandler: !e', array('!e' => $e->getMessage())), 'error');
+      drupal_set_message(t('Error Getting FormHandler: @e', array('@e' => check_plain($e->getMessage()))), 'error');
       return NULL;
     }
     $formHandler = $xml->ingest_form;
@@ -218,12 +294,18 @@ class CollectionClass {
     return NULL;
   }
 
+  /**
+   * get Allowed Mime Types
+   * @param type $contentModelPid
+   * @param type $contentModel_dsid
+   * @return type 
+   */
   function getAllowedMimeTypes($contentModelPid, $contentModel_dsid) {
     $stream = $this->getContentModelStream($contentModelPid, $contentModel_dsid);
     try {
       $xml = new SimpleXMLElement($stream);
     } catch (Exception $e) {
-      drupal_set_message(t('Error getting content model stream for mime types !e', array('!e' => $e->getMessage())), 'error');
+      drupal_set_message(t('Error getting content model stream for mime types @e', array('@e' => check_plain($e->getMessage()))), 'error');
       return;
     }
     foreach ($xml->mimetypes->type as $type) {
@@ -235,6 +317,12 @@ class CollectionClass {
   /**
    * Grabs the rules from the content model stream
    * file the file that has been uploaded
+   *
+   * @param type $file
+   * @param type $mimetype
+   * @param type $pid
+   * @param type $dsid
+   * @return type 
    */
   function getAndDoRules($file, $mimetype, $pid, $dsid) {
     if (!user_access('ingest new fedora objects')) {
@@ -247,7 +335,7 @@ class CollectionClass {
     try {
       $xml = new SimpleXMLElement($stream);
     } catch (Exception $e) {
-      drupal_set_message(t('Error getting content model stream !e', array('!e' => $e->getMessage())), 'error');
+      drupal_set_message(t('Error getting content model stream @e', array('@e' => check_plain($e->getMessage()))), 'error');
       return FALSE;
     }
     foreach ($xml->ingest_rules->rule as $rule) {
@@ -262,6 +350,10 @@ class CollectionClass {
 
   /**
    * calls the methods defined in the content model rules .xml file stored in a Fedora object
+   *
+   * @param type $file
+   * @param type $methods
+   * @return type 
    */
   function callMethods($file, $methods) {
     foreach ($methods as $method) {
@@ -284,7 +376,7 @@ class CollectionClass {
       $thisClass = new $phpClass ();
       $returnValue = $thisClass->$phpMethod($parametersArray, $dsid, $file, $file_ext);
       if (!$returnValue) {
-        drupal_set_message('Error! Failed running content model method !m !rv', array('!m' => $phpMethod, '!rv' => $returnValue));
+        drupal_set_message(t('Error! Failed running content model method !m !rv', array('!m' => $phpMethod, '!rv' => $returnValue)));
         return FALSE;
       }
     }
@@ -294,13 +386,19 @@ class CollectionClass {
   /**
    * grabs a xml form definition from a content model and builds
    * the form using drupals forms api
+   *
+   * @param type $form
+   * @param type $form_state
+   * @param type $contentModelPid
+   * @param type $contentModelDsid
+   * @return type 
    */
   function build_ingest_form(&$form, &$form_state, $contentModelPid, $contentModelDsid) {
     $stream = $this->getContentModelStream($contentModelPid, $contentModelDsid);
     try {
       $xml = new SimpleXMLElement($stream);
     } catch (Exception $e) {
-      drupal_set_message(t('Error getting ingest form stream !e', array('!e' => $e->getMessage())), 'error');
+      drupal_set_message(t('Error getting ingest form stream @e', array('@e' => check_plain($e->getMessage()))), 'error');
       return FALSE;
     }
     $docRoot = $_SERVER['DOCUMENT_ROOT'];
@@ -357,8 +455,13 @@ class CollectionClass {
     return $thisClass->$phpMethod($form, $ingest_form, $form_state['values'], $form_state);
   }
 
-  //this will also create a personal collection for an existing user if they don't have one
-  //not using this function currently
+  /**
+   * this will also create a personal collection for an existing user if they don't have one
+   * not using this function currently
+   * 
+   * @param type $user
+   * @return type 
+   */
   function createUserCollection(& $user) {
     if (isset($user->fedora_personal_pid)) {
       return;
@@ -370,7 +473,7 @@ class CollectionClass {
     module_load_include('inc', 'fedora_repository', 'ConnectionHelper');
     $connectionHelper = new ConnectionHelper();
     try {
-      $soapClient = $connectionHelper->getSoapClient(variable_get('fedora_soap_manage_url', 'http://localhost:8080/fedora/services/management?wsdl'));
+      $soapClient = $connectionHelper->getSoapClient(variable_get('fedora_soap_manage_url', 'http://localhost:8080/fedora/wsdl?api=API-M'));
       $pidNameSpace = variable_get('fedora_repository_pid', 'vre:');
       $pidNameSpace = substr($pidNameSpace, 0, strpos($pidNameSpace, ":"));
       $params = array(
@@ -378,10 +481,10 @@ class CollectionClass {
         'pidNamespace' => $pidNameSpace
       );
       $object = $soapClient->__soapCall('getNextPID', array(
-            $params
+        $params
           ));
     } catch (exception $e) {
-      drupal_set_message(t('Error getting Next PID: !e', array('!e' => $e->getMessage())), 'error');
+      drupal_set_message(t('Error getting Next PID: @e', array('@e' => check_plain($e->getMessage()))), 'error');
       return FALSE;
     }
     $pid = implode(get_object_vars($object));
@@ -393,7 +496,7 @@ class CollectionClass {
     module_load_include('inc', 'fedora_repository', 'plugins/PersonalCollectionClass');
     $personalCollectionClass = new PersonalCollectionClass();
     if (!$personalCollectionClass->createCollection($user, $pid, $soapClient)) {
-      drupal_set_message("Did not create a personal collection object for !u", array('!u' => $user->name));
+      drupal_set_message(t("Did not create a personal collection object for !u", array('!u' => $user->name)));
       return FALSE; //creation failed don't save the collection pid in drupal db
     }
     user_save($user, $personal_collection_pid);
@@ -403,59 +506,94 @@ class CollectionClass {
   /**
    * Queries a collection object for an xslt to format how the
    * collection of objects is displayed.
+   *
+   * @param type $pid
+   * @param type $path
+   * @param type $canUseDefault
+   * @return type 
    */
   function getXslContent($pid, $path, $canUseDefault = TRUE) {
     module_load_include('inc', 'fedora_repository', 'CollectionClass');
     $collectionClass = new CollectionClass();
     $xslContent = $collectionClass->getCollectionViewStream($pid);
-    if (!$xslContent && $canUseDefault) { //no xslt so we will use the default sent with the module
+    
+    //If there's no XSLT from the object, then check if the one which used to exist, does...
+    if (!$xslContent && $canUseDefault && file_exists($path . '/xsl/sparql_to_html.xsl')) { 
       $xslContent = file_get_contents($path . '/xsl/sparql_to_html.xsl');
     }
+    
     return $xslContent;
   }
 
+  /**
+   * show field sets ?
+   * @global type $base_url
+   * @global type $user
+   * @param type $page_number
+   * @return string 
+   */
   function showFieldSets($page_number) {
     module_load_include('inc', 'fedora_repository', 'api/fedora_item');
+    module_load_include('inc', 'fedora_repository', 'CollectionPolicy');
+    //module_load_include('inc', 'fedora_repository', 'BatchIngest'); //Legacy code?
     global $base_url;
-
-    $tabset = array();
-
     global $user;
-    $objectHelper = new ObjectHelper();
-    $item = new Fedora_Item($this->pid);
+    
+    $tabset = array();
     $query = NULL;
+    $item = new Fedora_Item($this->pid);
     if ($item->exists() && array_key_exists('QUERY', $item->datastreams)) {
       $query = $item->get_datastream_dissemination('QUERY');
     }
     $results = $this->getRelatedItems($this->pid, $query);
 
     $collection_items = $this->renderCollection($results, $this->pid, NULL, NULL, $page_number);
-    $collection_item = new Fedora_Item($this->pid);
+
+    $show_batch_tab = FALSE;
+    $policy = CollectionPolicy::loadFromCollection($this->pid, TRUE);
+
+    if (!empty($policy)) {
+      $content_models = $policy->getContentModels();
+    }
+    if (count($content_models) == 1 && $content_models[0]->pid == "islandora:collectionCModel") {
+      $show_batch_tab = FALSE;
+    }
+    
     // Check the form post to see if we are in the middle of an ingest operation.
-    $show_ingest_tab = (!empty($_POST['form_id']) && $_POST['form_id'] == 'fedora_repository_ingest_form');
-    $add_to_collection = $this->getIngestInterface();
+    $add_selected = ((!empty($_POST['form_id']) && $_POST['form_id'] == 'fedora_repository_ingest_form') || !$collection_items);
+    $view_selected = !$add_selected;
 
     $tabset['view_tab'] = array(
       '#type' => 'tabpage',
-      '#title' => 'View',
-      '#content' => $collection_items
+      '#title' => t('View'),
+      '#selected' => $view_selected,
+      '#content' => $collection_items,
+      '#tab_name' => 'view-tab',
     );
-    $tabset['add_tab'] = array(
-      // #type and #title are the minimum requirements.
-      '#type' => 'tabpage',
-      '#title' => t('Add'),
-      '#selected' => $show_ingest_tab,
-      // This will be the content of the tab.
-      '#content' => $add_to_collection,
-    );
+    
+    $add_to_collection = $this->getIngestInterface();
+    if (!empty($add_to_collection)) {
+      $tabset['add_tab'] = array(
+        '#type' => 'tabpage',
+        '#title' => t('Add'),
+        '#selected' => $add_selected,
+        // This will be the content of the tab.
+        '#content' => $add_to_collection,
+        '#tab_name' => 'add-tab',
+      );
+    }
+
     return $tabset;
   }
 
+  /**
+   * get Ingest Interface ??
+   * @global type $base_url
+   * @return string 
+   */
   function getIngestInterface() {
-    global $base_url;
-    $objectHelper = new ObjectHelper();
     module_load_include('inc', 'Fedora_Repository', 'CollectionPolicy');
-    $collectionPolicyExists = $objectHelper->getMimeType($this->pid, CollectionPolicy::getDefaultDSID());
+    $collectionPolicyExists = $this->collectionObject->getMimeType($this->pid, CollectionPolicy::getDefaultDSID());
     if (user_access(ObjectHelper :: $INGEST_FEDORA_OBJECTS) && $collectionPolicyExists) {
       if (!empty($collectionPolicyExists)) {
         $allow = TRUE;
@@ -474,68 +612,186 @@ class CollectionClass {
     return $ingestObject;
   }
 
-  function renderCollection($content, $pid, $dsId, $collection, $pageNumber = NULL) {
+  /**
+   * Unfortunate function, I know...
+   *
+   * Does just what it says:  Hacks the default Drupal pager such that it might
+   * be rendered, likely with: theme('pager', array(), $per_page, $pager_name)
+   * (I reccomend seeing the real documentation for more detail, but the first
+   * array can be a list of the tags to use for first, previous, next and last
+   * (text in the pager), I don't believe per_page is actually used in the theme
+   * function, and $pager_name is an integer used to identify the pager (such 
+   * that there can be more than one--that is, tracking different lists of 
+   * content on a single page.  You can render the exact same pager multiple 
+   * times, say if you want one at the top and bottom of a list, using the same 
+   * ID/pager_name.
+   *
+   * @global $pager_total array
+   *   Numerically indexed array, where keys are the $pager_names and values
+   *   are the number of pages in the given set, based on: ceil($total_items/$per_page);
+   * @global $pager_page_array array
+   *   Numerically indexed array, where keys are the $pager_names and values
+   *   are the page selected in the relevant set.
+   * @param $pager_name int
+   *   An integer to identify the pager to affect.  Do note that paging in using
+   *   this function will add the 'page' HTTP GET parameter to the URL, with 
+   *   the value containing a comma-separated list with max($pager_name + 1)
+   *   values--that is, if you create a single pager named '10', the 'next'
+   *   link will look something like: 0,0,0,0,0,0,0,0,0,0,1
+   * @param $per_page int
+   *   An integer representing the number of items per page.
+   * @param $total_items int
+   *   An integer representing the total number of items in the set.
+   * @return int
+   *   An integer representing what the current page should be.
+   */
+  protected static function hackPager($pager_name, $per_page = NULL, $total_items = NULL) {
+    global $pager_total, $pager_page_array;
+    
+    if ($per_page !== NULL && $total_items !== NULL) {
+      $pager_total[$pager_name] = ceil($total_items / $per_page);
+    }
+    
+    //XXX: Don't know that this is neccessary, to try to load all the time, or
+    //  whether Drupal will load it automatically somewhere...  Docs seems a
+    //  a little sparse.
+    $page_info = explode(',', isset($_GET['page']) ? $_GET['page'] : '');
+    $page = $page_info[$pager_name];
+    if ($page < 0) {
+      $page = 0;
+    }
+    
+    if (!isset($pager_page_array)) {
+      $pager_page_array = pager_load_array($page, $pager_name, $page_info);
+    }
+    else {
+      $pager_page_array = pager_load_array($page, $pager_name, $pager_page_array);
+    }
+    
+    $page = $pager_page_array[$pager_name];
+    return $page;
+  }
+  
+  /**
+   * render collection
+   * @global type $base_url
+   * @param type $content
+   * @param type $pid
+   * @param type $dsId
+   * @param type $collection
+   * @param int $pageNumber
+   * @return type 
+   */
+  function renderCollection($content, $pid, $dsId, $collectionName, $pageNumber = NULL) {
     $path = drupal_get_path('module', 'fedora_repository');
     global $base_url;
     $collection_pid = $pid; //we will be changing the pid later maybe
-    $objectHelper = new ObjectHelper();
     $parsedContent = NULL;
-    $contentModels = $objectHelper->get_content_models_list($pid);
+    $contentModels = $this->collectionObject->get_content_models_list($pid);
     $isCollection = FALSE;
     //if this is a collection object store the $pid in the session as it will come in handy
     //after a purge or ingest to return to the correct collection.
 
     $fedoraItem = NULL;
 
-
-
-    $collectionName = $collection;
-    if (!$pageNumber) {
-      $pageNumber = 1;
+    if (empty($collectionName)) {
+      $collectionName = menu_get_active_title();
     }
-
-    if (!isset($collectionName)) {
-      $collectionName = variable_get('fedora_repository_name', 'Collection');
-    }
+    
     $xslContent = $this->getXslContent($pid, $path);
 
-    //get collection list and display using xslt-------------------------------------------
     $objectList = '';
     if (isset($content) && $content != FALSE) {
-      $input = new DomDocument();
-      $input->loadXML(trim($content));
-      $results = $input->getElementsByTagName('result');
-      if ($results->length > 0) {
-        try {
-          $proc = new XsltProcessor();
-          $proc->setParameter('', 'collectionPid', $collection_pid);
-          $proc->setParameter('', 'collectionTitle', $collectionName);
-          $proc->setParameter('', 'baseUrl', $base_url);
-          $proc->setParameter('', 'path', $base_url . '/' . $path);
-          $proc->setParameter('', 'hitPage', $pageNumber);
-          $proc->registerPHPFunctions();
-          $xsl = new DomDocument();
-          $xsl->loadXML($xslContent);
-          // php xsl does not seem to work with namespaces so removing it below
-          // I may have just been being stupid here
-          // $content = str_ireplace('xmlns="http://www.w3.org/2001/sw/DataAccess/rf1/result"', '', $content);
+      if (!$xslContent) { //Didn't find an XSLT.
+        $intermediate_results = ObjectHelper::parse_sparql_results($content);
+        unset($content);
+        
+        $per_page = 20; //XXX:  Make this configurable.
+        $pager_name = 0;
+        $total = count($intermediate_results);
+        $pager_page = self::hackPager($pager_name, $per_page, $total);
 
-          $xsl = $proc->importStylesheet($xsl);
-          $newdom = $proc->transformToDoc($input);
+        $results = array();
+        foreach (array_slice($intermediate_results, $per_page * $pager_page, $per_page) as $result) {
+          $title = $result['title'];
+          $obj_path = "fedora/repository/{$result['object']}";
+          $thumbnail = theme('image', "$obj_path/TN", $title, $title, array(), FALSE);
+          $results[] = array(
+            'data' => l($thumbnail, $obj_path, array(
+              'html' => TRUE,
+              'attributes' => array(
+                'class' => 'results-image',
+              ),
+            )) . l($title, $obj_path, array('attributes' => array('class' => 'results-text'))),
+          );
+        }
+        if (!$results) {
+          drupal_set_message(t("No objects in this collection (or bad query)."));
+        }
+        else {
+          $first = $per_page * $pager_page;
+          $last = (($total - $first) > $per_page)?
+            ($first + $per_page):
+            $total;
+          $results_range_text = t('Results @first to @last of @total', array(
+            '@first' => $first + 1,
+            '@last' => $last,
+            '@total' => $total,
+          ));
+          //$objectList = '<h3>' . $results_range_text . '</h3>'; 
+          $objectList .= theme('pager', array(), $per_page, $pager_name);
+          $objectList .= theme('item_list', $results, $result_range_text, 'ul', array(
+            'class' => 'islandora-collection-results-list',
+          ));
+          $objectList .= theme('pager', array(), $per_page, $pager_name);
+        }
+      }
+      else {
+        if (!$pageNumber) {
+          $pageNumber = 1;
+        }
+        
+        //get collection list and display using xslt-------------------------------------------
+        $input = new DomDocument();
+        $input->loadXML(trim($content));
+        $results = $input->getElementsByTagName('result');
+        if ($results->length > 0) {
+          try {
+            $proc = new XsltProcessor();
+            $options = array( //Could make this the return of a hook?  
+              'collectionPid' => $collection_pid,
+              'collectionTitle' => $collectionName,
+              'baseUrl' => $base_url,
+              'path' => "$base_url/$path",
+              'hitPage' => $pageNumber,
+            );
+            
+            $proc->setParameter('', $options);
 
-          $objectList = $newdom->saveXML(); //is the xml transformed to html as defined in the xslt associated with the collection object
+            $proc->registerPHPFunctions();
+            $xsl = new DomDocument();
+            $xsl->loadXML($xslContent);
+            // php xsl does not seem to work with namespaces so removing it below
+            // I may have just been being stupid here
+            // $content = str_ireplace('xmlns="http://www.w3.org/2001/sw/DataAccess/rf1/result"', '', $content);
 
-          if (!$objectList) {
-            throw new Exception("Invalid XML.");
+            $xsl = $proc->importStylesheet($xsl);
+            $newdom = $proc->transformToDoc($input);
+
+            $objectList = $newdom->saveHTML(); //is the xml transformed to html as defined in the xslt associated with the collection object
+
+            if (!$objectList) {
+              throw new Exception("Invalid XML.");
+            }
+          } catch (Exception $e) {
+            drupal_set_message(check_plain($e->getMessage()), 'error');
+            return '';
           }
-        } catch (Exception $e) {
-          drupal_set_message(t('!e', array('!e' => $e->getMessage())), 'error');
-          return '';
         }
       }
     }
     else {
-      drupal_set_message(t("No Objects in this collection or bad query."));
+      drupal_set_message(t("No objects in this collection (or bad query)."));
     }
     return $objectList;
   }
