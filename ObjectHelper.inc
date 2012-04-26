@@ -359,7 +359,7 @@ class ObjectHelper {
     $content = '';
     $id = $dataStreamValue->ID;
     $label = $dataStreamValue->label;
-    $label = str_replace("_", " ", $label);
+    //$label = str_replace("_", " ", $label);
     $label_deslashed = preg_replace('/\//i', '${1}_', $label); // Necessary to handle the case of Datastream labels that contain slashes. Ugh.
     $mimeType = $dataStreamValue->MIMEType;
 
@@ -368,20 +368,8 @@ class ObjectHelper {
         'target' => '_blank',
       ),
     ));
-    $action = url("fedora/repository/object_download/$pid/$id/$label_deslashed");
-    $downloadVersion = '<form method="GET" action="' . $action . '"><input type="submit" value="' . t('Download') . '"></form>';
-    if (user_access(ObjectHelper::$EDIT_FEDORA_METADATA)) {
-      $versions = $item->get_datastream_history($id);
-      if (is_array($versions)) {
-        $downloadVersion = '<form method="GET" action="' . $action . '" onsubmit="this.action=\'' . $action . '\' + \'/\'+this.version.value;">';
-        $downloadVersion .= '<input type="submit" value="' . t('Download') . '">';
-        $downloadVersion .= '<select name="version">';
-        foreach ($versions as $version) {
-          $downloadVersion .= '<option>' . $version->createDate . '</option>';
-        }
-        $downloadVersion .= '</select></form>';
-      }
-    }
+    
+    $downloadVersion = drupal_get_form('fedora_repository_download_datastream_form', $pid, $id, $label_deslashed);
 
     return array(
       array(
