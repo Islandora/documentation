@@ -358,7 +358,7 @@ class ObjectHelper {
     $content = '';
     $id = $dataStreamValue->ID;
     $label = $dataStreamValue->label;
-    $label = str_replace("_", " ", $label);
+    //$label = str_replace("_", " ", $label);
     $label_deslashed = preg_replace('/\//i', '${1}_', $label); // Necessary to handle the case of Datastream labels that contain slashes. Ugh.
     $mimeType = $dataStreamValue->MIMEType;
 
@@ -367,20 +367,8 @@ class ObjectHelper {
         'target' => '_blank',
       ),
     ));
-    $action = url("fedora/repository/object_download/$pid/$id/$label_deslashed");
-    $downloadVersion = '<form method="GET" action="' . $action . '"><input type="submit" value="' . t('Download') . '"></form>';
-    if (user_access(ObjectHelper::$EDIT_FEDORA_METADATA)) {
-      $versions = $item->get_datastream_history($id);
-      if (is_array($versions)) {
-        $downloadVersion = '<form method="GET" action="' . $action . '" onsubmit="this.action=\'' . $action . '\' + \'/\'+this.version.value;">';
-        $downloadVersion .= '<input type="submit" value="' . t('Download') . '">';
-        $downloadVersion .= '<select name="version">';
-        foreach ($versions as $version) {
-          $downloadVersion .= '<option>' . $version->createDate . '</option>';
-        }
-        $downloadVersion .= '</select></form>';
-      }
-    }
+    
+    $downloadVersion = drupal_get_form('fedora_repository_download_datastream_form', $pid, $id, $label_deslashed);
 
     return array(
       array(
@@ -1026,7 +1014,7 @@ EOQ;
         $next_pid = $parent;
       }
       else {
-        watchdog('fedora_repository', 'Error generating breadcrumbs for %pid.  Verify there exists relationships back up to %root. (May also be due to a hierarchy deeper than %max_depth).', array('%pid' => $pid, '%root' => $root, '%max_depth' => $max_depth), WATCHDOG_WARNING);
+        watchdog('fedora_repository', 'Error generating breadcrumbs for %pid.  Verify there exists relationships back up to %root. (May also be due to a hierarchy deeper than %max_depth).', array('%pid' => $pid, '%root' => $root, '%max_depth' => $max_level), WATCHDOG_WARNING);
         $breadcrumbs[] = '...'; //Add an non-link, as we don't know how to get back to the root.
         $next_pid = $root;  //And cue the last two links to render and break recursion (on the next pass).
       }

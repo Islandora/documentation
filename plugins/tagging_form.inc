@@ -70,7 +70,7 @@ function fedora_repository_image_tagging_form($form_state, $pid) {
     $tag_title_text = t('Added by @creator.', array(
       '@creator' => $tag['creator'],
     ));
-    $tag_mnpl_search_path = "fedora/repository/mnpl_advanced_search/tag:{$tag['name']}"
+    $tag_mnpl_search_path = "fedora/repository/mnpl_advanced_search/tag:{$tag['name']}";
     $form_tag['tag'] = array(
       '#value' => l($tag['name'], $tag_mnpl_search_path, array('attributes' => array(
         'title' => $tag_title_text
