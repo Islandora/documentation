@@ -996,7 +996,7 @@ EOQ;
         $next_pid = $parent;
       }
       else {
-        watchdog('fedora_repository', 'Error generating breadcrumbs for %pid.  Verify there exists relationships back up to %root. (May also be due to a hierarchy deeper than %max_depth).', array('%pid' => $pid, '%root' => $root, '%max_depth' => $max_depth), WATCHDOG_WARNING);
+        watchdog('fedora_repository', 'Error generating breadcrumbs for %pid.  Verify there exists relationships back up to %root. (May also be due to a hierarchy deeper than %max_depth).', array('%pid' => $pid, '%root' => $root, '%max_depth' => $max_level), WATCHDOG_WARNING);
         $breadcrumbs[] = '...'; //Add an non-link, as we don't know how to get back to the root.
         $next_pid = $root;  //And cue the last two links to render and break recursion (on the next pass).
       }
