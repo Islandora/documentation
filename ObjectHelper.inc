@@ -987,21 +987,33 @@ class ObjectHelper {
       $breadcrumbs[] = l(t('Home'), '<front>');
     }
     else {
-      $query_string = 'select $parentObject $title $content from <#ri>
-                        where (
-                          <info:fedora/' . $pid . '> <fedora-model:label> $title
-                          and $parentObject <fedora-model:hasModel> $content
-                          and (
-                            <info:fedora/' . $pid . '> <fedora-rels-ext:isMemberOfCollection> $parentObject
-                            or <info:fedora/' . $pid . '> <fedora-rels-ext:isMemberOf> $parentObject
-                            or <info:fedora/' . $pid . '> <fedora-rels-ext:isPartOf> $parentObject
-                          )
-                          and $parentObject <fedora-model:state> <info:fedora/fedora-system:def/model#Active>
-                        )
-                        minus $content <mulgara:is> <info:fedora/fedora-system:FedoraObject-3.0>
-                        order by $title desc';
+      $sparql_query_string = <<<EOQ
+PREFIX fedora-model: <info:fedora/fedora-system:def/model#>
+PREFIX rels-ext: <info:fedora/fedora-system:def/relations-external#>
+SELECT ?parentObject ?title ?content
+FROM <#ri>
+WHERE {
+  ?this fedora-model:label ?title ;
+        ?relationship ?parentObject .
+  ?parentObject fedora-model:state fedora-model:Active ;
+                fedora-model:hasModel ?content .
+  FILTER(
+    sameTerm(?this, <info:fedora/$pid>) &&
+    (
+      sameTerm(?relationship, rels-ext:isMemberOfCollection) ||
+      sameTerm(?relationship, rels-ext:isMemberOf) ||
+      sameTerm(?relationship, rels-ext:isPartOf)
+    ) &&
+    !sameTerm(?content, <info:fedora/fedora-system:FedoraObject-3.0>)
+  ) .
+}
+ORDER BY DESC(?title)
+EOQ;
 
-      if (count($results = self::performItqlQuery($query_string)) > 0  && $level > 0) {
+      $results = self::performSparqlQuery($sparql_query_string);
+      $next_pid = NULL;
+      
+      if (count($results) > 0  && $level > 0) {
         $parent = $results[0]['parentObject'];
         $this_title = $results[0]['title'];
 
@@ -1011,13 +1023,17 @@ class ObjectHelper {
         
         $breadcrumbs[] = l($this_title, "fedora/repository/$pid");
         
-        $level--;
-        $this->getBreadcrumbs($parent, $breadcrumbs);
+        $next_pid = $parent;
       }
       else {
         watchdog('fedora_repository', 'Error generating breadcrumbs for %pid.  Verify there exists relationships back up to %root. (May also be due to a hierarchy deeper than %max_depth).', array('%pid' => $pid, '%root' => $root, '%max_depth' => $max_depth), WATCHDOG_WARNING);
         $breadcrumbs[] = '...'; //Add an non-link, as we don't know how to get back to the root.
-        $this->getBreadcrumbs($root, $breadcrumbs); //And render the last two links and break (on the next pass).
+        $next_pid = $root;  //And cue the last two links to render and break recursion (on the next pass).
+      }
+      
+      if ($next_pid !== NULL) {
+        $level--;
+        $this->getBreadcrumbs($next_pid, $breadcrumbs);
       }
     }
   }
