@@ -83,7 +83,6 @@ class ObjectHelper {
       return ' ';
     }
 
-
     if (variable_get('fedora_object_restrict_datastreams', FALSE) == TRUE) {
       if (($cm = ContentModel::loadFromObject($pid)) == FALSE) {
         drupal_set_message(t("You do not have access to objects without an Islandora Content Model."), 'error');
@@ -101,7 +100,6 @@ class ObjectHelper {
 
     module_load_include('inc', 'fedora_repository', 'api/fedora_item');
     $item = new Fedora_Item($pid);
-
 
     if (isset($item->datastreams[$dsID])) {
       $mimeType = $item->datastreams[$dsID]['MIMEType'];
@@ -128,8 +126,14 @@ class ObjectHelper {
 
     if (function_exists("curl_init")) {
       $url = variable_get('fedora_base_url', 'http://localhost:8080/fedora') . '/objects/' . $pid . '/datastreams/' . $dsID . '/content';
+      $query_options = array();
       if ($version) {
-        $url .= '/' . $version; //drupal_urlencode($version);
+        $query_options['asOfDateTime'] = $version; //drupal_urlencode($version);
+      }
+      if ($query_options) {
+        $url = url($url, array(
+          'query' => $query_options,
+        ));
       }
       $ch = curl_init();
       $user_agent = "Mozilla/4.0 pp(compatible; MSIE 5.01; Windows NT 5.0)";
@@ -205,7 +209,7 @@ class ObjectHelper {
             }
             
             header('HTTP/1.1 307 Moved Temporarily');
-            header('Location: ' . $effective_url . '?' . http_build_query($query)); //Fedora seems to discard the query portion.
+            header('Location: ' . url($effective_url, array('query' => $query)));
           }
           elseif ((isset($user) && $user->uid != 0) || $forceSoap || isset($_SERVER['HTTPS'])) { //If not anonymous, soap is force or we're using HTTPS
             //Have the webserver mediate the transfer (download and restream)
@@ -376,7 +380,7 @@ class ObjectHelper {
     $content = '';
     $id = $dataStreamValue->ID;
     $label = $dataStreamValue->label;
-    $label = str_replace("_", " ", $label);
+    //$label = str_replace("_", " ", $label);
     $label_deslashed = preg_replace('/\//i', '${1}_', $label); // Necessary to handle the case of Datastream labels that contain slashes. Ugh.
     $mimeType = $dataStreamValue->MIMEType;
 
@@ -385,20 +389,8 @@ class ObjectHelper {
         'target' => '_blank',
       ),
     ));
-    $action = url("fedora/repository/object_download/$pid/$id/$label_deslashed");
-    $downloadVersion = '<form method="GET" action="' . $action . '"><input type="submit" value="' . t('Download') . '"></form>';
-    if (user_access(ObjectHelper::$EDIT_FEDORA_METADATA)) {
-      $versions = $item->get_datastream_history($id);
-      if (is_array($versions)) {
-        $downloadVersion = '<form method="GET" action="' . $action . '" onsubmit="this.action=\'' . $action . '\' + \'/\'+this.version.value;">';
-        $downloadVersion .= '<input type="submit" value="' . t('Download') . '">';
-        $downloadVersion .= '<select name="version">';
-        foreach ($versions as $version) {
-          $downloadVersion .= '<option>' . $version->createDate . '</option>';
-        }
-        $downloadVersion .= '</select></form>';
-      }
-    }
+    
+    $downloadVersion = drupal_get_form('fedora_repository_download_datastream_form', $pid, $id, $label_deslashed);
 
     return array(
       array(
@@ -1005,21 +997,33 @@ class ObjectHelper {
       $breadcrumbs[] = l(t('Home'), '<front>');
     }
     else {
-      $query_string = 'select $parentObject $title $content from <#ri>
-                        where (
-                          <info:fedora/' . $pid . '> <fedora-model:label> $title
-                          and $parentObject <fedora-model:hasModel> $content
-                          and (
-                            <info:fedora/' . $pid . '> <fedora-rels-ext:isMemberOfCollection> $parentObject
-                            or <info:fedora/' . $pid . '> <fedora-rels-ext:isMemberOf> $parentObject
-                            or <info:fedora/' . $pid . '> <fedora-rels-ext:isPartOf> $parentObject
-                          )
-                          and $parentObject <fedora-model:state> <info:fedora/fedora-system:def/model#Active>
-                        )
-                        minus $content <mulgara:is> <info:fedora/fedora-system:FedoraObject-3.0>
-                        order by $title desc';
+      $sparql_query_string = <<<EOQ
+PREFIX fedora-model: <info:fedora/fedora-system:def/model#>
+PREFIX rels-ext: <info:fedora/fedora-system:def/relations-external#>
+SELECT ?parentObject ?title ?content
+FROM <#ri>
+WHERE {
+  ?this fedora-model:label ?title ;
+        ?relationship ?parentObject .
+  ?parentObject fedora-model:state fedora-model:Active ;
+                fedora-model:hasModel ?content .
+  FILTER(
+    sameTerm(?this, <info:fedora/$pid>) &&
+    (
+      sameTerm(?relationship, rels-ext:isMemberOfCollection) ||
+      sameTerm(?relationship, rels-ext:isMemberOf) ||
+      sameTerm(?relationship, rels-ext:isPartOf)
+    ) &&
+    !sameTerm(?content, <info:fedora/fedora-system:FedoraObject-3.0>)
+  ) .
+}
+ORDER BY DESC(?title)
+EOQ;
 
-      if (count($results = self::performItqlQuery($query_string)) > 0  && $level > 0) {
+      $results = self::performSparqlQuery($sparql_query_string);
+      $next_pid = NULL;
+      
+      if (count($results) > 0  && $level > 0) {
         $parent = $results[0]['parentObject'];
         $this_title = $results[0]['title'];
 
@@ -1029,13 +1033,17 @@ class ObjectHelper {
         
         $breadcrumbs[] = l($this_title, "fedora/repository/$pid");
         
-        $level--;
-        $this->getBreadcrumbs($parent, $breadcrumbs);
+        $next_pid = $parent;
       }
       else {
-        watchdog('fedora_repository', 'Error generating breadcrumbs for %pid.  Verify there exists relationships back up to %root. (May also be due to a hierarchy deeper than %max_depth).', array('%pid' => $pid, '%root' => $root, '%max_depth' => $max_depth), WATCHDOG_WARNING);
+        watchdog('fedora_repository', 'Error generating breadcrumbs for %pid.  Verify there exists relationships back up to %root. (May also be due to a hierarchy deeper than %max_depth).', array('%pid' => $pid, '%root' => $root, '%max_depth' => $max_level), WATCHDOG_WARNING);
         $breadcrumbs[] = '...'; //Add an non-link, as we don't know how to get back to the root.
-        $this->getBreadcrumbs($root, $breadcrumbs); //And render the last two links and break (on the next pass).
+        $next_pid = $root;  //And cue the last two links to render and break recursion (on the next pass).
+      }
+      
+      if ($next_pid !== NULL) {
+        $level--;
+        $this->getBreadcrumbs($next_pid, $breadcrumbs);
       }
     }
   }
