@@ -398,7 +398,6 @@ class ObjectHelper {
   function getFormattedDC($item) {
     global $base_url;
     $path = drupal_get_path('module', 'fedora_repository');
-    module_load_include('inc', 'fedora_repository', 'ConnectionHelper');
 
     $dsid = array_key_exists('QDC', $item->get_datastreams_list_as_array()) ? 'QDC' : 'DC';
     $xmlstr = $item->get_datastream_dissemination($dsid);
@@ -408,7 +407,7 @@ class ObjectHelper {
     }
     
     if (($xsl_path = "$path/xsl/convertQDC.xsl") &&
-      ($xsl = DOMDocument::load($xsl_path)) &&
+      ($xsl = DOMDocument::load($xsl_path)) &&  //Fails loading XSLT -> FALSE
       ($ds = DOMDocument::loadXML($xmlstr))) {
       $xslt_opts = array(
         'BASEURL' => $base_url,
