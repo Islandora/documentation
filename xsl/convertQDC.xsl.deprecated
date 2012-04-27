@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- This was how the metadata in the 'Fedora Object Details' tab was rendered.  Can be renamed back to 'convertQDC.xsl' (without '.deprecated') to make it be used again. -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
   <!-- Old parameter names "$baseUrl" and "$path" are deprecated.  Currently just used as defaults. -->
 	<xsl:param name="BASEURL" select="$baseUrl"/>
