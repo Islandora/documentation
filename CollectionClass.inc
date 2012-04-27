@@ -28,11 +28,9 @@ class CollectionClass {
    * @return CollectionClass
    */
   function __construct($pid = NULL) {
-    if (!empty($pid)) {
-      module_load_include('inc', 'fedora_repository', 'ObjectHelper');
-      $this->collectionObject = new ObjectHelper($pid);
-      $this->pid = $pid;
-    }
+    module_load_include('inc', 'fedora_repository', 'ObjectHelper');
+    $this->collectionObject = new ObjectHelper();
+    $this->pid = $pid;
   }
   
   public static function getCollectionQuery($pid) {
