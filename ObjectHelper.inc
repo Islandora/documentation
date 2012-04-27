@@ -432,9 +432,17 @@ class ObjectHelper {
     if (($xsl_path = "$path/xsl/convertQDC.xsl") &&
       ($xsl = DOMDocument::load($xsl_path)) &&
       ($ds = DOMDocument::loadXML($xmlstr))) {
+      $xslt_opts = array(
+        'BASEURL' => $base_url,
+        'PATH' => url($path, array('absolute' => TRUE)),
+        'baseUrl' => $base_url, //XXX: Deprecated; just here for legacy cases.
+        'path' => url($path, array('absolute' => TRUE)), //XXX: Deprecated; just here for legacy cases.
+      );
       $transform = new XSLTProcessor();
       $transform->importStylesheet($xsl);
-      return $transform->transformToXML($ds);
+      $transform->setParameter('', $xslt_opts);
+      $transformed = $transform->transformToDoc($ds);
+      return $transformed->saveHTML();
     }
     else {
       $simplexml = new SimpleXMLElement($xmlstr);
