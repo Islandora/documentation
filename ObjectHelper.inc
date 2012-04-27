@@ -433,8 +433,8 @@ class ObjectHelper {
       ($xsl = DOMDocument::load($xsl_path)) &&
       ($ds = DOMDocument::loadXML($xmlstr))) {
       $transform = new XSLTProcessor();
-      $transform->importStylesheet($domdoc);
-      return $transform->transformToHTML($ds);
+      $transform->importStylesheet($xsl);
+      return $transform->transformToXML($ds);
     }
     else {
       $simplexml = new SimpleXMLElement($xmlstr);
