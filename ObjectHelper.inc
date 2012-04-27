@@ -407,50 +407,59 @@ class ObjectHelper {
       return '';
     }
     
-    $simplexml = new SimpleXMLElement($xmlstr);
-
-    $headers = array(
-      array(
-        'data' => t('Metadata'),
-        'colspan' => 2,
-      ),
-    );
-    $rows = array();
-    foreach ($simplexml->getNamespaces(TRUE) as $ns) {
-      foreach ($simplexml->children($ns) as $child) {
-        $data = array();
-        $rendered_data = '';
-        if ($grand_children = $child->children()) {
-          foreach($grand_children as $grand_child) {
-            $data[] = $grand_child->tagName() . ' = ' . (string)$grand_child;
-          }
-        }
-        else {
-          $rendered_data = (string)$child;
-        }
-        
-        if ($data) {
-          $rendered_data = theme('item_list', $data);
-        }
-        
-        if ($rendered_data) {
-          $rows[] = array(
-            array(
-              'data' => $child->getName(),
-              'class' => 'dc-tag-name',
-            ),
-            array(
-              'data' => $rendered_data,
-              'class' => 'dc-content',
-            ),
-          );
-        }
-        
-        
-      }
+    if (($xsl_path = "$path/xsl/convertQDC.xsl") &&
+      ($xsl = DOMDocument::load($xsl_path)) &&
+      ($ds = DOMDocument::loadXML($xmlstr))) {
+      $transform = new XSLTProcessor();
+      $transform->importStylesheet($xsl);
+      return $transform->transformToXML($ds);
     }
+    else {
+      $simplexml = new SimpleXMLElement($xmlstr);
 
-    return theme('table', $headers, $rows, array('class' => 'dc-table'));
+      $headers = array(
+        array(
+          'data' => t('Metadata'),
+          'colspan' => 2,
+        ),
+      );
+      $rows = array();
+      foreach ($simplexml->getNamespaces(TRUE) as $ns) {
+        foreach ($simplexml->children($ns) as $child) {
+          $data = array();
+          $rendered_data = '';
+          if ($grand_children = $child->children()) {
+            foreach($grand_children as $grand_child) {
+              $data[] = $grand_child->getName() . ' = ' . (string)$grand_child;
+            }
+          }
+          else {
+            $rendered_data = (string)$child;
+          }
+          
+          if ($data) {
+            $rendered_data = theme('item_list', $data);
+          }
+          
+          if ($rendered_data) {
+            $rows[] = array(
+              array(
+                'data' => $child->getName(),
+                'class' => 'dc-tag-name',
+              ),
+              array(
+                'data' => $rendered_data,
+                'class' => 'dc-content',
+              ),
+            );
+          }
+          
+          
+        }
+      }
+
+      return theme('table', $headers, $rows, array('class' => 'dc-table'));
+    }
   }
 
   /**
