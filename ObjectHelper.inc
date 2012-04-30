@@ -2,7 +2,7 @@
 
 
 /**
- * @file 
+ * @file
  * Object Helper Class
  */
 
@@ -429,6 +429,7 @@ class ObjectHelper {
     }
     
     if (($xsl_path = "$path/xsl/convertQDC.xsl") &&
+      (is_readable($xsl_path)) &&
       ($xsl = DOMDocument::load($xsl_path)) &&  //Fails loading XSLT -> FALSE
       ($ds = DOMDocument::loadXML($xmlstr))) {
       $xslt_opts = array(
