@@ -32,8 +32,6 @@ class ObjectHelper {
     drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
     module_load_include('inc', 'fedora_repository', 'ConnectionHelper');
     $connectionHelper = new ConnectionHelper();
-    //$this->fedoraUser = $connectionHelper->getUser();
-    //$this->fedoraPass = $connectionHelper->getPassword();
   }
   
   private static function getBinaryLength($bin) {
