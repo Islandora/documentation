@@ -1071,7 +1071,7 @@ function fedora_repository_get_items($pid = NULL, $dsId = NULL, $collection = NU
    $object_details = array();
   }
 
-  $hook_tabs = module_invoke_all('islandora_tabs', $content_models, $pid);
+  $hook_tabs = module_invoke_all('islandora_tabs', $content_models, $pid, $page_number);
   $cmodels_tabs = array_merge($cmodels_tabs, $object_details, $hook_tabs);
 
   return tabs_render($cmodels_tabs);
