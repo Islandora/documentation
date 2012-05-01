@@ -688,22 +688,26 @@ class CollectionClass {
     $pager_name = 0;
     $total = count($sparql_results);
     $pager_page = self::hackPager($pager_name, $per_page, $total);
+    $max_title_length = 60;
     
     $results = array();
     foreach (array_slice($sparql_results, $per_page * $pager_page, $per_page) as $result) {
       $title = $result['title'];
+      $truncated_title = truncate_utf8($title, $max_title_length, TRUE, TRUE, 5);
       $obj_path = "fedora/repository/{$result['object']}";
       $tn_path = ($result['thumbnail'] ?
         "fedora/repository/{$result['thumbnail']}":
         "$obj_path/TN");
-      $thumbnail = theme('image', $tn_path, $title, $title, array(), FALSE);
+      
+      $thumbnail = theme('image', $tn_path, $truncated_title, $title, array(), FALSE);
+      
       $results[] = array(
           'data' => l($thumbnail, $obj_path, array(
               'html' => TRUE,
               'attributes' => array(
                   'class' => 'results-image',
               ),
-          )) . l($title, $obj_path, array('attributes' => array('class' => 'results-text'))),
+          )) . l($truncated_title, $obj_path, array('attributes' => array('class' => 'results-text'))),
       );
     }
     if (!$results) {
