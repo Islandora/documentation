@@ -966,9 +966,7 @@ function makeObject($pid, $dsID) {
  *   drupal_render().
  */
 function fedora_repository_islandora_tabs($content_models, $pid, $page_number) {
-  $cmodels_tabs = array(
-      '#type' => 'tabset',
-  );
+  $cmodels_tabs = array();
   
   foreach ($content_models as $content_model) {
     $content_model_fieldset = $content_model->displayExtraFieldset($pid, $page_number);
@@ -1025,17 +1023,26 @@ function fedora_repository_islandora_tabs_alter(&$tabs, $params) {
 }
 
 /**
- * Sends an ITQL query to the Fedora Resource index (can only communicate with Kowari or mulgara)
- * Reads the pid and datastream id as url parameters.  Queries the collection object for the query
- * if there is no query datastream falls back to the query shipped with the module.
+ * Menu callback for "fedora/repository".
+ * 
+ * If user is allow, and we are given a PID and a sensical DSID, return the
+ * datastream via the makeObject() function; otherwise, call out to the PIDs'
+ * ContentModels and all Drupal modules for Islandora tabs.
  *
- * @global type $user
- * @param type $pid
- * @param type $dsId
- * @param type $collection
- * @param type $page_number
- * @param type $limit
- * @return type 
+ * @global $user stdObject
+ * @param $pid string
+ *   An optional string containing the PID of an object.  (defaults to islandora:root)
+ * @param $dsId string
+ *   An optional string containing the dsid of an object. ("-" will be ignored
+ *   to allow later parameters without including one).
+ * @param $collection string
+ *   The collection name...  Deprecated.
+ * @param $page_number string/integer(?)
+ *   A page number to start on...  Seems to be going towards deprecation?
+ * @param $limit string/integer(?)
+ *   Used to limit the number of results returned?  Deprecated?
+ * @return string
+ *   A string containing markup for the rendered tabs.
  */
 function fedora_repository_get_items($pid = NULL, $dsId = NULL, $collection = NULL, $page_number = NULL, $limit = NULL) {
   module_load_include('inc', 'fedora_repository', 'ObjectHelper');
@@ -1108,7 +1115,7 @@ function fedora_repository_get_items($pid = NULL, $dsId = NULL, $collection = NU
   $cmodels_tabs = array(
     '#type' => 'tabset',
   );
-  $cmodels_tabs = array_merge($cmodels_tabs, $hook_tabs);
+  $cmodels_tabs += $hook_tabs;
   
   //Assemble parameters, to pass during alter
   $params = array( 
