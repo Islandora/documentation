@@ -1086,13 +1086,24 @@ function fedora_repository_get_items($pid = NULL, $dsId = NULL, $collection = NU
 
   $content_models = $objectHelper->get_content_models_list($pid);
   
+  //Get the tabs from all modules...
   $hook_tabs = module_invoke_all('islandora_tabs', $content_models, $pid, $page_number);
   
   $cmodels_tabs = array(
     '#type' => 'tabset',
   );
-  
   $cmodels_tabs = array_merge($cmodels_tabs, $hook_tabs);
+  
+  //Assemble parameters, to pass during alter
+  $params = array( 
+    'content_models' => $content_models,
+    'pid' => $pid,
+    'page' => $page_number,
+  );
+  
+  //Allow returned tabs to be altered, before return.
+  drupal_alter('islandora_tabs', $cmodels_tabs, $params);
+  
   return tabs_render($cmodels_tabs);
 }
 
