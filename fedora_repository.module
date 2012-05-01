@@ -995,17 +995,33 @@ function fedora_repository_islandora_tabs($content_models, $pid, $page_number) {
   //can disable showing the object details tab in admin UI
   if (variable_get('fedora_repository_show_object_details_tab', TRUE)) {
     $object_details = $obj->showFieldSets();
-    if ($object_details['fedora_object_details']['#selected'] == TRUE) {
-      foreach (element_children($cmodels_tabs) as $key) {
-        $cmodels_tabs[$key]['#selected'] = FALSE;
-      }
-    }
-  }
-  else {
-    $object_details = array();
+    $cmodel_tabs = array_merge($cmodels_tabs, $object_details);
   }
   
   return array_merge($cmodels_tabs, $object_details);
+}
+
+/**
+ * Implementation of hook_islandora_tabs_alter().
+ * 
+ * @param &$tabs array
+ *   The array of tabs/tabset to alter.
+ * @param $params array
+ *   An associative array containing the parameters with which the original
+ *   hook was called.
+ * @see fedora_repository_get_items()
+ */
+function fedora_repository_islandora_tabs_alter(&$tabs, $params) {
+  //Deselect all other tabs if the fedora_object_details tab is supposed
+  //  to be selected.
+  $object_details_key = 'fedora_object_details';
+  if ($tabs[$object_details_key]['#selected']) {
+    foreach (element_children($tabs) as $key) {
+      if ($key != $object_details_key) {
+        $tabs[$key]['#selected'] = FALSE;
+      }
+    }
+  }
 }
 
 /**
