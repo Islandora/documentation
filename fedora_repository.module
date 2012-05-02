@@ -741,7 +741,7 @@ function fedora_repository_replace_stream_form_submit($form, &$form_state) {
   $dsLabel = $form_state['values']['dsLabel'];
   
   $streamUrl = ($file !== NULL) ? 
-    url($file->filepath, array('absolute' => TRUE)):
+    $file->filepath:
     url($form_state['values']['reference'], array('absolute' => TRUE));
     
   // Remove the original file extension from the label and add the new one
@@ -751,10 +751,9 @@ function fedora_repository_replace_stream_form_submit($form, &$form_state) {
       substr($streamUrl, strrpos($streamUrl, '.')); // Add the file extention to the end of the label.
   }
 
-  
-
   $dformat = $form_state['storage']['mime_type'];
 
+  module_load_include('inc', 'fedora_repository', 'api/fedora_item');
   $item = new Fedora_Item($pid);
   $item->modify_datastream($streamUrl, $dsid, $dsLabel, $dformat);
 
