@@ -34,15 +34,35 @@ class ObjectHelper {
     $connectionHelper = new ConnectionHelper();
   }
   
-  private static function getBinaryLength($bin) {
-    $has_mbstring = extension_loaded('mbstring') ||@dl(PHP_SHLIB_PREFIX.'mbstring.'.PHP_SHLIB_SUFFIX);
-    $has_mb_shadow = (int) ini_get('mbstring.func_overload');
-
-    if ($has_mbstring && ($has_mb_shadow & 2) ) {
-       return mb_strlen($bin,'latin1');
-    } else {
-       return strlen($bin);
-    } 
+  /**
+   * Get the size of the indicated datastream.
+   * 
+   * Note that this only works for Inline XML and Managed datastream, as Fedora
+   * does not know anything about external or redirect streams, other than a URI.
+   * If run on an external or redirect stream, Fedora (and therefore this
+   * function) will return the integer value '0'.
+   * This function requires the use of the API-M method getDatastream, and defaults
+   * to returning '0' if it is not accessible.
+   * 
+   * @param $pid string
+   *   A string containing the PID of a Fedora object.
+   * @param $dsid string
+   *   A string containing the datastream ID of datastream on the Fedora object
+   *   indicated by the PID.
+   * @param $quiet boolean
+   *   A boolean indicating whether SOAP errors should be displayed.
+   * @return integer
+   *   An integer representing the size of the datastream, or zero if it could not be determined.  
+   */
+  static function getDatastreamSize($pid, $dsid, $quiet = FALSE) {
+    module_load_include('inc', 'fedora_repository', 'api/fedora_item');
+    $item = new Fedora_Item($pid);
+    if ($ds_info = $item->get_datastream($dsid, '', $quiet)) {
+      return $ds_info->size;
+    }
+    else {
+      return 0;
+    }
   }
 
   /**
@@ -133,21 +153,23 @@ class ObjectHelper {
           'query' => $query_options,
         ));
       }
-      $ch = curl_init();
-      $user_agent = "Mozilla/4.0 pp(compatible; MSIE 5.01; Windows NT 5.0)";
-      curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-      curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
-      curl_setopt($ch, CURLOPT_FAILONERROR, 1); // Fail on errors
-      curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1); // allow redirects
-      //curl_setopt($ch, CURLOPT_TIMEOUT, 15); // times out after 15s
-      curl_setopt($ch, CURLOPT_USERAGENT, $user_agent);
-      curl_setopt($ch, CURLOPT_URL, $url);
-      curl_setopt($ch, CURLOPT_USERPWD, "$fedoraUser:$fedoraPass");
-      // There seems to be a bug in Fedora 3.1's REST authentication, removing this line fixes the authorization denied error.
-      // curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
-      curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE); // return into a variable
-
-      curl_setopt($ch, CURLOPT_URL, $url);
+      $ch = curl_init($url);
+      
+      $user_agent = "Mozilla/4.0 pp(compatible; MSIE 5.01; Windows NT 5.0)"; 
+      $curl_opts = array(
+        CURLOPT_SSL_VERIFYPEER => FALSE,
+        CURLOPT_SSL_VERIFYHOST => FALSE,
+        CURLOPT_FAILONERROR => TRUE, // Fail on errors
+        CURLOPT_FOLLOWLOCATION => TRUE, // allow redirects
+        //CURLOPT_TIMEOUT => 15, // times out after 15s
+        CURLOPT_USERAGENT => $user_agent,
+        CURLOPT_URL => $url,
+        CURLOPT_USERPWD => "$fedoraUser:$fedoraPass",
+        // There seems to be a bug in Fedora 3.1's REST authentication, removing this line fixes the authorization denied error.
+        //CURLOPT_HTTPAUTH => CURLAUTH_ANY,
+        CURLOPT_RETURNTRANSFER => TRUE, // return into a variable; need to at first, so additional headers can be set later.
+      );
+      curl_setopt_array($ch, $curl_opts);
 
       if ($filePath !== FALSE) {
         $fp = fopen($filePath, 'w');
@@ -158,9 +180,9 @@ class ObjectHelper {
       }
       else {
         curl_setopt($ch, CURLOPT_NOBODY, TRUE);
-        $curl_out = curl_exec($ch);
+        $curl_stat = curl_exec($ch);
         
-        if ($curl_out !== FALSE) {
+        if ($curl_stat !== FALSE) {
           $info = curl_getinfo($ch);
           
           //Set what headers we can...
@@ -212,24 +234,31 @@ class ObjectHelper {
           elseif ((isset($user) && $user->uid != 0) || $forceSoap || isset($_SERVER['HTTPS'])) { //If not anonymous, soap is force or we're using HTTPS
             //Have the webserver mediate the transfer (download and restream)
             
-            curl_setopt($ch, CURLOPT_NOBODY, FALSE);
-            curl_setopt($ch, CURLOPT_HTTPGET, TRUE); //CURLOPT_NOBODY sets it to 'HEAD'
-            $toReturn = curl_exec($ch);
-            
-            if (($contentSize = self::getBinaryLength($toReturn)) > 0) {
+            if (($contentSize = self::getDatastreamSize($pid, $dsID, TRUE)) > 0) {
               header("Content-Length: $contentSize");
             }
-            //Done applying headers...
             
-            echo $toReturn;
+            $opts = array(
+              CURLOPT_NOBODY => FALSE,
+              CURLOPT_HTTPGET => TRUE, //CURLOPT_NOBODY sets it to 'HEAD'
+              CURLOPT_RETURNTRANSFER => FALSE, //Want to output as efficiently as possible now...
+            );
+            $curl_stat = curl_exec($ch);
+            
+            if (!$curl_stat) {
+              watchdog('fedora_repository', 'Error in ObjectHelper->makeObject() for @pid/@dsid.  See link for attempted URL.', array(
+                '@pid' => $pid,
+                '@dsid' => $dsID,
+              ), WATCHDOG_WARNING, $url);
+            }
           }
-          else {
+          else { //Try to redirect directly to Fedora.
             header('HTTP/1.1 307 Moved Temporarily');
             header('Location: ' . $url);
           }
         }
         else {
-          watchdog('fedora_repository', 'Curl error while trying to get datastream %dsid from Fedora object %dsid.  Curl info: !info', array(
+          watchdog('fedora_repository', 'Curl error while trying to get datastream %dsid from Fedora object %pid.  Curl info: !info', array(
             '%pid' => $pid,
             '%dsid' => $dsID,
             '!info' => print_r(curl_getinfo($ch), TRUE),
