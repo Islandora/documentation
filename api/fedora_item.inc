@@ -506,13 +506,13 @@ RDF;
    * @param type $as_of_date_time
    * @return type
    */
-  function get_datastream($dsid, $as_of_date_time = '') {
+  function get_datastream($dsid, $as_of_date_time = '', $quiet = TRUE) {
     $params = array(
       'pid' => $this->pid,
       'dsID' => $dsid,
       'asOfDateTime' => $as_of_date_time,
     );
-    $object = self::soap_call('getDatastream', $params);
+    $object = self::soap_call('getDatastream', $params, $quiet);
 
     return $object->datastream;
   }
