@@ -678,7 +678,12 @@ class CollectionClass {
    * 
    * @param $sparql_results array
    *   The array of results as yielded by ObjectHelper::parseSparqlResults()
-   *   (and those associated functions which make use of it)
+   *   (and those associated functions which make use of it).
+   *   Each result must contain:
+   *    - 'object': The PID/URI of the child object.
+   *    - 'title': A title for the child object.
+   *   and may contain:
+   *    - 'thumbnail': URI to a datastream. (will default to the 'TN' stream on the child)
    * @return
    *   An array to be passed to drupal_render, containing a pager, an unordered
    *   list of items, and another pager.
@@ -695,11 +700,22 @@ class CollectionClass {
       $title = $result['title'];
       $truncated_title = truncate_utf8($title, $max_title_length, TRUE, TRUE, 5);
       $obj_path = "fedora/repository/{$result['object']}";
+      
+      //Get a thumbnail
       $tn_path = ($result['thumbnail'] ?
         "fedora/repository/{$result['thumbnail']}":
         "$obj_path/TN");
       
-      $thumbnail = theme('image', $tn_path, $truncated_title, $title, array(), FALSE);
+      $thumbnail = NULL;
+      if ($thumbnail === NULL &&
+          module_exists('imagecache_external') &&
+          is_callable('theme_imagecache_external_image') &&
+          variable_get('fedora_repository_use_imagecache_external_in_collection_view', FALSE)) {
+        $thumbnail = theme('imagecache_external_image', 'fedora_repository_collection_thumbnail', $tn_path, $truncated_title, $title);
+      }
+      if ($thumbnail === NULL) {
+        $thumbnail = theme('image', $tn_path, $truncated_title, $title, array(), FALSE);
+      }
       
       $results[] = array(
           'data' => l($thumbnail, $obj_path, array(

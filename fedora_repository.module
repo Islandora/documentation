@@ -620,10 +620,11 @@ function fedora_repository_purge_stream_form_submit($form, &$form_state) {
   } catch (exception $e) {
     drupal_set_message(t('@message', array('@message' => check_plain($e->getMessage()))), 'error');
   }
-  $form_state['redirect'] = $base_url . "/fedora/repository/$pid";
+  $form_state['redirect'] = "fedora/repository/$pid";
 }
 
 function fedora_repository_download_datastream_form(&$form_state, $pid, $dsid, $label) {
+  module_load_include('inc', 'fedora_repository', 'ObjectHelper');
   $form = array(
     '#action' => url("fedora/repository/object_download/$pid/$dsid/$label"),
     'submit' => array(
@@ -2381,4 +2382,24 @@ function fedora_repository_forms($form_id) {
     );
   }
   return $forms;
+}
+
+function usc_mirc_imagecache_default_presets() {
+  return array(
+    'fedora_repository_collection_thumbnail' => array(
+      'presetname' => 'fedora_repository_collection_thumbnail',
+      'actions' => array(
+        0 => array(
+          'weight' => 0,
+          'module' => 'imagecache',
+          'action' => 'imagecache_scale',
+          'data' => array(
+            'width' => 200,
+            'height' => 200,
+            'upscale' => TRUE,
+          ),
+        ),
+      ),
+    ),
+  );
 }
