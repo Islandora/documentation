@@ -163,7 +163,6 @@ class ObjectHelper {
         CURLOPT_FOLLOWLOCATION => TRUE, // allow redirects
         //CURLOPT_TIMEOUT => 15, // times out after 15s
         CURLOPT_USERAGENT => $user_agent,
-        CURLOPT_URL => $url,
         CURLOPT_USERPWD => "$fedoraUser:$fedoraPass",
         // There seems to be a bug in Fedora 3.1's REST authentication, removing this line fixes the authorization denied error.
         //CURLOPT_HTTPAUTH => CURLAUTH_ANY,
@@ -243,6 +242,7 @@ class ObjectHelper {
               CURLOPT_HTTPGET => TRUE, //CURLOPT_NOBODY sets it to 'HEAD'
               CURLOPT_RETURNTRANSFER => FALSE, //Want to output as efficiently as possible now...
             );
+            curl_setopt_array($ch, $opts);
             $curl_stat = curl_exec($ch);
             
             if (!$curl_stat) {

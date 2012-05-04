@@ -660,42 +660,6 @@ function fedora_repository_download_datastream_form(&$form_state, $pid, $dsid, $
   return $form;
 }
 
-function fedora_repository_download_datastream_form(&$form_state, $pid, $dsid, $label) {
-  $form = array(
-    '#action' => url("fedora/repository/object_download/$pid/$dsid/$label"),
-    'submit' => array(
-      '#type' => 'submit',
-      '#value' => t('Download'),
-    ),
-  );
-  
-  if (user_access(ObjectHelper::$EDIT_FEDORA_METADATA)) {
-    $item = new Fedora_Item($pid);
-    $versions = $item->get_datastream_history($dsid);
-    $version_array = array();
-    if (is_array($versions)) {
-      foreach ($versions as $version) {
-        $version_array[] = $version->createDate;
-      }
-    }
-    else {
-      $version_array[] = $versions->createDate;
-    }
-    
-    if (count($version_array) > 1) {
-      $form['#attributes'] = array(
-        'onsubmit' => 'this.action="' . $form['#action'] . '/" + this.version.value;'
-      );
-      $form['version'] = array(
-        '#type' => 'select',
-        '#options' => array_combine($version_array, $version_array),
-      );
-    }
-  }
-  
-  return $form;
-}
-
 /**
  * fedora repository replace stream
  * @param type $pid
