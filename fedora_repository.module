@@ -2384,7 +2384,10 @@ function fedora_repository_forms($form_id) {
   return $forms;
 }
 
-function usc_mirc_imagecache_default_presets() {
+/**
+ * Implementation of hook_imagecache_default_presets().
+ */
+function fedora_repository_imagecache_default_presets() {
   return array(
     'fedora_repository_collection_thumbnail' => array(
       'presetname' => 'fedora_repository_collection_thumbnail',
@@ -2402,4 +2405,54 @@ function usc_mirc_imagecache_default_presets() {
       ),
     ),
   );
+}
+
+/**
+ * Actually render an image, given an arbitrary path and preset.
+ * 
+ * Note:  If imagecache_external is not available, the full-sized image will be
+ * produced...  Might want to look into restricting the display size by adding
+ * the width and height attributes to the theme('image') call, based on the
+ * selected preset? (get the presets and figure out the size from its actions?)
+ * 
+ * @param $tn_path string
+ * @param $imagecache_preset string
+ * @return
+ *   Markup for the image, making use of imagecache_external if it is available.
+ */
+function _fedora_repository_render_image($tn_path, $imagecache_preset = 'fedora_repository_collection_thumbnail') {
+  $thumbnail = NULL;
+  if ($thumbnail === NULL &&
+    module_exists('imagecache_external') &&
+    is_callable('theme_imagecache_external_image') &&
+    variable_get('fedora_repository_use_imagecache_external_in_collection_view', FALSE)) {
+    $thumbnail = theme('imagecache_external_image', $imagecache_preset, $tn_path, $truncated_title, $title);
+  }
+  if ($thumbnail === NULL) {
+    $thumbnail = theme('image', $tn_path, $truncated_title, $title, array(), FALSE);
+  }
+
+  return $thumbnail;
+}
+
+/**
+ * Render an image, given a PID, DSID and preset.
+ * 
+ * Produces a Drupal path for the image, passes to
+ * _fedora_repository_render_image(), and returns the result.
+ * 
+ * @see _fedora_repository_render_image()
+ * @param $pid string
+ *   A string containing a Fedora PID.
+ * @param $dsid
+ *   A string indicating a DSID on the object indicated by $pid.
+ * @param $imagecache_preset
+ *   An imagecache preset with which to render the image; defaults to
+ *   fedora_repository_collection_thumbnail, which is added in this module's
+ *   implementation of hook_imagecache_default_presets().
+ */
+function fedora_repository_render_image($pid, $dsid, $imagecache_preset = 'fedora_repository_collection_thumbnail') {
+  $tn_path = "fedora/repository/$pid/$dsid";
+
+  return _fedora_repository_render_image($tn_path, $imagecache_preset);
 }

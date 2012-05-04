@@ -706,16 +706,7 @@ class CollectionClass {
         "fedora/repository/{$result['thumbnail']}":
         "$obj_path/TN");
       
-      $thumbnail = NULL;
-      if ($thumbnail === NULL &&
-          module_exists('imagecache_external') &&
-          is_callable('theme_imagecache_external_image') &&
-          variable_get('fedora_repository_use_imagecache_external_in_collection_view', FALSE)) {
-        $thumbnail = theme('imagecache_external_image', 'fedora_repository_collection_thumbnail', $tn_path, $truncated_title, $title);
-      }
-      if ($thumbnail === NULL) {
-        $thumbnail = theme('image', $tn_path, $truncated_title, $title, array(), FALSE);
-      }
+      $thumbnail = _fedora_repository_render_image($tn_path);
       
       $results[] = array(
           'data' => l($thumbnail, $obj_path, array(
