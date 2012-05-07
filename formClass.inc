@@ -323,6 +323,21 @@ class formClass {
       '#default_value' => variable_get('fedora_object_restrict_datastreams', FALSE),
       '#description' => t('When enabled, restricts access to fedora object datastreams that are not listed in the Islandora Content Model for the object (unless the user is an administrator).'),
     );
+    
+    $form['advanced']['fedora_repository_use_imagecache_external_in_collection_view'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Allow imagecache_external use for thumbnails in collection view'),
+      '#default_value' => variable_get('fedora_repository_use_imagecache_external_in_collection_view', FALSE),
+      '#description' => t('If enabled, the default collection list view (or ' .
+        'anywhere the function "@function" is used) will try to use ' .
+        'imagecache_external, defaulting to the "@preset" preset.  Note that ' .
+        'this means it will NOT (currently) work with collections rendered via "@xsl".', 
+        array(
+          '@function' => '_fedora_repository_render_image()',
+          '@preset' => 'fedora_repository_collection_thumbnail',
+          '@xsl' => 'sparql_to_html.xsl',
+        )),
+    );
 
     $form['advanced']['fedora_collection_display_list'] = array(
       '#type' => 'select',

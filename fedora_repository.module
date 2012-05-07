@@ -2426,7 +2426,8 @@ function _fedora_repository_render_image($tn_path, $imagecache_preset = 'fedora_
   if ($thumbnail === NULL &&
     module_exists('imagecache_external') &&
     is_callable('theme_imagecache_external_image') &&
-    variable_get('fedora_repository_use_imagecache_external_in_collection_view', FALSE)) {
+    variable_get('fedora_repository_use_imagecache_external_in_collection_view', FALSE) &&
+    imagecache_external_can_fetch($tn_path, TRUE)) {
     $thumbnail = theme('imagecache_external_image', $imagecache_preset, $tn_path, $truncated_title, $title);
   }
   if ($thumbnail === NULL) {
