@@ -2458,3 +2458,13 @@ function fedora_repository_render_image($pid, $dsid, $imagecache_preset = 'fedor
 
   return _fedora_repository_render_image($tn_path, $imagecache_preset);
 }
+
+/**
+ * Convenience function used in XSLT callback...
+ * 
+ * @param $string string
+ *   A string containing some markup to convert to a domnode.
+ */
+function fedora_repository_string_to_domnode($string) {
+  return DOMDocument::loadXML($string);
+}
