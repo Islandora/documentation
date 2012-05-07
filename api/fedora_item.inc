@@ -230,6 +230,8 @@ class Fedora_Item {
    *   The predicate namespace.
    * @param boolean $literal_value
    *   Whether or not the object should be added as a URI (FALSE) or a literal (TRUE).
+   * @return ???
+   *  Value returned from SOAP call for modify_datastream.
    */
   function add_relationship($relationship, $object, $namespaceURI = RELS_EXT_URI, $literal_value = FALSE) {
     //dd($this, 'The Fedora_Item');
@@ -847,11 +849,10 @@ RDF;
 
   /**
    * Get Next PID in Namespace
-   * @param type $pid_namespace
-   * @return type
+   * @param $pid_namespace string
+   * @return string
    */
   static function get_next_PID_in_namespace($pid_namespace = '') {
-
     if (empty($pid_namespace)) {
       // Just get the first one in the config settings.
       $allowed_namespaces = explode(" ", variable_get('fedora_pids_allowed', 'default: demo: changeme: islandora: ilives: islandora-book: books: newspapers: '));
@@ -925,11 +926,11 @@ RDF;
 
   /**
    * Modify Object
-   * @param type $label
-   * @param type $state
-   * @param type $ownerId
-   * @param type $logMessage
-   * @param type $quiet
+   * @param $label string
+   * @param $state string
+   * @param $ownerId string
+   * @param $logMessage string
+   * @param $quiet boolean
    * @return type
    */
   function modify_object($label = '', $state = NULL, $ownerId = NULL, $logMessage = 'Modified by Islandora API', $quiet=TRUE) {
