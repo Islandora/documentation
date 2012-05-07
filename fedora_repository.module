@@ -384,7 +384,7 @@ function add_stream_form_submit($form, &$form_state) {
 
   $pid = $form_state['values']['pid'];
   $dsid = $form_state['values']['stream_id'];
-  $dsLabel = $form_state['values']['stream_label'] . substr($file, strrpos($file, '.')); // Add the file extention to the end of the label.;
+  $dsLabel = $form_state['values']['stream_label'] . substr($form_state['storage']['stream_url'], strrpos($form_state['storage']['stream_url'], '.')); // Add the file extention to the end of the label.;
 
   try {
     $item = new Fedora_Item($pid);
@@ -400,6 +400,7 @@ function add_stream_form_submit($form, &$form_state) {
     drupal_set_message(t('@message', array('@message' => check_plain($e->getMessage()))), 'error');
     return;
   }
+  unset($form_state['storage']); //Using storage; need to unset it for forms to work properly...
   $form_state['rebuild'] = TRUE;
 }
 
@@ -452,17 +453,13 @@ function add_stream_form_validate($form, &$form_state) {
   );
   
   $controlGroup = $form_state['storage']['control_group'] = $form_state['values']['control_group'];
-  if ((($controlGroup && in_array($controlGroup, array('X', 'M'))) || !$controlGroup) && (($fileObject = file_save_upload('add-stream-file-location', $validators)) !== 0)) {
+  if ((($controlGroup && in_array($controlGroup, array('X', 'M'))) || !$controlGroup) && (($fileObject = file_save_upload('add-stream-file-location', $validators)))) {
     // Move the uploaded file to Drupal's files directory.
-    file_move($fileObject->filepath, 0, 'FILE_EXISTS_RENAME');
-    $form_state['values']['add-stream-file-location'] = $fileObject->filepath;
+    $file_path = $fileObject->filepath;
+    file_move($file_path, 0, FILE_EXISTS_RENAME);
+    $form_state['values']['add-stream-file-location'] = $file_path;
     
-    $file_basename = basename($fileObject->filepath);
-    $file_directory = dirname($fileObject->filepath);
-    
-    $form_state['storage']['stream_url'] = url($file_directory . '/' . drupal_urlencode($file_basename), array(
-      'absolute' => TRUE,
-    ));
+    $form_state['storage']['stream_url'] = file_create_url($file_path);
   }
   elseif ($controlGroup && in_array($controlGroup, array('M', 'R', 'E')) && ($ref = $form_state['values']['ds_reference'])) {
     $form_state['storage']['stream_url'] = $form_state['values']['ds_reference'];
@@ -726,6 +723,9 @@ function fedora_repository_replace_stream_form_validate($form, &$form_state) {
     // set files to form_state, to process when form is submitted
     $form_state['values']['file'] = $file;
   }
+  elseif (!$form_state['values']['ds_reference']) {
+    form_set_error('', 'Need either a file or a reference!');
+  }
 }
 
 /**
@@ -742,7 +742,7 @@ function fedora_repository_replace_stream_form_submit($form, &$form_state) {
   $dsLabel = $form_state['values']['dsLabel'];
   
   $streamUrl = ($file !== NULL) ? 
-    $file->filepath:
+    file_create_url($file->filepath):
     url($form_state['values']['reference'], array('absolute' => TRUE));
     
   // Remove the original file extension from the label and add the new one
@@ -758,6 +758,7 @@ function fedora_repository_replace_stream_form_submit($form, &$form_state) {
   $item = new Fedora_Item($pid);
   $item->modify_datastream($streamUrl, $dsid, $dsLabel, $dformat);
 
+  unset($form_state['storage']);
   $form_state['redirect'] = 'fedora/repository/' . $pid;
 }
 
