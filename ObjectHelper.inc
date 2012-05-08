@@ -1193,6 +1193,7 @@ EOQ;
     $queryUrl = url(variable_get('fedora_repository_url', 'http://localhost:8080/fedora/risearch'), array('query' => $options));
     
     //Perform the query.
+    module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
     $curl_result = do_curl_ext($queryUrl);
     
     //If the query failed, write message to the logs and return.
