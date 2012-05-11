@@ -179,6 +179,16 @@ class formClass {
       'access arguments' => array('view fedora collection'),
     );
 
+    // ***** Jason: begin menu path for xslt config page
+    $items['admin/settings/fedora_repository/object_details_xslt'] = array(
+      'title' => "",
+      'type' => MENU_CALLBACK,
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('fedora_repository_object_details_XSLT_config'),
+      'file' => 'ObjectDetails.inc',
+      'access arguments' => array('administer site configuration'),
+    );
+    // ***** Jason: end menu path for xslt config page
     return $items;
   }
 
@@ -233,7 +243,7 @@ class formClass {
           theme('image', 'misc/watchdog-ok.png') . t('Successfully connected to Fedora server at @fedora_soap_url', array('@fedora_soap_url' => variable_get('fedora_soap_url', ''))) :
           theme('image', 'misc/watchdog-error.png') . t('Unable to connect to Fedora server at @fedora_soap_url', array('@fedora_soap_url' => variable_get('fedora_soap_url', '')))) . '</p>',
     );
-    
+
     $form['fedora_soap_manage_url'] = array(
       '#type' => 'textfield',
       '#title' => t('Fedora SOAP management URL'),
@@ -241,7 +251,7 @@ class formClass {
       '#required' => TRUE,
       '#weight' => -10
     );
-        
+
 // will allow admin user to remove namepsace restrictions if not explicitly disallowed  in settings.php
     if (variable_get('allow_open_namespace', TRUE)) {
       $form['fedora_namespace'] = array(
@@ -286,6 +296,7 @@ class formClass {
       '#collapsible' => TRUE,
       '#collapsed' => TRUE,
     );
+
     //when checked show object details tab
     $form['tabs']['fedora_repository_show_object_details_tab'] = array(
       '#type' => 'checkbox',
@@ -293,7 +304,29 @@ class formClass {
       '#default_value' => variable_get('fedora_repository_show_object_details_tab', TRUE),
       '#description' => t("When enabled, the 'Object Details' tab will be visible to users with the correct permissions when viewing an object in the repository"),
     );
-    
+
+    // ***** Jason: begin object details display profiles
+    module_load_include('inc', 'fedora_repository', 'ObjectDetails');
+    $primary_display_mode = variable_get('islandora_object_details_display_table', 'convertQDC');
+    $profiles = module_invoke_all("islandora_object_details_display");
+
+    $display_options = array();
+    foreach ($profiles as $machine_name => $profile) {
+      $display_options[$machine_name] = $profile['name'];
+      $config_path = $profile['config'];
+      if (isset($config_path) && $config_path != ""){
+        $display_options[$machine_name] .= " (". l("config", $config_path, array()) .")";
+      }
+    }
+    $form['tabs']['islandora_object_details_display_table'] = array(
+      '#type' => 'radios',
+      '#title' => t('Show object details as'),
+      '#options' => $display_options,
+      '#default_value' => $primary_display_mode,
+//      '#description' => t("Tells Islandora how to display the object details page for each object"),
+    );
+    // ***** Jason: end object details display profiles
+
     $form['advanced'] = array(
       '#type' => 'fieldset',
       '#title' => t('Advanced configuration options'),
