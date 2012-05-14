@@ -179,7 +179,6 @@ class formClass {
       'access arguments' => array('view fedora collection'),
     );
 
-    // ***** Jason: begin menu path for xslt config page
     $items['admin/settings/fedora_repository/object_details_xslt'] = array(
       'title' => "",
       'type' => MENU_CALLBACK,
@@ -188,7 +187,7 @@ class formClass {
       'file' => 'ObjectDetails.inc',
       'access arguments' => array('administer site configuration'),
     );
-    // ***** Jason: end menu path for xslt config page
+
     return $items;
   }
 
@@ -305,7 +304,6 @@ class formClass {
       '#description' => t("When enabled, the 'Object Details' tab will be visible to users with the correct permissions when viewing an object in the repository"),
     );
 
-    // ***** Jason: begin object details display profiles
     module_load_include('inc', 'fedora_repository', 'ObjectDetails');
     $primary_display_mode = variable_get('islandora_object_details_display_table', 'convertQDC');
     $profiles = module_invoke_all("islandora_object_details_display");
@@ -325,7 +323,6 @@ class formClass {
       '#default_value' => $primary_display_mode,
 //      '#description' => t("Tells Islandora how to display the object details page for each object"),
     );
-    // ***** Jason: end object details display profiles
 
     $form['advanced'] = array(
       '#type' => 'fieldset',
