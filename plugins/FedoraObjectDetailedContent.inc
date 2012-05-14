@@ -50,12 +50,12 @@ class FedoraObjectDetailedContent {
     );
 
     module_load_include('inc', 'fedora_repository', 'ObjectDetails');
-    $object_details_profile = variable_get('islandora_object_details_display_table', 'xslt_dc');
+    $object_details_profile = variable_get('islandora_object_details_display_table', 'xslt');
     $profiles = module_invoke_all("islandora_object_details_display");
     $profile = $profiles[$object_details_profile];
     if (!isset($profile)) {
       // default behaviour
-      drupal_set_message(t("There was an error reading the default object details display profile"), "error");
+      watchdog('fedora_repository', "Error while reading the default object details display profile: @e", array("@e" => $e->getMessage()), WATCHDOG_WARNING);
       $dc_html = $objectHelper->getFormattedDC($this->item);
     }
     else {
