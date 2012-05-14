@@ -23,6 +23,7 @@ function fedora_repository_islandora_object_details_display() {
       "file" => "ObjectDetails.inc",
       "function" => "fedora_repository_object_details_table",
       "description" => t("Show a datastream with a table"),
+      "config" => "admin/settings/fedora_repository/object_details_table",
     )
   );
   return $profiles;
@@ -39,7 +40,7 @@ function fedora_repository_object_details_XSLT($item) {
   module_load_include('inc', 'fedora_repository', 'ConnectionHelper');
 
   $dsid = variable_get('islandora_object_details_xslt_datastream', 'DC');
-  // special case for DC+QDC
+  // special case for DC+QDC for backward compatibility
   if ($dsid == 'DC' || $dsid == 'QDC') {
     $dsid = array_key_exists('QDC', $item->get_datastreams_list_as_array()) ? 'QDC' : 'DC';
   }
@@ -53,6 +54,7 @@ function fedora_repository_object_details_XSLT($item) {
     $proc = new XsltProcessor();
   } catch (Exception $e) {
     drupal_set_message($e->getMessage(), 'error');
+    watchdog('fedora_repository', "Error while creating XSLT processor: @e", array('@e' => $e->getMessage()), WATCHDOG_ERROR);
     return;
   }
 
@@ -78,7 +80,11 @@ function fedora_repository_object_details_table($item) {
   $path = drupal_get_path('module', 'fedora_repository');
   module_load_include('inc', 'fedora_repository', 'ConnectionHelper');
 
-  $dsid = array_key_exists('QDC', $item->get_datastreams_list_as_array()) ? 'QDC' : 'DC';
+  $dsid = variable_get('islandora_object_details_table_datastream', 'DC');
+  // special case for DC+QDC for backward compatibility
+  if ($dsid == 'DC' || $dsid == 'QDC') {
+    $dsid = array_key_exists('QDC', $item->get_datastreams_list_as_array()) ? 'QDC' : 'DC';
+  }
   $xmlstr = $item->get_datastream_dissemination($dsid);
 
   if (empty($xmlstr)) {
@@ -117,13 +123,9 @@ function fedora_repository_object_details_XSLT_config() {
   $form = array();
   $form['config'] = array(
     '#type' => 'fieldset',
-    '#title' => t("XSLT Options"),
+    '#title' => t("XSLT display options"),
   );
 
-  $form['config']['warning'] = array(
-    '#value' => 'Note: the elements here do not currently work',
-    '#weight' => 0,
-  );
   $form['config']['xslt'] = array(
     '#type' => 'textfield',
     '#title' => t("XSL transform to use"),
@@ -145,7 +147,33 @@ function fedora_repository_object_details_XSLT_config() {
   return $form;
 }
 
+function fedora_repository_object_details_table_config() {
+  $form = array();
+  $form['config'] = array(
+    '#type' => 'fieldset',
+    '#title' => t("Table display options"),
+  );
+
+  $form['config']['dsid'] = array(
+    '#type' => 'textfield',
+    '#title' => t("Datastream to transform"),
+    '#default_value' => variable_get('islandora_object_details_table_datastream', 'DC'),
+    '#required' => TRUE,
+  );
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t("Submit"),
+    '#weight' => 1,
+  );
+
+  return $form;
+}
+
 function fedora_repository_object_details_XSLT_config_submit($form, &$form_state) {
   variable_set('islandora_object_details_xslt_sheet', $form_state['values']['xslt']);
   variable_set('islandora_object_details_xslt_datastream', $form_state['values']['dsid']);
+}
+
+function fedora_repository_object_details_table_config_submit($form, &$form_state) {
+  variable_set('islandora_object_details_table_datastream', $form_state['values']['dsid']);
 }
