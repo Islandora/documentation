@@ -49,7 +49,6 @@ class FedoraObjectDetailedContent {
       '#type' => 'tabset',
     );
 
-    // ***** Jason: begin object details display profiles
     module_load_include('inc', 'fedora_repository', 'ObjectDetails');
     $object_details_profile = variable_get('islandora_object_details_display_table', 'xslt_dc');
     $profiles = module_invoke_all("islandora_object_details_display");
@@ -70,7 +69,6 @@ class FedoraObjectDetailedContent {
         // problem
       }
     }
-    // ***** Jason: end object details display profiles
 
     $i = 0;
     if (fedora_repository_access(OBJECTHELPER :: $VIEW_DETAILED_CONTENT_LIST, $this->pid, $user)) {
