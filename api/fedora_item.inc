@@ -637,18 +637,15 @@ RDF;
       // datastream, instead of returning it as an array, only
       // the single item will be returned directly. We have to
       // check for this.
-      if (count($this->datastreams_list->datastreamDef) > 1) {
-        foreach ($this->datastreams_list->datastreamDef as $ds) {
-          if (!is_object($ds)) {
-            print_r($ds);
-          }
-          $ds_list[$ds->ID]['label'] = $ds->label;
-          $ds_list[$ds->ID]['MIMEType'] = $ds->MIMEType;
-          $ds_list[$ds->ID]['URL'] = $this->url() . '/' . $ds->ID . '/' . drupal_urlencode($ds->label);
-        }
+      $xml_list = $this->datastreams_list->datastreamDef;
+      if (!is_array($this->datastreams_list->datastreamDef)) {
+        $xml_list = array($xml_list);
       }
-      else {
-        $ds = $this->datastreams_list->datastreamDef;
+      
+      foreach ($xml_list as $ds) {
+        if (!is_object($ds)) {
+          print_r($ds);
+        }
         $ds_list[$ds->ID]['label'] = $ds->label;
         $ds_list[$ds->ID]['MIMEType'] = $ds->MIMEType;
         $ds_list[$ds->ID]['URL'] = $this->url() . '/' . $ds->ID . '/' . drupal_urlencode($ds->label);
@@ -852,7 +849,7 @@ RDF;
    * @param $pid_namespace string
    * @return string
    */
-  static function get_next_PID_in_namespace($pid_namespace = '') {
+  static function get_next_PID_in_namespace($pid_namespace = '', $number_of_pids = 1) {
     if (empty($pid_namespace)) {
       // Just get the first one in the config settings.
       $allowed_namespaces = explode(" ", variable_get('fedora_pids_allowed', 'default: demo: changeme: islandora: ilives: islandora-book: books: newspapers: '));
@@ -866,11 +863,12 @@ RDF;
     }
 
     $params = array(
-      'numPIDs' => '',
+      'numPIDs' => $number_of_pids,
       'pidNamespace' => $pid_namespace,
     );
 
     $result = self::soap_call('getNextPID', $params);
+
     return $result->pid;
   }
 
@@ -1147,6 +1145,7 @@ RDF;
       $pid = self::get_next_PID_in_namespace();
     }
     if (empty($owner)) {
+      global $user;
       if (!empty($user->uid)) { // Default to current Drupal user.
         $owner = $user->uid;
       }
