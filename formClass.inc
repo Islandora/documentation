@@ -187,6 +187,14 @@ class formClass {
       'file' => 'ObjectDetails.inc',
       'access arguments' => array('administer site configuration'),
     );
+    $items['admin/settings/fedora_repository/object_details_table'] = array(
+      'title' => "",
+      'type' => MENU_CALLBACK,
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('fedora_repository_object_details_table_config'),
+      'file' => 'ObjectDetails.inc',
+      'access arguments' => array('administer site configuration'),
+    );
 
     return $items;
   }
@@ -291,7 +299,7 @@ class formClass {
     $form['tabs'] = array(
       '#type' => 'fieldset',
       '#title' => t('Tabs Configuration'),
-      '#description' => t('Configure the tabs avaialble when viewing Fedora objects.'),
+      '#description' => t('Configure the tabs available when viewing Fedora objects.'),
       '#collapsible' => TRUE,
       '#collapsed' => TRUE,
     );
@@ -305,7 +313,7 @@ class formClass {
     );
 
     module_load_include('inc', 'fedora_repository', 'ObjectDetails');
-    $primary_display_mode = variable_get('islandora_object_details_display_table', 'convertQDC');
+    $primary_display_mode = variable_get('islandora_object_details_display_table', 'xslt');
     $profiles = module_invoke_all("islandora_object_details_display");
 
     $display_options = array();
@@ -321,7 +329,7 @@ class formClass {
       '#title' => t('Show object details as'),
       '#options' => $display_options,
       '#default_value' => $primary_display_mode,
-//      '#description' => t("Tells Islandora how to display the object details page for each object"),
+      '#description' => t("Tells Islandora how to display the object details page for each object"),
     );
 
     $form['advanced'] = array(
