@@ -248,34 +248,23 @@ function islandora_view_object($object_id) {
   }
 
   $page_number = (empty($_GET['page'])) ? '1' : $_GET['page'];
-  require_once 'sites/all/libraries/tuque/Datastream.php';
-  require_once 'sites/all/libraries/tuque/FedoraApi.php';
-  require_once 'sites/all/libraries/tuque/FedoraApiSerializer.php';
-  require_once 'sites/all/libraries/tuque/Object.php';
-  require_once 'sites/all/libraries/tuque/RepositoryConnection.php';
-  require_once 'sites/all/libraries/tuque/Cache.php';
-  require_once 'sites/all/libraries/tuque/RepositoryException.php';
-  $connection = new RepositoryConnection('http://192.168.56.195:8080/fedora', 'fedoraAdmin', 'islandora');
-  $connection->reuseConnection = TRUE;
-  $api = new FedoraApi($connection);
-  $cache = new SimpleCache();
-//$repository = new FedoraRepository($api, $cache);
-//$fedora_object = new FedoraObject('islandora:9',$repository);
+  $page_size = (empty($_GET['pagesize'])) ? '10' : $_GET['pagesize'];
+  module_load_include('inc', 'islandora', 'RestConnection');
+  $user = new stdClass();
+  $user->name = 'fedoraAdmin';
+  $user->password = 'fedoraAdmin';
   try {
-    return $api->a->getDatastreamDissemination($object_id, 'MODS');
+    $restConnection = new RestConnection($user);
+    $fedora_object = new FedoraObject($object_id, $restConnection->repository);
+   //return $restConnection->api->a->getDatastreamDissemination($object_id, 'MODS');
   } catch (Exception $e) {
-    drupal_set_message('Error getting ds', 'error');
+    drupal_set_message(t('Error getting Islandora object %s',array('%s' => $object_id)), 'error');
     return"";
   }
-  if (!isset($object)) {
-    drupal_set_message(t('Cannot view object, object not found'), 'error');
-    return"";
-  }
-  global $user;
-  drupal_alter('islandora_view_object', $object); //modify object if required before it is passed along
-  $arr = module_invoke_all('islandora_view_object', $object, $user, $page_number, $page_size); //allow submodules to decide how to handle content base on object type
-  if ($arr[0] == NULL) {
-    drupal_set_message(t('No module registered to handle objects of type %s', array('%s' => $object->type)));
+  drupal_alter('islandora_view_object', $fedora_object); //modify object if required before it is passed along
+  $arr = module_invoke_all('islandora_view_object', $fedora_object, $user, $page_number, $page_size); //allow submodules to decide how to handle content base on object type
+  if (empty($arr) ) {
+    drupal_set_message(t('No module registered to handle objects of type %s', array('%s' => $fedora_object->objectProfile->objModels[0])));
     return "";
   }
   //module_invoke_all(islandora_display($arr)),
