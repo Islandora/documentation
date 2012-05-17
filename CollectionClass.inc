@@ -763,17 +763,8 @@ class CollectionClass {
   function renderCollection($content, $pid, $dsId, $collectionName, $pageNumber = NULL) {
     $path = drupal_get_path('module', 'fedora_repository');
     global $base_url;
-    $collection_pid = $pid; //we will be changing the pid later maybe
-    $parsedContent = NULL;
-    if(!isset($this->collectionObject)){
-      $this->collectionObject = new ObjectHelper($pid);
-    } 
+    
     $contentModels = $this->collectionObject->get_content_models_list($pid);
-    $isCollection = FALSE;
-    //if this is a collection object store the $pid in the session as it will come in handy
-    //after a purge or ingest to return to the correct collection.
-
-    $fedoraItem = NULL;
 
     if (empty($collectionName)) {
       $collectionName = menu_get_active_title();
@@ -805,7 +796,7 @@ class CollectionClass {
           try {
             $proc = new XsltProcessor();
             $options = array( //Could make this the return of a hook?  
-              'collectionPid' => $collection_pid,
+              'collectionPid' => $pid,
               'collectionTitle' => $collectionName,
               'baseUrl' => $base_url,
               'path' => "$base_url/$path",
@@ -817,10 +808,7 @@ class CollectionClass {
             $proc->registerPHPFunctions();
             $xsl = new DomDocument();
             $xsl->loadXML($xslContent);
-            // php xsl does not seem to work with namespaces so removing it below
-            // I may have just been being stupid here
-            // $content = str_ireplace('xmlns="http://www.w3.org/2001/sw/DataAccess/rf1/result"', '', $content);
-
+            
             $xsl = $proc->importStylesheet($xsl);
             $newdom = $proc->transformToDoc($input);
 
