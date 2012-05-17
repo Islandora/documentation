@@ -21,10 +21,7 @@
  * along with the program.  If not, see <http ://www.gnu.org/licenses/>.
  */
 
-/**
- *
- * @author paul
- */
+
 
 define('FEDORA_VIEW', 'view fedora repository');
 define('FEDORA_METADATA_EDIT', 'edit fedora metadata');
@@ -37,7 +34,6 @@ define('FEDORA_MODIFY_STATE', 'modify fedora state');
  * Implementation of hook_menu. 
  * we need some standard entry points so we can have consistent urls for different Object actions
  */
-
 function islandora_menu() {
   $items = array();
 
@@ -81,7 +77,7 @@ function islandora_menu() {
     'type' => MENU_CALLBACK,
     'access arguments' => array(FEDORA_VIEW),
   );
-  
+
   $items['islandora/object/%'] = array(
     'title' => 'Repository',
     'page callback' => 'islandora_view_object',
@@ -90,11 +86,11 @@ function islandora_menu() {
     'access arguments' => array(FEDORA_VIEW),
   );
 
-  /*$items['fedora/repository/service'] = array(
+  /* $items['fedora/repository/service'] = array(
     'page callback' => 'repository_service',
     'type' => MENU_CALLBACK,
     'access arguments' => array(FEDORA_VIEW),
-  );*/
+    ); */
 
   $items['islandora/object/%/datastream/%/download'] = array(
     'title' => t('Download object'),
@@ -245,15 +241,32 @@ function islandora_purge_datastream($object_id, $datastream_id) {
  * @return string 
  */
 function islandora_view_object($object_id) {
-  return $object_id;
+  //return $object_id;
   if (!isset($object_id)) {
     drupal_set_message('Cannot view object, object id not set');
     return;
   }
-  $page_number = (empty($_GET['page'])) ? '1' : $_GET['page'];
-  
-  $object = new IslandoraObject($object_id);
 
+  $page_number = (empty($_GET['page'])) ? '1' : $_GET['page'];
+  require_once 'sites/all/libraries/tuque/Datastream.php';
+  require_once 'sites/all/libraries/tuque/FedoraApi.php';
+  require_once 'sites/all/libraries/tuque/FedoraApiSerializer.php';
+  require_once 'sites/all/libraries/tuque/Object.php';
+  require_once 'sites/all/libraries/tuque/RepositoryConnection.php';
+  require_once 'sites/all/libraries/tuque/Cache.php';
+  require_once 'sites/all/libraries/tuque/RepositoryException.php';
+  $connection = new RepositoryConnection('http://192.168.56.195:8080/fedora', 'fedoraAdmin', 'islandora');
+  $connection->reuseConnection = TRUE;
+  $api = new FedoraApi($connection);
+  $cache = new SimpleCache();
+//$repository = new FedoraRepository($api, $cache);
+//$fedora_object = new FedoraObject('islandora:9',$repository);
+  try {
+    return $api->a->getDatastreamDissemination($object_id, 'MODS');
+  } catch (Exception $e) {
+    drupal_set_message('Error getting ds', 'error');
+    return"";
+  }
   if (!isset($object)) {
     drupal_set_message(t('Cannot view object, object not found'), 'error');
     return"";
@@ -265,6 +278,7 @@ function islandora_view_object($object_id) {
     drupal_set_message(t('No module registered to handle objects of type %s', array('%s' => $object->type)));
     return "";
   }
+  //module_invoke_all(islandora_display($arr)),
   return $arr[0]; //just an example as we could have more then one array element
 }
 
@@ -302,7 +316,7 @@ function islandora_permission() {
 }
 
 /**
- * DO WE EVEN WANT TO DEFINE THIS HERE OR SHOULD EACH MODULE HANDLE IT EVEN AT THE MENU/PATH LEVEL?
+ * 
  * @param string $object_id
  * @return type 
  */
