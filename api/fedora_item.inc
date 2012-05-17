@@ -771,9 +771,9 @@ RDF;
   /**
    * Set the object to a deleted state
    */
-  function move_to_trash($log_message = 'Flagged deleted using Islandora API.') {
+  function move_to_trash($log_message = 'Flagged deleted using Islandora API.', $quiet = TRUE) {
     // Loop through the datastreams and mark them deleted
-    foreach ($this->get_datastreams_list_as_array() as $dsid) {
+    foreach ($this->get_datastreams_list_as_array() as $dsid => $info) {
       $this->set_datastream_state($dsid, 'D');
     }
 
@@ -781,7 +781,7 @@ RDF;
     $params = array(
       'pid' => $this->pid,
       'state' => 'D',
-      'logMessage' => $logMessage,
+      'logMessage' => $log_message,
       'label' => $this->objectProfile->objLabel,
       'ownerId' => null,
     );
