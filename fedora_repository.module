@@ -986,18 +986,18 @@ function fedora_repository_islandora_tabs($content_models, $pid, $page_number) {
     }
   }
   
-  // Add a 'manage object' tab for all objects, where detailed list of content is shown.
-  // XXX:  Perhaps this should be extracted into its own object?
-  module_load_include('inc', 'fedora_repository', 'plugins/FedoraObjectDetailedContent');
-  $obj = new FedoraObjectDetailedContent($pid);
-  
   //can disable showing the object details tab in admin UI
   if (variable_get('fedora_repository_show_object_details_tab', TRUE)) {
+    // Add a 'manage object' tab for all objects, where detailed list of content is shown.
+    // XXX:  Perhaps this should be extracted into its own object?
+    module_load_include('inc', 'fedora_repository', 'plugins/FedoraObjectDetailedContent');
+    $obj = new FedoraObjectDetailedContent($pid);
+    
     $object_details = $obj->showFieldSets();
-    $cmodel_tabs = array_merge($cmodels_tabs, $object_details);
+    $cmodels_tabs = array_merge($cmodels_tabs, $object_details);
   }
   
-  return array_merge($cmodels_tabs, $object_details);
+  return $cmodels_tabs;
 }
 
 /**
