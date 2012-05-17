@@ -103,7 +103,7 @@ class CollectionClass {
    */
   function getRelatedItems($pid, $query_string = NULL, $limit = NULL, $offset = NULL) {
     module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
-
+    module_load_include('inc', 'fedora_repository', 'ObjectHelper');
     if (!fedora_repository_access(OBJECTHELPER :: $OBJECT_HELPER_VIEW_FEDORA, $pid)) {
       drupal_set_message(t("You do not have access to Fedora objects within the attempted namespace or access to Fedora denied."), 'error');
       return ' ';
@@ -765,6 +765,9 @@ class CollectionClass {
     global $base_url;
     $collection_pid = $pid; //we will be changing the pid later maybe
     $parsedContent = NULL;
+    if(!isset($this->collectionObject)){
+      $this->collectionObject = new ObjectHelper($pid);
+    } 
     $contentModels = $this->collectionObject->get_content_models_list($pid);
     $isCollection = FALSE;
     //if this is a collection object store the $pid in the session as it will come in handy
