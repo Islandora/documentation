@@ -3,9 +3,9 @@
 /*
  * @file fedora_repository.module
  * 
- * Copyright (c) 2012 Paul Pound. 
  * 
- * This file is part of CMR.
+ * 
+ * This file is part of Islandora.
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,8 +31,8 @@
  */
 function fedora_repository_show_metadata($metadata, &$render_array) {
   $header = array(t('Label'), t('Value'));
-  $table_attributes = array('class' => array('cmr_metadata'));
-  $rows = array();
+  $table_attributes = array('class' => array('islandora_metadata'));
+  /*$rows = array();
   foreach ($metadata as $key => $value) {
     if (isset($value) && is_array($value)) {
       $item_list = array('#items' => $value, '#theme' => 'item_list');
@@ -43,7 +43,9 @@ function fedora_repository_show_metadata($metadata, &$render_array) {
     }
   }
   $render_array['metadata'] = array('#header' => $header, '#theme' => 'table', '#rows' => $rows, '#attributes' => $table_attributes);
-  return $render_array;
+  */
+    return $render_array;
+   
 }
 
 /**
@@ -53,11 +55,12 @@ function fedora_repository_show_metadata($metadata, &$render_array) {
  */
 function theme_fedora_repository_view_object($variables) {
   $object = $variables['object'];
-  $metadata = $object->metadata;
+  //$metadata = $object->metadata;
   $render_array = array('title' => array(
       '#type' => 'markup',
       '#markup' => '<h2>' . $object->label . '</h2>',
       ));
+  
   fedora_repository_show_metadata($metadata, $render_array);
   fedora_repository_list_datastreams($object, $render_array);
   return drupal_render($render_array);
@@ -134,25 +137,22 @@ function fedora_repository_get_types() {
  * @return string
  *    themed html
  */
-function fedora_repository_view_object($object, $user, $page_number, $page_size) {
+function fedora_repository_islandora_view_object($object, $user, $page_number, $page_size) {
   //global $user;
-  if ($object->type != 'islandora:pdfCModel' && $object->type != 'cmr:basicObject') {
+  
+  if (!in_array('info:fedora/islandora_bookCmodel', $object->models) && !in_array('info:fedora/islandora:iaBookCModel', $object->models)) {
     return NULL;
   }
   $output = theme('fedora_repository_view_object', array('object' => $object));
-  $api = new CmrAPIDrupal($user);
-  try {
-    $results = $api->listObjectsByRelationship($object, 'cmr:isPartOf', $user, array('offset' => $page_number, 'limit' => $page_size));
-  } catch (CmrRelationshipException $e) {
-    drupal_set_message(t('error executing list objects query, %s', array('%s' => $e)));
-  }
-  pager_default_initialize($results['count'], $page_size);
-  $pager = theme('pager', array('quantity' => $results['count']));
-  $output .= $pager;
-  if ($results['count'] > 0) {
-    $output .= theme('fedora_repository_view_objects', $results);
-  }
-  $output .= $pager;
+  //$api = new CmrAPIDrupal($user);
+  
+  //pager_default_initialize($results['count'], $page_size);
+  //$pager = theme('pager', array('quantity' => $results['count']));
+  //$output .= $pager;
+  //if ($results['count'] > 0) {
+  //  $output .= theme('fedora_repository_view_objects', $results);
+  //}
+  //$output .= $pager;
   return $output;
 }
 

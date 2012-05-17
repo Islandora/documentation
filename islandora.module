@@ -215,7 +215,7 @@ function islandora_get_types() {
 }
 
 /**
- * DO WE EVEN WANT TO DEFINE THIS HERE OR SHOULD EACH MODULE HANDLE IT EVEN AT THE MENU/PATH LEVEL?  
+ * 
  * @paramstring $datastream_id
  * @return type 
  */
@@ -256,7 +256,6 @@ function islandora_view_object($object_id) {
   try {
     $restConnection = new RestConnection($user);
     $fedora_object = new FedoraObject($object_id, $restConnection->repository);
-   //return $restConnection->api->a->getDatastreamDissemination($object_id, 'MODS');
   } catch (Exception $e) {
     drupal_set_message(t('Error getting Islandora object %s',array('%s' => $object_id)), 'error');
     return"";
@@ -264,7 +263,8 @@ function islandora_view_object($object_id) {
   drupal_alter('islandora_view_object', $fedora_object); //modify object if required before it is passed along
   $arr = module_invoke_all('islandora_view_object', $fedora_object, $user, $page_number, $page_size); //allow submodules to decide how to handle content base on object type
   if (empty($arr) ) {
-    drupal_set_message(t('No module registered to handle objects of type %s', array('%s' => $fedora_object->objectProfile->objModels[0])));
+    //TODO: make sure we iterate over the array as they will be more then one cmodel per object
+    drupal_set_message(t('No module registered to handle objects of type %s', array('%s' => $fedora_object->models[0])));
     return "";
   }
   //module_invoke_all(islandora_display($arr)),

@@ -3,9 +3,9 @@
 /*
  * fedora-repository-object.tpl.php
  * 
- * Copyright (c) 2012 Paul Pound. 
+ *
  * 
- * This file is part of CMR.
+ * This file is part of Islandora.
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

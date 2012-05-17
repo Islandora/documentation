@@ -3,9 +3,9 @@
 /*
  * fedora-repository-view-object.tpl.php
  * 
- * Copyright (c) 2012 Paul Pound. 
+ *
  * 
- * This file is part of CMR.
+ * This file is part of Islandora.
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,10 +21,7 @@
  * along with the program.  If not, see <http ://www.gnu.org/licenses/>.
  */
 
-/**
- *
- * @author paul
- */
+
 ?>
 <?php print $variables['count'];
 foreach($variables['results'] as $object){
