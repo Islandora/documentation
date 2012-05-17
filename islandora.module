@@ -1,0 +1,324 @@
+<?php
+
+/*
+ * @file islandora.module
+ * defines paths (drupal menu items) as entry points and acts as a hub for dispatching tasks to other modules.
+ * 
+ * 
+ * This file is part of Islandora.
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with the program.  If not, see <http ://www.gnu.org/licenses/>.
+ */
+
+/**
+ *
+ * @author paul
+ */
+
+define('FEDORA_VIEW', 'view fedora repository');
+define('FEDORA_METADATA_EDIT', 'edit fedora metadata');
+define('FEDORA_ADD_DS', 'add fedora datastreams');
+define('FEDORA_INGEST', 'ingest fedora objects');
+define('FEDORA_PURGE', 'purge fedora objects and datastreams');
+define('FEDORA_MODIFY_STATE', 'modify fedora state');
+
+/**
+ * Implementation of hook_menu. 
+ * we need some standard entry points so we can have consistent urls for different Object actions
+ */
+
+function islandora_menu() {
+  $items = array();
+
+  $items['admin/settings/islandora'] = array(
+    'title' => t('Islandora Configuration'),
+    'description' => t("Configure Islandora's interaction with Fedora"),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('islandora_repository_admin'),
+    'file' => 'admin/islandora.admin.inc',
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+  $items['admin/settings/islandora/collection'] = array(
+    'title' => t('Islandora Configuration'),
+    'description' => t('Enter the Islandora collection information here.'),
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'weight' => 0,
+  );
+
+  $items['admin/settings/islandora/demoobjects'] = array(
+    'title' => t('Solution Packs'),
+    'description' => t('Install content models and collections required by installed solution packs.'),
+    'page callback' => 'islandora_solution_packs_page',
+    'access arguments' => array(FEDORA_ADD_DS),
+    'file' => 'admin/islandora.solutionpacks.inc',
+    'type' => MENU_LOCAL_TASK,
+  );
+  $items['islandoracm.xsd'] = array(
+    'title' => t('Islandora Content Model XML Schema Definition'),
+    'page callback' => 'islandora_display_schema',
+    'page arguments' => array('islandoracm.xsd'),
+    'type' => MENU_CALLBACK,
+    'access arguments' => array(FEDORA_VIEW),
+  );
+
+  $items['collection_policy.xsd'] = array(
+    'title' => t('Islandora Content Model XML Schema Definition'),
+    'page callback' => 'islandora_display_schema',
+    'page arguments' => array('collection_policy.xsd'),
+    'type' => MENU_CALLBACK,
+    'access arguments' => array(FEDORA_VIEW),
+  );
+  
+  $items['islandora/object/%'] = array(
+    'title' => 'Repository',
+    'page callback' => 'islandora_view_object',
+    'page arguments' => array(2),
+    'type' => MENU_NORMAL_ITEM,
+    'access arguments' => array(FEDORA_VIEW),
+  );
+
+  /*$items['fedora/repository/service'] = array(
+    'page callback' => 'repository_service',
+    'type' => MENU_CALLBACK,
+    'access arguments' => array(FEDORA_VIEW),
+  );*/
+
+  $items['islandora/object/%/datastream/%/download'] = array(
+    'title' => t('Download object'),
+    'page callback' => 'islandora_object_as_attachment',
+    'page arguments' => array(2, 4),
+    'type' => MENU_CALLBACK,
+    'access arguments' => array(FEDORA_VIEW)
+  );
+
+  /* $items['fedora/repository/editmetadata'] = array(
+    'title' => t('Edit metadata'),
+    'page callback' => 'fedora_repository_edit_qdc_page',
+    'type' => MENU_CALLBACK,
+    'access arguments' => array('edit fedora meta data')
+    ); */
+
+  $items['islandora/object/%/datastream/%/purge'] = array(
+    'title' => t('Purge data stream'),
+    'page callback' => 'islandora_purge_stream',
+    'page arguments' => array(2, 4),
+    'type' => MENU_CALLBACK,
+    'access arguments' => array(FEDORA_PURGE)
+  );
+
+  /* $items['fedora/repository/replaceStream'] = array(
+    'title' => t('Replace Stream'),
+    'page callback' => 'fedora_repository_replace_stream',
+    'type' => MENU_CALLBACK,
+    'access arguments' => array('add fedora datastreams'),
+    ); */
+
+  $items['islandora/object/%/purge'] = array(
+    'title' => t('Purge object'),
+    'page callback' => 'islandora_purge_object',
+    'type' => MENU_CALLBACK,
+    'access arguments' => array(FEDORA_PURGE)
+  );
+
+  $items['islandora/object/%/datastream/%/add'] = array(
+    'title' => t('Add stream'),
+    'page callback' => 'islandora_add_stream',
+    'type' => MENU_CALLBACK,
+    'access arguments' => array(FEDORA_ADD_DS)
+  );
+
+  /* $items['fedora/repository/collection'] = array(
+    'title' => t('Collection view'),
+    'page callback' => 'fedora_collection_view',
+    'type' => MENU_CALLBACK,
+    'access argruments' => array('view fedora collection'),
+    ); */
+
+  //new for mnpl******************************************
+
+
+  $items['islandora/object/ingest'] = array(
+    'title' => t('Ingest object'),
+    'page callback' => 'islandora_ingest_object',
+    'type' => MENU_CALLBACK,
+    'access arguments' => array(FEDORA_INGEST)
+  );
+
+  return $items;
+}
+
+/**
+ * determines whether we can see the object or not
+ * checks PID namespace permissions, and user permissions
+ * @global object $user
+ * @param string $op
+ * @param string $pid
+ *
+ *  @return boolean 
+ */
+function islandora_node_access($op, $pid = NULL, $as_user = NULL) {
+  //$returnValue = FALSE;
+
+  if ($pid == NULL) {
+    $pid = variable_get('fedora_repository_pid', 'islandora:root');
+  }
+
+  $isRestricted = variable_get('fedora_namespace_restriction_enforced', TRUE);
+  $namespace_access = NULL;
+  if (!$isRestricted) {
+    $namespace_access = TRUE;
+  }
+  else {
+    $pid_namespace = substr($pid, 0, strpos($pid, ':') + 1); //Get the namespace (with colon)
+    $allowed_namespaces = explode(" ", variable_get('fedora_pids_allowed', 'default: demo: changeme: islandora: ilives: islandora-book: books: newspapers: '));
+
+    $namespace_access = in_array($pid_namespace, $allowed_namespaces);
+  }
+
+  return ($namespace_access && user_access($op, $as_user));
+}
+
+/**
+ *
+ * @param type $object_id
+ * @return type 
+ */
+function islandora_purge_object($object_id) {
+  if (!isset($object_id)) {
+    drupal_set_message('Cannot remove object, object id not set');
+    return;
+  }
+  $object = new Object($object_id);
+  if (!isset($object)) {
+    drupal_set_message('Could not remove object, object not found');
+    return;
+  }
+  module_invoke_all('islandora_purge_object', $object); //notify modules of pending deletion
+  $object->delete();
+}
+
+/**
+ * returns an array listing object types provided by sub modules
+ * @return array 
+ */
+function islandora_get_types() {
+  return module_invoke_all('islandora_get_types');
+}
+
+/**
+ * DO WE EVEN WANT TO DEFINE THIS HERE OR SHOULD EACH MODULE HANDLE IT EVEN AT THE MENU/PATH LEVEL?  
+ * @paramstring $datastream_id
+ * @return type 
+ */
+function islandora_purge_datastream($object_id, $datastream_id) {
+  if (!isset($datastream_id)) {
+    drupal_set_message('Cannot remove datastream, datastream id not set');
+    return;
+  }
+  $object = new Object($object_id);
+  if (!isset($object)) {
+    drupal_set_message('Could not remove object, object not found');
+    return;
+  }
+  module_invoke_all('islandora_purge_datastream', $datastream); //notify modules of pending deletion so we can update rels etc
+  $object->deleteDatastream();
+}
+
+/**
+ * 
+ * @global object $user
+ * @param string $object_id
+ * 
+ * @return string 
+ */
+function islandora_view_object($object_id) {
+  return $object_id;
+  if (!isset($object_id)) {
+    drupal_set_message('Cannot view object, object id not set');
+    return;
+  }
+  $page_number = (empty($_GET['page'])) ? '1' : $_GET['page'];
+  
+  $object = new IslandoraObject($object_id);
+
+  if (!isset($object)) {
+    drupal_set_message(t('Cannot view object, object not found'), 'error');
+    return"";
+  }
+  global $user;
+  drupal_alter('islandora_view_object', $object); //modify object if required before it is passed along
+  $arr = module_invoke_all('islandora_view_object', $object, $user, $page_number, $page_size); //allow submodules to decide how to handle content base on object type
+  if ($arr[0] == NULL) {
+    drupal_set_message(t('No module registered to handle objects of type %s', array('%s' => $object->type)));
+    return "";
+  }
+  return $arr[0]; //just an example as we could have more then one array element
+}
+
+/**
+ * drupal hook_permissions function
+ * @return array
+ */
+function islandora_permission() {
+  return array(
+    FEDORA_VIEW => array(
+      'title' => t('View Fedora Repository objects and datastreams'),
+      'description' => t('Users with this permission will be allowed to view Fedora objects and datastreams.  Unless Fedora XACML security policies limits this functionality to certain objects.')
+    ),
+    FEDORA_ADD_DS => array(
+      'title' => t('Add Fedora streams to Fedora objects'),
+      'description' => t('Users with this permission will be allowed to add datastreams to Fedora objects.  Unless Fedora XACML security policies limits this functionality to certain objects.')
+    ),
+    FEDORA_METADATA_EDIT => array(
+      'title' => t('Edit Fedora Metadata'),
+      'description' => t('Users with this permission will be allowed to edit Fedora Metadata streams')
+    ),
+    FEDORA_INGEST => array(
+      'title' => t('Create new Fedora objects'),
+      'description' => t('Users with this permission will be allowed to create new objects in the Fedora repository')
+    ),
+    FEDORA_PURGE => array(
+      'title' => t('Permanently remove objects from the Fedora repository'),
+      'description' => t('Users with this permission will be allowed to Permantly remove objects from the Fedora repository.')
+    ),
+    FEDORA_MODIFY_STATE => array(
+      'title' => t('Change a Fedora objects state'),
+      'description' => t('Users with this permission will be allowed to change a Fedora objects state.')
+    ),
+  );
+}
+
+/**
+ * DO WE EVEN WANT TO DEFINE THIS HERE OR SHOULD EACH MODULE HANDLE IT EVEN AT THE MENU/PATH LEVEL?
+ * @param string $object_id
+ * @return type 
+ */
+function islandora_add_datastream($object_id) {
+  if (!isset($object_id)) {
+    drupal_set_message('Cannot add datastream to object, object id not set');
+    return;
+  }
+  //send message to synapse
+  $object = new IslandoraObject($object_id);
+
+  if (!isset($object)) {
+    drupal_set_message('Could not remove object, object not found');
+    return;
+  }
+  module_invoke_all('islandora_add_datastream', $object); //allow submodules to handle add datastream based on object type
+}
+
+?>
