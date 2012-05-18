@@ -266,7 +266,7 @@ function islandora_view_object($object_id) {
   module_load_include('inc', 'islandora', 'RestConnection');
   $user = new stdClass();
   $user->name = 'fedoraAdmin';
-  $user->password = 'fedoraAdmin';
+  $user->password = 'islandora';
   try {
     $restConnection = new RestConnection($user);
     $fedora_object = new FedoraObject($object_id, $restConnection->repository);

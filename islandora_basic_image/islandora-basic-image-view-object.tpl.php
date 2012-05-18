@@ -24,7 +24,7 @@
 
 ?>
 <?php 
-  $object = $variables['objects'];
+  $object = $variables['object'];
   print($object->label); 
 ?>
 
