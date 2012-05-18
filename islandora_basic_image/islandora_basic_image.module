@@ -93,7 +93,7 @@ function islandora_basic_image_theme() {
  * this module should attempt to respond.
  * @return array 
  */
-function islandora_basic_image_get_types() {
+function islandora_basic_image_islandora_get_types() {
   return array('info:fedora/islandora:imgageCModel', 'info:fedora/islandora:sp_basic_image');
 }
 
@@ -111,7 +111,7 @@ function islandora_basic_image_get_types() {
  */
 function islandora_basic_image_islandora_view_object($object, $user, $page_number, $page_size) {
   //global $user;
-  $cmodel_list = islandora_basic_image_get_types();
+  $cmodel_list = islandora_basic_image_islandora_get_types();
   $combined_list = array_intersect($cmodel_list, $object->models);
   if (empty($combined_list)) {
     return NULL;//we don't handle any of this objects cmodels
