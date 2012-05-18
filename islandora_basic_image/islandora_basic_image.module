@@ -3,7 +3,7 @@
 /*
  * @file islandora_basic_image.module
  * 
- * an Islandora module to handle legacy contentModels (with ISLANDORACM streams)
+ * an Islandora module to handle basic image cmodels (with ISLANDORACM streams)
  * 
  * 
  * This file is part of Islandora.
@@ -25,6 +25,7 @@
 
 /**
  * called by theme function and populates a render array for a table view.
+ * See theme registry.  This is also an example function.
  * @param array $metadata
  * @param array $render_array
  * @return array 
@@ -50,6 +51,7 @@ function islandora_basic_image_render_object($metadata, &$render_array) {
 
 /**
  * returns a drupal render array as a html string
+ * This is an example function.  We probably want to use a template
  * @param array $variables
  * @return  string
  */
@@ -85,7 +87,8 @@ function islandora_basic_image_theme() {
 }
 
 /**
- * tells the main module what types of objects we support.
+ * tells the main module what types of objects we support.  This is used to determine whether or not
+ * this module should attempt to respond.
  * @return array 
  */
 function islandora_basic_image_get_types() {
@@ -93,10 +96,11 @@ function islandora_basic_image_get_types() {
 }
 
 /**
- * this modules implentation of view_object will handle objects of type islandora:pdfCmodel as registered in its return types
- *   Other modules would handle objects
- * of other types.
- * @param FedoraObject $object
+ * this modules implentation of view_object will handle objects of type islandora:basicImageCModel and  info:fedora/islandora:sp_basic_image
+ * as registered in its return types
+ * Other modules would handle objects of other types.
+ * @param Object $object
+ *    a tuque fedora object
  * @param object $user
  * @param string $page_number
  * @param string $page_size
@@ -108,7 +112,7 @@ function islandora_basic_image_islandora_view_object($object, $user, $page_numbe
   $cmodel_list = islandora_basic_image_get_types();
   $combined_list = array_intersect($cmodel_list, $object->models);
   if (empty($combined_list)) {
-    return NULL;
+    return NULL;//we don't handle any of this objects cmodels
   }
   $output = theme('islandora_basic_image_view_object', array('objects' => $object));
   
