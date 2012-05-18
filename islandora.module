@@ -246,7 +246,8 @@ function islandora_purge_datastream($object_id, $datastream_id) {
 }
 
 /**
- * 
+ * The view entry point.  modules should implement hook_islandora_view_object for the Fedora Content models that
+ * there modules want to provide a view for.
  * @global object $user
  * @param string $object_id
  * 
@@ -276,11 +277,39 @@ function islandora_view_object($object_id) {
   $arr = module_invoke_all('islandora_view_object', $fedora_object, $user, $page_number, $page_size); //allow submodules to decide how to handle content base on object type
   if (empty($arr) ) {
     //TODO: make sure we iterate over the array as they will be more then one cmodel per object
-    drupal_set_message(t('No module registered to handle objects of type %s', array('%s' => $fedora_object->models[0])));
+    drupal_set_message(t('there was an error loading the view for islandora object %s',array('%s' => $object_id)),'error');
     return "";
   }
   //module_invoke_all(islandora_display($arr)),
   return $arr[0]; //just an example as we could have more then one array element
+}
+
+/**
+ * the default view hook.  If there are no modules registered to handle this objects cmodels or there are 
+ * not any cmodels specified this will create a default display.
+ * @param string $object_id
+ * @return string 
+ */
+function islandora_islandora_view_object($object){
+  $supported_models = islandora_get_types();  
+  $object_models = $object->models;
+  $combined_list = array_intersect($supported_models, $object->models);
+  if (empty($combined_list)) {
+    return theme('islandora_object_default_view', array('object' => $object));
+  }
+}
+
+/**
+ * Theme registry function
+ * @return array
+ */
+function islandora_theme() {
+  return array(
+    'islandora_object_default_view' => array(
+      'template' => 'islandora-object-default-view',
+      'variables' => array('object' => NULL),
+    ),
+   );
 }
 
 /**

@@ -30,10 +30,11 @@
  * @param array $render_array
  * @return array 
  */
+/*
 function islandora_basic_image_render_object($metadata, &$render_array) {
   $header = array(t('Label'), t('Value'));
   $table_attributes = array('class' => array('islandora_metadata'));
-  /*$rows = array();
+  $rows = array();
   foreach ($metadata as $key => $value) {
     if (isset($value) && is_array($value)) {
       $item_list = array('#items' => $value, '#theme' => 'item_list');
@@ -44,10 +45,10 @@ function islandora_basic_image_render_object($metadata, &$render_array) {
     }
   }
   $render_array['metadata'] = array('#header' => $header, '#theme' => 'table', '#rows' => $rows, '#attributes' => $table_attributes);
-  */
+  
     return $render_array;
    
-}
+}*/
 
 /**
  * returns a drupal render array as a html string
@@ -55,6 +56,7 @@ function islandora_basic_image_render_object($metadata, &$render_array) {
  * @param array $variables
  * @return  string
  */
+/*
 function theme_islandora_basic_image_view_object($variables) {
   $object = $variables['object'];
   //$metadata = $object->metadata;
@@ -66,7 +68,7 @@ function theme_islandora_basic_image_view_object($variables) {
   islandora_basic_image_render_object($object, $render_array);
   
   return drupal_render($render_array);
-}
+}*/
 
 
 /**
