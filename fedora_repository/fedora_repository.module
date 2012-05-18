@@ -3,6 +3,7 @@
 /*
  * @file fedora_repository.module
  * 
+ * an Islandora module to handle legacy contentModels (with ISLANDORACM streams)
  * 
  * 
  * This file is part of Islandora.
@@ -20,7 +21,6 @@
  * You should have received a copy of the GNU General Public License
  * along with the program.  If not, see <http ://www.gnu.org/licenses/>.
  */
-
 
 
 /**
@@ -69,37 +69,35 @@ function theme_fedora_repository_view_object($variables) {
 /**
  *
  * @global object $user
- * @param ActiveMongo $object
+ * @param Object $object
+ *    A tuque fedora object
  * @param string $render_array
  * @return type 
  */
 function fedora_repository_list_datastreams($object, &$render_array) {
-  module_load_include('inc', 'CmrAPIDrupal', 'cmr');
+ 
   global $user;
-  $api = new CmrAPIDrupal($user);
   $datastreams = $object->datastreams;
   if (!isset($datastreams)) {
     return $render_array;
   }
   foreach ($datastreams as $datastream) {
     foreach ($datastream as $key => $value) {
-      if ($key == 'cmr:data') {
-        $d = new CmrDatastream();
-        $d->find($value);
-        if (isset($d)) {
+      if ($key == 'islandora:bookCmodel') {
+       
          // $id = $d->getID()->id;
           $render_array[(string)$d->getID()] = array('type' => 'markup', '#markup' => '<div class = "cmr-external-link">'.l($d->label, $d->path,array('html'=>TRUE)).'</div>');
         }
       }
-      if($key = 'cmr:metaData'){
-        $d = new CmrDatastream();
+      if($key = 'islandora:iaBookCModel'){
+        $d = new datastream();
         $d->find($value);
         if(isset($d)){
           //@TODO: do something here
         }
       }
     }
-  }
+  
 }
 
 /**
@@ -123,7 +121,7 @@ function fedora_repository_theme() {
  * @return array 
  */
 function fedora_repository_get_types() {
-  return array('islandora:pdfCModel');
+  return array('islandora:bookCModel','islandora:isBookCModel');
 }
 
 /**
@@ -144,7 +142,6 @@ function fedora_repository_islandora_view_object($object, $user, $page_number, $
     return NULL;
   }
   $output = theme('fedora_repository_view_object', array('object' => $object));
-  //$api = new CmrAPIDrupal($user);
   
   //pager_default_initialize($results['count'], $page_size);
   //$pager = theme('pager', array('quantity' => $results['count']));
