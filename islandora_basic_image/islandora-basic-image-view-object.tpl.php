@@ -23,8 +23,8 @@
 
 
 ?>
-<?php print $variables['count'];
-foreach($variables['results'] as $object){
-  print_r ($object); 
-}?>
+<?php 
+  $object = $variables['objects'];
+  print($object->label); 
+?>
 

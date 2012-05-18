@@ -1,7 +1,7 @@
 <?php
 
 /*
- * @file fedora_repository.module
+ * @file islandora_basic_image.module
  * 
  * an Islandora module to handle legacy contentModels (with ISLANDORACM streams)
  * 
@@ -29,7 +29,7 @@
  * @param array $render_array
  * @return array 
  */
-function fedora_repository_show_metadata($metadata, &$render_array) {
+function islandora_basic_image_render_object($metadata, &$render_array) {
   $header = array(t('Label'), t('Value'));
   $table_attributes = array('class' => array('islandora_metadata'));
   /*$rows = array();
@@ -53,7 +53,7 @@ function fedora_repository_show_metadata($metadata, &$render_array) {
  * @param array $variables
  * @return  string
  */
-function theme_fedora_repository_view_object($variables) {
+function theme_islandora_basic_image_view_object($variables) {
   $object = $variables['object'];
   //$metadata = $object->metadata;
   $render_array = array('title' => array(
@@ -61,57 +61,25 @@ function theme_fedora_repository_view_object($variables) {
       '#markup' => '<h2>' . $object->label . '</h2>',
       ));
   
-  fedora_repository_show_metadata($metadata, $render_array);
-  fedora_repository_list_datastreams($object, $render_array);
+  islandora_basic_image_render_object($object, $render_array);
+  
   return drupal_render($render_array);
 }
 
-/**
- *
- * @global object $user
- * @param Object $object
- *    A tuque fedora object
- * @param string $render_array
- * @return type 
- */
-function fedora_repository_list_datastreams($object, &$render_array) {
- 
-  global $user;
-  $datastreams = $object->datastreams;
-  if (!isset($datastreams)) {
-    return $render_array;
-  }
-  foreach ($datastreams as $datastream) {
-    foreach ($datastream as $key => $value) {
-      if ($key == 'islandora:bookCmodel') {
-       
-         // $id = $d->getID()->id;
-          $render_array[(string)$d->getID()] = array('type' => 'markup', '#markup' => '<div class = "cmr-external-link">'.l($d->label, $d->path,array('html'=>TRUE)).'</div>');
-        }
-      }
-      if($key = 'islandora:iaBookCModel'){
-        $d = new datastream();
-        $d->find($value);
-        if(isset($d)){
-          //@TODO: do something here
-        }
-      }
-    }
-  
-}
 
 /**
  * Theme registry function
  * @return array
  */
-function fedora_repository_theme() {
+function islandora_basic_image_theme() {
   return array(
-    'fedora_repository_view_objects' => array(
-      'template' => 'fedora-repository-view-objects',
+    'islandora_basic_image_view_objects' => array(
+      'template' => 'islandora-basic-image-view-objects',
       'variables' => array('objects' => NULL),
     ),
-    'fedora_repository_view_object' => array(
-      'varibles' => array('object'),
+    'islandora_basic_image_view_object' => array(
+      'template' => 'islandora-basic-image-view-object',
+      'variables' => array('objects' => NULL),
     )
   );
 }
@@ -120,8 +88,8 @@ function fedora_repository_theme() {
  * tells the main module what types of objects we support.
  * @return array 
  */
-function fedora_repository_get_types() {
-  return array('islandora:bookCModel','islandora:isBookCModel');
+function islandora_basic_image_get_types() {
+  return array('info:fedora/islandora:imgageCModel', 'info:fedora/islandora:sp_basic_image');
 }
 
 /**
@@ -135,21 +103,15 @@ function fedora_repository_get_types() {
  * @return string
  *    themed html
  */
-function fedora_repository_islandora_view_object($object, $user, $page_number, $page_size) {
+function islandora_basic_image_islandora_view_object($object, $user, $page_number, $page_size) {
   //global $user;
-  
-  if (!in_array('info:fedora/islandora_bookCmodel', $object->models) && !in_array('info:fedora/islandora:iaBookCModel', $object->models)) {
+  $cmodel_list = islandora_basic_image_get_types();
+  $combined_list = array_intersect($cmodel_list, $object->models);
+  if (empty($combined_list)) {
     return NULL;
   }
-  $output = theme('fedora_repository_view_object', array('object' => $object));
+  $output = theme('islandora_basic_image_view_object', array('objects' => $object));
   
-  //pager_default_initialize($results['count'], $page_size);
-  //$pager = theme('pager', array('quantity' => $results['count']));
-  //$output .= $pager;
-  //if ($results['count'] > 0) {
-  //  $output .= theme('fedora_repository_view_objects', $results);
-  //}
-  //$output .= $pager;
   return $output;
 }
 

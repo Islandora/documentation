@@ -1,0 +1,4 @@
+name = "Islandora Basic Image"
+description = "A default Islandora Repository module to handle images"
+dependencies[] = islandora
+core = 7.x

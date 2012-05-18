@@ -27,7 +27,7 @@ define('FEDORA_VIEW', 'view fedora repository');
 define('FEDORA_METADATA_EDIT', 'edit fedora metadata');
 define('FEDORA_ADD_DS', 'add fedora datastreams');
 define('FEDORA_INGEST', 'ingest fedora objects');
-define('FEDORA_PURGE', 'purge fedora objects and datastreams');
+define('FEDORA_PURGE', 'delete fedora objects and datastreams');
 define('FEDORA_MODIFY_STATE', 'modify fedora state');
 
 /**
