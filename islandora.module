@@ -78,13 +78,14 @@ function islandora_menu() {
     'type' => MENU_CALLBACK,
     'access arguments' => array(FEDORA_VIEW),
   );
-
+  
   $items['islandora/ingest/%'] = array(
-    'title' => 'Ingest object',
-    'page callback' => 'islandora_ingest_object',
+    'title' => t('Ingest object'),
+    'page callback' => 'islandora_ingest_callback',
     'page arguments' => array(2),
-    'type' => MENU_NORMAL_ITEM,
-    'access arguments' => array(FEDORA_INGEST)
+    'file' => 'includes/ingest-menu.inc',
+    'type' => MENU_CALLBACK,
+    'access arguments' => array(FEDORA_INGEST),
   );
   
   $items['islandora/object/%'] = array(
@@ -163,15 +164,6 @@ function islandora_menu() {
     'page arguments' => array(2, 4),
     'type' => MENU_CALLBACK,
     'access arguments' => array(FEDORA_PURGE),
-  );
-
-  $items['islandora/ingest/%'] = array(
-    'title' => t('Ingest object'),
-    'page callback' => 'islandora_ingest_callback',
-    'page arguments' => array(2),
-    'file' => 'includes/ingest-menu.inc',
-    'type' => MENU_CALLBACK,
-    'access arguments' => array(FEDORA_INGEST)
   );
 
   return $items;
