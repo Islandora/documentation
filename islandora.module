@@ -165,6 +165,15 @@ function islandora_menu() {
     'access arguments' => array(FEDORA_PURGE),
   );
 
+  $items['islandora/ingest/%'] = array(
+    'title' => t('Ingest object'),
+    'page callback' => 'islandora_ingest_callback',
+    'page arguments' => array(2),
+    'file' => 'includes/ingest-menu.inc',
+    'type' => MENU_CALLBACK,
+    'access arguments' => array(FEDORA_INGEST)
+  );
+
   return $items;
 }
 
