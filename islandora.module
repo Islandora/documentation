@@ -266,7 +266,7 @@ function islandora_view_object($object_id) {
   module_load_include('inc', 'islandora', 'RestConnection');
   $user = new stdClass();
   $user->name = 'fedoraAdmin';
-  $user->password = 'fedoraAdmin';
+  $user->password = 'islandora';
   try {
     $restConnection = new RestConnection($user);
     $fedora_object = new FedoraObject($object_id, $restConnection->repository);
@@ -311,6 +311,22 @@ function islandora_theme() {
       'variables' => array('object' => NULL),
     ),
    );
+}
+
+function islandora_datastream_as_attachment($object_id, $dsid){
+  module_load_include('inc', 'islandora', 'RestConnection');
+  $user = new stdClass();
+  $user->name = 'fedoraAdmin';
+  $user->password = 'islandora';
+  try {
+    $restConnection = new RestConnection($user);
+    $fedora_object = new FedoraObject($object_id, $restConnection->repository);
+  } catch (Exception $e) {
+    drupal_set_message(t('Error getting Islanndora datastream $d for object %s', array('%s' => $object_id, '%d' => $dsid)), 'error');
+    return"";
+  }
+  print($fedora_object[$dsid]->content);
+  exit();
 }
 
 /**

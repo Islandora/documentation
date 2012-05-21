@@ -24,7 +24,20 @@
 
 ?>
 <?php 
-  $object = $variables['object'];
+/*object is a fedora tuque Object
+ * $object->label
+ * $object->id
+ * to get the contents of a datastream
+ * $object['dsid']->content 
+ * etc.
+ * 
+ */
+ 
+  $mods = $variables['object'];
+  $title = $mods['title'];
+  //dsm($object);
+  
   print('this is the default view for '. $object->label .' ' .$object->id); 
+  //print($object['MODS']->contentasJson->'key')
 ?>
 
