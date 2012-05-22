@@ -129,13 +129,13 @@
     
 
     //Export functionality
-    $form['advanced']['module']['islandora_export_area'] = array(
-      '#type' => 'textfield',
-      '#title' => t('Export area'),
-      '#default_value' => variable_get('islandora_export_area', file_directory_path() . '/fedora_export_area'),
-      '#description' => t("Path to the export area. It must be accessible by druapl (i.e. apache user)."),
-      '#required' => TRUE,
-    );
+    //$form['advanced']['module']['islandora_export_area'] = array(
+    //  '#type' => 'textfield',
+    //  '#title' => t('Export area'),
+   //   '#default_value' => variable_get('islandora_export_area', file_directory_path() . '/fedora_export_area'),
+    //  '#description' => t("Path to the export area. It must be accessible by druapl (i.e. apache user)."),
+    //  '#required' => TRUE,
+    //);
 
     $form['#attributes'] = array('enctype' => "multipart/form-data");
 
