@@ -96,9 +96,12 @@ function islandora_menu() {
     'access arguments' => array(FEDORA_VIEW),
   );
 
+
   $items['islandora/object/%/add'] = array(
-    'title' => 'Add stream',
-    'page callback' => 'islandora_add_stream',
+    'title' => 'Add to an object',
+    'file' => 'includes/add-menu.inc',
+    'page callback' => 'islandora_add_callback',
+    'page arguments' => array(2),
     'type' => MENU_NORMAL_ITEM,
     'access arguments' => array(FEDORA_ADD_DS)
   );
