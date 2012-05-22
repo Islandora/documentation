@@ -131,6 +131,7 @@ function islandora_menu() {
     'page callback' => 'islandora_datastream_as_attachment',
     'page arguments' => array(2, 4),
     'type' => MENU_CALLBACK,
+    'file' => 'utils/datastream.inc',
     'access arguments' => array(FEDORA_VIEW),
   );
   
@@ -139,6 +140,7 @@ function islandora_menu() {
     'page callback' => 'islandora_datastream_as_attachment',
     'page arguments' => array(2, 4),
     'type' => MENU_CALLBACK,
+    'file' => 'utils/datastream.inc',
     'access arguments' => array(FEDORA_VIEW),
   );
   
@@ -147,6 +149,7 @@ function islandora_menu() {
     'page callback' => 'islandora_datastream_as_attachment',
     'page arguments' => array(2, 4),
     'type' => MENU_CALLBACK,
+    'file' => 'utils/datastream.inc',
     'access arguments' => array(FEDORA_VIEW),
   );
   
@@ -282,7 +285,7 @@ function islandora_view_object($object_id) {
   //module_invoke_all(islandora_display($arr)),
   $output = "";
   foreach($arr as $key => $value){
-    $output .= $key .'<br />'.$value; //ir we have multiple modules handle one cmodel we need to iterate over multiple
+    $output .= $key .'<br />'.$value; //if we have multiple modules handle one cmodel we need to iterate over multiple
   }
   //we could do another module invoke all here to build the edit tab with a default implemented in this module?
   return $output; //just an example as we could have more then one array element
@@ -316,20 +319,6 @@ function islandora_theme() {
       'variables' => array('islandora_object' => NULL),
     ),
    );
-}
-
-function islandora_datastream_as_attachment($object_id, $dsid){
-  module_load_include('inc', 'islandora', 'RestConnection');
-  global $user;
-  try {
-    $restConnection = new RestConnection($user);
-    $fedora_object = new FedoraObject($object_id, $restConnection->repository);
-  } catch (Exception $e) {
-    drupal_set_message(t('Error getting Islanndora datastream $d for object %s', array('%s' => $object_id, '%d' => $dsid)), 'error');
-    return"";
-  }
-  print($fedora_object[$dsid]->content);
-  exit();
 }
 
 /**
