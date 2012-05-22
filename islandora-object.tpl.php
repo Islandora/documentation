@@ -45,6 +45,7 @@
  */
 
 //dsm($object);
+drupal_set_title($islandora_object->label);
 $dublin_core = $variables['islandora_dublin_core'];
 print($islandora_object->label . ' ' . $islandora_object->id);
 print ('<h3>datastreams</h3>');
