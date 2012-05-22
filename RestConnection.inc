@@ -19,7 +19,7 @@ class RestConnection {
 
   function RestConnection($user) {
     $url = variable_get('islandora_base_url', 'http://localhost:8080/fedora');
-    $this->connection = new RepositoryConnection($url, $user->name, $user->password);
+    $this->connection = new RepositoryConnection($url, $user->name, $user->pass);
     $this->connection->reuseConnection = TRUE;
     $this->api = new FedoraApi($this->connection);
     $this->cache = new SimpleCache();

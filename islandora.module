@@ -264,9 +264,10 @@ function islandora_view_object($object_id) {
   $page_number = (empty($_GET['page'])) ? '1' : $_GET['page'];
   $page_size = (empty($_GET['pagesize'])) ? '10' : $_GET['pagesize'];
   module_load_include('inc', 'islandora', 'RestConnection');
-  $user = new stdClass();
-  $user->name = 'fedoraAdmin';
-  $user->password = 'islandora';
+  //$user = new stdClass();
+  //$user->name = 'fedoraAdmin';
+  //$user->password = 'islandora';
+  global $user;
   try {
     $restConnection = new RestConnection($user);
     $fedora_object = new FedoraObject($object_id, $restConnection->repository);
@@ -315,9 +316,10 @@ function islandora_theme() {
 
 function islandora_datastream_as_attachment($object_id, $dsid){
   module_load_include('inc', 'islandora', 'RestConnection');
-  $user = new stdClass();
-  $user->name = 'fedoraAdmin';
-  $user->password = 'islandora';
+  //$user = new stdClass();
+  //$user->name = 'fedoraAdmin';
+  //$user->password = 'islandora';
+  global $user;
   try {
     $restConnection = new RestConnection($user);
     $fedora_object = new FedoraObject($object_id, $restConnection->repository);
