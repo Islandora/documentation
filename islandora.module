@@ -297,7 +297,7 @@ function islandora_islandora_view_object($object){
   $object_models = $object->models;
   $combined_list = array_intersect($supported_models, $object->models);
   if (empty($combined_list)) {
-    return theme('islandora_object_default_view', array('object' => $object));
+    return theme('islandora_default', array('islandora_object' => $object));
   }
 }
 
@@ -307,9 +307,9 @@ function islandora_islandora_view_object($object){
  */
 function islandora_theme() {
   return array(
-    'islandora_object_default_view' => array(
-      'template' => 'islandora-object-default-view',
-      'variables' => array('object' => NULL),
+    'islandora_default' => array(
+      'template' => 'islandora-object',
+      'variables' => array('islandora_object' => NULL),
     ),
    );
 }
@@ -379,4 +379,22 @@ function islandora_add_datastream($object_id) {
     return;
   }
   module_invoke_all('islandora_add_datastream', $object); //allow submodules to handle add datastream based on object type
+}
+
+function islandora_preprocess_islandora_default(&$variables){
+  $islandora_object = $variables['islandora_object'];
+  module_load_include('inc','islandora','utils/islandora_dublin_core');
+  try{
+    $dc = $islandora_object['DC']->content;
+    //$dc_xml = simplexml_load_string($dc);
+    $dc_object = Dublin_Core::import_from_xml_string($dc);
+  }catch(Exception $e){
+    drupal_set_message(t('Error retrieving object %s %t', array('%s' => $islandora_object->id,'%t'=>$e->getMessage())),'error');
+  }
+  $variables['islandora_dublin_core'] = $dc_object;
+  $variables['islandora_object_label'] = $islandora_object->label;
+  global $base_url;
+  if(isset($islandora_object['TN'])){
+      $variables['islandora_thumbnail_url'] = $base_url.'/islandora/object/'.$islandora_object->id.'/datastream/TN/view';
+  }
 }
