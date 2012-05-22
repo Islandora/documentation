@@ -24,7 +24,9 @@
 
 ?>
 <?php 
-  $object = $variables['object'];
+  $object = $variables['islandora_object'];
+  $image_url = $variables['islandora_image_url'];
   print($object->label); 
+  print('<img src = "'.$image_url.'"/>');
 ?>
 

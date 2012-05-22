@@ -316,9 +316,6 @@ function islandora_theme() {
 
 function islandora_datastream_as_attachment($object_id, $dsid){
   module_load_include('inc', 'islandora', 'RestConnection');
-  //$user = new stdClass();
-  //$user->name = 'fedoraAdmin';
-  //$user->password = 'islandora';
   global $user;
   try {
     $restConnection = new RestConnection($user);

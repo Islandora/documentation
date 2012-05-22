@@ -9,6 +9,7 @@ require_once 'sites/all/libraries/tuque/RepositoryConnection.php';
 require_once 'sites/all/libraries/tuque/Cache.php';
 require_once 'sites/all/libraries/tuque/RepositoryException.php';
 require_once 'sites/all/libraries/tuque/Repository.php';
+require_once 'sites/all/libraries/tuque/FedoraRelationships.php';
 
 class RestConnection {
 

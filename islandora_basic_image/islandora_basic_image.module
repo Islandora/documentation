@@ -77,13 +77,13 @@ function theme_islandora_basic_image_view_object($variables) {
  */
 function islandora_basic_image_theme() {
   return array(
-    'islandora_basic_image_view_objects' => array(
+    'islandora_basic_image_objects' => array(
       'template' => 'islandora-basic-image-view-objects',
-      'variables' => array('objects' => NULL),
+      'variables' => array('islandor_objects' => NULL),
     ),
-    'islandora_basic_image_view_object' => array(
-      'template' => 'islandora-basic-image-view-object',
-      'variables' => array('object' => NULL),
+    'islandora_basic_image' => array(
+      'template' => 'islandora-basic-image',
+      'variables' => array('islandora_object' => NULL),
     )
   );
 }
@@ -118,26 +118,28 @@ function islandora_basic_image_islandora_view_object($object, $user, $page_numbe
   if (empty($combined_list)) {
     return NULL;//we don't handle any of this objects cmodels
   }
-  $output = theme('islandora_basic_image_view_object', array('object' => $object));
+  $output = theme('islandora_basic_image', array('islandora_object' => $object));
   
   return $output;
 }
 
-function islandora_preprocess_islandora_basic_image_view_object(&$variables){
-  $object = $variables['object'];
+function islandora_preprocess_islandora_basic_image(&$variables){
+  $islandora_object = $variables['islandora_object'];
+  module_load_include('inc','islandora','utils/islandora_dublin_core');
   try{
-    $dc = $object['DC']->content;
-    $dc_xml = simplexml_load_string($dc);
-    $dc_json = json_decode(json_encode((array)simplexml_load_string($dc)),1);
+    $dc = $islandora_object['DC']->content;
+    //$dc_xml = simplexml_load_string($dc);
+    $dc_object = Dublin_Core::import_from_xml_string($dc);
   }catch(Exception $e){
-    drupal_set_message(t('Error retrieving object %s %t', array('%s' => $object->id,'%t'=>$e->getMessage())),'error');
+    drupal_set_message(t('Error retrieving object %s %t', array('%s' => $islandora_object->id,'%t'=>$e->getMessage())),'error');
   }
-  $variables['dc'] = $dc_json;
-  $variables['label'] = $object->label;
+  $variables['islandora_dublin_core'] = $dc_object;
+  $variables['islandora_object_label'] = $islandora_object->label;
   global $base_url;
-  $variables['image_url'] = $base_url.'islandora/object/'.$object->id.'/datastream/OBJ/view';
-  $variables['thumbnail_url'] = $base_url.'islandora/object/'.$object->id.'datastream/TN/view';
-  //return;
+  $variables['islandora_image_url'] = $base_url.'/islandora/object/'.$islandora_object->id.'/datastream/OBJ/view';
+  $variables['islandora_thumbnail_url'] = $base_url.'/islandora/object/'.$islandora_object->id.'/datastream/TN/view';
+  $variables['islandora_medium_size_url'] = $base_url . '/islandora/object/'.$islandora_object->id.'/datastream/MEDIUM/view';
 }
+
 
 ?>
