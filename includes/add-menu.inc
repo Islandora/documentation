@@ -2,31 +2,30 @@
 
 function islandora_add_callback($pid) {
   module_load_include('inc', 'islandora', 'RestConnection');
-  global $user;
+  $user = new stdClass();
+  $user->name = 'fedoraAdmin';
+  $user->pass = 'password';
   $connection = new RestConnection($user);
   $object = $connection->repository->getObject($pid);
+  $models = $object->models;
 
-  dsm($object->id);
+  return drupal_get_form('islandora_add_form', $models, $object);
+}
 
-  /**
+function islandora_add_form($object) {
+  $form = array ();
+  return $form;
+}
 
-  $ingest_registry = module_invoke_all('islandora_ingest_registry', $collection_pid);
-
-  $registry_count = count($ingest_registry);
-
-  if ($registry_count == 0) {
-    // No ingest implementations.
-    drupal_set_message(t('There are no ingest methods specified for this collection.'));
-    drupal_goto('islandora/object/' . $collection_pid);
+function islandora_form_alter(&$form, &$form_state, $form_id) {
+  if($form_id == 'islandora_add_form') {
+    $form['islandora_repository_pid'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Root Collection PID'),
+      '#default_value' => variable_get('islandora_repository_pid', 'islandora:root'),
+      '#description' => t('The PID of the Root Collection Object'),
+      '#required' => TRUE,
+      '#weight' => -18
+    );
   }
-  elseif ($registry_count == 1) {
-    // One registry implementation, go there
-    drupal_goto($ingest_registry[0]['url']);
-  }
-  else {
-    // Multiple ingest routes registered
-    return islandora_ingest_registry_render($ingest_registry);
-  }
-   *
-   */
 }
