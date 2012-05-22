@@ -20,13 +20,24 @@
  * You should have received a copy of the GNU General Public License
  * along with the program.  If not, see <http ://www.gnu.org/licenses/>.
  */
-
-
 ?>
-<?php 
+<?php
+
   $object = $variables['islandora_object'];
   $image_url = $variables['islandora_image_url'];
-  print($object->label); 
-  print('<img src = "'.$image_url.'"/>');
+  drupal_set_title($object->label);
+  foreach ($variables['islandora_dublin_core'] as $element) {
+    if (!empty($element)) {
+      foreach ($element as $key => $value) {
+        foreach ($value as $v) {
+          if (!empty($v)) {
+            print '<strong>' . ($key) . '</strong>: ';
+            print($v) . '<br />';
+          }
+        }
+      }
+    }
+  }
+  print('<img src = "' . $image_url . '"/>');
 ?>
 

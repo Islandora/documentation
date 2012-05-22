@@ -120,7 +120,7 @@ function islandora_basic_image_islandora_view_object($object, $user, $page_numbe
   }
   $output = theme('islandora_basic_image', array('islandora_object' => $object));
   
-  return $output;
+  return array('Basic Image Output' =>$output);
 }
 
 function islandora_preprocess_islandora_basic_image(&$variables){

@@ -134,6 +134,7 @@ function islandora_menu() {
     'page callback' => 'islandora_datastream_as_attachment',
     'page arguments' => array(2, 4),
     'type' => MENU_CALLBACK,
+    'file' => 'utils/datastream.inc',
     'access arguments' => array(FEDORA_VIEW),
   );
   
@@ -142,6 +143,7 @@ function islandora_menu() {
     'page callback' => 'islandora_datastream_as_attachment',
     'page arguments' => array(2, 4),
     'type' => MENU_CALLBACK,
+    'file' => 'utils/datastream.inc',
     'access arguments' => array(FEDORA_VIEW),
   );
   
@@ -150,6 +152,7 @@ function islandora_menu() {
     'page callback' => 'islandora_datastream_as_attachment',
     'page arguments' => array(2, 4),
     'type' => MENU_CALLBACK,
+    'file' => 'utils/datastream.inc',
     'access arguments' => array(FEDORA_VIEW),
   );
   
@@ -267,9 +270,6 @@ function islandora_view_object($object_id) {
   $page_number = (empty($_GET['page'])) ? '1' : $_GET['page'];
   $page_size = (empty($_GET['pagesize'])) ? '10' : $_GET['pagesize'];
   module_load_include('inc', 'islandora', 'RestConnection');
-  //$user = new stdClass();
-  //$user->name = 'fedoraAdmin';
-  //$user->password = 'islandora';
   global $user;
   try {
     $restConnection = new RestConnection($user);
@@ -286,7 +286,12 @@ function islandora_view_object($object_id) {
     return "";
   }
   //module_invoke_all(islandora_display($arr)),
-  return $arr[0]; //just an example as we could have more then one array element
+  $output = "";
+  foreach($arr as $key => $value){
+    $output .= $key .'<br />'.$value; //if we have multiple modules handle one cmodel we need to iterate over multiple
+  }
+  //we could do another module invoke all here to build the edit tab with a default implemented in this module?
+  return $output; //just an example as we could have more then one array element
 }
 
 /**
@@ -299,8 +304,10 @@ function islandora_islandora_view_object($object){
   $supported_models = islandora_get_types();  
   $object_models = $object->models;
   $combined_list = array_intersect($supported_models, $object->models);
+  $output = "";
   if (empty($combined_list)) {
-    return theme('islandora_object_default_view', array('object' => $object));
+    $output = theme('islandora_default', array('islandora_object' => $object));
+    return array ('Default Output' => $output);
   }
 }
 
@@ -310,25 +317,11 @@ function islandora_islandora_view_object($object){
  */
 function islandora_theme() {
   return array(
-    'islandora_object_default_view' => array(
-      'template' => 'islandora-object-default-view',
-      'variables' => array('object' => NULL),
+    'islandora_default' => array(
+      'template' => 'islandora-object',
+      'variables' => array('islandora_object' => NULL),
     ),
    );
-}
-
-function islandora_datastream_as_attachment($object_id, $dsid){
-  module_load_include('inc', 'islandora', 'RestConnection');
-  global $user;
-  try {
-    $restConnection = new RestConnection($user);
-    $fedora_object = new FedoraObject($object_id, $restConnection->repository);
-  } catch (Exception $e) {
-    drupal_set_message(t('Error getting Islanndora datastream $d for object %s', array('%s' => $object_id, '%d' => $dsid)), 'error');
-    return"";
-  }
-  print($fedora_object[$dsid]->content);
-  exit();
 }
 
 /**
@@ -382,4 +375,22 @@ function islandora_add_datastream($object_id) {
     return;
   }
   module_invoke_all('islandora_add_datastream', $object); //allow submodules to handle add datastream based on object type
+}
+
+function islandora_preprocess_islandora_default(&$variables){
+  $islandora_object = $variables['islandora_object'];
+  module_load_include('inc','islandora','utils/islandora_dublin_core');
+  try{
+    $dc = $islandora_object['DC']->content;
+    //$dc_xml = simplexml_load_string($dc);
+    $dc_object = Dublin_Core::import_from_xml_string($dc);
+  }catch(Exception $e){
+    drupal_set_message(t('Error retrieving object %s %t', array('%s' => $islandora_object->id,'%t'=>$e->getMessage())),'error');
+  }
+  $variables['islandora_dublin_core'] = $dc_object;
+  $variables['islandora_object_label'] = $islandora_object->label;
+  global $base_url;
+  if(isset($islandora_object['TN'])){
+      $variables['islandora_thumbnail_url'] = $base_url.'/islandora/object/'.$islandora_object->id.'/datastream/TN/view';
+  }
 }
