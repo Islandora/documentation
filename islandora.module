@@ -62,7 +62,7 @@ function islandora_menu() {
     'file' => 'admin/islandora.solutionpacks.inc',
     'type' => MENU_NORMAL_ITEM,
   );
-  
+
   $items['islandoracm.xsd'] = array(
     'title' => 'Islandora Content Model XML Schema Definition',
     'page callback' => 'islandora_display_schema',
@@ -78,16 +78,16 @@ function islandora_menu() {
     'type' => MENU_CALLBACK,
     'access arguments' => array(FEDORA_VIEW),
   );
-  
+
   $items['islandora/ingest/%'] = array(
-    'title' => t('Ingest object'),
+    'title' => 'Ingest object',
     'page callback' => 'islandora_ingest_callback',
     'page arguments' => array(2),
     'file' => 'includes/ingest-menu.inc',
     'type' => MENU_CALLBACK,
     'access arguments' => array(FEDORA_INGEST),
   );
-  
+
   $items['islandora/object/%'] = array(
     'title' => 'Repository',
     'page callback' => 'islandora_view_object',
@@ -105,7 +105,7 @@ function islandora_menu() {
     'type' => MENU_NORMAL_ITEM,
     'access arguments' => array(FEDORA_ADD_DS)
   );
-  
+
   $items['islandora/object/%/view'] = array(
     'title' => 'Repository',
     'page callback' => 'islandora_view_object',
@@ -113,7 +113,7 @@ function islandora_menu() {
     'type' => MENU_NORMAL_ITEM,
     'access arguments' => array(FEDORA_VIEW),
   );
- 
+
   $items['islandora/object/%/edit'] = array(
     'title' => 'Repository',
     'page callback' => 'islandora_edit_object',
@@ -121,14 +121,14 @@ function islandora_menu() {
     'type' => MENU_NORMAL_ITEM,
     'access arguments' => array(FEDORA_MODIFY_STATE),
   );
-    
+
   $items['islandora/object/%/delete'] = array(
     'title' => 'Purge object',
     'page callback' => 'islandora_purge_object',
     'type' => MENU_CALLBACK,
     'access arguments' => array(FEDORA_PURGE),
   );
-  
+
   $items['islandora/object/%/datastream/%'] = array(
     'title' => 'View datastream',
     'page callback' => 'islandora_datastream_as_attachment',
@@ -137,7 +137,7 @@ function islandora_menu() {
     'file' => 'utils/datastream.inc',
     'access arguments' => array(FEDORA_VIEW),
   );
-  
+
   $items['islandora/object/%/datastream/%/view'] = array(
     'title' => 'View datastream',
     'page callback' => 'islandora_datastream_as_attachment',
@@ -146,7 +146,7 @@ function islandora_menu() {
     'file' => 'utils/datastream.inc',
     'access arguments' => array(FEDORA_VIEW),
   );
-  
+
   $items['islandora/object/%/datastream/%/download'] = array(
     'title' => 'Download datastream',
     'page callback' => 'islandora_datastream_as_attachment',
@@ -155,7 +155,7 @@ function islandora_menu() {
     'file' => 'utils/datastream.inc',
     'access arguments' => array(FEDORA_VIEW),
   );
-  
+
   $items['islandora/object/%/datastream/%/edit'] = array(
     'title' => 'Edit datastream',
     'page callback' => 'islandora_edit_stream',
@@ -163,7 +163,7 @@ function islandora_menu() {
     'type' => MENU_CALLBACK,
     'access arguments' => array(FEDORA_METADATA_EDIT),
   );
-    
+
   $items['islandora/object/%/datastream/%/delete'] = array(
     'title' => 'Purge data stream',
     'page callback' => 'islandora_purge_stream',
@@ -280,15 +280,15 @@ function islandora_view_object($object_id) {
   }
   drupal_alter('islandora_view_object', $fedora_object); //modify object if required before it is passed along
   $arr = module_invoke_all('islandora_view_object', $fedora_object, $user, $page_number, $page_size); //allow submodules to decide how to handle content base on object type
-  if (empty($arr) ) {
+  if (empty($arr)) {
     //TODO: make sure we iterate over the array as they will be more then one cmodel per object
-    drupal_set_message(t('there was an error loading the view for islandora object %s',array('%s' => $object_id)),'error');
+    drupal_set_message(t('there was an error loading the view for islandora object %s', array('%s' => $object_id)), 'error');
     return "";
   }
   //module_invoke_all(islandora_display($arr)),
   $output = "";
-  foreach($arr as $key => $value){
-    $output .= $key .'<br />'.$value; //if we have multiple modules handle one cmodel we need to iterate over multiple
+  foreach ($arr as $key => $value) {
+    $output .= $key . '<br />' . $value; //if we have multiple modules handle one cmodel we need to iterate over multiple
   }
   //we could do another module invoke all here to build the edit tab with a default implemented in this module?
   return $output; //just an example as we could have more then one array element
@@ -300,14 +300,14 @@ function islandora_view_object($object_id) {
  * @param string $object_id
  * @return string 
  */
-function islandora_islandora_view_object($object){
-  $supported_models = islandora_get_types();  
+function islandora_islandora_view_object($object) {
+  $supported_models = islandora_get_types();
   $object_models = $object->models;
   $combined_list = array_intersect($supported_models, $object->models);
   $output = "";
   if (empty($combined_list)) {
     $output = theme('islandora_default', array('islandora_object' => $object));
-    return array ('Default Output' => $output);
+    return array('Default Output' => $output);
   }
 }
 
@@ -321,7 +321,7 @@ function islandora_theme() {
       'template' => 'islandora-object',
       'variables' => array('islandora_object' => NULL),
     ),
-   );
+  );
 }
 
 /**
@@ -377,20 +377,20 @@ function islandora_add_datastream($object_id) {
   module_invoke_all('islandora_add_datastream', $object); //allow submodules to handle add datastream based on object type
 }
 
-function islandora_preprocess_islandora_default(&$variables){
+function islandora_preprocess_islandora_default(&$variables) {
   $islandora_object = $variables['islandora_object'];
-  module_load_include('inc','islandora','utils/islandora_dublin_core');
-  try{
+  module_load_include('inc', 'islandora', 'utils/islandora_dublin_core');
+  try {
     $dc = $islandora_object['DC']->content;
     //$dc_xml = simplexml_load_string($dc);
     $dc_object = Dublin_Core::import_from_xml_string($dc);
-  }catch(Exception $e){
-    drupal_set_message(t('Error retrieving object %s %t', array('%s' => $islandora_object->id,'%t'=>$e->getMessage())),'error');
+  } catch (Exception $e) {
+    drupal_set_message(t('Error retrieving object %s %t', array('%s' => $islandora_object->id, '%t' => $e->getMessage())), 'error');
   }
   $variables['islandora_dublin_core'] = $dc_object;
   $variables['islandora_object_label'] = $islandora_object->label;
   global $base_url;
-  if(isset($islandora_object['TN'])){
-      $variables['islandora_thumbnail_url'] = $base_url.'/islandora/object/'.$islandora_object->id.'/datastream/TN/view';
+  if (isset($islandora_object['TN'])) {
+    $variables['islandora_thumbnail_url'] = $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/TN/view';
   }
 }

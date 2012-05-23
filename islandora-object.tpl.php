@@ -1,7 +1,7 @@
 <?php
 
 /*
- * islandora-object-default-view.tpl.php
+ * islandora-object.tpl.php
  * 
  *
  * 

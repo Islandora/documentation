@@ -1,0 +1,5 @@
+name = "Islandora Basic Collection"
+description = "A default Islandora Repository module to handle simple collections"
+dependencies[] = islandora
+package = Islandora
+core = 7.x
