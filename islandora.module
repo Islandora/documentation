@@ -424,16 +424,13 @@ function islandora_islandora_view_object($object) {
   $object_models = $object->models;
   $combined_list = array_intersect($supported_models, $object->models);
   $output = "";
-<<<<<<< HEAD
   if (empty($combined_list)) {
     $output = theme('islandora_default', array('islandora_object' => $object));
     return array('Default Output' => $output);
-=======
   foreach ($object->models as $model) {
     if (isset($supported_models[$model][ISLANDORA_VIEW_HOOK]) && $supported_models[$model][ISLANDORA_VIEW_HOOK] == TRUE) {//another module is handling the view
       return;
     }
->>>>>>> a364874a78dd45f202ba5ef18292bf77f6bf591e
   }
 }
 
@@ -536,4 +533,5 @@ function islandora_preprocess_islandora_default_edit(&$variables) {
     $variables['islandora_datastreams'][$ds->id] = $datastreams;
     
   }
+}
 }
