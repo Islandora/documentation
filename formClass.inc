@@ -13,7 +13,6 @@
 class formClass {
 
   function formClass() {
-    module_load_include('inc', 'formClass', '');
     drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
   }
 
@@ -69,19 +68,11 @@ class formClass {
       'type' => MENU_CALLBACK,
       'access arguments' => array('view fedora collection'),
     );
-    $repository_title = variable_get('fedora_repository_title', 'Digital repository');
-    if (trim($repository_title) != '') {
-      $respository_title = t($repository_title);
-    }
-    else {
-      $repository_title = NULL;
-    }
     $items['fedora/repository'] = array(
-      'title' => $repository_title,
+      'title' => 'Digital Repository',
       'page callback' => 'repository_page',
       'type' => MENU_NORMAL_ITEM,
       'access arguments' => array('view fedora collection'),
-        // 'access' => TRUE
     );
 
     $items['fedora/repository/service'] = array(
@@ -100,8 +91,6 @@ class formClass {
     $items['fedora/repository/editmetadata'] = array(
       'title' => t('Edit metadata'),
       'page callback' => 'fedora_repository_edit_qdc_page',
-      // 'page arguments' => array(1),
-      //'type' =>  MENU_LOCAL_TASK,
       'type' => MENU_CALLBACK,
       'access arguments' => array('edit fedora meta data')
     );
@@ -123,7 +112,6 @@ class formClass {
     $items['fedora/repository/purgeObject'] = array(
       'title' => t('Purge object'),
       'page callback' => 'fedora_repository_purge_object',
-      // 'type' =>  MENU_LOCAL_TASK,
       'type' => MENU_CALLBACK,
       'access arguments' => array('purge objects and datastreams')
     );
@@ -131,7 +119,6 @@ class formClass {
     $items['fedora/repository/addStream'] = array(
       'title' => t('Add stream'),
       'page callback' => 'add_stream',
-      // 'type' => MENU_LOCAL_TASK,
       'type' => MENU_CALLBACK,
       'access arguments' => array('add fedora datastreams')
     );
@@ -140,7 +127,7 @@ class formClass {
       'title' => t('Collection view'),
       'page callback' => 'fedora_collection_view',
       'type' => MENU_CALLBACK,
-      'access argruments' => array('view fedora collection')
+      'access argruments' => array('view fedora collection'),
     );
     
     //new for mnpl******************************************
@@ -197,24 +184,16 @@ class formClass {
 
   /**
    * Create admin form
-   * @return type 
+   * @return array 
    */
   function createAdminForm() {
     if (!user_access('administer site configuration')) {
-      drupal_set_message(t('You must be a site administrator to edit the Fedora collecitons list.'), 'error');
+      drupal_set_message(t('You must be a site administrator to edit the Fedora collections list.'), 'error');
       return;
     }
     module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
     module_load_include('inc', 'fedora_repository', 'ObjectHelper');
     $form = array();
-    $form['fedora_repository_name'] = array(
-      '#type' => 'textfield',
-      '#title' => t('Root Collection Name'),
-      '#default_value' => variable_get('fedora_repository_name', 'Islandora demos collection'),
-      '#description' => t('The Name of the Root Collection Object'),
-      '#required' => TRUE,
-      '#weight' => -20
-    );
     $form['fedora_repository_pid'] = array(
       '#type' => 'textfield',
       '#title' => t('Root Collection PID'),
@@ -249,7 +228,10 @@ class formClass {
       '#description' => t('The URL to use for SOAP connections'),
       '#required' => TRUE,
       '#weight' => -12,
-      '#suffix' => '<p>' . (fedora_available() ? '<img src="' . url('misc/watchdog-ok.png') . '"/>' . t('Successfully connected to Fedora server at !fedora_soap_url', array('!fedora_soap_url' => variable_get('fedora_soap_url', ''))) : '<img src="' . url('misc/watchdog-error.png') . '"/> ' . t('Unable to connect to Fedora server at !fedora_soap_url</p>', array('!fedora_soap_url' => variable_get('fedora_soap_url', '')))),
+      '#suffix' => '<p>' . (
+        fedora_available() ? 
+          theme('image', 'misc/watchdog-ok.png') . t('Successfully connected to Fedora server at @fedora_soap_url', array('@fedora_soap_url' => variable_get('fedora_soap_url', ''))) :
+          theme('image', 'misc/watchdog-error.png') . t('Unable to connect to Fedora server at @fedora_soap_url', array('@fedora_soap_url' => variable_get('fedora_soap_url', '')))) . '</p>',
     );
     
     $form['fedora_soap_manage_url'] = array(
@@ -295,12 +277,7 @@ class formClass {
         '#weight' => 0
       );
     }
-    $form['fedora_repository_title'] = array(
-      '#type' => 'textfield',
-      '#title' => t('Digital Repository Title'),
-      '#default_value' => variable_get('fedora_repository_title', 'Digital Repository'),
-      '#description' => t('The title displayed when viewing collections and objects in  /fedora/repository. Leave blank to display no title. Note that the menus must be rebuilt after changing this variable.'),
-    );
+
     //have tabs options (like disable)
     $form['tabs'] = array(
       '#type' => 'fieldset',
@@ -617,6 +594,7 @@ class formClass {
         $form = new IngestObjectMetadataForm();
         return $form->create($collection_pid, $collection_label, $form_state);
       } catch (Exception $e) {
+        //dd('An error occured; reverting to QDC form...');
         $form_state['storage']['xml'] = FALSE; // An error occured revert back to the QDC Form.
       }
     }
