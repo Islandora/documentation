@@ -1047,9 +1047,9 @@ PREFIX rels-ext: <info:fedora/fedora-system:def/relations-external#>
 SELECT ?parentObject ?title ?content
 FROM <#ri>
 WHERE {
-  ?this fedora-model:label ?title ;
-        ?relationship ?parentObject .
-  ?parentObject fedora-model:state fedora-model:Active ;
+  ?this ?relationship ?parentObject .
+  ?parentObject fedora-model:label ?title ;
+                fedora-model:state fedora-model:Active ;
                 fedora-model:hasModel ?content .
   FILTER(
     sameTerm(?this, <info:fedora/$pid>) &&
@@ -1068,16 +1068,18 @@ EOQ;
       $next_pid = NULL;
       
       if (count($results) > 0  && $level > 0) {
-        $parent = $results[0]['parentObject'];
-        $this_title = $results[0]['title'];
+        $parent_pid = $results[0]['parentObject'];
+        $parent_title = $results[0]['title'];
 
         if (empty($this_title)) {
           $this_title = t('Unlabeled Object');
         }
         
-        $breadcrumbs[] = l($this_title, "fedora/repository/$pid");
+        if ($parent_pid != $root) {
+          $breadcrumbs[] = l($parent_title, "fedora/repository/$parent_pid");
+        }
         
-        $next_pid = $parent;
+        $next_pid = $parent_pid;
       }
       else {
         watchdog('fedora_repository', 'Error generating breadcrumbs for %pid.  Verify there exists relationships back up to %root. (May also be due to a hierarchy deeper than %max_depth).', array('%pid' => $pid, '%root' => $root, '%max_depth' => $max_level), WATCHDOG_WARNING);
@@ -1137,6 +1139,18 @@ EOQ;
         $attrs = $element->attributes();
         if (!empty($attrs['uri'])) {
           $val = self::pidUriToBarePid((string)$attrs['uri']);
+        }
+        elseif(!empty($attrs['datatype'])) {
+          $dt = (string)$attrs['datatype'];
+          $val = (string)$element; //Default to a string...
+          if ($dt == 'http://www.w3.org/2001/XMLSchema#int') {
+            $val = intval($val);
+          }
+          else {
+            watchdog('fedora_repository', 'Datatype @dt_uri handled as string.', array(
+              '@dt_uri' => $dt,
+            ), WATCHDOG_DEBUG);
+          }
         }
         else {
           $val = (string)$element;
