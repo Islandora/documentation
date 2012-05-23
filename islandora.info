@@ -3,3 +3,5 @@ description = "View and manage Fedora objects"
 package = Islandora
 version = 7.x-dev
 core = 7.x
+stylesheets[all][] = css/islandora.base.css
+stylesheets[all][] = css/islandora.theme.css
