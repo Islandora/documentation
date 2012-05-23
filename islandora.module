@@ -175,14 +175,6 @@ function islandora_menu() {
     'access arguments' => array(FEDORA_PURGE),
   );
 
-  $items['islandora/test/%'] = array(
-    'title' => 'Purge data stream',
-    'page callback' => 'islandora_test_test',
-    'page arguments' => array(2),
-    'type' => MENU_CALLBACK,
-    'access arguments' => array(FEDORA_PURGE),
-  );
-
   return $items;
 }
 
