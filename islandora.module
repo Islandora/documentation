@@ -98,9 +98,12 @@ function islandora_menu() {
     'access arguments' => array(FEDORA_VIEW),
   );
 
+
   $items['islandora/object/%/add'] = array(
-    'title' => 'Add stream',
-    'page callback' => 'islandora_add_stream',
+    'title' => 'Add to an object',
+    'file' => 'includes/add-menu.inc',
+    'page callback' => 'islandora_add_callback',
+    'page arguments' => array(2),
     'type' => MENU_NORMAL_ITEM,
     'access arguments' => array(FEDORA_ADD_DS)
   );
@@ -158,7 +161,7 @@ function islandora_menu() {
 
   $items['islandora/object/%/datastream/%/edit'] = array(
     'title' => 'Edit datastream',
-    'page callback' => 'islandora_edit_stream',
+    'page callback' => 'islandora_edit_datastream',
     'page arguments' => array(2, 4),
     'type' => MENU_CALLBACK,
     'access arguments' => array(FEDORA_METADATA_EDIT),
@@ -166,7 +169,7 @@ function islandora_menu() {
 
   $items['islandora/object/%/datastream/%/delete'] = array(
     'title' => 'Purge data stream',
-    'page callback' => 'islandora_purge_stream',
+    'page callback' => 'islandora_purge_datastream',
     'page arguments' => array(2, 4),
     'type' => MENU_CALLBACK,
     'access arguments' => array(FEDORA_PURGE),
@@ -233,7 +236,7 @@ function islandora_purge_object($object_id) {
     $restConnection = new RestConnection($user);
     $fedora_object = new FedoraObject($object_id, $restConnection->repository);
   } catch (Exception $e) {
-    drupal_set_message(t('Error getting Islandora object %s', array('%s' => $object_id)), 'error');
+    drupal_set_message(t('Error getting Islandora object %s %e', array('%s' => $object_id, '%e' => $e)), 'error');
     return "";
   }
   if (!isset($fedora_object)) {
@@ -242,11 +245,11 @@ function islandora_purge_object($object_id) {
   }
   $content_models = $fedora_object->models;
   $arr = module_invoke_all('islandora_pre_purge_object', $fedora_object); //notify modules of pending deletion
-  if ($arr['delete']) {
+  if (isset($arr['delete']) && $arr['delete']) {
     try {
       $fedora_object->delete();
     } catch (Exception $e) {
-      drupal_set_message(t('Error deleting Islandora object %s', array('%s' => $object_id)), 'error');
+      drupal_set_message(t('Error deleting Islandora object %s %e', array('%s' => $object_id, '%e' => $e)), 'error');
       return "";
     }
   }
@@ -254,17 +257,16 @@ function islandora_purge_object($object_id) {
     try {
       $restConnection->repository->purgeObject($object_id);
     } catch (Exception $e) {
-      drupal_set_message(t('Error purging Islandora object %s', array('%s' => $object_id)), 'error');
+      drupal_set_message(t('Error purging Islandora object %s %e', array('%s' => $object_id, '%e' => $e)), 'error');
       return "";
     }
   }
   module_invoke_all('islandora_post_purge_object', $object_id, $content_models);  //notify modules post deletion
+  drupal_goto('islandora');
 }
 
 /**
  * returns an array listing object types provided by sub modules
- * The array should contain the cmodels it listens for and the hooks it answers to
- * example array ('islandora:collectionCModel' => array ('islandora_edit_object' => TRUE, 'islandora_view_object' => TRUE);
  * @return array 
  */
 function islandora_get_types() {
@@ -294,13 +296,12 @@ function islandora_edit_object($object_id) {
   foreach ($arr as $key => $value) {
     $output .= $key . '<br />' . $value; //if we have multiple modules handle one cmodel we need to iterate over multiple
   }
+  //we could do another module invoke all here to build the edit tab with a default implemented in this module?
   return $output;
 }
 
 /**
- * checks to see if any other modules implement this functionality and if there are none
  * builds a default page for the edit tab
- * 
  * @param object $fedora_object 
  *   A tuque Fedora Object
  */
@@ -317,22 +318,67 @@ function islandora_islandora_edit_object($fedora_object) {
 }
 
 /**
+ * Gives the option of purging or deleting a datastream.
  * 
- * @paramstring $datastream_id
- * @return type 
+ * The default behaviour is to purge the datastream but this can be overridden using the 
+ * 'islandora_pre_purge_datastream' hook. The returned array can include a 'block' => TRUE 
+ * pair which will prevent the datastream from being deleted if it particularly needed for 
+ * a certain function. Returning 'delete' => TRUE will cause the datastream to be put into 
+ * a deleted state.
+ * 
+ * @param string $object_id
+ *   ID of the object
+ * @param string $datastream_id
+ *   ID of the datastream
+ *   
  */
 function islandora_purge_datastream($object_id, $datastream_id) {
+  module_load_include('inc', 'islandora', 'RestConnection');
+  global $user;
   if (!isset($datastream_id)) {
     drupal_set_message(t('Cannot remove datastream, datastream id not set'));
     return;
   }
-  $object = new Object($object_id);
-  if (!isset($object)) {
+  try {
+    $restConnection = new RestConnection($user);
+    $fedora_object = new FedoraObject($object_id, $restConnection->repository);
+  } catch (Exception $e) {
+    drupal_set_message(t('Error getting Islandora object %s %e', array('%s' => $object_id, '%e' => $e)), 'error');
+    return "";
+  }
+  if (!isset($fedora_object)) {
     drupal_set_message(t('Could not remove object, object not found'));
     return;
   }
-  module_invoke_all('islandora_purge_datastream', $datastream); //notify modules of pending deletion so we can update rels etc
-  $object->deleteDatastream();
+  if (!isset($fedora_object)) {
+    drupal_set_message(t('Could not remove object, object not found'));
+    return;
+  }
+  $arr = module_invoke_all('islandora_pre_purge_datastream', $fedora_object, $datastream_id); //notify modules of pending deletion so we can update rels etc
+  if (isset($arr['block']) && $arr['block']) {
+    drupal_set_message(t('Purging of the %d datastream was blocked', array('%d' => $datastream_id)), 'warning');
+    return;
+  }
+  if (isset($arr['delete']) && $arr['delete']) {
+    try {
+      $datastream = new FedoraDatastream($datastream_id, $fedora_object, $restConnection->repository);
+      $datastream->state = 'D';
+    } catch (Exception $e) {
+      drupal_set_message(t('Error deleting %s datastream from Islandora object %o %e', array('%s' => $datastream_id, '%o' => $object_id, '%e' => $e)), 'error');
+      return;
+    }
+  }
+  else {
+    try {
+      $fedora_object->purgeDatastream($datastream_id);
+    } catch (Exception $e) {
+      drupal_set_message(t('Error purging %s datastream from Islandora object %o %e', array('%s' => $datastream_id, '%o' => $object_id, '%e' => $e)), 'error');
+      return;
+    }
+  }
+  module_invoke_all('islandora_post_purge_datastream', $fedora_object, $datastream_id);  //notify modules post deletion
+  drupal_set_message(t('%d datastream sucessfully purged from Islandora object %o', array('%d' => $datastream_id, '%o' => $object_id)));
+  drupal_goto('islandora/object/' . $object_id);
 }
 
 /**
@@ -386,14 +432,14 @@ function islandora_view_object($object_id) {
 function islandora_islandora_view_object($object) {
   $supported_models = islandora_get_types();
   $output = "";
-  foreach ($object->models as $model) {
-    if (isset($supported_models[$model][ISLANDORA_VIEW_HOOK]) && $supported_models[$model][ISLANDORA_VIEW_HOOK] == TRUE) {//another module is handling the view
-      return;
+    foreach ($object->models as $model) {
+      if (isset($supported_models[$model][ISLANDORA_VIEW_HOOK]) && $supported_models[$model][ISLANDORA_VIEW_HOOK] == TRUE) {//another module is handling the view
+        return;
+      }
     }
-  }
   $output = theme('islandora_default', array('islandora_object' => $object));
   return array('Default Output' => $output);
-}
+  }
 
 /**
  * Theme registry function
