@@ -52,7 +52,10 @@ function islandora_basic_image_theme($existing, $type, $theme, $path) {
  *   array of content model pids that this module supports
  */
 function islandora_basic_image_islandora_get_types() {
-  return array('info:fedora/islandora:imgageCModel', 'info:fedora/islandora:sp_basic_image');
+  $types = array();
+  $types['info:fedora/islandora:sp_basic_image'][ISLANDORA_VIEW_HOOK] = TRUE;
+  $types['info:fedora/islandora:sp_basic_image'][ISLANDORA_EDIT_HOOK] = FALSE;
+  return $types;
 }
 
 /**
@@ -70,13 +73,14 @@ function islandora_basic_image_islandora_get_types() {
 function islandora_basic_image_islandora_view_object($object, $user, $page_number, $page_size) {
   //global $user;
   $cmodel_list = islandora_basic_image_islandora_get_types();
-  $combined_list = array_intersect($cmodel_list, $object->models);
-  if (empty($combined_list)) {
-    return NULL; //we don't handle any of this objects cmodels
+  $models = $object->models;
+  foreach ($object->models as $model) {
+    if ($cmodel_list[$model][ISLANDORA_VIEW_HOOK] == TRUE) {
+      $output = theme('islandora_basic_image', array('islandora_object' => $object));
+      return array('Basic Image Output' => $output);
+    }
   }
-  $output = theme('islandora_basic_image', array('islandora_object' => $object));
-
-  return array('Basic Image Output' => $output);
+  return NULL;
 }
 
 /**
@@ -104,9 +108,8 @@ function islandora_basic_image_preprocess_islandora_basic_image(&$variables) {
   if (isset($islandora_object['TN'])) {
     $variables['islandora_thumbnail_url'] = $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/TN/view';
   }
-  if (isset($islandora_object['MEDIUM_SIZE'])){
+  if (isset($islandora_object['MEDIUM_SIZE'])) {
     $variables['islandora_medium_size_url'] = $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/MEDIUM_SIZE/view';
   }
-    
 }
 

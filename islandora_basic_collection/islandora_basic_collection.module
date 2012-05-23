@@ -48,7 +48,11 @@ function islandora_basic_collection_theme($existing, $type, $theme, $path) {
  *   array of content model pids that this module supports
  */
 function islandora_basic_collection_islandora_get_types() {
-  return array('info:fedora/islandora:collectionCModel');
+   $types = array();
+  $types['info:fedora/islandora:collectionCModel'][ISLANDORA_VIEW_HOOK] = TRUE;
+  $types['info:fedora/islandora:collectionCModel'][ISLANDORA_EDIT_HOOK] = FALSE;
+  return $types;
+  
 }
 
 /**
@@ -66,12 +70,14 @@ function islandora_basic_collection_islandora_get_types() {
 function islandora_basic_collection_islandora_view_object($object, $user, $page_number, $page_size) {
   //global $user;
   $cmodel_list = islandora_basic_collection_islandora_get_types();
-  $combined_list = array_intersect($cmodel_list, $object->models);
-  if (empty($combined_list)) {
-    return NULL; //we don't handle any of this objects cmodels
+  $models = $object->models;
+  foreach ($object->models as $model) {
+    if ($cmodel_list[$model][ISLANDORA_VIEW_HOOK] == TRUE) {
+      $output = theme('islandora_basic_collection', array('islandora_object' => $object));
+      return array('Basic Collection Output' => $output);
+    }
   }
-  $output = theme('islandora_basic_collection', array('islandora_object' => $object));
-  return array('Basic Collection Output' => $output);
+  return NULL;
 }
 
 /**
@@ -100,13 +106,12 @@ function islandora_basic_collection_preprocess_islandora_basic_collection(&$vari
   if (isset($islandora_object['TN'])) {
     $variables['islandora_thumbnail_url'] = $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/TN/view';
   }
-  if (isset($islandora_object['MEDIUM_SIZE'])){
+  if (isset($islandora_object['MEDIUM_SIZE'])) {
     $variables['islandora_medium_size_url'] = $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/MEDIUM_SIZE/view';
   }
-    
 }
 
-function islandora_basic_collection_get_objects($object){
+function islandora_basic_collection_get_objects($object) {
   $query = 'select $object $title $content from <#ri>
              where ($object <fedora-model:label> $title
              and $object <fedora-model:hasModel> $content
@@ -118,13 +123,13 @@ function islandora_basic_collection_get_objects($object){
   $page_number = (empty($_GET['page'])) ? '1' : $_GET['page'];
   $page_size = (empty($_GET['pagesize'])) ? '10' : $_GET['pagesize'];
   module_load_include('inc', 'islandora', 'RestConnection');
-  $query_array = array('query' => $query, 'type' => 'itql','pid' => $object->id, 'page_size'=>$page_size, 'page_number' => $page_number);
-  drupal_alter('islandora_basic_collection_query',$query_array);
+  $query_array = array('query' => $query, 'type' => 'itql', 'pid' => $object->id, 'page_size' => $page_size, 'page_number' => $page_number);
+  drupal_alter('islandora_basic_collection_query', $query_array);
   global $user;
   try {
     $restConnection = new RestConnection($user);
     $queryObject = new RepositoryQuery($restConnection->connection);
-    $results = $queryObject->query($query_array['query'],$query_array['type']);
+    $results = $queryObject->query($query_array['query'], $query_array['type']);
   } catch (Exception $e) {
     drupal_set_message(t('Islandora Error getting related objects for %s', array('%s' => $object->id)), 'error');
     return"";

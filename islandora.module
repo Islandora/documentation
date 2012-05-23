@@ -300,8 +300,13 @@ function islandora_edit_object($object_id) {
  *   A tuque Fedora Object
  */
 function islandora_islandora_edit_object($fedora_object) {
-  $output = theme('islandora_default_edit', array('islandora_object' => $fedora_object));
-  return array('Default Edit output' => $output);
+  $supported_models = islandora_get_types();
+  $output = "";
+  foreach ($fedora_object->models as $model) {
+    if ($supported_models[$model][ISLANDORA_EDIT_HOOK] == TRUE) {//another module is handling the view
+      return;
+    }
+  }
 }
 
 /**
@@ -365,7 +370,6 @@ function islandora_purge_datastream($object_id, $datastream_id) {
   }
   module_invoke_all('islandora_post_purge_datastream', $fedora_object, $datastream_id);  //notify modules post deletion
 }
-
 
 /**
  * The view entry point.  modules should implement hook_islandora_view_object for the Fedora Content models that
