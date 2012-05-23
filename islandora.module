@@ -29,6 +29,8 @@ define('FEDORA_ADD_DS', 'add fedora datastreams');
 define('FEDORA_INGEST', 'ingest fedora objects');
 define('FEDORA_PURGE', 'delete fedora objects and datastreams');
 define('FEDORA_MODIFY_STATE', 'modify fedora state');
+define('ISLANDORA_VIEW_HOOK', 'islandora_view_object');
+define('ISLANDORA_EDIT_HOOK', 'islandora_edit_object');
 
 /**
  * Implementation of hook_menu. 
