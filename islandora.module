@@ -337,7 +337,7 @@ function islandora_purge_datastream($object_id, $datastream_id) {
 
 /**
  * The view entry point.  modules should implement hook_islandora_view_object for the Fedora Content models that
- * there modules want to provide a view for.
+ * their modules want to provide a view for.
  * @global object $user
  * @param string $object_id
  * 
@@ -487,11 +487,12 @@ function islandora_preprocess_islandora_default_edit(&$variables) {
   $islandora_object = $variables['islandora_object'];
   global $base_url;
   $datastreams = array();
+  $variables['islandora_editmetadata_url'] = $base_url . '/islandora/edit_form/' . $islandora_object->id;
   foreach ($islandora_object as $ds) {
-    $datastreams['download_url'] = $base_url . '/islandora/object/' . $islandora_object->id . 'datastream/' . $ds->id .'/download';
-    $datastreams['view_url'] = $base_url . '/islandora/object/' . $islandora_object->id . 'datastream/' . $ds->id .'/view';
-    $datastreams['delete_url'] = $base_url . '/islandora/object/' . $islandora_object->id . 'datastream/' . $ds->id .'/delete';
-    $variables['islandora_datastreams'][$ds->id] = $datastreams;
-    
+    $datastreams['download_url'] = $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/' . $ds->id .'/download';
+    $datastreams['view_url'] = $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/' . $ds->id .'/view';
+    $datastreams['delete_url'] = $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/' . $ds->id .'/delete';
+    $datastreams['label'] = $ds->label;
+    $variables['islandora_datastreams'][$ds->id] = $datastreams;    
   }
 }

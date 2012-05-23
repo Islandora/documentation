@@ -49,11 +49,13 @@
 drupal_set_title($islandora_object->label);
 $islandora_datastreams = $variables['islandora_datastreams'];
 print($islandora_object->label . ' ' . $islandora_object->id);
-print('this is the edit template');
 print ('<h3>datastreams</h3>');
-foreach ($islandora_datastreams as $key => $ds) {
-  print $key. '<br />';
-  //do something
+foreach ($islandora_datastreams as $dsid => $ds) {
+  print (l($ds['label'],$ds['view_url']));
+  print (' ' . l('download', $ds['download_url']));
+  print (' ' . l('delete', $ds['delete_url']));
+  print ('<br />');
 }
+print (l(t('Edit Metadata'),$variables['islandora_editmetadata_url']));
 ?>
 
