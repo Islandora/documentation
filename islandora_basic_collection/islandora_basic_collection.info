@@ -3,3 +3,5 @@ description = "A default Islandora Repository module to handle simple collection
 dependencies[] = islandora
 package = Islandora
 core = 7.x
+stylesheets[all][] = css/islandora_basic_collection.base.css
+stylesheets[all][] = css/islandora_basic_collection.theme.css

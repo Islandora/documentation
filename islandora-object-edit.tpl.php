@@ -47,12 +47,12 @@
 //dsm($object);
 
 drupal_set_title($islandora_object->label);
-
+$islandora_datastreams = $variables['islandora_datastreams'];
 print($islandora_object->label . ' ' . $islandora_object->id);
 print('this is the edit template');
 print ('<h3>datastreams</h3>');
-foreach ($islandora_object as $ds) {
-  print $ds->label . '<br>';
+foreach ($islandora_datastreams as $key => $ds) {
+  print $key. '<br />';
   //do something
 }
 ?>
