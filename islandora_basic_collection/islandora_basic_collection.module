@@ -72,7 +72,7 @@ function islandora_basic_collection_islandora_view_object($object, $user, $page_
   $cmodel_list = islandora_basic_collection_islandora_get_types();
   $models = $object->models;
   foreach ($object->models as $model) {
-    if ($cmodel_list[$model][ISLANDORA_VIEW_HOOK] == TRUE) {
+    if (isset($cmodel_list[$model][ISLANDORA_VIEW_HOOK]) && $cmodel_list[$model][ISLANDORA_VIEW_HOOK]  == TRUE) {
       $output = theme('islandora_basic_collection', array('islandora_object' => $object));
       return array('Basic Collection Output' => $output);
     }
