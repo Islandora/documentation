@@ -172,6 +172,14 @@ function islandora_menu() {
     'access arguments' => array(FEDORA_PURGE),
   );
 
+  $items['islandora/test/%'] = array(
+    'title' => 'Purge data stream',
+    'page callback' => 'islandora_test_test',
+    'page arguments' => array(2),
+    'type' => MENU_CALLBACK,
+    'access arguments' => array(FEDORA_PURGE),
+  );
+
   return $items;
 }
 
@@ -393,4 +401,13 @@ function islandora_preprocess_islandora_default(&$variables) {
   if (isset($islandora_object['TN'])) {
     $variables['islandora_thumbnail_url'] = $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/TN/view';
   }
+}
+
+
+function islandora_islandora_ingest_registry() {
+  return array(array('url' => 'islandora/test', 'name' => 'basic collection ingest'));
+}
+
+function islandora_test_test($pid) {
+  return 'jessus';
 }
