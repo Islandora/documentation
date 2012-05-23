@@ -54,7 +54,7 @@ function islandora_basic_image_theme($existing, $type, $theme, $path) {
 function islandora_basic_image_islandora_get_types() {
   $types = array();
   $types['info:fedora/islandora:sp_basic_image'][ISLANDORA_VIEW_HOOK] = TRUE;
-  $types['info:fedora/islandora:sp_basic_image'][ISLANDORA_EDIT_HOOK] = TRUE;
+  $types['info:fedora/islandora:sp_basic_image'][ISLANDORA_EDIT_HOOK] = FALSE;
   return $types;
 }
 
