@@ -104,18 +104,18 @@ function islandora_menu() {
   );
 
   $items['islandora/object/%/view'] = array(
-    'title' => 'Repository',
+    'title' => 'View',
     'page callback' => 'islandora_view_object',
     'page arguments' => array(2),
-    'type' => MENU_NORMAL_ITEM,
+    'type' => MENU_DEFAULT_LOCAL_TASK,
     'access arguments' => array(FEDORA_VIEW),
   );
 
   $items['islandora/object/%/edit'] = array(
-    'title' => 'Repository',
+    'title' => 'Edit',
     'page callback' => 'islandora_edit_object',
     'page arguments' => array(2),
-    'type' => MENU_NORMAL_ITEM,
+    'type' => MENU_LOCAL_TASK,
     'access arguments' => array(FEDORA_MODIFY_STATE),
   );
 
@@ -272,6 +272,44 @@ function islandora_get_types() {
 }
 
 /**
+ * a function to call other modules edit page.  If there are not any modules
+ * that handle this function this module will build a default page.
+ * @global object $user
+ * @param string $object_id
+ * @return string 
+ */
+function islandora_edit_object($object_id) {
+  module_load_include('inc', 'islandora', 'RestConnection');
+  global $user;
+  try {
+    $restConnection = new RestConnection($user);
+    $fedora_object = new FedoraObject($object_id, $restConnection->repository);
+  } catch (Exception $e) {
+    drupal_set_message(t('Error getting Islandora object %s', array('%s' => $object_id)), 'error');
+    return"";
+  }
+  drupal_alter('islandora_edit_object', $fedora_object);
+  $arr = module_invoke_all('islandora_edit_object', $fedora_object);
+  $output = "";
+  foreach ($arr as $key => $value) {
+    $output .= $key . '<br />' . $value; //if we have multiple modules handle one cmodel we need to iterate over multiple
+  }
+  //we could do another module invoke all here to build the edit tab with a default implemented in this module?
+  return $output;  
+}
+
+
+/**
+ * builds a default page for the edit tab
+ * @param object $fedora_object 
+ *   A tuque Fedora Object
+ */
+function islandora_islandora_edit_object($fedora_object){
+  $output = theme('islandora_default_edit', array('islandora_object' => $fedora_object));
+  return array ('Default Edit output' => $output);
+}
+
+/**
  * 
  * @paramstring $datastream_id
  * @return type 
@@ -359,6 +397,10 @@ function islandora_theme() {
       'template' => 'islandora-object',
       'variables' => array('islandora_object' => NULL),
     ),
+    'islandora_default_edit' => array(
+      'template' => 'islandora-object-edit',
+      'variables' => array('islandora_object' => NULL),
+    ),
   );
 }
 
@@ -431,4 +473,9 @@ function islandora_preprocess_islandora_default(&$variables) {
   if (isset($islandora_object['TN'])) {
     $variables['islandora_thumbnail_url'] = $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/TN/view';
   }
+}
+
+function islandora_preprocess_islandora_default_edit(&$variables){
+  //$islandora_object = $variables['islandora_object'];
+  
 }
