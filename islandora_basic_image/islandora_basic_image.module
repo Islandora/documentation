@@ -99,6 +99,21 @@ function islandora_basic_image_preprocess_islandora_basic_image(&$variables) {
     drupal_set_message(t('Error retrieving object %s %t', array('%s' => $islandora_object->id, '%t' => $e->getMessage())), 'error');
   }
   $variables['islandora_dublin_core'] = $dc_object;
+  //create a nicer array for themers
+  //TODO: give this a better home
+  $dc_array = array();
+   foreach ($dc_object as $element) {
+    if (!empty($element)) {
+      foreach ($element as $key => $value) {
+        foreach ($value as $v) {
+          if (!empty($v)) {
+            $dc_array[] = array($key => $v);
+          }
+        }
+      }
+    }
+  }
+  $variables['dc_array'] = $dc_array;
   $variables['islandora_object_label'] = $islandora_object->label;
   $variables['theme_hook_suggestions'][] = 'islandora_basic_image__' . str_replace(':', '_', $islandora_object->id);
   global $base_url;

@@ -243,7 +243,7 @@ function islandora_purge_object($object_id) {
     $restConnection = new RestConnection($user);
     $fedora_object = new FedoraObject($object_id, $restConnection->repository);
   } catch (Exception $e) {
-    drupal_set_message(t('Error getting Islandora object %s', array('%s' => $object_id)), 'error');
+    drupal_set_message(t('Error getting Islandora object %s %e', array('%s' => $object_id, '%e' => $e)), 'error');
     return "";
   }
   if (!isset($fedora_object)) {
@@ -256,7 +256,7 @@ function islandora_purge_object($object_id) {
     try {
       $fedora_object->delete();
     } catch (Exception $e) {
-      drupal_set_message(t('Error deleting Islandora object %s', array('%s' => $object_id)), 'error');
+      drupal_set_message(t('Error deleting Islandora object %s %e', array('%s' => $object_id, '%e' => $e)), 'error');
       return "";
     }
   }
@@ -264,11 +264,12 @@ function islandora_purge_object($object_id) {
     try {
       $restConnection->repository->purgeObject($object_id);
     } catch (Exception $e) {
-      drupal_set_message(t('Error purging Islandora object %s', array('%s' => $object_id)), 'error');
+      drupal_set_message(t('Error purging Islandora object %s %e', array('%s' => $object_id, '%e' => $e)), 'error');
       return "";
     }
   }
   module_invoke_all('islandora_post_purge_object', $object_id, $content_models);  //notify modules post deletion
+  drupal_goto('islandora');
 }
 
 /**
@@ -319,6 +320,8 @@ function islandora_islandora_edit_object($fedora_object) {
       return;
     }
   }
+  $output = theme('islandora_default_edit', array('islandora_object' => $fedora_object));
+  return array('Default Edit output' => $output);
 }
 
 /**
@@ -347,7 +350,7 @@ function islandora_purge_datastream($object_id, $datastream_id) {
     $restConnection = new RestConnection($user);
     $fedora_object = new FedoraObject($object_id, $restConnection->repository);
   } catch (Exception $e) {
-    drupal_set_message(t('Error getting Islandora object %s', array('%s' => $object_id)), 'error');
+    drupal_set_message(t('Error getting Islandora object %s %e', array('%s' => $object_id, '%e' => $e)), 'error');
     return "";
   }
   if (!isset($fedora_object)) {
@@ -368,7 +371,7 @@ function islandora_purge_datastream($object_id, $datastream_id) {
       $datastream = new FedoraDatastream($datastream_id, $fedora_object, $restConnection->repository);
       $datastream->state = 'D';
     } catch (Exception $e) {
-      drupal_set_message(t('Error deleting %s datastream from Islandora object %o', array('%s' => $datastream_id, '%o' => $object_id)), 'error');
+      drupal_set_message(t('Error deleting %s datastream from Islandora object %o %e', array('%s' => $datastream_id, '%o' => $object_id, '%e' => $e)), 'error');
       return;
     }
   }
@@ -376,11 +379,13 @@ function islandora_purge_datastream($object_id, $datastream_id) {
     try {
       $fedora_object->purgeDatastream($datastream_id);
     } catch (Exception $e) {
-      drupal_set_message(t('Error purging %s datastream from Islandora object %o', array('%s' => $datastream_id, '%o' => $object_id)), 'error');
+      drupal_set_message(t('Error purging %s datastream from Islandora object %o %e', array('%s' => $datastream_id, '%o' => $object_id, '%e' => $e)), 'error');
       return;
     }
   }
   module_invoke_all('islandora_post_purge_datastream', $fedora_object, $datastream_id);  //notify modules post deletion
+  drupal_set_message(t('%d datastream sucessfully purged from Islandora object %o', array('%d' => $datastream_id, '%o' => $object_id)));
+  drupal_goto('islandora/object/' . $object_id);
 }
 
 function islandora_view_default_object() {
@@ -390,7 +395,7 @@ function islandora_view_default_object() {
 
 /**
  * The view entry point.  modules should implement hook_islandora_view_object for the Fedora Content models that
- * there modules want to provide a view for.
+ * their modules want to provide a view for.
  * @global object $user
  * @param string $object_id
  * 
@@ -438,19 +443,15 @@ function islandora_view_object($object_id) {
  */
 function islandora_islandora_view_object($object) {
   $supported_models = islandora_get_types();
-  $object_models = $object->models;
-  $combined_list = array_intersect($supported_models, $object->models);
   $output = "";
-  if (empty($combined_list)) {
-    $output = theme('islandora_default', array('islandora_object' => $object));
-    return array('Default Output' => $output);
     foreach ($object->models as $model) {
       if (isset($supported_models[$model][ISLANDORA_VIEW_HOOK]) && $supported_models[$model][ISLANDORA_VIEW_HOOK] == TRUE) {//another module is handling the view
         return;
       }
     }
+  $output = theme('islandora_default', array('islandora_object' => $object));
+  return array('Default Output' => $output);
   }
-}
 
 /**
  * Theme registry function
@@ -544,10 +545,12 @@ function islandora_preprocess_islandora_default_edit(&$variables) {
   $islandora_object = $variables['islandora_object'];
   global $base_url;
   $datastreams = array();
+  $variables['islandora_editmetadata_url'] = $base_url . '/islandora/edit_form/' . $islandora_object->id;
   foreach ($islandora_object as $ds) {
-    $datastreams['download_url'] = $base_url . '/islandora/object/' . $islandora_object->id . 'datastream/' . $ds->id . '/download';
-    $datastreams['view_url'] = $base_url . '/islandora/object/' . $islandora_object->id . 'datastream/' . $ds->id . '/view';
-    $datastreams['delete_url'] = $base_url . '/islandora/object/' . $islandora_object->id . 'datastream/' . $ds->id . '/delete';
-    $variables['islandora_datastreams'][$ds->id] = $datastreams;
+    $datastreams['download_url'] = $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/' . $ds->id .'/download';
+    $datastreams['view_url'] = $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/' . $ds->id .'/view';
+    $datastreams['delete_url'] = $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/' . $ds->id .'/delete';
+    $datastreams['label'] = $ds->label;
+    $variables['islandora_datastreams'][$ds->id] = $datastreams;    
   }
 }

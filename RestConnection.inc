@@ -42,8 +42,15 @@ class RestConnection {
   public $repository = NULL;
 
   function RestConnection($user) {
+    if(!isset($user) || $user->uid == 0){
+      $user_string = 'anonymous';
+      $pass_string = 'anonymous';
+    } else {
+      $user_string = $user->name;
+      $pass_string = $user->pass;
+    }
     $url = variable_get('islandora_base_url', 'http://localhost:8080/fedora');
-    $this->connection = new RepositoryConnection($url, $user->name, $user->pass);
+    $this->connection = new RepositoryConnection($url, $user_string, $pass_string);
     $this->connection->reuseConnection = TRUE;
     $this->api = new FedoraApi($this->connection);
     $this->cache = new SimpleCache();
