@@ -10,6 +10,12 @@ define("ISLANDORA_PAGE_URI", 'info:islandora/islandora-system:def/pageinfo#');
 define("ISLANDORA_RELS_EXT_URI", 'http://islandora.ca/ontology/relsext#');
 define("ISLANDORA_RELS_INT_URI", "http://islandora.ca/ontology/relsint#");
 
+define("RELS_TYPE_URI", 0);
+define("RELS_TYPE_PLAIN_LITERAL", 1);
+define("RELS_TYPE_STRING", 2);
+define("RELS_TYPE_INT", 3);
+define("RELS_TYPE_DATETIME", 4);
+
 /**
  * Fedora Item Class
  */
@@ -230,12 +236,17 @@ class Fedora_Item {
    *   The object to be related to.
    * @param string $namespaceURI
    *   The predicate namespace.
-   * @param boolean $literal_value
-   *   Whether or not the object should be added as a URI (FALSE) or a literal (TRUE).
+   * @param int $literal_value
+   *   Used to type the value.
+   *  - 0: URI
+   *  - 1: plain literal
+   *  - 2: string (explicitly typed)
+   *  - 3: integer
+   *  - 4: dateTime
    * @return ???
    *  Value returned from SOAP call for modify_datastream.
    */
-  function add_relationship($relationship, $object, $namespaceURI = RELS_EXT_URI, $literal_value = FALSE) {
+  function add_relationship($relationship, $object, $namespaceURI = RELS_EXT_URI, $literal_value = RELS_TYPE_URI) {
     //dd($this, 'The Fedora_Item');
     $ds_list = $this->get_datastreams_list_as_array();
     $f_prefix = 'info:fedora/';
@@ -251,7 +262,7 @@ RDF;
 
     $relsext = $this->get_datastream_dissemination('RELS-EXT');
     
-    if (!$literal_value && strpos($object, $f_prefix) !== 0) {
+    if ($literal_value == REL_TYPE_URI && strpos($object, $f_prefix) !== 0) {
       $object = $f_prefix . $object;
     }
 
@@ -271,8 +282,20 @@ RDF;
     // Create the new relationship node.
     $newrel = $relsextxml->createElementNS($namespaceURI, $relationship);
 
-    if ($literal_value) {
+    if ($literal_value > 0) {
       $newrel->appendChild($relsextxml->createTextNode($object));
+      if ($literal_value == RELS_TYPE_STRING) {
+        $newrel->setAttribute('rdf:datatype', 'http://www.w3.org/2001/XMLSchema#string');
+      }
+      elseif ($literal_value == RELS_TYPE_INT) {
+        $newrel->setAttribute('rdf:datatype', 'http://www.w3.org/2001/XMLSchema#int');
+      }
+      elseif ($literal_value == RELS_TYPE_DATETIME) {
+        $newrel->setAttribute('rdf:datatype', 'http://www.w3.org/2001/XMLSchema#dateTime');
+      }
+      else {
+        //plain literal.
+      }
     }
     else {
       $newrel->setAttribute('rdf:resource', $object);
@@ -305,8 +328,8 @@ RDF;
    *   The object to be related to. (NULL/value for which empty() evaluates to true will remove all relations of the given type, ignoring $literal_value)
    * @param string $namespaceURI
    *   The predicate namespace.
-   * @param boolean $literal_value
-   *   Whether or not the object should be looked for as a URI (FALSE) or a literal (TRUE).
+   * @param int $literal_value
+   *   Same as add_relationship.  NOTE: dateTime implemented.
    * @return boolean
    *   Whether or not this operation has produced any changes in the RELS-EXT
    */
@@ -321,8 +344,10 @@ RDF;
       foreach ($rels as $rel) {
         if (  //If either no object is specified, or the object matches (in either the literal or URI case), remove this node from it's parent, and mark as changed.
           empty($object) || 
-          (!$literal_value && $rel->getAttributeNS('http://www.w3.org/1999/02/22-rdf-syntax-ns#', 'resource') == $object) ||
-          ($literal_value && $rel->textContent == $object)) {
+          (($literal_value == RELS_TYPE_URI) && $rel->getAttributeNS('http://www.w3.org/1999/02/22-rdf-syntax-ns#', 'resource') == $object) ||
+          (($literal_value == RELS_TYPE_PLAIN_LITERAL) && $rel->textContent == $object) ||
+          (($literal_value == RELS_TYPE_STRING) && $rel->getAttribute('rdf:datatype') == 'http://www.w3.org/2001/XMLSchema#string' && $rel->textContent == $object) ||
+          (($literal_value == RELS_TYPE_INT) && $rel->getAttribute('rdf:datatype') == 'http://www.w3.org/2001/XMLSchema#int' && intval($rel->textContent) == $object)) {
           $rel->parentNode->removeChild($rel);
           $modified = TRUE;
         }
