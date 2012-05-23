@@ -90,6 +90,13 @@ function islandora_menu() {
     'access arguments' => array(FEDORA_INGEST),
   );
 
+  $items['islandora'] = array(
+    'title' => 'Islandora Repository',
+    'page callback' => 'islandora_view_default_object',
+    'type' => MENU_NORMAL_ITEM,
+    'access arguments' => array(FEDORA_VIEW),
+  );
+
   $items['islandora/object/%'] = array(
     'title' => 'Repository',
     'page callback' => 'islandora_view_object',
@@ -374,6 +381,11 @@ function islandora_purge_datastream($object_id, $datastream_id) {
     }
   }
   module_invoke_all('islandora_post_purge_datastream', $fedora_object, $datastream_id);  //notify modules post deletion
+}
+
+function islandora_view_default_object() {
+  $pid = variable_get('islandora_repository_pid', 'islandora:root');
+  return islandora_view_object($pid);
 }
 
 /**
