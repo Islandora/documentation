@@ -29,6 +29,8 @@ define('FEDORA_ADD_DS', 'add fedora datastreams');
 define('FEDORA_INGEST', 'ingest fedora objects');
 define('FEDORA_PURGE', 'delete fedora objects and datastreams');
 define('FEDORA_MODIFY_STATE', 'modify fedora state');
+define('ISLANDORA_VIEW_HOOK', 'islandora_view_object');
+define('ISLANDORA_EDIT_HOOK', 'islandora_edit_object');
 
 /**
  * Implementation of hook_menu. 
@@ -224,6 +226,8 @@ function islandora_purge_object($object_id) {
 
 /**
  * returns an array listing object types provided by sub modules
+ * The array should contain the cmodels it listens for and the hooks it answers to
+ * example array ('islandora:collectionCModel' => array ('islandora_edit_object' => TRUE, 'islandora_view_object' => TRUE);
  * @return array 
  */
 function islandora_get_types() {
@@ -253,19 +257,26 @@ function islandora_edit_object($object_id) {
   foreach ($arr as $key => $value) {
     $output .= $key . '<br />' . $value; //if we have multiple modules handle one cmodel we need to iterate over multiple
   }
-  //we could do another module invoke all here to build the edit tab with a default implemented in this module?
-  return $output;  
+  return $output;
 }
 
-
 /**
+ * checks to see if any other modules implement this functionality and if there are none
  * builds a default page for the edit tab
+ * 
  * @param object $fedora_object 
  *   A tuque Fedora Object
  */
-function islandora_islandora_edit_object($fedora_object){
+function islandora_islandora_edit_object($fedora_object) {
+  $supported_models = islandora_get_types();
+  $output = "";
+  foreach ($fedora_object->models as $model) {
+    if ($supported_models[$model][ISLANDORA_EDIT_HOOK] == TRUE) {//another module is handling the view
+      return;
+    }
+  }
   $output = theme('islandora_default_edit', array('islandora_object' => $fedora_object));
-  return array ('Default Edit output' => $output);
+  return array('Default Edit output' => $output);
 }
 
 /**
@@ -337,13 +348,14 @@ function islandora_view_object($object_id) {
  */
 function islandora_islandora_view_object($object) {
   $supported_models = islandora_get_types();
-  $object_models = $object->models;
-  $combined_list = array_intersect($supported_models, $object->models);
   $output = "";
-  if (empty($combined_list)) {
-    $output = theme('islandora_default', array('islandora_object' => $object));
-    return array('Default Output' => $output);
+  foreach ($object->models as $model) {
+    if ($supported_models[$model][ISLANDORA_VIEW_HOOK] == TRUE) {//another module is handling the view
+      return;
+    }
   }
+  $output = theme('islandora_default', array('islandora_object' => $object));
+  return array('Default Output' => $output);
 }
 
 /**
@@ -434,7 +446,6 @@ function islandora_preprocess_islandora_default(&$variables) {
   }
 }
 
-function islandora_preprocess_islandora_default_edit(&$variables){
+function islandora_preprocess_islandora_default_edit(&$variables) {
   //$islandora_object = $variables['islandora_object'];
-  
 }
