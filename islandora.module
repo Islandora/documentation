@@ -236,7 +236,7 @@ function islandora_purge_object($object_id) {
     $restConnection = new RestConnection($user);
     $fedora_object = new FedoraObject($object_id, $restConnection->repository);
   } catch (Exception $e) {
-    drupal_set_message(t('Error getting Islandora object %s', array('%s' => $object_id)), 'error');
+    drupal_set_message(t('Error getting Islandora object %s %e', array('%s' => $object_id, '%e' => $e)), 'error');
     return "";
   }
   if (!isset($fedora_object)) {
@@ -249,7 +249,7 @@ function islandora_purge_object($object_id) {
     try {
       $fedora_object->delete();
     } catch (Exception $e) {
-      drupal_set_message(t('Error deleting Islandora object %s', array('%s' => $object_id)), 'error');
+      drupal_set_message(t('Error deleting Islandora object %s %e', array('%s' => $object_id, '%e' => $e)), 'error');
       return "";
     }
   }
@@ -257,11 +257,12 @@ function islandora_purge_object($object_id) {
     try {
       $restConnection->repository->purgeObject($object_id);
     } catch (Exception $e) {
-      drupal_set_message(t('Error purging Islandora object %s', array('%s' => $object_id)), 'error');
+      drupal_set_message(t('Error purging Islandora object %s %e', array('%s' => $object_id, '%e' => $e)), 'error');
       return "";
     }
   }
   module_invoke_all('islandora_post_purge_object', $object_id, $content_models);  //notify modules post deletion
+  drupal_goto('islandora');
 }
 
 /**
@@ -340,7 +341,7 @@ function islandora_purge_datastream($object_id, $datastream_id) {
     $restConnection = new RestConnection($user);
     $fedora_object = new FedoraObject($object_id, $restConnection->repository);
   } catch (Exception $e) {
-    drupal_set_message(t('Error getting Islandora object %s', array('%s' => $object_id)), 'error');
+    drupal_set_message(t('Error getting Islandora object %s %e', array('%s' => $object_id, '%e' => $e)), 'error');
     return "";
   }
   if (!isset($fedora_object)) {
@@ -361,7 +362,7 @@ function islandora_purge_datastream($object_id, $datastream_id) {
       $datastream = new FedoraDatastream($datastream_id, $fedora_object, $restConnection->repository);
       $datastream->state = 'D';
     } catch (Exception $e) {
-      drupal_set_message(t('Error deleting %s datastream from Islandora object %o', array('%s' => $datastream_id, '%o' => $object_id)), 'error');
+      drupal_set_message(t('Error deleting %s datastream from Islandora object %o %e', array('%s' => $datastream_id, '%o' => $object_id, '%e' => $e)), 'error');
       return;
     }
   }
@@ -369,11 +370,13 @@ function islandora_purge_datastream($object_id, $datastream_id) {
     try {
       $fedora_object->purgeDatastream($datastream_id);
     } catch (Exception $e) {
-      drupal_set_message(t('Error purging %s datastream from Islandora object %o', array('%s' => $datastream_id, '%o' => $object_id)), 'error');
+      drupal_set_message(t('Error purging %s datastream from Islandora object %o %e', array('%s' => $datastream_id, '%o' => $object_id, '%e' => $e)), 'error');
       return;
     }
   }
   module_invoke_all('islandora_post_purge_datastream', $fedora_object, $datastream_id);  //notify modules post deletion
+  drupal_set_message(t('%d datastream sucessfully purged from Islandora object %o', array('%d' => $datastream_id, '%o' => $object_id)));
+  drupal_goto('islandora/object/' . $object_id);
 }
 
 /**
