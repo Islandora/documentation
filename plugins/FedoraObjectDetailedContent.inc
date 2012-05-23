@@ -32,7 +32,6 @@ class FedoraObjectDetailedContent {
    */
   public function showFieldSets() {
     global $user;
-    drupal_set_title($this->item->objectProfile->objLabel);
     $objectHelper = new ObjectHelper();
     $tabset = array();
     $show_purge_tab = (!empty($_POST['form_id']) && $_POST['form_id'] == 'fedora_repository_purge_object_form');
