@@ -259,10 +259,6 @@ function islandora_purge_object($object_id) {
   module_invoke_all('islandora_post_purge_object', $object_id, $content_models);  //notify modules post deletion
 }
 
-function islandora_islandora_pre_purge_object($object) {
-  return array();
-}
-
 /**
  * returns an array listing object types provided by sub modules
  * @return array 
