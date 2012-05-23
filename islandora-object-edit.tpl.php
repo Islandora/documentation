@@ -1,7 +1,7 @@
 <?php
 
 /*
- * islandora-object.tpl.php
+ * islandora-object-edit.tpl.php
  * 
  *
  * 
@@ -37,10 +37,7 @@
  * and each element has an array of values.  dc.title can have none, one or many titles
  * this is the case for all dc elements.
  * 
- * we can get a list of datastreams by doing
- * foreach ($object as $ds){
- * do something here
- * }
+ * 
  * 
  */
 
