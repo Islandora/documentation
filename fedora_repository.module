@@ -1107,6 +1107,8 @@ function fedora_repository_get_items($pid = NULL, $dsId = NULL, $collection = NU
   $breadcrumbs = array();
   $objectHelper->getBreadcrumbs($pid, $breadcrumbs);
   drupal_set_breadcrumb(array_reverse($breadcrumbs));
+  
+  drupal_set_title(truncate_utf8($item->objectProfile->objLabel, 56, TRUE, TRUE));
 
   $content_models = $objectHelper->get_content_models_list($pid);
   
