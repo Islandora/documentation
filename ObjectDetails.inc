@@ -61,18 +61,23 @@ function fedora_repository_object_details_XSLT($item) {
   $proc->setParameter('', 'baseUrl', $base_url);
   $proc->setParameter('', 'path', $base_url . '/' . $path);
   $input = NULL;
-  $xsl = new DomDocument();
-  try {
-    $xsl->load('./'. $path .'/'. variable_get('islandora_object_details_xslt_sheet', 'xsl/convertQDC.xsl'));
-    $input = new DomDocument();
+  
+  $xsl_file = './'. $path .'/'. variable_get('islandora_object_details_xslt_sheet', 'xsl/convertQDC.xsl');
+  if (is_readable($xsl_file)) {
+    $xsl = new DOMDocument();
+    $xsl->load($xsl_file);
+    $input = new DOMDocument();
     $input->loadXML(trim($xmlstr));
-  } catch (Exception $e) {
-    watchdog('fedora_repository', "Problem loading XSL file: @e", array('@e' => $e->getMessage()), NULL, WATCHDOG_ERROR);
+    $xsl = $proc->importStylesheet($xsl);
+    $newdom = $proc->transformToDoc($input);
+    $output = $newdom->saveHTML();
+    return $output;
   }
-  $xsl = $proc->importStylesheet($xsl);
-  $newdom = $proc->transformToDoc($input);
-  $output = $newdom->saveHTML();
-  return $output;
+  else {
+    watchdog('fedora_repository', 'The XSLT file @xslt_name is not readable.', array(
+      '@xslt_name' => $xsl_file,
+    ));
+  }
 }
 
 function fedora_repository_object_details_table($item) {
