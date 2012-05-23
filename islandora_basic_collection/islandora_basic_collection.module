@@ -29,15 +29,11 @@
  * colon should be replaced with a dash)
  * @return array
  */
-function islandora_basic_image_theme($existing, $type, $theme, $path) {
+function islandora_basic_collection_theme($existing, $type, $theme, $path) {
   return array(
-    'islandora_basic_image_objects' => array(
-      'template' => 'islandora-basic-image-view-objects',
-      'variables' => array('islandor_objects' => NULL),
-    ),
-    'islandora_basic_image' => array(
-      'template' => 'islandora-basic-image',
-      'pattern' => 'islandora_basic_image__', //we can add pids to the end of this pattern in our preprocess function
+    'islandora_basic_collection' => array(
+      'template' => 'islandora-basic-collection',
+      'pattern' => 'islandora_basic_collection__', //we can add pids to the end of this pattern in our preprocess function
       // and templates will be able to have have a pid appended to the template name to overide a template on a per object basis
       //an example template would be named islandora-basic-image--islandora-27.tpl.phps
       'variables' => array('islandora_object' => NULL),
@@ -51,8 +47,8 @@ function islandora_basic_image_theme($existing, $type, $theme, $path) {
  * @return array 
  *   array of content model pids that this module supports
  */
-function islandora_basic_image_islandora_get_types() {
-  return array('info:fedora/islandora:imgageCModel', 'info:fedora/islandora:sp_basic_image');
+function islandora_basic_collection_islandora_get_types() {
+  return array('info:fedora/islandora:collectionCModel');
 }
 
 /**
@@ -67,16 +63,15 @@ function islandora_basic_image_islandora_get_types() {
  * @return string
  *    themed html
  */
-function islandora_basic_image_islandora_view_object($object, $user, $page_number, $page_size) {
+function islandora_basic_collection_islandora_view_object($object, $user, $page_number, $page_size) {
   //global $user;
-  $cmodel_list = islandora_basic_image_islandora_get_types();
+  $cmodel_list = islandora_basic_collection_islandora_get_types();
   $combined_list = array_intersect($cmodel_list, $object->models);
   if (empty($combined_list)) {
     return NULL; //we don't handle any of this objects cmodels
   }
-  $output = theme('islandora_basic_image', array('islandora_object' => $object));
-
-  return array('Basic Image Output' => $output);
+  $output = theme('islandora_basic_collection', array('islandora_object' => $object));
+  return array('Basic Collection Output' => $output);
 }
 
 /**
@@ -85,7 +80,7 @@ function islandora_basic_image_islandora_view_object($object, $user, $page_numbe
  * @param array $variables 
  *   an array of variables that will be passed to the theme function
  */
-function islandora_basic_image_preprocess_islandora_basic_image(&$variables) {
+function islandora_basic_collection_preprocess_islandora_basic_collection(&$variables) {
   $islandora_object = $variables['islandora_object'];
   module_load_include('inc', 'islandora', 'utils/islandora_dublin_core');
   try {
@@ -94,9 +89,10 @@ function islandora_basic_image_preprocess_islandora_basic_image(&$variables) {
   } catch (Exception $e) {
     drupal_set_message(t('Error retrieving object %s %t', array('%s' => $islandora_object->id, '%t' => $e->getMessage())), 'error');
   }
+  $variables['islandora_associated_objects'] = islandora_basic_collection_get_objects($islandora_object);
   $variables['islandora_dublin_core'] = $dc_object;
   $variables['islandora_object_label'] = $islandora_object->label;
-  $variables['theme_hook_suggestions'][] = 'islandora_basic_image__' . str_replace(':', '_', $islandora_object->id);
+  $variables['theme_hook_suggestions'][] = 'islandora_basic_collection__' . str_replace(':', '_', $islandora_object->id);
   global $base_url;
   if (isset($islandora_object['OBJ'])) {
     $variables['islandora_image_url'] = $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/OBJ/view';
@@ -108,5 +104,31 @@ function islandora_basic_image_preprocess_islandora_basic_image(&$variables) {
     $variables['islandora_medium_size_url'] = $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/MEDIUM_SIZE/view';
   }
     
+}
+
+function islandora_basic_collection_get_objects($object){
+  $query = 'select $object $title $content from <#ri>
+             where ($object <fedora-model:label> $title
+             and $object <fedora-model:hasModel> $content
+             and ($object <fedora-rels-ext:isMemberOfCollection> <info:fedora/' . $object->id . '>
+             or $object <fedora-rels-ext:isMemberOf> <info:fedora/' . $object->id . '>)
+             and $object <fedora-model:state> <info:fedora/fedora-system:def/model#Active>)
+             minus $content <mulgara:is> <info:fedora/fedora-system:FedoraObject-3.0>
+             order by $title';
+  $page_number = (empty($_GET['page'])) ? '1' : $_GET['page'];
+  $page_size = (empty($_GET['pagesize'])) ? '10' : $_GET['pagesize'];
+  module_load_include('inc', 'islandora', 'RestConnection');
+  $query_array = array('query' => $query, 'type' => 'itql','pid' => $object->id, 'page_size'=>$page_size, 'page_number' => $page_number);
+  drupal_alter('islandora_basic_collection_query',$query_array);
+  global $user;
+  try {
+    $restConnection = new RestConnection($user);
+    $queryObject = new RepositoryQuery($restConnection->connection);
+    $results = $queryObject->query($query_array['query'],$query_array['type']);
+  } catch (Exception $e) {
+    drupal_set_message(t('Islandora Error getting related objects for %s', array('%s' => $object->id)), 'error');
+    return"";
+  }
+  return $results;
 }
 
