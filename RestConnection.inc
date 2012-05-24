@@ -41,7 +41,11 @@ class RestConnection {
    */
   public $repository = NULL;
 
-  function RestConnection($user) {
+  function RestConnection($user = NULL) {
+    if(!isset($user)) {
+      global $user;
+    }
+    
     if(!isset($user) || $user->uid == 0){
       $user_string = 'anonymous';
       $pass_string = 'anonymous';

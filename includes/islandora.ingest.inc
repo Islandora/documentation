@@ -12,7 +12,7 @@ function islandora_ingest_get_object($content_models, $collection_pid, $relation
   global $user;
   $connection = new RestConnection($user);
   $object = $connection->repository->constructObject($namespace);
-  foreach($content_models as $contentmodel) {
+  foreach($content_models as $content_model) {
     $object->relationships->add(FEDORA_MODEL_URI, 'hasModel', $content_model);
   }
   $object->relationships->add($relationship['uri'], $relationship['value'], $collection_pid);
