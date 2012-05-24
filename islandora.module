@@ -543,6 +543,9 @@ function islandora_preprocess_islandora_default(&$variables) {
 
 function islandora_preprocess_islandora_default_edit(&$variables) {
   $islandora_object = $variables['islandora_object'];
+  //module_load_include('inc', 'islandora', 'includes/datastream');
+  //$test = '';
+  //$dsids = islandora_add_datastream_form($islandora_object->id, $test);
   global $base_url;
   $datastreams = array();
   $variables['islandora_editmetadata_url'] = $base_url . '/islandora/edit_form/' . $islandora_object->id;

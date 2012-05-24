@@ -23,6 +23,50 @@
  */
 
 /**
+ * Implementation of hook_menu. 
+ * we need some standard entry points so we can have consistent urls for different Object actions
+ */
+function islandora_basic_image_menu() {
+  $items = array();
+  $items['islandora/object/%/image'] = array(
+    'title' => 'Manage Image',
+    'page callback' => 'islandora_edit_object',
+    'page arguments' => array(2),
+      'type' => MENU_LOCAL_TASK,
+    'access callback' => 'islandora_basic_image_access',
+    'access arguments' => array(2),
+    );
+  return $items;
+}
+
+
+
+function islandora_basic_image_access($object_id){
+  return true;
+  module_load_include('inc', 'islandora', 'RestConnection');
+  global $user;
+   try {
+    $restConnection = new RestConnection($user);
+    $fedora_object = new FedoraObject($object_id, $restConnection->repository);
+  } catch (Exception $e) {
+    drupal_set_message(t('Error getting Islandora object %s %e', array('%s' => $object_id, '%e' => $e)), 'error');
+    return "";
+  }
+  if (!isset($fedora_object)) {
+    drupal_set_message(t('Could not remove object, object not found'));
+    return;
+  }
+  $models = $fedora_object->models;
+  $cmodel_list = islandora_basic_image_islandora_get_types();
+  foreach ($fedora_object->models as $model) {
+    if (isset($cmodel_list[$model])){
+      return user_access(FEDORA_MODIFY_STATE);
+    }
+  }
+  return FALSE;
+}
+
+/**
  * Theme registry function
  * We supply a pattern so we can overide templates at the theme level if needed.
  * we can append a pid to a template and the new template file will be called (the pids
@@ -101,12 +145,11 @@ function islandora_basic_image_preprocess_islandora_basic_image(&$variables) {
   $variables['islandora_dublin_core'] = $dc_object;
   //create a nicer array for themers
   //TODO: give this a better home
-
   //$dc_array = array();
   //foreach ($dc_object as $element) {
   //  if (!empty($element)) {
   //    foreach ($element as $field => $value) {
-   //       // split value if the result value is an array
+  //       // split value if the result value is an array
   //        if (is_array($value)) {
   //          $value = implode(", ", $value);
   //        }
@@ -118,7 +161,7 @@ function islandora_basic_image_preprocess_islandora_basic_image(&$variables) {
   //    }
   //  }
   //}
-  
+
   $variables['dc_array'] = $dc_object->as_formatted_array();
   $variables['islandora_object_label'] = $islandora_object->label;
   $variables['theme_hook_suggestions'][] = 'islandora_basic_image__' . str_replace(':', '_', $islandora_object->id);
