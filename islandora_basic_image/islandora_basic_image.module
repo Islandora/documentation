@@ -28,21 +28,60 @@
  */
 function islandora_basic_image_menu() {
   $items = array();
-  $items['islandora/object/%/image'] = array(
-    'title' => 'Manage Image',
-    'page callback' => 'islandora_edit_object',
+  $items['islandora/object/%/edit/image'] = array(
+    'title' => 'Manage Image Types',
+    'page callback' => 'islandora_basic_image_edit_object',
     'page arguments' => array(2),
       'type' => MENU_LOCAL_TASK,
+    'access callback' => 'islandora_basic_image_access',
+    'access arguments' => array(2),
+    );
+  
+  $items['islandora/object/%/view/image'] = array(
+    'title' => 'Image View 1',
+    'page callback' => 'islandora_basic_image_view1',
+    'page arguments' => array(2),
+      'type' => MENU_LOCAL_TASK,
+    'access callback' => 'islandora_basic_image_access',
+    'access arguments' => array(2),
+    );
+   $items['islandora/object/%/view/image2'] = array(
+    'title' => 'Image View 2',
+    'page callback' => 'islandora_basic_image_view2',
+    'page arguments' => array(2),
+    'type' => MENU_LOCAL_TASK,
     'access callback' => 'islandora_basic_image_access',
     'access arguments' => array(2),
     );
   return $items;
 }
 
+/**
+ * an example of adding a new managment section to the manage section of islandora.
+ * The islandora_basic_image_access function determines whether or not to show this
+ * section.
+ * @param string $object_id
+ * @return string 
+ */
+function islandora_basic_image_edit_object($object_id){
+  return 'Image CModel edit function '.$object_id;
+}
 
+function islandora_basic_image_view1($object_id){
+  return 'A view returned by the image cmodel';
+}
 
+function islandora_basic_image_view2($object_id){
+  return 'Another view returned by the image cmodel';
+}
+
+/**
+ * determines whether or not to show this modules manage tab
+ * @global object $user
+ * @param string $object_id
+ * @return boolean 
+ */
 function islandora_basic_image_access($object_id){
-  return true;
   module_load_include('inc', 'islandora', 'RestConnection');
   global $user;
    try {
@@ -50,11 +89,10 @@ function islandora_basic_image_access($object_id){
     $fedora_object = new FedoraObject($object_id, $restConnection->repository);
   } catch (Exception $e) {
     drupal_set_message(t('Error getting Islandora object %s %e', array('%s' => $object_id, '%e' => $e)), 'error');
-    return "";
+    return FALSE;
   }
   if (!isset($fedora_object)) {
-    drupal_set_message(t('Could not remove object, object not found'));
-    return;
+     return FALSE;
   }
   $models = $fedora_object->models;
   $cmodel_list = islandora_basic_image_islandora_get_types();

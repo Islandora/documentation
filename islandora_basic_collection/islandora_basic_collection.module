@@ -23,6 +23,73 @@
  */
 
 /**
+ * Implementation of hook_menu. 
+ * we need some standard entry points so we can have consistent urls for different Object actions
+ */
+function islandora_basic_collection_menu() {
+  $items = array();
+  $items['islandora/object/%/edit/collection'] = array(
+    'title' => 'Manage Collection',
+    'page callback' => 'islandora_basic_collection_edit_object',
+    'page arguments' => array(2),
+      'type' => MENU_LOCAL_TASK,
+    'access callback' => 'islandora_basic_collection_access',
+    'access arguments' => array(2),
+    );
+  
+  $items['islandora/object/%/view/collection'] = array(
+    'title' => 'Collection View',
+    'page callback' => 'islandora_basic_collection_view1',
+    'page arguments' => array(2),
+      'type' => MENU_LOCAL_TASK,
+    'access callback' => 'islandora_basic_collection_access',
+    'access arguments' => array(2),
+    );
+  
+  return $items;
+}
+
+function islandora_basic_collection_edit_object($object_id){
+  return 'Collection CModel edit function '.$object_id;
+}
+
+function islandora_basic_collection_view1($object_id){
+  return 'A view returned by the Collection cmodel '.$object_id;
+}
+
+
+/**
+ * determines whether or not to show this modules manage tab
+ * @global object $user
+ * @param string $object_id
+ * @return boolean 
+ */
+function islandora_basic_collection_access($object_id){
+  module_load_include('inc', 'islandora', 'RestConnection');
+  global $user;
+   try {
+    $restConnection = new RestConnection($user);
+    $fedora_object = new FedoraObject($object_id, $restConnection->repository);
+  } catch (Exception $e) {
+    drupal_set_message(t('Error getting Islandora object %s %e', array('%s' => $object_id, '%e' => $e)), 'error');
+    return FALSE;
+  }
+  if (!isset($fedora_object)) {
+     return FALSE;
+  }
+  $models = $fedora_object->models;
+  $cmodel_list = islandora_basic_collection_islandora_get_types();
+  foreach ($fedora_object->models as $model) {
+    if (isset($cmodel_list[$model])){
+      return user_access(FEDORA_MODIFY_STATE);
+    }
+  }
+  return FALSE;
+}
+
+
+
+/**
  * Theme registry function
  * We supply a pattern so we can overide templates at the theme level if needed.
  * we can append a pid to a template and the new template file will be called (the pids
