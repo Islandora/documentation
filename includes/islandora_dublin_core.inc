@@ -101,7 +101,7 @@ class Dublin_Core {
 
   function as_formatted_array() {
     $dc_array = array();
-    foreach ($this->dc as $element) {
+    foreach ($this as $element) {
       if (!empty($element)) {
         foreach ($element as $field => $value) {
           // split value if the result value is an array
