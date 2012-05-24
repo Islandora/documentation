@@ -99,6 +99,25 @@ class Dublin_Core {
     
   }
 
+  function as_formatted_array() {
+    $dc_array = array();
+    foreach ($this->dc as $element) {
+      if (!empty($element)) {
+        foreach ($element as $field => $value) {
+          // split value if the result value is an array
+          if (is_array($value)) {
+            $value = implode(", ", $value);
+          }
+          $dc_label = explode(':', $field);
+          $element_label = ucfirst($dc_label[1]);
+          $dc_array[$field]['label'] = $element_label;
+          $dc_array[$field]['value'] = strip_tags($value);
+          $dc_array[$field]['class'] = strtolower(preg_replace('/[^A-Za-z0-9]/', '-', $field));
+        }
+      }
+    }
+    return $dc_array;
+  }
   
 
   /**
