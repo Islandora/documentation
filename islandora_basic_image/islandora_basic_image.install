@@ -40,9 +40,12 @@ function islandora_basic_image_install() {
       $xml = file_get_contents(drupal_get_path('module', 'islandora_basic_image') . '/xml/islandora_basic_image_collection.xml');
       $restConnection->api->m->ingest(array('string' => $xml));
       $fedora_object = new FedoraObject('islandora:sp_basic_image_collection', $restConnection->repository);
-      $datastream = new FedoraDatastream('COLLECTION_POLICY', $fedora_object, $restConnection->repository);
-      $datastream->setContentFromFile($base_root . '/' . drupal_get_path('module', 'islandora_basic_image') . '/xml/islandora_basic_image_collection_policy.xml');
-      $datastream->controlGroup = 'M';
+      $datastream = new NewFedoraDatastream('TN', 'M', $fedora_object, $restConnection->repository);
+      $file_path = $base_root . '/' . drupal_get_path('module', 'islandora_basic_image') . '/Crystal_Clear_filesystem_folder_grey.png';
+      $datastream->label = 'Thumbnail';
+      $datastream->mimetype = 'image/png';
+      $datastream->setContentFromUrl($file_path);
+      $fedora_object->ingestDatastream($datastream);
       
     } catch (Exception $e) {
       drupal_set_message(t('Unable to install collections %e', array('%e' => $e)), 'error');
