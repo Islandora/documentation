@@ -48,11 +48,10 @@ function islandora_basic_collection_theme($existing, $type, $theme, $path) {
  *   array of content model pids that this module supports
  */
 function islandora_basic_collection_islandora_get_types() {
-   $types = array();
-  $types['info:fedora/islandora:collectionCModel'][ISLANDORA_VIEW_HOOK] = TRUE;
-  $types['info:fedora/islandora:collectionCModel'][ISLANDORA_EDIT_HOOK] = FALSE;
+  $types = array();
+  $types['islandora:collectionCModel'][ISLANDORA_VIEW_HOOK] = TRUE;
+  $types['islandora:collectionCModel'][ISLANDORA_EDIT_HOOK] = FALSE;
   return $types;
-  
 }
 
 /**
@@ -72,7 +71,7 @@ function islandora_basic_collection_islandora_view_object($object, $user, $page_
   $cmodel_list = islandora_basic_collection_islandora_get_types();
   $models = $object->models;
   foreach ($object->models as $model) {
-    if (isset($cmodel_list[$model][ISLANDORA_VIEW_HOOK]) && $cmodel_list[$model][ISLANDORA_VIEW_HOOK]  == TRUE) {
+    if (isset($cmodel_list[$model][ISLANDORA_VIEW_HOOK]) && $cmodel_list[$model][ISLANDORA_VIEW_HOOK] == TRUE) {
       $output = theme('islandora_basic_collection', array('islandora_object' => $object));
       return array('Basic Collection Output' => $output);
     }
@@ -138,7 +137,7 @@ function islandora_basic_collection_get_objects($object) {
 }
 
 function islandora_basic_collection_islandora_ingest_get_information($models, $object) {
-  if(in_array('info:fedora/islandora:collectionCModel', $models) && isset($object['COLLECTION_POLICY'])) {
+  if (in_array('islandora:collectionCModel', $models) && isset($object['COLLECTION_POLICY'])) {
     try {
       module_load_include('inc', 'islandora_basic_collection', 'includes/CollectionPolicy');
       $return = array();
@@ -147,8 +146,7 @@ function islandora_basic_collection_islandora_ingest_get_information($models, $o
       $return['relationship'] = $policy->getRelationship();
 
       return $return;
-    }
-    catch (Exception $e) { 
+    } catch (Exception $e) {
       drupal_set_message(t('Islandora Error getting collection info for %s', array('%s' => $object->id)), 'error');
     }
   }

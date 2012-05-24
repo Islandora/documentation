@@ -53,13 +53,13 @@ function islandora_basic_image_theme($existing, $type, $theme, $path) {
  */
 function islandora_basic_image_islandora_get_types() {
   $types = array();
-  $types['info:fedora/islandora:sp_basic_image'][ISLANDORA_VIEW_HOOK] = TRUE;
-  $types['info:fedora/islandora:sp_basic_image'][ISLANDORA_EDIT_HOOK] = FALSE;
+  $types['islandora:sp_basic_image'][ISLANDORA_VIEW_HOOK] = TRUE;
+  $types['islandora:sp_basic_image'][ISLANDORA_EDIT_HOOK] = FALSE;
   return $types;
 }
 
 /**
- * this modules implentation of view_object hook will handle objects of type islandora:basicImageCModel and  info:fedora/islandora:sp_basic_image
+ * this modules implentation of view_object hook will handle objects of type islandora:basicImageCModel and  islandora:sp_basic_image
  * as registered in its return types
  * Other modules would handle objects of other types.
  * @param Object $object
