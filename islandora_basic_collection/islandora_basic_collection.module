@@ -88,7 +88,7 @@ function islandora_basic_collection_islandora_view_object($object, $user, $page_
  */
 function islandora_basic_collection_preprocess_islandora_basic_collection(&$variables) {
   $islandora_object = $variables['islandora_object'];
-  module_load_include('inc', 'islandora', 'utils/islandora_dublin_core');
+  module_load_include('inc', 'islandora', 'includes/islandora_dublin_core');
   try {
     $dc = $islandora_object['DC']->content;
     $dc_object = Dublin_Core::import_from_xml_string($dc);
