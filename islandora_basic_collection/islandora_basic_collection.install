@@ -1,0 +1,95 @@
+<?php
+
+/**
+ * @file islandora_basic_collection.install
+ */
+
+function islandora_basic_collection_install() {
+  module_load_include('inc', 'islandora', 'RestConnection');
+  global $user;
+  global $base_root;
+  
+  try {
+    $restConnection = new RestConnection($user);
+  } catch (Exception $e) {
+    drupal_set_message(t('Unable to connect to the repository %e', array('%e' => $e)), 'error');
+    return;
+  }
+
+  $content_model_query = $restConnection->api->a->findObjects('query', 'pid=islandora:collectionCModel');
+  if (empty($content_model_query['results'])) {
+    try {
+      $xml = file_get_contents(drupal_get_path('module', 'islandora_basic_collection') . '/xml/islandora_collection_CModel.xml');
+      $restConnection->api->m->ingest(array('string' => $xml));
+    } catch (Exception $e) {
+      drupal_set_message(t('Unable to install content models %e', array('%e' => $e)), 'error');
+      return;
+    }
+    drupal_set_message(t('Content models installed!'));
+  }
+  else {
+    drupal_set_message(t('Content models already exist!'), 'warning');
+  }
+
+  $collection_query = $restConnection->api->a->findObjects('query', 'pid=islandora:root');
+  if (empty($collection_query['results'])) {
+    try {
+      $xml = file_get_contents(drupal_get_path('module', 'islandora_basic_collection') . '/xml/islandora_root_collection.xml');
+      $restConnection->api->m->ingest(array('string' => $xml));
+      $fedora_object = new FedoraObject('islandora:root', $restConnection->repository);
+      $datastream = new NewFedoraDatastream('TN', 'M', $fedora_object, $restConnection->repository);
+      $file_path = $base_root . '/' . drupal_get_path('module', 'islandora_basic_collection') . '/Crystal_Clear_filesystem_folder_grey.png';
+      $datastream->label = 'Thumbnail';
+      $datastream->mimetype = 'image/png';
+      $datastream->setContentFromUrl($file_path);
+      $fedora_object->ingestDatastream($datastream);
+      
+    } catch (Exception $e) {
+      drupal_set_message(t('Unable to install collections %e', array('%e' => $e)), 'error');
+      return;
+    }
+    drupal_set_message(t('Collections installed!'));
+  }
+  else {
+    drupal_set_message(t('Collections already exist!'), 'warning');
+  }
+}
+
+function islandora_basic_collection_uninstall() {
+    module_load_include('inc', 'islandora', 'RestConnection');
+  global $user;
+  try {
+    $restConnection = new RestConnection($user);
+  } catch (Exception $e) {
+    drupal_set_message(t('Unable to connect to the repository %e', array('%e' => $e)), 'error');
+    return;
+  }
+
+  $content_model_query = $restConnection->api->a->findObjects('query', 'pid=islandora:collectionCModel');
+  if (!empty($content_model_query['results'])) {
+    try {
+      $restConnection->repository->purgeObject('islandora:collectionCModel');
+    } catch (Exception $e) {
+      drupal_set_message(t('Unable to purge content models %e', array('%e' => $e)), 'error');
+      return;
+    }
+    drupal_set_message(t('Content models purged!'));
+  }
+  else {
+    drupal_set_message(t('Content models don\'t exist!'), 'warning');
+  }
+
+  $collection_query = $restConnection->api->a->findObjects('query', 'pid=islandora:root');
+  if (!empty($collection_query['results'])) {
+    try {
+      $restConnection->repository->purgeObject('islandora:root');
+    } catch (Exception $e) {
+      drupal_set_message(t('Unable to purge collections %e', array('%e' => $e)), 'error');
+      return;
+    }
+    drupal_set_message(t('Collections purged!'));
+  }
+  else {
+    drupal_set_message(t('Collections don\'t exist!'), 'warning');
+  }
+}

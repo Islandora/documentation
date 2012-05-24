@@ -102,23 +102,24 @@ function islandora_basic_image_preprocess_islandora_basic_image(&$variables) {
   //create a nicer array for themers
   //TODO: give this a better home
 
-  $dc_array = array();
-  foreach ($dc_object as $element) {
-    if (!empty($element)) {
-      foreach ($element as $field => $value) {
-          // split value if the result value is an array
-          if (is_array($value)) {
-            $value = implode(", ", $value);
-          }
-      $dc_label = explode(':', $field);
-      $element_label = ucfirst($dc_label[1]);
-      $dc_array[$field]['label'] = $element_label;
-      $dc_array[$field]['value'] = strip_tags($value);
-      $dc_array[$field]['class'] = strtolower( preg_replace('/[^A-Za-z0-9]/', '-', $field));
-      }
-    }
-  }
-  $variables['dc_array'] = $dc_array;
+  //$dc_array = array();
+  //foreach ($dc_object as $element) {
+  //  if (!empty($element)) {
+  //    foreach ($element as $field => $value) {
+   //       // split value if the result value is an array
+  //        if (is_array($value)) {
+  //          $value = implode(", ", $value);
+  //        }
+  //    $dc_label = explode(':', $field);
+  //    $element_label = ucfirst($dc_label[1]);
+  //    $dc_array[$field]['label'] = $element_label;
+  //   $dc_array[$field]['value'] = strip_tags($value);
+  //    $dc_array[$field]['class'] = strtolower( preg_replace('/[^A-Za-z0-9]/', '-', $field));
+  //    }
+  //  }
+  //}
+  
+  $variables['dc_array'] = $dc_object->as_formatted_array();
   $variables['islandora_object_label'] = $islandora_object->label;
   $variables['theme_hook_suggestions'][] = 'islandora_basic_image__' . str_replace(':', '_', $islandora_object->id);
   global $base_url;
