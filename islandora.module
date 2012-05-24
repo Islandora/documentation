@@ -124,7 +124,7 @@ function islandora_menu() {
   );
 
   $items['islandora/object/%/edit'] = array(
-    'title' => 'Edit',
+    'title' => 'Manage',
     'page callback' => 'islandora_edit_object',
     'page arguments' => array(2),
     'type' => MENU_LOCAL_TASK,
@@ -144,7 +144,7 @@ function islandora_menu() {
     'page callback' => 'islandora_datastream_as_attachment',
     'page arguments' => array(2, 4),
     'type' => MENU_CALLBACK,
-    'file' => 'utils/datastream.inc',
+    'file' => 'includes/datastream.inc',
     'access arguments' => array(FEDORA_VIEW),
   );
 
@@ -153,7 +153,7 @@ function islandora_menu() {
     'page callback' => 'islandora_datastream_as_attachment',
     'page arguments' => array(2, 4),
     'type' => MENU_CALLBACK,
-    'file' => 'utils/datastream.inc',
+    'file' => 'includes/datastream.inc',
     'access arguments' => array(FEDORA_VIEW),
   );
 
@@ -162,7 +162,7 @@ function islandora_menu() {
     'page callback' => 'islandora_datastream_as_attachment',
     'page arguments' => array(2, 4),
     'type' => MENU_CALLBACK,
-    'file' => 'utils/datastream.inc',
+    'file' => 'includes/datastream.inc',
     'access arguments' => array(FEDORA_VIEW),
   );
 
@@ -525,7 +525,7 @@ function islandora_add_datastream($object_id) {
 
 function islandora_preprocess_islandora_default(&$variables) {
   $islandora_object = $variables['islandora_object'];
-  module_load_include('inc', 'islandora', 'utils/islandora_dublin_core');
+  module_load_include('inc', 'islandora', 'includes/islandora_dublin_core');
   try {
     $dc = $islandora_object['DC']->content;
     //$dc_xml = simplexml_load_string($dc);
