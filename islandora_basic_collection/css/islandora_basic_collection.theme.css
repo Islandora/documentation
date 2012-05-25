@@ -5,21 +5,24 @@
         Purpose of the stylesheet follows.
 */
 
-/* islandora-basic-collection STYLES*/
-
 .islandora-basic-collection {
-  width: 100%;
-  margin: 0 auto;
+  margin: 1.5em auto;
   overflow: hidden;
+  width: 96%;
 }
 
 dl.islandora-basic-collection-object
 {
   width: 20%;
   min-width: 100px;
-  text-align: center;
-  float: left;
-  margin:  2% 2% 50px 2%;
+  min-height: 180px;
+  display: -moz-inline-stack;
+  display: inline-block;
+  vertical-align: top;
+  margin: 1.5em 2%;
+  zoom: 1;
+  *display: inline;
+  _height: 180px;
 }
 
 .islandora-basic-collection-object dt img {
