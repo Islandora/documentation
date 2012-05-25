@@ -94,7 +94,7 @@ function islandora_basic_collection_access($object_id) {
   $cmodel_list = islandora_basic_collection_islandora_get_types();
   foreach ($fedora_object->models as $model) {
     if (isset($cmodel_list[$model])) {
-      return user_access(FEDORA_MODIFY_STATE);
+      return user_access(FEDORA_MANAGE);
     }
   }
   return FALSE;

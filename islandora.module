@@ -22,13 +22,16 @@
  */
 
 
-
+//Permissions
 define('FEDORA_VIEW', 'view fedora repository');
 define('FEDORA_METADATA_EDIT', 'edit fedora metadata');
 define('FEDORA_ADD_DS', 'add fedora datastreams');
 define('FEDORA_INGEST', 'ingest fedora objects');
 define('FEDORA_PURGE', 'delete fedora objects and datastreams');
 define('FEDORA_MODIFY_STATE', 'modify fedora state');
+define('FEDORA_MANAGE', 'manage fedora items');
+
+//hooks
 define('ISLANDORA_VIEW_HOOK', 'islandora_view_object');
 define('ISLANDORA_EDIT_HOOK', 'islandora_edit_object');
 
@@ -541,6 +544,10 @@ function islandora_permission() {
       'title' => t('Change a Fedora objects state'),
       'description' => t('Users with this permission will be allowed to change a Fedora objects state.')
     ),
+    FEDORA_MANAGE => array(
+      'title' => t('View Fedora Manage tabs'),
+      'description' => t('Users with this permission will be allowed to view fedora manage manage tabs.')
+    )
   );
 }
 
