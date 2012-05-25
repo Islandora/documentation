@@ -22,13 +22,16 @@
  */
 
 
-
+//Permissions
 define('FEDORA_VIEW', 'view fedora repository');
 define('FEDORA_METADATA_EDIT', 'edit fedora metadata');
 define('FEDORA_ADD_DS', 'add fedora datastreams');
 define('FEDORA_INGEST', 'ingest fedora objects');
 define('FEDORA_PURGE', 'delete fedora objects and datastreams');
 define('FEDORA_MODIFY_STATE', 'modify fedora state');
+define('FEDORA_MANAGE', 'manage fedora items');
+
+//hooks
 define('ISLANDORA_VIEW_HOOK', 'islandora_view_object');
 define('ISLANDORA_EDIT_HOOK', 'islandora_edit_object');
 
@@ -55,7 +58,7 @@ function islandora_menu() {
     'type' => MENU_NORMAL_ITEM,
     'weight' => 0,
   );
-
+  /* may not need this
   $items['admin/islandora/solution_packs'] = array(
     'title' => 'Solution Packs',
     'description' => 'Install content models and collections required by installed solution packs.',
@@ -63,7 +66,7 @@ function islandora_menu() {
     'access arguments' => array(FEDORA_ADD_DS),
     'file' => 'admin/islandora.solutionpacks.inc',
     'type' => MENU_NORMAL_ITEM,
-  );
+  );*/
 
   $items['islandoracm.xsd'] = array(
     'title' => 'Islandora Content Model XML Schema Definition',
@@ -93,7 +96,7 @@ function islandora_menu() {
   $items['islandora'] = array(
     'title' => 'Islandora Repository',
     'page callback' => 'islandora_view_default_object',
-    'type' => MENU_NORMAL_ITEM,
+    'type' => MENU_CALLBACK,
     'access arguments' => array(FEDORA_VIEW),
   );
 
@@ -117,19 +120,47 @@ function islandora_menu() {
 
   $items['islandora/object/%/view'] = array(
     'title' => 'View',
-    'page callback' => 'islandora_view_object',
+    //'page callback' => 'islandora_view_object',
     'page arguments' => array(2),
     'type' => MENU_DEFAULT_LOCAL_TASK,
     'access arguments' => array(FEDORA_VIEW),
+    'weight' => -10
+  );
+  $items['islandora/object/%/view/default'] = array(
+    'title' => 'View',
+    'page callback' => 'islandora_view_object',
+    'page arguments' => array(2),
+    'type' => MENU_LOCAL_TASK,
+    'access arguments' => array(FEDORA_VIEW),
+    'weight' => -10,
   );
 
-  $items['islandora/object/%/edit'] = array(
+  $items['islandora/object/%/manage'] = array(
     'title' => 'Manage',
     'page callback' => 'islandora_edit_object',
     'page arguments' => array(2),
     'type' => MENU_LOCAL_TASK,
     'access arguments' => array(FEDORA_MODIFY_STATE),
   );
+  
+  $items['islandora/object/%/manage/datastreams'] = array(
+    'title' => 'Datastreams',
+    'page callback' => 'islandora_edit_object',
+    'page arguments' => array(2),
+    'type' => MENU_LOCAL_TASK,
+    'access arguments' => array(FEDORA_PURGE),
+    'weight' => -10,
+    );
+  
+  $items['islandora/object/%/manage/properties'] = array(
+    'title' => 'Properties',
+    'page callback' => 'islandora_edit_properties',
+    'page arguments' => array(2),
+      'type' => MENU_LOCAL_TASK,
+    'access arguments' => array(FEDORA_MODIFY_STATE),
+    'weight' => -5,
+  );
+  
 
   $items['islandora/object/%/delete'] = array(
     'title' => 'Purge object',
@@ -183,6 +214,14 @@ function islandora_menu() {
   );
 
   return $items;
+}
+
+
+
+function islandora_admin_paths_alter(&$paths) {
+ 
+  $paths['*/manage*'] = TRUE;
+  
 }
 
 /**
@@ -301,10 +340,14 @@ function islandora_edit_object($object_id) {
   $arr = module_invoke_all('islandora_edit_object', $fedora_object);
   $output = "";
   foreach ($arr as $key => $value) {
-    $output .= $key . '<br />' . $value; //if we have multiple modules handle one cmodel we need to iterate over multiple
+    $output .= $value; //if we have multiple modules handle one cmodel we need to iterate over multiple
   }
   //we could do another module invoke all here to build the edit tab with a default implemented in this module?
   return $output;
+}
+
+function islandora_edit_properties($object_id){
+  return 'edit properties '.$object_id;
 }
 
 /**
@@ -429,8 +472,9 @@ function islandora_view_object($object_id) {
   //module_invoke_all(islandora_display($arr)),
   $output = "";
   foreach ($arr as $key => $value) {
-    $output .= $key . '<br />' . $value; //if we have multiple modules handle one cmodel we need to iterate over multiple
+    $output .= $value; //if we have multiple modules handle one cmodel we need to iterate over multiple
   }
+  
   //we could do another module invoke all here to build the edit tab with a default implemented in this module?
   return $output; //just an example as we could have more then one array element
 }
@@ -444,14 +488,14 @@ function islandora_view_object($object_id) {
 function islandora_islandora_view_object($object) {
   $supported_models = islandora_get_types();
   $output = "";
-    foreach ($object->models as $model) {
-      if (isset($supported_models[$model][ISLANDORA_VIEW_HOOK]) && $supported_models[$model][ISLANDORA_VIEW_HOOK] == TRUE) {//another module is handling the view
-        return;
-      }
+  foreach ($object->models as $model) {
+    if (isset($supported_models[$model][ISLANDORA_VIEW_HOOK]) && (boolean)$supported_models[$model][ISLANDORA_VIEW_HOOK] === TRUE) {//another module is handling the view
+      return;
     }
+  }
   $output = theme('islandora_default', array('islandora_object' => $object));
   return array('Default Output' => $output);
-  }
+}
 
 /**
  * Theme registry function
@@ -500,6 +544,10 @@ function islandora_permission() {
       'title' => t('Change a Fedora objects state'),
       'description' => t('Users with this permission will be allowed to change a Fedora objects state.')
     ),
+    FEDORA_MANAGE => array(
+      'title' => t('View Fedora Manage tabs'),
+      'description' => t('Users with this permission will be allowed to view fedora manage manage tabs.')
+    )
   );
 }
 
@@ -543,14 +591,17 @@ function islandora_preprocess_islandora_default(&$variables) {
 
 function islandora_preprocess_islandora_default_edit(&$variables) {
   $islandora_object = $variables['islandora_object'];
+  //module_load_include('inc', 'islandora', 'includes/datastream');
+  //$test = '';
+  //$dsids = islandora_add_datastream_form($islandora_object->id, $test);
   global $base_url;
   $datastreams = array();
   $variables['islandora_editmetadata_url'] = $base_url . '/islandora/edit_form/' . $islandora_object->id;
   foreach ($islandora_object as $ds) {
-    $datastreams['download_url'] = $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/' . $ds->id .'/download';
-    $datastreams['view_url'] = $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/' . $ds->id .'/view';
-    $datastreams['delete_url'] = $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/' . $ds->id .'/delete';
+    $datastreams['download_url'] = $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/' . $ds->id . '/download';
+    $datastreams['view_url'] = $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/' . $ds->id . '/view';
+    $datastreams['delete_url'] = $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/' . $ds->id . '/delete';
     $datastreams['label'] = $ds->label;
-    $variables['islandora_datastreams'][$ds->id] = $datastreams;    
+    $variables['islandora_datastreams'][$ds->id] = $datastreams;
   }
 }

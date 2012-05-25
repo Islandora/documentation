@@ -23,6 +23,84 @@
  */
 
 /**
+ * Implementation of hook_menu. 
+ * we need some standard entry points so we can have consistent urls for different Object actions
+ */
+function islandora_basic_collection_menu() {
+  $items = array();
+  $items['islandora/object/%/manage/collection'] = array(
+    'title' => 'Collection Related',
+    'page callback' => 'islandora_basic_collection_manage_object',
+    'page arguments' => array(2),
+    'type' => MENU_LOCAL_TASK,
+    'access callback' => 'islandora_basic_collection_access',
+    'access arguments' => array(2),
+  );
+  
+  $items['admin/islandora/basic_collection'] = array(
+    'title' => 'Islandora Basic Collection',
+    'description' => 'Configure the basic Collection solution pack.',
+    'page callback' => 'drupal_get_form',
+    'access arguments' => array('administer site configuration'),
+    'page arguments' => array('islandora_basic_collection_admin'),
+    'file' => 'admin/islandora_basic_collection.admin.inc',
+    'type' => MENU_NORMAL_ITEM,
+  );
+  
+  /* an example of adding a tab for view
+    $items['islandora/object/%/view/collection'] = array(
+    'title' => 'Collection View',
+    'page callback' => 'islandora_basic_collection_view1',
+    'page arguments' => array(2),
+    'type' => MENU_LOCAL_TASK,
+    'access callback' => 'islandora_basic_collection_access',
+    'access arguments' => array(2),
+    ); */
+
+  return $items;
+}
+
+/**
+ * This function is where we create the view for the related menu item
+ * @param type $object_id
+ * @return type 
+ */
+function islandora_basic_collection_manage_object($object_id) {
+  return 'Collection CModel edit function ' . $object_id;
+}
+
+
+
+/**
+ * determines whether or not to show this modules manage tab
+ * @global object $user
+ * @param string $object_id
+ * @return boolean 
+ */
+function islandora_basic_collection_access($object_id) {
+  module_load_include('inc', 'islandora', 'RestConnection');
+  global $user;
+  try {
+    $restConnection = new RestConnection($user);
+    $fedora_object = new FedoraObject($object_id, $restConnection->repository);
+  } catch (Exception $e) {
+    drupal_set_message(t('Error getting Islandora object %s %e', array('%s' => $object_id, '%e' => $e)), 'error');
+    return FALSE;
+  }
+  if (!isset($fedora_object)) {
+    return FALSE;
+  }
+  $models = $fedora_object->models;
+  $cmodel_list = islandora_basic_collection_islandora_get_types();
+  foreach ($fedora_object->models as $model) {
+    if (isset($cmodel_list[$model])) {
+      return user_access(FEDORA_MANAGE);
+    }
+  }
+  return FALSE;
+}
+
+/**
  * Theme registry function
  * We supply a pattern so we can overide templates at the theme level if needed.
  * we can append a pid to a template and the new template file will be called (the pids
@@ -44,13 +122,15 @@ function islandora_basic_collection_theme($existing, $type, $theme, $path) {
 /**
  * tells the main module what types of objects we support.  This is used to determine whether or not
  * this module should attempt to respond.
+ * If ISLANDORA_VIEW_HOOK = TRUE this function will populate the default tab.  This should be configurable
+ * in the modules admin section, otherwise two modules can populate one tab.
  * @return array 
  *   array of content model pids that this module supports
  */
 function islandora_basic_collection_islandora_get_types() {
   $types = array();
-  $types['islandora:collectionCModel'][ISLANDORA_VIEW_HOOK] = TRUE;
-  $types['islandora:collectionCModel'][ISLANDORA_EDIT_HOOK] = FALSE;
+  $types['islandora:collectionCModel'][ISLANDORA_VIEW_HOOK] = variable_get('islandora_basic_collection_use_for_default_tab', TRUE);
+  //$types['islandora:collectionCModel'][ISLANDORA_EDIT_HOOK] = FALSE;
   return $types;
 }
 

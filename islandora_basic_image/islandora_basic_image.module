@@ -23,6 +23,117 @@
  */
 
 /**
+ * Implementation of hook_menu. 
+ * If you need to add secondary tabs to either view or manage you would create a
+ * hook_menu function similar to below.  You would also need to create an access function
+ * to tell islandora when to show your tabs.  There is an example below.
+ */
+function islandora_basic_image_menu() {
+  $items = array();
+   $items['admin/islandora/basic_image'] = array(
+    'title' => 'Islandora Basic Image',
+    'description' => 'Configure the basic image solution pack.',
+    'page callback' => 'drupal_get_form',
+    'access arguments' => array('administer site configuration'),
+    'page arguments' => array('islandora_basic_image_admin'),
+    'file' => 'admin/islandora_basic_image.admin.inc',
+    'type' => MENU_NORMAL_ITEM,
+  );
+  /* example menu paths 
+  $items['islandora/object/%/manage/image'] = array(
+    'title' => 'Manage Image Types',
+    'page callback' => 'islandora_basic_image_manage_object',
+    'page arguments' => array(2),
+      'type' => MENU_LOCAL_TASK,
+    'access callback' => 'islandora_basic_image_access',
+    'access arguments' => array(2),
+    );
+  
+  $items['islandora/object/%/view/image'] = array(
+    'title' => 'Image View 1',
+    'page callback' => 'islandora_basic_image_view1',
+    'page arguments' => array(2),
+      'type' => MENU_LOCAL_TASK,
+    'access callback' => 'islandora_basic_image_access',
+    'access arguments' => array(2),
+    );
+   $items['islandora/object/%/view/image2'] = array(
+    'title' => 'Image View 2',
+    'page callback' => 'islandora_basic_image_view2',
+    'page arguments' => array(2),
+    'type' => MENU_LOCAL_TASK,
+    'access callback' => 'islandora_basic_image_access',
+    'access arguments' => array(2),
+    );*/
+  return $items;
+}
+
+/**
+ * an example of adding a new managment section to the manage section of islandora.
+ * The islandora_basic_image_access function determines whether or not to show this
+ * section.
+ * 
+ * This is an example function used by hook_menu above.
+ * @param string $object_id
+ * @return string 
+ */
+/**
+function islandora_basic_image_manage_object($object_id){
+  return 'Image CModel edit function '.$object_id;
+}*/
+
+/**
+ * /**
+ * An example function used by hook_menu 
+ * /
+ * @param type $object_id
+ * @return string 
+ */
+/*
+function islandora_basic_image_view1($object_id){
+  return 'A view returned by the image cmodel';
+}*/
+
+/**
+ * An example function needed by this modules hook_menu
+ * @param type $object_id
+ * @return string 
+ */
+/*
+function islandora_basic_image_view2($object_id){
+  return 'Another view returned by the image cmodel';
+}*/
+
+/**
+ * determines whether or not to show this modules manage tab
+ * @global object $user
+ * @param string $object_id
+ * @return boolean 
+ */
+function islandora_basic_image_access($object_id){
+  module_load_include('inc', 'islandora', 'RestConnection');
+  global $user;
+   try {
+    $restConnection = new RestConnection($user);
+    $fedora_object = new FedoraObject($object_id, $restConnection->repository);
+  } catch (Exception $e) {
+    drupal_set_message(t('Error getting Islandora object %s %e', array('%s' => $object_id, '%e' => $e)), 'error');
+    return FALSE;
+  }
+  if (!isset($fedora_object)) {
+     return FALSE;
+  }
+  $models = $fedora_object->models;
+  $cmodel_list = islandora_basic_image_islandora_get_types();
+  foreach ($fedora_object->models as $model) {
+    if (isset($cmodel_list[$model])){
+      return user_access(FEDORA_MODIFY_STATE);
+    }
+  }
+  return FALSE;
+}
+
+/**
  * Theme registry function
  * We supply a pattern so we can overide templates at the theme level if needed.
  * we can append a pid to a template and the new template file will be called (the pids
@@ -33,7 +144,7 @@ function islandora_basic_image_theme($existing, $type, $theme, $path) {
   return array(
     'islandora_basic_image_objects' => array(
       'template' => 'islandora-basic-image-view-objects',
-      'variables' => array('islandor_objects' => NULL),
+      'variables' => array('islandora_objects' => NULL),
     ),
     'islandora_basic_image' => array(
       'template' => 'islandora-basic-image',
@@ -53,8 +164,8 @@ function islandora_basic_image_theme($existing, $type, $theme, $path) {
  */
 function islandora_basic_image_islandora_get_types() {
   $types = array();
-  $types['islandora:sp_basic_image'][ISLANDORA_VIEW_HOOK] = TRUE;
-  $types['islandora:sp_basic_image'][ISLANDORA_EDIT_HOOK] = FALSE;
+  $types['islandora:sp_basic_image'][ISLANDORA_VIEW_HOOK] = variable_get('islandora_basic_image_use_for_default_tab', TRUE);
+  //$types['islandora:sp_basic_image'][ISLANDORA_EDIT_HOOK] = FALSE;
   return $types;
 }
 
@@ -101,12 +212,11 @@ function islandora_basic_image_preprocess_islandora_basic_image(&$variables) {
   $variables['islandora_dublin_core'] = $dc_object;
   //create a nicer array for themers
   //TODO: give this a better home
-
   //$dc_array = array();
   //foreach ($dc_object as $element) {
   //  if (!empty($element)) {
   //    foreach ($element as $field => $value) {
-   //       // split value if the result value is an array
+  //       // split value if the result value is an array
   //        if (is_array($value)) {
   //          $value = implode(", ", $value);
   //        }
@@ -118,7 +228,7 @@ function islandora_basic_image_preprocess_islandora_basic_image(&$variables) {
   //    }
   //  }
   //}
-  
+
   $variables['dc_array'] = $dc_object->as_formatted_array();
   $variables['islandora_object_label'] = $islandora_object->label;
   $variables['theme_hook_suggestions'][] = 'islandora_basic_image__' . str_replace(':', '_', $islandora_object->id);
