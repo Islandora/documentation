@@ -96,10 +96,10 @@ function islandora_menu() {
   $items['islandora'] = array(
     'title' => 'Islandora Repository',
     'page callback' => 'islandora_view_default_object',
-    'type' => MENU_CALLBACK,
+    'type' => MENU_NORMAL_ITEM,
     'access arguments' => array(FEDORA_VIEW),
   );
-
+ 
   $items['islandora/object/%'] = array(
     'title' => 'Repository',
     'page callback' => 'islandora_view_object',

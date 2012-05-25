@@ -8,30 +8,29 @@
 /* islandora-basic-collection STYLES*/
 
 .islandora-basic-collection {
-  width: 100%;
-  margin: 0 auto;
-  overflow: hidden;
+ margin: 2% auto;
+ overflow: hidden;
+ width: 96%;
 }
 
 dl.islandora-basic-collection-object
 {
-  width: 20%;
-  min-width: 100px;
-  text-align: center;
-  float: left;
-  margin:  2% 2% 50px 2%;
+ float: left;
+ margin: 2% 2% 50px;
+ width: 20%;
+ height: 180px;
 }
 
 .islandora-basic-collection-object dt img {
-  max-width: 100%;
-  *width: 100%;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
+ max-width: 100%;
+ *width: 100%;
+ -webkit-border-radius: 5px;
+ -moz-border-radius: 5px;
+ border-radius: 5px;
 }
 
 .islandora-basic-collection-object dd
 {
-  margin: 0;
-  padding: 0;
+ margin: 0;
+ padding: 0;
 }

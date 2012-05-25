@@ -38,7 +38,7 @@ function islandora_basic_image_menu() {
     'page arguments' => array('islandora_basic_image_admin'),
     'file' => 'admin/islandora_basic_image.admin.inc',
     'type' => MENU_NORMAL_ITEM,
-  );
+  ); 
   /* example menu paths 
   $items['islandora/object/%/manage/image'] = array(
     'title' => 'Manage Image Types',
