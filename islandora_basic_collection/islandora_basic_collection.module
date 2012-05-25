@@ -84,7 +84,6 @@ function islandora_basic_collection_access($object_id) {
     $restConnection = new RestConnection($user);
     $fedora_object = new FedoraObject($object_id, $restConnection->repository);
   } catch (Exception $e) {
-    drupal_set_message(t('Error getting Islandora object %s %e', array('%s' => $object_id, '%e' => $e)), 'error');
     return FALSE;
   }
   if (!isset($fedora_object)) {

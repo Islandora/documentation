@@ -474,9 +474,7 @@ function islandora_view_object($object_id) {
   foreach ($arr as $key => $value) {
     $output .= $value; //if we have multiple modules handle one cmodel we need to iterate over multiple
   }
-  
-  //we could do another module invoke all here to build the edit tab with a default implemented in this module?
-  return $output; //just an example as we could have more then one array element
+  return $output; 
 }
 
 /**
