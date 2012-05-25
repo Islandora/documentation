@@ -132,7 +132,7 @@ function islandora_menu() {
     'weight' => -10,
   );
 
-  $items['islandora/object/%/edit'] = array(
+  $items['islandora/object/%/manage'] = array(
     'title' => 'Manage',
     'page callback' => 'islandora_edit_object',
     'page arguments' => array(2),
@@ -140,8 +140,8 @@ function islandora_menu() {
     'access arguments' => array(FEDORA_MODIFY_STATE),
   );
   
-  $items['islandora/object/%/edit/datastreams'] = array(
-    'title' => 'Manage Datastreams',
+  $items['islandora/object/%/manage/datastreams'] = array(
+    'title' => 'Datastreams',
     'page callback' => 'islandora_edit_object',
     'page arguments' => array(2),
     'type' => MENU_LOCAL_TASK,
@@ -149,8 +149,8 @@ function islandora_menu() {
     'weight' => -10,
     );
   
-  $items['islandora/object/%/edit/properties'] = array(
-    'title' => 'Manage Properties',
+  $items['islandora/object/%/manage/properties'] = array(
+    'title' => 'Properties',
     'page callback' => 'islandora_edit_properties',
     'page arguments' => array(2),
       'type' => MENU_LOCAL_TASK,
@@ -217,7 +217,7 @@ function islandora_menu() {
 
 function islandora_admin_paths_alter(&$paths) {
  
-  $paths['*/edit*'] = TRUE;
+  $paths['*/manage*'] = TRUE;
   
 }
 

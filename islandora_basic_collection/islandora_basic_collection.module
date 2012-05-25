@@ -28,34 +28,36 @@
  */
 function islandora_basic_collection_menu() {
   $items = array();
-  $items['islandora/object/%/edit/collection'] = array(
-    'title' => 'Manage Collection',
-    'page callback' => 'islandora_basic_collection_edit_object',
+  $items['islandora/object/%/manage/collection'] = array(
+    'title' => 'Collection Related',
+    'page callback' => 'islandora_basic_collection_manage_object',
     'page arguments' => array(2),
-      'type' => MENU_LOCAL_TASK,
+    'type' => MENU_LOCAL_TASK,
     'access callback' => 'islandora_basic_collection_access',
     'access arguments' => array(2),
-    );
-  
-  $items['islandora/object/%/view/collection'] = array(
+  );
+  /* an example of adding a tab for view
+    $items['islandora/object/%/view/collection'] = array(
     'title' => 'Collection View',
     'page callback' => 'islandora_basic_collection_view1',
     'page arguments' => array(2),
-      'type' => MENU_LOCAL_TASK,
+    'type' => MENU_LOCAL_TASK,
     'access callback' => 'islandora_basic_collection_access',
     'access arguments' => array(2),
-    );
-  
+    ); */
+
   return $items;
 }
 
-function islandora_basic_collection_edit_object($object_id){
-  return 'Collection CModel edit function '.$object_id;
+/**
+ * This function is where we create the view for the related menu item
+ * @param type $object_id
+ * @return type 
+ */
+function islandora_basic_collection_manage_object($object_id) {
+  return 'Collection CModel edit function ' . $object_id;
 }
 
-function islandora_basic_collection_view1($object_id){
-  return 'A view returned by the Collection cmodel '.$object_id;
-}
 
 
 /**
@@ -64,10 +66,10 @@ function islandora_basic_collection_view1($object_id){
  * @param string $object_id
  * @return boolean 
  */
-function islandora_basic_collection_access($object_id){
+function islandora_basic_collection_access($object_id) {
   module_load_include('inc', 'islandora', 'RestConnection');
   global $user;
-   try {
+  try {
     $restConnection = new RestConnection($user);
     $fedora_object = new FedoraObject($object_id, $restConnection->repository);
   } catch (Exception $e) {
@@ -75,19 +77,17 @@ function islandora_basic_collection_access($object_id){
     return FALSE;
   }
   if (!isset($fedora_object)) {
-     return FALSE;
+    return FALSE;
   }
   $models = $fedora_object->models;
   $cmodel_list = islandora_basic_collection_islandora_get_types();
   foreach ($fedora_object->models as $model) {
-    if (isset($cmodel_list[$model])){
+    if (isset($cmodel_list[$model])) {
       return user_access(FEDORA_MODIFY_STATE);
     }
   }
   return FALSE;
 }
-
-
 
 /**
  * Theme registry function
@@ -117,7 +117,7 @@ function islandora_basic_collection_theme($existing, $type, $theme, $path) {
 function islandora_basic_collection_islandora_get_types() {
   $types = array();
   $types['islandora:collectionCModel'][ISLANDORA_VIEW_HOOK] = TRUE;
-  $types['islandora:collectionCModel'][ISLANDORA_EDIT_HOOK] = FALSE;
+  //$types['islandora:collectionCModel'][ISLANDORA_EDIT_HOOK] = FALSE;
   return $types;
 }
 

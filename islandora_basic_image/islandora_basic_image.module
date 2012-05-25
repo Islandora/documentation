@@ -24,13 +24,15 @@
 
 /**
  * Implementation of hook_menu. 
- * we need some standard entry points so we can have consistent urls for different Object actions
+ * If you need to add secondary tabs to either view or manage you would create a
+ * hook_menu function similar to below.  You would also need to create an access function
+ * to tell islandora when to show your tabs.  There is an example below.
  */
-function islandora_basic_image_menu() {
+/*function islandora_basic_image_menu() {
   $items = array();
-  $items['islandora/object/%/edit/image'] = array(
+  $items['islandora/object/%/manage/image'] = array(
     'title' => 'Manage Image Types',
-    'page callback' => 'islandora_basic_image_edit_object',
+    'page callback' => 'islandora_basic_image_manage_object',
     'page arguments' => array(2),
       'type' => MENU_LOCAL_TASK,
     'access callback' => 'islandora_basic_image_access',
@@ -54,26 +56,43 @@ function islandora_basic_image_menu() {
     'access arguments' => array(2),
     );
   return $items;
-}
+}*/
 
 /**
  * an example of adding a new managment section to the manage section of islandora.
  * The islandora_basic_image_access function determines whether or not to show this
  * section.
+ * 
+ * This is an example function used by hook_menu above.
  * @param string $object_id
  * @return string 
  */
-function islandora_basic_image_edit_object($object_id){
+/**
+function islandora_basic_image_manage_object($object_id){
   return 'Image CModel edit function '.$object_id;
-}
+}*/
 
+/**
+ * /**
+ * An example function used by hook_menu 
+ * /
+ * @param type $object_id
+ * @return string 
+ */
+/*
 function islandora_basic_image_view1($object_id){
   return 'A view returned by the image cmodel';
-}
+}*/
 
+/**
+ * An example function needed by this modules hook_menu
+ * @param type $object_id
+ * @return string 
+ */
+/*
 function islandora_basic_image_view2($object_id){
   return 'Another view returned by the image cmodel';
-}
+}*/
 
 /**
  * determines whether or not to show this modules manage tab
