@@ -28,8 +28,18 @@
  * hook_menu function similar to below.  You would also need to create an access function
  * to tell islandora when to show your tabs.  There is an example below.
  */
-/*function islandora_basic_image_menu() {
+function islandora_basic_image_menu() {
   $items = array();
+   $items['admin/islandora/basic_image'] = array(
+    'title' => 'Islandora Basic Image',
+    'description' => 'Configure the basic image solution pack.',
+    'page callback' => 'drupal_get_form',
+    'access arguments' => array('administer site configuration'),
+    'page arguments' => array('islandora_basic_image_admin'),
+    'file' => 'admin/islandora_basic_image.admin.inc',
+    'type' => MENU_NORMAL_ITEM,
+  );
+  /* example menu paths 
   $items['islandora/object/%/manage/image'] = array(
     'title' => 'Manage Image Types',
     'page callback' => 'islandora_basic_image_manage_object',
@@ -54,9 +64,9 @@
     'type' => MENU_LOCAL_TASK,
     'access callback' => 'islandora_basic_image_access',
     'access arguments' => array(2),
-    );
+    );*/
   return $items;
-}*/
+}
 
 /**
  * an example of adding a new managment section to the manage section of islandora.
@@ -134,7 +144,7 @@ function islandora_basic_image_theme($existing, $type, $theme, $path) {
   return array(
     'islandora_basic_image_objects' => array(
       'template' => 'islandora-basic-image-view-objects',
-      'variables' => array('islandor_objects' => NULL),
+      'variables' => array('islandora_objects' => NULL),
     ),
     'islandora_basic_image' => array(
       'template' => 'islandora-basic-image',
@@ -154,8 +164,8 @@ function islandora_basic_image_theme($existing, $type, $theme, $path) {
  */
 function islandora_basic_image_islandora_get_types() {
   $types = array();
-  $types['islandora:sp_basic_image'][ISLANDORA_VIEW_HOOK] = TRUE;
-  $types['islandora:sp_basic_image'][ISLANDORA_EDIT_HOOK] = FALSE;
+  $types['islandora:sp_basic_image'][ISLANDORA_VIEW_HOOK] = variable_get('islandora_basic_image_use_for_default_tab', TRUE);
+  //$types['islandora:sp_basic_image'][ISLANDORA_EDIT_HOOK] = FALSE;
   return $types;
 }
 

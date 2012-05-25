@@ -36,6 +36,17 @@ function islandora_basic_collection_menu() {
     'access callback' => 'islandora_basic_collection_access',
     'access arguments' => array(2),
   );
+  
+  $items['admin/islandora/basic_collection'] = array(
+    'title' => 'Islandora Basic Collection',
+    'description' => 'Configure the basic Collection solution pack.',
+    'page callback' => 'drupal_get_form',
+    'access arguments' => array('administer site configuration'),
+    'page arguments' => array('islandora_basic_collection_admin'),
+    'file' => 'admin/islandora_basic_collection.admin.inc',
+    'type' => MENU_NORMAL_ITEM,
+  );
+  
   /* an example of adding a tab for view
     $items['islandora/object/%/view/collection'] = array(
     'title' => 'Collection View',
@@ -111,12 +122,14 @@ function islandora_basic_collection_theme($existing, $type, $theme, $path) {
 /**
  * tells the main module what types of objects we support.  This is used to determine whether or not
  * this module should attempt to respond.
+ * If ISLANDORA_VIEW_HOOK = TRUE this function will populate the default tab.  This should be configurable
+ * in the modules admin section, otherwise two modules can populate one tab.
  * @return array 
  *   array of content model pids that this module supports
  */
 function islandora_basic_collection_islandora_get_types() {
   $types = array();
-  $types['islandora:collectionCModel'][ISLANDORA_VIEW_HOOK] = TRUE;
+  $types['islandora:collectionCModel'][ISLANDORA_VIEW_HOOK] = variable_get('islandora_basic_collection_use_for_default_tab', TRUE);
   //$types['islandora:collectionCModel'][ISLANDORA_EDIT_HOOK] = FALSE;
   return $types;
 }

@@ -55,7 +55,7 @@ function islandora_menu() {
     'type' => MENU_NORMAL_ITEM,
     'weight' => 0,
   );
-
+  /* may not need this
   $items['admin/islandora/solution_packs'] = array(
     'title' => 'Solution Packs',
     'description' => 'Install content models and collections required by installed solution packs.',
@@ -63,7 +63,7 @@ function islandora_menu() {
     'access arguments' => array(FEDORA_ADD_DS),
     'file' => 'admin/islandora.solutionpacks.inc',
     'type' => MENU_NORMAL_ITEM,
-  );
+  );*/
 
   $items['islandoracm.xsd'] = array(
     'title' => 'Islandora Content Model XML Schema Definition',
@@ -471,6 +471,7 @@ function islandora_view_object($object_id) {
   foreach ($arr as $key => $value) {
     $output .= $value; //if we have multiple modules handle one cmodel we need to iterate over multiple
   }
+  
   //we could do another module invoke all here to build the edit tab with a default implemented in this module?
   return $output; //just an example as we could have more then one array element
 }
@@ -485,7 +486,7 @@ function islandora_islandora_view_object($object) {
   $supported_models = islandora_get_types();
   $output = "";
   foreach ($object->models as $model) {
-    if (isset($supported_models[$model][ISLANDORA_VIEW_HOOK]) && $supported_models[$model][ISLANDORA_VIEW_HOOK] == TRUE) {//another module is handling the view
+    if (isset($supported_models[$model][ISLANDORA_VIEW_HOOK]) && (boolean)$supported_models[$model][ISLANDORA_VIEW_HOOK] === TRUE) {//another module is handling the view
       return;
     }
   }
