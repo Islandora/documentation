@@ -66,7 +66,91 @@ function islandora_basic_collection_menu() {
  * @return type 
  */
 function islandora_basic_collection_manage_object($object_id) {
-  return 'Collection CModel edit function ' . $object_id;
+
+  module_load_include('inc', 'islandora_basic_collection', 'includes/CollectionManagement');
+  module_load_include('inc', 'islandora_basic_collection', 'includes/CollectionManagerTable');
+  module_load_include('inc', 'islandora_basic_collection', 'includes/DeleteCollection');
+  module_load_include('inc', 'islandora_basic_collection', 'includes/MoveCollection');
+  drupal_add_library('system', 'drupal.vertical-tabs');
+  drupal_load_stylesheet('misc/vertical-tabs-rtl.css');
+  $form['additional_settings'] = array(
+    '#type' => 'vertical_tabs',
+    '#weight' => 99,
+  );
+
+  $form['create_child_collection'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Create Child Collection'),
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+    '#group' => 'additional_settings',
+    '#tree' => TRUE,
+    '#weight' => -2,
+  );
+
+  $form['create_child_collection']['form'] = array(
+//      '#content' => drupal_get_form('collection_management_form', $object_id),
+  );
+
+  $form['manage_policies'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Manage Collection Policies'),
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+    '#group' => 'additional_settings',
+    '#tree' => TRUE,
+    '#weight' => -3,
+  );
+
+  $form['manage_policies']['form'] = array(
+//    '#content' => drupal_get_form($form_id),
+  );
+
+  $form['change_content_models'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Change Content Models'),
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+    '#group' => 'additional_settings',
+    '#tree' => TRUE,
+    '#weight' => -3,
+  );
+
+  $form['change_content_models']['form'] = array(
+//    '#content' => drupal_get_form($form_id),
+  );
+
+  $form['migrate_members'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Migrate Members'),
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+    '#group' => 'additional_settings',
+    '#tree' => TRUE,
+    '#weight' => -3,
+  );
+
+  $form['migrate_members']['form'] = array(
+    '#content' => drupal_get_form('islandora_collection_migrate_form', $object_id),
+  );
+
+  $form['delete_members'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Delete Members of this Collection'),
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+    '#group' => 'additional_settings',
+    '#tree' => TRUE,
+    '#weight' => -3,
+  );
+
+  $form['delete_members']['form'] = array(
+    '#content' => drupal_get_form('islandora_collection_deletion_form', $object_id),
+  );
+
+  return $form;
+
+//  return 'Collection CModel edit function ' . $object_id;
 }
 
 /**
@@ -206,7 +290,7 @@ function islandora_basic_collection_preprocess_islandora_basic_collection(&$vari
       $associated_objects_array[$pid]['dc_array'] = $dc_object->as_formatted_array();
     } catch (Exception $e) {
       drupal_set_message(t('Error retrieving object %s %t', array('%s' => $islandora_object->id, '%t' => $e->getMessage())), 'error');
-    }    
+    }
     $object_url = 'islandora/object/' . $pid;
     $thumbnail_img = '<img src="' . $base_path . $object_url . '/datastream/TN/view"' . '/>';
     $title = $variables['islandora_associated_objects'][$key]['title']['value'];
@@ -214,9 +298,10 @@ function islandora_basic_collection_preprocess_islandora_basic_collection(&$vari
     $associated_objects_array[$pid]['path'] = $object_url;
     $associated_objects_array[$pid]['title'] = $title;
     $associated_objects_array[$pid]['class'] = strtolower(preg_replace('/[^A-Za-z0-9]/', '-', $pid));
-    if(isset($fc_object['TN'])){
+    if (isset($fc_object['TN'])) {
       $thumbnail_img = '<img src="' . $base_path . $object_url . '/datastream/TN/view"' . '/>';
-    } else {
+    }
+    else {
       $thumbnail_img = '<img src="http://codesprint-centos.islandora.ca/islandora/object/islandora%3A52/datastream/TN"' . '/>';
     }
     $associated_objects_array[$pid]['thumbnail'] = $thumbnail_img;
