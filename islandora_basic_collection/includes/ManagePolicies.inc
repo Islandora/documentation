@@ -1,10 +1,52 @@
 <?php
 
 function islandora_manage_policies_form($form, &$form_state, $collection_pid) {
+  module_load_include('inc', 'islandora_basic_collection', 'includes/CollectionPolicy');
+  module_load_include('inc', 'islandora', 'RestConnection');
+  $restConnection = new RestConnection();
+
+  $content_models = get_content_models_list($collection_pid);
+  $cm_options = array();
+  $name_mappings = array();
+  foreach ($content_models as $content_model) {
+    if ($content_model != "islandora:collectionCModel") {
+      $item = new FedoraObject($content_model, $restConnection->repository);
+      $cm_name = $item->Label;
+      $cm_options[$content_model] = $cm_name;
+    }
+  }
 
   $new_options = array();
   if (is_array($content_models) && is_array($cm_options)) {
     $new_options = array_diff_key($content_models, $cm_options);
+  }
+
+  $namespace = substr($collection_pid, 0, strpos($collection_pid, ":"));
+
+  $collection_policy_dsid = variable_get('Islandora_Collection_Policy_DSID', 'COLLECTION_POLICY');
+  $collection_object = new FedoraObject($collection_pid, $restConnection->repository);
+  $collection_policy_string = $collection_object->getDatastream($collection_policy_dsid);
+  $collection_policy = new CollectionPolicy($collection_policy_string->content);
+
+  if ($collection_policy) {
+    $supported_collection_models = $collection_policy->getContentModels();
+  }
+  $collection_namespace = substr($collection_pid, 0, strpos($collection_pid, ":"));
+
+  $represented_content_models = get_represented_content_models($collection_pid);
+  $collection_name = $collection_object->label;
+  $new_content_models = get_content_models_as_option_array();
+  $current_models_in_policy = array();
+
+  if ($supported_collection_models) {
+    foreach ($supported_collection_models as $supported_model) {
+      $current_models_in_policy[$supported_model['pid']] = $supported_model['pid'];
+    }
+  }
+
+  $new_options = array();
+  if (is_array($new_content_models) && is_array($current_models_in_policy)) {
+    $new_options = array_diff_key($new_content_models, $current_models_in_policy);
   }
 
   $form ['manage_collection_policy']['add']['content_model_to_add'] = array(
@@ -18,7 +60,7 @@ function islandora_manage_policies_form($form, &$form_state, $collection_pid) {
     '#title' => "Choose Namespace",
     '#type' => 'textfield',
     '#size' => 15,
-    '#default_value' => $collection_namespace,
+    '#default_value' => $namespace,
     '#description' => t("Choose namespace for objects in this collection associated with this content model"),
   );
   $form['manage_collection_policy']['add']['submit'] = array(
@@ -57,5 +99,38 @@ function islandora_manage_policies_form_validate($form, &$form_state) {
 }
 
 function islandora_manage_policies_form_submit($form, &$form_state) {
-  
+  module_load_include('inc', 'islandora', 'RestConnection');
+  $restConnection = new RestConnection();
+  if ($form_state['clicked_button']['#id'] == 'add_cm') {
+    if (!$policy) {
+      $item = new Fedora_Item($collection_pid);
+      $item->add_datastream_from_string($collection_policy, 'COLLECTION_POLICY', 'COLLECTION_POLICY', 'text/xml', 'X');
+      $policy = CollectionPolicy::loadFromCollection($collection_pid, TRUE);
+    }
+
+    $cp_namespace = $form_state['values']['new_cp_namespace'];
+    $cp_content_model = $form_state['values']['content_model_to_add'];
+    $policy->addModel(ContentModel::loadFromModel($cp_content_model), $cp_namespace);
+    $policy->saveToFedora();
+    drupal_set_message("Collection model successfully added");
+  }
+
+  //remove content model from collection policy
+  if ($form_state['clicked_button']['#id'] == 'remove_cm') {
+    $candidates = $form_state['values']['content_models_to_remove'];
+    $count = 0;
+    foreach ($candidates as $candidate) {
+      if (is_string($candidate)) {
+        $policy->removeModel(ContentModel::loadFromModel($candidate));
+        $count++;
+      }
+    }
+    if ($count > 0) {
+      $policy->saveToFedora();
+      if ($count > 1) {
+        $s = 's';
+      }
+      drupal_set_message("$count collection model$s removed");
+    }
+  }
 }

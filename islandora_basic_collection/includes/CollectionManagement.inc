@@ -435,17 +435,18 @@ function get_represented_content_models($pid) {
   $restConnection = new RestConnection();
   require_once 'sites/all/libraries/tuque/RepositoryQuery.php';
 
-  $query = "select \$model from <#ri>
+  $query = "select \$model \$title from <#ri>
 where (\$object <info:fedora/fedora-system:def/relations-external#isMemberOf> <info:fedora/$pid>
        or \$object <info:fedora/fedora-system:def/relations-external#isMemberOfCollection> <info:fedora/$pid>)
-       and \$object <info:fedora/fedora-system:def/model#hasModel> \$model";
+       and \$object <info:fedora/fedora-system:def/model#hasModel> \$model
+       and \$object <dc:title> \$title";
 
   $model_pids = $restConnection->repository->ri->itqlQuery($query, 'unlimited', '0');
   $represented_models = array();
   foreach ($model_pids as $model_pid) {
-    if ($model_pid && $model_pid['object']['value'] != 'fedora-system:FedoraObject-3.0') {
+    if ($model_pid && $model_pid['model']['value'] != 'fedora-system:FedoraObject-3.0') {
 
-      $represented_models[$model_pid['object']['value']] = $model_pid['object']['value'] . ' ~ ' . $model_pid['title']['value'];
+      $represented_models[$model_pid['model']['value']] = $model_pid['model']['value'] . ' ~ ' . $model_pid['title']['value'];
     }
   }
   return $represented_models;
@@ -492,7 +493,6 @@ function Islandora_collections_get_collection_from_pid($pid) {
  * @param <type> $query_format R
  */
 function get_related_items_as_array($collection_pid, $relationship = array('isMemberOfCollection'), $limit = 10000, $offset = 0, $active_objects_only = TRUE, $cmodel = NULL, $orderby = '$title') {
-//  module_load_include('inc', 'fedora_repository', 'ObjectHelper');
   module_load_include('inc', 'islandora', 'RestConnection');
   $restConnection = new RestConnection();
   require_once 'sites/all/libraries/tuque/RepositoryQuery.php';
@@ -533,14 +533,6 @@ function get_related_items_as_array($collection_pid, $relationship = array('isMe
   $query_string .= ')
                     minus $content <mulgara:is> <info:fedora/fedora-system:FedoraObject-3.0>
                     order by ' . $orderby;
-
-//  $query_string = htmlentities(urlencode($query_string));
-//
-//
-//  $content = '';
-//  $url = variable_get('fedora_repository_url', 'http://localhost:8080/fedora/risearch');
-//  $url .= "?type=tuples&flush=TRUE&format=Sparql&limit=$limit&offset=$offset&lang=itql&stream=on&query=" . $query_string;
-//  $content .= do_curl($url);
   
   $results = $restConnection->repository->ri->itqlQuery($query_string, $limit, $offset);
 
@@ -562,3 +554,113 @@ function get_related_items_as_array($collection_pid, $relationship = array('isMe
 //  }
 //  return $resultsarray;
 //}
+
+  /**
+   * gets the name of the content models for the specified object
+   * this now returns an array of pids as in Fedora 3 we can have more then one Cmodel for an object
+   * @param type $pid
+   * @param type $include_fedora_system_content_models
+   * @return array 
+   */
+  function get_content_models_list($pid, $include_fedora_system_content_models = FALSE) {
+//    module_load_include('inc', 'fedora_repository', 'CollectionClass');
+//    module_load_include('inc', 'fedora_repository', 'ContentModel');
+//    $collectionHelper = new CollectionClass();
+  module_load_include('inc', 'islandora', 'RestConnection');
+  require_once 'sites/all/libraries/tuque/RepositoryQuery.php';
+  $restConnection = new RestConnection();
+    $pids = array();
+    $query = 'select $object from <#ri>
+            where <info:fedora/' . $pid . '> <fedora-model:hasModel> $object
+            and $object <fedora-model:state> <info:fedora/fedora-system:def/model#Active>';
+//    $content_models = $collectionHelper->getRelatedItems($pid, $query);
+    $content_models = $restConnection->repository->ri->itqlQuery($query, 'unlimited', '0');
+    
+    if (empty($content_models)) {
+      return $pids;
+    }
+
+    $cmodels = array();
+    foreach ($content_models as $content_model) {
+      if (strpos($content_model['object']['uri'], 'fedora-system:FedoraObject-3.0') != FALSE && $include_fedora_system_content_models == FALSE) {
+        continue;
+      }
+      $cmodels[] = substr(strstr($content_model['object']['uri'], '/'), 1);
+//      $cm = ContentModel::loadFromModel($cmodel_pid);
+//      if ($cm) {
+//        $cmodels[] = $cm;
+//      }
+    }
+
+    return $cmodels;
+  }
+  
+  /**
+ * Function: get_content_models_as_option_array
+ *
+ * Description: Returns an associative array of all available content models in Fedora instance
+ *
+ * @return array
+ */
+function get_content_models_as_option_array() {
+  module_load_include('inc', 'islandora', 'RestConnection');
+  $restConnection = new RestConnection();
+    require_once 'sites/all/libraries/tuque/RepositoryQuery.php';
+
+    $restricted = variable_get('fedora_namespace_restriction_enforced', TRUE);
+    $allowed_string = variable_get('fedora_pids_allowed', 'default: demo: changeme: islandora:');
+    $namespaces = explode(':', $allowed_string);
+    foreach ($namespaces as $namespace) {
+        if ($namespace) {
+            $allowed[] = trim($namespace);
+        }
+    }
+    $query = 'select $object $title from <#ri>
+          where ($object <fedora-model:label> $title
+          and ($object <fedora-model:hasModel> <info:fedora/fedora-system:ContentModel-3.0>
+          or $object <fedora-rels-ext:isMemberOfCollection> <info:fedora/islandora:ContentModelsCollection>)
+          and $object <fedora-model:state> <info:fedora/fedora-system:def/model#Active>)
+          order by $title';
+    
+    $list = $restConnection->repository->ri->itqlQuery($query, 'unlimited', '0');
+    $options = array();
+    foreach ($list as $item) {   //removes  blanks
+        if ($item) {
+          $item_namespace = explode(':', $item['object']['value']);
+            if (!$restricted || in_array($item_namespace[0], $allowed)) {
+
+                if (!preg_match('/fedora-system/', $item['object']['value'])) {
+                    $options[$item['object']['value']] = $item['title']['value'] . ' ~ ' . $item['object']['value'];
+                }
+            }
+        }
+    }
+
+    return $options;
+}
+
+  function getContentModels($collection_pid, $showError = TRUE) {
+    module_load_include('inc', 'islandora', 'RestConnection');
+    $restConnection = new RestConnection();
+//    module_load_include('inc', 'Fedora_Repository', 'ContentModel');
+    $collection_stream = $this->getCollectionPolicyStream($collection_pid);
+    $collection_object = new FedoraObject($collection_pid, $restConnection->repository);
+    $collection_stream = $collection_object->getDatastream('COLLECTION_POLICY');
+    try {
+      $xml = new SimpleXMLElement($collection_stream);
+    } catch (Exception $e) {
+      if ($showError) {
+        drupal_set_message(t('@e', array('@e' => check_plain($e->getMessage()))), 'error');
+      }
+      return NULL;
+    }
+    foreach ($xml->contentmodels->contentmodel as $content_model) {
+      $contentModel = new ContentModel();
+      $contentModel->contentModelDsid = $content_model->dsid;
+      $contentModel->contentModelPid = $content_model->pid;
+      $contentModel->pidNamespace = $content_model->pidNamespace;
+      $contentModel->contentModelName = $content_model['name'];
+      $models[] = $contentModel;
+    }
+    return $models;
+  }
