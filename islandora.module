@@ -548,7 +548,7 @@ function islandora_permission() {
 }
 
 /**
- * Not implemented
+ * renders the add datastream from.
  * @param string $object_id
  * @return type 
  */
@@ -564,7 +564,7 @@ function islandora_add_datastream($object_id) {
     return drupal_render($form);
   }
   return "";
-  // hook form alter might be enough heremodule_invoke_all('islandora_add_datastream', $object); //allow submodules to handle add datastream based on object type
+  // hook form alter might be enough here may not need a module invoke all
 }
 
 function islandora_preprocess_islandora_default(&$variables) {
