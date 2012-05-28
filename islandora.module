@@ -108,7 +108,7 @@ function islandora_menu() {
     'access arguments' => array(FEDORA_VIEW),
   );
 
-
+  /*
   $items['islandora/object/%/add'] = array(
     'title' => 'Add to an object',
     'file' => 'includes/add-menu.inc',
@@ -117,6 +117,7 @@ function islandora_menu() {
     'type' => MENU_NORMAL_ITEM,
     'access arguments' => array(FEDORA_ADD_DS)
   );
+   */
 
   $items['islandora/object/%/view'] = array(
     'title' => 'View',
@@ -433,7 +434,7 @@ function islandora_purge_datastream($object_id, $datastream_id) {
 
 function islandora_view_default_object() {
   $pid = variable_get('islandora_repository_pid', 'islandora:root');
-  return islandora_view_object($pid);
+  drupal_goto("islandora/object/$pid");
 }
 
 /**
