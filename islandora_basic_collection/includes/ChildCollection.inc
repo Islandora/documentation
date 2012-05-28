@@ -24,6 +24,7 @@ function islandora_create_child_collection_form($form, &$form_state, $this_colle
   $form['child_creation']['collection_name'] = array(
     '#title' => "Collection Name",
     '#type' => 'textfield',
+    '#size' => 25,
     '#description' => t("Human readable name for this collection"),
   );
 

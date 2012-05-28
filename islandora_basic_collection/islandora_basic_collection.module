@@ -30,8 +30,8 @@ function islandora_basic_collection_menu() {
   $items = array();
   $items['islandora/object/%/manage/collection'] = array(
     'title' => 'Collection Related',
-    'page callback' => 'drupal_get_form',
-    'page arguments' => array('islandora_basic_collection_manage_object', 2),
+    'page callback' => 'islandora_basic_collection_manage_object',
+    'page arguments' => array(2),
     'type' => MENU_LOCAL_TASK,
     'access callback' => 'islandora_basic_collection_access',
     'access arguments' => array(2),
