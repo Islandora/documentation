@@ -108,7 +108,7 @@ function islandora_menu() {
     'access arguments' => array(FEDORA_VIEW),
   );
 
-
+  /*
   $items['islandora/object/%/add'] = array(
     'title' => 'Add to an object',
     //'file' => 'includes/add-menu.inc',
@@ -117,6 +117,7 @@ function islandora_menu() {
     'type' => MENU_NORMAL_ITEM,
     'access arguments' => array(FEDORA_ADD_DS)
   );
+   */
 
   $items['islandora/object/%/view'] = array(
     'title' => 'View',
@@ -430,7 +431,7 @@ function islandora_purge_datastream($object_id, $datastream_id) {
 
 function islandora_view_default_object() {
   $pid = variable_get('islandora_repository_pid', 'islandora:root');
-  return islandora_view_object($pid);
+  drupal_goto("islandora/object/$pid");
 }
 
 /**
@@ -576,6 +577,7 @@ function islandora_preprocess_islandora_default(&$variables) {
   } catch (Exception $e) {
     drupal_set_message(t('Error retrieving object %s %t', array('%s' => $islandora_object->id, '%t' => $e->getMessage())), 'error');
   }
+  $variables['dc_array'] = $dc_object->as_formatted_array();
   $variables['islandora_dublin_core'] = $dc_object;
   $variables['islandora_object_label'] = $islandora_object->label;
   global $base_url;

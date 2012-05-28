@@ -30,8 +30,8 @@ function islandora_basic_collection_menu() {
   $items = array();
   $items['islandora/object/%/manage/collection'] = array(
     'title' => 'Collection Related',
-    'page callback' => 'islandora_basic_collection_manage_object',
-    'page arguments' => array(2),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('islandora_basic_collection_manage_object', 2),
     'type' => MENU_LOCAL_TASK,
     'access callback' => 'islandora_basic_collection_access',
     'access arguments' => array(2),
@@ -66,7 +66,70 @@ function islandora_basic_collection_menu() {
  * @return type 
  */
 function islandora_basic_collection_manage_object($object_id) {
-  return 'Collection CModel edit function ' . $object_id;
+
+  module_load_include('inc', 'islandora_basic_collection', 'includes/CollectionManagement');
+  module_load_include('inc', 'islandora_basic_collection', 'includes/CollectionManagerTable');
+  module_load_include('inc', 'islandora_basic_collection', 'includes/DeleteCollection');
+  module_load_include('inc', 'islandora_basic_collection', 'includes/MoveCollection');
+  module_load_include('inc', 'islandora_basic_collection', 'includes/ChildCollection');
+  module_load_include('inc', 'islandora_basic_collection', 'includes/ManagePolicies');
+
+  $form = array();
+
+  $form['collection_manager'] = array(
+    '#type' => 'vertical_tabs',
+    '#weight' => 0,
+    '#prefix' => '',
+  );
+
+  $form['collection_manager']['create_child_collection'] = array(
+    '#title' => t('Create Child Collection'),
+    '#type' => 'fieldset',
+  );
+
+  $form['collection_manager']['create_child_collection']['form'] = drupal_get_form('islandora_create_child_collection_form', $object_id);
+
+  $form['collection_manager']['manage_policies'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Manage Collection Policies'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+  );
+
+  $form['collection_manager']['manage_policies']['form'] = drupal_get_form('islandora_manage_policies_form', $object_id);
+
+  $form['collection_manager']['change_content_models'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Change Content Models'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+  );
+
+  $form['collection_manager']['change_content_models']['form'] = array(
+//    '#content' => drupal_get_form($form_id),
+  );
+
+  $form['collection_manager']['migrate_members'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Migrate Members'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+  );
+
+  $form['collection_manager']['migrate_members']['form'] = drupal_get_form('islandora_collection_migrate_form', $object_id);
+
+  $form['collection_manager']['delete_members'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Delete Members of this Collection'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+  );
+
+  $form['collection_manager']['delete_members']['form'] = drupal_get_form('islandora_collection_deletion_form', $object_id);
+
+  return $form;
+
+//  return 'Collection CModel edit function ' . $object_id;
 }
 
 /**
@@ -112,7 +175,11 @@ function islandora_basic_collection_theme($existing, $type, $theme, $path) {
 // and templates will be able to have have a pid appended to the template name to overide a template on a per object basis
 //an example template would be named islandora-basic-image--islandora-27.tpl.phps
       'variables' => array('islandora_object' => NULL),
-    )
+    ),
+    'islandora_basic_collection_management_form_table' => array(
+      'arguments' => array('element' => NULL),
+      'file' => 'includes/CollectionManagerTable.inc',
+    ),
   );
 }
 
@@ -206,7 +273,7 @@ function islandora_basic_collection_preprocess_islandora_basic_collection(&$vari
       $associated_objects_array[$pid]['dc_array'] = $dc_object->as_formatted_array();
     } catch (Exception $e) {
       drupal_set_message(t('Error retrieving object %s %t', array('%s' => $islandora_object->id, '%t' => $e->getMessage())), 'error');
-    }    
+    }
     $object_url = 'islandora/object/' . $pid;
     $thumbnail_img = '<img src="' . $base_path . $object_url . '/datastream/TN/view"' . '/>';
     $title = $variables['islandora_associated_objects'][$key]['title']['value'];
@@ -214,9 +281,10 @@ function islandora_basic_collection_preprocess_islandora_basic_collection(&$vari
     $associated_objects_array[$pid]['path'] = $object_url;
     $associated_objects_array[$pid]['title'] = $title;
     $associated_objects_array[$pid]['class'] = strtolower(preg_replace('/[^A-Za-z0-9]/', '-', $pid));
-    if(isset($fc_object['TN'])){
+    if (isset($fc_object['TN'])) {
       $thumbnail_img = '<img src="' . $base_path . $object_url . '/datastream/TN/view"' . '/>';
-    } else {
+    }
+    else {
       $thumbnail_img = '<img src="http://codesprint-centos.islandora.ca/islandora/object/islandora%3A52/datastream/TN"' . '/>';
     }
     $associated_objects_array[$pid]['thumbnail'] = $thumbnail_img;
