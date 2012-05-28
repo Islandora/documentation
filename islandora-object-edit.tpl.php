@@ -52,7 +52,9 @@ foreach ($islandora_datastreams as $dsid => $ds) {
   print (' ' . l('download', $ds['download_url']));
   print (' ' . l('delete', $ds['delete_url']));
   print ('<br />');
+  
 }
+print (drupal_render($variables['add_datastream_form']));
 print (l(t('Edit Metadata'),$variables['islandora_editmetadata_url']));
 ?>
 
