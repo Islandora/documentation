@@ -7,21 +7,15 @@
  *
  * @return string
  */
-function islandora_collection_migrate_form(&$form_state, $pid) {
-  module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
-  module_load_include('inc', 'islandora_collection_manager', 'CollectionManagerTable');
+function islandora_collection_migrate_form($form, &$form_state, $pid) {
+  module_load_include('inc', 'islandora_basic_collection', 'CollectionManagerTable');
   $potential_collections = get_collections_as_option_array();
   $table = islandora_collection_table($pid);
   if (!$table) {
     return;
   }
   $form = array();
-  $form['migrate'] = array(
-    '#title' => "Migrate Members",
-    '#type' => 'fieldset',
-    '#collapsible' => TRUE,
-    '#collapsed' => TRUE,
-  );
+
   $form['migrate']['new_collection'] = array(
     '#title' => t('New Collection'),
     '#description' => t("All content will be migrated from $pid to the selected collection"),
@@ -29,9 +23,7 @@ function islandora_collection_migrate_form(&$form_state, $pid) {
     '#options' => $potential_collections,
   );
 
-  $form['migrate']['table'] = array(
-    'table' => $table,
-  );
+  $form['migrate']['table'] = $table;
 
   $form['current'] = array(
     '#type' => 'hidden',
@@ -50,13 +42,15 @@ function islandora_collection_migrate_form(&$form_state, $pid) {
 }
 
 function islandora_collection_migrate_form_submit($form, &$form_state) {
-  module_load_include('inc', 'fedora_repository', 'api/fedora_item');
-  $pids = array_filter($form_state['values']['table']['selections']);
+  module_load_include('inc', 'islandora', 'RestConnection');
+  $restConnection = new RestConnection();
+
+  $pids = array_filter($form_state['values']['table']);
   $new_collection = $form_state['values']['new_collection'];
   $current = $form_state['values']['current'];
   foreach ($pids as $pid) {
-    $item = new Fedora_Item($pid);
-    $item->add_relationship('isMemberOfCollection', $new_collection, RELS_EXT_URI);
-    $item->purge_relationship('isMemberOfCollection', $current);
+    $fedora_object = new FedoraObject($pid, $restConnection->repository);
+    $fedora_object->relationships->remove(NULL, 'isMemberOfCollection', NULL);
+    $fedora_object->relationships->add(FEDORA_RELS_EXT_URI, 'isMemberOfCollection', $new_collection);
   }
 }

@@ -71,82 +71,62 @@ function islandora_basic_collection_manage_object($object_id) {
   module_load_include('inc', 'islandora_basic_collection', 'includes/CollectionManagerTable');
   module_load_include('inc', 'islandora_basic_collection', 'includes/DeleteCollection');
   module_load_include('inc', 'islandora_basic_collection', 'includes/MoveCollection');
-  drupal_add_library('system', 'drupal.vertical-tabs');
-  drupal_load_stylesheet('misc/vertical-tabs-rtl.css');
-  $form['additional_settings'] = array(
-    '#type' => 'vertical_tabs',
-    '#weight' => 99,
-  );
+$form = array();
 
-  $form['create_child_collection'] = array(
+$form['collection_manager'] = array(
+  '#type' => 'fieldset',
+);
+
+  $form['collection_manager']['create_child_collection'] = array(
     '#type' => 'fieldset',
     '#title' => t('Create Child Collection'),
     '#collapsible' => TRUE,
-    '#collapsed' => FALSE,
-    '#group' => 'additional_settings',
-    '#tree' => TRUE,
-    '#weight' => -2,
+    '#collapsed' => TRUE,
   );
 
-  $form['create_child_collection']['form'] = array(
-//      '#content' => drupal_get_form('collection_management_form', $object_id),
+  $form['collection_manager']['create_child_collection']['form'] = array(
+//      '#markup' => drupal_get_form('collection_management_form', $object_id),
   );
 
-  $form['manage_policies'] = array(
+  $form['collection_manager']['manage_policies'] = array(
     '#type' => 'fieldset',
     '#title' => t('Manage Collection Policies'),
     '#collapsible' => TRUE,
-    '#collapsed' => FALSE,
-    '#group' => 'additional_settings',
-    '#tree' => TRUE,
-    '#weight' => -3,
+    '#collapsed' => TRUE,
   );
 
-  $form['manage_policies']['form'] = array(
+  $form['collection_manager']['manage_policies']['form'] = array(
 //    '#content' => drupal_get_form($form_id),
   );
 
-  $form['change_content_models'] = array(
+  $form['collection_manager']['change_content_models'] = array(
     '#type' => 'fieldset',
     '#title' => t('Change Content Models'),
     '#collapsible' => TRUE,
-    '#collapsed' => FALSE,
-    '#group' => 'additional_settings',
-    '#tree' => TRUE,
-    '#weight' => -3,
+    '#collapsed' => TRUE,
   );
 
-  $form['change_content_models']['form'] = array(
+  $form['collection_manager']['change_content_models']['form'] = array(
 //    '#content' => drupal_get_form($form_id),
   );
 
-  $form['migrate_members'] = array(
+  $form['collection_manager']['migrate_members'] = array(
     '#type' => 'fieldset',
     '#title' => t('Migrate Members'),
     '#collapsible' => TRUE,
-    '#collapsed' => FALSE,
-    '#group' => 'additional_settings',
-    '#tree' => TRUE,
-    '#weight' => -3,
+    '#collapsed' => TRUE,
   );
+  
+  $form['collection_manager']['migrate_members']['form'] =  drupal_get_form('islandora_collection_migrate_form', $object_id);
 
-  $form['migrate_members']['form'] = array(
-    '#content' => drupal_get_form('islandora_collection_migrate_form', $object_id),
-  );
-
-  $form['delete_members'] = array(
+  $form['collection_manager']['delete_members'] = array(
     '#type' => 'fieldset',
     '#title' => t('Delete Members of this Collection'),
     '#collapsible' => TRUE,
-    '#collapsed' => FALSE,
-    '#group' => 'additional_settings',
-    '#tree' => TRUE,
-    '#weight' => -3,
+    '#collapsed' => TRUE,
   );
 
-  $form['delete_members']['form'] = array(
-    '#content' => drupal_get_form('islandora_collection_deletion_form', $object_id),
-  );
+  $form['collection_manager']['delete_members']['form'] = drupal_get_form('islandora_collection_deletion_form', $object_id);
 
   return $form;
 
@@ -196,7 +176,11 @@ function islandora_basic_collection_theme($existing, $type, $theme, $path) {
 // and templates will be able to have have a pid appended to the template name to overide a template on a per object basis
 //an example template would be named islandora-basic-image--islandora-27.tpl.phps
       'variables' => array('islandora_object' => NULL),
-    )
+    ),
+    'islandora_basic_collection_management_form_table' => array(
+      'arguments' => array('element' => NULL),
+      'file' => 'includes/CollectionManagerTable.inc',
+    ),
   );
 }
 
