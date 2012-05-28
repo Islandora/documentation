@@ -21,7 +21,7 @@ function islandora_collection_table($collection_pid) {
     $objects[$result['object']['value']] = $result['title']['value'];
     $keys[] = $result['object']['value'];
   }
-
+  $rows = array();
   foreach ($objects as $key => $object) {
     $rows[$key] = array(
       '#pid' => $key,
@@ -40,6 +40,10 @@ function islandora_collection_table($collection_pid) {
     'title' => array('data' => t('Title')),
     );
   
+  if (!$rows) {
+    return;
+  }
+  
   $table = array(
     '#type' => 'tableselect',
     '#header' => $header,
@@ -47,6 +51,7 @@ function islandora_collection_table($collection_pid) {
   );
 
   return $table;
+  
 }
 
 /**

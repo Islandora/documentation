@@ -43,33 +43,28 @@ function islandora_collection_deletion_form($form, &$form_state, $pid) {
     '#value' => t('@message', array('@message' => $submit_text_message)),
   );
 
-    return $form;
-
+  return $form;
 }
 
 function islandora_collection_deletion_form_submit($form, &$form_state) {
   global $user;
-//  module_load_include('inc', 'fedora_repository', 'api/fedora_item');
-//  module_load_include('inc', 'fedora_repository', 'api/fedora_collection');
   module_load_include('inc', 'islandora', 'RestConnection');
   $restConnection = new RestConnection();
-  
+
   $collection_pid = $form_state['values']['current'];
   $fedora_object = new FedoraObject($collection_pid, $restConnection->repository);
   $parents = $fedora_object->relationships->get(NULL, 'isMemberOfCollection');
-  var_dump($parents);
-//  exit;
-//  $parents = Islandora_collections_get_collection_from_pid($collection_pid);
-//  $collection_pid = $form_state['values']['current'];
-  if ($form_state['values']['delete_root'] == 1) {
+  $parents = Islandora_collections_get_collection_from_pid($collection_pid);
+  $collection_pid = $form_state['values']['current'];
+  if (isset($form_state['values']['delete_root']) && $form_state['values']['delete_root'] == 1) {
     delete_root_collection($collection_pid);
-    drupal_goto("islandora/" . $parents[0]);
+    drupal_goto("islandora/object/" . $parents[0]['parent']['value']);
   }
 
   $child_collections = get_child_collections($collection_pid);
 
   $populated_child_collections = array();
-  $pids = @array_filter($form_state['values']['table']['selections']);
+  $pids = @array_filter($form_state['values']['table']);
 
   if (!empty($child_collections)) {
     foreach ($child_collections as $child) {
@@ -93,12 +88,17 @@ function islandora_collection_deletion_form_submit($form, &$form_state) {
   foreach ($pids_to_delete as $pid_to_delete) {
     $restConnection->repository->purgeObject($pid_to_delete);
   }
-  drupal_goto("islandora/" . $parents[0]);
+  drupal_goto("islandora/object/" . $collection_pid);
 }
 
 function delete_root_collection($pid) {
-  module_load_include('inc', 'fedora_repository', 'api/fedora_item');
-  $item = new Fedora_Item($pid);
-  $item->purge();
-  drupal_set_message("$pid deleted.");
+  module_load_include('inc', 'islandora', 'RestConnection');
+  try {
+    $restConnection = new RestConnection();
+    $restConnection->repository->purgeObject($pid);
+  } catch (Exception $e) {
+    drupal_set_message(t('Collection @pid could not be deleted!', array('@pid' => $pid)), 'error');
+    return;
+  }
+  drupal_set_message(t('Collection @pid deleted.', array('@pid' => $pid)));
 }
