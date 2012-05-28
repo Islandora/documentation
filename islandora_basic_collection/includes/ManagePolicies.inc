@@ -26,9 +26,10 @@ function islandora_manage_policies_form($form, &$form_state, $collection_pid) {
   $collection_policy_dsid = variable_get('Islandora_Collection_Policy_DSID', 'COLLECTION_POLICY');
   $collection_object = new FedoraObject($collection_pid, $restConnection->repository);
   $collection_policy_string = $collection_object->getDatastream($collection_policy_dsid);
-  $collection_policy = new CollectionPolicy($collection_policy_string->content);
 
-  if ($collection_policy) {
+  $supported_collection_models = array();
+  if ($collection_policy_string) {
+    $collection_policy = new CollectionPolicy($collection_policy_string->content);
     $supported_collection_models = $collection_policy->getContentModels();
   }
   $collection_namespace = substr($collection_pid, 0, strpos($collection_pid, ":"));
@@ -132,7 +133,7 @@ function islandora_manage_policies_form_submit($form, &$form_state) {
   $collection_policy_xml->loadXML($policy->content);
 
   if ($form_state['clicked_button']['#id'] == 'add_cm') {
-    if (!$policy->content) {
+    if (empty($policy->content)) {
       $collection_policy_datastream = $collection_object->constructDatastream('COLLECTION_POLICY', 'X');
       $collection_policy_datastream->setContentFromString($collection_policy);
       $collection_policy_datastream->label = 'COLLECTION_POLICY';
