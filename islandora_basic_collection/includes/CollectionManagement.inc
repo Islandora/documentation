@@ -482,3 +482,83 @@ function Islandora_collections_get_collection_from_pid($pid) {
   $object_pids = array_values(array_filter($object_pids));
   return $object_pids;
 }
+
+
+/**
+ * Returns an array of pids that match the query contained in the collection
+ * object's QUERY datastream or in the suppled $query parameter.
+ * @param <type> $collection_pid
+ * @param <type> $query
+ * @param <type> $query_format R
+ */
+function get_related_items_as_array($collection_pid, $relationship = array('isMemberOfCollection'), $limit = 10000, $offset = 0, $active_objects_only = TRUE, $cmodel = NULL, $orderby = '$title') {
+//  module_load_include('inc', 'fedora_repository', 'ObjectHelper');
+  module_load_include('inc', 'islandora', 'RestConnection');
+  $restConnection = new RestConnection();
+  require_once 'sites/all/libraries/tuque/RepositoryQuery.php';
+  
+  global $user;
+//  if (!fedora_repository_access(OBJECTHELPER :: $OBJECT_HELPER_VIEW_FEDORA, $pid, $user)) {
+//    drupal_set_message(t("You do not have access to Fedora objects within the attempted namespace or access to Fedora denied."), 'error');
+//    return array();
+//  }
+
+  $query_string = 'select $object $title $content from <#ri>
+                             where ($object <fedora-model:label> $title
+                             and $object <fedora-model:hasModel> $content
+                             and (';
+
+  if (is_array($relationship)) {
+    foreach ($relationship as $rel) {
+      $query_string .= '$object <fedora-rels-ext:' . $rel . '> <info:fedora/' . $collection_pid . '>';
+      if (next($relationship)) {
+        $query_string .= ' OR ';
+      }
+    }
+  }
+  elseif (is_string($relationship)) {
+    $query_string .= '$object <fedora-rels-ext:' . $relationship . '> <info:fedora/' . $collection_pid . '>';
+  }
+  else {
+    return '';
+  }
+
+  $query_string .= ') ';
+  $query_string .= $active_objects_only ? 'and $object <fedora-model:state> <info:fedora/fedora-system:def/model#Active>' : '';
+
+  if ($cmodel) {
+    $query_string .= ' and $content <mulgara:is> <info:fedora/' . $cmodel . '>';
+  }
+
+  $query_string .= ')
+                    minus $content <mulgara:is> <info:fedora/fedora-system:FedoraObject-3.0>
+                    order by ' . $orderby;
+
+//  $query_string = htmlentities(urlencode($query_string));
+//
+//
+//  $content = '';
+//  $url = variable_get('fedora_repository_url', 'http://localhost:8080/fedora/risearch');
+//  $url .= "?type=tuples&flush=TRUE&format=Sparql&limit=$limit&offset=$offset&lang=itql&stream=on&query=" . $query_string;
+//  $content .= do_curl($url);
+  
+  $results = $restConnection->repository->ri->itqlQuery($query_string, $limit, $offset);
+
+  return $results;
+}
+
+
+//function get_related_items_as_array($collection_pid, $relationship = 'isMemberOfCollection', $limit = 10000, $offset = 0, $active_objects_only = TRUE, $cmodel = NULL, $orderby = '$title') {
+//  $content = get_related_items_as_xml($collection_pid, $relationship, $limit, $offset, $active_objects_only, $cmodel, $orderby);
+//  if (empty($content)) {
+//    return array();
+//  }
+//
+//  $content = new SimpleXMLElement($content);
+//
+//  $resultsarray = array();
+//  foreach ($content->results->result as $result) {
+//    $resultsarray[] = substr($result->object->attributes()->uri, 12); // Remove 'info:fedora/'.
+//  }
+//  return $resultsarray;
+//}

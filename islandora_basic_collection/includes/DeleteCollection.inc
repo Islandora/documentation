@@ -97,8 +97,8 @@ function delete_root_collection($pid) {
     $restConnection = new RestConnection();
     $restConnection->repository->purgeObject($pid);
   } catch (Exception $e) {
-    drupal_set_message(t('Collection @pid could not be deleted!', array('@pid' => $pid)), 'error');
+    drupal_set_message(t("Collection '@pid' could not be deleted!", array('@pid' => $pid)), 'error');
     return;
   }
-  drupal_set_message(t('Collection @pid deleted.', array('@pid' => $pid)));
+  drupal_set_message(t("Collection '@pid' deleted.", array('@pid' => $pid)));
 }

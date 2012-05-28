@@ -30,10 +30,11 @@ function islandora_collection_migrate_form($form, &$form_state, $pid) {
     '#value' => $pid,
   );
 
-    $form['migrate']['message'] = array(
+  $form['migrate']['message'] = array(
     '#type' => 'item',
     '#value' => t(""),
   );
+  
   $form['migrate']['submit'] = array(
     '#type' => 'submit',
     '#value' => t('Migrate selected objects'),
@@ -50,7 +51,7 @@ function islandora_collection_migrate_form_submit($form, &$form_state) {
   $current = $form_state['values']['current'];
   foreach ($pids as $pid) {
     $fedora_object = new FedoraObject($pid, $restConnection->repository);
-    $fedora_object->relationships->remove(NULL, 'isMemberOfCollection', NULL);
+    $fedora_object->relationships->remove(FEDORA_RELS_EXT_URI, 'isMemberOfCollection', $current);
     $fedora_object->relationships->add(FEDORA_RELS_EXT_URI, 'isMemberOfCollection', $new_collection);
   }
 }

@@ -30,8 +30,8 @@ function islandora_basic_collection_menu() {
   $items = array();
   $items['islandora/object/%/manage/collection'] = array(
     'title' => 'Collection Related',
-    'page callback' => 'islandora_basic_collection_manage_object',
-    'page arguments' => array(2),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('islandora_basic_collection_manage_object', 2),
     'type' => MENU_LOCAL_TASK,
     'access callback' => 'islandora_basic_collection_access',
     'access arguments' => array(2),
@@ -71,11 +71,15 @@ function islandora_basic_collection_manage_object($object_id) {
   module_load_include('inc', 'islandora_basic_collection', 'includes/CollectionManagerTable');
   module_load_include('inc', 'islandora_basic_collection', 'includes/DeleteCollection');
   module_load_include('inc', 'islandora_basic_collection', 'includes/MoveCollection');
-$form = array();
+  module_load_include('inc', 'islandora_basic_collection', 'includes/ChildCollection');
+  module_load_include('inc', 'islandora_basic_collection', 'includes/ManagePolicies');
 
-$form['collection_manager'] = array(
-  '#type' => 'fieldset',
-);
+
+  $form = array();
+
+  $form['collection_manager'] = array(
+    '#type' => 'fieldset',
+  );
 
   $form['collection_manager']['create_child_collection'] = array(
     '#type' => 'fieldset',
@@ -84,9 +88,7 @@ $form['collection_manager'] = array(
     '#collapsed' => TRUE,
   );
 
-  $form['collection_manager']['create_child_collection']['form'] = array(
-//      '#markup' => drupal_get_form('collection_management_form', $object_id),
-  );
+  $form['collection_manager']['create_child_collection']['form'] = drupal_get_form('islandora_create_child_collection_form', $object_id);
 
   $form['collection_manager']['manage_policies'] = array(
     '#type' => 'fieldset',
@@ -95,9 +97,7 @@ $form['collection_manager'] = array(
     '#collapsed' => TRUE,
   );
 
-  $form['collection_manager']['manage_policies']['form'] = array(
-//    '#content' => drupal_get_form($form_id),
-  );
+  $form['collection_manager']['manage_policies']['form'] = drupal_get_form('islandora_manage_policies_form', $object_id);
 
   $form['collection_manager']['change_content_models'] = array(
     '#type' => 'fieldset',
@@ -116,8 +116,8 @@ $form['collection_manager'] = array(
     '#collapsible' => TRUE,
     '#collapsed' => TRUE,
   );
-  
-  $form['collection_manager']['migrate_members']['form'] =  drupal_get_form('islandora_collection_migrate_form', $object_id);
+
+  $form['collection_manager']['migrate_members']['form'] = drupal_get_form('islandora_collection_migrate_form', $object_id);
 
   $form['collection_manager']['delete_members'] = array(
     '#type' => 'fieldset',
