@@ -172,3 +172,170 @@ function islandora_get_add_datastream_form($object_id, &$form_state) {
   }
   return $form;
 }
+
+/**
+ * Default implmentation currently only does M (managed datastreams)
+ * other modules can hook form alter to add other functionality
+ * @global string $base_url
+ * @global object $user
+ *   Drupal user
+ * @param array $form
+ * @param array $form_state
+ * @return type 
+ */
+function islandora_add_datastream_form_submit($form, &$form_state) {
+  global $base_url;
+  if (!empty($form_state['submit']) && $form_state['submit'] == 'OK') {
+    $form_state['rebuild'] = TRUE;
+    return;
+  }
+
+  $file = $form_state['values']['add-stream-file-location'];
+  $file = drupal_realpath($file);
+  $object_id = $form_state['values']['pid'];
+  $dsid = $form_state['values']['stream_id'];
+  $ds_label = $form_state['values']['stream_label']; // Add the file extention to the end of the label.;
+  //$dformat = $mimetype->getType($file);
+  $controlGroup = "M";
+  //if ($dformat == 'text/xml') {
+  //  $controlGroup = 'X';
+  //}
+  global $user;
+  try {
+    $restConnection = new RestConnection($user);
+    $fedora_object = new FedoraObject($object_id, $restConnection->repository);
+    $ds = $fedora_object->constructDatastream($dsid, $controlGroup);
+    $ds->label = $ds_label;
+    $ds->setContentFromFile($file);
+    $fedora_object->ingestDatastream($ds);
+    $d_file = file_load($form_state['values']['fid']);
+    file_delete($d_file);
+  } catch (exception $e) {
+    drupal_set_message(t('@message', array('@message' => check_plain($e->getMessage()))), 'error');
+    return;
+  }
+  $form_state['rebuild'] = TRUE;
+}
+
+/**
+ * validates this datastream id against its allowed mimetypes in the dscomposite 
+ * of its content models.
+ * @param array $form
+ * @param array $form_state
+ * @return boolean 
+ */
+function islandora_add_datastream_form_validate($form, &$form_state) {
+  module_load_include('inc', 'islandora', 'includes/MimeClass');
+  $mimetype = new MimeClass();
+  if ($form_state['clicked_button']['#value'] == 'OK') {
+    $form_state['rebuild'] = TRUE;
+    return;
+  }
+  $dsid = $form_state['values']['stream_id'];
+  $dsLabel = $form_state['values']['stream_label'];
+  if (strlen($dsid) > 64) {
+    form_set_error('', t('Data stream ID cannot be more than 64 characters.'));
+    return FALSE;
+  }
+  if (!(preg_match("/^[a-zA-Z]/", $dsid))) {
+    form_set_error('', t("Data stream ID (@dsid) has to start with a letter.", array('@dsid' => check_plain($dsid))));
+    return FALSE;
+  }
+  if (strlen($dsLabel) > 64) {
+    form_set_error('', t('Data stream Label cannot be more than 64 characters.'));
+    return FALSE;
+  }
+  if (strpos($dsLabel, '/')) {
+    form_set_error('', t('Data stream Label cannot contain a "/".'));
+    return FALSE;
+  }
+  $mimetype = new MimeClass();
+  $unused_dsids = islandora_get_unused_dsids($form_state['values']['pid']);
+  $types_allowed = $unused_dsids[$dsid];
+  $arr = array();
+  foreach ($types_allowed as $type) {
+    $arr[] = $mimetype->getExtension($type);
+  }
+  $file = file_save_upload('add-stream-file-location', array('file_validate_extensions' => $arr));
+  if ($file) {
+    $form_state['values']['add-stream-file-location'] = $file->uri;
+    $form_state['values']['fid'] = $file->fid; //so we can load it to delete later
+  }
+  else {
+    form_set_error('add-stream-file-location', t('There was no file uploaded'));
+  }
+}
+
+
+/**
+ * buids the default add datastream form
+ * @param string $object_id
+ * @param array $form_state
+ * @return array 
+ *  a form ready to be rendered with a call to Drupal render
+ */
+function islandora_add_datastream_form($form, &$form_state, $object_id) {
+  $unused_dsids = islandora_get_unused_dsids($object_id); //$defined_dsids;
+  $form = array();
+  $form['add_fieldset'] = array(
+    '#type' => 'fieldset',
+    '#title' => 'Add a datastream',
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+  );
+  $form['add_fieldset']['add_datastream_label'] = array(
+    '#value' => t('<br /><h3>Add Datastream:</h3>'),
+    '#weight' => -10,
+  );
+
+  $form['pid'] = array(
+    '#type' => 'hidden',
+    '#value' => "$object_id"
+  );
+
+  $form['add_fieldset']['stream_label'] = array(
+    '#title' => 'Datastream Label',
+    '#required' => 'TRUE',
+    '#description' => t('A Human readable label'),
+    '#type' => 'textfield'
+  );
+
+  $form['#attributes']['enctype'] = 'multipart/form-data';
+  $form['add_fieldset']['add-stream-file-location'] = array(
+    '#type' => 'file',
+    '#title' => t('Upload Document'),
+    '#size' => 48,
+    // '#required'=>'TRUE',
+    '#description' => t('The file to upload.')
+  );
+  $form['#redirect'] = "islandora/object/$object_id/";
+  $form['add_fieldset']['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Add Datastream')
+  );
+
+  if (!empty($unused_dsids)) {
+    $dsidsForForm = array();
+    foreach ($unused_dsids as $key => $value) {
+      $dsidsForForm[$key] = $key;
+    }
+    $form['add_fieldset']['stream_id'] = array(
+      '#type' => 'select',
+      '#title' => t('Datastream ID'),
+      '#default_value' => variable_get('feed_item_length', 'teaser'),
+      '#weight' => '-1',
+      '#description' => t('Datastream IDs defined by the content model.'),
+    );
+    $form['add_fieldset']['stream_id']['#options'] = $dsidsForForm;
+  }
+  else {
+    $form['add_fieldset']['stream_id'] = array(
+      '#title' => 'Datastream ID',
+      '#required' => 'TRUE',
+      '#description' => t('An ID for this stream that is unique to this object. Must start with a letter and contain only alphanumeric characters and dashes and underscores.'),
+      '#type' => 'textfield',
+      '#weight' => -1,
+    );
+  }
+  return $form;
+}
