@@ -1,16 +1,28 @@
 <?php
 
+/**
+ * @file
+ * ManagePolicies.inc
+ */
+
+/**
+ *
+ * @param type $form
+ * @param type $form_state
+ * @param type $collection_pid
+ * @return type
+ */
 function islandora_manage_policies_form($form, &$form_state, $collection_pid) {
   module_load_include('inc', 'islandora_basic_collection', 'includes/CollectionPolicy');
   module_load_include('inc', 'islandora', 'RestConnection');
-  $restConnection = new RestConnection();
+  $rest_connection = new RestConnection();
 
   $content_models = get_content_models_list($collection_pid);
   $cm_options = array();
   $name_mappings = array();
   foreach ($content_models as $content_model) {
     if ($content_model != "islandora:collectionCModel") {
-      $item = new FedoraObject($content_model, $restConnection->repository);
+      $item = new FedoraObject($content_model, $rest_connection->repository);
       $cm_name = $item->Label;
       $cm_options[$content_model] = $cm_name;
     }
@@ -24,7 +36,7 @@ function islandora_manage_policies_form($form, &$form_state, $collection_pid) {
   $namespace = substr($collection_pid, 0, strpos($collection_pid, ":"));
 
   $collection_policy_dsid = variable_get('Islandora_Collection_Policy_DSID', 'COLLECTION_POLICY');
-  $collection_object = new FedoraObject($collection_pid, $restConnection->repository);
+  $collection_object = new FedoraObject($collection_pid, $rest_connection->repository);
   $collection_policy_string = $collection_object->getDatastream($collection_policy_dsid);
 
   $supported_collection_models = array();
@@ -50,6 +62,11 @@ function islandora_manage_policies_form($form, &$form_state, $collection_pid) {
     $new_options = array_diff_key($new_content_models, $current_models_in_policy);
   }
 
+  $form['manage_collection_policy']['titlebox'] = array(
+    '#type' => 'item',
+    '#title' => t("Manage collection policy for @collection_pid", array('@collection_pid' => $collection_pid)),
+  );  
+  
   $form ['manage_collection_policy']['add']['content_model_to_add'] = array(
     '#title' => "Choose Content Model",
     '#type' => 'select',
@@ -96,7 +113,6 @@ function islandora_manage_policies_form($form, &$form_state, $collection_pid) {
       '#description' => t("Choose content models to remove from this collection policy."),
     );
 
-
     $form['manage_collection_policy']['remove']['submit'] = array(
       '#type' => 'submit',
       '#value' => t('Remove Content Model From Collection Policy'),
@@ -107,16 +123,16 @@ function islandora_manage_policies_form($form, &$form_state, $collection_pid) {
 }
 
 function islandora_manage_policies_form_validate($form, &$form_state) {
-  
+
 }
 
 function islandora_manage_policies_form_submit($form, &$form_state) {
   module_load_include('inc', 'islandora_basic_collection', 'CollectionPolicy');
   module_load_include('inc', 'islandora', 'RestConnection');
-  $restConnection = new RestConnection();
+  $rest_connection = new RestConnection();
 
   $collection_pid = $form_state['values']['parent_collection'];
-  $collection_object = new FedoraObject($collection_pid, $restConnection->repository);
+  $collection_object = new FedoraObject($collection_pid, $rest_connection->repository);
   $policy = $collection_object->getDatastream(variable_get('Islandora_Collection_Policy_DSID', 'COLLECTION_POLICY'));
   $collection_policy = '<?xml version="1.0" encoding="UTF-8"?>
 <collection_policy xmlns="http://www.islandora.ca" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="" xsi:schemaLocation="http://www.islandora.ca http://syn.lib.umanitoba.ca/collection_policy.xsd">
@@ -143,7 +159,7 @@ function islandora_manage_policies_form_submit($form, &$form_state) {
 
     $cp_namespace = $form_state['values']['new_cp_namespace'];
     $cp_content_model = $form_state['values']['content_model_to_add'];
-    $content_model_object = new FedoraObject($cp_content_model, $restConnection->repository);
+    $content_model_object = new FedoraObject($cp_content_model, $rest_connection->repository);
     $content_model_datastream = $content_model_object->getDatastream(variable_get('Islandora_Content_Model_DSID', 'ISLANDORACM'));
 
     $content_models_element = $collection_policy_xml->getElementsByTagName('content_models');
@@ -160,7 +176,7 @@ function islandora_manage_policies_form_submit($form, &$form_state) {
     $new_collection_policy_datastream->setContentFromString($collection_policy_xml->saveXML());
     $new_collection_policy_datastream->label = 'COLLECTION_POLICY';
     $collection_object->ingestDatastream($new_collection_policy_datastream);
-    drupal_set_message("Collection model successfully added");
+    drupal_set_message(t("Collection model @model successfully added", array('@model' => $content_model_object->label)));
   }
 
   //remove content model from collection policy
@@ -170,7 +186,6 @@ function islandora_manage_policies_form_submit($form, &$form_state) {
     $s = '';
     foreach ($candidates as $candidate) {
       if (is_string($candidate)) {
-
         $content_models_element = $collection_policy_xml->getElementsByTagName('content_models');
         $models = $content_models_element->item(0)->getElementsByTagName('content_model');
         $found = FALSE;
@@ -195,7 +210,7 @@ function islandora_manage_policies_form_submit($form, &$form_state) {
       if ($count > 1) {
         $s = 's';
       }
-      drupal_set_message("$count collection model$s removed");
+      drupal_set_message(t("$count collection model@s removed", array('@s' => $s)));
     }
   }
 }

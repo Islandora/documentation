@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * @file 
+ * CollectionManagement.inc
+ */
+
+/**
  * collection creation form 
  * @param array $form_state
  * @param string $parent_collection_pid
@@ -219,7 +224,7 @@ function collection_management_form($this_collection_pid, $content_models) {
     '#id' => 'change_model',
   );
 
-  return($form);
+  return $form;
 }
 
 /**

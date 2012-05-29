@@ -1,29 +1,30 @@
 <?php
 
 /*
- * @file islandora_basic_image.module
- * 
- * an Islandora module to handle basic image cmodels 
- * 
- * 
+ * @file
+ * islandora_basic_collection.module
+ *
+ * an Islandora module to handle basic image cmodels
+ *
+ *
  * This file is part of Islandora.
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with the program.  If not, see <http ://www.gnu.org/licenses/>.
  */
 
 /**
- * Implementation of hook_menu. 
+ * Implements hook_menu().
  * we need some standard entry points so we can have consistent urls for different Object actions
  */
 function islandora_basic_collection_menu() {
@@ -63,7 +64,7 @@ function islandora_basic_collection_menu() {
 /**
  * This function is where we create the view for the related menu item
  * @param type $object_id
- * @return type 
+ * @return type
  */
 function islandora_basic_collection_manage_object($object_id) {
 
@@ -73,6 +74,7 @@ function islandora_basic_collection_manage_object($object_id) {
   module_load_include('inc', 'islandora_basic_collection', 'includes/MoveCollection');
   module_load_include('inc', 'islandora_basic_collection', 'includes/ChildCollection');
   module_load_include('inc', 'islandora_basic_collection', 'includes/ManagePolicies');
+  module_load_include('inc', 'islandora_basic_collection', 'includes/ChangeContentModels');
 
   $form = array();
 
@@ -105,9 +107,7 @@ function islandora_basic_collection_manage_object($object_id) {
     '#collapsed' => TRUE,
   );
 
-  $form['collection_manager']['change_content_models']['form'] = array(
-//    '#content' => drupal_get_form($form_id),
-  );
+  $form['collection_manager']['change_content_models']['form'] = drupal_get_form('islandora_change_content_models_form', $object_id);
 
   $form['collection_manager']['migrate_members'] = array(
     '#type' => 'fieldset',
@@ -136,7 +136,7 @@ function islandora_basic_collection_manage_object($object_id) {
  * determines whether or not to show this modules manage tab
  * @global object $user
  * @param string $object_id
- * @return boolean 
+ * @return boolean
  */
 function islandora_basic_collection_access($object_id) {
   module_load_include('inc', 'islandora', 'RestConnection');
@@ -188,7 +188,7 @@ function islandora_basic_collection_theme($existing, $type, $theme, $path) {
  * this module should attempt to respond.
  * If ISLANDORA_VIEW_HOOK = TRUE this function will populate the default tab.  This should be configurable
  * in the modules admin section, otherwise two modules can populate one tab.
- * @return array 
+ * @return array
  *   array of content model pids that this module supports
  */
 function islandora_basic_collection_islandora_get_types() {
@@ -226,7 +226,7 @@ function islandora_basic_collection_islandora_view_object($object, $user, $page_
 /**
  *
  * @global type $base_url
- * @param array $variables 
+ * @param array $variables
  *   an array of variables that will be passed to the theme function
  */
 function islandora_basic_collection_preprocess_islandora_basic_collection(&$variables) {

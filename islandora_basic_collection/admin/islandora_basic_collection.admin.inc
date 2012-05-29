@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * @file
+ * islandora_basic_collection.admin.inc
+ */
+
+/**
+ *
+ * @return type
+ */
 function islandora_basic_collection_admin() {
   $form = array();
   $form['islandora_basic_collection_use_for_default_tab'] = array(
@@ -13,4 +22,3 @@ function islandora_basic_collection_admin() {
 
   return system_settings_form($form);
 }
-
