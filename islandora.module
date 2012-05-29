@@ -661,6 +661,7 @@ function islandora_preprocess_islandora_default_edit(&$variables) {
   $header = array(
     array('data' => t('ID')),
     array('data' => t('Type')),
+    array('data' => t('State')),
     array('data' => t('Mime type')),
     array('data' => t('Label')),
     array('data' => t('Operations'), 'colspan' => '2'),
@@ -670,9 +671,10 @@ function islandora_preprocess_islandora_default_edit(&$variables) {
   $rows = array();
   foreach ($islandora_object as $ds) {
     $rows[] = array(
-      array('class' => 'datastream-label', 'data' => l($ds->id, $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/' . $ds->id . '/view')),
-      array('class' => 'datastream-label', 'data' => $ds->controlGroup),
-      array('class' => 'datastream-label', 'data' => $ds->mimeType),
+      array('class' => 'datastream-id', 'data' => l($ds->id, $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/' . $ds->id . '/view')),
+      array('class' => 'datastream-control', 'data' => $ds->controlGroup),
+      array('class' => 'datastream-state', 'data' => $ds->state),
+      array('class' => 'datastream-mime', 'data' => $ds->mimeType),
       array('class' => 'datastream-label', 'data' => l($ds->label, $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/' . $ds->id . '/view')),
       array('class' => 'datastream-download', 'data' => l(t('download'), $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/' . $ds->id . '/download')),
       array('class' => 'datastream-delete', 'data' => l(t('delete'), $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/' . $ds->id . '/delete')),
