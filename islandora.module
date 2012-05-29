@@ -659,6 +659,7 @@ function islandora_preprocess_islandora_default_edit(&$variables) {
       array('class' => 'datastream-delete', 'data' => l(t('delete'), $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/' . $ds->id . '/delete')),
       );
   }
-  $table = array('colgroups' => NULL,  'sticky' => TRUE, 'empty' => 'Error loading datastreams', 'caption' => NULL, 'header' => $header, 'rows' => $rows, 'attributes' => $table_attributes);
+  $caption = $islandora_object->label . ' - ' . $islandora_object->id;
+  $table = array('colgroups' => NULL,  'sticky' => TRUE, 'empty' => 'Error loading datastreams', 'caption' => $caption, 'header' => $header, 'rows' => $rows, 'attributes' => $table_attributes);
   $variables['datastream_table'] = theme_table($table);
 }
