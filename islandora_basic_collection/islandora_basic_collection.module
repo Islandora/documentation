@@ -176,6 +176,11 @@ function islandora_basic_collection_theme($existing, $type, $theme, $path) {
 //an example template would be named islandora-basic-image--islandora-27.tpl.phps
       'variables' => array('islandora_object' => NULL),
     ),
+    'islandora_basic_collection_grid' => array(
+      'template' => 'islandora-basic-collection-grid',
+      'pattern' => 'islandora_basic_collection_grid__',
+      'variables' => array('islandora_object' => NULL),
+    ),
     'islandora_basic_collection_management_form_table' => array(
       'arguments' => array('element' => NULL),
       'file' => 'includes/CollectionManagerTable.inc',
@@ -216,11 +221,25 @@ function islandora_basic_collection_islandora_view_object($object, $user) {
   $models = $object->models;
   foreach ($object->models as $model) {
     if (isset($cmodel_list[$model][ISLANDORA_VIEW_HOOK]) && $cmodel_list[$model][ISLANDORA_VIEW_HOOK] == TRUE) {
-      $output = theme('islandora_basic_collection', array('islandora_object' => $object));
-      return array('' => $output);
+      $display = (empty($_GET['display'])) ? 'list' : $_GET['display'];
+      if($display == 'grid'){
+        $output = theme('islandora_basic_collection_grid', array('islandora_object' => $object));
+      } else {
+        $output = theme('islandora_basic_collection', array('islandora_object' => $object));
+      }
+      return array('Collection View' => $output);
     }
   }
   return NULL;
+}
+
+/**
+ * list view preprocess
+ * currently just calls normal view preprocess as variables are the same
+ * @param type $variables 
+ */
+function islandora_basic_collection_preprocess_islandora_basic_collection_grid(&$variables){
+  islandora_basic_collection_preprocess_islandora_basic_collection($variables);
 }
 
 /**
