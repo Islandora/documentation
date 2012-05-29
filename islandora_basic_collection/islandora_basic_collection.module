@@ -210,7 +210,7 @@ function islandora_basic_collection_islandora_get_types() {
  * @return string
  *    themed html
  */
-function islandora_basic_collection_islandora_view_object($object, $user, $page_number, $page_size) {
+function islandora_basic_collection_islandora_view_object($object, $user) {
 //global $user;
   $cmodel_list = islandora_basic_collection_islandora_get_types();
   $models = $object->models;
@@ -242,7 +242,13 @@ function islandora_basic_collection_preprocess_islandora_basic_collection(&$vari
   } catch (Exception $e) {
     drupal_set_message(t('Error retrieving object %s %t', array('%s' => $islandora_object->id, '%t' => $e->getMessage())), 'error');
   }
-  $variables['islandora_associated_objects'] = islandora_basic_collection_get_objects($islandora_object);
+  $page_number = (empty($_GET['page'])) ? '1' : $_GET['page'];
+  $page_size = (empty($_GET['pagesize'])) ? variable_get('islandora_collection_pagesize',5) : $_GET['pagesize'];
+  $results = islandora_basic_collection_get_objects($islandora_object,$page_number,$page_size);
+  pager_default_initialize(count($results), $page_size);
+  $variables['islandora_associated_objects'] = $results;
+  $pager = theme('pager', array('quantity' => count($results)));
+  $variables['pager'] = $pager;
   $variables['islandora_dublin_core'] = $dc_object;
   $variables['islandora_object_label'] = $islandora_object->label;
   $variables['theme_hook_suggestions'][] = 'islandora_basic_collection__' . str_replace(':', '_', $islandora_object->id);
@@ -260,6 +266,7 @@ function islandora_basic_collection_preprocess_islandora_basic_collection(&$vari
   }
 
   $associated_objects_array = array();
+  //for($i=$page_size * ($page_number -1),$i < $page_size * ($page)
   foreach ($variables['islandora_associated_objects'] as $key => $value) {
     $pid = $variables['islandora_associated_objects'][$key]['object']['value'];
     $fc_object = islandora_basic_collection_get_object($pid);
@@ -307,7 +314,7 @@ function islandora_basic_collection_get_object($object_id) {
   return $fedora_object;
 }
 
-function islandora_basic_collection_get_objects($object) {
+function islandora_basic_collection_get_objects($object, $page_number = 1, $page_size = 5) {
   $query = 'select $object $title $content from <#ri>
              where ($object <fedora-model:label> $title
              and $object <fedora-model:hasModel> $content
@@ -316,8 +323,6 @@ function islandora_basic_collection_get_objects($object) {
              and $object <fedora-model:state> <info:fedora/fedora-system:def/model#Active>)
              minus $content <mulgara:is> <info:fedora/fedora-system:FedoraObject-3.0>
              order by $title';
-  $page_number = (empty($_GET['page'])) ? '1' : $_GET['page'];
-  $page_size = (empty($_GET['pagesize'])) ? '10' : $_GET['pagesize'];
   module_load_include('inc', 'islandora', 'RestConnection');
   $query_array = array('query' => $query, 'type' => 'itql', 'pid' => $object->id, 'page_size' => $page_size, 'page_number' => $page_number);
   drupal_alter('islandora_basic_collection_query', $query_array);

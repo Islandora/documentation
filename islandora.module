@@ -646,20 +646,26 @@ function islandora_preprocess_islandora_default_edit(&$variables) {
   module_load_include('inc', 'islandora', 'includes/datastream');
   // $variables['add_datastream_form'] = drupal_get_form('islandora_add_datastream_form', $islandora_object->id);
   $header = array(
+    array('data' => t('ID')),
+    array('data' => t('Type')),
+    array('data' => t('Mime type')),
     array('data' => t('Label')),
-    array('data' => t('Operations'),'colspan' => '2'),
-    //array('data' => t('Delete')),
+    array('data' => t('Operations'), 'colspan' => '2'),
+      //array('data' => t('Delete')),
   );
   $table_attributes = array('class' => array('manage-datastrea'));
   $rows = array();
   foreach ($islandora_object as $ds) {
     $rows[] = array(
+      array('class' => 'datastream-label', 'data' => l($ds->id, $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/' . $ds->id . '/view')),
+      array('class' => 'datastream-label', 'data' => $ds->controlGroup),
+      array('class' => 'datastream-label', 'data' => $ds->mimeType),
       array('class' => 'datastream-label', 'data' => l($ds->label, $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/' . $ds->id . '/view')),
-      array('class' => 'datastream-download',  'data' => l(t('download'), $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/' . $ds->id . '/download')),
+      array('class' => 'datastream-download', 'data' => l(t('download'), $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/' . $ds->id . '/download')),
       array('class' => 'datastream-delete', 'data' => l(t('delete'), $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/' . $ds->id . '/delete')),
-      );
+    );
   }
   $caption = $islandora_object->label . ' - ' . $islandora_object->id;
-  $table = array('colgroups' => NULL,  'sticky' => TRUE, 'empty' => 'Error loading datastreams', 'caption' => $caption, 'header' => $header, 'rows' => $rows, 'attributes' => $table_attributes);
+  $table = array('colgroups' => NULL, 'sticky' => TRUE, 'empty' => 'Error loading datastreams', 'caption' => $caption, 'header' => $header, 'rows' => $rows, 'attributes' => $table_attributes);
   $variables['datastream_table'] = theme_table($table);
 }
