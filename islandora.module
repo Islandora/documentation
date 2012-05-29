@@ -108,16 +108,16 @@ function islandora_menu() {
     'access arguments' => array(FEDORA_VIEW),
   );
 
-  /*
+  
   $items['islandora/object/%/add'] = array(
     'title' => 'Add to an object',
-    //'file' => 'includes/add-menu.inc',
-    'page callback' => 'islandora_add_datastream',
-    'page arguments' => array(2),
+    'file' => 'includes/datastream.inc',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('islandora_add_datastream_form',2),
     'type' => MENU_NORMAL_ITEM,
     'access arguments' => array(FEDORA_ADD_DS)
   );
-   */
+   
 
   $items['islandora/object/%/view'] = array(
     'title' => 'View',
@@ -155,8 +155,9 @@ function islandora_menu() {
 
   $items['islandora/object/%/manage/properties'] = array(
     'title' => 'Properties',
-    'page callback' => 'islandora_edit_properties',
-    'page arguments' => array(2),
+    'page callback' => 'drupal_get_form',
+    'file' => 'includes/object_properties.inc',
+    'page arguments' => array('islandora_edit_properties_form',2),
     'type' => MENU_LOCAL_TASK,
     'access arguments' => array(FEDORA_MODIFY_STATE),
     'weight' => -5,
@@ -344,12 +345,25 @@ function islandora_edit_object($object_id) {
   return $output;
 }
 
+/**
+ * edit properties form
+ * @param type $object_id
+ * @return string 
+ */
 function islandora_edit_properties($object_id) {
-  return 'edit properties ' . $object_id;
+  $object = islandora_get_object($object_id);
+  if (isset($object)) {
+    module_load_include('inc','islandora','includes/object_properties');
+    $form = drupal_get_form('islandora_edit_properties_form', $object);
+    drupal_set_title($object->label);
+    return drupal_render($form);
+  }
+  return "";
 }
 
 /**
  * builds a default page for the edit tab
+ *
  * @param object $fedora_object 
  *   A tuque Fedora Object
  */
@@ -548,25 +562,10 @@ function islandora_permission() {
 }
 
 /**
- * renders the add datastream from.
- * @param string $object_id
- * @return type 
+ * preprocess for the default view template
+ * @global string $base_url
+ * @param array $variables 
  */
-function islandora_add_datastream($object_id) {
-  if (!isset($object_id)) {
-    drupal_set_message(t('Cannot add datastream to object, object id not set'));
-    return;
-  }
-  $object = islandora_get_object($object_id);
-  if (isset($object)) {
-    $form = drupal_get_form('islandora_add_datastream_form', $object);
-    drupal_set_title($object->label);
-    return drupal_render($form);
-  }
-  return "";
-  // hook form alter might be enough here may not need a module invoke all
-}
-
 function islandora_preprocess_islandora_default(&$variables) {
   $islandora_object = $variables['islandora_object'];
   module_load_include('inc', 'islandora', 'includes/islandora_dublin_core');
@@ -586,6 +585,12 @@ function islandora_preprocess_islandora_default(&$variables) {
   }
 }
 
+/**
+ * a helper function to get a connection and return an object
+ * @global object $user
+ * @param string $object_id
+ * @return FedoraObject 
+ */
 function islandora_get_object($object_id) {
   module_load_include('inc', 'islandora', 'RestConnection');
   global $user;
@@ -600,117 +605,18 @@ function islandora_get_object($object_id) {
 }
 
 /**
- * Builds the default add a datastream form.  
- * @param array $form
- * @param array  $form_state
- * @param Object $islandora_object
- * @return type 
- */
-function islandora_add_datastream_form($form, &$form_state, $islandora_object) {
-  module_load_include('inc', 'islandora', 'includes/datastream');
-  $form = islandora_get_add_datastream_form($islandora_object->id, $form_state);
-  return $form;
-}
-
-/**
- * Default implmentation currently only does M (managed datastreams)
- * other modules can hook form alter to add other functionality
+ * preprocess the edit template
  * @global string $base_url
- * @global object $user
- *   Drupal user
- * @param array $form
- * @param array $form_state
- * @return type 
+ * @param array $variables 
+ *   theme variables for the edit template
  */
-function islandora_add_datastream_form_submit($form, &$form_state) {
-  global $base_url;
-  if (!empty($form_state['submit']) && $form_state['submit'] == 'OK') {
-    $form_state['rebuild'] = TRUE;
-    return;
-  }
-
-  $file = $form_state['values']['add-stream-file-location'];
-  $file = drupal_realpath($file);
-  $object_id = $form_state['values']['pid'];
-  $dsid = $form_state['values']['stream_id'];
-  $ds_label = $form_state['values']['stream_label']; // Add the file extention to the end of the label.;
-  //$dformat = $mimetype->getType($file);
-  $controlGroup = "M";
-  //if ($dformat == 'text/xml') {
-  //  $controlGroup = 'X';
-  //}
-  global $user;
-  try {
-    $restConnection = new RestConnection($user);
-    $fedora_object = new FedoraObject($object_id, $restConnection->repository);
-    $ds = $fedora_object->constructDatastream($dsid, $controlGroup);
-    $ds->label = $ds_label;
-    $ds->setContentFromFile($file);
-    $fedora_object->ingestDatastream($ds);
-    $d_file = file_load($form_state['values']['fid']);
-    file_delete($d_file);
-  } catch (exception $e) {
-    drupal_set_message(t('@message', array('@message' => check_plain($e->getMessage()))), 'error');
-    return;
-  }
-  $form_state['rebuild'] = TRUE;
-}
-
-/**
- * validates this datastream id against its allowed mimetypes in the dscomposite 
- * of its content models.
- * @param array $form
- * @param array $form_state
- * @return boolean 
- */
-function islandora_add_datastream_form_validate($form, &$form_state) {
-  module_load_include('inc', 'islandora', 'includes/MimeClass');
-  $mimetype = new MimeClass();
-  if ($form_state['clicked_button']['#value'] == 'OK') {
-    $form_state['rebuild'] = TRUE;
-    return;
-  }
-  $dsid = $form_state['values']['stream_id'];
-  $dsLabel = $form_state['values']['stream_label'];
-  if (strlen($dsid) > 64) {
-    form_set_error('', t('Data stream ID cannot be more than 64 characters.'));
-    return FALSE;
-  }
-  if (!(preg_match("/^[a-zA-Z]/", $dsid))) {
-    form_set_error('', t("Data stream ID (@dsid) has to start with a letter.", array('@dsid' => check_plain($dsid))));
-    return FALSE;
-  }
-  if (strlen($dsLabel) > 64) {
-    form_set_error('', t('Data stream Label cannot be more than 64 characters.'));
-    return FALSE;
-  }
-  if (strpos($dsLabel, '/')) {
-    form_set_error('', t('Data stream Label cannot contain a "/".'));
-    return FALSE;
-  }
-  $mimetype = new MimeClass();
-  $unused_dsids = islandora_get_unused_dsids($form_state['values']['pid']);
-  $types_allowed = $unused_dsids[$dsid];
-  $arr = array();
-  foreach ($types_allowed as $type) {
-    $arr[] = $mimetype->getExtension($type);
-  }
-  $file = file_save_upload('add-stream-file-location', array('file_validate_extensions' => $arr));
-  if ($file) {
-    $form_state['values']['add-stream-file-location'] = $file->uri;
-    $form_state['values']['fid'] = $file->fid; //so we can load it to delete later
-  }
-  else {
-    form_set_error('add-stream-file-location', t('There was no file uploaded'));
-  }
-}
-
 function islandora_preprocess_islandora_default_edit(&$variables) {
   $islandora_object = $variables['islandora_object'];
   global $base_url;
   $datastreams = array();
   $variables['islandora_editmetadata_url'] = $base_url . '/islandora/edit_form/' . $islandora_object->id;
-  $variables['add_datastream_form'] = drupal_get_form('islandora_add_datastream_form', $islandora_object);
+  module_load_include('inc','islandora','includes/datastream');
+  $variables['add_datastream_form'] = drupal_get_form('islandora_add_datastream_form', $islandora_object->id);
   foreach ($islandora_object as $ds) {
     $datastreams['download_url'] = $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/' . $ds->id . '/download';
     $datastreams['view_url'] = $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/' . $ds->id . '/view';
