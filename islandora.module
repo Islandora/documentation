@@ -596,7 +596,20 @@ function islandora_permission() {
  */
 function islandora_preprocess_islandora_default(&$variables) {
   $islandora_object = $variables['islandora_object'];
+  $repository = $islandora_object->repository;
   module_load_include('inc', 'islandora', 'includes/islandora_dublin_core');
+
+  $variables['parent_collections'] = array();
+  $collections = $islandora_object->relationships->get(FEDORA_RELS_EXT_URI, 'isMemberOfCollection');
+  foreach($collections as $collection) {
+    $pid = $collection['object']['value'];
+    $object = $repository->getObject($collection['object']['value']);
+    $variables['parent_collections'][$pid] = array();
+    $variables['parent_collections'][$pid]['object'] = $object;
+    $variables['parent_collections'][$pid]['label'] = $object->label;
+    $variables['parent_collections'][$pid]['url'] = url('islandora/object/' . $object->id);
+  }
+
   try {
     $dc = $islandora_object['DC']->content;
     //$dc_xml = simplexml_load_string($dc);
