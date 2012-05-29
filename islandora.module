@@ -149,7 +149,7 @@ function islandora_menu() {
     'title' => 'Properties',
     'page callback' => 'drupal_get_form',
     'file' => 'includes/object_properties.inc',
-    'page arguments' => array('islandora_edit_properties_form',2),
+    'page arguments' => array('islandora_edit_properties_form', 2),
     'type' => MENU_LOCAL_TASK,
     'access arguments' => array(FEDORA_MODIFY_STATE),
     'weight' => -5,
@@ -181,7 +181,7 @@ function islandora_menu() {
   //   'type' => MENU_NORMAL_ITEM,
   //   'access arguments' => array(FEDORA_ADD_DS)
   // );
-   
+
 
   $items['islandora/object/%/datastream/%'] = array(
     'title' => 'View datastream',
@@ -381,7 +381,7 @@ function islandora_edit_object($object_id) {
 function islandora_edit_properties($object_id) {
   $object = islandora_get_object($object_id);
   if (isset($object)) {
-    module_load_include('inc','islandora','includes/object_properties');
+    module_load_include('inc', 'islandora', 'includes/object_properties');
     $form = drupal_get_form('islandora_edit_properties_form', $object);
     drupal_set_title($object->label);
     return drupal_render($form);
@@ -643,13 +643,22 @@ function islandora_preprocess_islandora_default_edit(&$variables) {
   global $base_url;
   $datastreams = array();
   $variables['islandora_editmetadata_url'] = $base_url . '/islandora/edit_form/' . $islandora_object->id;
-  module_load_include('inc','islandora','includes/datastream');
+  module_load_include('inc', 'islandora', 'includes/datastream');
   // $variables['add_datastream_form'] = drupal_get_form('islandora_add_datastream_form', $islandora_object->id);
+  $header = array(
+    array('data' => t('Label')),
+    array('data' => t('Operations'),'colspan' => '2'),
+    //array('data' => t('Delete')),
+  );
+  $table_attributes = array('class' => array('manage-datastrea'));
+  $rows = array();
   foreach ($islandora_object as $ds) {
-    $datastreams['download_url'] = $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/' . $ds->id . '/download';
-    $datastreams['view_url'] = $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/' . $ds->id . '/view';
-    $datastreams['delete_url'] = $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/' . $ds->id . '/delete';
-    $datastreams['label'] = $ds->label;
-    $variables['islandora_datastreams'][$ds->id] = $datastreams;
+    $rows[] = array(
+      array('class' => 'datastream-label', 'data' => l($ds->label, $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/' . $ds->id . '/view')),
+      array('class' => 'datastream-download',  'data' => l(t('download'), $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/' . $ds->id . '/download')),
+      array('class' => 'datastream-delete', 'data' => l(t('delete'), $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/' . $ds->id . '/delete')),
+      );
   }
+  $table = array('colgroups' => NULL,  'sticky' => TRUE, 'empty' => 'Error loading datastreams', 'caption' => NULL, 'header' => $header, 'rows' => $rows, 'attributes' => $table_attributes);
+  $variables['datastream_table'] = theme_table($table);
 }

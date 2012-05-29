@@ -44,17 +44,8 @@
 //dsm($object);
 
 drupal_set_title($islandora_object->label);
-$islandora_datastreams = $variables['islandora_datastreams'];
 print($islandora_object->label . ' ' . $islandora_object->id);
-print ('<h3>datastreams</h3>');
-foreach ($islandora_datastreams as $dsid => $ds) {
-  print (l($ds['label'],$ds['view_url']));
-  print (' ' . l('download', $ds['download_url']));
-  print (' ' . l('delete', $ds['delete_url']));
-  print ('<br />');
   
-}
-print (drupal_render($variables['add_datastream_form']));
-print (l(t('Edit Metadata'),$variables['islandora_editmetadata_url']));
+print ($variables['datastream_table']);
 ?>
 
