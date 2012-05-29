@@ -224,7 +224,7 @@ function islandora_basic_collection_islandora_view_object($object, $user) {
 }
 
 /**
- *
+ * 
  * @global type $base_url
  * @param array $variables 
  *   an array of variables that will be passed to the theme function
@@ -242,12 +242,13 @@ function islandora_basic_collection_preprocess_islandora_basic_collection(&$vari
   } catch (Exception $e) {
     drupal_set_message(t('Error retrieving object %s %t', array('%s' => $islandora_object->id, '%t' => $e->getMessage())), 'error');
   }
-  $page_number = (empty($_GET['page'])) ? '1' : $_GET['page'];
-  $page_size = (empty($_GET['pagesize'])) ? variable_get('islandora_collection_pagesize',5) : $_GET['pagesize'];
-  $results = islandora_basic_collection_get_objects($islandora_object,$page_number,$page_size);
-  pager_default_initialize(count($results), $page_size);
-  $variables['islandora_associated_objects'] = $results;
-  $pager = theme('pager', array('quantity' => count($results)));
+  $page_number = (empty($_GET['page'])) ? 0 : $_GET['page'];
+  $page_size = (empty($_GET['pagesize'])) ? variable_get('islandora_basic_collection_page_size', '10') : $_GET['pagesize'];
+  $results = islandora_basic_collection_get_objects($islandora_object, $page_number, $page_size);
+  $total_count = count($results);
+  pager_default_initialize($total_count, $page_size);
+  
+  $pager = theme('pager', array('quantity' => $total_count));
   $variables['pager'] = $pager;
   $variables['islandora_dublin_core'] = $dc_object;
   $variables['islandora_object_label'] = $islandora_object->label;
@@ -266,9 +267,11 @@ function islandora_basic_collection_preprocess_islandora_basic_collection(&$vari
   }
 
   $associated_objects_array = array();
-  //for($i=$page_size * ($page_number -1),$i < $page_size * ($page)
-  foreach ($variables['islandora_associated_objects'] as $key => $value) {
-    $pid = $variables['islandora_associated_objects'][$key]['object']['value'];
+  $start = $page_size * ($page_number);
+  $end = min($start + $page_size, $total_count);
+ 
+  for ($i = $start; $i < $end; $i++) {
+    $pid = $results[$i]['object']['value'];
     $fc_object = islandora_basic_collection_get_object($pid);
     if (!isset($fc_object)) {
       continue; //null object so don't show in collection view;
@@ -283,7 +286,7 @@ function islandora_basic_collection_preprocess_islandora_basic_collection(&$vari
     }
     $object_url = 'islandora/object/' . $pid;
     $thumbnail_img = '<img src="' . $base_path . $object_url . '/datastream/TN/view"' . '/>';
-    $title = $variables['islandora_associated_objects'][$key]['title']['value'];
+    $title = $results[$i]['title']['value'];
     $associated_objects_array[$pid]['pid'] = $pid;
     $associated_objects_array[$pid]['path'] = $object_url;
     $associated_objects_array[$pid]['title'] = $title;
