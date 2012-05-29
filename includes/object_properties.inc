@@ -64,6 +64,7 @@ function islandora_edit_properties_form_submit($form, &$form_state) {
 function islandora_edit_properties_form($form, &$form_state, $object_id) {
   $form = array();
   $islandora_object = islandora_get_object($object_id);
+  drupal_set_title($islandora_object->label);
   if (!isset($islandora_object)) {
     return NULL;
   }
