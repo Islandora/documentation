@@ -137,9 +137,9 @@ function islandora_menu() {
 
   $items['islandora/object/%/manage/datastreams'] = array(
     'title' => 'Datastreams',
-    'page callback' => 'islandora_edit_object',
+    //'page callback' => 'islandora_edit_object',
     'page arguments' => array(2),
-    'type' => MENU_LOCAL_TASK,
+    'type' => MENU_DEFAULT_LOCAL_TASK,
     'access arguments' => array(FEDORA_PURGE),
     'weight' => -10,
   );
@@ -241,7 +241,7 @@ function islandora_admin_paths_alter(&$paths) {
 function islandora_menu_local_tasks_alter(&$data, $router_item, $root_path) {
   // Add action link 'islandora/object/%/manage/datastreams'.
   $object_id = $router_item['page_arguments'][0];
-  if ($root_path == 'islandora/object/%/manage/datastreams') {
+  if ($root_path == 'islandora/object/%/manage') {
     $item = menu_get_item("islandora/object/$object_id/manage/datastreams/add");
     if ($item['access']) {
       $data['actions']['output'][] = array(
