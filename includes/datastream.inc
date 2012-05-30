@@ -24,7 +24,9 @@ function islandora_datastream_as_attachment($object_id, $dsid) {
     return"";
   }
   header('Content-type: ' . $fedora_object[$dsid]->mimetype);
-  header('Content-length: ' . $fedora_object[$dsid]->size);
+  if($fedora_object[$dsid]->controlGroup == 'M' || $fedora_object[$dsid]->controlGroup == 'X') {
+    header('Content-length: ' . $fedora_object[$dsid]->size);
+  }
   header("Cache-control: private");
   $method = arg(5);
   if (isset($method) && $method == 'download') {

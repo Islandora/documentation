@@ -31,3 +31,18 @@ function islandora_convert_bytes_to_human_readable($bytes, $precision = 2)
         return $bytes . ' B';
     }
 }
+
+function islandora_control_group_to_human_readable($control_group) {
+  switch($control_group) {
+    case 'M':
+      return '<b>M</b>anaged';
+    case 'X':
+      return 'Inline <b>X</b>ML';
+    case 'R':
+      return '<b>R</b>edirect';
+    case 'E':
+      return '<b>E</b>xternally Referenced';
+    default:
+      return $control_group;
+  }
+}
