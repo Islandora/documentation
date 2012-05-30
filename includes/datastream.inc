@@ -369,11 +369,19 @@ function islandora_add_datastream_form($form, &$form_state, $object_id) {
   return $form;
 }
 
-function islandora_datastream_autocomplete_callback($object_id) {
+function islandora_datastream_autocomplete_callback($object_id, $string = '') {
   $dsids = islandora_get_unused_dsids($object_id);
   $output = array();
   foreach($dsids as $id => $ds) {
-    $output[$id] = $id;
+    if(trim($string) == '') {
+      $output[$id] = $id;
+    }
+    else {
+      $ret = stripos($id, $string);
+      if($ret !== FALSE) {
+        $output[$id] = $id;
+      }
+    }
   }
   drupal_json_output($output);
 }
