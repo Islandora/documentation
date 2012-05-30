@@ -109,7 +109,6 @@ function islandora_menu() {
   );
 
 
-
   $items['islandora/object/%/view'] = array(
     'title' => 'View',
     //'page callback' => 'islandora_view_object',
@@ -143,7 +142,6 @@ function islandora_menu() {
     'access arguments' => array(FEDORA_PURGE),
     'weight' => -10,
   );
-
 
   $items['islandora/object/%/manage/properties'] = array(
     'title' => 'Properties',
@@ -617,13 +615,23 @@ function islandora_preprocess_islandora_default(&$variables) {
     $pid = $islandora_object->id;
     $id = $ds->id;
     $label = $ds->label;
-    $download_path = 'islandora/object/' . $pid . '/datastream/' . $id . '/download';
+    if($ds->controlGroup != 'R') {
+      $download_path = 'islandora/object/' . $pid . '/datastream/' . $id . '/download';
+    }
+    else {
+      $download_path = $ds->url;
+    }
     $datastreams[$id]['id'] = $id;
     $datastreams[$id]['label'] = $label;
     $datastreams[$id]['label_link'] = l($label, $download_path);
     $datastreams[$id]['download_url'] = $download_path;
     $datastreams[$id]['mimetype'] = $ds->mimetype;
-    $datastreams[$id]['size'] = islandora_convert_bytes_to_human_readable($ds->size);
+    if($ds->controlGroup == 'M' || $ds->controlGroup == 'X') {
+      $datastreams[$id]['size'] = islandora_convert_bytes_to_human_readable($ds->size);
+    }
+    else {
+      $datastreams[$id]['size'] = '-';
+    }
     $datastreams[$id]['created_date'] = $ds->createdDate->format("Y-m-d");
     $datastreams[$id]['class'] = strtolower(preg_replace('/[^A-Za-z0-9]/', '-', $id));
   }
@@ -679,9 +687,9 @@ function islandora_preprocess_islandora_default_edit(&$variables) {
   // $variables['add_datastream_form'] = drupal_get_form('islandora_add_datastream_form', $islandora_object->id);
   $header = array(
     array('data' => t('ID')),
+    array('data' => t('Label')),
     array('data' => t('Type')),
     array('data' => t('Mime type')),
-    array('data' => t('Label')),
     array('data' => t('Size')),
     array('data' => t('Operations'), 'colspan' => '2'),
       //array('data' => t('Delete')),
@@ -690,11 +698,11 @@ function islandora_preprocess_islandora_default_edit(&$variables) {
   $rows = array();
   foreach ($islandora_object as $ds) {
     $rows[] = array(
-      array('class' => 'datastream-id', 'data' => l($ds->id, $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/' . $ds->id . '/view')),
-      array('class' => 'datastream-control', 'data' => $ds->controlGroup),
+      array('class' => 'datastream-id', 'data' => $ds->id),
+      array('class' => 'datastream-label', 'data' => l($ds->label, $ds->controlGroup != 'R' ? $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/' . $ds->id . '/view' : $ds->url)),
+      array('class' => 'datastream-control', 'data' => islandora_control_group_to_human_readable($ds->controlGroup)),
       array('class' => 'datastream-mime', 'data' => $ds->mimeType),
-      array('class' => 'datastream-label', 'data' => l($ds->label, $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/' . $ds->id . '/view')),
-      array('class' => 'datastream-size', 'data' => islandora_convert_bytes_to_human_readable($ds->size)),
+      array('class' => 'datastream-size', 'data' => $ds->controlGroup == 'M' || $ds->controlGroup == 'X' ? islandora_convert_bytes_to_human_readable($ds->size) : '-'),
       array('class' => 'datastream-download', 'data' => l(t('download'), $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/' . $ds->id . '/download')),
       array('class' => 'datastream-delete', 'data' => l(t('delete'), $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/' . $ds->id . '/delete')),
     );
