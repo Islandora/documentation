@@ -1,7 +1,7 @@
 <?php
 
 /*
- * islandora-object-edit.tpl.php
+ * islandora-basic-collection.tpl.php
  * 
  *
  * 
@@ -21,31 +21,17 @@
  * along with the program.  If not, see <http ://www.gnu.org/licenses/>.
  */
 ?>
-<?php
+<?php drupal_set_title('grid_view'); ?>
 
-/* 
- * this is a template for objects that do not have a module to registered to build their display.
- * 
- * islandora_object is a fedora tuque Object
- *    $object->label
- *    $object->id
- * to get the contents of a datastream
- *    $object['dsid']->content 
- * 
- * $dublin_core is a Dublin_Core object
- * which is an array of elements, such as dc.title
- * and each element has an array of values.  dc.title can have none, one or many titles
- * this is the case for all dc elements.
- * 
- * 
- * 
- */
-
-//dsm($object);
-
-drupal_set_title($islandora_object->label);
-//print($islandora_object->label . ' ' . $islandora_object->id);
-  
-print ($variables['datastream_table']);
-?>
-
+<div class="islandora-basic-collection-wrapper">
+  <div class="islandora-basic-collection clearfix">
+  <?php print($variables['pager']); ?>
+  <?php foreach($associated_objects_array as $key => $value): ?>
+    <dl class="islandora-basic-collection-object <?php print $value['class']; ?>">
+        <dt class="islandora-basic-collection-thumb"><?php print $value['thumb_link']; ?></dt>
+        <dd class="islandora-basic-collection-caption"><?php print $value['title_link']; ?></dd>
+    </dl>
+  <?php endforeach; ?>
+  <?php print($variables['pager']); ?>
+</div>
+</div>

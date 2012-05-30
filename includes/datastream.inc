@@ -24,7 +24,9 @@ function islandora_datastream_as_attachment($object_id, $dsid) {
     return"";
   }
   header('Content-type: ' . $fedora_object[$dsid]->mimetype);
-  header('Content-length: ' . $fedora_object[$dsid]->size);
+  if($fedora_object[$dsid]->controlGroup == 'M' || $fedora_object[$dsid]->controlGroup == 'X') {
+    header('Content-length: ' . $fedora_object[$dsid]->size);
+  }
   header("Cache-control: private");
   $method = arg(5);
   if (isset($method) && $method == 'download') {
@@ -32,6 +34,29 @@ function islandora_datastream_as_attachment($object_id, $dsid) {
   }
   print($fedora_object[$dsid]->content);
   exit();
+}
+
+function islandora_get_datastream_parents($islandora_object) {
+  $parent_collections = array();
+  $repository = $islandora_object->repository;
+  $collections1 = $islandora_object->relationships->get(FEDORA_RELS_EXT_URI, 'isMemberOfCollection');
+  $collections2 = $islandora_object->relationships->get(FEDORA_RELS_EXT_URI, 'isMemberOf');
+  $collections = array_merge($collections1, $collections2);
+
+  foreach($collections as $collection) {
+    try {
+      $pid = $collection['object']['value'];
+      $object = $repository->getObject($collection['object']['value']);
+      $parent_collections[$pid] = array();
+      $parent_collections[$pid]['object'] = $object;
+      $parent_collections[$pid]['url'] = 'islandora/object/' . $object->id;
+      $parent_collections[$pid]['label'] = $object->label;
+      $parent_collections[$pid]['label_link'] = l($parent_collections[$pid]['label'], $parent_collections[$pid]['url']);
+    }
+    catch (RepositoryException $e) {}
+  }
+
+  return $parent_collections;
 }
 
 /**
@@ -280,8 +305,8 @@ function islandora_add_datastream_form($form, &$form_state, $object_id) {
   $form['add_fieldset'] = array(
     '#type' => 'fieldset',
     '#title' => 'Add a datastream',
-    '#collapsible' => TRUE,
-    '#collapsed' => TRUE,
+    '#collapsible' => FALSE,
+    '#collapsed' => FALSE,
   );
   $form['add_fieldset']['add_datastream_label'] = array(
     '#value' => t('<br /><h3>Add Datastream:</h3>'),
@@ -338,4 +363,25 @@ function islandora_add_datastream_form($form, &$form_state, $object_id) {
     );
   }
   return $form;
+}
+
+function islandora_datastream_get_human_readable_size($ds) {
+  module_load_include('inc', 'islandora', 'includes/utilities');
+
+  // we return - if we don't have a size
+  if($ds->controlGroup == 'M' || $ds->controlGroup == 'X') {
+    return islandora_convert_bytes_to_human_readable($ds->size);
+  }
+  else {
+    return '-';
+  }
+}
+
+function islandora_datastream_get_url($ds, $type = 'download') {
+  if($ds->controlGroup == 'R') {
+    return $ds->url;
+  }
+  else {
+    return "islandora/object/{$ds->parent->id}/datastream/{$ds->id}/$type";
+  }
 }

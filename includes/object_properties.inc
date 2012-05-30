@@ -1,8 +1,17 @@
 <?php
 
-function islandora_edit_properties_form_validate($form, &$form_state){
+/**
+ * may want more validation here the only restrictions i see on
+ * the object label and owner is the foxml schema says they should be
+ * an xsd:string there maybe further restrictions such as length but they aren't
+ * defined in the schema.
+ * @param array $form
+ * @param array $form_state
+ * @return boolean 
+ */
+function islandora_edit_properties_form_validate($form, &$form_state) {
   $islandora_object = islandora_get_object($form_state['values']['pid']);
-  if(!isset($islandora_object)){
+  if (!isset($islandora_object)) {
     form_set_error('', t('Could not update properties object not found.'));
     return FALSE;
   }
@@ -13,27 +22,34 @@ function islandora_edit_properties_form_validate($form, &$form_state){
  * @param array $form
  * @param array $form_state 
  */
-function islandora_edit_properties_form_submit($form, &$form_state){
+function islandora_edit_properties_form_submit($form, &$form_state) {
   $islandora_object = islandora_get_object($form_state['values']['pid']);
   $owner = $form_state['values']['object_owner'];
   $state = $form_state['values']['object_state'];
   $label = $form_state['values']['object_label'];
-  $submit = FALSE;
-  $params = array();
-  if(isset($owner) && $owner != $islandora_object->owner){
-    $params['ownerId'] = check_plain($owner);
-    $submit = TRUE;
+  if (isset($owner) && $owner != $islandora_object->owner) {
+    try {
+      $islandora_object->owner = $owner;
+      drupal_set_message(t('Successfully updated owner %s', array('%s' => $owner)));
+    } catch (Exception $e) {
+      form_set_error('object_owner',t('Error updating owner %s', array('%s'=> $e->getMessage())));
+    }
   }
-  if(isset($state) && $state != $islandora_object->state){
-    $params['state'] = check_plain($state);
-    $submit = TRUE;
+  if (isset($state) && $state != $islandora_object->state) {
+    try {
+      $islandora_object->state = $state;
+      drupal_set_message(t('Successfully updated state %s', array('%s' => $state)));
+    } catch (Exception $e) {
+      form_set_error('object_state',t('Error updating state %s', array('%s'=> $e->getMessage())));
+    }
   }
-  if(isset($label) && $label != $islandora_object->label){
-    $params['label'] = check_plain($label);
-    $submit = TRUE;
-  }
-  if($submit){
-    $islandora_object->modifyObject($params);
+  if (isset($label) && $label != $islandora_object->label) {
+    try {
+      $islandora_object->label = $label;
+      drupal_set_message(t('Successfully updated label %s', array('%s' => check_plain($label))));
+    } catch (Exception $e) {
+      form_set_error(t('Error updating label %s', array('%s' => $e->getMessage())));
+    }
   }
 }
 
@@ -45,10 +61,11 @@ function islandora_edit_properties_form_submit($form, &$form_state){
  *   an object id
  * @return array 
  */
-function islandora_edit_properties_form ($form, &$form_state, $object_id){
+function islandora_edit_properties_form($form, &$form_state, $object_id) {
   $form = array();
   $islandora_object = islandora_get_object($object_id);
-  if(!isset($islandora_object)){
+  drupal_set_title($islandora_object->label);
+  if (!isset($islandora_object)) {
     return NULL;
   }
   $form['pid'] = array(
@@ -76,7 +93,7 @@ function islandora_edit_properties_form ($form, &$form_state, $object_id){
     '#required' => TRUE,
     '#description' => t('The items state one of active, inactive or deleted'),
     '#type' => 'select',
-    '#options' => array ('A' => 'Active', 'I' => 'Inactive', 'D'=>'Deleted'),
+    '#options' => array('A' => 'Active', 'I' => 'Inactive', 'D' => 'Deleted'),
   );
   $form['submit'] = array(
     '#type' => 'submit',
@@ -84,4 +101,5 @@ function islandora_edit_properties_form ($form, &$form_state, $object_id){
   );
   return $form;
 }
+
 ?>

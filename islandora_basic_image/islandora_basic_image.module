@@ -203,7 +203,10 @@ function islandora_basic_image_preprocess_islandora_basic_image(&$variables) {
   drupal_add_js('misc/form.js');
   drupal_add_js('misc/collapse.js');
   $islandora_object = $variables['islandora_object'];
+  $repository = $islandora_object->repository;
   module_load_include('inc', 'islandora', 'includes/islandora_dublin_core');
+  module_load_include('inc', 'islandora', 'includes/datastream');
+
   try {
     $dc = $islandora_object['DC']->content;
     $dc_object = Dublin_Core::import_from_xml_string($dc);
@@ -214,6 +217,7 @@ function islandora_basic_image_preprocess_islandora_basic_image(&$variables) {
   $variables['dc_array'] = $dc_object->as_formatted_array();
   $variables['islandora_object_label'] = $islandora_object->label;
   $variables['theme_hook_suggestions'][] = 'islandora_basic_image__' . str_replace(':', '_', $islandora_object->id);
+  $variables['parent_collections'] = islandora_get_datastream_parents($islandora_object);
   global $base_url;
   if (isset($islandora_object['OBJ'])) {
     $full_size_url = $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/OBJ/view';
