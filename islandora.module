@@ -600,6 +600,7 @@ function islandora_preprocess_islandora_default(&$variables) {
   $islandora_object = $variables['islandora_object'];
   $repository = $islandora_object->repository;
   module_load_include('inc', 'islandora', 'includes/islandora_dublin_core');
+  module_load_include('inc', 'islandora', 'includes/utilities');
 
   $variables['parent_collections'] = array();
   $collections = $islandora_object->relationships->get(FEDORA_RELS_EXT_URI, 'isMemberOfCollection');
@@ -622,7 +623,7 @@ function islandora_preprocess_islandora_default(&$variables) {
     $datastreams[$id]['label_link'] = l($label, $download_path);
     $datastreams[$id]['download_url'] = $download_path;
     $datastreams[$id]['mimetype'] = $ds->mimetype;
-    $datastreams[$id]['size'] = bytesToSize($ds->size);
+    $datastreams[$id]['size'] = islandora_convert_bytes_to_human_readable($ds->size);
     $datastreams[$id]['created_date'] = $ds->createdDate->format("Y-m-d");
     $datastreams[$id]['class'] = strtolower(preg_replace('/[^A-Za-z0-9]/', '-', $id));
   }
@@ -641,38 +642,6 @@ function islandora_preprocess_islandora_default(&$variables) {
   if (isset($islandora_object['TN'])) {
     $variables['islandora_thumbnail_url'] = $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/TN/view';
   }
-}
-
-/**
- * Convert bytes to human readable format
- *
- * @param integer bytes Size in bytes to convert
- * @return string
- */
-function bytesToSize($bytes, $precision = 2)
-{  
-    $kilobyte = 1024;
-    $megabyte = $kilobyte * 1024;
-    $gigabyte = $megabyte * 1024;
-    $terabyte = $gigabyte * 1024;
-   
-    if (($bytes >= 0) && ($bytes < $kilobyte)) {
-        return $bytes . ' B';
- 
-    } elseif (($bytes >= $kilobyte) && ($bytes < $megabyte)) {
-        return round($bytes / $kilobyte, $precision) . ' KB';
- 
-    } elseif (($bytes >= $megabyte) && ($bytes < $gigabyte)) {
-        return round($bytes / $megabyte, $precision) . ' MB';
- 
-    } elseif (($bytes >= $gigabyte) && ($bytes < $terabyte)) {
-        return round($bytes / $gigabyte, $precision) . ' GB';
- 
-    } elseif ($bytes >= $terabyte) {
-        return round($bytes / $terabyte, $precision) . ' TB';
-    } else {
-        return $bytes . ' B';
-    }
 }
 
 /**
@@ -706,12 +675,14 @@ function islandora_preprocess_islandora_default_edit(&$variables) {
   $datastreams = array();
   $variables['islandora_editmetadata_url'] = $base_url . '/islandora/edit_form/' . $islandora_object->id;
   module_load_include('inc', 'islandora', 'includes/datastream');
+  module_load_include('inc', 'islandora', 'includes/utilities');
   // $variables['add_datastream_form'] = drupal_get_form('islandora_add_datastream_form', $islandora_object->id);
   $header = array(
     array('data' => t('ID')),
     array('data' => t('Type')),
     array('data' => t('Mime type')),
     array('data' => t('Label')),
+    array('data' => t('Size')),
     array('data' => t('Operations'), 'colspan' => '2'),
       //array('data' => t('Delete')),
   );
@@ -723,6 +694,7 @@ function islandora_preprocess_islandora_default_edit(&$variables) {
       array('class' => 'datastream-control', 'data' => $ds->controlGroup),
       array('class' => 'datastream-mime', 'data' => $ds->mimeType),
       array('class' => 'datastream-label', 'data' => l($ds->label, $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/' . $ds->id . '/view')),
+      array('class' => 'datastream-size', 'data' => islandora_convert_bytes_to_human_readable($ds->size)),
       array('class' => 'datastream-download', 'data' => l(t('download'), $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/' . $ds->id . '/download')),
       array('class' => 'datastream-delete', 'data' => l(t('delete'), $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/' . $ds->id . '/delete')),
     );
