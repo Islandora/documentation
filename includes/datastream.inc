@@ -19,6 +19,12 @@ function islandora_datastream_as_attachment($object_id, $dsid) {
   try {
     $restConnection = new RestConnection($user);
     $fedora_object = new FedoraObject($object_id, $restConnection->repository);
+
+    // if the object exists but the datastream doesn't
+    if(!isset($fedora_object[$dsid])) {
+      return drupal_not_found();
+    }
+
     header('Content-type: ' . $fedora_object[$dsid]->mimetype);
     if($fedora_object[$dsid]->controlGroup == 'M' || $fedora_object[$dsid]->controlGroup == 'X') {
       header('Content-length: ' . $fedora_object[$dsid]->size);
@@ -31,7 +37,7 @@ function islandora_datastream_as_attachment($object_id, $dsid) {
     print($fedora_object[$dsid]->content);
     exit();
   } catch (Exception $e) {
-    return drupal_not_found();;
+    return drupal_not_found();
   }
 }
 
