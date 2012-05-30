@@ -19,21 +19,20 @@ function islandora_datastream_as_attachment($object_id, $dsid) {
   try {
     $restConnection = new RestConnection($user);
     $fedora_object = new FedoraObject($object_id, $restConnection->repository);
+    header('Content-type: ' . $fedora_object[$dsid]->mimetype);
+    if($fedora_object[$dsid]->controlGroup == 'M' || $fedora_object[$dsid]->controlGroup == 'X') {
+      header('Content-length: ' . $fedora_object[$dsid]->size);
+    }
+    header("Cache-control: private");
+    $method = arg(5);
+    if (isset($method) && $method == 'download') {
+      header("Content-Disposition: attachment; filename=\"" . $fedora_object[$dsid]->label);
+    }
+    print($fedora_object[$dsid]->content);
+    exit();
   } catch (Exception $e) {
-    drupal_set_message(t('Error getting Islanndora datastream $d for object %s', array('%s' => $object_id, '%d' => $dsid)), 'error');
-    return"";
+    return drupal_not_found();;
   }
-  header('Content-type: ' . $fedora_object[$dsid]->mimetype);
-  if($fedora_object[$dsid]->controlGroup == 'M' || $fedora_object[$dsid]->controlGroup == 'X') {
-    header('Content-length: ' . $fedora_object[$dsid]->size);
-  }
-  header("Cache-control: private");
-  $method = arg(5);
-  if (isset($method) && $method == 'download') {
-    header("Content-Disposition: attachment; filename=\"" . $fedora_object[$dsid]->label);
-  }
-  print($fedora_object[$dsid]->content);
-  exit();
 }
 
 function islandora_get_datastream_parents($islandora_object) {
