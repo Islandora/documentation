@@ -1,8 +1,20 @@
 <?php
 
+/**
+ * @file
+ * ChildCollection.inc
+ */
+
+/**
+ *
+ * @param type $form
+ * @param type $form_state
+ * @param type $this_collection_pid
+ * @return string
+ */
 function islandora_create_child_collection_form($form, &$form_state, $this_collection_pid) {
   module_load_include('inc', 'islandora', 'RestConnection');
-  $restConnection = new RestConnection();
+  $rest_connection = new RestConnection();
 
   $restricted = FALSE;
   if (variable_get('fedora_namespace_restriction_enforced', TRUE)) {
@@ -18,7 +30,8 @@ function islandora_create_child_collection_form($form, &$form_state, $this_colle
   $collection_namespace = substr($this_collection_pid, 0, strpos($this_collection_pid, ":"));
 
   $form['child_creation']['titlebox'] = array(
-    '#markup' => t("Create New Child Collection within @collection", array('@collection' => $this_collection_pid)),
+    '#type' => 'item',
+    '#title' => t("Create New Child Collection within @collection", array('@collection' => $this_collection_pid)),
   );
 
   $form['child_creation']['collection_name'] = array(
@@ -32,7 +45,7 @@ function islandora_create_child_collection_form($form, &$form_state, $this_colle
     '#title' => "Collection PID",
     '#type' => 'textfield',
     '#size' => 15,
-    '#default_value' => $restConnection->repository->api->m->getNextPid($collection_namespace),
+    '#default_value' => $rest_connection->repository->api->m->getNextPid($collection_namespace),
     '#description' => t("Unique PID for this collection.  <br />Pids take the general form of namespace:collection (eg. islandora:pamphlets)"),
   );
 
@@ -62,14 +75,14 @@ function islandora_create_child_collection_form($form, &$form_state, $this_colle
 
   $form['child_creation']['submit'] = array(
     '#type' => 'submit',
-    '#value' => t('Create Collection'),
+    '#value' => t('Create collection'),
     '#id' => 'create_child'
   );
   return $form;
 }
 
 function islandora_create_child_collection_form_validate($form, &$form_state) {
-  
+
 }
 
 function islandora_create_child_collection_form_submit($form, &$form_state) {
@@ -94,7 +107,7 @@ function islandora_create_child_collection_form_submit($form, &$form_state) {
     $thumbnail_datastream->mimetype = 'image/png';
     $fedora_object->ingestDatastream($thumbnail_datastream);
     $new_fedora_object = islandora_ingest_add_object($fedora_object);
-    
+
 //    $content_models = $form_state['values']['content_models'];
 //    $collection_policy_xml = simplexml_load_string($collection_policy);
 //    foreach ($content_models as $content_model) {

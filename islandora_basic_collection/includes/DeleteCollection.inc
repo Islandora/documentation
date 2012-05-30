@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * @file
+ * DeleteCollection.inc
+ */
+
+/**
  *
  * @param array $form_state
  * @param string $pid
@@ -12,9 +17,14 @@ function islandora_collection_deletion_form($form, &$form_state, $pid) {
   $potential_collections = get_collections_as_option_array();
   $table = islandora_collection_table($pid);
   $deletion_message = ($table) ? "Delete Members of this Collection" : "Delete Collection";
-  $submit_text_message = ($table) ? "Delete Selected Objects" : "Delete Collection";
+  $submit_text_message = ($table) ? "Delete selected objects" : "Delete collection";
 
   $form = array();
+  
+  $form['collection_delete']['titlebox'] = array(
+    '#type' => 'item',
+    '#title' => t("Delete objects from @collection_pid", array('@collection_pid' => $pid)),
+  );
 
   if ($table) {
     $form['collection_delete']['table'] = array(
@@ -49,10 +59,10 @@ function islandora_collection_deletion_form($form, &$form_state, $pid) {
 function islandora_collection_deletion_form_submit($form, &$form_state) {
   global $user;
   module_load_include('inc', 'islandora', 'RestConnection');
-  $restConnection = new RestConnection();
+  $rest_connection = new RestConnection();
 
   $collection_pid = $form_state['values']['current'];
-  $fedora_object = new FedoraObject($collection_pid, $restConnection->repository);
+  $fedora_object = new FedoraObject($collection_pid, $rest_connection->repository);
   $parents = $fedora_object->relationships->get(NULL, 'isMemberOfCollection');
   $parents = Islandora_collections_get_collection_from_pid($collection_pid);
   $collection_pid = $form_state['values']['current'];
@@ -75,18 +85,18 @@ function islandora_collection_deletion_form_submit($form, &$form_state) {
     }
   }
   if (!empty($populated_child_collections)) {
-    $conflict = false;
+    $conflict = FALSE;
     foreach ($populated_child_collections as $collection) {
       if (in_array($collection, $pids)) {
-        $conflict = true;
-        drupal_set_message("Populated child collections were not deleted.");
+        $conflict = TRUE;
+        drupal_set_message(t("Populated child collections were not deleted."));
       }
     }
   }
   $pids_to_delete = array_diff($pids, $populated_child_collections);
 
   foreach ($pids_to_delete as $pid_to_delete) {
-    $restConnection->repository->purgeObject($pid_to_delete);
+    $rest_connection->repository->purgeObject($pid_to_delete);
   }
   drupal_goto("islandora/object/" . $collection_pid);
 }
@@ -94,8 +104,8 @@ function islandora_collection_deletion_form_submit($form, &$form_state) {
 function delete_root_collection($pid) {
   module_load_include('inc', 'islandora', 'RestConnection');
   try {
-    $restConnection = new RestConnection();
-    $restConnection->repository->purgeObject($pid);
+    $rest_connection = new RestConnection();
+    $rest_connection->repository->purgeObject($pid);
   } catch (Exception $e) {
     drupal_set_message(t("Collection '@pid' could not be deleted!", array('@pid' => $pid)), 'error');
     return;

@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * @file 
+ * CollectionManagement.inc
+ */
+
+/**
  * collection creation form 
  * @param array $form_state
  * @param string $parent_collection_pid
@@ -219,7 +224,7 @@ function collection_management_form($this_collection_pid, $content_models) {
     '#id' => 'change_model',
   );
 
-  return($form);
+  return $form;
 }
 
 /**
@@ -409,9 +414,9 @@ function collection_management_form_submit($form, &$form_state) {
  */
 function delete_objects_as_batch($pid) {
   module_load_include('inc', 'islandora', 'RestConnection');
-  $restConnection = new RestConnection();
+  $rest_connection = new RestConnection();
   $name = $user->name;
-  $restConnection->repository->purgeObject($pid);
+  $rest_connection->repository->purgeObject($pid);
 }
 
 /**
@@ -420,8 +425,8 @@ function delete_objects_as_batch($pid) {
  */
 function remove_collection_association($pid, $collection_pid) {
   module_load_include('inc', 'islandora', 'RestConnection');
-  $restConnection = new RestConnection();
-  $fedora_object = new FedoraObject($pid, $restConnection->repository);
+  $rest_connection = new RestConnection();
+  $fedora_object = new FedoraObject($pid, $rest_connection->repository);
   $fedora_object->relationships->remove(NULL, 'isMemberOfCollection', $collection_pid);
 }
 
@@ -432,7 +437,7 @@ function remove_collection_association($pid, $collection_pid) {
  */
 function get_represented_content_models($pid) {
   module_load_include('inc', 'islandora', 'RestConnection');
-  $restConnection = new RestConnection();
+  $rest_connection = new RestConnection();
   require_once 'sites/all/libraries/tuque/RepositoryQuery.php';
 
   $query = "select \$model \$title from <#ri>
@@ -441,12 +446,14 @@ where (\$object <info:fedora/fedora-system:def/relations-external#isMemberOf> <i
        and \$object <info:fedora/fedora-system:def/model#hasModel> \$model
        and \$object <dc:title> \$title";
 
-  $model_pids = $restConnection->repository->ri->itqlQuery($query, 'unlimited', '0');
+  $model_pids = $rest_connection->repository->ri->itqlQuery($query, 'unlimited', '0');
   $represented_models = array();
   foreach ($model_pids as $model_pid) {
-    if ($model_pid && $model_pid['model']['value'] != 'fedora-system:FedoraObject-3.0') {
-
-      $represented_models[$model_pid['model']['value']] = $model_pid['model']['value'] . ' ~ ' . $model_pid['title']['value'];
+    
+    if ($model_pid['model']['value'] && $model_pid['model']['value'] != 'fedora-system:FedoraObject-3.0') {
+      $fedora_object = new FedoraObject($model_pid['model']['value'], $rest_connection->repository);
+      $content_model_title = $fedora_object->label;
+      $represented_models[$model_pid['model']['value']] = $model_pid['model']['value'] . ' ~ ' . $content_model_title;
     }
   }
   return $represented_models;
@@ -454,7 +461,7 @@ where (\$object <info:fedora/fedora-system:def/relations-external#isMemberOf> <i
 
 function get_child_collections($collection_pid) {
   module_load_include('inc', 'islandora', 'RestConnection');
-  $restConnection = new RestConnection();
+  $rest_connection = new RestConnection();
   require_once 'sites/all/libraries/tuque/RepositoryQuery.php';
 
   $query = <<<EOD
@@ -463,14 +470,14 @@ function get_child_collections($collection_pid) {
     and \$object  <info:fedora/fedora-system:def/relations-external#isMemberOfCollection> <info:fedora/$collection_pid>
 EOD;
 
-  $lines = $restConnection->repository->ri->itqlQuery($query, 'unlimited', '0');
+  $lines = $rest_connection->repository->ri->itqlQuery($query, 'unlimited', '0');
   $collection_pids = array_values(array_filter($lines));
   return $collection_pids;
 }
 
 function Islandora_collections_get_collection_from_pid($pid) {
   module_load_include('inc', 'islandora', 'RestConnection');
-  $restConnection = new RestConnection();
+  $rest_connection = new RestConnection();
   require_once 'sites/all/libraries/tuque/RepositoryQuery.php';
 
   $query = 'select  $parent from <#ri>
@@ -479,7 +486,7 @@ function Islandora_collections_get_collection_from_pid($pid) {
 		and $object <dc:identifier> \'' . $pid . '\'
 		order by $object';
 
-  $object_pids = $restConnection->repository->ri->itqlQuery($query, 'unlimited', '0');
+  $object_pids = $rest_connection->repository->ri->itqlQuery($query, 'unlimited', '0');
   $object_pids = array_values(array_filter($object_pids));
   return $object_pids;
 }
@@ -494,7 +501,7 @@ function Islandora_collections_get_collection_from_pid($pid) {
  */
 function get_related_items_as_array($collection_pid, $relationship = array('isMemberOfCollection'), $limit = 10000, $offset = 0, $active_objects_only = TRUE, $cmodel = NULL, $orderby = '$title') {
   module_load_include('inc', 'islandora', 'RestConnection');
-  $restConnection = new RestConnection();
+  $rest_connection = new RestConnection();
   require_once 'sites/all/libraries/tuque/RepositoryQuery.php';
   
   global $user;
@@ -534,7 +541,7 @@ function get_related_items_as_array($collection_pid, $relationship = array('isMe
                     minus $content <mulgara:is> <info:fedora/fedora-system:FedoraObject-3.0>
                     order by ' . $orderby;
   
-  $results = $restConnection->repository->ri->itqlQuery($query_string, $limit, $offset);
+  $results = $rest_connection->repository->ri->itqlQuery($query_string, $limit, $offset);
 
   return $results;
 }
@@ -568,13 +575,13 @@ function get_related_items_as_array($collection_pid, $relationship = array('isMe
 //    $collectionHelper = new CollectionClass();
   module_load_include('inc', 'islandora', 'RestConnection');
   require_once 'sites/all/libraries/tuque/RepositoryQuery.php';
-  $restConnection = new RestConnection();
+  $rest_connection = new RestConnection();
     $pids = array();
     $query = 'select $object from <#ri>
             where <info:fedora/' . $pid . '> <fedora-model:hasModel> $object
             and $object <fedora-model:state> <info:fedora/fedora-system:def/model#Active>';
 //    $content_models = $collectionHelper->getRelatedItems($pid, $query);
-    $content_models = $restConnection->repository->ri->itqlQuery($query, 'unlimited', '0');
+    $content_models = $rest_connection->repository->ri->itqlQuery($query, 'unlimited', '0');
     
     if (empty($content_models)) {
       return $pids;
@@ -604,7 +611,7 @@ function get_related_items_as_array($collection_pid, $relationship = array('isMe
  */
 function get_content_models_as_option_array() {
   module_load_include('inc', 'islandora', 'RestConnection');
-  $restConnection = new RestConnection();
+  $rest_connection = new RestConnection();
     require_once 'sites/all/libraries/tuque/RepositoryQuery.php';
 
     $restricted = variable_get('fedora_namespace_restriction_enforced', TRUE);
@@ -622,7 +629,7 @@ function get_content_models_as_option_array() {
           and $object <fedora-model:state> <info:fedora/fedora-system:def/model#Active>)
           order by $title';
     
-    $list = $restConnection->repository->ri->itqlQuery($query, 'unlimited', '0');
+    $list = $rest_connection->repository->ri->itqlQuery($query, 'unlimited', '0');
     $options = array();
     foreach ($list as $item) {   //removes  blanks
         if ($item) {
@@ -641,10 +648,10 @@ function get_content_models_as_option_array() {
 
   function getContentModels($collection_pid, $showError = TRUE) {
     module_load_include('inc', 'islandora', 'RestConnection');
-    $restConnection = new RestConnection();
+    $rest_connection = new RestConnection();
 //    module_load_include('inc', 'Fedora_Repository', 'ContentModel');
     $collection_stream = $this->getCollectionPolicyStream($collection_pid);
-    $collection_object = new FedoraObject($collection_pid, $restConnection->repository);
+    $collection_object = new FedoraObject($collection_pid, $rest_connection->repository);
     $collection_stream = $collection_object->getDatastream('COLLECTION_POLICY');
     try {
       $xml = new SimpleXMLElement($collection_stream);

@@ -13,9 +13,9 @@ function islandora_ingest_get_object($content_models, $collection_pid, $relation
   $connection = new RestConnection($user);
   $object = $connection->repository->constructObject($namespace);
   foreach($content_models as $content_model) {
-    $object->relationships->add(FEDORA_MODEL_URI, 'hasModel', $content_model);
+    $object->relationships->add(FEDORA_MODEL_URI, 'hasModel', $content_model['pid']);
   }
-  $object->relationships->add($relationship['uri'], $relationship['value'], $collection_pid);
+  $object->relationships->add(FEDORA_RELS_EXT_URI, $relationship, $collection_pid);
   module_invoke_all('islandora_ingest_pre_ingest', $object, $content_models, $collection_pid);
   return $object;
 }
