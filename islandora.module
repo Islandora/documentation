@@ -480,6 +480,8 @@ function islandora_view_default_object() {
  * @return string 
  */
 function islandora_view_object($object_id = NULL) {
+  module_load_include('inc', 'islandora', 'includes/Breadcrumbs');
+  drupal_set_breadcrumb(islandora_get_breadcrumbs($object_id));
   //return $object_id;
   if (!isset($object_id)) {
     $object_id = variable_get('islandora_repository_pid', 'islandora:root');
