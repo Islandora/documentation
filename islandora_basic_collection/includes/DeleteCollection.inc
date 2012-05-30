@@ -17,7 +17,7 @@ function islandora_collection_deletion_form($form, &$form_state, $pid) {
   $potential_collections = get_collections_as_option_array();
   $table = islandora_collection_table($pid);
   $deletion_message = ($table) ? "Delete Members of this Collection" : "Delete Collection";
-  $submit_text_message = ($table) ? "Delete Selected Objects" : "Delete Collection";
+  $submit_text_message = ($table) ? "Delete selected objects" : "Delete collection";
 
   $form = array();
   

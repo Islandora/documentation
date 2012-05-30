@@ -75,7 +75,7 @@ function islandora_create_child_collection_form($form, &$form_state, $this_colle
 
   $form['child_creation']['submit'] = array(
     '#type' => 'submit',
-    '#value' => t('Create Collection'),
+    '#value' => t('Create collection'),
     '#id' => 'create_child'
   );
   return $form;

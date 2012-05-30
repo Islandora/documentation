@@ -28,11 +28,6 @@ function islandora_manage_policies_form($form, &$form_state, $collection_pid) {
     }
   }
 
-  $new_options = array();
-  if (is_array($content_models) && is_array($cm_options)) {
-    $new_options = array_diff_key($content_models, $cm_options);
-  }
-
   $namespace = substr($collection_pid, 0, strpos($collection_pid, ":"));
 
   $collection_policy_dsid = variable_get('Islandora_Collection_Policy_DSID', 'COLLECTION_POLICY');
@@ -94,7 +89,7 @@ function islandora_manage_policies_form($form, &$form_state, $collection_pid) {
 
   $form['manage_collection_policy']['add']['submit'] = array(
     '#type' => 'submit',
-    '#value' => t('Add Content Model to Collection Policy'),
+    '#value' => t('Add content model to collection policy'),
     '#id' => 'add_cm'
   );
 
@@ -115,7 +110,7 @@ function islandora_manage_policies_form($form, &$form_state, $collection_pid) {
 
     $form['manage_collection_policy']['remove']['submit'] = array(
       '#type' => 'submit',
-      '#value' => t('Remove Content Model From Collection Policy'),
+      '#value' => t('Remove content model from collection policy'),
       '#id' => 'remove_cm'
     );
   }
@@ -127,7 +122,6 @@ function islandora_manage_policies_form_validate($form, &$form_state) {
 }
 
 function islandora_manage_policies_form_submit($form, &$form_state) {
-  module_load_include('inc', 'islandora_basic_collection', 'CollectionPolicy');
   module_load_include('inc', 'islandora', 'RestConnection');
   $rest_connection = new RestConnection();
 
