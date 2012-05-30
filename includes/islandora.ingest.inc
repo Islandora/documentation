@@ -21,7 +21,7 @@ function islandora_ingest_get_object($content_models, $collection_pid, $relation
 }
 
 function islandora_ingest_add_object(&$object) {
-  $object->repository->ingestObject($object);
+  //$object->repository->ingestObject($object);
   module_invoke_all('islandora_ingest_post_ingest', $object);
   return $object;
 }

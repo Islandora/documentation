@@ -32,6 +32,7 @@ function islandora_datastream_as_attachment($object_id, $dsid) {
   if (isset($method) && $method == 'download') {
     header("Content-Disposition: attachment; filename=\"" . $fedora_object[$dsid]->label);
   }
+  //maybe able to use drupal's file transfer here
   print($fedora_object[$dsid]->content);
   exit();
 }
