@@ -86,18 +86,15 @@ function islandora_create_child_collection_form_validate($form, &$form_state) {
 }
 
 function islandora_create_child_collection_form_submit($form, &$form_state) {
-  global $base_root;
+  global $base_url;
   module_load_include('inc', 'islandora', '/includes/islandora.ingest');
-    $thumbnail = $base_root . '/' . drupal_get_path('module', 'islandora_basic_collection') . '/Crystal_Clear_filesystem_folder_grey.png';
+    $thumbnail = $base_url . '/' . drupal_get_path('module', 'islandora_basic_collection') . '/Crystal_Clear_filesystem_folder_grey.png';
     $new_collection_pid = $form_state['values']['new_collection_pid'];
     $new_collection_label = $form_state['values']['collection_name'];
     $namespace = $form_state['values']['collection_namespace'];
 //    $all_cModels = get_content_models_as_option_array();
-    $content_models = array('islandora:collectionCModel');
-    $relationship = array(
-      'uri' => FEDORA_RELS_EXT_URI,
-      'value' => 'isMemberOfCollection',
-    );
+    $content_models = array(array('pid' => 'islandora:collectionCModel'));
+    $relationship = 'isMemberOfCollection';
 
     $fedora_object = islandora_ingest_get_object($content_models, $form_state['values']['current'], $relationship, $new_collection_pid);
     $fedora_object->label = $new_collection_label;
