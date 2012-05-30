@@ -170,16 +170,13 @@ function islandora_menu() {
     'access arguments' => array(FEDORA_ADD_DS)
   );
 
-
-  // $items['islandora/object/%/add'] = array(
-  //   'title' => 'Add to an object',
-  //   'file' => 'includes/datastream.inc',
-  //   'page callback' => 'drupal_get_form',
-  //   'page arguments' => array('islandora_add_datastream_form',2),
-  //   'type' => MENU_NORMAL_ITEM,
-  //   'access arguments' => array(FEDORA_ADD_DS)
-  // );
-
+  $items['islandora/object/%/manage/datastreams/add/autocomplete'] = array(
+    'file' => 'includes/datastream.inc',
+    'page callback' => 'islandora_datastream_autocomplete_callback',
+    'page arguments' => array(2),
+    'type' => MENU_CALLBACK,
+    'access arguments' => array(FEDORA_ADD_DS)
+  );
 
   $items['islandora/object/%/datastream/%'] = array(
     'title' => 'View datastream',

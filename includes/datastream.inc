@@ -339,6 +339,7 @@ function islandora_add_datastream_form($form, &$form_state, $object_id) {
     '#value' => t('Add Datastream')
   );
 
+  /*
   if (!empty($unused_dsids)) {
     $dsidsForForm = array();
     foreach ($unused_dsids as $key => $value) {
@@ -354,15 +355,27 @@ function islandora_add_datastream_form($form, &$form_state, $object_id) {
     $form['add_fieldset']['stream_id']['#options'] = $dsidsForForm;
   }
   else {
+   *
+   */
     $form['add_fieldset']['stream_id'] = array(
       '#title' => 'Datastream ID',
       '#required' => 'TRUE',
       '#description' => t('An ID for this stream that is unique to this object. Must start with a letter and contain only alphanumeric characters and dashes and underscores.'),
       '#type' => 'textfield',
       '#weight' => -1,
+      '#autocomplete_path' => "islandora/object/$object_id/manage/datastreams/add/autocomplete",
     );
-  }
+  //}
   return $form;
+}
+
+function islandora_datastream_autocomplete_callback($object_id) {
+  $dsids = islandora_get_unused_dsids($object_id);
+  $output = array();
+  foreach($dsids as $id => $ds) {
+    $output[$id] = $id;
+  }
+  drupal_json_output($output);
 }
 
 function islandora_datastream_get_human_readable_size($ds) {
