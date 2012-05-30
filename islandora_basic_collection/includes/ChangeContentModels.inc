@@ -28,7 +28,7 @@ function islandora_change_content_models_form($form, &$form_state, $collection_p
   $collection_policy_datastream = $collection_object->getDatastream($collection_policy_dsid);
 
   $supported_collection_models = array();
-  if ($collection_policy_datastream->content) {
+  if ($collection_policy_datastream && $collection_policy_datastream->content) {
     $collection_policy = new CollectionPolicy($collection_policy_datastream->content);
     $supported_collection_models = $collection_policy->getContentModels();
   }

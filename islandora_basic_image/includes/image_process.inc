@@ -1,5 +1,26 @@
 <?php
 
+function islandora_basic_image_create_all_derivatives($object){
+  module_load_include('inc', 'islandora', 'includes/MimeClass');
+  module_load_include('inc', 'islandora_basic_image', 'includes/image_process');
+  $mime_class = new MimeClass();
+  if(!isset($object['OBJ'])){
+    drupal_set_message(t('Could not create image derivatives for %s.  No image file was uploaded.',array('%s' => $object->id)),'error');
+    return "";
+  }
+  $ext = $mime_class->getExtension($object['OBJ']->mimeType);
+  $file_name = str_replace(':', '-', $object->id);
+  $original_file = file_save_data($object['OBJ']->content, 'temporary://' . $file_name . 'OBJ.' . $ext);
+  $tn_file = file_copy($original_file, 'temporary://' . $file_name . 'TN.' . $ext);
+  if (islandora_basic_image_create_derivative($tn_file, 200, 200)) {
+    islandora_basic_image_add_datastream($object, 'TN', $tn_file);
+  }
+  $medium_file = file_copy($original_file, 'temporary://' . $file_name . 'MEDIUM.' . $ext);
+  if (islandora_basic_image_create_derivative($medium_file, 500, 700)) {
+    islandora_basic_image_add_datastream($object, 'MEDIUM_SIZE', $medium_file);
+  }
+}
+
 
 /**
  *

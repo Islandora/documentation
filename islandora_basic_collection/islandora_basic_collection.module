@@ -62,6 +62,26 @@ function islandora_basic_collection_menu() {
 }
 
 /**
+ * Implements hook_menu_local_tasks_alter().
+ */
+function islandora_basic_collection_menu_local_tasks_alter(&$data, $router_item, $root_path) {
+  if (module_exists('islandora_content_model_forms')) {
+    // Add action link 
+    if ($root_path == 'islandora/object/%/manage/collection') {
+      $object_id = $router_item['page_arguments'][0];
+      $item = menu_get_item("islandora/ingest_form/$object_id");
+      $item['title'] = 'Add a repository item';
+      if ($item['access']) {
+        $data['actions']['output'][] = array(
+          '#theme' => 'menu_local_action',
+          '#link' => $item,
+        );
+      }
+    }
+  }
+}
+
+/**
  * This function is where we create the view for the related menu item
  * @param type $object_id
  * @return type
@@ -222,9 +242,10 @@ function islandora_basic_collection_islandora_view_object($object, $user) {
   foreach ($object->models as $model) {
     if (isset($cmodel_list[$model][ISLANDORA_VIEW_HOOK]) && $cmodel_list[$model][ISLANDORA_VIEW_HOOK] == TRUE) {
       $display = (empty($_GET['display'])) ? 'list' : $_GET['display'];
-      if($display == 'grid'){
+      if ($display == 'grid') {
         $output = theme('islandora_basic_collection_grid', array('islandora_object' => $object));
-      } else {
+      }
+      else {
         $output = theme('islandora_basic_collection', array('islandora_object' => $object));
       }
       return array('Collection View' => $output);
@@ -238,7 +259,7 @@ function islandora_basic_collection_islandora_view_object($object, $user) {
  * currently just calls normal view preprocess as variables are the same
  * @param type $variables 
  */
-function islandora_basic_collection_preprocess_islandora_basic_collection_grid(&$variables){
+function islandora_basic_collection_preprocess_islandora_basic_collection_grid(&$variables) {
   islandora_basic_collection_preprocess_islandora_basic_collection($variables);
 }
 
@@ -266,7 +287,7 @@ function islandora_basic_collection_preprocess_islandora_basic_collection(&$vari
   $results = islandora_basic_collection_get_objects($islandora_object, $page_number, $page_size);
   $total_count = count($results);
   pager_default_initialize($total_count, $page_size);
-  
+
   $pager = theme('pager', array('quantity' => $total_count));
   $variables['pager'] = $pager;
   $variables['islandora_dublin_core'] = $dc_object;
@@ -288,7 +309,7 @@ function islandora_basic_collection_preprocess_islandora_basic_collection(&$vari
   $associated_objects_array = array();
   $start = $page_size * ($page_number);
   $end = min($start + $page_size, $total_count);
- 
+
   for ($i = $start; $i < $end; $i++) {
     $pid = $results[$i]['object']['value'];
     $fc_object = islandora_basic_collection_get_object($pid);

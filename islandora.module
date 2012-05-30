@@ -170,16 +170,13 @@ function islandora_menu() {
     'access arguments' => array(FEDORA_ADD_DS)
   );
 
-
-  // $items['islandora/object/%/add'] = array(
-  //   'title' => 'Add to an object',
-  //   'file' => 'includes/datastream.inc',
-  //   'page callback' => 'drupal_get_form',
-  //   'page arguments' => array('islandora_add_datastream_form',2),
-  //   'type' => MENU_NORMAL_ITEM,
-  //   'access arguments' => array(FEDORA_ADD_DS)
-  // );
-
+  $items['islandora/object/%/manage/datastreams/add/autocomplete'] = array(
+    'file' => 'includes/datastream.inc',
+    'page callback' => 'islandora_datastream_autocomplete_callback',
+    'page arguments' => array(2),
+    'type' => MENU_CALLBACK,
+    'access arguments' => array(FEDORA_ADD_DS)
+  );
 
   $items['islandora/object/%/datastream/%'] = array(
     'title' => 'View datastream',
@@ -483,6 +480,8 @@ function islandora_view_default_object() {
  * @return string 
  */
 function islandora_view_object($object_id = NULL) {
+  module_load_include('inc', 'islandora', 'includes/Breadcrumbs');
+  drupal_set_breadcrumb(islandora_get_breadcrumbs($object_id));
   //return $object_id;
   if (!isset($object_id)) {
     $object_id = variable_get('islandora_repository_pid', 'islandora:root');
@@ -500,14 +499,14 @@ function islandora_view_object($object_id = NULL) {
     drupal_set_message(t('Error getting Islandora object %s', array('%s' => $object_id)), 'error');
     return"";
   }
-  drupal_alter('islandora_view_object', $fedora_object); //modify object if required before it is passed along
+  drupal_alter('islandora_object', $fedora_object); //modify object if required before it is passed along
   $arr = module_invoke_all('islandora_view_object', $fedora_object, $user, $page_number, $page_size); //allow submodules to decide how to handle content base on object type
   if (empty($arr)) {
     //TODO: make sure we iterate over the array as they will be more then one cmodel per object
     drupal_set_message(t('there was an error loading the view for islandora object %s', array('%s' => $object_id)), 'error');
     return "";
   }
-  //module_invoke_all(islandora_display($arr)),
+  drupal_alter('islandora_display',$arr);
   $output = "";
   foreach ($arr as $key => $value) {
     $output .= $value; //if we have multiple modules handle one cmodel we need to iterate over multiple
