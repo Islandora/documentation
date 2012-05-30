@@ -364,3 +364,24 @@ function islandora_add_datastream_form($form, &$form_state, $object_id) {
   }
   return $form;
 }
+
+function islandora_datastream_get_human_readable_size($ds) {
+  module_load_include('inc', 'islandora', 'includes/utilities');
+
+  // we return - if we don't have a size
+  if($ds->controlGroup == 'M' || $ds->controlGroup == 'X') {
+    return islandora_convert_bytes_to_human_readable($ds->size);
+  }
+  else {
+    return '-';
+  }
+}
+
+function islandora_datastream_get_url($ds, $type = 'download') {
+  if($ds->controlGroup == 'R') {
+    return $ds->url;
+  }
+  else {
+    return "islandora/object/{$ds->parent->id}/datastream/{$ds->id}/$type";
+  }
+}
