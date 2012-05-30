@@ -39,7 +39,9 @@ function islandora_datastream_as_attachment($object_id, $dsid) {
 function islandora_get_datastream_parents($islandora_object) {
   $parent_collections = array();
   $repository = $islandora_object->repository;
-  $collections = $islandora_object->relationships->get(FEDORA_RELS_EXT_URI, 'isMemberOfCollection');
+  $collections1 = $islandora_object->relationships->get(FEDORA_RELS_EXT_URI, 'isMemberOfCollection');
+  $collections2 = $islandora_object->relationships->get(FEDORA_RELS_EXT_URI, 'isMemberOf');
+  $collections = array_merge($collections1, $collections2);
 
   foreach($collections as $collection) {
     try {
