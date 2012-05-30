@@ -596,22 +596,12 @@ function islandora_preprocess_islandora_default(&$variables) {
   drupal_add_js('misc/form.js');
   drupal_add_js('misc/collapse.js');
   $islandora_object = $variables['islandora_object'];
-  $repository = $islandora_object->repository;
   module_load_include('inc', 'islandora', 'includes/islandora_dublin_core');
   module_load_include('inc', 'islandora', 'includes/utilities');
+  module_load_include('inc', 'islandora', 'includes/datastream');
 
-  $parent_collections = array();
-  $collections = $islandora_object->relationships->get(FEDORA_RELS_EXT_URI, 'isMemberOfCollection');
-  foreach($collections as $collection) {
-    $pid = $collection['object']['value'];
-    $object = $repository->getObject($collection['object']['value']);
-    $parent_collections[$pid] = array();
-    $parent_collections[$pid]['object'] = $object;
-    $parent_collections[$pid]['url'] = 'islandora/object/' . $object->id;
-    $parent_collections[$pid]['label'] = $object->label;
-    $parent_collections[$pid]['label_link'] = l($parent_collections[$pid]['label'], $parent_collections[$pid]['url']);
-  }
-  $variables['parent_collections'] = $parent_collections;
+  $variables['parent_collections'] = islandora_get_datastream_parents($islandora_object);
+
   $datastreams = array();
   foreach ($islandora_object as $ds) {
     $pid = $islandora_object->id;

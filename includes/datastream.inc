@@ -36,6 +36,27 @@ function islandora_datastream_as_attachment($object_id, $dsid) {
   exit();
 }
 
+function islandora_get_datastream_parents($islandora_object) {
+  $parent_collections = array();
+  $repository = $islandora_object->repository;
+  $collections = $islandora_object->relationships->get(FEDORA_RELS_EXT_URI, 'isMemberOfCollection');
+
+  foreach($collections as $collection) {
+    try {
+      $pid = $collection['object']['value'];
+      $object = $repository->getObject($collection['object']['value']);
+      $parent_collections[$pid] = array();
+      $parent_collections[$pid]['object'] = $object;
+      $parent_collections[$pid]['url'] = 'islandora/object/' . $object->id;
+      $parent_collections[$pid]['label'] = $object->label;
+      $parent_collections[$pid]['label_link'] = l($parent_collections[$pid]['label'], $parent_collections[$pid]['url']);
+    }
+    catch (RepositoryException $e) {}
+  }
+
+  return $parent_collections;
+}
+
 /**
  *
  * @param array $arr
