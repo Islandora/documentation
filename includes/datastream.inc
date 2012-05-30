@@ -426,3 +426,55 @@ function islandora_datastream_get_url($ds, $type = 'download') {
     return "islandora/object/{$ds->parent->id}/datastream/{$ds->id}/$type";
   }
 }
+
+function islandora_datastream_edit_get_link($object, $ds_id) {
+  $edit_registry = module_invoke_all('islandora_edit_datastream_registry', $object, $ds_id);
+  if (count($edit_registry) > 0 && user_access(FEDORA_METADATA_EDIT)) {
+    return l(t('edit'), 'islandora/object/' . $object->id . '/datastream/' . $ds_id . '/edit');
+  }
+  else {
+    return '';
+  }
+}
+
+function islandora_edit_datastream($object_id, $ds_id) {
+  global $user;
+  try {
+    module_load_include('inc', 'islandora', 'RestConnection');
+    $restConnection = new RestConnection($user);
+    $object = new FedoraObject($object_id, $restConnection->repository);
+    
+    $edit_registry = module_invoke_all('islandora_edit_datastream_registry', $object, $ds_id);
+    $edit_count = count($edit_registry);
+  
+    if ($edit_count == 0) {
+      // No edit implementations.
+      drupal_set_message(t('There are no edit methods specified for this datastream.'));
+      drupal_goto('islandora/object/' . $object->id . '/manage/datastreams');
+    }
+    elseif ($edit_count == 1) {
+      // One registry implementation, go there
+      drupal_goto($edit_registry[0]['url']);
+    }
+    else {
+      // Multiple edit routes registered
+      return islandora_edit_datastream_registry_render($edit_registry);
+    }
+  } catch (Exception $e) {
+    drupal_set_message(t('Error getting Islandora edit method for %s ', array('%s' => $object_id)), 'error');
+    return;
+  }
+  
+}
+
+//@TODO: theme / preprocess
+function islandora_edit_datastream_registry_render($edit_registry) {
+  $output = array(
+    '#type' => 'markup',
+    '#markup' => '',
+  );
+  foreach ($edit_registry AS $edit_route) {
+    $output['#markup'] .= l($edit_route['name'], $edit_route['url']) . '<br/>';
+  }
+  return $output;
+}
