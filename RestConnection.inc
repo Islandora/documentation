@@ -61,5 +61,8 @@ class RestConnection {
     $this->repository = new FedoraRepository($this->api, $this->cache);
   }
 
+  static function exists() {
+    return class_exists('RepositoryConnection');
+  }
 }
 
