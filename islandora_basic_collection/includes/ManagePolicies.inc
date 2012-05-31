@@ -6,10 +6,11 @@
  */
 
 /**
- *
- * @param type $form
- * @param type $form_state
- * @param type $collection_pid
+ * Create form to collection policy management feature
+ * 
+ * @param array $form
+ * @param array $form_state
+ * @param string $collection_pid
  * @return type
  */
 function islandora_manage_policies_form($form, &$form_state, $collection_pid) {
@@ -121,6 +122,12 @@ function islandora_manage_policies_form_validate($form, &$form_state) {
 
 }
 
+/**
+ * Submit handler for collection policy management form
+ * 
+ * @param array $form
+ * @param array $form_state 
+ */
 function islandora_manage_policies_form_submit($form, &$form_state) {
   module_load_include('inc', 'islandora', 'RestConnection');
   $rest_connection = new RestConnection();

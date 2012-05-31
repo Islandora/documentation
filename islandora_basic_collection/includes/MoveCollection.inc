@@ -6,7 +6,8 @@
  */
 
 /**
- *
+ * Create object migration form for the collection manager
+ * 
  * @param array $form_state
  * @param string $pid
  *
@@ -56,6 +57,12 @@ function islandora_collection_migrate_form($form, &$form_state, $pid) {
   return $form;
 }
 
+/**
+ * Submit handler for object migration form
+ * 
+ * @param array $form
+ * @param array $form_state 
+ */
 function islandora_collection_migrate_form_submit($form, &$form_state) {
   module_load_include('inc', 'islandora', 'RestConnection');
   $rest_connection = new RestConnection();

@@ -3,29 +3,8 @@
 /**
  * @file 
  * CollectionManagement.inc
+ * A set of useful functions to help with collection management
  */
-
-/**
- * deletes PID 
- * @param string $pid
- */
-function delete_objects_as_batch($pid) {
-  module_load_include('inc', 'islandora', 'RestConnection');
-  $rest_connection = new RestConnection();
-  $name = $user->name;
-  $rest_connection->repository->purgeObject($pid);
-}
-
-/**
- * removes association of this object to this collection
- * @param string $pid
- */
-function remove_collection_association($pid, $collection_pid) {
-  module_load_include('inc', 'islandora', 'RestConnection');
-  $rest_connection = new RestConnection();
-  $fedora_object = new FedoraObject($pid, $rest_connection->repository);
-  $fedora_object->relationships->remove(NULL, 'isMemberOfCollection', $collection_pid);
-}
 
 /**
  * returns content models associated with all objects in a collection
@@ -102,7 +81,9 @@ function get_related_items_as_array($collection_pid, $relationship = array('isMe
   require_once 'sites/all/libraries/tuque/RepositoryQuery.php';
   
   global $user;
-//  if (!fedora_repository_access(OBJECTHELPER :: $OBJECT_HELPER_VIEW_FEDORA, $pid, $user)) {
+  
+// Not sure if this is necessary given that we should never be able to delete objects in a namespace that we don't have access to.
+//  if (!fedora_repository_access('view fedora repository', $collection_pid['object']['value'])) {
 //    drupal_set_message(t("You do not have access to Fedora objects within the attempted namespace or access to Fedora denied."), 'error');
 //    return array();
 //  }
@@ -142,6 +123,45 @@ function get_related_items_as_array($collection_pid, $relationship = array('isMe
 
   return $results;
 }
+
+
+  /**
+   * determines whether we can see the object or not
+   * checks PID namespace permissions, and user permissions
+   * @global type $user
+   * @param type $op
+   * @param type $pid
+   * @return type 
+   */
+  function fedora_repository_access($permission, $pid) {
+    global $user;
+    $name_space_access = FALSE;
+    $is_restricted = variable_get('islandora_namespace_restriction_enforced', TRUE);
+    if (!$is_restricted) {
+      $name_space_access = TRUE;
+    }
+    if ($pid == NULL) {
+      $pid = variable_get('islandora_repository_pid', 'islandora:root');
+    }
+    $name_space_allowed = explode(" ", variable_get('fedora_pids_allowed', 'default: demo: changeme: islandora: ilives: islandora-book: books: newspapers: '));
+    $pos = NULL;
+    foreach ($name_space_allowed as $name_space) {
+      $pos = stripos($pid, $name_space);
+      if ($pos === 0) {
+        $name_space_access = TRUE;
+      }
+    }
+    if ($name_space_access) {
+      $user_access = user_access($permission);
+      if ($user_access == NULL) {
+        return FALSE;
+      }
+      return $user_access;
+    }
+    else {
+      return FALSE;
+    }
+  }
 
   /**
    * gets the name of the content models for the specified object
@@ -219,28 +239,3 @@ function get_content_models_as_option_array() {
 
     return $options;
 }
-
-  function get_content_models($collection_pid, $show_error = TRUE) {
-    module_load_include('inc', 'islandora', 'RestConnection');
-    $rest_connection = new RestConnection();
-    $collection_stream = $this->getCollectionPolicyStream($collection_pid);
-    $collection_object = new FedoraObject($collection_pid, $rest_connection->repository);
-    $collection_stream = $collection_object->getDatastream('COLLECTION_POLICY');
-    try {
-      $xml = new SimpleXMLElement($collection_stream);
-    } catch (Exception $e) {
-      if ($show_error) {
-        drupal_set_message(t('@e', array('@e' => check_plain($e->getMessage()))), 'error');
-      }
-      return NULL;
-    }
-    foreach ($xml->contentmodels->contentmodel as $content_model) {
-      $content_model_object = new ContentModel();
-      $content_model_object->contentModelDsid = $content_model->dsid;
-      $content_model_object->contentModelPid = $content_model->pid;
-      $content_model_object->pidNamespace = $content_model->pidNamespace;
-      $content_model_object->contentModelName = $content_model['name'];
-      $models[] = $content_model_object;
-    }
-    return $models;
-  }
