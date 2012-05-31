@@ -269,7 +269,7 @@ function islandora_basic_collection_preprocess_islandora_basic_collection_wrappe
   $results = islandora_basic_collection_get_objects($islandora_object, $page_number, $page_size);
   $total_count = count($results);
   pager_default_initialize($total_count, $page_size);
-  $variables['collection_pager'] = theme('pager', array('quantity' => $total_count));
+  $variables['collection_pager'] = theme('pager', array('quantity' => 10));
   $display = (empty($_GET['display'])) ? 'list' : $_GET['display'];
   if ($display == 'grid') {
     $collection_content = theme('islandora_basic_collection_grid', array('islandora_object' => $islandora_object, 'collection_results' => $results));
