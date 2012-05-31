@@ -101,8 +101,8 @@ function islandora_basic_collection_preprocess_islandora_basic_collection(&$vari
       $thumbnail_img = '<img src="' . $base_path . $object_url . '/datastream/TN/view"' . '/>';
     }
     else {
-      //TODO: change this default image url
-      $thumbnail_img = '<img src="http://codesprint-centos.islandora.ca/islandora/object/islandora%3A52/datastream/TN"' . '/>';
+      $image_path = drupal_get_path('module', 'islandora');
+      $thumbnail_img = '<img src="' .$base_path .  $image_path . '/images/Crystal_Clear_action_filenew.png"/>';
     }
     $associated_objects_array[$pid]['thumbnail'] = $thumbnail_img;
     $associated_objects_array[$pid]['title_link'] = l($title, $object_url, array('html' => TRUE, 'attributes' => array('title' => $title)));
