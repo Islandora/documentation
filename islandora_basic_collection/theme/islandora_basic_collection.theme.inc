@@ -17,19 +17,19 @@ function islandora_basic_collection_preprocess_islandora_basic_collection_wrappe
   $total_count = count($results);
   pager_default_initialize($total_count, $page_size);
   $variables['collection_pager'] = theme('pager', array('quantity' => 10));
-  $display = (empty($_GET['display'])) ? 'list' : $_GET['display'];
+  $display = (empty($_GET['display'])) ? variable_get('islandora_basic_collection_default_view', 'grid') : $_GET['display'];
   $link_text = (empty($_GET['display'])) ? 'grid' : $_GET['display'];
   $query_params = drupal_get_query_parameters($_GET);
 
   if ($display == 'grid') {
     $query_params['display'] = 'list';
-    $link_text = 'list view';
+    $link_text = 'List View';
     $link_class = 'islandora-view-default';
     $collection_content = theme('islandora_basic_collection_grid', array('islandora_object' => $islandora_object, 'collection_results' => $results));
   }
   else {
     $query_params['display'] = 'grid';
-    $link_text = 'grid view';
+    $link_text = 'Grid View';
     $link_class = 'islandora-view-grid';
     $collection_content = theme('islandora_basic_collection', array('islandora_object' => $islandora_object, 'collection_results' => $results));
   }

@@ -428,6 +428,21 @@ function islandora_datastream_get_url($ds, $type = 'download') {
   }
 }
 
+function islandora_datastream_get_delete_link($ds) {
+  $datastreams = module_invoke_all('islandora_undeletable_datastreams', $ds->parent->models);
+
+  if(in_array($ds->id, $datastreams)) {
+    return '';
+  }
+  else {
+    return l(t('delete'), 'islandora/object/' . $ds->parent->id . '/datastream/' . $ds->id . '/delete');
+  }
+}
+
+function islandora_islandora_undeletable_datastreams($models) {
+  return array('DC');
+}
+
 function islandora_datastream_edit_get_link($object, $ds_id) {
   $edit_registry = module_invoke_all('islandora_edit_datastream_registry', $object, $ds_id);
   if (count($edit_registry) > 0 && user_access(FEDORA_METADATA_EDIT)) {
