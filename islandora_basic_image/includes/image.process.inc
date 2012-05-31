@@ -19,6 +19,7 @@ function islandora_basic_image_create_all_derivatives($object){
   if (islandora_basic_image_create_derivative($medium_file, 500, 700)) {
     islandora_basic_image_add_datastream($object, 'MEDIUM_SIZE', $medium_file);
   }
+  file_delete($original_file);
 }
 
 
