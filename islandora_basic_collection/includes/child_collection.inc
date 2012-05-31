@@ -15,12 +15,25 @@
  */
 function islandora_create_child_collection_form($form, &$form_state, $this_collection_pid) {
   module_load_include('inc', 'islandora', 'RestConnection');
+  module_load_include('inc', 'islandora_basic_collection', 'includes/CollectionPolicy');
   $rest_connection = new RestConnection();
-  $current_content_models = get_content_models_list($this_collection_pid);
-  if (!in_array('islandora:collectionCModel', $current_content_models)) {
+  $collection_object = new FedoraObject($this_collection_pid, $rest_connection->repository);
+  $policy_datastream = $collection_object->getDatastream(variable_get('Islandora_Collection_Policy_DSID', 'COLLECTION_POLICY'));
+  $collection_policy = new CollectionPolicy($policy_datastream->content);
+  $current_content_models = $collection_policy->getContentModels();
+  
+  $collection_content_model_exists = FALSE;
+  
+  foreach ($current_content_models as $current_content_model) {
+    if ($current_content_model['pid'] == 'islandora:collectionCModel') {
+      $collection_content_model_exists = TRUE;
+    }
+  }
+  
+  if (!$collection_content_model_exists) {
     $form['not_collection'] = array(
       '#type' => 'item',
-      '#title' => t("This object is not a collection and so can't contain child collections. To fix this add the islandora:collectionCModel to this object's collection policy"),
+      '#title' => t("This object can't contain child collections. To fix this add the islandora:collectionCModel to this object's collection policy"),
     );
     return $form;
   }
