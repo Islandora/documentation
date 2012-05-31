@@ -17,7 +17,11 @@ function islandora_collection_migrate_form($form, &$form_state, $pid) {
   $potential_collections = get_collections_as_option_array();
   $table = islandora_collection_table($pid);
   if (!$table) {
-    return;
+    $form['no_objects'] = array(
+      '#type' => 'item',
+      '#title' => t('No objects found in this collection'),
+    );
+    return $form;
   }
   $form = array();
 
