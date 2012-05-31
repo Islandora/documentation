@@ -58,31 +58,6 @@ function islandora_menu() {
     'type' => MENU_NORMAL_ITEM,
     'weight' => 0,
   );
-  /* may not need this
-    $items['admin/islandora/solution_packs'] = array(
-    'title' => 'Solution Packs',
-    'description' => 'Install content models and collections required by installed solution packs.',
-    'page callback' => 'islandora_solution_packs_page',
-    'access arguments' => array(FEDORA_ADD_DS),
-    'file' => 'admin/islandora.solutionpacks.inc',
-    'type' => MENU_NORMAL_ITEM,
-    ); */
-
-  $items['islandoracm.xsd'] = array(
-    'title' => 'Islandora Content Model XML Schema Definition',
-    'page callback' => 'islandora_display_schema',
-    'page arguments' => array('islandoracm.xsd'),
-    'type' => MENU_CALLBACK,
-    'access arguments' => array(FEDORA_VIEW),
-  );
-
-  $items['collection_policy.xsd'] = array(
-    'title' => 'Islandora Content Model XML Schema Definition',
-    'page callback' => 'islandora_display_schema',
-    'page arguments' => array('collection_policy.xsd'),
-    'type' => MENU_CALLBACK,
-    'access arguments' => array(FEDORA_VIEW),
-  );
 
   $items['islandora/ingest/%'] = array(
     'title' => 'Ingest object',
@@ -154,9 +129,9 @@ function islandora_menu() {
   );
 
   $items['islandora/object/%/delete'] = array(
-    'title' => 'Purge object',
-    'page callback' => 'islandora_purge_object',
-    'page arguments' => array(2),
+    'title' => 'Delete object',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('islandora_purge_object', 2),
     'type' => MENU_CALLBACK,
     'access arguments' => array(FEDORA_PURGE),
   );
@@ -294,7 +269,10 @@ function islandora_node_access($op, $pid = NULL, $as_user = NULL) {
  *   ID of the object
  * @return type 
  */
-function islandora_purge_object($object_id) {
+function islandora_purge_object_submit($form, &$form_state) {
+  $object_id = $form_state['values']['pid'];
+  $collection = $form_state['values']['col'];
+
   module_load_include('inc', 'islandora', 'RestConnection');
   global $user;
   if (!isset($object_id)) {
@@ -331,7 +309,38 @@ function islandora_purge_object($object_id) {
     }
   }
   module_invoke_all('islandora_post_purge_object', $object_id, $content_models);  //notify modules post deletion
-  drupal_goto('islandora');
+  drupal_goto($collection);
+}
+
+function islandora_purge_object($form, &$form_state, $pid) {
+
+  module_load_include('inc', 'islandora', 'RestConnection');
+  module_load_include('inc', 'islandora', 'includes/datastream');
+
+  $connection = new RestConnection();
+  $object = $connection->repository->getObject($pid);
+  $parent = islandora_datastream_get_parents($object);
+  $key = array_keys($parent);
+
+  if(count($key) > 0) {
+    $redirect = "islandora/object/$key[0]";
+  }
+  else {
+    $redirect = "islandora";
+  }
+
+
+  // Always provide entity id in the same form key as in the entity edit form.
+  $form['pid'] = array('#type' => 'value', '#value' => $pid);
+  $form['col'] = array('#type' => 'value', '#value' => $redirect);
+
+  return confirm_form($form,
+    t('Are you sure you want to delete %title?', array('%title' => $object->label)),
+    "islandora/object/$pid",
+    t('This action cannot be undone.'),
+    t('Delete'),
+    t('Cancel')
+  );
 }
 
 /**
@@ -500,14 +509,14 @@ function islandora_view_object($object_id = NULL) {
     drupal_set_message(t('Error getting Islandora object %s', array('%s' => $object_id)), 'error');
     return"";
   }
-  drupal_alter('islandora_view_object', $fedora_object); //modify object if required before it is passed along
+  drupal_alter('islandora_object', $fedora_object); //modify object if required before it is passed along
   $arr = module_invoke_all('islandora_view_object', $fedora_object, $user, $page_number, $page_size); //allow submodules to decide how to handle content base on object type
   if (empty($arr)) {
     //TODO: make sure we iterate over the array as they will be more then one cmodel per object
     drupal_set_message(t('there was an error loading the view for islandora object %s', array('%s' => $object_id)), 'error');
     return "";
   }
-  //module_invoke_all(islandora_display($arr)),
+  drupal_alter('islandora_display',$arr);
   $output = "";
   foreach ($arr as $key => $value) {
     $output .= $value; //if we have multiple modules handle one cmodel we need to iterate over multiple
@@ -600,7 +609,7 @@ function islandora_preprocess_islandora_default(&$variables) {
   module_load_include('inc', 'islandora', 'includes/utilities');
   module_load_include('inc', 'islandora', 'includes/datastream');
 
-  $variables['parent_collections'] = islandora_get_datastream_parents($islandora_object);
+  $variables['parent_collections'] = islandora_datastream_get_parents($islandora_object);
 
   $datastreams = array();
   foreach ($islandora_object as $ds) {

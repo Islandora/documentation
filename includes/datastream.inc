@@ -39,9 +39,10 @@ function islandora_datastream_as_attachment($object_id, $dsid) {
   } catch (Exception $e) {
     return drupal_not_found();
   }
+
 }
 
-function islandora_get_datastream_parents($islandora_object) {
+function islandora_datastream_get_parents($islandora_object) {
   $parent_collections = array();
   $repository = $islandora_object->repository;
   $collections1 = $islandora_object->relationships->get(FEDORA_RELS_EXT_URI, 'isMemberOfCollection');

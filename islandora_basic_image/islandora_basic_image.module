@@ -30,7 +30,7 @@
  */
 function islandora_basic_image_menu() {
   $items = array();
-   $items['admin/islandora/basic_image'] = array(
+  $items['admin/islandora/basic_image'] = array(
     'title' => 'Islandora Basic Image',
     'description' => 'Configure the basic image solution pack.',
     'page callback' => 'drupal_get_form',
@@ -38,33 +38,33 @@ function islandora_basic_image_menu() {
     'page arguments' => array('islandora_basic_image_admin'),
     'file' => 'admin/islandora_basic_image.admin.inc',
     'type' => MENU_NORMAL_ITEM,
-  ); 
+  );
   /* example menu paths 
-  $items['islandora/object/%/manage/image'] = array(
+    $items['islandora/object/%/manage/image'] = array(
     'title' => 'Manage Image Types',
     'page callback' => 'islandora_basic_image_manage_object',
     'page arguments' => array(2),
-      'type' => MENU_LOCAL_TASK,
+    'type' => MENU_LOCAL_TASK,
     'access callback' => 'islandora_basic_image_access',
     'access arguments' => array(2),
     );
-  
-  $items['islandora/object/%/view/image'] = array(
+
+    $items['islandora/object/%/view/image'] = array(
     'title' => 'Image View 1',
     'page callback' => 'islandora_basic_image_view1',
     'page arguments' => array(2),
-      'type' => MENU_LOCAL_TASK,
+    'type' => MENU_LOCAL_TASK,
     'access callback' => 'islandora_basic_image_access',
     'access arguments' => array(2),
     );
-   $items['islandora/object/%/view/image2'] = array(
+    $items['islandora/object/%/view/image2'] = array(
     'title' => 'Image View 2',
     'page callback' => 'islandora_basic_image_view2',
     'page arguments' => array(2),
     'type' => MENU_LOCAL_TASK,
     'access callback' => 'islandora_basic_image_access',
     'access arguments' => array(2),
-    );*/
+    ); */
   return $items;
 }
 
@@ -78,9 +78,9 @@ function islandora_basic_image_menu() {
  * @return string 
  */
 /*
-function islandora_basic_image_manage_object($object_id){
+  function islandora_basic_image_manage_object($object_id){
   return 'Image CModel edit function '.$object_id;
-}*/
+  } */
 
 /**
  * /**
@@ -90,9 +90,9 @@ function islandora_basic_image_manage_object($object_id){
  * @return string 
  */
 /*
-function islandora_basic_image_view1($object_id){
+  function islandora_basic_image_view1($object_id){
   return 'A view returned by the image cmodel';
-}*/
+  } */
 
 /**
  * An example function needed by this modules hook_menu
@@ -100,9 +100,9 @@ function islandora_basic_image_view1($object_id){
  * @return string 
  */
 /*
-function islandora_basic_image_view2($object_id){
+  function islandora_basic_image_view2($object_id){
   return 'Another view returned by the image cmodel';
-}*/
+  } */
 
 /**
  * determines whether or not to show this modules manage tab
@@ -110,22 +110,22 @@ function islandora_basic_image_view2($object_id){
  * @param string $object_id
  * @return boolean 
  */
-function islandora_basic_image_access($object_id){
+function islandora_basic_image_access($object_id) {
   module_load_include('inc', 'islandora', 'RestConnection');
   global $user;
-   try {
+  try {
     $restConnection = new RestConnection($user);
     $fedora_object = new FedoraObject($object_id, $restConnection->repository);
   } catch (Exception $e) {
     return FALSE;
   }
   if (!isset($fedora_object)) {
-     return FALSE;
+    return FALSE;
   }
   $models = $fedora_object->models;
   $cmodel_list = islandora_basic_image_islandora_get_types();
   foreach ($fedora_object->models as $model) {
-    if (isset($cmodel_list[$model])){
+    if (isset($cmodel_list[$model])) {
       return user_access(FEDORA_MODIFY_STATE);
     }
   }
@@ -193,6 +193,17 @@ function islandora_basic_image_islandora_view_object($object, $user, $page_numbe
   return NULL;
 }
 
+function islandora_basic_image_islandora_ingest_post_ingest($object) {
+  $cmodel_list = islandora_basic_image_islandora_get_types();
+  $models = $object->models;
+  foreach ($object->models as $model) {
+    if (isset($cmodel_list[$model])) {
+      module_load_include('inc', 'islandora_basic_image', 'includes/image_process');
+      islandora_basic_image_create_all_derivatives($object);
+    }
+  }
+}
+
 /**
  *
  * @global type $base_url
@@ -217,10 +228,11 @@ function islandora_basic_image_preprocess_islandora_basic_image(&$variables) {
   $variables['dc_array'] = $dc_object->as_formatted_array();
   $variables['islandora_object_label'] = $islandora_object->label;
   $variables['theme_hook_suggestions'][] = 'islandora_basic_image__' . str_replace(':', '_', $islandora_object->id);
-  $variables['parent_collections'] = islandora_get_datastream_parents($islandora_object);
+  $variables['parent_collections'] = islandora_datastream_get_parents($islandora_object);
   global $base_url;
   if (isset($islandora_object['OBJ'])) {
     $full_size_url = $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/OBJ/view';
+    $variables['islandora_full_url'] = $full_size_url;
     $variables['islandora_full_img'] = '<img src="' . $full_size_url . '"/>';
   }
   if (isset($islandora_object['TN'])) {

@@ -53,6 +53,11 @@ function islandora_edit_properties_form_submit($form, &$form_state) {
   }
 }
 
+function islandora_edit_properties_form_delete($form, &$form_state) {
+  $islandora_object = $form_state['values']['pid'];
+  drupal_goto("islandora/object/$islandora_object/delete");
+}
+
 /**
  *
  * @param array $form
@@ -98,6 +103,11 @@ function islandora_edit_properties_form($form, &$form_state, $object_id) {
   $form['submit'] = array(
     '#type' => 'submit',
     '#value' => 'Update Properties',
+  );
+  $form['delete'] = array(
+    '#type' => 'submit',
+    '#value' => t('Delete'),
+    '#submit' => array('islandora_edit_properties_form_delete'),
   );
   return $form;
 }
