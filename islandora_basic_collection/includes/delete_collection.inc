@@ -13,7 +13,7 @@
  * @return string
  */
 function islandora_collection_deletion_form($form, &$form_state, $pid) {
-  module_load_include('inc', 'islandora_basic_collection', 'CollectionManagerTable');
+  module_load_include('inc', 'islandora_basic_collection', 'collection_manager_table');
   $potential_collections = get_collections_as_option_array();
   $table = islandora_collection_table($pid);
   $deletion_message = ($table) ? "Delete Members of this Collection" : "Delete Collection";

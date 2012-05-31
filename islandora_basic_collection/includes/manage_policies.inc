@@ -40,6 +40,7 @@ function islandora_manage_policies_form($form, &$form_state, $collection_pid) {
     $collection_policy = new CollectionPolicy($collection_policy_string->content);
     $supported_collection_models = $collection_policy->getContentModels();
   }
+
   $collection_namespace = substr($collection_pid, 0, strpos($collection_pid, ":"));
 
   $represented_content_models = get_represented_content_models($collection_pid);
@@ -58,11 +59,16 @@ function islandora_manage_policies_form($form, &$form_state, $collection_pid) {
     $new_options = array_diff_key($new_content_models, $current_models_in_policy);
   }
 
+  $s = '';
+  if (count($current_models_in_policy) > 1) {
+    $s = 's';
+  }
+
   $form['manage_collection_policy']['titlebox'] = array(
     '#type' => 'item',
     '#title' => t("Manage collection policy for @collection_pid", array('@collection_pid' => $collection_pid)),
-  );  
-  
+  );
+
   $form ['manage_collection_policy']['add']['content_model_to_add'] = array(
     '#title' => "Choose content model",
     '#type' => 'select',
@@ -111,7 +117,7 @@ function islandora_manage_policies_form($form, &$form_state, $collection_pid) {
 
     $form['manage_collection_policy']['remove']['submit'] = array(
       '#type' => 'submit',
-      '#value' => t('Remove content model from collection policy'),
+      '#value' => t('Remove content model@s from collection policy', array('@s' => $s)),
       '#id' => 'remove_cm'
     );
   }
@@ -119,7 +125,7 @@ function islandora_manage_policies_form($form, &$form_state, $collection_pid) {
 }
 
 function islandora_manage_policies_form_validate($form, &$form_state) {
-
+  
 }
 
 /**
@@ -196,7 +202,7 @@ function islandora_manage_policies_form_submit($form, &$form_state) {
           }
         }
 
-        if ($found !== FALSE && $models->length > 1) {
+        if ($found !== FALSE && $models->length > 0) {
           $content_models_element->item(0)->removeChild($found);
           $ret = TRUE;
         }

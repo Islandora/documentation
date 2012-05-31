@@ -61,22 +61,28 @@ function islandora_basic_collection_menu() {
   return $items;
 }
 
+function islandora_basic_collection_init() {
+  if (path_is_admin(current_path())) {
+    drupal_add_css(drupal_get_path('module', 'islandora_basic_collection') . '/css/islandora_basic_collection.admin.css');
+  }
+}
+
 /**
  * Implements hook_menu_local_tasks_alter().
  */
 function islandora_basic_collection_menu_local_tasks_alter(&$data, $router_item, $root_path) {
-    // Add action link 
-    if ($root_path == 'islandora/object/%/manage/collection') {
-      $object_id = $router_item['page_arguments'][0];
-      $item = menu_get_item("islandora/ingest/$object_id");
-      $item['title'] = 'Add a repository item';
-      if ($item['access']) {
-        $data['actions']['output'][] = array(
-          '#theme' => 'menu_local_action',
-          '#link' => $item,
-        );
-      }
+  // Add action link 
+  if ($root_path == 'islandora/object/%/manage/collection') {
+    $object_id = $router_item['page_arguments'][0];
+    $item = menu_get_item("islandora/ingest/$object_id");
+    $item['title'] = 'Add a repository item';
+    if ($item['access']) {
+      $data['actions']['output'][] = array(
+        '#theme' => 'menu_local_action',
+        '#link' => $item,
+      );
     }
+  }
 }
 
 /**
@@ -86,13 +92,13 @@ function islandora_basic_collection_menu_local_tasks_alter(&$data, $router_item,
  */
 function islandora_basic_collection_manage_object($object_id) {
 
-  module_load_include('inc', 'islandora_basic_collection', 'includes/CollectionManagement');
-  module_load_include('inc', 'islandora_basic_collection', 'includes/CollectionManagerTable');
-  module_load_include('inc', 'islandora_basic_collection', 'includes/DeleteCollection');
-  module_load_include('inc', 'islandora_basic_collection', 'includes/MoveCollection');
-  module_load_include('inc', 'islandora_basic_collection', 'includes/ChildCollection');
-  module_load_include('inc', 'islandora_basic_collection', 'includes/ManagePolicies');
-  module_load_include('inc', 'islandora_basic_collection', 'includes/ChangeContentModels');
+  module_load_include('inc', 'islandora_basic_collection', 'includes/collection_management');
+  module_load_include('inc', 'islandora_basic_collection', 'includes/collection_manager_table');
+  module_load_include('inc', 'islandora_basic_collection', 'includes/delete_collection');
+  module_load_include('inc', 'islandora_basic_collection', 'includes/move_collection');
+  module_load_include('inc', 'islandora_basic_collection', 'includes/child_collection');
+  module_load_include('inc', 'islandora_basic_collection', 'includes/manage_policies');
+  module_load_include('inc', 'islandora_basic_collection', 'includes/change_content_models');
 
   $form = array();
 
@@ -210,7 +216,7 @@ function islandora_basic_collection_theme($existing, $type, $theme, $path) {
     'islandora_basic_collection_management_form_table' => array(
       'file' => 'theme/islandora_basic_collection.theme.inc',
       'arguments' => array('element' => NULL),
-      'file' => 'includes/CollectionManagerTable.inc',
+      'file' => 'includes/collection_manager_table.inc',
     ),
   );
 }
