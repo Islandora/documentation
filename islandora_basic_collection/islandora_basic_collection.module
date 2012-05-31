@@ -65,11 +65,10 @@ function islandora_basic_collection_menu() {
  * Implements hook_menu_local_tasks_alter().
  */
 function islandora_basic_collection_menu_local_tasks_alter(&$data, $router_item, $root_path) {
-  if (module_exists('islandora_content_model_forms')) {
     // Add action link 
     if ($root_path == 'islandora/object/%/manage/collection') {
       $object_id = $router_item['page_arguments'][0];
-      $item = menu_get_item("islandora/ingest_form/$object_id");
+      $item = menu_get_item("islandora/ingest/$object_id");
       $item['title'] = 'Add a repository item';
       if ($item['access']) {
         $data['actions']['output'][] = array(
@@ -78,7 +77,6 @@ function islandora_basic_collection_menu_local_tasks_alter(&$data, $router_item,
         );
       }
     }
-  }
 }
 
 /**
@@ -146,7 +144,7 @@ function islandora_basic_collection_manage_object($object_id) {
   );
 
   $form['collection_manager']['delete_members']['form'] = drupal_get_form('islandora_collection_deletion_form', $object_id);
-  
+
   // Pass the form around any modules that are interested so that they can add their own collection management functions.
   module_invoke_all('islandora_collection_manager', $form);
 
@@ -191,22 +189,26 @@ function islandora_basic_collection_access($object_id) {
 function islandora_basic_collection_theme($existing, $type, $theme, $path) {
   return array(
     'islandora_basic_collection' => array(
-      'template' => 'islandora-basic-collection',
+      'file' => 'theme/islandora_basic_collection.theme.inc',
+      'template' => 'theme/islandora-basic-collection',
       'pattern' => 'islandora_basic_collection__', //we can add pids to the end of this pattern in our preprocess function
 // and templates will be able to have have a pid appended to the template name to overide a template on a per object basis
 //an example template would be named islandora-basic-image--islandora-27.tpl.phps
       'variables' => array('islandora_object' => NULL),
     ),
     'islandora_basic_collection_grid' => array(
-      'template' => 'islandora-basic-collection-grid',
+      'file' => 'theme/islandora_basic_collection.theme.inc',
+      'template' => 'theme/islandora-basic-collection-grid',
       'pattern' => 'islandora_basic_collection_grid__',
       'variables' => array('islandora_object' => NULL, 'collection_results' => NULL),
     ),
     'islandora_basic_collection_wrapper' => array(
-      'template' => 'islandora-basic-collection-wrapper',
+      'file' => 'theme/islandora_basic_collection.theme.inc',
+      'template' => 'theme/islandora-basic-collection-wrapper',
       'variables' => array('islandora_object' => NULL),
     ),
     'islandora_basic_collection_management_form_table' => array(
+      'file' => 'theme/islandora_basic_collection.theme.inc',
       'arguments' => array('element' => NULL),
       'file' => 'includes/CollectionManagerTable.inc',
     ),
@@ -254,110 +256,11 @@ function islandora_basic_collection_islandora_view_object($object, $user) {
 }
 
 /**
- * list view preprocess
- * currently just calls normal view preprocess as variables are the same
- * @param type $variables 
+ * a wrappert to retrieve an object from Fedora
+ * @global object $user
+ * @param string $object_id
+ * @return null|\FedoraObject 
  */
-function islandora_basic_collection_preprocess_islandora_basic_collection_grid(&$variables) {
-  islandora_basic_collection_preprocess_islandora_basic_collection($variables);
-}
-
-function islandora_basic_collection_preprocess_islandora_basic_collection_wrapper(&$variables) {
-  $page_number = (empty($_GET['page'])) ? 0 : $_GET['page'];
-  $page_size = (empty($_GET['pagesize'])) ? variable_get('islandora_basic_collection_page_size', '10') : $_GET['pagesize'];
-  $islandora_object = $variables['islandora_object'];
-  $results = islandora_basic_collection_get_objects($islandora_object, $page_number, $page_size);
-  $total_count = count($results);
-  pager_default_initialize($total_count, $page_size);
-  $variables['collection_pager'] = theme('pager', array('quantity' => 10));
-  $display = (empty($_GET['display'])) ? 'list' : $_GET['display'];
-  if ($display == 'grid') {
-    $collection_content = theme('islandora_basic_collection_grid', array('islandora_object' => $islandora_object, 'collection_results' => $results));
-  }
-  else {
-    $collection_content = theme('islandora_basic_collection', array('islandora_object' => $islandora_object, 'collection_results' => $results));
-  }
-  $variables['collection_content'] = $collection_content; 
-}
-
-/**
- * 
- * @global type $base_url
- * @param array $variables
- *   an array of variables that will be passed to the theme function
- */
-function islandora_basic_collection_preprocess_islandora_basic_collection(&$variables) {
-// base url
-  global $base_url;
-// base path
-  global $base_path;
-  $islandora_object = $variables['islandora_object'];
-  module_load_include('inc', 'islandora', 'includes/islandora_dublin_core');
-  try {
-    $dc = $islandora_object['DC']->content;
-    $dc_object = Dublin_Core::import_from_xml_string($dc);
-  } catch (Exception $e) {
-    drupal_set_message(t('Error retrieving object %s %t', array('%s' => $islandora_object->id, '%t' => $e->getMessage())), 'error');
-  }
-  $page_number = (empty($_GET['page'])) ? 0 : $_GET['page'];
-  $page_size = (empty($_GET['pagesize'])) ? variable_get('islandora_basic_collection_page_size', '10') : $_GET['pagesize'];
-  $results = $variables['collection_results'];//islandora_basic_collection_get_objects($islandora_object, $page_number, $page_size);
-  $total_count = count($results);
-  $variables['islandora_dublin_core'] = $dc_object;
-  $variables['islandora_object_label'] = $islandora_object->label;
-  $variables['theme_hook_suggestions'][] = 'islandora_basic_collection__' . str_replace(':', '_', $islandora_object->id);
-  if (isset($islandora_object['OBJ'])) {
-    $full_size_url = $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/OBJ/view';
-    $variables['islandora_full_img'] = '<img src="' . $full_size_url . '"/>';
-  }
-  if (isset($islandora_object['TN'])) {
-    $thumbnail_size_url = $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/TN/view';
-    $variables['islandora_thumbnail_img'] = '<img src="' . $thumbnail_size_url . '"/>';
-  }
-  if (isset($islandora_object['MEDIUM_SIZE'])) {
-    $medium_size_url = $base_url . '/islandora/object/' . $islandora_object->id . '/datastream/MEDIUM_SIZE/view';
-    $variables['islandora_medium_img'] = '<img src="' . $medium_size_url . '"/>';
-  }
-
-  $associated_objects_array = array();
-  $start = $page_size * ($page_number);
-  $end = min($start + $page_size, $total_count);
-
-  for ($i = $start; $i < $end; $i++) {
-    $pid = $results[$i]['object']['value'];
-    $fc_object = islandora_basic_collection_get_object($pid);
-    if (!isset($fc_object)) {
-      continue; //null object so don't show in collection view;
-    }
-    $associated_objects_array[$pid]['object'] = $fc_object;
-    try {
-      $dc = $fc_object['DC']->content;
-      $dc_object = Dublin_Core::import_from_xml_string($dc);
-      $associated_objects_array[$pid]['dc_array'] = $dc_object->as_formatted_array();
-    } catch (Exception $e) {
-      drupal_set_message(t('Error retrieving object %s %t', array('%s' => $islandora_object->id, '%t' => $e->getMessage())), 'error');
-    }
-    $object_url = 'islandora/object/' . $pid;
-    $thumbnail_img = '<img src="' . $base_path . $object_url . '/datastream/TN/view"' . '/>';
-    $title = $results[$i]['title']['value'];
-    $associated_objects_array[$pid]['pid'] = $pid;
-    $associated_objects_array[$pid]['path'] = $object_url;
-    $associated_objects_array[$pid]['title'] = $title;
-    $associated_objects_array[$pid]['class'] = strtolower(preg_replace('/[^A-Za-z0-9]/', '-', $pid));
-    if (isset($fc_object['TN'])) {
-      $thumbnail_img = '<img src="' . $base_path . $object_url . '/datastream/TN/view"' . '/>';
-    }
-    else {
-      //TODO: change this default image url
-      $thumbnail_img = '<img src="http://codesprint-centos.islandora.ca/islandora/object/islandora%3A52/datastream/TN"' . '/>';
-    }
-    $associated_objects_array[$pid]['thumbnail'] = $thumbnail_img;
-    $associated_objects_array[$pid]['title_link'] = l($title, $object_url, array('html' => TRUE, 'attributes' => array('title' => $title)));
-    $associated_objects_array[$pid]['thumb_link'] = l($thumbnail_img, $object_url, array('html' => TRUE, 'attributes' => array('title' => $title)));
-  }
-  $variables['associated_objects_array'] = $associated_objects_array;
-}
-
 function islandora_basic_collection_get_object($object_id) {
   module_load_include('inc', 'islandora', 'RestConnection');
   global $user;
@@ -371,6 +274,15 @@ function islandora_basic_collection_get_object($object_id) {
   return $fedora_object;
 }
 
+/**
+ * gets objects associated with this object with teh isMemberOf or isMemberOfCollection
+ * 
+ * @global object $user
+ * @param object $object
+ * @param string $page_number
+ * @param string $page_size
+ * @return array
+ */
 function islandora_basic_collection_get_objects($object, $page_number = 1, $page_size = 5) {
   $query = 'select $object $title $content from <#ri>
              where ($object <fedora-model:label> $title
