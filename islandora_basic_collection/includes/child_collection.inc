@@ -38,9 +38,9 @@ function islandora_create_child_collection_form($form, &$form_state, $this_colle
     return $form;
   }
   $restricted = FALSE;
-  if (variable_get('fedora_namespace_restriction_enforced', TRUE)) {
+  if (variable_get('islandora_namespace_restriction_enforced', FALSE)) {
     $restricted = TRUE;
-    $allowed_string = variable_get('fedora_pids_allowed', 'default: demo: changeme: islandora:');
+    $allowed_string = variable_get('islandora_pids_allowed', 'default: demo: changeme: islandora:');
     $namespaces = explode(':', $allowed_string);
     foreach ($namespaces as $namespace) {
       if ($namespace) {

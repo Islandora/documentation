@@ -21,7 +21,7 @@
  * along with the program.  If not, see <http ://www.gnu.org/licenses/>.
  */
 ?>
-<?php if($islandora_object_label): ?>
+<?php if(isset($islandora_object_label)): ?>
   <?php drupal_set_title("$islandora_object_label"); ?>
 <?php endif; ?>
 
@@ -39,7 +39,7 @@
       <h3><?php print $dc_array['dc:description']['label']; ?></h3>
       <p><?php print $dc_array['dc:description']['value']; ?></p>
     <?php endif; ?>
-    <?php if($parent_collections): ?>
+    <?php if(empty($parent_collections)): ?>
       <div>
         <h3>In Collections</h3>
         <ul>

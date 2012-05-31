@@ -134,14 +134,14 @@ function get_related_items_as_array($collection_pid, $relationship = array('isMe
 function fedora_repository_access($permission, $pid) {
   global $user;
   $name_space_access = FALSE;
-  $is_restricted = variable_get('islandora_namespace_restriction_enforced', TRUE);
+  $is_restricted = variable_get('islandora_namespace_restriction_enforced', FALSE);
   if (!$is_restricted) {
     $name_space_access = TRUE;
   }
   if ($pid == NULL) {
     $pid = variable_get('islandora_repository_pid', 'islandora:root');
   }
-  $name_space_allowed = explode(" ", variable_get('fedora_pids_allowed', 'default: demo: changeme: islandora: ilives: islandora-book: books: newspapers: '));
+  $name_space_allowed = explode(" ", variable_get('islandora_pids_allowed', 'default: demo: changeme: islandora: ilives: islandora-book: books: newspapers: '));
   $pos = NULL;
   foreach ($name_space_allowed as $name_space) {
     $pos = stripos($pid, $name_space);
@@ -206,8 +206,8 @@ function get_content_models_as_option_array() {
   $rest_connection = new RestConnection();
   require_once 'sites/all/libraries/tuque/RepositoryQuery.php';
 
-  $restricted = variable_get('fedora_namespace_restriction_enforced', TRUE);
-  $allowed_string = variable_get('fedora_pids_allowed', 'default: demo: changeme: islandora:');
+  $restricted = variable_get('islandora_namespace_restriction_enforced', FALSE);
+  $allowed_string = variable_get('islandora_pids_allowed', 'default: demo: changeme: islandora:');
   $namespaces = explode(':', $allowed_string);
   foreach ($namespaces as $namespace) {
     if ($namespace) {
