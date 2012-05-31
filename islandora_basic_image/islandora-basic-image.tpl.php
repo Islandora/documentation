@@ -21,11 +21,11 @@
  * along with the program.  If not, see <http ://www.gnu.org/licenses/>.
  */
 ?>
-<?php drupal_set_title(""); ?>
+<?php drupal_set_title("$islandora_object_label"); ?>
 
 <div class="islandora-basic-image-object islandora">
   <div class="islandora-basic-image-content clearfix">
-    <?php print $islandora_medium_img; ?> 
+    <?php print l($islandora_medium_img, $islandora_full_url, array('html' => TRUE)); ?>
   </div>
   <div class="islandora-basic-image-sidebar">
     <h1 class="title"><?php print $islandora_object_label; ?></h1>
