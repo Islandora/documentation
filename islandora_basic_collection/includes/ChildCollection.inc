@@ -34,7 +34,7 @@ function islandora_create_child_collection_form($form, &$form_state, $this_colle
 
   $form['child_creation']['titlebox'] = array(
     '#type' => 'item',
-    '#title' => t("Create New Child Collection within @collection", array('@collection' => $this_collection_pid)),
+    '#title' => t("Create new child collection within @collection", array('@collection' => $this_collection_pid)),
   );
 
   $form['child_creation']['collection_name'] = array(

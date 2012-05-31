@@ -72,7 +72,7 @@ EOD;
   return $collection_pids;
 }
 
-function Islandora_collections_get_collection_from_pid($pid) {
+function islandora_collections_get_collection_from_pid($pid) {
   module_load_include('inc', 'islandora', 'RestConnection');
   $rest_connection = new RestConnection();
   require_once 'sites/all/libraries/tuque/RepositoryQuery.php';
@@ -220,7 +220,7 @@ function get_content_models_as_option_array() {
     return $options;
 }
 
-  function getContentModels($collection_pid, $showError = TRUE) {
+  function get_content_models($collection_pid, $show_error = TRUE) {
     module_load_include('inc', 'islandora', 'RestConnection');
     $rest_connection = new RestConnection();
     $collection_stream = $this->getCollectionPolicyStream($collection_pid);
@@ -229,18 +229,18 @@ function get_content_models_as_option_array() {
     try {
       $xml = new SimpleXMLElement($collection_stream);
     } catch (Exception $e) {
-      if ($showError) {
+      if ($show_error) {
         drupal_set_message(t('@e', array('@e' => check_plain($e->getMessage()))), 'error');
       }
       return NULL;
     }
     foreach ($xml->contentmodels->contentmodel as $content_model) {
-      $contentModel = new ContentModel();
-      $contentModel->contentModelDsid = $content_model->dsid;
-      $contentModel->contentModelPid = $content_model->pid;
-      $contentModel->pidNamespace = $content_model->pidNamespace;
-      $contentModel->contentModelName = $content_model['name'];
-      $models[] = $contentModel;
+      $content_model_object = new ContentModel();
+      $content_model_object->contentModelDsid = $content_model->dsid;
+      $content_model_object->contentModelPid = $content_model->pid;
+      $content_model_object->pidNamespace = $content_model->pidNamespace;
+      $content_model_object->contentModelName = $content_model['name'];
+      $models[] = $content_model_object;
     }
     return $models;
   }

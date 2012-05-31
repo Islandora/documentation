@@ -30,7 +30,7 @@
 function islandora_basic_collection_menu() {
   $items = array();
   $items['islandora/object/%/manage/collection'] = array(
-    'title' => 'Collection Related',
+    'title' => 'Collection related',
     'page callback' => 'islandora_basic_collection_manage_object',
     'page arguments' => array(2),
     'type' => MENU_LOCAL_TASK,
@@ -39,7 +39,7 @@ function islandora_basic_collection_menu() {
   );
 
   $items['admin/islandora/basic_collection'] = array(
-    'title' => 'Islandora Basic Collection',
+    'title' => 'Islandora basic collection',
     'description' => 'Configure the basic Collection solution pack.',
     'page callback' => 'drupal_get_form',
     'access arguments' => array('administer site configuration'),
@@ -105,7 +105,7 @@ function islandora_basic_collection_manage_object($object_id) {
   );
 
   $form['collection_manager']['create_child_collection'] = array(
-    '#title' => t('Create Child Collection'),
+    '#title' => t('Create child collection'),
     '#type' => 'fieldset',
   );
 
@@ -113,7 +113,7 @@ function islandora_basic_collection_manage_object($object_id) {
 
   $form['collection_manager']['manage_policies'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Manage Collection Policies'),
+    '#title' => t('Manage collection policies'),
     '#collapsible' => TRUE,
     '#collapsed' => TRUE,
   );
@@ -122,7 +122,7 @@ function islandora_basic_collection_manage_object($object_id) {
 
   $form['collection_manager']['change_content_models'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Change Content Models'),
+    '#title' => t('Change content models'),
     '#collapsible' => TRUE,
     '#collapsed' => TRUE,
   );
@@ -131,7 +131,7 @@ function islandora_basic_collection_manage_object($object_id) {
 
   $form['collection_manager']['migrate_members'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Migrate Members'),
+    '#title' => t('Migrate members'),
     '#collapsible' => TRUE,
     '#collapsed' => TRUE,
   );
@@ -140,16 +140,17 @@ function islandora_basic_collection_manage_object($object_id) {
 
   $form['collection_manager']['delete_members'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Delete Members of this Collection'),
+    '#title' => t('Delete members of this collection'),
     '#collapsible' => TRUE,
     '#collapsed' => TRUE,
   );
 
   $form['collection_manager']['delete_members']['form'] = drupal_get_form('islandora_collection_deletion_form', $object_id);
+  
+  // Pass the form around any modules that are interested so that they can add their own collection management functions.
+  module_invoke_all('islandora_collection_manager', $form);
 
   return $form;
-
-//  return 'Collection CModel edit function ' . $object_id;
 }
 
 /**
