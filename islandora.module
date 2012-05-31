@@ -65,7 +65,8 @@ function islandora_menu() {
     'page arguments' => array(2),
     'file' => 'includes/ingest-menu.inc',
     'type' => MENU_CALLBACK,
-    'access arguments' => array(FEDORA_INGEST),
+    'access callback' => 'islandora_access_callback',
+    'access arguments' => array(2, FEDORA_INGEST),
   );
 
   $items['islandora'] = array(
@@ -80,16 +81,17 @@ function islandora_menu() {
     'page callback' => 'islandora_view_object',
     'page arguments' => array(2),
     'type' => MENU_NORMAL_ITEM,
-    'access arguments' => array(FEDORA_VIEW),
+    'access callback' => 'islandora_access_callback',
+    'access arguments' => array(2, FEDORA_VIEW),
   );
 
 
   $items['islandora/object/%/view'] = array(
     'title' => 'View',
-    //'page callback' => 'islandora_view_object',
     'page arguments' => array(2),
     'type' => MENU_DEFAULT_LOCAL_TASK,
-    'access arguments' => array(FEDORA_VIEW),
+    'access callback' => 'islandora_access_callback',
+    'access arguments' => array(2, FEDORA_VIEW),
     'weight' => -10
   );
   $items['islandora/object/%/view/default'] = array(
@@ -97,7 +99,8 @@ function islandora_menu() {
     'page callback' => 'islandora_view_object',
     'page arguments' => array(2),
     'type' => MENU_LOCAL_TASK,
-    'access arguments' => array(FEDORA_VIEW),
+    'access callback' => 'islandora_access_callback',
+    'access arguments' => array(2, FEDORA_VIEW),
     'weight' => -10,
   );
 
@@ -106,7 +109,8 @@ function islandora_menu() {
     'page callback' => 'islandora_edit_object',
     'page arguments' => array(2),
     'type' => MENU_LOCAL_TASK,
-    'access arguments' => array(FEDORA_MODIFY_STATE),
+    'access callback' => 'islandora_access_callback',
+    'access arguments' => array(2, FEDORA_MODIFY_STATE),
   );
 
   $items['islandora/object/%/manage/datastreams'] = array(
@@ -114,7 +118,8 @@ function islandora_menu() {
     //'page callback' => 'islandora_edit_object',
     'page arguments' => array(2),
     'type' => MENU_DEFAULT_LOCAL_TASK,
-    'access arguments' => array(FEDORA_PURGE),
+    'access callback' => 'islandora_access_callback',
+    'access arguments' => array(2, FEDORA_PURGE),
     'weight' => -10,
   );
 
@@ -124,7 +129,8 @@ function islandora_menu() {
     'file' => 'includes/object_properties.inc',
     'page arguments' => array('islandora_edit_properties_form', 2),
     'type' => MENU_LOCAL_TASK,
-    'access arguments' => array(FEDORA_MODIFY_STATE),
+    'access callback' => 'islandora_access_callback',
+    'access arguments' => array(2, FEDORA_MODIFY_STATE),
     'weight' => -5,
   );
 
@@ -133,7 +139,8 @@ function islandora_menu() {
     'page callback' => 'drupal_get_form',
     'page arguments' => array('islandora_purge_object', 2),
     'type' => MENU_CALLBACK,
-    'access arguments' => array(FEDORA_PURGE),
+    'access callback' => 'islandora_access_callback',
+    'access arguments' => array(2, FEDORA_PURGE),
   );
 
   $items['islandora/object/%/manage/datastreams/add'] = array(
@@ -142,7 +149,8 @@ function islandora_menu() {
     'page callback' => 'drupal_get_form',
     'page arguments' => array('islandora_add_datastream_form', 2),
     'type' => MENU_NORMAL_ITEM,
-    'access arguments' => array(FEDORA_ADD_DS)
+    'access callback' => 'islandora_access_callback',
+    'access arguments' => array(2, FEDORA_ADD_DS)
   );
 
   $items['islandora/object/%/manage/datastreams/add/autocomplete'] = array(
@@ -150,7 +158,8 @@ function islandora_menu() {
     'page callback' => 'islandora_datastream_autocomplete_callback',
     'page arguments' => array(2),
     'type' => MENU_CALLBACK,
-    'access arguments' => array(FEDORA_ADD_DS)
+    'access callback' => 'islandora_access_callback',
+    'access arguments' => array(2, FEDORA_ADD_DS)
   );
 
   $items['islandora/object/%/datastream/%'] = array(
@@ -159,7 +168,8 @@ function islandora_menu() {
     'page arguments' => array(2, 4),
     'type' => MENU_CALLBACK,
     'file' => 'includes/datastream.inc',
-    'access arguments' => array(FEDORA_VIEW),
+    'access callback' => 'islandora_access_callback',
+    'access arguments' => array(2, FEDORA_VIEW),
   );
 
   $items['islandora/object/%/datastream/%/view'] = array(
@@ -168,7 +178,8 @@ function islandora_menu() {
     'page arguments' => array(2, 4),
     'type' => MENU_CALLBACK,
     'file' => 'includes/datastream.inc',
-    'access arguments' => array(FEDORA_VIEW),
+    'access callback' => 'islandora_access_callback',
+    'access arguments' => array(2, FEDORA_VIEW),
   );
 
   $items['islandora/object/%/datastream/%/download'] = array(
@@ -177,7 +188,8 @@ function islandora_menu() {
     'page arguments' => array(2, 4),
     'type' => MENU_CALLBACK,
     'file' => 'includes/datastream.inc',
-    'access arguments' => array(FEDORA_VIEW),
+    'access callback' => 'islandora_access_callback',
+    'access arguments' => array(2, FEDORA_VIEW),
   );
 
   $items['islandora/object/%/datastream/%/edit'] = array(
@@ -186,7 +198,8 @@ function islandora_menu() {
     'page arguments' => array(2, 4),
     'type' => MENU_CALLBACK,
     'file' => 'includes/datastream.inc',
-    'access arguments' => array(FEDORA_METADATA_EDIT),
+    'access callback' => 'islandora_access_callback',
+    'access arguments' => array(2, FEDORA_METADATA_EDIT),
   );
 
   $items['islandora/object/%/datastream/%/delete'] = array(
@@ -194,7 +207,8 @@ function islandora_menu() {
     'page callback' => 'drupal_get_form',
     'page arguments' => array('islandora_purge_datastream', 2, 4),
     'type' => MENU_CALLBACK,
-    'access arguments' => array(FEDORA_PURGE),
+    'access callback' => 'islandora_access_callback',
+    'access arguments' => array(2, FEDORA_PURGE),
   );
 
   return $items;
@@ -231,15 +245,13 @@ function islandora_menu_local_tasks_alter(&$data, $router_item, $root_path) {
  *
  *  @return boolean 
  */
-function islandora_node_access($op, $pid = NULL, $as_user = NULL) {
-  //$returnValue = FALSE;
-
-  if ($pid == NULL) {
-    $pid = variable_get('fedora_repository_pid', 'islandora:root');
+function islandora_access_callback($pid = NULL, $perm = NULL) {
+  if(!$pid || !$perm) {
+    return FALSE;
   }
 
   $isRestricted = variable_get('islandora_namespace_restriction_enforced', FALSE);
-  $namespace_access = NULL;
+  
   if (!$isRestricted) {
     $namespace_access = TRUE;
   }
@@ -250,7 +262,7 @@ function islandora_node_access($op, $pid = NULL, $as_user = NULL) {
     $namespace_access = in_array($pid_namespace, $allowed_namespaces);
   }
 
-  return ($namespace_access && user_access($op, $as_user));
+  return ($namespace_access && user_access($perm));
 }
 
 /**
