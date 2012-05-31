@@ -65,7 +65,6 @@ function islandora_basic_collection_menu() {
  * Implements hook_menu_local_tasks_alter().
  */
 function islandora_basic_collection_menu_local_tasks_alter(&$data, $router_item, $root_path) {
-  if (module_exists('islandora_content_model_forms')) {
     // Add action link 
     if ($root_path == 'islandora/object/%/manage/collection') {
       $object_id = $router_item['page_arguments'][0];
@@ -78,7 +77,6 @@ function islandora_basic_collection_menu_local_tasks_alter(&$data, $router_item,
         );
       }
     }
-  }
 }
 
 /**
