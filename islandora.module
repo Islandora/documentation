@@ -351,6 +351,12 @@ function islandora_get_types() {
   return module_invoke_all('islandora_get_types');
 }
 
+function islandora_init() {
+  if (path_is_admin(current_path())) {
+    drupal_add_css(drupal_get_path('module', 'islandora') . '/css/islandora.admin.css');
+  }
+}
+
 /**
  * a function to call other modules edit page.  If there are not any modules
  * that handle this function this module will build a default page.
