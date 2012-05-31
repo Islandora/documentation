@@ -86,13 +86,13 @@ function islandora_basic_collection_menu_local_tasks_alter(&$data, $router_item,
  */
 function islandora_basic_collection_manage_object($object_id) {
 
-  module_load_include('inc', 'islandora_basic_collection', 'includes/CollectionManagement');
-  module_load_include('inc', 'islandora_basic_collection', 'includes/CollectionManagerTable');
-  module_load_include('inc', 'islandora_basic_collection', 'includes/DeleteCollection');
-  module_load_include('inc', 'islandora_basic_collection', 'includes/MoveCollection');
-  module_load_include('inc', 'islandora_basic_collection', 'includes/ChildCollection');
-  module_load_include('inc', 'islandora_basic_collection', 'includes/ManagePolicies');
-  module_load_include('inc', 'islandora_basic_collection', 'includes/ChangeContentModels');
+  module_load_include('inc', 'islandora_basic_collection', 'includes/collection_management');
+  module_load_include('inc', 'islandora_basic_collection', 'includes/collection_manager_table');
+  module_load_include('inc', 'islandora_basic_collection', 'includes/delete_collection');
+  module_load_include('inc', 'islandora_basic_collection', 'includes/move_collection');
+  module_load_include('inc', 'islandora_basic_collection', 'includes/child_collection');
+  module_load_include('inc', 'islandora_basic_collection', 'includes/manage_policies');
+  module_load_include('inc', 'islandora_basic_collection', 'includes/change_content_models');
 
   $form = array();
 
@@ -210,7 +210,7 @@ function islandora_basic_collection_theme($existing, $type, $theme, $path) {
     'islandora_basic_collection_management_form_table' => array(
       'file' => 'theme/islandora_basic_collection.theme.inc',
       'arguments' => array('element' => NULL),
-      'file' => 'includes/CollectionManagerTable.inc',
+      'file' => 'includes/collection_manager_table.inc',
     ),
   );
 }
