@@ -2,7 +2,7 @@
 
 /**
  * @file
- * CollectionManagerTable.inc
+ * collection_manager_table.inc
  */
 
 /**
