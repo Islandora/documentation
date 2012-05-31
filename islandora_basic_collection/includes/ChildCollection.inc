@@ -142,7 +142,7 @@ function islandora_create_child_collection_form_submit($form, &$form_state) {
   $thumbnail_datastream->label = 'Thumbnail';
   $thumbnail_datastream->mimetype = 'image/png';
   $fedora_object->ingestDatastream($thumbnail_datastream);
-  $policy_datastream = $fedora_object->constructDatastream(variable_get('Islandora_Collection_Policy_DSID', 'COLLECTION_POLICY'), 'X');
+  $policy_datastream = $fedora_object->constructDatastream(variable_get('Islandora_Collection_Policy_DSID', 'COLLECTION_POLICY'), 'M');
   $policy_datastream->setContentFromString($collection_policy_xml->saveXML());
   $policy_datastream->label = 'Collection policy';
   $fedora_object->ingestDatastream($policy_datastream);
