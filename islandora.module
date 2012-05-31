@@ -322,7 +322,7 @@ function islandora_purge_object($form, &$form_state, $pid) {
   $parent = islandora_datastream_get_parents($object);
   $key = array_keys($parent);
 
-  if(count($key) > 0) {
+  if (count($key) > 0) {
     $redirect = "islandora/object/$key[0]";
   }
   else {
@@ -516,7 +516,7 @@ function islandora_view_object($object_id = NULL) {
     drupal_set_message(t('there was an error loading the view for islandora object %s', array('%s' => $object_id)), 'error');
     return "";
   }
-  drupal_alter('islandora_display',$arr);
+  drupal_alter('islandora_display', $arr);
   $output = "";
   foreach ($arr as $key => $value) {
     $output .= $value; //if we have multiple modules handle one cmodel we need to iterate over multiple

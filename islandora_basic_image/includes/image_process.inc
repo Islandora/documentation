@@ -1,11 +1,17 @@
 <?php
+/**
+ * @file
+ *
+ * This file contains all the functions for image manipulation used in the
+ * basic image solution pack.
+ */
 
-function islandora_basic_image_create_all_derivatives($object){
+function islandora_basic_image_create_all_derivatives($object) {
   module_load_include('inc', 'islandora', 'includes/MimeClass');
   module_load_include('inc', 'islandora_basic_image', 'includes/image_process');
   $mime_class = new MimeClass();
-  if(!isset($object['OBJ'])){
-    drupal_set_message(t('Could not create image derivatives for %s.  No image file was uploaded.',array('%s' => $object->id)),'error');
+  if (!isset($object['OBJ'])) {
+    drupal_set_message(t('Could not create image derivatives for %s.  No image file was uploaded.', array('%s' => $object->id)),'error');
     return "";
   }
   $ext = $mime_class->getExtension($object['OBJ']->mimeType);
@@ -32,7 +38,7 @@ function islandora_basic_image_create_derivative($file, $width, $height) {
   $image = image_load($real_path);
   if (!empty($image)) {
     $scale = image_scale($image, $width, $height, TRUE);
-    if($scale){
+    if ($scale) {
       return image_save($image);
     }
   }
