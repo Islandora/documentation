@@ -69,8 +69,8 @@ function islandora_create_child_collection_form($form, &$form_state, $this_colle
     '#title' => "Collection PID",
     '#type' => 'textfield',
     '#size' => 15,
-    '#default_value' => $rest_connection->repository->api->m->getNextPid($collection_namespace),
-    '#description' => t("Unique PID for this collection.  <br />Pids take the general form of namespace:collection (eg. islandora:pamphlets)"),
+    '#default_value' => '',
+    '#description' => t("Unique PID for this collection. Leave blank for default. <br />Pids take the general form of namespace:collection (eg. islandora:pamphlets)"),
   );
 
   if (!$restricted) {
@@ -128,6 +128,10 @@ function islandora_create_child_collection_form_submit($form, &$form_state) {
   module_load_include('inc', 'islandora', '/includes/islandora.ingest');
   $thumbnail = $base_url . '/' . drupal_get_path('module', 'islandora_basic_collection') . '/Crystal_Clear_filesystem_folder_grey.png';
   $new_collection_pid = $form_state['values']['new_collection_pid'];
+  $this_collection_pid = $form_state['values']['current'];
+  if(empty($new_collection_pid)) {
+    $collection_namespace = substr($this_collection_pid, 0, strpos($this_collection_pid, ":"));
+  }
   $new_collection_label = $form_state['values']['collection_name'];
   $namespace = $form_state['values']['collection_namespace'];
   $all_cModels = get_content_models_as_option_array();

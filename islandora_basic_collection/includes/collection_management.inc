@@ -25,11 +25,13 @@ where (\$object <info:fedora/fedora-system:def/relations-external#isMemberOf> <i
   $model_pids = $rest_connection->repository->ri->itqlQuery($query, 'unlimited', '0');
   $represented_models = array();
   foreach ($model_pids as $model_pid) {
-
     if ($model_pid['model']['value'] && $model_pid['model']['value'] != 'fedora-system:FedoraObject-3.0') {
-      $fedora_object = new FedoraObject($model_pid['model']['value'], $rest_connection->repository);
-      $content_model_title = $fedora_object->label;
-      $represented_models[$model_pid['model']['value']] = $model_pid['model']['value'] . ' ~ ' . $content_model_title;
+      try {
+        $fedora_object = new FedoraObject($model_pid['model']['value'], $rest_connection->repository);
+        $content_model_title = $fedora_object->label;
+        $represented_models[$model_pid['model']['value']] = $model_pid['model']['value'] . ' ~ ' . $content_model_title;
+      }
+      catch (RepositoryException $e) {}
     }
   }
   return $represented_models;

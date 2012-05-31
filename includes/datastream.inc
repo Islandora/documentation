@@ -15,6 +15,9 @@ define('DS_COMP_STREAM', 'DS-COMPOSITE-MODEL');
  */
 function islandora_datastream_as_attachment($object_id, $dsid) {
   module_load_include('inc', 'islandora', 'RestConnection');
+  drupal_add_http_header("Cache-Control", 'public');
+  drupal_add_http_header("Pragma", FALSE);
+
   global $user;
   try {
     $restConnection = new RestConnection($user);
@@ -29,7 +32,6 @@ function islandora_datastream_as_attachment($object_id, $dsid) {
     if($fedora_object[$dsid]->controlGroup == 'M' || $fedora_object[$dsid]->controlGroup == 'X') {
       header('Content-length: ' . $fedora_object[$dsid]->size);
     }
-    header("Cache-control: private");
     $method = arg(5);
     if (isset($method) && $method == 'download') {
       header("Content-Disposition: attachment; filename=\"" . $fedora_object[$dsid]->label);
