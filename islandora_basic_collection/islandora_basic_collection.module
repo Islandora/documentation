@@ -69,7 +69,7 @@ function islandora_basic_collection_menu_local_tasks_alter(&$data, $router_item,
     // Add action link 
     if ($root_path == 'islandora/object/%/manage/collection') {
       $object_id = $router_item['page_arguments'][0];
-      $item = menu_get_item("islandora/ingest_form/$object_id");
+      $item = menu_get_item("islandora/ingest/$object_id");
       $item['title'] = 'Add a repository item';
       if ($item['access']) {
         $data['actions']['output'][] = array(
