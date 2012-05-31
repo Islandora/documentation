@@ -21,17 +21,15 @@
  * along with the program.  If not, see <http ://www.gnu.org/licenses/>.
  */
 ?>
-<?php drupal_set_title('grid_view'); ?>
+
 
 <div class="islandora-basic-collection-wrapper">
   <div class="islandora-basic-collection clearfix">
-  <?php print($variables['pager']); ?>
   <?php foreach($associated_objects_array as $key => $value): ?>
     <dl class="islandora-basic-collection-object <?php print $value['class']; ?>">
         <dt class="islandora-basic-collection-thumb"><?php print $value['thumb_link']; ?></dt>
         <dd class="islandora-basic-collection-caption"><?php print $value['title_link']; ?></dd>
     </dl>
   <?php endforeach; ?>
-  <?php print($variables['pager']); ?>
 </div>
 </div>
