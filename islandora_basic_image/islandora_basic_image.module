@@ -132,6 +132,12 @@ function islandora_basic_image_access($object_id) {
   return FALSE;
 }
 
+function islandora_basic_image_init() {
+  if (path_is_admin(current_path())) {
+    drupal_add_css(drupal_get_path('module', 'islandora_basic_image') . '/css/islandora_basic_image.admin.css');
+  }
+}
+
 /**
  * Theme registry function
  * We supply a pattern so we can overide templates at the theme level if needed.
