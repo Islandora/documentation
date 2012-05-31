@@ -210,7 +210,7 @@ function islandora_basic_image_islandora_ingest_post_ingest($object) {
   }
   foreach ($models as $model) {
     if (isset($cmodel_list[$model])) {
-      module_load_include('inc', 'islandora_basic_image', 'includes/image_process');
+      module_load_include('inc', 'islandora_basic_image', 'includes/image.process');
       islandora_basic_image_create_all_derivatives($object);
     }
   }
