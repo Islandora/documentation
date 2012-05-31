@@ -1,7 +1,8 @@
 <?php
 
 /**
- * @file islandora-basic-image.install
+ * @file 
+ * islandora-basic-image.install
  */
 
 /**
@@ -58,6 +59,10 @@ function islandora_basic_image_install() {
   }
 }
 
+
+/**
+ * Implements hook_uninstall
+ */
 function islandora_basic_image_uninstall() {
   module_load_include('inc', 'islandora', 'RestConnection');
   global $user;

@@ -6,11 +6,12 @@
  */
 
 /**
- *
- * @param type $form
- * @param type $form_state
- * @param type $this_collection_pid
- * @return string
+ * Create the child collection creation form
+ * 
+ * @param array $form
+ * @param array $form_state
+ * @param string $this_collection_pid
+ * @return array
  */
 function islandora_create_child_collection_form($form, &$form_state, $this_collection_pid) {
   module_load_include('inc', 'islandora', 'RestConnection');
@@ -38,7 +39,7 @@ function islandora_create_child_collection_form($form, &$form_state, $this_colle
   );
 
   $form['child_creation']['collection_name'] = array(
-    '#title' => "Collection Name",
+    '#title' => "Collection name",
     '#type' => 'textfield',
     '#size' => 25,
     '#description' => t("Human readable name for this collection"),
@@ -54,7 +55,7 @@ function islandora_create_child_collection_form($form, &$form_state, $this_colle
 
   if (!$restricted) {
     $form['child_creation']['collection_namespace'] = array(
-      '#title' => "Collection Namespace",
+      '#title' => "Collection namespace",
       '#type' => 'textfield',
       '#size' => 15,
       '#default_value' => $collection_namespace,
@@ -63,7 +64,7 @@ function islandora_create_child_collection_form($form, &$form_state, $this_colle
   }
   else {
     $form['child_creation']['collection_namespace'] = array(
-      '#title' => "Collection Namespace",
+      '#title' => "Collection namespace",
       '#type' => 'select',
       '#options' => $allowed,
       '#default_value' => 'default',
@@ -95,6 +96,13 @@ function islandora_create_child_collection_form_validate($form, &$form_state) {
   
 }
 
+/**
+ * Submit handler for child collection creation form
+ * 
+ * @global type $base_url
+ * @param array $form
+ * @param array $form_state 
+ */
 function islandora_create_child_collection_form_submit($form, &$form_state) {
   global $base_url;
   module_load_include('inc', 'islandora', '/includes/islandora.ingest');
