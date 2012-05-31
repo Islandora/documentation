@@ -16,7 +16,6 @@
 function islandora_create_child_collection_form($form, &$form_state, $this_collection_pid) {
   module_load_include('inc', 'islandora', 'RestConnection');
   $rest_connection = new RestConnection();
-  var_dump(get_content_models_list($this_collection_pid));
   $current_content_models = get_content_models_list($this_collection_pid);
   if (!in_array('islandora:collectionCModel', $current_content_models)) {
     $form['not_collection'] = array(
