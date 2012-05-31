@@ -6,10 +6,11 @@
  */
 
 /**
- *
- * @param type $form
- * @param type $form_state
- * @param type $collection_pid
+ * Create form to collection policy management feature
+ * 
+ * @param array $form
+ * @param array $form_state
+ * @param string $collection_pid
  * @return type
  */
 function islandora_manage_policies_form($form, &$form_state, $collection_pid) {
@@ -63,14 +64,14 @@ function islandora_manage_policies_form($form, &$form_state, $collection_pid) {
   );  
   
   $form ['manage_collection_policy']['add']['content_model_to_add'] = array(
-    '#title' => "Choose Content Model",
+    '#title' => "Choose content model",
     '#type' => 'select',
     '#options' => $new_options,
     '#description' => t("Choose content model to add to this collection policy."),
   );
 
   $form ['manage_collection_policy']['add']['new_cp_namespace'] = array(
-    '#title' => "Choose Namespace",
+    '#title' => "Choose namespace",
     '#type' => 'textfield',
     '#size' => 15,
     '#default_value' => $namespace,
@@ -95,14 +96,14 @@ function islandora_manage_policies_form($form, &$form_state, $collection_pid) {
 
   if (count($current_models_in_policy) > 0) {
     $form['manage_collection_policy']['remove'] = array(
-      '#title' => "Delete Content Model from Collection Policy",
+      '#title' => "Delete content model from collection policy",
       '#type' => 'fieldset',
       '#collapsible' => TRUE,
       '#collapsed' => TRUE,
     );
 
     $form ['manage_collection_policy']['remove']['content_models_to_remove'] = array(
-      '#title' => "Choose Content Model to Remove",
+      '#title' => "Choose content model to remove",
       '#type' => 'checkboxes',
       '#options' => $current_models_in_policy,
       '#description' => t("Choose content models to remove from this collection policy."),
@@ -121,6 +122,12 @@ function islandora_manage_policies_form_validate($form, &$form_state) {
 
 }
 
+/**
+ * Submit handler for collection policy management form
+ * 
+ * @param array $form
+ * @param array $form_state 
+ */
 function islandora_manage_policies_form_submit($form, &$form_state) {
   module_load_include('inc', 'islandora', 'RestConnection');
   $rest_connection = new RestConnection();

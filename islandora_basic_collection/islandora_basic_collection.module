@@ -30,7 +30,7 @@
 function islandora_basic_collection_menu() {
   $items = array();
   $items['islandora/object/%/manage/collection'] = array(
-    'title' => 'Collection Related',
+    'title' => 'Collection related',
     'page callback' => 'islandora_basic_collection_manage_object',
     'page arguments' => array(2),
     'type' => MENU_LOCAL_TASK,
@@ -39,7 +39,7 @@ function islandora_basic_collection_menu() {
   );
 
   $items['admin/islandora/basic_collection'] = array(
-    'title' => 'Islandora Basic Collection',
+    'title' => 'Islandora basic collection',
     'description' => 'Configure the basic Collection solution pack.',
     'page callback' => 'drupal_get_form',
     'access arguments' => array('administer site configuration'),
@@ -105,7 +105,7 @@ function islandora_basic_collection_manage_object($object_id) {
   );
 
   $form['collection_manager']['create_child_collection'] = array(
-    '#title' => t('Create Child Collection'),
+    '#title' => t('Create child collection'),
     '#type' => 'fieldset',
   );
 
@@ -113,7 +113,7 @@ function islandora_basic_collection_manage_object($object_id) {
 
   $form['collection_manager']['manage_policies'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Manage Collection Policies'),
+    '#title' => t('Manage collection policies'),
     '#collapsible' => TRUE,
     '#collapsed' => TRUE,
   );
@@ -122,7 +122,7 @@ function islandora_basic_collection_manage_object($object_id) {
 
   $form['collection_manager']['change_content_models'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Change Content Models'),
+    '#title' => t('Change content models'),
     '#collapsible' => TRUE,
     '#collapsed' => TRUE,
   );
@@ -131,7 +131,7 @@ function islandora_basic_collection_manage_object($object_id) {
 
   $form['collection_manager']['migrate_members'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Migrate Members'),
+    '#title' => t('Migrate members'),
     '#collapsible' => TRUE,
     '#collapsed' => TRUE,
   );
@@ -140,16 +140,17 @@ function islandora_basic_collection_manage_object($object_id) {
 
   $form['collection_manager']['delete_members'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Delete Members of this Collection'),
+    '#title' => t('Delete members of this collection'),
     '#collapsible' => TRUE,
     '#collapsed' => TRUE,
   );
 
   $form['collection_manager']['delete_members']['form'] = drupal_get_form('islandora_collection_deletion_form', $object_id);
+  
+  // Pass the form around any modules that are interested so that they can add their own collection management functions.
+  module_invoke_all('islandora_collection_manager', $form);
 
   return $form;
-
-//  return 'Collection CModel edit function ' . $object_id;
 }
 
 /**
@@ -199,6 +200,10 @@ function islandora_basic_collection_theme($existing, $type, $theme, $path) {
     'islandora_basic_collection_grid' => array(
       'template' => 'islandora-basic-collection-grid',
       'pattern' => 'islandora_basic_collection_grid__',
+      'variables' => array('islandora_object' => NULL, 'collection_results' => NULL),
+    ),
+    'islandora_basic_collection_wrapper' => array(
+      'template' => 'islandora-basic-collection-wrapper',
       'variables' => array('islandora_object' => NULL),
     ),
     'islandora_basic_collection_management_form_table' => array(
@@ -241,13 +246,7 @@ function islandora_basic_collection_islandora_view_object($object, $user) {
   $models = $object->models;
   foreach ($object->models as $model) {
     if (isset($cmodel_list[$model][ISLANDORA_VIEW_HOOK]) && $cmodel_list[$model][ISLANDORA_VIEW_HOOK] == TRUE) {
-      $display = (empty($_GET['display'])) ? 'list' : $_GET['display'];
-      if ($display == 'grid') {
-        $output = theme('islandora_basic_collection_grid', array('islandora_object' => $object));
-      }
-      else {
-        $output = theme('islandora_basic_collection', array('islandora_object' => $object));
-      }
+      $output = theme('islandora_basic_collection_wrapper', array('islandora_object' => $object,));
       return array('Collection View' => $output);
     }
   }
@@ -261,6 +260,24 @@ function islandora_basic_collection_islandora_view_object($object, $user) {
  */
 function islandora_basic_collection_preprocess_islandora_basic_collection_grid(&$variables) {
   islandora_basic_collection_preprocess_islandora_basic_collection($variables);
+}
+
+function islandora_basic_collection_preprocess_islandora_basic_collection_wrapper(&$variables) {
+  $page_number = (empty($_GET['page'])) ? 0 : $_GET['page'];
+  $page_size = (empty($_GET['pagesize'])) ? variable_get('islandora_basic_collection_page_size', '10') : $_GET['pagesize'];
+  $islandora_object = $variables['islandora_object'];
+  $results = islandora_basic_collection_get_objects($islandora_object, $page_number, $page_size);
+  $total_count = count($results);
+  pager_default_initialize($total_count, $page_size);
+  $variables['collection_pager'] = theme('pager', array('quantity' => 10));
+  $display = (empty($_GET['display'])) ? 'list' : $_GET['display'];
+  if ($display == 'grid') {
+    $collection_content = theme('islandora_basic_collection_grid', array('islandora_object' => $islandora_object, 'collection_results' => $results));
+  }
+  else {
+    $collection_content = theme('islandora_basic_collection', array('islandora_object' => $islandora_object, 'collection_results' => $results));
+  }
+  $variables['collection_content'] = $collection_content; 
 }
 
 /**
@@ -284,12 +301,8 @@ function islandora_basic_collection_preprocess_islandora_basic_collection(&$vari
   }
   $page_number = (empty($_GET['page'])) ? 0 : $_GET['page'];
   $page_size = (empty($_GET['pagesize'])) ? variable_get('islandora_basic_collection_page_size', '10') : $_GET['pagesize'];
-  $results = islandora_basic_collection_get_objects($islandora_object, $page_number, $page_size);
+  $results = $variables['collection_results'];//islandora_basic_collection_get_objects($islandora_object, $page_number, $page_size);
   $total_count = count($results);
-  pager_default_initialize($total_count, $page_size);
-
-  $pager = theme('pager', array('quantity' => $total_count));
-  $variables['pager'] = $pager;
   $variables['islandora_dublin_core'] = $dc_object;
   $variables['islandora_object_label'] = $islandora_object->label;
   $variables['theme_hook_suggestions'][] = 'islandora_basic_collection__' . str_replace(':', '_', $islandora_object->id);
@@ -335,6 +348,7 @@ function islandora_basic_collection_preprocess_islandora_basic_collection(&$vari
       $thumbnail_img = '<img src="' . $base_path . $object_url . '/datastream/TN/view"' . '/>';
     }
     else {
+      //TODO: change this default image url
       $thumbnail_img = '<img src="http://codesprint-centos.islandora.ca/islandora/object/islandora%3A52/datastream/TN"' . '/>';
     }
     $associated_objects_array[$pid]['thumbnail'] = $thumbnail_img;

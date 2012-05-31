@@ -46,7 +46,7 @@ function islandora_change_content_models_form($form, &$form_state, $collection_p
 
   $form['change_cmodel']['titlebox'] = array(
     '#type' => 'item',
-    '#title' => t("Change Content Models within @collection_pid", array('@collection_pid' => $collection_pid)),
+    '#title' => t("Change content models within @collection_pid", array('@collection_pid' => $collection_pid)),
   );
 
   $form['change_cmodel']['current_content_model'] = array(

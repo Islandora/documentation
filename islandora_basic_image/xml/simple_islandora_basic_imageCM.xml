@@ -39,9 +39,6 @@ PID="islandora:sp_basic_image">
                     <dsTypeModel ID="MODS"> 
                         <form MIME="text/xml"></form>
                     </dsTypeModel>
-                    <dsTypeModel ID="ISLANDORACM">
-                        <form MIME="text/xml" /> 
-                    </dsTypeModel>
                 </dsCompositeModel>
             </foxml:xmlContent>
         </foxml:datastreamVersion>
@@ -65,11 +62,6 @@ PID="islandora:sp_basic_image">
                     </rdf:Description>
                 </rdf:RDF>
             </foxml:xmlContent>
-        </foxml:datastreamVersion>
-    </foxml:datastream>
-    <foxml:datastream ID="ISLANDORACM" STATE="A" CONTROL_GROUP="X" VERSIONABLE="true"> <!-- should the ISLANDORACM be a managed DS ? No -->
-        <foxml:datastreamVersion ID="ISLANDORACM.0" LABEL="ISLANDORACM" CREATED="2012-04-26T13:37:58.433Z" MIMETYPE="text/xml" SIZE="5745">
-            <foxml:contentLocation TYPE="INTERNAL_ID" REF="islandora:sp_basic_image+ISLANDORACM+ISLANDORACM.0"/>
         </foxml:datastreamVersion>
     </foxml:datastream>
 </foxml:digitalObject>

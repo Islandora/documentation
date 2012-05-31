@@ -6,7 +6,8 @@
  */
 
 /**
- *
+ * Create object migration form for the collection manager
+ * 
  * @param array $form_state
  * @param string $pid
  *
@@ -17,7 +18,11 @@ function islandora_collection_migrate_form($form, &$form_state, $pid) {
   $potential_collections = get_collections_as_option_array();
   $table = islandora_collection_table($pid);
   if (!$table) {
-    return;
+    $form['no_objects'] = array(
+      '#type' => 'item',
+      '#title' => t('No objects found in this collection'),
+    );
+    return $form;
   }
   $form = array();
 
@@ -27,7 +32,7 @@ function islandora_collection_migrate_form($form, &$form_state, $pid) {
   );  
 
   $form['migrate']['new_collection'] = array(
-    '#title' => t('New Collection'),
+    '#title' => t('New collection'),
     '#description' => t("All content will be migrated from @pid to the selected collection", array('@pid' => $pid)),
     '#type' => 'select',
     '#options' => $potential_collections,
@@ -52,6 +57,12 @@ function islandora_collection_migrate_form($form, &$form_state, $pid) {
   return $form;
 }
 
+/**
+ * Submit handler for object migration form
+ * 
+ * @param array $form
+ * @param array $form_state 
+ */
 function islandora_collection_migrate_form_submit($form, &$form_state) {
   module_load_include('inc', 'islandora', 'RestConnection');
   $rest_connection = new RestConnection();

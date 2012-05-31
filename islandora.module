@@ -191,8 +191,8 @@ function islandora_menu() {
 
   $items['islandora/object/%/datastream/%/delete'] = array(
     'title' => 'Purge data stream',
-    'page callback' => 'islandora_purge_datastream',
-    'page arguments' => array(2, 4),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('islandora_purge_datastream', 2, 4),
     'type' => MENU_CALLBACK,
     'access arguments' => array(FEDORA_PURGE),
   );
@@ -412,6 +412,31 @@ function islandora_islandora_edit_object($fedora_object) {
   return array('Default Edit output' => $output);
 }
 
+
+function islandora_purge_datastream($form, &$form_state, $object_id, $datastream_id) {
+  module_load_include('inc', 'islandora', 'RestConnection');
+  module_load_include('inc', 'islandora', 'includes/datastream');
+
+  $connection = new RestConnection();
+  $object = $connection->repository->getObject($object_id);
+  $datastream = $object->getDatastream($datastream_id);
+
+  $redirect = "islandora/object/$object_id";
+  
+  // Always provide entity id in the same form key as in the entity edit form.
+  $form['pid'] = array('#type' => 'value', '#value' => $object_id);
+  $form['dsid'] = array('#type' => 'value', '#value' => $datastream_id);
+  $form['col'] = array('#type' => 'value', '#value' => $redirect);
+
+  return confirm_form($form,
+    t('Are you sure you want to delete the %dsid datastream?', array('%dsid' => $datastream->id)),
+    "islandora/object/$object_id",
+    t('This action cannot be undone.'),
+    t('Delete'),
+    t('Cancel')
+  );
+}
+
 /**
  * Gives the option of purging or deleting a datastream.
  * 
@@ -427,8 +452,10 @@ function islandora_islandora_edit_object($fedora_object) {
  *   ID of the datastream
  *   
  */
-function islandora_purge_datastream($object_id, $datastream_id) {
+function islandora_purge_datastream_submit($form, &$form_state) {
   module_load_include('inc', 'islandora', 'RestConnection');
+  $object_id = $form_state['values']['pid'];
+  $datastream_id = $form_state['values']['dsid'];
   global $user;
   if (!isset($datastream_id)) {
     drupal_set_message(t('Cannot remove datastream, datastream id not set'));
@@ -516,6 +543,7 @@ function islandora_view_object($object_id = NULL) {
     drupal_set_message(t('there was an error loading the view for islandora object %s', array('%s' => $object_id)), 'error');
     return "";
   }
+  arsort($arr);
   drupal_alter('islandora_display', $arr);
   $output = "";
   foreach ($arr as $key => $value) {
