@@ -1,5 +1,18 @@
 <?php
 
+function islandora_basic_collection_requirements($phase) {
+  if($phase == 'install') {
+    module_load_include('inc', 'islandora', 'includes/tuque');
+    if(!IslandoraTuque::exists()) {
+      return array(array(
+        'title' => 'Tuque',
+        'description' => 'The Islandora Collection solution pack requires the Tuque library.',
+        'severity' => REQUIREMENT_ERROR,
+      ));
+    }
+  }
+}
+
 /**
  * @file
  * islandora_basic_collection.install

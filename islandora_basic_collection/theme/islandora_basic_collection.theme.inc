@@ -22,18 +22,23 @@ function islandora_basic_collection_preprocess_islandora_basic_collection_wrappe
   $query_params = drupal_get_query_parameters($_GET);
   global $base_url;
   if ($display == 'grid') {
+    $query_params['display'] = 'list';
      $list_link = l('List View', $base_url . '/islandora/object/' . $islandora_object->id, array('attributes' => array('class' => 'islandora-view-list'),
-    'query' => array('display' => 'list')));
-    $grid_link = l('Grid View', $base_url . '/islandora/object/' . $islandora_object->id, array('attributes' => array('class' => array('islandora-view-grid', 'islandora-view-active')),
-    'query' => array('display' => 'grid')));
+    'query' => $query_params));
+     unset($query_params['display']);
+     $query_params['display'] = 'grid';
+    $grid_link = l('Grid View', $base_url . '/islandora/object/' . $islandora_object->id, array('attributes' => array('class' => array('islandora-view-grid', 'active')),
+    'query' => $query_params));
     $collection_content = theme('islandora_basic_collection_grid', array('islandora_object' => $islandora_object, 'collection_results' => $results));
   }
   else {
+    $query_params['display'] = 'list';
+    $list_link = l('List View', $base_url . '/islandora/object/' . $islandora_object->id, array('attributes' => array('class' => array('islandora-view-list', 'active')),
+    'query' => $query_params));
+    unset($query_params['display']);
     $query_params['display'] = 'grid';
-    $list_link = l('List View', $base_url . '/islandora/object/' . $islandora_object->id, array('attributes' => array('class' => array('islandora-view-list', 'islandora-view-active')),
-    'query' => array('display' => 'list')));
     $grid_link = l('Grid View', $base_url . '/islandora/object/' . $islandora_object->id, array('attributes' => array('class' => 'islandora-view-grid'),
-    'query' => array('display' => 'grid')));
+    'query' => $query_params));
     $collection_content = theme('islandora_basic_collection', array('islandora_object' => $islandora_object, 'collection_results' => $results));
   }
   $variables['list_link'] = $list_link;
