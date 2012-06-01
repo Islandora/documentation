@@ -37,7 +37,7 @@
       </div>
     <?php endif; ?>
   <div class="islandora-basic-image-sidebar">
-    <?php if($dc_array['dc:description']['value']): ?>
+    <?php if(isset($dc_array['dc:description']['value'])): ?>
       <h2><?php print $dc_array['dc:description']['label']; ?></h2>
       <p><?php print $dc_array['dc:description']['value']; ?></p>
     <?php endif; ?>

@@ -60,29 +60,33 @@ function islandora_preprocess_islandora_default(&$variables) {
 
   $datastreams = array();
   foreach ($islandora_object as $ds) {
-    $pid = $islandora_object->id;
-    $id = $ds->id;
-    $label = $ds->label;
-    $download_path = islandora_datastream_get_url($ds, 'download');
-    $datastreams[$id]['id'] = $id;
-    $datastreams[$id]['label'] = $label;
-    $datastreams[$id]['label_link'] = l($label, $download_path);
-    $datastreams[$id]['download_url'] = $download_path;
-    $datastreams[$id]['mimetype'] = $ds->mimetype;
-    $datastreams[$id]['size'] = islandora_datastream_get_human_readable_size($ds);
-    $datastreams[$id]['created_date'] = $ds->createdDate->format("Y-m-d");
-    $datastreams[$id]['class'] = strtolower(preg_replace('/[^A-Za-z0-9]/', '-', $id));
+    try {
+      $pid = $islandora_object->id;
+      $id = $ds->id;
+      $label = $ds->label;
+      $download_path = islandora_datastream_get_url($ds, 'download');
+      $datastreams[$id]['id'] = $id;
+      $datastreams[$id]['label'] = $label;
+      $datastreams[$id]['label_link'] = l($label, $download_path);
+      $datastreams[$id]['download_url'] = $download_path;
+      $datastreams[$id]['mimetype'] = $ds->mimetype;
+      $datastreams[$id]['size'] = islandora_datastream_get_human_readable_size($ds);
+      $datastreams[$id]['created_date'] = $ds->createdDate->format("Y-m-d");
+      $datastreams[$id]['class'] = strtolower(preg_replace('/[^A-Za-z0-9]/', '-', $id));
+    }
+    catch (RepositoryException $e) {}
   }
   $variables['datastreams'] = $datastreams;
   try {
     $dc = $islandora_object['DC']->content;
     //$dc_xml = simplexml_load_string($dc);
     $dc_object = Dublin_Core::import_from_xml_string($dc);
+    $dc_array = $dc_object->as_formatted_array();
   } catch (Exception $e) {
-    drupal_set_message(t('Error retrieving object %s %t', array('%s' => $islandora_object->id, '%t' => $e->getMessage())), 'error');
+    drupal_set_message(t('Error retrieving object %s %t', array('%s' => $islandora_object->id, '%t' => $e->getMessage())), 'error', FALSE);
   }
-  $variables['dc_array'] = $dc_object->as_formatted_array();
-  $variables['islandora_dublin_core'] = $dc_object;
+  $variables['dc_array'] = isset($dc_array) ? $dc_array : array();
+  $variables['islandora_dublin_core'] = isset($dc_object) ? $dc_object : NULL;
   $variables['islandora_object_label'] = $islandora_object->label;
   global $base_url;
   if (isset($islandora_object['TN'])) {

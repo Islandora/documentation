@@ -284,9 +284,7 @@ function islandora_basic_collection_islandora_ingest_get_information($models, $o
       $return['relationship'] = $policy->getRelationship();
 
       return $return;
-    } catch (Exception $e) {
-      drupal_set_message(t('Islandora Error getting collection info for %s', array('%s' => $object->id)), 'error');
-    }
+    } catch (Exception $e) {}
   }
 }
 
