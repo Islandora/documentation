@@ -29,8 +29,8 @@
  */
 function islandora_basic_collection_menu() {
   $items = array();
-  $items['islandora/object/%/manage/collection'] = array(
-    'title' => 'Collection related',
+  $items['islandora/object/%islandora_object/manage/collection'] = array(
+    'title' => 'Collection',
     'page callback' => 'islandora_basic_collection_manage_object',
     'page arguments' => array(2),
     'type' => MENU_LOCAL_TASK,
@@ -68,29 +68,11 @@ function islandora_basic_collection_init() {
 }
 
 /**
- * Implements hook_menu_local_tasks_alter().
- */
-function islandora_basic_collection_menu_local_tasks_alter(&$data, $router_item, $root_path) {
-  // Add action link 
-  if ($root_path == 'islandora/object/%/manage/collection') {
-    $object_id = $router_item['page_arguments'][0];
-    $item = menu_get_item("islandora/ingest/$object_id");
-    $item['title'] = 'Add a repository item';
-    if ($item['access']) {
-      $data['actions']['output'][] = array(
-        '#theme' => 'menu_local_action',
-        '#link' => $item,
-      );
-    }
-  }
-}
-
-/**
  * This function is where we create the view for the related menu item
  * @param type $object_id
  * @return type
  */
-function islandora_basic_collection_manage_object($object_id) {
+function islandora_basic_collection_manage_object($object) {
 
   module_load_include('inc', 'islandora_basic_collection', 'includes/collection_management');
   module_load_include('inc', 'islandora_basic_collection', 'includes/collection_manager_table');
@@ -113,7 +95,7 @@ function islandora_basic_collection_manage_object($object_id) {
     '#type' => 'fieldset',
   );
 
-  $form['collection_manager']['create_child_collection']['form'] = drupal_get_form('islandora_create_child_collection_form', $object_id);
+  $form['collection_manager']['create_child_collection']['form'] = drupal_get_form('islandora_create_child_collection_form', $object);
 
   $form['collection_manager']['manage_policies'] = array(
     '#type' => 'fieldset',
@@ -122,7 +104,7 @@ function islandora_basic_collection_manage_object($object_id) {
     '#collapsed' => TRUE,
   );
 
-  $form['collection_manager']['manage_policies']['form'] = drupal_get_form('islandora_manage_policies_form', $object_id);
+  $form['collection_manager']['manage_policies']['form'] = drupal_get_form('islandora_manage_policies_form', $object);
 
   $form['collection_manager']['change_content_models'] = array(
     '#type' => 'fieldset',
@@ -131,7 +113,7 @@ function islandora_basic_collection_manage_object($object_id) {
     '#collapsed' => TRUE,
   );
 
-  $form['collection_manager']['change_content_models']['form'] = drupal_get_form('islandora_change_content_models_form', $object_id);
+  $form['collection_manager']['change_content_models']['form'] = drupal_get_form('islandora_change_content_models_form', $object);
 
   $form['collection_manager']['migrate_members'] = array(
     '#type' => 'fieldset',
@@ -140,7 +122,7 @@ function islandora_basic_collection_manage_object($object_id) {
     '#collapsed' => TRUE,
   );
 
-  $form['collection_manager']['migrate_members']['form'] = drupal_get_form('islandora_collection_migrate_form', $object_id);
+  $form['collection_manager']['migrate_members']['form'] = drupal_get_form('islandora_collection_migrate_form', $object);
 
   $form['collection_manager']['delete_members'] = array(
     '#type' => 'fieldset',
@@ -149,7 +131,7 @@ function islandora_basic_collection_manage_object($object_id) {
     '#collapsed' => TRUE,
   );
 
-  $form['collection_manager']['delete_members']['form'] = drupal_get_form('islandora_collection_deletion_form', $object_id);
+  $form['collection_manager']['delete_members']['form'] = drupal_get_form('islandora_collection_deletion_form', $object);
 
   // Pass the form around any modules that are interested so that they can add their own collection management functions.
   module_invoke_all('islandora_collection_manager', $form);
@@ -163,15 +145,7 @@ function islandora_basic_collection_manage_object($object_id) {
  * @param string $object_id
  * @return boolean
  */
-function islandora_basic_collection_access($object_id) {
-  module_load_include('inc', 'islandora', 'RestConnection');
-  global $user;
-  try {
-    $restConnection = new RestConnection($user);
-    $fedora_object = new FedoraObject($object_id, $restConnection->repository);
-  } catch (Exception $e) {
-    return FALSE;
-  }
+function islandora_basic_collection_access($fedora_object) {
   if (!isset($fedora_object)) {
     return FALSE;
   }
@@ -268,16 +242,7 @@ function islandora_basic_collection_islandora_view_object($object, $user) {
  * @return null|\FedoraObject 
  */
 function islandora_basic_collection_get_object($object_id) {
-  module_load_include('inc', 'islandora', 'RestConnection');
-  global $user;
-  try {
-    $restConnection = new RestConnection($user);
-    $fedora_object = new FedoraObject($object_id, $restConnection->repository);
-  } catch (Exception $e) {
-    //drupal_set_message(t('Error getting Islandora object %s', array('%s' => $object_id)), 'error');
-    return NULL;
-  }
-  return $fedora_object;
+  return islandora_object_load($object_id);
 }
 
 /**
@@ -298,14 +263,10 @@ function islandora_basic_collection_get_objects($object, $page_number = 1, $page
              and $object <fedora-model:state> <info:fedora/fedora-system:def/model#Active>)
              minus $content <mulgara:is> <info:fedora/fedora-system:FedoraObject-3.0>
              order by $title';
-  module_load_include('inc', 'islandora', 'RestConnection');
   $query_array = array('query' => $query, 'type' => 'itql', 'pid' => $object->id, 'page_size' => $page_size, 'page_number' => $page_number);
   drupal_alter('islandora_basic_collection_query', $query_array);
-  global $user;
   try {
-    $restConnection = new RestConnection($user);
-    $queryObject = new RepositoryQuery($restConnection->connection);
-    $results = $queryObject->query($query_array['query'], $query_array['type']);
+    $results = $object->repository->ri->query($query_array['query'], $query_array['type']);
   } catch (Exception $e) {
     drupal_set_message(t('Islandora Error getting related objects for %s', array('%s' => $object->id)), 'error');
     return"";
@@ -325,6 +286,14 @@ function islandora_basic_collection_islandora_ingest_get_information($models, $o
       return $return;
     } catch (Exception $e) {
       drupal_set_message(t('Islandora Error getting collection info for %s', array('%s' => $object->id)), 'error');
+    }
+  }
+}
+
+function islandora_basic_collection_islandora_undeletable_datastreams($models) {
+  if(in_array('islandora:collectionCModel', $models)) {
+    if(variable_get('islandora_basic_collection_disable_collection_policy_delete', TRUE)) {
+      return array('COLLECTION_POLICY');
     }
   }
 }

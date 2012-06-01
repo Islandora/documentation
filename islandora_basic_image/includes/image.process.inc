@@ -7,9 +7,9 @@
  */
 
 function islandora_basic_image_create_all_derivatives($object) {
-  module_load_include('inc', 'islandora', 'includes/MimeClass');
+  module_load_include('inc', 'islandora', 'includes/mime.detect');
   module_load_include('inc', 'islandora_basic_image', 'includes/image_process');
-  $mime_class = new MimeClass();
+  $mime_class = new MimeDetect();
   if (!isset($object['OBJ'])) {
     drupal_set_message(t('Could not create image derivatives for %s.  No image file was uploaded.', array('%s' => $object->id)),'error');
     return "";

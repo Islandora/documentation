@@ -20,9 +20,9 @@ class CollectionPolicy {
    * @return CollectionPolicy
    *   The parsed collection policy.
    */
-  public function __construct($xmlStr) {
+  public function __construct($xml_string) {
     $this->xml = new DOMDocument();
-    $this->xml->loadXML($xmlStr);
+    $this->xml->loadXML($xml_string);
     $this->name = 'Collection Policy';
   }
 

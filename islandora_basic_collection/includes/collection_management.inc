@@ -11,58 +11,48 @@
  * @param string $pid
  * @return array
  */
-function get_represented_content_models($pid) {
-  module_load_include('inc', 'islandora', 'RestConnection');
-  $rest_connection = new RestConnection();
-  require_once 'sites/all/libraries/tuque/RepositoryQuery.php';
-
+function get_represented_content_models($object) {
   $query = "select \$model \$title from <#ri>
-where (\$object <info:fedora/fedora-system:def/relations-external#isMemberOf> <info:fedora/$pid>
-       or \$object <info:fedora/fedora-system:def/relations-external#isMemberOfCollection> <info:fedora/$pid>)
+where (\$object <info:fedora/fedora-system:def/relations-external#isMemberOf> <info:fedora/$object->id>
+       or \$object <info:fedora/fedora-system:def/relations-external#isMemberOfCollection> <info:fedora/$object->id>)
        and \$object <info:fedora/fedora-system:def/model#hasModel> \$model
        and \$object <dc:title> \$title";
 
-  $model_pids = $rest_connection->repository->ri->itqlQuery($query, 'unlimited', '0');
+  $model_pids = $object->repository->ri->itqlQuery($query, 'unlimited', '0');
   $represented_models = array();
   foreach ($model_pids as $model_pid) {
-
     if ($model_pid['model']['value'] && $model_pid['model']['value'] != 'fedora-system:FedoraObject-3.0') {
-      $fedora_object = new FedoraObject($model_pid['model']['value'], $rest_connection->repository);
-      $content_model_title = $fedora_object->label;
-      $represented_models[$model_pid['model']['value']] = $model_pid['model']['value'] . ' ~ ' . $content_model_title;
+      try {
+        $fedora_object = $object->repository->getObject($model_pid['model']['value']);
+        $content_model_title = $fedora_object->label;
+        $represented_models[$model_pid['model']['value']] = $model_pid['model']['value'] . ' ~ ' . $content_model_title;
+      }
+      catch (RepositoryException $e) {}
     }
   }
   return $represented_models;
 }
 
-function get_child_collections($collection_pid) {
-  module_load_include('inc', 'islandora', 'RestConnection');
-  $rest_connection = new RestConnection();
-  require_once 'sites/all/libraries/tuque/RepositoryQuery.php';
-
+function get_child_collections($object) {
   $query = <<<EOD
   select \$object from <#ri>
     where \$object <info:fedora/fedora-system:def/model#hasModel> <info:fedora/islandora:collectionCModel>
     and \$object  <info:fedora/fedora-system:def/relations-external#isMemberOfCollection> <info:fedora/$collection_pid>
 EOD;
 
-  $lines = $rest_connection->repository->ri->itqlQuery($query, 'unlimited', '0');
+  $lines = $object->repository->ri->itqlQuery($query, 'unlimited', '0');
   $collection_pids = array_values(array_filter($lines));
   return $collection_pids;
 }
 
-function islandora_collections_get_collection_from_pid($pid) {
-  module_load_include('inc', 'islandora', 'RestConnection');
-  $rest_connection = new RestConnection();
-  require_once 'sites/all/libraries/tuque/RepositoryQuery.php';
-
+function islandora_collections_get_collection_from_pid($object) {
   $query = 'select  $parent from <#ri>
 		where ($object <fedora-rels-ext:isMemberOf> $parent
     or $object <fedora-rels-ext:isMemberOfCollection> $parent)
 		and $object <dc:identifier> \'' . $pid . '\'
 		order by $object';
 
-  $object_pids = $rest_connection->repository->ri->itqlQuery($query, 'unlimited', '0');
+  $object_pids = $object->repository->ri->itqlQuery($query, 'unlimited', '0');
   $object_pids = array_values(array_filter($object_pids));
   return $object_pids;
 }
@@ -74,12 +64,9 @@ function islandora_collections_get_collection_from_pid($pid) {
  * @param <type> $query
  * @param <type> $query_format R
  */
-function get_related_items_as_array($collection_pid, $relationship = array('isMemberOfCollection'), $limit = 10000, $offset = 0, $active_objects_only = TRUE, $cmodel = NULL, $orderby = '$title') {
-  module_load_include('inc', 'islandora', 'RestConnection');
-  $rest_connection = new RestConnection();
-  require_once 'sites/all/libraries/tuque/RepositoryQuery.php';
+function get_related_items_as_array($collection_object, $relationship = array('isMemberOfCollection'), $limit = 10000, $offset = 0, $active_objects_only = TRUE, $cmodel = NULL, $orderby = '$title') {
 
-  global $user;
+  $collection_pid = $collection_object->id;
 
 // Not sure if this is necessary given that we should never be able to delete objects in a namespace that we don't have access to.
 //  if (!fedora_repository_access('view fedora repository', $collection_pid['object']['value'])) {
@@ -118,7 +105,7 @@ function get_related_items_as_array($collection_pid, $relationship = array('isMe
                     minus $content <mulgara:is> <info:fedora/fedora-system:FedoraObject-3.0>
                     order by ' . $orderby;
 
-  $results = $rest_connection->repository->ri->itqlQuery($query_string, $limit, $offset);
+  $results = $collection_object->repository->ri->itqlQuery($query_string, $limit, $offset);
 
   return $results;
 }
@@ -168,16 +155,13 @@ function fedora_repository_access($permission, $pid) {
  * @param type $include_fedora_system_content_models
  * @return array 
  */
-function get_content_models_list($pid, $include_fedora_system_content_models = FALSE) {
+function get_content_models_list($object, $include_fedora_system_content_models = FALSE) {
 
-  module_load_include('inc', 'islandora', 'RestConnection');
-  require_once 'sites/all/libraries/tuque/RepositoryQuery.php';
-  $rest_connection = new RestConnection();
   $pids = array();
   $query = 'select $object from <#ri>
-            where <info:fedora/' . $pid . '> <fedora-model:hasModel> $object
+            where <info:fedora/' . $object->id . '> <fedora-model:hasModel> $object
             and $object <fedora-model:state> <info:fedora/fedora-system:def/model#Active>';
-  $content_models = $rest_connection->repository->ri->itqlQuery($query, 'unlimited', '0');
+  $content_models = $object->repository->ri->itqlQuery($query, 'unlimited', '0');
 
   if (empty($content_models)) {
     return $pids;
@@ -202,9 +186,8 @@ function get_content_models_list($pid, $include_fedora_system_content_models = F
  * @return array
  */
 function get_content_models_as_option_array() {
-  module_load_include('inc', 'islandora', 'RestConnection');
-  $rest_connection = new RestConnection();
-  require_once 'sites/all/libraries/tuque/RepositoryQuery.php';
+  module_load_include('inc', 'islandora', 'includes/tuque');
+  $rest_connection = new IslandoraTuque();
 
   $restricted = variable_get('islandora_namespace_restriction_enforced', FALSE);
   $allowed_string = variable_get('islandora_pids_allowed', 'default: demo: changeme: islandora:');
