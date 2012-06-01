@@ -8,9 +8,9 @@ function islandora_ingest_get_information(AbstractFedoraObject $collection_objec
 }
 
 function islandora_ingest_get_object($content_models, $collection_pid, $relationship, $namespace) {
-  module_load_include('inc', 'islandora', 'RestConnection');
+  module_load_include('inc', 'islandora', 'includes/tuque');
   global $user;
-  $connection = new RestConnection($user);
+  $connection = new IslandoraTuque($user);
   $object = $connection->repository->constructObject($namespace);
   foreach($content_models as $content_model) {
     $object->relationships->add(FEDORA_MODEL_URI, 'hasModel', $content_model['pid']);

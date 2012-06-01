@@ -136,7 +136,7 @@ function islandora_get_add_datastream_form($object, &$form_state) {
 
   $form['pid'] = array(
     '#type' => 'hidden',
-    '#value' => "$object_id"
+    '#value' => "$object->id"
   );
 
   $form['add_fieldset']['stream_label'] = array(
@@ -154,7 +154,7 @@ function islandora_get_add_datastream_form($object, &$form_state) {
     // '#required'=>'TRUE',
     '#description' => t('The file to upload.')
   );
-  $form['#redirect'] = "islandora/object/$object_id/";
+  $form['#redirect'] = "islandora/object/$object->id/";
   $form['add_fieldset']['submit'] = array(
     '#type' => 'submit',
     '#value' => t('Add Datastream')
@@ -198,7 +198,6 @@ function islandora_get_add_datastream_form($object, &$form_state) {
  */
 function islandora_add_datastream_form_submit($form, &$form_state) {
   global $base_url;
-  module_load_include('inc', 'islandora', 'RestConnection');
   if (!empty($form_state['submit']) && $form_state['submit'] == 'OK') {
     $form_state['rebuild'] = TRUE;
     return;
@@ -217,8 +216,7 @@ function islandora_add_datastream_form_submit($form, &$form_state) {
   $controlGroup = "M";
 
   try {
-    $restConnection = new RestConnection();
-    $fedora_object = $restConnection->repository->getObject($object_id);
+    $fedora_object = islandora_object_load($object_id);
     $ds = $fedora_object->constructDatastream($dsid, $controlGroup);
     $ds->label = $ds_label;
     $ds->mimetype = $dformat;
@@ -243,7 +241,6 @@ function islandora_add_datastream_form_submit($form, &$form_state) {
  */
 function islandora_add_datastream_form_validate($form, &$form_state) {
   module_load_include('inc', 'islandora', 'includes/mime.detect');
-  module_load_include('inc', 'islandora', 'RestConnection');
   $mimetype = new MimeDetect();
   if ($form_state['clicked_button']['#value'] == 'OK') {
     $form_state['rebuild'] = TRUE;
@@ -269,8 +266,7 @@ function islandora_add_datastream_form_validate($form, &$form_state) {
   }
 
   $object_id = $form_state['values']['pid'];
-  $restConnection = new RestConnection();
-  $fedora_object = $restConnection->repository->getObject($object_id);
+  $fedora_object = islandora_object_load($object_id);
 
   if(isset($fedora_object[$dsid])) {
     form_set_error('', t('Data stream ID already exists in object.'));

@@ -427,15 +427,15 @@ function islandora_permission() {
  * @return FedoraObject 
  */
 function islandora_object_load($object_id) {
-  module_load_include('inc', 'islandora', 'RestConnection');
-  static $restConnection = NULL;
+  module_load_include('inc', 'islandora', 'includes/tuque');
+  static $islandora_tuque = NULL;
 
-  if(!$restConnection) {
-    $restConnection = new RestConnection();
+  if(!$islandora_tuque) {
+    $islandora_tuque = new IslandoraTuque();
   }
 
   try {
-    $fedora_object = $restConnection->repository->getObject($object_id);
+    $fedora_object = $islandora_tuque->repository->getObject($object_id);
   } catch (Exception $e) {
     return NULL;
   }

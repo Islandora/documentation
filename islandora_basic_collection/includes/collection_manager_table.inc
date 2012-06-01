@@ -11,15 +11,12 @@
  * @param string $collection_pid
  * @return array
  */
-function islandora_collection_table($collection_pid) {
-  module_load_include('inc', 'islandora', 'RestConnection');
-  require_once 'sites/all/libraries/tuque/RepositoryQuery.php';
-  $rest_connection = new RestConnection();
+function islandora_collection_table($object) {
   $query = 'select $object $title from <#ri>
-              where  ($object <info:fedora/fedora-system:def/relations-external#isMemberOf> <info:fedora/' . $collection_pid . '>
-              or $object <info:fedora/fedora-system:def/relations-external#isMemberOfCollection> <info:fedora/' . $collection_pid . '>)
+              where  ($object <info:fedora/fedora-system:def/relations-external#isMemberOf> <info:fedora/' . $object->id . '>
+              or $object <info:fedora/fedora-system:def/relations-external#isMemberOfCollection> <info:fedora/' . $object->id . '>)
               and $object <dc:title> $title';
-  $results = $rest_connection->repository->ri->itqlQuery($query, 'unlimited', '0');
+  $results = $object->repository->ri->itqlQuery($query, 'unlimited', '0');
   $keys = array();
   $objects = array();
   foreach ($results as $result) {
@@ -87,14 +84,13 @@ function theme_islandora_basic_collection_management_form_table(array $element) 
 }
 
 function get_collections_as_option_array() {
-  module_load_include('inc', 'islandora', 'RestConnection');
-  require_once 'sites/all/libraries/tuque/RepositoryQuery.php';
+  module_load_include('inc', 'islandora', 'includes/tuque');
 
   $restricted = variable_get('islandora_namespace_restriction_enforced', FALSE);
   $allowed_string = variable_get('islandora_pids_allowed', 'default: demo: changeme: islandora:');
   $namespaces = explode(':', $allowed_string);
 
-  $rest_connection = new RestConnection();
+  $rest_connection = new IslandoraTuque();
   $query = 'select $object $title from <#ri>
                             where ($object <fedora-model:label> $title
                               and $object <info:fedora/fedora-system:def/model#hasModel> <info:fedora/islandora:collectionCModel>
