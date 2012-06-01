@@ -31,8 +31,8 @@
 function islandora_basic_image_menu() {
   $items = array();
   $items['admin/islandora/basic_image'] = array(
-    'title' => 'Islandora Basic Image',
-    'description' => 'Configure the basic image solution pack.',
+    'title' => 'Basic Image collection',
+    'description' => 'Configure the Basic Image solution pack.',
     'page callback' => 'drupal_get_form',
     'access arguments' => array('administer site configuration'),
     'page arguments' => array('islandora_basic_image_admin'),
@@ -124,7 +124,7 @@ function islandora_basic_image_theme($existing, $type, $theme, $path) {
       'variables' => array('islandora_objects' => NULL),
     ),
     'islandora_basic_image' => array(
-      'template' => 'islandora-basic-image',
+      'template' => 'theme/islandora-basic-image',
       'pattern' => 'islandora_basic_image__', //we can add pids to the end of this pattern in our preprocess function
       // and templates will be able to have have a pid appended to the template name to overide a template on a per object basis
       //an example template would be named islandora-basic-image--islandora-27.tpl.phps

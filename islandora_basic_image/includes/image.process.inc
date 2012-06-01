@@ -1,11 +1,17 @@
 <?php
 /**
- * @file
+ * @file image.process.inc
  *
  * This file contains all the functions for image manipulation used in the
  * basic image solution pack.
  */
 
+/**
+ * creates the derivatives for this content model type
+ * @param object $object
+ *   tuque FedoraObject
+ * @return string 
+ */
 function islandora_basic_image_create_all_derivatives($object) {
   module_load_include('inc', 'islandora', 'includes/mime.detect');
   module_load_include('inc', 'islandora_basic_image', 'includes/image_process');

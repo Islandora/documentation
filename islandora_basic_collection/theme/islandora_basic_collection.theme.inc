@@ -20,23 +20,29 @@ function islandora_basic_collection_preprocess_islandora_basic_collection_wrappe
   $display = (empty($_GET['display'])) ? variable_get('islandora_basic_collection_default_view', 'grid') : $_GET['display'];
   $link_text = (empty($_GET['display'])) ? 'grid' : $_GET['display'];
   $query_params = drupal_get_query_parameters($_GET);
-
+  global $base_url;
   if ($display == 'grid') {
     $query_params['display'] = 'list';
-    $link_text = 'List View';
-    $link_class = 'islandora-view-default';
+     $list_link = l('List View', $base_url . '/islandora/object/' . $islandora_object->id, array('attributes' => array('class' => 'islandora-view-list'),
+    'query' => $query_params));
+     unset($query_params['display']);
+     $query_params['display'] = 'grid';
+    $grid_link = l('Grid View', $base_url . '/islandora/object/' . $islandora_object->id, array('attributes' => array('class' => array('islandora-view-grid', 'active')),
+    'query' => $query_params));
     $collection_content = theme('islandora_basic_collection_grid', array('islandora_object' => $islandora_object, 'collection_results' => $results));
   }
   else {
+    $query_params['display'] = 'list';
+    $list_link = l('List View', $base_url . '/islandora/object/' . $islandora_object->id, array('attributes' => array('class' => array('islandora-view-list', 'active')),
+    'query' => $query_params));
+    unset($query_params['display']);
     $query_params['display'] = 'grid';
-    $link_text = 'Grid View';
-    $link_class = 'islandora-view-grid';
+    $grid_link = l('Grid View', $base_url . '/islandora/object/' . $islandora_object->id, array('attributes' => array('class' => 'islandora-view-grid'),
+    'query' => $query_params));
     $collection_content = theme('islandora_basic_collection', array('islandora_object' => $islandora_object, 'collection_results' => $results));
   }
-  global $base_url;
-  $link = l($link_text, $base_url . '/islandora/object/' . $islandora_object->id, array('attributes' => array('class' => $link_class),
-    'query' => $query_params));
-  $variables['switch_view_link'] = $link;
+  $variables['list_link'] = $list_link;
+  $variables['grid_link'] = $grid_link;
   $variables['collection_content'] = $collection_content;
 }
 

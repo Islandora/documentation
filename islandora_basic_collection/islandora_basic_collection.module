@@ -39,8 +39,8 @@ function islandora_basic_collection_menu() {
   );
 
   $items['admin/islandora/basic_collection'] = array(
-    'title' => 'Islandora basic collection',
-    'description' => 'Configure the basic Collection solution pack.',
+    'title' => 'Core collection',
+    'description' => 'Configure the core Islandora collection functionality.',
     'page callback' => 'drupal_get_form',
     'access arguments' => array('administer site configuration'),
     'page arguments' => array('islandora_basic_collection_admin'),
