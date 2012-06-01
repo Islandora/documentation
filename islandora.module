@@ -434,13 +434,18 @@ function islandora_object_load($object_id) {
     $islandora_tuque = new IslandoraTuque();
   }
 
-  try {
-    $fedora_object = $islandora_tuque->repository->getObject($object_id);
-  } catch (Exception $e) {
+  if(IslandoraTuque::exists()) {
+    try {
+      $fedora_object = $islandora_tuque->repository->getObject($object_id);
+    } catch (Exception $e) {
+      return NULL;
+    }
+    return $fedora_object;
+  }
+  else {
+    IslandoraTuque::getError();
     return NULL;
   }
-  
-  return $fedora_object;
 }
 
 function islandora_ingest_access_callback($object, $perm) {

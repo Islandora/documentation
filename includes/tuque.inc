@@ -1,15 +1,15 @@
 <?php
 
 //do this until we expost these in a module or library
-require_once 'sites/all/libraries/tuque/Datastream.php';
-require_once 'sites/all/libraries/tuque/FedoraApi.php';
-require_once 'sites/all/libraries/tuque/FedoraApiSerializer.php';
-require_once 'sites/all/libraries/tuque/Object.php';
-require_once 'sites/all/libraries/tuque/RepositoryConnection.php';
-require_once 'sites/all/libraries/tuque/Cache.php';
-require_once 'sites/all/libraries/tuque/RepositoryException.php';
-require_once 'sites/all/libraries/tuque/Repository.php';
-require_once 'sites/all/libraries/tuque/FedoraRelationships.php';
+@include_once 'sites/all/libraries/tuque/Datastream.php';
+@include_once 'sites/all/libraries/tuque/FedoraApi.php';
+@include_once 'sites/all/libraries/tuque/FedoraApiSerializer.php';
+@include_once 'sites/all/libraries/tuque/Object.php';
+@include_once 'sites/all/libraries/tuque/RepositoryConnection.php';
+@include_once 'sites/all/libraries/tuque/Cache.php';
+@include_once 'sites/all/libraries/tuque/RepositoryException.php';
+@include_once 'sites/all/libraries/tuque/Repository.php';
+@include_once 'sites/all/libraries/tuque/FedoraRelationships.php';
 
 class IslandoraTuque {
 
@@ -58,15 +58,24 @@ class IslandoraTuque {
       $url = variable_get('islandora_base_url', 'http://localhost:8080/fedora');
     }
 
-    $this->connection = new RepositoryConnection($url, $user_string, $pass_string);
-    $this->connection->reuseConnection = TRUE;
-    $this->api = new FedoraApi($this->connection);
-    $this->cache = new SimpleCache();
-    $this->repository = new FedoraRepository($this->api, $this->cache);
+    if(self::exists()) {
+      $this->connection = new RepositoryConnection($url, $user_string, $pass_string);
+      $this->connection->reuseConnection = TRUE;
+      $this->api = new FedoraApi($this->connection);
+      $this->cache = new SimpleCache();
+      $this->repository = new FedoraRepository($this->api, $this->cache);
+    }
   }
 
   static function exists() {
     return class_exists('RepositoryConnection');
+  }
+
+  static function getError() {
+    $islandora_doc_link = l(t('Islandora documentation'), 'https://wiki.duraspace.org/display/ISLANDORA/Islandora');
+    $tuque_link = l(t('Tuque Fedora API'), 'http://github.com/islandora/tuque');
+    $message = t('Islandora requires the !tuque_url. Please install in /sites/all/libraries/tuque before continuing. See the !islandora_url.', array( '!tuque_url' => $tuque_link, '!islandora_url' => $islandora_doc_link));
+    drupal_set_message($message, 'error', FALSE);
   }
 }
 
