@@ -64,7 +64,6 @@ function islandora_collection_migrate_form($form, &$form_state, $object) {
  * @param array $form_state 
  */
 function islandora_collection_migrate_form_submit($form, &$form_state) {
-
   $pids = array_filter($form_state['values']['table']);
   $new_collection = $form_state['values']['new_collection'];
   $current = $form_state['values']['current'];
@@ -73,4 +72,6 @@ function islandora_collection_migrate_form_submit($form, &$form_state) {
     $fedora_object->relationships->remove(FEDORA_RELS_EXT_URI, 'isMemberOfCollection', $current);
     $fedora_object->relationships->add(FEDORA_RELS_EXT_URI, 'isMemberOfCollection', $new_collection);
   }
+  
+  drupal_set_message("@count objects successfully migrated!", array('@count' => count($pids)));
 }

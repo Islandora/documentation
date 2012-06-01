@@ -46,3 +46,31 @@ function islandora_control_group_to_human_readable($control_group) {
       return $control_group;
   }
 }
+
+/**
+ * valid pid ??
+ * @param type $pid
+ * @return boolean
+ */
+function islandora_validate_pid($pid) {
+  $valid = FALSE;
+  if (strlen(trim($pid)) <= 64 && preg_match('/^([A-Za-z0-9]|-|\.)+:(([A-Za-z0-9])|-|\.|~|_|(%[0-9A-F]{2}))+$/', trim($pid))) {
+    $valid = TRUE;
+  }
+
+  return $valid;
+}
+
+/**
+ * Valid Dsid ??
+ * @param type $dsid
+ * @return boolean
+ */
+function islandora_validadte_dsid($dsid) {
+  $valid = FALSE;
+  if (strlen(trim($dsid)) <= 64 && preg_match('/^[a-zA-Z0-9\_\-\.]+$/', trim($dsid))) {
+    $valid = TRUE;
+  }
+
+  return $valid;
+}

@@ -166,7 +166,7 @@ function islandora_manage_policies_form_submit($form, &$form_state) {
 
     $cp_namespace = $form_state['values']['new_cp_namespace'];
     $cp_content_model = $form_state['values']['content_model_to_add'];
-    $content_model_object = new FedoraObject($cp_content_model, $rest_connection->repository);
+    $content_model_object = islandora_object_load($cp_content_model);
     $content_model_datastream = $content_model_object->getDatastream(variable_get('Islandora_Content_Model_DSID', 'ISLANDORACM'));
 
     $content_models_element = $collection_policy_xml->getElementsByTagName('content_models');
