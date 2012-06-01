@@ -17,13 +17,26 @@ function islandora_basic_collection_preprocess_islandora_basic_collection_wrappe
   $total_count = count($results);
   pager_default_initialize($total_count, $page_size);
   $variables['collection_pager'] = theme('pager', array('quantity' => 10));
-  $display = (empty($_GET['display'])) ? 'list' : $_GET['display'];
+  $display = (empty($_GET['display'])) ? variable_get('islandora_basic_collection_default_view', 'grid') : $_GET['display'];
+  $link_text = (empty($_GET['display'])) ? 'grid' : $_GET['display'];
+  $query_params = drupal_get_query_parameters($_GET);
+
   if ($display == 'grid') {
+    $query_params['display'] = 'list';
+    $link_text = 'List View';
+    $link_class = 'islandora-view-default';
     $collection_content = theme('islandora_basic_collection_grid', array('islandora_object' => $islandora_object, 'collection_results' => $results));
   }
   else {
+    $query_params['display'] = 'grid';
+    $link_text = 'Grid View';
+    $link_class = 'islandora-view-grid';
     $collection_content = theme('islandora_basic_collection', array('islandora_object' => $islandora_object, 'collection_results' => $results));
   }
+  global $base_url;
+  $link = l($link_text, $base_url . '/islandora/object/' . $islandora_object->id, array('attributes' => array('class' => $link_class),
+    'query' => $query_params));
+  $variables['switch_view_link'] = $link;
   $variables['collection_content'] = $collection_content;
 }
 
@@ -101,8 +114,8 @@ function islandora_basic_collection_preprocess_islandora_basic_collection(&$vari
       $thumbnail_img = '<img src="' . $base_path . $object_url . '/datastream/TN/view"' . '/>';
     }
     else {
-      //TODO: change this default image url
-      $thumbnail_img = '<img src="http://codesprint-centos.islandora.ca/islandora/object/islandora%3A52/datastream/TN"' . '/>';
+      $image_path = drupal_get_path('module', 'islandora');
+      $thumbnail_img = '<img src="' . $base_path . $image_path . '/images/Crystal_Clear_action_filenew.png"/>';
     }
     $associated_objects_array[$pid]['thumbnail'] = $thumbnail_img;
     $associated_objects_array[$pid]['title_link'] = l($title, $object_url, array('html' => TRUE, 'attributes' => array('title' => $title)));

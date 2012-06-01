@@ -103,15 +103,27 @@ class Dublin_Core {
     $dc_array = array();
     foreach ($this as $element) {
       if (!empty($element)) {
-        foreach ($element as $field => $value) {
+        foreach ($element as $field => $values) {
           // split value if the result value is an array
-          if (is_array($value)) {
-            $value = implode(", ", $value);
+          if (is_array($values)) {
+            $value = '';
+            $i = 0;
+            foreach($values as $piece) {
+              if(!empty($piece)) {
+                if($i++) {
+                  $value .= ", ";
+                }
+                $value .= $piece;
+              }
+            }
+          }
+          else {
+            $value = $values;
           }
           $dc_label = explode(':', $field);
           $element_label = ucfirst($dc_label[1]);
           $dc_array[$field]['label'] = $element_label;
-          $dc_array[$field]['value'] = strip_tags($value);
+          $dc_array[$field]['value'] = $value;
           $dc_array[$field]['class'] = strtolower(preg_replace('/[^A-Za-z0-9]/', '-', $field));
         }
       }

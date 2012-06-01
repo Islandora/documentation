@@ -1,11 +1,17 @@
 <?php
+/**
+ * @file
+ *
+ * This file contains all the functions for image manipulation used in the
+ * basic image solution pack.
+ */
 
-function islandora_basic_image_create_all_derivatives($object){
-  module_load_include('inc', 'islandora', 'includes/MimeClass');
+function islandora_basic_image_create_all_derivatives($object) {
+  module_load_include('inc', 'islandora', 'includes/mime.detect');
   module_load_include('inc', 'islandora_basic_image', 'includes/image_process');
-  $mime_class = new MimeClass();
-  if(!isset($object['OBJ'])){
-    drupal_set_message(t('Could not create image derivatives for %s.  No image file was uploaded.',array('%s' => $object->id)),'error');
+  $mime_class = new MimeDetect();
+  if (!isset($object['OBJ'])) {
+    drupal_set_message(t('Could not create image derivatives for %s.  No image file was uploaded.', array('%s' => $object->id)),'error');
     return "";
   }
   $ext = $mime_class->getExtension($object['OBJ']->mimeType);
@@ -19,6 +25,7 @@ function islandora_basic_image_create_all_derivatives($object){
   if (islandora_basic_image_create_derivative($medium_file, 500, 700)) {
     islandora_basic_image_add_datastream($object, 'MEDIUM_SIZE', $medium_file);
   }
+  file_delete($original_file);
 }
 
 
@@ -32,7 +39,7 @@ function islandora_basic_image_create_derivative($file, $width, $height) {
   $image = image_load($real_path);
   if (!empty($image)) {
     $scale = image_scale($image, $width, $height, TRUE);
-    if($scale){
+    if ($scale) {
       return image_save($image);
     }
   }

@@ -25,4 +25,4 @@ function hook_islandora_datastream_edit($object, $dsid){}
  *       array('name' => t('Ingest Route Name'), 'url' => 'ingest_route/url', 'weight' => 0),
  *     );
  */
-function hook_islandora_ingest_registry($collection_pid) {}
+function hook_islandora_ingest_registry($collection_object) {}

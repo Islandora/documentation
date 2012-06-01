@@ -90,8 +90,8 @@ function get_collections_as_option_array() {
   module_load_include('inc', 'islandora', 'RestConnection');
   require_once 'sites/all/libraries/tuque/RepositoryQuery.php';
 
-  $restricted = variable_get('fedora_namespace_restriction_enforced', TRUE);
-  $allowed_string = variable_get('fedora_pids_allowed', 'default: demo: changeme: islandora:');
+  $restricted = variable_get('islandora_namespace_restriction_enforced', FALSE);
+  $allowed_string = variable_get('islandora_pids_allowed', 'default: demo: changeme: islandora:');
   $namespaces = explode(':', $allowed_string);
 
   $rest_connection = new RestConnection();
