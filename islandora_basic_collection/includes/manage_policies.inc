@@ -27,8 +27,9 @@ function islandora_manage_policies_form($form, &$form_state, $collection_object)
         $item = $repository->getObject($content_model);
         $cm_name = $item->Label;
         $cm_options[$content_model] = $cm_name;
+      } catch (RepositoryException $e) {
+        
       }
-      catch(RepositoryException $e) {}
     }
   }
 
@@ -71,36 +72,43 @@ function islandora_manage_policies_form($form, &$form_state, $collection_object)
     '#title' => t("Manage collection policy for @collection_title", array('@collection_title' => $collection_object->label)),
   );
 
-  $form ['manage_collection_policy']['add']['content_model_to_add'] = array(
-    '#title' => "Choose content model",
-    '#type' => 'select',
-    '#options' => $new_options,
-    '#description' => t("Choose content model to add to this collection policy."),
-  );
+  if (count($new_content_models) > 0) {
+    $form ['manage_collection_policy']['add']['content_model_to_add'] = array(
+      '#title' => "Choose content model",
+      '#type' => 'select',
+      '#options' => $new_options,
+      '#description' => t("Choose content model to add to this collection policy."),
+    );
 
-  $form ['manage_collection_policy']['add']['new_cp_namespace'] = array(
-    '#title' => "Choose namespace",
-    '#type' => 'textfield',
-    '#size' => 15,
-    '#default_value' => $namespace,
-    '#description' => t("Choose namespace for objects in this collection associated with this content model"),
-  );
+    $form['manage_collection_policy']['add']['new_cp_namespace'] = array(
+      '#title' => "Choose namespace",
+      '#type' => 'textfield',
+      '#size' => 15,
+      '#default_value' => $namespace,
+      '#description' => t("Choose namespace for objects in this collection associated with this content model"),
+    );
 
-  $form['parent_collection'] = array(
-    '#type' => 'hidden',
-    '#value' => $collection_object->id,
-  );
+    $form['parent_collection'] = array(
+      '#type' => 'hidden',
+      '#value' => $collection_object->id,
+    );
 
-  $form['collection_pid'] = array(
-    '#type' => 'hidden',
-    '#value' => $collection_object->id,
-  );
+    $form['collection_pid'] = array(
+      '#type' => 'hidden',
+      '#value' => $collection_object->id,
+    );
 
-  $form['manage_collection_policy']['add']['submit'] = array(
-    '#type' => 'submit',
-    '#value' => t('Add content model to collection policy'),
-    '#id' => 'add_cm'
-  );
+    $form['manage_collection_policy']['add']['submit'] = array(
+      '#type' => 'submit',
+      '#value' => t('Add content model to collection policy'),
+      '#id' => 'add_cm'
+    );
+  }
+  else {
+    $form['manage_collection_policy']['no_content_models'] = array(
+      '#markup' => t('No content models available to add!'),
+    );
+  }
 
   if (count($current_models_in_policy) > 0) {
     $form['manage_collection_policy']['remove'] = array(
@@ -140,7 +148,7 @@ function islandora_manage_policies_form_submit($form, &$form_state) {
   module_load_include('module', 'islandora', 'islandora');
   $collection_pid = $form_state['values']['parent_collection'];
   $collection_object = islandora_object_load($collection_pid);
-  
+
   $policy = $collection_object->getDatastream(variable_get('Islandora_Collection_Policy_DSID', 'COLLECTION_POLICY'));
   $collection_policy = '<?xml version="1.0" encoding="UTF-8"?>
 <collection_policy xmlns="http://www.islandora.ca" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="" xsi:schemaLocation="http://www.islandora.ca http://syn.lib.umanitoba.ca/collection_policy.xsd">

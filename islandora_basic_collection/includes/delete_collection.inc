@@ -21,7 +21,7 @@ function islandora_collection_deletion_form($form, &$form_state, $object) {
   $submit_text_message = ($table) ? "Delete selected objects" : "Delete collection";
 
   $form = array();
-  
+
   $form['collection_delete']['titlebox'] = array(
     '#type' => 'item',
     '#title' => t("Delete objects from @collection_pid", array('@collection_pid' => $pid)),
@@ -113,7 +113,7 @@ function islandora_collection_deletion_form_submit($form, &$form_state) {
  * @param string $pid
  */
 function delete_root_collection($object) {
-
+  $pid = $object->id;
   try {
     $object->repository->purgeObject($object->id);
   } catch (RepositoryException $e) {
