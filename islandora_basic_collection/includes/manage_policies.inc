@@ -137,6 +137,7 @@ function islandora_manage_policies_form_validate($form, &$form_state) {
  * @param array $form_state 
  */
 function islandora_manage_policies_form_submit($form, &$form_state) {
+  module_load_include('module', 'islandora', 'islandora');
   $collection_pid = $form_state['values']['parent_collection'];
   $collection_object = islandora_object_load($collection_pid);
   
@@ -166,6 +167,7 @@ function islandora_manage_policies_form_submit($form, &$form_state) {
 
     $cp_namespace = $form_state['values']['new_cp_namespace'];
     $cp_content_model = $form_state['values']['content_model_to_add'];
+
     $content_model_object = islandora_object_load($cp_content_model);
     $content_model_datastream = $content_model_object->getDatastream(variable_get('Islandora_Content_Model_DSID', 'ISLANDORACM'));
 

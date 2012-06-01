@@ -66,11 +66,33 @@ function islandora_validate_pid($pid) {
  * @param type $dsid
  * @return boolean
  */
-function islandora_validadte_dsid($dsid) {
+function islandora_validate_dsid($dsid) {
   $valid = FALSE;
   if (strlen(trim($dsid)) <= 64 && preg_match('/^[a-zA-Z0-9\_\-\.]+$/', trim($dsid))) {
     $valid = TRUE;
   }
 
   return $valid;
+}
+
+/* Helper function to describe a Fedora repository.
+ * 
+ * Can be used to check if Fedora is available.
+ * 
+ * @param $url
+ *   A url to a Fedora repository.
+ * @return
+ *   Returns an array describing the repository. Returns FALSE if Fedora is down
+ *   or if the url is incorrect.
+ */
+function islandora_describe_repository($url) {
+  
+  $connection = new IslandoraTuque(NULL, $url);
+  try {
+    $info = $connection->api->a->describeRepository();
+    return $info;
+  }
+  catch (RepositoryException $e) {
+    return FALSE;
+  }
 }
