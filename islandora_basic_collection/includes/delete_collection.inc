@@ -67,7 +67,7 @@ function islandora_collection_deletion_form($form, &$form_state, $object) {
 function islandora_collection_deletion_form_submit($form, &$form_state) {
 
   $collection_pid = $form_state['values']['current'];
-  $fedora_object = islandora_object_load($collection_object);
+  $fedora_object = islandora_object_load($collection_pid);
 
   $parents = $fedora_object->relationships->get(NULL, 'isMemberOfCollection');
   $parents = islandora_collections_get_collection_from_pid($fedora_object);
@@ -77,14 +77,14 @@ function islandora_collection_deletion_form_submit($form, &$form_state) {
     drupal_goto("islandora/object/" . $parents[0]['parent']['value']);
   }
 
-  $child_collections = get_child_collections($collection_pid);
+  $child_collections = get_child_collections($fedora_object);
 
   $populated_child_collections = array();
   $pids = @array_filter($form_state['values']['table']);
 
   if (!empty($child_collections)) {
     foreach ($child_collections as $child) {
-      $child_pids = get_related_items_as_array(islandora_object_load($child), 'isMemberOfCollection');
+      $child_pids = get_related_items_as_array(islandora_object_load($child['object']['value']), 'isMemberOfCollection');
       if (!empty($child_pids)) {
         $populated_child_collections[] = $child;
       }

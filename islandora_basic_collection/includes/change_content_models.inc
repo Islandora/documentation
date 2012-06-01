@@ -86,7 +86,7 @@ function islandora_change_content_models_form_submit($form, &$form_state) {
   $collection_pid = $form_state['values']['collection_pid'];
   
   $current_content_model_object = islandora_object_load($current_content_model);
-  $collection_object = islandora_load_object($form_state['values']['collection_pid']);
+  $collection_object = islandora_object_load($form_state['values']['collection_pid']);
 
   $collection_policy_datastream = $collection_object->getDatastream(variable_get('Islandora_Collection_Policy_DSID', 'COLLECTION_POLICY'));
   $policy = new CollectionPolicy($collection_policy_datastream->content);
@@ -105,7 +105,7 @@ function islandora_change_content_models_form_submit($form, &$form_state) {
     }
   }
   if ($add_to_policy) {
-    $new_content_model_object = new FedoraObject($new_content_model, $rest_connection->repository);
+    $new_content_model_object = islandora_object_load($new_content_model);
     $new_content_model_datastream = $new_content_model_object->getDatastream(variable_get('Islandora_Content_Model_DSID', 'ISLANDORACM'));
     $content_models_element = $collection_policy_xml->getElementsByTagName('content_models');
     $content_model_element = $content_models_element->item(0)->getElementsByTagName('content_model');
@@ -129,14 +129,14 @@ function islandora_change_content_models_form_submit($form, &$form_state) {
            or \$object <info:fedora/fedora-system:def/relations-external#isMemberOf> <info:fedora/$collection_pid>)
       and \$object <fedora-model:state> <info:fedora/fedora-system:def/model#Active>)";
   
-  $objects = $rest_connection->repository->ri->itqlQuery($query, 'unlimited', '0');
+  $objects = $collection_object->repository->ri->itqlQuery($query, 'unlimited', '0');
   
   $count = 0;
   foreach ($objects as $object) {
     if (!$object['object']['value']) {
       continue;
     }
-    $fedora_item = new FedoraObject($object['object']['value'], $rest_connection->repository);
+    $fedora_item = islandora_object_load($object['object']['value']);
     $fedora_item->relationships->remove(FEDORA_MODEL_URI, 'hasModel', $current_content_model);
     $fedora_item->relationships->add(FEDORA_MODEL_URI, 'hasModel', $new_content_model);
     $count++;

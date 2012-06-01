@@ -119,7 +119,20 @@ function islandora_create_child_collection_form($form, &$form_state, $collection
 }
 
 function islandora_create_child_collection_form_validate($form, &$form_state) {
-  
+  module_load_include('inc', 'islandora', 'includes/utilities');
+  $new_collection_pid = $form_state['values']['new_collection_pid'];
+  if($new_collection_pid) {
+    $valid = islandora_validate_pid($new_collection_pid);
+    if(!$valid) {
+      form_set_error('new_collection_pid', 'Collection PID is Invalid.');
+    }
+    else {
+      $object = islandora_object_load($new_collection_pid);
+      if($object !== NULL) {
+        form_set_error('new_collection_pid', 'Collection PID already exists.');
+      }
+    }
+  }
 }
 
 /**
@@ -136,7 +149,7 @@ function islandora_create_child_collection_form_submit($form, &$form_state) {
   $new_collection_pid = $form_state['values']['new_collection_pid'];
   $this_collection_pid = $form_state['values']['current'];
   if(empty($new_collection_pid)) {
-    $collection_namespace = substr($this_collection_pid, 0, strpos($this_collection_pid, ":"));
+    $new_collection_pid = substr($this_collection_pid, 0, strpos($this_collection_pid, ":"));
   }
   $new_collection_label = $form_state['values']['collection_name'];
   $namespace = $form_state['values']['collection_namespace'];
@@ -185,5 +198,5 @@ function islandora_create_child_collection_form_submit($form, &$form_state) {
   $fedora_object->ingestDatastream($policy_datastream);
   $new_fedora_object = islandora_ingest_add_object($fedora_object);
 
-  drupal_goto('/islandora/object/' . $new_collection_pid);
+  drupal_goto('/islandora/object/' . $fedora_object->id);
 }

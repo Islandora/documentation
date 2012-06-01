@@ -64,7 +64,6 @@ function islandora_collection_migrate_form($form, &$form_state, $object) {
  * @param array $form_state 
  */
 function islandora_collection_migrate_form_submit($form, &$form_state) {
-
   $pids = array_filter($form_state['values']['table']);
   $new_collection = $form_state['values']['new_collection'];
   $current = $form_state['values']['current'];

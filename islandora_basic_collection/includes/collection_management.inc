@@ -37,7 +37,7 @@ function get_child_collections($object) {
   $query = <<<EOD
   select \$object from <#ri>
     where \$object <info:fedora/fedora-system:def/model#hasModel> <info:fedora/islandora:collectionCModel>
-    and \$object  <info:fedora/fedora-system:def/relations-external#isMemberOfCollection> <info:fedora/$collection_pid>
+    and \$object  <info:fedora/fedora-system:def/relations-external#isMemberOfCollection> <info:fedora/$object->id>
 EOD;
 
   $lines = $object->repository->ri->itqlQuery($query, 'unlimited', '0');
@@ -49,7 +49,7 @@ function islandora_collections_get_collection_from_pid($object) {
   $query = 'select  $parent from <#ri>
 		where ($object <fedora-rels-ext:isMemberOf> $parent
     or $object <fedora-rels-ext:isMemberOfCollection> $parent)
-		and $object <dc:identifier> \'' . $pid . '\'
+		and $object <dc:identifier> \'' . $object->id . '\'
 		order by $object';
 
   $object_pids = $object->repository->ri->itqlQuery($query, 'unlimited', '0');
