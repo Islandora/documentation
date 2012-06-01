@@ -33,9 +33,16 @@ function islandora_view_datastream($object, $dsid, $method = 'view') {
 
 function islandora_datastream_get_parents($islandora_object) {
   $parent_collections = array();
-  $repository = $islandora_object->repository;
-  $collections1 = $islandora_object->relationships->get(FEDORA_RELS_EXT_URI, 'isMemberOfCollection');
-  $collections2 = $islandora_object->relationships->get(FEDORA_RELS_EXT_URI, 'isMemberOf');
+
+  try {
+    $repository = $islandora_object->repository;
+    $collections1 = $islandora_object->relationships->get(FEDORA_RELS_EXT_URI, 'isMemberOfCollection');
+    $collections2 = $islandora_object->relationships->get(FEDORA_RELS_EXT_URI, 'isMemberOf');
+  }
+  catch (RepositoryException $e) {
+    $collections1 = array();
+    $collections2 = array();
+  }
   $collections = array_merge($collections1, $collections2);
 
   foreach($collections as $collection) {

@@ -24,12 +24,33 @@ function islandora_repository_admin($form, &$form_state) {
     $url = variable_get('islandora_base_url', 'http://localhost:8080/fedora');
   }
 
-  // Connect to Fedora
-  $info = islandora_describe_repository($url);
+  module_load_include('inc', 'islandora', 'includes/tuque');
+  $connection = new IslandoraTuque(NULL, $url);
+  try {
+    $info = $connection->api->a->describeRepository();
+  }
+  catch (RepositoryException $e) {
+    $info = FALSE;
+  }
+
+  if($info) {
+    try {
+      $dc = $connection->api->m->getDatastream('fedora-system:ContentModel-3.0', 'DC');
+    }
+    catch (RepositoryException $e) {
+      $dc = FALSE;
+    }
+  }
   
   if($info) {
-    $confirmation_message = '<img src="' . url('misc/watchdog-ok.png') . '"/>'
-      . t('Successfully connected to Fedora Server (Version !version).', array('!version' => $info['repositoryVersion']));
+    if($dc) {
+      $confirmation_message = '<img src="' . url('misc/watchdog-ok.png') . '"/>'
+        . t('Successfully connected to Fedora Server (Version !version).', array('!version' => $info['repositoryVersion']));
+    }
+    else {
+      $confirmation_message = '<img src="' . url('misc/watchdog-warning.png') . '"/>'
+        . t('Unable to authenticate when connecting to to Fedora Server (Version !version). Please configure the !filter.', array('!version' => $info['repositoryVersion'], '!filter' => 'Drupal Filter'));
+    }
   }
   else {
     $confirmation_message = '<img src="' . url('misc/watchdog-error.png') . '"/> '
