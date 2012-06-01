@@ -22,7 +22,7 @@
  *
  */
 
-class MimeClass {
+class MimeDetect {
 
   protected $protectedMimeTypes = array(
     /*

@@ -204,8 +204,8 @@ function islandora_add_datastream_form_submit($form, &$form_state) {
     return;
   }
 
-  module_load_include('inc', 'islandora', 'includes/MimeClass');
-  $mimetype = new MimeClass();
+  module_load_include('inc', 'islandora', 'includes/mime.detect');
+  $mimetype = new MimeDetect();
   
   $file = $form_state['values']['add-stream-file-location'];
   $file = drupal_realpath($file);
@@ -242,9 +242,9 @@ function islandora_add_datastream_form_submit($form, &$form_state) {
  * @return boolean 
  */
 function islandora_add_datastream_form_validate($form, &$form_state) {
-  module_load_include('inc', 'islandora', 'includes/MimeClass');
+  module_load_include('inc', 'islandora', 'includes/mime.detect');
   module_load_include('inc', 'islandora', 'RestConnection');
-  $mimetype = new MimeClass();
+  $mimetype = new MimeDetect();
   if ($form_state['clicked_button']['#value'] == 'OK') {
     $form_state['rebuild'] = TRUE;
     return;
@@ -277,7 +277,7 @@ function islandora_add_datastream_form_validate($form, &$form_state) {
     return FALSE;
   }
 
-  $mimetype = new MimeClass();
+  $mimetype = new MimeDetect();
   $object = islandora_object_load($form_state['values']['pid']);
   $unused_dsids = islandora_get_unused_dsids($object);
   if(isset($unused_dsids[$dsid])) {
