@@ -21,8 +21,9 @@
  * along with the program.  If not, see <http ://www.gnu.org/licenses/>.
  */
 ?>
-<?php if (isset(drupal_set_title($islandora_object->label))): ?>
-  <?php drupal_set_title($islandora_object->label); ?>
+
+<?php if(isset($islandora_object_label)): ?>
+  <?php drupal_set_title("$islandora_object_label"); ?>
 <?php endif; ?>
 
 <div class="islandora islandora-basic-collection">
