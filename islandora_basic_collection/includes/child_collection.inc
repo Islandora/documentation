@@ -17,7 +17,15 @@ function islandora_create_child_collection_form($form, &$form_state, $collection
   module_load_include('inc', 'islandora_basic_collection', 'includes/CollectionPolicy');
 
   $policy_datastream = $collection_object->getDatastream(variable_get('Islandora_Collection_Policy_DSID', 'COLLECTION_POLICY'));
+  if (!$policy_datastream) {
+    $form['no_policy'] = array(
+      '#type' => 'item',
+      '#title' => t('No collection policy datastream found!'),
+    );
+    return $form;
+  }
   $collection_policy = new CollectionPolicy($policy_datastream->content);
+
   $current_content_models = $collection_policy->getContentModels();
   
   $collection_content_model_exists = FALSE;
