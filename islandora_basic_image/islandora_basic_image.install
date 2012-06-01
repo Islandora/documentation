@@ -38,13 +38,13 @@ function islandora_basic_image_install() {
       $xml = file_get_contents(drupal_get_path('module', 'islandora_basic_image') . '/xml/simple_islandora_basic_imageCM.xml');
       $restConnection->api->m->ingest(array('string' => $xml));
     } catch (Exception $e) {
-      drupal_set_message(t('Unable to install content models %e', array('%e' => $e)), 'error');
+      drupal_set_message(t('Unable to install content models for the basic image module %e', array('%e' => $e)), 'error');
       return;
     }
-    drupal_set_message(t('Content models installed!'));
+    drupal_set_message(t('Content models for the basic image module installed!'));
   }
   else {
-    drupal_set_message(t('Content models already exist!'), 'warning');
+    drupal_set_message(t('Content models for the basic image module already exist!'), 'warning');
   }
 
   $collection_query = $restConnection->api->a->findObjects('query', 'pid=islandora:sp_basic_image_collection');
@@ -61,13 +61,13 @@ function islandora_basic_image_install() {
       $fedora_object->ingestDatastream($datastream);
       
     } catch (Exception $e) {
-      drupal_set_message(t('Unable to install collections %e', array('%e' => $e)), 'error');
+      drupal_set_message(t('Unable to install collections for the basic image module %e', array('%e' => $e)), 'error');
       return;
     }
-    drupal_set_message(t('Collections installed!'));
+    drupal_set_message(t('Collections for the basic image module installed!'));
   }
   else {
-    drupal_set_message(t('Collections already exist!'), 'warning');
+    drupal_set_message(t('Collections for the basic image module already exist!'), 'warning');
   }
 }
 
@@ -90,13 +90,13 @@ function islandora_basic_image_uninstall() {
     try {
       $restConnection->repository->purgeObject('islandora:sp_basic_image');
     } catch (Exception $e) {
-      drupal_set_message(t('Unable to purge content models %e', array('%e' => $e)), 'error');
+      drupal_set_message(t('Unable to purge content models for the basic image module %e', array('%e' => $e)), 'error');
       return;
     }
-    drupal_set_message(t('Content models purged!'));
+    drupal_set_message(t('Content models for the basic image module purged!'));
   }
   else {
-    drupal_set_message(t('Content models don\'t exist!'), 'warning');
+    drupal_set_message(t('Content models for the basic image module don\'t exist!'), 'warning');
   }
 
   $collection_query = $restConnection->api->a->findObjects('query', 'pid=islandora:sp_basic_image_collection');
@@ -104,12 +104,12 @@ function islandora_basic_image_uninstall() {
     try {
       $restConnection->repository->purgeObject('islandora:sp_basic_image_collection');
     } catch (Exception $e) {
-      drupal_set_message(t('Unable to purge collections %e', array('%e' => $e)), 'error');
+      drupal_set_message(t('Unable to purge collections for the basic image module %e', array('%e' => $e)), 'error');
       return;
     }
-    drupal_set_message(t('Collections purged!'));
+    drupal_set_message(t('Collections for the basic image module purged!'));
   }
   else {
-    drupal_set_message(t('Collections don\'t exist!'), 'warning');
+    drupal_set_message(t('Collections for the basic image module don\'t exist!'), 'warning');
   }
 }

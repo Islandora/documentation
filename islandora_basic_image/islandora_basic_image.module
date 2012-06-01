@@ -31,8 +31,8 @@
 function islandora_basic_image_menu() {
   $items = array();
   $items['admin/islandora/basic_image'] = array(
-    'title' => 'Islandora Basic Image',
-    'description' => 'Configure the basic image solution pack.',
+    'title' => 'Basic Image collection',
+    'description' => 'Configure the Basic Image solution pack.',
     'page callback' => 'drupal_get_form',
     'access arguments' => array('administer site configuration'),
     'page arguments' => array('islandora_basic_image_admin'),
