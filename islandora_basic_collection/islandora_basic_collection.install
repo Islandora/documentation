@@ -24,10 +24,10 @@ function islandora_basic_collection_install() {
       drupal_set_message(st('Unable to install content models %e', array('%e' => $e)), 'error');
       return;
     }
-    drupal_set_message(st('Content models installed!'));
+    drupal_set_message(st('Content models for the basic collection module installed!'));
   }
   else {
-    drupal_set_message(st('Content models already exist!'), 'warning');
+    drupal_set_message(st('Content models for the basic collection module already exist!'), 'warning');
   }
 
   $collection_query = $rest_connection->api->a->findObjects('query', 'pid=islandora:root');
@@ -43,13 +43,13 @@ function islandora_basic_collection_install() {
       $datastream->setContentFromUrl($file_path);
       $fedora_object->ingestDatastream($datastream);
     } catch (Exception $e) {
-      drupal_set_message(st('Unable to install collections %e', array('%e' => $e)), 'error');
+      drupal_set_message(st('Unable to install collections for the basic collection module %e', array('%e' => $e)), 'error');
       return;
     }
-    drupal_set_message(st('Collections installed!'));
+    drupal_set_message(st('Collections installed for the basic collection module!'));
   }
   else {
-    drupal_set_message(st('Collections already exist!'), 'warning');
+    drupal_set_message(st('Collections already exist for the basic collection module!'), 'warning');
   }
 }
 
@@ -67,13 +67,13 @@ function islandora_basic_collection_uninstall() {
     try {
       $rest_connection->repository->purgeObject('islandora:collectionCModel');
     } catch (Exception $e) {
-      drupal_set_message(st('Unable to purge content models %e', array('%e' => $e)), 'error');
+      drupal_set_message(st('Unable to purge content models for the basic collection module %e', array('%e' => $e)), 'error');
       return;
     }
-    drupal_set_message(st('Content models purged!'));
+    drupal_set_message(st('Content models for the basic collection module purged!'));
   }
   else {
-    drupal_set_message(st('Content models don\'t exist!'), 'warning');
+    drupal_set_message(st('Content models for the basic collection module don\'t exist!'), 'warning');
   }
 
   $collection_query = $rest_connection->api->a->findObjects('query', 'pid=islandora:root');
@@ -81,12 +81,12 @@ function islandora_basic_collection_uninstall() {
     try {
       $rest_connection->repository->purgeObject('islandora:root');
     } catch (Exception $e) {
-      drupal_set_message(st('Unable to purge collections %e', array('%e' => $e)), 'error');
+      drupal_set_message(st('Unable to purge collections for the basic collection module %e', array('%e' => $e)), 'error');
       return;
     }
-    drupal_set_message(st('Collections purged!'));
+    drupal_set_message(st('Collections for the basic collection module purged!'));
   }
   else {
-    drupal_set_message(st('Collections don\'t exist!'), 'warning');
+    drupal_set_message(st('Collections for the basic collection module don\'t exist!'), 'warning');
   }
 }

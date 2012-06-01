@@ -43,14 +43,14 @@ function islandora_menu() {
   $items = array();
 
   $items['admin/islandora'] = array(
-    'title' => 'Islandora Configuration',
-    'description' => "Configure Islandora's interaction with Fedora",
+    'title' => 'Islandora',
+    'description' => "Configure settings associated with Islandora.",
     'access arguments' => array('administer site configuration'),
     'type' => MENU_NORMAL_ITEM,
   );
   $items['admin/islandora/configure'] = array(
-    'title' => 'Islandora Configuration',
-    'description' => 'Enter the Islandora collection information here.',
+    'title' => 'Configuration',
+    'description' => 'Configure settings for Islandora.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('islandora_repository_admin'),
     'file' => 'admin/islandora.admin.inc',
@@ -390,32 +390,32 @@ function islandora_theme() {
 function islandora_permission() {
   return array(
     FEDORA_VIEW => array(
-      'title' => t('View Fedora Repository objects and datastreams'),
-      'description' => t('Users with this permission will be allowed to view Fedora objects and datastreams.  Unless Fedora XACML security policies limits this functionality to certain objects.')
+      'title' => t('View repository objects and datastreams'),
+      'description' => t('View objects in the repository and their associated datastreams. Note: Fedora XACML security policies may override this permission.')
     ),
     FEDORA_ADD_DS => array(
-      'title' => t('Add Fedora streams to Fedora objects'),
-      'description' => t('Users with this permission will be allowed to add datastreams to Fedora objects.  Unless Fedora XACML security policies limits this functionality to certain objects.')
+      'title' => t('Add datastreams to repository objects'),
+      'description' => t('Add datastreams to objects in the repository. Note: Fedora XACML security policies may override this position.')
     ),
     FEDORA_METADATA_EDIT => array(
-      'title' => t('Edit Fedora Metadata'),
-      'description' => t('Users with this permission will be allowed to edit Fedora Metadata streams')
+      'title' => t('Edit metadata'),
+      'description' => t('Edit metadata for objects in the repository.')
     ),
     FEDORA_INGEST => array(
-      'title' => t('Create new Fedora objects'),
-      'description' => t('Users with this permission will be allowed to create new objects in the Fedora repository')
+      'title' => t('Create new repository objects'),
+      'description' => t('Create new objects in the repository.')
     ),
     FEDORA_PURGE => array(
-      'title' => t('Permanently remove objects from the Fedora repository'),
-      'description' => t('Users with this permission will be allowed to Permantly remove objects from the Fedora repository.')
+      'title' => t('Permanently remove objects from the repository'),
+      'description' => t('Permanently remove objects from the repository.')
     ),
     FEDORA_MODIFY_STATE => array(
-      'title' => t('Change a Fedora objects state'),
-      'description' => t('Users with this permission will be allowed to change a Fedora objects state.')
+      'title' => t('Change repository object states'),
+      'description' => t('Change the state of objects in the repository (e.g. from Active to Inactive).')
     ),
     FEDORA_MANAGE => array(
-      'title' => t('View Fedora Manage tabs'),
-      'description' => t('Users with this permission will be allowed to view fedora manage manage tabs.')
+      'title' => t('View object management tabs'),
+      'description' => t('View tabs that provide object management functions.')
     )
   );
 }
