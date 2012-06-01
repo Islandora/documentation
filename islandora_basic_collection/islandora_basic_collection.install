@@ -5,12 +5,11 @@
  * islandora_basic_collection.install
  */
 function islandora_basic_collection_install() {
-  module_load_include('inc', 'islandora', 'RestConnection');
-  global $user;
+  module_load_include('inc', 'islandora', 'includes/tuque');
   global $base_root;
 
   try {
-    $rest_connection = new RestConnection($user);
+    $rest_connection = new IslandoraTuque();
   } catch (Exception $e) {
     drupal_set_message(st('Unable to connect to the repository %e', array('%e' => $e)), 'error');
     return;
@@ -55,10 +54,9 @@ function islandora_basic_collection_install() {
 }
 
 function islandora_basic_collection_uninstall() {
-  module_load_include('inc', 'islandora', 'RestConnection');
-  global $user;
+  module_load_include('inc', 'islandora', 'includes/tuque');
   try {
-    $rest_connection = new RestConnection($user);
+    $rest_connection = new IslandoraTuque();
   } catch (Exception $e) {
     drupal_set_message(st('Unable to connect to the repository %e', array('%e' => $e)), 'error');
     return;

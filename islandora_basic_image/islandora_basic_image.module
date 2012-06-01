@@ -104,34 +104,6 @@ function islandora_basic_image_menu() {
   return 'Another view returned by the image cmodel';
   } */
 
-/**
- * determines whether or not to show this modules manage tab
- * @global object $user
- * @param string $object_id
- * @return boolean 
- */
-function islandora_basic_image_access($object_id) {
-  module_load_include('inc', 'islandora', 'RestConnection');
-  global $user;
-  try {
-    $restConnection = new RestConnection($user);
-    $fedora_object = new FedoraObject($object_id, $restConnection->repository);
-  } catch (Exception $e) {
-    return FALSE;
-  }
-  if (!isset($fedora_object)) {
-    return FALSE;
-  }
-  $models = $fedora_object->models;
-  $cmodel_list = islandora_basic_image_islandora_get_types();
-  foreach ($fedora_object->models as $model) {
-    if (isset($cmodel_list[$model])) {
-      return user_access(FEDORA_MODIFY_STATE);
-    }
-  }
-  return FALSE;
-}
-
 function islandora_basic_image_init() {
   if (path_is_admin(current_path())) {
     drupal_add_css(drupal_get_path('module', 'islandora_basic_image') . '/css/islandora_basic_image.admin.css');

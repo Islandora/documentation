@@ -5,12 +5,10 @@
  * ChangeContentModels.inc
  */
 
-function islandora_change_content_models_form($form, &$form_state, $collection_pid) {
+function islandora_change_content_models_form($form, &$form_state, $collection_object) {
   module_load_include('inc', 'islandora_basic_collection', 'includes/CollectionPolicy');
-  module_load_include('inc', 'islandora', 'RestConnection');
-  $rest_connection = new RestConnection();
-
-  $content_models = get_content_models_list($collection_pid);
+  $collection_pid = $collection_object->id;
+  $content_models = get_content_models_list($collection_object);
   $cm_options = array();
   $name_mappings = array();
   foreach ($content_models as $content_model) {
@@ -24,7 +22,6 @@ function islandora_change_content_models_form($form, &$form_state, $collection_p
   $namespace = substr($collection_pid, 0, strpos($collection_pid, ":"));
 
   $collection_policy_dsid = variable_get('Islandora_Collection_Policy_DSID', 'COLLECTION_POLICY');
-  $collection_object = new FedoraObject($collection_pid, $rest_connection->repository);
   $collection_policy_datastream = $collection_object->getDatastream($collection_policy_dsid);
 
   $supported_collection_models = array();
@@ -46,7 +43,7 @@ function islandora_change_content_models_form($form, &$form_state, $collection_p
 
   $form['change_cmodel']['titlebox'] = array(
     '#type' => 'item',
-    '#title' => t("Change content models within @collection_pid", array('@collection_pid' => $collection_pid)),
+    '#title' => t("Change content models within @collection_name", array('@collection_name' => $collection_object->label)),
   );
 
   $form['change_cmodel']['current_content_model'] = array(
@@ -83,16 +80,14 @@ function islandora_change_content_models_form_validate($form, &$form_state) {
 
 function islandora_change_content_models_form_submit($form, &$form_state) {
   module_load_include('inc', 'islandora_basic_collection', 'includes/CollectionPolicy');
-  module_load_include('inc', 'islandora', 'RestConnection');
-  $rest_connection = new RestConnection();
 
   $current_content_model = $form_state['values']['current_content_model'];
   $new_content_model = $form_state['values']['new_content_model'];
   $collection_pid = $form_state['values']['collection_pid'];
   
-  $current_content_model_object = new FedoraObject($current_content_model, $rest_connection->repository);
+  $current_content_model_object = islandora_object_load($current_content_model);
+  $collection_object = islandora_load_object($form_state['values']['collection_pid']);
 
-  $collection_object = new FedoraObject($form_state['values']['collection_pid'], $rest_connection->repository);
   $collection_policy_datastream = $collection_object->getDatastream(variable_get('Islandora_Collection_Policy_DSID', 'COLLECTION_POLICY'));
   $policy = new CollectionPolicy($collection_policy_datastream->content);
   

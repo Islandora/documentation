@@ -11,7 +11,7 @@ require_once 'sites/all/libraries/tuque/RepositoryException.php';
 require_once 'sites/all/libraries/tuque/Repository.php';
 require_once 'sites/all/libraries/tuque/FedoraRelationships.php';
 
-class RestConnection {
+class IslandoraTuque {
 
   /**
    * Connection to the repository

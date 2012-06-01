@@ -9,12 +9,11 @@
  * Implements hook_install
  */
 function islandora_basic_image_install() {
-  module_load_include('inc', 'islandora', 'RestConnection');
-  global $user;
+  module_load_include('inc', 'islandora', 'includes/tuque');
   global $base_root;
   
   try {
-    $restConnection = new RestConnection($user);
+    $restConnection = new IslandoraTuque();
   } catch (Exception $e) {
     drupal_set_message(t('Unable to connect to the repository %e', array('%e' => $e)), 'error');
     return;
@@ -64,10 +63,10 @@ function islandora_basic_image_install() {
  * Implements hook_uninstall
  */
 function islandora_basic_image_uninstall() {
-  module_load_include('inc', 'islandora', 'RestConnection');
+  module_load_include('inc', 'islandora', 'includes/tuque');
   global $user;
   try {
-    $restConnection = new RestConnection($user);
+    $restConnection = new IslandoraTuque($user);
   } catch (Exception $e) {
     drupal_set_message(t('Unable to connect to the repository %e', array('%e' => $e)), 'error');
     return;

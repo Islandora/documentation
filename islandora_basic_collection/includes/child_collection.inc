@@ -13,11 +13,9 @@
  * @param string $this_collection_pid
  * @return array
  */
-function islandora_create_child_collection_form($form, &$form_state, $this_collection_pid) {
-  module_load_include('inc', 'islandora', 'RestConnection');
+function islandora_create_child_collection_form($form, &$form_state, $collection_object) {
   module_load_include('inc', 'islandora_basic_collection', 'includes/CollectionPolicy');
-  $rest_connection = new RestConnection();
-  $collection_object = new FedoraObject($this_collection_pid, $rest_connection->repository);
+
   $policy_datastream = $collection_object->getDatastream(variable_get('Islandora_Collection_Policy_DSID', 'COLLECTION_POLICY'));
   if (!$policy_datastream) {
     $form['no_policy'] = array(
@@ -56,14 +54,14 @@ function islandora_create_child_collection_form($form, &$form_state, $this_colle
       }
     }
   }
-  $collection_namespace = substr($this_collection_pid, 0, strpos($this_collection_pid, ":"));
+  $collection_namespace = substr($collection_object->id, 0, strpos($collection_object->id, ":"));
 
   $content_models = get_content_models_as_option_array();
   unset($content_models['islandora:collectionCModel']);
 
   $form['child_creation']['titlebox'] = array(
     '#type' => 'item',
-    '#title' => t("Create new child collection within @collection", array('@collection' => $this_collection_pid)),
+    '#title' => t("Create new child collection within @collection", array('@collection' => $collection_object->id)),
   );
 
   $form['child_creation']['collection_name'] = array(
@@ -102,7 +100,7 @@ function islandora_create_child_collection_form($form, &$form_state, $this_colle
 
   $form['current'] = array(
     '#type' => 'hidden',
-    '#value' => $this_collection_pid,
+    '#value' => $collection_object->id,
   );
 
   $form['child_creation']['content_models'] = array(

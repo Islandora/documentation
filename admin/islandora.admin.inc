@@ -7,9 +7,9 @@
  */
 
 function islandora_repository_admin($form, &$form_state) {
-  module_load_include('inc', 'islandora', 'RestConnection');
+  module_load_include('inc', 'islandora', 'includes/tuque');
 
-  if (!RestConnection::exists()) {
+  if (!IslandoraTuque::exists()) {
     $message = t('This module requires the !url. Please install sites all libraries folder before continuing.', array('!url' => l(t('Tuque Fedora API'), 'http://github.com/islandora/tuque')));
     drupal_set_message(check_plain($message));
     return;
@@ -24,8 +24,7 @@ function islandora_repository_admin($form, &$form_state) {
     $url = variable_get('islandora_base_url', 'http://localhost:8080/fedora');
   }
 
-  module_load_include('inc', 'islandora', 'RestConnection');
-  $connection = new RestConnection(NULL, $url);
+  $connection = new IslandoraTuque(NULL, $url);
   try {
     $info = $connection->api->a->describeRepository();
     $connected = TRUE;

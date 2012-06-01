@@ -17,25 +17,26 @@
  * @return type
  */
 function islandora_purge_object_submit($form, &$form_state) {
+
   $object_id = $form_state['values']['pid'];
   $collection = $form_state['values']['col'];
 
-  if (!isset($object_id)) {
+  if (!$object_id) {
     drupal_set_message(t('Cannot remove object, object id not set'));
     return;
   }
 
   $object = islandora_object_load($object_id);
 
-  if (!isset($fedora_object)) {
+  if (!$object) {
     drupal_set_message(t('Could not remove object, object not found'));
     return;
   }
-  $content_models = $fedora_object->models;
-  $arr = module_invoke_all('islandora_pre_purge_object', $fedora_object); //notify modules of pending deletion
+  $content_models = $object->models;
+  $arr = module_invoke_all('islandora_pre_purge_object', $object); //notify modules of pending deletion
   if (isset($arr['delete']) && $arr['delete']) {
     try {
-      $fedora_object->delete();
+      $object->delete();
     } catch (Exception $e) {
       drupal_set_message(t('Error deleting Islandora object %s %e', array('%s' => $object_id, '%e' => $e)), 'error');
       return "";
@@ -43,7 +44,7 @@ function islandora_purge_object_submit($form, &$form_state) {
   }
   else {
     try {
-      $restConnection->repository->purgeObject($object_id);
+      $object->repository->purgeObject($object_id);
     } catch (Exception $e) {
       drupal_set_message(t('Error purging Islandora object %s %e', array('%s' => $object_id, '%e' => $e)), 'error');
       return "";

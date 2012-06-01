@@ -3,7 +3,6 @@
 function islandora_get_breadcrumbs($object) {
   $breadcrumbs = array();
 
-  $connection = new RestConnection();
   islandora_get_breadcrumbs_recursive($object->id, $breadcrumbs, $object->repository);
   
   if(isset($breadcrumbs[0])) {

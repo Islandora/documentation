@@ -13,26 +13,28 @@
  * @param string $collection_pid
  * @return type
  */
-function islandora_manage_policies_form($form, &$form_state, $collection_pid) {
+function islandora_manage_policies_form($form, &$form_state, $collection_object) {
   module_load_include('inc', 'islandora_basic_collection', 'includes/CollectionPolicy');
-  module_load_include('inc', 'islandora', 'RestConnection');
-  $rest_connection = new RestConnection();
 
-  $content_models = get_content_models_list($collection_pid);
+  $repository = $collection_object->repository;
+
+  $content_models = get_content_models_list($collection_object);
   $cm_options = array();
   $name_mappings = array();
   foreach ($content_models as $content_model) {
     if ($content_model != "islandora:collectionCModel") {
-      $item = new FedoraObject($content_model, $rest_connection->repository);
-      $cm_name = $item->Label;
-      $cm_options[$content_model] = $cm_name;
+      try {
+        $item = $repository->getObject($content_model);
+        $cm_name = $item->Label;
+        $cm_options[$content_model] = $cm_name;
+      }
+      catch(RepositoryException $e) {}
     }
   }
 
-  $namespace = substr($collection_pid, 0, strpos($collection_pid, ":"));
+  $namespace = substr($collection_object->id, 0, strpos($collection_object->id, ":"));
 
   $collection_policy_dsid = variable_get('Islandora_Collection_Policy_DSID', 'COLLECTION_POLICY');
-  $collection_object = new FedoraObject($collection_pid, $rest_connection->repository);
   $collection_policy_string = $collection_object->getDatastream($collection_policy_dsid);
 
   $supported_collection_models = array();
@@ -41,9 +43,9 @@ function islandora_manage_policies_form($form, &$form_state, $collection_pid) {
     $supported_collection_models = $collection_policy->getContentModels();
   }
 
-  $collection_namespace = substr($collection_pid, 0, strpos($collection_pid, ":"));
+  $collection_namespace = substr($collection_object->id, 0, strpos($collection_object->id, ":"));
 
-  $represented_content_models = get_represented_content_models($collection_pid);
+  $represented_content_models = get_represented_content_models($collection_object);
   $collection_name = $collection_object->label;
   $new_content_models = get_content_models_as_option_array();
   $current_models_in_policy = array();
@@ -66,7 +68,7 @@ function islandora_manage_policies_form($form, &$form_state, $collection_pid) {
 
   $form['manage_collection_policy']['titlebox'] = array(
     '#type' => 'item',
-    '#title' => t("Manage collection policy for @collection_pid", array('@collection_pid' => $collection_pid)),
+    '#title' => t("Manage collection policy for @collection_title", array('@collection_title' => $collection_object->label)),
   );
 
   $form ['manage_collection_policy']['add']['content_model_to_add'] = array(
@@ -86,12 +88,12 @@ function islandora_manage_policies_form($form, &$form_state, $collection_pid) {
 
   $form['parent_collection'] = array(
     '#type' => 'hidden',
-    '#value' => $collection_pid,
+    '#value' => $collection_object->id,
   );
 
   $form['collection_pid'] = array(
     '#type' => 'hidden',
-    '#value' => $collection_pid,
+    '#value' => $collection_object->id,
   );
 
   $form['manage_collection_policy']['add']['submit'] = array(
@@ -135,11 +137,9 @@ function islandora_manage_policies_form_validate($form, &$form_state) {
  * @param array $form_state 
  */
 function islandora_manage_policies_form_submit($form, &$form_state) {
-  module_load_include('inc', 'islandora', 'RestConnection');
-  $rest_connection = new RestConnection();
-
   $collection_pid = $form_state['values']['parent_collection'];
-  $collection_object = new FedoraObject($collection_pid, $rest_connection->repository);
+  $collection_object = islandora_object_load($collection_pid);
+  
   $policy = $collection_object->getDatastream(variable_get('Islandora_Collection_Policy_DSID', 'COLLECTION_POLICY'));
   $collection_policy = '<?xml version="1.0" encoding="UTF-8"?>
 <collection_policy xmlns="http://www.islandora.ca" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="" xsi:schemaLocation="http://www.islandora.ca http://syn.lib.umanitoba.ca/collection_policy.xsd">

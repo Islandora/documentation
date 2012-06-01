@@ -216,8 +216,8 @@ function islandora_admin_paths() {
  *
  *  @return boolean 
  */
-function islandora_access_callback($pid = NULL, $perm = NULL) {
-  if(!$pid || !$perm) {
+function islandora_access_callback($object = NULL, $perm = NULL) {
+  if(!$object || !$perm) {
     return FALSE;
   }
 
@@ -227,7 +227,7 @@ function islandora_access_callback($pid = NULL, $perm = NULL) {
     $namespace_access = TRUE;
   }
   else {
-    $pid_namespace = substr($pid, 0, strpos($pid, ':') + 1); //Get the namespace (with colon)
+    $pid_namespace = substr($object->id, 0, strpos($object->id, ':') + 1); //Get the namespace (with colon)
     $allowed_namespaces = explode(" ", variable_get('islandora_pids_allowed', 'default: demo: changeme: islandora: ilives: islandora-book: books: newspapers: '));
     $namespace_access = in_array($pid_namespace, $allowed_namespaces);
   }
@@ -427,15 +427,15 @@ function islandora_permission() {
  * @return FedoraObject 
  */
 function islandora_object_load($object_id) {
-  module_load_include('inc', 'islandora', 'RestConnection');
-  static $restConnection = NULL;
+  module_load_include('inc', 'islandora', 'includes/tuque');
+  static $islandora_tuque = NULL;
 
-  if(!$restConnection) {
-    $restConnection = new RestConnection();
+  if(!$islandora_tuque) {
+    $islandora_tuque = new IslandoraTuque();
   }
 
   try {
-    $fedora_object = $restConnection->repository->getObject($object_id);
+    $fedora_object = $islandora_tuque->repository->getObject($object_id);
   } catch (Exception $e) {
     return NULL;
   }
