@@ -87,6 +87,12 @@ function hook_islandora_postingest($islandora_object){}
  */
 function hook_islandora_ingest_registry($collection_object) {}
 
+/**
+ * Register a datastream edit route/form.
+ * @param $islandora_object
+ * @param $ds_id
+ */
+function hook_islandora_edit_datastream_registry($islandora_object, $ds_id) {}
 
 /**
  * alter an object before it gets used further down the stack
