@@ -25,7 +25,8 @@
 
 <div class="islandora-basic-collection-wrapper">
 <div class="islandora-basic-collection clearfix">
-  <?php print ($switch_view_link) ?>
+  <?php print ($grid_link); ?>
+  <?php print ($list_link); ?>
   <?php print($collection_pager); ?>
   <?php print ($collection_content); ?>
   <?php print($collection_pager); ?>
