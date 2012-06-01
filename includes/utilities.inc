@@ -46,3 +46,53 @@ function islandora_control_group_to_human_readable($control_group) {
       return $control_group;
   }
 }
+
+/**
+ * valid pid ??
+ * @param type $pid
+ * @return boolean
+ */
+function islandora_validate_pid($pid) {
+  $valid = FALSE;
+  if (strlen(trim($pid)) <= 64 && preg_match('/^([A-Za-z0-9]|-|\.)+:(([A-Za-z0-9])|-|\.|~|_|(%[0-9A-F]{2}))+$/', trim($pid))) {
+    $valid = TRUE;
+  }
+
+  return $valid;
+}
+
+/**
+ * Valid Dsid ??
+ * @param type $dsid
+ * @return boolean
+ */
+function islandora_validate_dsid($dsid) {
+  $valid = FALSE;
+  if (strlen(trim($dsid)) <= 64 && preg_match('/^[a-zA-Z0-9\_\-\.]+$/', trim($dsid))) {
+    $valid = TRUE;
+  }
+
+  return $valid;
+}
+
+/* Helper function to describe a Fedora repository.
+ * 
+ * Can be used to check if Fedora is available.
+ * 
+ * @param $url
+ *   A url to a Fedora repository.
+ * @return
+ *   Returns an array describing the repository. Returns FALSE if Fedora is down
+ *   or if the url is incorrect.
+ */
+function islandora_describe_repository($url) {
+  
+  $connection = new IslandoraTuque(NULL, $url);
+  try {
+    $info = $connection->api->a->describeRepository();
+    return $info;
+  }
+  catch (RepositoryException $e) {
+    return FALSE;
+  }
+}

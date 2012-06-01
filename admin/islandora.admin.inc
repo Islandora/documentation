@@ -8,6 +8,7 @@
 
 function islandora_repository_admin($form, &$form_state) {
   module_load_include('inc', 'islandora', 'includes/tuque');
+  module_load_include('inc', 'islandora', 'includes/utilities');
 
   if (!IslandoraTuque::exists()) {
     $message = t('This module requires the !url. Please install sites all libraries folder before continuing.', array('!url' => l(t('Tuque Fedora API'), 'http://github.com/islandora/tuque')));
@@ -24,16 +25,10 @@ function islandora_repository_admin($form, &$form_state) {
     $url = variable_get('islandora_base_url', 'http://localhost:8080/fedora');
   }
 
-  $connection = new IslandoraTuque(NULL, $url);
-  try {
-    $info = $connection->api->a->describeRepository();
-    $connected = TRUE;
-  }
-  catch (RepositoryException $e) {
-    $connected = FALSE;
-  }
-
-  if($connected) {
+  // Connect to Fedora
+  $info = islandora_describe_repository($url);
+  
+  if($info) {
     $confirmation_message = '<img src="' . url('misc/watchdog-ok.png') . '"/>'
       . t('Successfully connected to Fedora Server (Version !version).', array('!version' => $info['repositoryVersion']));
   }
