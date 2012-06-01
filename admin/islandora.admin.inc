@@ -11,8 +11,7 @@ function islandora_repository_admin($form, &$form_state) {
   module_load_include('inc', 'islandora', 'includes/utilities');
 
   if (!IslandoraTuque::exists()) {
-    $message = t('This module requires the !url. Please install sites all libraries folder before continuing.', array('!url' => l(t('Tuque Fedora API'), 'http://github.com/islandora/tuque')));
-    drupal_set_message(check_plain($message));
+    IslandoraTuque::getError();
     return;
   }
 
