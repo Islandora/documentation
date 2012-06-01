@@ -59,13 +59,13 @@ function islandora_menu() {
     'weight' => -1,
   );
 
-  $items['islandora/ingest/%'] = array(
-    'title' => 'Ingest object',
+  $items['islandora/object/%islandora_object/manage/ingest'] = array(
+    'title' => 'Add an object',
     'page callback' => 'islandora_ingest_callback',
     'page arguments' => array(2),
     'file' => 'includes/ingest-menu.inc',
-    'type' => MENU_CALLBACK,
-    'access callback' => 'islandora_access_callback',
+    'type' => MENU_LOCAL_ACTION,
+    'access callback' => 'islandora_ingest_access_callback',
     'access arguments' => array(2, FEDORA_INGEST),
   );
 
@@ -76,7 +76,7 @@ function islandora_menu() {
     'access arguments' => array(FEDORA_VIEW),
   );
 
-  $items['islandora/object/%'] = array(
+  $items['islandora/object/%islandora_object'] = array(
     'title' => 'Repository',
     'page callback' => 'islandora_view_object',
     'page arguments' => array(2),
@@ -86,25 +86,19 @@ function islandora_menu() {
   );
 
 
-  $items['islandora/object/%/view'] = array(
+  $items['islandora/object/%islandora_object/view'] = array(
     'title' => 'View',
-    'page arguments' => array(2),
     'type' => MENU_DEFAULT_LOCAL_TASK,
-    'access callback' => 'islandora_access_callback',
-    'access arguments' => array(2, FEDORA_VIEW),
-    'weight' => -10
-  );
-  $items['islandora/object/%/view/default'] = array(
-    'title' => 'View',
-    'page callback' => 'islandora_view_object',
-    'page arguments' => array(2),
-    'type' => MENU_LOCAL_TASK,
-    'access callback' => 'islandora_access_callback',
-    'access arguments' => array(2, FEDORA_VIEW),
-    'weight' => -10,
+    'weight' => -1,
   );
 
-  $items['islandora/object/%/manage'] = array(
+  $items['islandora/object/%islandora_object/view/default'] = array(
+    'title' => 'View',
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'weight' => -1,
+  );
+
+  $items['islandora/object/%islandora_object/manage'] = array(
     'title' => 'Manage',
     'page callback' => 'islandora_edit_object',
     'page arguments' => array(2),
@@ -113,17 +107,13 @@ function islandora_menu() {
     'access arguments' => array(2, FEDORA_MODIFY_STATE),
   );
 
-  $items['islandora/object/%/manage/datastreams'] = array(
+  $items['islandora/object/%islandora_object/manage/datastreams'] = array(
     'title' => 'Datastreams',
-    //'page callback' => 'islandora_edit_object',
-    'page arguments' => array(2),
     'type' => MENU_DEFAULT_LOCAL_TASK,
-    'access callback' => 'islandora_access_callback',
-    'access arguments' => array(2, FEDORA_PURGE),
     'weight' => -10,
   );
 
-  $items['islandora/object/%/manage/properties'] = array(
+  $items['islandora/object/%islandora_object/manage/properties'] = array(
     'title' => 'Properties',
     'page callback' => 'drupal_get_form',
     'file' => 'includes/object_properties.inc',
@@ -134,8 +124,9 @@ function islandora_menu() {
     'weight' => -5,
   );
 
-  $items['islandora/object/%/delete'] = array(
+  $items['islandora/object/%islandora_object/delete'] = array(
     'title' => 'Delete object',
+    'file' => 'includes/purge.form.inc',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('islandora_purge_object', 2),
     'type' => MENU_CALLBACK,
@@ -143,17 +134,17 @@ function islandora_menu() {
     'access arguments' => array(2, FEDORA_PURGE),
   );
 
-  $items['islandora/object/%/manage/datastreams/add'] = array(
+  $items['islandora/object/%islandora_object/manage/datastreams/add'] = array(
     'title' => 'Add a datastream',
     'file' => 'includes/datastream.inc',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('islandora_add_datastream_form', 2),
-    'type' => MENU_NORMAL_ITEM,
+    'type' => MENU_LOCAL_ACTION,
     'access callback' => 'islandora_access_callback',
     'access arguments' => array(2, FEDORA_ADD_DS)
   );
 
-  $items['islandora/object/%/manage/datastreams/add/autocomplete'] = array(
+  $items['islandora/object/%islandora_object/manage/datastreams/add/autocomplete'] = array(
     'file' => 'includes/datastream.inc',
     'page callback' => 'islandora_datastream_autocomplete_callback',
     'page arguments' => array(2),
@@ -162,9 +153,9 @@ function islandora_menu() {
     'access arguments' => array(2, FEDORA_ADD_DS)
   );
 
-  $items['islandora/object/%/datastream/%'] = array(
+  $items['islandora/object/%islandora_object/datastream/%'] = array(
     'title' => 'View datastream',
-    'page callback' => 'islandora_datastream_as_attachment',
+    'page callback' => 'islandora_view_datastream',
     'page arguments' => array(2, 4),
     'type' => MENU_CALLBACK,
     'file' => 'includes/datastream.inc',
@@ -172,27 +163,22 @@ function islandora_menu() {
     'access arguments' => array(2, FEDORA_VIEW),
   );
 
-  $items['islandora/object/%/datastream/%/view'] = array(
+  $items['islandora/object/%islandora_object/datastream/%/view'] = array(
     'title' => 'View datastream',
-    'page callback' => 'islandora_datastream_as_attachment',
-    'page arguments' => array(2, 4),
-    'type' => MENU_CALLBACK,
-    'file' => 'includes/datastream.inc',
-    'access callback' => 'islandora_access_callback',
-    'access arguments' => array(2, FEDORA_VIEW),
+    'type' => MENU_DEFAULT_LOCAL_TASK,
   );
 
-  $items['islandora/object/%/datastream/%/download'] = array(
+  $items['islandora/object/%islandora_object/datastream/%/download'] = array(
     'title' => 'Download datastream',
-    'page callback' => 'islandora_datastream_as_attachment',
-    'page arguments' => array(2, 4),
+    'page callback' => 'islandora_view_datastream',
+    'page arguments' => array(2, 4, 5),
     'type' => MENU_CALLBACK,
     'file' => 'includes/datastream.inc',
     'access callback' => 'islandora_access_callback',
     'access arguments' => array(2, FEDORA_VIEW),
   );
 
-  $items['islandora/object/%/datastream/%/edit'] = array(
+  $items['islandora/object/%islandora_object/datastream/%/edit'] = array(
     'title' => 'Edit datastream',
     'page callback' => 'islandora_edit_datastream',
     'page arguments' => array(2, 4),
@@ -202,10 +188,11 @@ function islandora_menu() {
     'access arguments' => array(2, FEDORA_METADATA_EDIT),
   );
 
-  $items['islandora/object/%/datastream/%/delete'] = array(
+  $items['islandora/object/%islandora_object/datastream/%/delete'] = array(
     'title' => 'Purge data stream',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('islandora_purge_datastream', 2, 4),
+    'file' => 'includes/purge.form.inc',
     'type' => MENU_CALLBACK,
     'access callback' => 'islandora_access_callback',
     'access arguments' => array(2, FEDORA_PURGE),
@@ -214,26 +201,10 @@ function islandora_menu() {
   return $items;
 }
 
-function islandora_admin_paths_alter(&$paths) {
-
+function islandora_admin_paths() {
+  $paths = array();
   $paths['*/manage*'] = TRUE;
-}
-
-/**
- * Implements hook_menu_local_tasks_alter().
- */
-function islandora_menu_local_tasks_alter(&$data, $router_item, $root_path) {
-  // Add action link 'islandora/object/%/manage/datastreams'.
-  if ($root_path == 'islandora/object/%/manage') {
-    $object_id = $router_item['page_arguments'][0];
-    $item = menu_get_item("islandora/object/$object_id/manage/datastreams/add");
-    if ($item['access']) {
-      $data['actions']['output'][] = array(
-        '#theme' => 'menu_local_action',
-        '#link' => $item,
-      );
-    }
-  }
+  return $paths;
 }
 
 /**
@@ -258,101 +229,10 @@ function islandora_access_callback($pid = NULL, $perm = NULL) {
   else {
     $pid_namespace = substr($pid, 0, strpos($pid, ':') + 1); //Get the namespace (with colon)
     $allowed_namespaces = explode(" ", variable_get('islandora_pids_allowed', 'default: demo: changeme: islandora: ilives: islandora-book: books: newspapers: '));
-
     $namespace_access = in_array($pid_namespace, $allowed_namespaces);
   }
 
   return ($namespace_access && user_access($perm));
-}
-
-/**
- * Gives the option of deleting or purging and object.
- * 
- * The default behaviour is to purge the object to reduce maintenance.
- * If a solution pack wants to change this behaviour and have the object set to deleted then
- * it can respond to the 'islandora_pre_purge_object' hook with an array containing the pair 
- * 'delete' => TRUE. 
- * Once the object has been deleted/purged then a second call lets the solution packs know that
- * the object has been dealt with. In this call the object id and content models are sent out so
- * that the solution packs can act on this news. There is no guarantee that the object still exists
- * and so the object object isn't sent.
- * 
- * @param string $object_id
- *   ID of the object
- * @return type 
- */
-function islandora_purge_object_submit($form, &$form_state) {
-  $object_id = $form_state['values']['pid'];
-  $collection = $form_state['values']['col'];
-
-  module_load_include('inc', 'islandora', 'RestConnection');
-  global $user;
-  if (!isset($object_id)) {
-    drupal_set_message(t('Cannot remove object, object id not set'));
-    return;
-  }
-  try {
-    $restConnection = new RestConnection($user);
-    $fedora_object = new FedoraObject($object_id, $restConnection->repository);
-  } catch (Exception $e) {
-    drupal_set_message(t('Error getting Islandora object %s %e', array('%s' => $object_id, '%e' => $e)), 'error');
-    return "";
-  }
-  if (!isset($fedora_object)) {
-    drupal_set_message(t('Could not remove object, object not found'));
-    return;
-  }
-  $content_models = $fedora_object->models;
-  $arr = module_invoke_all('islandora_pre_purge_object', $fedora_object); //notify modules of pending deletion
-  if (isset($arr['delete']) && $arr['delete']) {
-    try {
-      $fedora_object->delete();
-    } catch (Exception $e) {
-      drupal_set_message(t('Error deleting Islandora object %s %e', array('%s' => $object_id, '%e' => $e)), 'error');
-      return "";
-    }
-  }
-  else {
-    try {
-      $restConnection->repository->purgeObject($object_id);
-    } catch (Exception $e) {
-      drupal_set_message(t('Error purging Islandora object %s %e', array('%s' => $object_id, '%e' => $e)), 'error');
-      return "";
-    }
-  }
-  module_invoke_all('islandora_post_purge_object', $object_id, $content_models);  //notify modules post deletion
-  drupal_goto($collection);
-}
-
-function islandora_purge_object($form, &$form_state, $pid) {
-
-  module_load_include('inc', 'islandora', 'RestConnection');
-  module_load_include('inc', 'islandora', 'includes/datastream');
-
-  $connection = new RestConnection();
-  $object = $connection->repository->getObject($pid);
-  $parent = islandora_datastream_get_parents($object);
-  $key = array_keys($parent);
-
-  if (count($key) > 0) {
-    $redirect = "islandora/object/$key[0]";
-  }
-  else {
-    $redirect = "islandora";
-  }
-
-
-  // Always provide entity id in the same form key as in the entity edit form.
-  $form['pid'] = array('#type' => 'value', '#value' => $pid);
-  $form['col'] = array('#type' => 'value', '#value' => $redirect);
-
-  return confirm_form($form,
-    t('Are you sure you want to delete %title?', array('%title' => $object->label)),
-    "islandora/object/$pid",
-    t('This action cannot be undone.'),
-    t('Delete'),
-    t('Cancel')
-  );
 }
 
 /**
@@ -376,18 +256,12 @@ function islandora_init() {
  * @param string $object_id
  * @return string 
  */
-function islandora_edit_object($object_id) {
-  module_load_include('inc', 'islandora', 'RestConnection');
-  global $user;
-  try {
-    $restConnection = new RestConnection($user);
-    $fedora_object = new FedoraObject($object_id, $restConnection->repository);
-  } catch (Exception $e) {
-    drupal_set_message(t('Error getting Islandora object %s', array('%s' => $object_id)), 'error');
-    return"";
+function islandora_edit_object($object) {
+  if(!$object) {
+    return drupal_not_found();
   }
-  drupal_alter('islandora_edit_object', $fedora_object);
-  $arr = module_invoke_all('islandora_edit_object', $fedora_object);
+  drupal_alter('islandora_edit_object', $object);
+  $arr = module_invoke_all('islandora_edit_object', $object);
   $output = "";
   foreach ($arr as $key => $value) {
     $output .= $value; //if we have multiple modules handle one cmodel we need to iterate over multiple
@@ -402,7 +276,7 @@ function islandora_edit_object($object_id) {
  * @return string 
  */
 function islandora_edit_properties($object_id) {
-  $object = islandora_get_object($object_id);
+  $object = islandora_object_load($object_id);
   if (isset($object)) {
     module_load_include('inc', 'islandora', 'includes/object_properties');
     $form = drupal_get_form('islandora_edit_properties_form', $object);
@@ -430,97 +304,6 @@ function islandora_islandora_edit_object($fedora_object) {
   return array('Default Edit output' => $output);
 }
 
-
-function islandora_purge_datastream($form, &$form_state, $object_id, $datastream_id) {
-  module_load_include('inc', 'islandora', 'RestConnection');
-  module_load_include('inc', 'islandora', 'includes/datastream');
-
-  $connection = new RestConnection();
-  $object = $connection->repository->getObject($object_id);
-  $datastream = $object->getDatastream($datastream_id);
-
-  $redirect = "islandora/object/$object_id";
-  
-  // Always provide entity id in the same form key as in the entity edit form.
-  $form['pid'] = array('#type' => 'value', '#value' => $object_id);
-  $form['dsid'] = array('#type' => 'value', '#value' => $datastream_id);
-  $form['col'] = array('#type' => 'value', '#value' => $redirect);
-
-  return confirm_form($form,
-    t('Are you sure you want to delete the %dsid datastream?', array('%dsid' => $datastream->id)),
-    "islandora/object/$object_id",
-    t('This action cannot be undone.'),
-    t('Delete'),
-    t('Cancel')
-  );
-}
-
-/**
- * Gives the option of purging or deleting a datastream.
- * 
- * The default behaviour is to purge the datastream but this can be overridden using the 
- * 'islandora_pre_purge_datastream' hook. The returned array can include a 'block' => TRUE 
- * pair which will prevent the datastream from being deleted if it particularly needed for 
- * a certain function. Returning 'delete' => TRUE will cause the datastream to be put into 
- * a deleted state.
- * 
- * @param string $object_id
- *   ID of the object
- * @param string $datastream_id
- *   ID of the datastream
- *   
- */
-function islandora_purge_datastream_submit($form, &$form_state) {
-  module_load_include('inc', 'islandora', 'RestConnection');
-  $object_id = $form_state['values']['pid'];
-  $datastream_id = $form_state['values']['dsid'];
-  global $user;
-  if (!isset($datastream_id)) {
-    drupal_set_message(t('Cannot remove datastream, datastream id not set'));
-    return;
-  }
-  try {
-    $restConnection = new RestConnection($user);
-    $fedora_object = new FedoraObject($object_id, $restConnection->repository);
-  } catch (Exception $e) {
-    drupal_set_message(t('Error getting Islandora object %s %e', array('%s' => $object_id, '%e' => $e)), 'error');
-    return "";
-  }
-  if (!isset($fedora_object)) {
-    drupal_set_message(t('Could not remove object, object not found'));
-    return;
-  }
-  if (!isset($fedora_object)) {
-    drupal_set_message(t('Could not remove object, object not found'));
-    return;
-  }
-  $arr = module_invoke_all('islandora_pre_purge_datastream', $fedora_object, $datastream_id); //notify modules of pending deletion so we can update rels etc
-  if (isset($arr['block']) && $arr['block']) {
-    drupal_set_message(t('Purging of the %d datastream was blocked', array('%d' => $datastream_id)), 'warning');
-    return;
-  }
-  if (isset($arr['delete']) && $arr['delete']) {
-    try {
-      $datastream = new FedoraDatastream($datastream_id, $fedora_object, $restConnection->repository);
-      $datastream->state = 'D';
-    } catch (Exception $e) {
-      drupal_set_message(t('Error deleting %s datastream from Islandora object %o %e', array('%s' => $datastream_id, '%o' => $object_id, '%e' => $e)), 'error');
-      return;
-    }
-  }
-  else {
-    try {
-      $fedora_object->purgeDatastream($datastream_id);
-    } catch (Exception $e) {
-      drupal_set_message(t('Error purging %s datastream from Islandora object %o %e', array('%s' => $datastream_id, '%o' => $object_id, '%e' => $e)), 'error');
-      return;
-    }
-  }
-  module_invoke_all('islandora_post_purge_datastream', $fedora_object, $datastream_id);  //notify modules post deletion
-  drupal_set_message(t('%d datastream sucessfully purged from Islandora object %o', array('%d' => $datastream_id, '%o' => $object_id)));
-  drupal_goto('islandora/object/' . $object_id);
-}
-
 function islandora_view_default_object() {
   $pid = variable_get('islandora_repository_pid', 'islandora:root');
   drupal_goto("islandora/object/$pid");
@@ -534,26 +317,19 @@ function islandora_view_default_object() {
  * 
  * @return string 
  */
-function islandora_view_object($object_id = NULL) {
+function islandora_view_object($fedora_object = NULL) {
   module_load_include('inc', 'islandora', 'includes/Breadcrumbs');
-  drupal_set_breadcrumb(islandora_get_breadcrumbs($object_id));
-  //return $object_id;
-  if (!isset($object_id)) {
-    $object_id = variable_get('islandora_repository_pid', 'islandora:root');
-    //return;
+  global $user;
+
+  if(!$fedora_object) {
+    return drupal_not_found();
   }
+
+  drupal_set_breadcrumb(islandora_get_breadcrumbs($fedora_object));
 
   $page_number = (empty($_GET['page'])) ? '1' : $_GET['page'];
   $page_size = (empty($_GET['pagesize'])) ? '10' : $_GET['pagesize'];
-  module_load_include('inc', 'islandora', 'RestConnection');
-  global $user;
-  try {
-    $restConnection = new RestConnection($user);
-    $fedora_object = new FedoraObject($object_id, $restConnection->repository);
-  } catch (Exception $e) {
-    drupal_set_message(t('Error getting Islandora object %s', array('%s' => $object_id)), 'error');
-    return"";
-  }
+
   drupal_alter('islandora_object', $fedora_object); //modify object if required before it is passed along
   $arr = module_invoke_all('islandora_view_object', $fedora_object, $user, $page_number, $page_size); //allow submodules to decide how to handle content base on object type
   if (empty($arr)) {
@@ -695,16 +471,20 @@ function islandora_preprocess_islandora_default(&$variables) {
  * @param string $object_id
  * @return FedoraObject 
  */
-function islandora_get_object($object_id) {
+function islandora_object_load($object_id) {
   module_load_include('inc', 'islandora', 'RestConnection');
-  global $user;
+  static $restConnection = NULL;
+
+  if(!$restConnection) {
+    $restConnection = new RestConnection();
+  }
+
   try {
-    $restConnection = new RestConnection($user);
-    $fedora_object = new FedoraObject($object_id, $restConnection->repository);
+    $fedora_object = $restConnection->repository->getObject($object_id);
   } catch (Exception $e) {
-    drupal_set_message(t('Error getting Islandora object %s', array('%s' => $object_id)), 'error');
     return NULL;
   }
+  
   return $fedora_object;
 }
 
@@ -748,4 +528,19 @@ function islandora_preprocess_islandora_default_edit(&$variables) {
   $caption = $islandora_object->label . ' - ' . $islandora_object->id;
   $table = array('colgroups' => NULL, 'sticky' => TRUE, 'empty' => 'Error loading datastreams', 'caption' => $caption, 'header' => $header, 'rows' => $rows, 'attributes' => $table_attributes);
   $variables['datastream_table'] = theme_table($table);
+}
+
+function islandora_ingest_access_callback($object, $perm) {
+  if(islandora_access_callback($object, $perm) === FALSE) {
+    return FALSE;
+  }
+
+  $ingest_registry = module_invoke_all('islandora_ingest_registry', $object);
+
+  if(count($ingest_registry) > 0) {
+    return TRUE;
+  }
+  else {
+    return FALSE;
+  }
 }

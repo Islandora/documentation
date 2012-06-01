@@ -13,35 +13,22 @@ define('DS_COMP_STREAM', 'DS-COMPOSITE-MODEL');
  * @return stream 
  *  prints datastream to browser
  */
-function islandora_datastream_as_attachment($object_id, $dsid) {
-  module_load_include('inc', 'islandora', 'RestConnection');
-  drupal_add_http_header("Cache-Control", 'public');
-  drupal_add_http_header("Pragma", FALSE);
-
-  global $user;
-  try {
-    $restConnection = new RestConnection($user);
-    $fedora_object = new FedoraObject($object_id, $restConnection->repository);
-
-    // if the object exists but the datastream doesn't
-    if(!isset($fedora_object[$dsid])) {
-      return drupal_not_found();
-    }
-
-    header('Content-type: ' . $fedora_object[$dsid]->mimetype);
-    if($fedora_object[$dsid]->controlGroup == 'M' || $fedora_object[$dsid]->controlGroup == 'X') {
-      header('Content-length: ' . $fedora_object[$dsid]->size);
-    }
-    $method = arg(5);
-    if (isset($method) && $method == 'download') {
-      header("Content-Disposition: attachment; filename=\"" . $fedora_object[$dsid]->label);
-    }
-    print($fedora_object[$dsid]->content);
-    exit();
-  } catch (Exception $e) {
+function islandora_view_datastream($object, $dsid, $method = 'view') {
+  // if the object exists but the datastream doesn't
+  if(!isset($object[$dsid])) {
     return drupal_not_found();
   }
 
+  header('Content-type: ' . $object[$dsid]->mimetype);
+  if($object[$dsid]->controlGroup == 'M' || $object[$dsid]->controlGroup == 'X') {
+    header('Content-length: ' . $object[$dsid]->size);
+  }
+
+  if ($method == 'download') {
+    header("Content-Disposition: attachment; filename=\"" . $object[$dsid]->label);
+  }
+  print($object[$dsid]->content);
+  exit();
 }
 
 function islandora_datastream_get_parents($islandora_object) {
@@ -96,26 +83,19 @@ function islandora_get_defined_dsids_array(&$arr, $ds_comp_stream) {
  * @param string $object_id
  * @return string|array 
  */
-function islandora_get_unused_dsids($object_id) {
-  module_load_include('inc', 'islandora', 'RestConnection');
-  global $user;
-  try {
-    $restConnection = new RestConnection($user);
-    $fedora_object = new FedoraObject($object_id, $restConnection->repository);
-  } catch (Exception $e) {
-    drupal_set_message(t('Error getting Islandora object %s ', array('%s' => $object_id)), 'error');
-    return;
-  }
-  if (!isset($fedora_object)) {
-    drupal_set_message(t('Could not create add datastream form for %s'), array('%s' => $object_id));
-    return;
-  }
-  $models = $fedora_object->models;
+function islandora_get_unused_dsids($object) {
+
   $defined_dsids = array();
+
+  if(!$object) {
+    return $defined_dsids;
+  }
+
+  $models = $object->models;
   if (isset($models)) {
     foreach ($models as $model) {
       try {
-        $model_object = new FedoraObject($model, $restConnection->repository);
+        $model_object = $object->repository->getObject($model);
         if (isset($model_object[DS_COMP_STREAM])) {
           $dscomposite_stream = $model_object[DS_COMP_STREAM]->content;
           islandora_get_defined_dsids_array($defined_dsids, $dscomposite_stream);
@@ -140,8 +120,8 @@ function islandora_get_unused_dsids($object_id) {
  * @return array 
  *  a form ready to be rendered with a call to Drupal render
  */
-function islandora_get_add_datastream_form($object_id, &$form_state) {
-  $unused_dsids = islandora_get_unused_dsids($object_id); //$defined_dsids;
+function islandora_get_add_datastream_form($object, &$form_state) {
+  $unused_dsids = islandora_get_unused_dsids($object); 
   $form = array();
   $form['add_fieldset'] = array(
     '#type' => 'fieldset',
@@ -298,7 +278,8 @@ function islandora_add_datastream_form_validate($form, &$form_state) {
   }
 
   $mimetype = new MimeClass();
-  $unused_dsids = islandora_get_unused_dsids($form_state['values']['pid']);
+  $object = islandora_object_load($form_state['values']['pid']);
+  $unused_dsids = islandora_get_unused_dsids($object);
   if(isset($unused_dsids[$dsid])) {
     $types_allowed = $unused_dsids[$dsid];
     $arr = array();
@@ -331,8 +312,8 @@ function islandora_add_datastream_form_validate($form, &$form_state) {
  * @return array 
  *  a form ready to be rendered with a call to Drupal render
  */
-function islandora_add_datastream_form($form, &$form_state, $object_id) {
-  $unused_dsids = islandora_get_unused_dsids($object_id); //$defined_dsids;
+function islandora_add_datastream_form($form, &$form_state, $object) {
+  $unused_dsids = islandora_get_unused_dsids($object); //$defined_dsids;
   $form = array();
   $form['add_fieldset'] = array(
     '#type' => 'fieldset',
@@ -347,7 +328,7 @@ function islandora_add_datastream_form($form, &$form_state, $object_id) {
 
   $form['pid'] = array(
     '#type' => 'hidden',
-    '#value' => "$object_id"
+    '#value' => "$object->id"
   );
 
   $form['add_fieldset']['stream_label'] = array(
@@ -365,13 +346,13 @@ function islandora_add_datastream_form($form, &$form_state, $object_id) {
     // '#required'=>'TRUE',
     '#description' => t('The file to upload.')
   );
-  $form['#redirect'] = "islandora/object/$object_id/";
+  $form['#redirect'] = "islandora/object/$object->id/";
   $form['add_fieldset']['submit'] = array(
     '#type' => 'submit',
     '#value' => t('Add Datastream')
   );
 
-  $unused_dsids = islandora_get_unused_dsids($object_id);
+  $unused_dsids = islandora_get_unused_dsids($object);
   $dsidsForForm = '';
   $i = 0;
   foreach ($unused_dsids as $key => $value) {
@@ -387,13 +368,13 @@ function islandora_add_datastream_form($form, &$form_state, $object_id) {
     '#description' => t('An ID for this stream that is unique to this object. Must start with a letter and contain only alphanumeric characters and dashes and underscores. Datastreams that are defined by the content model dont currently exist: <b>' . $dsidsForForm . '</b>.'),
     '#type' => 'textfield',
     '#weight' => -1,
-    '#autocomplete_path' => "islandora/object/$object_id/manage/datastreams/add/autocomplete",
+    '#autocomplete_path' => "islandora/object/$object->id/manage/datastreams/add/autocomplete",
   );
   return $form;
 }
 
-function islandora_datastream_autocomplete_callback($object_id, $string = '') {
-  $dsids = islandora_get_unused_dsids($object_id);
+function islandora_datastream_autocomplete_callback($object, $string = '') {
+  $dsids = islandora_get_unused_dsids($object);
   $output = array();
   foreach($dsids as $id => $ds) {
     if(trim($string) == '') {
@@ -455,34 +436,23 @@ function islandora_datastream_edit_get_link($object, $ds_id) {
   }
 }
 
-function islandora_edit_datastream($object_id, $ds_id) {
-  global $user;
-  try {
-    module_load_include('inc', 'islandora', 'RestConnection');
-    $restConnection = new RestConnection($user);
-    $object = new FedoraObject($object_id, $restConnection->repository);
-    
-    $edit_registry = module_invoke_all('islandora_edit_datastream_registry', $object, $ds_id);
-    $edit_count = count($edit_registry);
-  
-    if ($edit_count == 0) {
-      // No edit implementations.
-      drupal_set_message(t('There are no edit methods specified for this datastream.'));
-      drupal_goto('islandora/object/' . $object->id . '/manage/datastreams');
-    }
-    elseif ($edit_count == 1) {
-      // One registry implementation, go there
-      drupal_goto($edit_registry[0]['url']);
-    }
-    else {
-      // Multiple edit routes registered
-      return islandora_edit_datastream_registry_render($edit_registry);
-    }
-  } catch (Exception $e) {
-    drupal_set_message(t('Error getting Islandora edit method for %s ', array('%s' => $object_id)), 'error');
-    return;
+function islandora_edit_datastream($object, $ds_id) {
+  $edit_registry = module_invoke_all('islandora_edit_datastream_registry', $object, $ds_id);
+  $edit_count = count($edit_registry);
+
+  if ($edit_count == 0) {
+    // No edit implementations.
+    drupal_set_message(t('There are no edit methods specified for this datastream.'));
+    drupal_goto('islandora/object/' . $object->id . '/manage/datastreams');
   }
-  
+  elseif ($edit_count == 1) {
+    // One registry implementation, go there
+    drupal_goto($edit_registry[0]['url']);
+  }
+  else {
+    // Multiple edit routes registered
+    return islandora_edit_datastream_registry_render($edit_registry);
+  }
 }
 
 //@TODO: theme / preprocess

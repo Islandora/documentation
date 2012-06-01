@@ -10,7 +10,7 @@
  * @return boolean 
  */
 function islandora_edit_properties_form_validate($form, &$form_state) {
-  $islandora_object = islandora_get_object($form_state['values']['pid']);
+  $islandora_object = islandora_object_load($form_state['values']['pid']);
   if (!isset($islandora_object)) {
     form_set_error('', t('Could not update properties object not found.'));
     return FALSE;
@@ -23,7 +23,7 @@ function islandora_edit_properties_form_validate($form, &$form_state) {
  * @param array $form_state 
  */
 function islandora_edit_properties_form_submit($form, &$form_state) {
-  $islandora_object = islandora_get_object($form_state['values']['pid']);
+  $islandora_object = islandora_object_load($form_state['values']['pid']);
   $owner = $form_state['values']['object_owner'];
   $state = $form_state['values']['object_state'];
   $label = $form_state['values']['object_label'];
@@ -66,35 +66,34 @@ function islandora_edit_properties_form_delete($form, &$form_state) {
  *   an object id
  * @return array 
  */
-function islandora_edit_properties_form($form, &$form_state, $object_id) {
+function islandora_edit_properties_form($form, &$form_state, $object) {
   $form = array();
-  $islandora_object = islandora_get_object($object_id);
-  drupal_set_title($islandora_object->label);
-  if (!isset($islandora_object)) {
+  if (!isset($object)) {
     return NULL;
   }
+  drupal_set_title($object->label);
   $form['pid'] = array(
     '#type' => 'hidden',
-    '#value' => $object_id,
+    '#value' => $object->id,
   );
 
   $form['object_label'] = array(
     '#title' => t('Item Label'),
-    '#default_value' => $islandora_object->label,
+    '#default_value' => $object->label,
     '#required' => 'TRUE',
     '#description' => t('A Human readable label'),
     '#type' => 'textfield'
   );
   $form['object_owner'] = array(
     '#title' => t('Owner'),
-    '#default_value' => $islandora_object->owner,
+    '#default_value' => $object->owner,
     '#required' => FALSE,
     '#description' => t('The owner id'),
     '#type' => 'textfield',
   );
   $form['object_state'] = array(
     '#title' => t('State'),
-    '#default_value' => $islandora_object->state,
+    '#default_value' => $object->state,
     '#required' => TRUE,
     '#description' => t('The items state one of active, inactive or deleted'),
     '#type' => 'select',
