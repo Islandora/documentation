@@ -165,7 +165,7 @@ class Fedora_Item {
       'pid' => $this->pid,
       'dsID' => $datastream_id,
       'altIDs' => NULL,
-      'dsLabel' => $datastream_label,
+      'dsLabel' => truncate_utf8($datastream_label, 255, TRUE, TRUE),
       'versionable' => TRUE,
       'MIMEType' => $datastream_mimetype,
       'formatURI' => NULL,
@@ -247,7 +247,11 @@ class Fedora_Item {
    *  Value returned from SOAP call for modify_datastream.
    */
   function add_relationship($relationship, $object, $namespaceURI = RELS_EXT_URI, $literal_value = RELS_TYPE_URI) {
-    //dd($this, 'The Fedora_Item');
+    static $relsextxml = NULL;
+    if ($relsextxml === NULL) {
+      $relsextxml = new DOMDocument(); //Avoid new instantiations in long-running processes
+    }
+    
     $ds_list = $this->get_datastreams_list_as_array();
     $f_prefix = 'info:fedora/';
     if (!array_key_exists('RELS-EXT', $ds_list)) {
@@ -265,8 +269,6 @@ RDF;
     if ($literal_value == REL_TYPE_URI && strpos($object, $f_prefix) !== 0) {
       $object = $f_prefix . $object;
     }
-
-    $relsextxml = new DOMDocument();
 
     $relsextxml->loadXML($relsext);
     $description = $relsextxml->getElementsByTagNameNS('http://www.w3.org/1999/02/22-rdf-syntax-ns#', 'Description');
@@ -911,7 +913,6 @@ RDF;
       'logMessage' => 'Fedora Object Ingested'
     );
     $object = self::soap_call('ingest', $params);
-    //dd($object, 'Soap return');
     return new Fedora_Item($object->objectPID);
   }
 
@@ -1195,7 +1196,7 @@ RDF;
 
     $label_property = $foxml->createElementNS("info:fedora/fedora-system:def/foxml#", "foxml:property");
     $label_property->setAttribute("NAME", "info:fedora/fedora-system:def/model#label");
-    $label_property->setAttribute("VALUE", $label);
+    $label_property->setAttribute("VALUE", truncate_utf8($label, 255, TRUE, TRUE));
 
     $owner_property = $foxml->createElementNS("info:fedora/fedora-system:def/foxml#", "foxml:property");
     $owner_property->setAttribute("NAME", "info:fedora/fedora-system:def/model#ownerId");
