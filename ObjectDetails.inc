@@ -87,17 +87,24 @@ function fedora_repository_object_details_XSLT($item) {
   $proc->setParameter('', 'baseUrl', $base_url);
   $proc->setParameter('', 'path', $base_url . '/' . $path);
   $input = NULL;
-  $xsl = new DomDocument();
-  try {
-    $xsl->load('./'. $path .'/'. variable_get('islandora_object_details_xslt_sheet', 'object_details_xslts/convertQDC.xsl'));
+
+  $xsl_file = './'. $path .'/'. variable_get('islandora_object_details_xslt_sheet', 'object_details_xslts/convertQDC.xsl');
+  // set an error message in case xslt parsing fails
+  $output = t("Failed to parse xslt file at @xsltFile", array('@xsltFile' => $xsl_file));
+  if (is_readable($xsl_file)) {
+    $xsl = new DomDocument();
     $input = new DomDocument();
-    $input->loadXML(trim($xmlstr));
-  } catch (Exception $e) {
-    watchdog('fedora_repository', "Problem loading XSL file: @e", array('@e' => $e->getMessage()), NULL, WATCHDOG_ERROR);
+    try {
+      $xsl->load($xsl_file);
+
+      $input->loadXML(trim($xmlstr));
+    } catch (Exception $e) {
+      watchdog('fedora_repository', "Problem loading XSL file: @e", array('@e' => $e->getMessage()), NULL, WATCHDOG_ERROR);
+    }
+    $xsl = $proc->importStylesheet($xsl);
+    $newdom = $proc->transformToDoc($input);
+    $output = $newdom->saveHTML();
   }
-  $xsl = $proc->importStylesheet($xsl);
-  $newdom = $proc->transformToDoc($input);
-  $output = $newdom->saveHTML();
   return $output;
 }
 
