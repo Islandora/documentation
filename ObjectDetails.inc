@@ -89,7 +89,7 @@ function fedora_repository_object_details_XSLT($item) {
   $input = NULL;
   $xsl = new DomDocument();
   try {
-    $xsl->load('./'. $path .'/'. variable_get('islandora_object_details_xslt_sheet', 'xsl/convertQDC.xsl'));
+    $xsl->load('./'. $path .'/'. variable_get('islandora_object_details_xslt_sheet', 'object_details_xslts/convertQDC.xsl'));
     $input = new DomDocument();
     $input->loadXML(trim($xmlstr));
   } catch (Exception $e) {
@@ -177,7 +177,7 @@ function fedora_repository_object_details_XSLT_config() {
   $form['config']['xslt'] = array(
     '#type' => 'select',
     '#title' => t("XSL transform to use"),
-    '#default_value' => variable_get('islandora_object_details_xslt_sheet', 'xsl/convertQDC.xsl'),
+    '#default_value' => variable_get('islandora_object_details_xslt_sheet', 'object_details_xslts/convertQDC.xsl'),
     '#options' => $options,
     '#key_type' => 'associative',
     '#required' => TRUE,
