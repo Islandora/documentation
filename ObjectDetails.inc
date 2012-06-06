@@ -213,6 +213,12 @@ function fedora_repository_object_details_XSLT_config_submit($form, &$form_state
 
 /**
  * Base function to supply the available xslt files.
+ *
+ * Modules implementing this hook need to return an array describing where the
+ * XSLT is.  The array key is the path to the XSLT (paths start with sites/) and
+ * the value in the array is the display name.  In the simplest form you can use
+ * file_scan_directory like we do here - this puts the filename as the display
+ * name and will automatically detect new files as they are added.
  */
 function fedora_repository_object_details_get_available_xslts() {
   $folder = drupal_get_path("module", "fedora_repository") ."/object_details_xslts/";
