@@ -548,7 +548,9 @@ RDF;
    * @return type
    */
   function get_datastream($dsid, $as_of_date_time = '', $quiet = TRUE) {
-    if (!array_key_exists($dsid, datastreams)) {
+    if (!array_key_exists($dsid, $this->datastreams)) {
+      watchdog('fedora_repository', 'Requested invalid datastream dissemination @dsid on object @pid',
+               array('@dsid' => $dsid, '@pid' => $pid));
       return NULL;
     }
     $params = array(
