@@ -107,6 +107,7 @@ function islandora_edit_properties_form($form, &$form_state, $object) {
     '#type' => 'submit',
     '#value' => t('Delete'),
     '#submit' => array('islandora_edit_properties_form_delete'),
+    '#limit_validation_errors' => array(array('pid')),
   );
   return $form;
 }

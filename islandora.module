@@ -203,7 +203,8 @@ function islandora_menu() {
 
 function islandora_admin_paths() {
   $paths = array();
-  $paths['*/manage*'] = TRUE;
+  $paths['islandora/object/*/manage*'] = TRUE;
+  $paths['islandora/object/*/delete'] = TRUE;
   return $paths;
 }
 
