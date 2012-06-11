@@ -32,7 +32,6 @@ class FedoraObjectDetailedContent {
    */
   public function showFieldSets() {
     global $user;
-    drupal_set_title($this->item->objectProfile->objLabel);
     $objectHelper = new ObjectHelper();
     $tabset = array();
     $show_purge_tab = (!empty($_POST['form_id']) && $_POST['form_id'] == 'fedora_repository_purge_object_form');
@@ -48,9 +47,28 @@ class FedoraObjectDetailedContent {
     $tabset['fedora_object_details']['tabset'] = array(
       '#type' => 'tabset',
     );
-    $dc_html = $objectHelper->getFormattedDC($this->item);
 
-    $ds_list = $objectHelper->get_formatted_datastream_list($this->pid, NULL, $this->item);
+    module_load_include('inc', 'fedora_repository', 'ObjectDetails');
+    $object_details_profile = variable_get('islandora_object_details_display_table', 'xslt');
+    $profiles = module_invoke_all("islandora_object_details_display");
+    $profile = $profiles[$object_details_profile];
+    if (!isset($profile)) {
+      // default behaviour
+      watchdog('fedora_repository', "Error while reading the default object details display profile: @e", array("@e" => $e->getMessage()), WATCHDOG_WARNING);
+      $dc_html = $objectHelper->getFormattedDC($this->item);
+    }
+    else {
+      // invoke the requested display profile
+      require_once(drupal_get_path('module', $profile['module']) ."/". $profile['file']);
+      $details_function = $profile['function'];
+      if (function_exists($details_function)) {
+        $dc_html = $details_function($this->item);
+      }
+      else {
+        // problem - display profile not found
+        watchdog('fedora_repository', "Error - could not find object details display function @function", array('@function' => $details_function), WATCHDOG_WARNING);
+      }
+    }
 
     $i = 0;
     if (fedora_repository_access(OBJECTHELPER :: $VIEW_DETAILED_CONTENT_LIST, $this->pid, $user)) {
@@ -63,9 +81,24 @@ class FedoraObjectDetailedContent {
           '#weight' => $i++
         ),
         'list' => array(
-          '#type' => 'markup',
-          '#value' => $ds_list, //XXX:  The function called here could be cleaned up a fair bit as well...
-          '#weight' => $i++
+          '#type' => 'fieldset',
+          '#title' => t('Detailed List of Content'),
+          '#attributes' => array(
+            'class' => 'fedora_detailed_list',
+          ),
+          '#collapsible' => TRUE,
+          '#collapsed' => TRUE,
+          '#weight' => $i++,
+          'parents' => array(
+            '#type' => 'markup',
+            '#value' => $objectHelper->get_parent_objects_asHTML($this->pid),
+            '#weight' => $i++,
+          ),
+          'datastreams' => array(
+            '#type' => 'markup',
+            '#value' => $objectHelper->get_formatted_datastream_list($this->pid, NULL, $this->item), //XXX:  The function called here could be cleaned up a fair bit as well...
+            '#weight' => $i++,
+          ),
         ),
         'purge' => array(
           '#type' => 'markup',
