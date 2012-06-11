@@ -256,7 +256,7 @@ function fedora_repository_ingest_form_validate($form, &$form_state) {
                     t('The uploaded file\'s mimetype (@mime) is not associated with this Content Model. The allowed types are: @allowed', array(
                       '@mime' => $dformat,
                       '@allowed' => implode(', ', $allowedMimeTypes),
-                    ));
+                    )));
                 file_delete($file);
                 return;
               }
