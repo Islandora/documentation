@@ -3,15 +3,15 @@
 $islandora_module_path = drupal_get_path('module', 'fedora_repository');
 
 //do this until we expost these in a module or library
-@include_once 'sites/all/libraries/tuque/Datastream.php';
-@include_once 'sites/all/libraries/tuque/FedoraApi.php';
-@include_once 'sites/all/libraries/tuque/FedoraApiSerializer.php';
-@include_once 'sites/all/libraries/tuque/Object.php';
-@include_once 'sites/all/libraries/tuque/RepositoryConnection.php';
-@include_once 'sites/all/libraries/tuque/Cache.php';
-@include_once 'sites/all/libraries/tuque/RepositoryException.php';
-@include_once 'sites/all/libraries/tuque/Repository.php';
-@include_once 'sites/all/libraries/tuque/FedoraRelationships.php';
+@include_once 'sites/default/libraries/tuque/Datastream.php';
+@include_once 'sites/default/libraries/tuque/FedoraApi.php';
+@include_once 'sites/default/libraries/tuque/FedoraApiSerializer.php';
+@include_once 'sites/default/libraries/tuque/Object.php';
+@include_once 'sites/default/libraries/tuque/RepositoryConnection.php';
+@include_once 'sites/default/libraries/tuque/Cache.php';
+@include_once 'sites/default/libraries/tuque/RepositoryException.php';
+@include_once 'sites/default/libraries/tuque/Repository.php';
+@include_once 'sites/default/libraries/tuque/FedoraRelationships.php';
 
 @include_once "$islandora_module_path/libraries/tuque/Datastream.php";
 @include_once "$islandora_module_path/libraries/tuque/FedoraApi.php";
@@ -26,31 +26,31 @@ $islandora_module_path = drupal_get_path('module', 'fedora_repository');
 class IslandoraTuque {
 
   /**
-   * Connection to the repository
-   *
-   * @var RepositoryConnection
-   */
+* Connection to the repository
+*
+* @var RepositoryConnection
+*/
   public $connection = NULL;
 
   /**
-   * The Fedora API we are using
-   *
-   * @var FedoraAPI
-   */
+* The Fedora API we are using
+*
+* @var FedoraAPI
+*/
   public $api = NULL;
 
   /**
-   * The cache we use to connect.
-   *
-   * @var SimpleCache
-   */
+* The cache we use to connect.
+*
+* @var SimpleCache
+*/
   public $cache = NULL;
 
   /**
-   * The repository object.
-   *
-   * @var FedoraRepository
-   */
+* The repository object.
+*
+* @var FedoraRepository
+*/
   public $repository = NULL;
 
   function __construct($user = NULL, $url = NULL) {
@@ -77,8 +77,9 @@ class IslandoraTuque {
       $this->cache = new SimpleCache();
       $this->repository = new FedoraRepository($this->api, $this->cache);
     }
-  }
-
+    
+ }
+ 
   static function exists() {
     return class_exists('RepositoryConnection');
   }
@@ -89,5 +90,29 @@ class IslandoraTuque {
     $message = t('Islandora requires the !tuque_url. Please install in /sites/all/libraries/tuque before continuing. See the !islandora_url.', array( '!tuque_url' => $tuque_link, '!islandora_url' => $islandora_doc_link));
     drupal_set_message($message, 'error', FALSE);
   }
+  
+  
 }
+
+function islandora_object_load($object_id) {
+    static $islandora_tuque = NULL;
+
+    if(!$islandora_tuque) {
+      $islandora_tuque = new IslandoraTuque(); 
+    }
+
+    if(IslandoraTuque::exists()) {
+      try {
+        $fedora_object = $islandora_tuque->repository->getObject($object_id);
+      } catch (Exception $e) {
+        return NULL;
+      }
+      return $fedora_object;
+    }
+    else {
+      IslandoraTuque::getError();
+      return NULL;
+    }
+  }
+
 
