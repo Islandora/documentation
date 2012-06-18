@@ -1170,8 +1170,9 @@ function fedora_object_as_attachment($pid, $dsId, $label=NULL, $version=NULL) {
     drupal_set_message(t("no pid or dsid given to create an object with!"));
     return ' ';
   }
+
   //Disable the page cache, so entire datastreams do not get thrown into the page cache.
-  $GLOBALS['conf']['cache'] = FALSE;
+  $GLOBALS['conf']['cache'] = CACHE_DISABLED;
 
   $objectHelper = new ObjectHelper();
   $objectHelper->makeObject($pid, $dsId, TRUE, $label, FALSE, $version);
