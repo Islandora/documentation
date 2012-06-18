@@ -317,11 +317,19 @@ class formClass {
     $profiles = module_invoke_all("islandora_object_details_display");
 
     $display_options = array();
-    foreach ($profiles as $machine_name => $profile) {
-      $display_options[$machine_name] = $profile['name'];
-      $config_path = $profile['config'];
-      if (isset($config_path) && $config_path != ""){
-        $display_options[$machine_name] .= " (". l("config", $config_path, array()) .")";
+    // suppress php warnings from empty lists
+    if ($profiles) {
+      foreach ($profiles as $machine_name => $profile) {
+        // make sure the name exists (the bare minimum)
+        if (array_key_exists('name', $profile)) {
+          $display_options[$machine_name] = $profile['name'];
+          if (array_key_exists('config', $profile)) {
+            $config_path = $profile['config'];
+            if (isset($config_path) && $config_path != "") {
+              $display_options[$machine_name] .= " (". l("config", $config_path, array()) .")";
+            }
+          }
+        }
       }
     }
     $form['tabs']['islandora_object_details_display_table'] = array(
@@ -809,15 +817,12 @@ class formClass {
    * @return string 
    */
   function createQDCEditForm($pid, $dsid, $client, &$form_state) {
+    module_load_include('inc', 'fedora_repository', 'api/fedora_item');
     $dsid = empty($dsid) ? 'QDC' : $dsid;
-    try {
-      $params = array('pid' => "$pid", 'dsID' => "$dsid", 'asOfDateTime' => "");
-      $object = $client->__soapCall('getDatastreamDissemination', array('parameters' => $params));
-    } catch (Exception $e) {
-      return array();
-    }
-    $content = $object->dissemination->stream;
-    $content = trim($content);
+
+    $item = new fedora_item($pid);
+    $content = trim($item->get_datastream_dissemination($dsid));
+
     $doc = new DOMDocument();
     if (!$doc->loadXML($content)) {
       echo "error loading xml";
