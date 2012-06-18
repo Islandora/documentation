@@ -994,10 +994,10 @@ function fedora_repository_islandora_tabs($content_models, $pid, $page_number) {
   //can disable showing the object details tab in admin UI
   if (variable_get('fedora_repository_show_object_details_tab', TRUE)) {
     $object_details = $obj->showFieldSets();
-    $cmodel_tabs = array_merge($cmodels_tabs, $object_details);
+    $cmodels_tabs = array_merge($cmodels_tabs, $object_details);
   }
   
-  return array_merge($cmodels_tabs, $object_details);
+  return $cmodels_tabs;
 }
 
 /**
@@ -1159,6 +1159,8 @@ function fedora_object_as_attachment($pid, $dsId, $label=NULL, $version=NULL) {
     drupal_set_message(t("no pid or dsid given to create an object with!"));
     return ' ';
   }
+  //Disable the page cache, so entire datastreams do not get thrown into the page cache.
+  $GLOBALS['conf']['cache'] = FALSE;
 
   $objectHelper = new ObjectHelper();
   $objectHelper->makeObject($pid, $dsId, TRUE, $label, FALSE, $version);
