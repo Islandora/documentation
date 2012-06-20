@@ -3,6 +3,9 @@ dependencies[] = imageapi
 dependencies[] = tabs
 dependencies[] = islandora_content_model_forms
 description = Shows a list of items in a fedora collection.
+
 package = Islandora
-version = 6.x-12.1-RC1
+
+version = 6.x-11.1.1
+
 core = 6.x
