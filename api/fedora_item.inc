@@ -347,7 +347,9 @@ RDF;
     $modified = FALSE;
     $rels = $relsextxml->getElementsByTagNameNS($namespaceURI, $relationship);
     if (!empty($rels)) {
-      foreach ($rels as $rel) {
+      for ($i = $rels->length; $i>0; $i--) {
+        $rel = $rels->item($i-1);
+//      foreach ($rels as $rel) {
         if (  //If either no object is specified, or the object matches (in either the literal or URI case), remove this node from it's parent, and mark as changed.
           empty($object) || 
           (($literal_value == RELS_TYPE_URI) && $rel->getAttributeNS('http://www.w3.org/1999/02/22-rdf-syntax-ns#', 'resource') == $object) ||
