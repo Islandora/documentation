@@ -175,6 +175,8 @@ class MimeClass {
     "movie" => "video/x-sgi-movie",
     "flv" => "video/x-flv",
     "swf" => "application/x-shockwave-flash",
+    'mkv' => "video/x-matroska",
+    'wmv' =>	'video/x-ms-wmv',
     // audio:
     "mp3" => "audio/mpeg",
     "mp4a" => "audio/mp4",
