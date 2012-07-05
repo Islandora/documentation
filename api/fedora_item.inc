@@ -347,7 +347,10 @@ RDF;
     $modified = FALSE;
     $rels = $relsextxml->getElementsByTagNameNS($namespaceURI, $relationship);
     if (!empty($rels)) {
-      foreach ($rels as $rel) {
+      // iterate backwards so if we delete something our pointer doesn't get out of sync
+      for ($i = $rels->length; $i>0; $i--) {
+        $rel = $rels->item($i-1);
+//      foreach ($rels as $rel) { // moving forward like this caused iteration errors when something was deleted
         if (  //If either no object is specified, or the object matches (in either the literal or URI case), remove this node from it's parent, and mark as changed.
           empty($object) || 
           (($literal_value == RELS_TYPE_URI) && $rel->getAttributeNS('http://www.w3.org/1999/02/22-rdf-syntax-ns#', 'resource') == $object) ||
@@ -987,6 +990,54 @@ RDF;
   }
 
   /**
+   * Work around function, due to file_create_url not URL encoding stuff.
+   *
+   * Parses and reassembles the URL, exploding, rawurlencoding and imploding
+   * the path components along the way.
+   *
+   * @param $url
+   *   A string containing an HTTP(S) URL to attempt.
+   * @return string
+   *   The results of the HTTP request if successful; boolean FALSE otherwise.
+   */
+  protected static function try_http_get_content($url) {
+    //Can throw a warning prior to 5.3.3
+    $parsed_url = @parse_url($url);
+    $supported_schemes = array(
+      'http',
+      'https'
+    );
+
+    $content = FALSE;
+
+    if ($parsed_url && array_key_exists('scheme', $parsed_url) && in_array($parsed_url['scheme'], $supported_schemes)) {
+      $components = explode('/', $parsed_url['path']);
+      $components = array_map('rawurlencode', $components);
+      $result = drupal_http_request(
+        url(
+          t('!scheme://!user:!pass@!host:!port/!path', array(
+            '!scheme' => $parsed_url['scheme'],
+            '!user' => rawurlencode($parsed_url['user']),
+            '!pass' => rawurlencode($parsed_url['pass']),
+            '!host' => $parsed_url['host'],
+            '!path' => implode('/', $components),
+          )),
+          array(
+            'query' => $parsed_url['query'],
+            'fragment' => $parsed_url['fragment'],
+          )
+        )
+      );
+
+      if ((int)($result->code / 100) === 2) {
+        $content = $result->data;
+      }
+    }
+
+    return $content;
+  }
+
+  /**
    *  Wrap modify by value and reference
    *
    *  Wrap modify by value and reference, so that the proper one gets called in the correct instance. (value if inline XML, reference otherwise)
@@ -1011,7 +1062,7 @@ RDF;
    */
   function modify_datastream($filename_or_content, $dsid, $label, $mime_type, $force = FALSE, $logMessage='Modified by Islandora API', $quiet=FALSE) {
     $toReturn = NULL;
-    
+
     //Determine if it's inline xml; if it is, modify by value
     if ($this->get_datastream($dsid)->controlGroup === 'X') {
       $content = '<null/>';
@@ -1019,7 +1070,15 @@ RDF;
         $content = file_get_contents($filename_or_content);
       }
       else {
-        $content = $filename_or_content;
+        //XXX:  Get the contents to deal with fopen not being allowed for remote access
+        //   in some OSs
+        $temp_content = self::try_http_get_content($filename_or_content);
+        if ($temp_content !== FALSE) {
+          $content = $temp_content;
+        }
+        else {
+          $content = $filename_or_content;
+        }
       }
       
       $toReturn = $this->modify_datastream_by_value($content, $dsid, $label, $mime_type, $force, $logMessage);
@@ -1036,8 +1095,15 @@ RDF;
         $created_temp = ($original_path != $file);
       }
       else {
+        //XXX:  Get the contents to deal with fopen not being allowed for remote access
+        //   in some OSs
+        $temp_content = self::try_http_get_content($filename_or_content);
+        if ($temp_content !== FALSE) {
+          $filename_or_content = $temp_content;
+        }
+
         //Push contents to a web-accessible file
-        $file = file_save_data($filename_or_content, file_directory_path());
+        $file = file_save_data($filename_or_content, file_create_filename($label, file_directory_path()));
         $created_temp = TRUE;
       }
       
