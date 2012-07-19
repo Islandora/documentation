@@ -38,7 +38,7 @@ class fits {
     $file_suffix = '_' . $dsid . '.xml';
     $returnValue = TRUE;
     $output = array();
-    exec('fits ' . escapeshellarg($file) . '', $output);
+    exec('fits.sh -h' . escapeshellarg($file) . '', $output);
     file_put_contents($file . $file_suffix, implode("\n", $output));
     $_SESSION['fedora_ingest_files']["$dsid"] = $file . $file_suffix;
     return TRUE;
@@ -50,11 +50,11 @@ class fits {
    */
   function displayMetadata() {
     $output = '';
-    $exif = $this->item->get_datastream_dissemination('FITS');
-    if (trim($exif) != '') {
-      $exifDom = DOMDocument::loadXML($this->item->get_datastream_dissemination('FITS'));
-      if ($exifDom != NULL) {
-        $description = $exifDom->getElementsByTagNameNS('http://www.w3.org/1999/02/22-rdf-syntax-ns#', 'Description');
+    $fits = $this->item->get_datastream_dissemination('FITS');
+    if (trim($fits) != '') {
+      $fitsDom = DOMDocument::loadXML($this->item->get_datastream_dissemination('FITS'));
+      if ($fitsDom != NULL) {
+        $description = $fitsDom->getElementsByTagNameNS('http://hul.harvard.edu/ois/xml/ns/fits/fits_output', 'fits');
         if ($description->length > 0) {
           $description = $description->item(0);
           $output .= '<div class="fedora_technical_metadata"><ul>';
