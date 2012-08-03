@@ -33,12 +33,12 @@ class fits {
    * @param type $file_ext
    * @return type
    */
-  function extractMetadata($parameterArray, $dsid, $file, $file_ext) {
+  function extractFits($parameterArray, $dsid, $file, $file_ext) {
     $system = getenv('System');
     $file_suffix = '_' . $dsid . '.xml';
     $returnValue = TRUE;
     $output = array();
-    exec('fits ' . escapeshellarg($file) . '', $output);
+    exec('fits.sh -i ' . escapeshellarg($file) . '', $output);
     file_put_contents($file . $file_suffix, implode("\n", $output));
     $_SESSION['fedora_ingest_files']["$dsid"] = $file . $file_suffix;
     return TRUE;
@@ -48,13 +48,13 @@ class fits {
    * display metadata
    * @return type
    */
-  function displayMetadata() {
+  function displayFits() {
     $output = '';
     $exif = $this->item->get_datastream_dissemination('FITS');
     if (trim($exif) != '') {
       $exifDom = DOMDocument::loadXML($this->item->get_datastream_dissemination('FITS'));
       if ($exifDom != NULL) {
-        $description = $exifDom->getElementsByTagNameNS('http://www.w3.org/1999/02/22-rdf-syntax-ns#', 'Description');
+        $description = $exifDom->getElementsByTagName('fits');
         if ($description->length > 0) {
           $description = $description->item(0);
           $output .= '<div class="fedora_technical_metadata"><ul>';
