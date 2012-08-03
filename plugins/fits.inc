@@ -18,11 +18,12 @@ class fits {
    * Constructor
    * @param type $pid
    */
-  function __construct($pid) {
-    //drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
-    $this->pid = $pid;
+  function __construct($pid = NULL) {
     module_load_include('inc', 'fedora_repository', 'api/fedora_item');
-    $this->item = new Fedora_Item($this->pid);
+    if (!empty($pid)) {
+      $this->pid = $pid;
+      $this->item = new Fedora_Item($this->pid);
+    }
   }
 
   /**
@@ -34,7 +35,6 @@ class fits {
    * @return type
    */
   function extractFits($parameterArray, $dsid, $file, $file_ext) {
-    $system = getenv('System');
     $file_suffix = '_' . $dsid . '.xml';
     $returnValue = TRUE;
     $output = array();
