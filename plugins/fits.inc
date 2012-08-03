@@ -50,11 +50,11 @@ class fits {
    */
   function displayFits() {
     $output = '';
-    $exif = $this->item->get_datastream_dissemination('FITS');
-    if (trim($exif) != '') {
-      $exifDom = DOMDocument::loadXML($this->item->get_datastream_dissemination('FITS'));
-      if ($exifDom != NULL) {
-        $description = $exifDom->getElementsByTagName('fits');
+    $fits = $this->item->get_datastream_dissemination('FITS');
+    if (trim($fits) != '') {
+      $fitsDom = DOMDocument::loadXML($this->item->get_datastream_dissemination('FITS'));
+      if ($fitsDom != NULL) {
+        $description = $fitsDom->getElementsByTagName('fits');
         if ($description->length > 0) {
           $description = $description->item(0);
           $output .= '<div class="fedora_technical_metadata"><ul>';
