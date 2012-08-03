@@ -36,10 +36,11 @@ class fits {
    */
   function extractFits($parameterArray, $dsid, $file, $file_ext) {
     $file_suffix = '_' . $dsid . '.xml';
-    $returnValue = TRUE;
     $output = array();
     exec('fits.sh -i ' . escapeshellarg($file) . '', $output);
-    file_put_contents($file . $file_suffix, implode("\n", $output));
+    if ( !file_put_contents($file . $file_suffix, implode("\n", $output)) ) {
+        exit("Error writing file: ". $file_name);
+    }
     $_SESSION['fedora_ingest_files']["$dsid"] = $file . $file_suffix;
     return TRUE;
   }
