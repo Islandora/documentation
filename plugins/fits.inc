@@ -4,6 +4,12 @@
  * @file
  * Fits
  * fits.sh must be in the apache user's path
+ *
+ * Download FITS from http://code.google.com/p/fits/
+ * Installing: http://code.google.com/p/fits/wiki/installing
+ * Edit line 5 in fits.sh (FITS_HOME='') and give it a home.
+ * Make sure that home is in the apache user's path.
+ *
  */
 
 /**
