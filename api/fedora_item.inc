@@ -1118,9 +1118,9 @@ RDF;
         $created_temp = TRUE;
       }
       
-      $parts = explode('/', $file);
+      $parts = explode(DIRECTORY_SEPARATOR, $file);
       $parts = array_map('rawurlencode', $parts);
-      $file_url = file_create_url(implode('/', $parts));
+      $file_url = file_create_url(implode(DIRECTORY_SEPARATOR, $parts));
       
       $toReturn = $this->modify_datastream_by_reference($file_url, $dsid, $label, $mime_type, $force, $logMessage);
       
