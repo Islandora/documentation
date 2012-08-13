@@ -41,14 +41,16 @@ class fits {
    * @return type
    */
   function extractFits($parameterArray, $dsid, $file, $file_ext) {
-    $file_name = '_' . $dsid . '.xml';
-    $output = array();
-    exec('fits.sh -i ' . escapeshellarg($file) . '', $output);
-    if ( !file_put_contents($file . $file_name, implode("\n", $output)) ) {
-        exit("Error writing file: ". $file_name);
+    if (variable_get('enable_fits', TRUE) == 1) {
+      $file_name = '_' . $dsid . '.xml';
+      $output = array();
+      exec(variable_get('fits_path', '/usr/local/bin/fits.sh') .' -i ' . escapeshellarg($file) . '', $output);
+      if ( !file_put_contents($file . $file_name, implode("\n", $output)) ) {
+        exit("Error writing file: ". $file.$file_name);
+      }
+      $_SESSION['fedora_ingest_files']["$dsid"] = $file . $file_name;
+      return TRUE;
     }
-    $_SESSION['fedora_ingest_files']["$dsid"] = $file . $file_name;
-    return TRUE;
   }
 
   /**
