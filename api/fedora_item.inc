@@ -980,7 +980,9 @@ RDF;
 
     $params = array(
       'pid' => $this->pid,
-      'ownerId' => $ownerId,
+      'ownerId' => (($ownerId !== NULL)? //Default to the current owner if none is provided.
+        $ownerId:
+        $this->objectProfile->objOwnerId),
       'state' => $state,
       'label' => $label,
       'logMessage' => $logMessage
@@ -1116,7 +1118,9 @@ RDF;
         $created_temp = TRUE;
       }
       
-      $file_url = file_create_url($file);
+      $parts = explode(DIRECTORY_SEPARATOR, $file);
+      $parts = array_map('rawurlencode', $parts);
+      $file_url = file_create_url(implode(DIRECTORY_SEPARATOR, $parts));
       
       $toReturn = $this->modify_datastream_by_reference($file_url, $dsid, $label, $mime_type, $force, $logMessage);
       
@@ -1140,6 +1144,14 @@ RDF;
    * @return type
    */
   function modify_datastream_by_reference($external_url, $dsid, $label, $mime_type, $force = FALSE, $logMessage = 'Modified by Islandora API', $quiet=FALSE) {
+    global $base_url;
+
+    // Fedora has some problems getting files from HTTPS connections sometimes, so if we are getting a file
+    // from the local drupal, we try to pass a HTTP url instead of a HTTPS one.
+    if(stripos($external_url, 'https://') !== FALSE && stripos($external_url, $base_url) !== FALSE) {
+      $external_url = str_ireplace('https://', 'http://', $external_url);
+    }
+    
     $params = array(
       'pid' => $this->pid,
       'dsID' => $dsid,
