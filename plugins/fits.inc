@@ -41,16 +41,18 @@ class fits {
    * @return type
    */
   function extractFits($parameterArray, $dsid, $file, $file_ext) {
-    if (variable_get('enable_fits', TRUE) == 1) {
+    if (variable_get('enable_fits', FALSE) == 1) {
       $file_name = '_' . $dsid . '.xml';
       $output = array();
       exec(variable_get('fits_path', '/usr/local/bin/fits.sh') .' -i ' . escapeshellarg($file) . '', $output);
       if ( !file_put_contents($file . $file_name, implode("\n", $output)) ) {
-        exit("Error writing file: ". $file.$file_name);
+        //drupal_set_message(t("error writing fits file %s", array('%s' => "$file.$file_name")));
+        return FALSE;
       }
       $_SESSION['fedora_ingest_files']["$dsid"] = $file . $file_name;
       return TRUE;
     }
+    return TRUE; //this prevents getting the error following content model rules message when fits generation is turned off
   }
 
   /**

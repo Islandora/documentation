@@ -373,7 +373,7 @@ class formClass {
       '#type' => 'checkbox',
       '#title' => t('Enable FITS support?'),
       '#description' => t('Whether or not we should create a FITS datastream upon object ingest.'),
-      '#default_value' => variable_get('enable_fits', TRUE),
+      '#default_value' => variable_get('enable_fits', FALSE),
     );
 
     //FITS Path
@@ -389,7 +389,7 @@ class formClass {
       '#type' => 'textfield',
       '#title' => t('Export area'),
       '#default_value' => variable_get('export_area', file_directory_path() . '/fedora_export_area'),
-      '#description' => t("Path to the export area. It must be accessible by druapl (i.e. apache user)."),
+      '#description' => t("Path to the export area. It must be accessible by drupal (i.e. apache user)."),
       '#required' => TRUE,
     );
 
