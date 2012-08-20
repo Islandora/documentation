@@ -61,7 +61,7 @@ class fits {
    */
   function displayFits() {
     $output = '';
-    $fits = $this->item->get_datastream_dissemination('FITS');
+    $fits = $this->item->get_datastream_dissemination('TECHMD_FITS');
     if (trim($fits) != '') {
       $fitsDom = DOMDocument::loadXML($this->item->get_datastream_dissemination('FITS'));
       if ($fitsDom != NULL) {
