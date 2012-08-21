@@ -182,7 +182,8 @@ class ObjectHelper {
           //Set what headers we can...
           if ($mimeType = $info['content_type']) {
             drupal_set_header("Content-Type: $mimeType");
-            // Fixes an IE issue
+            // Fixes an IE issue (ISLANDORA-311)
+            // http://support.microsoft.com/kb/316431 
             drupal_set_header("Cache-Control: private", TRUE); 
             if ($asAttachment) {
               $suggestedFileName = "$label";
