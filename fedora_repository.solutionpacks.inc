@@ -57,7 +57,9 @@ function fedora_repository_solution_packs_page() {
  * Check for installed objects and add a 'Update' or 'Install' button if
  * some objects are missing.
  *
- * @param array $solution_pack
+ * @param array &$form_state
+ * @param array $solution_pack_module
+ * @param array $solution_pack_name
  */
 function fedora_repository_solution_pack_form(&$form_state, $solution_pack_module, $solution_pack_name, $objects = array()) {
 
@@ -201,15 +203,18 @@ function fedora_repository_solution_pack_form_submit($form, &$form_state) {
     $batch['operations'][] = array('fedora_repository_batch_reingest_object', array($object));
   }
 
-  batch_set($batch);
+  // Used in postprocess hook.
+  $_SESSION['solution_pack_module_name'] = $module_name;
 
-  // Hook to let solution pack objects be modified.
-  // Not using module_invoke so solution packs can be expanded by other modules.
-  module_invoke_all('postprocess_solution_pack', $module_name);
+  // Tell the batch to call the function to send out a postprocess hook.
+  $batch['finished'] = 'fedora_repository_solutionpack_send_postprocess';
+
+  batch_set($batch);
 
 }
 
 /**
+ * Writes a form entry into the database.
  *
  * @param unknown_type $form_name
  * @param unknown_type $form_xml
@@ -226,6 +231,7 @@ function solution_pack_add_form($form_name, $form_xml) {
 }
 
 /**
+ * Writes a form association to the database
  *
  * @param unknown_type $content_model
  * @param unknown_type $form_name
