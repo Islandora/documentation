@@ -195,7 +195,9 @@ class MimeClass {
     "zip" => "application/x-zip",
     // others:
     'bin' => 'application/octet-stream',
+    'json' => 'application/json',
   );
+
   private $private_file_extensions;
   private $system_types;
   private $system_exts;
