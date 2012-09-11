@@ -299,7 +299,7 @@ function islandora_add_datastream_form_validate($form, &$form_state) {
     }
   }
   else {
-    // todo: this is unsafe, should probably be fixed see:
+    // @TODO: this is unsafe, should probably be fixed see:
     // http://api.drupal.org/api/drupal/includes!file.inc/function/file_save_upload/7
     $arr = array();
   }
