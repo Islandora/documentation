@@ -201,6 +201,9 @@ function islandora_menu() {
   return $items;
 }
 
+/**
+ * Implements hook_admin_paths().
+ */
 function islandora_admin_paths() {
   $paths = array();
   $paths['islandora/object/*/manage*'] = TRUE;
@@ -348,8 +351,9 @@ function islandora_view_object($fedora_object = NULL) {
 }
 
 /**
- * the default view hook.  If there are no modules registered to handle this objects cmodels or there are
+ * The default view hook.  If there are no modules registered to handle this objects cmodels or there are
  * not any cmodels specified this will create a default display.
+ *
  * @param string $object_id
  * @return string
  */
@@ -366,7 +370,8 @@ function islandora_islandora_view_object($object) {
 }
 
 /**
- * Theme registry function
+ * Implements hook_theme().
+ *
  * @return array
  */
 function islandora_theme() {
@@ -385,7 +390,8 @@ function islandora_theme() {
 }
 
 /**
- * drupal hook_permissions function
+ * Implements hook_permission().
+ *
  * @return array
  */
 function islandora_permission() {
@@ -422,7 +428,8 @@ function islandora_permission() {
 }
 
 /**
- * a helper function to get a connection and return an object
+ * A helper function to get a connection and return an object
+ *
  * @global object $user
  * @param string $object_id
  * @return FedoraObject
@@ -449,6 +456,9 @@ function islandora_object_load($object_id) {
   }
 }
 
+/**
+ * Ingest access callback
+ */
 function islandora_ingest_access_callback($object, $perm) {
   if (islandora_access_callback($object, $perm) === FALSE) {
     return FALSE;

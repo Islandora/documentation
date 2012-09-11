@@ -37,6 +37,9 @@ function islandora_convert_bytes_to_human_readable($bytes, $precision = 2) {
   }
 }
 
+/**
+ * Creates a label for control group symbols.
+ */
 function islandora_control_group_to_human_readable($control_group) {
   switch ($control_group) {
     case 'M':
