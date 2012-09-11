@@ -69,7 +69,7 @@ function do_curl($url, $return_to_variable = 1, $number_of_post_vars = 0, $post 
  * Various defaults are used for the parameters required by curl_exec including
  * the user agent and timeout.  These are hard-coded.
  *
- * @param $url
+ * @param string $url
  *   URL to be accessed by the function
  * @param $return_to_variable
  *   Indicates whether the resource accessed by the curl call (HTML page,
@@ -80,7 +80,7 @@ function do_curl($url, $return_to_variable = 1, $number_of_post_vars = 0, $post 
  * @param $post
  *   Whether the curl_exec is done as a "get" or a "post"
  *
- * @return
+ * @return mixed
  *   an array that consists of three value or NULL if curl is not suported:
  *   - element 0:
  *     The value returned from the curl_exec function call.
@@ -340,4 +340,34 @@ function get_content_models_as_option_array() {
   }
 
   return $options;
+}
+
+/**
+ * This function will retrieve the collections that the given PID belongs to.
+ *
+ * @param string $PID
+ *   The PID to find the parents of.
+ *
+ * @return array
+ *   $object_PIDs the list of PIDs of the collections that the
+ *   indicated object is a member of.
+ */
+function get_parent_collections_from_pid($PID) {
+  $query_string = 'select  $parent  from <#ri>
+        where ($object <fedora-rels-ext:isMemberOf> $parent
+    or $object <fedora-rels-ext:isMemberOfCollection> $parent)
+        and $object <dc:identifier> \'' . $PID . '\'
+        order by $object';
+
+  $query_string = htmlentities(urlencode($query_string));
+  $url = variable_get('fedora_repository_url', 'http://localhost:8080/fedora/risearch');
+  $url .= '?type=tuples&flush=true&format=csv&limit=13000&lang=itql&stream=on&query=' . $query_string;
+
+  $content = do_curl($url, TRUE);
+
+  $results = explode("\n", $content);
+  $object_PIDs = preg_replace('/^info:fedora\/|"parent"| /', '', $results);
+  $object_PIDs = array_values(array_filter($object_PIDs));
+
+  return $object_PIDs;
 }
