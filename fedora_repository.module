@@ -2217,7 +2217,9 @@ function _is_added_to_basket($pid, $account = NULL) {
 
 /**
  * fedora repository display schema
+ *
  * @param type $file
+ *
  * @return type
  */
 function fedora_repository_display_schema($file) {
@@ -2236,13 +2238,19 @@ function fedora_repository_display_schema($file) {
  *
  * @param array $object
  *   An array defining an object to ingest.
- * @param type $context
- * @return type
+ * @param string $module_name
+ *   The string needed in the finished callback to be
+ *   sent out in the postprocess hook.
+ * @param array $context
+ *   Variables shared between batch iterations
+ *   and finished callback
  */
-function fedora_repository_batch_reingest_object($object, &$context) {
+function fedora_repository_batch_reingest_object($object, $module_name, &$context) {
 
   module_load_include('inc', 'fedora_repository', 'api/fedora_item');
   module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
+
+  $context['results']['module_name'] = $module_name;
 
   if (!empty($object) && is_array($object)) {
     $pid = $object['pid'];
@@ -2316,8 +2324,8 @@ function fedora_repository_batch_reingest_object($object, &$context) {
 function fedora_repository_solutionpack_send_postprocess($success, $results, $operations) {
   // Hook to let solution pack objects be modified.
   // Not using module_invoke so solution packs can be expanded by other modules.
-  if($success) {
-    module_invoke_all('postprocess_solution_pack', $_SESSION['solution_pack_module_name']);
+  if ($success) {
+    module_invoke_all('postprocess_solution_pack', $results['module_name']);
   }
 }
 
@@ -2341,7 +2349,7 @@ function fedora_repository_get_islandora_datastream_version($item = NULL, $dsid 
     $doc = simplexml_load_file($datastream_file);
   }
 
-  if (!empty($doc) && $version = (int)$doc->attributes()->version) {
+  if (!empty($doc) && $version = (int) $doc->attributes()->version) {
     $return = $version;
   }
 
@@ -2350,7 +2358,9 @@ function fedora_repository_get_islandora_datastream_version($item = NULL, $dsid 
 
 /**
  * theme fedora repository solution pack list
+ *
  * @param type $solution_packs
+ *
  * @return string
  */
 function theme_fedora_repository_solution_packs_list($solution_packs) {
@@ -2365,8 +2375,10 @@ function theme_fedora_repository_solution_packs_list($solution_packs) {
 }
 
 /**
- * Implementation of hook_forms()
+ * Implements hook_forms()
+ *
  * @param string $form_id
+ *
  * @return array
  */
 function fedora_repository_forms($form_id) {
@@ -2380,7 +2392,7 @@ function fedora_repository_forms($form_id) {
 }
 
 /**
- * Implementation of hook_imagecache_default_presets().
+ * Implements hook_imagecache_default_presets().
  */
 function fedora_repository_imagecache_default_presets() {
   return array(
