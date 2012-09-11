@@ -306,9 +306,6 @@ function fedora_repository_purge_object_form(&$form_state, $pid, $referrer = NUL
       '#value' => t('Purge'),
       '#suffix' => 'Purge this object',
     );
-    if (!empty($collectionPid)) {
-      $collectionPid = $_SESSION['fedora_collection'];
-    }
 
     return $form;
   }
@@ -532,7 +529,11 @@ function fedora_repository_purge_object_form_validate($form, &$form_state) {
  */
 function fedora_repository_purge_object_form_submit($form, &$form_state) {
   module_load_include('inc', 'fedora_repository', 'ConnectionHelper');
+  module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
+
   $pid = $form_state['values']['pid'];
+  $parents = get_parent_collections_from_pid($pid);
+
   if (!isset($form_state['storage']['confirm'])) {
     /* This will cause the form to be rebuilt,
      * entering the confirm part of the form.*/
@@ -563,18 +564,8 @@ function fedora_repository_purge_object_form_submit($form, &$form_state) {
       return;
     }
 
-    // Set the form's redirect.
-    if (!empty($form_state['values']['referrer'])) {
-      $form_state['redirect'] = $form_state['values']['referrer'];
-    }
-    elseif (empty($collectionPid) && !empty($_SESSION['fedora_collection']) && $_SESSION['fedora_collection'] != $pid) {
-      $collectionPid = $_SESSION['fedora_collection'];
-
-      $form_state['redirect'] = "fedora/repository/$collectionPid/";
-    }
-    else {
-      $form_state['redirect'] = 'fedora/repository/';
-    }
+    // Set the form's redirect to its first identifiable parent collection.
+    $form_state['redirect'] = "fedora/repository/$parents[0]/";
   }
 }
 
