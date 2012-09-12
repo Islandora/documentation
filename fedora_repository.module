@@ -40,8 +40,10 @@ function fedora_repository_help($path, $arg) {
 
 /**
  * fedora repository purge object
+ *
  * @param type $pid
  * @param type $name
+ *
  * @return type
  */
 function fedora_repository_purge_object($pid = NULL, $name = NULL) {
@@ -64,9 +66,11 @@ function fedora_repository_purge_object($pid = NULL, $name = NULL) {
 
 /**
  * fedora repository ingest object
+ *
  * @param type $collection_pid
  * @param type $collection_label
  * @param type $content_model
+ *
  * @return type
  */
 function fedora_repository_ingest_object($collection_pid=NULL, $collection_label = NULL, $content_model = NULL) {
@@ -266,11 +270,15 @@ function fedora_repository_ingest_form(&$form_state, $collection_pid, $collectio
 
 /**
  * fedora repository purge object form
+ *
  * @global type $base_url
+ *
  * @param type $form_state
  * @param type $pid
  * @param type $referrer
- * @return type
+ *
+ * @return mixed
+ *   NULL or the form array.
  */
 function fedora_repository_purge_object_form(&$form_state, $pid, $referrer = NULL) {
   global $base_url;
@@ -282,7 +290,7 @@ function fedora_repository_purge_object_form(&$form_state, $pid, $referrer = NUL
   }
   $form['pid'] = array(
     '#type' => 'hidden',
-    '#value' => "$pid"
+    '#value' => "$pid",
   );
   if (!strstr(drupal_get_destination(), urlencode('fedora/repository'))) {
     $form['referrer'] = array(
@@ -291,27 +299,26 @@ function fedora_repository_purge_object_form(&$form_state, $pid, $referrer = NUL
     );
   }
   if (!isset($form_state['storage']['confirm'])) {
-// do your normal $form definition here
-
-
+    // Do your normal $form definition here.
     $form['submit'] = array(
       '#type' => 'image_button',
       '#src' => drupal_get_path('module', 'fedora_repository') . '/images/purge_big.png',
       '#value' => t('Purge'),
       '#suffix' => 'Purge this object',
     );
-    if (!empty($collectionPid)) {
-      $collectionPid = $_SESSION['fedora_collection'];
-    }
-//$form['#rebuild'] = $false;
 
     return $form;
   }
   else {
-// ALSO do $form definition here. Your final submit handler (after user clicks Yes, I Confirm) will only see $form_state info defined here. Form you create here passed as param1 to confirm_form
+    /* ALSO do $form definition here. Your final submit handler
+     * (after user clicks Yes, I Confirm)
+     * will only see $form_state info defined here.
+     * Form you create here passed as param1 to confirm_form*/
 
-    return confirm_form($form, 'Confirm Purge Object', $referrer, 'Are you sure you want to delete this object? This action cannot be undone.', 'Delete', 'Cancel'); //Had better luck leaving off last param 'name'
+    // Had better luck leaving off last param 'name'.
+    return confirm_form($form, 'Confirm Purge Object', $referrer, 'Are you sure you want to delete this object? This action cannot be undone.', 'Delete', 'Cancel');
   }
+
   return $form;
 }
 
@@ -487,18 +494,26 @@ function fedora_repository_purge_stream($pid = NULL, $dsId = NULL, $name = NULL)
   return $output;
 }
 
+/**
+ * Validates the purge object form.
+ *
+ * @param array $form
+ *   The form to validate.
+ * @param array $form_state
+ *   The state of the form to validate
+ */
 function fedora_repository_purge_object_form_validate($form, &$form_state) {
   module_load_include('inc', 'fedora_repository', 'api/fedora_collection');
   $pid = $form_state['values']['pid'];
 
-  $objectHelper = new ObjectHelper();
-  $contentModels = $objectHelper->get_content_models_list($pid);
-  foreach ($contentModels as $contentModel) {
-    if ($contentModel->pid == 'islandora:collectionCModel') {
+  $object_helper = new ObjectHelper();
+  $content_models = $object_helper->get_content_models_list($pid);
+  foreach ($content_models as $content_model) {
+    if ($content_model->pid == 'islandora:collectionCModel') {
       $member_pids = get_related_items_as_array($pid, 'isMemberOfCollection');
       if (is_array($member_pids) && ! empty($member_pids)) {
-      form_set_error('new_collection_pid', t("Please purge all members of this collection before deleting the collection itself."));
-      return;
+        form_set_error('new_collection_pid', t("Please purge all members of this collection before deleting the collection itself."));
+        return;
       }
     }
   }
@@ -506,27 +521,37 @@ function fedora_repository_purge_object_form_validate($form, &$form_state) {
 
 /**
  * fedora repository purge object form submit
+ *
  * @param type $form
+ *   The submited form.
  * @param type $form_state
- * @return type
+ *   The state of the submitted form.
  */
 function fedora_repository_purge_object_form_submit($form, &$form_state) {
   module_load_include('inc', 'fedora_repository', 'ConnectionHelper');
+  module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
+
   $pid = $form_state['values']['pid'];
+  $parents = get_parent_collections_from_pid($pid);
+
   if (!isset($form_state['storage']['confirm'])) {
-    $form_state['storage']['confirm'] = TRUE; // this will cause the form to be rebuilt, entering the confirm part of the form
-    $form_state['rebuild'] = TRUE; // along with this
+    /* This will cause the form to be rebuilt,
+     * entering the confirm part of the form.*/
+    $form_state['storage']['confirm'] = TRUE;
+    // Along with this.
+    $form_state['rebuild'] = TRUE;
   }
   else {
-// this is where you do your processing after they have pressed the confirm button
+    /* This is where you do your processing after
+     * they have pressed the confirm button.*/
     $params = array(
       "pid" => $pid,
       "logMessage" => "Purged",
-      "force" => ""
+      "force" => "",
     );
     try {
-      $soapHelper = new ConnectionHelper();
-      $client = $soapHelper->getSoapClient(variable_get('fedora_soap_manage_url', 'http://localhost:8080/fedora/wsdl?api=API-M'));
+      $soap_helper = new ConnectionHelper();
+      $client = $soap_helper->getSoapClient(variable_get('fedora_soap_manage_url', 'http://localhost:8080/fedora/wsdl?api=API-M'));
       $object = $client->__soapCall('purgeObject', array($params));
       unset($form_state['storage']['confirm']);
     } catch (exception $e) {
@@ -538,39 +563,33 @@ function fedora_repository_purge_object_form_submit($form, &$form_state) {
       }
       return;
     }
-    if (!empty($form_state['values']['referrer'])) {
-      $form_state['redirect'] = $form_state['values']['referrer'];
-    }
-    elseif (empty($collectionPid) && !empty($_SESSION['fedora_collection']) && $_SESSION['fedora_collection'] != $pid) {
-      $collectionPid = $_SESSION['fedora_collection'];
 
-      $form_state['redirect'] = "fedora/repository/$collectionPid/";
-    }
-    else {
-      $form_state['redirect'] = 'fedora/repository/';
-    }
+    // Set the form's redirect to its first identifiable parent collection.
+    $form_state['redirect'] = "fedora/repository/$parents[0]/";
   }
 }
 
 /**
  * fedora repository purge stream form
+ *
  * @param type $form_state
  * @param type $pid
  * @param type $dsId
+ *
  * @return type
  */
 function fedora_repository_purge_stream_form(&$form_state, $pid, $dsId) {
   $form['pid'] = array(
     '#type' => 'hidden',
-    '#value' => "$pid"
+    '#value' => "$pid",
   );
   $form['dsid'] = array(
     '#type' => 'hidden',
-    '#value' => "$dsId"
+    '#value' => "$dsId",
   );
   $form['submit'] = array(
     '#type' => 'submit',
-    '#value' => t('Purge')
+    '#value' => t('Purge'),
   );
 
   return $form;
@@ -578,7 +597,9 @@ function fedora_repository_purge_stream_form(&$form_state, $pid, $dsId) {
 
 /**
  * fedora repository purge stream form submit
+ *
  * @global type $base_url
+ *
  * @param type $form
  * @param array $form_state
  */
@@ -596,6 +617,13 @@ function fedora_repository_purge_stream_form_submit($form, &$form_state) {
   $form_state['redirect'] = "fedora/repository/$pid";
 }
 
+/**
+ *
+ * @param unknown_type $form_state
+ * @param unknown_type $pid
+ * @param unknown_type $dsid
+ * @param unknown_type $label
+ */
 function fedora_repository_download_datastream_form(&$form_state, $pid, $dsid, $label) {
   module_load_include('inc', 'fedora_repository', 'ObjectHelper');
   $form = array(
@@ -621,7 +649,7 @@ function fedora_repository_download_datastream_form(&$form_state, $pid, $dsid, $
 
     if (count($version_array) > 1) {
       $form['#attributes'] = array(
-        'onsubmit' => 'this.action="' . $form['#action'] . '/" + this.version.value;'
+        'onsubmit' => 'this.action="' . $form['#action'] . '/" + this.version.value;',
       );
       $form['version'] = array(
         '#type' => 'select',
@@ -635,11 +663,13 @@ function fedora_repository_download_datastream_form(&$form_state, $pid, $dsid, $
 
 /**
  * fedora repository replace stream
+ *
  * @param type $pid
  * @param type $dsId
  * @param type $dsLabel
  * @param type $collectionName
- * @return type
+ *
+ * @return string
  */
 function fedora_repository_replace_stream($pid, $dsId, $dsLabel = '', $collectionName = NULL) {
   if ($pid == NULL || $dsId == NULL) {
@@ -653,10 +683,12 @@ function fedora_repository_replace_stream($pid, $dsId, $dsLabel = '', $collectio
 
 /**
  * fedora repository replace stream form
+ *
  * @param type $form_state
  * @param type $pid
  * @param type $dsId
  * @param type $dsLabel
+ *
  * @return type
  */
 function fedora_repository_replace_stream_form(&$form_state, $pid, $dsId, $dsLabel) {
@@ -675,7 +707,7 @@ function fedora_repository_replace_stream_form_validate($form, &$form_state) {
   // If a file was uploaded, process it.
   if (isset($_FILES['files']) && is_uploaded_file($_FILES['files']['tmp_name']['file'])) {
 
-    // attempt to save the uploaded file
+    // Attempt to save the uploaded file.
     $file = file_save_upload('file', array(), file_directory_path());
 
     // set error is file was not uploaded
@@ -843,7 +875,8 @@ function fedora_repository_edit_qdc_form_submit($form, &$form_state) {
       $soap_helper = new ConnectionHelper();
       $client = $soap_helper->getSoapClient(variable_get('fedora_soap_manage_url', 'http://localhost:8080/fedora/wsdl?api=API-M'));
 
-      // Check the content model for a custom edit metadata form submit function.
+      /* Check the content model for a custom
+       * edit metadata form submit function.*/
       if (isset($form_state['values']['pid'])) {
         module_load_include('inc', 'fedora_repository', 'ContentModel');
         if (($cm = ContentModel::loadFromObject($form_state['values']['pid'])) !== FALSE) {
@@ -2246,6 +2279,7 @@ function fedora_repository_display_schema($file) {
  *   and finished callback
  */
 function fedora_repository_batch_reingest_object($object, $module_name, &$context) {
+
 
   module_load_include('inc', 'fedora_repository', 'api/fedora_item');
   module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
