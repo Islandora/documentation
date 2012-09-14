@@ -15,11 +15,13 @@
  *   if the object actualy exists with a ISLANDORACM datastream.
  * @param string $pid
  *   The Fedora PID of the object who's page is firing the hook.
+ * @param int $page_number
+ *   Page number for collection views.
  *
  * @return array
  *   $tabset a tab definition.
  */
-function hook_islandora_tabs($content_models, $pid) {
+function hook_islandora_tabs($content_models, $pid, $page_number) {
 
   $tabset['A TAB'] = array(
     '#type' => 'tabpage',
