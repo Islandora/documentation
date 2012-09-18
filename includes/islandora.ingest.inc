@@ -143,8 +143,8 @@ function islandora_ingest_new_object($object_model) {
   // build new object
   $object = islandora_ingest_new_object_prepare($namespace, $label, $datastreams, $content_models, $relationships);
 
-  // ingest new object
-  islandora_ingest_add_object($object);
+  // ingest (and return) new object
+  return islandora_ingest_add_object($object);
 }
 
 

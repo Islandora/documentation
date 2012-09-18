@@ -566,3 +566,42 @@ function islandora_get_islandora_datastream_version($item = NULL, $dsid = NULL, 
 
   return $return;
 }
+
+/**
+ * Implements hook_islandora_required_objects().
+ */
+function islandora_islandora_required_objects() {
+
+  // module path
+  $module_path = drupal_get_path('module', 'islandora');
+  
+  return array(
+    'islandora' => array(
+      'module' => 'islandora',
+      'title' => 'Islandora',
+      'objects' => array(
+        array(
+          'pid' => 'islandora:root',
+          'label' => 'Islandora top-level collection',
+          'cmodel' => 'islandora:collectionCModel',
+          'datastreams' => array(
+            array(
+              'dsid' => 'COLLECTION_POLICY',
+              'label' => 'Collection policy',
+              'mimetype' => 'text/xml',
+              'control_group' => 'X',
+              'datastream_file' => "$module_path/xml/islandora_collection_policy.xml",
+            ),
+            array(
+              'dsid' => 'TN',
+              'label' => 'Thumbnail', 
+              'mimetype' => 'image/png',
+              'control_group' => 'M',
+              'datastream_file' => "$module_path/images/folder.png",
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+}

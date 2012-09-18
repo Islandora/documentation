@@ -9,3 +9,9 @@
 {
   padding-top: 0.5em;
 }
+
+.islandora-solution-pack-fieldset table th,
+.islandora-solution-pack-fieldset table td
+{
+  width: 33%;
+}

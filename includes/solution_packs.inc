@@ -36,6 +36,7 @@ function islandora_solution_packs_admin() {
 function islandora_solution_pack_form($form, &$form_state,  $solution_pack_module, $solution_pack_name, $objects = array()) {
 
   // set variables
+  global $base_url;
   global $base_path;
   $needs_update = FALSE;
   $needs_install = FALSE;
@@ -64,19 +65,23 @@ function islandora_solution_pack_form($form, &$form_state,  $solution_pack_modul
 
   // table
   // header
-  $table_header = array('PID', 'Status');
+  $table_header = array(t('Label'), t('PID'), t('Status'));
   $table_rows = array();
 
   // loop over defined objects
   foreach ($objects as $object) {
     $datastreams = NULL;
     if (isset($object['pid'])) {
+      // set variables
       $pid = $object['pid'];
 
       // load object
       $item = islandora_object_load($pid);
 
-      $table_row = array($object['pid']);
+      // table row
+      $table_row = array();
+
+      // check out object status
       $object_status = t('Up-to-date');
       if (!$item) {
         $object_status = t('Missing');
@@ -119,7 +124,19 @@ function islandora_solution_pack_form($form, &$form_state,  $solution_pack_modul
           }
         }
       }
-      array_push($table_row, $object_status);
+      // label (prepend)
+      if ($needs_install) {
+        $label = $object['label'] ? $object['label'] : '';
+      }
+      else {
+        $label = $object['label'] ? l($object['label'], $base_url . '/islandora/object/' . $pid) : '';
+      }
+      $table_row[] = $label;      
+      // pid
+      $table_row[] = $pid;
+      // object status
+      $table_row[] = $object_status;
+      // add row
       $table_rows[] = $table_row;
     }
   }
@@ -212,24 +229,26 @@ function islandora_solution_pack_form_submit($form, &$form_state) {
  * @param type $context
  * @return type
  */
-function islandora_batch_reingest_object($object, &$context) {
+function islandora_batch_reingest_object($object_model, &$context) {
 
   module_load_include('inc', 'islandora', 'includes/utilities');
   module_load_include('inc', 'islandora', 'includes/islandora.ingest');
   // include Tuque library
   module_load_include('inc', 'islandora', 'includes/tuque');
   global $user;
+  global $base_url;
   // new connection
   try {
     $connection = new IslandoraTuque($user);
-  } catch (Exception $e) {
+  }
+  catch (Exception $e) {
     drupal_set_message(t('Unable to connect to the repository %e', array('%e' => $e)), 'error');
     return;
   }
 
-  if (!empty($object) && is_array($object)) {
+  if (!empty($object_model) && is_array($object_model)) {
     // set and validate PID
-    $pid = $object['pid'];
+    $pid = $object_model['pid'];
     if (!islandora_validate_pid($pid)) {
       return NULL;
     }
@@ -237,21 +256,95 @@ function islandora_batch_reingest_object($object, &$context) {
     // purge object
     // check if object already exits
     $object_query = $connection->api->a->findObjects('query', 'pid=' . $pid);
+    $reinstall = FALSE;
     if (!empty($object_query['results'])) {
       islandora_object_purge($pid);
-    }
-    else {
-      drupal_set_message(t('Content models for the basic image module already exist!'), 'warning');
+      $reinstall = TRUE;
     }
 
     // build and ingest new object
-    islandora_ingest_new_object($object);
+    try {
+      $object = islandora_ingest_new_object($object_model);
+      $object_name = $object->label;
+      if ($reinstall) {
+        drupal_set_message(t('Successfully re-installed <em>@object_name</em>.', array('@object_name' => $object_name, '@pid' => $pid)));
+      }
+      else {
+        drupal_set_message(t('Successfully installed <em>@object_name</em>.', array('@object_name' => $object_name, '@pid' => $pid)));
+      }
+    }
+    catch (Exception $e) {
+      drupal_set_message(t('Installation of object @pid failed', array('@pid' => $pid)), 'error');
+    }
   }
 }
 
 
-
-
-
-
-
+/**
+ * Callback function that can be called from the solution pack's hook_install() and hook_uninstall() functions.
+ *
+ * @TODO: add documentation
+ */
+function islandora_install_solution_pack($module_name = NULL, $op = 'install') {
+  if (!empty($module_name)) {
+    module_load_include('inc', 'islandora', 'includes/tuque');
+    module_load_include('module', 'islandora', 'islandora');
+    module_load_include('inc', 'islandora', 'includes/islandora.ingest');
+    module_load_include('module', $module_name, $module_name);
+    global $base_url;
+    global $user;
+  
+    // get module info
+    $info_file = drupal_get_path('module', $module_name) . '/' . $module_name . '.info';
+    $info_array = drupal_parse_info_file($info_file);
+    $module_label = $info_array['name'];
+  
+    // create new connection
+    try {
+      $connection = new IslandoraTuque($user);
+    } catch (Exception $e) {
+      drupal_set_message(st('Unable to connect to the repository %e', array('%e' => $e)), 'error');
+      return;
+    }
+  
+    // get object models
+    $enabled_solution_packs = module_invoke_all('islandora_required_objects');
+    $islandora_required_objects = $module_name . '_islandora_required_objects';
+    $required_objects = $islandora_required_objects();
+    $objects = $required_objects[$module_name]['objects'];
+  
+    // loop over object models
+    foreach ($objects as $object) {
+      // set variables
+      $pid = $object['pid'];
+      $label = isset($object['label']) ? $object['label'] : st('Object');
+      // check if object already exists
+      $query = $connection->api->a->findObjects('query', 'pid=' . $pid);
+  
+      // operation: install or uninstall
+      switch ($op) {
+        case 'install':
+          // if object exists, don't re-ingest
+          if (!empty($query['results'])) {
+            $object_url = url($base_url . '/islandora/object/' . $pid);
+            drupal_set_message(st('@module_label: did not install <a href="!url" title="@pid">@label</a> because the object already exists.', array('@module_label' => $module_label, '@label' => $label, '@pid' => $pid, '!url' => $object_url)), 'warning');
+          }
+          else {
+            // build and ingest new object
+            islandora_ingest_new_object($object);
+            // set message
+            drupal_set_message(st('@module_label: installed <a href="!url" title="@pid">@label</a> object.', array('@module_label' => $module_label, '@label' => $label, '@pid' => $pid)));
+          }
+          break;
+  
+        case 'uninstall':
+          // if object exists, set message
+          if (!empty($query['results'])) {
+            $object_url = url($base_url . '/islandora/object/' . $pid);
+            drupal_set_message(st('@module_label: Did not remove <a href="!object_url" title="@pid">@label</a>. It may be used by other sites.', array('@pid' => $pid, '!object_url' => $object_url, '@label' => $label, '@module_label' => $module_label)), 'warning');
+          }
+          break;
+      }
+    }    
+  }
+}
