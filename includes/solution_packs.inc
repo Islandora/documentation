@@ -5,6 +5,9 @@
  * This file contains all admin and callback functions for solution pack management.
  */
 
+/**
+ * Solution pack admin page callback
+ */
 function islandora_solution_packs_admin() {
   // set variables
   $enabled_solution_packs = module_invoke_all('islandora_required_objects');
@@ -32,7 +35,9 @@ function islandora_solution_packs_admin() {
   return $output;
 }
 
-
+/**
+ * Solution pack admin page
+ */
 function islandora_solution_pack_form($form, &$form_state,  $solution_pack_module, $solution_pack_name, $objects = array()) {
 
   // set variables
@@ -75,63 +80,38 @@ function islandora_solution_pack_form($form, &$form_state,  $solution_pack_modul
       // set variables
       $pid = $object['pid'];
 
-      // load object
-      $item = islandora_object_load($pid);
-
       // table row
       $table_row = array();
 
-      // check out object status
-      $object_status = t('Up-to-date');
-      if (!$item) {
-        $object_status = t('Missing');
-        $needs_install = TRUE;
+      // check object status
+      $object_status = islandora_check_object_status($object);
+      // set status labels
+      switch ($object_status) {
+        case 'up_to_date':
+          $object_status = t('Up-to-date');
+          break;
+        case 'missing':
+          $object_status = t('Missing');
+          $needs_install = TRUE;
+          break;
+        case 'missing_datastream':
+          $object_status = t('Missing datastream');
+          $needs_update = TRUE;
+          break;
+        case 'out_of_date':
+          $object_status = t('Out-of-date');
+          $needs_update = TRUE;
+          break;
       }
-      else {
-        if (isset($object['dsid']) && isset($object['datastream_file']) && isset($object['dsversion'])) {
-          $datastreams = array(
-            array(
-              'dsid' => $object['dsid'],
-              'datastream_file' => $object['datastream_file'],
-              'dsversion' => $object['dsversion'],
-            ),
-          );
-        }
-        elseif (!empty($object['datastreams'])) {
-          $datastreams = $object['datastreams'];
-        }
-        if (!empty($datastreams) && is_array($datastreams)) {
-          foreach ($datastreams as $ds) {
 
-            $ds_id = $ds['dsid'];
-            // check if defined datastream exists in the object
-            if (!$item[$ds_id]) {
-              $needs_update = TRUE;
-              $object_status = t('Missing datastream');
-              break;
-            }
-            elseif (isset($ds['dsversion'])) {
-              // Check if the datastream is versioned and needs updating.
-              $installed_version = islandora_get_islandora_datastream_version($item, $ds['dsid']);
-              $available_version = islandora_get_islandora_datastream_version(NULL, NULL, $ds['datastream_file']);
-
-              if ($available_version > $installed_version) {
-                $needs_update = TRUE;
-                $object_status = t('Out of date');
-                break;
-              }
-            }
-          }
-        }
-      }
-      // label (prepend)
+      // label
       if ($needs_install) {
         $label = $object['label'] ? $object['label'] : '';
       }
       else {
         $label = $object['label'] ? l($object['label'], $base_url . '/islandora/object/' . $pid) : '';
       }
-      $table_row[] = $label;      
+      $table_row[] = $label;
       // pid
       $table_row[] = $pid;
       // object status
@@ -149,6 +129,7 @@ function islandora_solution_pack_form($form, &$form_state,  $solution_pack_modul
       '#suffix' => '</h3>',
     );
 
+    // install status
     $form['solution_pack']['install_status'] = array(
       '#markup' => '<strong>' . t('Object status:') . '&nbsp;</strong>',
       '#prefix' => '<div class="islandora-solution-pack-install-status">',
@@ -156,20 +137,25 @@ function islandora_solution_pack_form($form, &$form_state,  $solution_pack_modul
     );
     if (!$needs_install && !$needs_update) {
       $form['solution_pack']['install_status']['#markup'] .= ' ' . theme('image', array('path' => 'misc/watchdog-ok.png')) . ' ' . t('All required objects are installed and up-to-date.');
-      $submit_button_text = t("Force reinstallation of objects");
+      $submit_button_text = t("Force reinstall objects");
     }
-    else {
-      $form['solution_pack']['install_status']['#markup'] .= ' ' . theme('image', array('path' => 'misc/watchdog-warning.png')) . ' ' . t('Some objects must be re-ingested. See objects list for details.');
+    elseif ($needs_install) {
+      $form['solution_pack']['install_status']['#markup'] .= ' ' . theme('image', array('path' => 'misc/watchdog-warning.png')) . ' ' . t('Some objects are missing and must be installed. See objects list for details.');
       $submit_button_text = t("Install objects");
-
+    }
+    elseif ($needs_update) {
+      $form['solution_pack']['install_status']['#markup'] .= ' ' . theme('image', array('path' => 'misc/watchdog-warning.png')) . ' ' . t('Some objects must be reinstalled. See objects list for details.');
+      $submit_button_text = t("Reinstall objects");
     }
 
+    // table
     $form['solution_pack']['table'] = array(
       '#type' => 'item',
       '#markup' => theme('table', array('header' => $table_header, 'rows' => $table_rows)),
     );
   }
 
+  // submit
   $form['solution_pack']['submit'] = array(
     '#value' => $submit_button_text,
     '#type' => 'submit',
@@ -177,7 +163,7 @@ function islandora_solution_pack_form($form, &$form_state,  $solution_pack_modul
     '#attributes' => array('class' => array('islandora-solution-pack-submit')),
     '#weight' => 40,
   );
-
+  // submit callback
   $form['solution_pack']['#submit'] = array(
     'islandora_solution_pack_form_submit',
   );
@@ -223,7 +209,7 @@ function islandora_solution_pack_form_submit($form, &$form_state) {
 
 
 /**
- * Batch reingest object
+ * Batch reingest object(s)
  *
  * @param type $object
  * @param type $context
@@ -267,7 +253,7 @@ function islandora_batch_reingest_object($object_model, &$context) {
       $object = islandora_ingest_new_object($object_model);
       $object_name = $object->label;
       if ($reinstall) {
-        drupal_set_message(t('Successfully re-installed <em>@object_name</em>.', array('@object_name' => $object_name, '@pid' => $pid)));
+        drupal_set_message(t('Successfully reinstalled <em>@object_name</em>.', array('@object_name' => $object_name, '@pid' => $pid)));
       }
       else {
         drupal_set_message(t('Successfully installed <em>@object_name</em>.', array('@object_name' => $object_name, '@pid' => $pid)));
@@ -293,12 +279,12 @@ function islandora_install_solution_pack($module_name = NULL, $op = 'install') {
     module_load_include('module', $module_name, $module_name);
     global $base_url;
     global $user;
-  
+
     // get module info
     $info_file = drupal_get_path('module', $module_name) . '/' . $module_name . '.info';
     $info_array = drupal_parse_info_file($info_file);
     $module_label = $info_array['name'];
-  
+
     // create new connection
     try {
       $connection = new IslandoraTuque($user);
@@ -306,13 +292,13 @@ function islandora_install_solution_pack($module_name = NULL, $op = 'install') {
       drupal_set_message(st('Unable to connect to the repository %e', array('%e' => $e)), 'error');
       return;
     }
-  
+
     // get object models
     $enabled_solution_packs = module_invoke_all('islandora_required_objects');
     $islandora_required_objects = $module_name . '_islandora_required_objects';
     $required_objects = $islandora_required_objects();
     $objects = $required_objects[$module_name]['objects'];
-  
+
     // loop over object models
     foreach ($objects as $object) {
       // set variables
@@ -320,14 +306,29 @@ function islandora_install_solution_pack($module_name = NULL, $op = 'install') {
       $label = isset($object['label']) ? $object['label'] : st('Object');
       // check if object already exists
       $query = $connection->api->a->findObjects('query', 'pid=' . $pid);
-  
+
       // operation: install or uninstall
       switch ($op) {
         case 'install':
           // if object exists, don't re-ingest
           if (!empty($query['results'])) {
+            // object url
             $object_url = url($base_url . '/islandora/object/' . $pid);
-            drupal_set_message(st('@module_label: did not install <a href="!url" title="@pid">@label</a> because the object already exists.', array('@module_label' => $module_label, '@label' => $label, '@pid' => $pid, '!url' => $object_url)), 'warning');
+            $sp_admin = url($base_url . '/admin/islandora/solution_packs');
+            // check object status
+            $object_status = islandora_check_object_status($object);
+            // set messages
+            switch ($object_status) {
+              case 'up_to_date':
+                drupal_set_message(st('@module_label: did not install <a href="!url" title="@pid">@label</a>. The object already exists and is up-to-date.', array('@module_label' => $module_label, '@label' => $label, '@pid' => $pid, '!url' => $object_url)));
+                break;
+              case 'missing_datastream':
+                drupal_set_message(st('@module_label: did not install <a href="!url" title="@pid">@label</a>. The object already exists but is missing a datastream. Please reinstall the object on the <a href="!sp_admin" title="Solution pack admin page">solution pack admin page</a>.', array('@module_label' => $module_label, '@label' => $label, '@pid' => $pid, '!url' => $object_url, '!sp_admin' => $sp_admin)), 'warning');
+                break;
+              case 'out_of_date':
+                drupal_set_message(st('@module_label: did not install <a href="!url" title="@pid">@label</a>. The object already exists but is out-of-date. Please update the object on the <a href="!sp_admin" title="Solution pack admin page">solution pack admin page</a>.', array('@module_label' => $module_label, '@label' => $label, '@pid' => $pid, '!url' => $object_url, '!sp_admin' => $sp_admin)), 'warning');
+                break;
+            }
           }
           else {
             // build and ingest new object
@@ -336,15 +337,94 @@ function islandora_install_solution_pack($module_name = NULL, $op = 'install') {
             drupal_set_message(st('@module_label: installed <a href="!url" title="@pid">@label</a> object.', array('@module_label' => $module_label, '@label' => $label, '@pid' => $pid)));
           }
           break;
-  
+
         case 'uninstall':
           // if object exists, set message
           if (!empty($query['results'])) {
             $object_url = url($base_url . '/islandora/object/' . $pid);
-            drupal_set_message(st('@module_label: Did not remove <a href="!object_url" title="@pid">@label</a>. It may be used by other sites.', array('@pid' => $pid, '!object_url' => $object_url, '@label' => $label, '@module_label' => $module_label)), 'warning');
+            drupal_set_message(st('@module_label: did not remove <a href="!object_url" title="@pid">@label</a>. It may be used by other sites.', array('@pid' => $pid, '!object_url' => $object_url, '@label' => $label, '@module_label' => $module_label)), 'warning');
           }
           break;
       }
-    }    
+    }
   }
 }
+
+
+/**
+ * Function to check the status of an object against an object model array.
+ *
+ * @param array $object_model
+ *   an array describing an object
+ * @return string
+ *   Returns one of the following values:
+ *   up_to_date, missing, missing_datastream or out_of_date
+ *   You can perform an appropriate action based on this value.
+ *   Returns FALSE if the array is empty
+ *
+ * @see islandora_solution_pack_form()
+ * @see islandora_install_solution_pack()
+ * @TODO: should this function live in islandora.module so it can be called easier without having to include the solution_packs.inc file? 
+ */
+function islandora_check_object_status($object_model = array()) {
+  if (!empty($object_model)) {
+    // set variables
+    $pid = $object_model['pid'];
+    $object_status = 'up_to_date';
+  
+    // table row
+    $table_row = array();
+  
+    // load object
+    $object = islandora_object_load($pid);
+  
+    // check if object exists
+    if (!$object) {
+      $object_status = 'missing';
+    }
+    else {
+      // object defined with single datastream file // @TODO: should dsversion be mandatory for the check to valid?
+      if (isset($object_model['dsid']) && isset($object_model['datastream_file']) && isset($object_model['dsversion'])) {
+        $datastreams = array(
+          array(
+            'dsid' => $object_model['dsid'],
+            'datastream_file' => $object_model['datastream_file'],
+            'dsversion' => $object_model['dsversion'],
+          ),
+        );
+      }
+      // object defined with multiple datastreams (using an array)
+      elseif (!empty($object_model['datastreams'])) {
+        $datastreams = $object_model['datastreams'];
+      }
+      if (!empty($datastreams) && is_array($datastreams)) {
+        // loop over defined datastreams
+        foreach ($datastreams as $ds) {
+          $ds_id = $ds['dsid'];
+          // check if defined datastream exists in the object
+          if (!$object[$ds_id]) {
+            $object_status = 'missing_datastream';
+            break;
+          }
+          elseif (isset($ds['dsversion'])) {
+            // Check if the datastream is versioned and needs updating.
+            $installed_version = islandora_get_islandora_datastream_version($object, $ds['dsid']);
+            $available_version = islandora_get_islandora_datastream_version(NULL, NULL, $ds['datastream_file']);
+  
+            if ($available_version > $installed_version) {
+              $object_status = 'out_of_date';
+              break;
+            }
+          }
+        }
+      }
+    }
+    return $object_status;    
+  }
+  else {
+    return FALSE;
+  }
+}
+
+
+
