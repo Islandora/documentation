@@ -577,7 +577,6 @@ function islandora_islandora_required_objects() {
   
   return array(
     'islandora' => array(
-      'module' => 'islandora',
       'title' => 'Islandora',
       'objects' => array(
         array(
