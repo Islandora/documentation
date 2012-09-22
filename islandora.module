@@ -491,7 +491,7 @@ function islandora_object_purge($object_id) {
     drupal_set_message(t('Cannot remove object, object id not set'));
     return;
   }
-  
+
   // load object
   $object = islandora_object_load($object_id);
 
@@ -574,7 +574,7 @@ function islandora_islandora_required_objects() {
 
   // module path
   $module_path = drupal_get_path('module', 'islandora');
-  
+
   return array(
     'islandora' => array(
       'title' => 'Islandora',
@@ -593,7 +593,7 @@ function islandora_islandora_required_objects() {
             ),
             array(
               'dsid' => 'TN',
-              'label' => 'Thumbnail', 
+              'label' => 'Thumbnail',
               'mimetype' => 'image/png',
               'control_group' => 'M',
               'datastream_file' => "$module_path/images/folder.png",

@@ -15,7 +15,7 @@ function islandora_solution_packs_admin() {
   $info = islandora_describe_repository($url);
   if (!$info) {
     $config_url = url('admin/islandora/configure');
-    drupal_set_message(t('Could not connect to the repository. Please check the settings on the <a href="!config_url" title="Islandora configuration page">Islandora configuration</a> page.', array('!config_url' => $config_url)), 'error');
+    drupal_set_message(t('Could not connect to the repository. Please check the settings on the <a href="@config_url" title="Islandora configuration page">Islandora configuration</a> page.', array('@config_url' => $config_url)), 'error');
   }
 
   // set variables
@@ -295,7 +295,7 @@ function islandora_batch_reingest_object($object_model, &$context) {
 function islandora_install_solution_pack($module_name = NULL, $op = 'install') {
   // check if a module name is given. // @TODO: check module name for existance
   if (!empty($module_name)) {
-  
+
     // include files
     module_load_include('inc', 'islandora', 'includes/tuque');
     module_load_include('module', 'islandora', 'islandora');
@@ -306,7 +306,7 @@ function islandora_install_solution_pack($module_name = NULL, $op = 'install') {
     // set globals
     global $base_url;
     global $user;
-    
+
     // set variables
     $sp_admin = url($base_url . '/admin/islandora/solution_packs');
     $config_url = url('admin/islandora/configure');
@@ -315,7 +315,7 @@ function islandora_install_solution_pack($module_name = NULL, $op = 'install') {
     $info_file = drupal_get_path('module', $module_name) . '/' . $module_name . '.info';
     $info_array = drupal_parse_info_file($info_file);
     $module_label = $info_array['name'];
-  
+
     // check connection
     $url = variable_get('islandora_base_url', 'http://localhost:8080/fedora');
     $info = islandora_describe_repository($url);
@@ -323,11 +323,11 @@ function islandora_install_solution_pack($module_name = NULL, $op = 'install') {
       // operation
       switch ($op) {
         case 'install':
-          drupal_set_message(st('@module_label: Did not install any objects. Could not connect to the repository. Please check the settings on the <a href="!config_url" title="Islandora configuration page">Islandora configuration</a> page and install the required objects manually on the <a href="!sp_url" title="Solution pack admin">solution pack admin</a> page.', array('@module_label' => $module_label, '!config_url' => $config_url, '!sp_url' => $sp_admin)), 'error');
+          drupal_set_message(st('@module_label: Did not install any objects. Could not connect to the repository. Please check the settings on the <a href="@config_url" title="Islandora configuration page">Islandora configuration</a> page and install the required objects manually on the <a href="@sp_url" title="Solution pack admin">solution pack admin</a> page.', array('@module_label' => $module_label, '@config_url' => $config_url, '@sp_url' => $sp_admin)), 'error');
           break;
-  
+
         case 'uninstall':
-          drupal_set_message(st('@module_label: Did not uninstall any objects. Could not connect to the repository. Please check the settings on the <a href="!config_url" title="Islandora configuration page">Islandora configuration</a> page and uninstall the required objects manually if necessary.', array('@module_label' => $module_label, '!config_url' => $config_url, '!sp_url' => $sp_admin)), 'error');
+          drupal_set_message(st('@module_label: Did not uninstall any objects. Could not connect to the repository. Please check the settings on the <a href="@config_url" title="Islandora configuration page">Islandora configuration</a> page and uninstall the required objects manually if necessary.', array('@module_label' => $module_label, '@config_url' => $config_url)), 'error');
           break;
       }
       return;
@@ -355,26 +355,26 @@ function islandora_install_solution_pack($module_name = NULL, $op = 'install') {
       $label = isset($object['label']) ? $object['label'] : st('Object');
       // check if object already exists
       $query = $connection->api->a->findObjects('query', 'pid=' . $pid);
+      // object url
+      $object_url = url($base_url . '/islandora/object/' . $pid);
 
       // operation: install or uninstall
       switch ($op) {
         case 'install':
           // if object exists, don't re-ingest
           if (!empty($query['results'])) {
-            // object url
-            $object_url = url($base_url . '/islandora/object/' . $pid);
             // check object status
             $object_status = islandora_check_object_status($object);
             // set messages
             switch ($object_status) {
               case 'up_to_date':
-                drupal_set_message(st('@module_label: did not install <a href="!url" title="@pid">@label</a>. The object already exists and is up-to-date.', array('@module_label' => $module_label, '@label' => $label, '@pid' => $pid, '!url' => $object_url)));
+                drupal_set_message(st('@module_label: did not install <a href="@object_url" title="@pid">@label</a>. The object already exists and is up-to-date.', array('@module_label' => $module_label, '@label' => $label, '@pid' => $pid, '@object_url' => $object_url)));
                 break;
               case 'missing_datastream':
-                drupal_set_message(st('@module_label: did not install <a href="!url" title="@pid">@label</a>. The object already exists but is missing a datastream. Please reinstall the object on the <a href="!sp_admin" title="Solution pack admin page">solution pack admin page</a>.', array('@module_label' => $module_label, '@label' => $label, '@pid' => $pid, '!url' => $object_url, '!sp_admin' => $sp_admin)), 'warning');
+                drupal_set_message(st('@module_label: did not install <a href="@object_url" title="@pid">@label</a>. The object already exists but is missing a datastream. Please reinstall the object on the <a href="@sp_admin" title="Solution pack admin page">solution pack admin page</a>.', array('@module_label' => $module_label, '@label' => $label, '@pid' => $pid, '@objecturl' => $object_url, '@sp_admin' => $sp_admin)), 'warning');
                 break;
               case 'out_of_date':
-                drupal_set_message(st('@module_label: did not install <a href="!url" title="@pid">@label</a>. The object already exists but is out-of-date. Please update the object on the <a href="!sp_admin" title="Solution pack admin page">solution pack admin page</a>.', array('@module_label' => $module_label, '@label' => $label, '@pid' => $pid, '!url' => $object_url, '!sp_admin' => $sp_admin)), 'warning');
+                drupal_set_message(st('@module_label: did not install <a href="@object_url" title="@pid">@label</a>. The object already exists but is out-of-date. Please update the object on the <a href="@sp_admin" title="Solution pack admin page">solution pack admin page</a>.', array('@module_label' => $module_label, '@label' => $label, '@pid' => $pid, '@object_url' => $object_url, '@sp_admin' => $sp_admin)), 'warning');
                 break;
             }
           }
@@ -382,7 +382,7 @@ function islandora_install_solution_pack($module_name = NULL, $op = 'install') {
             // build and ingest new object
             islandora_ingest_new_object($object);
             // set message
-            drupal_set_message(st('@module_label: installed <a href="!url" title="@pid">@label</a> object.', array('@module_label' => $module_label, '@label' => $label, '@pid' => $pid)));
+            drupal_set_message(st('@module_label: installed <a href="@object_url" title="@pid">@label</a> object.', array('@module_label' => $module_label, '@label' => $label, '@pid' => $pid, '@object_url' => $object_url)));
           }
           break;
 
@@ -390,7 +390,7 @@ function islandora_install_solution_pack($module_name = NULL, $op = 'install') {
           // if object exists, set message
           if (!empty($query['results'])) {
             $object_url = url($base_url . '/islandora/object/' . $pid);
-            drupal_set_message(st('@module_label: did not remove <a href="!object_url" title="@pid">@label</a>. It may be used by other sites.', array('@pid' => $pid, '!object_url' => $object_url, '@label' => $label, '@module_label' => $module_label)), 'warning');
+            drupal_set_message(st('@module_label: did not remove <a href="@object_url" title="@pid">@label</a>. It may be used by other sites.', array('@pid' => $pid, '@object_url' => $object_url, '@label' => $label, '@module_label' => $module_label)), 'warning');
           }
           break;
       }
@@ -466,7 +466,7 @@ function islandora_check_object_status($object_model = array()) {
               // Check if the datastream is versioned and needs updating.
               $installed_version = islandora_get_islandora_datastream_version($object, $ds['dsid']);
               $available_version = islandora_get_islandora_datastream_version(NULL, NULL, $ds['datastream_file']);
-  
+
               if ($available_version > $installed_version) {
                 $object_status = 'out_of_date';
                 break;
