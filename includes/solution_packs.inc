@@ -9,6 +9,15 @@
  * Solution pack admin page callback
  */
 function islandora_solution_packs_admin() {
+  // check connection
+  module_load_include('inc', 'islandora', 'includes/utilities');
+  $url = variable_get('islandora_base_url', 'http://localhost:8080/fedora');
+  $info = islandora_describe_repository($url);
+  if (!$info) {
+    $config_url = url('admin/islandora/configure');
+    drupal_set_message(t('Could not connect to the repository. Please check the settings on the <a href="!config_url" title="Islandora configuration page">Islandora configuration</a> page.', array('!config_url' => $config_url)), 'error');
+  }
+
   // set variables
   $enabled_solution_packs = module_invoke_all('islandora_required_objects');
 
@@ -45,6 +54,7 @@ function islandora_solution_pack_form($form, &$form_state,  $solution_pack_modul
   global $base_path;
   $needs_update = FALSE;
   $needs_install = FALSE;
+  $could_not_connect = FALSE;
   $form = array();
 
   $form['solution_pack'] = array(
@@ -85,6 +95,7 @@ function islandora_solution_pack_form($form, &$form_state,  $solution_pack_modul
 
       // check object status
       $object_status = islandora_check_object_status($object);
+
       // set status labels
       switch ($object_status) {
         case 'up_to_date':
@@ -102,10 +113,14 @@ function islandora_solution_pack_form($form, &$form_state,  $solution_pack_modul
           $object_status = t('Out-of-date');
           $needs_update = TRUE;
           break;
+        case 'could_not_connect':
+          $object_status = t('Could not connect');
+          $could_not_connect = TRUE;
+          break;
       }
 
       // label
-      if ($needs_install) {
+      if ($needs_install OR $could_not_connect) {
         $label = $object['label'] ? $object['label'] : '';
       }
       else {
@@ -135,7 +150,7 @@ function islandora_solution_pack_form($form, &$form_state,  $solution_pack_modul
       '#prefix' => '<div class="islandora-solution-pack-install-status">',
       '#suffix' => '</div>',
     );
-    if (!$needs_install && !$needs_update) {
+    if (!$needs_install AND !$needs_update AND !$could_not_connect) {
       $form['solution_pack']['install_status']['#markup'] .= ' ' . theme('image', array('path' => 'misc/watchdog-ok.png')) . ' ' . t('All required objects are installed and up-to-date.');
       $submit_button_text = t("Force reinstall objects");
     }
@@ -147,6 +162,10 @@ function islandora_solution_pack_form($form, &$form_state,  $solution_pack_modul
       $form['solution_pack']['install_status']['#markup'] .= ' ' . theme('image', array('path' => 'misc/watchdog-warning.png')) . ' ' . t('Some objects must be reinstalled. See objects list for details.');
       $submit_button_text = t("Reinstall objects");
     }
+    elseif ($could_not_connect) {
+      $form['solution_pack']['install_status']['#markup'] .= ' ' . theme('image', array('path' => 'misc/watchdog-error.png')) . ' ' . t('Could not connect to the repository.');
+      $submit_button_text = '';
+    }
 
     // table
     $form['solution_pack']['table'] = array(
@@ -156,17 +175,19 @@ function islandora_solution_pack_form($form, &$form_state,  $solution_pack_modul
   }
 
   // submit
-  $form['solution_pack']['submit'] = array(
-    '#value' => $submit_button_text,
-    '#type' => 'submit',
-    '#name' => $solution_pack_module,
-    '#attributes' => array('class' => array('islandora-solution-pack-submit')),
-    '#weight' => 40,
-  );
-  // submit callback
-  $form['solution_pack']['#submit'] = array(
-    'islandora_solution_pack_form_submit',
-  );
+  if (!$could_not_connect) {
+    $form['solution_pack']['submit'] = array(
+      '#value' => $submit_button_text,
+      '#type' => 'submit',
+      '#name' => $solution_pack_module,
+      '#attributes' => array('class' => array('islandora-solution-pack-submit')),
+      '#weight' => 40,
+    );
+    // submit callback
+    $form['solution_pack']['#submit'] = array(
+      'islandora_solution_pack_form_submit',
+    );
+  }
 
   return $form;
 }
@@ -272,23 +293,51 @@ function islandora_batch_reingest_object($object_model, &$context) {
  * @TODO: add documentation
  */
 function islandora_install_solution_pack($module_name = NULL, $op = 'install') {
+  // check if a module name is given. // @TODO: check module name for existance
   if (!empty($module_name)) {
+  
+    // include files
     module_load_include('inc', 'islandora', 'includes/tuque');
     module_load_include('module', 'islandora', 'islandora');
     module_load_include('inc', 'islandora', 'includes/islandora.ingest');
+    module_load_include('inc', 'islandora', 'includes/utilities');
     module_load_include('module', $module_name, $module_name);
+
+    // set globals
     global $base_url;
     global $user;
+    
+    // set variables
+    $sp_admin = url($base_url . '/admin/islandora/solution_packs');
+    $config_url = url('admin/islandora/configure');
 
     // get module info
     $info_file = drupal_get_path('module', $module_name) . '/' . $module_name . '.info';
     $info_array = drupal_parse_info_file($info_file);
     $module_label = $info_array['name'];
+  
+    // check connection
+    $url = variable_get('islandora_base_url', 'http://localhost:8080/fedora');
+    $info = islandora_describe_repository($url);
+    if (!$info) {
+      // operation
+      switch ($op) {
+        case 'install':
+          drupal_set_message(st('@module_label: Did not install any objects. Could not connect to the repository. Please check the settings on the <a href="!config_url" title="Islandora configuration page">Islandora configuration</a> page and install the required objects manually on the <a href="!sp_url" title="Solution pack admin">solution pack admin</a> page.', array('@module_label' => $module_label, '!config_url' => $config_url, '!sp_url' => $sp_admin)), 'error');
+          break;
+  
+        case 'uninstall':
+          drupal_set_message(st('@module_label: Did not uninstall any objects. Could not connect to the repository. Please check the settings on the <a href="!config_url" title="Islandora configuration page">Islandora configuration</a> page and uninstall the required objects manually if necessary.', array('@module_label' => $module_label, '!config_url' => $config_url, '!sp_url' => $sp_admin)), 'error');
+          break;
+      }
+      return;
+    }
 
     // create new connection
     try {
       $connection = new IslandoraTuque($user);
-    } catch (Exception $e) {
+    }
+    catch (Exception $e) {
       drupal_set_message(st('Unable to connect to the repository %e', array('%e' => $e)), 'error');
       return;
     }
@@ -314,7 +363,6 @@ function islandora_install_solution_pack($module_name = NULL, $op = 'install') {
           if (!empty($query['results'])) {
             // object url
             $object_url = url($base_url . '/islandora/object/' . $pid);
-            $sp_admin = url($base_url . '/admin/islandora/solution_packs');
             // check object status
             $object_status = islandora_check_object_status($object);
             // set messages
@@ -364,62 +412,71 @@ function islandora_install_solution_pack($module_name = NULL, $op = 'install') {
  *
  * @see islandora_solution_pack_form()
  * @see islandora_install_solution_pack()
- * @TODO: should this function live in islandora.module so it can be called easier without having to include the solution_packs.inc file? 
+ * @TODO: should this function live in islandora.module so it can be called easier without having to include the solution_packs.inc file?
  */
 function islandora_check_object_status($object_model = array()) {
   if (!empty($object_model)) {
     // set variables
     $pid = $object_model['pid'];
     $object_status = 'up_to_date';
-  
+
     // table row
     $table_row = array();
-  
-    // load object
-    $object = islandora_object_load($pid);
-  
-    // check if object exists
-    if (!$object) {
-      $object_status = 'missing';
+
+    // check connection
+    module_load_include('inc', 'islandora', 'includes/utilities');
+    $url = variable_get('islandora_base_url', 'http://localhost:8080/fedora');
+    $info = islandora_describe_repository($url);
+    if (!$info) {
+      $object_status = 'could_not_connect';
     }
     else {
-      // object defined with single datastream file // @TODO: should dsversion be mandatory for the check to valid?
-      if (isset($object_model['dsid']) && isset($object_model['datastream_file']) && isset($object_model['dsversion'])) {
-        $datastreams = array(
-          array(
-            'dsid' => $object_model['dsid'],
-            'datastream_file' => $object_model['datastream_file'],
-            'dsversion' => $object_model['dsversion'],
-          ),
-        );
+
+      // load object
+      $object = islandora_object_load($pid);
+      // check if object exists
+      if (!$object) {
+        $object_status = 'missing';
       }
-      // object defined with multiple datastreams (using an array)
-      elseif (!empty($object_model['datastreams'])) {
-        $datastreams = $object_model['datastreams'];
-      }
-      if (!empty($datastreams) && is_array($datastreams)) {
-        // loop over defined datastreams
-        foreach ($datastreams as $ds) {
-          $ds_id = $ds['dsid'];
-          // check if defined datastream exists in the object
-          if (!$object[$ds_id]) {
-            $object_status = 'missing_datastream';
-            break;
-          }
-          elseif (isset($ds['dsversion'])) {
-            // Check if the datastream is versioned and needs updating.
-            $installed_version = islandora_get_islandora_datastream_version($object, $ds['dsid']);
-            $available_version = islandora_get_islandora_datastream_version(NULL, NULL, $ds['datastream_file']);
-  
-            if ($available_version > $installed_version) {
-              $object_status = 'out_of_date';
+      else {
+        // object defined with single datastream file // @TODO: should dsversion be mandatory for the check to valid?
+        if (isset($object_model['dsid']) && isset($object_model['datastream_file']) && isset($object_model['dsversion'])) {
+          $datastreams = array(
+            array(
+              'dsid' => $object_model['dsid'],
+              'datastream_file' => $object_model['datastream_file'],
+              'dsversion' => $object_model['dsversion'],
+            ),
+          );
+        }
+        // object defined with multiple datastreams (using an array)
+        elseif (!empty($object_model['datastreams'])) {
+          $datastreams = $object_model['datastreams'];
+        }
+        if (!empty($datastreams) && is_array($datastreams)) {
+          // loop over defined datastreams
+          foreach ($datastreams as $ds) {
+            $ds_id = $ds['dsid'];
+            // check if defined datastream exists in the object
+            if (!$object[$ds_id]) {
+              $object_status = 'missing_datastream';
               break;
+            }
+            elseif (isset($ds['dsversion'])) {
+              // Check if the datastream is versioned and needs updating.
+              $installed_version = islandora_get_islandora_datastream_version($object, $ds['dsid']);
+              $available_version = islandora_get_islandora_datastream_version(NULL, NULL, $ds['datastream_file']);
+  
+              if ($available_version > $installed_version) {
+                $object_status = 'out_of_date';
+                break;
+              }
             }
           }
         }
       }
     }
-    return $object_status;    
+    return $object_status;
   }
   else {
     return FALSE;

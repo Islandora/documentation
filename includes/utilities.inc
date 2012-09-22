@@ -94,7 +94,7 @@ function islandora_validate_dsid($dsid) {
  *   or if the url is incorrect.
  */
 function islandora_describe_repository($url) {
-
+  module_load_include('inc', 'islandora', 'includes/tuque');
   $connection = new IslandoraTuque(NULL, $url);
   try {
     $info = $connection->api->a->describeRepository();
