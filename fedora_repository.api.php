@@ -89,3 +89,19 @@ function hook_required_fedora_objects() {
     ),
   );
 }
+
+/**
+ * Override ingest permissions.
+ * (from islandora_workflow)
+ *
+ * @param string $collection_pid
+ *   The PID of the collection
+ * @return boolean
+ *   TRUE if the user can ingest into the specified collection, FALSE otherwise.
+ */
+function islandora_can_ingest($collection_pid) {
+
+  module_load_include('inc', 'islandora_workflow', 'islandora_workflow.permissions');
+  return (islandora_workflow_user_collection_permission_check($collection_pid) !== FALSE);
+
+}
