@@ -501,7 +501,7 @@ class formClass {
    */
   function canShowIngestForm($collection_pid) {
     if (!user_access('ingest new fedora objects')) {
-      $ingest_override_array = module_invoke_all('can_ingest', $collection_pid);
+      $ingest_override_array = module_invoke_all('fedora_repository_can_ingest', $collection_pid);
       $overrides = array_filter($ingest_override_array);
       if (empty($overrides)) {
         drupal_set_message(t('You do not have permission to ingest.'), 'error');
