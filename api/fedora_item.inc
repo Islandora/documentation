@@ -84,6 +84,7 @@ class Fedora_Item {
       else {
         $this->objectProfile = '';
         $this->datastreams = array();
+        $this->ownerId = NULL;
       }
       Fedora_Item::$instantiated_pids[$pid] = &$this;
     }
