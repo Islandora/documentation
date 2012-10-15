@@ -24,6 +24,8 @@ class Fedora_Item {
   // The $pid of the fedora object represented by an instance of this class.
   public $pid = NULL;
   public $objectProfile = NULL;
+  public $ownerId = NULL;
+
   // A SimpleXML object to store a list of this item's datastreams.
   private $datastreams_list = NULL;
   public $datastreams = NULL;
@@ -65,6 +67,7 @@ class Fedora_Item {
       $this->objectProfile = & Fedora_Item::$instantiated_pids[$pid]->objectProfile;
       $this->datastreams = & Fedora_Item::$instantiated_pids[$pid]->datastreams;
       $this->datastreams_list = & Fedora_Item::$instantiated_pids[$pid]->datastreams_list;
+      $this->ownerId = & Fedora_Item::$instantiated_pids[$pid]->ownerId;
     }
     else {
       if (empty(self::$connection_helper)) {
@@ -76,6 +79,7 @@ class Fedora_Item {
       if (!empty($raw_objprofile)) {
         $this->objectProfile = $raw_objprofile->objectProfile;
         $this->datastreams = $this->get_datastreams_list_as_array();
+        $this->ownerId = & Fedora_Item::getOwnerId($pid);
       }
       else {
         $this->objectProfile = '';
@@ -1166,7 +1170,7 @@ RDF;
        // Default to the current owner if none is provided..
       'ownerId' => (($ownerId !== NULL) ?
           $ownerId :
-          $this->objectProfile->objOwnerId),
+          $this->ownerId),
       'state' => $state,
       'label' => $label,
       'logMessage' => $logMessage,
@@ -1536,5 +1540,28 @@ RDF;
   static function fedora_item_exists($pid) {
     $item = new Fedora_Item($pid);
     return $item->exists();
+  }
+
+  /**
+   * This function will retrieve the ownerId
+   * object property from Fedora using the SOAP API.
+   *
+   * @param string $PID
+   *   The Fedora PID to retrieve the
+   */
+  static function getOwnerId($PID) {
+
+    $params = array(
+      'query' => array(array('property' => 'pid', 'operator' => 'eq', 'value' => $object_id)),
+      'resultFields' => array('pid', 'ownerId'),
+      'maxResults' => 1,
+    );
+    $response = Fedora_Item::soap_call('findObjects', $params);
+
+    if (!$response) {
+      return FALSE;
+    }
+    return $response->result->resultList->objectFields->ownerId;
+
   }
 }
