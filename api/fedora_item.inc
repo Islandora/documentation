@@ -1468,7 +1468,7 @@ RDF;
    * @param type $label
    * @param string $owner
    *   Used to set an object's ownerId attribute.  Defaults to current user's
-   *   name.
+   *   name. If we are not a Drupal user(ie. Drush) defaults to ''.
    *
    * @return DOMDocument
    */
@@ -1485,9 +1485,9 @@ RDF;
       if (!empty($user->name)) {
         $owner = $user->name;
       }
-      // We are not inside Drupal.
-      else {
-        $owner = 'fedoraAdmin';
+      // We are annonamous user.
+      elseif ($user->uid == 0) {
+        $owner = 'anonymous';
       }
     }
 
