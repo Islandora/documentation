@@ -810,6 +810,7 @@ class ObjectHelper {
    * Get a tree of related pids - for the basket functionality
    *
    * FIXME:  This doesn't actually get a tree...
+   * XXX: Is this still required, without basket being in?
    *
    * @param type $pid
    * @return type 
