@@ -9,7 +9,7 @@
 <xsl:template match="/">
 
 <div><table cellspacing="3" cellpadding="3"><tbody>
-<tr><th colspan="3"><h3>DC Metadata</h3></th></tr>
+<tr><th colspan="3"><h3 class="islandora-obj-details-metadata-title">Metadata (DC)</h3></th></tr>
 <xsl:for-each select="/*/*">
 	<xsl:variable name="FULLFIELD" select="name()"/>
 	<xsl:variable name="FIELD" select="local-name()"/>
