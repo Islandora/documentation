@@ -150,7 +150,7 @@ function fedora_repository_object_details_table($item) {
 
   $headers = array(
     array(
-      'data' => t('Metadata'),
+      'data' => t('@dsid Metadata', array('@dsid' => $dsid)),
       'colspan' => 2,
     ),
   );
