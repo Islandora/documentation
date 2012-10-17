@@ -139,7 +139,8 @@ function fedora_repository_object_details_table($item) {
   $xmlstr = $item->get_datastream_dissemination($dsid);
   
   if (empty($xmlstr) && variable_get('islandora_object_details_table_default_dc', FALSE) && $dsid != 'DC' && $dsid != 'QDC') {
-    $xmlstr = $item->get_datastream_dissemination('DC');
+    $dsid = 'DC';
+    $xmlstr = $item->get_datastream_dissemination($dsid);
   }
   if (empty($xmlstr)) {
     return t('Error - could not find datastream @dsid on object @pid<br/>Please contact the site administrator.',
@@ -150,7 +151,7 @@ function fedora_repository_object_details_table($item) {
 
   $headers = array(
     array(
-      'data' => t('@dsid Metadata', array('@dsid' => $dsid)),
+      'data' => t('Metadata (@dsid)', array('@dsid' => $dsid)),
       'colspan' => 2,
     ),
   );
