@@ -137,7 +137,10 @@ function fedora_repository_object_details_table($item) {
     $dsid = array_key_exists('QDC', $item->get_datastreams_list_as_array()) ? 'QDC' : 'DC';
   }
   $xmlstr = $item->get_datastream_dissemination($dsid);
-
+  
+  if (empty($xmlstr) && variable_get('islandora_object_details_table_default_dc', FALSE) && $dsid != 'DC' && $dsid != 'QDC') {
+    $xmlstr = $item->get_datastream_dissemination('DC');
+  }
   if (empty($xmlstr)) {
     return t('Error - could not find datastream @dsid on object @pid<br/>Please contact the site administrator.',
     array('@dsid' => $dsid, '@pid' => $item->pid));
@@ -270,6 +273,11 @@ function fedora_repository_object_details_table_config() {
     '#default_value' => variable_get('islandora_object_details_table_datastream', 'DC'),
     '#required' => TRUE,
   );
+  $form['config']['default_dc'] = array(
+    '#type' => 'checkbox',
+    '#title' => t("If the datastream to transform is unavailable, attempt to transform using the DC datastream"),
+    '#default_value' => variable_get('islandora_object_details_table_default_dc', FALSE),
+  );
   $form['submit'] = array(
     '#type' => 'submit',
     '#value' => t("Submit"),
@@ -289,5 +297,6 @@ function fedora_repository_object_details_table_config() {
 function fedora_repository_object_details_table_config_submit($form, &$form_state) {
   variable_set('islandora_object_details_display_table', 'table');
   variable_set('islandora_object_details_table_datastream', $form_state['values']['dsid']);
+  variable_set('islandora_object_details_table_default_dc', $form_state['values']['default_dc']);
   drupal_set_message('Object Details view has been set to Table and your configuration has been saved');
 }
