@@ -257,3 +257,27 @@ function solution_pack_add_form_association($content_model, $form_name) {
     drupal_set_message(t("Added association between @cm and @name", array("@cm" => $content_model, "@name" => $form_name)));
   }
 }
+
+
+module_load_include('inc', 'fedora_repository', 'fedora_repository.test');
+
+/**
+ * Class containing tests that are common to all solution packs.
+ */
+abstract class SolutionPackTestCase extends IslandoraTestCase {
+ 
+  /**
+   * Tests the fedora_repository_required_fedora_objects hook.
+   */
+  public function testFedoraRepositoryRequiredFedoraObjects() {
+    $results = module_invoke($this->getModuleShortFormName(), 'fedora_repository_required_fedora_objects');
+
+    $this->assertNotNull($results, 'A non-null result was returned from the fedora_repository_required_fedora_objects hook.');
+    $this->assertTrue(is_array($results), 'An array was returned from the fedora_repository_required_fedora_objects hook.');
+    $this->assertTrue(array_key_exists($this->getModuleShortFormName(), $results), "Returned array has top level key that is equal to the module's short form name");
+    $this->assertTrue(is_array($results[$this->getModuleShortFormName()]), "Value associated with top level key that is eqal to the module's short form name is an array");
+    $this->assertTrue(array_key_exists('module', $results[$this->getModuleShortFormName()]), "Top level array has 'module' key");
+    $this->assertEqual($results[$this->getModuleShortFormName()]['module'], $this->getModuleShortFormName(), "Value associated with 'module' key is equal to the module's short form name");
+
+  }
+}
