@@ -4,8 +4,7 @@
  * @file
  * Generic test case to be extended to implement Islandora testing.
  */
-abstract class IslandoraTestCase extends DrupalWebTestCase
-{
+abstract class IslandoraTestCase extends DrupalWebTestCase {
 
   /**
    * User with the rights required to perform the test
