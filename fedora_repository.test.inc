@@ -3,6 +3,16 @@
 /**
  * @file
  * Generic test case to be extended to implement Islandora testing.
+ *
+ * In order to use this properly, you must place a test user in
+ * your Fedora installation.  Please add the follwing snippet to your
+ * $FEDORA_HOME/server/config/fedora-users.xml:
+ *
+ *    <user name="simpletestuser" password="41fe63c9636c6649f0a4747400f0f95e">
+ *      <attribute name="fedoraRole">
+ *        <value>administrator</value>
+ *      </attribute>
+ *    </user>
  */
 abstract class IslandoraTestCase extends DrupalWebTestCase {
 
