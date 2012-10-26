@@ -1553,7 +1553,7 @@ RDF;
   static function getOwnerId($PID) {
 
     $params = array(
-      'query' => array(array('property' => 'pid', 'operator' => 'eq', 'value' => $object_id)),
+      'query' => array(array('property' => 'pid', 'operator' => 'eq', 'value' => $PID)),
       'resultFields' => array('pid', 'ownerId'),
       'maxResults' => 1,
     );
