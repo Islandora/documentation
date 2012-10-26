@@ -54,13 +54,9 @@ function fedora_repository_help($path, $arg) {
  *
  * @return type
  */
-function fedora_repository_purge_object($pid = NULL, $name = NULL) {
-  if (!user_access('purge objects and datastreams')) {
+function fedora_repository_purge_object($pid, $name = NULL) {
+  if (!fedora_repository_check_perm('purge objects and datastreams', $pid)) {
     drupal_set_message(t('You do not have access to add a datastream to this object.'), 'error');
-    return '';
-  }
-  if ($pid == NULL) {
-    drupal_set_message(t('You must specify an object pid to purge an object.'), 'error');
     return '';
   }
   $output = t('Are you sure you wish to purge object %name %pid!<br /><b>This cannot be undone</b><br />', array(
@@ -75,16 +71,18 @@ function fedora_repository_purge_object($pid = NULL, $name = NULL) {
 /**
  * fedora repository ingest object
  *
+ * XXX:  Is this even used?
+ *
  * @param type $collection_pid
  * @param type $collection_label
  * @param type $content_model
  *
  * @return type
  */
-function fedora_repository_ingest_object($collection_pid=NULL, $collection_label = NULL, $content_model = NULL) {
+function fedora_repository_ingest_object($collection_pid, $collection_label = NULL, $content_model = NULL) {
   module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
   module_load_include('inc', 'fedora_repository', 'ObjectHelper');
-  if (!user_access('ingest new fedora objects')) {
+  if (!fedora_repository_check_perm('ingest new fedora objects', $collection_pid)) {
     drupal_set_message(t('You do not have permission to ingest.'), 'error');
     return '';
   }
@@ -122,11 +120,12 @@ function fedora_repository_ingest_object($collection_pid=NULL, $collection_label
  * @param array $form_state
  */
 function fedora_repository_ingest_form_submit(array $form, array &$form_state) {
-  // Only validate the form if the submit button was pressed (other buttons may be used for AHAH.
-  if ($form_state['ahah_submission']) {
+  // Only validate if the submit button was pressed, AHAH may use other buttons.
+  if (array_key_exists('ahah_submission', $form_state) && $form_state['ahah_submission']) {
     $form_state['submitted'] = FALSE;
     return;
   }
+
 
   if ($form_state['storage']['xml'] && module_exists('islandora_content_model_forms')) {
     module_load_include('inc', 'islandora_content_model_forms', 'IngestObjectMetadataForm');
@@ -182,12 +181,13 @@ function fedora_repository_ingest_form_submit(array $form, array &$form_state) {
  * @return type
  */
 function fedora_repository_ingest_form_validate($form, &$form_state) {
-  // Only validate the form if the submit button was pressed (other buttons may be used for AHAH.
-  if ($form_state['ahah_submission']) {
+  // Only validate if the submit button was pressed, AHAH may use other buttons.
+  $is_ahah_submission = (array_key_exists('ahah_submission', $form_state) && $form_state['ahah_submission']);
+  if ($is_ahah_submission) {
     $form_state['submitted'] = FALSE;
     return;
   }
-  if (strpos($form_state['clicked_button']['#id'], 'edit-submit') === 0 && $form_state['ahah_submission'] != 1) {
+  if (strpos($form_state['clicked_button']['#id'], 'edit-submit') === 0 && !$is_ahah_submission) {
     switch ($form_state['storage']['step']) {
       case 1:
         $form_state['storage']['step']++;
@@ -205,18 +205,18 @@ function fedora_repository_ingest_form_validate($form, &$form_state) {
         $validators = array();
 
         $ifl = 'ingest-file-location';
-        $fileObject = NULL;
+        $file_object = NULL;
         // Check if it's already there; this is what upload_element provides.
         if (is_a($form_state['values'][$ifl], 'stdClass') && property_exists($form_state['values'][$ifl], '')) {
-          $fileObject = $form_state['values'][$ifl];
+          $file_object = $form_state['values'][$ifl];
         }
         elseif (!empty($_FILES['files']['name'][$ifl])) {
-          $fileObject = file_save_upload($ifl, $validators);
+          $file_object = file_save_upload($ifl, $validators);
         }
 
-        if ($fileObject !== NULL && property_exists($fileObject, 'filepath')) {
-          file_move($fileObject->filepath, 0, 'FILE_EXISTS_RENAME');
-          $form_state['values'][$ifl] = $fileObject->filepath;
+        if ($file_object !== NULL && property_exists($file_object, 'filepath')) {
+          file_move($file_object->filepath, 0, 'FILE_EXISTS_RENAME');
+          $form_state['values'][$ifl] = $file_object->filepath;
         }
 
         if (isset($form_state['values'][$ifl]) && file_exists($form_state['values'][$ifl])) {
@@ -237,7 +237,7 @@ function fedora_repository_ingest_form_validate($form, &$form_state) {
             if (!empty($file)) {
               if (!in_array($dformat, $allowedMimeTypes)) {
                 form_set_error($ifl,
-                    t('The uploaded file\'s mimetype (@mime) is not associated with this Content Model. The allowed types are: @allowed', array(
+                    t("The uploaded file's mimetype (@mime) is not associated with this Content Model. The allowed types are: @allowed", array(
                       '@mime' => $dformat,
                       '@allowed' => implode(', ', $allowedMimeTypes),
                     )));
@@ -271,7 +271,8 @@ function fedora_repository_ingest_form_validate($form, &$form_state) {
  */
 function fedora_repository_ingest_form(&$form_state, $collection_pid, $collection_label = NULL, $content_model = NULL) {
   module_load_include('inc', 'fedora_repository', 'formClass');
-  // For the sake of easily maintaining the module in different core versions create our own form_values variable.
+  // For the sake of easily maintaining the module in different core versions
+  // create our own form_values variable.
   if (empty($form_state['storage']['step'])) {
     $form_state['storage']['step'] = 1;
   }
@@ -296,10 +297,7 @@ function fedora_repository_ingest_form(&$form_state, $collection_pid, $collectio
  */
 function fedora_repository_purge_object_form(&$form_state, $pid, $referrer = NULL) {
   global $base_url;
-  if (!user_access('purge objects and datastreams')) {
-    return NULL;
-  }
-  if ($pid == NULL) {
+  if (!fedora_repository_check_perm('purge objects and datastreams', $pid)) {
     return NULL;
   }
   $form['pid'] = array(
@@ -339,23 +337,19 @@ function fedora_repository_purge_object_form(&$form_state, $pid, $referrer = NUL
 /**
  * add stream
  *
- * @param type $collection_pid
+ * @param type $pid
  * @param type $collectionName
  *
  * @return type
  */
-function add_stream($collection_pid=NULL, $collectionName=NULL) {
+function add_stream($pid, $collectionName=NULL) {
   module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
   if (!valid_pid($collection_pid)) {
     drupal_set_message(t("This PID is not valid!"), 'error');
     return ' ';
   }
-  if (!user_access('ingest new fedora objects')) {
+  if (!fedora_repository_check_perm('add fedora datastreams', $pid)) {
     drupal_set_message(t('You do not have permission to ingest.'), 'error');
-    return '';
-  }
-  if ($collection_pid == NULL) {
-    drupal_set_message(t('You must specify an collection object pid to ingest an object.'), 'error');
     return '';
   }
   $output .= drupal_get_form('fedora_repository_add_stream_form', $pid);
@@ -385,7 +379,8 @@ function add_stream_form_submit($form, &$form_state) {
 
   $pid = $form_state['values']['pid'];
   $dsid = $form_state['values']['stream_id'];
-  $dsLabel = $form_state['values']['stream_label'] . substr($form_state['storage']['stream_url'], strrpos($form_state['storage']['stream_url'], '.')); // Add the file extention to the end of the label.;
+  // Add the file extention to the end of the label.
+  $dsLabel = $form_state['values']['stream_label'] . substr($form_state['storage']['stream_url'], strrpos($form_state['storage']['stream_url'], '.'));
 
   try {
     $item = new Fedora_Item($pid);
@@ -401,7 +396,8 @@ function add_stream_form_submit($form, &$form_state) {
     drupal_set_message(t('@message', array('@message' => check_plain($e->getMessage()))), 'error');
     return;
   }
-  unset($form_state['storage']); //Using storage; need to unset it for forms to work properly...
+  // Using storage; need to unset it for forms to work properly...
+  unset($form_state['storage']);
   $form_state['rebuild'] = TRUE;
 }
 
@@ -506,7 +502,7 @@ function fedora_repository_purge_stream($pid = NULL, $dsId = NULL, $name = NULL)
     drupal_set_message(t('You must specify an object pid and DataStream ID to purge a datastream'), 'error');
     return ' ';
   }
-  if (!fedora_repository_access(OBJECTHELPER :: $PURGE_FEDORA_OBJECTSANDSTREAMS, $pid, $user)) {
+  if (!fedora_repository_check_perm(OBJECTHELPER :: $PURGE_FEDORA_OBJECTSANDSTREAMS, $pid, $user)) {
     drupal_set_message(t("You do not have access to Fedora objects within the attempted namespace or you do not have permission to purge objects."), 'error');
     return ' ';
   }
@@ -658,7 +654,7 @@ function fedora_repository_download_datastream_form(&$form_state, $pid, $dsid, $
     ),
   );
 
-  if (user_access(ObjectHelper::$EDIT_FEDORA_METADATA)) {
+  if (fedora_repository_check_perm(ObjectHelper::$EDIT_FEDORA_METADATA, $pid)) {
     $item = new Fedora_Item($pid);
     $versions = $item->get_datastream_history($dsid);
     $version_array = array();
@@ -809,7 +805,7 @@ function fedora_repository_edit_qdc_page($pid = NULL, $dsId = NULL) {
     drupal_set_message(t('You must specify an object pid and a Dublin Core DataStream ID to edit metadata'), 'error');
     return ' ';
   }
-  if (!fedora_repository_access(OBJECTHELPER :: $EDIT_FEDORA_METADATA, $pid, $user)) {
+  if (!fedora_repository_check_perm(OBJECTHELPER :: $EDIT_FEDORA_METADATA, $pid, $user)) {
     drupal_set_message(t("You do not have access to Fedora objects within the attempted namespace or you do not have permission to edit meta data for this object."), 'error');
     return ' ';
   }
@@ -821,9 +817,11 @@ function fedora_repository_edit_qdc_page($pid = NULL, $dsId = NULL) {
 /**
  * fedora repository edit qdc form
  * @global type $user
+ *
  * @param type $form_state
  * @param type $pid
  * @param type $dsId
+ *
  * @return type
  */
 function fedora_repository_edit_qdc_form(&$form_state, $pid, $dsId = NULL) {
@@ -833,7 +831,7 @@ function fedora_repository_edit_qdc_form(&$form_state, $pid, $dsId = NULL) {
     drupal_set_message(t('You must specify an object pid!'), 'error');
   }
   global $user;
-  if (!fedora_repository_access(OBJECTHELPER :: $EDIT_FEDORA_METADATA, $pid, $user)) {
+  if (!fedora_repository_check_perm(OBJECTHELPER :: $EDIT_FEDORA_METADATA, $pid, $user)) {
     drupal_set_message(t("You do not have access to Fedora objects within the attempted namespace or you do not have permission to edit meta data for this object."), 'error');
     return ' ';
   }
@@ -843,24 +841,25 @@ function fedora_repository_edit_qdc_form(&$form_state, $pid, $dsId = NULL) {
   $soapHelper = new ConnectionHelper();
   $client = $soapHelper->getSoapClient(variable_get('fedora_soap_url', 'http://localhost:8080/fedora/services/access?wsdl'));
 
-// Check if there is a custom edit metadata function defined in the content model.
+  // Check if there's a custom edit metadata function in the content model.
   $output = '';
   if (($cm = ContentModel::loadFromObject($pid)) !== FALSE) {
     $output = $cm->buildEditMetadataForm($pid, $dsId);
   }
 
   if (empty($output)) {
-// There is no custom function, so just load the standard QDC form.
+    // There is no custom function, so just load the standard QDC form.
     $metaDataForm = new formClass();
-//currently we only edit the dc metadata.  If you defined a custom form with a custom handler you are sol for now.
+    // Currently we only edit the dc metadata.
+    // If you defined a custom form with a custom handler you are sol for now.
     $output = $metaDataForm->createMetaDataForm($pid, $dsId, $client, $form_state);
   }
-
   return $output;
 }
 
 /**
  * fedora repository edit qdc form validate
+ *
  * @param type $form
  * @param boolean $form_state
  */
@@ -877,12 +876,14 @@ function fedora_repository_edit_qdc_form_validate($form, &$form_state) {
 }
 
 /**
- * Check if there is a custom edit metadata function defined in the content model. If so,
- * call it, if not do the submit action for the standard QDC metadata.  Custom forms will
- * need to implement their own equivalent to the FormClass->updateMetaData function
+ * Check if there is a custom edit metadata function defined in the
+ * content model. If so, call it, if not do the submit action for the
+ * standard QDC metadata.  Custom forms willneed to implement their own
+ * equivalent to the FormClass->updateMetaData function
  *
  * @param array $form
  * @param array $form_state
+ *
  * @return
  */
 function fedora_repository_edit_qdc_form_submit($form, &$form_state) {
@@ -937,21 +938,6 @@ function fedora_repository_perm() {
 }
 
 /**
- * drupal hook
- * determines if a user has access to what they are asking for
- *
- * @param type $op
- * @param type $node
- * @param type $account
- * @return type
- */
-function fedora_repository_access($op, $node = NULL, $account = NULL) {
-  module_load_include('inc', 'fedora_repository', 'ObjectHelper');
-  $objectHelper = new ObjectHelper();
-  return $objectHelper->fedora_repository_access($op, $node, $account);
-}
-
-/**
  * Grabs a stream from fedora sets the mimetype and returns it. $dsID is the
  * datastream id.
  * @param $pid String
@@ -975,7 +961,7 @@ function makeObject($pid, $dsID) {
     return ' ';
   }
   global $user, $conf;
-  if (!fedora_repository_access(OBJECTHELPER :: $OBJECT_HELPER_VIEW_FEDORA, $pid, $user)) {
+  if (!fedora_repository_check_perm(OBJECTHELPER :: $OBJECT_HELPER_VIEW_FEDORA, $pid, $user)) {
     drupal_access_denied();
     return;
     drupal_set_message(t("You do not have access to Fedora objects within the attempted namespace."), 'error');
@@ -991,7 +977,7 @@ function makeObject($pid, $dsID) {
 }
 
 /**
- * Implementation of hook_islandora_tabs().
+ * Implements hook_islandora_tabs().
  *
  * @param $content_models array
  *   An array of ContentModel objects to which the current Fedora Object
@@ -1010,8 +996,8 @@ function fedora_repository_islandora_tabs($content_models, $pid, $page_number) {
   foreach ($content_models as $content_model) {
     $content_model_fieldset = $content_model->displayExtraFieldset($pid, $page_number);
 
-    // Each content model may return either a tabpage array or plain HTML. If
-    //  it is HTML, stick it in a tabpage.
+    // Each content model may return either a tabpage array or plain HTML.
+    // If it is HTML, stick it in a tabpage.
     if (is_array($content_model_fieldset)) {
       $cmodels_tabs = array_merge($cmodels_tabs, $content_model_fieldset);
     }
@@ -1024,7 +1010,7 @@ function fedora_repository_islandora_tabs($content_models, $pid, $page_number) {
     }
   }
 
-  //can disable showing the object details tab in admin UI
+  // Can disable showing the object details tab in admin UI.
   if (variable_get('fedora_repository_show_object_details_tab', TRUE)) {
     // Add a 'manage object' tab for all objects, where detailed list of content is shown.
     // XXX:  Perhaps this should be extracted into its own object?
@@ -1039,7 +1025,7 @@ function fedora_repository_islandora_tabs($content_models, $pid, $page_number) {
 }
 
 /**
- * Implementation of hook_islandora_tabs_alter().
+ * Implements hook_islandora_tabs_alter().
  *
  * @param &$tabs array
  *   The array of tabs/tabset to alter.
@@ -1049,8 +1035,8 @@ function fedora_repository_islandora_tabs($content_models, $pid, $page_number) {
  * @see fedora_repository_get_items()
  */
 function fedora_repository_islandora_tabs_alter(&$tabs, $params) {
-  //Deselect all other tabs if the fedora_object_details tab is supposed
-  //  to be selected.
+  // Deselect all other tabs if the fedora_object_details tab is supposed
+  // to be selected.
   $object_details_key = 'fedora_object_details';
   if ($tabs[$object_details_key]['#selected']) {
     foreach (element_children($tabs) as $key) {
@@ -1068,18 +1054,21 @@ function fedora_repository_islandora_tabs_alter(&$tabs, $params) {
  * datastream via the makeObject() function; otherwise, call out to the PIDs'
  * ContentModels and all Drupal modules for Islandora tabs.
  *
- * @global $user stdObject
- * @param $pid string
- *   An optional string containing the PID of an object.  (defaults to islandora:root)
- * @param $dsId string
+ * @global stdObject $user
+ *
+ * @param string $pid
+ *   An optional string containing the PID of an object.
+ *   (defaults to islandora:root)
+ * @param string $dsId
  *   An optional string containing the dsid of an object. ("-" will be ignored
  *   to allow later parameters without including one).
- * @param $collection string
+ * @param string $collection
  *   The collection name...  Deprecated.
- * @param $page_number string/integer(?)
+ * @param string/integer(?) $page_number
  *   A page number to start on...  Seems to be going towards deprecation?
- * @param $limit string/integer(?)
+ * @param string/integer(?) $limit
  *   Used to limit the number of results returned?  Deprecated?
+ *
  * @return string
  *   A string containing markup for the rendered tabs.
  */
@@ -1118,7 +1107,7 @@ function fedora_repository_get_items($pid = NULL, $dsId = NULL, $collection = NU
     drupal_set_message(t("Invalid dsID!"), 'error');
     return ' ';
   }
-  if (!fedora_repository_access(OBJECTHELPER::$OBJECT_HELPER_VIEW_FEDORA, $pid, $user)) {
+  if (!fedora_repository_check_perm(OBJECTHELPER::$OBJECT_HELPER_VIEW_FEDORA, $pid, $user)) {
     if (user_access('access administration pages')) {
       drupal_set_message(t("PIDs may be added to allowed namespaces, or all namespace restrictions removed !here", array('!here' => l('here', 'admin/settings/fedora_repository'))), 'warning');
     }
@@ -1137,8 +1126,10 @@ function fedora_repository_get_items($pid = NULL, $dsId = NULL, $collection = NU
     exit;
     return ' ';
   }
-  if ($dsId != NULL && $dsId != '-') { //if we have a dsID return the stream otherwise query for a collection of objects
-//probably should check pid as well here.
+  // If we have a dsID return the stream
+  // otherwise query for a collection of objects.
+  if ($dsId != NULL && $dsId != '-') {
+    // Probably should check pid as well here.
     return makeObject($pid, $dsId);
   }
 
@@ -1150,7 +1141,7 @@ function fedora_repository_get_items($pid = NULL, $dsId = NULL, $collection = NU
 
   $content_models = $objectHelper->get_content_models_list($pid);
 
-  //Get the tabs from all modules...
+  // Get the tabs from all modules...
   $hook_tabs = module_invoke_all('islandora_tabs', $content_models, $pid, $page_number);
 
   $cmodels_tabs = array(
@@ -1158,14 +1149,14 @@ function fedora_repository_get_items($pid = NULL, $dsId = NULL, $collection = NU
   );
   $cmodels_tabs += $hook_tabs;
 
-  //Assemble parameters, to pass during alter
+  // Assemble parameters, to pass during alter.
   $params = array(
     'content_models' => $content_models,
     'pid' => $pid,
     'page' => $page_number,
   );
 
-  //Allow returned tabs to be altered, before return.
+  // Allow returned tabs to be altered, before return.
   drupal_alter('islandora_tabs', $cmodels_tabs, $params);
 
   return tabs_render($cmodels_tabs);
@@ -1185,7 +1176,7 @@ function fedora_repository_urlencode_string($str) {
  * Uses makeobject to get a stream.  Sets the Content Disposition in the header so it suggests a filename
  * and sends it as an attachment.  This should prompt for a download of the object.
  *
- * @global type $user
+ * @global type $conf
  * @param type $pid
  * @param type $dsId
  * @param type $label
@@ -1209,6 +1200,7 @@ function fedora_object_as_attachment($pid, $dsId, $label=NULL, $version=NULL) {
 
 /**
  * repository page
+ *
  * @param type $pid
  * @param type $dsId
  * @param type $collection
@@ -1216,13 +1208,16 @@ function fedora_object_as_attachment($pid, $dsId, $label=NULL, $version=NULL) {
  * @return type
  */
 function repository_page($pid = NULL, $dsId = NULL, $collection = NULL, $pageNumber = NULL) {
-//do security check at fedora_repository_get_items function as it has to be called there in case
-//someone trys to come in a back door.
+  // Do security check at fedora_repository_get_items function as
+  // it has to be called there in case someone trys to come in a back door.
   return fedora_repository_get_items($pid, $dsId, $collection, $pageNumber);
 }
 
 /**
  * repository service
+ *
+ * XXX: Is this even used?
+ *
  * @global type $user
  * @param type $pid
  * @param type $servicePid
@@ -1234,8 +1229,7 @@ function repository_service($pid = NULL, $servicePid = NULL, $serviceMethod = NU
   module_load_include('inc', 'fedora_repository', 'ObjectHelper');
   global $user;
 
-  if (!fedora_repository_access(OBJECTHELPER::$OBJECT_HELPER_VIEW_FEDORA, $pid, $user)) {
-//drupal_set_message(t("You do not have access to Fedora objects within the attempted namespace or access to Fedora denied"), 'error');
+  if (!fedora_repository_check_perm(OBJECTHELPER::$OBJECT_HELPER_VIEW_FEDORA, $pid, $user)) {
     drupal_access_denied();
     if (user_access('access administration pages')) {
       drupal_set_message(t("PIDs may be added to allowed namespaces, or all namespace restrictions removed @here", array('@here' => l('here', 'admin/settings/fedora_repository'))), 'error');
@@ -1261,267 +1255,17 @@ function repository_service($pid = NULL, $servicePid = NULL, $serviceMethod = NU
   exit();
 }
 
-//Search Stuff ********************************************************************
-
 /**
- * Implements hook_search().
- * sends a search query to fedora fgsearch which is backed by Lucene
- * In our implementation of Fedora we have api-a and api-m locked down
- * to authorized users but at the object level.  We can query Lucene and the
- * RI index to get a list of results without authorization but to view any
- * datastreams users must be authorized.
- *
- * @param type $op
- * @param type $keys
- * @return array
- */
-function fedora_repository_search($op = 'search', $keys = NULL) {
-  module_load_include('inc', 'fedora_repository', 'ObjectHelper');
-  module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
-
-  switch ($op) {
-    case 'name':
-      if (user_access('view fedora collection')) {
-        return t('Digital Repository', array('-9'));
-      }
-    case 'search':
-      if (user_access('view fedora collection')) {
-//demo search string ?operation=gfindObjects&indexName=DemoOnLucene&query=fgs.DS.first.text%3Achristmas&hitPageStart=11&hitPageSize=10
-        $resultData = NULL;
-        $numberOfHitsPerPage = NULL;
-        $index = strpos($keys, '.');
-        $test = substr($keys, 0, $index + 1);
-        $type = NULL;
-        if ($index > 0) {
-          $index = strpos($keys, ':');
-          $type = substr($keys, 0, $index);
-          $keys = substr($keys, $index + 1);
-        }
-
-        $index = strpos($keys, ':');
-        $startPage = substr($keys, 0, $index);
-        if ($index > 1) {
-          $keys = substr($keys, $index + 1);
-        }
-
-        if (!$startPage) {
-          $startPage = 1;
-        }
-
-        $xmlDoc = NULL;
-
-        $path = drupal_get_path('module', 'fedora_repository');
-        $xmlDoc = new DomDocument();
-        $xmlDoc->load($path . '/searchTerms.xml');
-        $nodeList = $xmlDoc->getElementsByTagName('default');
-        if (!$type) {
-          $type = $nodeList->item(0)->nodeValue;
-        }
-        $nodeList = $xmlDoc->getElementsByTagName('number_of_results');
-        $numberOfHitsPerPage = $nodeList->item(0)->nodeValue;
-
-        $indexName = variable_get('fedora_index_name', 'DemoOnLucene');
-        $keys = htmlentities(urlencode($keys));
-        $searchQuery = NULL;
-        if (isset($type) && strcmp($type, ':')) {
-          $searchQuery = $type . ':' . $keys;
-        }
-        else {
-          $searchQuery = $keys;
-        }
-
-        $searchUrl = variable_get('fedora_fgsearch_url', 'http://localhost:8080/fedoragsearch/rest');
-        $searchString = '?operation=gfindObjects&indexName=' . $indexName . '&restXslt=copyXml&query=' . $searchQuery;
-        $searchString .= '&hitPageSize=' . $numberOfHitsPerPage . '&hitPageStart=' . $startPage;
-
-        $searchUrl .= $searchString;
-        $objectHelper = new ObjectHelper();
-        $resultData = do_curl($searchUrl);
-
-        $results[] = array(
-          array(
-            'data' => $resultData,
-            'colspan' => 2
-          )
-        );
-        return $results;
-      }
-  }
-}
-
-/**
- * Implements hook_search_page().
- * Display the search results
- *
- * @param type $resultData
+ * Implements hook_theme().
  *
  * @return array
- */
-function fedora_repository_search_page($resultData) {
-  $path = drupal_get_path('module', 'fedora_repository');
-  $isRestricted = variable_get('fedora_namespace_restriction_enforced', TRUE);
-  $proc = NULL;
-  // No results.
-  if (!$resultData[0][0]['data']) {
-    return '';
-  }
-  $text = utf8_encode($resultData[0][0]['data']);
-
-  try {
-    $proc = new XsltProcessor();
-  } catch (Exception $e) {
-    $out[] = array(
-      array(
-        'data' => $e->getMessage(),
-        'colspan' => 2,
-      ),
-    );
-    return $out;
-  }
-
-  // Inject into xsl stylesheet.
-  $proc->setParameter('', 'searchToken', drupal_get_token('search_form')); //token generated by Drupal, keeps tack of what tab etc we are on
-  $proc->setParameter('', 'searchUrl', url('search') . '/fedora_repository'); //needed in our xsl
-  $proc->setParameter('', 'objectsPage', base_path());
-  $proc->setParameter('', 'allowedPidNameSpaces', variable_get('fedora_pids_allowed', 'default: demo: changeme: islandora: ilives: islandora-book: books: newspapers: '));
-  $proc->registerPHPFunctions();
-  $xsl = new DomDocument();
-  if ($isRestricted) {
-    $xsl->load($path . '/xsl/results.xsl');
-  }
-  else {
-    $xsl->load($path . '/xsl/unfilteredresults.xsl');
-  }
-
-  $input = new DomDocument();
-  $didLoadOk = $input->loadXML(utf8_encode($resultData[0][0]['data']));
-
-  if (!$didLoadOk) {
-    $results[] = array(
-      array(
-        'data' => 'Error parsing results',
-        'colspan' => 2
-      )
-    );
-  }
-  else {
-    $xsl = $proc->importStylesheet($xsl);
-    $newdom = $proc->transformToDoc($input);
-
-    $results[] = array(
-      array(
-        'data' => $newdom->saveHTML(),
-        'colspan' => 2
-      )
-    );
-  }
-
-  $header = array(
-    array(
-      'data' => t('Collection results'),
-      NULL,
-    ),
-    (NULL)
-  );
-
-  $output .= theme('table', $header, $results);
-  return $output;
-}
-
-/**
- * Implementation of hook_form_alter().
- * allows the advanced search form in drupal
- *
- * @param type $form
- * @param type $form_state
- * @param type $form_id
- */
-function fedora_repository_form_alter(&$form, &$form_state, $form_id) {
-// Advanced node search form
-  module_load_include('inc', 'fedora_repository', 'SearchClass');
-  $path = drupal_get_path('module', 'fedora_repository');
-  if ($form_id == 'search_form' && arg(1) == 'fedora_repository' && user_access('use advanced search')) {
-    $default_value = $form['basic']['inline']['keys']['#default_value'];
-    $index = strpos($default_value, '.');
-    $test = substr($default_value, 0, $index + 1);
-    $type = NULL;
-    if ($index > 0) {
-      $index = strpos($default_value, ':');
-      $type = substr($default_value, 0, $index);
-      $default_value = substr($default_value, $index + 1);
-    }
-    $form['basic']['inline']['keys']['#default_value'] = $default_value;
-// Keyword boxes:
-    $form['advanced'] = array(
-      '#type' => 'fieldset',
-      '#title' => t('Advanced search'),
-      '#collapsible' => TRUE,
-      '#collapsed' => TRUE,
-      '#attributes' => array(
-        'class' => 'search-advanced'
-      ),
-    );
-    $form['advanced']['keywords'] = array(
-      '#prefix' => '<div class="criterion">',
-      '#suffix' => '</div>',
-    );
-    $xmlDoc = new DomDocument();
-    $xmlDoc->load($path . '/searchTerms.xml');
-    $nodeList = $xmlDoc->getElementsByTagName('term');
-    $searchClass = new SearchClass();
-    $types = $searchClass->get_search_terms_array();
-
-    $form['advanced']['type'] = array(
-      '#type' => 'select',
-      '#title' => t('Choose a field to search'),
-      '#prefix' => '<div class="criterion">', '#suffix' => '</div>', '#options' => $types,
-      '#default_value' => $type,
-    );
-    $form['advanced']['submit'] = array(
-      '#type' => 'submit',
-      '#value' => t('Advanced search'),
-      '#prefix' => '<div class="action clear-block">', '#suffix' => '</div>',
-    );
-    $form['#validate'][] = 'fedora_repository_search_validate';
-  }
-}
-
-/**
- * Implementation of hook_search_validate()
- *
- * @param type $form
- * @param type $form_state
- */
-function fedora_repository_search_validate($form, &$form_state) {
-// Initialise using any existing basic search keywords.
-  $keys = $form_state['values']['processed_keys'];
-
-  if (isset($form_state['values']['type'])) {
-    $type = $form_state['values']['type'];
-    if ($type) {
-      $keys = $type . ':' . $keys;
-    }
-  }
-
-  if (!empty($keys)) {
-    form_set_value($form['basic']['inline']['processed_keys'], trim($keys), $form_state); //set the form string
-  }
-}
-
-/**
- * fedora repository theme
- * @return type
+ *   The themes for the fedora_repository module.
  */
 function fedora_repository_theme() {
   return array(
-    'fedora_repository_mnpl_advanced_search_form' => array(
-      'arguments' => array(
-        'form' => NULL,
-      ),
-    ),
     'fedora_repository_time' => array(
       'arguments' => array(
-        'element' => NULL
+        'element' => NULL,
       ),
       'fedora_repository_solution_packs_list' => array(
         'arguments' => array(
@@ -1533,313 +1277,15 @@ function fedora_repository_theme() {
 }
 
 /**
- * Get a list of terms from a lucene index
- *
- * @param type $field
- * @param type $startTerm
- * @param type $displayName
- * @return type
- */
-function fedora_repository_list_terms($field, $startTerm = NULL, $displayName = NULL) {
-  module_load_include('inc', 'fedora_repository', 'SearchClass');
-  $searchClass = new SearchClass();
-  return $searchClass->getTerms($field, $startTerm, $displayName);
-}
-
-/**
- * fedora repository mnpl advanced search form
- * @return type
- */
-function fedora_repository_mnpl_advanced_search_form() {
-  module_load_include('inc', 'fedora_repository', 'SearchClass');
-  $searchClass = new SearchClass();
-  return $searchClass->build_advanced_search_form();
-}
-
-/**
- * theme fedora repository mnpl advanced search form
- * @param type $form
- * @return type
- */
-function theme_fedora_repository_mnpl_advanced_search_form($form) {
-  module_load_include('inc', 'fedora_repository', 'SearchClass');
-  $advanced_search_form = new SearchClass();
-  return $advanced_search_form->theme_advanced_search_form($form);
-}
-
-/**
- * fedora repository mnpl advanced search
- * @param type $query
- * @param type $startPage
- * @return type
- */
-function fedora_repository_mnpl_advanced_search($query, $startPage = 1) {
-  module_load_include('inc', 'fedora_repository', 'SearchClass');
-  $searchClass = new SearchClass();
-  $retVal = $searchClass->custom_search($query, $startPage);
-  return $searchClass->custom_search($query, $startPage);
-}
-
-/**
- * fedora repository mnpl_advanced search form submit
- * @param type $form
- * @param type $form_state
- */
-function fedora_repository_mnpl_advanced_search_form_submit($form, &$form_state) {
-  $type_id = $form_state['values']['type'];
-  $repeat = variable_get('fedora_repository_advanced_block_repeat', t('3'));
-  $searchString = $form_state['values']['type1'] . ':' . $form_state['values']['fedora_terms1'];
-  if ($form_state['values']['fedora_terms2'] != '') {
-    $searchString .=' +' . $form_state['values']['andor1'] . '+' . $form_state['values']['type2'] . ':' . $form_state['values']['fedora_terms2'];
-  }
-  if ($repeat > 2 && $repeat < 9) {
-    for ($i = 3; $i < $repeat + 1; $i++) {
-      $t = $i - 1;
-      if ($form_state['values']["fedora_terms$i"] != '') {
-        $searchString .= '+' . $form_state['values']["andor$t"] . '+' . $form_state['values']["type$i"] . ':' . $form_state['values']["fedora_terms$i"];
-      }
-    }
-  }
-  drupal_goto("fedora/repository/mnpl_advanced_search/$searchString");
-}
-
-/**
- * fedora repository install demo page
- * @return type
- */
-function fedora_repository_install_demos_page() {
-  $output = drupal_get_form('fedora_repository_demo_objects_form');
-  return $output;
-}
-
-/**
- * fedora repository demo objects form
- * @return string
- */
-function fedora_repository_demo_objects_form() {
-  module_load_include('inc', 'fedora_repository', 'ObjectHelper');
-  module_load_include('inc', 'fedora_repository', 'api/fedora_item');
-  $form = array();
-  $existing_demos = array();
-
-  $form['install_demos'] = array(
-    '#title' => t('Islandora Demo Collections'),
-    '#type' => 'fieldset',
-    '#description' => t('Install demo image and document collections and content models.'),
-  );
-  $demo_objects = array();
-// Check if the top-level islandora collection exists. If not, display a button to ingest.
-
-  $form['install_demos']['demo_collections'] = array(
-    '#type' => 'checkboxes',
-    '#title' => t('Collections to ingest'),
-    '#options' => array(),
-    '#description' => t('Choose which demo collections you would like ingested into the repository.'),
-  );
-
-  foreach (array(
-'islandora:collectionCModel' => 'Islandora default content models',
- 'islandora:root' => 'Islandora top-level collection',
- 'islandora:demos' => 'Islandora demos collection',
- 'islandora:largeimages' => 'Sample large image content model (requires <a href="http://sourceforge.net/projects/djatoka/">Djatoka</a> and <a href="http://www.kakadusoftware.com/index.php?option=com_content&task=view&id=26&Itemid=22">Kakadu</a>.)',
-  )
-  as $available_demo => $available_demo_desc) {
-    try {
-      $demo_objects[$available_demo] = new Fedora_Item($available_demo);
-    } catch (exception $e) {
-
-    }
-
-    if (empty($demo_objects[$available_demo]->objectProfile)) {
-//The demo objects collection does not exist in the repository, display a button to ingest them.
-      $form['install_demos']['demo_collections']['#options'][$available_demo] = $available_demo_desc;
-    }
-    else {
-      array_push($existing_demos, $demo_objects[$available_demo]);
-    }
-  }
-
-// Check if the SmileyStuff collectoin exists, and if it has a COLLECTION_VIEW datastream. If it doesn't then we can add it.
-
-  $smiley_stuff = new Fedora_Item('demo:SmileyStuff');
-  if (!empty($smiley_stuff->objectProfile)) {
-    $datastreams_list = $smiley_stuff->get_datastreams_list_as_array();
-    if (empty($datastreams_list['COLLECTION_VIEW'])) {
-      $form['install_demos']['demo_collections']['#options']['demo:SmileyStuff'] = 'Add Islandora Collection View to Fedora Smiley Stuff Collection';
-    }
-    else {
-      $demo_objects['demo:SmileyStuff'] = $smiley_stuff;
-    }
-  }
-  else {
-    $form['install_demos']['smileynote'] = array(
-      '#value' => '<p>If you install the ' . l('fedora demo objects', 'https://wiki.duraspace.org/display/FCR30/Demonstration+Objects') . ' Islandora can display them as a collection.</p>'
-    );
-  }
-
-  $form['install_demos']['ingest'] = array(
-    '#type' => 'submit',
-    '#name' => 'install_demos',
-    '#value' => 'Install Selected Demos',
-    '#disabled' => (empty($form['install_demos']['demo_collections']['#options'])) ? TRUE : FALSE,
-  );
-
-  $form['existing_demos'] = array(
-    '#prefix' => '<p>Demo collections already installed in this repository:</p><ul>',
-    '#suffix' => '</ul>',
-  );
-
-  if (!empty($existing_demos)) {
-    foreach ($existing_demos as $pid => $demo_object) {
-
-      $form['existing_demos'][$demo_object->pid] = array(
-        '#prefix' => '<li>',
-        '#value' => l($demo_object->pid, $demo_object->url()),
-        '#suffix' => '</li>',
-      );
-    }
-  }
-
-  return $form;
-}
-
-/**
- * fedora repository demo objects form submit
- * @global type $base_url
- * @param type $form
- * @param type $form_state
- */
-function fedora_repository_demo_objects_form_submit($form, &$form_state) {
-  module_load_include('inc', 'fedora_repository', 'api/fedora_item');
-  module_load_include('inc', 'fedora_repository', 'api/dublin_core');
-  module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
-  global $base_url;
-  if ($form_state['clicked_button']['#name'] == 'install_demos') {
-    if (!empty($form_state['values']['demo_collections']['islandora:collectionCModel'])) {
-      try {
-        $collectioncm = Fedora_Item::ingest_new_item('islandora:collectionCModel', 'A', 'Islandora Collection Content Model');
-        $collectioncm->add_relationship('hasModel', 'fedora-system:ContentModel-3.0', FEDORA_MODEL_URI);
-        $collectioncm->add_datastream_from_file(drupal_get_path('module', 'fedora_repository') . '/content_models/COLLECTIONCM.xml', 'ISLANDORACM', 'Islandora Content Model.xml', 'application/xml', 'X');
-      } catch (exception $e) {
-
-      }
-      try {
-        $strictpdfcm = Fedora_Item::ingest_new_item('islandora:strict_pdf', 'A', 'Strict PDF Content Model');
-        $strictpdfcm->add_relationship('hasModel', 'fedora-system:ContentModel-3.0', FEDORA_MODEL_URI);
-        $strictpdfcm->add_datastream_from_file(drupal_get_path('module', 'fedora_repository') . '/content_models/STRICT_PDFCM.xml', 'ISLANDORACM', 'Islandora Content Model.xml', 'application/xml', 'X');
-      } catch (exception $e) {
-
-      }
-
-// Install a collection object that points to all content model objects
-      try {
-        $cmodel_collection_xml = Fedora_Item::create_object_FOXML('islandora:ContentModelCollection');
-        $cmodel_collection = Fedora_Item::ingest_from_FOXML($cmodel_collection_xml);
-
-//$dc = new Dublin_Core(new Fedora_Item('islandora:ContentModelCollection'));
-        $dc = new Dublin_Core($cmodel_collection);
-        $dc->set_element('dc:title', array('Installed Content Model'));
-        $dc->save();
-        $cmodel_collection->add_datastream_from_string('select $object $title from <#ri>
-          where ($object <fedora-model:label> $title
-          and ($object <fedora-model:hasModel> <info:fedora/fedora-system:ContentModel-3.0>
-          or $object <fedora-rels-ext:isMemberOfCollection> <info:fedora/islandora:ContentModelsCollection>)
-          and $object <fedora-model:state> <info:fedora/fedora-system:def/model#Active>)
-          order by $title', 'QUERY', 'Content Model Collection Query', 'text/plain');
-        $cmodel_collection->add_relationship('isMemberOfCollection', 'islandora:root');
-        $cmodel_collection->add_relationship('hasModel', 'islandora:collectionCModel', FEDORA_MODEL_URI);
-        $cmodel_collection->add_datastream_from_file(drupal_get_path('module', 'fedora_repository') . '/collection_views/simple_list_view.xml', 'COLLECTION_VIEW', 'Collection View', 'text/xml', 'X');
-        $cmodel_collection->add_datastream_from_file(drupal_get_path('module', 'fedora_repository') . '/images/contentModel.jpg', 'TN', 'Thumbnail', 'image/jpg', 'M');
-        drupal_set_message(t("Successfully installed <a href=\"@base_url/fedora/repository/islandora:ContentModelCollection\">islandora:ContentModelCollection</a>.", array('@base_url' => check_plain($base_url))), 'message');
-      } catch (exception $e) {
-
-      }
-    }
-
-    if (!empty($form_state['values']['demo_collections']['islandora:root'])) {
-      $new_item = Fedora_Item::ingest_new_item('islandora:root', 'A', 'Islandora Top-level Collection');
-      $new_item->add_relationship('hasModel', 'islandora:collectionCModel', FEDORA_MODEL_URI);
-      $cp = $new_item->add_datastream_from_file(drupal_get_path('module', 'fedora_repository') . '/collection_policies/COLLECTION-COLLECTION POLICY.xml', 'COLLECTION_POLICY', 'Collection Policy', 'text/xml', 'X');
-      try {
-        $tn = $new_item->add_datastream_from_file(drupal_get_path('module', 'fedora_repository') . '/images/Gnome-emblem-photos.png', 'TN', 'Thumbnail.png', 'image/png', 'M');
-        drupal_set_message(t("Successfully installed <a href=\"@base_url/fedora/repository/islandora:root\">islandora:root</a>.", array('@base_url' => check_plain($base_url))), 'message');
-      } catch (exception $e) {
-
-      }
-    }
-
-    if (!empty($form_state['values']['demo_collections']['islandora:demos'])) {
-      $new_item = fedora_item::ingest_new_item('islandora:demos', 'A', 'Islandora Demo Collection');
-      $new_item->add_relationship('isMemberOfCollection', 'islandora:root');
-      $new_item->add_relationship('hasModel', 'islandora:collectionCModel', FEDORA_MODEL_URI);
-      $cp = $new_item->add_datastream_from_file(drupal_get_path('module', 'fedora_repository') . '/collection_policies/COLLECTION-COLLECTION POLICY.xml', 'COLLECTION_POLICY', 'Collection Policy', 'text/xml', 'X');
-
-// $cv = $new_item->add_datastream_from_file( drupal_get_path('module', 'fedora_repository') . '/collection_views/COLLECTION_VIEW.xml', 'COLLECTION_VIEW', 'Collection View.xml', 'text/xml', 'X');
-      $tn = $new_item->add_datastream_from_file(drupal_get_path('module', 'fedora_repository') . '/images/Gnome-emblem-photos.png', 'TN', 'Thumbnail.png', 'image/png', 'M');
-      try {
-        $new_item = Fedora_Item::ingest_new_item('islandora:pdf_collection', 'A', 'PDF Collection');
-        $new_item->add_relationship('isMemberOfCollection', 'islandora:demos');
-        $new_item->add_relationship('hasModel', 'islandora:collectionCModel', FEDORA_MODEL_URI);
-        $cp = $new_item->add_datastream_from_file(drupal_get_path('module', 'fedora_repository') . '/collection_policies/PDF-COLLECTION POLICY.xml', 'COLLECTION_POLICY', 'Collection Policy', 'text/xml', 'X');
-        $tn = $new_item->add_datastream_from_file(drupal_get_path('module', 'fedora_repository') . '/images/Crystal_Clear_mimetype_pdf.png', 'TN', 'Thumbnail.png', 'image/png', 'M');
-        drupal_set_message(t("Successfully installed <a href=\"@base_url/fedora/repository/islandora:demos\">islandora:demos</a>.", array('@base_url' => check_plain($base_url))), 'message');
-      } catch (exception $e) {
-
-      }
-    }
-
-    if (!empty($form_state['values']['demo_collections']['demo:SmileyStuff'])) {
-      $smiley_stuff = new Fedora_Item('demo:SmileyStuff');
-      $new_item = $smiley_stuff->add_datastream_from_file(drupal_get_path('module', 'fedora_repository') . '/collection_views/SmileyStuff-COLLECTION_VIEW.xml', 'COLLECTION_VIEW', 'Collection View', 'text/xml', 'X');
-      $smiley_stuff->add_relationship('isMemberOfCollection', 'info:fedora/islandora:demos');
-      $tn = $smiley_stuff->add_datastream_from_file(drupal_get_path('module', 'fedora_repository') . '/images/smileytn.png', 'TN', 'Thumbnail.png', 'image/png', 'M');
-      $cp = $smiley_stuff->add_datastream_from_file(drupal_get_path('module', 'fedora_repository') . '/collection_policies/JPG-COLLECTION POLICY.xml', 'COLLECTION_POLICY', 'Collection Policy.xml', 'application/xml', 'X');
-
-      $cm = new Fedora_Item('demo:DualResImage');
-      try {
-        $cmstream = $cm->add_datastream_from_file(drupal_get_path('module', 'fedora_repository') . '/content_models/STANDARD JPG.xml', 'ISLANDORACM', 'Content Model.xml', 'application/xml', 'X');
-      } catch (exception $e) {
-
-      }
-      $dual_res_image_collection_cmodel = new Fedora_Item('demo:DualResImageCollection');
-      try {
-        $cmstream = $dual_res_image_collection_cmodel->add_datastream_from_file(drupal_get_path('module', 'fedora_repository') . '/content_models/COLLECTIONCM.xml', 'ISLANDORACM', 'Islandora Content Model.xml', 'application/xml', 'X');
-        drupal_set_message(t("Successfully installed <a href=\"@base_url/fedora/repository/demo:SmileyStuff\">demo:SmileyStuff</a> collection view.", array('@base_url' => check_plain($base_url))), 'message');
-      } catch (exception $e) {
-
-      }
-    }
-
-    if (!empty($form_state['values']['demo_collections']['islandora:largeimages'])) {
-      $error = '';
-      foreach (array('islandora_jp2Sdep-slideCModel.xml', 'islandora_mods2htmlSdef.xml', 'islandora_mods2htmlSdep.xml',
-    'islandora_slideCModel.xml', 'islandora_viewerSdep-slideCModel.xml', 'ilives_jp2Sdef.xml', 'ilives_viewerSdef.xml') as $foxml_file) {
-        try {
-          $item = Fedora_Item::ingest_from_FOXML_file(drupal_get_path('module', 'fedora_repository') . '/content_models/' . $foxml_file);
-        } catch (exception $e) {
-          $error .= " - Problem ingesting $foxml_file";
-        }
-      }
-      try {
-        $item = Fedora_Item::ingest_from_FOXML_file(drupal_get_path('module', 'fedora_repository') . '/content_models/islandora_largeimages.xml');
-        $tn = $item->add_datastream_from_file(drupal_get_path('module', 'fedora_repository') . '/images/Gnome-emblem-photos.png', 'TN', 'Thumbnail.png', 'image/png', 'M');
-        drupal_set_message(t("Successfully installed <a href=\"@base_url/fedora/repository/islandora:largeimages\">islandora:largeimages</a>.", array('@base_url' => check_plain($base_url))), 'message');
-      } catch (exception $e) {
-        $error .= " - Problem ingesting islandora:largeimages collection";
-      }
-    }
-
-    if (!empty($error)) {
-      drupal_set_message(t('Some problems occurred: @error', array('@error' => $error)));
-    }
-  }
-}
-
-/**
  * fedora repository required fedora objects
  *
  * @return array
- *  array( 'path-to-foxml-file', 'pid', 'dsid', 'path-to-datastream-file', int dsversion, boolean required)
+ *   array( 'path-to-foxml-file',
+ *   'pid',
+ *   'dsid',
+ *   'path-to-datastream-file',
+ *   int dsversion,
+ *   boolean required)
  */
 function fedora_repository_required_fedora_objects() {
 
@@ -1892,12 +1338,14 @@ function fedora_repository_elements() {
 
 /**
  * fedora repository expand time
+ *
  * @param type $element
+ *
  * @return string
  */
 function fedora_repository_expand_time($element) {
-// Default to current time, check default_value but set value so that if
-// default value is present it will override value
+  // Default to current time, check default_value but set value so that if
+  // default value is present it will override value.
   if (empty($element['#default_value'])) {
     $element['#value'] = array(
       'hour' => intval(format_date(time(), 'custom', 'h')),
@@ -1935,7 +1383,9 @@ function fedora_repository_expand_time($element) {
 
 /**
  * fedora repository time
+ *
  * @param type $element
+ *
  * @return type
  */
 function fedora_repository_time($element) {
@@ -1945,333 +1395,14 @@ function fedora_repository_time($element) {
 
 /**
  * theme fedora repository time
+ *
  * @param type $element
+ *
  * @return type
  */
 function theme_fedora_repository_time($element) {
   $output = '<div class="container-inline">' . $element['#children'] . '</div>';
   return theme('form_element', $element, $output);
-}
-
-/* Export (basket) functionality */
-
-/**
- * fedora repository remove item from basket
- * @param type $pid
- */
-function fedora_repository_remove_item_from_basket($pid) {
-
-  module_load_include('inc', 'fedora_repository', 'ObjectHelper');
-  $pids = empty($_SESSION['basket']['processed']) ? array() : $_SESSION['basket']['processed'];
-
-  $objectHelper = new ObjectHelper();
-// getting child PIDs if any
-  $cpids = $objectHelper->get_child_pids(array($pid));
-
-  if (array_key_exists($pid, $pids)) {
-// remove item from basket
-    unset($_SESSION['basket']['processed'][$pid]);
-  }
-  if (!empty($cpids)) { // there are children
-    foreach ($cpids as $child_pid => $value) {
-// remove child item from basket recursively
-      fedora_repository_remove_item_from_basket($child_pid);
-    }
-  }
-}
-
-/**
- * fedora repository basket
- * @return type
- */
-function fedora_repository_basket() {
-  $pids = _fedora_repository_get_basket_pids();
-  $output = drupal_get_form('fedora_repository_basket_form', $pids);
-
-  return $output;
-}
-
-function fedora_repository_basket_form($form_state, $pids) {
-  $form = array();
-
-  if (!empty($pids)) {
-    $form['pid'] = array();
-    $form['title'] = array();
-    $form['desc'] = array();
-  }
-  else {
-    return;
-  }
-
-  ksort($pids);
-  foreach ($pids as $pid => $arr) {
-    $cbs[$pid] = '';
-
-    $form['pid'][$pid] = array('#value' => l($pid, "fedora/repository/$pid"));
-    $form['title'][$pid] = array('#value' => $arr['title']);
-    $form['desc'][$pid] = array('#value' => $arr['desc']);
-  }
-
-  $form['remove'] = array(
-    '#type' => 'checkboxes',
-    '#options' => $cbs,
-  );
-
-  $form['remove_submit'] = array(
-    '#type' => 'submit',
-    '#value' => t('Remove selected'),
-  );
-
-  $form['remove_all'] = array(
-    '#type' => 'submit',
-    '#value' => t('Empty basket'),
-  );
-
-  $form['submit'] = array(
-    '#type' => 'submit',
-    '#value' => t('Export selected'),
-  );
-
-  $form['submit_all'] = array(
-    '#type' => 'submit',
-    '#value' => t('Export all'),
-  );
-
-  return $form;
-}
-
-/**
- * theme fedora repository basket form
- * @param type $form
- * @return string
- */
-function theme_fedora_repository_basket_form($form) {
-  $header = array(
-    theme('table_select_header_cell'),
-    t('PID'),
-    t('Title'),
-    t('Description'),
-  );
-
-  if (isset($form['pid']) && is_array($form['pid'])) {
-    foreach (element_children($form['pid']) as $key) {
-      $rows[] = array(
-        drupal_render($form['remove'][$key]),
-        drupal_render($form['pid'][$key]),
-        drupal_render($form['title'][$key]),
-        drupal_render($form['desc'][$key]),
-      );
-    }
-  }
-  else {
-    $rows[] = array(array('data' => t('Your basket is empty.'), 'colspan' => '4'));
-  }
-
-  $output = theme('table', $header, $rows);
-
-  $frm = drupal_render($form);
-  $output = $frm . $output . $frm;
-
-  return $output;
-}
-
-/**
- * fedora repository basket form validate
- * @param type $form
- * @param type $form_state
- */
-function fedora_repository_basket_form_validate($form, &$form_state) {
-
-}
-
-/**
- * fedora repository basket form submit
- * @global type $user
- * @param type $form
- * @param type $form_state
- * @return type
- */
-function fedora_repository_basket_form_submit($form, &$form_state) {
-  if ($form_state['values']['op'] == $form_state['values']['remove_submit']) {
-    $pids = $form_state['clicked_button']['#post']['remove'];
-
-    if (isset($pids)) {
-      foreach ($pids as $pid) {
-        fedora_repository_remove_from_basket($pid);
-      }
-      drupal_set_message(t("Selected objects removed"));
-      return;
-    }
-  }
-
-  if ($form_state['values']['op'] == $form_state['values']['remove_all']) {
-    _fedora_repository_empty_basket();
-    drupal_set_message(t("Basket emptied"));
-    return;
-  }
-
-  if ($form_state['values']['op'] == $form_state['values']['submit_all']) {
-    $msg = t("All objects exported to staging area");
-    $pids = _fedora_repository_get_basket_pids();
-  }
-  elseif ($form_state['values']['op'] == $form_state['values']['submit']) {
-    $msg = t("Selected objects exported to staging area");
-    $pids = array_filter($form_state['values']['remove']);
-  }
-
-  if (!empty($pids)) {
-    global $user;
-    $log = array();
-    $success = TRUE;
-    $export_dir = variable_get('export_area', file_directory_path() . '/fedora_export_area') . '/' . $user->name . '/' . date("Ymd-His");
-    $foxml_dir = $export_dir . '/foxml';
-
-    if (!file_exists($foxml_dir) && !@mkdir($foxml_dir, 0775, TRUE)) {
-      drupal_set_message(t("Failed to create foxml dir @dir. Check that export dir exsits and has correct permissions", array('@dir' => $foxml_dir)), 'error');
-      return FALSE;
-    }
-
-    module_load_include('inc', 'fedora_repository', 'api/fedora_export');
-    foreach ($pids as $pid => $arr) {
-
-      $objects_dir = $export_dir . '/objects/' . $pid;
-      if (!file_exists($objects_dir) && !@mkdir($objects_dir, 0775, TRUE)) {
-        drupal_set_message(t("Failed to create objects dir @dir. Check that export dir exsits and has correct permissions", array('@dir' => $objects_dir)), 'error');
-        return FALSE;
-      }
-
-      if (!export_to_export_area($pid, $foxml_dir, $objects_dir, $log)) {
-        $success = FALSE;
-      }
-    }
-    $msg = $success ? $msg : t("Failed to export objects to staging area");
-    $msg .= ":<br/>" . implode("<br/>", $log);
-
-    drupal_set_message($msg, $success ? 'info' : 'error');
-//_fedora_repository_empty_basket();
-  }
-  else {
-    drupal_set_message(t("No objects selected or basket empty"), 'error');
-  }
-
-  return;
-}
-
-/**
- * Get all pids saved to the basket.
- *
- * @return type
- */
-function _fedora_repository_get_basket_pids() {
-
-// Set empty defaults if basket elements are missing
-  $_SESSION['basket'] = isset($_SESSION['basket']) ? $_SESSION['basket'] : array('processed' => array(), 'unprocessed' => array());
-  $_SESSION['basket']['processed'] = isset($_SESSION['basket']['processed']) ? $_SESSION['basket']['processed'] : array();
-  $_SESSION['basket']['unprocessed'] = isset($_SESSION['basket']['unprocessed']) ? $_SESSION['basket']['unprocessed'] : array();
-
-  $pids = empty($_SESSION['basket']['processed']) ? array() : $_SESSION['basket']['processed'];
-
-  module_load_include('inc', 'fedora_repository', 'ObjectHelper');
-  $ob = new ObjectHelper();
-  foreach ($_SESSION['basket']['unprocessed'] as $pid) {
-// Check if the pid already exists in the tree
-    if (array_key_exists($pid, $pids)) {
-      continue;
-    }
-
-    $pids += $ob->get_all_related_pids($pid);
-//    $pids += array($pid);
-  }
-
-  $_SESSION['basket']['processed'] = $pids;
-  $_SESSION['basket']['unprocessed'] = array();
-
-  return $pids;
-}
-
-/**
- * fedora repository empty basket
- */
-function _fedora_repository_empty_basket() {
-  unset($_SESSION['basket']);
-}
-
-/**
- * fedora repository add to basket
- * @param type $pid
- * @param type $warn
- * @param type $searchResultsFlag
- */
-function fedora_repository_add_to_basket($pid, $warn = TRUE, $searchResultsFlag = FALSE) {
-  if ($warn && _is_added_to_basket($pid)) {
-    drupal_set_message(t("Object already in basket"));
-  }
-
-  if (!isset($_SESSION['basket'])) {
-    $_SESSION['basket'] = array();
-    $_SESSION['basket']['unprocessed'] = array($pid => $pid);
-  }
-  else {
-    $_SESSION['basket']['unprocessed'][$pid] = $pid;
-  }
-
-  if (!$searchResultsFlag) {
-    drupal_goto('fedora/basket');
-  }
-}
-
-/**
- * fedora repository remove from basket
- * @param type $pid
- * @return type
- */
-function fedora_repository_remove_from_basket($pid) {
-  if (isset($_SESSION['basket']['unprocessed'][$pid])) {
-    unset($_SESSION['basket']['unprocessed'][$pid]);
-  }
-
-  if (isset($_SESSION['basket']['processed'][$pid])) {
-    unset($_SESSION['basket']['processed'][$pid]);
-  }
-  return;
-}
-
-/**
- * theme add to basket link
- * @param type $pid
- * @param type $type
- * @return type
- */
-function theme_add_to_basket_link($pid, $type = 'object') {
-  $object = t($type);
-  $path = drupal_urlencode($pid);
-
-  $save = "export_big.png";
-  $saved = "exported_big.png";
-//  $path = drupal_get_path('module', 'fedora_repository').'/images/'.$save ;
-  /*
-    var_dump($path);
-    var_dump(theme('image',drupal_get_path('module', 'fedora_repository').'/images/'.$save));
-    die();
-   */
-  if (!_is_added_to_basket($pid)) {
-    return l(
-        theme('image', drupal_get_path('module', 'fedora_repository') . '/images/' . $save, t("Add to basket"), t("Add this @object to my basket", array('@object' => $object))), "fedora/repository/addToBasket/" . $path, array('html' => TRUE)
-    );
-  }
-
-  return theme('image', drupal_get_path('module', 'fedora_repository') . '/images/' . $saved, t("In basket"), t("This @object is already in your basket", array('@object' => $object)));
-}
-
-/**
- * is added to basket
- * @param type $pid
- * @param type $account
- * @return type
- */
-function _is_added_to_basket($pid, $account = NULL) {
-  return isset($_SESSION['basket']['unprocessed'][$pid]) || isset($_SESSION['basket']['processed'][$pid]);
-//  return db_result(db_query("SELECT uid FROM {repository_basket} WHERE uid = %d AND pid = '%s'", $account->uid, $pid));
 }
 
 /**
@@ -2305,8 +1436,6 @@ function fedora_repository_display_schema($file) {
  *   and finished callback
  */
 function fedora_repository_batch_reingest_object($object, $module_name, &$context) {
-
-
   module_load_include('inc', 'fedora_repository', 'api/fedora_item');
   module_load_include('inc', 'fedora_repository', 'api/fedora_utils');
 
@@ -2437,7 +1566,7 @@ function theme_fedora_repository_solution_packs_list($solution_packs) {
 }
 
 /**
- * Implements hook_forms()
+ * Implements hook_forms().
  *
  * @param string $form_id
  *
@@ -2489,7 +1618,7 @@ function fedora_repository_imagecache_default_presets() {
  * @return
  *   Markup for the image, making use of imagecache_external if it is available.
  */
-function _fedora_repository_render_image($tn_path, $imagecache_preset = 'fedora_repository_collection_thumbnail') {
+function _fedora_repository_render_image($tn_path, $imagecache_preset = 'fedora_repository_collection_thumbnail', $truncated_title = '', $title = '') {
   $thumbnail = NULL;
   if ($thumbnail === NULL &&
     module_exists('imagecache_external') &&
@@ -2512,6 +1641,9 @@ function _fedora_repository_render_image($tn_path, $imagecache_preset = 'fedora_
  * _fedora_repository_render_image(), and returns the result.
  *
  * @see _fedora_repository_render_image()
+ * @todo
+ *   Set the title/alt text(truncated title) for passing into _fedora_repository_render_image()
+ *
  * @param $pid string
  *   A string containing a Fedora PID.
  * @param $dsid
@@ -2530,9 +1662,96 @@ function fedora_repository_render_image($pid, $dsid, $imagecache_preset = 'fedor
 /**
  * Convenience function used in XSLT callback...
  *
- * @param $string string
+ * @param string $string
  *   A string containing some markup to convert to a domnode.
  */
 function fedora_repository_string_to_domnode($string) {
   return DOMDocument::loadXML($string);
+}
+
+/**
+ * Permission check function at old name.
+ *
+ * Defers the call to fedora_repository_check_perm() and displays a message
+ * to encourage any people using the old function to change their code.
+ *
+ * @deprecated
+ */
+function fedora_repository_access() {
+  drupal_set_message(t('Contact your code maintainer to change all occurences of fedora_repository_access() to fedora_repository_check_perm().'));
+  return call_user_func_array('fedora_repository_check_perm', func_get_args());
+}
+
+/**
+ * Hookable access check for module-specific permissions.
+ *
+ * @global $user
+ * @see hook_fedora_repository_check_perm()
+ *
+ * @param string $op
+ *   The operation to be performed.
+ * @param string|null $pid
+ *   A PID to check, or NULL to use the root collection PID.
+ * @param object|null $as_user
+ *   An account to check the permission on, or NULL to use the current user.
+ * @param boolean $reset_cache
+ *   A boolean to reset the static cache, if required in long-running processes.
+ *
+ * @return boolean
+ *   A boolean indicating if the operation should be permitted (TRUE) or denied
+ *   (FALSE).
+ */
+function fedora_repository_check_perm($op, $pid = NULL, $as_user = NULL, $reset_cache = FALSE) {
+  static $cache = array();
+
+  if ($reset_cache) {
+    $cache = array();
+  }
+  // The PID can be empty for the root object.
+  if (empty($pid)) {
+    $pid = variable_get('fedora_repository_pid', 'islandora:root');
+  }
+  if ($as_user === NULL) {
+    global $user;
+    $as_user = $user;
+  }
+
+  // Populate the cache on a miss.
+  if (!isset($cache[$op][$pid][$as_user->uid])) {
+    $results = module_invoke_all('fedora_repository_check_perm', $op, $pid, $as_user);
+    // Nothing returned FALSE, and something returned TRUE.
+    $cache[$op][$pid][$as_user->uid] = (!in_array(FALSE, $results, TRUE) && in_array(TRUE, $results, TRUE));
+  }
+
+  return $cache[$op][$pid][$as_user->uid];
+}
+
+/**
+ * Implements hook_fedora_repository_check_perm().
+ *
+ * Checks the PID namespace if restrictions are enabled, in addition to
+ * permitting according to Drupal permissions.
+ */
+function fedora_repository_fedora_repository_check_perm($op, $pid, $user) {
+  $to_return = TRUE;
+  if (variable_get('fedora_namespace_restriction_enforced', TRUE)) {
+    // Get the namespace (with colon)
+    $pid_namespace = substr($pid, 0, strpos($pid, ':') + 1);
+    $allowed_namespaces = explode(" ", variable_get('fedora_pids_allowed', 'default: demo: changeme: islandora: ilives: islandora-book: books: newspapers: '));
+
+    $to_return = in_array($pid_namespace, $allowed_namespaces);
+  }
+
+  if ($to_return && user_access($op, $user)) {
+    // Straight Drupal permissions, let's allow it.
+    return TRUE;
+  }
+  elseif ($to_return === FALSE) {
+    // PID namespace is outside of those allowed.  Forbid!
+    return FALSE;
+  }
+  else {
+    // Neither allowing of forbidding, to allow other modules to override.
+    return NULL;
+  }
 }
