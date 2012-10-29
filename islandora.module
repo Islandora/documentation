@@ -254,38 +254,19 @@ function islandora_access_callback($object = NULL, $perm = NULL) {
 /**
  * Returns an array listing object types.
  *
- * @param string $model
- *   A string representing a short content model URI, to only get the relevant
- *   elements.
- *
  * @return array
  *   An associative array mapping cmodel pids to modules to a boolean
  *   indicating if the hook on the given module should be called.
- *
- * @todo
- *   Rename this function and the hook, as it now has a wider usage.
  */
-function islandora_get_types($model = NULL) {
+function islandora_types() {
   $types = &drupal_static(__FUNCTION__);
 
   if ($types === NULL) {
-    $types = module_invoke_all('islandora_get_types');
-    drupal_alter('islandora_get_types', $types);
-
-    // TODO: Add in the defaults, where there's no view or edit?
+    $types = module_invoke_all('islandora_type_info');
+    drupal_alter('islandora_type_info', $types);
   }
 
-  if ($model !== NULL) {
-    if (isset($types[$model])) {
-      return $types[$model];
-    }
-    else {
-      return array();
-    }
-  }
-  else {
-    return $types;
-  }
+  return $types;
 }
 
 function islandora_init() {
@@ -331,7 +312,7 @@ function islandora_edit_object($object) {
 }
 
 /**
- * Invoke a hook registered via islandora_get_types().
+ * Invoke a hook registered via hook_islandora_type_info().
  *
  * @param string $hook
  *   The hook to invoke.
@@ -351,7 +332,7 @@ function islandora_invoke($hook, $object) {
   $output = array();
 
   // Get the models...
-  $supported_models = islandora_get_types();
+  $supported_models = islandora_types();
 
   // Filter them down to only the ones explicitly supported.
   $models = array_intersect(array_keys($supported_models), $object->models);

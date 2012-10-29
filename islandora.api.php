@@ -6,58 +6,133 @@
  */
 
 /**
- * Allows modules to add to a repository objects view/edit(/misc) process.
+ * Generate a repository objects view.
  *
- * If you implement this hook you must also register your module for view
- * with the hook_islandora_get_types().
- *
- * Islandora gets all displays back in an array.  The order they are displayed
- * is based on the order of the key of the array that each module returns.
- *
- * "HOOK_NAME" reflects those provided by the islandora_get_types() function,
- * and these functions should be called via islandora_invoke().  There are a
- * number of these hooks defined at the top of islandora.module, including:
- * - ISLANDORA_VIEW_HOOK: Invoked in islandora_view_object(); returns an array
- *     containing string values, and whose keys will be used for sorting.
- *     Takes four parameters:
- *   - fedora_object: A Tuque FedoraObject being operated on.
- *   - user: The user accessing the object.
- *   - page_number: The page in the content.
- *   - page_size: The size o the page.
- * - ISLANDORA_EDIT_HOOK: Invoked in islandora_edit_object(); returns an array
- *     containing string values, whose keys will be used for sorting.
- *     Takes one parameter:
- *   - fedora_object: A Tuque FedoraObject being operated on.
- * - ISLANDORA_POST_INGEST_HOOK: Invoked in islandora_ingest_add_object(); no
- *     return.  Probably want to use this to add additional datastreams, or
- *     or perhap remove some.  Takes one parameter:
- *   - The object in question.
- * - ISLANDORA_PRE_PURGE_OBJECT_HOOK: Invoked in islandora_object_purge(); can
- *     return an associative array of with the key "delete" mapped to TRUE,
- *     which will cause the object to be marked "deleted" instead of actually
- *     purging the object. (This should be verirfied?)
+ * If you implement this hook you must also register your module with
+ * hook_islandora_hook_info().
  *
  * @param type $islandora_object
  *   A Tuque FedoraObject
- * @param ...
- *   A variable list of arguments, as required by the in question hook.
+ * @param FedoraObject $fedora_object
+ *   A Tuque FedoraObject being operated on.
+ * @param object $user
+ *   The user accessing the object.
+ * @param string $page_number
+ *   The page in the content.
+ * @param string $page_size: The size of the page.
  *
  * @return array
  *   An array to merge in.
  */
-function hook_HOOK_NAME($islandora_object) {}
+function hook_islandora_view_object($fedora_object, $user, $page_number, $page_size) {}
 
 /**
- * Alter an object before further processing in islandora_invoke().
+ * Alter an object before processing in hook_islandora_view_object().
+ *
+ * @param FedoraObject $fedora_object
+ *   The Tuque FedoraObject being displayed.
  */
-function hook_HOOK_NAME_alter($fedora_object) {}
+function hook_islandora_view_object_alter(&$fedora_object) {}
 
 /**
- * Allow output of hooks passing through islandora_invoke() to be altered.
+ * Alter display output after it has been generated.
+ *
+ * @param array $arr
+ *   An arr of rendered views.
+ */
+function hook_islandora_view_object_output_alter(&$arr) {}
+
+/**
+ * Generate an object's management display.
+ *
+ * If you implement this hook you must also register your module with
+ * hook_islandora_hook_info().
+ *
+ * @param type $fedora_object
+ *   A Tuque FedoraObject
+ *
+ * @return array
+ *   An array to merge in.
+ */
+function hook_islandora_edit_object($fedora_object) {}
+
+/**
+ * Alter an object before processing in hook_islandora_edit_object().
+ * 
+ * @param FedoraObject $fedora_object
+ *   The Tuque FedoraObject to alter.
+ */
+function hook_islandora_edit_object_alter(&$fedora_object) {}
+
+/**
+ * Allow management display output to be altered.
+ *
  * @param type $arr
  *   an arr of rendered views
  */
-function hook_HOOK_NAME_output_alter($arr) {}
+function hook_islandora_edit_object_output_alter(&$arr) {}
+
+/**
+ * Allows modules to add to an objects ingest process.
+ *
+ * If you implement this hook you must also register your module for with
+ * hook_islandora_hook_info().
+ *
+ * NOTE: This doesn't normally return any output.
+ *
+ * @param FedoraObject $fedora_object
+ *   A Tuque FedoraObject.
+ */
+function hook_islandora_ingest_post_ingest($fedora_object) {}
+
+/**
+ * Alter an object before processing in hook_islandora_ingest_post_ingest().
+ *
+ * @param FedoraObject $fedora_object
+ *   A Tuque FedoraObject.
+ */
+function hook_islandora_ingest_post_ingest_alter(&$fedora_object) {}
+
+/**
+ * Allow output of hook_islandora_ingest_post_ingest() be altered.
+ *
+ * @param array $arr
+ *   The array of hook output.
+ */
+function hook_islandora_ingest_post_ingest_output_alter(&$arr) {}
+
+/**
+ * Allows modules to add to a repository objects view/edit(/misc) process.
+ *
+ * If you implement this hook you must also register your module with
+ * hook_islandora_hook_info().
+ *
+ * @param FedoraObject $fedora_object
+ *   A Tuque FedoraObject.
+ *
+ * @return array|null
+ *   An associative array with 'deleted' mapped to TRUE--indicating that the
+ *   object should just be marked as deleted, instead of actually being
+ *   purged--or NULL/no return if we just need to do something before the
+ *   is purged.
+ */
+function hook_islandora_pre_purge_object($fedora_object) {}
+
+/**
+ * Alter an object before processing in hook_islandora_pre_purge_object_alter().
+ *
+ * @param FedoraObject $fedora_object
+ *   A Tuque FedoraObject.
+ */
+function hook_islandora_pre_purge_object_alter(&$fedora_object) {}
+
+/**
+ * Allow output of hook_islandora_pre_purge_object() to be altered.
+ *
+ * @param array $arr
+ *   The array of hook output.
+ */
+function hook_islandora_pre_purge_object_output_alter(&$arr) {}
 
 
 /**
@@ -68,7 +143,7 @@ function hook_HOOK_NAME_output_alter($arr) {}
  *   booleans indicating that the given module's implementation of the hook
  *   should be invoked.
  */
-function hook_islandora_get_types() {
+function hook_islandora_type_info() {
   $types = array(
     'my:coolCModel' => array(
       'my_cool_module' => array(
@@ -78,22 +153,6 @@ function hook_islandora_get_types() {
   );
   return $types;
 }
-
-/**
- * Allows modules to define an object edit page by cmodel.
- *
- * Your module must return TRUE for ISLANDORA_EDIT_HOOK in its
- * implementation of hook_islandora_get_types().
- *
- * Islandora provides a default implementation that should work for most use
- * cases.
- *
- * @param object $islandora_object
- *   A Tuque FedoraObject to be edited.
- * @return array
- *   An array of strings containing markup, which will be imploded together.
- */
-function hook_islandora_edit_object($islandora_object) {}
 
 /**
  * Register potential ingest routes.
