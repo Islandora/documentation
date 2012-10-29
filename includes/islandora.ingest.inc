@@ -95,7 +95,7 @@ function islandora_ingest_new_object_prepare($namespace = NULL, $label = NULL, $
  */
 function islandora_ingest_add_object(&$object) {
   $object->repository->ingestObject($object);
-  module_invoke_all('islandora_ingest_post_ingest', $object);
+  islandora_invoke(ISLANDORA_POST_INGEST_HOOK, $object);
   return $object;
 }
 
