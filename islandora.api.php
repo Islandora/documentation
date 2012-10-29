@@ -22,7 +22,7 @@
  * @param string $page_size: The size of the page.
  *
  * @return array
- *   An array to merge in.
+ *   An array whose values are markup.
  */
 function hook_islandora_view_object($fedora_object, $user, $page_number, $page_size) {}
 
@@ -52,7 +52,7 @@ function hook_islandora_view_object_output_alter(&$arr) {}
  *   A Tuque FedoraObject
  *
  * @return array
- *   An array to merge in.
+ *   An array whose values are markup.
  */
 function hook_islandora_edit_object($fedora_object) {}
 
