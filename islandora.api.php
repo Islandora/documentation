@@ -8,11 +8,6 @@
 /**
  * Generate a repository objects view.
  *
- * If you implement this hook you must also register your module with
- * hook_islandora_hook_info().
- *
- * @param type $islandora_object
- *   A Tuque FedoraObject
  * @param FedoraObject $fedora_object
  *   A Tuque FedoraObject being operated on.
  * @param object $user
@@ -27,26 +22,32 @@
 function hook_islandora_view_object($fedora_object, $user, $page_number, $page_size) {}
 
 /**
- * Alter an object before processing in hook_islandora_view_object().
+ * Generate an object's display for the given content model.
  *
- * @param FedoraObject $fedora_object
- *   The Tuque FedoraObject being displayed.
+ * Content models PIDs have colons and hyphens changed to underscores, to
+ * create the hook name.
+ *
+ * @param type $fedora_object
+ *   A Tuque FedoraObject
+ *
+ * @return array
+ *   An array whose values are markup.
  */
-function hook_islandora_view_object_alter(&$fedora_object) {}
+function hook_CMODEL_PID_islandora_view_object($fedora_object) {}
+
 
 /**
  * Alter display output after it has been generated.
  *
+ * @param FedoraObject $fedora_object
+ *   A Tuque FedoraObject being operated on.
  * @param array $arr
  *   An arr of rendered views.
  */
-function hook_islandora_view_object_output_alter(&$arr) {}
+function hook_islandora_view_object_alter(&$fedora_object, &$arr) {}
 
 /**
  * Generate an object's management display.
- *
- * If you implement this hook you must also register your module with
- * hook_islandora_hook_info().
  *
  * @param type $fedora_object
  *   A Tuque FedoraObject
@@ -57,28 +58,31 @@ function hook_islandora_view_object_output_alter(&$arr) {}
 function hook_islandora_edit_object($fedora_object) {}
 
 /**
- * Alter an object before processing in hook_islandora_edit_object().
- * 
- * @param FedoraObject $fedora_object
- *   The Tuque FedoraObject to alter.
+ * Generate an object's management display for the given content model.
+ *
+ * Content models PIDs have colons and hyphens changed to underscores, to
+ * create the hook name.
+ *
+ * @param type $fedora_object
+ *   A Tuque FedoraObject
+ *
+ * @return array
+ *   An array whose values are markup.
  */
-function hook_islandora_edit_object_alter(&$fedora_object) {}
+function hook_CMODEL_PID_islandora_edit_object($fedora_object) {}
 
 /**
  * Allow management display output to be altered.
  *
+ * @param type $fedora_object
+ *   A Tuque FedoraObject
  * @param type $arr
  *   an arr of rendered views
  */
-function hook_islandora_edit_object_output_alter(&$arr) {}
+function hook_islandora_edit_object_alter(&$fedora_object, &$arr) {}
 
 /**
  * Allows modules to add to an objects ingest process.
- *
- * If you implement this hook you must also register your module for with
- * hook_islandora_hook_info().
- *
- * NOTE: This doesn't normally return any output.
  *
  * @param FedoraObject $fedora_object
  *   A Tuque FedoraObject.
@@ -86,20 +90,9 @@ function hook_islandora_edit_object_output_alter(&$arr) {}
 function hook_islandora_ingest_post_ingest($fedora_object) {}
 
 /**
- * Alter an object before processing in hook_islandora_ingest_post_ingest().
- *
- * @param FedoraObject $fedora_object
- *   A Tuque FedoraObject.
+ * Allow modules to add to the ingest process of a specific content model.
  */
-function hook_islandora_ingest_post_ingest_alter(&$fedora_object) {}
-
-/**
- * Allow output of hook_islandora_ingest_post_ingest() be altered.
- *
- * @param array $arr
- *   The array of hook output.
- */
-function hook_islandora_ingest_post_ingest_output_alter(&$arr) {}
+function hook_CMODEL_PID_islandora_ingest_post_ingest($fedora_object) {}
 
 /**
  * Allows modules to add to a repository objects view/edit(/misc) process.
@@ -119,40 +112,11 @@ function hook_islandora_ingest_post_ingest_output_alter(&$arr) {}
 function hook_islandora_pre_purge_object($fedora_object) {}
 
 /**
- * Alter an object before processing in hook_islandora_pre_purge_object_alter().
+ * Allow modules to react to the purge process of a specific content model.
  *
- * @param FedoraObject $fedora_object
- *   A Tuque FedoraObject.
+ * @see hook_islandora_pre_purge_object()
  */
-function hook_islandora_pre_purge_object_alter(&$fedora_object) {}
-
-/**
- * Allow output of hook_islandora_pre_purge_object() to be altered.
- *
- * @param array $arr
- *   The array of hook output.
- */
-function hook_islandora_pre_purge_object_output_alter(&$arr) {}
-
-
-/**
- * Get an array of object types provided by other modules.
- *
- * @return array
- *   An associative array mapping cmodel PIDs to module names to hooks to
- *   booleans indicating that the given module's implementation of the hook
- *   should be invoked.
- */
-function hook_islandora_type_info() {
-  $types = array(
-    'my:coolCModel' => array(
-      'my_cool_module' => array(
-        ISLANDORA_VIEW_HOOK => TRUE,
-      ),
-    ),
-  );
-  return $types;
-}
+function hook_CMODEL_PID_islandora_pre_purge_object($fedora_object) {}
 
 /**
  * Register potential ingest routes.
@@ -180,6 +144,7 @@ function hook_islandora_edit_datastream_registry($islandora_object, $ds_id) {}
 
 /**
  * Alter an object before it gets used further down the stack.
+ *
  * @param type $object
  *   A Tuque FedoraObject
  */
@@ -189,11 +154,18 @@ function hook_islandora_object_alter($fedora_object) {}
  * Allow modification of an object before ingesting.
  *
  * @param type $islandora_object
- *   a tuque FedoraObject
+ *   A Tuque FedoraObject
  * @param array $content_models
  * @param string $collection_pid
  */
 function hook_islandora_ingest_pre_ingest($islandora_object, $content_models, $collection_pid) {}
+
+/**
+ * Allow modification of objects of a certain content model before ingesting.
+ *
+ * @see hook_islandora_ingest_pre_ingest()
+ */
+function hook_CMODEL_PID_islandora_ingest_pre_ingest($islandora_object, $content_models, $collection_pid) {}
 
 /**
  * Allow modules to setup for the purge of a datastream.
