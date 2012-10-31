@@ -132,7 +132,8 @@ function islandora_ingest_new_object_prepare($namespace = NULL, $label = NULL, $
     $object->ingestDatastream($datastream);
   }
 
-  foreach (_islandora_build_hook_list('islandora_ingest_pre_ingest', $content_models) as $hook) {
+  module_load_include('inc', 'islandora', 'includes/utilities');
+  foreach (islandora_build_hook_list('islandora_ingest_pre_ingest', $content_models) as $hook) {
     module_invoke_all($hook, $object, $content_models, $collection_pid);
   }
 
@@ -151,7 +152,9 @@ function islandora_ingest_new_object_prepare($namespace = NULL, $label = NULL, $
 function islandora_ingest_add_object(&$object) {
   $object->repository->ingestObject($object);
 
-  foreach (_islandora_build_hook_list(ISLANDORA_POST_INGEST_HOOK, $object->models) as $hook) {
+  module_load_include('inc', 'islandora', 'includes/utilities');
+
+  foreach (islandora_build_hook_list(ISLANDORA_POST_INGEST_HOOK, $object->models) as $hook) {
     module_invoke_all($hook, $object);
   }
 
