@@ -641,36 +641,20 @@ function theme_islandora_viewers_table($variables) {
  *
  * @TODO add documentation
  */
-function islandora_get_viewer($object_id = NULL, $dsid = NULL, $settings_id = NULL) {
+function islandora_get_viewer($url = NULL, $settings_id = NULL) {
   // get viewer from settings
   $settings = variable_get($settings_id, array());
   // make sure a viewer is set
   if (!empty($settings) AND $settings['default'] !== 'none') {
-    // create url
-    $url = islandora_get_viewer_url($object_id, $dsid);
     // get callback function
     $viewer_id = islandora_get_viewer_id($settings_id);
-    if ($viewer_id) {
+    if ($viewer_id AND $url !== NULL) {
       $callback = islandora_get_viewer_callback($viewer_id);
       // call callback function
       return $callback($url);
     }
   }
   return NULL;
-}
-
-/**
- * Get the url to be passed to the viewer.
- *
- * @TODO add documentation
- */
-function islandora_get_viewer_url($object_id = NULL, $dsid = NULL) {
-  global $base_url;
-  if ($object_id !== NULL AND $dsid !== NULL) {
-    $url = $base_url . '/islandora/object/' . $object_id . '/datastream/' . $dsid . '/view';
-    return $url;
-  }
-  return FALSE;
 }
 
 /**
