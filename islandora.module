@@ -415,15 +415,22 @@ function islandora_default_islandora_view_object($object) {
  */
 function islandora_theme() {
   return array(
+    // default object template
     'islandora_default' => array(
       'file' => 'theme/islandora.theme.inc',
       'template' => 'theme/islandora-object',
       'variables' => array('islandora_object' => NULL),
     ),
+    // default edit page
     'islandora_default_edit' => array(
       'file' => 'theme/islandora.theme.inc',
       'template' => 'theme/islandora-object-edit',
       'variables' => array('islandora_object' => NULL),
+    ),
+    // admin table for solution pack viewer selection
+    'islandora_viewers_table' => array(
+      'file' => 'includes/solution_packs.inc',
+      'render element' => 'form',
     ),
   );
 }
@@ -634,3 +641,8 @@ function islandora_islandora_required_objects() {
     ),
   );
 }
+
+
+
+
+

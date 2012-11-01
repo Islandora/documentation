@@ -483,5 +483,222 @@ function islandora_check_object_status($object_model = array()) {
   }
 }
 
+/**
+ * A form construct to create a viewer selection table.
+ *
+ * @TODO: documentation
+ */
+function islandora_viewers_form($variable_id = NULL, $mimetype = NULL) {
+  $form = array();
+  // get viewers
+  $viewers = islandora_get_viewers($mimetype);
+  if (!empty($viewers)) {
+    // add option for no viewer
+    $no_viewer = array();
+    $no_viewer['none'] = array(
+      'label' => t('None'),
+      'description' => t('Don\'t use a viewer for this solution pack.'),
+    );
+    // merge to viewers array
+    $viewers = array_merge_recursive($no_viewer, $viewers);
+  }
+  // get viewer settings
+  $viewers_config = variable_get($variable_id, array());
+  // viewer
+  $form['viewers'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Viewers'),
+    '#collapsible' => FALSE,
+    '#collapsed' => FALSE,
+  );
 
+  if (!empty($viewers)) {
+    // viewers table
+    $form['viewers'][$variable_id] = array(
+      '#type' => 'item',
+      '#title' => t('Select a viewer'),
+      '#description' => t('Preferred viewer for your solution pack. These may be provided by third-party modules.'),
+      '#tree' => TRUE, // this attribute is important to return the submitted values in a deeper nested arrays in
+      '#theme' => 'islandora_viewers_table',
+    );
 
+    // table loop
+    foreach ($viewers as $name => $profile) {
+  
+      $options[$name] = '';
+        // machine name
+      $form['viewers'][$variable_id]['name'][$name] = array(
+        '#type' => 'hidden',
+        '#value' => $name,
+      );
+      // label
+      $form['viewers'][$variable_id]['label'][$name] = array(
+        '#type' => 'item',
+        '#markup' => $profile['label'],
+      );
+      // description
+      $form['viewers'][$variable_id]['description'][$name] = array(
+        '#type' => 'item',
+        '#markup' => $profile['description'],
+      );
+      // configuration url
+      $form['viewers'][$variable_id]['configuration'][$name] = array(
+        '#type' => 'item',
+        '#markup' => (isset($profile['configuration']) AND $profile['configuration'] != '') ? l(t('configure'), $profile['configuration']) : '',
+      );
+    }
+    // radios
+    $form['viewers'][$variable_id]['default'] = array(
+      '#type' => 'radios',
+      '#options' => isset($options) ? $options : array(),
+      '#default_value' => !empty($viewers_config) ? $viewers_config['default'] : 'none',
+    );
+  }
+  else {
+    // No viewers found
+    $form['viewers'][$variable_id . '_no_viewers'] = array(
+      '#markup' => t('No viewers detected.'),
+    );
+    // remove viewers variable
+    variable_del($variable_id);
+  }
+  return $form;
+}
+
+/**
+ * Returns all defined viewers.
+ *
+ * @param string $mimetype
+ *  specify a mimetype to return only viewers that support this certain mimetype.
+ * @return
+ *  array of viewer definitions, or FALSE if none are found.
+ */
+function islandora_get_viewers($mimetype = NULL) {
+  $viewers = array();
+  // get all viewers
+  $defined_viewers = module_invoke_all('islandora_viewer_info');  
+  // filter viewers by mimetype
+  foreach($defined_viewers as $key => $value) {
+    if (in_array($mimetype, $value['mimetype']) OR $mimetype == NULL) {
+      $viewers[$key] = $value;
+    }
+  }
+  if (!empty($viewers)) {
+    return $viewers;
+  }
+  return FALSE;
+}
+
+/**
+ * Theme function for the admin primary display table
+ *
+ * @param type $variables
+ *   render element: $form
+ *   Contains the form array
+ * @return
+ *   rendered form element
+ *
+ *  @see islandora_large_image_admin()
+ */
+function theme_islandora_viewers_table($variables) {
+  // set form
+  $form = $variables['form'];
+  $rows = array();
+
+  foreach ($form['name'] as $key => $element) {
+    // Do not take form control structures.
+    if (is_array($element) && element_child($key)) {
+      // set rows
+      $row = array();
+      $row[] = array('data' => drupal_render($form['default'][$key]));
+      $row[] = array('data' => drupal_render($form['label'][$key]));
+      $row[] = array('data' => drupal_render($form['description'][$key]));
+      $row[] = array('data' => drupal_render($form['configuration'][$key]));
+
+      // add to rows
+      $rows[] = array('data' => $row);
+    }
+  }
+
+  // Individual table headers.
+  // default | label | description | configuration
+  $header = array();
+  $header[] = array('data' => t('Default'));
+  $header[] = array('data' => t('Label'));
+  $header[] = array('data' => t('Description'));
+  $header[] = array('data' => t('Configuration'));
+
+  // render form
+  $output = '';
+  $output .= theme('table', array('header' => $header, 'rows' => $rows, 'attributes' => array('id' => 'islandora-viewers-table')));
+  $output .= drupal_render_children($form);
+
+  return $output;
+}
+
+/**
+ * Gather information and return a rendered viewer
+ *
+ * @TODO add documentation
+ */
+function islandora_get_viewer($object_id = NULL, $dsid = NULL, $settings_id = NULL) {
+  // get viewer from settings
+  $settings = variable_get($settings_id, array());
+  // make sure a viewer is set
+  if (!empty($settings) AND $settings['default'] !== 'none') {
+    // create url
+    $url = islandora_get_viewer_url($object_id, $dsid);
+    // get callback function
+    $viewer_id = islandora_get_viewer_id($settings_id);
+    if ($viewer_id) {
+      $callback = islandora_get_viewer_callback($viewer_id);
+      // call callback function
+      return $callback($url);
+    }
+  }
+  return NULL;
+}
+
+/**
+ * Get the url to be passed to the viewer.
+ *
+ * @TODO add documentation
+ */
+function islandora_get_viewer_url($object_id = NULL, $dsid = NULL) {
+  global $base_url;
+  if ($object_id !== NULL AND $dsid !== NULL) {
+    $url = $base_url . '/islandora/object/' . $object_id . '/datastream/' . $dsid . '/view';
+    return $url;
+  }
+  return FALSE;
+}
+
+/**
+ * Get id of the enabled viewer.
+ *
+ * @TODO add documentation
+ */
+function islandora_get_viewer_id() {
+  $viewers_config = variable_get('islandora_large_image_viewers', array());
+  if (!empty($viewers_config)) {
+    return $viewers_config['default'];
+  }
+  return FALSE;
+}
+
+/**
+ * Get callback function for a viewer.
+ *
+ * @TODO add documentation
+ */
+function islandora_get_viewer_callback($viewer_id = NULL) {
+  if ($viewer_id !== NULL) {
+    // get defined viewers
+    $viewers = module_invoke_all('islandora_viewer_info');
+    if (isset($viewers[$viewer_id]['callback'])) {
+      // return callback function
+      return $viewers[$viewer_id]['callback'];      
+    }
+  }
+  return FALSE;
+}
