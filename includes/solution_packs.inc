@@ -486,9 +486,20 @@ function islandora_check_object_status($object_model = array()) {
 }
 
 /**
+ * @defgroup viewer-functions
+ * @{
+ * Helper functions to include viewers for solution packs.
+ */
+
+/**
  * A form construct to create a viewer selection table.
  *
- * @TODO: documentation
+ * @param string $variable_id
+ *   The id of the Drupal variable to save the viewer settings in
+ * @param string $mimetype
+ *   The table will be populated with viewers supporting this mimetype
+ * @return
+ *   A form api array which defines a themed table to select a viewer.
  */
 function islandora_viewers_form($variable_id = NULL, $mimetype = NULL) {
   $form = array();
@@ -641,19 +652,25 @@ function theme_islandora_viewers_table($variables) {
 /**
  * Gather information and return a rendered viewer
  *
- * @TODO add documentation
+ * @param array/string $params
+ *   Array or string with data the module needs in order to render a full viewer
+ * @param string $variable_id
+ *   The id of the Drupal variable the viewer settings are saved in
+ * @return
+ *   The callback to the viewer module. Returns a rendered viewer. Returns FALSE
+ *   if no viewer is set.
  */
-function islandora_get_viewer($url = NULL, $settings_id = NULL) {
+function islandora_get_viewer($params = NULL, $variable_id = NULL) {
   // get viewer from settings
-  $settings = variable_get($settings_id, array());
+  $settings = variable_get($variable_id, array());
   // make sure a viewer is set
   if (!empty($settings) AND $settings['default'] !== 'none') {
     // get callback function
-    $viewer_id = islandora_get_viewer_id($settings_id);
-    if ($viewer_id AND $url !== NULL) {
+    $viewer_id = islandora_get_viewer_id($variable_id);
+    if ($viewer_id AND $params !== NULL) {
       $callback = islandora_get_viewer_callback($viewer_id);
       // call callback function
-      return $callback($url);
+      return $callback($params);
     }
   }
   return NULL;
@@ -662,10 +679,13 @@ function islandora_get_viewer($url = NULL, $settings_id = NULL) {
 /**
  * Get id of the enabled viewer.
  *
- * @TODO add documentation
+ * @param string $variable_id
+ *   The id of the Drupal variable the viewer settings are saved in
+ * @return
+ *   The enabled viewer id. Returns FALSE if no viewer config is set.
  */
-function islandora_get_viewer_id() {
-  $viewers_config = variable_get('islandora_large_image_viewers', array());
+function islandora_get_viewer_id($variable_id) {
+  $viewers_config = variable_get($variable_id, array());
   if (!empty($viewers_config)) {
     return $viewers_config['default'];
   }
@@ -675,7 +695,10 @@ function islandora_get_viewer_id() {
 /**
  * Get callback function for a viewer.
  *
- * @TODO add documentation
+ * @param string $viewer_id
+ *   The ID of a viewer
+ * @return
+ *   The callback function as a string as defined by the viewer.
  */
 function islandora_get_viewer_callback($viewer_id = NULL) {
   if ($viewer_id !== NULL) {
@@ -688,3 +711,7 @@ function islandora_get_viewer_callback($viewer_id = NULL) {
   }
   return FALSE;
 }
+
+/**
+ * @} End of "defgroup viewer-functions".
+ */
