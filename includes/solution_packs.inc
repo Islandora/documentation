@@ -492,24 +492,6 @@ function islandora_check_object_status($object_model = array()) {
  */
 
 /**
- * A form construct to create a select box for the use of the default tab.
- *
- * @param string $variable_id
- *  The ID of the Drupal variable to save the checkbox setting in
- */
-function islandora_use_for_default_tab_form($variable_id = NULL) {
-  $form = array();
-  $form[$variable_id] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Provide the view for the default tab'),
-    '#default_value' => variable_get($variable_id, 1),
-    '#description' => t('Should this module provide the view for the default view tab. If you are seeing unexpected content
-      on a view tab you may have multiple modules configured to provide content for the default tab.'),
-  );
-  return $form;  
-}
-
-/**
  * A form construct to create a viewer selection table.
  *
  * @param string $variable_id
