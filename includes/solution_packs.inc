@@ -9,6 +9,8 @@
  * Solution pack admin page callback
  */
 function islandora_solution_packs_admin() {
+  // add css
+  drupal_add_css(drupal_get_path('module', 'islandora') . '/css/islandora.admin.css');
   // check connection
   module_load_include('inc', 'islandora', 'includes/utilities');
   $url = variable_get('islandora_base_url', 'http://localhost:8080/fedora');
