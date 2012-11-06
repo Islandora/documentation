@@ -436,7 +436,7 @@ function islandora_view_object($fedora_object = NULL) {
 
   // Call cmodel oriented variants first.
   foreach (islandora_build_hook_list(ISLANDORA_VIEW_HOOK, $fedora_object->models) as $hook) {
-    $temp = module_invoke_all($hook, $fedora_object, $user, $page_number, $page_size);
+    $temp = module_invoke_all($hook, $fedora_object, $page_number, $page_size);
     if (!empty($temp)) {
       $output = array_merge_recursive($output, $temp);
     }
