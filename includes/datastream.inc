@@ -35,7 +35,7 @@ function islandora_view_datastream(FedoraDatastream $datastream, $download = FAL
     header('Content-length: ' . $datastream->size);
   }
   if ($download) {
-    header("Content-Disposition: attachment; filename=\"" . $datastream->label);
+    header("Content-Disposition: attachment; filename=\"{$datastream->label}\"");
   }
   drupal_page_is_cacheable(FALSE);
   // Try not to load the file into PHP memory!
