@@ -59,11 +59,10 @@ function islandora_preprocess_islandora_default(&$variables) {
   drupal_add_js('misc/form.js');
   drupal_add_js('misc/collapse.js');
   $islandora_object = $variables['islandora_object'];
-  module_load_include('inc', 'islandora', 'includes/islandora_dublin_core');
   module_load_include('inc', 'islandora', 'includes/utilities');
   module_load_include('inc', 'islandora', 'includes/datastream');
 
-  $variables['parent_collections'] = islandora_datastream_get_parents($islandora_object);
+  $variables['parent_collections'] = islandora_get_parents_from_rels_ext($islandora_object);
 
   $datastreams = array();
   foreach ($islandora_object as $ds) {
@@ -89,7 +88,7 @@ function islandora_preprocess_islandora_default(&$variables) {
   try {
     $dc = $islandora_object['DC']->content;
     //$dc_xml = simplexml_load_string($dc);
-    $dc_object = Dublin_Core::import_from_xml_string($dc);
+    $dc_object = DublinCore::import_from_xml_string($dc);
     $dc_array = $dc_object->as_formatted_array();
   } catch (Exception $e) {
     drupal_set_message(t('Error retrieving object %s %t', array('%s' => $islandora_object->id, '%t' => $e->getMessage())), 'error', FALSE);

@@ -58,45 +58,43 @@ function islandora_control_group_to_human_readable($control_group) {
 }
 
 /**
- * valid pid ??
- * @param type $pid
+ * Checks if the given pid is valid.
+ *
+ * @param string $pid
+ *   The object id to check.
+ *
  * @return boolean
+ *   TRUE if valid, FALSE otherwise.
  */
-function islandora_validate_pid($pid) {
-  $valid = FALSE;
-  if (drupal_strlen(trim($pid)) <= 64 && preg_match('/^([A-Za-z0-9]|-|\.)+:(([A-Za-z0-9])|-|\.|~|_|(%[0-9A-F]{2}))+$/', trim($pid))) {
-    $valid = TRUE;
-  }
-
-  return $valid;
+function islandora_is_valid_pid($pid) {
+  return drupal_strlen(trim($pid)) <= 64 && preg_match('/^([A-Za-z0-9]|-|\.)+:(([A-Za-z0-9])|-|\.|~|_|(%[0-9A-F]{2}))+$/', trim($pid));
 }
 
 /**
- * Valid Dsid ??
- * @param type $dsid
+ * Checks if the given datastream id is valid.
+ *
+ * @param string $dsid
+ *   The datastream id to check.
+ *
  * @return boolean
+ *   TRUE if valid, FALSE otherwise.
  */
-function islandora_validate_dsid($dsid) {
-  $valid = FALSE;
-  if (drupal_strlen(trim($dsid)) <= 64 && preg_match('/^[a-zA-Z0-9\_\-\.]+$/', trim($dsid))) {
-    $valid = TRUE;
-  }
-
-  return $valid;
+function islandora_is_valid_dsid($dsid) {
+  return drupal_strlen(trim($dsid)) <= 64 && preg_match('/^[a-zA-Z0-9\_\-\.]+$/', trim($dsid));
 }
 
 /* Helper function to describe a Fedora repository.
  *
  * Can be used to check if Fedora is available.
  *
- * @param $url
- *   A url to a Fedora repository.
+ * @param string $url
+ *   A url to a Fedora repository, if NULL the default is used.
  * @return
  *   Returns an array describing the repository. Returns FALSE if Fedora is down
  *   or if the url is incorrect.
  */
-function islandora_describe_repository($url) {
-  module_load_include('inc', 'islandora', 'includes/tuque');
+function islandora_describe_repository($url = NULL) {
+  $url = isset($url) ? $url : variable_get('islandora_base_url', 'http://localhost:8080/fedora');
   $connection = new IslandoraTuque(NULL, $url);
   try {
     $info = $connection->api->a->describeRepository();
@@ -151,4 +149,47 @@ function islandora_escape_pid_for_function($pid) {
     '_',
     $pid
   );
+}
+
+/**
+ * Gets the namespace of the given id.
+ *
+ * @param string $id
+ *   Either a PID or namespace to check for accessibility. Any string like those below are fine.
+ * @code
+ *  'islandora',
+ *  'islandora:',
+ *  'islandora:1234',
+ * @endcode
+ *
+ * @return string
+ *   The namespace portion of the given string.
+ */
+function islandora_get_namespace($id) {
+  $matches = array();
+  preg_match('/^([^:]*)/', $id, $matches);
+  return $matches[0];
+}
+
+/**
+ * Checks the given namespace or PID is/has an accessible namespace as defined by the "islandora_pids_allowed" variable.
+ *
+ * @param string $namespace
+ *   Either a PID or namespace to check for accessibility. Any string like those below are fine.
+ * @code
+ *  'islandora',
+ *  'islandora:',
+ *  'islandora:1234',
+ * @endcode
+ *
+ * @return boolean
+ *   TRUE if accessible, FALSE otherwise.
+ */
+function islanodra_namespace_accessible($id) {
+  if (variable_get('islandora_namespace_restriction_enforced', FALSE)) {
+    $namespace = islandora_get_namespace($id) . ':';
+    $allowed_namespaces = explode(" ", variable_get('islandora_pids_allowed', 'default: demo: changeme: islandora: ilives: islandora-book: books: newspapers: '));
+    return in_array($namespace, $allowed_namespaces);
+  }
+  return TRUE;
 }

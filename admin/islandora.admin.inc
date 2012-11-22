@@ -11,18 +11,10 @@
  * @return array
  */
 function islandora_repository_admin($form, &$form_state) {
-  module_load_include('inc', 'islandora', 'includes/tuque');
   module_load_include('inc', 'islandora', 'includes/utilities');
-  // add css
   drupal_add_css(drupal_get_path('module', 'islandora') . '/css/islandora.admin.css');
 
-  if (!IslandoraTuque::exists()) {
-    IslandoraTuque::getError();
-    return;
-  }
-
   $form = array();
-
   if (isset($form_state['values']['islandora_base_url'])) {
     $url = $form_state['values']['islandora_base_url'];
   }
@@ -30,7 +22,6 @@ function islandora_repository_admin($form, &$form_state) {
     $url = variable_get('islandora_base_url', 'http://localhost:8080/fedora');
   }
 
-  module_load_include('inc', 'islandora', 'includes/tuque');
   $connection = new IslandoraTuque(NULL, $url);
   try {
     $info = $connection->api->a->describeRepository();
@@ -156,7 +147,6 @@ function islandora_repository_admin($form, &$form_state) {
 function islandora_update_url_div($form, $form_state) {
   unset($form_state['submit_handlers']);
   $form_state['rebuild'] = TRUE;
-
   return $form['islandora_tabs']['islandora_general']['wrapper'];
 }
 
@@ -166,6 +156,5 @@ function islandora_update_url_div($form, $form_state) {
 function islandora_update_namespace_div($form, $form_state) {
   unset($form_state['submit_handlers']);
   $form_state['rebuild'] = TRUE;
-
   return $form['islandora_tabs']['islandora_namespace']['wrapper'];
 }

@@ -155,17 +155,15 @@ function hook_islandora_object_alter($fedora_object) {}
  *
  * @param type $islandora_object
  *   A Tuque FedoraObject
- * @param array $content_models
- * @param string $collection_pid
  */
-function hook_islandora_ingest_pre_ingest($islandora_object, $content_models, $collection_pid) {}
+function hook_islandora_ingest_pre_ingest($islandora_object) {}
 
 /**
  * Allow modification of objects of a certain content model before ingesting.
  *
  * @see hook_islandora_ingest_pre_ingest()
  */
-function hook_CMODEL_PID_islandora_ingest_pre_ingest($islandora_object, $content_models, $collection_pid) {}
+function hook_CMODEL_PID_islandora_ingest_pre_ingest($islandora_object) {}
 
 /**
  * Allow modules to setup for the purge of a datastream.
@@ -218,3 +216,9 @@ function hook_islandora_required_objects() {}
  * @see islandora_get_viewer_callback()
  */
 function hook_islandora_viewer_info() {}
+
+
+/**
+ * Returns a list of datastreams that are determined to be undeletable.
+ */
+function hook_islandora_undeletable_datastreams(array $models) {}
