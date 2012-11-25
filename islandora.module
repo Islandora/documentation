@@ -460,6 +460,10 @@ function islandora_object_load($object_id) {
   }
   $object = islandora_get_object_by_id($object_id); // Either NULL or FALSE.
   if (!isset($object)) {
+    module_load_include('inc', 'islandora', 'includes/utilities');
+    if (islandora_describe_repository() === FALSE) {
+      drupal_set_message(t('The repository is not availible please contact the administrator.'), 'error');
+    }
     $load_failed = TRUE;
   }
   return $object;

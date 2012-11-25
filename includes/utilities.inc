@@ -83,7 +83,8 @@ function islandora_is_valid_dsid($dsid) {
   return drupal_strlen(trim($dsid)) <= 64 && preg_match('/^[a-zA-Z0-9\_\-\.]+$/', trim($dsid));
 }
 
-/* Helper function to describe a Fedora repository.
+/**
+ * Helper function to describe a Fedora repository.
  *
  * Can be used to check if Fedora is available.
  *
