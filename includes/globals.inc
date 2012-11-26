@@ -121,8 +121,6 @@ function islandora_delete_object(FedoraObject &$object) {
       $object = NULL;
       return TRUE;
   }
-  islandora_post_delete_object($object);
-  return $object;
 }
 
 /**

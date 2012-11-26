@@ -243,7 +243,7 @@ function islandora_ingest_form_submit(array $form, array &$form_state) {
       $form_state['redirect'] = "islandora/object/{$object->id}";
     } catch (Exception $e) {
       watchdog('islandora', $e->getMessage(), NULL, WATCHDOG_ERROR);  // If post hooks throws it may already exist at this point but may be invalid, so don't say failed :P
-      drupal_set_message(t('A problems occured while ingesting "@label" (ID: @pid), please notifiy the administrator.', array('@label' => $object->label, '@pid' => $object->id)), 'error');
+      drupal_set_message(t('A problem occured while ingesting "@label" (ID: @pid), please notifiy the administrator.', array('@label' => $object->label, '@pid' => $object->id)), 'error');
     }
   }
 }
