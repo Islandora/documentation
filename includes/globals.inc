@@ -113,7 +113,7 @@ function islandora_delete_object(FedoraObject &$object) {
       return FALSE;
     case 'delete': // Change the state to deleted.
       $object->delete();
-      islandora_post_delete_object($object, $object_id, $models);
+      islandora_post_delete_object($object_id, $models);
       return TRUE;
     default: // Purge
       $object->repository->purgeObject($object_id);
@@ -142,7 +142,7 @@ function islandora_pre_delete_object(FedoraObject $object) {
 }
 
 /**
- * Calls the ISLANDORA_POST_INGEST_HOOK hooks.
+ * Calls the ISLANDORA_POST_PURGE_OBJECT_HOOK hooks.
  *
  * @param string $object_id
  *   The object id of an the recently deleted object.
