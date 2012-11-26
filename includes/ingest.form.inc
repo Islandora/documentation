@@ -15,7 +15,16 @@
  * @param array $form_state
  *   The drupal form state.
  * @param array $configuration
- *   A list of key value pairs that are used to build the list of steps to be executed.
+ *   An associative array of configuration values that are used to build the
+ *   list of steps to be executed, including:
+ *   - id: The PID with which the object should be created.
+ *   - namespace: The PID namespace in which the object should be created.
+ *     (id is used first, if it is given).
+ *   - label: The initial label for the object. Defaults to "New Object".
+ *   - collections: An array of collection PIDs, to which the new object should
+ *     be related.
+ *   - models: An array of content model PIDs, to which the new object should
+ *     subscribe
  *
  * @return array
  *   The form definition of the current step.
