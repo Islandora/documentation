@@ -436,22 +436,22 @@ function islandora_default_islandora_view_object($object) {
 /**
  * A helper function to get a connection and return an object for objects specified in the menu path as '%islandora_object'.
  *
- * This should only be used by the Drupal menu wildcard system! As for non existing objects this will return page not found.
+ * This should only be used by the Drupal menu wildcard system!
  *
- * After some research drupal_not_found(), drupal_access_denied() and others can not be safetly used at this level. Nor can
- * They be used at the "access callback" level. Not without hacking core, also it seems roling our own versions of these
- * functions will be fruitless. We can still use drupal_goto() though, if we redirect to our own pages for 404, 500 etc. we
- * Will be able to deliever the correct message to users.
+ * When this function returns FALSE the Drupal menu system will issues a "page not found" error, when this function returns NULL,
+ * the access function is expected to check for the given object and return false generating a "accesss denied" error.
  *
- * @todo For non accessible objects to the user this should return access denied.
- * @todo When the repository down this should return a 500 error or a site offline notice.
+ * This will currently display a message if the repository is inaccessable, ideally this would redirect to another page in such a case,
+ * as the access function will not be aware of this fact and will trigger the display of the "access denied" page.
+ *
+ * @todo When the repository down this should return a 500 error or a site offline notice. Currently only displays a message.
  *
  * @param string $object_id
  *   The pid of an object in the menu path identified by '%islandora_object'.
  *
  * @return FedoraObject
- *   If the given object id exists in the repository then this returns a FedoraObject, if no object was found it returns FALSE which triggers a drupal_page_not_found(), if the
- *   object was inaccessible then NULL is returned, and the access callback will catch that case, triggering an access denied.
+ *   If the given object id exists in the repository then this returns a FedoraObject, if no object was found it returns FALSE which triggers drupal_page_not_found(), if the
+ *   object was inaccessible then NULL is returned, and the access callback is expected to catch that case, triggering drupal_access_denied().
  */
 function islandora_object_load($object_id) {
   static $object = NULL, $load_failed = FALSE; // Assume inaccessible.

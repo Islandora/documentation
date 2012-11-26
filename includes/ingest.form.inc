@@ -249,39 +249,44 @@ function islandora_ingest_form_submit(array $form, array &$form_state) {
 }
 
 /**
- * Gets the configuration.
+ * Gets the configuration used to create the multi-page ingest form.
  *
  * @param array $form_state
  *   The drupal form state.
  *
- * @return int
- *   The current step index.
+ * @return array
+ *   The configuration used to generate the multi-page ingest forms.
  */
 function islandora_ingest_form_get_configuration(array $form_state) {
   return $form_state['islandora']['configuration'];
 }
 
 /**
- * Gets the stored objects.
+ * Gets a reference to the stored NewFedoraObject's which are to be ingested when the final step submits.
  *
  * @param array $form_state
  *   The drupal form state.
  *
- * @return int
- *   The current step index.
+ * @return array
+ *   A reference to the stored NewFedoraObjects to be ingested when the final step submits.
  */
 function &islandora_ingest_form_get_objects(array $form_state) {
   return $form_state['islandora']['objects'];
 }
 
 /**
- * Gets a single object.
+ * Gets a single object from the stored NewFedoraObject's.
+ *
+ * @note - In our current use case we are only dealing with a single object ingest, this makes it convenient to access it.
+ *   Ideally the steps implementations will be abstracted to be indifferent to what object it's currently working on. This will act as
+ *   a placeholder for such functionality.
  *
  * @param array $form_state
  *   The drupal form state.
  *
- * @return int
- *   The current step index.
+ * @return array
+ *   Returns the 'current' object in the array of NewFedoraObjects, generally this is only used
+ *   when there is one object in the list of objects.
  */
 function islandora_ingest_form_get_object(array $form_state) {
   $objects = &islandora_ingest_form_get_objects($form_state);
