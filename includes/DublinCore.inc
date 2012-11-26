@@ -2,6 +2,7 @@
 
 /**
  * @file
+ *
  * Implements a simple class for working with Dublin Core data and exporting it
  * back to XML. Inspiration and design shamelessly stolen from the pyfedora
  * project at http://pypi.python.org/pypi/pyfedora/0.1.0
@@ -32,7 +33,8 @@ class DublinCore {
   public $owner;
 
   /**
-   * Constructs a DublinCore object from a Fedora_Item object and populates the $dc array.
+   * Constructs a DublinCore object from a Fedora_Item object and populates the
+   * $dc array.
    *
    * @param string $dc_xml
    */

@@ -14,9 +14,10 @@
  */
 function islandora_ingest_callback() {
   $configuration = islandora_ingest_get_configuration();
-  if ($configuration === FALSE) { // Redirect back to referer or top level collection.
+  if ($configuration === FALSE) {
     drupal_set_message(t('Invalid ingest configuration.'), 'error');
     $redirect = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '<front>';
+    // Redirect back to referer or top level collection.
     drupal_goto($redirect);
   }
   module_load_include('inc', 'islandora', 'includes/ingest.form');
@@ -26,10 +27,13 @@ function islandora_ingest_callback() {
 /**
  * Fetches/validates the ingest configuration from the $_GET parameters.
  *
- * Generic parameters as accepted by all ingest processes, other modules may add to this list.
+ * Generic parameters as accepted by all ingest processes, other modules may
+ * add to this list.
  *   id -> The pid of the object to create. optional.
- *   models -> Comma delimited list of all the content models the created object should have.
- *   collections -> Comma delimited list of all the collections the created object should belong to.
+ *   models -> Comma delimited list of all the content models the created object
+ *             should have.
+ *   collections -> Comma delimited list of all the collections the created
+ *                  object should belong to.
  *
  * @return array
  *   The configuration options used to build the multi-paged ingest process.

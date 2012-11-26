@@ -7,10 +7,12 @@
  */
 
 /**
- * Get an array of links to be passed to drupal_set_breadcrumb(). This is used for generating the bread-crumbs for the view object page.
+ * Get an array of links to be passed to drupal_set_breadcrumb(). This is used
+ * for generating the bread-crumbs for the view object page.
  *
  * Each link in the bread-crumbs represents a member of the given objects ancestry
- * which is identified by any of the following RELS-EXT terms (isMemberOf,isMemberOfCollection,isPartOf).
+ * which is identified by any of the following RELS-EXT terms
+ * (isMemberOf,isMemberOfCollection,isPartOf).
  *
  * @param FedoraObject $object
  *   An object whose ancestry will be mapped to bread-crumbs.
@@ -18,12 +20,15 @@
  * @see drupal_set_breadcrumb()
  *
  * @return array
- *   Array of links, starting with most distant ancestor proceeding up to but not including the given object. For use in the function drupal_set_breadcrumb().
+ *   Array of links, starting with most distant ancestor proceeding up to but
+ *   not including the given object. For use in the function
+ *   drupal_set_breadcrumb().
  */
 function islandora_get_breadcrumbs($object) {
   $breadcrumbs = array();
   islandora_get_breadcrumbs_recursive($object->id, $breadcrumbs, $object->repository);
-  if (isset($breadcrumbs[0])) { // Remove the actual object.
+  if (isset($breadcrumbs[0])) {
+    // Remove the actual object.
     unset($breadcrumbs[0]);
   }
   $breadcrumbs = array_reverse($breadcrumbs);
@@ -35,7 +40,8 @@ function islandora_get_breadcrumbs($object) {
  *
  * @todo Make fully recursive...
  *
- * @todo Could use some clean up, can't be called multiple times safely due to the use of static variables.
+ * @todo Could use some clean up, can't be called multiple times safely due to
+ *   the use of static variables.
  *
  * @param string $pid
  *   THe object id whose parent will be fetched for the next link.
@@ -45,7 +51,8 @@ function islandora_get_breadcrumbs($object) {
  *   The fedora repository.
  */
 function islandora_get_breadcrumbs_recursive($pid, array &$breadcrumbs, FedoraRepository $repository) {
-  // Before executing the query, we hve a base case of accessing the top-level collection
+  // Before executing the query, we hve a base case of accessing the
+  // top-level collection
   static $max_level = 10;
   static $level = -1;
 
@@ -88,8 +95,10 @@ function islandora_get_breadcrumbs_recursive($pid, array &$breadcrumbs, FedoraRe
       islandora_get_breadcrumbs_recursive($parent, $breadcrumbs, $repository);
     }
     else {
-      $breadcrumbs[] = '...'; // Add an non-link, as we don't know how to get back to the root.
-      islandora_get_breadcrumbs_recursive($root, $breadcrumbs, $repository); // And render the last two links and break (on the next pass).
+      // Add an non-link, as we don't know how to get back to the root.
+      $breadcrumbs[] = '...';
+      // And render the last two links and break (on the next pass).
+      islandora_get_breadcrumbs_recursive($root, $breadcrumbs, $repository);
     }
   }
 }

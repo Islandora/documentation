@@ -3,11 +3,13 @@
 /**
  * @file
  *
- * This file contains any functions meant to be part of the global space, ie. functions that and other modules will use without including a module file.
+ * This file contains any functions meant to be part of the global space, ie.
+ * functions that and other modules will use without including a module file.
  */
 
 /**
- * Just a wrapper around fetchings the IslandoraTuque object, with some very basic error logging.
+ * Just a wrapper around fetchings the IslandoraTuque object, with some very
+ *  basic error logging.
  *
  * @return IslandoraTuque
  *   A IslandoraTuque instance
@@ -25,13 +27,15 @@ function islandora_get_tuque_connection() {
 }
 
 /**
- * Gets the given object if found, NULL if it is inaccessible and FALSE if it was not found.
+ * Gets the given object if found, NULL if it is inaccessible and FALSE if it
+ * was not found.
  *
  * @param string $object_id
  *   The identifier of the object to get.
  *
  * @return FedoraObject
- *   The object if found, NULL if it is inaccessible and FALSE if it was not found.
+ *   The object if found, NULL if it is inaccessible and FALSE if it was not
+ *   found.
  */
 function islandora_get_object_by_id($object_id) {
   $tuque = islandora_get_tuque_connection();
@@ -52,7 +56,8 @@ function islandora_get_object_by_id($object_id) {
   else {
     IslandoraTuque::getError();
   }
-  return NULL; // Assuming access denied in all other cases for now.
+  // Assuming access denied in all other cases for now.
+  return NULL;
 }
 
 /**
@@ -110,13 +115,16 @@ function islandora_delete_object(FedoraObject &$object) {
   $models = $object->models;
   $action = islandora_pre_delete_object($object);
   switch ($action) {
-    case 'blocked': // Do nothing.
+    case 'blocked':
+      // Do nothing.
       return FALSE;
-    case 'delete': // Change the state to deleted.
+    case 'delete':
+      // Change the state to deleted.
       $object->delete();
       islandora_post_delete_object($object_id, $models);
       return TRUE;
-    default: // Purge
+    default:
+      // Purge
       $object->repository->purgeObject($object_id);
       islandora_post_delete_object($object_id, $models);
       $object = NULL;
@@ -161,26 +169,32 @@ function islandora_post_delete_object($object_id, array $models) {
  * Delete's/Purges the given datastream.
  *
  * @throws Exception
- *  Which types are undefined, but more than likely because of the hooks there will be several kinds.
+ *  Which types are undefined, but more than likely because of the hooks
+ *  there will be several kinds.
  *
  * @param FedoraDatastream $datastream
  *   The datastream to delete.
  *
  * @return boolean
- *   TRUE is returned if the datastream was Deleted/Purged, FALSE if it was blocked.
+ *   TRUE is returned if the datastream was Deleted/Purged, FALSE if it was
+ *   blocked.
  */
 function islandora_delete_datastream(FedoraDatastream &$datastream) {
   $datastream_id = $datastream->id;
   $object = $datastream->parent;
   $action = islandora_pre_delete_datastream($datastream);
   switch ($action) {
-    case 'blocked': // Do nothing.
+    case 'blocked':
+      // Do nothing.
       return FALSE;
-    case 'delete': // Change the state to deleted.
+    case 'delete':
+      // Change the state to deleted.
       $object[$datastream_id]->state = 'D';
-      islandora_post_delete_datastream($object, $datastream_id); // @todo Differentiate between delete/purge in the hooks.
+      // @todo Differentiate between delete/purge in the hooks.
+      islandora_post_delete_datastream($object, $datastream_id);
       return TRUE;
-    default: // Purge
+    default:
+      // Purge
       $object->purgeDatastream($datastream_id);
       islandora_post_delete_datastream($object, $datastream_id);
       $datastream = NULL;
@@ -189,27 +203,29 @@ function islandora_delete_datastream(FedoraDatastream &$datastream) {
 }
 
 /**
- * The default behaviour is to 'purge' the datastream but this can be overridden by modules that implement
- * the 'islandora_pre_purge_datastream' hook.
+ * The default behaviour is to 'purge' the datastream but this can be overridden
+ * by modules that implement the 'islandora_pre_purge_datastream' hook.
  *
  * @todo make this an alter.
  *
  * The returned array can include a 'block' => TRUE
- * pair which will prevent the datastream from being deleted if it particularly needed for
- * a certain function. Returning 'delete' => TRUE will cause the datastream to be put into
- * a deleted state.
+ * pair which will prevent the datastream from being deleted if it particularly
+ * needed for a certain function. Returning 'delete' => TRUE will cause the
+ * datastream to be put into a deleted state.
  *
  * @param FedoraDatastream $datastream
  *   The datastream to delete.
  *
  * @return string
- *   The action to take when deleting the given datastream, either 'purge', 'delete', or 'block'.
+ *   The action to take when deleting the given datastream, either 'purge',
+ *   'delete', or 'block'.
  */
 function islandora_pre_delete_datastream(FedoraDatastream $datastream) {
   module_load_include('inc', 'islandora', 'includes/utilities');
   $results = array();
   foreach (islandora_build_hook_list(ISLANDORA_PRE_PURGE_DATASTREAM_HOOK, $datastream->parent->models) as $hook) {
-    $results = array_merge_recursive($results, module_invoke_all($hook, $datastream)); // @note Not sure this will work the greatest, probably an alter would be better...
+    // Not sure this will work the greatest, probably an alter would be better..
+    $results = array_merge_recursive($results, module_invoke_all($hook, $datastream));
   }
   $action = (isset($results['block']) && $results['block']) ? 'block' : FALSE;
   $action = (!$action && isset($results['delete']) && $results['delete']) ? 'delete' : $action;
@@ -235,15 +251,18 @@ function islandora_post_delete_datastream(FedoraObject $object, $datastream_id) 
 }
 
 /**
- * Gets any objects that the given object has a (isMemberOf, isMemberOfCollection) relationship with.
+ * Gets any objects that the given object has a
+ * (isMemberOf, isMemberOfCollection) relationship with.
  *
- * This function gets its info from the RELS-EXT directly rather than through an risearch.
+ * This function gets its info from the RELS-EXT directly rather than through an
+ * risearch.
  *
  * @param FedoraObject $object
  *   The object whose parents will be returned.
  *
  * @return array
- *   An array of FedoraObject's that the given object has a (isMemberOf, isMemberOfCollection) relationship with.
+ *   An array of FedoraObject's that the given object has a
+ *   (isMemberOf, isMemberOfCollection) relationship with.
  */
 function islandora_get_parents_from_rels_ext(FedoraObject $object) {
   try {
@@ -252,20 +271,24 @@ function islandora_get_parents_from_rels_ext(FedoraObject $object) {
       $object->relationships->get(FEDORA_RELS_EXT_URI, 'isMemberOf'));
   }
   catch (RepositoryException $e) {
+    // @todo some logging would be nice, not sure what this throws.
     return array();
-  } // @todo some logging would be nice, not sure what this throws.
+  }
   $collections = array_map(function($o) { return islandora_get_object_by_id($o['object']['value']); }, $collections);
   return array_filter($collections);
 }
 
 /**
- * Checks what datastreams the object already has against its required datastreams as defined by its content models, and returns their intersection.
+ * Checks what datastreams the object already has against its required
+ * datastreams as defined by its content models, and returns their intersection.
  *
  * @param FedoraObject $object
- *   The object which models will be used to determine what datastreams it should have.
+ *   The object which models will be used to determine what datastreams it
+ *   should have.
  *
  * @return array
- *   The DS-COMPOSITE-MODEL defined datastreams that are required for the given object, but not already present.
+ *   The DS-COMPOSITE-MODEL defined datastreams that are required for the given
+ *   object, but not already present.
  */
 function islandora_get_missing_datastreams_requirements(FedoraObject $object) {
   $datastreams = islandora_get_datastreams_requirements($object);
@@ -278,19 +301,24 @@ function islandora_get_missing_datastreams_requirements(FedoraObject $object) {
 }
 
 /**
- * Checks the object's content model's for which datastream are expected to be used with this object, as defined by the DS-COMPOSITE-MODEL datastreams.
+ * Checks the object's content model's for which datastream are expected to be
+ * used with this object, as defined by the DS-COMPOSITE-MODEL datastreams.
  *
- * For duplicate datastreams in the models, the first model defines the datastreams attributes regardless of what other models define.
+ * For duplicate datastreams in the models, the first model defines the
+ * datastreams attributes regardless of what other models define.
  * This should be undefined behavior according to the documentation.
  * @see https://wiki.duraspace.org/display/FEDORA34/Fedora+Digital+Object+Model#FedoraDigitalObjectModel-ContentModelObjectCMODEL
  *
  * @param FedoraObject $object
- *   The object which models will be used to determine what datastreams it should have.
+ *   The object which models will be used to determine what datastreams it
+ *   should have.
  *
- * @see islandora_get_required_datastreams_from_content_model() from more details on the return value.
+ * @see islandora_get_required_datastreams_from_content_model() from more
+ *   details on the return value.
  *
  * @return array
- *   The DS-COMPOSITE-MODEL defined datastreams that are required for the given object.
+ *   The DS-COMPOSITE-MODEL defined datastreams that are required for the given
+ *   object.
  */
 function islandora_get_datastreams_requirements(FedoraObject $object) {
   $dsids = array();
@@ -298,20 +326,24 @@ function islandora_get_datastreams_requirements(FedoraObject $object) {
     $model = islandora_get_object_by_id($model);
     $dsids += islandora_get_datastreams_requirements_from_content_model($model);
   }
-  unset($dsids['AUDIT']); // The AUDIT Datastream can not really be added, so it can't really be missing.
+  // The AUDIT Datastream can not really be added, so it can't really be missing.
+  unset($dsids['AUDIT']);
   return $dsids;
 }
 
 /**
- * Checks the given content model for which datastreams are required for subscribing objects, as defined by it's DS-COMPOSITE-MODEL datastream.
+ * Checks the given content model for which datastreams are required for
+ * subscribing objects, as defined by it's DS-COMPOSITE-MODEL datastream.
  *
  * @todo Add support for fetching the schema information.
  *
  * @param FedoraObject $object
- *   The content model whose DS-COMPOSITE-MODEL datastream will be used to determine what datastreams are required.
+ *   The content model whose DS-COMPOSITE-MODEL datastream will be used to
+ *   determine what datastreams are required.
  *
  * @return array
- *   The DS-COMPOSITE-MODEL defined datastreams that are required for the given object.
+ *   The DS-COMPOSITE-MODEL defined datastreams that are required for the given
+ *   object.
  *
  * @code
  *   array(
@@ -389,7 +421,8 @@ function islandora_prepare_new_object($namespace = NULL, $label = NULL, $datastr
     $dsid = $ds['dsid'];
     $label = isset($ds['label']) ? $ds['label'] : '';
     $mimetype = isset($ds['mimetype']) ? $ds['mimetype'] : 'text/xml';
-    $control_group = (isset($ds['control_group']) && in_array($ds['control_group'], array('X', 'M', 'R', 'E'))) ? $ds['control_group'] : 'M'; // Default 'Managed'
+    // Default 'Managed'
+    $control_group = (isset($ds['control_group']) && in_array($ds['control_group'], array('X', 'M', 'R', 'E'))) ? $ds['control_group'] : 'M';
     $datastream_file = url($ds['datastream_file'], array('absolute' => TRUE));
     $datastream = $object->constructDatastream($dsid, $control_group);
     $datastream->label = $label;

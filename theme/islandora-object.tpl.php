@@ -1,8 +1,10 @@
 <?php
 
-/*
+/**
  * @file
- * This is a template for objects that do not have a module to registered to build their display.
+ *
+ * This is a template for objects that do not have a module to registered to
+ * build their display.
  *
  * islandora_object is a fedora tuque Object
  *    $object->label             - The label for this object.
@@ -35,13 +37,16 @@
  *    $ds->size              - The size of the datastream
  *    $ds->checksum          - The checksum of the datastream
  *    $ds->checksumType      - The type of checksum for the datastream.
- *    $ds->createdDate->format("Y-m-d") - The created date with an option to use a format of your choice
+ *    $ds->createdDate->format("Y-m-d") - The created date with an option to use
+ *                                        a format of your choice
  *    $ds->content           - The content of the datastream
- *    $ds->url               - The URL. This is only valid for R and E datastreams.
+ *    $ds->url               - The URL. This is only valid for R and E
+ *                             datastreams.
  *
  * $dublin_core is a DublinCore object
  * which is an array of elements, such as dc.title
- * and each element has an array of values.  dc.title can have none, one or many titles
+ * and each element has an array of values.
+ * dc.title can have none, one or many titles
  * this is the case for all dc elements.
  *
  *
@@ -81,7 +86,7 @@
         <dt>Collections</dt>
         <dd>
           <?php foreach ($parent_collections as $collection): ?>
-   	    <div><?php print l($collection->label, "islandora/object/{$collection->id}"); ?></div>
+            <div><?php print l($collection->label, "islandora/object/{$collection->id}"); ?></div>
           <?php endforeach; ?>
         </dd>
       <?php endif; ?>

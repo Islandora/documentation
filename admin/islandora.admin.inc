@@ -2,7 +2,9 @@
 
 /**
  * @file
- * islandora.admin.inc: This file contains the general islandora admin form and callback functions.
+ *
+ * islandora.admin.inc: This file contains the general islandora admin form and
+ * callback functions.
  */
 
 /**

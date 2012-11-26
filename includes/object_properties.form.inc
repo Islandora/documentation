@@ -32,11 +32,15 @@ function islandora_object_properties_form(array $form, array &$form_state, Fedor
       '#default_value' => $object->label,
       '#required' => 'TRUE',
       '#description' => t('A Human readable label'),
-      '#size' => 120, // Double the normal length
-      '#maxlength' => 255, // Max length for a Fedora Label
+      // Double the normal length
+      '#size' => 120,
+      // Max length for a Fedora Label
+      '#maxlength' => 255,
       '#type' => 'textfield'
     ),
-    'object_owner' => array( // @todo Make this into an autocomplete field that list the users in the system as well.
+    // @todo Make this into an autocomplete field that list the users in the
+    // system as well.
+    'object_owner' => array(
       '#title' => t('Owner'),
       '#default_value' => $object->owner,
       '#required' => FALSE,

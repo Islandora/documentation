@@ -3,7 +3,8 @@
 /**
  * @file
  *
- * islandora.module: defines paths (drupal menu items) as entry points and acts as a hub for dispatching tasks to other modules.
+ * islandora.module: defines paths (drupal menu items) as entry points and acts
+ *  as a hub for dispatching tasks to other modules.
  *
  * This file is part of Islandora.
  *
@@ -49,7 +50,8 @@ define('ISLANDORA_EDIT_DATASTREAM_HOOK', 'islandora_edit_datastream');
 /**
  * Implements hook_menu().
  *
- * We need some standard entry points so we can have consistent urls for different Object actions
+ * We need some standard entry points so we can have consistent urls for
+ * different Object actions
  */
 function islandora_menu() {
   $items = array();
@@ -290,16 +292,20 @@ function islandora_forms($form_id) {
 }
 
 /**
- * Checks whether the user can access the given object with the given permission.
+ * Checks whether the user can access the given object with the given
+ * permission.
  *
- * Checks for object existance, accessiblitly, namespace permissions, and user permissions
+ * Checks for object existance, accessiblitly, namespace permissions,
+ * and user permissions
  *
- * @see islandora_object_load() To find potential solutions to enable page not found errors.
+ * @see islandora_object_load() To find potential solutions to enable
+ *   page not found errors.
  *
  * @param string $perm
  *   The user permission to test for.
  * @param FedoraObject $object
- *   The object to test, if NULL given the object doesn't exist or is inaccessible.
+ *   The object to test, if NULL given the object doesn't exist or is
+ *   inaccessible.
  *
  * @return boolean
  *   TRUE if the user is allowed to access this object, FALSE otherwise.
@@ -310,18 +316,23 @@ function islandora_object_access_callback($perm, $object = NULL) {
 }
 
 /**
- * Checks whether the user can access the given object and datastream with the given permission.
+ * Checks whether the user can access the given object and datastream with
+ * the given permission.
  *
- * Checks for object existance, accessiblitly, namespace permissions, and user permissions
+ * Checks for object existance, accessiblitly, namespace permissions,
+ * and user permissions
  *
- * @see islandora_object_load() To find potential solutions to enable page not found errors.
+ * @see islandora_object_load() To find potential solutions to enable page
+ *   not found errors.
  *
  * @param string $perm
  *   The user permission to test for.
  * @param FedoraObject $object
- *   The object to test, if NULL given the object doesn't exist or is inaccessible.
+ *   The object to test, if NULL given the object doesn't exist or is
+ *   inaccessible.
  * @param FedoraDatastream $datastream
- *   The datastream to test, if NULL given the datastream doesn't exist or is inaccessible.
+ *   The datastream to test, if NULL given the datastream doesn't exist
+ *   or is inaccessible.
  *
  * @return boolean
  *   TRUE if the user is allowed to access this object, FALSE otherwise.
@@ -332,10 +343,13 @@ function islandora_object_datastream_access_callback($perm, $object = NULL, $dat
 }
 
 /**
- * Renders the given objects manage page. Its possible to modify the output of this function if 'ISLANDORA_EDIT_HOOK' is
- * implemented in other modules.
+ * Renders the given objects manage page.
  *
- * If no modules implement 'ISLANDORA_EDIT_HOOK' then this function returns the default manage view.
+ * Its possible to modify the output of this function if 'ISLANDORA_EDIT_HOOK'
+ * is implemented in other modules.
+ *
+ * If no modules implement 'ISLANDORA_EDIT_HOOK' then this function returns the
+ *  default manage view.
  *
  * @param FedoraObject $object
  *   The object to manage.
@@ -353,7 +367,8 @@ function islandora_edit_object(FedoraObject $object) {
     }
   }
   if (empty($output)) {
-    $output = islandora_default_islandora_edit_object($object); // Add in the default, if we did not get any results.
+    // Add in the default, if we did not get any results.
+    $output = islandora_default_islandora_edit_object($object);
   }
   arsort($output);
   drupal_alter(ISLANDORA_EDIT_HOOK, $object, $output);
@@ -367,7 +382,8 @@ function islandora_edit_object(FedoraObject $object) {
  *   The object used to render the manage object page.
  *
  * @return array
- *   The default rendering of the object manage page, indexed at 'Default Edit output'.
+ *   The default rendering of the object manage page, indexed at
+ *   'Default Edit output'.
  */
 function islandora_default_islandora_edit_object(FedoraObject $object) {
   $output = theme('islandora_default_edit', array('islandora_object' => $object));
@@ -377,7 +393,8 @@ function islandora_default_islandora_edit_object(FedoraObject $object) {
 /**
  * Page callback for the path "islandora".
  *
- * Redirects to the view of the object indicated by the Drupal variable 'islandora_repository_pid'.
+ * Redirects to the view of the object indicated by the Drupal variable
+ * 'islandora_repository_pid'.
  */
 function islandora_view_default_object() {
   $pid = variable_get('islandora_repository_pid', 'islandora:root');
@@ -387,10 +404,11 @@ function islandora_view_default_object() {
 /**
  * Renders the default view object page for the given object.
  *
- * Modules should implement ISLANDORA_VIEW_HOOK for the Fedora Content models that
- * their modules want to provide a view for.
+ * Modules should implement ISLANDORA_VIEW_HOOK for the Fedora Content
+ * models that their modules want to provide a view for.
  *
- * If no modules implement the hook then the default view object page will be rendered.
+ * If no modules implement the hook then the default view object page
+ *  will be rendered.
  *
  * @param FedoraObject $object
  *   The object to view.
@@ -407,13 +425,16 @@ function islandora_view_object(FedoraObject $object) {
   $page_size = (empty($_GET['pagesize'])) ? '10' : $_GET['pagesize'];
   $output = array();
   foreach (islandora_build_hook_list(ISLANDORA_VIEW_HOOK, $object->models) as $hook) {
-    $temp = module_invoke_all($hook, $object, $page_number, $page_size); // @todo Remove page number and size from this hook, implementers of the hook should use drupal page handling directly.
+    // @todo Remove page number and size from this hook, implementers of the
+    // hook should use drupal page handling directly.
+    $temp = module_invoke_all($hook, $object, $page_number, $page_size);
     if (!empty($temp)) {
       $output = array_merge_recursive($output, $temp);
     }
   }
   if (empty($output)) {
-    $output = islandora_default_islandora_view_object($object); // No results, use the default view.
+    // No results, use the default view.
+    $output = islandora_default_islandora_view_object($object);
   }
   arsort($output);
   drupal_alter(ISLANDORA_VIEW_HOOK, $object, $output);
@@ -435,24 +456,35 @@ function islandora_default_islandora_view_object($object) {
 }
 
 /**
- * A helper function to get a connection and return an object for objects specified in the menu path as '%islandora_object'.
+ * A helper function to get a connection and return an object for objects
+ * specified in the menu path as '%islandora_object'.
  *
  * This should only be used by the Drupal menu wildcard system!
  *
- * When this function returns FALSE the Drupal menu system will issues a "page not found" error, when this function returns NULL,
- * the access function is expected to check for the given object and return false generating a "accesss denied" error.
+ * When this function returns FALSE the Drupal menu system will issues a
+ * "page not found" error, when this function returns NULL, the access function
+ * is expected to check for the given object and return false generating a
+ * "accesss denied" error.
  *
- * This will currently display a message if the repository is inaccessable, ideally this would redirect to another page in such a case,
- * as the access function will not be aware of this fact and will trigger the display of the "access denied" page.
+ * This will currently display a message if the repository is inaccessable,
+ * ideally this would redirect to another page in such a case,
+ * as the access function will not be aware of this fact and will trigger
+ * the display of the "access denied" page.
  *
- * @todo When the repository down this should return a 500 error or a site offline notice. Currently only displays a message.
+ * @todo When the repository down this should return a 500 error or a
+ *   site offline notice. Currently only displays a message.
  *
  * @param string $object_id
  *   The pid of an object in the menu path identified by '%islandora_object'.
  *
  * @return FedoraObject
- *   If the given object id exists in the repository then this returns a FedoraObject, if no object was found it returns FALSE which triggers drupal_page_not_found(), if the
- *   object was inaccessible then NULL is returned, and the access callback is expected to catch that case, triggering drupal_access_denied().
+ *   If the given object id exists in the repository then this returns a
+ *   FedoraObject.
+ *   If no object was found it returns FALSE which triggers
+ *   drupal_page_not_found().
+ *   If the object was inaccessible then NULL is returned, and the
+ *   access callback is expected to catch that case, triggering
+ *   drupal_access_denied().
  */
 function islandora_object_load($object_id) {
   static $object = NULL, $load_failed = FALSE; // Assume inaccessible.
@@ -471,46 +503,49 @@ function islandora_object_load($object_id) {
 }
 
 /**
- * A helper function to get an datastream specified as '%islandora_datastream' for the object specified in the menu path as '%islandora_object'.
+ * A helper function to get an datastream specified as '%islandora_datastream'
+ * for the object specified in the menu path as '%islandora_object'.
  *
- * This should only be used by the Drupal menu wildcard system! As for non existing datastreams this will return page not found.
+ * This should only be used by the Drupal menu wildcard system!
  *
- * The following settings are required for any menu paths which intent to use this auto loader.
+ * The following settings are required for any menu paths which intent to use
+ * this auto loader.
  *
  * @code
  *     'load arguments' => array('%map'),
  * @endcode
  *
- * @see islandora_object_load() for solutions to access/not found problems.
- *
- * @todo For non accessible datastreams to the user this should return access denied.
- * @todo Is there anything we can do to enhance caching?
+ * Its up to the access callbacks and menu callbacks to trigger
+ * drupal_access_denied() when appropriate.
  *
  * @param string $datastream_id
- *   The dsid of the datastream specified as '%islandora_datastream' to fetch from the given object in the menu path identified by '%islandora_object'.
+ *   The dsid of the datastream specified as '%islandora_datastream' to fetch
+ *   from the given object in the menu path identified by '%islandora_object'.
  *
  * @return FedoraDatastream
- *   If the given datastream id exists in the object then this returns a FedoraDatastream, in other cases this aborts.
+ *   If the given datastream ID exists then this returns a FedoraDatastream
+ *   object, otherwise it returns NULL which triggers drupal_page_not_found().
  */
 function islandora_datastream_load($datastream_id, $map) {
-  static $datastream = NULL, $load_failed = FALSE; // @hack for bug in drupal_not_found() when used before the menu callback. Infinite recursion bug.
+  static $datastream = NULL, $load_failed = FALSE;
   if ($load_failed || isset($datastream)) {
     return $datastream;
   }
   foreach ($map as $element) {
-    $is_fedora_object = is_object($element) && strtolower(get_class($element)) == 'fedoraobject';  // @todo Probably a better way to check types by now.
-    if ($is_fedora_object && isset($element[$datastream_id])) {   // @todo check for access denied to this datastream so we can show the access denied page instead.
+    $is_fedora_object = is_object($element) && strtolower(get_class($element)) == 'fedoraobject';
+    if ($is_fedora_object && isset($element[$datastream_id])) {
       $datastream = $element[$datastream_id];
       return $datastream;
     }
   }
   $load_failed = TRUE;
-  return $datastream; // @todo Test
+  return $datastream;
 }
 
 /**
- * Content model, collection view and collection policy datastreams may now optionally define a version
- * number in their top-level XML element as an attribute, as in:
+ * Content model, collection view and collection policy datastreams may now
+ * optionally define a version number in their top-level XML element as an
+ * attribute, as in:
  *   <content_model name="Collection" version="2" ...
  *
  * @param object $item
@@ -540,7 +575,6 @@ function islandora_get_islandora_datastream_version($item = NULL, $dsid = NULL, 
  * Implements hook_islandora_required_objects().
  */
 function islandora_islandora_required_objects() {
-  // module path
   $module_path = drupal_get_path('module', 'islandora');
   return array(
     'islandora' => array(

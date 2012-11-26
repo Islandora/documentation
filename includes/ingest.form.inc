@@ -3,19 +3,21 @@
 /**
  * @file
  *
- * Defines the multi-page ingest form and any relevant hooks and functions for defining the multi-page ingest forms.
+ * Defines the multi-page ingest form and any relevant hooks and functions for
+ * defining the multi-page ingest forms.
  */
 
 /**
- * Ingest form build function. Initializes the form state, and builds the initial list of steps,
- * excutes the current step.
+ * Ingest form build function. Initializes the form state, and builds the
+ * initial list of steps, excutes the current step.
  *
  * @param array $form
  *   The drupal form.
  * @param array $form_state
  *   The drupal form state.
  * @param array $configuration
- *   A list of key value pairs that are used to build the list of steps to be executed.
+ *   A list of key value pairs that are used to build the list of steps to be
+ *   executed.
  *
  * @return array
  *   The form definition of the current step.
@@ -33,13 +35,17 @@ function islandora_ingest_form(array $form, array &$form_state, array $configura
  * @param array $form_state
  *   The drupal form state.
  * @param array $configuration
- *   A list of key value pairs that are used to build the list of steps to be executed.
+ *   A list of key value pairs that are used to build the list of steps to be
+ *   executed.
  */
 function islandora_ingest_form_init_form_state(array &$form_state, array $configuration) {
-  islandora_ingest_form_init_form_state_storage($form_state, $configuration); // First time initialization of storage.
+  // First time initialization of storage.
+  islandora_ingest_form_init_form_state_storage($form_state, $configuration);
   $steps = &islandora_ingest_form_get_steps($form_state);
-  usort($steps, 'drupal_sort_weight'); // Always re-sort the steps just incase any build/submit handlers have appended new steps.
-  islandora_ingest_form_step_form_load_include($form_state); // Load any required files for the current step.
+  // Always re-sort the steps just incase any build/submit handlers have appended new steps.
+  usort($steps, 'drupal_sort_weight');
+  // Load any required files for the current step.
+  islandora_ingest_form_step_form_load_include($form_state);
 }
 
 /**
@@ -48,12 +54,15 @@ function islandora_ingest_form_init_form_state(array &$form_state, array $config
  * @param array $form_state
  *   The drupal form state.
  * @param array $configuration
- *   A list of key value pairs that are used to build the list of steps to be executed.
+ *   A list of key value pairs that are used to build the list of steps to be
+ *   executed.
  */
 function islandora_ingest_form_init_form_state_storage(array &$form_state, array $configuration) {
   if (empty($form_state['islandora'])) {
-    $id = isset($configuration['id']) ? $configuration['id'] : NULL; // Use ID if given.
-    $namespace = isset($configuration['namespace']) && !isset($id) ? $configuration['namespace'] : $id; // Use namespace if ID not given.
+    // Use ID if given.
+    $id = isset($configuration['id']) ? $configuration['id'] : NULL;
+    // Use namespace if ID not given.
+    $namespace = isset($configuration['namespace']) && !isset($id) ? $configuration['namespace'] : $id;
     $label = isset($configuration['label']) ? $configuration['label'] : 'New Object';
     $relationship_map = function($o) { return array('relationship' => 'isMemberOfCollection', 'pid' => $o); };
     $relationships = empty($configuration['collections']) ? array() : array_map($relationship_map, $configuration['collections']);
@@ -68,8 +77,8 @@ function islandora_ingest_form_init_form_state_storage(array &$form_state, array
 }
 
 /**
- * Executes the current step, building the form definition and appending on any additonal elements
- * required for the step to function.
+ * Executes the current step, building the form definition and appending on any
+ * additonal elements required for the step to function.
  *
  * @param array $form
  *   The drupal form.
@@ -87,7 +96,8 @@ function islandora_ingest_form_execute_step(array $form, array &$form_state) {
       $args = isset($step_info['args']) ? array_merge($args, $step_info['args']) : $args;
       $form = call_user_func_array($step_info['form_id'], $args);
       return islandora_ingest_form_stepify($form, $form_state, $step_info);
-    case 'batch': // @todo Implement if possible.
+    case 'batch':
+      // @todo Implement if possible.
       break;
   }
   return array();
@@ -127,11 +137,13 @@ function islandora_ingest_form_previous_button() {
     '#value' => t('Previous'),
     '#name' => 'prev',
     '#submit' => array('islandora_ingest_form_previous_submit'),
-    /**
-     * #limit_validation_errors, is why when the previous button is pressed no values persisted in the form_state, but its also what allows us to go back when validation errors occur.
-     * To have a better solution going forward we can either limit validation only on required fields, or we can convert all required fields to use #element_validation functions, and
-     * Remove the need for #limit_validation_errors. Or maybe there is some other solution, regardless of what it is, it won't be standard.
-     */
+    // #limit_validation_errors, is why when the previous button is pressed no
+    // values persisted in the form_state, but its also what allows us to go
+    // back when validation errors occur. To have a better solution going
+    // forward we can either limit validation only on required fields, or we can
+    // convert all required fields to use #element_validation functions, and
+    // Remove the need for #limit_validation_errors. Or maybe there is some
+    // other solution, regardless of what it is, it won't be standard.
     '#limit_validation_errors' => array()
   );
 }
@@ -151,10 +163,10 @@ function islandora_ingest_form_previous_button() {
 function islandora_ingest_form_previous_submit(array $form, array &$form_state) {
   $step = &islandora_ingest_form_get_step($form_state);
   $step_info = &islandora_ingest_form_get_step_info($form_state, $step);
-  $step_info['values'] = $form_state['values']; // Store values
-  $step--; // Goto previous step
-  $step_info = &islandora_ingest_form_get_step_info($form_state, $step); // Get values
-  $form_state['values'] = isset($step_info['values']) ? $step_info['values'] : NULL; // Use values
+  $step_info['values'] = $form_state['values'];
+  $step--;
+  $step_info = &islandora_ingest_form_get_step_info($form_state, $step);
+  $form_state['values'] = isset($step_info['values']) ? $step_info['values'] : NULL;
   $form_state['rebuild'] = TRUE;
 }
 
@@ -196,10 +208,10 @@ function islandora_ingest_form_next_button(array $step_info) {
 function islandora_ingest_form_next_submit(array $form, array &$form_state) {
   $step = &islandora_ingest_form_get_step($form_state);
   $step_info = &islandora_ingest_form_get_step_info($form_state, $step);
-  $step_info['values'] = $form_state['values']; // Store Values
-  $step++; // Goto Next Step
+  $step_info['values'] = $form_state['values'];
+  $step++;
   $step_info = &islandora_ingest_form_get_step_info($form_state, $step);
-  $form_state['values'] = isset($step_info['values']) ? $step_info['values'] : array(); // Restore Values if Stored.
+  $form_state['values'] = isset($step_info['values']) ? $step_info['values'] : array();
   $form_state['rebuild'] = TRUE;
 }
 
@@ -242,7 +254,8 @@ function islandora_ingest_form_submit(array $form, array &$form_state) {
       islandora_add_object($object);
       $form_state['redirect'] = "islandora/object/{$object->id}";
     } catch (Exception $e) {
-      watchdog('islandora', $e->getMessage(), NULL, WATCHDOG_ERROR);  // If post hooks throws it may already exist at this point but may be invalid, so don't say failed :P
+      // If post hooks throws it may already exist at this point but may be invalid, so don't say failed :P
+      watchdog('islandora', $e->getMessage(), NULL, WATCHDOG_ERROR);
       drupal_set_message(t('A problem occured while ingesting "@label" (ID: @pid), please notifiy the administrator.', array('@label' => $object->label, '@pid' => $object->id)), 'error');
     }
   }
@@ -262,13 +275,15 @@ function islandora_ingest_form_get_configuration(array $form_state) {
 }
 
 /**
- * Gets a reference to the stored NewFedoraObject's which are to be ingested when the final step submits.
+ * Gets a reference to the stored NewFedoraObject's which are to be ingested
+ * when the final step submits.
  *
  * @param array $form_state
  *   The drupal form state.
  *
  * @return array
- *   A reference to the stored NewFedoraObjects to be ingested when the final step submits.
+ *   A reference to the stored NewFedoraObjects to be ingested when the final
+ *   step submits.
  */
 function &islandora_ingest_form_get_objects(array $form_state) {
   return $form_state['islandora']['objects'];
@@ -277,16 +292,18 @@ function &islandora_ingest_form_get_objects(array $form_state) {
 /**
  * Gets a single object from the stored NewFedoraObject's.
  *
- * @note - In our current use case we are only dealing with a single object ingest, this makes it convenient to access it.
- *   Ideally the steps implementations will be abstracted to be indifferent to what object it's currently working on. This will act as
- *   a placeholder for such functionality.
+ * @note - In our current use case we are only dealing with a single object
+ *   ingest, this makes it convenient to access it. Ideally the steps
+ *   implementations will be abstracted to be indifferent to what object it's
+ *   currently working on. This will act as a placeholder for such
+ *   functionality.
  *
  * @param array $form_state
  *   The drupal form state.
  *
  * @return array
- *   Returns the 'current' object in the array of NewFedoraObjects, generally this is only used
- *   when there is one object in the list of objects.
+ *   Returns the 'current' object in the array of NewFedoraObjects, generally
+ *   this is only used when there is one object in the list of objects.
  */
 function islandora_ingest_form_get_object(array $form_state) {
   $objects = &islandora_ingest_form_get_objects($form_state);
@@ -307,7 +324,8 @@ function &islandora_ingest_form_get_step(array &$form_state) {
 }
 
 /**
- * Get a reference to the step info of the given step or the current step if none is given.
+ * Get a reference to the step info of the given step or the current step if
+ * none is given.
  *
  * @param array $form_state
  *   The drupal form state.
@@ -323,7 +341,8 @@ function &islandora_ingest_form_get_step_info(array &$form_state, $step = NULL) 
   if (!empty($steps[$step])) {
     return $steps[$step];
   }
-  return NULL; // @todo deal with unknown case.
+  // @todo deal with unknown case.
+  return NULL;
 }
 
 /**
@@ -346,13 +365,14 @@ function &islandora_ingest_form_get_steps(array &$form_state) {
  *   The drupal form state.
  */
 function islandora_ingest_form_step_form_load_include(array &$form_state) {
-  form_load_include($form_state, 'inc', 'islandora', 'includes/ingest.form'); // Always load this file.
+  form_load_include($form_state, 'inc', 'islandora', 'includes/ingest.form');
   $step_info = islandora_ingest_form_get_step_info($form_state);
+  // Load include files
   if (isset($step_info['file']) && isset($step_info['module'])) {
     $matches = array();
     preg_match('/^(.*)\.(.*)$/', $step_info['file'], $matches);
     list($file, $name, $type) = $matches;
-    form_load_include($form_state, $type, $step_info['module'], $name); // Load include files.
+    form_load_include($form_state, $type, $step_info['module'], $name);
   }
 }
 
@@ -371,7 +391,9 @@ function islandora_ingest_form_get_step_count(array $form_state) {
 }
 
 /**
- * Buildes the initial list of ingest steps. Sorted by weight expected range between -50 to 50.
+ * Buildes the initial list of ingest steps.
+ *
+ * Sorted by weight expected range between -50 to 50.
  *
  * The sort order is undefined for steps which have the same weight.
  *
@@ -379,7 +401,8 @@ function islandora_ingest_form_get_step_count(array $form_state) {
  *   The configuration options used to build the multi-paged ingest process.
  *
  * @return array
- *   The initial list of sorted ingest steps as defined by all implementers of ISLANDORA_INGEST_STEP_HOOK.
+ *   The initial list of sorted ingest steps as defined by all implementers
+ *   of ISLANDORA_INGEST_STEP_HOOK.
  */
 function islandora_ingest_get_steps(array $configuration) {
   module_load_include('inc', 'islandora', 'includes/utilities');

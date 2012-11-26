@@ -41,8 +41,10 @@ function islandora_add_datastream_form(array $form, array &$form_state, FedoraOb
       'dsid' => array(
         '#title' => 'Datastream ID',
         '#description' => t('An ID for this stream that is unique to this object.' .
-                        'Must start with a letter and contain only alphanumeric characters and dashes and underscores.' .
-                        'Datastreams that are defined by the content model don\'t currently exist: <b>@unused_dsids</b>.',
+                        'Must start with a letter and contain only alphanumeric ' .
+                        'characters and dashes and underscores. Datastreams that ' .
+                        'are defined by the content model don\'t currently exist: ' .
+                        '<b>@unused_dsids</b>.',
                         array('@unused_dsids' => $unused_datastreams)
         ),
         '#type' => 'textfield',
@@ -75,7 +77,8 @@ function islandora_add_datastream_form(array $form, array &$form_state, FedoraOb
         '#upload_location' => 'temporary://',
         '#upload_validators' => array(
           'file_validate_extensions' => array(NULL),
-          'file_validate_size' => array($upload_size * 1024 * 1024), // Assume its specified in MB
+          // Assume its specified in MB
+          'file_validate_size' => array($upload_size * 1024 * 1024),
         ),
       ),
       'submit' => array(
@@ -119,7 +122,8 @@ function islandora_add_datastream_form_field_starts_with_a_letter(array $element
 }
 
 /**
- * Checks if the given form field contains only valid characters for a datstream id.
+ * Checks if the given form field contains only valid characters for a
+ * datastream id.
  *
  * @param array $element
  *   The form field to check.
@@ -152,7 +156,8 @@ function islandora_add_datastream_form_field_does_not_contain_a_forward_slash(ar
 }
 
 /**
- * Checks if the given datastream id requires that the  upload file be of a certian MIME type.
+ * Checks if the given datastream id requires that the upload file be of a
+ * certian MIME type.
  *
  * @param array $form
  *   The Drupal form.
@@ -174,7 +179,8 @@ function islandora_add_datastream_form_validate(array $form, array &$form_state)
 }
 
 /**
- * Adds the new datastream based on the submitted values, only creates managed datastreams at the moment.
+ * Adds the new datastream based on the submitted values, only creates managed
+ * datastreams at the moment.
  *
  * @param array $form
  *   The Drupal form.
@@ -202,12 +208,14 @@ function islandora_add_datastream_form_submit(array $form, array &$form_state) {
 }
 
 /**
- * Callback for an autocomplete field in the admin add datastream form. It lists the missing required (may be optional) datastreams.
+ * Callback for an autocomplete field in the admin add datastream form.
+ * It lists the missing required (may be optional) datastreams.
  *
  * @param FedoraObject $object
- *   The object used to check for missing required datastreams used to populate the options in this callback.
+ *   The object used to check for missing required datastreams used to populate
+ *    the options in this callback.
  * @param string $query
- *   The user query to match against the missing required datastreams.
+ *   vThe user query to match against the missing required datastreams.
  */
 function islandora_add_datastream_form_autocomplete_callback(FedoraObject $object, $query = '') {
   module_load_include('inc', 'islandora', 'includes/content_model');

@@ -2,6 +2,7 @@
 
 /**
  * @file
+ *
  * This file contains all theme and preprocess functions.
  */
 
@@ -13,13 +14,12 @@
  *   theme variables for the edit template
  */
 function islandora_preprocess_islandora_default_edit(&$variables) {
-  $islandora_object = $variables['islandora_object'];
   global $base_url;
+  $islandora_object = $variables['islandora_object'];
   $datastreams = array();
   $variables['islandora_editmetadata_url'] = $base_url . '/islandora/edit_form/' . $islandora_object->id;
   module_load_include('inc', 'islandora', 'includes/datastream');
   module_load_include('inc', 'islandora', 'includes/utilities');
-  // $variables['add_datastream_form'] = drupal_get_form('islandora_add_datastream_form', $islandora_object->id);
   $header = array(
     array('data' => t('ID')),
     array('data' => t('Label')),
@@ -27,7 +27,6 @@ function islandora_preprocess_islandora_default_edit(&$variables) {
     array('data' => t('Mime type')),
     array('data' => t('Size')),
     array('data' => t('Operations'), 'colspan' => '3'),
-      //array('data' => t('Delete')),
   );
   $table_attributes = array('class' => array('manage-datastreams'));
   $rows = array();
@@ -87,7 +86,6 @@ function islandora_preprocess_islandora_default(&$variables) {
   $variables['datastreams'] = $datastreams;
   try {
     $dc = $islandora_object['DC']->content;
-    //$dc_xml = simplexml_load_string($dc);
     $dc_object = DublinCore::import_from_xml_string($dc);
     $dc_array = $dc_object->as_formatted_array();
   } catch (Exception $e) {
