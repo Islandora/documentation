@@ -222,3 +222,33 @@ function hook_islandora_viewer_info() {}
  * Returns a list of datastreams that are determined to be undeletable.
  */
 function hook_islandora_undeletable_datastreams(array $models) {}
+
+/**
+ * Define steps used in the islandora_ingest_form() ingest process.
+ *
+ * @return array
+ *   An array of associative arrays which define each step in the ingest
+ *   process.  Steps are defined by by a number of properties (keys) including:
+ *   - type: The type of step.  Currently, only "form" is implemented.
+ *   - weight: The "weight" of this step--heavier(/"larger") values sink to the
+ *     end of the process while smaller(/"lighter") values are executed first.
+ *   - form_id: The form building function to call to get the form structure
+ *     for this step.
+ *   - args: An array of arguments to pass to the form building function.
+ */
+function hook_islandora_ingest_steps(array $configuration) {
+  return array(
+    array(
+      'type' => 'form',
+      'weight' => 1,
+      'form_id' => 'my_cool_form',
+      'args' => array('arg_one', 'numero deux'),
+    ),
+  );
+}
+/**
+ * Content model specific version of hook_islandora_ingest_steps().
+ *
+ * @see hook_islandora_ingest_steps()
+ */
+function hook_CMODEL_PID_islandora_ingest_steps(array $configuration) {}
