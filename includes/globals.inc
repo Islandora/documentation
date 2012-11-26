@@ -43,7 +43,8 @@ function islandora_get_object_by_id($object_id) {
     } catch (Exception $e) {
       if ($e->getCode() == '404') {
         return FALSE;
-      } else {
+      }
+      else {
         return NULL;
       }
     }

@@ -36,7 +36,7 @@ function islandora_delete_datastream_form(array $form, array &$form_state, Fedor
  * The ISLANDORA_PRE_PURGE_DATASTREAM_HOOK will query other modules as to whether the given FedoraDatastream
  * should be: blocked from purging; state set to 'Deleted'; or purged.
  *
- * @see islanodra_delete_datastream().
+ * @see islandora_delete_datastream().
  *
  * @param string $object_id
  *   ID of the object

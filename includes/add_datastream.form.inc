@@ -70,7 +70,7 @@ function islandora_add_datastream_form(array $form, array &$form_state, FedoraOb
         '#required' => TRUE,
         '#title' => t('Upload Document'),
         '#size' => 48,
-        '#description' => t('Select a file to upload.<br/>Files must be less than <b>!size MB.</b>', array('!size' => $upload_size)),
+        '#description' => t('Select a file to upload.<br/>Files must be less than <b>@size MB.</b>', array('@size' => $upload_size)),
         '#default_value' => isset($form_state['values']['files']) ? $form_state['values']['files'] : NULL,
         '#upload_location' => 'temporary://',
         '#upload_validators' => array(
@@ -98,7 +98,7 @@ function islandora_add_datastream_form(array $form, array &$form_state, FedoraOb
  */
 function islandora_add_datastream_form_field_is_not_an_existing_datastream_id(array $element, array &$form_state, array $form) {
   if (isset($form_state['object'][$element['#value']])) {
-    form_error($element, t("!title already exists in the object.", array('!title' => $element['#title'])));
+    form_error($element, t("@title already exists in the object.", array('@title' => $element['#title'])));
   }
 }
 
@@ -114,7 +114,7 @@ function islandora_add_datastream_form_field_is_not_an_existing_datastream_id(ar
  */
 function islandora_add_datastream_form_field_starts_with_a_letter(array $element, array &$form_state, array $form) {
   if (!(preg_match("/^[a-zA-Z]/", $element['#value']))) {
-    form_error($element, t("!title has to start with a letter.", array('!title' => $element['#title'])));
+    form_error($element, t("@title has to start with a letter.", array('@title' => $element['#title'])));
   }
 }
 
@@ -131,7 +131,7 @@ function islandora_add_datastream_form_field_starts_with_a_letter(array $element
 function islandora_add_datastream_form_field_is_valid_dsid(array $element, array &$form_state, array $form) {
   module_load_include('inc', 'islandora', 'includes/utilities');
   if (!islandora_is_valid_dsid($element['#value'])) {
-    form_error($element, t("!title contains invalid characters.", array('!title' => $element['#title'])));
+    form_error($element, t("@title contains invalid characters.", array('@title' => $element['#title'])));
   }
 }
 
@@ -147,7 +147,7 @@ function islandora_add_datastream_form_field_is_valid_dsid(array $element, array
  */
 function islandora_add_datastream_form_field_does_not_contain_a_forward_slash(array $element, array &$form_state, array $form) {
   if (strpos($element['#value'], '/') !== FALSE) {
-    form_error($element, t('!title cannot contain a "/" character.', array('!title' => $element['#title'])));
+    form_error($element, t('@title cannot contain a "/" character.', array('@title' => $element['#title'])));
   }
 }
 

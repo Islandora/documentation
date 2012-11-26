@@ -33,7 +33,7 @@ function islandora_delete_object_form(array $form, array &$form_state, FedoraObj
 /**
  * Gives the option of deleting or purging and object.
  *
- * @note The description below probably applies to islanodra_object_purge() function...
+ * @note The description below probably applies to islandora_object_purge() function...
  *
  * The default behaviour is to purge the object to reduce maintenance.
  * If a solution pack wants to change this behaviour and have the object set to deleted then
