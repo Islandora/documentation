@@ -50,7 +50,8 @@ function islandora_ingest_form_init_form_state(array &$form_state, array $config
   // First time initialization of storage.
   islandora_ingest_form_init_form_state_storage($form_state, $configuration);
   $steps = &islandora_ingest_form_get_steps($form_state);
-  // Always re-sort the steps just incase any build/submit handlers have appended new steps.
+  // Always re-sort the steps just incase any build/submit handlers have
+  // appended new steps.
   usort($steps, 'drupal_sort_weight');
   // Load any required files for the current step.
   islandora_ingest_form_step_form_load_include($form_state);
