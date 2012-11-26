@@ -186,7 +186,7 @@ function islandora_get_namespace($id) {
  * @return boolean
  *   TRUE if accessible, FALSE otherwise.
  */
-function islanodra_namespace_accessible($id) {
+function islandora_namespace_accessible($id) {
   if (variable_get('islandora_namespace_restriction_enforced', FALSE)) {
     $namespace = islandora_get_namespace($id) . ':';
     $allowed_namespaces = explode(" ", variable_get('islandora_pids_allowed', 'default: demo: changeme: islandora: ilives: islandora-book: books: newspapers: '));

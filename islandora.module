@@ -44,6 +44,7 @@ define('ISLANDORA_POST_PURGE_OBJECT_HOOK', 'islandora_post_purge_object');
 define('ISLANDORA_INGEST_STEP_HOOK', 'islandora_ingest_steps');
 define('ISLANDORA_PRE_PURGE_DATASTREAM_HOOK', 'islandora_pre_purge_datastream');
 define('ISLANDORA_POST_PURGE_DATASTREAM_HOOK', 'islandora_post_purge_datastream');
+define('ISLANDORA_EDIT_DATASTREAM_HOOK', 'islandora_edit_datastream');
 
 /**
  * Implements hook_menu().
@@ -75,7 +76,7 @@ function islandora_menu() {
     'access arguments' => array(FEDORA_ADD_DS),
     'file' => 'includes/solution_packs.inc',
     'type' => MENU_NORMAL_ITEM,
-    );
+  );
   $items['islandora'] = array(
     'title' => 'Islandora Repository',
     'page callback' => 'islandora_view_default_object',
@@ -305,7 +306,7 @@ function islandora_forms($form_id) {
  */
 function islandora_object_access_callback($perm, $object = NULL) {
   module_load_include('inc', 'islandora', 'includes/utilities');
-  return user_access($perm) && is_object($object) && islanodra_namespace_accessible($object->id);
+  return user_access($perm) && is_object($object) && islandora_namespace_accessible($object->id);
 }
 
 /**
@@ -327,7 +328,7 @@ function islandora_object_access_callback($perm, $object = NULL) {
  */
 function islandora_object_datastream_access_callback($perm, $object = NULL, $datastream = NULL) {
   module_load_include('inc', 'islandora', 'includes/utilities');
-  return user_access($perm) && is_object($object) && islanodra_namespace_accessible($object->id) && is_object($datastream);
+  return user_access($perm) && is_object($object) && islandora_namespace_accessible($object->id) && is_object($datastream);
 }
 
 /**
