@@ -38,7 +38,7 @@ function islandora_preprocess_islandora_default_edit(&$variables) {
       array('class' => 'datastream-mime', 'data' => $ds->mimeType),
       array('class' => 'datastream-size', 'data' => islandora_datastream_get_human_readable_size($ds)),
       array('class' => 'datastream-download', 'data' => l(t('download'), islandora_datastream_get_url($ds, 'download'))),
-      array('class' => 'datstream-edit', 'data' => islandora_datastream_edit_get_link($islandora_object, $ds->id)),
+      array('class' => 'datstream-edit', 'data' => islandora_datastream_edit_get_link($ds)),
       array('class' => 'datastream-delete', 'data' => islandora_datastream_get_delete_link($ds)),
     );
   }
