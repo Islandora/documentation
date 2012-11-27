@@ -3,7 +3,8 @@
 /**
  * @file
  *
- * This file contains all admin and callback functions for solution pack management.
+ * This file contains all admin and callback functions for solution pack
+ * management.
  */
 
 /**
@@ -69,25 +70,15 @@ function islandora_solution_pack_form($form, &$form_state,  $solution_pack_modul
     '#value' => $objects,
   );
 
-  // table
-  // header
   $table_header = array(t('Label'), t('PID'), t('Status'));
   $table_rows = array();
 
-  // loop over defined objects
   foreach ($objects as $object) {
     $datastreams = NULL;
     if (isset($object['pid'])) {
-      // set variables
       $pid = $object['pid'];
-
-      // table row
       $table_row = array();
-
-      // check object status
       $object_status = islandora_check_object_status($object);
-
-      // set status labels
       switch ($object_status) {
         case 'up_to_date':
           $object_status = t('Up-to-date');
@@ -130,7 +121,6 @@ function islandora_solution_pack_form($form, &$form_state,  $solution_pack_modul
       '#suffix' => '</h3>',
     );
 
-    // install status
     $form['solution_pack']['install_status'] = array(
       '#markup' => '<strong>' . t('Object status:') . '&nbsp;</strong>',
       '#prefix' => '<div class="islandora-solution-pack-install-status">',
@@ -269,8 +259,6 @@ function islandora_batch_reingest_object($object_model, &$context) {
 function islandora_install_solution_pack($module_name = NULL, $op = 'install') {
   // check if a module name is given. // @TODO: check module name for existance
   if (!empty($module_name)) {
-
-    // include files
     module_load_include('module', 'islandora', 'islandora');
     module_load_include('inc', 'islandora', 'includes/utilities');
     module_load_include('module', $module_name, $module_name);
@@ -382,7 +370,8 @@ function islandora_install_solution_pack($module_name = NULL, $op = 'install') {
  *
  * @see islandora_solution_pack_form()
  * @see islandora_install_solution_pack()
- * @TODO: should this function live in islandora.module so it can be called easier without having to include the solution_packs.inc file?
+ * @todo: Should this function live in islandora.module so it can be called
+ *   easier without having to include the solution_packs.inc file?
  */
 function islandora_check_object_status($object_model = array()) {
   if (!empty($object_model)) {
@@ -409,7 +398,8 @@ function islandora_check_object_status($object_model = array()) {
         $object_status = 'missing';
       }
       else {
-        // object defined with single datastream file // @TODO: should dsversion be mandatory for the check to valid?
+        // object defined with single datastream file
+        // @TODO: should dsversion be mandatory for the check to valid?
         if (isset($object_model['dsid']) && isset($object_model['datastream_file']) && isset($object_model['dsversion'])) {
           $datastreams = array(
             array(
@@ -580,7 +570,9 @@ function islandora_viewers_form($variable_id = NULL, $mimetype = NULL) {
       '#type' => 'item',
       '#title' => t('Select a viewer'),
       '#description' => t('Preferred viewer for your solution pack. These may be provided by third-party modules.'),
-      '#tree' => TRUE, // this attribute is important to return the submitted values in a deeper nested arrays in
+      // This attribute is important to return the submitted values in a deeper
+      // nested arrays in
+      '#tree' => TRUE,
       '#theme' => 'islandora_viewers_table',
     );
 
@@ -631,7 +623,8 @@ function islandora_viewers_form($variable_id = NULL, $mimetype = NULL) {
  * Returns all defined viewers.
  *
  * @param string $mimetype
- *  specify a mimetype to return only viewers that support this certain mimetype.
+ *  specify a mimetype to return only viewers that support this certain
+ *  mimetype.
  * @return
  *  array of viewer definitions, or FALSE if none are found.
  */

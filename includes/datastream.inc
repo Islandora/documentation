@@ -3,7 +3,8 @@
 /**
  * @file
  *
- * This file contains the admin form and callback functions for datastream manipulations.
+ * This file contains the admin form and callback functions for datastream
+ * manipulations.
  */
 
 /**
@@ -25,7 +26,8 @@ function islandora_download_datastream(FedoraDatastream $datastream) {
  * @param FedoraDatastream $datastream
  *   The datastream to view/download.
  * @param boolean $download
- *   If TRUE the file is download to the user computer for viewing otherwise it will attempt to display in the browser natively.
+ *   If TRUE the file is download to the user computer for viewing otherwise it
+ *   will attempt to display in the browser natively.
  */
 function islandora_view_datastream(FedoraDatastream $datastream, $download = FALSE) {
   header_remove('Cache-Control');
@@ -53,7 +55,8 @@ function islandora_view_datastream(FedoraDatastream $datastream, $download = FAL
  *   The datastream to check.
  *
  * @return string
- *   A human readable size of the given datastream, or '-' if the size could not be determined.
+ *   A human readable size of the given datastream, or '-' if the size could not
+ *   be determined.
  */
 function islandora_datastream_get_human_readable_size(FedoraDatastream $datastream) {
   module_load_include('inc', 'islandora', 'includes/utilities');

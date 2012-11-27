@@ -3,7 +3,8 @@
 /**
  * @file
  *
- * This file contains the admin (confirmation) form and callback functions to delete/purge a datastream.
+ * This file contains the admin (confirmation) form and callback functions to
+ * delete/purge a datastream.
  */
 
 /**
@@ -31,9 +32,11 @@ function islandora_delete_datastream_form(array $form, array &$form_state, Fedor
 }
 
 /**
- * Submit handler for the delete datastream form. Purges/Delete's the given FedoraDatastream if possible.
+ * Submit handler for the delete datastream form. Purges/Delete's the given
+ * FedoraDatastream if possible.
  *
- * The ISLANDORA_PRE_PURGE_DATASTREAM_HOOK will query other modules as to whether the given FedoraDatastream
+ * The ISLANDORA_PRE_PURGE_DATASTREAM_HOOK will query other modules as to
+ * whether the given FedoraDatastream
  * should be: blocked from purging; state set to 'Deleted'; or purged.
  *
  * @see islandora_delete_datastream().

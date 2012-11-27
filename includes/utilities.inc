@@ -156,7 +156,9 @@ function islandora_escape_pid_for_function($pid) {
  * Gets the namespace of the given id.
  *
  * @param string $id
- *   Either a PID or namespace to check for accessibility. Any string like those below are fine.
+ *   Either a PID or namespace to check for accessibility. Any string like those
+ *   below are fine.
+ *
  * @code
  *  'islandora',
  *  'islandora:',
@@ -173,10 +175,13 @@ function islandora_get_namespace($id) {
 }
 
 /**
- * Checks the given namespace or PID is/has an accessible namespace as defined by the "islandora_pids_allowed" variable.
+ * Checks the given namespace or PID is/has an accessible namespace as defined
+ * by the "islandora_pids_allowed" variable.
  *
  * @param string $namespace
- *   Either a PID or namespace to check for accessibility. Any string like those below are fine.
+ *   Either a PID or namespace to check for accessibility. Any string like those
+ *   below are fine.
+ *
  * @code
  *  'islandora',
  *  'islandora:',
