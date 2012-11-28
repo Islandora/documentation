@@ -2,26 +2,38 @@
 
 /**
  * @file
- * Invokes a hook to any dependent modules asking them if their installations require
- * any fedora objects to be present. Modules implementing this hook should return an array
+ * Invokes a hook to any dependent modules asking them if their
+ * installations require any fedora objects to be present.
+ * Modules implementing this hook should return an array
  * of arrays of the form:
  *
- * array( 'pid', 'path-to-foxml-file', 'dsid', 'path-to-datastream-file', int dsversion)
+ * array( 'pid', 'path-to-foxml-file',
+ *   'dsid',
+ *   'path-to-datastream-file',
+ *   int dsversion)
  *
- * where the last three options are optional. A module can either point to a simple
- * foxml file to install, or can specify a datastreamstream to check for, with a
- * path to load the datastream from if it isn't there. Optionally a version number
- * can be included, to enable updating of content model or collection policy streams
- * that may have been updated. THis is a simple whole number that should be incremented
- * when changed.  This value appears in as an attribute of the topmost element of the stream,
+ * where the last three options are optional.
+ * A module can either point to a simple foxml file to install,
+ * or can specify a datastreamstream to check for, with a
+ * path to load the datastream from if it isn't there.
+ * Optionally a version number can be included,
+ * to enable updating of content model or collection policy streams
+ * that may have been updated.
+ * This is a simple whole number that should be incremented when changed.
+ * This value appears in as an attribute of the topmost element of the stream,
  * e.g.,:
  *
- * <?xml version="1.0" encoding="utf-8"?> <content_model name="Collection" version="2" ...
+ * <?xml version="1.0" encoding="utf-8"?>
+ * <content_model name="Collection" version="2" ...
  *
  * Datastreams which don't have this element are assumed to be at version 0.
  */
+
+/**
+ * Builds the tab for the solution packs.
+ */
 function fedora_repository_solution_packs_page() {
-  $enabled_solution_packs = module_invoke_all('required_fedora_objects');
+  $enabled_solution_packs = module_invoke_all('fedora_repository_required_fedora_objects');
   $output = '';
   foreach ($enabled_solution_packs as $solution_pack_module => $solution_pack_info) {
     $objects = array();
@@ -42,18 +54,27 @@ function fedora_repository_solution_packs_page() {
 }
 
 /**
- * Check for installed objects and add a 'Update' or 'Install' button if some objects are missing.
- * @param array $solution_pack
+ * Check for installed objects and add a 'Update' or 'Install' button if
+ * some objects are missing.
+ *
+ * @param array &$form_state
+ *   The current state of the form.
+ * @param unknown $solution_pack_module
+ *   Module name of that solution pack.
+ * @param string $solution_pack_name
+ *   Human readable name for the solution pack.
+ * @param array $objects
+ *   Defaults to an empty array.
  */
 function fedora_repository_solution_pack_form(&$form_state, $solution_pack_module, $solution_pack_name, $objects = array()) {
-    
+
   // Check each object to see if it is in the repository.
   module_load_include('inc', 'fedora_repository', 'api/fedora_item');
   global $base_path;
   $needs_update = FALSE;
   $needs_install = FALSE;
   $form = array();
-  
+
   $form['solution_pack_module'] = array(
     '#type' => 'hidden',
     '#value' => $solution_pack_module,
@@ -161,14 +182,20 @@ function fedora_repository_solution_pack_form(&$form_state, $solution_pack_modul
   return $form;
 }
 
+/**
+ * Submit handler for solution pack form.
+ *
+ * @param array $form
+ *   The form submitted.
+ * @param array_reference $form_state
+ *   The state of the form submited.
+ */
 function fedora_repository_solution_pack_form_submit($form, &$form_state) {
-  $what = $form_state;
+
   $module_name = $form_state['values']['solution_pack_module'];
 
-  // This should be replaced with module_invoke
-  //$solution_pack_info = call_user_func($module_name . '_required_fedora_objects');
-  $solution_pack_info = module_invoke($module_name, 'required_fedora_objects');
-  
+  $solution_pack_info = module_invoke($module_name, 'fedora_repository_required_fedora_objects');
+
   $batch = array(
     'title' => t('Installing / updating solution pack objects'),
     'file' => drupal_get_path('module', 'fedora_repository') . '/fedora_repository.module',
@@ -178,11 +205,25 @@ function fedora_repository_solution_pack_form_submit($form, &$form_state) {
 
   foreach ($solution_pack_info[$module_name]['objects'] as $object) {
     // Add this object to the batch job queue.
-    $batch['operations'][] = array('fedora_repository_batch_reingest_object', array($object));
+    // Module name is needed in the finished callback.
+    $batch['operations'][] = array('fedora_repository_batch_reingest_object', array($object, $module_name));
   }
+
+  // Tell the batch to call the function to send out a postprocess hook.
+  $batch['finished'] = 'fedora_repository_solutionpack_send_postprocess';
+
   batch_set($batch);
+
 }
 
+/**
+ * Writes a form entry into the database.
+ *
+ * @param string $form_name
+ *   The name of the form.
+ * @param unknown_type $form_xml
+ *   The form definition.
+ */
 function solution_pack_add_form($form_name, $form_xml) {
   $result = db_result(db_query('Select name from {xml_forms} where name = "%s"', $form_name));
   if (!$result) {
@@ -194,6 +235,14 @@ function solution_pack_add_form($form_name, $form_xml) {
   }
 }
 
+/**
+ * Writes a form association to the database
+ *
+ * @param string $content_model
+ *   content model PID
+ * @param string $form_name
+ *   Name of the form
+ */
 function solution_pack_add_form_association($content_model, $form_name) {
   $result = db_result(db_query('Select content_model from {islandora_content_model_forms} where  content_model = "%s" and form_name = "%s"',
               $content_model, $form_name));
@@ -205,6 +254,6 @@ function solution_pack_add_form_association($content_model, $form_name) {
     $object->title_field = "['titleInfo']['title']";
     $object->transform = 'mods_to_dc.xsl';
     $result = drupal_write_record('islandora_content_model_forms', $object);
-    drupal_set_message(t("Added association between @cm and @name", array("@cm" => $content_model, "@name"=>$form_name)));
+    drupal_set_message(t("Added association between @cm and @name", array("@cm" => $content_model, "@name" => $form_name)));
   }
 }

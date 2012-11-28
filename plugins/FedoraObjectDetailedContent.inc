@@ -55,14 +55,14 @@ class FedoraObjectDetailedContent {
     if (!isset($profile)) {
       // default behaviour
       watchdog('fedora_repository', "Error while reading the default object details display profile: @e", array("@e" => $e->getMessage()), WATCHDOG_WARNING);
-      $dc_html = $objectHelper->getFormattedDC($this->item);
+      $dc_returned = $objectHelper->getFormattedDC($this->item);
     }
     else {
       // invoke the requested display profile
       require_once(drupal_get_path('module', $profile['module']) ."/". $profile['file']);
       $details_function = $profile['function'];
       if (function_exists($details_function)) {
-        $dc_html = $details_function($this->item);
+        $dc_returned = $details_function($this->item);
       }
       else {
         // problem - display profile not found
@@ -70,16 +70,31 @@ class FedoraObjectDetailedContent {
       }
     }
 
+    $dc_array = array();
     $i = 0;
-    if (fedora_repository_access(OBJECTHELPER :: $VIEW_DETAILED_CONTENT_LIST, $this->pid, $user)) {
-      $tabset['fedora_object_details']['tabset']['view'] = array(
-        '#type' => 'tabpage',
-        '#title' => t('View'),
-        'dc' => array(
-          '#type' => 'markup',
-          '#value' => $dc_html, //XXX:  This could easily be done in Drupal, instead of using an XSL
-          '#weight' => $i++
-        ),
+    if (is_array($dc_returned)) {
+      $dc_array = $dc_returned;
+      $dc_array['#weight'] = $i++;
+    }
+    elseif (!empty($dc_returned)) {
+      $dc_array = array(
+        '#type' => 'markup',
+        '#value' => $dc_returned, //XXX:  This could easily be done in Drupal, instead of using an XSL
+        '#weight' => $i++
+      );
+    }
+
+    $tabset['fedora_object_details']['tabset']['view'] = array(
+      '#type' => 'tabpage',
+      '#title' => t('View'),
+    );
+
+    if (!empty($dc_array)) {
+      $tabset['fedora_object_details']['tabset']['view']['dc'] = $dc_array;
+    }
+
+    if (fedora_repository_check_perm(ObjectHelper :: $VIEW_DETAILED_CONTENT_LIST, $this->pid, $user)) {
+      $tabset['fedora_object_details']['tabset']['view'] += array(
         'list' => array(
           '#type' => 'fieldset',
           '#title' => t('Detailed List of Content'),
@@ -100,6 +115,11 @@ class FedoraObjectDetailedContent {
             '#weight' => $i++,
           ),
         ),
+      );
+    }
+
+    if (fedora_repository_check_perm(ObjectHelper :: $PURGE_FEDORA_OBJECTSANDSTREAMS, $this->pid, $user)) {
+      $tabset['fedora_object_details']['tabset']['view'] += array(
         'purge' => array(
           '#type' => 'markup',
           '#value' => $purge_form,
@@ -108,7 +128,7 @@ class FedoraObjectDetailedContent {
       );
     }
 
-    if (fedora_repository_access(OBJECTHELPER :: $EDIT_FEDORA_METADATA, $this->pid, $user)) {
+    if (fedora_repository_check_perm(OBJECTHELPER :: $EDIT_FEDORA_METADATA, $this->pid, $user)) {
       $editform = drupal_get_form('fedora_repository_edit_qdc_form', $this->pid, 'DC');
       $tabset['fedora_object_details']['tabset']['edit'] = array(
         '#type' => 'tabpage',
@@ -119,7 +139,8 @@ class FedoraObjectDetailedContent {
     }
 
     $ts = $tabset['fedora_object_details']['tabset'];
-    if (array_key_exists('view', $ts) || array_key_exists('edit', $ts)) {
+    if ((array_key_exists('view', $ts) && (count(element_children($ts['view'])) > 0)) || 
+      (array_key_exists('edit', $ts) && (count(element_children($ts['edit'])) > 0 || array_key_exists('#content', $ts['edit'])))) {
       return $tabset;
     }
     else {
