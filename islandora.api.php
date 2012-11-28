@@ -235,6 +235,10 @@ function hook_islandora_undeletable_datastreams(array $models) {}
  *   - form_id: The form building function to call to get the form structure
  *     for this step.
  *   - args: An array of arguments to pass to the form building function.
+ *   And may optionally include both:
+ *   - module: A module from which we want to load an include.
+ *   - file: A file to include (relative to the module's path, including the
+ *     file's extension).
  */
 function hook_islandora_ingest_steps(array $configuration) {
   return array(
