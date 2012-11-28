@@ -21,6 +21,7 @@
  */
 function islandora_add_datastream_form(array $form, array &$form_state, FedoraObject $object) {
   module_load_include('inc', 'islandora', 'includes/content_model');
+  module_load_include('inc', 'islandora', 'includes/utilities');
   form_load_include($form_state, 'inc', 'islandora', 'includes/add_datastream.form');
   $form_state['object'] = $object;
   $form_state['datastream_requirements'] = islandora_get_missing_datastreams_requirements($object);
@@ -219,6 +220,7 @@ function islandora_add_datastream_form_submit(array $form, array &$form_state) {
  */
 function islandora_add_datastream_form_autocomplete_callback(FedoraObject $object, $query = '') {
   module_load_include('inc', 'islandora', 'includes/content_model');
+  module_load_include('inc', 'islandora', 'includes/utilities');
   $dsids = array_keys(islandora_get_missing_datastreams_requirements($object));
   $dsids = array_combine($dsids, $dsids);
   $query = trim($query);

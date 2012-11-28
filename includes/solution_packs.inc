@@ -491,6 +491,7 @@ function islandora_solution_pack_add_object(array $object_definition) {
  *   An NewFedoraObject which has been initalized with the given properties.
  */
 function islandora_solution_pack_prepare_new_object(array $object_definition) {
+  module_load_include('inc', 'islandora', 'includes/utilities');
   $namespace = $object_definition['pid'];
   $label = !empty($object_definition['label']) ? $object_definition['label'] : NULL;
   $datastreams = array();
