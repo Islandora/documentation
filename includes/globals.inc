@@ -321,8 +321,23 @@ function islandora_get_missing_datastreams_requirements(FedoraObject $object) {
  *   object.
  */
 function islandora_get_datastreams_requirements(FedoraObject $object) {
+  return islandora_get_datastreams_requirements_from_models($object->models);
+}
+
+/**
+ * Get the list of which datastreams are valid in the given set of models.
+ *
+ * @param array $models
+ *   An array of content models PIDs from which to parse the DS-COMPOSITE-MODEL
+ *   stream.
+ *
+ * @return array
+ *   An associative array of associative arrays, merged from calls to
+ *   islandora_get_datastreams_requirements_from_content_model(). 
+ */
+function islandora_get_datastreams_requirements_from_models(array $models) {
   $dsids = array();
-  foreach ($object->models as  $model) {
+  foreach ($models as  $model) {
     $model = islandora_get_object_by_id($model);
     $dsids += islandora_get_datastreams_requirements_from_content_model($model);
   }
