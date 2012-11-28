@@ -160,7 +160,7 @@ function islandora_menu() {
     'file' => 'includes/datastream.inc',
     'access callback' => 'islandora_object_datastream_access_callback',
     'access arguments' => array(FEDORA_VIEW, 2, 4),
-    'load arguments' => array('%map'),
+    'load arguments' => array(2),
   );
   $items['islandora/object/%islandora_object/datastream/%islandora_datastream/view'] = array(
     'title' => 'View datastream',
@@ -174,7 +174,7 @@ function islandora_menu() {
     'file' => 'includes/datastream.inc',
     'access callback' => 'islandora_object_datastream_access_callback',
     'access arguments' => array(FEDORA_VIEW, 2, 4),
-    'load arguments' => array('%map'),
+    'load arguments' => array(2),
   );
   $items['islandora/object/%islandora_object/datastream/%islandora_datastream/edit'] = array(
     'title' => 'Edit datastream',
@@ -184,7 +184,7 @@ function islandora_menu() {
     'file' => 'includes/datastream.inc',
     'access callback' => 'islandora_object_datastream_access_callback',
     'access arguments' => array(FEDORA_METADATA_EDIT, 2, 4),
-    'load arguments' => array('%map'),
+    'load arguments' => array(2),
   );
   $items['islandora/object/%islandora_object/datastream/%islandora_datastream/delete'] = array(
     'title' => 'Delete data stream',
@@ -194,7 +194,7 @@ function islandora_menu() {
     'type' => MENU_CALLBACK,
     'access callback' => 'islandora_object_datastream_access_callback',
     'access arguments' => array(FEDORA_PURGE, 2, 4),
-    'load arguments' => array('%map'),
+    'load arguments' => array(2),
   );
   $items['islandora/ingest'] = array(
     'title' => 'Add an Object',
@@ -459,21 +459,6 @@ function islandora_default_islandora_view_object($object) {
  * A helper function to get a connection and return an object for objects
  * specified in the menu path as '%islandora_object'.
  *
- * This should only be used by the Drupal menu wildcard system!
- *
- * When this function returns FALSE the Drupal menu system will issues a
- * "page not found" error, when this function returns NULL, the access function
- * is expected to check for the given object and return false generating a
- * "accesss denied" error.
- *
- * This will currently display a message if the repository is inaccessable,
- * ideally this would redirect to another page in such a case,
- * as the access function will not be aware of this fact and will trigger
- * the display of the "access denied" page.
- *
- * @todo When the repository down this should return a 500 error or a
- *   site offline notice. Currently only displays a message.
- *
  * @param string $object_id
  *   The pid of an object in the menu path identified by '%islandora_object'.
  *
@@ -487,33 +472,31 @@ function islandora_default_islandora_view_object($object) {
  *   drupal_access_denied().
  */
 function islandora_object_load($object_id) {
-  static $object = NULL, $load_failed = FALSE; // Assume inaccessible.
-  if ($load_failed || isset($object)) {
-    return $object;
-  }
-  $object = islandora_get_object_by_id($object_id); // Either NULL or FALSE.
-  if (!isset($object)) {
-    module_load_include('inc', 'islandora', 'includes/utilities');
-    if (islandora_describe_repository() === FALSE) {
-      drupal_set_message(t('The repository is not availible please contact the administrator.'), 'error');
+  $tuque = islandora_get_tuque_connection();
+  if ($tuque) {
+    try {
+      $object = $tuque->repository->getObject($object_id);
+      drupal_alter('islandora_object', $object);
+      return $object;
+    } catch (Exception $e) {
+      if ($e->getCode() == '404') {
+        return FALSE;
+      }
+      else {
+        return NULL;
+      }
     }
-    $load_failed = TRUE;
   }
-  return $object;
+  else {
+    IslandoraTuque::getError();
+  }
+  // Assuming access denied in all other cases for now.
+  return NULL;
 }
 
 /**
  * A helper function to get an datastream specified as '%islandora_datastream'
  * for the object specified in the menu path as '%islandora_object'.
- *
- * This should only be used by the Drupal menu wildcard system!
- *
- * The following settings are required for any menu paths which intent to use
- * this auto loader.
- *
- * @code
- *     'load arguments' => array('%map'),
- * @endcode
  *
  * Its up to the access callbacks and menu callbacks to trigger
  * drupal_access_denied() when appropriate.
@@ -522,24 +505,21 @@ function islandora_object_load($object_id) {
  *   The dsid of the datastream specified as '%islandora_datastream' to fetch
  *   from the given object in the menu path identified by '%islandora_object'.
  *
+ * $param string $object_id
+ *   The object to load the datastream from.
+ *
  * @return FedoraDatastream
  *   If the given datastream ID exists then this returns a FedoraDatastream
  *   object, otherwise it returns NULL which triggers drupal_page_not_found().
  */
-function islandora_datastream_load($datastream_id, $map) {
-  static $datastream = NULL, $load_failed = FALSE;
-  if ($load_failed || isset($datastream)) {
-    return $datastream;
+function islandora_datastream_load($datastream_id, $object_id) {
+  $object = islandora_object_load($object_id);
+
+  if(!$object) {
+    return NULL;
   }
-  foreach ($map as $element) {
-    $is_fedora_object = is_object($element) && strtolower(get_class($element)) == 'fedoraobject';
-    if ($is_fedora_object && isset($element[$datastream_id])) {
-      $datastream = $element[$datastream_id];
-      return $datastream;
-    }
-  }
-  $load_failed = TRUE;
-  return $datastream;
+
+  return $object[$datastream_id];
 }
 
 /**

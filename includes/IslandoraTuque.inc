@@ -74,3 +74,22 @@ class IslandoraTuque {
     drupal_set_message(filter_xss($message), 'error', FALSE);
   }
 }
+
+/**
+ * Just a wrapper around fetchings the IslandoraTuque object, with some very
+ *  basic error logging.
+ *
+ * @return IslandoraTuque
+ *   A IslandoraTuque instance
+ */
+function islandora_get_tuque_connection() {
+  $tuque = &drupal_static(__FUNCTION__);
+  if (!$tuque) {
+    try {
+      $tuque = new IslandoraTuque();
+    } catch (Exception $e) {
+      drupal_set_message(t('Unable to connect to the repository %e', array('%e' => $e)), 'error');
+    }
+  }
+  return $tuque;
+}

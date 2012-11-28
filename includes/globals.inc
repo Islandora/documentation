@@ -27,40 +27,6 @@ function islandora_get_tuque_connection() {
 }
 
 /**
- * Gets the given object if found, NULL if it is inaccessible and FALSE if it
- * was not found.
- *
- * @param string $object_id
- *   The identifier of the object to get.
- *
- * @return FedoraObject
- *   The object if found, NULL if it is inaccessible and FALSE if it was not
- *   found.
- */
-function islandora_get_object_by_id($object_id) {
-  $tuque = islandora_get_tuque_connection();
-  if ($tuque) {
-    try {
-      $object = $tuque->repository->getObject($object_id);
-      drupal_alter('islandora_object', $object);
-      return $object;
-    } catch (Exception $e) {
-      if ($e->getCode() == '404') {
-        return FALSE;
-      }
-      else {
-        return NULL;
-      }
-    }
-  }
-  else {
-    IslandoraTuque::getError();
-  }
-  // Assuming access denied in all other cases for now.
-  return NULL;
-}
-
-/**
  * Ingest the given object into Fedora calling its pre/post hooks as well.
  *
  * @param NewFedoraObject $object
@@ -274,7 +240,7 @@ function islandora_get_parents_from_rels_ext(FedoraObject $object) {
     // @todo some logging would be nice, not sure what this throws.
     return array();
   }
-  $collections = array_map(function($o) { return islandora_get_object_by_id($o['object']['value']); }, $collections);
+  $collections = array_map(function($o) { return islandora_object_load($o['object']['value']); }, $collections);
   return array_filter($collections);
 }
 
@@ -333,12 +299,12 @@ function islandora_get_datastreams_requirements(FedoraObject $object) {
  *
  * @return array
  *   An associative array of associative arrays, merged from calls to
- *   islandora_get_datastreams_requirements_from_content_model(). 
+ *   islandora_get_datastreams_requirements_from_content_model().
  */
 function islandora_get_datastreams_requirements_from_models(array $models) {
   $dsids = array();
   foreach ($models as  $model) {
-    $model = islandora_get_object_by_id($model);
+    $model = islandora_object_load($model);
     $dsids += islandora_get_datastreams_requirements_from_content_model($model);
   }
   // The AUDIT Datastream can not really be added, so it can't really be missing.

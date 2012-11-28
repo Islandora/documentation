@@ -226,7 +226,7 @@ function islandora_batch_reingest_object($object_model, &$context) {
     $object_query = $connection->api->a->findObjects('query', 'pid=' . $pid);
     $reinstall = FALSE;
     if (!empty($object_query['results'])) {
-      $object = islandora_get_object_by_id($pid);
+      $object = islandora_object_load($pid);
       if (isset($object)) {
         islandora_delete_object($object);
       }
