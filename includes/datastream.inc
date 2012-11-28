@@ -85,52 +85,60 @@ function islandora_datastream_get_url(FedoraDatastream $datastream, $type = 'dow
  */
 function islandora_datastream_get_delete_link(FedoraDatastream $datastream) {
   $datastreams = module_invoke_all('islandora_undeletable_datastreams', $datastream->parent->models);
-  if (in_array($datastream->id, $datastreams)) {
-    return '';
-  }
-  else {
-    return l(t('delete'), 'islandora/object/' . $datastream->parent->id . '/datastream/' . $datastream->id . '/delete');
-  }
+  $can_delete = !in_array($datastream->id, $datastreams);
+  return $can_delete ? l(t('delete'), "islandora/object/{$datastream->parent->id}/datastream/{$datastream->id}/delete") : '';
 }
 
-
-function islandora_datastream_edit_get_link($object, $ds_id) {
-  $edit_registry = module_invoke_all('islandora_edit_datastream_registry', $object, $ds_id);
-  if (count($edit_registry) > 0 && user_access(FEDORA_METADATA_EDIT)) {
-    return l(t('edit'), 'islandora/object/' . $object->id . '/datastream/' . $ds_id . '/edit');
-  }
-  else {
-    return '';
-  }
+/**
+ * Gets the edit link.
+ *
+ * @param FedoraDatastream $datastream
+ *   The datastream to generated the url to.
+ */
+function islandora_datastream_edit_get_link(FedoraDatastream $datastream) {
+  $edit_registry = module_invoke_all('islandora_edit_datastream_registry', $datastream->parent, $datastream);
+  $can_edit = count($edit_registry) > 0 && user_access(FEDORA_METADATA_EDIT);
+  return $can_edit ? l(t('edit'), "islandora/object/{$datastream->parent->id}/datastream/{$datastream->id}/edit") : '';
 }
 
-function islandora_edit_datastream($object, $ds_id) {
-  $edit_registry = module_invoke_all('islandora_edit_datastream_registry', $object, $ds_id);
+/**
+ * Display the edit datastream page.
+ *
+ * @param FedoraDatastream $datastream
+ *   The datastream to edit.
+ */
+function islandora_edit_datastream(FedoraDatastream $datastream) {
+  $edit_registry = module_invoke_all('islandora_edit_datastream_registry', $datastream->parent, $datastream);
   $edit_count = count($edit_registry);
-
-  if ($edit_count == 0) {
-    // No edit implementations.
-    drupal_set_message(t('There are no edit methods specified for this datastream.'));
-    drupal_goto('islandora/object/' . $object->id . '/manage/datastreams');
-  }
-  elseif ($edit_count == 1) {
-    // One registry implementation, go there
-    drupal_goto($edit_registry[0]['url']);
-  }
-  else {
-    // Multiple edit routes registered
-    return islandora_edit_datastream_registry_render($edit_registry);
+  switch ($edit_count) {
+    case 0:
+      // No edit implementations.
+      drupal_set_message(t('There are no edit methods specified for this datastream.'));
+      drupal_goto("islandora/object/{$object->id}/manage/datastreams");
+      break;
+    case 1:
+      // One registry implementation, go there
+      drupal_goto($edit_registry[0]['url']);
+      break;
+    default:
+      // Multiple edit routes registered
+      return islandora_edit_datastream_registry_render($edit_registry);
   }
 }
 
-// @TODO: theme / preprocess
-function islandora_edit_datastream_registry_render($edit_registry) {
-  $output = array(
-    '#type' => 'markup',
-    '#markup' => '',
-  );
-  foreach ($edit_registry AS $edit_route) {
-    $output['#markup'] .= l($edit_route['name'], $edit_route['url']) . '<br/>';
+/**
+ * Displays links to all the edit datastream registry items.
+ *
+ * @param array $edit_registry
+ *   A list of 'islandora_edit_datastream_registry' values.
+ */
+function islandora_edit_datastream_registry_render(array $edit_registry) {
+  $markup = '';
+  foreach ($edit_registry as $edit_route) {
+    $markup .= l($edit_route['name'], $edit_route['url']) . '<br/>';
   }
-  return $output;
+  return array(
+    '#type' => 'markup',
+    '#markup' => $markup,
+  );
 }
