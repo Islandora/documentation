@@ -420,6 +420,8 @@ function islandora_ingest_get_steps(array $configuration) {
   foreach (islandora_build_hook_list(ISLANDORA_INGEST_STEP_HOOK, $models) as $hook) {
     $steps = array_merge($steps, module_invoke_all($hook, $configuration));
   }
+  // Remove NULL values.
+  $steps = array_filter($steps);
   usort($steps, 'drupal_sort_weight');
   return $steps;
 }
