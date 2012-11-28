@@ -3,5 +3,5 @@ description = Adds image manipulation support through a REST interface
 package = Islandora Dependencies
 dependencies[] = fedora_repository
 dependencies[] = imageapi
-version = 6.x-12.3.0-RC1
+version = 6.x-12.3.0-RC
 core = 6.x
