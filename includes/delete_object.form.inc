@@ -41,6 +41,7 @@ function islandora_delete_object_form(array $form, array &$form_state, FedoraObj
  */
 function islandora_delete_object_form_submit(array $form, array &$form_state) {
   module_load_include('inc', 'islandora', 'includes/datastream');
+  module_load_include('inc', 'islandora', 'includes/utilities');
   $object = $form_state['object'];
   $parents = islandora_get_parents_from_rels_ext($object);
   $parent = array_pop($parents);

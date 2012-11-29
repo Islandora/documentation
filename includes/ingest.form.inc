@@ -67,6 +67,7 @@ function islandora_ingest_form_init_form_state(array &$form_state, array $config
  *   executed.
  */
 function islandora_ingest_form_init_form_state_storage(array &$form_state, array $configuration) {
+  module_load_include('inc', 'islandora', 'includes/utilities');
   if (empty($form_state['islandora'])) {
     // Use ID if given.
     $id = isset($configuration['id']) ? $configuration['id'] : NULL;

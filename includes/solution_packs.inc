@@ -226,7 +226,7 @@ function islandora_batch_reingest_object($object_model, &$context) {
     $object_query = $connection->api->a->findObjects('query', 'pid=' . $pid);
     $reinstall = FALSE;
     if (!empty($object_query['results'])) {
-      $object = islandora_get_object_by_id($pid);
+      $object = islandora_object_load($pid);
       if (isset($object)) {
         islandora_delete_object($object);
       }
@@ -491,6 +491,7 @@ function islandora_solution_pack_add_object(array $object_definition) {
  *   An NewFedoraObject which has been initalized with the given properties.
  */
 function islandora_solution_pack_prepare_new_object(array $object_definition) {
+  module_load_include('inc', 'islandora', 'includes/utilities');
   $namespace = $object_definition['pid'];
   $label = !empty($object_definition['label']) ? $object_definition['label'] : NULL;
   $datastreams = array();
