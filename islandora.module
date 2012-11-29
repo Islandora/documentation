@@ -515,7 +515,7 @@ function islandora_object_load($object_id) {
 function islandora_datastream_load($datastream_id, $object_id) {
   $object = islandora_object_load($object_id);
 
-  if(!$object) {
+  if (!$object) {
     return NULL;
   }
 

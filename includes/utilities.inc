@@ -126,8 +126,9 @@ function islandora_describe_repository($url = NULL) {
 function islandora_build_hook_list($hook, $pids = array()) {
   $hooks = array();
 
-  foreach ($pids as $model) {
-    $hooks[] = islandora_escape_pid_for_function($model) . '_' . $hook;
+  $pids = array_unique($pids);
+  foreach ($pids as $pid) {
+    $hooks[] = islandora_escape_pid_for_function($pid) . '_' . $hook;
   }
   $hooks[] = $hook;
 
