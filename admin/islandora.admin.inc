@@ -24,7 +24,7 @@ function islandora_repository_admin($form, &$form_state) {
     $url = variable_get('islandora_base_url', 'http://localhost:8080/fedora');
   }
 
-  $connection = islandora_get_tuque_connection();
+  $connection = islandora_get_tuque_connection(NULL, $url);
   if (!$connection) {
     return;
   }

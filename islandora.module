@@ -461,13 +461,13 @@ function islandora_default_islandora_view_object($object) {
  * @return IslandoraTuque
  *   A IslandoraTuque instance
  */
-function islandora_get_tuque_connection() {
+function islandora_get_tuque_connection($user = NULL, $url = NULL) {
   module_load_include('inc', 'islandora', 'includes/IslandoraTuque');
   $tuque = &drupal_static(__FUNCTION__);
   if (!$tuque) {
     if (IslandoraTuque::exists()) {
       try {
-        $tuque = new IslandoraTuque();
+        $tuque = new IslandoraTuque($user, $url);
       } catch (Exception $e) {
         drupal_set_message(t('Unable to connect to the repository %e', array('%e' => $e)), 'error');
       }
