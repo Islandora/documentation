@@ -256,7 +256,7 @@ function islandora_ingest_form_next_button(array $step_info) {
 function islandora_ingest_form_next_submit(array $form, array &$form_state) {
   $step = islandora_ingest_form_get_step_number($form_state);
   islandora_ingest_form_stash_info($form_state);
-  $step = min(array($step + 1, islandora_ingest_form_get_step_count($form_state))) ;
+  $step = min(array($step + 1, islandora_ingest_form_get_step_count($form_state) - 1)) ;
   $form_state['islandora']['step_id'] = islandora_ingest_form_get_step_id($form_state, $step);
   islandora_ingest_form_grab_info($form_state);
   $form_state['rebuild'] = TRUE;
