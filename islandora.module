@@ -536,7 +536,7 @@ function islandora_object_load($object_id) {
  */
 function islandora_tokened_object_load($object_id, $map) {
   if (array_key_exists('token', $_GET)) {
-    $token = $_GET['token'];
+    $token = filter_input(INPUT_GET, 'token', FILTER_SANITIZE_STRING);
     if ($token) {
       module_load_include('inc', 'islandora', 'includes/islandora_authtokens');
       $token_user = islandora_validate_object_token($object_id, $map[4], $token);
@@ -550,7 +550,12 @@ function islandora_tokened_object_load($object_id, $map) {
  * This datastream load must take in arguments in a different 
  * order than the usual islandora_datastream_load.  This is because 
  * the function islandora_tokened_object_load needs DSID. It uses
- * the path %map to avoid duplicate parameters.
+ * the path %map to avoid duplicate parameters. The menu system
+ * passes 'load arguments' to both islandora_tokened_object_load
+ * and this function and the first parameter is positional with the token.
+ * An alternative: 
+ * islandora_tokened_object_load(PID, DSID, PID)
+ * islandora_tokened_datastream_load(DSID, DSID, PID)
  * 
  * @param mixed $datastream_id
  *   %islandora_tokened_datastream @see islandora_datastream_load
