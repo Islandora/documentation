@@ -6,8 +6,9 @@
  *   such as Djatoka that do not pass through credentials.
  */
 
-// Token lifespan: after this duration the token expires.
-define('TOKEN_TIMEOUT', 30000);
+// Token lifespan(seconds): after this duration the token expires.
+// 5 minutes.
+define('TOKEN_TIMEOUT', 300);
 
 /**
  * Request Islandora to construct an object/datastream authentication token.
@@ -30,7 +31,11 @@ define('TOKEN_TIMEOUT', 30000);
 function islandora_get_object_token($pid, $dsid, $uses = 1) {
   global $user;
   $time = time();
-  $token = hash("sha256", mt_rand());
+  // The function mt_rand is not considered cryptographically secure
+  // and openssl_rando_pseudo_bytes() is only available in PHP > 5.3.
+  // We might be safe in this case because mt_rand should never be using
+  // the same seed, but this is still more secure.
+  $token = hash("sha256", mt_rand() . $time);
 
   $id = db_insert("islandora_authtokens")->fields(
     array(
