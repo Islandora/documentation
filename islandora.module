@@ -167,7 +167,6 @@ function islandora_menu() {
     'load arguments' => array('%map'),
     'type' => MENU_DEFAULT_LOCAL_TASK,
   );
-
   $items['islandora/object/%islandora_object/datastream/%islandora_datastream/download'] = array(
     'title' => 'Download datastream',
     'page callback' => 'islandora_download_datastream',
@@ -597,12 +596,10 @@ function islandora_tokened_datastream_load($datastream_id, $map) {
  *   object, otherwise it returns NULL which triggers drupal_page_not_found().
  */
 function islandora_datastream_load($datastream_id, $object_id) {
-  $object = islandora_object_load($object_id);
-
+  $object = is_object($object_id) ? $object_id : islandora_object_load($object_id);
   if (!$object) {
     return NULL;
   }
-
   return $object[$datastream_id];
 }
 
