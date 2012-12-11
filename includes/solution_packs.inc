@@ -15,10 +15,12 @@
  */
 function islandora_solution_packs_admin() {
   module_load_include('inc', 'islandora', 'includes/utilities');
-  if (($connection = islandora_get_tuque_connection()) === NULL) {
+  if (!islandora_describe_repository()) {
     islandora_display_repository_inaccessible_message();
-    return;
+    return '';
   }
+
+  $connection = islandora_get_tuque_connection();
   drupal_add_css(drupal_get_path('module', 'islandora') . '/css/islandora.admin.css');
   $output = '';
   $enabled_solution_packs = module_invoke_all('islandora_required_objects', $connection);
@@ -60,25 +62,26 @@ function islandora_solution_pack_form(array $form, array &$form_state,  $solutio
   $warning_image = theme_image(array('path' => 'misc/watchdog-warning.png', 'attributes' => array()));
   $status_info = array(
     'up_to_date' => array(
-      'object' => t('Up-to-date'),
       'solution_pack' => t('All required objects are installed and up-to-date.'),
       'image' => $ok_image,
       'button' => t("Force reinstall objects"),
     ),
+    'modified_datastream' => array(
+      'solution_pack' => t('Some objects must be reinstalled. See objects list for details.'),
+      'image' => $warning_image,
+      'button' => t("Reinstall objects")
+    ),
     'out_of_date' => array(
-      'object' => t('Out-of-date'),
       'solution_pack' => t('Some objects must be reinstalled. See objects list for details.'),
       'image' => $warning_image,
       'button' => t("Reinstall objects")
     ),
     'missing_datastream' => array(
-      'object' => t('Missing Datastream'),
       'solution_pack' => t('Some objects must be reinstalled. See objects list for details.'),
       'image' => $warning_image,
       'button' => t("Reinstall objects")
     ),
     'missing' => array(
-      'object' => t('Missing'),
       'solution_pack' => t( 'Some objects are missing and must be installed. See objects list for details.'),
       'image' => $warning_image,
       'button' => t("Install objects")
@@ -89,13 +92,13 @@ function islandora_solution_pack_form(array $form, array &$form_state,  $solutio
   $table_rows = array();
   foreach ($objects as $object) {
     $object_status = islandora_check_object_status($object);
-    $object_status_info = $status_info[$object_status];
-    $object_status_severity = array_search($object_status, $status_severities);
+    $object_status_info = $status_info[$object_status['status']];
+    $object_status_severity = array_search($object_status['status'], $status_severities);
     // The solution pack status severity will be the highest severity of the objects.
     $solution_pack_status_severity = max($solution_pack_status_severity, $object_status_severity);
-    $exists = $object_status != 'missing';
+    $exists = $object_status['status'] != 'missing';
     $label = $exists ? l($object->label, "islandora/object/{$object->id}") : $object->label;
-    $status_msg = "{$object_status_info['image']}&nbsp{$object_status_info['object']}";
+    $status_msg = "{$object_status_info['image']}&nbsp{$object_status['status_friendly']}";
     $table_rows[] = array($label, $object->id, $status_msg);
   }
   $solution_pack_status = $status_severities[$solution_pack_status_severity];
@@ -155,7 +158,6 @@ function islandora_solution_pack_form(array $form, array &$form_state,  $solutio
  */
 function islandora_solution_pack_form_submit(array $form, array &$form_state) {
   $solution_pack_module = $form_state['values']['solution_pack_module'];
-  $solution_pack_name = $form_state['values']['solution_pack_name'];
   $objects = $form_state['values']['objects'];
   $batch = array(
     'title' => t('Installing / Updating solution pack objects'),
@@ -186,7 +188,7 @@ function islandora_solution_pack_batch_operation_reingest_object(NewFedoraObject
   $existing_object = islandora_object_load($object->id);
   if ($existing_object) {
     $deleted = islandora_delete_object($existing_object);
-    $purged = $deleted && $exsiting_object == NULL;
+    $purged = $deleted && $existing_object == NULL;
     if (!$purged) {
       $object_link = l($existing_object->label, "islandora/object/{$existing_object->id}");
       drupal_set_message(t('Failed to purge existing object !object_link.', array(
@@ -257,7 +259,8 @@ function islandora_install_solution_pack($module, $op = 'install') {
   $status_messages = array(
     'up_to_date' => 'The object already exists and is up-to-date',
     'missing_datastream' => 'The object already exists but is missing a datastream. Please reinstall the object on the !admin_link page',
-    'out_of_date' => 'The object already exists but is out-of-date. Please update the object on the !admin_link page'
+    'out_of_date' => 'The object already exists but is out-of-date. Please update the object on the !admin_link page',
+    'modified_datastream' => 'The object already exists but datastreams are modified. Please reinstall the object on the !admin_link page',
   );
   foreach ($objects as $object) {
     $query = $connection->api->a->findObjects('query', 'pid=' . $object->id);
@@ -266,7 +269,7 @@ function islandora_install_solution_pack($module, $op = 'install') {
     $object_link = l($label, "islandora/object/{$object->id}");
     if ($already_exists) {
       $object_status = islandora_check_object_status($object);
-      $status_msg = $status_messages[$object_status];
+      $status_msg = $status_messages[$object_status['status']];
       drupal_set_message(st("@module: Did not install !object_link. $status_msg.", array(
             '@module' => $module_name,
             '!object_link' => $object_link,
@@ -304,7 +307,6 @@ function islandora_uninstall_solution_pack($module) {
   module_load_include('module', 'islandora', 'islandora');
   module_load_include('inc', 'islandora', 'includes/utilities');
   module_load_include('module', $module, $module);
-  $admin_link = l(t('Solution Pack admin'), 'admin/islandora/solution_packs');
   $config_link = l(t('Islandora configuration'), 'admin/islandora/configure');
   $info_file = drupal_get_path('module', $module) . "/{$module}.info";
   $info_array = drupal_parse_info_file($info_file);
@@ -352,31 +354,72 @@ function islandora_uninstall_solution_pack($module) {
  *
  * @see islandora_solution_pack_form()
  * @see islandora_install_solution_pack()
- * @todo Should this function live in islandora.module so it can be called
- *       easier without having to include the solution_packs.inc file?
  */
 function islandora_check_object_status(NewFedoraObject $object_definition) {
   $existing_object = islandora_object_load($object_definition->id);
   if (!$existing_object) {
-    return 'missing';
+    return array('status' => 'missing', 'status_friendly' => t('Missing'));
   }
+
   $existing_datastreams = array_keys(iterator_to_array($existing_object));
   $expected_datastreams = array_keys(iterator_to_array($object_definition));
   $datastream_diff = array_diff($expected_datastreams, $existing_datastreams);
   if (!empty($datastream_diff)) {
-    return 'missing_datastream';
+    $status_friendly = format_plural(count($datastream_diff), 'Missing Datastream: %dsids.', 'Missing Datastreams: %dsids.', array('%dsids' => implode(', ', $datastream_diff)));
+    return array('status' => 'missing_datastream', 'status_friendly' => $status_friendly, 'data' => $datastream_diff);
   }
+
   $is_xml_datastream = function($ds) { return $ds->mimetype == 'text/xml'; };
   $xml_datastreams = array_filter(iterator_to_array($object_definition), $is_xml_datastream);
+  $out_of_date_datastreams = array();
   foreach ($xml_datastreams as $ds) {
     $installed_version = islandora_get_islandora_datastream_version($existing_object, $ds->id);
     $available_version = islandora_get_islandora_datastream_version($object_definition, $ds->id);
     if ($available_version > $installed_version) {
-      return 'out_of_date';
+      $out_of_date_datastreams[] = $ds->id;
     }
   }
+  if(count($out_of_date_datastreams)) {
+    $status_friendly = format_plural(count($out_of_date_datastreams), 'Datastream out of date: %dsids.', 'Datastreams out of date: %dsids.', array('%dsids' => implode(', ', $out_of_date_datastreams)));
+    return array('status' => 'out_of_date', 'status_friendly' => $status_friendly, 'data' => $out_of_date_datastreams);
+  }
+
+  // This is a pretty heavy function, but I'm not sure a better way. If we have
+  // performance trouble, we should maybe remove this.
+  $modified_datastreams = array();
+  foreach ($object_definition as $ds) {
+    if($ds->mimetype == 'text/xml' || $ds->mimetype == 'application/rdf+xml') {
+      // If the datastream is XML we use the domdocument C14N cannonicalization
+      // function to test if they are equal, because the strings likely won't
+      // be equal as Fedora does some XML mangling. In order for C14N to work
+      // we need to replace the info:fedora namespace, as C14N hates it.
+      $object_definition_dom = new DOMDocument();
+      $object_definition_dom->loadXML(str_replace('info:', 'http://', $ds->content));
+      $object_actual_dom = new DOMDocument();
+      $object_actual_dom->loadXML(str_replace('info:', 'http://', $existing_object[$ds->id]->content));
+
+      // We have to use the shutup function here. C14N throws warnings about the
+      // info:fedora namespace, but they are mostly useless.
+      if($object_actual_dom->C14N() != $object_definition_dom->C14N()) {
+        $modified_datastreams[] = $ds->id;
+      }
+    }
+    else {
+      $object_definition_hash = md5($ds->content);
+      $object_actual_hash = md5($existing_object[$ds->id]->content);
+      if($object_definition_hash != $object_actual_hash) {
+        $modified_datastreams[] = $ds->id;;
+      }
+    }
+  }
+  if(count($modified_datastreams)) {
+    $status_friendly = format_plural(count($modified_datastreams), 'Modified Datastream: %dsids.', 'Modified Datastreams: %dsids.', array('%dsids' => implode(', ', $modified_datastreams)));
+    return array('status' => 'modified_datastream', 'data' => $modified_datastreams, 'status_friendly' => $status_friendly);
+  }
+
+
   // If not anything else we can assume its up to date.
-  return 'up_to_date';
+  return array('status' => 'up_to_date', 'status_friendly' => t('Up-to-date'));
 }
 
 /**

@@ -423,7 +423,7 @@ function islandora_prepare_new_object($namespace = NULL, $label = NULL, $datastr
 function islandora_display_repository_inaccessible_message() {
   $text = t('Islandora configuration');
   $link = l($text, 'admin/islandora/configure', array('attributes' => array('title' => $text)));
-  $message = t('Could not connect to the repository. Please check the settings on the @link page.',
-             array('@link' => $link));
-  drupal_set_message($message, 'error');
+  $message = t('Could not connect to the repository. Please check the settings on the !link page.',
+             array('!link' => $link));
+  drupal_set_message($message, 'error', FALSE);
 }

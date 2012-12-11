@@ -314,6 +314,12 @@ function islandora_forms($form_id) {
  */
 function islandora_object_access_callback($perm, $object = NULL) {
   module_load_include('inc', 'islandora', 'includes/utilities');
+
+  if (!$object && !islandora_describe_repository()) {
+    islandora_display_repository_inaccessible_message();
+    return FALSE;
+  }
+
   return user_access($perm) && is_object($object) && islandora_namespace_accessible($object->id);
 }
 
