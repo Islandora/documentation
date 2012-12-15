@@ -439,13 +439,16 @@ function islandora_check_object_status(NewFedoraObject $object_definition) {
  *   The ID of the Drupal variable to save the viewer settings in
  * @param string $mimetype
  *   The table will be populated with viewers supporting this mimetype
+ * @param string $model
+ *   The table will be populated with viewers supporting this content model
+ *
  * @return
  *   A form api array which defines a themed table to select a viewer.
  */
-function islandora_viewers_form($variable_id = NULL, $mimetype = NULL) {
+function islandora_viewers_form($variable_id = NULL, $mimetype = NULL, $model = NULL) {
   $form = array();
   // get viewers
-  $viewers = islandora_get_viewers($mimetype);
+  $viewers = islandora_get_viewers($mimetype, $model);
   if (!empty($viewers)) {
     // add option for no viewer
     $no_viewer = array();
@@ -530,13 +533,15 @@ function islandora_viewers_form($variable_id = NULL, $mimetype = NULL) {
  * @return
  *  array of viewer definitions, or FALSE if none are found.
  */
-function islandora_get_viewers($mimetype = NULL) {
+function islandora_get_viewers($mimetype = NULL, $content_model = NULL) {
   $viewers = array();
   // get all viewers
   $defined_viewers = module_invoke_all('islandora_viewer_info');
   // filter viewers by mimetype
   foreach ($defined_viewers as $key => $value) {
-    if (in_array($mimetype, $value['mimetype']) OR $mimetype == NULL) {
+    $value['mimetype'] = isset($value['mimetype']) ? $value['mimetype'] : array();
+    $value['model'] = isset($value['model']) ? $value['model'] : array();
+    if (in_array($mimetype, $value['mimetype']) OR in_array($content_model, $value['model'])) {
       $viewers[$key] = $value;
     }
   }
