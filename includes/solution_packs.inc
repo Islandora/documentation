@@ -435,6 +435,12 @@ function islandora_check_object_status(NewFedoraObject $object_definition) {
 /**
  * A form construct to create a viewer selection table.
  *
+ * The list of selectable viewers is limited by the $mimetype and the $model
+ * parameters. When neither are given all defined viewers are listed. If only
+ * $mimetype is given only viewers that support that mimetype will be listed,
+ * the same goes for the $model parameter. If both are given, than any viewer
+ * that supports either the give $mimetype or $model will be listed.
+ *
  * @param string $variable_id
  *   The ID of the Drupal variable to save the viewer settings in
  * @param string $mimetype
@@ -526,6 +532,13 @@ function islandora_viewers_form($variable_id = NULL, $mimetype = NULL, $model = 
 
 /**
  * Returns all defined viewers.
+ *
+ * The list of selectable viewers is limited by the $mimetype and the
+ * $content_model parameters. When neither are given all defined viewers are
+ * listed. If only $mimetype is given only viewers that support that mimetype
+ * will be listed, the same goes for the $content_model parameter. If both are
+ * given, than any viewer that supports either the give $mimetype or $model will
+ * be listed.
  *
  * @param string $mimetype
  *  Specify a mimetype to return only viewers that support this certain
