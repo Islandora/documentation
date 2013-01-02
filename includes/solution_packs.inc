@@ -528,10 +528,14 @@ function islandora_viewers_form($variable_id = NULL, $mimetype = NULL, $model = 
  * Returns all defined viewers.
  *
  * @param string $mimetype
- *  specify a mimetype to return only viewers that support this certain
+ *  Specify a mimetype to return only viewers that support this certain
  *  mimetype.
- * @return
- *  array of viewer definitions, or FALSE if none are found.
+ * @param string $content_model
+ *  Specify a content model to return only viewers that support the content
+ *  model.
+ *
+ * @return array
+ *  Viewer definitions, or FALSE if none are found.
  */
 function islandora_get_viewers($mimetype = NULL, $content_model = NULL) {
   $viewers = array();
