@@ -342,55 +342,41 @@ function islandora_object_access_callback($perm, $object = NULL) {
  * @param FedoraDatastream $datastream
  *   The datastream to test, if NULL given the datastream doesn't exist
  *   or is inaccessible.
+ * @param StdObject $account
+ *   The account to test permissions as or NULL for current user.
  *
  * @return boolean
  *   TRUE if the user is allowed to access this object, FALSE otherwise.
  */
-function islandora_object_datastream_access_callback($perm, $object = NULL, $datastream = NULL) {
+function islandora_object_datastream_access_callback($perm, $object = NULL, $datastream = NULL, $account = NULL) {
   module_load_include('inc', 'islandora', 'includes/utilities');
-  return user_access($perm) && is_object($object) && islandora_namespace_accessible($object->id) && is_object($datastream);
+  return user_access($perm, $account) && is_object($object) && islandora_namespace_accessible($object->id) && is_object($datastream);
 }
 
 /**
- * Checks whether the user who added the token can access the given object and datastream with
- * the given permission.
+ * Checks whether the user can access the given object and datastream with
+ * the given permission. This function will validate and use a token if one
+ * is provided in the _GET array.
  *
  * Checks for object existance, accessiblitly, namespace permissions,
  * and user permissions
  *
- * @see islandora_object_load() To find potential solutions to enable page
- *   not found errors.
- *
- * @param string $perm
- *   The user permission to test for.
- * @param FedoraObject $object
- *   The object to test, if NULL given the object doesn't exist or is
- *   inaccessible.
- * @param FedoraDatastream $datastream
- *   The datastream to test, if NULL given the datastream doesn't exist
- *   or is inaccessible.
- *
- * @return boolean
- *   TRUE if the user is allowed to access this object.
- *   TRUE if the user who created the token is allowed to access the object
- *   FALSE otherwise
+ * @see islandora_object_datastream_tokened_access_callback()
  */
 function islandora_object_datastream_tokened_access_callback($perm, $object = NULL, $datastream = NULL) {
   module_load_include('inc', 'islandora', 'includes/utilities');
-  $drupal_access = islandora_object_datastream_access_callback($perm, $object, $datastream);
-  $token_access = FALSE;
-  if($drupal_access) {
-    return $drupal_access;
-  }
-  if (array_key_exists('token', $_GET)) {
-    $token = filter_input(INPUT_GET, 'token', FILTER_SANITIZE_STRING);
-    $token_user = islandora_validate_object_token($object->id, $datastream->id, $token);
-    if (isset($token_user)) {
-      $token_account = user_load(array('uid' => $token_user->uid));
-      $token_access = user_access($perm, $token_account);
+
+  $token_account = NULL;
+  $token = filter_input(INPUT_GET, 'token', FILTER_SANITIZE_STRING);
+
+  if ($token) {
+    $user = islandora_validate_object_token($object->id, $datastream->id, $token);
+    if ($user) {
+      $token_account = user_load($user->uid);
     }
   }
-  return $token_access;
+
+  return islandora_object_datastream_access_callback($perm, $object, $datastream, $token_account);
 }
 
 /**
@@ -542,8 +528,14 @@ function islandora_default_islandora_view_object($object) {
 }
 
 /**
- * Just a wrapper around fetchings the IslandoraTuque object, with some very
+ *  Just a wrapper around fetchings the IslandoraTuque object, with some very
  *  basic error logging.
+ *
+ * @param $user
+ *   The user to connect as.
+ *
+ * @param $url
+ *   The URL to connect to.
  *
  * @return IslandoraTuque
  *   A IslandoraTuque instance
@@ -624,7 +616,8 @@ function islandora_tokened_object_load($object_id, $map) {
     if ($token) {
       module_load_include('inc', 'islandora', 'includes/islandora_authtokens');
       $token_user = islandora_validate_object_token($object_id, $map[4], $token);
-      islandora_get_tuque_connection($user = $token_user);
+      $token_user = $token_user ? user_load($token_user->uid) : NULL;
+      islandora_get_tuque_connection($token_user);
     }
   }
   return islandora_object_load($object_id);
