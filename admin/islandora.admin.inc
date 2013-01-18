@@ -47,17 +47,20 @@ function islandora_repository_admin($form, &$form_state) {
 
   if ($info) {
     if ($dc) {
-      $confirmation_message = '<img src="' . url('misc/watchdog-ok.png') . '"/>'
-        . t('Successfully connected to Fedora Server (Version !version).', array('!version' => $info['repositoryVersion']));
+      $confirmation_message = theme_image(array('path' => 'misc/watchdog-ok.png', 'attributes' => array()));
+      $confirmation_message .= t('Successfully connected to Fedora Server (Version !version).', array(
+                                 '!version' => $info['repositoryVersion']));
     }
     else {
-      $confirmation_message = '<img src="' . url('misc/watchdog-warning.png') . '"/>'
-        . t('Unable to authenticate when connecting to to Fedora Server (Version !version). Please configure the !filter.', array('!version' => $info['repositoryVersion'], '!filter' => 'Drupal Filter'));
+      $confirmation_message = theme_image(array('path' => 'misc/watchdog-warning.png', 'attributes' => array()));
+      $confirmation_message .= t('Unable to authenticate when connecting to to Fedora Server (Version !version). Please configure the !filter.',
+                               array('!version' => $info['repositoryVersion'], '!filter' => 'Drupal Filter'));
     }
   }
   else {
-    $confirmation_message = '<img src="' . url('misc/watchdog-error.png') . '"/> '
-      . t('Unable to connect to Fedora server at !islandora_url', array('!islandora_url' => $url));
+    $confirmation_message = theme_image(array('path' => 'misc/watchdog-error.png', 'attributes' => array()));
+    $confirmation_message .= t('Unable to connect to Fedora server at !islandora_url', array(
+                               '!islandora_url' => $url));
   }
 
   $form['islandora_tabs'] = array(
