@@ -2,17 +2,21 @@
 
 /**
  * @file
- *
- * islandora.admin.inc: This file contains the general islandora admin form and
- * callback functions.
+ * This administration form for this module.
  */
 
 /**
- * Create admin form
+ * The administration form for the fedora repository connection.
+ *
+ * @param array $form
+ *   The Drupal form definition.
+ * @param array $form_state
+ *   The Drupal form state.
  *
  * @return array
+ *   The Drupal form definition.
  */
-function islandora_repository_admin($form, &$form_state) {
+function islandora_repository_admin(array $form, array &$form_state) {
   module_load_include('inc', 'islandora', 'includes/utilities');
   drupal_add_css(drupal_get_path('module', 'islandora') . '/css/islandora.admin.css');
 
@@ -72,7 +76,7 @@ function islandora_repository_admin($form, &$form_state) {
     '#title' => t('General Configuarion'),
   );
 
-  // ajax wrapper for url checking
+  // Ajax wrapper for url checking.
   $form['islandora_tabs']['islandora_general']['wrapper'] = array(
     '#prefix' => '<div id="islandora-url">',
     '#suffix' => '</div>',
@@ -119,7 +123,7 @@ function islandora_repository_admin($form, &$form_state) {
     '#weight' => -1,
     '#type' => 'checkbox',
     '#title' => t('Enforce namespace restrictions'),
-    '#description' => t('Allow administrator to restrict user\'s access to the PID namepaces listed below'),
+    '#description' => t("Allow administrator to restrict user's access to the PID namepaces listed below"),
     '#default_value' => variable_get('islandora_namespace_restriction_enforced', FALSE),
     '#ajax' => array(
       'callback' => 'islandora_update_namespace_div',
@@ -151,19 +155,31 @@ function islandora_repository_admin($form, &$form_state) {
 }
 
 /**
- * Checks url validity and refreshes requestHandler dropdown list
+ * Get the element to render for the AJAX event that triggered this callback.
+ *
+ * @param array $form
+ *   The Drupal form definition.
+ * @param array $form_state
+ *   The Drupal form state.
+ *
+ * @return array
+ *   The form element to render.
  */
-function islandora_update_url_div($form, $form_state) {
-  unset($form_state['submit_handlers']);
-  $form_state['rebuild'] = TRUE;
+function islandora_update_url_div(array $form, array $form_state) {
   return $form['islandora_tabs']['islandora_general']['wrapper'];
 }
 
 /**
- * Checks url validity and refreshes requestHandler dropdown list
+ * Get the element to render for the AJAX event that triggered this callback.
+ *
+ * @param array $form
+ *   The Drupal form definition.
+ * @param array $form_state
+ *   The Drupal form state.
+ *
+ * @return array
+ *   The form element to render.
  */
-function islandora_update_namespace_div($form, $form_state) {
-  unset($form_state['submit_handlers']);
-  $form_state['rebuild'] = TRUE;
+function islandora_update_namespace_div(array $form, array $form_state) {
   return $form['islandora_tabs']['islandora_namespace']['wrapper'];
 }
