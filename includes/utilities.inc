@@ -134,7 +134,6 @@ function islandora_describe_repository($url = NULL) {
  *   The merged results from all the hooks.
  */
 function islandora_invoke_hook_list($hook, array $refinements, array $args) {
-  dsm(func_get_args());
   $return = array();
   foreach (islandora_build_hook_list($hook, $refinements) as $hook) {
     array_unshift($args, $hook);
