@@ -100,24 +100,22 @@ function hook_islandora_edit_object_alter(&$object, &$rendered) {
  * @param AbstractFedoraObject $object
  *   The object to alter.
  * @param array $context
- *   The context for the alter action, this will always contain at the
- *   following properties.
+ *   An associative array containing:
+ *   - action: A string either 'ingest', 'purge', 'modify'.
+ *   - block: Either TRUE or FALSE, if TRUE the action won't take place.
+ *     Defaults to FALSE.
+ *   - purge: Either TRUE or FALSE, only present when the action is 'purge'.
+ *     If 'delete' or 'block' is set to TRUE, they will take precedence.
+ *     Defaults to TRUE.
+ *   - delete: Either TRUE or FALSE, only present when the action is 'purge'.
+ *     If TRUE it will cause the object's state to be set to 'D' instead.
+ *     If 'block' is set to TRUE, it will take precedence.
+ *     Defaults to FALSE,
+ *   - params: An associative array, only present when the action is 'modify'.
+ *     The key value pairs repersent what values will be changed. The params
+ *     will match the same params as passed to FedoraApiM::modifyObject().
  *
- * @code
- *   array(
- *     // Either 'ingest', 'purge', 'modify'.
- *     'action' => 'ingest',
- *     // Either TRUE or FALSE, if TRUE the action won't take place.
- *     // Set by the implementing alter hook.
- *     'block' => FALSE,
- *   )
- * @endcode
- *
- *  When the action is "purge" two additional boolean properties are present
- *  'delete' defaults to FALSE, and 'purge' defaults to TRUE. If only purge
- *  is set to TRUE the object will be 'purged' if delete is set to TRUE and
- *  block is not then the object state will be set to 'Deleted'. If 'block'
- *  is set to TRUE the object will not be deleted or purged.
+ * @see FedoraApiM::modifyObject()
  */
 function hook_islandora_object_alter(AbstractFedoraObject $object, array &$context) {
 }
@@ -151,27 +149,22 @@ function hook_CMODEL_PID_islandora_object_alter(AbstractFedoraObject $object, ar
  * @param AbstractFedoraDatastream $datastream
  *   The datastream to alter.
  * @param array $context
- *   The context for the alter action, this will always contain at the
- *   following properties.
+ *   An associative array containing:
+ *   - action: A string either 'ingest', 'purge', 'modify'.
+ *   - block: Either TRUE or FALSE, if TRUE the action won't take place.
+ *     Defaults to FALSE.
+ *   - purge: Either TRUE or FALSE, only present when the action is 'purge'.
+ *     If 'delete' or 'block' is set to TRUE, they will take precedence.
+ *     Defaults to TRUE.
+ *   - delete: Either TRUE or FALSE, only present when the action is 'purge'.
+ *     If TRUE it will cause the object's state to be set to 'D' instead.
+ *     If 'block' is set to TRUE, it will take precedence.
+ *     Defaults to FALSE,
+ *   - params: An associative array, only present when the action is 'modify'.
+ *     The key value pairs repersent what values will be changed. The params
+ *     will match the same params as passed to FedoraApiM::modifyDatastream().
  *
- * @code
- *   array(
- *     // Either 'ingest', 'purge', 'modify'.
- *     'action' => 'ingest',
- *     // Either TRUE or FALSE, if TRUE the action won't take place.
- *     // Set by the implementing alter hook.
- *     'block' => FALSE,
- *   )
- * @endcode
- *
- *  When the action is "purge" two additional boolean properties are present
- *  'delete' (defaults to FALSE), and 'purge' (defaults to TRUE). If only purge
- *  is set to TRUE the datastream will be 'purged' if delete is set to TRUE and
- *  block is not then the datastream state will be set to 'Deleted'. If 'block'
- *  is set to TRUE the datastream will not be deleted or purged.
- *
- *  When the action is "modify" there is an additional property "params" that
- *  contains the modifications about to take place.
+ * @see FedoraApiM::modifyDatastream()
  */
 function hook_islandora_datastream_alter(AbstractFedoraObject $object, AbstractFedoraDatastream $datastream, array &$context) {
 }
