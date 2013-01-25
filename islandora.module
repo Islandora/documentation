@@ -541,7 +541,6 @@ function islandora_default_islandora_view_object($object) {
  *   A IslandoraTuque instance
  */
 function islandora_get_tuque_connection($user = NULL, $url = NULL) {
-  module_load_include('inc', 'islandora', 'includes/islandora_tuque');
   $tuque = &drupal_static(__FUNCTION__);
   if (!$tuque) {
     if (IslandoraTuque::exists()) {
