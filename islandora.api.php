@@ -321,22 +321,6 @@ function hook_CMODEL_PID_islandora_datastream_purged(FedoraObject $object, $dsid
 }
 
 /**
- * Register potential ingest routes.
- *
- * Implementations should return an array containing possible routes.
- */
-function hook_islandora_ingest_registry($collection_object) {
-  $reg = array(
-    array(
-      'name' => t('Ingest route name'),
-      'url' => 'ingest_route/url',
-      'weight' => 0,
-    ),
-  );
-  return $reg;
-}
-
-/**
  * Register a datastream edit route/form.
  *
  * @param FedoraObject $object
