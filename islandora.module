@@ -227,13 +227,13 @@ function islandora_theme() {
   return array(
     // default object template
     'islandora_default' => array(
-      'file' => 'theme/islandora.theme.inc',
+      'file' => 'theme/theme.inc',
       'template' => 'theme/islandora-object',
       'variables' => array('islandora_object' => NULL),
     ),
     // default edit page
     'islandora_default_edit' => array(
-      'file' => 'theme/islandora.theme.inc',
+      'file' => 'theme/theme.inc',
       'template' => 'theme/islandora-object-edit',
       'variables' => array('islandora_object' => NULL),
     ),
@@ -615,7 +615,7 @@ function islandora_tokened_object_load($object_id, $map) {
   if (array_key_exists('token', $_GET)) {
     $token = filter_input(INPUT_GET, 'token', FILTER_SANITIZE_STRING);
     if ($token) {
-      module_load_include('inc', 'islandora', 'includes/islandora_authtokens');
+      module_load_include('inc', 'islandora', 'includes/authtokens');
       $token_user = islandora_validate_object_token($object_id, $map[4], $token);
       $token_user = $token_user ? user_load($token_user->uid) : NULL;
       islandora_get_tuque_connection($token_user);
@@ -794,7 +794,7 @@ function islandora_delete_datastream(FedoraDatastream &$datastream) {
  * Removes expired authentication tokens.
  */
 function islandora_cron() {
-  module_load_include('inc', 'islandora', 'includes/islandora_authtokens');
+  module_load_include('inc', 'islandora', 'includes/authtokens');
   islandora_remove_expired_tokens();
 }
 
