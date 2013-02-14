@@ -1,31 +1,12 @@
 <?php
 
-/*
- * islandora-object.tpl.php
- * 
+/**
+ * @file
+ * The default object view.
  *
- * 
- * This file is part of Islandora.
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with the program.  If not, see <http ://www.gnu.org/licenses/>.
- */
-?>
-<?php
-
-/* 
- * this is a template for objects that do not have a module to registered to build their display.
- * 
+ * This is a template for objects that do not have a module to registered to
+ * build their display.
+ *
  * islandora_object is a fedora tuque Object
  *    $object->label             - The label for this object.
  *    $object->id                - The identifier of the object.
@@ -39,7 +20,7 @@
  * to test if a datastream exists isset($object['dsid'])
  *
  * to iterate over datastreams:
- * foreach($object as $ds) {
+ * foreach ($object as $ds) {
  *   $ds->label, etc
  * }
  *
@@ -57,40 +38,38 @@
  *    $ds->size              - The size of the datastream
  *    $ds->checksum          - The checksum of the datastream
  *    $ds->checksumType      - The type of checksum for the datastream.
- *    $ds->createdDate->format("Y-m-d") - The created date with an option to use a format of your choice
+ *    $ds->createdDate->format("Y-m-d") - The created date with an option to use
+ *                                        a format of your choice
  *    $ds->content           - The content of the datastream
- *    $ds->url               - The URL. This is only valid for R and E datastreams. 
- * 
- * $dublin_core is a Dublin_Core object
+ *    $ds->url               - The URL. This is only valid for R and E
+ *                             datastreams.
+ *
+ * $dublin_core is a DublinCore object
  * which is an array of elements, such as dc.title
- * and each element has an array of values.  dc.title can have none, one or many titles
+ * and each element has an array of values.
+ * dc.title can have none, one or many titles
  * this is the case for all dc elements.
  *
  *
- * 
+ *
  * we can get a list of datastreams by doing
- * foreach ($object as $ds){
+ * foreach ($object as $ds) {
  * do something here
  * }
- * 
  */
 ?>
-<?php if(isset($islandora_object_label)): ?>
-  <?php drupal_set_title("$islandora_object_label"); ?>
-<?php endif; ?>
-
 <div class="islandora-object islandora">
-  <h2>Details</h2>
+  <h2><?php print t('Details'); ?></h2>
   <dl class="islandora-object-tn">
     <dt>
-      <?php if(isset($variables['islandora_thumbnail_url'])): ?>
-        <?php print('<img src = "'.$variables['islandora_thumbnail_url'].'"/>'); ?></dt>
+      <?php if (isset($variables['islandora_thumbnail_url'])): ?>
+        <img src="<?php print $variables['islandora_thumbnail_url']; ?>"/></dt>
       <?php endif; ?>
     <dd></dd>
   </dl>
     <dl class="islandora-inline-metadata islandora-object-fields">
       <?php $row_field = 0; ?>
-      <?php foreach($dc_array as $key => $value): ?>
+      <?php foreach ($dc_array as $key => $value): ?>
         <dt class="<?php print $value['class']; ?><?php print $row_field == 0 ? ' first' : ''; ?>">
           <?php print $value['label']; ?>
         </dt>
@@ -99,26 +78,26 @@
         </dd>
       <?php $row_field++; ?>
       <?php endforeach; ?>
-      <?php if($parent_collections): ?>
+      <?php if ($parent_collections): ?>
         <dt>Collections</dt>
         <dd>
-          <?php foreach($parent_collections as $key => $value): ?>
-            <div><?php print $value['label_link'] ?></div>
+          <?php foreach ($parent_collections as $collection): ?>
+            <div><?php print l($collection->label, "islandora/object/{$collection->id}"); ?></div>
           <?php endforeach; ?>
         </dd>
       <?php endif; ?>
     </dl>
 </div>
 <fieldset class="collapsible collapsed" style="display: block; clear:both">
-<legend><span class="fieldset-legend">File Details</span></legend>
+<legend><span class="fieldset-legend"><?php print t('File details'); ?></span></legend>
   <div class="fieldset-wrapper">
 <table>
   <tr>
-    <th>ID</th>
-    <th>Label</th>
-    <th>Size</th>
-    <th>Mimetype</th>
-    <th>Created</th> 
+    <th><?php print t('ID'); ?></th>
+    <th><?php print t('Label'); ?></th>
+    <th><?php print t('Size'); ?></th>
+    <th><?php print t('Mimetype'); ?></th>
+    <th><?php print t('Created'); ?></th>
   </tr>
   <?php foreach($datastreams as $key => $value): ?>
   <tr>
