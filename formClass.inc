@@ -599,7 +599,6 @@ class formClass {
           '#value' => t('Ingest')
         );
       }
-
     }
     return $form;
   }
