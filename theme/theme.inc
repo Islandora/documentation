@@ -117,6 +117,9 @@ function islandora_preprocess_islandora_default(&$variables) {
       if (isset($dc_object)) {
         $dc_array = $dc_object->asArray();
       }
+      else {
+        $dc_array = array();
+      }
     }
   }
   catch (Exception $e) {
