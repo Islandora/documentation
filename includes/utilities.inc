@@ -80,6 +80,19 @@ function islandora_is_valid_pid($pid) {
 }
 
 /**
+ * Checks if the given namespace is valid.
+ *
+ * @param string $namespace
+ *   The namespace to check without the ":" character.
+ *
+ * @return bool
+ *   TRUE if valid, FALSE otherwise.
+ */
+function islandora_is_valid_namespace($namespace) {
+  return drupal_strlen(trim($namespace)) <= 64 && preg_match('/^([A-Za-z0-9]|-|\.)+$/', trim($namespace));
+}
+
+/**
  * Checks if the given datastream id is valid.
  *
  * @param string $dsid
@@ -560,9 +573,10 @@ function islandora_directory_exists_message($path) {
 /**
  * Gets the default value for the given system_settings_form() element.
  *
- * Checks the $form_state for the default value if not it checks variable_get().
- * Assumes #tree is FALSE. This is only really required for elements that utilize
- * AJAX, as their value can change before the submit actually takes place.
+ * Checks the $form_state for the default value if not it checks
+ * variable_get(). Assumes #tree is FALSE. This is only really required
+ * for elements that utilize AJAX, as their value can change before the
+ * submit actually takes place.
  *
  * @param string $name
  *   The name of the system settings form element.
@@ -579,10 +593,11 @@ function islandora_system_settings_form_default_value($name, $default_value, arr
 }
 
 /**
- * Returns basic information about DS-COMPOSITE-MODEL
+ * Returns basic information about DS-COMPOSITE-MODEL.
  *
  * @param string $pid
- *  pid of content model containing DS_COMP stream
+ *   PID of content model containing DS_COMP stream.
+ *
  * @return array
  *   array of values in the following form
  *
@@ -607,9 +622,7 @@ function islandora_system_settings_form_default_value($name, $default_value, arr
  *           [optional] => true
  *           [mimetype] => application/rdf+xml
  *      )
- *
  */
-
 function islandora_get_comp_ds_mappings($pid) {
   $cm_object = islandora_object_load($pid);
   if (!isset($cm_object) || !isset($cm_object['DS-COMPOSITE-MODEL'])) {
@@ -631,4 +644,97 @@ function islandora_get_comp_ds_mappings($pid) {
     }
   }
   return $mappings;
+}
+
+/**
+ * Checks that the given/current account has all the given permissions.
+ *
+ * @param array $perms
+ *   The permissions to check.
+ * @param mixed $account
+ *   (optional) The account to check, if not given use currently logged in user.
+ *
+ * @return bool
+ *   TRUE if the account has all the given permissions, FALSE otherwise.
+ */
+function islandora_user_access_all(array $perms, $account = NULL) {
+  foreach ($perms as $perm) {
+    if (!user_access($perm, $account)) {
+      return FALSE;
+    }
+  }
+  return TRUE;
+}
+
+/**
+ * Checks that the given/current account has at one of the given permissions.
+ *
+ * @param array $perms
+ *   The permissions to check.
+ * @param mixed $account
+ *   (optional) The account to check, if not given use currently logged in user.
+ *
+ * @return bool
+ *   TRUE if the account has at least one of the given permissions, FALSE
+ *   otherwise.
+ */
+function islandora_user_access_any(array $perms, $account = NULL) {
+  foreach ($perms as $perm) {
+    if (user_access($perm, $account)) {
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+/**
+ * Gets the list of allowed namespaces as defined by 'islandora_pids_allowed'.
+ *
+ * @return array
+ *   The list of namespaces striped of trailing ":" characters.
+ */
+function islandora_get_allowed_namespaces() {
+  $matches = array();
+  $allowed_namespaces = variable_get('islandora_pids_allowed', 'default: demo: changeme: islandora:');
+  preg_match_all('/([A-Za-z0-9-\.]+):/', $allowed_namespaces, $matches);
+  return $matches[1];
+}
+
+/**
+ * Gets a list of all existing content models.
+ *
+ * If 'islandora_namespace_restriction_enforced' is set to true only return
+ * content models in the allowed namespace.
+ *
+ * @param bool $ignore_system_namespace
+ *   Ignore content models in the 'fedora-system' namespace.
+ *
+ * @return array
+ *   An associative array of all existing content models.
+ *   - pid: The PID of the content model object.
+ *     - pid: The PID of the content model object.
+ *     - label: The label of the content model object.
+ */
+function islandora_get_content_models($ignore_system_namespace = TRUE) {
+  module_load_include('inc', 'islandora', 'includes/utilities');
+  $tuque = islandora_get_tuque_connection();
+  $query = 'select $object $label from <#ri>
+          where ($object <fedora-model:label> $label
+          and ($object <fedora-model:hasModel> <info:fedora/fedora-system:ContentModel-3.0>
+          or $object <fedora-rels-ext:isMemberOfCollection> <info:fedora/islandora:ContentModelsCollection>)
+          and $object <fedora-model:state> <info:fedora/fedora-system:def/model#Active>)
+          order by $label';
+  $content_models = array();
+  $results = $tuque->repository->ri->itqlQuery($query, 'unlimited');
+  foreach ($results as $result) {
+    $content_model = $result['object']['value'];
+    $label = $result['label']['value'];
+    $namespace = islandora_get_namespace($content_model);
+    $ignore = $ignore_system_namespace && $namespace == 'fedora-system';
+    $ignore |= !islandora_namespace_accessible($namespace);
+    if (!$ignore) {
+      $content_models[$content_model] = array('pid' => $content_model, 'label' => $label);
+    }
+  }
+  return $content_models;
 }
