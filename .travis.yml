@@ -22,7 +22,7 @@ before_install:
   - drush dl --yes drupal
   - cd drupal-*
   - drush si standard --db-url=mysql://drupal:drupal@localhost/drupal --yes
-  - drush runserver 8081 > /dev/null &
+  - drush runserver localhost:8081 > /dev/null &
   - ln -s $TRAVIS_BUILD_DIR sites/all/modules/islandora
   - mv sites/all/modules/islandora/tests/travis.test_config.ini sites/all/modules/islandora/tests/test_config.ini
   - mkdir sites/all/libraries
@@ -32,4 +32,4 @@ before_install:
   - drush cc all
   - sleep 4
 script: 
-  - drush test-run --uri=http://127.0.0.1:8081 Islandora
+  - sudo -u www-data drush test-run --uri=http://localhost:8081 Islandora
