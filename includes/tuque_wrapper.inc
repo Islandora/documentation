@@ -35,10 +35,7 @@ $islandora_module_path = drupal_get_path('module', 'islandora');
  * Allow modules to alter an object before a mutable event occurs.
  */
 function islandora_alter_object(AbstractFedoraObject $object, array &$context) {
-  $types = array('islandora_object');
-  foreach ($object->models as $model) {
-    $types[] = "{$model}_islandora_object";
-  }
+  $types = islandora_build_hook_list('islandora_object', $object->models);
   drupal_alter($types, $object, $context);
 }
 
@@ -46,11 +43,11 @@ function islandora_alter_object(AbstractFedoraObject $object, array &$context) {
  * Allow modules to alter a datastream before a mutable event occurs.
  */
 function islandora_alter_datastream(AbstractFedoraObject $object, AbstractDatastream $datastream, array &$context) {
-  $types = array('islandora_datastream');
+  $types = array();
   foreach ($object->models as $model) {
-    $types[] = "{$model}_{$datastream->id}_islandora_datastream";
+    $types[] = "{$model}_{$datastream->id}";
   }
-  drupal_alter($types, $object, $datastream, $context);
+  drupal_alter(islandora_build_hook_list('islandora_datastream', $types), $object, $datastream, $context);
 }
 
 /**
