@@ -401,7 +401,7 @@ function islandora_user_access($object, array $permissions, $content_models = ar
   }
   elseif (is_subclass_of($object, 'FedoraDatastream')) {
     $datastream = $object;
-    $object = $datstream->parent;
+    $object = $datastream->parent;
   }
   // Check for access.
   $accessible_namespace = islandora_namespace_accessible($object->id);
