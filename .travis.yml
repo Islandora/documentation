@@ -11,7 +11,7 @@ before_install:
   - sudo apt-get install -qq php5-cgi
   - sudo apt-get install -qq php5-mysql
   - git clone git://github.com/Islandora/tuque.git
-  - git clone git://github.com/Islandora/islandora_tomcat.git
+  - git clone -b 3.5 git://github.com/Islandora/islandora_tomcat.git
   - cd islandora_tomcat
   - export CATALINA_HOME='.'
   - ./bin/startup.sh
@@ -23,7 +23,7 @@ before_install:
   - drush dl --yes drupal
   - cd drupal-*
   - drush si standard --db-url=mysql://drupal:drupal@localhost/drupal --yes
-  - drush runserver localhost:8081 > /dev/null &
+  - drush runserver localhost:8081 &>/dev/null &
   - ln -s $TRAVIS_BUILD_DIR sites/all/modules/islandora
   - mv sites/all/modules/islandora/tests/travis.test_config.ini sites/all/modules/islandora/tests/test_config.ini
   - mkdir sites/all/libraries
@@ -33,4 +33,4 @@ before_install:
   - drush cc all
   - sleep 4
 script: 
-  - sudo -u www-data drush test-run --uri=http://localhost:8081 Islandora
+  - drush test-run --uri=http://localhost:8081 Islandora
