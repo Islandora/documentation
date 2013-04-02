@@ -19,7 +19,6 @@ before_install:
   - pyrus channel-discover pear.drush.org
   - pyrus install drush/drush
   - phpenv rehash
-  - sudo -u www-data phpenv rehash
   - drush dl --yes drupal
   - cd drupal-*
   - drush si standard --db-url=mysql://drupal:drupal@localhost/drupal --yes
