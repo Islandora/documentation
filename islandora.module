@@ -120,7 +120,7 @@ function islandora_menu() {
         FEDORA_METADATA_EDIT,
         FEDORA_ADD_DS,
         FEDORA_PURGE,
-        FEDORA_INGEST
+        FEDORA_INGEST,
       ), 2),
   );
 
@@ -1098,7 +1098,7 @@ function islandora_download_clip(FedoraObject $object) {
     curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1);
     curl_setopt($ch, CURLOPT_HEADER, 0);
     curl_setopt($ch, CURLOPT_URL, $url);
-    $response = curl_exec ($ch);
+    $response = curl_exec($ch);
     curl_close($ch);
   }
   exit();
