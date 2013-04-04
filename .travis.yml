@@ -6,5 +6,6 @@ env:
   - FEDORA_VERSION="3.5"
 before_install:
   - $TRAVIS_BUILD_DIR/tests/travis_setup.sh
+  - cd drupal-*
 script: 
   - drush test-run --uri=http://localhost:8081 Islandora
