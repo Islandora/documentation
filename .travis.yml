@@ -1,6 +1,6 @@
 language: php
 php:
-  - 5.3
+  - 5.3.3
 before_install:
   - mysql -u root -e 'create database drupal;'
   - mysql -u root -e "create database fedora;"
@@ -8,8 +8,6 @@ before_install:
   - mysql -u root -e "GRANT ALL PRIVILEGES ON drupal.* To 'drupal'@'localhost' IDENTIFIED BY 'drupal';"
   - cd $HOME
   - sudo apt-get update -qq
-  - sudo apt-get install -qq php5-cgi
-  - sudo apt-get install -qq php5-mysql
   - git clone git://github.com/Islandora/tuque.git
   - git clone -b 3.5 git://github.com/Islandora/islandora_tomcat.git
   - cd islandora_tomcat
