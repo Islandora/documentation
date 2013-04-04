@@ -11,5 +11,6 @@ before_install:
   - $TRAVIS_BUILD_DIR/tests/travis_setup.sh
   - cd $HOME/drupal-*
 script:
+  - ant lint
   - drush dcs sites/all/modules/islandora
   - drush test-run --uri=http://localhost:8081 Islandora
