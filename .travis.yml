@@ -1,6 +1,6 @@
 language: php
 php:
-  - 5.3.3
+  - 5.4
 before_install:
   - mysql -u root -e 'create database drupal;'
   - mysql -u root -e "create database fedora;"
@@ -20,7 +20,7 @@ before_install:
   - drush dl --yes drupal
   - cd drupal-*
   - drush si standard --db-url=mysql://drupal:drupal@localhost/drupal --yes
-  - drush runserver localhost:8081 &>/dev/null &
+  - drush runserver --server=builtin localhost:8081 &>/dev/null &
   - ln -s $TRAVIS_BUILD_DIR sites/all/modules/islandora
   - mv sites/all/modules/islandora/tests/travis.test_config.ini sites/all/modules/islandora/tests/test_config.ini
   - mkdir sites/all/libraries
