@@ -4,7 +4,7 @@ Current build status:
 [![Build Status](https://travis-ci.org/Islandora/islandora.png?branch=7.x)](https://travis-ci.org/Islandora/islandora)
 
 CI Server:
-http://jenkins.discoverygarden.ca:8080
+http://jenkins.discoverygarden.ca
 
 SUMMARY
 -------
