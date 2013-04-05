@@ -1077,7 +1077,7 @@ function islandora_entity_property_info() {
  * @return array
  *   A renderable array.
  */
-function islandora_print_object(FedoraObject $object) {
+function islandora_print_object(AbstractObject $object) {
   drupal_set_title($object->label);
   return theme('islandora_object_print', array('object' => $object));
 }
@@ -1085,7 +1085,7 @@ function islandora_print_object(FedoraObject $object) {
 /**
  * Menu callback downloads the given clip.
  */
-function islandora_download_clip(FedoraObject $object) {
+function islandora_download_clip(AbstractObject $object) {
   if (isset($_GET['clip'])) {
     $is_https = isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on';
     $http_protocol = $is_https ? 'https' : 'http';
