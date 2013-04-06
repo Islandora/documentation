@@ -57,27 +57,21 @@ function islandora_get_breadcrumbs_recursive($pid, FedoraRepository $repository,
     );
   }
   else {
-    $query_string = <<<EOQ
-SELECT ?parentObject ?title
-FROM <#ri>
-WHERE {
-  ?object <fedora-model:label> ?title ;
-  {
-    ?object <fedora-rels-ext:isMemberOfCollection> ?parentObject .
-  }
-  UNION {
-    ?object <fedora-rels-ext:isMemberOf> ?parentObject .
-  }
-  UNION {
-    ?object <fedora-rels-ext:isPartOf> ?parentObject .
-  }
-  ?parentObject <fedora-model:state> <fedora-model:Active> .
-  FILTER (sameTerm(?object, <info:fedora/$pid>))
-  FILTER (!sameTerm(?object, ?parentObject))
-}
-ORDER BY ?title
-EOQ;
-    $results = $repository->ri->sparqlQuery($query_string);
+    $query_string = 'select $parentObject $title $content from <#ri>
+                      where (
+                        <info:fedora/' . $pid . '> <fedora-model:label> $title
+                        and $parentObject <fedora-model:hasModel> $content
+                        and (
+                          <info:fedora/' . $pid . '> <fedora-rels-ext:isMemberOfCollection> $parentObject
+                          or <info:fedora/' . $pid . '> <fedora-rels-ext:isMemberOf> $parentObject
+                          or <info:fedora/' . $pid . '> <fedora-rels-ext:isPartOf> $parentObject
+                        )
+                        and $parentObject <fedora-model:state> <info:fedora/fedora-system:def/model#Active>
+                      )
+                      minus $content <mulgara:is> <info:fedora/fedora-system:FedoraObject-3.0>
+                      minus $parentObject <mulgara:is> <info:fedora/' . $pid . '>
+                      order by $title desc';
+    $results = $repository->ri->itqlQuery($query_string);
 
     if (count($results) > 0  && $context['level'] > 0) {
       $parent = $results[0]['parentObject']['value'];
