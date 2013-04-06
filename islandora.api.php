@@ -54,13 +54,13 @@ function hook_islandora_view_object_alter(&$object, &$rendered) {
  * Alter display output if the object has the given model.
  *
  * @see hook_islandora_view_object_alter()
+ *
  * @param FedoraObject $object
  *   A Tuque FedoraObject being operated on.
  * @param array $rendered
  *   An arr of rendered views.
  */
 function hook_CMODEL_PID_islandora_view_object_alter(&$object, &$rendered) {
-
 }
 
 /**

@@ -36,9 +36,7 @@ function islandora_get_breadcrumbs($object) {
  * @todo Make fully recursive...
  *
  * @param string $pid
- *   THe object id whose parent will be fetched for the next link.
- * @param array $breadcrumbs
- *   The list of existing bread-crumb links in reverse order.
+ *   The object id whose parent will be fetched for the next link.
  * @param FedoraRepository $repository
  *   The fedora repository.
  */
@@ -95,7 +93,7 @@ function islandora_get_breadcrumbs_recursive($pid, FedoraRepository $repository,
       return array_merge(
         islandora_get_breadcrumbs_recursive($root, $repository),
         array(
-          '...'
+          '...',
         )
       );
     }
