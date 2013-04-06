@@ -25,13 +25,8 @@
  *   drupal_set_breadcrumb().
  */
 function islandora_get_breadcrumbs($object) {
-  $breadcrumbs = array();
-  islandora_get_breadcrumbs_recursive($object->id, $breadcrumbs, $object->repository);
-  if (isset($breadcrumbs[0])) {
-    // Remove the actual object.
-    unset($breadcrumbs[0]);
-  }
-  $breadcrumbs = array_reverse($breadcrumbs);
+  $breadcrumbs = islandora_get_breadcrumbs_recursive($object->id, $object->repository);
+  array_pop($breadcrumbs);
   return $breadcrumbs;
 }
 
@@ -40,9 +35,6 @@ function islandora_get_breadcrumbs($object) {
  *
  * @todo Make fully recursive...
  *
- * @todo Could use some clean up, can't be called multiple times safely due to
- *   the use of static variables.
- *
  * @param string $pid
  *   THe object id whose parent will be fetched for the next link.
  * @param array $breadcrumbs
@@ -50,39 +42,44 @@ function islandora_get_breadcrumbs($object) {
  * @param FedoraRepository $repository
  *   The fedora repository.
  */
-function islandora_get_breadcrumbs_recursive($pid, array &$breadcrumbs, FedoraRepository $repository) {
+function islandora_get_breadcrumbs_recursive($pid, FedoraRepository $repository, array &$context = NULL) {
   // Before executing the query, we have a base case of accessing the top-level
   // collection.
-  static $max_level = 10;
-  static $level = -1;
-
-  if (count($breadcrumbs) === 0) {
-    $level = $max_level;
+  if ($context === NULL) {
+    $context['level'] = 10;
   }
 
   $root = variable_get('islandora_repository_pid', 'islandora:root');
   if ($pid == $root) {
-    $breadcrumbs[] = l(menu_get_active_title(), 'islandora');
-    $breadcrumbs[] = l(t('Home'), '<front>');
+    return array(
+      l(t('Home'), '<front>'),
+      l(menu_get_active_title(), 'islandora'),
+    );
   }
   else {
-    $query_string = 'select $parentObject $title $content from <#ri>
-                      where (
-                        <info:fedora/' . $pid . '> <fedora-model:label> $title
-                        and $parentObject <fedora-model:hasModel> $content
-                        and (
-                          <info:fedora/' . $pid . '> <fedora-rels-ext:isMemberOfCollection> $parentObject
-                          or <info:fedora/' . $pid . '> <fedora-rels-ext:isMemberOf> $parentObject
-                          or <info:fedora/' . $pid . '> <fedora-rels-ext:isPartOf> $parentObject
-                        )
-                        and $parentObject <fedora-model:state> <info:fedora/fedora-system:def/model#Active>
-                      )
-                      minus $content <mulgara:is> <info:fedora/fedora-system:FedoraObject-3.0>
-                      minus $parentObject <mulgara:is> <info:fedora/' . $pid . '>
-                      order by $title desc';
-    $results = $repository->ri->itqlQuery($query_string);
+    $query_string = <<<EOQ
+SELECT ?parentObject ?title
+FROM <#ri>
+WHERE {
+  ?object <fedora-model:label> ?title ;
+  {
+    ?object <fedora-rels-ext:isMemberOfCollection> ?parentObject .
+  }
+  UNION {
+    ?object <fedora-rels-ext:isMemberOf> ?parentObject .
+  }
+  UNION {
+    ?object <fedora-rels-ext:isPartOf> ?parentObject .
+  }
+  ?parentObject <fedora-model:state> <fedora-model:Active> .
+  FILTER (sameTerm(?object, <info:fedora/$pid>))
+  FILTER (!sameTerm(?object, ?parentObject))
+}
+ORDER BY ?title
+EOQ;
+    $results = $repository->ri->sparqlQuery($query_string);
 
-    if (count($results) > 0  && $level > 0) {
+    if (count($results) > 0  && $context['level'] > 0) {
       $parent = $results[0]['parentObject']['value'];
       $this_title = $results[0]['title']['value'];
 
@@ -90,16 +87,23 @@ function islandora_get_breadcrumbs_recursive($pid, array &$breadcrumbs, FedoraRe
         $this_title = t('-');
       }
 
-      $breadcrumbs[] = l($this_title, "islandora/object/$pid");
-
-      $level--;
-      islandora_get_breadcrumbs_recursive($parent, $breadcrumbs, $repository);
+      $context['level']--;
+      return array_merge(
+        islandora_get_breadcrumbs_recursive($parent, $repository, $context),
+        array(
+          l($this_title, "islandora/object/$pid"),
+        )
+      );
     }
     else {
-      // Add an non-link, as we don't know how to get back to the root.
-      $breadcrumbs[] = '...';
-      // And render the last two links and break (on the next pass).
-      islandora_get_breadcrumbs_recursive($root, $breadcrumbs, $repository);
+      // Add an non-link, as we don't know how to get back to the root, and
+      // render the last two links and break (on the next pass).
+      return array_merge(
+        islandora_get_breadcrumbs_recursive($root, $repository),
+        array(
+          '...'
+        )
+      );
     }
   }
 }
