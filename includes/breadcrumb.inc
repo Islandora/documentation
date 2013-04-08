@@ -91,7 +91,7 @@ function islandora_get_breadcrumbs_recursive($pid, FedoraRepository $repository,
       // Add an non-link, as we don't know how to get back to the root, and
       // render the last two links and break (on the next pass).
       return array_merge(
-        islandora_get_breadcrumbs_recursive($root, $repository),
+        islandora_get_breadcrumbs_recursive($root, $repository, $context),
         array(
           '...',
         )
