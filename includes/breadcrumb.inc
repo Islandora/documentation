@@ -39,6 +39,14 @@ function islandora_get_breadcrumbs($object) {
  *   The object id whose parent will be fetched for the next link.
  * @param FedoraRepository $repository
  *   The fedora repository.
+ * @param array $context
+ *   An associative array of context for internal use when recursing. Currently
+ *   only used to track a single value:
+ *   - level: The number of child-parent relationships to follow. Defaults to
+ *     10.
+ *
+ * @return array
+ *   An array of links representing the breadcrumb trail, "root" first.
  */
 function islandora_get_breadcrumbs_recursive($pid, FedoraRepository $repository, array &$context = NULL) {
   // Before executing the query, we have a base case of accessing the top-level
