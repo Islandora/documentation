@@ -465,20 +465,41 @@ function islandora_prepare_new_object($namespace = NULL, $label = NULL, $datastr
     if (isset($ds['control_group']) && in_array($ds['control_group'], $groups)) {
       $control_group = $ds['control_group'];
     }
-    $ds_uri = FALSE;
+
+    $as_file = FALSE;
     if (file_valid_uri($ds['datastream_file'])) {
+      // A local file with as a Drupal file/stream wrapper URI.
       $datastream_file = $ds['datastream_file'];
-      $ds_uri = TRUE;
+      $as_file = TRUE;
+    }
+    elseif (is_readable($ds['datastream_file'])) {
+      // A local file as a filesystem path.
+      $datastream_file = drupal_realpath($ds['datastream_file']);
+      $as_file = TRUE;
     }
     else {
-      $datastream_file = url($ds['datastream_file'], array('absolute' => TRUE));
+      $scheme = parse_url($ds['datastream_file'], PHP_URL_SCHEME);
+      if (in_array($scheme, stream_get_wrappers())) {
+        // A URI which gets handled by one of the PHP-native stream wrappers.
+        $datastream_file = $ds['datastream_file'];
+        $as_file = TRUE;
+      }
+      else {
+        // XXX: Dunno... No promises? Let's try to make a URL out of whatever
+        // this is.
+        $datastream_file = url($ds['datastream_file'], array('absolute' => TRUE));
+        watchdog('islandora', 'Attempting to ingest %file in islandora_prepare_new_object(), but it does not appear to be readable. We will pass the path through url(), and pass along as such.', array(
+            '%file' => $datastream_file,
+          ), WATCHDOG_WARNING);
+      }
     }
+
     $datastream = $object->constructDatastream($dsid, $control_group);
     $datastream->label = $label;
     $datastream->mimetype = $mimetype;
     switch ($control_group) {
       case 'M':
-        if ($ds_uri) {
+        if ($as_file) {
           $datastream->setContentFromFile($datastream_file);
         }
         else {
@@ -490,8 +511,10 @@ function islandora_prepare_new_object($namespace = NULL, $label = NULL, $datastr
         $datastream->setContentFromString(file_get_contents($datastream_file));
         break;
     }
+
     $object->ingestDatastream($datastream);
   }
+
   return $object;
 }
 
