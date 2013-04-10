@@ -485,12 +485,15 @@ function islandora_prepare_new_object($namespace = NULL, $label = NULL, $datastr
         $as_file = TRUE;
       }
       else {
-        // XXX: Dunno... No promises? Let's try to make a URL out of whatever
-        // this is.
+        // Schema does not match available php stream wrapper. Attempt to
+        // set datastream_file by url for the given scheme. Https (SSL) can 
+        // cause this to fail, and trigger an output log in watchdog.
         $datastream_file = url($ds['datastream_file'], array('absolute' => TRUE));
-        watchdog('islandora', 'Attempting to ingest %file in islandora_prepare_new_object(), but it does not appear to be readable. We will pass the path through url(), and pass along as such.', array(
-            '%file' => $datastream_file,
-          ), WATCHDOG_WARNING);
+        watchdog('islandora', 'Attempting to ingest %file in islandora_prepare_new_object(), ' . 
+                              ' but it does not appear to be readable. We will pass the path through' . 
+                              ' url(), and pass along as such.', 
+                              array('%file' => $datastream_file, ) , 
+                              WATCHDOG_WARNING);
       }
     }
 
@@ -529,7 +532,7 @@ function islandora_display_repository_inaccessible_message() {
   $link = l($text, 'admin/islandora/configure', array('attributes' => array('title' => $text)));
   $message = t('Could not connect to the repository. Please check the settings on the !link page.',
              array('!link' => $link));
-  drupal_set_message($message, 'error', FALSE);
+  drupal_set_message(check_plain($message), 'error', FALSE);
 }
 
 /**
