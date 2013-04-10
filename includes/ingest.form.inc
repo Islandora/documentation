@@ -96,15 +96,18 @@ function islandora_ingest_form_init_form_state_storage(array &$form_state, array
  */
 function islandora_ingest_form_prepare_new_object(array $configuration) {
   module_load_include('inc', 'islandora', 'includes/utilities');
-  // ID is more specific than namespace so it will take precedence.
-  $id = isset($configuration['namespace']) ? $configuration['namespace'] : 'islandora';
-  $id = isset($configuration['id']) ? $configuration['id'] : $id;
-  $label = isset($configuration['label']) ? $configuration['label'] : 'New Object';
-  $relationship_map = function($o) {
-    return array('relationship' => 'isMemberOfCollection', 'pid' => $o);
-  };
-  $relationships = empty($configuration['collections']) ? array() : array_map($relationship_map, $configuration['collections']);
-  return islandora_prepare_new_object($id, $label, array(), array(), $relationships);
+  if (empty($configuration['object'])) {
+    // ID is more specific than namespace so it will take precedence.
+    $id = isset($configuration['namespace']) ? $configuration['namespace'] : 'islandora';
+    $id = isset($configuration['id']) ? $configuration['id'] : $id;
+    $label = isset($configuration['label']) ? $configuration['label'] : 'New Object';
+    $relationship_map = function($o) {
+      return array('relationship' => 'isMemberOfCollection', 'pid' => $o);
+    };
+    $relationships = empty($configuration['collections']) ? array() : array_map($relationship_map, $configuration['collections']);
+    return islandora_prepare_new_object($id, $label, array(), array(), $relationships);
+  }
+  return $configuration['object'];
 }
 
 /**
@@ -144,7 +147,8 @@ function islandora_ingest_form_get_step(array &$form_state, $step_id = NULL) {
 function islandora_ingest_form_get_current_step_id(array &$form_state) {
   if (empty($form_state['islandora']['step_id'])) {
     $steps = islandora_ingest_form_get_steps($form_state);
-    return array_shift(array_keys($steps));
+    $keys = array_keys($steps);
+    return array_shift($keys);
   }
   return $form_state['islandora']['step_id'];
 }
