@@ -124,8 +124,7 @@ function islandora_describe_repository($url = NULL) {
     try {
       $info = $connection->api->a->describeRepository();
       return $info;
-    }
-    catch (RepositoryException $e) {
+    } catch (RepositoryException $e) {
       return FALSE;
     }
   }
@@ -204,13 +203,13 @@ function islandora_escape_pid_for_function($pid) {
   // Apparently, case doesn't matter for function calls in PHP, so let's not
   // really worry about changing the case.
   return str_replace(
-    // Any PID characters which are not valid in the name of a PHP function.
-    array(
-      ':',
-      '-',
-    ),
-    '_',
-    $pid
+      // Any PID characters which are not valid in the name of a PHP function.
+      array(
+        ':',
+        '-',
+      ),
+      '_',
+      $pid
   );
 }
 
@@ -281,16 +280,15 @@ function islandora_namespace_accessible($id) {
 function islandora_get_parents_from_rels_ext(FedoraObject $object) {
   try {
     $collections = array_merge(
-      $object->relationships->get(FEDORA_RELS_EXT_URI, 'isMemberOfCollection'),
-      $object->relationships->get(FEDORA_RELS_EXT_URI, 'isMemberOf'));
-  }
-  catch (RepositoryException $e) {
+            $object->relationships->get(FEDORA_RELS_EXT_URI, 'isMemberOfCollection'),
+            $object->relationships->get(FEDORA_RELS_EXT_URI, 'isMemberOf'));
+  } catch (RepositoryException $e) {
     // @todo some logging would be nice, not sure what this throws.
     return array();
   }
   $map = function($o) {
-    return islandora_object_load($o['object']['value']);
-  };
+        return islandora_object_load($o['object']['value']);
+      };
   $collections = array_map($map, $collections);
   return array_filter($collections);
 }
@@ -505,7 +503,7 @@ function islandora_display_repository_inaccessible_message() {
   $text = t('Islandora configuration');
   $link = l($text, 'admin/islandora/configure', array('attributes' => array('title' => $text)));
   $message = t('Could not connect to the repository. Please check the settings on the !link page.',
-             array('!link' => $link));
+          array('!link' => $link));
   drupal_set_message($message, 'error', FALSE);
 }
 
@@ -731,10 +729,76 @@ function islandora_get_content_models($ignore_system_namespace = TRUE) {
     $label = $result['label']['value'];
     $namespace = islandora_get_namespace($content_model);
     $ignore = $ignore_system_namespace && $namespace == 'fedora-system';
-    $ignore |= !islandora_namespace_accessible($namespace);
+    $ignore |= ! islandora_namespace_accessible($namespace);
     if (!$ignore) {
       $content_models[$content_model] = array('pid' => $content_model, 'label' => $label);
     }
   }
   return $content_models;
+}
+
+/**
+ * Returns Drupal tableselect element allowing selection of one or more Content Models
+ * Primarily useful for Admin screens
+ * @param string $variable
+ *   the name of the Drupal variable holding selected content models
+ *   Content models held in this variable will appear at the top of the displyed list
+ * @return array  Drupal form element allowing content model selection
+ */
+
+function islandora_content_model_select_table_form_element($variable) {
+  $connection = islandora_get_tuque_connection();
+  $restricted = variable_get('islandora_namespace_restriction_enforced', FALSE);
+  $allowed_string = variable_get('islandora_pids_allowed', 'default: demo: changeme: islandora:');
+  $namespaces = explode(':', $allowed_string);
+  foreach ($namespaces as $namespace) {
+    if ($namespace) {
+      $allowed[] = trim($namespace);
+    }
+  }
+  $query = 'select $object $title from <#ri>
+          where ($object <fedora-model:label> $title
+          and ($object <fedora-model:hasModel> <info:fedora/fedora-system:ContentModel-3.0>
+          or $object <fedora-rels-ext:isMemberOfCollection> <info:fedora/islandora:ContentModelsCollection>)
+          and $object <fedora-model:state> <info:fedora/fedora-system:def/model#Active>)
+          order by $title';
+
+  $list = $connection->repository->ri->itqlQuery($query, 'unlimited');
+  $other_list = islandora_get_content_models(TRUE);
+  $options = array();
+
+  foreach ($other_list as $pid => $label) {
+    if ($pid) {
+      $item_namespace = explode(':', $pid);
+      if (!$restricted || in_array($item_namespace[0], $allowed)) {
+
+        if (!preg_match('/fedora-system/', $pid)) {
+          $options[$pid] = $label;
+        }
+      }
+    }
+  }
+
+  $selected = variable_get($variable, array(''));
+  foreach ($selected as $cmodel) {
+    $options = array($cmodel => $options[$cmodel]) + $options;
+  }
+  foreach ($options as $key => $value) {
+    $rows[$key] = array(
+      'pid' => $key,
+      'title' => $value,
+    );
+    in_array($key, $selected) ? $defaults[$key] = TRUE : $defaults[$key] = FALSE;
+  }
+  $header = array(
+    'pid' => array('data' => t('PID')),
+    'title' => array('data' => t('Content Model')),
+  );
+//build and return table element
+  return array(
+    '#type' => 'tableselect',
+    '#header' => $header,
+    '#options' => $rows,
+    '#default_value' => $defaults,
+  );
 }
