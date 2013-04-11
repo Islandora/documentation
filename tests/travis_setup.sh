@@ -12,14 +12,17 @@ export CATALINA_HOME='.'
 ./bin/startup.sh
 cd $HOME
 pyrus channel-discover pear.drush.org
+pyrus channel-discover pear.phpqatools.org
+pyrus channel-discover pear.netpirates.net
 pyrus install drush/drush
 pyrus install pear/PHP_CodeSniffer
+pyrus install pear.phpunit.de/phpcpd
 phpenv rehash
 drush dl --yes drupal
 cd drupal-*
 drush si standard --db-url=mysql://drupal:drupal@localhost/drupal --yes
 drush runserver --php-cgi=$HOME/.phpenv/shims/php-cgi localhost:8081 &>/dev/null &
-ln -s $TRAVIS_BUILD_DIR sites/all/modules/islandora
+ln -s $ISLANDORA_DIR sites/all/modules/islandora
 mv sites/all/modules/islandora/tests/travis.test_config.ini sites/all/modules/islandora/tests/test_config.ini
 mkdir sites/all/libraries
 ln -s $HOME/tuque sites/all/libraries/tuque
