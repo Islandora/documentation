@@ -740,12 +740,15 @@ function islandora_get_content_models($ignore_system_namespace = TRUE) {
 }
 
 /**
- * Returns Drupal tableselect element allowing selection of one or more Content Models
- * Primarily useful for Admin screens
+ * Returns Drupal tableselect element allowing selection of Content Models.
+ *
  * @param string $drupal_variable
  *   the name of the Drupal variable holding selected content models
- *   Content models held in this variable will appear at the top of the displyed list
- * @return array  Drupal form element allowing content model selection
+ *   Content models held in this variable will appear at the top of
+ *   the displayed list
+ *
+ * @return array
+ *   Drupal form element allowing content model selection
  */
 function islandora_content_model_select_table_form_element($drupal_variable) {
   $connection = islandora_get_tuque_connection();
@@ -773,7 +776,7 @@ function islandora_content_model_select_table_form_element($drupal_variable) {
     'pid' => array('data' => t('PID')),
     'title' => array('data' => t('Content Model')),
   );
-//build and return table element
+  //  Build and return table element.
   $element = array(
     '#type' => 'tableselect',
     '#header' => $header,
