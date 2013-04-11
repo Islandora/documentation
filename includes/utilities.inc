@@ -745,7 +745,6 @@ function islandora_get_content_models($ignore_system_namespace = TRUE) {
  *   Content models held in this variable will appear at the top of the displyed list
  * @return array  Drupal form element allowing content model selection
  */
-
 function islandora_content_model_select_table_form_element($variable) {
   $connection = islandora_get_tuque_connection();
   $restricted = variable_get('islandora_namespace_restriction_enforced', FALSE);
@@ -756,29 +755,7 @@ function islandora_content_model_select_table_form_element($variable) {
       $allowed[] = trim($namespace);
     }
   }
-  $query = 'select $object $title from <#ri>
-          where ($object <fedora-model:label> $title
-          and ($object <fedora-model:hasModel> <info:fedora/fedora-system:ContentModel-3.0>
-          or $object <fedora-rels-ext:isMemberOfCollection> <info:fedora/islandora:ContentModelsCollection>)
-          and $object <fedora-model:state> <info:fedora/fedora-system:def/model#Active>)
-          order by $title';
-
-  $list = $connection->repository->ri->itqlQuery($query, 'unlimited');
-  $other_list = islandora_get_content_models(TRUE);
-  $options = array();
-
-  foreach ($other_list as $pid => $label) {
-    if ($pid) {
-      $item_namespace = explode(':', $pid);
-      if (!$restricted || in_array($item_namespace[0], $allowed)) {
-
-        if (!preg_match('/fedora-system/', $pid)) {
-          $options[$pid] = $label;
-        }
-      }
-    }
-  }
-
+  $options = islandora_get_content_models(TRUE);
   $selected = variable_get($variable, array(''));
   foreach ($selected as $cmodel) {
     $options = array($cmodel => $options[$cmodel]) + $options;
