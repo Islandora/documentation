@@ -124,7 +124,8 @@ function islandora_describe_repository($url = NULL) {
     try {
       $info = $connection->api->a->describeRepository();
       return $info;
-    } catch (RepositoryException $e) {
+    }
+    catch (RepositoryException $e) {
       return FALSE;
     }
   }
@@ -282,7 +283,8 @@ function islandora_get_parents_from_rels_ext(FedoraObject $object) {
     $collections = array_merge(
             $object->relationships->get(FEDORA_RELS_EXT_URI, 'isMemberOfCollection'),
             $object->relationships->get(FEDORA_RELS_EXT_URI, 'isMemberOf'));
-  } catch (RepositoryException $e) {
+  }
+  catch (RepositoryException $e) {
     // @todo some logging would be nice, not sure what this throws.
     return array();
   }
@@ -398,7 +400,7 @@ function islandora_get_datastreams_requirements_from_content_model(FedoraObject 
   $xml = new SimpleXMLElement($object[DS_COMP_STREAM]->content);
   foreach ($xml->dsTypeModel as $ds) {
     $dsid = (string) $ds['ID'];
-    $optional = strtolower((string) $ds['optional']);
+    $optional = drupal_strtolower((string) $ds['optional']);
     $mime = array();
     foreach ($ds->form as $form) {
       $mime[] = (string) $form['MIME'];
@@ -740,12 +742,12 @@ function islandora_get_content_models($ignore_system_namespace = TRUE) {
 /**
  * Returns Drupal tableselect element allowing selection of one or more Content Models
  * Primarily useful for Admin screens
- * @param string $variable
+ * @param string $drupal_variable
  *   the name of the Drupal variable holding selected content models
  *   Content models held in this variable will appear at the top of the displyed list
  * @return array  Drupal form element allowing content model selection
  */
-function islandora_content_model_select_table_form_element($variable) {
+function islandora_content_model_select_table_form_element($drupal_variable) {
   $connection = islandora_get_tuque_connection();
   $restricted = variable_get('islandora_namespace_restriction_enforced', FALSE);
   $allowed_string = variable_get('islandora_pids_allowed', 'default: demo: changeme: islandora:');
@@ -756,7 +758,7 @@ function islandora_content_model_select_table_form_element($variable) {
     }
   }
   $options = islandora_get_content_models(TRUE);
-  $selected = variable_get($variable, array(''));
+  $selected = variable_get($drupal_variable, array(''));
   foreach ($selected as $cmodel) {
     $options = array($cmodel => $options[$cmodel]) + $options;
   }
@@ -772,10 +774,12 @@ function islandora_content_model_select_table_form_element($variable) {
     'title' => array('data' => t('Content Model')),
   );
 //build and return table element
-  return array(
+  $element = array(
     '#type' => 'tableselect',
     '#header' => $header,
     '#options' => $rows,
     '#default_value' => $defaults,
   );
+
+  return $element;
 }
