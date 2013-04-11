@@ -776,7 +776,7 @@ function islandora_content_model_select_table_form_element($drupal_variable) {
     'pid' => array('data' => t('PID')),
     'title' => array('data' => t('Content Model')),
   );
-  //  Build and return table element.
+  // Build and return table element.
   $element = array(
     '#type' => 'tableselect',
     '#header' => $header,
