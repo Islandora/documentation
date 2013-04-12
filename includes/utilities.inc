@@ -762,8 +762,9 @@ function islandora_content_model_select_table_form_element($drupal_variable) {
     }
   }
   $defaults = array();
-  $options = array();
-  $options = $options + islandora_get_content_models(TRUE);
+  $rows = array();
+  $content_models = array();
+  $options = islandora_get_content_models(TRUE);
  
   foreach($options as $option){
     $content_models[$option['pid']] = $option['label'];
@@ -771,7 +772,9 @@ function islandora_content_model_select_table_form_element($drupal_variable) {
 
   $selected = array_values(variable_get($drupal_variable, array('')));
   foreach($selected as $selection){
-    $content_models = array($selection => $content_models[$selection]) + $content_models;
+    if(isset($content_models[$selection])){
+      $content_models = array($selection => $content_models[$selection]) + $content_models;
+    }
   }
 
   foreach ($content_models as $pid => $label) {
@@ -791,6 +794,7 @@ function islandora_content_model_select_table_form_element($drupal_variable) {
     '#header' => $header,
     '#options' => $rows,
     '#default_value' => $defaults,
+    '#empty' => t("There are no content models in this Fedora Repository.")
   );
 
   return $element;
