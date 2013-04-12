@@ -744,7 +744,7 @@ function islandora_get_content_models($ignore_system_namespace = TRUE) {
     $label = $result['label']['value'];
     $namespace = islandora_get_namespace($content_model);
     $ignore = $ignore_system_namespace && $namespace == 'fedora-system';
-    $ignore |= ! islandora_namespace_accessible($namespace);
+    $ignore |= !islandora_namespace_accessible($namespace);
     if (!$ignore) {
       $content_models[$content_model] = array('pid' => $content_model, 'label' => $label);
     }
@@ -771,13 +771,13 @@ function islandora_content_model_select_table_form_element($drupal_variable) {
   $content_models = array();
 
   $options = islandora_get_content_models(TRUE);
-  foreach($options as $option){
+  foreach ($options as $option){
     $content_models[$option['pid']] = $option['label'];
   }
 
   $selected = array_values(variable_get($drupal_variable, array('')));
-  foreach($selected as $selection){
-    if(isset($content_models[$selection])){
+  foreach ($selected as $selection){
+    if (isset($content_models[$selection])){
       $content_models = array($selection => $content_models[$selection]) + $content_models;
     }
   }
@@ -799,7 +799,7 @@ function islandora_content_model_select_table_form_element($drupal_variable) {
     '#header' => $header,
     '#options' => $rows,
     '#default_value' => $defaults,
-    '#empty' => t("There are no content models in this Fedora Repository.")
+    '#empty' => t("There are no content models in this Fedora Repository."),
   );
 
   return $element;
