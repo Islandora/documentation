@@ -771,13 +771,13 @@ function islandora_content_model_select_table_form_element($drupal_variable) {
   $content_models = array();
 
   $options = islandora_get_content_models(TRUE);
-  foreach ($options as $option){
+  foreach ($options as $option) {
     $content_models[$option['pid']] = $option['label'];
   }
 
   $selected = array_values(variable_get($drupal_variable, array('')));
-  foreach ($selected as $selection){
-    if (isset($content_models[$selection])){
+  foreach ($selected as $selection) {
+    if (isset($content_models[$selection])) {
       $content_models = array($selection => $content_models[$selection]) + $content_models;
     }
   }
