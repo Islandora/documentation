@@ -718,8 +718,8 @@ function islandora_get_allowed_namespaces() {
 function islandora_get_content_models($ignore_system_namespace = TRUE) {
   module_load_include('inc', 'islandora', 'includes/utilities');
   $tuque = islandora_get_tuque_connection();
-  $query = 'PREFIX fm: <info:fedora/fedora-system:def/model#>
-            PREFIX fr: <info:fedora/fedora-system:def/relations-external#>
+  $query = "PREFIX fm: <" . FEDORA_MODEL_URI . ">
+            PREFIX fr: <" . FEDORA_RELS_EXT_URI . ">
             SELECT ?object ?label
             FROM <#ri>
             WHERE {
@@ -736,7 +736,7 @@ function islandora_get_content_models($ignore_system_namespace = TRUE) {
                 ?object fm:label ?label
               }
             }
-           }';
+           }";
   $content_models = array();
   $results = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
   foreach ($results as $result) {
@@ -765,7 +765,6 @@ function islandora_get_content_models($ignore_system_namespace = TRUE) {
  */
 function islandora_content_model_select_table_form_element($drupal_variable) {
   $connection = islandora_get_tuque_connection();
-  $restricted = variable_get('islandora_namespace_restriction_enforced', FALSE);
   $defaults = array();
   $rows = array();
   $content_models = array();
