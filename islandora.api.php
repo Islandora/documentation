@@ -405,7 +405,7 @@ function hook_islandora_undeletable_datastreams(array $models) {
  *     end of the process while smaller(/"lighter") values are executed first.
  *   Both types may optionally include:
  *   - module: A module from which we want to load an include.
- *   "Form type" may optionally include:
+ *   "Form" type may optionally include:
  *   - file: A file to include (relative to the module's path, including the
  *     file's extension).
  */

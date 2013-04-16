@@ -1097,3 +1097,21 @@ function islandora_download_clip(AbstractObject $object) {
   }
   exit();
 }
+
+/**
+ * Implements hook_islandora_ingest_steps().
+ */
+function islandora_islandora_ingest_steps(&$form_state) {
+  return array(
+    'islandora_ingest_form_submit' => array(
+      'type' => 'callback',
+      'weight' => 50,
+      'do_function' => array(
+        'function' => 'islandora_ingest_form_ingest',
+      ),
+      'undo_function' => array(
+        'function' => 'islandora_ingest_form_undo_ingest',
+      ),
+    ),
+  );
+}

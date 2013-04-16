@@ -288,7 +288,9 @@ function islandora_ingest_form_execute_step(array $form, array &$form_state, $st
       break;
 
     case 'callback':
-      call_user_func_array($step['do_function']['function'], $step['do_function']['args']);
+      $args = array(&$form_state);
+      $args = isset($step['do_function']['args']) ? array_merge($args, $step['do_function']['args']) : $args;
+      call_user_func_array($step['do_function']['function'], $args);
       $next_step = islandora_ingest_form_get_next_step_id($form_state);
       if ($next_step) {
         islandora_ingest_form_increment_step($form_state);
@@ -470,7 +472,9 @@ function islandora_ingest_form_callback_previous(array $form, array &$form_state
     $step = islandora_ingest_form_get_step($form_state, $keys[$current_step]);
     islandora_ingest_form_decrement_step($form_state);
     if ($step['type'] === 'callback') {
-      call_user_func_array($step['undo_function']['function'], $step['undo_function']['args']);
+      $args = array(&$form_state);
+      $args = isset($step['undo_function']['args']) ? array_merge($args, $step['undo_function']['args']) : $args;
+      call_user_func_array($step['undo_function']['function'], $args);
     }
     else {
       $form = TRUE;
@@ -583,7 +587,10 @@ function islandora_ingest_form_ingest_button(array &$form_state) {
   $validate_callback = $form_id . '_validate';
   $validate = function_exists($validate_callback) ? array($validate_callback) : NULL;
   $submit_callback = $form_id . '_submit';
-  $submit = function_exists($submit_callback) ? array($submit_callback, 'islandora_ingest_form_submit') : array('islandora_ingest_form_submit');
+  $submit = array();
+  if (function_exists($submit_callback)) {
+    $submit[] = $submit_callback;
+  }
 
   // Because of callback shananigans we have to check if there are a chain of
   // n callbacks that are weighted after the current step.
@@ -607,12 +614,10 @@ function islandora_ingest_form_ingest_button(array &$form_state) {
  *
  * Attempts to ingest every object built by the previous steps.
  *
- * @param array $form
- *   The Drupal form.
  * @param array $form_state
  *   The Drupal form state.
  */
-function islandora_ingest_form_submit(array $form, array &$form_state) {
+function islandora_ingest_form_ingest(array &$form_state) {
   foreach ($form_state['islandora']['objects'] as $object) {
     try {
       islandora_add_object($object);
@@ -644,7 +649,9 @@ function islandora_ingest_form_callback_ingest(array $form, array &$form_state) 
   // Execute our n chain of callbacks.
   while ($current_step < count($steps)) {
     $step = islandora_ingest_form_get_step($form_state, $keys[$current_step]);
-    call_user_func_array($step['do_function']['function'], $step['do_function']['args']);
+    $args = array(&$form_state);
+    $args = isset($step['do_function']['args']) ? array_merge($args, $step['do_function']['args']) : $args;
+    call_user_func_array($step['do_function']['function'], $args);
     $current_step++;
   }
 }
@@ -790,7 +797,6 @@ function islandora_ingest_form_get_steps(array &$form_state) {
             '@module' => $step['module'],
             '@step' => $key,
           ), WATCHDOG_ERROR);
-        dd('errorsaursu');
         unset($steps[$key]);
       }
     }
