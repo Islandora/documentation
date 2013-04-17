@@ -764,7 +764,6 @@ function islandora_get_content_models($ignore_system_namespace = TRUE) {
  *   Drupal form element allowing content model selection
  */
 function islandora_content_model_select_table_form_element($drupal_variable) {
-  $connection = islandora_get_tuque_connection();
   $defaults = array();
   $rows = array();
   $content_models = array();
