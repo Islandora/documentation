@@ -158,7 +158,7 @@ function islandora_ingest_form_get_next_step(array &$form_state, array $step = N
 }
 
 /**
- * Gets the next step.
+ * Gets the previous step.
  *
  * If the current step is not defined, its assumed to be the first step.
  *
@@ -465,9 +465,14 @@ function islandora_ingest_form_previous_button(array &$form_state) {
   // Before we move back to the previous step we should tell the previous step
   // to undo whatever its submit handler did.
   $prev_step = islandora_ingest_form_get_previous_step($form_state);
-  $form_id = $prev_step['form_id'];
-  $submit_callback = $form_id . '_undo_submit';
-  $submit = function_exists($submit_callback) ? array($submit_callback, 'islandora_ingest_form_previous_submit') : array('islandora_ingest_form_previous_submit');
+  if ($prev_step['type'] == 'form') {
+    $form_id = $prev_step['form_id'];
+    $submit_callback = $form_id . '_undo_submit';
+    $submit = function_exists($submit_callback) ? array($submit_callback, 'islandora_ingest_form_previous_submit') : array('islandora_ingest_form_previous_submit');
+  }
+  else {
+    $submit = array('islandora_ingest_form_previous_submit');
+  }
   return array(
     '#type' => 'submit',
     '#value' => t('Previous'),
@@ -611,7 +616,7 @@ function islandora_ingest_form_ingest_button(array &$form_state) {
  *   The Drupal form state.
  */
 function islandora_ingest_form_submit(array $form, array &$form_state) {
-  // Execute any remainng callbacks.
+  // Execute any remaining callbacks.
   islandora_ingest_form_increment_step($form_state);
   $step = islandora_ingest_form_get_step($form_state);
   if (isset($step) && $step['type'] == 'callback') {
