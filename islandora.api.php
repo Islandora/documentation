@@ -35,7 +35,7 @@ function hook_islandora_view_object($object, $user, $page_number, $page_size) {
  * @return array
  *   An array whose values are markup.
  */
-function hook_cmodel_pid_islandora_view_object($object) {
+function hook_CMODEL_PID_islandora_view_object($object) {
 }
 
 
@@ -60,7 +60,7 @@ function hook_islandora_view_object_alter(&$object, &$rendered) {
  * @param array $rendered
  *   The array of rendered views.
  */
-function hook_cmodel_pid_islandora_view_object_alter(&$object, &$rendered) {
+function hook_CMODEL_PID_islandora_view_object_alter(&$object, &$rendered) {
 }
 
 /**
@@ -87,7 +87,7 @@ function hook_islandora_edit_object($object) {
  * @return array
  *   An array whose values are markup.
  */
-function hook_cmodel_pid_islandora_edit_object($object) {
+function hook_CMODEL_PID_islandora_edit_object($object) {
 }
 
 /**
@@ -138,7 +138,7 @@ function hook_islandora_object_alter(AbstractFedoraObject $object, array &$conte
  *
  * @see hook_islandora_object_alter()
  */
-function hook_cmodel_pid_islandora_object_alter(AbstractFedoraObject $object, array &$context) {
+function hook_CMODEL_PID_islandora_object_alter(AbstractFedoraObject $object, array &$context) {
 }
 
 /**
@@ -187,7 +187,7 @@ function hook_islandora_datastream_alter(AbstractFedoraObject $object, AbstractF
  *
  * @see hook_islandora_datastream_alter()
  */
-function hook_cmodel_pid_DSID_islandora_datastream_alter(AbstractFedoraObject $object, AbstractFedoraDatastream $datastream, array &$context) {
+function hook_CMODEL_PID_DSID_islandora_datastream_alter(AbstractFedoraObject $object, AbstractFedoraDatastream $datastream, array &$context) {
 }
 
 /**
@@ -211,7 +211,7 @@ function hook_islandora_object_ingested(FedoraObject $object) {
  *
  * @see hook_islandora_object_ingested()
  */
-function hook_cmodel_pid_islandora_object_ingested(FedoraObject $object) {
+function hook_CMODEL_PID_islandora_object_ingested(FedoraObject $object) {
 }
 
 /**
@@ -236,7 +236,7 @@ function hook_islandora_object_modified(FedoraObject $object) {
  *
  * @see hook_islandora_object_modified()
  */
-function hook_cmodel_pid_islandora_object_modified(FedoraObject $object) {
+function hook_CMODEL_PID_islandora_object_modified(FedoraObject $object) {
 }
 
 /**
@@ -256,7 +256,7 @@ function hook_islandora_object_purged($pid) {
  *
  * @see hook_islandora_object_purged()
  */
-function hook_cmodel_pid_islandora_object_purged($pid) {
+function hook_CMODEL_PID_islandora_object_purged($pid) {
 }
 
 /**
@@ -281,7 +281,7 @@ function hook_islandora_datastream_ingested(FedoraObject $object, FedoraDatastre
  *
  * @see hook_islandora_object_ingested()
  */
-function hook_cmodel_pid_DSID_islandora_datastream_ingested(FedoraObject $object, FedoraDatastream $datastream) {
+function hook_CMODEL_PID_DSID_islandora_datastream_ingested(FedoraObject $object, FedoraDatastream $datastream) {
 }
 
 /**
@@ -308,7 +308,7 @@ function hook_islandora_datastream_modified(FedoraObject $object, FedoraDatastre
  *
  * @see hook_islandora_datastream_modified()
  */
-function hook_cmodel_pid_islandora_datastream_modified(FedoraObject $object, FedoraDatastream $datastream) {
+function hook_CMODEL_PID_islandora_datastream_modified(FedoraObject $object, FedoraDatastream $datastream) {
 }
 
 /**
@@ -330,7 +330,7 @@ function hook_islandora_datastream_purged(FedoraObject $object, $dsid) {
  *
  * @see hook_islandora_datastream_purged()
  */
-function hook_cmodel_pid_islandora_datastream_purged(FedoraObject $object, $dsid) {
+function hook_CMODEL_PID_islandora_datastream_purged(FedoraObject $object, $dsid) {
 }
 
 /**
@@ -418,5 +418,5 @@ function hook_islandora_ingest_steps(array $form_state) {
  *
  * @see hook_islandora_ingest_steps()
  */
-function hook_cmodel_pid_islandora_ingest_steps(array $form_state) {
+function hook_CMODEL_PID_islandora_ingest_steps(array $form_state) {
 }
