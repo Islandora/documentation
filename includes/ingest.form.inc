@@ -490,11 +490,7 @@ function islandora_ingest_form_stepify(array $form, array &$form_state, $step) {
  *   TRUE if we are currently on the first step, FALSE otherwise.
  */
 function islandora_ingest_form_on_first_form_step(array &$form_state) {
-  $step = NULL;
-  do {
-    $step = islandora_ingest_form_get_previous_step($form_state, $step);
-  } while (isset($step) && $step['type'] != 'form');
-  return !$step;
+  return !islandora_ingest_form_get_previous_form_step($form_state);
 }
 
 /**
@@ -507,11 +503,41 @@ function islandora_ingest_form_on_first_form_step(array &$form_state) {
  *   TRUE if we are currently on the last step, FALSE otherwise.
  */
 function islandora_ingest_form_on_last_form_step(array &$form_state) {
+  return !islandora_ingest_form_get_next_form_step($form_state);
+}
+
+/**
+ * Get the previous form step relative to the current step.
+ *
+ * @param array $form_state
+ *   The Drupal form state.
+ *
+ * @return array
+ *   The previous form step if one exists, NULL otherwise.
+ */
+function islandora_ingest_form_get_previous_form_step(array &$form_state) {
+  $step = NULL;
+  do {
+    $step = islandora_ingest_form_get_previous_step($form_state, $step);
+  } while (isset($step) && $step['type'] != 'form');
+  return $step;
+}
+
+/**
+ * Get the next form step relative to the current step.
+ *
+ * @param array $form_state
+ *   The Drupal form state.
+ *
+ * @return array
+ *   The next form step if one exists, NULL otherwise.
+ */
+function islandora_ingest_form_get_next_form_step(array &$form_state) {
   $step = NULL;
   do {
     $step = islandora_ingest_form_get_next_step($form_state, $step);
   } while (isset($step) && $step['type'] != 'form');
-  return !$step;
+  return $step;
 }
 
 /**
@@ -526,17 +552,12 @@ function islandora_ingest_form_on_last_form_step(array &$form_state) {
  *   The previous button for the ingest form.
  */
 function islandora_ingest_form_previous_button(array &$form_state) {
-  // Before we move back to the previous step we should tell the previous step
+  // Before we move back to the previous step we should tell the previous steps
   // to undo whatever its submit handler did.
-  $prev_step = islandora_ingest_form_get_previous_step($form_state);
-  if ($prev_step['type'] == 'form') {
-    $form_id = $prev_step['form_id'];
-    $submit_callback = $form_id . '_undo_submit';
-    $submit = function_exists($submit_callback) ? array($submit_callback, 'islandora_ingest_form_previous_submit') : array('islandora_ingest_form_previous_submit');
-  }
-  else {
-    $submit = array('islandora_ingest_form_previous_submit');
-  }
+  $prev_form_step = islandora_ingest_form_get_previous_form_step();
+  $form_id = $prev_form_step['form_id'];
+  $submit_callback = $form_id . '_undo_submit';
+  $submit = function_exists($submit_callback) ? array($submit_callback, 'islandora_ingest_form_previous_submit') : array('islandora_ingest_form_previous_submit');
   return array(
     '#type' => 'submit',
     '#value' => t('Previous'),
