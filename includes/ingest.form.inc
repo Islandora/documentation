@@ -136,6 +136,50 @@ function islandora_ingest_form_get_step(array &$form_state, $step_id = NULL) {
 }
 
 /**
+ * Gets the next step.
+ *
+ * If the current step is not defined, its assumed to be the first step.
+ *
+ * @param array $form_state
+ *   The Drupal form state.
+ * @param string $step
+ *   The step relative to the result, if not provided the current step is used.
+ *
+ * @return string
+ *   The next step if found, NULL otherwise.
+ */
+function islandora_ingest_form_get_next_step(array &$form_state, array $step = NULL) {
+  $step = isset($step) ? $step : islandora_ingest_form_get_step($form_state);
+  $next_step_id = islandora_ingest_form_get_next_step_id($form_state, $step['id']);
+  if ($next_step_id) {
+    return islandora_ingest_form_get_step($form_state, $next_step_id);
+  }
+  return NULL;
+}
+
+/**
+ * Gets the next step.
+ *
+ * If the current step is not defined, its assumed to be the first step.
+ *
+ * @param array $form_state
+ *   The Drupal form state.
+ * @param string $step
+ *   The step relative to the result, if not provided the current step is used.
+ *
+ * @return string
+ *   The next step if found, NULL otherwise.
+ */
+function islandora_ingest_form_get_previous_step(array &$form_state, array $step = NULL) {
+  $step = isset($step) ? $step : islandora_ingest_form_get_step($form_state);
+  $next_step_id = islandora_ingest_form_get_previous_step_id($form_state, $step['id']);
+  if ($next_step_id) {
+    return islandora_ingest_form_get_step($form_state, $next_step_id);
+  }
+  return NULL;
+}
+
+/**
  * Gets the ID of the current step.
  *
  * If a current step is not defined, its assumed to be the first step.
@@ -162,12 +206,15 @@ function islandora_ingest_form_get_current_step_id(array &$form_state) {
  *
  * @param array $form_state
  *   The Drupal form state.
+ * @param string $step_id
+ *   The ID of the  step relative to the result, if not provided the current
+ *   step_id is used.
  *
  * @return string
  *   The next step ID if found, NULL otherwise.
  */
-function islandora_ingest_form_get_next_step_id(array &$form_state) {
-  $step_id = islandora_ingest_form_get_current_step_id($form_state);
+function islandora_ingest_form_get_next_step_id(array &$form_state, $step_id = NULL) {
+  $step_id = isset($step_id) ? $step_id : islandora_ingest_form_get_current_step_id($form_state);
   $step_ids = array_keys(islandora_ingest_form_get_steps($form_state));
   $index = array_search($step_id, $step_ids);
   $count = count($step_ids);
@@ -184,14 +231,15 @@ function islandora_ingest_form_get_next_step_id(array &$form_state) {
  *
  * @param array $form_state
  *   The Drupal form state.
+ * @param string $step_id
+ *   The ID of the step relative to the result, if not provided the current
+ *   step_id is used.
  *
  * @return string
  *   The previous step ID if found, NULL otherwise.
  */
-function islandora_ingest_form_get_previous_step_id(array &$form_state) {
-  $step_id = islandora_ingest_form_get_current_step_id($form_state);
-  $step = islandora_ingest_form_get_step($form_state, $step_id);
-
+function islandora_ingest_form_get_previous_step_id(array &$form_state, $step_id = NULL) {
+  $step_id = isset($step_id) ? $step_id : islandora_ingest_form_get_current_step_id($form_state);
   $step_ids = array_keys(islandora_ingest_form_get_steps($form_state));
   $index = array_search($step_id, $step_ids);
   if ($index !== FALSE && --$index >= 0) {
@@ -237,13 +285,15 @@ function islandora_ingest_form_decrement_step(array &$form_state) {
  * Build a list of steps given only configuration.
  *
  * XXX: This is used to give an indication of whether there are any steps for a
- *   given list of content models.
+ *   given configuration.
  *
  * @param array $configuration
  *   The list of key/value pairs of configuration.
  */
 function islandora_ingest_get_approximate_steps(array $configuration) {
   try {
+    // @todo, we need to expand the configuration before we can validate it?
+    // I think this need some thinking.
     islandora_ingest_form_validate_configuration($configuration);
   }
   catch (InvalidArgumentException $e) {
@@ -279,27 +329,70 @@ function islandora_ingest_form_execute_step(array $form, array &$form_state, $st
   islandora_ingest_form_load_include($form_state);
   $step = isset($step_id) ? islandora_ingest_form_get_step($form_state) : islandora_ingest_form_get_step($form_state, $step_id);
   switch ($step['type']) {
+    case 'callback':
+      // Execute all the consecutive callbacks, and move then attempt to process
+      // the next step.
+      islandora_ingest_form_execute_consecutive_callback_steps($form, $form_state, $step);
+      return islandora_ingest_form_execute_step($form, $form_state);
+
     case 'form':
-      $args = array($form, &$form_state);
-      $args = isset($step['args']) ? array_merge($args, $step['args']) : $args;
-      $form = call_user_func_array($step['form_id'], $args);
-      return islandora_ingest_form_stepify($form, $form_state, $step);
+      return islandora_ingest_form_execute_form_step($form, $form_state, $step);
 
     case 'batch':
       // @todo Implement if possible.
       break;
-
-    case 'callback':
-      $args = array(&$form_state);
-      $args = isset($step['do_function']['args']) ? array_merge($args, $step['do_function']['args']) : $args;
-      call_user_func_array($step['do_function']['function'], $args);
-      $next_step = islandora_ingest_form_get_next_step_id($form_state);
-      if ($next_step) {
-        islandora_ingest_form_increment_step($form_state);
-        return islandora_ingest_form_execute_step($form, $form_state, $next_step);
-      }
   }
   return array();
+}
+
+/**
+ * Assumes the given $step is a 'form' step.
+ */
+function islandora_ingest_form_execute_form_step(array $form, array &$form_state, array $step) {
+  $args = array($form, &$form_state);
+  $args = isset($step['args']) ? array_merge($args, $step['args']) : $args;
+  $form = call_user_func_array($step['form_id'], $args);
+  return islandora_ingest_form_stepify($form, $form_state, $step);
+}
+
+/**
+ * Assumes the given $step is a 'callback' step.
+ */
+function islandora_ingest_form_execute_consecutive_callback_steps(array $form, array &$form_state, array $step) {
+  do {
+    islandora_ingest_form_execute_callback_step($form, $form_state, $step);
+    islandora_ingest_form_increment_step($form_state);
+    $step = islandora_ingest_form_get_step($form_state);
+  } while (isset($step) && $step['type'] == 'callback');
+}
+
+/**
+ * Assumes the given $step is a 'callback' step.
+ */
+function islandora_ingest_form_execute_callback_step(array $form, array &$form_state, array $step) {
+  $args = array(&$form_state);
+  $args = isset($step['do_function']['args']) ? array_merge($args, $step['do_function']['args']) : $args;
+  call_user_func_array($step['do_function']['function'], $args);
+}
+
+/**
+ * Assumes the given $step is a 'callback' step.
+ */
+function islandora_ingest_form_undo_consecutive_callback_steps(array $form, array &$form_state, array $step) {
+  do {
+    islandora_ingest_form_undo_callback_step($form, $form_state, $step);
+    islandora_ingest_form_decrement_step($form_state);
+    $step = islandora_ingest_form_get_step($form_state);
+  } while (isset($step) && $step['type'] == 'callback');
+}
+
+/**
+ * Assumes the given $step is a 'callback' step.
+ */
+function islandora_ingest_form_undo_callback_step(array $form, array &$form_state, array $step) {
+  $args = array(&$form_state);
+  $args = isset($step['undo_function']['args']) ? array_merge($args, $step['undo_function']['args']) : $args;
+  call_user_func_array($step['undo_function']['function'], $args);
 }
 
 /**
@@ -314,18 +407,17 @@ function islandora_ingest_form_execute_step(array $form, array &$form_state, $st
  *   The stepified Drupal form definition for the given step.
  */
 function islandora_ingest_form_stepify(array $form, array &$form_state, $step) {
-  $first_step = islandora_ingest_form_on_first_step($form_state);
-  $last_step = islandora_ingest_form_on_last_step($form_state);
-  $form['prev'] = $first_step ? NULL : islandora_ingest_form_previous_button($form_state);
-  $form['next'] = $last_step ? islandora_ingest_form_ingest_button($form_state) : islandora_ingest_form_next_button($form_state);
-
+  $first_form_step = islandora_ingest_form_on_first_form_step($form_state);
+  $last_form_step = islandora_ingest_form_on_last_form_step($form_state);
+  $form['prev'] = $first_form_step ? NULL : islandora_ingest_form_previous_button($form_state);
+  $form['next'] = $last_form_step ? islandora_ingest_form_ingest_button($form_state) : islandora_ingest_form_next_button($form_state);
   // Allow for a hook_form_FORM_ID_alter().
   drupal_alter(array('form_' . $step['form_id'], 'form'), $form, $form_state, $step['form_id']);
   return $form;
 }
 
 /**
- * Checks if we are on the first step.
+ * Checks if we are on the first form step.
  *
  * @param array $form_state
  *   The Drupal form state.
@@ -333,14 +425,16 @@ function islandora_ingest_form_stepify(array $form, array &$form_state, $step) {
  * @return bool
  *   TRUE if we are currently on the first step, FALSE otherwise.
  */
-function islandora_ingest_form_on_first_step(array &$form_state) {
-  $step_id = islandora_ingest_form_get_current_step_id($form_state);
-  $step_ids = array_keys(islandora_ingest_form_get_steps($form_state));
-  return array_search($step_id, $step_ids) == 0;
+function islandora_ingest_form_on_first_form_step(array &$form_state) {
+  $step = NULL;
+  do {
+    $step = islandora_ingest_form_get_previous_step($form_state, $step);
+  } while (isset($step) && $step['type'] != 'form');
+  return !$step;
 }
 
 /**
- * Checks if we are on the last step.
+ * Checks if we are on the last form step.
  *
  * @param array $form_state
  *   The Drupal form state.
@@ -348,29 +442,12 @@ function islandora_ingest_form_on_first_step(array &$form_state) {
  * @return bool
  *   TRUE if we are currently on the last step, FALSE otherwise.
  */
-function islandora_ingest_form_on_last_step(array &$form_state) {
-  $next_id = islandora_ingest_form_get_next_step_id($form_state);
-  if (!$next_id) {
-    return TRUE;
-  }
-  else {
-    $step_ids = array_keys(islandora_ingest_form_get_steps($form_state));
-    $next_step_num = array_search($next_id, $step_ids);
-    $callback_chain = TRUE;
-    $num_steps = count($step_ids);
-    while ($next_step_num < $num_steps) {
-      $next_step = islandora_ingest_form_get_step($form_state, $step_ids[$next_step_num]);
-      // Still is a form somewhere down our chain.
-      if ($next_step['type'] === 'form') {
-        $callback_chain = FALSE;
-        break;
-      }
-      else {
-        $next_step_num++;
-      }
-    }
-    return $callback_chain;
-  }
+function islandora_ingest_form_on_last_form_step(array &$form_state) {
+  $step = NULL;
+  do {
+    $step = islandora_ingest_form_get_next_step($form_state, $step);
+  } while (isset($step) && $step['type'] != 'form');
+  return !$step;
 }
 
 /**
@@ -387,37 +464,10 @@ function islandora_ingest_form_on_last_step(array &$form_state) {
 function islandora_ingest_form_previous_button(array &$form_state) {
   // Before we move back to the previous step we should tell the previous step
   // to undo whatever its submit handler did.
-  $prev_step_id = islandora_ingest_form_get_previous_step_id($form_state);
-  $prev_step = islandora_ingest_form_get_step($form_state, $prev_step_id);
-
-  if ($prev_step['type'] === 'form') {
-    $form_id = $prev_step['form_id'];
-    $submit_callback = $form_id . '_undo_submit';
-    $submit = function_exists($submit_callback) ? array($submit_callback, 'islandora_ingest_form_previous_submit') : array('islandora_ingest_form_undo_submit');
-  }
-  elseif ($prev_step['type'] === 'callback') {
-    // Need to check if we have one or more callbacks at the start of our steps.
-    $steps = islandora_ingest_form_get_steps($form_state);
-    $keys = array_keys($steps);
-    $form = FALSE;
-    $current_step = array_search($prev_step_id, $keys);
-    while ($current_step >= 0 && !$form) {
-      $step = islandora_ingest_form_get_step($form_state, $keys[$current_step]);
-      if ($step['type'] === 'form') {
-        $form = TRUE;
-        break;
-      }
-      $current_step--;
-    }
-    // Only render a previous button if there a form somewhere behind us in our
-    // history chain.
-    if ($form) {
-      $submit = array('islandora_ingest_form_callback_previous');
-    }
-    else {
-      return;
-    }
-  }
+  $prev_step = islandora_ingest_form_get_previous_step($form_state);
+  $form_id = $prev_step['form_id'];
+  $submit_callback = $form_id . '_undo_submit';
+  $submit = function_exists($submit_callback) ? array($submit_callback, 'islandora_ingest_form_previous_submit') : array('islandora_ingest_form_previous_submit');
   return array(
     '#type' => 'submit',
     '#value' => t('Previous'),
@@ -435,40 +485,6 @@ function islandora_ingest_form_previous_button(array &$form_state) {
 }
 
 /**
- * Handles the execution of "undoing" callbacks until a form type is reached.
- *
- * @param array $form
- *   The Drupal form.
- * @param array $form_state
- *   The Drupal form state.
- */
-function islandora_ingest_form_callback_previous(array $form, array &$form_state) {
-  // Arbitrarily move at least 1 back.
-  islandora_ingest_form_decrement_step($form_state);
-  $step_id = islandora_ingest_form_get_current_step_id($form_state);
-  $steps = islandora_ingest_form_get_steps($form_state);
-  $keys = array_keys($steps);
-  $current_step = array_search($step_id, $keys);
-
-  $form = FALSE;
-
-  while ($current_step >= 0 && !$form) {
-    $step = islandora_ingest_form_get_step($form_state, $keys[$current_step]);
-    islandora_ingest_form_decrement_step($form_state);
-    if ($step['type'] === 'callback') {
-      $args = array(&$form_state);
-      $args = isset($step['undo_function']['args']) ? array_merge($args, $step['undo_function']['args']) : $args;
-      call_user_func_array($step['undo_function']['function'], $args);
-    }
-    else {
-      $form = TRUE;
-    }
-    $current_step--;
-  }
-  $form_state['rebuild'] = TRUE;
-}
-
-/**
  * The submit handler for the ingest form previous button.
  *
  * Stores the current form steps values in the form storage.
@@ -482,6 +498,11 @@ function islandora_ingest_form_callback_previous(array $form, array &$form_state
  */
 function islandora_ingest_form_previous_submit(array $form, array &$form_state) {
   islandora_ingest_form_decrement_step($form_state);
+  $step = islandora_ingest_form_get_step($form_state);
+  // Undo all callbacks that occured after the previous step.
+  if ($step['type'] == 'callback') {
+    islandora_ingest_form_undo_consecutive_callback_steps($form, $form_state, $step);
+  }
   $form_state['rebuild'] = TRUE;
 }
 
@@ -571,19 +592,7 @@ function islandora_ingest_form_ingest_button(array &$form_state) {
   $validate_callback = $form_id . '_validate';
   $validate = function_exists($validate_callback) ? array($validate_callback) : NULL;
   $submit_callback = $form_id . '_submit';
-  $submit = array();
-  if (function_exists($submit_callback)) {
-    $submit[] = $submit_callback;
-  }
-
-  // Because of callback shananigans we have to check if there are a chain of
-  // n callbacks that are weighted after the current step.
-  $next_id = islandora_ingest_form_get_next_step_id($form_state);
-
-  if ($next_id) {
-    $submit[] = 'islandora_ingest_form_callback_ingest';
-  }
-
+  $submit = function_exists($submit_callback) ? array($submit_callback, 'islandora_ingest_form_submit') : array('islandora_ingest_form_submit');
   return array(
     '#type' => 'submit',
     '#name' => 'ingest',
@@ -601,7 +610,14 @@ function islandora_ingest_form_ingest_button(array &$form_state) {
  * @param array $form_state
  *   The Drupal form state.
  */
-function islandora_ingest_form_ingest(array &$form_state) {
+function islandora_ingest_form_submit(array $form, array &$form_state) {
+  // Execute any remainng callbacks.
+  islandora_ingest_form_increment_step($form_state);
+  $step = islandora_ingest_form_get_step($form_state);
+  if (isset($step) && $step['type'] == 'callback') {
+    islandora_ingest_form_execute_consecutive_callback_steps($form, $form_state, $step);
+  }
+  // Ingest the objects.
   foreach ($form_state['islandora']['objects'] as $object) {
     try {
       islandora_add_object($object);
@@ -613,30 +629,6 @@ function islandora_ingest_form_ingest(array &$form_state) {
       watchdog('islandora', $e->getMessage(), NULL, WATCHDOG_ERROR);
       drupal_set_message(t('A problem occured while ingesting "@label" (ID: @pid), please notifiy the administrator.', array('@label' => $object->label, '@pid' => $object->id)), 'error');
     }
-  }
-}
-
-/**
- * Execute any callbacks that are weighted at end of the ingest steps on ingest.
- *
- * @param array $form
- *   The Drupal form.
- * @param array $form_state
- *   The Drupal form state.
- */
-function islandora_ingest_form_callback_ingest(array $form, array &$form_state) {
-  $next_id = islandora_ingest_form_get_next_step_id($form_state);
-  $steps = islandora_ingest_form_get_steps($form_state);
-  $keys = array_keys($steps);
-  $current_step = array_search($next_id, $keys);
-  $num_steps = count($steps);
-  // Execute our n chain of callbacks.
-  while ($current_step < $num_steps) {
-    $step = islandora_ingest_form_get_step($form_state, $keys[$current_step]);
-    $args = array(&$form_state);
-    $args = isset($step['do_function']['args']) ? array_merge($args, $step['do_function']['args']) : $args;
-    call_user_func_array($step['do_function']['function'], $args);
-    $current_step++;
   }
 }
 
@@ -752,6 +744,8 @@ function islandora_ingest_form_get_steps(array &$form_state) {
   $shared_storage = &islandora_ingest_form_get_shared_storage($form_state);
   foreach (islandora_build_hook_list(ISLANDORA_INGEST_STEP_HOOK, $shared_storage['models']) as $hook) {
     // Required for pass by reference.
+    // @todo Change this around so that it isn't passed by reference, there
+    // Is an alter below that can handle that requirement.
     foreach (module_implements($hook) as $module) {
       $function = $module . '_' . $hook;
       $module_steps = (array) $function($form_state);
@@ -762,30 +756,10 @@ function islandora_ingest_form_get_steps(array &$form_state) {
   foreach (islandora_build_hook_list(ISLANDORA_INGEST_STEP_HOOK, $shared_storage['models']) as $hook) {
     drupal_alter($hook, $steps, $form_state);
   }
-  // Check to see if the callback functions are implemented (existed). Remove
-  // any implementations from the steps that are incorrectly defined.
-  foreach ($steps as $key => $step) {
-    $watchdog = FALSE;
-    if ($step['type'] === 'callback') {
-      if (!isset($step['do_function']) || !isset($step['undo_function'])) {
-        $watchdog = TRUE;
-      }
-      elseif (!isset($step['do_function']['function']) || !isset($step['undo_function']['function'])) {
-        $watchdog = TRUE;
-      }
-
-      if ($watchdog) {
-        watchdog('islandora', 'The @module module is incorrectly implementing the
-          callback functionality of islandora_ingest_steps. The step @step has
-          not been included in the list of steps.', array(
-            '@module' => $step['module'],
-            '@step' => $key,
-          ), WATCHDOG_ERROR);
-        unset($steps[$key]);
-      }
-    }
+  // Add any defaults.
+  foreach ($steps as $key => &$step) {
+    $step['id'] = $key;
   }
   uasort($steps, 'drupal_sort_weight');
-
   return $steps;
 }
