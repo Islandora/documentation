@@ -304,7 +304,7 @@ function hook_islandora_datastream_modified(FedoraObject $object, FedoraDatastre
 }
 
 /**
- * Notify modules that the given datastream was ingested.
+ * Notify modules that the given datastream was modified.
  *
  * @see hook_islandora_datastream_modified()
  */

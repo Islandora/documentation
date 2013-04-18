@@ -26,7 +26,8 @@
  *     be related.
  *   - models: An array of content model PIDs, to which the new object might
  *     subscribe
- *
+ *   - parent: The parent of the child to be ingested. This is needed for XACML
+ *     to correctly apply the parent's POLICY to children.
  * @return array
  *   The form definition of the current step.
  */
@@ -373,8 +374,8 @@ function islandora_ingest_form_on_last_step(array &$form_state) {
     $step_ids = array_keys(islandora_ingest_form_get_steps($form_state));
     $next_step_num = array_search($next_id, $step_ids);
     $callback_chain = TRUE;
-
-    while ($next_step_num < count($step_ids)) {
+    $num_steps = count($step_ids);
+    while ($next_step_num < $num_steps) {
       $next_step = islandora_ingest_form_get_step($form_state, $step_ids[$next_step_num]);
       // Still is a form somewhere down our chain.
       if ($next_step['type'] === 'form') {
@@ -645,9 +646,9 @@ function islandora_ingest_form_callback_ingest(array $form, array &$form_state) 
   $steps = islandora_ingest_form_get_steps($form_state);
   $keys = array_keys($steps);
   $current_step = array_search($next_id, $keys);
-
+  $num_steps = count($steps);
   // Execute our n chain of callbacks.
-  while ($current_step < count($steps)) {
+  while ($current_step < $num_steps) {
     $step = islandora_ingest_form_get_step($form_state, $keys[$current_step]);
     $args = array(&$form_state);
     $args = isset($step['do_function']['args']) ? array_merge($args, $step['do_function']['args']) : $args;
