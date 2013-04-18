@@ -28,6 +28,7 @@
  *     subscribe
  *   - parent: The parent of the child to be ingested. This is needed for XACML
  *     to correctly apply the parent's POLICY to children.
+ *
  * @return array
  *   The form definition of the current step.
  */
@@ -299,24 +300,6 @@ function islandora_ingest_form_execute_step(array $form, array &$form_state, $st
       }
   }
   return array();
-}
-
-/**
- * Handles occurances where a callback is executed to grab the next form type.
- *
- * @param array $form_state
- *   The Drupal form state.
- * @param array $step
- *   Describes the current step.
- *
- * @return array
- *   The stepified Drupal form definition for the given step.
- */
-function islandora_ingest_callback_stepify(array &$form_state, $step) {
-  $next_step = islandora_ingest_form_get_step($form_state, $step);
-  $form = call_user_func_array($next_step['form_id'], $args);
-  islandora_ingest_form_increment_step($form_state);
-  return islandora_ingest_form_stepify($form, $form_state, $next_step);
 }
 
 /**
