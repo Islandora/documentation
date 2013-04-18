@@ -84,8 +84,8 @@ function islandora_ingest_form_init_form_state_storage(array &$form_state, array
       'shared_storage' => $configuration,
       'step_storage' => array(),
     );
-    // Must be called after $form_state['islandora'] is initialized, otherwise, the values
-    // in 'islandora' would not be availible to the step hooks.
+    // Must be called after $form_state['islandora'] is initialized, otherwise,
+    // the values in 'islandora' would not be availible to the step hooks.
     $form_state['islandora']['step_id'] = islandora_ingest_form_get_first_step_id($form_state);
   }
 }
@@ -262,8 +262,8 @@ function islandora_ingest_form_get_next_step_id(array &$form_state, $step_id = N
  */
 function islandora_ingest_form_get_previous_step_id(array &$form_state, $step_id = NULL) {
   $step_id = isset($step_id) ? $step_id : islandora_ingest_form_get_current_step_id($form_state);
-  // If the current step is not defined it's assumed that all steps have executed.
-  // so return the very last step.
+  // If the current step is not defined it's assumed that all steps have
+  // executed. So return the very last step.
   if ($step_id == NULL) {
     return islandora_ingest_form_get_last_step_id($form_state);
   }
