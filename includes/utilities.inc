@@ -765,7 +765,6 @@ function islandora_content_model_select_table_form_element($drupal_variable, $de
   $defaults = array();
   $rows = array();
   $content_models = array();
-
   $options = islandora_get_content_models(TRUE);
   foreach ($options as $option) {
     $content_models[$option['pid']] = $option['label'];
