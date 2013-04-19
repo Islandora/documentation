@@ -778,9 +778,9 @@ function islandora_content_model_select_table_form_element($drupal_variable, $de
       $a_val = 1;
     }
     if (in_array($b, $selected)) {
-      $b_val = 1;
+      $b_val - 1;
     }
-    return $a_val = $b_val;
+    return $a_val - $b_val;
   };
   uksort($content_models, $comparator);
   foreach ($content_models as $pid => $label) {
