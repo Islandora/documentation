@@ -554,7 +554,7 @@ function islandora_ingest_form_get_next_form_step(array &$form_state) {
 function islandora_ingest_form_previous_button(array &$form_state) {
   // Before we move back to the previous step we should tell the previous steps
   // to undo whatever its submit handler did.
-  $prev_form_step = islandora_ingest_form_get_previous_form_step();
+  $prev_form_step = islandora_ingest_form_get_previous_form_step($form_state);
   $form_id = $prev_form_step['form_id'];
   $submit_callback = $form_id . '_undo_submit';
   $submit = function_exists($submit_callback) ? array($submit_callback, 'islandora_ingest_form_previous_submit') : array('islandora_ingest_form_previous_submit');
