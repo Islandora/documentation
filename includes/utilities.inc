@@ -204,7 +204,7 @@ function islandora_escape_pid_for_function($pid) {
   // Apparently, case doesn't matter for function calls in PHP, so let's not
   // really worry about changing the case.
   return str_replace(
- // Any PID characters which are not valid in the name of a PHP function.
+  // Any PID characters which are not valid in the name of a PHP function.
       array(
         ':',
         '-',
@@ -289,8 +289,8 @@ function islandora_get_parents_from_rels_ext(FedoraObject $object) {
     return array();
   }
   $map = function($o) {
-        return islandora_object_load($o['object']['value']);
-      };
+    return islandora_object_load($o['object']['value']);
+  };
   $collections = array_map($map, $collections);
   return array_filter($collections);
 }
@@ -770,6 +770,7 @@ function islandora_get_content_models($ignore_system_namespace = TRUE) {
  *   the displayed list
  * @param array $default_values_array
  *   default values to display if $drupal_variable is unset
+ *
  * @return array
  *   Drupal form element allowing content model selection
  */
