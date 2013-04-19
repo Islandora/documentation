@@ -204,7 +204,7 @@ function islandora_escape_pid_for_function($pid) {
   // Apparently, case doesn't matter for function calls in PHP, so let's not
   // really worry about changing the case.
   return str_replace(
-      // Any PID characters which are not valid in the name of a PHP function.
+ // Any PID characters which are not valid in the name of a PHP function.
       array(
         ':',
         '-',
@@ -281,8 +281,8 @@ function islandora_namespace_accessible($id) {
 function islandora_get_parents_from_rels_ext(FedoraObject $object) {
   try {
     $collections = array_merge(
-            $object->relationships->get(FEDORA_RELS_EXT_URI, 'isMemberOfCollection'),
-            $object->relationships->get(FEDORA_RELS_EXT_URI, 'isMemberOf'));
+      $object->relationships->get(FEDORA_RELS_EXT_URI, 'isMemberOfCollection'),
+      $object->relationships->get(FEDORA_RELS_EXT_URI, 'isMemberOf'));
   }
   catch (RepositoryException $e) {
     // @todo some logging would be nice, not sure what this throws.
@@ -724,17 +724,14 @@ function islandora_get_content_models($ignore_system_namespace = TRUE) {
             FROM <#ri>
             WHERE {
               {?object fm:hasModel <info:fedora/fedora-system:ContentModel-3.0>;
-                       fm:state <info:fedora/fedora-system:def/model#Active>
-              OPTIONAL{
+                       fm:state fm:Active
+              }
+            UNION{
+                ?object fr:isMemberOfCollection <info:fedora/islandora:ContentModelsCollection>;
+                fm:state fm:Active
+              }
+            OPTIONAL{
                  ?object fm:label ?label
-              }
-            }
-            UNION
-              {?object fr:isMemberOfCollection <info:fedora/islandora:ContentModelsCollection>;
-                fm:state <info:fedora/fedora-system:def/model#Active>
-              OPTIONAL{
-                ?object fm:label ?label
-              }
             }
            }";
   $content_models = array();
@@ -744,7 +741,7 @@ function islandora_get_content_models($ignore_system_namespace = TRUE) {
     $label = $result['label']['value'];
     $namespace = islandora_get_namespace($content_model);
     $ignore = $ignore_system_namespace && $namespace == 'fedora-system';
-    $ignore |= ! islandora_namespace_accessible($namespace);
+    $ignore |= !islandora_namespace_accessible($namespace);
     if (!$ignore) {
       $content_models[$content_model] = array('pid' => $content_model, 'label' => $label);
     }
@@ -776,15 +773,15 @@ function islandora_content_model_select_table_form_element($drupal_variable, $de
 
   $selected = array_values(variable_get($drupal_variable, $default_values_array));
   $comparator = function ($a, $b) use ($selected) {
-        $a_val = $b_val = 0;
-        if (in_array($a, $selected)) {
-          $a_val = 1;
-        }
-        if (in_array($b, $selected)) {
-          $b_val = 1;
-        }
-        return $a_val = $b_val;
-      };
+    $a_val = $b_val = 0;
+    if (in_array($a, $selected)) {
+      $a_val = 1;
+    }
+    if (in_array($b, $selected)) {
+      $b_val = 1;
+    }
+    return $a_val = $b_val;
+  };
   uksort($content_models, $comparator);
   foreach ($content_models as $pid => $label) {
     $rows[$pid] = array(
