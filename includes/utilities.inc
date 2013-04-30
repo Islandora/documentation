@@ -824,8 +824,8 @@ function islandora_content_model_select_table_form_element($drupal_variable, $de
  * To utilitize this function pass the results to trigger_error() like so:
  *
  * @code
- *   $message = islandora_deprecated('7.x-1.1', t('Use more cowbell.'));
- *   trigger_error(check_plain($message), E_USER_DEPRECATED);
+ *   $message = islandora_deprecated('7.x-1.1', t('Use more cowbell.'))
+ *   trigger_error(check_plain($message), E_USER_DEPRECATED)
  * @endcode
  *
  * @param string $release
