@@ -5,8 +5,6 @@
  * Defines the multi-page ingest form and any relevant hooks and functions.
  */
 
-require_once 'utilities.inc';
-
 /**
  * Checks if the given configuration can be used to display the ingest form.
  *
@@ -134,6 +132,7 @@ function islandora_ingest_form_get_last_step_id(array &$form_state) {
  *   The new object.
  */
 function islandora_ingest_form_prepare_new_object(array $configuration) {
+  module_load_include('inc', 'islandora', 'includes/utilities');
   if (empty($configuration['object'])) {
     $message = islandora_deprecated('Please use "objects" as the default ingest form configuration property.');
     trigger_error(check_plain($message), E_USER_DEPRECATED);
@@ -802,6 +801,7 @@ function islandora_ingest_form_load_include(array &$form_state) {
  *   of ISLANDORA_INGEST_STEP_HOOK.
  */
 function islandora_ingest_form_get_steps(array &$form_state) {
+  module_load_include('inc', 'islandora', 'includes/utilities');
   $steps = &drupal_static(__FUNCTION__);
   if (isset($steps)) {
     return $steps;
