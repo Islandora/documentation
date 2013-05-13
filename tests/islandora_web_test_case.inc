@@ -130,7 +130,7 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
   /**
    * Asserts that the given datastreams exist on the object.
    *
-   * @param AbstractObject $objectpid
+   * @param AbstractObject $object
    *   The PID of the object
    * @param array $datastreams
    *   An array of strings containing  datastream names
@@ -141,7 +141,7 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
       return;
     }
 
-    foreach($datastreams as $datastream) {
+    foreach ($datastreams as $datastream) {
       if (isset($object[$datastream])) {
         $this->pass("Loaded datastream {$datastream} from PID {$object->id}");
       }
@@ -164,9 +164,9 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
     $path_parts = explode('/', $path);
     $array_length = count($path_parts);
     for ($i = 0; $i < $array_length; $i++) {
-      if ($path_parts[$i] == 'islandora' && isset($path_parts[$i+1]) && $path_parts[$i+1] == 'object') {
-        if (isset($path_parts[$i+2])) {
-          return islandora_object_load(urldecode($path_parts[$i+2]));
+      if ($path_parts[$i] == 'islandora' && isset($path_parts[$i + 1]) && $path_parts[$i + 1] == 'object') {
+        if (isset($path_parts[$i + 2])) {
+          return islandora_object_load(urldecode($path_parts[$i + 2]));
         }
       }
     }
@@ -182,7 +182,11 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
    */
   public function deleteObject($pid) {
     $current_user = $this->loggedInUser;
-    $user = $this->drupalCreateUser(array('manage object properties', 'delete fedora objects and datastreams', 'view fedora repository objects'));
+    $user = $this->drupalCreateUser(array(
+      'manage object properties',
+      'delete fedora objects and datastreams',
+      'view fedora repository objects',
+    ));
 
     $this->drupalLogin($user);
 
