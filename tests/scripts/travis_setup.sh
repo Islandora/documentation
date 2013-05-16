@@ -11,11 +11,12 @@ cd islandora_tomcat
 export CATALINA_HOME='.'
 ./bin/startup.sh
 cd $HOME
+pear update pear
 pear channel-discover pear.phpqatools.org
 pear channel-discover pear.netpirates.net
 pear install pear/PHP_CodeSniffer
 pear install pear.phpunit.de/phpcpd
-sudo apt-get install -qq drush
+pear install drush/drush
 phpenv rehash
 drush dl --yes drupal
 cd drupal-*
