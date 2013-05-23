@@ -952,6 +952,63 @@ function islandora_add_object(AbstractObject &$object) {
 }
 
 /**
+ * Creates a new object with the same properties as the old.
+ *
+ * @todo Make Tuque objects support cloneing.
+ *
+ * @param AbstractObject $object
+ *   An existing or new Fedora Object.
+ *
+ * @return AbstractObject
+ *   The new Fedora Object with properties identical to the object given. This
+ *   returned object is not automatically ingested.
+ */
+function islandora_copy_object(AbstractObject $object) {
+  $clone = $object->repository->constructObject($object->id);
+  $object_properties = array(
+    'state',
+    'createdDate',
+    'lastModifiedDate',
+    'label',
+    'owner',
+    'logMessage',
+  );
+  // Copy Properties.
+  foreach ($object_properties as $property) {
+    if (isset($object->$property)) {
+      $clone->$property = $object->$property;
+    }
+  }
+  $datastream_properties = array(
+    'label',
+    'versionable',
+    'state',
+    'mimetype',
+    'format',
+    'size',
+    'checksum',
+    'checksumType',
+    'createdDate',
+    'content',
+    'url',
+    'location',
+  );
+  // Copy Datastreams.
+  foreach ($object as $dsid => $datastream) {
+    if (empty($clone[$dsid])) {
+      $ds = $clone->constructDatastream($dsid, $datastream->controlGroup);
+      $clone->ingestDatastream($ds);
+    }
+    foreach ($datastream_properties as $property) {
+      if (isset($object[$dsid]->$property)) {
+        $clone[$dsid]->$property = $object[$dsid]->$property;
+      }
+    }
+  }
+  return $clone;
+}
+
+/**
  * Delete's or purges the given object.
  *
  * @param AbstractObject $object
