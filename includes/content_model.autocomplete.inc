@@ -1,10 +1,15 @@
 <?php
+/**
+ * @file
+ * Autocomplete functionality for content models in Islandora.
+ */
 
 /**
  * Autocomplete the content model name.
  *
  * @param string $string
  *   A search string.
+ *
  * @return string
  *   The rendered JSON results.
  */
@@ -59,6 +64,7 @@ function islandora_query_content_models() {
  *
  * @param array $content
  *   The array of results as returned from Tuque's RI query interface.
+ *
  * @return array
  *   An array of results in a more usable format.
  */
