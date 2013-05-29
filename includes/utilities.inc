@@ -825,7 +825,7 @@ function islandora_content_model_select_table_form_element($drupal_variable, $de
  *
  * @code
  *   $message = islandora_deprecated('7.x-1.1', t('Use more cowbell.'))
- *   trigger_error(check_plain($message), E_USER_DEPRECATED)
+ *   trigger_error(filter_xss($message), E_USER_DEPRECATED)
  * @endcode
  *
  * @param string $release
