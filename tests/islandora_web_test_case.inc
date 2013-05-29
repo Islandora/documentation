@@ -28,7 +28,7 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
       $this->backUpDrupalFilter();
       $this->setUpDrupalFilter();
     }
-    $this->createAdminUser();
+    $this->admin = $this->createAdminUser();
   }
 
   /**
@@ -90,15 +90,20 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
    * Creates the a full fedora admin user with a repository connection.
    */
   protected function createAdminUser() {
-    $this->admin = new stdClass();
-    $this->admin->uid = 1;
-    $this->admin->name = $this->configuration['admin_user'];
-    $this->admin->pass = $this->configuration['admin_pass'];
+    $roles = user_roles();
+    $index = array_search('administrator', $roles);
+    $user = $this->drupalCreateUser();
+    $this->drupalLogin($user);
+    $user->roles[$index] = 'administrator';
+    $user->name = $this->configuration['admin_user'];
+    $user->pass = $this->configuration['admin_pass'];
+    $user = user_save($user);
     $url = variable_get('islandora_base_url', $this->configuration['fedora_url']);
-    $connection = islandora_get_tuque_connection($this->admin, $url);
-    $this->admin->repository = $connection->repository;
-    return $this->admin;
+    $connection = islandora_get_tuque_connection($user, $url);
+    $user->repository = $connection->repository;
+    return $user;
   }
+
   /**
    * Stores the content of the Drupal Filter for later restoration.
    */
