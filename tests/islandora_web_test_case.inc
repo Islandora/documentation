@@ -179,11 +179,13 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
    *
    * @param string $pid
    *   The PID of the collection to be deleted
+   * @param string $button
+   *   The label of the first 'Delete' button
    */
-  public function deleteObject($pid) {
+  public function deleteObject($pid, $button='Delete') {
     $path = 'islandora/object/' . $pid . '/manage/properties';
     $edit = array();
-    $this->drupalPost($path, $edit, t('Delete'));
+    $this->drupalPost($path, $edit, $button);
     $this->drupalPost($this->url, $edit, t('Delete'));
     $object = islandora_object_load($pid);
 
