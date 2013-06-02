@@ -71,7 +71,8 @@ class IslandoraIngestsTestCase extends IslandoraWebTestCase {
    * Test Ingest Steps.
    */
   public function testIngest() {
-    global $user;
+    // Login the Admin user.
+    $this->drupalLogin($this->admin);
     // First step in form.
     $this->drupalGet('test/ingest');
     // Default model selected, has no additional steps.
