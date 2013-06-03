@@ -979,30 +979,17 @@ function islandora_copy_object(AbstractObject $object) {
       $clone->$property = $object->$property;
     }
   }
-  $datastream_properties = array(
-    'label',
-    'versionable',
-    'state',
-    'mimetype',
-    'format',
-    'size',
-    'checksum',
-    'checksumType',
-    'createdDate',
-    'content',
-    'url',
-    'location',
-  );
   // Copy Datastreams.
   foreach ($object as $dsid => $datastream) {
     if (empty($clone[$dsid])) {
-      $ds = $clone->constructDatastream($dsid, $datastream->controlGroup);
-      $clone->ingestDatastream($ds);
+      $clone->ingestDatastream($datastream);
     }
-    foreach ($datastream_properties as $property) {
-      if (isset($object[$dsid]->$property)) {
-        $clone[$dsid]->$property = $object[$dsid]->$property;
-      }
+    else {
+      // Get the content into a file, and add the file.
+      $temp_file = drupal_tempnam('temporary://', 'datastream');
+      $datastream->getContent($temp_file);
+      $clone[$dsid]->setContentFromFile($temp_file);
+      drupal_unlink($temp_file);
     }
   }
   return $clone;
