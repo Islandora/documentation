@@ -108,7 +108,7 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
    *
    * @see DrupalWebTestCase::drupalLogin()
    */
-  protected function drupalLogin(stdClass &$account) {
+  protected function drupalLogin(stdClass $account) {
     if ($account->uid == $this->admin->uid) {
       // Create password for Drupal.
       $edit = array('pass' => user_password());
