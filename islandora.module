@@ -1129,10 +1129,8 @@ function islandora_file_mimetype_mapping_alter(&$mapping) {
 
 /**
  * A callback to get the root collection label.
- *
- *
  * @return text
- *   The object label of the root collection or the fallback
+ *   The object label of the root collection or the fallback.
  */
 function islandora_repository_root_label() {
   $root = variable_get('islandora_repository_pid', 'islandora:root');
