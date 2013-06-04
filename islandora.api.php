@@ -443,3 +443,42 @@ function hook_islandora_ingest_steps(array $form_state) {
  */
 function hook_CMODEL_PID_islandora_ingest_steps(array $form_state) {
 }
+
+/**
+ * Hookable access hook.
+ *
+ * @param string $op
+ *   A string define an operation to check. Should be defined via
+ *   hook_permission().
+ * @param AbstractObject $object
+ *   An object to check the operation on.
+ * @param object $user
+ *   A loaded user object, as the global $user variable might contain.
+ *
+ * @return bool|NULL
+ *   Either boolean TRUE or FALSE to explicitly allow or deny the operation on
+ *   the given object, or NULL to indicate that we are making no assertion
+ *   about the outcome.
+ */
+function hook_islandora_access($op, $object, $user) {
+  switch ($op) {
+    case 'create stuff':
+      return TRUE;
+
+    case 'break stuff':
+      return FALSE;
+
+    case 'do a barrel roll!':
+      return NULL;
+
+  }
+}
+
+/**
+ * Content model specific version of hook_islandora_access().
+ *
+ * @see hook_islandora_access
+ */
+function hook_CMODEL_PID_islandora_access($op, $object, $user) {
+
+}

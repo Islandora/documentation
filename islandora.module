@@ -1126,3 +1126,76 @@ function islandora_file_mimetype_mapping_alter(&$mapping) {
     $mapping['extensions'][$ext] = key($mapping['mimetypes']);
   }
 }
+
+/**
+ * Hookable access callback.
+ *
+ * @param string $op
+ *   String identifying an operation to check. Should correspond to a
+ *   permission declared via hook_permission().
+ * @param AbstractObject $object
+ *   An object to check for permissions.
+ * @param object $user
+ *   An optional loaded user object. Defaults to the global $user.
+ *
+ * @return bool
+ *   TRUE if at least one implementation of hook_islandora_access() returned
+ *   TRUE, and no implementation return FALSE; FALSE otherwise.
+ */
+function islandora_access($op, $object = NULL, $user = NULL) {
+  $cache = &drupal_static(__FUNCTION__);
+
+  if (empty($object)) {
+    $pid = variable_get('islandora_repository_pid', 'islandora:root');
+    $object = islandora_object_load($pid);
+  }
+  if (!$object) {
+    // The object could not be loaded... Presumably, we don't have
+    // permission.
+    return FALSE;
+  }
+  if ($user === NULL) {
+    global $user;
+  }
+
+  // Populate the cache on a miss.
+  if (!isset($cache[$op][$object->id][$user->uid])) {
+    module_load_include('inc', 'islandora', 'includes/utilities');
+
+    $results = islandora_invoke_hook_list('islandora_access', $object->models, array(
+      $op,
+      $object,
+      $user,
+    ));
+
+    // Nothing returned FALSE, and something returned TRUE.
+    $cache[$op][$object->id][$user->uid] = (!in_array(FALSE, $results, TRUE) && in_array(TRUE, $results, TRUE));
+  }
+
+  return $cache[$op][$object->id][$user->uid];
+}
+
+/**
+ * Implements hook_islandora_access().
+ *
+ * Denies according to PID namespace restrictions, passes according to
+ * user_access(), and makes no indication if namespace restrictions passed but
+ * user_access() returned a fail, to allow other modules to allow an operation.
+ */
+function islandora_islandora_access($op, $object, $user) {
+  module_load_include('inc', 'islandora', 'includes/utilities');
+  $to_return = islandora_namespace_accessible($object->id);
+
+  if ($to_return && user_access($op, $user)) {
+    // Straight Drupal permissions, let's allow it.
+    return TRUE;
+  }
+  elseif ($to_return === FALSE) {
+    // PID namespace is outside of those allowed. Forbid!
+    return FALSE;
+  }
+  else {
+    // Neither allowing of forbidding, to allow other modules to override.
+    return NULL;
+  }
+}
