@@ -88,7 +88,7 @@ function islandora_menu() {
     'type' => MENU_NORMAL_ITEM,
   );
   $items['islandora'] = array(
-    'title' => 'Islandora Repository',
+    'title callback' => 'islandora_repository_root_label',
     'page callback' => 'islandora_view_default_object',
     'type' => MENU_NORMAL_ITEM,
     'access arguments' => array(FEDORA_VIEW_OBJECTS),
@@ -1125,4 +1125,18 @@ function islandora_file_mimetype_mapping_alter(&$mapping) {
     end($mapping['mimetypes']);
     $mapping['extensions'][$ext] = key($mapping['mimetypes']);
   }
+}
+
+/**
+ * A callback to get the root collection label.
+ *
+ *
+ * @return text
+ *   The object label of the root collection or the fallback
+ */
+function islandora_repository_root_label() {
+  $root = variable_get('islandora_repository_pid', 'islandora:root');
+  $object = islandora_object_load($root);
+  $title = ($object ? $object->label : 'Islandora Repository');
+  return $title;
 }
