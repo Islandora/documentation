@@ -376,7 +376,7 @@ class MimeDetect {
    * Gets MIME type array.
    *
    * @return array
-   *   returns associative array with exts and mimetypes
+   *   Returns associative array with exts and mimetypes.
    */
   public function getMimeTypes() {
     return $this->protectedMimeTypes;
