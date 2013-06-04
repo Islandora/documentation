@@ -475,7 +475,7 @@ function islandora_object_access_callback($perm, $object = NULL) {
     return FALSE;
   }
 
-  return user_access($perm) && is_object($object) && islandora_namespace_accessible($object->id);
+  return islandora_object_access($perm);
 }
 
 /**
@@ -499,8 +499,7 @@ function islandora_object_access_callback($perm, $object = NULL) {
  *   TRUE if the user is allowed to access this object, FALSE otherwise.
  */
 function islandora_object_datastream_access_callback($perm, $object = NULL, $datastream = NULL, $account = NULL) {
-  module_load_include('inc', 'islandora', 'includes/utilities');
-  return user_access($perm, $account) && is_object($object) && islandora_namespace_accessible($object->id) && is_object($datastream);
+  return islandora_datastream_access($perm, $datastream, $account);
 }
 
 /**
@@ -554,10 +553,10 @@ function islandora_object_manage_access_callback($perms, $object = NULL) {
 
   $has_access = FALSE;
   for ($i = 0; $i < count($perms) && !$has_access; $i++) {
-    $has_access = $has_access || user_access($perms[$i]);
+    $has_access = $has_access || islandora_object_access($perms[$i], $object);
   }
 
-  return $has_access && is_object($object) && islandora_namespace_accessible($object->id);
+  return $has_access;
 }
 
 /**
@@ -1128,7 +1127,7 @@ function islandora_file_mimetype_mapping_alter(&$mapping) {
 }
 
 /**
- * Hookable access callback.
+ * Hookable object access callback.
  *
  * @param string $op
  *   String identifying an operation to check. Should correspond to a
@@ -1139,17 +1138,13 @@ function islandora_file_mimetype_mapping_alter(&$mapping) {
  *   An optional loaded user object. Defaults to the global $user.
  *
  * @return bool
- *   TRUE if at least one implementation of hook_islandora_access() returned
+ *   TRUE if at least one implementation of hook_islandora_object_access() returned
  *   TRUE, and no implementation return FALSE; FALSE otherwise.
  */
-function islandora_access($op, $object = NULL, $user = NULL) {
+function islandora_object_access($op, $object, $user = NULL) {
   $cache = &drupal_static(__FUNCTION__);
 
-  if (empty($object)) {
-    $pid = variable_get('islandora_repository_pid', 'islandora:root');
-    $object = islandora_object_load($pid);
-  }
-  if (!$object) {
+  if (!is_object($object)) {
     // The object could not be loaded... Presumably, we don't have
     // permission.
     return FALSE;
@@ -1162,7 +1157,7 @@ function islandora_access($op, $object = NULL, $user = NULL) {
   if (!isset($cache[$op][$object->id][$user->uid])) {
     module_load_include('inc', 'islandora', 'includes/utilities');
 
-    $results = islandora_invoke_hook_list('islandora_access', $object->models, array(
+    $results = islandora_invoke_hook_list('islandora_object_access', $object->models, array(
       $op,
       $object,
       $user,
@@ -1176,13 +1171,13 @@ function islandora_access($op, $object = NULL, $user = NULL) {
 }
 
 /**
- * Implements hook_islandora_access().
+ * Implements hook_islandora_object_access().
  *
  * Denies according to PID namespace restrictions, passes according to
  * user_access(), and makes no indication if namespace restrictions passed but
  * user_access() returned a fail, to allow other modules to allow an operation.
  */
-function islandora_islandora_access($op, $object, $user) {
+function islandora_islandora_object_access($op, $object, $user) {
   module_load_include('inc', 'islandora', 'includes/utilities');
   $to_return = islandora_namespace_accessible($object->id);
 
@@ -1198,4 +1193,49 @@ function islandora_islandora_access($op, $object, $user) {
     // Neither allowing of forbidding, to allow other modules to override.
     return NULL;
   }
+}
+
+/**
+ * Hookable access callback for datastreams.
+ *
+ * Requires the equivalent permissions on the object.
+ */
+function islandora_datastream_access($op, $datastream, $user = NULL) {
+  $cache = &drupal_static(__FUNCTION__);
+
+  if (!$datastream) {
+    // The object could not be loaded... Presumably, we don't have
+    // permission.
+    return NULL;
+  }
+  if ($user === NULL) {
+    global $user;
+  }
+
+  // Populate the cache on a miss.
+  if (!isset($cache[$op][$object->id][$user->uid])) {
+    if ($cache[$op][$datastream->parent->id][$datastream->id][$user->uid]) {
+      module_load_include('inc', 'islandora', 'includes/utilities');
+      $object_results = islandora_invoke_hook_list('islandora_object_access', $datastream->parent->models, array(
+        $op,
+        $datastream->parent,
+        $user,
+      ));
+
+      $datastream_results = islandora_invoke_hook_list('islandora_datastream_access', $datastream->parent->models, array(
+        $op,
+        $datastream,
+        $user,
+      ));
+
+      // Neither the object nor the datastream check returned FALSE, and one in
+      // the object or datastream checks returned TRUE.
+      $cache[$op][$datastream->parent->id][$datastream->id][$user->uid] =
+        !in_array(FALSE, $object_results, TRUE) &&
+        !in_array(FALSE, $datastream_results, TRUE) &&
+        (in_array(TRUE, $object_results, TRUE) ||  in_array(TRUE, $datastream_results, TRUE));
+    }
+  }
+
+  return $cache[$op][$datastream->parent->id][$datastream->id][$user->uid];
 }

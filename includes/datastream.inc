@@ -85,7 +85,7 @@ function islandora_datastream_get_url(AbstractDatastream $datastream, $type = 'd
  */
 function islandora_datastream_get_delete_link(AbstractDatastream $datastream) {
   $datastreams = module_invoke_all('islandora_undeletable_datastreams', $datastream->parent->models);
-  $can_delete = !in_array($datastream->id, $datastreams);
+  $can_delete = !in_array($datastream->id, $datastreams) && islandora_datastream_access(FEDORA_PURGE, $datastream);
   return $can_delete ? l(t('delete'), "islandora/object/{$datastream->parent->id}/datastream/{$datastream->id}/delete") : '';
 }
 
@@ -97,7 +97,7 @@ function islandora_datastream_get_delete_link(AbstractDatastream $datastream) {
  */
 function islandora_datastream_edit_get_link(AbstractDatastream $datastream) {
   $edit_registry = module_invoke_all('islandora_edit_datastream_registry', $datastream->parent, $datastream);
-  $can_edit = count($edit_registry) > 0 && user_access(FEDORA_METADATA_EDIT);
+  $can_edit = count($edit_registry) > 0 && islandora_datastream_access(FEDORA_METADATA_EDIT, $datastream);
   return $can_edit ? l(t('edit'), "islandora/object/{$datastream->parent->id}/datastream/{$datastream->id}/edit") : '';
 }
 

@@ -460,7 +460,7 @@ function hook_CMODEL_PID_islandora_ingest_steps(array $form_state) {
  *   the given object, or NULL to indicate that we are making no assertion
  *   about the outcome.
  */
-function hook_islandora_access($op, $object, $user) {
+function hook_islandora_object_access($op, $object, $user) {
   switch ($op) {
     case 'create stuff':
       return TRUE;
@@ -475,10 +475,47 @@ function hook_islandora_access($op, $object, $user) {
 }
 
 /**
- * Content model specific version of hook_islandora_access().
+ * Content model specific version of hook_islandora_object_access().
  *
- * @see hook_islandora_access
+ * @see hook_islandora_object_access()
  */
-function hook_CMODEL_PID_islandora_access($op, $object, $user) {
+function hook_CMODEL_PID_islandora_object_access($op, $object, $user) {
+}
 
+/**
+ * Hookable access hook.
+ *
+ * @param string $op
+ *   A string define an operation to check. Should be defined via
+ *   hook_permission().
+ * @param AbstractDatastream $object
+ *   An object to check the operation on.
+ * @param object $user
+ *   A loaded user object, as the global $user variable might contain.
+ *
+ * @return bool|NULL
+ *   Either boolean TRUE or FALSE to explicitly allow or deny the operation on
+ *   the given object, or NULL to indicate that we are making no assertion
+ *   about the outcome.
+ */
+function hook_islandora_datastream_access($op, $object, $user) {
+  switch ($op) {
+    case 'create stuff':
+      return TRUE;
+
+    case 'break stuff':
+      return FALSE;
+
+    case 'do a barrel roll!':
+      return NULL;
+
+  }
+}
+
+/**
+ * Content model specific version of hook_islandora_datastream_access().
+ *
+ * @see hook_islandora_datastream_access()
+ */
+function hook_CMODEL_PID_islandora_datastream_access($op, $object, $user) {
 }
