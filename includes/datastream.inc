@@ -144,3 +144,37 @@ function islandora_edit_datastream_registry_render(array $edit_registry) {
     '#markup' => $markup,
   );
 }
+
+/**
+ * Get markup for a download link.
+ *
+ * @param AbstractDatastream $datastream
+ *   The datastream for which to generate a link.
+ *
+ * @return string
+ *   Either the link markup if the user has access or an empty string if the
+ *   user is not allowed to see the given datastream.
+ */
+function islandora_datastream_get_download_link(AbstractDatastream $datastream) {
+  $label = t('download');
+  return islandora_datastream_access(FEDORA_VIEW_OBJECTS, $datastream) ?
+    l($label, islandora_datastream_get_url($datastream, 'download')) :
+    '';
+}
+
+/**
+ * Get markup for a view link.
+ *
+ * @param AbstractDatastream $datastream
+ *   The datastream for which to generate a link.
+ *
+ * @return string
+ *   Either the link markup if the user has access or a string containing the
+ *   datastream ID if the user is not allowed to see the given datastream.
+ */
+function islandora_datastream_get_view_link(AbstractDatastream $datastream) {
+  $label = check_plain($datastream->id);
+  return islandora_datastream_access(FEDORA_VIEW_OBJECTS, $datastream) ?
+    l($label, islandora_datastream_get_url($datastream, 'view')) :
+    $label;
+}

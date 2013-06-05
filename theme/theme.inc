@@ -29,9 +29,7 @@ function islandora_preprocess_islandora_default_edit(array &$variables) {
     $rows[] = array(
       array(
         'class' => 'datastream-id',
-        'data' => (islandora_datastream_access(FEDORA_VIEW_OBJECTS, $ds) ?
-          l($ds->id, islandora_datastream_get_url($ds, 'view')) :
-          ''),
+        'data' => islandora_datastream_get_view_link($ds),
       ),
       array(
         'class' => 'datastream-label',
@@ -51,9 +49,7 @@ function islandora_preprocess_islandora_default_edit(array &$variables) {
       ),
       array(
         'class' => 'datastream-download',
-        'data' => (islandora_datastream_access(FEDORA_VIEW_OBJECTS, $ds) ?
-          l(t('download'), islandora_datastream_get_url($ds, 'download')) :
-          ''),
+        'data' => islandora_datastream_get_download_link($ds),
       ),
       array(
         'class' => 'datstream-edit',
@@ -99,7 +95,9 @@ function islandora_preprocess_islandora_default(&$variables) {
       $download_path = islandora_datastream_get_url($ds, 'download');
       $datastreams[$id]['id'] = $id;
       $datastreams[$id]['label'] = $label;
-      $datastreams[$id]['label_link'] = l($label, $download_path);
+      $datastreams[$id]['label_link'] = islandora_datastream_access(FEDORA_VIEW_OBJECTS, $ds) ?
+        l($label, $download_path) :
+        $label;
       $datastreams[$id]['download_url'] = $download_path;
       $datastreams[$id]['mimetype'] = $ds->mimetype;
       $datastreams[$id]['size'] = islandora_datastream_get_human_readable_size($ds);
@@ -112,14 +110,14 @@ function islandora_preprocess_islandora_default(&$variables) {
   }
   $variables['datastreams'] = $datastreams;
   // Objects in fcrepo4 don't always contain a DC datastream.
-  if (isset($islandora_object['DC'])) {
+  if (isset($islandora_object['DC']) && islandora_datastream_access(FEDORA_VIEW_OBJECTS, $islandora_object['DC'])) {
     $dc_object = DublinCore::importFromXMLString($islandora_object['DC']->content);
     $dc_array = $dc_object->asArray();
   }
   $variables['dc_array'] = isset($dc_array) ? $dc_array : array();
   $variables['islandora_dublin_core'] = isset($dc_object) ? $dc_object : NULL;
   $variables['islandora_object_label'] = $islandora_object->label;
-  if (isset($islandora_object['TN'])) {
+  if (isset($islandora_object['TN']) && islandora_datastream_access(FEDORA_VIEW_OBJECTS, $islandora_object['TN'])) {
     $variables['islandora_thumbnail_url'] = url("islandora/object/{$islandora_object->id}/datastream/TN/view");
   }
 }
@@ -201,12 +199,16 @@ function islandora_preprocess_islandora_objects(array &$variables) {
     $o = islandora_object_load($o);
     $url = "islandora/object/{$o->id}";
     $link_options = array('html' => TRUE, 'attributes' => array('title' => $o->label));
-    $img = theme_image(array('path' => url("$url/datastream/TN/view"), 'attributes' => array()));
+    $img = islandora_datastream_access(FEDORA_VIEW_OBJECTS, $o['TN']) ?
+      theme('image', array('path' => url("$url/datastream/TN/view"), 'attributes' => array())) :
+      '';
     $description = NULL;
-    $dc = DublinCore::importFromXMLString($o['DC']->content);
-    if ($dc) {
-      $dc = $dc->asArray();
-      $description = $dc['dc:description']['value'];
+    if (islandora_datastream_access($o['DC'])) {
+      $dc = DublinCore::importFromXMLString($o['DC']->content);
+      if ($dc) {
+        $dc = $dc->asArray();
+        $description = $dc['dc:description']['value'];
+      }
     }
     return array(
       'label' => $o->label,
