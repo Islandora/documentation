@@ -29,7 +29,9 @@ function islandora_preprocess_islandora_default_edit(array &$variables) {
     $rows[] = array(
       array(
         'class' => 'datastream-id',
-        'data' => l($ds->id, islandora_datastream_get_url($ds, 'view')),
+        'data' => (islandora_datastream_access(FEDORA_VIEW_OBJECTS, $ds) ?
+          l($ds->id, islandora_datastream_get_url($ds, 'view')) :
+          ''),
       ),
       array(
         'class' => 'datastream-label',
@@ -49,7 +51,9 @@ function islandora_preprocess_islandora_default_edit(array &$variables) {
       ),
       array(
         'class' => 'datastream-download',
-        'data' => l(t('download'), islandora_datastream_get_url($ds, 'download')),
+        'data' => (islandora_datastream_access(FEDORA_VIEW_OBJECTS, $ds) ?
+          l(t('download'), islandora_datastream_get_url($ds, 'download')) :
+          ''),
       ),
       array(
         'class' => 'datstream-edit',
