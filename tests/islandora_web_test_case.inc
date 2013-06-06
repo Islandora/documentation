@@ -182,7 +182,7 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
    * @param string $button
    *   The label of the first 'Delete' button
    */
-  public function deleteObject($pid, $button='Delete') {
+  public function deleteObject($pid, $button = 'Delete') {
     $path = 'islandora/object/' . $pid . '/manage/properties';
     $edit = array();
     $this->drupalPost($path, $edit, $button);
