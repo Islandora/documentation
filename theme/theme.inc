@@ -203,7 +203,7 @@ function islandora_preprocess_islandora_objects(array &$variables) {
       theme('image', array('path' => url("$url/datastream/TN/view"), 'attributes' => array())) :
       '';
     $description = NULL;
-    if (islandora_datastream_access($o['DC'])) {
+    if (isset($o['DC']) && islandora_datastream_access(FEDORA_VIEW_OBJECTS, $o['DC'])) {
       $dc = DublinCore::importFromXMLString($o['DC']->content);
       if ($dc) {
         $dc = $dc->asArray();

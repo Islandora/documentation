@@ -389,7 +389,7 @@ function islandora_get_datastreams_requirements_from_models(array $models) {
  *     - "optional": A boolean indicating if the given stream is optional.
  */
 function islandora_get_datastreams_requirements_from_content_model(AbstractObject $object) {
-  if (empty($object[DS_COMP_STREAM])) {
+  if (empty($object[DS_COMP_STREAM]) || !islandora_datastream_access(FEDORA_VIEW_OBJECTS, $object[DS_COMP_STREAM])) {
     return array();
   }
   $xml = new SimpleXMLElement($object[DS_COMP_STREAM]->content);
