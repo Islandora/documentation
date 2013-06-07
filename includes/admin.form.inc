@@ -108,6 +108,13 @@ function islandora_repository_admin(array $form, array &$form_state) {
     '#required' => TRUE,
   );
 
+  $form['islandora_tabs']['islandora_general']['islandora_strict_user_access_enforcement'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Strict User Access Enforcement'),
+    '#description' => t('Restrict permissions to the result of user_access(); other modules will be able to deny things, but other modules will not be able to allow operations not allowed via Drupal permissions.'),
+    '#default_value' => variable_get('islandora_strict_user_access_enforcement', TRUE),
+  );
+
   $form['islandora_tabs']['islandora_namespace'] = array(
     '#type' => 'fieldset',
     '#title' => t('Namespaces'),

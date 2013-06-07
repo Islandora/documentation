@@ -1181,11 +1181,13 @@ function islandora_islandora_object_access($op, $object, $user) {
   module_load_include('inc', 'islandora', 'includes/utilities');
   $to_return = islandora_namespace_accessible($object->id);
 
-  if ($to_return && user_access($op, $user)) {
+  $user_access_result = user_access($op, $user);
+
+  if ($to_return && $user_access_result) {
     // Straight Drupal permissions, let's allow it.
     return TRUE;
   }
-  elseif ($to_return === FALSE) {
+  elseif ($to_return === FALSE || variable_get('islandora_strict_user_access_enforcement', TRUE) && !$user_access_result) {
     // PID namespace is outside of those allowed. Forbid!
     return FALSE;
   }
