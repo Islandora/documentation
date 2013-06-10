@@ -432,24 +432,55 @@ function islandora_user_access($object, array $permissions, $content_models = ar
     }
   }
   // Determine what has been passed as $object.
-  if (is_subclass_of($object, 'FedoraObject')) {
-    $object = $object;
+  if (is_subclass_of($object, 'AbstractObject')) {
+    $datastream = NULL;
+    // $object stays $object...
   }
-  elseif (is_subclass_of($object, 'FedoraDatastream')) {
+  elseif (is_subclass_of($object, 'AbstractDatastream')) {
     $datastream = $object;
     $object = $datastream->parent;
   }
+
   // Check for access.
   $accessible_namespace = islandora_namespace_accessible($object->id);
   if ($access_any) {
-    $has_required_permissions = islandora_user_access_any($permissions, $account);
+    $has_required_permissions = function ($permissions, $datastream, $object) {
+      foreach ($permissions as $p) {
+        if ($datastream !== NULL) {
+          $check = islandora_datastream_access($p, $datastream);
+        }
+        else {
+          $check = islandora_object_access($p, $object);
+        }
+
+        if ($check) {
+          return TRUE;
+        }
+      }
+    };
     $has_required_content_models = empty($content_models) ? TRUE : count(array_intersect($object->models, $content_models)) > 0;
   }
   else {
-    $has_required_permissions = islandora_user_access_all($permissions, $account);
+    $has_required_permissions = function ($permissions, $datastream, $object) {
+      foreach ($permissions as $p) {
+        if ($datastream !== NULL) {
+          $check = islandora_datastream_access($p, $datastream);
+        }
+        else {
+          $check = islandora_object_access($p, $object);
+        }
+
+        if (!$check) {
+          return FALSE;
+        }
+      }
+    };
     $has_required_content_models = count(array_diff($content_models, $object->models)) == 0;
   }
-  return $accessible_namespace && $has_required_permissions && $has_required_content_models;
+
+  return $accessible_namespace &&
+    $has_required_permissions($permissions, $datastream, $object) &&
+    $has_required_content_models;
 }
 
 /**
@@ -1187,7 +1218,7 @@ function islandora_islandora_object_access($op, $object, $user) {
     // Straight Drupal permissions, let's allow it.
     return TRUE;
   }
-  elseif ($to_return === FALSE || variable_get('islandora_strict_user_access_enforcement', TRUE) && !$user_access_result) {
+  elseif ($to_return === FALSE || (variable_get('islandora_strict_user_access_enforcement', TRUE) && !$user_access_result)) {
     // PID namespace is outside of those allowed. Forbid!
     return FALSE;
   }
