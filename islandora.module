@@ -443,7 +443,7 @@ function islandora_user_access($object, array $permissions, $content_models = ar
 
   // Check for access.
   if ($access_any) {
-    $has_required_permissions = function ($permissions, $content_models, $datastream, $object, $user) {
+    $has_required_permissions = function ($permissions, $datastream, $object, $user) {
       foreach ($permissions as $p) {
         if ($datastream !== NULL) {
           $check = islandora_datastream_access($p, $datastream, $user);
@@ -457,10 +457,10 @@ function islandora_user_access($object, array $permissions, $content_models = ar
         }
       }
     };
-    $has_required_content_models = empty($content_models) ? TRUE : (count(array_intersect($object->models, $content_models)) > 0);
+    $has_required_content_models = empty($content_models) ? TRUE : count(array_intersect($object->models, $content_models)) > 0;
   }
   else {
-    $has_required_permissions = function ($permissions, $content_models, $datastream, $object, $user) {
+    $has_required_permissions = function ($permissions, $datastream, $object, $user) {
       foreach ($permissions as $p) {
         if ($datastream !== NULL) {
           $check = islandora_datastream_access($p, $datastream, $user);
@@ -477,7 +477,7 @@ function islandora_user_access($object, array $permissions, $content_models = ar
     $has_required_content_models = count(array_diff($content_models, $object->models)) == 0;
   }
 
-  return $has_required_permissions($permissions, $content_models, $datastream, $object, $account) &&
+  return $has_required_permissions($permissions, $datastream, $object, $account) &&
     $has_required_content_models;
 }
 
