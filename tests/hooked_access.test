@@ -58,6 +58,9 @@ class IslandoraHookedAccessTestCase extends IslandoraWebTestCase {
     parent::tearDown();
   }
 
+  /**
+   * Create the test object(s) to use during the test.
+   */
   public function createTestObjects() {
     foreach ($this->objects as $object_id) {
       $object = $this->repository->constructObject($object_id);
