@@ -444,13 +444,13 @@ function islandora_user_access($object, array $permissions, $content_models = ar
   // Check for access.
   $accessible_namespace = islandora_namespace_accessible($object->id);
   if ($access_any) {
-    $has_required_permissions = function ($permissions, $datastream, $object) {
+    $has_required_permissions = function ($permissions, $datastream, $object, $user) {
       foreach ($permissions as $p) {
         if ($datastream !== NULL) {
-          $check = islandora_datastream_access($p, $datastream);
+          $check = islandora_datastream_access($p, $datastream, $user);
         }
         else {
-          $check = islandora_object_access($p, $object);
+          $check = islandora_object_access($p, $object, $user);
         }
 
         if ($check) {
@@ -461,13 +461,13 @@ function islandora_user_access($object, array $permissions, $content_models = ar
     $has_required_content_models = empty($content_models) ? TRUE : count(array_intersect($object->models, $content_models)) > 0;
   }
   else {
-    $has_required_permissions = function ($permissions, $datastream, $object) {
+    $has_required_permissions = function ($permissions, $datastream, $object, $user) {
       foreach ($permissions as $p) {
         if ($datastream !== NULL) {
-          $check = islandora_datastream_access($p, $datastream);
+          $check = islandora_datastream_access($p, $datastream, $user);
         }
         else {
-          $check = islandora_object_access($p, $object);
+          $check = islandora_object_access($p, $object, $user);
         }
 
         if (!$check) {
@@ -479,7 +479,7 @@ function islandora_user_access($object, array $permissions, $content_models = ar
   }
 
   return $accessible_namespace &&
-    $has_required_permissions($permissions, $datastream, $object) &&
+    $has_required_permissions($permissions, $datastream, $object, $account) &&
     $has_required_content_models;
 }
 
@@ -1188,6 +1188,9 @@ function islandora_object_access($op, $object, $user = NULL) {
   if (!isset($cache[$op][$object->id][$user->uid])) {
     module_load_include('inc', 'islandora', 'includes/utilities');
 
+    if (!($object instanceof AbstractObject)) {
+      ddebug_backtrace();
+    }
     $results = islandora_invoke_hook_list('islandora_object_access', $object->models, array(
       $op,
       $object,
