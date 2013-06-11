@@ -413,7 +413,7 @@ function islandora_user_access($object, array $permissions, $content_models = ar
       return FALSE;
     }
   }
-  if (!$is_repository_accessible || !is_object($object)) {
+  if (!$is_repository_accessible || !is_object($object) || empty($permissions)) {
     return FALSE;
   }
   // Determine the user account to test against.
@@ -456,6 +456,7 @@ function islandora_user_access($object, array $permissions, $content_models = ar
           return TRUE;
         }
       }
+      return FALSE;
     };
     $has_required_content_models = empty($content_models) ? TRUE : count(array_intersect($object->models, $content_models)) > 0;
   }
@@ -473,6 +474,7 @@ function islandora_user_access($object, array $permissions, $content_models = ar
           return FALSE;
         }
       }
+      return TRUE;
     };
     $has_required_content_models = count(array_diff($content_models, $object->models)) == 0;
   }
