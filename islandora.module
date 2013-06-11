@@ -442,7 +442,6 @@ function islandora_user_access($object, array $permissions, $content_models = ar
   }
 
   // Check for access.
-  $accessible_namespace = islandora_namespace_accessible($object->id);
   if ($access_any) {
     $has_required_permissions = function ($permissions, $content_models, $datastream, $object, $user) {
       foreach ($permissions as $p) {
@@ -478,8 +477,7 @@ function islandora_user_access($object, array $permissions, $content_models = ar
     $has_required_content_models = count(array_diff($content_models, $object->models)) == 0;
   }
 
-  return $accessible_namespace &&
-    $has_required_permissions($permissions, $content_models, $datastream, $object, $account) &&
+  return $has_required_permissions($permissions, $content_models, $datastream, $object, $account) &&
     $has_required_content_models;
 }
 
