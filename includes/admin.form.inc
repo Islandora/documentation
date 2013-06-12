@@ -59,25 +59,20 @@ function islandora_repository_admin(array $form, array &$form_state) {
       'islandora_namespace' => array(
         '#type' => 'fieldset',
         '#title' => t('Namespaces'),
-        'wrapper' => array(
-          '#type' => 'markup',
-          '#prefix' => '<div id="islandora-namespace">',
-          '#suffix' => '</div>',
-          'islandora_namespace_restriction_enforced' => array(
-            '#type' => 'checkbox',
-            '#title' => t('Enforce namespace restrictions'),
-            '#description' => t("Allow administrator to restrict user's access to the PID namepaces listed below"),
-            '#default_value' => $restrict_namespaces,
-          ),
-          'islandora_pids_allowed' => array(
-            '#type' => 'textfield',
-            '#title' => t('PID namespaces allowed in this Drupal install'),
-            '#description' => t('A list of PID namespaces, separated by spaces, that users are permitted to access from this Drupal installation. <br /> This could be more than a simple namespace, e.g. <b>demo:mydemos</b>. <br /> The namespace <b>islandora:</b> is reserved, and is always allowed.'),
-            '#default_value' => variable_get('islandora_pids_allowed', 'default: demo: changeme: ilives: islandora-book: books: newspapers: '),
-            '#states' => array(
-              'invisible' => array(
-                ':input[name="islandora_namespace_restriction_enforced"]' => array('checked' => FALSE),
-              ),
+        'islandora_namespace_restriction_enforced' => array(
+          '#type' => 'checkbox',
+          '#title' => t('Enforce namespace restrictions'),
+          '#description' => t("Allow administrator to restrict user's access to the PID namepaces listed below"),
+          '#default_value' => $restrict_namespaces,
+        ),
+        'islandora_pids_allowed' => array(
+          '#type' => 'textfield',
+          '#title' => t('PID namespaces allowed in this Drupal install'),
+          '#description' => t('A list of PID namespaces, separated by spaces, that users are permitted to access from this Drupal installation. <br /> This could be more than a simple namespace, e.g. <b>demo:mydemos</b>. <br /> The namespace <b>islandora:</b> is reserved, and is always allowed.'),
+          '#default_value' => variable_get('islandora_pids_allowed', 'default: demo: changeme: ilives: islandora-book: books: newspapers: '),
+          '#states' => array(
+            'invisible' => array(
+              ':input[name="islandora_namespace_restriction_enforced"]' => array('checked' => FALSE),
             ),
           ),
         ),
