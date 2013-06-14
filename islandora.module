@@ -1188,9 +1188,6 @@ function islandora_object_access($op, $object, $user = NULL) {
   if (!isset($cache[$op][$object->id][$user->uid])) {
     module_load_include('inc', 'islandora', 'includes/utilities');
 
-    if (!($object instanceof AbstractObject)) {
-      ddebug_backtrace();
-    }
     $results = islandora_invoke_hook_list('islandora_object_access', $object->models, array(
       $op,
       $object,
