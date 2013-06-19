@@ -136,41 +136,6 @@ class IslandoraHookedAccessTestCase extends IslandoraWebTestCase {
   /**
    * Deny an operation which was not explicitly allowed on an object.
    */
-  public function testDenyObjectImplicit() {
-    $user = $this->drupalCreateUser(array($this->other_op));
-
-    // This variable forces either a TRUE or FALSE from Islandora's
-    // implementation of hook_islandora_object_access().
-    variable_set('islandora_strict_user_access_enforcement', FALSE);
-    $_SESSION['islandora_hooked_access_test'] = array(
-      $this->other_op,
-      $this->object,
-      $user,
-    );
-    $this->assertFalse(islandora_object_access($this->op, $this->object, $user), 'Implied denial of object access.');
-  }
-
-  /**
-   * Deny an operation which was not explicitly allowed on a datastream.
-   */
-  public function testDenyDatastreamImplicit() {
-    $user = $this->drupalCreateUser(array($this->other_op));
-
-    // This variable forces either a TRUE or FALSE from Islandora's
-    // implementation of hook_islandora_object_access().
-    variable_set('islandora_strict_user_access_enforcement', FALSE);
-
-    $_SESSION['islandora_hooked_access_test'] = array(
-      $this->other_op,
-      $this->object['asdf'],
-      $user,
-    );
-    $this->assertFalse(islandora_datastream_access($this->op, $this->object['asdf'], $user), 'Implied denial of datastream access.');
-  }
-
-  /**
-   * Deny an operation which was not explicitly allowed on an object.
-   */
   public function testDenyObjectExplicit() {
     $this->assertFalse(islandora_object_access($this->denied_op, $this->object), 'Explicit denial of object access.');
   }
