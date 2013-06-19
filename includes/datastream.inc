@@ -85,7 +85,7 @@ function islandora_datastream_get_url(AbstractDatastream $datastream, $type = 'd
  */
 function islandora_datastream_get_delete_link(AbstractDatastream $datastream) {
   $message = islandora_deprecated('7.x-1.2', 'Use the "islandora_datastream_delete_link" theme implementation.');
-  trigger_error($message, E_USER_DEPRECATED);
+  trigger_error(filter_xss($message), E_USER_DEPRECATED);
 
   return theme('islandora_datastream_delete_link', array(
     'datastream' => $datastream,
@@ -100,7 +100,7 @@ function islandora_datastream_get_delete_link(AbstractDatastream $datastream) {
  */
 function islandora_datastream_edit_get_link(AbstractDatastream $datastream) {
   $message = islandora_deprecated('7.x-1.2', 'Use the "islandora_datastream_edit_link" theme implementation.');
-  trigger_error($message, E_USER_DEPRECATED);
+  trigger_error(filter_xss($message), E_USER_DEPRECATED);
 
   return theme('islandora_datastream_edit_link', array(
     'datastream' => $datastream,
@@ -163,7 +163,7 @@ function islandora_edit_datastream_registry_render(array $edit_registry) {
  */
 function islandora_datastream_get_download_link(AbstractDatastream $datastream) {
   $message = islandora_deprecated('7.x-1.2', 'Use the "islandora_datastream_download_link" theme implementation.');
-  trigger_error($message, E_USER_DEPRECATED);
+  trigger_error(filter_xss($message), E_USER_DEPRECATED);
 
   return theme('islandora_datastream_download_link', array(
     'datastream' => $datastream,
@@ -182,7 +182,7 @@ function islandora_datastream_get_download_link(AbstractDatastream $datastream) 
  */
 function islandora_datastream_get_view_link(AbstractDatastream $datastream) {
   $message = islandora_deprecated('7.x-1.2', 'Use the "islandora_datastream_view_link" theme implementation.');
-  trigger_error($message, E_USER_DEPRECATED);
+  trigger_error(filter_xss($message), E_USER_DEPRECATED);
 
   return theme('islandora_datastream_view_link', array(
     'datastream' => $datastream,

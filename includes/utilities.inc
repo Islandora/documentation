@@ -673,8 +673,8 @@ function islandora_get_comp_ds_mappings($pid) {
  *   TRUE if the account has all the given permissions, FALSE otherwise.
  */
 function islandora_user_access_all(array $perms, $account = NULL) {
-  $message = islandora_deprecated('7.x-1.2', 'Roll your own code.');
-  trigger_error($message, E_USER_DEPRECATED);
+  $message = islandora_deprecated('7.x-1.2', 'Roll your own code or use islandora_user_access().');
+  trigger_error(filter_xss($message), E_USER_DEPRECATED);
 
   foreach ($perms as $perm) {
     if (!user_access($perm, $account)) {
@@ -697,8 +697,8 @@ function islandora_user_access_all(array $perms, $account = NULL) {
  *   otherwise.
  */
 function islandora_user_access_any(array $perms, $account = NULL) {
-  $message = islandora_deprecated('7.x-1.2', 'Roll your own code.');
-  trigger_error($message, E_USER_DEPRECATED);
+  $message = islandora_deprecated('7.x-1.2', 'Roll your own code or use islandora_user_access().');
+  trigger_error(filter_xss($message), E_USER_DEPRECATED);
 
   foreach ($perms as $perm) {
     if (user_access($perm, $account)) {

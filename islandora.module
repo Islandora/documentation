@@ -549,7 +549,7 @@ function islandora_object_access_callback($perm, $object = NULL) {
 function islandora_object_datastream_access_callback($perm, $object = NULL, $datastream = NULL, $account = NULL) {
   module_load_include('inc', 'islandora', 'includes/utilities');
   $message = islandora_deprecated('7.x-1.2', 'Use islandora_datastream_access().');
-  trigger_error($message, E_USER_DEPRECATED);
+  trigger_error(filter_xss($message), E_USER_DEPRECATED);
 
   return islandora_datastream_access($perm, $datastream, $account);
 }
