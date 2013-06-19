@@ -445,7 +445,7 @@ function hook_CMODEL_PID_islandora_ingest_steps(array $form_state) {
 }
 
 /**
- * Hookable access hook.
+ * Object-level access callback hook.
  *
  * @param string $op
  *   A string define an operation to check. Should be defined via
@@ -483,7 +483,7 @@ function hook_CMODEL_PID_islandora_object_access($op, $object, $user) {
 }
 
 /**
- * Hookable access hook.
+ * Datastream-level access callback hook.
  *
  * @param string $op
  *   A string define an operation to check. Should be defined via
