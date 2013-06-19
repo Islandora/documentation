@@ -190,8 +190,8 @@ function islandora_menu() {
     'page arguments' => array(4, FALSE),
     'type' => MENU_CALLBACK,
     'file' => 'includes/datastream.inc',
-    'access callback' => 'islandora_object_datastream_access_callback',
-    'access arguments' => array(FEDORA_VIEW_OBJECTS, 2, 4),
+    'access callback' => 'islandora_datastream_access',
+    'access arguments' => array(FEDORA_VIEW_OBJECTS, 4),
     'load arguments' => array(2),
   );
   // This menu item uses token authentication in islandora_tokened_object.
@@ -208,8 +208,8 @@ function islandora_menu() {
     'page arguments' => array(4),
     'type' => MENU_CALLBACK,
     'file' => 'includes/datastream.inc',
-    'access callback' => 'islandora_object_datastream_access_callback',
-    'access arguments' => array(FEDORA_VIEW_OBJECTS, 2, 4),
+    'access callback' => 'islandora_datastream_access',
+    'access arguments' => array(FEDORA_VIEW_OBJECTS, 4),
     'load arguments' => array(2),
   );
   $items['islandora/object/%islandora_object/datastream/%islandora_datastream/edit'] = array(
@@ -218,8 +218,8 @@ function islandora_menu() {
     'page arguments' => array(4),
     'type' => MENU_CALLBACK,
     'file' => 'includes/datastream.inc',
-    'access callback' => 'islandora_object_datastream_access_callback',
-    'access arguments' => array(FEDORA_METADATA_EDIT, 2, 4),
+    'access callback' => 'islandora_datastream_access',
+    'access arguments' => array(FEDORA_METADATA_EDIT, 4),
     'load arguments' => array(2),
   );
   $items['islandora/object/%islandora_object/datastream/%islandora_datastream/delete'] = array(
@@ -228,8 +228,8 @@ function islandora_menu() {
     'page arguments' => array('islandora_delete_datastream_form', 4),
     'file' => 'includes/delete_datastream.form.inc',
     'type' => MENU_CALLBACK,
-    'access callback' => 'islandora_object_datastream_access_callback',
-    'access arguments' => array(FEDORA_PURGE, 2, 4),
+    'access callback' => 'islandora_datastream_access',
+    'access arguments' => array(FEDORA_PURGE, 4),
     'load arguments' => array(2),
   );
   $items['islandora/object/%islandora_object/print'] = array(
@@ -237,7 +237,7 @@ function islandora_menu() {
     'page callback' => 'islandora_print_object',
     'page arguments' => array(2),
     'type' => MENU_CALLBACK,
-    'access callback' => 'islandora_object_access_callback',
+    'access callback' => 'islandora_object_access',
     'access arguments' => array(FEDORA_VIEW_OBJECTS, 2),
     'load arguments' => array(2),
   );
@@ -245,7 +245,7 @@ function islandora_menu() {
     'page callback' => 'islandora_download_clip',
     'page arguments' => array(2),
     'type' => MENU_CALLBACK,
-    'access callback' => 'islandora_object_access_callback',
+    'access callback' => 'islandora_object_access',
     'access arguments' => array(FEDORA_VIEW_OBJECTS, 2),
     'load arguments' => array(2),
   );
@@ -531,6 +531,10 @@ function islandora_object_access_callback($perm, $object = NULL) {
  *   TRUE if the user is allowed to access this object, FALSE otherwise.
  */
 function islandora_object_datastream_access_callback($perm, $object = NULL, $datastream = NULL, $account = NULL) {
+  module_load_include('inc', 'islandora', 'includes/utilities');
+  $message = islandora_deprecated('7.x-1.2', 'Use islandora_datastream_access().');
+  trigger_error($message, E_USER_DEPRECATED);
+
   return islandora_datastream_access($perm, $datastream, $account);
 }
 
@@ -539,10 +543,8 @@ function islandora_object_datastream_access_callback($perm, $object = NULL, $dat
  *
  * This function will validate and use a token if present in the GET parameters.
  *
- * Checks for object existance, accessiblitly, namespace permissions,
+ * Checks for object existance, accessibility, namespace permissions,
  * and user permissions
- *
- * @see islandora_object_datastream_tokened_access_callback()
  */
 function islandora_object_datastream_tokened_access_callback($perm, $object = NULL, $datastream = NULL) {
   module_load_include('inc', 'islandora', 'includes/utilities');
@@ -557,7 +559,7 @@ function islandora_object_datastream_tokened_access_callback($perm, $object = NU
     }
   }
 
-  return islandora_object_datastream_access_callback($perm, $object, $datastream, $token_account);
+  return islandora_datastream_access($perm, $datastream, $token_account);
 }
 
 /**
