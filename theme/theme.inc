@@ -29,7 +29,9 @@ function islandora_preprocess_islandora_default_edit(array &$variables) {
     $rows[] = array(
       array(
         'class' => 'datastream-id',
-        'data' => islandora_datastream_get_view_link($ds),
+        'data' => theme('islandora_datastream_view_link', array(
+          'datastream' => $ds,
+        )),
       ),
       array(
         'class' => 'datastream-label',
@@ -49,15 +51,21 @@ function islandora_preprocess_islandora_default_edit(array &$variables) {
       ),
       array(
         'class' => 'datastream-download',
-        'data' => islandora_datastream_get_download_link($ds),
+        'data' => theme('islandora_datastream_download_link', array(
+          'datastream' => $ds,
+        )),
       ),
       array(
         'class' => 'datstream-edit',
-        'data' => islandora_datastream_edit_get_link($ds),
+        'data' => theme('islandora_datastream_edit_link', array(
+          'datastream' => $ds,
+        )),
       ),
       array(
         'class' => 'datastream-delete',
-        'data' => islandora_datastream_get_delete_link($ds),
+        'data' => theme('islandora_datastream_delete_link', array(
+          'datastream' => $ds,
+        )),
       ),
     );
   }
@@ -223,4 +231,76 @@ function islandora_preprocess_islandora_objects(array &$variables) {
   $variables['content'] = theme($theme, array('objects' => $objects));
   $module_path = drupal_get_path('module', 'islandora');
   drupal_add_css("$module_path/css/islandora.objects.css");
+}
+
+/**
+ * Renders a link to allow downloading of a datatream.
+ *
+ * @param array $vars
+ *   An array containing:
+ *   - datastream: An AbstractDatastream for which to generate a download link.
+ */
+function theme_islandora_datastream_download_link(array $vars) {
+  $datastream = $vars['datastream'];
+  module_load_include('inc', 'islandora', 'includes/utilities');
+
+  $label = t('download');
+  return islandora_datastream_access(FEDORA_VIEW_OBJECTS, $datastream) ?
+    l($label, islandora_datastream_get_url($datastream, 'download')) :
+    '';
+}
+
+/**
+ * Renders a link to allow viewing of a datatream.
+ *
+ * @param array $vars
+ *   An array containing:
+ *   - datastream: An AbstractDatastream for which to generate a view link.
+ */
+function theme_islandora_datastream_view_link(array $vars) {
+  $datastream = $vars['datastream'];
+  module_load_include('inc', 'islandora', 'includes/utilities');
+
+  $label = check_plain($datastream->label);
+  return islandora_datastream_access(FEDORA_VIEW_OBJECTS, $datastream) ?
+    l($label, islandora_datastream_get_url($datastream, 'view')) :
+    $label;
+}
+
+/**
+ * Renders a link to allow deleting of a datatream.
+ *
+ * @param array $vars
+ *   An array containing:
+ *   - datastream: An AbstractDatastream for which to generate a delete link.
+ */
+function theme_islandora_datastream_delete_link(array $vars) {
+  $datastream = $vars['datastream'];
+
+  $datastreams = module_invoke_all('islandora_undeletable_datastreams', $datastream->parent->models);
+
+  $can_delete = !in_array($datastream->id, $datastreams) && islandora_datastream_access(FEDORA_PURGE, $datastream);
+
+  return $can_delete ?
+    l(t('delete'), "islandora/object/{$datastream->parent->id}/datastream/{$datastream->id}/delete") :
+    '';
+}
+
+/**
+ * Renders a link to allow editing of a datatream.
+ *
+ * @param array $vars
+ *   An array containing:
+ *   - datastream: An AbstractDatastream for which to generate a edit link.
+ */
+function theme_islandora_datastream_edit_link(array $vars) {
+  $datastream = $vars['datastream'];
+
+  $edit_registry = module_invoke_all('islandora_edit_datastream_registry', $datastream->parent, $datastream);
+
+  $can_edit = count($edit_registry) > 0 && islandora_datastream_access(FEDORA_METADATA_EDIT, $datastream);
+
+  return $can_edit ?
+    l(t('edit'), "islandora/object/{$datastream->parent->id}/datastream/{$datastream->id}/edit") :
+    '';
 }

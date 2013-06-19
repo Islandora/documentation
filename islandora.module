@@ -322,6 +322,22 @@ function islandora_theme() {
       'template' => 'theme/islandora-objects-list',
       'variables' => array('objects' => NULL),
     ),
+    'islandora_datastream_edit_link' => array(
+      'file' => 'theme/theme.inc',
+      'variables' => array('datastream' => NULL),
+    ),
+    'islandora_datastream_delete_link' => array(
+      'file' => 'theme/theme.inc',
+      'variables' => array('datastream' => NULL),
+    ),
+    'islandora_datastream_view_link' => array(
+      'file' => 'theme/theme.inc',
+      'variables' => array('datastream' => NULL),
+    ),
+    'islandora_datastream_download_link' => array(
+      'file' => 'theme/theme.inc',
+      'variables' => array('datastream' => NULL),
+    ),
   );
 }
 

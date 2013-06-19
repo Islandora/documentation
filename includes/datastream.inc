@@ -84,9 +84,12 @@ function islandora_datastream_get_url(AbstractDatastream $datastream, $type = 'd
  *   The datastream to generated the url to.
  */
 function islandora_datastream_get_delete_link(AbstractDatastream $datastream) {
-  $datastreams = module_invoke_all('islandora_undeletable_datastreams', $datastream->parent->models);
-  $can_delete = !in_array($datastream->id, $datastreams) && islandora_datastream_access(FEDORA_PURGE, $datastream);
-  return $can_delete ? l(t('delete'), "islandora/object/{$datastream->parent->id}/datastream/{$datastream->id}/delete") : '';
+  $message = islandora_deprecated('7.x-1.2', 'Use the "islandora_datastream_delete_link" theme implementation.');
+  trigger_error($message, E_USER_DEPRECATED);
+
+  return theme('islandora_datastream_delete_link', array(
+    'datastream' => $datastream,
+  ));
 }
 
 /**
@@ -96,9 +99,12 @@ function islandora_datastream_get_delete_link(AbstractDatastream $datastream) {
  *   The datastream to generated the url to.
  */
 function islandora_datastream_edit_get_link(AbstractDatastream $datastream) {
-  $edit_registry = module_invoke_all('islandora_edit_datastream_registry', $datastream->parent, $datastream);
-  $can_edit = count($edit_registry) > 0 && islandora_datastream_access(FEDORA_METADATA_EDIT, $datastream);
-  return $can_edit ? l(t('edit'), "islandora/object/{$datastream->parent->id}/datastream/{$datastream->id}/edit") : '';
+  $message = islandora_deprecated('7.x-1.2', 'Use the "islandora_datastream_edit_link" theme implementation.');
+  trigger_error($message, E_USER_DEPRECATED);
+
+  return theme('islandora_datastream_edit_link', array(
+    'datastream' => $datastream,
+  ));
 }
 
 /**
@@ -156,10 +162,12 @@ function islandora_edit_datastream_registry_render(array $edit_registry) {
  *   user is not allowed to see the given datastream.
  */
 function islandora_datastream_get_download_link(AbstractDatastream $datastream) {
-  $label = t('download');
-  return islandora_datastream_access(FEDORA_VIEW_OBJECTS, $datastream) ?
-    l($label, islandora_datastream_get_url($datastream, 'download')) :
-    '';
+  $message = islandora_deprecated('7.x-1.2', 'Use the "islandora_datastream_download_link" theme implementation.');
+  trigger_error($message, E_USER_DEPRECATED);
+
+  return theme('islandora_datastream_download_link', array(
+    'datastream' => $datastream,
+  ));
 }
 
 /**
@@ -173,8 +181,10 @@ function islandora_datastream_get_download_link(AbstractDatastream $datastream) 
  *   datastream ID if the user is not allowed to see the given datastream.
  */
 function islandora_datastream_get_view_link(AbstractDatastream $datastream) {
-  $label = check_plain($datastream->id);
-  return islandora_datastream_access(FEDORA_VIEW_OBJECTS, $datastream) ?
-    l($label, islandora_datastream_get_url($datastream, 'view')) :
-    $label;
+  $message = islandora_deprecated('7.x-1.2', 'Use the "islandora_datastream_view_link" theme implementation.');
+  trigger_error($message, E_USER_DEPRECATED);
+
+  return theme('islandora_datastream_view_link', array(
+    'datastream' => $datastream,
+  ));
 }
