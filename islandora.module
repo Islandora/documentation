@@ -1320,7 +1320,7 @@ function islandora_datastream_access($op, $datastream, $user = NULL) {
   return $cache[$op][$datastream->parent->id][$datastream->id][$user->uid];
 }
 
-/*
+/**
  * Implements hook_islandora_basic_collection_get_filters().
  */
 function islandora_islandora_basic_collection_get_filters() {
