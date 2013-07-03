@@ -12,13 +12,13 @@
  *   The Drupal form.
  * @param array $form_state
  *   The Drupal form state.
- * @param FedoraObject $object
+ * @param AbstractObject $object
  *   The object to be deleted.
  *
  * @return array
  *   The drupal form definition.
  */
-function islandora_add_datastream_form(array $form, array &$form_state, FedoraObject $object) {
+function islandora_add_datastream_form(array $form, array &$form_state, AbstractObject $object) {
   module_load_include('inc', 'islandora', 'includes/content_model');
   module_load_include('inc', 'islandora', 'includes/utilities');
   form_load_include($form_state, 'inc', 'islandora', 'includes/add_datastream.form');
@@ -39,7 +39,7 @@ function islandora_add_datastream_form(array $form, array &$form_state, FedoraOb
       '#collapsed' => FALSE,
       'dsid' => array(
         '#title' => 'Datastream ID',
-        '#description' => t("An ID for this stream that is unique to this object. Must start with a letter and contain only alphanumeric characters and dashes and underscores. Datastreams that are defined by the content model don't currently exist: <b>@unused_dsids</b>.", array('@unused_dsids' => $unused_datastreams)),
+        '#description' => t("An ID for this stream that is unique to this object. Must start with a letter and contain only alphanumeric characters, dashes and underscores. The following datastreams are defined by this content model but don't currently exist: <b>@unused_dsids</b>.", array('@unused_dsids' => $unused_datastreams)),
       ),
       '#type' => 'textfield',
       '#size' => 64,
@@ -57,7 +57,7 @@ function islandora_add_datastream_form(array $form, array &$form_state, FedoraOb
       '#required' => TRUE,
       '#size' => 64,
       '#maxlength' => 64,
-      '#description' => t('A Human readable label'),
+      '#description' => t('A human-readable label'),
       '#type' => 'textfield',
       '#element_validate' => array('islandora_add_datastream_form_field_does_not_contain_a_forward_slash'),
     ),
@@ -206,13 +206,13 @@ function islandora_add_datastream_form_submit(array $form, array &$form_state) {
  *
  * It lists the missing required (may be optional) datastreams.
  *
- * @param FedoraObject $object
+ * @param AbstractObject $object
  *   The object used to check for missing required datastreams used to populate
  *    the options in this callback.
  * @param string $query
  *   vThe user query to match against the missing required datastreams.
  */
-function islandora_add_datastream_form_autocomplete_callback(FedoraObject $object, $query = '') {
+function islandora_add_datastream_form_autocomplete_callback(AbstractObject $object, $query = '') {
   module_load_include('inc', 'islandora', 'includes/content_model');
   module_load_include('inc', 'islandora', 'includes/utilities');
   $dsids = array_keys(islandora_get_missing_datastreams_requirements($object));

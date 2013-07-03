@@ -204,13 +204,13 @@ function islandora_escape_pid_for_function($pid) {
   // Apparently, case doesn't matter for function calls in PHP, so let's not
   // really worry about changing the case.
   return str_replace(
-    // Any PID characters which are not valid in the name of a PHP function.
-    array(
-      ':',
-      '-',
-    ),
-    '_',
-    $pid
+  // Any PID characters which are not valid in the name of a PHP function.
+      array(
+        ':',
+        '-',
+      ),
+      '_',
+      $pid
   );
 }
 
@@ -256,8 +256,8 @@ function islandora_get_namespace($id) {
  */
 function islandora_namespace_accessible($id) {
   if (variable_get('islandora_namespace_restriction_enforced', FALSE)) {
-    $namespace = islandora_get_namespace($id) . ':';
-    $allowed_namespaces = explode(" ", variable_get('islandora_pids_allowed', 'default: demo: changeme: islandora: ilives: islandora-book: books: newspapers: '));
+    $namespace = islandora_get_namespace($id);
+    $allowed_namespaces = islandora_get_allowed_namespaces();
     return in_array($namespace, $allowed_namespaces);
   }
   return TRUE;
@@ -271,14 +271,14 @@ function islandora_namespace_accessible($id) {
  * This function gets its info from the RELS-EXT directly rather than through an
  * risearch.
  *
- * @param FedoraObject $object
+ * @param AbstractObject $object
  *   The object whose parents will be returned.
  *
  * @return array
  *   An array of FedoraObject's that the given object has a
  *   (isMemberOf, isMemberOfCollection) relationship with.
  */
-function islandora_get_parents_from_rels_ext(FedoraObject $object) {
+function islandora_get_parents_from_rels_ext(AbstractObject $object) {
   try {
     $collections = array_merge(
       $object->relationships->get(FEDORA_RELS_EXT_URI, 'isMemberOfCollection'),
@@ -298,7 +298,7 @@ function islandora_get_parents_from_rels_ext(FedoraObject $object) {
 /**
  * Gets the datastreams requirments that are missing.
  *
- * @param FedoraObject $object
+ * @param AbstractObject $object
  *   The object which models will be used to determine what datastreams it
  *   should have.
  *
@@ -306,7 +306,7 @@ function islandora_get_parents_from_rels_ext(FedoraObject $object) {
  *   The DS-COMPOSITE-MODEL defined datastreams that are required for the given
  *   object, but not already present.
  */
-function islandora_get_missing_datastreams_requirements(FedoraObject $object) {
+function islandora_get_missing_datastreams_requirements(AbstractObject $object) {
   module_load_include('inc', 'islandora', 'includes/utilities');
   $datastreams = islandora_get_datastreams_requirements($object);
   foreach ($datastreams as $dsid => $requirements) {
@@ -331,7 +331,7 @@ function islandora_get_missing_datastreams_requirements(FedoraObject $object) {
  *
  * @see islandora_get_required_datastreams_from_content_model()
  *
- * @param FedoraObject $object
+ * @param AbstractObject $object
  *   The object which models will be used to determine what datastreams it
  *   should have.
  *
@@ -339,7 +339,7 @@ function islandora_get_missing_datastreams_requirements(FedoraObject $object) {
  *   The DS-COMPOSITE-MODEL defined datastreams that are required for the given
  *   object.
  */
-function islandora_get_datastreams_requirements(FedoraObject $object) {
+function islandora_get_datastreams_requirements(AbstractObject $object) {
   return islandora_get_datastreams_requirements_from_models($object->models);
 }
 
@@ -375,26 +375,21 @@ function islandora_get_datastreams_requirements_from_models(array $models) {
  *
  * @todo Add support for fetching the schema information.
  *
- * @param FedoraObject $object
+ * @param AbstractObject $object
  *   The content model whose DS-COMPOSITE-MODEL datastream will be used to
  *   determine what datastreams are required.
  *
  * @return array
- *   The DS-COMPOSITE-MODEL defined datastreams that are required for the given
- *   object.
- *
- * @code
- *   array(
- *     'DC' => array(
- *       'id' => 'DC',
- *       'mime' => 'text/xml',
- *       'optional' => FALSE,
- *     )
- *   )
- * @endcode
+ *   An associative array mapping datastream IDs to associative arrays
+ *   containing the values parsed from the DS-COMPOSITE-MODEL on the given
+ *   object--of the form:
+ *   - DSID: A datastream ID being described.
+ *     - "id": A string containing ID of the datastream.
+ *     - "mime": A array containing MIME-types the stream may have.
+ *     - "optional": A boolean indicating if the given stream is optional.
  */
-function islandora_get_datastreams_requirements_from_content_model(FedoraObject $object) {
-  if (empty($object[DS_COMP_STREAM])) {
+function islandora_get_datastreams_requirements_from_content_model(AbstractObject $object) {
+  if (empty($object[DS_COMP_STREAM]) || !islandora_datastream_access(FEDORA_VIEW_OBJECTS, $object[DS_COMP_STREAM])) {
     return array();
   }
   $xml = new SimpleXMLElement($object[DS_COMP_STREAM]->content);
@@ -465,20 +460,43 @@ function islandora_prepare_new_object($namespace = NULL, $label = NULL, $datastr
     if (isset($ds['control_group']) && in_array($ds['control_group'], $groups)) {
       $control_group = $ds['control_group'];
     }
-    $ds_uri = FALSE;
+
+    $as_file = FALSE;
     if (file_valid_uri($ds['datastream_file'])) {
+      // A local file with as a Drupal file/stream wrapper URI.
       $datastream_file = $ds['datastream_file'];
-      $ds_uri = TRUE;
+      $as_file = TRUE;
+    }
+    elseif (is_readable($ds['datastream_file'])) {
+      // A local file as a filesystem path.
+      $datastream_file = drupal_realpath($ds['datastream_file']);
+      $as_file = TRUE;
     }
     else {
-      $datastream_file = url($ds['datastream_file'], array('absolute' => TRUE));
+      $scheme = parse_url($ds['datastream_file'], PHP_URL_SCHEME);
+      if (in_array($scheme, stream_get_wrappers())) {
+        // A URI which gets handled by one of the PHP-native stream wrappers.
+        $datastream_file = $ds['datastream_file'];
+        $as_file = TRUE;
+      }
+      else {
+        // Schema does not match available php stream wrapper. Attempt to
+        // set datastream_file by url for the given scheme. Https (SSL) can
+        // cause this to fail, and trigger an output log in watchdog.
+        $datastream_file = url($ds['datastream_file'], array('absolute' => TRUE));
+        watchdog('islandora',
+                 'Attempting to ingest %file in islandora_prepare_new_object(), but it does not appear to be readable. We will pass the path through url(), and pass along as such.',
+                 array('%file' => $datastream_file),
+                 WATCHDOG_WARNING);
+      }
     }
+
     $datastream = $object->constructDatastream($dsid, $control_group);
     $datastream->label = $label;
     $datastream->mimetype = $mimetype;
     switch ($control_group) {
       case 'M':
-        if ($ds_uri) {
+        if ($as_file) {
           $datastream->setContentFromFile($datastream_file);
         }
         else {
@@ -490,8 +508,10 @@ function islandora_prepare_new_object($namespace = NULL, $label = NULL, $datastr
         $datastream->setContentFromString(file_get_contents($datastream_file));
         break;
     }
+
     $object->ingestDatastream($datastream);
   }
+
   return $object;
 }
 
@@ -505,8 +525,9 @@ function islandora_display_repository_inaccessible_message() {
   $text = t('Islandora configuration');
   $link = l($text, 'admin/islandora/configure', array('attributes' => array('title' => $text)));
   $message = t('Could not connect to the repository. Please check the settings on the !link page.',
-             array('!link' => $link));
-  drupal_set_message($message, 'error', FALSE);
+  array('!link' => $link));
+  drupal_set_message(check_plain($message), 'error', FALSE);
+
 }
 
 /**
@@ -595,35 +616,29 @@ function islandora_system_settings_form_default_value($name, $default_value, arr
 /**
  * Returns basic information about DS-COMPOSITE-MODEL.
  *
+ * @deprecated
+ *   The pre-existing--and more flexible--
+ *   islandora_get_datastreams_requirements_from_content_model() should be
+ *   preferred, as it addresses the case where a stream can be allowed to have
+ *   one of a set of mimetypes (this functions appears to only return the last
+ *   declared mimetype for a given datastream).
+ *
  * @param string $pid
- *   PID of content model containing DS_COMP stream.
+ *   The PID of content model containing DS_COMP stream.
  *
  * @return array
- *   array of values in the following form
- *
- * [DC] => Array
- *       (
- *           [mimetype] => text/xml
- *       )
- *
- *   [MODS] => Array
- *       (
- *           [optional] => true
- *           [mimetype] => text/xml
- *       )
- *
- *   [RELS-EXT] => Array
- *       (
- *           [mimetype] => application/rdf+xml
- *       )
- *
- *   [RELS-INT] => Array
- *       (
- *           [optional] => true
- *           [mimetype] => application/rdf+xml
- *      )
+ *   An associative array mapping datastream IDs to an associative array
+ *   representing the parsed DS-COMPOSITE-MODEL of the form:
+ *   - DSID: A string containing the datastream ID.
+ *     - "mimetype": A string containing the last mimetype declared for the
+ *       given datastream ID.
+ *     - "optional": An optional boolean indicating that the given datastream
+ *       is optional.
  */
 function islandora_get_comp_ds_mappings($pid) {
+  $message = islandora_deprecated('7.x-1.2', t('Refactor to use the more flexible islandora_get_datastreams_requirements_from_content_model().'));
+  trigger_error(filter_xss($message), E_USER_DEPRECATED);
+
   $cm_object = islandora_object_load($pid);
   if (!isset($cm_object) || !isset($cm_object['DS-COMPOSITE-MODEL'])) {
     return FALSE;
@@ -658,6 +673,9 @@ function islandora_get_comp_ds_mappings($pid) {
  *   TRUE if the account has all the given permissions, FALSE otherwise.
  */
 function islandora_user_access_all(array $perms, $account = NULL) {
+  $message = islandora_deprecated('7.x-1.2', 'Roll your own code or use islandora_user_access().');
+  trigger_error(filter_xss($message), E_USER_DEPRECATED);
+
   foreach ($perms as $perm) {
     if (!user_access($perm, $account)) {
       return FALSE;
@@ -679,6 +697,9 @@ function islandora_user_access_all(array $perms, $account = NULL) {
  *   otherwise.
  */
 function islandora_user_access_any(array $perms, $account = NULL) {
+  $message = islandora_deprecated('7.x-1.2', 'Roll your own code or use islandora_user_access().');
+  trigger_error(filter_xss($message), E_USER_DEPRECATED);
+
   foreach ($perms as $perm) {
     if (user_access($perm, $account)) {
       return TRUE;
@@ -697,7 +718,13 @@ function islandora_get_allowed_namespaces() {
   $matches = array();
   $allowed_namespaces = variable_get('islandora_pids_allowed', 'default: demo: changeme: islandora:');
   preg_match_all('/([A-Za-z0-9-\.]+):/', $allowed_namespaces, $matches);
-  return $matches[1];
+  $accessible_namespaces = $matches[1];
+  // Ensure that the "islandora" namespace is explicitly allowed
+  // no matter what happens.
+  if (!in_array('islandora', $accessible_namespaces)) {
+    $accessible_namespaces[] = 'islandora';
+  }
+  return $accessible_namespaces;
 }
 
 /**
@@ -718,14 +745,24 @@ function islandora_get_allowed_namespaces() {
 function islandora_get_content_models($ignore_system_namespace = TRUE) {
   module_load_include('inc', 'islandora', 'includes/utilities');
   $tuque = islandora_get_tuque_connection();
-  $query = 'select $object $label from <#ri>
-          where ($object <fedora-model:label> $label
-          and ($object <fedora-model:hasModel> <info:fedora/fedora-system:ContentModel-3.0>
-          or $object <fedora-rels-ext:isMemberOfCollection> <info:fedora/islandora:ContentModelsCollection>)
-          and $object <fedora-model:state> <info:fedora/fedora-system:def/model#Active>)
-          order by $label';
+  $query = "PREFIX fm: <" . FEDORA_MODEL_URI . ">
+            PREFIX fr: <" . FEDORA_RELS_EXT_URI . ">
+            SELECT ?object ?label
+            FROM <#ri>
+            WHERE {
+              {?object fm:hasModel <info:fedora/fedora-system:ContentModel-3.0>;
+                       fm:state fm:Active
+              }
+            UNION{
+                ?object fr:isMemberOfCollection <info:fedora/islandora:ContentModelsCollection>;
+                fm:state fm:Active
+              }
+            OPTIONAL{
+                 ?object fm:label ?label
+            }
+           }";
   $content_models = array();
-  $results = $tuque->repository->ri->itqlQuery($query, 'unlimited');
+  $results = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
   foreach ($results as $result) {
     $content_model = $result['object']['value'];
     $label = $result['label']['value'];
@@ -737,4 +774,94 @@ function islandora_get_content_models($ignore_system_namespace = TRUE) {
     }
   }
   return $content_models;
+}
+
+/**
+ * Returns Drupal tableselect element allowing selection of Content Models.
+ *
+ * @param string $drupal_variable
+ *   the name of the Drupal variable holding selected content models
+ *   Content models held in this variable will appear at the top of
+ *   the displayed list
+ * @param array $default_values_array
+ *   default values to display if $drupal_variable is unset
+ *
+ * @return array
+ *   Drupal form element allowing content model selection
+ */
+function islandora_content_model_select_table_form_element($drupal_variable, $default_values_array = array('')) {
+  $defaults = array();
+  $rows = array();
+  $content_models = array();
+  $options = islandora_get_content_models(TRUE);
+  foreach ($options as $option) {
+    $content_models[$option['pid']] = $option['label'];
+  }
+
+  $selected = array_values(variable_get($drupal_variable, $default_values_array));
+  $comparator = function ($a, $b) use ($selected) {
+    $a_val = $b_val = 0;
+    if (in_array($a, $selected)) {
+      $a_val = 1;
+    }
+    if (in_array($b, $selected)) {
+      $b_val = 1;
+    }
+    return $b_val - $a_val;
+  };
+  uksort($content_models, $comparator);
+  foreach ($content_models as $pid => $label) {
+    $rows[$pid] = array(
+      'pid' => $pid,
+      'title' => $label,
+    );
+    $defaults[$pid] = in_array($pid, $selected);
+  }
+  $header = array(
+    'pid' => array('data' => t('PID')),
+    'title' => array('data' => t('Content Model')),
+  );
+  // Build and return table element.
+  $element = array(
+    '#type' => 'tableselect',
+    '#header' => $header,
+    '#options' => $rows,
+    '#default_value' => $defaults,
+    '#empty' => t("There are no content models in this Fedora Repository."),
+  );
+
+  return $element;
+}
+
+/**
+ * Convience function for generating a E_USER_DEPRECATED message.
+ *
+ * To utilitize this function pass the results to trigger_error() like so:
+ *
+ * @code
+ *   $message = islandora_deprecated('7.x-1.1', t('Use more cowbell.'))
+ *   trigger_error(filter_xss($message), E_USER_DEPRECATED)
+ * @endcode
+ *
+ * @param string $release
+ *   The release the calling function was depreciated in.
+ * @param string $solution
+ *   A message describing an alternative solution to the deprecated function.
+ *   It's assumed to be already passed though the t() function.
+ *
+ * @return string
+ *   The deprecated message.
+ */
+function islandora_deprecated($release, $solution = NULL) {
+  $bt = debug_backtrace();
+  assert($bt[0]['function'] == __FUNCTION__);
+  $function = $bt[1]['function'];
+  $message = t('@function() has been deprecated. As of @release, please update your code before the next release.', array(
+               '@function' => $function,
+               '@release' => $release,
+             ));
+  if (isset($solution)) {
+    $message .= "<br/>\n" . $solution;
+  }
+  return $message;
 }
