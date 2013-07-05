@@ -62,7 +62,7 @@ function islandora_add_datastream_form(array $form, array &$form_state, Abstract
       '#element_validate' => array('islandora_add_datastream_form_field_does_not_contain_a_forward_slash'),
     ),
     'file' => array(
-      '#type' => 'managed_file',
+      '#type' => 'file',
       '#required' => TRUE,
       '#title' => t('Upload Document'),
       '#size' => 48,

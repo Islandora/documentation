@@ -33,6 +33,7 @@ define('FEDORA_ADD_DS', 'add fedora datastreams');
 define('FEDORA_INGEST', 'ingest fedora objects');
 define('FEDORA_PURGE', 'delete fedora objects and datastreams');
 define('FEDORA_MANAGE_PROPERTIES', 'manage object properties');
+define('ISLANDORA_VIEW_DATASTREAM_HISTORY', 'view old datastream versions');
 
 // Hooks.
 define('ISLANDORA_VIEW_HOOK', 'islandora_view_object');
@@ -233,6 +234,16 @@ function islandora_menu() {
     'access arguments' => array(FEDORA_PURGE, 4),
     'load arguments' => array(2),
   );
+  $items['islandora/object/%islandora_object/datastream/%islandora_datastream/versions'] = array(
+    'title' => 'Datastream Versions',
+    'page arguments' => array(4),
+    'page callback' => 'islandora_datastream_versions_table',
+    'file' => 'includes/datastream.versions.inc',
+    'type' => MENU_CALLBACK,
+    'access callback' => 'islandora_datastream_access',
+    'access arguments' => array(ISLANDORA_VIEW_DATASTREAM_HISTORY, 4),
+    'load arguments' => array(2),
+  );
   $items['islandora/object/%islandora_object/print'] = array(
     'title' => 'Print Object',
     'page callback' => 'islandora_print_object',
@@ -270,6 +281,7 @@ function islandora_admin_paths() {
   $paths['islandora/object/*/manage*'] = TRUE;
   $paths['islandora/object/*/delete'] = TRUE;
   $paths['islandora/object/*/datastream/*/edit'] = TRUE;
+  $paths['islandora/object/*/datastream/*/versions'] = TRUE;
   return $paths;
 }
 
@@ -333,9 +345,13 @@ function islandora_theme() {
     ),
     'islandora_datastream_view_link' => array(
       'file' => 'theme/theme.inc',
-      'variables' => array('datastream' => NULL),
+      'variables' => array('datastream' => NULL, 'version' => NULL, 'label' => NULL),
     ),
     'islandora_datastream_download_link' => array(
+      'file' => 'theme/theme.inc',
+      'variables' => array('datastream' => NULL),
+    ),
+    'islandora_datastream_version_link' => array(
       'file' => 'theme/theme.inc',
       'variables' => array('datastream' => NULL),
     ),
@@ -370,6 +386,10 @@ function islandora_permission() {
     FEDORA_MANAGE_PROPERTIES => array(
       'title' => t('Manage object properties'),
       'description' => t('Modify object labels, owner IDs, and states.'),
+    ),
+    ISLANDORA_VIEW_DATASTREAM_HISTORY => array(
+      'title' => t('View datastream history'),
+      'description' => t('View all previous versions of a datastream.'),
     ),
   );
 }
