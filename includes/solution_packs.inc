@@ -431,12 +431,18 @@ function islandora_check_object_status(AbstractObject $object_definition) {
       // we need to replace the info:fedora namespace, as C14N hates it.
       // C14N also doesn't normalize whitespace at the end of lines and Fedora
       // may add some whitespace on some lines.
+      $xsl = new DOMDocument();
+      $xsl->load(drupal_get_path('module', 'islandora') . '/xml/strip_newlines_and_whitespace.xsl');
+      $xslt = new XSLTProcessor();
+      $xslt->importStyleSheet($xsl);
       $object_definition_dom = new DOMDocument();
       $object_definition_dom->preserveWhiteSpace = FALSE;
       $object_definition_dom->loadXML(str_replace('info:', 'http://', $ds->content));
+      $object_definition_dom = $xslt->transformToDoc($object_definition_dom);
       $object_actual_dom = new DOMDocument();
       $object_actual_dom->preserveWhiteSpace = FALSE;
       $object_actual_dom->loadXML(str_replace('info:', 'http://', $existing_object[$ds->id]->content));
+      $object_actual_dom = $xslt->transformToDoc($object_actual_dom);
 
       // Fedora changes the xml structure so we need to cannonize it.
       if ($object_actual_dom->C14N() != $object_definition_dom->C14N()) {
