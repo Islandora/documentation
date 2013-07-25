@@ -270,8 +270,6 @@ class IslandoraFedoraApiM extends FedoraApiM {
         case 'block':
           throw new Exception('Purge Datastream was blocked.');
 
-        break;
-
         case 'delete':
           $object[$dsid]->state = 'D';
           return array();
@@ -314,8 +312,6 @@ class IslandoraFedoraApiM extends FedoraApiM {
       switch ($action) {
         case 'block':
           throw new Exception('Purge object was blocked.');
-
-        break;
 
         case 'delete':
           $object->state = 'D';
