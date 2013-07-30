@@ -103,7 +103,7 @@ function islandora_menu() {
     'access callback' => 'islandora_object_access_callback',
     'access arguments' => array(FEDORA_VIEW_OBJECTS, 2),
   );
-  $items['islandora/print/%islandora_object'] = array(
+  $items['islandora/object/%islandora_object/print'] = array(
     'page callback' => 'islandora_printer_object',
     'page arguments' => array(2),
     'type' => MENU_NORMAL_ITEM,
@@ -239,15 +239,6 @@ function islandora_menu() {
     'type' => MENU_CALLBACK,
     'access callback' => 'islandora_datastream_access',
     'access arguments' => array(FEDORA_PURGE, 4),
-    'load arguments' => array(2),
-  );
-  $items['islandora/object/%islandora_object/print'] = array(
-    'title' => 'Print Object',
-    'page callback' => 'islandora_print_object',
-    'page arguments' => array(2),
-    'type' => MENU_CALLBACK,
-    'access callback' => 'islandora_object_access',
-    'access arguments' => array(FEDORA_VIEW_OBJECTS, 2),
     'load arguments' => array(2),
   );
   $items['islandora/object/%islandora_object/download_clip'] = array(
@@ -770,7 +761,10 @@ function islandora_view_object(AbstractObject $object) {
       'print_img' => $path . '/images/print-icon.png'),
     ), array('type' => 'setting'));
 
-  drupal_add_js(array('islandora' => array('print_link' => '/islandora/print/' . $object->id)), array('type' => 'setting'));
+  drupal_add_js(array(
+    'islandora' => array(
+      'print_link' => '/islandora/object/' . $object->id . '/print')),
+    array('type' => 'setting'));
   drupal_add_js($path . '/js/add_print.js');
 
   drupal_set_title($object->label);
@@ -817,48 +811,22 @@ function islandora_view_object(AbstractObject $object) {
  *   An HTML representation of this object.
  */
 function islandora_printer_object(AbstractObject $object) {
-
   $output = array();
-  $output = NULL;
-  $islandora_object = islandora_object_load($object->id);
-  $obj_pid = urldecode($object->id);
-  $resource_url = '';
-
-  // Check for a valid image/pdf/large image cmodel
-  // TODO: More preprocessing on large image and pdf to optimize view.
-  if (in_array('islandora:sp_basic_image', $islandora_object->models)) {
-    $resource_url = url("islandora/object/{$obj_pid}/datastream/OBJ/view");
-  }
-  elseif (in_array('islandora:sp_large_image_cmodel', $islandora_object->models)) {
-    $resource_url = url("islandora/object/{$obj_pid}/datastream/JPG/view");
-  }
-  elseif (in_array('islandora:sp_pdf', $islandora_object->models)) {
-    // Check for higher quality data stream if available.
-    $dsid = isset($obj['HQ_JPG']) ? 'HQ_JPG' : 'PREVIEW';
-    $resource_url = url("islandora/object/{$obj_pid}/datastream/{$dsid}/view");
-  }
-
-  $params = array(
-    'title' => $islandora_object->label,
-    'path' => $resource_url,
-  );
-  // Theme the image seperatly.
-  $variables['islandora_img'] = theme('image', $params);
-  $output = islandora_default_islandora_printer_object($object, $variables['islandora_img']);
-
+  $temp_arr = array();
   // Dispatch print hook.
   foreach (islandora_build_hook_list(ISLANDORA_PRINT_HOOK, $object->models) as $hook) {
-    $temp = module_invoke_all($hook, $output);
+    $temp = module_invoke_all($hook, $object);
     islandora_as_renderable_array($temp);
     if (!empty($temp)) {
-      $output = array_merge_recursive($output, $temp);
+      $temp_arr = array_merge_recursive($temp_arr, $temp);
     }
   }
-
+  $output = islandora_default_islandora_printer_object($object, drupal_render($temp_arr));
   arsort($output);
-  drupal_alter(ISLANDORA_PRINT_HOOK, $object, $output);
   islandora_as_renderable_array($output);
 
+  // Prompt to print.
+  drupal_add_js('jQuery(document).ready(function () { window.print(); });', 'inline');
   return $output;
 }
 

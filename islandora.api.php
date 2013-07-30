@@ -22,16 +22,13 @@
  */
 function hook_islandora_view_object($object, $user, $page_number, $page_size) {
 }
-
 /**
  * An alter hook to print friendly page for the given object.
  *
  * @param object $object
  *   The object form to print.
- * @param string $output
- *   The object form to print
  */
-function hook_islandora_view_print_object_alter($object, &$output) {
+function hook_islandora_view_print_object($object) {
 }
 /**
  * Generate an object's display for the given content model.
