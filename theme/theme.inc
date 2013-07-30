@@ -165,7 +165,6 @@ function islandora_preprocess_islandora_object_print(array &$variables) {
  * Implements theme_hook().
  */
 function theme_islandora_object_print(array &$variables) {
-  dsm(array('obj_print' => 'obj_in_print'));
   return drupal_render($variables['content']);
 }
 
