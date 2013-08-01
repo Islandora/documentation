@@ -232,6 +232,9 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
    *
    * @param string $hex
    *   The hex value being converted.
+   *
+   * @return bool|int
+   *   FALSE or the integer value that is converted.
    */
   public function convertHexToInt($hex) {
 
