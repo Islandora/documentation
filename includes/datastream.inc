@@ -131,7 +131,7 @@ function islandora_datastream_get_delete_link(AbstractDatastream $datastream) {
  * @param AbstractDatastream $datastream
  *   The datastream to generated the url to.
  *
- *  @return string
+ * @return string
  *   Markup containing the link to edit the datastream.
  */
 function islandora_datastream_edit_get_link(AbstractDatastream $datastream) {
