@@ -14,7 +14,7 @@ function islandora_datastream_version_table($datastream) {
   drupal_set_title(t("@dsid Previous Versions", array('@dsid' => $datastream->id)));
 
   $header = array();
-  $header[] = array('data' => 'Created Date');
+  $header[] = array('data' => t('Created Date'));
   $header[] = array('data' => t('Size'));
   $header[] = array('data' => t('Label'));
   $header[] = array('data' => t('Mime type'));
