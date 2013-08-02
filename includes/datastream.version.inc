@@ -117,7 +117,7 @@ function islandora_delete_datastream_version_form_submit(array $form, array &$fo
           '%e' => $e->getMessage())), 'error');
   }
 
-  drupal_set_message(t('%d datastream version sucessfully deleted from Islandora object %o', array(
+  drupal_set_message(t('%d datastream version successfully deleted from Islandora object %o', array(
         '%d' => $datastream_id,
         '%o' => $object->label)));
 
