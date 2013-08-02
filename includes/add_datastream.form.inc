@@ -32,7 +32,7 @@ function islandora_add_datastream_form(array $form, array &$form_state, Abstract
     '#attributes' => array(
       'enctype' => 'multipart/form-data',
     ),
-    'dsid' => array(
+    'dsid_fieldset' => array(
       '#type' => 'fieldset',
       '#title' => 'Add a datastream',
       '#collapsible' => FALSE,
