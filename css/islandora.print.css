@@ -2,7 +2,7 @@
  * @file
  * Print styling
  *
- * We provide some sane print styling for Drupal using Zen's layout method.
+ * We provide some sane print styling for Drupal, hiding most visuals.
  */
 a:link,
 a:visited { /* underline all links */
