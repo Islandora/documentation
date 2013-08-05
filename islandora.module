@@ -242,48 +242,6 @@ function islandora_menu() {
     'access arguments' => array(FEDORA_PURGE, 4),
     'load arguments' => array(2),
   );
-<<<<<<< HEAD
-=======
-  $items['islandora/object/%islandora_object/datastream/%islandora_datastream/version'] = array(
-    'title' => 'Datastream Versions',
-    'page arguments' => array(4),
-    'page callback' => 'islandora_datastream_version_table',
-    'file' => 'includes/datastream.version.inc',
-    'type' => MENU_CALLBACK,
-    'access callback' => 'islandora_datastream_access',
-    'access arguments' => array(ISLANDORA_VIEW_DATASTREAM_HISTORY, 4),
-    'load arguments' => array(2),
-  );
-  $items['islandora/object/%islandora_object/datastream/%islandora_datastream/version/%/delete'] = array(
-    'title' => 'Delete datastream version',
-    'page arguments' => array('islandora_delete_datastream_version_form', 4, 6),
-    'page callback' => 'drupal_get_form',
-    'file' => 'includes/datastream.version.inc',
-    'type' => MENU_CALLBACK,
-    'access callback' => 'islandora_datastream_access',
-    'access arguments' => array(FEDORA_PURGE, 4),
-    'load arguments' => array(2),
-  );
-  $items['islandora/object/%islandora_object/datastream/%islandora_datastream/version/%/view'] = array(
-    'title' => 'View datastream version',
-    'page callback' => 'islandora_view_datastream',
-    'page arguments' => array(4, FALSE, 6),
-    'type' => MENU_CALLBACK,
-    'file' => 'includes/datastream.inc',
-    'access callback' => 'islandora_datastream_access',
-    'access arguments' => array(ISLANDORA_VIEW_DATASTREAM_HISTORY, 4),
-    'load arguments' => array(2),
-  );
-  $items['islandora/object/%islandora_object/print'] = array(
-    'title' => 'Print Object',
-    'page callback' => 'islandora_print_object',
-    'page arguments' => array(2),
-    'type' => MENU_CALLBACK,
-    'access callback' => 'islandora_object_access',
-    'access arguments' => array(FEDORA_VIEW_OBJECTS, 2),
-    'load arguments' => array(2),
-  );
->>>>>>> 73e09a9d0d9f0f91f2cbca4d6a204a96c9695fa1
   $items['islandora/object/%islandora_object/download_clip'] = array(
     'page callback' => 'islandora_download_clip',
     'page arguments' => array(2),
