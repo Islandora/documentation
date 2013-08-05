@@ -52,6 +52,7 @@ define('ISLANDORA_DATASTREAM_INGESTED_HOOK', 'islandora_datastream_ingested');
 define('ISLANDORA_DATASTREAM_MODIFIED_HOOK', 'islandora_datastream_modified');
 define('ISLANDORA_DATASTREAM_PURGED_HOOK', 'islandora_datastream_purged');
 define('ISLANDORA_INGEST_STEP_HOOK', 'islandora_ingest_steps');
+define('ISLANDORA_DERVIATIVE_CREATION_HOOK', 'islandora_derivative');
 
 // Autocomplete paths.
 define('ISLANDORA_CONTENT_MODELS_AUTOCOMPLETE', 'islandora/autocomplete/content-models');
@@ -1414,4 +1415,37 @@ function islandora_islandora_basic_collection_get_query_filters() {
       '!namespaces' => $namespace_sparql,
     ));
   }
+}
+
+/**
+ * Implements hook_islandora_datastream_ingested().
+ */
+function islandora_islandora_datastream_ingested(AbstractObject $object, AbstractDatastream $datastream) {
+  $logging_results = islandora_do_derivatives($object);
+  dd($logging_results, 'logging');
+  foreach ($logging_results as $result) {
+
+  }
+}
+
+function islandora_do_derivatives(AbstractObject $object, $force = FALSE, $all = TRUE) {
+  $hooks = islandora_invoke_hook_list(ISLANDORA_DERVIATIVE_CREATION_HOOK, $object->models, array());
+  uasort($hooks, 'drupal_sort_weight');
+  $results = array();
+  dd($hooks, 'hooks');
+  foreach ($hooks as $hook) {
+    if (!$all && !isset($hook['source_dsid'])) {
+      continue;
+    }
+    if (isset($hook['file'])) {
+       require_once($hook['file']);
+    }
+    foreach ($hook['function'] as $function) {
+      $logging = call_user_func($function, $object, $force);
+      if (!empty($logging)) {
+        $results[] = $logging;
+      }
+    }
+  }
+  return $results;
 }
