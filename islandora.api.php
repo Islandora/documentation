@@ -21,23 +21,21 @@
  *   An array whose values are markup.
  */
 function hook_islandora_view_object($object, $user, $page_number, $page_size) {
-//   Example Implementation
-//   $islandora_object = islandora_object_load($object->id);
-//   $output = array();
-//   if (in_array('islandora:sp_basic_image', $islandora_object->models)) {
-//     $resource_url = url("islandora/object/{$object->id}/datastream/OBJ/view");
-//     $params = array(
-//       'title' => $islandora_object->label,
-//       'path' => $resource_url,
-//     );
+  $output = array();
+  if (in_array('islandora:sp_basic_image', $object->models)) {
+    $resource_url = url("islandora/object/{$object->id}/datastream/OBJ/view");
+    $params = array(
+      'title' => $object->label,
+      'path' => $resource_url,
+    );
 
-//     // Theme the image seperatly.
-//     $variables['islandora_img'] = theme('image', $params);
-//     $output = theme('islandora_default_print', array(
-//     'islandora_content' => $variables['islandora_img']));
-//   }
+    // Theme the image seperatly.
+    $variables['islandora_img'] = theme('image', $params);
+    $output = theme('islandora_default_print', array(
+    'islandora_content' => $variables['islandora_img']));
+  }
 
-//   return $output;
+  return $output;
 }
 /**
  * Generate a print friendly page for the given object.
