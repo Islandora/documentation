@@ -272,7 +272,7 @@ function islandora_menu() {
     'access arguments' => array(ISLANDORA_VIEW_DATASTREAM_HISTORY, 4),
     'load arguments' => array(2),
   );
-  $items['islandora/object/%islandora_object/print'] = array(
+  $items['islandora/object/%islandora_object/printer'] = array(
     'title' => 'Print Object',
     'page callback' => 'islandora_print_object',
     'page arguments' => array(2),
