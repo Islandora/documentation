@@ -6,7 +6,7 @@
  */
 
 /**
- * Implements hook_islandora_CMODEL_derivative().
+ * Implements hook_islandora_CMODEL_PID_derivative().
  */
 function islandora_derivatives_test_some_cmodel_islandora_derivative() {
   return array(
@@ -146,7 +146,7 @@ function islandora_derivatives_test_create_nosource_datastream(AbstractObject $o
  *   The datastream id for which we are adding/modifying.
  * @param string $deriv_string
  *   The content of the datastream we are adding.
- * 
+ *
  * @return bool|string
  *   A bool if the operation was successfully, the error message otherwise.
  */

@@ -553,6 +553,8 @@ function hook_CMODEL_PID_islandora_datastream_access($op, $object, $user) {
  *       - severity: (Optional) A severity level / status to be used when
  *         logging messages. Uses the defaults of drupal_set_message and
  *         watchdog if not defined.
+ *   - file: A string denoting the path to the file where the function
+ *     is being called from.
  */
 function hook_islandora_derivative() {
   return array(

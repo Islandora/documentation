@@ -91,7 +91,7 @@ function islandora_derivative_logging(array $logging_results) {
   foreach ($logging_results as $result) {
     foreach ($result['messages'] as $message) {
       if ($message['type'] === 'dsm') {
-        drupal_set_message(filter_xss(format_string($message['message'], isset($message['message_sub']) ? $message['message_sub'] : array()), isset($message['severity']) ? $message['severity'] : 'status'));
+        drupal_set_message(filter_xss(format_string($message['message'], isset($message['message_sub']) ? $message['message_sub'] : array())), isset($message['severity']) ? $message['severity'] : 'status');
       }
       else {
         watchdog('islandora', $message['message'], isset($message['message_sub']) ? $message['message_sub'] : array(), isset($message['severity']) ? $message['severity'] : WATCHDOG_NOTICE);
