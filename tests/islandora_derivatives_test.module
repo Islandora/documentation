@@ -1,0 +1,114 @@
+<?php
+
+/**
+ * @file
+ * Tests for derivative generation.
+ */
+
+/**
+ * Implements hook_islandora_CMODEL_derivative().
+ */
+function islandora_derivatives_test_some_cmodel_islandora_derivative() {
+  return array(
+    array(
+      'source_dsid' => 'OBJ',
+      'destination_dsid' => 'DERIV',
+      'weight' => '0',
+      'function' => array(
+        'islandora_derivatives_test_create_deriv_datastream',
+      ),
+    ),
+    array(
+      'source_dsid' => 'SOMEWEIRDDATASTREAM',
+      'destination_dsid' => 'STANLEY',
+      'weight' => '-1',
+      'function' => array(
+        'islandora_derivatives_test_create_some_weird_datastream',
+      ),
+    ),
+  );
+}
+
+function islandora_derivatives_test_create_deriv_datastream(AbstractObject $object, $force = FALSE) {
+  global $derivative_functions;
+  $derivative_functions[] = 'islandora_derivatives_test_create_deriv_datastream';
+  $return = '';
+  if (!isset($object['DERIV']) || (isset($object['DERIV']) && $force === TRUE)) {
+    if ($force !== TRUE) {
+      $deriv_string = $object['OBJ']->content . ' some string';
+    }
+    else {
+      $deriv_string = "FORCEFULLY APPENDING CONTENT TO " . $object['OBJ']->content;
+    }
+    $added_successfully = islandora_derivatives_test_add_datastream($object, 'DERIV', $deriv_string);
+    if ($added_successfully !== TRUE) {
+      $return = islandora_derivatives_test_failed_adding($added_successfully);
+    }
+    else {
+      $return = array(
+        'success' => TRUE,
+        'messages' => array(
+          array(
+            'message' => t('The DERIV datastream was added successfully for @pid!'),
+            'message_sub' => array('@pid' => $object->id),
+            'type' => WATCHDOG_INFO,
+          ),
+        ),
+      );
+    }
+    return $return;
+  }
+}
+
+/**
+ * Stub function that should never actually get called because of DSID filtering.
+ *
+ * @param AbstractObject $object
+ *   An AbstractObject representing a Fedora object.
+ * @param bool $force
+ *   Whether the derivatives are being forcefully generated or not.
+ */
+function islandora_derivatives_test_create_some_weird_datastream(AbstractObject $object, $force = FALSE) {
+  global $derivative_functions;
+  // Add to the global that we got to this function.
+  $derivative_functions[] = 'islandora_derivatives_test_create_some_weird_datastream';
+}
+
+function islandora_derivatives_test_add_datastream(AbstractObject $object, $dsid, $deriv_string) {
+  global $ingest_method;
+  try {
+    $ingest = !isset($object[$dsid]);
+    if ($ingest) {
+      $ds = $object->constructDatastream($dsid, 'M');
+      $ds->label = $dsid;
+    }
+    else {
+      $ds = $object[$dsid];
+    }
+    $ds->content = $deriv_string;
+    if ($ingest) {
+      $ingest_method = 'ingestDatastream';
+      $object->ingestDatastream($ds);
+    }
+    else {
+      $ingest_method = 'modifyDatastream';
+    }
+    return TRUE;
+  }
+  catch (exception $e) {
+    $message = $e->getMessage();
+    return $message;
+  }
+}
+
+function islandora_derivatives_test_failed_adding($message) {
+  return array(
+    'success' => FALSE,
+    'messages' => array(
+      array(
+        'message' => $message,
+        'type' => WATCHDOG_ERROR,
+      ),
+    ),
+  );
+}

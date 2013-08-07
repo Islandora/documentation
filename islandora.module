@@ -1421,31 +1421,75 @@ function islandora_islandora_basic_collection_get_query_filters() {
  * Implements hook_islandora_datastream_ingested().
  */
 function islandora_islandora_datastream_ingested(AbstractObject $object, AbstractDatastream $datastream) {
-  $logging_results = islandora_do_derivatives($object);
-  dd($logging_results, 'logging');
-  foreach ($logging_results as $result) {
-
-  }
+  $logging_results = islandora_do_derivatives($object, array(
+    'source_dsid' => $datastream->id,
+  ));
+  islandora_derivative_logging($logging_results);
 }
 
-function islandora_do_derivatives(AbstractObject $object, $force = FALSE, $all = TRUE) {
+/**
+ * Implements hook_islandora_datastream_modified().
+ */
+function islandora_islandora_datastream_modified(AbstractObject $object, AbstractDatastream $datastream) {
+  $logging_results = islandora_do_derivatives($object, array(
+    'source_dsid' => $datastream->id,
+    'force' => TRUE,
+  ));
+  islandora_derivative_logging($logging_results);
+}
+
+function islandora_do_derivatives(AbstractObject $object, array $options = array()) {
+  $options += array(
+    'force' => FALSE,
+    'source_dsid' => NULL,
+    'destination_dsid' => NULL,
+  );
   $hooks = islandora_invoke_hook_list(ISLANDORA_DERVIATIVE_CREATION_HOOK, $object->models, array());
   uasort($hooks, 'drupal_sort_weight');
   $results = array();
-  dd($hooks, 'hooks');
+
+  if ($options['source_dsid'] !== NULL) {
+    $hooks = array_filter($hooks, function($filter_hook) use($options) {
+      return !isset($filter_hook['source_dsid']) ||
+      (isset($filter_hook['source_dsid']) && $filter_hook['source_dsid'] == $options['source_dsid']);
+    });
+  }
+  if ($options['destination_dsid'] !== NULL) {
+    $hooks = array_filter($hooks, function($filter_hook) use($options) {
+      return !isset($filter_hook['destination_dsid']) ||
+      (isset($filter_hook['destination_dsid']) && $filter_hook['destination_dsid'] == $options['destination_dsid']);
+    });
+  }
+  dd($hooks, 'hooooooks');
   foreach ($hooks as $hook) {
-    if (!$all && !isset($hook['source_dsid'])) {
-      continue;
-    }
     if (isset($hook['file'])) {
-       require_once($hook['file']);
+      require_once $hook['file'];
     }
     foreach ($hook['function'] as $function) {
-      $logging = call_user_func($function, $object, $force);
+      $logging = call_user_func($function, $object, $options['force']);
       if (!empty($logging)) {
         $results[] = $logging;
       }
     }
   }
   return $results;
+}
+
+function islandora_derivative_logging(array $logging_results) {
+  foreach ($logging_results as $result) {
+    foreach ($result['messages'] as $message) {
+      if ($message['type'] >= WATCHDOG_WARNING) {
+        if ($message['type'] == WATCHDOG_WARNING) {
+          $status = 'warning';
+        }
+        else {
+          $status = 'status';
+        }
+        drupal_set_message(format_string($message['message'], isset($message['message_sub']) ? $message['message_sub'] : array()), $status);
+      }
+      else {
+        watchdog('islandora', $message['message'], isset($message['message_sub']) ? $message['message_sub'] : array(), $message['type']);
+      }
+    }
+  }
 }
