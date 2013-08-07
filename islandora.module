@@ -1417,10 +1417,30 @@ function islandora_islandora_basic_collection_get_query_filters() {
   }
 }
 
+
+/**
+ * Implements hook_islandora_object_ingested().
+ *
+ * On object ingestion we call the case of source_dsid being NULL only as
+ * the islandora_islandora_datastream_ingested hook will handle the cases
+ * where specific values of source_dsid can occur.
+ */
+function islandora_islandora_object_ingested(AbstractObject $object) {
+  module_load_include('inc', 'islandora', 'includes/derivatives');
+  $logging_results = islandora_do_derivatives($object, array(
+    'source_dsid' => NULL,
+  ));
+  islandora_derivative_logging($logging_results);
+}
+
 /**
  * Implements hook_islandora_datastream_ingested().
+ *
+ * When a datastream is ingested we filter the derivatives on source_dsid being
+ * equal to the current ingested datastream's id.
  */
 function islandora_islandora_datastream_ingested(AbstractObject $object, AbstractDatastream $datastream) {
+  module_load_include('inc', 'islandora', 'includes/derivatives');
   $logging_results = islandora_do_derivatives($object, array(
     'source_dsid' => $datastream->id,
   ));
@@ -1429,67 +1449,16 @@ function islandora_islandora_datastream_ingested(AbstractObject $object, Abstrac
 
 /**
  * Implements hook_islandora_datastream_modified().
+ *
+ * When a datastream is modified we filter the derivatives on source_dsid being
+ * equal to the current ingested datastream's id. Force is set to TRUE such that
+ * existing derivatives will be updated to reflect the change in the source.
  */
 function islandora_islandora_datastream_modified(AbstractObject $object, AbstractDatastream $datastream) {
+  module_load_include('inc', 'islandora', 'includes/derivatives');
   $logging_results = islandora_do_derivatives($object, array(
     'source_dsid' => $datastream->id,
     'force' => TRUE,
   ));
   islandora_derivative_logging($logging_results);
-}
-
-function islandora_do_derivatives(AbstractObject $object, array $options = array()) {
-  $options += array(
-    'force' => FALSE,
-    'source_dsid' => NULL,
-    'destination_dsid' => NULL,
-  );
-  $hooks = islandora_invoke_hook_list(ISLANDORA_DERVIATIVE_CREATION_HOOK, $object->models, array());
-  uasort($hooks, 'drupal_sort_weight');
-  $results = array();
-
-  if ($options['source_dsid'] !== NULL) {
-    $hooks = array_filter($hooks, function($filter_hook) use($options) {
-      return !isset($filter_hook['source_dsid']) ||
-      (isset($filter_hook['source_dsid']) && $filter_hook['source_dsid'] == $options['source_dsid']);
-    });
-  }
-  if ($options['destination_dsid'] !== NULL) {
-    $hooks = array_filter($hooks, function($filter_hook) use($options) {
-      return !isset($filter_hook['destination_dsid']) ||
-      (isset($filter_hook['destination_dsid']) && $filter_hook['destination_dsid'] == $options['destination_dsid']);
-    });
-  }
-  dd($hooks, 'hooooooks');
-  foreach ($hooks as $hook) {
-    if (isset($hook['file'])) {
-      require_once $hook['file'];
-    }
-    foreach ($hook['function'] as $function) {
-      $logging = call_user_func($function, $object, $options['force']);
-      if (!empty($logging)) {
-        $results[] = $logging;
-      }
-    }
-  }
-  return $results;
-}
-
-function islandora_derivative_logging(array $logging_results) {
-  foreach ($logging_results as $result) {
-    foreach ($result['messages'] as $message) {
-      if ($message['type'] >= WATCHDOG_WARNING) {
-        if ($message['type'] == WATCHDOG_WARNING) {
-          $status = 'warning';
-        }
-        else {
-          $status = 'status';
-        }
-        drupal_set_message(format_string($message['message'], isset($message['message_sub']) ? $message['message_sub'] : array()), $status);
-      }
-      else {
-        watchdog('islandora', $message['message'], isset($message['message_sub']) ? $message['message_sub'] : array(), $message['type']);
-      }
-    }
-  }
 }

@@ -26,15 +26,35 @@ function islandora_derivatives_test_some_cmodel_islandora_derivative() {
         'islandora_derivatives_test_create_some_weird_datastream',
       ),
     ),
+    array(
+      'source_dsid' => NULL,
+      'destination_dsid' => 'NOSOURCE',
+      'weight' => '-3',
+      'function' => array(
+        'islandora_derivatives_test_create_nosource_datastream',
+      ),
+    ),
   );
 }
 
+/**
+ * Creates the DERIV datastream for use in testing.
+ *
+ * @param AbstractObject $object
+ *   An AbstractObject representing a Fedora object.
+ * @param bool $force
+ *   Whether or not derivative generation is to be forced.
+ * @return array
+ *   An array detailing the success of the operation.
+ *
+ * @see hook_islandora_derivative()
+ */
 function islandora_derivatives_test_create_deriv_datastream(AbstractObject $object, $force = FALSE) {
-  global $derivative_functions;
-  $derivative_functions[] = 'islandora_derivatives_test_create_deriv_datastream';
+  global $_islandora_derivative_test_derivative_functions;
+  $_islandora_derivative_test_derivative_functions[] = 'islandora_derivatives_test_create_deriv_datastream';
   $return = '';
   if (!isset($object['DERIV']) || (isset($object['DERIV']) && $force === TRUE)) {
-    if ($force !== TRUE) {
+    if ($force !== TRUE || !isset($object['DERIV'])) {
       $deriv_string = $object['OBJ']->content . ' some string';
     }
     else {
@@ -51,7 +71,7 @@ function islandora_derivatives_test_create_deriv_datastream(AbstractObject $obje
           array(
             'message' => t('The DERIV datastream was added successfully for @pid!'),
             'message_sub' => array('@pid' => $object->id),
-            'type' => WATCHDOG_INFO,
+            'type' => 'dsm',
           ),
         ),
       );
@@ -61,7 +81,7 @@ function islandora_derivatives_test_create_deriv_datastream(AbstractObject $obje
 }
 
 /**
- * Stub function that should never actually get called because of DSID filtering.
+ * Stub function that used only for datastream filtering counts.
  *
  * @param AbstractObject $object
  *   An AbstractObject representing a Fedora object.
@@ -69,13 +89,69 @@ function islandora_derivatives_test_create_deriv_datastream(AbstractObject $obje
  *   Whether the derivatives are being forcefully generated or not.
  */
 function islandora_derivatives_test_create_some_weird_datastream(AbstractObject $object, $force = FALSE) {
-  global $derivative_functions;
+  global $_islandora_derivative_test_derivative_functions;
   // Add to the global that we got to this function.
-  $derivative_functions[] = 'islandora_derivatives_test_create_some_weird_datastream';
+  $_islandora_derivative_test_derivative_functions[] = 'islandora_derivatives_test_create_some_weird_datastream';
 }
 
+/**
+ * Creates the NOSOURCE datastream for use in testing.
+ *
+ * @param AbstractObject $object
+ *   An AbstractObject representing a Fedora object.
+ * @param bool $force
+ *   Whether or not derivative generation is to be forced.
+ * @return array
+ *   An array detailing the success of the operation.
+ *
+ * @see hook_islandora_derivative()
+ */
+function islandora_derivatives_test_create_nosource_datastream(AbstractObject $object, $force = FALSE) {
+  global $_islandora_derivative_test_derivative_functions;
+  $_islandora_derivative_test_derivative_functions[] = 'islandora_derivatives_test_create_nosource_datastream';
+  $return = '';
+  if (!isset($object['NOSOURCE']) || (isset($object['NOSOURCE']) && $force === TRUE)) {
+    if ($force !== TRUE || !isset($object['NOSOURCE'])) {
+      $deriv_string = 'NOSOURCE';
+    }
+    else {
+      $deriv_string = "FORCEFULLY APPENDING CONTENT TO " . $object['NOSOURCE']->content;
+    }
+    $added_successfully = islandora_derivatives_test_add_datastream($object, 'NOSOURCE', $deriv_string);
+    if ($added_successfully !== TRUE) {
+      $return = islandora_derivatives_test_failed_adding($added_successfully);
+    }
+    else {
+      $return = array(
+        'success' => TRUE,
+        'messages' => array(
+          array(
+            'message' => t('The DERIV datastream was added successfully for @pid!'),
+            'message_sub' => array('@pid' => $object->id),
+            'type' => 'dsm',
+          ),
+        ),
+      );
+    }
+    return $return;
+  }
+}
+
+/**
+ * Helper function that adds/modifies the datastream to the object in testing.
+ *
+ * @param AbstractObject $object
+ *   An AbstractObject representing a Fedora object.
+ * @param string $dsid
+ *   The datastream id for which we are adding/modifying.
+ * @param string $deriv_string
+ *   The content of the datastream we are adding.
+ * 
+ * @return bool|string
+ *   A bool if the operation was successfully, the error message otherwise.
+ */
 function islandora_derivatives_test_add_datastream(AbstractObject $object, $dsid, $deriv_string) {
-  global $ingest_method;
+  global $_islandora_derivative_test_ingest_method;
   try {
     $ingest = !isset($object[$dsid]);
     if ($ingest) {
@@ -87,11 +163,11 @@ function islandora_derivatives_test_add_datastream(AbstractObject $object, $dsid
     }
     $ds->content = $deriv_string;
     if ($ingest) {
-      $ingest_method = 'ingestDatastream';
+      $_islandora_derivative_test_ingest_method = 'ingestDatastream';
       $object->ingestDatastream($ds);
     }
     else {
-      $ingest_method = 'modifyDatastream';
+      $_islandora_derivative_test_ingest_method = 'modifyDatastream';
     }
     return TRUE;
   }
@@ -101,13 +177,25 @@ function islandora_derivatives_test_add_datastream(AbstractObject $object, $dsid
   }
 }
 
+/**
+ * Returns a message if we failed to add a derivative.
+ *
+ * @see hook_islandora_derivative()
+ *
+ * @param string $message
+ *   The error message to be returned back.
+ *
+ * @return array
+ *   An array describing the outcome of our failure.
+ */
 function islandora_derivatives_test_failed_adding($message) {
   return array(
     'success' => FALSE,
     'messages' => array(
       array(
         'message' => $message,
-        'type' => WATCHDOG_ERROR,
+        'type' => 'watchdog',
+        'severity' => WATCHDOG_ERROR,
       ),
     ),
   );
