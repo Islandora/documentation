@@ -94,7 +94,11 @@ function islandora_derivative_logging(array $logging_results) {
         drupal_set_message(filter_xss(format_string($message['message'], isset($message['message_sub']) ? $message['message_sub'] : array())), isset($message['severity']) ? $message['severity'] : 'status');
       }
       else {
+        // @codingStandardsIgnoreStart
+        // We know what we are doing here. Passing through the translated
+        // message and the substitutions needed.
         watchdog('islandora', $message['message'], isset($message['message_sub']) ? $message['message_sub'] : array(), isset($message['severity']) ? $message['severity'] : WATCHDOG_NOTICE);
+        // @codingStandardsIgnoreEnd
       }
     }
   }
