@@ -188,9 +188,9 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
    * imagecreatefromstring() function to determine what filetypes are valid.
    *
    * @param AbstractObject $object
-   *  The PID of the object.
+   *   The PID of the object.
    * @param array $datastreams
-   *  An array of datastreams to check.
+   *   An array of datastreams to check.
    */
   public function assertImageDatastreams($object, array $datastreams) {
     if (!is_object($object)) {
