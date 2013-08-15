@@ -543,6 +543,37 @@ function hook_CMODEL_PID_islandora_datastream_access($op, $object, $user) {
 }
 
 /**
+ * Lets one add to the overview tab in object management.
+ */
+function hook_islandora_overview_object(AbstractObject $object) {
+  return drupal_render(drupal_get_form('some_form', $object));
+}
+
+/**
+ * Lets one add to the overview tab in object management.
+ *
+ * Content model specific.
+ */
+function hook_CMODEL_PID_islandora_overview_object(AbstractObject $object) {
+  return drupal_render(drupal_get_form('some_form', $object));
+}
+/**
+ * Lets one alter the overview tab in object management.
+ */
+function hook_islandora_overview_object_alter(AbstractObject &$object, &$output) {
+  $output = $output . drupal_render(drupal_get_form('some_form', $object));
+}
+
+/**
+ * Lets one alter the overview tab in object management.
+ *
+ * Content model specific.
+ */
+function hook_CMODEL_PID_islandora_overview_object_alter(AbstractObject &$object, &$output) {
+  $output = $output . drupal_render(drupal_get_form('some_form', $object));
+}
+
+/*
  * Defines derivative functions to be executed based on certain conditions.
  *
  * This hook fires when an object/datastream is ingested or a datastream is
