@@ -796,7 +796,7 @@ function islandora_view_object(AbstractObject $object) {
   $path = drupal_get_path('module', 'islandora');
   drupal_add_js(array(
     'islandora' => array(
-      'print_img' => $path . 'images/print-icon.png'),
+      'print_img' => $path . '/images/print-icon.png'),
     ), array(
       'type' => 'setting'));
 
