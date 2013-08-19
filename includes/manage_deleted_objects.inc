@@ -155,7 +155,6 @@ function islandora_delete_form_select_objects(array $form, array &$form_state) {
     );
   }
 
-
   return $form;
 }
 
