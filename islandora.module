@@ -34,6 +34,7 @@ define('FEDORA_INGEST', 'ingest fedora objects');
 define('FEDORA_PURGE', 'delete fedora objects and datastreams');
 define('FEDORA_MANAGE_PROPERTIES', 'manage object properties');
 define('ISLANDORA_VIEW_DATASTREAM_HISTORY', 'view old datastream versions');
+define('ISLANDORA_MANAGE_DELETED_OBJECTS', 'manage deleted objects');
 
 // Hooks.
 define('ISLANDORA_VIEW_HOOK', 'islandora_view_object');
@@ -44,6 +45,7 @@ define('ISLANDORA_PRE_INGEST_HOOK', 'islandora_ingest_pre_ingest');
 define('ISLANDORA_POST_INGEST_HOOK', 'islandora_ingest_post_ingest');
 define('ISLANDORA_PRE_PURGE_OBJECT_HOOK', 'islandora_pre_purge_object');
 define('ISLANDORA_POST_PURGE_OBJECT_HOOK', 'islandora_post_purge_object');
+define('ISLANDORA_UPDATE_RELATED_OBJECTS_PROPERTIES_HOOK', 'islandora_update_related_objects_properties');
 
 // @todo Add Documentation.
 define('ISLANDORA_OBJECT_INGESTED_HOOK', 'islandora_object_ingested');
@@ -289,6 +291,15 @@ function islandora_menu() {
     'access arguments' => array('administer site configuration'),
     'type' => MENU_CALLBACK,
   );
+  $items['restore/islandora'] = array(
+    'title' => 'Manage Deleted Objects',
+    'file' => 'includes/manage_deleted_objects.inc',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('islandora_deleted_objects_form'),
+    'type' => MENU_NORMAL_ITEM,
+    'access arguments' => array(ISLANDORA_MANAGE_DELETED_OBJECTS),
+  );
+
   return $items;
 }
 
@@ -427,9 +438,7 @@ function islandora_permission() {
 function islandora_forms($form_id) {
   $forms = array();
   if (strpos($form_id, 'islandora_solution_pack_form_') !== FALSE) {
-    $forms[$form_id] = array(
-      'callback' => 'islandora_solution_pack_form',
-    );
+    $forms[$form_id] = array('callback' => 'islandora_solution_pack_form');
   }
   return $forms;
 }
@@ -698,11 +707,7 @@ function islandora_manage_overview_object(AbstractObject $object) {
  */
 function islandora_default_islandora_manage_overview_object(AbstractObject $object) {
   $output = theme('islandora_default_overview', array('islandora_object' => $object));
-  return array(
-    'Default overview output' => array(
-      '#markup' => $output,
-    ),
-  );
+  return array('Default overview output' => array('#markup' => $output));
 }
 
 /**
@@ -755,11 +760,7 @@ function islandora_edit_object(AbstractObject $object) {
  */
 function islandora_default_islandora_edit_object(AbstractObject $object) {
   $output = theme('islandora_default_edit', array('islandora_object' => $object));
-  return array(
-    'Default Edit output' => array(
-      '#markup' => $output,
-    ),
-  );
+  return array('Default Edit output' => array('#markup' => $output));
 }
 
 /**
@@ -797,13 +798,12 @@ function islandora_view_object(AbstractObject $object) {
   drupal_add_js(array(
     'islandora' => array(
       'print_img' => $path . '/images/print-icon.png'),
-    ), array(
-      'type' => 'setting'));
+      ), array(
+        'type' => 'setting'));
 
   drupal_add_js(array(
     'islandora' => array(
-      'print_link' => '/islandora/object/' . $object->id . '/print')),
-    array('type' => 'setting'));
+      'print_link' => '/islandora/object/' . $object->id . '/print')), array('type' => 'setting'));
   drupal_add_js($path . '/js/add_print.js');
 
   drupal_set_title($object->label);
@@ -887,6 +887,7 @@ function islandora_drupal_title(AbstractObject $object) {
 
   return $object->label;
 }
+
 /**
  * Renders the default view object page for the given object.
  *
@@ -898,11 +899,7 @@ function islandora_drupal_title(AbstractObject $object) {
  */
 function islandora_default_islandora_view_object($object) {
   $output = theme('islandora_default', array('islandora_object' => $object));
-  return array(
-    'Default output' => array(
-      '#markup' => $output,
-    ),
-  );
+  return array('Default output' => array('#markup' => $output));
 }
 
 /**
@@ -940,11 +937,7 @@ function islandora_default_islandora_printer_object($object, $alter) {
     'dc_array' => $variables,
     'islandora_content' => $alter));
 
-  return array(
-    'Default output' => array(
-      '#markup' => $output,
-    ),
-  );
+  return array('Default output' => array('#markup' => $output));
 }
 
 /**
@@ -1163,9 +1156,7 @@ function islandora_islandora_required_objects(IslandoraTuque $connection) {
   return array(
     'islandora' => array(
       'title' => 'Islandora',
-      'objects' => array(
-        $root_collection,
-      ),
+      'objects' => array($root_collection),
     ),
   );
 }
@@ -1341,6 +1332,7 @@ function islandora_entity_property_info() {
 
   return $info;
 }
+
 /**
  * Menu callback downloads the given clip.
  */
@@ -1471,9 +1463,9 @@ function islandora_datastream_access($op, $datastream, $user = NULL) {
     // The datastream check returned FALSE, and one in the object or datastream
     // checks returned TRUE.
     $cache[$op][$datastream->parent->id][$datastream->id][$user->uid] = (
-      !in_array(FALSE, $datastream_results, TRUE) &&
-      (in_array(TRUE, $object_results, TRUE) ||  in_array(TRUE, $datastream_results, TRUE))
-    );
+        !in_array(FALSE, $datastream_results, TRUE) &&
+        (in_array(TRUE, $object_results, TRUE) || in_array(TRUE, $datastream_results, TRUE))
+        );
   }
 
   return $cache[$op][$datastream->parent->id][$datastream->id][$user->uid];
@@ -1487,8 +1479,6 @@ function islandora_islandora_basic_collection_get_query_filters() {
   if ($enforced) {
     $namespace_array = islandora_get_allowed_namespaces();
     $namespace_sparql = implode('|', $namespace_array);
-    return format_string('regex(str(?object), "info:fedora/(!namespaces):")', array(
-      '!namespaces' => $namespace_sparql,
-    ));
+    return format_string('regex(str(?object), "info:fedora/(!namespaces):")', array('!namespaces' => $namespace_sparql));
   }
 }

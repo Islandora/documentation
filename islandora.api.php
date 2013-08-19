@@ -541,3 +541,15 @@ function hook_islandora_datastream_access($op, $object, $user) {
  */
 function hook_CMODEL_PID_islandora_datastream_access($op, $object, $user) {
 }
+
+/**
+ * Content model specific function to update related objects.
+ *
+ * @param FedoraObject $object
+ *   FedoraObject representing original object.
+ *
+ * @return array
+ *   Array of pids representing objects associated with original object.
+ */
+function islandora_book_islandora_bookCModel_islandora_update_related_objects($object) {
+}

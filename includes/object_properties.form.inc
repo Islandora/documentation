@@ -21,6 +21,14 @@
 function islandora_object_properties_form(array $form, array &$form_state, AbstractObject $object) {
   drupal_set_title($object->label);
   $form_state['object'] = $object;
+  $hooks = islandora_build_hook_list(ISLANDORA_UPDATE_RELATED_OBJECTS_PROPERTIES_HOOK, $object->models);
+  $related_objects_pids = array();
+  foreach ($hooks as $hook) {
+    $temp = module_invoke_all($hook, $object);
+    if (!empty($temp)) {
+      $related_objects_pids = array_merge_recursive($related_objects_pids, $temp);
+    }
+  }
   return array(
     'pid' => array(
       '#type' => 'hidden',
@@ -54,6 +62,18 @@ function islandora_object_properties_form(array $form, array &$form_state, Abstr
       '#type' => 'select',
       '#options' => array('A' => 'Active', 'I' => 'Inactive', 'D' => 'Deleted'),
     ),
+    'propogate' => array(
+      '#title' => t('Apply changes to related objects?'),
+      '#default_value' => TRUE,
+      '#description' => t("Changes to owner and state will applied to associated objects. ie page objects associated with a book object."),
+      '#type' => 'checkbox',
+      '#access' => count($related_objects_pids),
+    ),
+    'related_pids' => array(
+      '#value' => $related_objects_pids,
+      '#type' => 'hidden',
+      '#access' => count($related_objects_pids),
+    ),
     'submit' => array(
       '#type' => 'submit',
       '#value' => 'Update Properties',
@@ -81,24 +101,20 @@ function islandora_object_properties_form_submit(array $form, array &$form_state
   $owner = $form_state['values']['object_owner'];
   $state = $form_state['values']['object_state'];
   $label = $form_state['values']['object_label'];
+  $propogate = $form_state['values']['propogate'];
+  $update_owners = FALSE;
+  $update_states = FALSE;
   if (isset($owner) && $owner != $object->owner) {
     try {
       $object->owner = $owner;
+      $update_owners = TRUE;
       drupal_set_message(t('Successfully updated owner %s', array('%s' => $owner)));
     }
     catch (Exception $e) {
       form_set_error('object_owner', t('Error updating owner %s', array('%s' => $e->getMessage())));
     }
   }
-  if (isset($state) && $state != $object->state) {
-    try {
-      $object->state = $state;
-      drupal_set_message(t('Successfully updated state %s', array('%s' => $state)));
-    }
-    catch (Exception $e) {
-      form_set_error('object_state', t('Error updating state %s', array('%s' => $e->getMessage())));
-    }
-  }
+
   if (isset($label) && $label != $object->label) {
     try {
       $object->label = $label;
@@ -107,6 +123,32 @@ function islandora_object_properties_form_submit(array $form, array &$form_state
     catch (Exception $e) {
       form_set_error(t('Error updating label %s', array('%s' => $e->getMessage())));
     }
+  }
+  if (isset($state) && $state != $object->state) {
+    try {
+      $object->state = $state;
+      $update_states = TRUE;
+      drupal_set_message(t('Successfully updated state %s', array('%s' => $state)));
+    }
+    catch (Exception $e) {
+      form_set_error('object_state', t('Error updating state %s', array('%s' => $e->getMessage())));
+    }
+  }
+  if ($propogate && ($update_states || $update_owners)) {
+    $related_objects_pids = $form_state['values']['related_pids'];
+    $batch = array(
+      'title' => t('Updating related objects'),
+      'file' => drupal_get_path('module', 'islandora') . '/includes/object_properties.form.inc',
+      'operations' => array(),
+    );
+
+    foreach ($related_objects_pids as $pid) {
+      $batch['operations'][] = array(
+        'islandora_update_object_properties',
+        array($pid, $update_states, $state, $update_owners, $owner),
+      );
+    }
+    batch_set($batch);
   }
 }
 
@@ -120,4 +162,30 @@ function islandora_object_properties_form_submit(array $form, array &$form_state
  */
 function islandora_object_properties_form_delete(array $form, array &$form_state) {
   drupal_goto("islandora/object/{$form_state['values']['pid']}/delete");
+}
+
+/**
+ * Updates object state.
+ *
+ * @param String $pid
+ *   PID of object to be updated
+ * @param Boolean $update_states
+ *   If TRUE, update object state
+ * @param String $state
+ *   Desired object state
+ * @param Boolean $update_owners
+ *   If TRUE, update Owner
+ * @param String $owner
+ *   New Owner
+ */
+function islandora_update_object_properties($pid, $update_states, $state, $update_owners, $owner) {
+  $fedora_object = islandora_object_load($pid);
+  if ($fedora_object) {
+    if ($update_states) {
+      $fedora_object->state = $state;
+    }
+    if ($update_owners) {
+      $fedora_object->owner = $owner;
+    }
+  }
 }
