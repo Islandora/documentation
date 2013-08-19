@@ -649,9 +649,10 @@ function hook_CMODEL_PID_islandora_derivative() {
 
 /**
  * Retrieves PIDS of related objects for property updating.
- * 
+ *
  * @param string $pid
+ *   PID of object
  */
-function hook_islandora_update_related_objects_properties($pid){
-  
+function hook_islandora_update_related_objects_properties($pid) {
+
 }
