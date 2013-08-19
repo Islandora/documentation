@@ -652,6 +652,6 @@ function hook_CMODEL_PID_islandora_derivative() {
  * 
  * @param string $pid
  */
-function islandora_update_related_objects_properties($pid){
+function hook_islandora_update_related_objects_properties($pid){
   
 }
