@@ -214,23 +214,22 @@ function islandora_delete_form_contentmodels(array $form, array &$form_state) {
  *   array of pids
  */
 function islandora_get_deleted_objects($content_models) {
+  $tuque = islandora_get_tuque_connection();
+  $repository = $tuque->repository;
   $qualifier = '';
   $last_content_model = key(array_slice($content_models, -1, 1, TRUE));
   foreach ($content_models as $content_model) {
-    $qualifier .= "\$subject<info:fedora/fedora-system:def/model#hasModel> <info:fedora/$content_model>";
+    $qualifier .= "\$subject <" . FEDORA_MODEL_URI . "hasModel> <info:fedora/$content_model>";
     if ($content_model != $last_content_model) {
       $qualifier .= ' or ';
     }
   }
-  $tuque = new IslandoraTuque();
-  $repository = $tuque->repository;
-  $query = <<<STRING
-select \$subject \$title \$object from <#ri>
-where ($qualifier)     
-and \$subject <info:fedora/fedora-system:def/model#state> <info:fedora/fedora-system:def/model#Deleted>
-and \$subject<info:fedora/fedora-system:def/model#hasModel> \$object
-and \$subject <dc:title> \$title
-STRING;
+
+  $query = "select \$subject \$title \$object from <#ri>";
+  $query .= "where ($qualifier)";
+  $query .= "and \$subject <" . FEDORA_MODEL_URI . "state> <" . FEDORA_MODEL_URI . "Deleted>";
+  $query .= "and \$subject<" . FEDORA_MODEL_URI . "hasModel> \$object ";
+  $query .= "and \$subject <dc:title> \$title";
   $objects = $repository->ri->itqlQuery($query, 'unlimited');
   $deleted_objects = array();
   foreach ($objects as $object) {
@@ -257,12 +256,10 @@ function islandora_get_contentmodels_with_deleted_members() {
 
   $tuque = new IslandoraTuque();
   $repository = $tuque->repository;
-  $query = <<<STRING
-select \$object from <#ri>
-where \$subject <info:fedora/fedora-system:def/model#state> <info:fedora/fedora-system:def/model#Deleted>
-and \$subject<info:fedora/fedora-system:def/model#hasModel> \$object
+  $query = "select \$object from <#ri>";
+  $query .= "where \$subject <" . FEDORA_MODEL_URI . "state> <" . FEDORA_MODEL_URI . "Deleted>";
+  $query .= "and \$subject<" . FEDORA_MODEL_URI . "hasModel> \$object";
 
-STRING;
   $objects = $repository->ri->itqlQuery($query, 'unlimited');
   $content_models = array();
   foreach ($objects as $object) {

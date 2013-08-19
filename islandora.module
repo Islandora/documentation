@@ -305,7 +305,8 @@ function islandora_menu() {
     'access arguments' => array('administer site configuration'),
     'type' => MENU_CALLBACK,
   );
-  $items['restore/islandora'] = array(
+  $items['admin/islandora/restore'] = array(
+    'description' => 'Restore or permanantly remove objects with Deleted status',
     'title' => 'Manage Deleted Objects',
     'file' => 'includes/manage_deleted_objects.inc',
     'page callback' => 'drupal_get_form',
