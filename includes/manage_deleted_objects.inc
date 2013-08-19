@@ -20,7 +20,7 @@ function islandora_deleted_objects_form($form, &$form_state) {
   if (!isset($form_state['stage'])) {
     $form_state['stage'] = 'get_content_models';
   }
-  $form = array();
+
   switch ($form_state['stage']) {
     case 'get_content_models':
       return islandora_delete_form_contentmodels($form, $form_state);
@@ -32,7 +32,6 @@ function islandora_deleted_objects_form($form, &$form_state) {
 
     break;
   }
-  return $form;
 }
 
 /**
