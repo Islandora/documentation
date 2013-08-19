@@ -148,14 +148,14 @@ function islandora_delete_form_select_objects(array $form, array &$form_state) {
     '#attributes' => array('source' => 'restore'),
   );
 
-  if (user_access(FEDORA_PURGE)) {
+  if (user_access(ISLANDORA_PURGE)) {
     $form['purge'] = array(
       '#type' => 'submit',
       '#value' => t('Irrevocably purge selected objects'),
       '#attributes' => array('source' => 'purge'),
     );
   }
-
+  
   return $form;
 }
 
@@ -225,13 +225,13 @@ function islandora_get_deleted_objects($content_models) {
   }
   $tuque = new IslandoraTuque();
   $repository = $tuque->repository;
-  $query = <<<STRING
+  $query = "
 select \$subject \$title \$object from <#ri>
 where ($qualifier)     
 and \$subject <info:fedora/fedora-system:def/model#state> <info:fedora/fedora-system:def/model#Deleted>
 and \$subject<info:fedora/fedora-system:def/model#hasModel> \$object
-and \$subject <dc:title> \$title
-STRING;
+and \$subject <dc:title> \$title";
+
   $objects = $repository->ri->itqlQuery($query, 'unlimited');
   $deleted_objects = array();
   foreach ($objects as $object) {
