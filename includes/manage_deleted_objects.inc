@@ -216,26 +216,29 @@ function islandora_delete_form_contentmodels(array $form, array &$form_state) {
 function islandora_get_deleted_objects($content_models) {
   $tuque = islandora_get_tuque_connection();
   $repository = $tuque->repository;
-  $qualifier = '';
-  $last_content_model = key(array_slice($content_models, -1, 1, TRUE));
-  foreach ($content_models as $content_model) {
-    $qualifier .= "\$subject <" . FEDORA_MODEL_URI . "hasModel> <info:fedora/$content_model>";
-    if ($content_model != $last_content_model) {
-      $qualifier .= ' or ';
-    }
+  $first_contentmodel = array_shift($content_models);
+  $prefix = "PREFIX fm: <" . FEDORA_MODEL_URI . "> ";
+  $select = "SELECT ?subject ?label ?object FROM <#ri> WHERE { ";
+  $where_clause = "{?subject fm:hasModel <info:fedora/$first_contentmodel>;
+                            fm:state fm:Deleted;
+                            fm:hasModel ?object;
+                   }";
+  $suffix = '}';
+  $unions = '';
+  foreach ($content_models as $contentmodel) {
+    $unions .= "UNION {?subject fm:hasModel <info:fedora/$contentmodel>;
+                            fm:state fm:Deleted;
+                            fm:hasModel ?object;
+                   } ";
   }
-
-  $query = "select \$subject \$title \$object from <#ri>";
-  $query .= "where ($qualifier)";
-  $query .= "and \$subject <" . FEDORA_MODEL_URI . "state> <" . FEDORA_MODEL_URI . "Deleted>";
-  $query .= "and \$subject<" . FEDORA_MODEL_URI . "hasModel> \$object ";
-  $query .= "and \$subject <dc:title> \$title";
-  $objects = $repository->ri->itqlQuery($query, 'unlimited');
+  $optional = "OPTIONAL{?subject fm:label ?label}";
+  $query = "$prefix $select $where_clause $unions $optional $suffix";
+  $objects = $repository->ri->sparqlQuery($query, -1);
   $deleted_objects = array();
   foreach ($objects as $object) {
     if ($object['object']['value'] != "fedora-system:FedoraObject-3.0") {
       $pid = $object['subject']['value'];
-      $title = $object['title']['value'];
+      $title = $object['label']['value'];
       $content_model = islandora_object_load($object['object']['value']);
       $deleted_objects[$pid] = array(
         'title' => $title, 'pid' => $pid,
@@ -256,11 +259,15 @@ function islandora_get_contentmodels_with_deleted_members() {
 
   $tuque = new IslandoraTuque();
   $repository = $tuque->repository;
-  $query = "select \$object from <#ri>";
-  $query .= "where \$subject <" . FEDORA_MODEL_URI . "state> <" . FEDORA_MODEL_URI . "Deleted>";
-  $query .= "and \$subject<" . FEDORA_MODEL_URI . "hasModel> \$object";
+  $query = "PREFIX fm: <info:fedora/fedora-system:def/model#>  
+            SELECT DISTINCT ?object FROM <#ri> 
+            WHERE {    
+                   {?subject fm:state fm:Deleted;
+                             fm:hasModel ?object;
+                   }
+                  }";
 
-  $objects = $repository->ri->itqlQuery($query, 'unlimited');
+  $objects = $repository->ri->sparqlQuery($query, -1);
   $content_models = array();
   foreach ($objects as $object) {
     if ($object['object']['value'] != "fedora-system:FedoraObject-3.0") {
