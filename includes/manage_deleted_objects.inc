@@ -95,7 +95,7 @@ function islandora_deleted_objects_form_submit($form, &$form_state) {
 }
 
 /**
- * The first form in the deletion managemnt process.
+ * The second form in the deletion managemnt process.
  *
  * @param array $form
  *   The Drupal form definition.
@@ -112,15 +112,19 @@ function islandora_delete_form_select_objects(array $form, array &$form_state) {
     '#attributes' => array('source' => 'previous'),
   );
   $content_models = $form_state['values']['content_models'];
-  $chosen_contentmodels = array_filter($content_models);
-  $options = islandora_get_deleted_objects($chosen_contentmodels);
-  if (empty($options)) {
+  $valid = function($element) {
+    return $element;
+  };
+  $chosen_contentmodels = array_filter($content_models, $valid);
+
+  if (empty($chosen_contentmodels)) {
     $form['message'] = array(
       '#type' => 'markup',
       '#markup' => t("There are no deleted objects with the selected content models in this repository."),
     );
     return $form;
   }
+  $options = islandora_get_deleted_objects($form_state['values']['mapped_contentmodels']);
   $form['propogate'] = array(
     '#title' => t('Apply changes to related objects?'),
     '#default_value' => TRUE,
@@ -172,6 +176,7 @@ function islandora_delete_form_select_objects(array $form, array &$form_state) {
 function islandora_delete_form_contentmodels(array $form, array &$form_state) {
   module_load_include('inc', 'islandora', 'includes/utilities');
   $contentmodels_with_deleted_members = islandora_get_contentmodels_with_deleted_members();
+  $elegible_contentmodels = array_keys($contentmodels_with_deleted_members);
   if (empty($contentmodels_with_deleted_members)) {
     $form['message'] = array(
       '#type' => 'markup',
@@ -183,10 +188,14 @@ function islandora_delete_form_contentmodels(array $form, array &$form_state) {
     '#type' => 'markup',
     '#markup' => t("Select content models of deleted objects."),
   );
+  $form['mapped_contentmodels'] = array(
+    '#type' => 'hidden',
+    '#value' => $contentmodels_with_deleted_members,
+  );
   $table_element = islandora_content_model_select_table_form_element(NULL);
 
   foreach ($table_element['#options'] as $option) {
-    if (!in_array($option['pid'], $contentmodels_with_deleted_members)) {
+    if (!in_array($option['pid'], $elegible_contentmodels)) {
       unset($table_element['#options'][$option['pid']]);
     }
   }
@@ -216,7 +225,8 @@ function islandora_delete_form_contentmodels(array $form, array &$form_state) {
 function islandora_get_deleted_objects($content_models) {
   $tuque = islandora_get_tuque_connection();
   $repository = $tuque->repository;
-  $first_contentmodel = array_shift($content_models);
+  $candidates = array_keys($content_models);
+  $first_contentmodel = array_shift($candidates);
   $prefix = "PREFIX fm: <" . FEDORA_MODEL_URI . "> ";
   $select = "SELECT ?subject ?label ?object FROM <#ri> WHERE { ";
   $where_clause = "{?subject fm:hasModel <info:fedora/$first_contentmodel>;
@@ -225,11 +235,12 @@ function islandora_get_deleted_objects($content_models) {
                    }";
   $suffix = '}';
   $unions = '';
-  foreach ($content_models as $contentmodel) {
+  foreach ($candidates as $contentmodel) {
     $unions .= "UNION {?subject fm:hasModel <info:fedora/$contentmodel>;
                             fm:state fm:Deleted;
                             fm:hasModel ?object;
-                   } ";
+                   } 
+                ";
   }
   $optional = "OPTIONAL{?subject fm:label ?label}";
   $query = "$prefix $select $where_clause $unions $optional $suffix";
@@ -238,11 +249,11 @@ function islandora_get_deleted_objects($content_models) {
   foreach ($objects as $object) {
     if ($object['object']['value'] != "fedora-system:FedoraObject-3.0") {
       $pid = $object['subject']['value'];
+      $cm_pid = $object['object']['value'];
       $title = $object['label']['value'];
-      $content_model = islandora_object_load($object['object']['value']);
       $deleted_objects[$pid] = array(
         'title' => $title, 'pid' => $pid,
-        'content_model' => $content_model->label,
+        'content_model' => $content_models[$cm_pid],
       );
     }
   }
@@ -260,18 +271,21 @@ function islandora_get_contentmodels_with_deleted_members() {
   $tuque = new IslandoraTuque();
   $repository = $tuque->repository;
   $query = "PREFIX fm: <info:fedora/fedora-system:def/model#>  
-            SELECT DISTINCT ?object FROM <#ri> 
+            SELECT DISTINCT ?object ?label FROM <#ri> 
             WHERE {    
                    {?subject fm:state fm:Deleted;
-                             fm:hasModel ?object;
+                             fm:hasModel ?object; 
                    }
+            OPTIONAL{
+                        ?object fm:label  ?label
+                     }
                   }";
 
   $objects = $repository->ri->sparqlQuery($query, -1);
   $content_models = array();
   foreach ($objects as $object) {
     if ($object['object']['value'] != "fedora-system:FedoraObject-3.0") {
-      $content_models[] = $object['object']['value'];
+      $content_models[$object['object']['value']] = $object['label']['value'];
     }
   }
   return $content_models;
