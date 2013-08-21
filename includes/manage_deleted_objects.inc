@@ -60,11 +60,11 @@ function islandora_deleted_objects_form_submit($form, &$form_state) {
   $objects_to_process = array_filter($form_state['values']['objects_to_process']);
   if ($form_state['clicked_button']['#attributes']['source'] == 'restore') {
     $descriptor = "Restoring";
-    $action = 'islandora_restore_object';
+    $action = 'islandora_restore_object_by_pid';
   }
   if ($form_state['clicked_button']['#attributes']['source'] == 'purge') {
     $descriptor = "Purging";
-    $action = 'islandora_purge_object';
+    $action = 'islandora_purge_object_by_pid';
   }
   $pids_to_restore = $objects_to_process;
   if ($form_state['values']['propogate']) {
@@ -283,7 +283,7 @@ function islandora_get_contentmodels_with_deleted_members() {
  * @param String $pid
  *   PID of object to be restored
  */
-function islandora_restore_object($pid) {
+function islandora_restore_object_by_pid($pid) {
   $fedora_object = islandora_object_load($pid);
   $fedora_object->state = 'A';
 }
@@ -294,7 +294,7 @@ function islandora_restore_object($pid) {
  * @param String $pid
  *   PID of object to be restored
  */
-function islandora_purge_object($pid) {
+function islandora_purge_object_by_pid($pid) {
   $fedora_object = islandora_object_load($pid);
   $fedora_object->repository->purgeObject($pid);
 }
