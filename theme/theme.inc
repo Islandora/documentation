@@ -361,15 +361,12 @@ function theme_islandora_datastream_revert_link(array $vars) {
     }
     $link = "islandora/object/{$datastream->parent->id}/datastream/{$datastream->id}/version/{$vars['version']}/revert";
   }
-  else {
-    $link = "islandora/object/{$datastream->parent->id}/datastream/{$datastream->id}/revert";
-  }
 
   if ($can_revert) {
     return l(t('revert'), $link);
   }
   else {
-    '';
+    return '';
   }
 }
 

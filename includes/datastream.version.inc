@@ -143,7 +143,7 @@ function islandora_delete_datastream_version_form_submit(array $form, array &$fo
  * @param AbstractDatastream $datastream
  *   The datastream to be deleted.
  * @param string $version
- *   The version number of the datastream we are trying to delete.
+ *   The version number of the datastream we are trying to revert to.
  *
  * @return array
  *   The drupal form definition.
@@ -169,11 +169,7 @@ function islandora_revert_datastream_version_form(array $form, array &$form_stat
 /**
  * Submit handler for the revert datastream form.
  *
- * Purges/Delete's the given AbstractDatastream if possible.
- *
- * The ISLANDORA_PRE_PURGE_DATASTREAM_HOOK will query other modules as to
- * whether the given FedoraDatastream
- * should be: blocked from purging; state set to 'Deleted'; or purged.
+ * Reverts the given AbstractDatastream if possible.
  *
  * @param array $form
  *   The Drupal form.
@@ -192,7 +188,7 @@ function islandora_revert_datastream_version_form_submit(array $form, array &$fo
     $datastream_to_revert->url = $datastream_to_revert_to->url;
   }
   else {
-    $filename = file_create_filename('datastream_temp_file', '.');
+    $filename = file_create_filename('datastream_temp_file', 'temporary://');
     $datastream_to_revert_to->getContent($filename);
     $datastream_to_revert->setContentFromFile($filename);
     file_unmanaged_delete($filename);
