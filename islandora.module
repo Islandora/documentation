@@ -1571,4 +1571,3 @@ function islandora_islandora_datastream_modified(AbstractObject $object, Abstrac
   ));
   islandora_derivative_logging($logging_results);
 }
-

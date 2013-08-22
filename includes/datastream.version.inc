@@ -208,4 +208,3 @@ function islandora_revert_datastream_version_form_submit(array $form, array &$fo
 
   $form_state['redirect'] = "islandora/object/{$islandora_object->id}/datastream/{$datastream_to_revert->id}/version";
 }
-

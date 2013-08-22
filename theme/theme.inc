@@ -420,4 +420,3 @@ function theme_islandora_datastream_version_link(array $vars) {
     return '';
   }
 }
-
