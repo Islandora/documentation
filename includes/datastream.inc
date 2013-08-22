@@ -46,9 +46,20 @@ function islandora_view_datastream(AbstractDatastream $datastream, $download = F
     }
   }
 
-  header_remove('Cache-Control');
   header_remove('Expires');
   header('Content-type: ' . $datastream->mimetype);
+  $cache_control = array();
+  if ($datastream->parent->repository->api->connection->username == 'anonymous') {
+    $cache_control[] = 'public';
+  }
+  else {
+    $cache_control[] = 'private';
+  }
+  $cache_control[] = 'must-revalidate';
+  header('Cache-Control: ' . implode(', ', $cache_control));
+  header('Last-Modified: '. $datastream->createdDate->format('D, d M Y H:i:s \G\M\T'));
+  header('Etag: "' . $datastream->createdDate->format('Uu') . '"');
+
   if ($datastream->controlGroup == 'M' || $datastream->controlGroup == 'X') {
     header('Content-length: ' . $datastream->size);
   }
