@@ -64,7 +64,7 @@ function islandora_view_datastream(AbstractDatastream $datastream, $download = F
       header('HTTP/1.1 304 Not Modified');
     }
     elseif ($cache_check === 412) {
-      header('HTTP/1.0 412 Precondition Failed'); 
+      header('HTTP/1.0 412 Precondition Failed');
     }
   }
   islandora_view_datastream_set_cache_headers($datastream);
@@ -72,7 +72,8 @@ function islandora_view_datastream(AbstractDatastream $datastream, $download = F
   drupal_page_is_cacheable(FALSE);
   // Try not to load the file into PHP memory!
   // Close and flush ALL the output buffers!
-  while(@ob_end_flush()) {};
+  while (@ob_end_flush()) {
+  };
 
   // New content needed.
   if ($cache_check === 200) {
@@ -93,13 +94,13 @@ function islandora_view_datastream(AbstractDatastream $datastream, $download = F
 function islandora_parse_http_match_headers($header_value) {
   $matches = array();
   $count = preg_match_all('/(((W\/)?("?)(\*|.+?)\4)(, +)?)/', $header_value, $matches);
-  return $matches[5];  
+  return $matches[5];
 }
 
 /**
  * Validate cache headers.
  *
- * @param AbstractDatastream $datastrea
+ * @param AbstractDatastream $datastream
  *
  * @return int
  *   An integer representing the HTTP response code. One of:
@@ -174,6 +175,7 @@ function islandora_view_datastream_cache_check(AbstractDatastream $datastream) {
  *   The datastream being viewed/downloaded.
  */
 function islandora_view_datastream_set_cache_headers(AbstractDatastream $datastream) {
+  // Force cache revalidation.
   header('Expires: Sun, 19 Nov 1978 05:00:00 GMT');
   $cache_control = array();
   if ($datastream->parent->repository->api->connection->username == 'anonymous') {
@@ -185,7 +187,7 @@ function islandora_view_datastream_set_cache_headers(AbstractDatastream $datastr
   $cache_control[] = 'must-revalidate';
   $cache_control[] = 'max-age=0';
   header('Cache-Control: ' . implode(', ', $cache_control));
-  header('Last-Modified: '. $datastream->createdDate->format('D, d M Y H:i:s \G\M\T'));
+  header('Last-Modified: ' . $datastream->createdDate->format('D, d M Y H:i:s \G\M\T'));
   if (isset($datastream->checksum)) {
     header("Etag: \"{$datastream->checksum}\"");
   }
