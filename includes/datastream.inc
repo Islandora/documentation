@@ -101,6 +101,7 @@ function islandora_parse_http_match_headers($header_value) {
  * Validate cache headers.
  *
  * @param AbstractDatastream $datastream
+ *   The datastream for which to check the request headers against.
  *
  * @return int
  *   An integer representing the HTTP response code. One of:
