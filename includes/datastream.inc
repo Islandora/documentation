@@ -46,20 +46,7 @@ function islandora_view_datastream(AbstractDatastream $datastream, $download = F
     }
   }
 
-  header_remove('Expires');
   header('Content-type: ' . $datastream->mimetype);
-  $cache_control = array();
-  if ($datastream->parent->repository->api->connection->username == 'anonymous') {
-    $cache_control[] = 'public';
-  }
-  else {
-    $cache_control[] = 'private';
-  }
-  $cache_control[] = 'must-revalidate';
-  header('Cache-Control: ' . implode(', ', $cache_control));
-  header('Last-Modified: '. $datastream->createdDate->format('D, d M Y H:i:s \G\M\T'));
-  header('Etag: "' . $datastream->createdDate->format('Uu') . '"');
-
   if ($datastream->controlGroup == 'M' || $datastream->controlGroup == 'X') {
     header('Content-length: ' . $datastream->size);
   }
@@ -70,11 +57,137 @@ function islandora_view_datastream(AbstractDatastream $datastream, $download = F
     $filename = $datastream->label . '.' . $extension;
     header("Content-Disposition: attachment; filename=\"$filename\"");
   }
+
+  $cache_check = islandora_view_datastream_cache_check($datastream);
+  if ($cache_check !== 200) {
+    if ($cache_check === 304) {
+      header('HTTP/1.1 304 Not Modified');
+    }
+    elseif ($cache_check === 412) {
+      header('HTTP/1.0 412 Precondition Failed'); 
+    }
+  }
+  islandora_view_datastream_set_cache_headers($datastream);
+
   drupal_page_is_cacheable(FALSE);
   // Try not to load the file into PHP memory!
-  ob_end_flush();
-  $datastream->getContent('php://output');
+  // Close and flush ALL the output buffers!
+  while(@ob_end_flush()) {};
+
+  // New content needed.
+  if ($cache_check === 200) {
+    $datastream->getContent('php://output');
+  }
   exit();
+}
+
+/**
+ * Parse "etags" from HTTP If-Match or If-None-Match headers.
+ *
+ * @param string $header_value
+ *   The value from the headers.
+ *
+ * @return array
+ *   An array containing all the etags present.
+ */
+function islandora_parse_http_match_headers($header_value) {
+  $matches = array();
+  $count = preg_match_all('/(((W\/)?("?)(\*|.+?)\4)(, +)?)/', $header_value, $matches);
+  return $matches[5];  
+}
+
+/**
+ * Validate cache headers.
+ *
+ * @param AbstractDatastream $datastrea
+ *
+ * @return int
+ *   An integer representing the HTTP response code. One of:
+ *   - 200: Proceed as normal.
+ *   - 304: Resource hasn't changed; pass cache validation.
+ *   - 412: Resource has channged; fail cache validation.
+ * 
+ * @see http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html
+ */
+function islandora_view_datastream_cache_check(AbstractDatastream $datastream) {
+  // Let's assume that if we get here, we'll be able to complete the request.
+  $return = 200;
+
+  if (isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])) {
+    $modified_since = DateTime::createFromFormat('D, d M Y H:i:s e', $_SERVER['HTTP_IF_MODIFIED_SINCE']);
+    if ($datastream->createdDate->getTimestamp() - $modified_since->getTimestamp() > 0) {
+      // Changed!
+      return $return;
+    }
+    else {
+      $return = 304;
+    }
+  }
+  if ($return === 200 && isset($_SERVER['HTTP_IF_UNMODIFIED_SINCE'])) {
+    $unmodified_since = DateTime::createFromFormat('D, d M Y H:i:s e', $_SERVER['HTTP_IF_UNMODIFIED_SINCE']);
+    if ($datastream->createdDate->getTimestamp() !== $unmodified_since->getTimestamp()) {
+      // Changed!
+      $return = 412;
+    }
+    else {
+      return $return;
+    }
+  }
+
+  // Only consider Etags we have provided.
+  if (isset($datastream->checksum)) {
+    $tags = array();
+    foreach ($datastream as $offset => $version) {
+      if (isset($version->checksum)) {
+        $tags[$offset] = $version->checksum;
+      }
+    }
+
+    if ($return === 200 && isset($_SERVER['HTTP_IF_MATCH'])) {
+      $request_tags = islandora_parse_http_match_headers($_SERVER['HTTP_IF_MATCH']);
+      if (in_array('*', $request_tags) || count(array_intersect($tags, $request_tags)) > 0) {
+        // There's a match... Let things go ahead.
+        return $return;
+      }
+      else {
+        $return = 412;
+      }
+    }
+    if (in_array($return, array(200, 304), TRUE) && isset($_SERVER['HTTP_IF_NONE_MATCH'])) {
+      $request_tags = islandora_parse_http_match_headers($_SERVER['HTTP_IF_NONE_MATCH']);
+      if (in_array('*', $request_tags) || count(array_intersect($tags, $request_tags)) > 0) {
+        $return = 304;
+      }
+      else {
+        $return = 200;
+      }
+    }
+  }
+
+  return $return;
+}
+
+/**
+ * Set various HTTP headers for caching.
+ *
+ * @param AbstractDatastream $datastream
+ *   The datastream being viewed/downloaded.
+ */
+function islandora_view_datastream_set_cache_headers(AbstractDatastream $datastream) {
+  header_remove('Expires');
+  $cache_control = array();
+  if ($datastream->parent->repository->api->connection->username == 'anonymous') {
+    $cache_control[] = 'public';
+  }
+  else {
+    $cache_control[] = 'private';
+  }
+  $cache_control[] = 'must-revalidate';
+  header('Cache-Control: ' . implode(', ', $cache_control));
+  header('Last-Modified: '. $datastream->createdDate->format('D, d M Y H:i:s \G\M\T'));
+  if (isset($datastream->checksum)) {
+    header("Etag: \"{$datastream->checksum}\"");
+  }
 }
 
 /**
