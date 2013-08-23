@@ -174,7 +174,7 @@ function islandora_view_datastream_cache_check(AbstractDatastream $datastream) {
  *   The datastream being viewed/downloaded.
  */
 function islandora_view_datastream_set_cache_headers(AbstractDatastream $datastream) {
-  header_remove('Expires');
+  header('Expires: Sun, 19 Nov 1978 05:00:00 GMT');
   $cache_control = array();
   if ($datastream->parent->repository->api->connection->username == 'anonymous') {
     $cache_control[] = 'public';
@@ -183,6 +183,7 @@ function islandora_view_datastream_set_cache_headers(AbstractDatastream $datastr
     $cache_control[] = 'private';
   }
   $cache_control[] = 'must-revalidate';
+  $cache_control[] = 'max-age=0';
   header('Cache-Control: ' . implode(', ', $cache_control));
   header('Last-Modified: '. $datastream->createdDate->format('D, d M Y H:i:s \G\M\T'));
   if (isset($datastream->checksum)) {
