@@ -6,7 +6,7 @@
  */
 
 /**
- * Manages the two deletion management forms.
+ * The deletion management prep form.
  *
  * @param array $form
  *   The Drupal form definition.
@@ -16,48 +16,180 @@
  * @return array
  *   The Drupal form definition.
  */
-function islandora_deleted_objects_form($form, &$form_state) {
-  if (!isset($form_state['stage'])) {
-    $form_state['stage'] = 'get_content_models';
+function islandora_deleted_objects_prep_form($form, $form_state, $serialized_chosen = NULL) {
+  module_load_include('inc', 'islandora', 'includes/utilities');
+  $chosen_contentmodels = array();
+  if ($serialized_chosen) {
+    $chosen_contentmodels = unserialize($serialized_chosen);
   }
-  $form = array();
-  switch ($form_state['stage']) {
-    case 'get_content_models':
-      $form = islandora_delete_form_contentmodels($form, $form_state);
-
-      break;
-
-    case 'get_objects':
-      $form = islandora_delete_form_select_objects($form, $form_state);
-
-      break;
+  $contentmodels_with_deleted_members = islandora_get_contentmodels_with_deleted_members();
+  $elegible_contentmodels = array_keys($contentmodels_with_deleted_members);
+  if (empty($contentmodels_with_deleted_members)) {
+    $form['message'] = array(
+      '#type' => 'markup',
+      '#markup' => t("There are no deleted objects in this repository."),
+    );
+    return $form;
   }
+  $form['message'] = array(
+    '#type' => 'markup',
+    '#markup' => t("Select content models of deleted objects."),
+  );
+  $form['mapped_contentmodels'] = array(
+    '#type' => 'hidden',
+    '#value' => $contentmodels_with_deleted_members,
+  );
+  $table_element = islandora_content_model_select_table_form_element(NULL);
+
+  foreach ($table_element['#options'] as $option) {
+    if (!in_array($option['pid'], $elegible_contentmodels)) {
+      unset($table_element['#options'][$option['pid']]);
+    }
+  }
+
+  foreach ($table_element['#options'] as $option) {
+    if (array_key_exists($option['pid'], $chosen_contentmodels)) {
+      $table_element['#default_value'][$option['pid']] = TRUE;
+    }
+  }
+
+  $form['contentmodels'] = $table_element;
+  $form['next'] = array(
+    '#type' => 'submit',
+    '#value' => t('Next'),
+  );
+
   return $form;
 }
 
 /**
- * Submit handler for deletion management.
+ * Submit handler for deletion management prep form.
  *
  * @param array $form
  *   The form.
  * @param array $form_state
  *   The form state.
  */
-function islandora_deleted_objects_form_submit($form, &$form_state) {
-  if (isset($form_state['clicked_button']['#attributes']['source']) && $form_state['clicked_button']['#attributes']['source'] == 'previous') {
-    $form_state['rebuild'] = TRUE;
-    $form_state['stage'] = 'get_content_models';
-    return;
+function islandora_deleted_objects_prep_form_submit($form, $form_state) {
+  $content_models = $form_state['values']['contentmodels'];
+  $chosen = function($element) {
+    return $element;
+  };
+  $serialized_contentmodels = serialize(array_filter($content_models, $chosen));
+  drupal_goto("admin/islandora/restore/manage/$serialized_contentmodels");
+}
+
+/**
+ * The deletion management prep form.
+ *
+ * @param array $form
+ *   The Drupal form definition.
+ * @param array $form_state
+ *   The Drupal form state.
+ *
+ * @return array
+ *   The Drupal form definition.
+ */
+function islandora_deleted_objects_manage_form($form, $form_state, $serialized_chosen = NULL) {
+
+  $form['previous'] = array(
+    '#type' => 'submit',
+    '#value' => t('Previous'),
+    '#attributes' => array('source' => 'previous'),
+  );
+
+  $chosen_contentmodels = unserialize($serialized_chosen);
+  $content_models_with_deleted = islandora_get_contentmodels_with_deleted_members();
+  foreach ($chosen_contentmodels as $contentmodel) {
+    if (!array_key_exists($contentmodel, $content_models_with_deleted)) {
+      unset($chosen_contentmodels[$contentmodel]);
+    }
   }
 
+  if (empty($chosen_contentmodels)) {
+    $form['message'] = array(
+      '#type' => 'markup',
+      '#markup' => t("There are no deleted objects with the selected content models in this repository."),
+    );
+    return $form;
+  }
+  if (is_array($chosen_contentmodels)) {
+    foreach ($chosen_contentmodels as $key => $value) {
+      if (in_array($key, $content_models_with_deleted)) {
+        $chosen_contentmodels[$key] = $content_models_with_deleted[$key];
+      }
+    }
+  }
+
+  $options = islandora_get_deleted_objects($chosen_contentmodels);
+  $per_page = 25;
+  if (count($options) < 28) {
+    $per_page = count($options);
+  }
+  $current_page = pager_default_initialize(count($options), $per_page);
+  $options_this_page = array_slice($options, $current_page * $per_page, $per_page);
+  foreach ($options_this_page as &$option) {
+    $option['content_model'] = $content_models_with_deleted[$option['content_model']];
+  }
+  $form['serialized_chosen'] = array(
+    '#type' => 'hidden',
+    '#value' => $serialized_chosen,
+  );
+  $form['pager'] = array(
+    '#type' => 'markup',
+    '#markup' => theme('pager', array('quantity', count($options))),
+  );
+  $form['propogate'] = array(
+    '#title' => t('Apply changes to related objects?'),
+    '#default_value' => TRUE,
+    '#description' => t("Objects associated with selected objects will also be restored. ie page objects associated with a book object."),
+    '#type' => 'checkbox',
+  );
+  $form['chosen'] = array(
+    '#type' => 'hidden',
+    '#value' => $chosen_contentmodels,
+  );
+  $form['objects_to_process'] = array(
+    '#type' => 'tableselect',
+    '#header' => array(
+      'title' => t('Name'),
+      'pid' => t('PID'),
+      'content_model' => t('Content Model'),
+    ),
+    '#multiple' => TRUE,
+    '#options' => $options_this_page,
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Restore selected objects'),
+    '#attributes' => array('source' => 'restore'),
+  );
+  if (user_access(FEDORA_PURGE)) {
+    $form['purge'] = array(
+      '#type' => 'submit',
+      '#value' => t('Irrevocably purge selected objects'),
+      '#attributes' => array('source' => 'purge'),
+    );
+  }
+  return $form;
+}
+
+/**
+ * Submit handler for deletion management form.
+ *
+ * @param array $form
+ *   The form.
+ * @param array $form_state
+ *   The form state.
+ */
+function islandora_deleted_objects_manage_form_submit($form, $form_state) {
   module_load_include('inc', 'islandora', 'includes/utilities');
-  if ($form_state['stage'] == 'get_content_models') {
-    $form_state['rebuild'] = TRUE;
-    $form_state['stage'] = 'get_objects';
-    return;
-  }
+  $serialized_chosen = isset($form_state['values']['serialized_chosen']) ? $form_state['values']['serialized_chosen'] : NULL;
 
-  $objects_to_process = array_filter($form_state['values']['objects_to_process']);
+  if (isset($form_state['clicked_button']['#attributes']['source']) && $form_state['clicked_button']['#attributes']['source'] == 'previous') {
+    drupal_goto("admin/islandora/restore/prep/$serialized_chosen");
+  }
   if ($form_state['clicked_button']['#attributes']['source'] == 'restore') {
     $descriptor = "Restoring";
     $action = 'islandora_restore_object_by_pid';
@@ -66,6 +198,7 @@ function islandora_deleted_objects_form_submit($form, &$form_state) {
     $descriptor = "Purging";
     $action = 'islandora_purge_object_by_pid';
   }
+  $objects_to_process = array_filter($form_state['values']['objects_to_process']);
   $pids_to_restore = $objects_to_process;
   if ($form_state['values']['propogate']) {
     foreach ($objects_to_process as $pid) {
@@ -92,128 +225,7 @@ function islandora_deleted_objects_form_submit($form, &$form_state) {
     );
   }
   batch_set($batch);
-}
-
-/**
- * The second form in the deletion managemnt process.
- *
- * @param array $form
- *   The Drupal form definition.
- * @param array $form_state
- *   The Drupal form state.
- *
- * @return array
- *   The Drupal form definition.
- */
-function islandora_delete_form_select_objects(array $form, array &$form_state) {
-  $form['previous'] = array(
-    '#type' => 'submit',
-    '#value' => t('Previous'),
-    '#attributes' => array('source' => 'previous'),
-  );
-  $content_models = $form_state['values']['content_models'];
-  $valid = function($element) {
-    return $element;
-  };
-  $chosen_contentmodels = array_filter($content_models, $valid);
-
-  if (empty($chosen_contentmodels)) {
-    $form['message'] = array(
-      '#type' => 'markup',
-      '#markup' => t("There are no deleted objects with the selected content models in this repository."),
-    );
-    return $form;
-  }
-  $options = islandora_get_deleted_objects($form_state['values']['mapped_contentmodels']);
-  $form['propogate'] = array(
-    '#title' => t('Apply changes to related objects?'),
-    '#default_value' => TRUE,
-    '#description' => t("Objects associated with selected objects will also be restored. ie page objects associated with a book object."),
-    '#type' => 'checkbox',
-  );
-  $form['chosen'] = array(
-    '#type' => 'hidden',
-    '#value' => $chosen_contentmodels,
-  );
-  $form['objects_to_process'] = array(
-    '#type' => 'tableselect',
-    '#header' => array(
-      'title' => t('Name'),
-      'pid' => t('PID'),
-      'content_model' => t('Content Model'),
-    ),
-    '#multiple' => TRUE,
-    '#options' => $options,
-  );
-
-  $form['submit'] = array(
-    '#type' => 'submit',
-    '#value' => t('Restore selected objects'),
-    '#attributes' => array('source' => 'restore'),
-  );
-  if (user_access(FEDORA_PURGE)) {
-    $form['purge'] = array(
-      '#type' => 'submit',
-      '#value' => t('Irrevocably purge selected objects'),
-      '#attributes' => array('source' => 'purge'),
-    );
-  }
-
-  return $form;
-}
-
-/**
- * The first form in the deletion management process.
- *
- * @param array $form
- *   The Drupal form definition.
- * @param array $form_state
- *   The Drupal form state.
- *
- * @return array
- *   The Drupal form definition.
- */
-function islandora_delete_form_contentmodels(array $form, array &$form_state) {
-  module_load_include('inc', 'islandora', 'includes/utilities');
-  $contentmodels_with_deleted_members = islandora_get_contentmodels_with_deleted_members();
-  $elegible_contentmodels = array_keys($contentmodels_with_deleted_members);
-  if (empty($contentmodels_with_deleted_members)) {
-    $form['message'] = array(
-      '#type' => 'markup',
-      '#markup' => t("There are no deleted objects in this repository."),
-    );
-    return $form;
-  }
-  $form['message'] = array(
-    '#type' => 'markup',
-    '#markup' => t("Select content models of deleted objects."),
-  );
-  $form['mapped_contentmodels'] = array(
-    '#type' => 'hidden',
-    '#value' => $contentmodels_with_deleted_members,
-  );
-  $table_element = islandora_content_model_select_table_form_element(NULL);
-
-  foreach ($table_element['#options'] as $option) {
-    if (!in_array($option['pid'], $elegible_contentmodels)) {
-      unset($table_element['#options'][$option['pid']]);
-    }
-  }
-  if (isset($form_state['values']['chosen'])) {
-    $chosen_contentmodels = $form_state['values']['chosen'];
-    foreach ($table_element['#options'] as $option) {
-      if (in_array($option['pid'], $chosen_contentmodels)) {
-        $table_element['#default_value'][$option['pid']] = TRUE;
-      }
-    }
-  }
-  $form['content_models'] = $table_element;
-  $form['next'] = array(
-    '#type' => 'submit',
-    '#value' => t('Next'),
-  );
-
-  return $form;
+  batch_process("admin/islandora/restore/manage/$serialized_chosen");
 }
 
 /**
@@ -228,7 +240,7 @@ function islandora_get_deleted_objects($content_models) {
   $candidates = array_keys($content_models);
   $first_contentmodel = array_shift($candidates);
   $prefix = "PREFIX fm: <" . FEDORA_MODEL_URI . "> ";
-  $select = "SELECT ?subject ?label ?object FROM <#ri> WHERE { ";
+  $select = "SELECT DISTINCT ?subject ?label ?object FROM <#ri> WHERE { ";
   $where_clause = "{?subject fm:hasModel <info:fedora/$first_contentmodel>;
                             fm:state fm:Deleted;
                             fm:hasModel ?object;
