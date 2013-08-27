@@ -297,6 +297,15 @@ function islandora_menu() {
     'access arguments' => array(ISLANDORA_VIEW_DATASTREAM_HISTORY, 4),
     'load arguments' => array(2),
   );
+  $items['islandora/object/%islandora_object/printer'] = array(
+    'title' => 'Print Object',
+    'page callback' => 'islandora_print_object',
+    'page arguments' => array(2),
+    'type' => MENU_CALLBACK,
+    'access callback' => 'islandora_object_access',
+    'access arguments' => array(FEDORA_VIEW_OBJECTS, 2),
+    'load arguments' => array(2),
+  );
   $items['islandora/object/%islandora_object/download_clip'] = array(
     'page callback' => 'islandora_download_clip',
     'page arguments' => array(2),
@@ -338,6 +347,12 @@ function islandora_theme() {
     'islandora_default' => array(
       'file' => 'theme/theme.inc',
       'template' => 'theme/islandora-object',
+      'variables' => array('islandora_object' => NULL),
+    ),
+    // Default edit page.
+    'islandora_default_print' => array(
+      'file' => 'theme/theme.inc',
+      'template' => 'theme/islandora-object-print',
       'variables' => array('islandora_object' => NULL),
     ),
     // Default edit page.
@@ -454,6 +469,22 @@ function islandora_permission() {
   );
 }
 
+/**
+ * Renders the print page for the given object.
+ *
+ * Modules can either implement preprocess functions to append content onto the
+ * 'content' variable, or override the display by providing a theme suggestion.
+ *
+ * @param AbstractObject $object
+ *   The object.
+ *
+ * @return array
+ *   A renderable array.
+ */
+function islandora_print_object(AbstractObject $object) {
+  drupal_set_title($object->label);
+  return theme('islandora_object_print', array('object' => $object));
+}
 /**
  * Implements hook_forms().
  */
