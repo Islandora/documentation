@@ -85,6 +85,15 @@ function islandora_view_datastream(AbstractDatastream $datastream, $download = F
 /**
  * Parse "etags" from HTTP If-Match or If-None-Match headers.
  *
+ * Parses from the CSV-like struture supported by HTTP headers into an array,
+ * so `"asdf", "fdsa", W/"2132"` should become an array containing the strings:
+ * - asdf
+ * - fdsa
+ * - 2132
+ *
+ * @see http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.24
+ * @see http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.26
+ *
  * @param string $header_value
  *   The value from the headers.
  *
@@ -93,7 +102,9 @@ function islandora_view_datastream(AbstractDatastream $datastream, $download = F
  */
 function islandora_parse_http_match_headers($header_value) {
   $matches = array();
+  // Match the CSV-like structure supported by the HTTP headers.
   $count = preg_match_all('/(((W\/)?("?)(\*|.+?)\4)(, +)?)/', $header_value, $matches);
+  // The fifth sub-expression/group is which will contain the etags.
   return $matches[5];
 }
 
@@ -105,13 +116,17 @@ function islandora_parse_http_match_headers($header_value) {
  *
  * @return int
  *   An integer representing the HTTP response code. One of:
- *   - 200: Proceed as normal.
+ *   - 200: Proceed as normal. (Full download).
  *   - 304: Resource hasn't changed; pass cache validation.
  *   - 412: Resource has channged; fail cache validation.
  * 
  * @see http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html
  */
 function islandora_view_datastream_cache_check(AbstractDatastream $datastream) {
+  if (!variable_get('islandora_use_datastream_cache_headers', TRUE)) {
+    return 200;
+  }
+
   // Let's assume that if we get here, we'll be able to complete the request.
   $return = 200;
 
