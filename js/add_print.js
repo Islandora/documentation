@@ -10,7 +10,6 @@
   $(document).ready(function() {
     $('.tabs .primary').append('<img id="print_btn" title="Print" src="' + Drupal.settings.basePath + Drupal.settings.islandora.print_img + '"></img>');
     $('#print_btn').css("cursor","pointer");
-    console.log(Drupal.settings.basePath + Drupal.settings.islandora.print_link);
     $('#print_btn').click(function() {
       window.location=Drupal.settings.basePath + Drupal.settings.islandora.print_link;
     });
