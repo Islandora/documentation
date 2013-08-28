@@ -65,7 +65,10 @@ class IslandoraDatastreamCacheTestCase extends IslandoraWebTestCase {
     }
   }
 
-  public function createTestObject() {
+  /**
+   * Create our test object.
+   */
+  protected function createTestObject() {
     $object = $this->repository->constructObject('test:test');
     $object->label = 'Test object';
     $object->models = 'test:model';
