@@ -279,11 +279,11 @@ function islandora_get_contentmodels_with_deleted_members() {
 
   $tuque = new IslandoraTuque();
   $repository = $tuque->repository;
-  $query = "PREFIX fm: <info:fedora/fedora-system:def/model#>  
-            SELECT DISTINCT ?object ?label FROM <#ri> 
-            WHERE {    
+  $query = "PREFIX fm: <info:fedora/fedora-system:def/model#>
+    SELECT DISTINCT ?object ?label FROM <#ri>
+            WHERE {
                    {?subject fm:state fm:Deleted;
-                             fm:hasModel ?object; 
+                             fm:hasModel ?object;
                    }
             OPTIONAL{
                         ?object fm:label  ?label
