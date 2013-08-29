@@ -191,21 +191,27 @@ function islandora_view_datastream_cache_check(AbstractDatastream $datastream) {
  *   The datastream being viewed/downloaded.
  */
 function islandora_view_datastream_set_cache_headers(AbstractDatastream $datastream) {
-  // Force cache revalidation.
-  header('Expires: Sun, 19 Nov 1978 05:00:00 GMT');
-  $cache_control = array();
-  if ($datastream->parent->repository->api->connection->username == 'anonymous') {
-    $cache_control[] = 'public';
+  if (variable_get('islandora_use_datastream_cache_headers', TRUE)) {
+    // Force cache revalidation.
+    header('Expires: Sun, 19 Nov 1978 05:00:00 GMT');
+    $cache_control = array();
+    if ($datastream->parent->repository->api->connection->username == 'anonymous') {
+      $cache_control[] = 'public';
+    }
+    else {
+      $cache_control[] = 'private';
+    }
+    $cache_control[] = 'must-revalidate';
+    $cache_control[] = 'max-age=0';
+    header('Cache-Control: ' . implode(', ', $cache_control));
+    header('Last-Modified: ' . $datastream->createdDate->format('D, d M Y H:i:s \G\M\T'));
+    if (isset($datastream->checksum)) {
+      header("Etag: \"{$datastream->checksum}\"");
+    }
   }
   else {
-    $cache_control[] = 'private';
-  }
-  $cache_control[] = 'must-revalidate';
-  $cache_control[] = 'max-age=0';
-  header('Cache-Control: ' . implode(', ', $cache_control));
-  header('Last-Modified: ' . $datastream->createdDate->format('D, d M Y H:i:s \G\M\T'));
-  if (isset($datastream->checksum)) {
-    header("Etag: \"{$datastream->checksum}\"");
+    header_remove('Cache-Control');
+    header_remove('Expires'); 
   }
 }
 
