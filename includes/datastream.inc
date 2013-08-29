@@ -118,8 +118,8 @@ function islandora_parse_http_match_headers($header_value) {
  *   An integer representing the HTTP response code. One of:
  *   - 200: Proceed as normal. (Full download).
  *   - 304: Resource hasn't changed; pass cache validation.
- *   - 412: Resource has channged; fail cache validation.
- * 
+ *   - 412: Resource has changed; fail cache validation.
+ *
  * @see http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html
  */
 function islandora_view_datastream_cache_check(AbstractDatastream $datastream) {

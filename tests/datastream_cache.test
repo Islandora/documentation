@@ -2,13 +2,7 @@
 
 /**
  * @file
- * Tests to see if the hooks get called when appropriate.
- *
- * In the test module 'islandora_hooks_test' there are implementations
- * of hooks being tested. These implementations modifies the session, and
- * that's how we test if the hook gets called.
- *
- * To make sense of these tests reference islandora_hooks_test.module.
+ * Tests to verify the cache headers we provide.
  */
 
 class IslandoraDatastreamCacheTestCase extends IslandoraWebTestCase {
