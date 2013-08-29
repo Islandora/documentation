@@ -333,7 +333,7 @@ function islandora_menu() {
     'file' => 'includes/manage_deleted_objects.inc',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('islandora_deleted_objects_manage_form'),
-    'type' => MENU_NORMAL_ITEM,
+    'type' => MENU_SUGGESTED_ITEM,
     'access arguments' => array(ISLANDORA_MANAGE_DELETED_OBJECTS),
   );
 
