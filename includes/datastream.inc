@@ -211,7 +211,7 @@ function islandora_view_datastream_set_cache_headers(AbstractDatastream $datastr
   }
   else {
     header_remove('Cache-Control');
-    header_remove('Expires'); 
+    header_remove('Expires');
   }
 }
 
