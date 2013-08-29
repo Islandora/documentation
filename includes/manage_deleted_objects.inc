@@ -45,9 +45,6 @@ function islandora_deleted_objects_prep_form($form, $form_state, $serialized_cho
     if (!in_array($option['pid'], $elegible_contentmodels)) {
       unset($table_element['#options'][$option['pid']]);
     }
-  }
-
-  foreach ($table_element['#options'] as $option) {
     if (array_key_exists($option['pid'], $chosen_contentmodels)) {
       $table_element['#default_value'][$option['pid']] = TRUE;
     }
