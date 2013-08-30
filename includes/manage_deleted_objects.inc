@@ -139,7 +139,7 @@ function islandora_deleted_objects_manage_form($form, $form_state, $serialized_c
   $form['propogate'] = array(
     '#title' => t('Apply changes to related objects?'),
     '#default_value' => TRUE,
-    '#description' => t("Objects associated with selected objects will also be restored. ie page objects associated with a book object."),
+    '#description' => t("Objects associated with selected objects will also be purged/restored. ie page objects associated with a book object."),
     '#type' => 'checkbox',
   );
   $form['chosen'] = array(
