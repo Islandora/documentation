@@ -162,7 +162,7 @@ function islandora_deleted_objects_manage_form($form, $form_state, $serialized_c
     '#value' => t('Restore selected objects'),
     '#attributes' => array('source' => 'restore'),
   );
-  if (user_access(FEDORA_PURGE)) {
+  if (user_access(ISLANDORA_PURGE)) {
     $form['purge'] = array(
       '#type' => 'submit',
       '#value' => t('Irrevocably purge selected objects'),
@@ -200,12 +200,9 @@ function islandora_deleted_objects_manage_form_submit($form, $form_state) {
   if ($form_state['values']['propogate']) {
     foreach ($objects_to_process as $pid) {
       $fedora_object = islandora_object_load($pid);
-      $hooks = islandora_build_hook_list(ISLANDORA_UPDATE_RELATED_OBJECTS_PROPERTIES_HOOK, $fedora_object->models);
-      foreach ($hooks as $hook) {
-        $temp = module_invoke_all($hook, $fedora_object);
-        if (!empty($temp)) {
-          $pids_to_restore = array_merge_recursive($pids_to_restore, $temp);
-        }
+      $temp = islandora_invoke_hook_list(ISLANDORA_UPDATE_RELATED_OBJECTS_PROPERTIES_HOOK, $fedora_object->models, array($fedora_object));
+      if (!empty($temp)) {
+        $pids_to_restore = array_merge_recursive($pids_to_restore, $temp);
       }
     }
   }
