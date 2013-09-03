@@ -21,7 +21,7 @@
 function islandora_object_properties_form(array $form, array &$form_state, AbstractObject $object) {
   drupal_set_title($object->label);
   $form_state['object'] = $object;
-  $temp = islandora_invoke_hook_list(ISLANDORA_UPDATE_RELATED_OBJECTS_PROPERTIES_HOOK, $fedora_object->models, array($fedora_object));
+  $temp = islandora_invoke_hook_list(ISLANDORA_UPDATE_RELATED_OBJECTS_PROPERTIES_HOOK, $object->models, array($object));
   $related_objects_pids = array();
   if (!empty($temp)) {
     $pids_to_restore = array_merge_recursive($related_objects_pids, $temp);
