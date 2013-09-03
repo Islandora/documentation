@@ -648,3 +648,10 @@ function hook_islandora_derivative() {
 function hook_CMODEL_PID_islandora_derivative() {
 
 }
+
+/**
+ * Alters breadcrumbs used on Solr search results and collection views.
+ */
+function hook_islandora_breadcrumbs_alter(&$breadcrumbs) {
+
+}

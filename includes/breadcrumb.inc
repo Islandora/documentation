@@ -27,6 +27,7 @@
 function islandora_get_breadcrumbs($object) {
   $breadcrumbs = islandora_get_breadcrumbs_recursive($object->id, $object->repository);
   array_pop($breadcrumbs);
+  drupal_alter('islandora_breadcrumbs', $breadcrumbs);
   return $breadcrumbs;
 }
 
