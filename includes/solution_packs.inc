@@ -679,11 +679,17 @@ function islandora_viewers_form($variable_id = NULL, $mimetype = NULL, $model = 
 function islandora_get_viewers($mimetype = NULL, $content_model = NULL) {
   $viewers = array();
   $defined_viewers = module_invoke_all('islandora_viewer_info');
+
+  if(!is_array($mimetype)) {
+    $mimetype = array($mimetype);
+  }
+
   // Filter viewers by MIME type.
   foreach ($defined_viewers as $key => $value) {
     $value['mimetype'] = isset($value['mimetype']) ? $value['mimetype'] : array();
     $value['model'] = isset($value['model']) ? $value['model'] : array();
-    if (in_array($mimetype, $value['mimetype']) OR in_array($content_model, $value['model'])) {
+    if (array_intersect($mimetype, $value['mimetype']) OR in_array($content_model, $value['model'])) {
+    //if (in_array($mimetype, $value['mimetype']) OR in_array($content_model, $value['model'])) {
       $viewers[$key] = $value;
     }
   }
