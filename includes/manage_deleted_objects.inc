@@ -88,7 +88,6 @@ function islandora_deleted_objects_prep_form_submit($form, $form_state) {
  *   The Drupal form definition.
  */
 function islandora_deleted_objects_manage_form($form, $form_state, $serialized_chosen = NULL) {
-
   $form['previous'] = array(
     '#type' => 'submit',
     '#value' => t('Previous'),
@@ -110,6 +109,7 @@ function islandora_deleted_objects_manage_form($form, $form_state, $serialized_c
     );
     return $form;
   }
+
   if (is_array($chosen_contentmodels)) {
     foreach ($chosen_contentmodels as $key => $value) {
       if (in_array($key, $content_models_with_deleted)) {
@@ -117,6 +117,7 @@ function islandora_deleted_objects_manage_form($form, $form_state, $serialized_c
       }
     }
   }
+
   $tuque = islandora_get_tuque_connection();
   $repository = $tuque->repository;
   // Query brings back fedora-system:FedoraObject-3.0, doubling the results.
@@ -126,9 +127,10 @@ function islandora_deleted_objects_manage_form($form, $form_state, $serialized_c
     $limit = $total;
   }
   $current_page = pager_default_initialize($total, $limit);
-  $offset = $current_page * $limit * 2;
   $query_limit = $limit * 2;
+  $offset = $current_page * $query_limit;
   $options = islandora_get_deleted_objects($chosen_contentmodels, $query_limit, $offset);
+
   foreach ($options as &$option) {
     $option['content_model'] = $content_models_with_deleted[$option['content_model']];
   }
@@ -230,7 +232,7 @@ function islandora_deleted_objects_manage_form_submit($form, $form_state) {
  * Gets PIDS of all deleted objects.
  *
  * @return array
- *   array of pids
+ *   PIDS of deleted objects
  */
 function islandora_get_deleted_objects($content_models, $limit, $offset) {
   $tuque = islandora_get_tuque_connection();
@@ -324,7 +326,7 @@ function islandora_get_deleted_query($content_models, $offset = 0) {
                             fm:state fm:Deleted;
                             fm:hasModel ?object;
                    }";
-  $suffix = "} ORDER BY ?subject offset $offset";
+  $suffix = "} ORDER BY ?subject OFFSET $offset";
   $unions = '';
   foreach ($candidates as $contentmodel) {
     $unions .= "UNION {?subject fm:hasModel <info:fedora/$contentmodel>;
