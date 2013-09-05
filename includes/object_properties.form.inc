@@ -24,7 +24,7 @@ function islandora_object_properties_form(array $form, array &$form_state, Abstr
   $temp = islandora_invoke_hook_list(ISLANDORA_UPDATE_RELATED_OBJECTS_PROPERTIES_HOOK, $object->models, array($object));
   $related_objects_pids = array();
   if (!empty($temp)) {
-    $pids_to_restore = array_merge_recursive($related_objects_pids, $temp);
+    $related_objects_pids = array_merge_recursive($related_objects_pids, $temp);
   }
   return array(
     'pid' => array(

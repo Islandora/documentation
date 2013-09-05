@@ -117,15 +117,19 @@ function islandora_deleted_objects_manage_form($form, $form_state, $serialized_c
       }
     }
   }
-
-  $options = islandora_get_deleted_objects($chosen_contentmodels);
-  $per_page = 25;
-  if (count($options) < 28) {
-    $per_page = count($options);
+  $tuque = islandora_get_tuque_connection();
+  $repository = $tuque->repository;
+  // Query brings back fedora-system:FedoraObject-3.0, doubling the results.
+  $total = $repository->ri->countQuery(islandora_get_deleted_query($chosen_contentmodels), 'sparql') / 2;
+  $limit = 25;
+  if ($total < 28) {
+    $limit = $total;
   }
-  $current_page = pager_default_initialize(count($options), $per_page);
-  $options_this_page = array_slice($options, $current_page * $per_page, $per_page);
-  foreach ($options_this_page as &$option) {
+  $current_page = pager_default_initialize($total, $limit);
+  $offset = $current_page * $limit * 2;
+  $query_limit = $limit * 2;
+  $options = islandora_get_deleted_objects($chosen_contentmodels, $query_limit, $offset);
+  foreach ($options as &$option) {
     $option['content_model'] = $content_models_with_deleted[$option['content_model']];
   }
   $form['serialized_chosen'] = array(
@@ -154,7 +158,7 @@ function islandora_deleted_objects_manage_form($form, $form_state, $serialized_c
       'content_model' => t('Content Model'),
     ),
     '#multiple' => TRUE,
-    '#options' => $options_this_page,
+    '#options' => $options,
   );
 
   $form['submit'] = array(
@@ -228,29 +232,11 @@ function islandora_deleted_objects_manage_form_submit($form, $form_state) {
  * @return array
  *   array of pids
  */
-function islandora_get_deleted_objects($content_models) {
+function islandora_get_deleted_objects($content_models, $limit, $offset) {
   $tuque = islandora_get_tuque_connection();
   $repository = $tuque->repository;
-  $candidates = array_keys($content_models);
-  $first_contentmodel = array_shift($candidates);
-  $prefix = "PREFIX fm: <" . FEDORA_MODEL_URI . "> ";
-  $select = "SELECT DISTINCT ?subject ?label ?object FROM <#ri> WHERE { ";
-  $where_clause = "{?subject fm:hasModel <info:fedora/$first_contentmodel>;
-                            fm:state fm:Deleted;
-                            fm:hasModel ?object;
-                   }";
-  $suffix = '}';
-  $unions = '';
-  foreach ($candidates as $contentmodel) {
-    $unions .= "UNION {?subject fm:hasModel <info:fedora/$contentmodel>;
-                            fm:state fm:Deleted;
-                            fm:hasModel ?object;
-                   } 
-                ";
-  }
-  $optional = "OPTIONAL{?subject fm:label ?label}";
-  $query = "$prefix $select $where_clause $unions $optional $suffix";
-  $objects = $repository->ri->sparqlQuery($query, -1);
+  $query = islandora_get_deleted_query($content_models, $offset);
+  $objects = $repository->ri->sparqlQuery($query, $limit, $offset);
   $deleted_objects = array();
   foreach ($objects as $object) {
     if ($object['object']['value'] != "fedora-system:FedoraObject-3.0") {
@@ -273,7 +259,6 @@ function islandora_get_deleted_objects($content_models) {
  *   array of content model pids
  */
 function islandora_get_contentmodels_with_deleted_members() {
-
   $tuque = new IslandoraTuque();
   $repository = $tuque->repository;
   $query = "PREFIX fm: <info:fedora/fedora-system:def/model#>
@@ -317,4 +302,37 @@ function islandora_restore_object_by_pid($pid) {
 function islandora_purge_object_by_pid($pid) {
   $fedora_object = islandora_object_load($pid);
   $fedora_object->repository->purgeObject($pid);
+}
+
+/**
+ * Get query to find all deleted objects by content type.
+ *
+ * @param array $content_models
+ *   Content models to restrict search
+ * @param int $offset
+ *   offset to be added to search
+ *
+ * @return String
+ *   Sparql query
+ */
+function islandora_get_deleted_query($content_models, $offset = 0) {
+  $candidates = array_keys($content_models);
+  $first_contentmodel = array_shift($candidates);
+  $prefix = "PREFIX fm: <" . FEDORA_MODEL_URI . "> ";
+  $select = "SELECT DISTINCT ?subject ?label ?object FROM <#ri> WHERE { ";
+  $where_clause = "{?subject fm:hasModel <info:fedora/$first_contentmodel>;
+                            fm:state fm:Deleted;
+                            fm:hasModel ?object;
+                   }";
+  $suffix = "} ORDER BY ?subject offset $offset";
+  $unions = '';
+  foreach ($candidates as $contentmodel) {
+    $unions .= "UNION {?subject fm:hasModel <info:fedora/$contentmodel>;
+                            fm:state fm:Deleted;
+                            fm:hasModel ?object;
+                   } 
+                ";
+  }
+  $optional = "OPTIONAL{?subject fm:label ?label}";
+  return "$prefix $select $where_clause $unions $optional $suffix";
 }
