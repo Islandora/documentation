@@ -287,28 +287,21 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
    * Constructs and ingests a Fedora object and datastream(s) via tuque.
    *
    * All keys inside the parameter arrays for this function are optional. it
-   * can potentially be run simply by calling $this->ingestTuqueObject();.
+   * can be run simply by calling $this->ingestConstructedObject();.
    *
    * @param array $properties
-   *   An array containing object information in the format:
-   *   array(
-   *     'label' => "Object Label", // Randomized if not set.
-   *     'pid' => "namespace:pid", // Or "namespace" to generate the ending.
-   *     'models' => array('content:model1', 'content:model2', ...),
-   *     'owner' => "Owner",
-   *     'parent' => "parent:collection",
-   *   );
+   *   An array containing object information using these keys:
+   *   'label' - The object label; randomized if not set.
+   *   'pid' - 'namespace:pid', or just 'namespace' to generate the suffix.
+   *   'models' - An array that can contain multiple content model PIDs.
+   *   'owner' - The object's owner.
+   *   'parent' - The PID of the parent collection.
    * @param array $datastreams
-   *   An array containing zero or more datastream arrays, in the format:
-   *   array(
-   *     array(
-   *       'dsid' => "DSID", // Randomized if not set.
-   *       'path' => "path_to_file", // Defaults to fixtures/test.jpg.
-   *       'control_group' => "X",
-   *       'mimetype' => "mime/type",
-   *     ),
-   *   );
-   *   With more arrays added if necessary.
+   *   An array containing zero or more datastream arrays that use the keys:
+   *   'dsid' - the datastream ID; randomized if not set.
+   *   'path' - The path to the file to use; defaults to fixtures/test.jpg.
+   *   'control_group' - The single-letter control group identifier.
+   *   'mimetype' - The datastream's mimetype.
    *
    * @return bool|array
    *   FALSE if the object ingest failed, or the object array if successful.
