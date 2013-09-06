@@ -282,4 +282,107 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
     $int = hexdec($reverse_hex);
     return $int;
   }
+
+  /**
+   * Constructs and ingests a Fedora object and datastream(s) via tuque.
+   *
+   * All keys inside the parameter arrays for this function are optional. it
+   * can potentially be run simply by calling $this->ingestTuqueObject();.
+   *
+   * @param array $properties
+   *   An array containing object information in the format:
+   *   array(
+   *     'label' => "Object Label", // Randomized if not set.
+   *     'pid' => "namespace:pid", // Or "namespace" to generate the ending.
+   *     'models' => array('content:model1', 'content:model2', ...),
+   *     'owner' => "Owner",
+   *     'parent' => "parent:collection",
+   *   );
+   * @param array $datastreams
+   *   An array containing zero or more datastream arrays, in the format:
+   *   array(
+   *     array(
+   *       'dsid' => "DSID", // Randomized if not set.
+   *       'path' => "path_to_file", // Defaults to fixtures/test.jpg.
+   *       'control_group' => "X",
+   *       'mimetype' => "mime/type",
+   *     ),
+   *   );
+   *   With more arrays added if necessary.
+   *
+   * @return bool|array
+   *   FALSE if the object ingest failed, or the object array if successful.
+   */
+  public function ingestConstructedObject(array $properties = array(), array $datastreams = array()) {
+    module_load_include('inc', 'islandora', 'includes/tuque');
+    $tuque = new IslandoraTuque();
+    $repository = $tuque->repository;
+    if (!isset($properties['pid'])) {
+      $properties['pid'] = "islandora";
+    }
+    $object = $repository->constructObject($properties['pid']);
+
+    // Set the object properties before ingesting it.
+    if (isset($properties['label'])) {
+      $object->label = $properties['label'];
+    }
+    else {
+      $properties['label'] = $this->randomName(16);
+      $object->label = $properties['label'];
+    }
+
+    if (isset($properties['owner'])) {
+      $object->owner = $properties['owner'];
+    }
+
+    if (isset($properties['models']) && is_array($properties['models'])) {
+      foreach ($properties['models'] as $model) {
+        $object->relationships->add(FEDORA_MODEL_URI, 'hasModel', $model);
+      }
+    }
+    elseif (isset($properties['models']) && !is_array($properties['models'])) {
+      $this->fail(t("'models' key of properties variable is not an array. Content model(s) will not be set."), 'Islandora');
+    }
+
+    $repository->ingestObject($object);
+    if (!$object) {
+      $this->fail(t("Failed to ingest object."), 'Islandora');
+      return FALSE;
+    }
+    else {
+      $this->pass(t("Ingested object %object", array('%object' => $object->id)), 'Islandora');
+    }
+
+    // Chuck in some datastreams.
+    if (!empty($datastreams)) {
+      foreach ($datastreams as $datastream) {
+        if (!isset($datastream['dsid'])) {
+          $datastream['dsid'] = $this->randomName(8);
+        }
+        if (!isset($datastream['path'])) {
+          $datastream['path'] = drupal_get_path('module', 'islandora') . '/tests/fixtures/test.jpg';
+        }
+        if (!isset($datastream['control_group'])) {
+          $new_datastream = $object->constructDatastream($datastream['dsid']);
+        }
+        else {
+          $new_datastream = $object->constructDatastream($datastream['dsid'], $datastream['control_group']);
+        }
+        $new_datastream->label = $datastream['dsid'];
+        if (isset($datastream['mimetype'])) {
+          $new_datastream->mimetype = $datastream['mimetype'];
+        }
+        $new_datastream->setContentFromFile($datastream['path']);
+        $object->ingestDatastream($new_datastream);
+      }
+    }
+
+    // Add a parent relationship, if necessary.
+    if (isset($properties['parent'])) {
+      $object->relationships->add(FEDORA_RELS_EXT_URI, 'isMemberOfCollection', $properties['parent']);
+    }
+
+    return $object;
+  }
+
 }
