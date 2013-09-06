@@ -287,7 +287,7 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
    * Constructs and ingests a Fedora object and datastream(s) via tuque.
    *
    * All keys inside the parameter arrays for this function are optional. it
-   * can potentially be run simply by calling $this->ingestTuqueObject();.
+   * can be run simply by calling $this->ingestConstructedObject();.
    *
    * @param array $properties
    *   An array containing object information in the format:
