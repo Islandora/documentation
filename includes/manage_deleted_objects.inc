@@ -238,7 +238,7 @@ function islandora_get_deleted_objects($content_models, $limit, $offset) {
   $tuque = islandora_get_tuque_connection();
   $repository = $tuque->repository;
   $query = islandora_get_deleted_query($content_models, $offset);
-  $objects = $repository->ri->sparqlQuery($query, $limit, $offset);
+  $objects = $repository->ri->sparqlQuery($query, $limit);
   $deleted_objects = array();
   foreach ($objects as $object) {
     if ($object['object']['value'] != "fedora-system:FedoraObject-3.0") {
