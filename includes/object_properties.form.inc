@@ -78,7 +78,7 @@ function islandora_object_properties_form(array $form, array &$form_state, Abstr
     'delete' => array(
       '#type' => 'submit',
       '#access' => islandora_object_access(ISLANDORA_PURGE, $object),
-      '#value' => t('Delete'),
+      '#value' => t("Permanently remove '@label' from repository", array('@label' => $object->label)),
       '#submit' => array('islandora_object_properties_form_delete'),
       '#limit_validation_errors' => array(array('pid')),
     ),
