@@ -210,6 +210,66 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
   }
 
   /**
+   * Asserts the validity of any .tif/.tiff datastream, which we have a lot of.
+   *
+   * @param AbstractObject $object
+   *   The PID of the object.
+   * @param array $datastreams
+   *   An array of .tif or .tiff datastreams to check.
+   */
+  public function assertTiffDatastreams($object, array $datastreams) {
+    if (!is_object($object)) {
+      $this->fail("Failed. Object passed in is invalid.", 'Islandora');
+      return FALSE;
+    }
+    foreach ($datastreams as $datastream) {
+      $datastream_string = $object[$datastream]->content;
+      $datastream_header_hex = substr(bin2hex($datastream_string), 0, 8);
+      if ($datastream_header_hex == "49492a00") {
+        // In this case, the ingested TIFF is designated as using the "Intel
+        // byte-order" (e.g. little-endian) by starting with the characters "II"
+        // (repeated so that byte order does not yet need to be significant).
+        // The number that follows is '42' in little-endian hex, a number of
+        // 'deep philosophical significance' to the TIFF format creators.
+        $this->pass(t("{$datastream} datastream asserts that it is a valid Intel-byte-orderded TIF/TIFF file."), 'Islandora');
+      }
+      else if ($datastream_header_hex == "4d4d002a") {
+        // In this case, the ingested TIFF is designated as using the "Motorola
+        // byte-order" (e.g. big-endian) by starting with the characters "MM"
+        // instead. 42 follows once again, this time in big-endian hex.
+        $this->pass(t("{$datastream} datastream asserts that it is a valid Motorola-byte-ordered TIF/TIFF file."), 'Islandora');
+      }
+      else {
+        $this->fail(t("{$datastream} datastream does not assert that it is a valid TIF/TIFF file."), 'Islandora');
+      }
+    }
+  }
+
+  /**
+   * Asserts the validity of any .jp2 datastreams, which we also have a lot of.
+   *
+   * @param AbstractObject $object
+   *   The PID of the object.
+   * @param array $datastreams
+   *   An array of .jp2 datastreams to check.
+   */
+  public function assertJp2Datastreams($object, array $datastreams) {
+    if (!is_object($object)) {
+      $this->fail("Failed. Object passed in is invalid.", 'Islandora');
+      return FALSE;
+    }
+    foreach ($datastreams as $datastream) {
+      $datastream_hex = bin2hex($object[$datastream]->content);
+      // .jp2 files begin with an offset header at the second 32-bit integer,
+      // 0x6A502020. This header is in all .jp2s, and we check for it here.
+      $this->assertTrue(substr($datastream_hex, 8, 8) == '6a502020', t("{$datastream} datastream begins correctly with the appropriate .jp2 header."), 'Islandora');
+      // .jp2 files have their codestream capped with a marker, 0xFFD9. We're
+      // just checking for it here to see if the .jp2 encoder finished okay.
+      $this->assertTrue(substr($datastream_hex, strlen($datastream_hex) - 4, 4) == 'ffd9', t("{$datastream} datastream ends correctly with the appropriate .jp2 marker."), 'Islandora');
+    }
+  }
+
+  /**
    * Gets a tuque object from a path.
    *
    * @param string $path
