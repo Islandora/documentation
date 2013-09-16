@@ -181,91 +181,39 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
   }
 
   /**
-   * Asserts that an object's given datastreams are common-type image files.
+   * Attempts to validate an array of datastreams, generally via binary checks.
    *
-   * Uses PHPGD to run the assertion check. This means that only certain kinds
-   * of image files can be checked. Please check the documentation for the PHPGD
-   * imagecreatefromstring() function to determine what filetypes are valid.
+   * These functions exist in, and can be added to, datastream_validators.inc,
+   * which is found in this folder.
    *
-   * @param AbstractObject $object
-   *   The PID of the object.
-   * @param array $datastreams
-   *   An array of datastreams to check.
+   * $param AbstractObject $object
+   *   The object to load datastreams from.
+   * $param array $datastreams
+   *   An array of paired DSIDs, validate function names, and optional params.
    */
-  public function assertImageDatastreams($object, array $datastreams) {
+  public function validateDatastreams($object, array $datastreams) {
     if (!is_object($object)) {
       $this->fail("Failed. Object passed in is invalid.", 'Islandora');
     }
-    else {
-      foreach ($datastreams as $datastream) {
-        $datastream_string = $object[$datastream]->content;
-        if (!imagecreatefromstring($datastream_string)) {
-          $this->fail("Image datastream {$datastream} is either invalid or corrupt.", 'Islandora');
+    module_load_include('inc', 'islandora', 'tests/datastream_validators');
+    foreach ($datastreams as $datastream) {
+      if (isset($object[$datastream[0]])) {
+        $function = 'validate_' . $datastream[1] . '_datastream';
+        if (function_exists($function)) {
+          if (isset($datastream[2])) {
+            $results = $function($object, $datastream[0], $datastream[2]);
+          }
+          else {
+            $results = $function($object, $datastream[0]);
+          }
+          foreach ($results as $result) {
+            $this->assertTrue($result[0], $result[1], 'Islandora');
+          }
         }
         else {
-          $this->pass("Image datastream {$datastream} is valid.", 'Islandora');
+          $this->fail("No {$datastream[0]} validation function exists for the {$datastream[1]} datastream.", 'Islandora');
         }
       }
-    }
-  }
-
-  /**
-   * Asserts the validity of any .tif/.tiff datastream, which we have a lot of.
-   *
-   * @param AbstractObject $object
-   *   The PID of the object.
-   * @param array $datastreams
-   *   An array of .tif or .tiff datastreams to check.
-   */
-  public function assertTiffDatastreams($object, array $datastreams) {
-    if (!is_object($object)) {
-      $this->fail("Failed. Object passed in is invalid.", 'Islandora');
-      return FALSE;
-    }
-    foreach ($datastreams as $datastream) {
-      $datastream_string = $object[$datastream]->content;
-      $datastream_header_hex = substr(bin2hex($datastream_string), 0, 8);
-      if ($datastream_header_hex == "49492a00") {
-        // In this case, the ingested TIFF is designated as using the "Intel
-        // byte-order" (e.g. little-endian) by starting with the characters "II"
-        // (repeated so that byte order does not yet need to be significant).
-        // The number that follows is '42' in little-endian hex, a number of
-        // 'deep philosophical significance' to the TIFF format creators.
-        $this->pass(t("{$datastream} datastream asserts that it is a valid Intel-byte-orderded TIF/TIFF file."), 'Islandora');
-      }
-      else if ($datastream_header_hex == "4d4d002a") {
-        // In this case, the ingested TIFF is designated as using the "Motorola
-        // byte-order" (e.g. big-endian) by starting with the characters "MM"
-        // instead. 42 follows once again, this time in big-endian hex.
-        $this->pass(t("{$datastream} datastream asserts that it is a valid Motorola-byte-ordered TIF/TIFF file."), 'Islandora');
-      }
-      else {
-        $this->fail(t("{$datastream} datastream does not assert that it is a valid TIF/TIFF file."), 'Islandora');
-      }
-    }
-  }
-
-  /**
-   * Asserts the validity of any .jp2 datastreams, which we also have a lot of.
-   *
-   * @param AbstractObject $object
-   *   The PID of the object.
-   * @param array $datastreams
-   *   An array of .jp2 datastreams to check.
-   */
-  public function assertJp2Datastreams($object, array $datastreams) {
-    if (!is_object($object)) {
-      $this->fail("Failed. Object passed in is invalid.", 'Islandora');
-      return FALSE;
-    }
-    foreach ($datastreams as $datastream) {
-      $datastream_hex = bin2hex($object[$datastream]->content);
-      // .jp2 files begin with an offset header at the second 32-bit integer,
-      // 0x6A502020. This header is in all .jp2s, and we check for it here.
-      $this->assertTrue(substr($datastream_hex, 8, 8) == '6a502020', t("{$datastream} datastream begins correctly with the appropriate .jp2 header."), 'Islandora');
-      // .jp2 files have their codestream capped with a marker, 0xFFD9. We're
-      // just checking for it here to see if the .jp2 encoder finished okay.
-      $this->assertTrue(substr($datastream_hex, strlen($datastream_hex) - 4, 4) == 'ffd9', t("{$datastream} datastream ends correctly with the appropriate .jp2 marker."), 'Islandora');
     }
   }
 
@@ -309,38 +257,6 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
 
     $this->drupalGet("islandora/object/$pid");
     $this->assertResponse(404, "Object $pid successfully deleted.");
-  }
-
-  /**
-   * Reverses a hex string and converts it to a little-endian-formatted integer.
-   *
-   * This is useful for running checks on values that appear in the binary
-   * of a datastream. Returns FALSE if the hex value contains non-hex characters
-   * or if the string would not return a 16- or 32-bit formatted big-endian
-   * signed integer.
-   *
-   * @param string $hex
-   *   The hex value being converted.
-   *
-   * @return bool|int
-   *   FALSE or the integer value that is converted.
-   */
-  public function convertHexToInt($hex) {
-
-    // A couple of quick string checks.
-    if (!ctype_xdigit($hex)) {
-      $this->fail('String passed to convertHexToInt() contains non-hexidecimal characters.', 'PHP');
-      return FALSE;
-    }
-    if (!strlen($hex) === 4 || !strlen($hex) === 8) {
-      $this->fail('String passed to convertHexToInt() cannot create a 16- or 32-bit little-endian signed integer', 'PHP');
-      return FALSE;
-    }
-
-    // The actual conversion.
-    $reverse_hex = implode('', array_reverse(str_split($hex, 2)));
-    $int = hexdec($reverse_hex);
-    return $int;
   }
 
   /**
