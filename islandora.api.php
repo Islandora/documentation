@@ -394,8 +394,17 @@ function hook_islandora_viewer_info() {
 
 /**
  * Returns a list of datastreams that are determined to be undeletable.
+ *
+ * The list is used to prevent delete links from being shown.
+ *
+ * @param array $models
+ *   An array of content models for the current object.
+ *
+ * @return array
+ *   An array of DSIDs that shouldn't be deleted.
  */
 function hook_islandora_undeletable_datastreams(array $models) {
+  return array('DC', 'MODS');
 }
 
 /**
@@ -578,6 +587,8 @@ function hook_CMODEL_PID_islandora_overview_object_alter(AbstractObject &$object
 /*
  * Defines derivative functions to be executed based on certain conditions.
  *
+ * @param AbstractObject $object
+ *   Object to which derivatives will be added
  * This hook fires when an object/datastream is ingested or a datastream is
  * modified.
  *
@@ -611,33 +622,38 @@ function hook_CMODEL_PID_islandora_overview_object_alter(AbstractObject &$object
  *   - file: A string denoting the path to the file where the function
  *     is being called from.
  */
-function hook_islandora_derivative() {
-  return array(
-    array(
-      'source_dsid' => 'OBJ',
-      'destination_dsid' => 'DERIV',
-      'weight' => '0',
-      'function' => array(
-        'islandora_derivatives_test_create_deriv_datastream',
-      ),
+function hook_islandora_derivative(AbstractObject $object) {
+
+  $derivatives[] = array(
+    'source_dsid' => 'OBJ',
+    'destination_dsid' => 'DERIV',
+    'weight' => '0',
+    'function' => array(
+      'islandora_derivatives_test_create_deriv_datastream',
     ),
-    array(
+  );
+  // Test object before adding this derivative.
+  if ($object['SOMEWEIRDDATASTREAM']->mimetype == "SOMETHING/ODD") {
+    $derivatives[] = array(
       'source_dsid' => 'SOMEWEIRDDATASTREAM',
       'destination_dsid' => 'STANLEY',
       'weight' => '-1',
       'function' => array(
         'islandora_derivatives_test_create_some_weird_datastream',
       ),
-    ),
-    array(
-      'source_dsid' => NULL,
-      'destination_dsid' => 'NOSOURCE',
-      'weight' => '-3',
-      'function' => array(
-        'islandora_derivatives_test_create_nosource_datastream',
-      ),
+    );
+  }
+
+  $derivatives[] = array(
+    'source_dsid' => NULL,
+    'destination_dsid' => 'NOSOURCE',
+    'weight' => '-3',
+    'function' => array(
+      'islandora_derivatives_test_create_nosource_datastream',
     ),
   );
+
+  return $derivatives;
 }
 
 /**
@@ -674,4 +690,32 @@ function hook_islandora_update_related_objects_properties(AbstractObject $object
  */
 function hook_islandora_breadcrumbs_alter(&$breadcrumbs, $context) {
 
+}
+
+/**
+ * Registry hook for metadata display viewers.
+ *
+ * Modules can use this hook to override the default Dublin Core display.
+ * This hook lets Islandora know which viewers there are available.
+ *
+ * @return array
+ *   An associative array where the values are the following:
+ *   -label: Human readable display label for selection.
+ *   -description: A description of what the metadata display viewer does.
+ *   -callback: A callable function that provides the markup to be passed
+ *    off to the template files.
+ *   -configuration (Optional): A path to the administration page for the
+ *    metadata display.
+
+ * @see islandora_retrieve_metadata_markup()
+ */
+function hook_islandora_metadata_display_info() {
+  return array(
+    'hookable_displays_yay' => array(
+      'label' => t('Hookable display yay!'),
+      'description' => t('This is purely an example of how to implement this.'),
+      'callback' => 'hookable_displays_some_function_that_returns_markup',
+      'configuration' => 'admin/hookable_displays_yay/somepath',
+    ),
+  );
 }
