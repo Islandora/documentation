@@ -691,3 +691,31 @@ function hook_islandora_update_related_objects_properties(AbstractObject $object
 function hook_islandora_breadcrumbs_alter(&$breadcrumbs, $context) {
 
 }
+
+/**
+ * Registry hook for metadata display viewers.
+ *
+ * Modules can use this hook to override the default Dublin Core display.
+ * This hook lets Islandora know which viewers there are available.
+ *
+ * @return array
+ *   An associative array where the values are the following:
+ *   -label: Human readable display label for selection.
+ *   -description: A description of what the metadata display viewer does.
+ *   -callback: A callable function that provides the markup to be passed
+ *    off to the template files.
+ *   -configuration (Optional): A path to the administration page for the
+ *    metadata display.
+
+ * @see islandora_retrieve_metadata_markup()
+ */
+function hook_islandora_metadata_display_info() {
+  return array(
+    'hookable_displays_yay' => array(
+      'label' => t('Hookable display yay!'),
+      'description' => t('This is purely an example of how to implement this.'),
+      'callback' => 'hookable_displays_some_function_that_returns_markup',
+      'configuration' => 'admin/hookable_displays_yay/somepath',
+    ),
+  );
+}
