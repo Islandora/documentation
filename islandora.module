@@ -464,6 +464,17 @@ function islandora_theme() {
       'pattern' => 'islandora_dublin_core_display__',
       'variables' => array('islandora_object' => NULL),
     ),
+    'islandora_dublin_core_description' => array(
+      'file' => 'theme/theme.inc',
+      'template' => 'theme/islandora-dublin-core-description',
+      // We can add PIDs to the end of this pattern in our preprocess function
+      // and templates will be able to have have a pid appended to the
+      // template name to overide a template on a per object basis.
+      // An example template might be named:
+      // "islandora-dublin-core-description--islandora-27.tpl.php".
+      'pattern' => 'islandora_dublin_core_description__',
+      'variables' => array('islandora_object' => NULL),
+    ),
   );
 }
 
@@ -1630,7 +1641,8 @@ function islandora_islandora_metadata_display_info() {
     'dublin_core' => array(
       'label' => t('Dublin Core'),
       'description' => t('Dublin Core metadata'),
-      'callback' => 'islandora_metadata_display_callback',
+      'metadata callback' => 'islandora_metadata_display_callback',
+      'description callback' => 'islandora_metadata_description_callback',
     ),
   );
 }

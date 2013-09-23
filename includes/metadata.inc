@@ -16,13 +16,39 @@
 function islandora_retrieve_metadata_markup(AbstractObject $object) {
   $viewers = module_invoke_all('islandora_metadata_display_info');
   $viewer = variable_get('islandora_metadata_display', 'dublin_core');
+  $markup = '';
+  if (isset($viewers[$viewer]['metadata callback'])) {
+    $markup = call_user_func($viewers[$viewer]['metadata callback'], $object);
+    // The callback doesn't have any markup provided for this particular object,
+    // default back to the dublin_core display.
+    if ($markup === FALSE) {
+      $markup = call_user_func($viewers['dublin_core']['metadata callback'], $object);
+    }
+  }
+  return $markup;
+}
 
-  if (isset($viewers[$viewer]['callback'])) {
-    return call_user_func($viewers[$viewer]['callback'], $object);
+/**
+ * Retrieves the metadata display description for an Islandora object.
+ *
+ * @param AbstractObject $object
+ *   An AbstractObject representing an object within Fedora.
+ * @return string
+ *   Markup to be rendered for description on Islandora object pages.
+ */
+function islandora_retrieve_description_markup(AbstractObject $object) {
+  $viewers = module_invoke_all('islandora_metadata_display_info');
+  $viewer = variable_get('islandora_metadata_display', 'dublin_core');
+  $markup = '';
+  if (isset($viewers[$viewer]['description callback'])) {
+    $markup = call_user_func($viewers[$viewer]['description callback'], $object);
+    // The callback doesn't have any markup provided for this particular object,
+    // default back to the dublin_core display.
+    if ($markup === FALSE) {
+      $markup = call_user_func($viewers['dublin_core']['description callback'], $object);
+    }
   }
-  else {
-    return '';
-  }
+  return $markup;
 }
 
 /**
@@ -120,4 +146,31 @@ function islandora_metadata_display_callback(AbstractObject $object) {
     'islandora_object' => $object,
   );
   return theme('islandora_dublin_core_display', $elements);
+}
+
+/**
+ * Metadata description callback for rendering Dublin Core description.
+ *
+ * @param AbstractObject $object
+ *   An AbstractObject representing an object within Fedora.
+ *
+ * @return string
+ *   Markup representing the rendered metadata from Dublin Core.
+ */
+function islandora_metadata_description_callback(AbstractObject $islandora_object) {
+  if (islandora_datastream_access(ISLANDORA_VIEW_OBJECTS, $islandora_object['DC'])) {
+    try {
+      $dc = $islandora_object['DC']->content;
+      $dc_object = DublinCore::importFromXMLString($dc);
+    }
+    catch (Exception $e) {
+      drupal_set_message(t('Error retrieving object %s %t', array('%s' => $islandora_object->id, '%t' => $e->getMessage())), 'error', FALSE);
+    }
+  }
+  $dc_array = isset($dc_object) ? $dc_object->asArray() : array();
+  $elements = array(
+    'islandora_object' => $islandora_object,
+    'dc_array' => $dc_array,
+  );
+  return theme('islandora_dublin_core_description', $elements);
 }

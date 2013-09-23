@@ -714,7 +714,8 @@ function hook_islandora_metadata_display_info() {
     'hookable_displays_yay' => array(
       'label' => t('Hookable display yay!'),
       'description' => t('This is purely an example of how to implement this.'),
-      'callback' => 'hookable_displays_some_function_that_returns_markup',
+      'metadata callback' => 'hookable_displays_some_function_that_returns_metadata_markup',
+      'description callback' => 'hookable_displays_some_function_that_returns_description_markup',
       'configuration' => 'admin/hookable_displays_yay/somepath',
     ),
   );
