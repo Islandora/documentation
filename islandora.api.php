@@ -702,8 +702,10 @@ function hook_islandora_breadcrumbs_alter(&$breadcrumbs, $context) {
  *   An associative array where the values are the following:
  *   -label: Human readable display label for selection.
  *   -description: A description of what the metadata display viewer does.
- *   -callback: A callable function that provides the markup to be passed
- *    off to the template files.
+ *   -metadata callback: A callable function that provides the markup to be
+ *    passed  off to the template files.
+ *   -description callback: A callable function that provides the markup to be
+ *    passed for the description.
  *   -configuration (Optional): A path to the administration page for the
  *    metadata display.
 
