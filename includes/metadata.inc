@@ -11,7 +11,7 @@
  *   An AbstractObject representing an object within Fedora.
  * @param bool $print
  *   Whether the object is being printed.
- * 
+ *
  * @return string
  *   Markup to be rendered for display on Islandora object pages.
  */

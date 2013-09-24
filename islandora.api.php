@@ -703,9 +703,11 @@ function hook_islandora_breadcrumbs_alter(&$breadcrumbs, $context) {
  *   -label: Human readable display label for selection.
  *   -description: A description of what the metadata display viewer does.
  *   -metadata callback: A callable function that provides the markup to be
- *    passed  off to the template files.
+ *    passed  off to the template files. Returns markup or FALSE if the viewer
+ *    wishes to default back to the Dublin Core display for the current object.
  *   -description callback: A callable function that provides the markup to be
- *    passed for the description.
+ *    passed for the description. Returns markup or FALSE if the viewer
+ *    wishes to default back to the Dublin Core display for the current object.
  *   -configuration (Optional): A path to the administration page for the
  *    metadata display.
 
