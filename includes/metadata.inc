@@ -13,16 +13,16 @@
  * @return string
  *   Markup to be rendered for display on Islandora object pages.
  */
-function islandora_retrieve_metadata_markup(AbstractObject $object) {
+function islandora_retrieve_metadata_markup(AbstractObject $object, $print = FALSE) {
   $viewers = module_invoke_all('islandora_metadata_display_info');
   $viewer = variable_get('islandora_metadata_display', 'dublin_core');
   $markup = '';
   if (isset($viewers[$viewer]['metadata callback'])) {
-    $markup = call_user_func($viewers[$viewer]['metadata callback'], $object);
+    $markup = call_user_func($viewers[$viewer]['metadata callback'], $object, $print);
     // The callback doesn't have any markup provided for this particular object,
     // default back to the dublin_core display.
     if ($markup === FALSE) {
-      $markup = call_user_func($viewers['dublin_core']['metadata callback'], $object);
+      $markup = call_user_func($viewers['dublin_core']['metadata callback'], $object, $print);
     }
   }
   return $markup;
@@ -33,6 +33,7 @@ function islandora_retrieve_metadata_markup(AbstractObject $object) {
  *
  * @param AbstractObject $object
  *   An AbstractObject representing an object within Fedora.
+ *
  * @return string
  *   Markup to be rendered for description on Islandora object pages.
  */
@@ -137,13 +138,16 @@ function islandora_metadata_display_form_submit($form, $form_state) {
  *
  * @param AbstractObject $object
  *   An AbstractObject representing an object within Fedora.
+ * @param bool $print
+ *   Whether the display is being printed or not.
  *
  * @return string
  *   Markup representing the rendered metadata from Dublin Core.
  */
-function islandora_metadata_display_callback(AbstractObject $object) {
+function islandora_metadata_display_callback(AbstractObject $object, $print = FALSE) {
   $elements = array(
     'islandora_object' => $object,
+    'print' => $print,
   );
   return theme('islandora_dublin_core_display', $elements);
 }
@@ -151,7 +155,7 @@ function islandora_metadata_display_callback(AbstractObject $object) {
 /**
  * Metadata description callback for rendering Dublin Core description.
  *
- * @param AbstractObject $object
+ * @param AbstractObject $islandora_object
  *   An AbstractObject representing an object within Fedora.
  *
  * @return string

@@ -16,7 +16,7 @@
 * @see theme_islandora_dublin_core_display()
 */
 ?>
-<fieldset class="collapsible collapsed">
+<fieldset <?php $print ? print('class="islandora islandora-metadata"') : print('class="islandora islandora-metadata collapsible collapsed"');?>>
   <legend><span class="fieldset-legend"><?php print t('Details'); ?></span></legend>
   <div class="fieldset-wrapper">
     <dl xmlns:dcterms="http://purl.org/dc/terms/" class="islandora-inline-metadata islandora-metadata-fields">
