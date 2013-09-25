@@ -462,7 +462,10 @@ function islandora_theme() {
       // An example template might be named:
       // "islandora-dublin-core-display--islandora-27.tpl.php".
       'pattern' => 'islandora_dublin_core_display__',
-      'variables' => array('islandora_object' => NULL),
+      'variables' => array(
+        'islandora_object' => NULL,
+        'print' => NULL,
+      ),
     ),
     'islandora_dublin_core_description' => array(
       'file' => 'theme/theme.inc',
