@@ -164,19 +164,8 @@ function islandora_metadata_display_callback(AbstractObject $object, $print = FA
  *   Markup representing the rendered metadata from Dublin Core.
  */
 function islandora_metadata_description_callback(AbstractObject $islandora_object) {
-  if (islandora_datastream_access(ISLANDORA_VIEW_OBJECTS, $islandora_object['DC'])) {
-    try {
-      $dc = $islandora_object['DC']->content;
-      $dc_object = DublinCore::importFromXMLString($dc);
-    }
-    catch (Exception $e) {
-      drupal_set_message(t('Error retrieving object %s %t', array('%s' => $islandora_object->id, '%t' => $e->getMessage())), 'error', FALSE);
-    }
-  }
-  $dc_array = isset($dc_object) ? $dc_object->asArray() : array();
   $elements = array(
     'islandora_object' => $islandora_object,
-    'dc_array' => $dc_array,
   );
   return theme('islandora_dublin_core_description', $elements);
 }
