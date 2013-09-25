@@ -9,8 +9,6 @@
 * - $dc_array: The DC datastream object values as a sanitized array. This
 * includes label, value and class name.
 * - $islandora_object_label: The sanitized object label.
-* - $parent_collections: An array containing parent collection(s) info.
-* Includes collection object, label, url and rendered link.
 *
 * @see template_preprocess_islandora_dublin_core_display()
 * @see theme_islandora_dublin_core_display()
