@@ -696,10 +696,11 @@ function islandora_ingest_form_ingest_button(array &$form_state) {
 
   $islandora_path = drupal_get_path('module', 'islandora');
 
-  drupal_add_js($islandora_path . '/js/spin/spin.min.js');
-  drupal_add_js($islandora_path . '/js/ingesting_object.js');
-
   return array(
+    '#attached' => array('js' => array(
+        "$islandora_path/js/spin/spin.min.js",
+        "$islandora_path/js/ingesting_object.js",
+      )),
     '#type' => 'submit',
     '#name' => 'ingest',
     '#value' => t('Ingest'),

@@ -6,7 +6,7 @@
 (function ($) {
   function islandora_start_ingest_feedback() {
     $('#islandora-ingest-form').after('<div id="islandora_is_working"><div>' +
-        Drupal.t('Please wait while the object is ingested.') +
+        Drupal.t('Please be patient while the the page loads.') +
         '</div></div>');
 
     var opts = {
@@ -29,19 +29,26 @@
     };
     var target = document.getElementById('islandora_is_working');
     var spinner = new Spinner(opts).spin(target);
+    // Don't want to do this in Safari, can't submit after form errors.
+    if (!(navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1)) {
+      $('#edit-next').hide();
+      $('#edit-prev').hide();
+    }
   }
   
-  $(document).ready(function() {
-    // Safari is having issues with stalling JS execution that was preventing this from running.
-    if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
-      $('#edit-next').mousedown(function() {
-        islandora_start_ingest_feedback()
-      });
+  Drupal.behaviors.islandoraIngestingObject = {
+    attach: function(context, settings) {
+      // Safari is having issues with stalling JS execution that was preventing this from running.
+      if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
+        $('#edit-next').one('mousedown', function() {
+          islandora_start_ingest_feedback()
+        });
+      }
+      else {
+        $('#islandora-ingest-form').one('submit', function() {
+          islandora_start_ingest_feedback()
+        });
+      }
     }
-    else {
-      $('#islandora-ingest-form').submit(function() {
-        islandora_start_ingest_feedback()
-      });
-    }
-  });
+  };
 })(jQuery);
