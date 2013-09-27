@@ -693,6 +693,12 @@ function islandora_ingest_form_ingest_button(array &$form_state) {
   $validate = function_exists($validate_callback) ? array($validate_callback) : NULL;
   $submit_callback = $form_id . '_submit';
   $submit = function_exists($submit_callback) ? array($submit_callback, 'islandora_ingest_form_submit') : array('islandora_ingest_form_submit');
+
+  $islandora_path = drupal_get_path('module', 'islandora');
+
+  drupal_add_js($islandora_path . '/js/spin/spin.min.js');
+  drupal_add_js($islandora_path . '/js/ingesting_object.js');
+
   return array(
     '#type' => 'submit',
     '#name' => 'ingest',
