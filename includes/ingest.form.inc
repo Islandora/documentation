@@ -725,7 +725,7 @@ function islandora_ingest_form_ingest_button_process(array $element) {
       'className' => 'spinner',
       'zIndex' => 2000000000,
       'top' => 'auto',
-      'left' => 'auto'
+      'left' => 'auto',
     ),
   );
   drupal_add_js($settings, 'setting');
