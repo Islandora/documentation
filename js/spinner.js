@@ -30,11 +30,15 @@
               // Add Message.
               var message = $('<div/>').text(settings.spinner[base].message);
               $(id).after(message);
-              // Activate Spinner
+              // Make UI changes.
               spinner.spin(this);
+              $('#edit-next').hide();
+              $('#edit-prev').hide(); 
               // Submit the form after a set timeout, this handles problems with
               // safari, in that safari submit's immediately..
-              $(':submit').attr('disabled', 'disabled');
+              if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) { 
+                $(':submit').attr('disabled', 'disabled');
+              }
               setTimeout(function() {
                 // Allow for the button to be clicked, then click it then
                 // prevent the default behavoir.
