@@ -74,15 +74,22 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
     $connection_info = Database::getConnectionInfo('default');
     $drupal_filter_dom = new DomDocument();
     $drupal_filter_dom->loadXML($this->originalDrupalFilterContent);
-    $drupal_filter_xpath = new DOMXPath($drupal_filter_dom);
     $server = $connection_info['default']['host'];
     $dbname = $connection_info['default']['database'];
     $user = $connection_info['default']['username'];
     $password = $connection_info['default']['password'];
     $port = $connection_info['default']['port'] ? $connection_info['default']['port'] : '3306';
     $prefix = $connection_info['default']['prefix']['default'];
-    $results = $drupal_filter_xpath->query("/FilterDrupal_Connection/connection[@server='$server' and @dbname='$dbname' and @user='$user' and @password='$password' and @port='$port']/sql");
-    $results->item(0)->nodeValue = "SELECT DISTINCT u.uid AS userid, u.name AS Name, u.pass AS Pass, r.name AS Role FROM ({$prefix}users u LEFT JOIN {$prefix}users_roles ON u.uid={$prefix}users_roles.uid) LEFT JOIN {$prefix}role r ON r.rid={$prefix}users_roles.rid WHERE u.name=? AND u.pass=?;";
+    $filter_drupal_connection_node = $drupal_filter_dom->getElementsByTagName('FilterDrupal_Connection')->item(0);
+    $first_connection_node = $drupal_filter_dom->getElementsByTagName('connection')->item(0);
+    $connection_node = $filter_drupal_connection_node->insertBefore($drupal_filter_dom->createElement('connection'), $first_connection_node);
+    $connection_node->setAttributeNode(new DOMAttr('server', $server));
+    $connection_node->setAttributeNode(new DOMAttr('dbname', $dbname));
+    $connection_node->setAttributeNode(new DOMAttr('user', $user));
+    $connection_node->setAttributeNode(new DOMAttr('password', $password));
+    $connection_node->setAttributeNode(new DOMAttr('port', $port));
+    $sql_node = $connection_node->appendChild(new DOMElement('sql'));
+    $sql_node->appendChild($drupal_filter_dom->createTextNode("SELECT DISTINCT u.uid AS userid, u.name AS Name, u.pass AS Pass, r.name AS Role FROM ({$prefix}users u LEFT JOIN {$prefix}users_roles ON u.uid={$prefix}users_roles.uid) LEFT JOIN {$prefix}role r ON r.rid={$prefix}users_roles.rid WHERE u.name=? AND u.pass=?;"));
     file_put_contents($this->configuration['drupal_filter_file'], $drupal_filter_dom->saveXML());
   }
 
@@ -248,10 +255,16 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
    * @param string $button
    *   The label of the first 'Delete' button
    */
-  public function deleteObject($pid, $button = 'Delete') {
+  public function deleteObject($pid, $button = NULL) {
     $path = 'islandora/object/' . $pid . '/manage/properties';
     $edit = array();
-    $this->drupalPost($path, $edit, $button);
+    if (isset($button)) {
+      $this->drupalPost($path, $edit, $button);
+    }
+    else {
+      $object = islandora_object_load($pid);
+      $this->drupalPost($path, $edit, "Permanently remove '{$object->label}' from repository");
+    }
     $this->drupalPost($this->url, $edit, t('Delete'));
     $object = islandora_object_load($pid);
 

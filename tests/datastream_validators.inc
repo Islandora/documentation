@@ -38,7 +38,7 @@
  * @return array
  *   A result that can be made useful in the validation functions below.
  */
-function assert_valid($assertion, $results, $pass, $fail = '') {
+function assert_valid($assertion, $results, $pass, $fail = NULL) {
   if ($assertion) {
     $result = array(TRUE, $pass);
   }
