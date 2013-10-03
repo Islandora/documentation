@@ -889,9 +889,7 @@ function islandora_as_renderable_array(&$markup_array) {
     if (!is_array($value)) {
       // Not a renderable array, just a string. Let's convert it to a
       // renderable '#markup' element.
-      $value = array(
-        '#markup' => $value,
-      );
+      $value = array('#markup' => $value);
     }
     elseif (!isset($value['#type']) && !isset($value['#markup'])) {
       // A simple array--possibly the result of a recursive merge? Let's
@@ -902,13 +900,27 @@ function islandora_as_renderable_array(&$markup_array) {
           // If it is an array at this level, we can assume that it is a
           // renderable array. If it is not an array, convert to a renderable
           // '#markup' element.
-          $inner = array(
-            '#markup' => $inner,
-          );
+          $inner = array('#markup' => $inner);
         }
       }
       unset($inner);
     }
   }
   unset($value);
+}
+
+/**
+ * Sanitizes an input string to be valid XML.
+ *
+ * @param string $input
+ *   An input string.
+ * @param string $replacement
+ *   What we are replacing invalid characters with, defaults to ''.
+ *
+ * @return string
+ *   The sanitized string.
+ */
+function islandora_sanitize_input_for_valid_xml($input, $replacement = '') {
+  $input = preg_replace('/[^\x9\xA\xD\x20-\x{D7FF}\x{E000}-\x{FFFD}\x{10000}-\x{10FFFF}]/u', $replacement, $input);
+  return $input;
 }
