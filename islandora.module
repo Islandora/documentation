@@ -1730,6 +1730,7 @@ function islandora_repair_drupal_filter() {
   else {
     drupal_set_message(format_plural($entries, "Removed 1 simpletest entry from the Drupal filter.", "Removed @count simpletest entries from the Drupal filter."));
   }
+}
 
  /**
  * Implements hook_islandora_metadata_display_info().
