@@ -1745,4 +1745,3 @@ function islandora_islandora_metadata_display_info() {
     ),
   );
 }
-
