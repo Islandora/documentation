@@ -1733,8 +1733,8 @@ function islandora_repair_drupal_filter() {
 }
 
  /**
- * Implements hook_islandora_metadata_display_info().
- */
+  * Implements hook_islandora_metadata_display_info().
+  */
 function islandora_islandora_metadata_display_info() {
   return array(
     'dublin_core' => array(
@@ -1745,4 +1745,3 @@ function islandora_islandora_metadata_display_info() {
     ),
   );
 }
-
