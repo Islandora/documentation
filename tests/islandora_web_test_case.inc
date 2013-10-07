@@ -205,7 +205,7 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
     module_load_include('inc', 'islandora', 'tests/datastream_validators');
     foreach ($datastreams as $datastream) {
       if (isset($object[$datastream[0]])) {
-        $function = 'validate_' . $datastream[1] . '_datastream';
+        $function = 'islandora_validate_' . $datastream[1] . '_datastream';
         if (function_exists($function)) {
           if (isset($datastream[2])) {
             $results = $function($object, $datastream[0], $datastream[2]);

@@ -38,7 +38,7 @@
  * @return array
  *   A result that can be made useful in the validation functions below.
  */
-function assert_valid($assertion, $results, $pass, $fail = NULL) {
+function islandora_assert_valid($assertion, $results, $pass, $fail = NULL) {
   if ($assertion) {
     $result = array(TRUE, $pass);
   }
@@ -68,15 +68,15 @@ function assert_valid($assertion, $results, $pass, $fail = NULL) {
  * @return bool|int
  *   FALSE on failure, or the integer on success.
  */
-function hex2int($hex) {
+function islandora_hex2int($hex) {
 
   // A couple of quick string checks.
   if (!ctype_xdigit($hex)) {
-    drupal_set_message(t('String passed to hex2int() contains non-hexidecimal characters.'), 'error');
+    drupal_set_message(t('String passed to islandora_hex2int() contains non-hexidecimal characters.'), 'error');
     return FALSE;
   }
   if (!strlen($hex) === 4 || !strlen($hex) === 8) {
-    drupal_set_message(t('String passed to hex2int() cannot create a 16- or 32-bit little-endian signed integer'), 'error');
+    drupal_set_message(t('String passed to islandora_hex2int() cannot create a 16- or 32-bit little-endian signed integer'), 'error');
     return FALSE;
   }
 
@@ -106,19 +106,19 @@ function hex2int($hex) {
  * @return array
  *   A series of TRUE(pass)/FALSE(fail) results paired with result messages.
  */
-function validate_image_datastream($object, $datastream) {
+function islandora_validate_image_datastream($object, $datastream) {
   $datastream_string = $object[$datastream]->content;
   $results = array();
   $pass = "Image datastream {$datastream} is valid.";
   $fail = "Image datastream {$datastream} is either invalid or corrupt.";
-  $results = assert_valid(imagecreatefromstring($datastream_string), $results, $pass, $fail);
+  $results = islandora_assert_valid(imagecreatefromstring($datastream_string), $results, $pass, $fail);
   return $results;
 }
 
 /**
  * Asserts the validity of any .tif/.tiff datastream.
  *
- * Does not use the assert_valid() function, as this is not a simple true/false.
+ * Does not use the islandora_assert_valid() function, as this is not a simple true/false.
  *
  * @param AbstractObject $object
  *   The PID of the object.
@@ -128,7 +128,7 @@ function validate_image_datastream($object, $datastream) {
  * @return array
  *   A series of TRUE(pass)/FALSE(fail) results paired with result messages.
  */
-function validate_tiff_datastream($object, $datastream) {
+function islandora_validate_tiff_datastream($object, $datastream) {
   $datastream_string = $object[$datastream]->content;
   $datastream_header_hex = substr(bin2hex($datastream_string), 0, 8);
   $results = array();
@@ -163,19 +163,19 @@ function validate_tiff_datastream($object, $datastream) {
  * @return array
  *   A series of TRUE(pass)/FALSE(fail) results paired with result messages.
  */
-function validate_jp2_datastream($object, $datastream) {
+function islandora_validate_jp2_datastream($object, $datastream) {
   $datastream_hex = bin2hex($object[$datastream]->content);
   $results = array();
   // JP2 files begin with an offset header at the second 32-bit integer,
   // 0x6A502020. This header is in all .jp2s, and we check for it here.
   $pass = "{$datastream} datastream begins correctly with the appropriate .jp2 header.";
   $fail = "{$datastream} datastream does not begin with the appropriate .jp2 header.";
-  $results = assert_valid(substr($datastream_hex, 8, 8) == '6a502020', $results, $pass, $fail);
+  $results = islandora_assert_valid(substr($datastream_hex, 8, 8) == '6a502020', $results, $pass, $fail);
   // JP2 files have their codestream capped with a marker, 0xFFD9. We're
   // just checking for it here to see if the .jp2 encoder finished okay.
   $pass = "{$datastream} datastream ends correctly with the appropriate .jp2 marker.";
   $fail = "{$datastream} datastream does not end with a .jp2 marker; derivative generation was likely interrupted.";
-  $results = assert_valid(substr($datastream_hex, strlen($datastream_hex) - 4, 4) == 'ffd9', $results, $pass, $fail);
+  $results = islandora_assert_valid(substr($datastream_hex, strlen($datastream_hex) - 4, 4) == 'ffd9', $results, $pass, $fail);
   return $results;
 }
 
@@ -190,22 +190,22 @@ function validate_jp2_datastream($object, $datastream) {
  * @return array
  *   A series of TRUE(pass)/FALSE(fail) results paired with result messages.
  */
-function validate_pdf_datastream($object, $datastream) {
+function islandora_validate_pdf_datastream($object, $datastream) {
   $pdf = $object[$datastream]->content;
   $pdf_version = substr($pdf, 5, 3);
   $results = array();
   $pass = "{$datastream} datastream asserts that it is a valid PDF file using PDF version {$pdf_version}";
   $fail = "{$datastream} datastream binary header appears to be corrupt and missing a valid PDF signature.";
-  $results = assert_valid(substr($pdf, 0, 5) == '%PDF-', $results, $pass, $fail);
+  $results = islandora_assert_valid(substr($pdf, 0, 5) == '%PDF-', $results, $pass, $fail);
 
   $pdf_streams = substr_count(bin2hex($pdf), '0a73747265616d0a');
   $pass = "{$datastream} datastream reports the existence of {$pdf_streams} PDF streams. Note that an extremely low number could still indicate corruption.";
   $fail = "{$datastream} datastream contains zero PDF streams, and is likely not a PDF file.";
-  $results = assert_valid($pdf_streams, $results, $pass, $fail);
+  $results = islandora_assert_valid($pdf_streams, $results, $pass, $fail);
 
   $pass = "{$datastream} datastream reports the existence of the closing 'EOF' tag required at the end of PDFs";
   $fail = "{$datastream} datastream does not contain the closing 'EOF' tag. If this is the only PDF validation that failed, it is likely that derivative generation was interrupted.";
-  $results = assert_valid(strpos(bin2hex($pdf), '0a2525454f460a'), $results, $pass, $fail);
+  $results = islandora_assert_valid(strpos(bin2hex($pdf), '0a2525454f460a'), $results, $pass, $fail);
   return $results;
 }
 
@@ -222,13 +222,13 @@ function validate_pdf_datastream($object, $datastream) {
  * @return array
  *   A series of TRUE(pass)/FALSE(fail) results paired with result messages.
  */
-function validate_text_datastream($object, $datastream, array $text) {
+function islandora_validate_text_datastream($object, $datastream, array $text) {
   $results = array();
   $content = $object[$datastream]->content;
   $string_count = substr_count($content, $text[0]);
   $pass = "{$datastream} datastream contains the word(s) '{$text[0]}' repeated {$string_count} time(s) (expected: {$text[1]}).";
   $fail = "{$datastream} datastream contains the word(s) '{$text[0]}' repeated {$string_count} time(s) (expected: {$text[1]}).";
-  $results = assert_valid($string_count == $text[1], $results, $pass, $fail);
+  $results = islandora_assert_valid($string_count == $text[1], $results, $pass, $fail);
   return $results;
 }
 
@@ -250,43 +250,43 @@ function validate_text_datastream($object, $datastream, array $text) {
  * @return array
  *   A series of TRUE(pass)/FALSE(fail) results paired with result messages.
  */
-function validate_wav_datastream($object, $datastream) {
+function islandora_validate_wav_datastream($object, $datastream) {
   $results = array();
   $wav = bin2hex($object['OBJ']->content);
-  $wav_subchunk2size = hex2int(substr($wav, 80, 8));
-  $wav_samplerate = hex2int(substr($wav, 48, 8));
-  $wav_numchannels = hex2int(substr($wav, 44, 4));
-  $wav_bytespersample = hex2int(substr($wav, 68, 4)) / 8;
+  $wav_subchunk2size = islandora_hex2int(substr($wav, 80, 8));
+  $wav_samplerate = islandora_hex2int(substr($wav, 48, 8));
+  $wav_numchannels = islandora_hex2int(substr($wav, 44, 4));
+  $wav_bytespersample = islandora_hex2int(substr($wav, 68, 4)) / 8;
   $wav_numsamples = strlen(substr($wav, 88)) / $wav_numchannels / $wav_bytespersample / 2;
   $magic_number = str_split(substr($wav, 0, 24), 8);
 
   $pass = "Header of the {$datastream} datastream contains correct file signature";
   $fail = "Header of the {$datastream} datastream contains corrupt file signature";
-  $results = assert_valid($magic_number[0] = '52494646' && $magic_number[2] = '57415645', $results, $pass, $fail);
+  $results = islandora_assert_valid($magic_number[0] = '52494646' && $magic_number[2] = '57415645', $results, $pass, $fail);
 
   $pass = "{$datastream} datastream chunksize in WAV header is correct";
   $fail = "{$datastream} datastream chunksize in WAV header does not match actual chunksize.";
-  $results = assert_valid(hex2int(substr($wav, 8, 8)) === 36 + $wav_subchunk2size, $results, $pass, $fail);
+  $results = islandora_assert_valid(islandora_hex2int(substr($wav, 8, 8)) === 36 + $wav_subchunk2size, $results, $pass, $fail);
 
   $pass = "{$datastream} datastream contains a 'fmt' subchunk.";
   $fail = "{$datastream} datastream is missing the required 'fmt' subchunk.";
-  $results = assert_valid(substr($wav, 24, 8) === '666d7420', $results, $pass, $fail);
+  $results = islandora_assert_valid(substr($wav, 24, 8) === '666d7420', $results, $pass, $fail);
 
   $pass = "{$datastream} datastream byterate in the WAV header is correct.";
   $fail = "{$datastream} datastream byterate in the WAV header does not match actual calculated byterate.";
-  $results = assert_valid(hex2int(substr($wav, 56, 8)) === $wav_samplerate * $wav_numchannels * $wav_bytespersample, $results, $pass, $fail);
+  $results = islandora_assert_valid(islandora_hex2int(substr($wav, 56, 8)) === $wav_samplerate * $wav_numchannels * $wav_bytespersample, $results, $pass, $fail);
 
   $pass = "{$datastream} datastream block alignment is set correctly.";
   $fail = "{$datastream} datastream block alignment is off.";
-  $results = assert_valid(hex2int(substr($wav, 64, 4)) === $wav_numchannels * $wav_bytespersample, $results, $pass, $fail);
+  $results = islandora_assert_valid(islandora_hex2int(substr($wav, 64, 4)) === $wav_numchannels * $wav_bytespersample, $results, $pass, $fail);
 
   $pass = "{$datastream} datastream contains 'data' subchunk.";
   $fail = "{$datastream} datastream is missing the 'data' subchunk.";
-  $results = assert_valid(substr($wav, 72, 8) === '64617461', $results, $pass, $fail);
+  $results = islandora_assert_valid(substr($wav, 72, 8) === '64617461', $results, $pass, $fail);
 
   $pass = "{$datastream} datastream 'data' chunk is the correct size.";
   $fail = "{$datastream} datastream 'data' chunk is sized incorrectly.";
-  $results = assert_valid($wav_subchunk2size === $wav_numsamples * $wav_numchannels * $wav_bytespersample, $results, $pass, $fail);
+  $results = islandora_assert_valid($wav_subchunk2size === $wav_numsamples * $wav_numchannels * $wav_bytespersample, $results, $pass, $fail);
 
   return $results;
 }
@@ -308,7 +308,7 @@ function validate_wav_datastream($object, $datastream) {
  * @return array
  *   A series of TRUE(pass)/FALSE(fail) results paired with result messages.
  */
-function validate_mp3_datastream($object, $datastream) {
+function islandora_validate_mp3_datastream($object, $datastream) {
   $results = array();
   $mp3 = bin2hex($object[$datastream]->content);
   $mp3_size = strlen($mp3) / 2;
@@ -339,7 +339,7 @@ function validate_mp3_datastream($object, $datastream) {
       $mp3_field_bytes = hexdec(substr($mp3_vbrheader, $mp3_field_offset[0] + 16, 8));
       $pass = "{$datastream} datastream reported filesize of {$mp3_size} bytes matches size field value of {$mp3_field_bytes}";
       $fail = "{$datastream} datastream reported filesize of {$mp3_size} bytes does not match size field value of {$mp3_field_bytes}";
-      $results = assert_valid($mp3_size == $mp3_field_bytes, $results, $pass, $fail);
+      $results = islandora_assert_valid($mp3_size == $mp3_field_bytes, $results, $pass, $fail);
       $mp3_field_offset[1] += 8;
       $mp3_field_offset[2] += 8;
     }
@@ -354,7 +354,7 @@ function validate_mp3_datastream($object, $datastream) {
       $mp3_field_quality = hexdec(substr($mp3_vbrheader, $mp3_field_offset[2] + 16, 8));
       $pass = "{$datastream} datastream reports valid VBR quality of {$mp3_field_quality} (expected: between 0-100)";
       $fail = "{$datastream} datastream reports invalid VBR quality of {$mp3_field_quality} (expected: between 0-100)";
-      $results = assert_valid($mp3_field_quality <= 100 && $mp3_field_quality >= 0, $results, $pass, $fail);
+      $results = islandora_assert_valid($mp3_field_quality <= 100 && $mp3_field_quality >= 0, $results, $pass, $fail);
     }
   }
 
@@ -388,7 +388,7 @@ function validate_mp3_datastream($object, $datastream) {
  * @return array
  *   A series of TRUE(pass)/FALSE(fail) results paired with result messages.
  */
-function validate_mp4_datastream($object, $datastream) {
+function islandora_validate_mp4_datastream($object, $datastream) {
   $results = array();
   $mp4 = $object[$datastream]->content;
   if (strpos($mp4, 'ftyp')) {
@@ -396,7 +396,7 @@ function validate_mp4_datastream($object, $datastream) {
   }
   $pass = "{$datastream} datastream asserts that it is a valid ISO-formatted video file using ftyp {$mp4_ftyp}";
   $fail = "{$datastream} datastream is not a valid ISO-formatted video";
-  $results = assert_valid(strpos($mp4, 'ftyp'), $results, $pass, $fail);
+  $results = islandora_assert_valid(strpos($mp4, 'ftyp'), $results, $pass, $fail);
   return $results;
 }
 
@@ -417,22 +417,22 @@ function validate_mp4_datastream($object, $datastream) {
  * @return array
  *   A series of TRUE(pass)/FALSE(fail) results paired with result messages.
  */
-function validate_ogg_datastream($object, $datastream) {
+function islandora_validate_ogg_datastream($object, $datastream) {
   $results = array();
   $ogg = $object[$datastream]->content;
   $ogg_pages = substr_count($ogg, 'OggS');
 
   $pass = "{$datastream} datastream asserts that it contains {$ogg_pages} Ogg pages (even a very small file should contain several).";
   $fail = "{$datastream} datastream contains no Ogg pages.";
-  $results = assert_valid(substr_count($ogg, 'OggS'), $results, $pass, $fail);
+  $results = islandora_assert_valid(substr_count($ogg, 'OggS'), $results, $pass, $fail);
 
   $pass = "{$datastream} datastream asserts that it contains Theora-encoded video data.";
   $fail = "{$datastream} datastream contains no marker indicating the presence of Theora-encoded video data.";
-  $results = assert_valid(substr_count($ogg, 'theora'), $results, $pass, $fail);
+  $results = islandora_assert_valid(substr_count($ogg, 'theora'), $results, $pass, $fail);
 
   $pass = "{$datastream} datastream asserts that it contains Vorbis-encoded audio data";
   $fail = "{$datastream} datastream contains no marker indicating the presence of Vorbis-encoded audio data.";
-  $results = assert_valid(substr_count($ogg, 'vorbis'), $results, $pass, $fail);
+  $results = islandora_assert_valid(substr_count($ogg, 'vorbis'), $results, $pass, $fail);
 
   return $results;
 }
@@ -456,17 +456,17 @@ function validate_ogg_datastream($object, $datastream) {
  * @return array
  *   A series of TRUE(pass)/FALSE(fail) results paired with result messages.
  */
-function validate_mkv_datastream($object, $datastream) {
+function islandora_validate_mkv_datastream($object, $datastream) {
   $results = array();
   $mkv = bin2hex($object[$datastream]->content);
 
   $pass = "{$datastream} datastream asserts that it is an EBML-formatted file";
   $fail = "{$datastream} datastream is not an EBML-formatted file.";
-  $results = assert_valid(substr($mkv, 0, 8) == '1a45dfa3', $results, $pass, $fail);
+  $results = islandora_assert_valid(substr($mkv, 0, 8) == '1a45dfa3', $results, $pass, $fail);
 
   $pass = "{$datastream} datastream asserts that its EBML DocType is Matroska";
   $fail = "{$datastream} datastream does not contain a Matroska EBML DocType marker.";
-  $results = assert_valid(substr_count($mkv, '6d6174726f736b61') == 1, $results, $pass, $fail);
+  $results = islandora_assert_valid(substr_count($mkv, '6d6174726f736b61') == 1, $results, $pass, $fail);
 
   return $results;
 }
