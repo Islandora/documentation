@@ -57,6 +57,12 @@ function islandora_ingest_form(array $form, array &$form_state, array $configura
     return islandora_ingest_form_execute_step($form, $form_state);
   }
   catch (Exception $e) {
+    watchdog(
+      'islandora',
+      'Exception during ingest form processing with Message: "@exception",  and Trace: @trace',
+      array('@exception' => $e->getMessage(), '@trace' => $e->getTraceAsString()),
+      WATCHDOG_ERROR
+    );
     drupal_set_message($e->getMessage(), 'error');
     return array(array(
         '#markup' => l(t('Back'), 'javascript:window.history.back();', array('external' => TRUE))));
