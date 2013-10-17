@@ -773,6 +773,9 @@ function islandora_ingest_form_submit(array $form, array &$form_state) {
     try {
       islandora_add_object($object);
       $form_state['redirect'] = "islandora/object/{$object->id}";
+      drupal_set_message(
+      t('"@label" (ID: @pid) has been ingested.', array('@label' => $object->label, '@pid' => $object->id)),
+      'status');
     }
     catch (Exception $e) {
       // If post hooks throws it may already exist at this point but may be
