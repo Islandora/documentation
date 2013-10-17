@@ -773,7 +773,7 @@ function islandora_ingest_form_submit(array $form, array &$form_state) {
       // invalid, so don't say failed.
       watchdog(
         'islandora',
-        'Exception Message: @exception.  Trace: @trace',
+        'Exception during ingest with Message: "@exception",  and Trace: @trace',
         array('@exception' => $e->getMessage(), '@trace' => $e->getTraceAsString()),
         WATCHDOG_ERROR
       );
