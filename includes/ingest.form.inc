@@ -58,9 +58,10 @@ function islandora_ingest_form(array $form, array &$form_state, array $configura
   }
   catch (Exception $e) {
     watchdog(
-        'islandora',
-        'Exception during ingest form processing with Message: "@exception",  and Trace: @trace',
-        array('@exception' => $e->getMessage(), '@trace' => $e->getTraceAsString()), WATCHDOG_ERROR
+      'islandora',
+      'Exception during ingest form processing with Message: "@exception",  and Trace: @trace',
+      array('@exception' => $e->getMessage(), '@trace' => $e->getTraceAsString()),
+      WATCHDOG_ERROR
     );
     drupal_set_message($e->getMessage(), 'error');
     return array(array(
