@@ -39,7 +39,7 @@ function islandora_preprocess_islandora_default_edit(array &$variables) {
     );
     $row[] = array(
       'class' => 'datastream-label',
-      'data' => $ds->label,
+      'data' => filter_xss($ds->label),
     );
     $row[] = array(
       'class' => 'datastream-control',
@@ -47,7 +47,7 @@ function islandora_preprocess_islandora_default_edit(array &$variables) {
     );
     $row[] = array(
       'class' => 'datastream-mime',
-      'data' => $ds->mimeType,
+      'data' => filter_xss($ds->mimeType),
     );
     $row[] = array(
       'class' => 'datastream-size',
@@ -81,7 +81,7 @@ function islandora_preprocess_islandora_default_edit(array &$variables) {
     );
     $rows[] = $row;
   }
-  $caption = $islandora_object->label . ' - ' . $islandora_object->id;
+  $caption = filter_xss($islandora_object->label) . ' - ' . $islandora_object->id;
   $table = array(
     'colgroups' => NULL,
     'sticky' => TRUE,
