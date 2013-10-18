@@ -100,10 +100,10 @@ function islandora_derivative_logging(array $logging_results) {
           drupal_set_message(filter_xss(format_string($message['message'], isset($message['message_sub']) ? $message['message_sub'] : array())), $message['severity']);
         }
         else {
-          if (!isset($_SESSION['islandora_derivative_messages'])) {
-            $_SESSION['islandora_derivative_messages'] = array();
+          if (!isset($_SESSION['islandora_event_messages'])) {
+            $_SESSION['islandora_event_messages'] = array();
           }
-          $_SESSION['islandora_derivative_messages'][] = array(
+          $_SESSION['islandora_event_messages'][] = array(
             'message' => filter_xss(format_string($message['message'], isset($message['message_sub']) ? $message['message_sub'] : array())),
             'severity' => 'status',
           );

@@ -933,12 +933,12 @@ function islandora_sanitize_input_for_valid_xml($input, $replacement = '') {
  */
 function islandora_event_status() {
   $results = FALSE;
-  if (isset($_SESSION['islandora_derivative_messages'])) {
-    foreach ($_SESSION['islandora_derivative_messages'] as $message) {
+  if (isset($_SESSION['islandora_event_messages'])) {
+    foreach ($_SESSION['islandora_event_messages'] as $message) {
       drupal_set_message($message['message'], $message['severity']);
       $results = TRUE;
     }
-    unset($_SESSION['islandora_derivative_messages']);
+    unset($_SESSION['islandora_event_messages']);
   }
   $text = ($results) ? t('The status messages above will be deleted after viewing this page.') : t('No messages to display.');
   return array('#markup' => $text);
