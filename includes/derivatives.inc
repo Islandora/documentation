@@ -96,7 +96,19 @@ function islandora_derivative_logging(array $logging_results) {
   foreach ($logging_results as $result) {
     foreach ($result['messages'] as $message) {
       if ($message['type'] === 'dsm') {
-        drupal_set_message(filter_xss(format_string($message['message'], isset($message['message_sub']) ? $message['message_sub'] : array())), isset($message['severity']) ? $message['severity'] : 'status');
+        if (isset($message['severity']) && $message['severity'] != 'status') {
+          drupal_set_message(filter_xss(format_string($message['message'], isset($message['message_sub']) ? $message['message_sub'] : array())), $message['severity']);
+        }
+        else {
+          if (!isset($_SESSION['islandora_derivative_messages'])) {
+            $_SESSION['islandora_derivative_messages'] = array();
+          }
+          $_SESSION['islandora_derivative_messages'][] = array(
+            'message' => filter_xss(format_string($message['message'], isset($message['message_sub']) ? $message['message_sub'] : array())),
+            'severity' => 'status',
+          );
+          drupal_set_message(l(t('Derivatives successfully created.'), 'islandora/event-status'), 'status', FALSE);
+        }
       }
       else {
         // We know what we are doing here. Passing through the translated

@@ -322,6 +322,13 @@ function islandora_menu() {
     'access arguments' => array(ISLANDORA_VIEW_OBJECTS, 2),
     'load arguments' => array(2),
   );
+  $items['islandora/event-status'] = array(
+    'title' => 'Event Status',
+    'page callback' => 'islandora_event_status',
+    'type' => MENU_CALLBACK,
+    'access callback' => TRUE,
+    'file' => 'includes/utilities.inc',
+  );
   $items[ISLANDORA_CONTENT_MODELS_AUTOCOMPLETE] = array(
     'title' => 'Autocomplete callback',
     'description' => 'Autocomplete a Fedora content model PID.',

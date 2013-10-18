@@ -924,3 +924,22 @@ function islandora_sanitize_input_for_valid_xml($input, $replacement = '') {
   $input = preg_replace('/[^\x9\xA\xD\x20-\x{D7FF}\x{E000}-\x{FFFD}\x{10000}-\x{10FFFF}]/u', $replacement, $input);
   return $input;
 }
+
+/**
+ * Page callback for session status messages to be sent to drupal_set_message().
+ *
+ * @return array
+ *   Render array containing markup.
+ */
+function islandora_event_status() {
+  $results = FALSE;
+  if (isset($_SESSION['islandora_derivative_messages'])) {
+    foreach ($_SESSION['islandora_derivative_messages'] as $message) {
+      drupal_set_message($message['message'], $message['severity']);
+      $results = TRUE;
+    }
+    unset($_SESSION['islandora_derivative_messages']);
+  }
+  $text = ($results) ? t('The status messages above will be deleted after viewing this page.') : t('No messages to display.');
+  return array('#markup' => $text);
+}
