@@ -20,11 +20,11 @@
     <dl xmlns:dcterms="http://purl.org/dc/terms/" class="islandora-inline-metadata islandora-metadata-fields">
       <?php $row_field = 0; ?>
       <?php foreach($dc_array as $key => $value): ?>
-        <dt property="<?php print $value['dcterms']; ?>" content="<?php print $value['value']; ?>" class="<?php print $value['class']; ?><?php print $row_field == 0 ? ' first' : ''; ?>">
-          <?php print $value['label']; ?>
+        <dt property="<?php print $value['dcterms']; ?>" content="<?php print filter_xss($value['value']); ?>" class="<?php print $value['class']; ?><?php print $row_field == 0 ? ' first' : ''; ?>">
+          <?php print filter_xss($value['label']); ?>
         </dt>
         <dd class="<?php print $value['class']; ?><?php print $row_field == 0 ? ' first' : ''; ?>">
-          <?php print $value['value']; ?>
+          <?php print filter_xss($value['value']); ?>
         </dd>
         <?php $row_field++; ?>
       <?php endforeach; ?>
