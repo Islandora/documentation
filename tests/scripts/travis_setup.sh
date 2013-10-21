@@ -9,6 +9,7 @@ git clone git://github.com/Islandora/tuque.git
 git clone -b $FEDORA_VERSION git://github.com/qadan/islandora_tomcat.git
 cd islandora_tomcat
 export CATALINA_HOME='.'
+export FEDORA_HOME='/home/travis/islandora_tomcat/fedora'
 ./bin/startup.sh
 cd $HOME
 pear upgrade --force Console_Getopt
