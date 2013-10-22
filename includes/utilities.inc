@@ -943,3 +943,41 @@ function islandora_event_status() {
   $text = ($results) ? t('The status messages above will be deleted after viewing this page.') : t('No messages to display.');
   return array('#markup' => $text);
 }
+
+/**
+ * Scales the given image.
+ *
+ * @param object $file
+ *   The image file to scale.
+ * @param int $width
+ *   The width to scale the derived image to.
+ * @param int $height
+ *   The height to scale the derived image to.
+ *
+ * @return bool
+ *   TRUE if successful, FALSE otherwise.
+ */
+function islandora_scale_thumbnail($file, $width, $height) {
+  $real_path = drupal_realpath($file->uri);
+  $image = image_load($real_path);
+  try {
+    if (!empty($image)) {
+      $scale = image_scale($image, $width, $height, TRUE);
+      if ($scale) {
+        return image_save($image);
+      }
+    }
+  }
+  catch (exception $e) {
+    drupal_set_message(t(
+        "Islandora failed to scale image with message: '@message'",
+        array("@message" => $e->getMessage())));
+    watchdog(
+      'islandora',
+      'Islandora failed to scale image.<br/> With stack: @trace',
+      array('@trace' => $e->getTraceAsString()),
+      WATCHDOG_ERROR
+    );
+  }
+  return FALSE;
+}
