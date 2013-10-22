@@ -24,7 +24,7 @@ pear install drush/drush-5.9.0
 phpenv rehash
 drush dl --yes drupal
 cd drupal-*
-drush si standard --db-url=mysql://drupal:drupal@localhost/drupal --yes
+drush si minimal --db-url=mysql://drupal:drupal@localhost/drupal --yes
 drush runserver --php-cgi=$HOME/.phpenv/shims/php-cgi localhost:8081 &>/dev/null &
 ln -s $ISLANDORA_DIR sites/all/modules/islandora
 mv sites/all/modules/islandora/tests/travis.test_config.ini sites/all/modules/islandora/tests/test_config.ini
