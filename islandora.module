@@ -533,6 +533,48 @@ function islandora_permission() {
 }
 
 /**
+ * Implements hook_i18n_string_info().
+ */
+function islandora_i18n_string_info() {
+  return array(
+    'islandora' => array(
+      'title' => t('Islandora'),
+      'description' => t('Translatable Metadata labels, etc.'),
+      'format' => FALSE,
+      'list' => TRUE,
+    ),
+  );
+}
+
+/**
+ * Implements islandora_i18n_string_list().
+ */
+function islandora_i18n_string_list($group) {
+  if ($group == 'islandora') {
+    return array(
+      'islandora' => array(
+        'dc' => array(
+          'title' => array('label' => 'Title'),
+          'creator' => array('label' => 'Creator'),
+          'subject' => array('label' => 'Subject'),
+          'description' => array('label' => 'Description'),
+          'publisher' => array('label' => 'Publisher'),
+          'contributor' => array('label' => 'Contributor'),
+          'date' => array('label' => 'Date'),
+          'type' => array('label' => 'Type'),
+          'format' => array('label' => 'Format'),
+          'identifier' => array('label' => 'Identifier'),
+          'source' => array('label' => 'Source'),
+          'language' => array('label' => 'Language'),
+          'relation' => array('label' => 'Relation'),
+          'coverage' => array('label' => 'Coverage'),
+        ),
+      ),
+    );
+  }
+}
+
+/**
  * Renders the print page for the given object.
  *
  * Modules can either implement preprocess functions to append content onto the
