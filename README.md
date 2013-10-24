@@ -26,8 +26,16 @@ REQUIREMENTS
 The Tuque library must be installed to use Islandora. It can be found here:
 http://github.com/Islandora/tuque
 It is expected to be in one of two paths:
- - sites/all/libraries/tuque (libraries directory may need to be created) 
+ - sites/all/libraries/tuque (libraries directory may need to be created)
  - islandora_folder/libraries/tuque
+
+OPTIONAL REQUIREMENTS
+---------------------
+
+If you want to support languages other than English download and enable
+[String Translation](https://drupal.org/project/i18n), And follow our
+[guide](wiki/Multilingual-Support) for setting up additional languges.
+
 
 INSTALLATION
 ------------
