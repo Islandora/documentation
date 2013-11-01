@@ -6,7 +6,7 @@ mysql -u root -e "GRANT ALL PRIVILEGES ON fedora.* To 'fedora'@'localhost' IDENT
 mysql -u root -e "GRANT ALL PRIVILEGES ON drupal.* To 'drupal'@'localhost' IDENTIFIED BY 'drupal';"
 cd $HOME
 git clone git://github.com/Islandora/tuque.git
-git clone -b $FEDORA_VERSION git://github.com/GervaisdeM/islandora_tomcat.git
+git clone -b $FEDORA_VERSION git://github.com/Islandora/islandora_tomcat.git
 cd islandora_tomcat
 export CATALINA_HOME='.'
 export JAVA_OPTS="-Xms1024m -Xmx1024m -XX:MaxPermSize=512m -XX:+CMSClassUnloadingEnabled -Djavax.net.ssl.trustStore=$CATALINA_HOME/fedora/server/truststore -Djavax.net.ssl.trustStorePassword=tomcat"
