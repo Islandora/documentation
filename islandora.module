@@ -322,6 +322,13 @@ function islandora_menu() {
     'access arguments' => array(ISLANDORA_VIEW_OBJECTS, 2),
     'load arguments' => array(2),
   );
+  $items['islandora/event-status'] = array(
+    'title' => 'Event Status',
+    'page callback' => 'islandora_event_status',
+    'type' => MENU_CALLBACK,
+    'access callback' => TRUE,
+    'file' => 'includes/utilities.inc',
+  );
   $items[ISLANDORA_CONTENT_MODELS_AUTOCOMPLETE] = array(
     'title' => 'Autocomplete callback',
     'description' => 'Autocomplete a Fedora content model PID.',
@@ -523,6 +530,48 @@ function islandora_permission() {
       'description' => t('Purge or revert deleted objects.'),
     ),
   );
+}
+
+/**
+ * Implements hook_i18n_string_info().
+ */
+function islandora_i18n_string_info() {
+  return array(
+    'islandora' => array(
+      'title' => t('Islandora'),
+      'description' => t('Translatable Metadata labels, etc.'),
+      'format' => FALSE,
+      'list' => TRUE,
+    ),
+  );
+}
+
+/**
+ * Implements islandora_i18n_string_list().
+ */
+function islandora_i18n_string_list($group) {
+  if ($group == 'islandora') {
+    return array(
+      'islandora' => array(
+        'dc' => array(
+          'title' => array('label' => 'Title'),
+          'creator' => array('label' => 'Creator'),
+          'subject' => array('label' => 'Subject'),
+          'description' => array('label' => 'Description'),
+          'publisher' => array('label' => 'Publisher'),
+          'contributor' => array('label' => 'Contributor'),
+          'date' => array('label' => 'Date'),
+          'type' => array('label' => 'Type'),
+          'format' => array('label' => 'Format'),
+          'identifier' => array('label' => 'Identifier'),
+          'source' => array('label' => 'Source'),
+          'language' => array('label' => 'Language'),
+          'relation' => array('label' => 'Relation'),
+          'coverage' => array('label' => 'Coverage'),
+        ),
+      ),
+    );
+  }
 }
 
 /**
@@ -993,7 +1042,7 @@ function islandora_drupal_title(AbstractObject $object) {
   module_load_include('inc', 'islandora', 'includes/breadcrumb');
   drupal_set_breadcrumb(islandora_get_breadcrumbs($object));
 
-  return $object->label;
+  return filter_xss($object->label);
 }
 
 /**
@@ -1585,6 +1634,7 @@ function islandora_datastream_access($op, $datastream, $user = NULL) {
  * Implements hook_islandora_basic_collection_get_query_filters().
  */
 function islandora_islandora_basic_collection_get_query_filters() {
+  module_load_include('inc', 'islandora', 'includes/utilities');
   $enforced = variable_get('islandora_namespace_restriction_enforced', FALSE);
   if ($enforced) {
     $namespace_array = islandora_get_allowed_namespaces();
