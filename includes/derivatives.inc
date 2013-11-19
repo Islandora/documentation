@@ -34,6 +34,7 @@
  *       watchdog if not defined.
  */
 function islandora_do_derivatives(AbstractObject $object, array $options) {
+  module_load_include('inc', 'islandora', 'includes/utilities');
   $options += array(
     'force' => FALSE,
   );
