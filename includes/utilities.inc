@@ -908,3 +908,76 @@ function islandora_as_renderable_array(&$markup_array) {
   }
   unset($value);
 }
+
+/**
+ * Sanitizes an input string to be valid XML.
+ *
+ * @param string $input
+ *   An input string.
+ * @param string $replacement
+ *   What we are replacing invalid characters with, defaults to ''.
+ *
+ * @return string
+ *   The sanitized string.
+ */
+function islandora_sanitize_input_for_valid_xml($input, $replacement = '') {
+  $input = preg_replace('/[^\x9\xA\xD\x20-\x{D7FF}\x{E000}-\x{FFFD}\x{10000}-\x{10FFFF}]/u', $replacement, $input);
+  return $input;
+}
+
+/**
+ * Page callback for session status messages to be sent to drupal_set_message().
+ *
+ * @return array
+ *   Render array containing markup.
+ */
+function islandora_event_status() {
+  $results = FALSE;
+  if (isset($_SESSION['islandora_event_messages'])) {
+    foreach ($_SESSION['islandora_event_messages'] as $message) {
+      drupal_set_message($message['message'], $message['severity']);
+      $results = TRUE;
+    }
+    unset($_SESSION['islandora_event_messages']);
+  }
+  $text = ($results) ? t('The status messages above will be deleted after viewing this page.') : t('No messages to display.');
+  return array('#markup' => $text);
+}
+
+/**
+ * Scales the given image.
+ *
+ * @param object $file
+ *   The image file to scale.
+ * @param int $width
+ *   The width to scale the derived image to.
+ * @param int $height
+ *   The height to scale the derived image to.
+ *
+ * @return bool
+ *   TRUE if successful, FALSE otherwise.
+ */
+function islandora_scale_thumbnail($file, $width, $height) {
+  $real_path = drupal_realpath($file->uri);
+  $image = image_load($real_path);
+  try {
+    if (!empty($image)) {
+      $scale = image_scale($image, $width, $height, TRUE);
+      if ($scale) {
+        return image_save($image);
+      }
+    }
+  }
+  catch (exception $e) {
+    drupal_set_message(t(
+        "Islandora failed to scale image with message: '@message'",
+        array("@message" => $e->getMessage())));
+    watchdog(
+      'islandora',
+      'Islandora failed to scale image.<br/> With stack: @trace',
+      array('@trace' => $e->getTraceAsString()),
+      WATCHDOG_ERROR
+    );
+  }
+  return FALSE;
+}

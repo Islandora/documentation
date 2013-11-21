@@ -105,7 +105,7 @@ function islandora_menu() {
     'page callback' => 'drupal_get_form',
     'page arguments' => array('islandora_metadata_display_form'),
     'file' => 'includes/metadata.inc',
-    'access arguments' => array('adminisiter site configuration'),
+    'access arguments' => array('administer site configuration'),
   );
   $items['admin/islandora/solution_packs'] = array(
     'title' => 'Solution packs',
@@ -322,6 +322,13 @@ function islandora_menu() {
     'access arguments' => array(ISLANDORA_VIEW_OBJECTS, 2),
     'load arguments' => array(2),
   );
+  $items['islandora/event-status'] = array(
+    'title' => 'Event Status',
+    'page callback' => 'islandora_event_status',
+    'type' => MENU_CALLBACK,
+    'access callback' => TRUE,
+    'file' => 'includes/utilities.inc',
+  );
   $items[ISLANDORA_CONTENT_MODELS_AUTOCOMPLETE] = array(
     'title' => 'Autocomplete callback',
     'description' => 'Autocomplete a Fedora content model PID.',
@@ -462,6 +469,20 @@ function islandora_theme() {
       // An example template might be named:
       // "islandora-dublin-core-display--islandora-27.tpl.php".
       'pattern' => 'islandora_dublin_core_display__',
+      'variables' => array(
+        'islandora_object' => NULL,
+        'print' => NULL,
+      ),
+    ),
+    'islandora_dublin_core_description' => array(
+      'file' => 'theme/theme.inc',
+      'template' => 'theme/islandora-dublin-core-description',
+      // We can add PIDs to the end of this pattern in our preprocess function
+      // and templates will be able to have have a pid appended to the
+      // template name to overide a template on a per object basis.
+      // An example template might be named:
+      // "islandora-dublin-core-description--islandora-27.tpl.php".
+      'pattern' => 'islandora_dublin_core_description__',
       'variables' => array('islandora_object' => NULL),
     ),
   );
@@ -509,6 +530,48 @@ function islandora_permission() {
       'description' => t('Purge or revert deleted objects.'),
     ),
   );
+}
+
+/**
+ * Implements hook_i18n_string_info().
+ */
+function islandora_i18n_string_info() {
+  return array(
+    'islandora' => array(
+      'title' => t('Islandora'),
+      'description' => t('Translatable Metadata labels, etc.'),
+      'format' => FALSE,
+      'list' => TRUE,
+    ),
+  );
+}
+
+/**
+ * Implements islandora_i18n_string_list().
+ */
+function islandora_i18n_string_list($group) {
+  if ($group == 'islandora') {
+    return array(
+      'islandora' => array(
+        'dc' => array(
+          'title' => array('label' => 'Title'),
+          'creator' => array('label' => 'Creator'),
+          'subject' => array('label' => 'Subject'),
+          'description' => array('label' => 'Description'),
+          'publisher' => array('label' => 'Publisher'),
+          'contributor' => array('label' => 'Contributor'),
+          'date' => array('label' => 'Date'),
+          'type' => array('label' => 'Type'),
+          'format' => array('label' => 'Format'),
+          'identifier' => array('label' => 'Identifier'),
+          'source' => array('label' => 'Source'),
+          'language' => array('label' => 'Language'),
+          'relation' => array('label' => 'Relation'),
+          'coverage' => array('label' => 'Coverage'),
+        ),
+      ),
+    );
+  }
 }
 
 /**
@@ -897,7 +960,7 @@ function islandora_view_object(AbstractObject $object) {
       ), array(
         'type' => 'setting'));
 
-  drupal_add_js(array('islandora' => array('print_link' => 'islandora/object/' . $object->id . '/print')), array('type' => 'setting'));
+  drupal_add_js(array('islandora' => array('print_link' => 'islandora/object/' . $object->id . '/print_object')), array('type' => 'setting'));
   drupal_add_js($path . '/js/add_print.js');
 
   drupal_set_title($object->label);
@@ -979,7 +1042,7 @@ function islandora_drupal_title(AbstractObject $object) {
   module_load_include('inc', 'islandora', 'includes/breadcrumb');
   drupal_set_breadcrumb(islandora_get_breadcrumbs($object));
 
-  return $object->label;
+  return filter_xss($object->label);
 }
 
 /**
@@ -1010,6 +1073,7 @@ function islandora_default_islandora_view_object($object) {
 function islandora_default_islandora_printer_object($object, $alter) {
   module_load_include('inc', 'islandora', 'includes/utilities');
   module_load_include('inc', 'islandora', 'includes/datastream');
+  module_load_include('inc', 'islandora', 'includes/metadata');
 
   $path = drupal_get_path('module', 'islandora');
   drupal_add_css($path . '/css/islandora.print.css');
@@ -1024,11 +1088,12 @@ function islandora_default_islandora_printer_object($object, $alter) {
   catch (Exception $e) {
     drupal_set_message(t('Error retrieving object %s %t', array('%s' => $islandora_object->id, '%t' => $e->getMessage())), 'error', FALSE);
   }
-
+  $metadata = islandora_retrieve_metadata_markup($object, TRUE);
   $variables = isset($dc_object) ? $dc_object->asArray() : array();
   $output = theme('islandora_object_print_object', array(
     'object' => $object,
     'dc_array' => $variables,
+    'metadata' => $metadata,
     'islandora_content' => $alter));
 
   return array('Default output' => array('#markup' => $output));
@@ -1048,6 +1113,7 @@ function islandora_default_islandora_printer_object($object, $alter) {
  *   A IslandoraTuque instance
  */
 function islandora_get_tuque_connection($user = NULL, $url = NULL) {
+  module_load_include('inc', 'islandora', 'includes/tuque');
   $tuque = &drupal_static(__FUNCTION__);
   if (!$tuque) {
     if (IslandoraTuque::exists()) {
@@ -1569,6 +1635,7 @@ function islandora_datastream_access($op, $datastream, $user = NULL) {
  * Implements hook_islandora_basic_collection_get_query_filters().
  */
 function islandora_islandora_basic_collection_get_query_filters() {
+  module_load_include('inc', 'islandora', 'includes/utilities');
   $enforced = variable_get('islandora_namespace_restriction_enforced', FALSE);
   if ($enforced) {
     $namespace_array = islandora_get_allowed_namespaces();
@@ -1623,14 +1690,109 @@ function islandora_islandora_datastream_modified(AbstractObject $object, Abstrac
 }
 
 /**
- * Implements hook_islandora_metadata_display_info().
+ * Implements hook_form_simpletest_test_form_alter().
  */
+function islandora_form_simpletest_test_form_alter(array &$form) {
+  module_load_include('inc', 'simpletest', 'simpletest.pages');
+  $form['tests'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Tests'),
+    '#description' => t('Select the test(s) or test group(s) you would like to run, and click <em>Run tests</em>.<br/><br/>NOTE: Tests in groups prefixed with <em>Islandora</em> generally require a configuration file, found in the Islandora module "tests" folder, as well as the use of the Islandora Drupal filter. Before any tests are run, please ensure that your web server has the appropriate permissions to alter the drupal_filter.xml file in your Fedora config folder. Your original Islandora Drupal filter configuration will NOT be overwritten by tests; HOWEVER, if PHP exits abnormally before the filter is reset, please use the "Repair Drupal Filter" button below.'),
+  );
+
+  $form['tests']['table'] = array(
+    '#theme' => 'simpletest_test_table',
+  );
+
+  // Generate the list of tests arranged by group.
+  $groups = simpletest_test_get_all();
+  foreach ($groups as $group => $tests) {
+    $form['tests']['table'][$group] = array(
+      '#collapsed' => TRUE,
+    );
+
+    foreach ($tests as $class => $info) {
+      $form['tests']['table'][$group][$class] = array(
+        '#type' => 'checkbox',
+        '#title' => filter_xss($info['name']),
+        '#description' => filter_xss($info['description']),
+      );
+    }
+  }
+
+  // Operation buttons.
+  $form['tests']['op'] = array(
+    '#type' => 'submit',
+    '#value' => t('Run tests'),
+  );
+
+  $form['reset'] = array(
+    '#type' => 'fieldset',
+    '#collapsible' => FALSE,
+    '#collapsed' => FALSE,
+    '#title' => t('Repair Islandora Drupal Filter'),
+    '#description' => t('Attempts to repair the Islandora Drupal filter if a test that alters the Drupal filter has crashed. This is also intended for developers when creating tests built using the IslandoraWebTestCase class.'),
+  );
+  $form['reset']['op'] = array(
+    '#type' => 'submit',
+    '#value' => t('Repair Drupal Filter'),
+    '#submit' => array('islandora_repair_drupal_filter'),
+  );
+}
+
+/**
+ * Submit handler for islandora_form_simpletest_test_form_alter().
+ */
+function islandora_repair_drupal_filter() {
+
+  // Grab the config.
+  $path = drupal_get_path('module', 'islandora');
+  if (file_exists("$path/tests/test_config.ini")) {
+    $configuration = parse_ini_file("$path/tests/test_config.ini");
+  }
+  elseif (file_exists("$path/tests/default.test_config.ini")) {
+    $configuration = parse_ini_file("$path/tests/default.test_config.ini");
+  }
+  else {
+    drupal_set_message(t('Required default.test_config.ini/test_config.ini file not found'), 'error');
+    return FALSE;
+  }
+
+  // Xpath to the filter 'sql' elements.
+  $drupal_filter_dom = new DOMDocument();
+  $drupal_filter_dom->loadXML(file_get_contents($configuration['drupal_filter_file']));
+  $drupal_filter_xpath = new DOMXPath($drupal_filter_dom);
+
+  // Blow out the simpletest stuff.
+  $entries = 0;
+  foreach ($drupal_filter_xpath->query('//sql') as $sql) {
+    if (strpos($sql->nodeValue, 'simpletest') !== FALSE) {
+      $parent = $sql->parentNode;
+      $root = $parent->parentNode;
+      $parent->removeChild($sql);
+      $root->removeChild($parent);
+      $entries++;
+    }
+  }
+  file_put_contents($configuration['drupal_filter_file'], $drupal_filter_dom->saveXML());
+  if ($entries == 0) {
+    drupal_set_message(t("No simpletest entries were found in the Drupal filter."));
+  }
+  else {
+    drupal_set_message(format_plural($entries, "Removed 1 simpletest entry from the Drupal filter.", "Removed @count simpletest entries from the Drupal filter."));
+  }
+}
+
+ /**
+  * Implements hook_islandora_metadata_display_info().
+  */
 function islandora_islandora_metadata_display_info() {
   return array(
     'dublin_core' => array(
       'label' => t('Dublin Core'),
       'description' => t('Dublin Core metadata'),
-      'callback' => 'islandora_metadata_display_callback',
+      'metadata callback' => 'islandora_metadata_display_callback',
+      'description callback' => 'islandora_metadata_description_callback',
     ),
   );
 }

@@ -34,6 +34,7 @@
  *       watchdog if not defined.
  */
 function islandora_do_derivatives(AbstractObject $object, array $options) {
+  module_load_include('inc', 'islandora', 'includes/utilities');
   $options += array(
     'force' => FALSE,
   );
@@ -60,9 +61,14 @@ function islandora_do_derivatives(AbstractObject $object, array $options) {
       require_once $hook['file'];
     }
     foreach ($hook['function'] as $function) {
-      $logging = call_user_func($function, $object, $options['force']);
-      if (!empty($logging)) {
-        $results[] = $logging;
+      if (function_exists($function)) {
+        $logging = call_user_func($function, $object, $options['force']);
+        if (!empty($logging)) {
+          $results[] = $logging;
+        }
+      }
+      else {
+        watchdog('islandora', 'Unable to call derivative function @function as it was not found!', array('@function' => $function), WATCHDOG_ERROR);
       }
     }
   }
@@ -91,7 +97,19 @@ function islandora_derivative_logging(array $logging_results) {
   foreach ($logging_results as $result) {
     foreach ($result['messages'] as $message) {
       if ($message['type'] === 'dsm') {
-        drupal_set_message(filter_xss(format_string($message['message'], isset($message['message_sub']) ? $message['message_sub'] : array())), isset($message['severity']) ? $message['severity'] : 'status');
+        if (isset($message['severity']) && $message['severity'] != 'status') {
+          drupal_set_message(filter_xss(format_string($message['message'], isset($message['message_sub']) ? $message['message_sub'] : array())), $message['severity']);
+        }
+        else {
+          if (!isset($_SESSION['islandora_event_messages'])) {
+            $_SESSION['islandora_event_messages'] = array();
+          }
+          $_SESSION['islandora_event_messages'][] = array(
+            'message' => filter_xss(format_string($message['message'], isset($message['message_sub']) ? $message['message_sub'] : array())),
+            'severity' => 'status',
+          );
+          drupal_set_message(l(t('Derivatives successfully created.'), 'islandora/event-status'), 'status', FALSE);
+        }
       }
       else {
         // We know what we are doing here. Passing through the translated
