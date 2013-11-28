@@ -108,11 +108,11 @@ function islandora_delete_datastream_version_form(array $form, array &$form_stat
   $form_state['datastream'] = $datastream;
   $form_state['version'] = $version;
   return confirm_form($form,
-      t('Are you sure you want to delete version @version of the @dsid datastream?', array('@dsid' => $datastream->id, '@version' => $version)),
-      "islandora/object/{$datastream->parent->id}",
-       t('This action cannot be undone.'),
-       t('Delete'),
-       t('Cancel')
+    t('Are you sure you want to delete version @version of the @dsid datastream?', array('@dsid' => $datastream->id, '@version' => $version)),
+    "islandora/object/{$datastream->parent->id}",
+     t('This action cannot be undone.'),
+     t('Delete'),
+     t('Cancel')
   );
 }
 
@@ -142,15 +142,15 @@ function islandora_delete_datastream_version_form_submit(array $form, array &$fo
   }
   catch (Exception $e) {
     drupal_set_message(t('Error deleting version %v of %s datastream from object %o %e', array(
-      '%v' => $version,
-      '%s' => $datastream_id,
-      '%o' => $object->label,
-      '%e' => $e->getMessage())), 'error');
+          '%v' => $version,
+          '%s' => $datastream_id,
+          '%o' => $object->label,
+          '%e' => $e->getMessage())), 'error');
   }
 
   drupal_set_message(t('%d datastream version successfully deleted from Islandora object %o', array(
-    '%d' => $datastream_id,
-    '%o' => $object->label)));
+        '%d' => $datastream_id,
+        '%o' => $object->label)));
 
   $form_state['redirect'] = "islandora/object/{$object->id}/datastream/{$datastream->id}/version";
 }
@@ -179,7 +179,12 @@ function islandora_revert_datastream_version_form(array $form, array &$form_stat
   $form_state['object_id'] = $datastream->parent->id;
   $form_state['version'] = $version;
 
-  return confirm_form($form, t('Are you sure you want to revert to version @version of the @dsid datastream?', array('@dsid' => $datastream->id, '@version' => $version)), "islandora/object/{$datastream->parent->id}", "", t('Revert'), t('Cancel')
+  return confirm_form($form,
+    t('Are you sure you want to revert to version @version of the @dsid datastream?', array('@dsid' => $datastream->id, '@version' => $version)),
+    "islandora/object/{$datastream->parent->id}",
+     "",
+     t('Revert'),
+     t('Cancel')
   );
 }
 
@@ -219,9 +224,9 @@ function islandora_revert_datastream_version_form_submit(array $form, array &$fo
   }
 
   drupal_set_message(t('%d datastream successfully reverted to version %v for Islandora object %o', array(
-    '%d' => $datastream_to_revert->id,
-    '%v' => $version,
-    '%o' => $islandora_object->label)));
+        '%d' => $datastream_to_revert->id,
+        '%v' => $version,
+        '%o' => $islandora_object->label)));
 
   $form_state['redirect'] = "islandora/object/{$islandora_object->id}/datastream/{$datastream_to_revert->id}/version";
 }
