@@ -107,7 +107,12 @@ function islandora_delete_datastream_version_form(array $form, array &$form_stat
 
   $form_state['datastream'] = $datastream;
   $form_state['version'] = $version;
-  return confirm_form($form, t('Are you sure you want to delete version @version of the @dsid datastream?', array('@dsid' => $datastream->id, '@version' => $version)), "islandora/object/{$datastream->parent->id}", t('This action cannot be undone.'), t('Delete'), t('Cancel')
+  return confirm_form($form,
+      t('Are you sure you want to delete version @version of the @dsid datastream?', array('@dsid' => $datastream->id, '@version' => $version)),
+      "islandora/object/{$datastream->parent->id}",
+       t('This action cannot be undone.'),
+       t('Delete'),
+       t('Cancel')
   );
 }
 
