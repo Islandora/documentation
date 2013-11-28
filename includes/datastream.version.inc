@@ -110,9 +110,9 @@ function islandora_delete_datastream_version_form(array $form, array &$form_stat
   return confirm_form($form,
     t('Are you sure you want to delete version @version of the @dsid datastream?', array('@dsid' => $datastream->id, '@version' => $version)),
     "islandora/object/{$datastream->parent->id}",
-     t('This action cannot be undone.'),
-     t('Delete'),
-     t('Cancel')
+    t('This action cannot be undone.'),
+    t('Delete'),
+    t('Cancel')
   );
 }
 
@@ -182,9 +182,9 @@ function islandora_revert_datastream_version_form(array $form, array &$form_stat
   return confirm_form($form,
     t('Are you sure you want to revert to version @version of the @dsid datastream?', array('@dsid' => $datastream->id, '@version' => $version)),
     "islandora/object/{$datastream->parent->id}",
-     "",
-     t('Revert'),
-     t('Cancel')
+    "",
+    t('Revert'),
+    t('Cancel')
   );
 }
 
