@@ -28,7 +28,16 @@ function islandora_solution_packs_get_required_objects($module = NULL) {
 
   if (!$required_objects) {
     $connection = islandora_get_tuque_connection();
-    $required_objects = module_invoke_all('islandora_required_objects', $connection);
+    if (isset($module)) {
+      // The module may be disabled when this function runs, as modules must be
+      // disabled before they can be uninstalled. We must manually load the
+      // module file to use it's islandora_required_objects hook.
+      module_load_include('module', $module, $module);
+      $required_objects = module_invoke($module, 'islandora_required_objects', $connection);
+    }
+    else {
+      $required_objects = module_invoke_all('islandora_required_objects', $connection);
+    }
   }
 
   if ($module !== NULL) {
