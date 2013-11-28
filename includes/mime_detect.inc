@@ -383,4 +383,19 @@ class MimeDetect {
     return $this->protectedMimeTypes;
   }
 
+  /**
+   * Get all valid extensions for this MIME type.
+   *
+   * @param string $mimetype
+   *   The MIME type we are searching for.
+   *
+   * @return array
+   *   An array of valid extensions for this MIME type.
+   */
+  public function getValidExtensions($mimetype) {
+    $filter = function($mime) use ($mimetype) {
+      return $mime == $mimetype;
+    };
+    return array_keys(array_filter($this->protectedMimeTypes, $filter));
+  }
 }

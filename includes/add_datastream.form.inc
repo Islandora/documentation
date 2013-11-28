@@ -161,7 +161,10 @@ function islandora_add_datastream_form_validate(array $form, array &$form_state)
   if (isset($form_state['datastream_requirements'][$dsid]) && $file) {
     $allowed_types = $form_state['datastream_requirements'][$dsid]['mime'];
     $mime_detect = new MimeDetect();
-    $allowed_extensions = array_map(array($mime_detect, 'getExtension'), $allowed_types);
+    $allowed_extensions = array();
+    foreach ($allowed_types as $mime) {
+      $allowed_extensions = array_merge($allowed_extensions, $mime_detect->getValidExtensions($mime));
+    }
     $errors = file_validate_extensions($file, implode(' ', $allowed_extensions));
     if (count($errors) > 0) {
       form_set_error('file', $errors[0]);
