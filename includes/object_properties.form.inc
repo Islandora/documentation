@@ -166,15 +166,15 @@ function islandora_object_properties_form_delete(array $form, array &$form_state
 /**
  * Updates object state.
  *
- * @param String $pid
+ * @param string $pid
  *   PID of object to be updated
- * @param Boolean $update_states
+ * @param bool $update_states
  *   If TRUE, update object state
- * @param String $state
+ * @param string $state
  *   Desired object state
- * @param Boolean $update_owners
+ * @param bool $update_owners
  *   If TRUE, update Owner
- * @param String $owner
+ * @param string $owner
  *   New Owner
  */
 function islandora_update_object_properties($pid, $update_states, $state, $update_owners, $owner) {

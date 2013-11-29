@@ -393,7 +393,7 @@ class MimeDetect {
    *   An array of valid extensions for this MIME type.
    */
   public function getValidExtensions($mimetype) {
-    $filter = function($mime) use ($mimetype) {
+    $filter = function ($mime) use ($mimetype) {
       return $mime == $mimetype;
     };
     return array_keys(array_filter($this->protectedMimeTypes, $filter));
