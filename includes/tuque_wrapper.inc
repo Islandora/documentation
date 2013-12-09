@@ -8,7 +8,11 @@
  * @todo Overload functions and apply pre/post hooks.
  */
 
-$islandora_module_path = drupal_get_path('module', 'islandora');
+// This function may not exist when a batch operation is running from a
+// multistep form.
+if (function_exists('drupal_get_path')) {
+  $islandora_module_path = drupal_get_path('module', 'islandora');
+}
 
 // @todo this until we expost these in a module or library
 @include_once 'sites/all/libraries/tuque/Datastream.php';
