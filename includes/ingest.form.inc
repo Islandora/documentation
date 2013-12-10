@@ -769,10 +769,16 @@ function islandora_ingest_form_submit(array $form, array &$form_state) {
     islandora_ingest_form_execute_consecutive_callback_steps($form, $form_state, $step);
   }
   // Ingest the objects.
+  $set_redirect = TRUE;
   foreach ($form_state['islandora']['objects'] as &$object) {
     try {
       islandora_add_object($object);
-      $form_state['redirect'] = "islandora/object/{$object->id}";
+      // We want to redirect to the first object as it's considered to be the
+      // primary object.
+      if ($set_redirect) {
+        $form_state['redirect'] = "islandora/object/{$object->id}";
+        $set_redirect = FALSE;
+      }
       drupal_set_message(
       t('"@label" (ID: @pid) has been ingested.', array('@label' => $object->label, '@pid' => $object->id)),
       'status');
