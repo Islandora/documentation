@@ -485,6 +485,11 @@ function islandora_theme() {
       'pattern' => 'islandora_dublin_core_description__',
       'variables' => array('islandora_object' => NULL),
     ),
+    // Table for install/reinstall content model and collections.
+    'islandora_solution_pack_table' => array(
+      'file' => 'includes/solution_packs.inc',
+      'render element' => 'form',
+    ),
   );
 }
 
