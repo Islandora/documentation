@@ -681,7 +681,6 @@ function islandora_viewers_form($variable_id = NULL, $mimetype = NULL, $model = 
       );
       $form['viewers'][$variable_id]['label'][$name] = array(
         '#type' => 'item',
-        '#type' => 'item',
         '#markup' => $profile['label'],
       );
       $form['viewers'][$variable_id]['description'][$name] = array(
