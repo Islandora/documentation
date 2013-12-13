@@ -140,7 +140,7 @@ function islandora_solution_pack_form(array $form, array &$form_state, $solution
   );
   $status_severities = array_keys($status_info);
   $solution_pack_status_severity = array_search('up_to_date', $status_severities);
-  $table_rows = array();
+  $object_info = array();
   foreach ($objects as $object) {
     $object_status = islandora_check_object_status($object);
     $object_status_info = $status_info[$object_status['status']];
@@ -151,11 +151,14 @@ function islandora_solution_pack_form(array $form, array &$form_state, $solution
     $exists = $object_status['status'] != 'missing';
     $label = $exists ? l($object->label, "islandora/object/{$object->id}") : $object->label;
     $status_msg = "{$object_status_info['image']}&nbsp{$object_status['status_friendly']}";
-    $table_rows[] = array($label, $object->id, $status_msg);
+    $object_info[] = array(
+      'label' => $label,
+      'pid' => $object->id,
+      'status' => $status_msg);
   }
   $solution_pack_status = $status_severities[$solution_pack_status_severity];
   $solution_pack_status_info = $status_info[$solution_pack_status];
-  return array(
+  $form = array(
     'solution_pack' => array(
       '#type' => 'fieldset',
       '#collapsible' => FALSE,
@@ -180,17 +183,16 @@ function islandora_solution_pack_form(array $form, array &$form_state, $solution
       ),
       'install_status' => array(
         '#markup' => t('<strong>Object status:</strong> !image !status', array(
-                     '!image' => $solution_pack_status_info['image'],
-                     '!status' => $solution_pack_status_info['solution_pack'],
-          )),
+          '!image' => $solution_pack_status_info['image'],
+          '!status' => $solution_pack_status_info['solution_pack'],
+        )),
         '#prefix' => '<div class="islandora-solution-pack-install-status">',
         '#suffix' => '</div>',
       ),
       'table' => array(
         '#type' => 'item',
-        '#markup' => theme('table', array(
-                     'header' => array(t('Label'), t('PID'), t('Status')),
-                     'rows' => $table_rows)),
+        '#tree' => TRUE,
+        '#theme' => 'islandora_solution_pack_table',
       ),
       'submit' => array(
         '#type' => 'submit',
@@ -200,6 +202,25 @@ function islandora_solution_pack_form(array $form, array &$form_state, $solution
       ),
     ),
   );
+  foreach ($object_info as $object) {
+    $pid = $object['pid'];
+    $form['solution_pack']['table']['label'][$pid] = array(
+      '#type' => 'item',
+      '#markup' => $object['label'],
+    );
+    $form['solution_pack']['table']['pid'][$pid] = array(
+      '#type' => 'item',
+      '#markup' => $pid,
+    );
+    $form['solution_pack']['table']['status'][$pid] = array(
+      '#type' => 'item',
+      '#markup' => $object['status'],
+    );
+    $form['solution_pack']['table']['check'][$pid] = array(
+      '#type' => 'checkbox',
+    );
+  }
+  return $form;
 }
 
 /**
@@ -211,9 +232,20 @@ function islandora_solution_pack_form(array $form, array &$form_state, $solution
  *   The state of the form submited.
  */
 function islandora_solution_pack_form_submit(array $form, array &$form_state) {
+  $not_checked = array();
+  if (isset($form_state['values']['table']['check'])) {
+    foreach ($form_state['values']['table']['check'] as $key => $value) {
+      if ($value === 0) {
+        $not_checked[] = $key;
+      }
+    }
+  }
   $solution_pack_module = $form_state['values']['solution_pack_module'];
 
-  $batch = islandora_solution_pack_get_batch($solution_pack_module);
+  // Use not_checked instead of checked. Remove not checked item from betch. so
+  // that get batch function can get all object ingest batch if not checked list
+  // is empty.
+  $batch = islandora_solution_pack_get_batch($solution_pack_module, $not_checked);
   batch_set($batch);
   // Hook to let solution pack objects be modified.
   // Not using module_invoke so solution packs can be expanded by other modules.
@@ -227,11 +259,13 @@ function islandora_solution_pack_form_submit(array $form, array &$form_state) {
  * @param string $module
  *   The name of the modules of which to grab the required objects for to setup
  *   the batch.
- *
+ * @param array $not_checked
+ *   The object that will bot be install.
+ * 
  * @return array
  *   An array defining a batch which can be passed on to batch_set().
  */
-function islandora_solution_pack_get_batch($module) {
+function islandora_solution_pack_get_batch($module, $not_checked = array()) {
   $batch = array(
     'title' => t('Installing / Updating solution pack objects'),
     'file' => drupal_get_path('module', 'islandora') . '/includes/solution_packs.inc',
@@ -239,6 +273,14 @@ function islandora_solution_pack_get_batch($module) {
   );
 
   $info = islandora_solution_packs_get_required_objects($module);
+  foreach ($info['objects'] as $key => $object) {
+    foreach ($not_checked as $not) {
+      if ($object->id == $not) {
+        unset($info['objects'][$key]);
+      }
+    }
+  }
+
   foreach ($info['objects'] as $object) {
     $batch['operations'][] = array('islandora_solution_pack_batch_operation_reingest_object', array($object));
   }
@@ -639,6 +681,7 @@ function islandora_viewers_form($variable_id = NULL, $mimetype = NULL, $model = 
       );
       $form['viewers'][$variable_id]['label'][$name] = array(
         '#type' => 'item',
+        '#type' => 'item',
         '#markup' => $profile['label'],
       );
       $form['viewers'][$variable_id]['description'][$name] = array(
@@ -798,6 +841,32 @@ function islandora_get_viewer_callback($viewer_id = NULL) {
   return FALSE;
 }
 
+/**
+ * Implements theme_hook().
+ */
+function theme_islandora_solution_pack_table($variables) {
+  $form = $variables['form'];
+  $rows = array();
+  foreach ($form['label'] as $key => $element) {
+    if (is_array($element) && element_child($key)) {
+      $row = array();
+      $row[] = array('data' => drupal_render($form['label'][$key]));
+      $row[] = array('data' => drupal_render($form['pid'][$key]));
+      $row[] = array('data' => drupal_render($form['status'][$key]));
+      $row[] = array('data' => drupal_render($form['check'][$key]));
+      $rows[] = array('data' => $row);
+    }
+  }
+  $header = array(t('Label'), t('PID'), t('Status'), '');
+
+  $output = '';
+  $output .= theme('table', array(
+    'header' => $header,
+    'rows' => $rows,
+    'attributes' => array('id' => 'islandora-viewers-table'),
+  ));
+  return $output;
+}
 /**
  * @} End of "defgroup viewer-functions".
  */
