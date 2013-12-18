@@ -204,6 +204,9 @@ function islandora_solution_pack_form(array $form, array &$form_state, $solution
   );
   foreach ($object_info as $object) {
     $pid = $object['pid'];
+    $form['solution_pack']['table']['check'][$pid] = array(
+      '#type' => 'checkbox',
+    );
     $form['solution_pack']['table']['label'][$pid] = array(
       '#type' => 'item',
       '#markup' => $object['label'],
@@ -215,9 +218,6 @@ function islandora_solution_pack_form(array $form, array &$form_state, $solution
     $form['solution_pack']['table']['status'][$pid] = array(
       '#type' => 'item',
       '#markup' => $object['status'],
-    );
-    $form['solution_pack']['table']['check'][$pid] = array(
-      '#type' => 'checkbox',
     );
   }
   return $form;
@@ -846,17 +846,19 @@ function islandora_get_viewer_callback($viewer_id = NULL) {
 function theme_islandora_solution_pack_table($variables) {
   $form = $variables['form'];
   $rows = array();
-  foreach ($form['label'] as $key => $element) {
-    if (is_array($element) && element_child($key)) {
-      $row = array();
-      $row[] = array('data' => drupal_render($form['label'][$key]));
-      $row[] = array('data' => drupal_render($form['pid'][$key]));
-      $row[] = array('data' => drupal_render($form['status'][$key]));
-      $row[] = array('data' => drupal_render($form['check'][$key]));
-      $rows[] = array('data' => $row);
+  if (isset($form['label'])) {
+    foreach ($form['label'] as $key => $element) {
+      if (is_array($element) && element_child($key)) {
+        $row = array();
+        $row[] = array('data' => drupal_render($form['check'][$key]));
+        $row[] = array('data' => drupal_render($form['label'][$key]));
+        $row[] = array('data' => drupal_render($form['pid'][$key]));
+        $row[] = array('data' => drupal_render($form['status'][$key]));
+        $rows[] = array('data' => $row);
+      }
     }
   }
-  $header = array(t('Label'), t('PID'), t('Status'), '');
+  $header = array('', t('Label'), t('PID'), t('Status'));
 
   $output = '';
   $output .= theme('table', array(
