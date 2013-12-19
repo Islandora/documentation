@@ -140,6 +140,13 @@ function islandora_solution_pack_form(array $form, array &$form_state, $solution
   );
   $status_severities = array_keys($status_info);
   $solution_pack_status_severity = array_search('up_to_date', $status_severities);
+
+  // Prepair for tableselect.
+  $header = array(
+    'label' => t('Label'),
+    'pid' => t('PID'),
+    'status' => t('Status'));
+
   $object_info = array();
   foreach ($objects as $object) {
     $object_status = islandora_check_object_status($object);
@@ -158,6 +165,7 @@ function islandora_solution_pack_form(array $form, array &$form_state, $solution
   }
   $solution_pack_status = $status_severities[$solution_pack_status_severity];
   $solution_pack_status_info = $status_info[$solution_pack_status];
+
   $form = array(
     'solution_pack' => array(
       '#type' => 'fieldset',
@@ -190,9 +198,13 @@ function islandora_solution_pack_form(array $form, array &$form_state, $solution
         '#suffix' => '</div>',
       ),
       'table' => array(
-        '#type' => 'item',
-        '#tree' => TRUE,
-        '#theme' => 'islandora_solution_pack_table',
+        '#type' => 'tableselect',
+        '#header' => $header,
+        '#options' => $object_info,
+      ),
+      'tablevalue' => array(
+        '#type' => 'hidden',
+        '#value' => json_encode($object_info),
       ),
       'submit' => array(
         '#type' => 'submit',
@@ -202,24 +214,6 @@ function islandora_solution_pack_form(array $form, array &$form_state, $solution
       ),
     ),
   );
-  foreach ($object_info as $object) {
-    $pid = $object['pid'];
-    $form['solution_pack']['table']['check'][$pid] = array(
-      '#type' => 'checkbox',
-    );
-    $form['solution_pack']['table']['label'][$pid] = array(
-      '#type' => 'item',
-      '#markup' => $object['label'],
-    );
-    $form['solution_pack']['table']['pid'][$pid] = array(
-      '#type' => 'item',
-      '#markup' => $pid,
-    );
-    $form['solution_pack']['table']['status'][$pid] = array(
-      '#type' => 'item',
-      '#markup' => $object['status'],
-    );
-  }
   return $form;
 }
 
@@ -233,10 +227,11 @@ function islandora_solution_pack_form(array $form, array &$form_state, $solution
  */
 function islandora_solution_pack_form_submit(array $form, array &$form_state) {
   $not_checked = array();
-  if (isset($form_state['values']['table']['check'])) {
-    foreach ($form_state['values']['table']['check'] as $key => $value) {
+  $object_info = json_decode($form_state['values']['tablevalue']);
+  if (isset($form_state['values']['table'])) {
+    foreach ($form_state['values']['table'] as $key => $value) {
       if ($value === 0) {
-        $not_checked[] = $key;
+        $not_checked[] = $object_info[$key]->pid;
       }
     }
   }
