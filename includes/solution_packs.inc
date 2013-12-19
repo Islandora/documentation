@@ -834,35 +834,6 @@ function islandora_get_viewer_callback($viewer_id = NULL) {
   }
   return FALSE;
 }
-
-/**
- * Implements theme_hook().
- */
-function theme_islandora_solution_pack_table($variables) {
-  $form = $variables['form'];
-  $rows = array();
-  if (isset($form['label'])) {
-    foreach ($form['label'] as $key => $element) {
-      if (is_array($element) && element_child($key)) {
-        $row = array();
-        $row[] = array('data' => drupal_render($form['check'][$key]));
-        $row[] = array('data' => drupal_render($form['label'][$key]));
-        $row[] = array('data' => drupal_render($form['pid'][$key]));
-        $row[] = array('data' => drupal_render($form['status'][$key]));
-        $rows[] = array('data' => $row);
-      }
-    }
-  }
-  $header = array('', t('Label'), t('PID'), t('Status'));
-
-  $output = '';
-  $output .= theme('table', array(
-    'header' => $header,
-    'rows' => $rows,
-    'attributes' => array('id' => 'islandora-viewers-table'),
-  ));
-  return $output;
-}
 /**
  * @} End of "defgroup viewer-functions".
  */
