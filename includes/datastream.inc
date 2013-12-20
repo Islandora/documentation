@@ -312,7 +312,7 @@ function islandora_edit_datastream(AbstractDatastream $datastream) {
     case 0:
       // No edit implementations.
       drupal_set_message(t('There are no edit methods specified for this datastream.'));
-      drupal_goto("islandora/object/{$object->id}/manage/datastreams");
+      drupal_goto("islandora/object/{$datastream->parent->id}/manage/datastreams");
       break;
 
     case 1:

@@ -25,7 +25,7 @@ function islandora_preprocess_islandora_default_edit(array &$variables) {
     $header[] = array('data' => t('Versions'));
   }
 
-  $header[] = array('data' => t('Operations'), 'colspan' => '3');
+  $header[] = array('data' => t('Operations'), 'colspan' => '4');
 
   $table_attributes = array('class' => array('manage-datastreams'));
   $rows = array();
@@ -79,6 +79,14 @@ function islandora_preprocess_islandora_default_edit(array &$variables) {
         'datastream' => $ds,
       )),
     );
+    if (user_access(ISLANDORA_REGENERATE_DERIVATIVES)) {
+      $row[] = array(
+        'class' => 'datastream-regenerate',
+        'data' => theme('islandora_datastream_regenerate_link', array(
+          'datastream' => $ds,
+        )),
+      );
+    }
     $rows[] = $row;
   }
   $caption = filter_xss($islandora_object->label) . ' - ' . $islandora_object->id;
@@ -421,6 +429,27 @@ function theme_islandora_datastream_version_link(array $vars) {
   }
   else {
     return '';
+  }
+}
+
+/**
+ * Renders a link that will re-create derivatives for a datastream.
+ *
+ * @param array $vars
+ *   An array containing:
+ *   - datastream: An AbstractDatastream to generate the version link from.
+ *
+ * @return string
+ *   Markup.
+ */
+function theme_islandora_datastream_regenerate_link(array $vars) {
+  $datastream = $vars['datastream'];
+  $object = $datastream->parent;
+  $hooks = islandora_invoke_hook_list(ISLANDORA_DERVIATIVE_CREATION_HOOK, $object->models, array($object));
+  foreach ($hooks as $hook) {
+    if ($hook['destination_dsid'] == $datastream->id) {
+      return l(t('regenerate'), "islandora/object/{$datastream->parent->id}/datastream/{$datastream->id}/regenerate");
+    }
   }
 }
 
