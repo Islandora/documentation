@@ -692,7 +692,7 @@ function hook_islandora_update_related_objects_properties(AbstractObject $object
  * @param string $context
  *   Where the alter is originating from for distinguishing.
  * @param AbstractObject $object
- *   AbstractObject representing object providing breadcrumb path
+ *   (Optional) AbstractObject representing object providing breadcrumb path
  */
 function hook_islandora_breadcrumbs_alter(&$breadcrumbs, $context, $object) {
 
