@@ -62,7 +62,7 @@ function islandora_regenerate_object_derivatives_form(array $form, array &$form_
   $form_state['object'] = $object;
   return confirm_form($form,
     t('Are you sure you want to regenerate all the derivatives for %title?', array('%title' => $object->label)),
-    "islandora/object/{$object}/manage/properties",
+    "islandora/object/{$object->id}/manage/properties",
     t('This will create a new version for every datastream on the object. Please wait while this happens.'),
     t('Regenerate'),
     t('Cancel')
@@ -78,11 +78,10 @@ function islandora_regenerate_object_derivatives_form(array $form, array &$form_
  *   The Drupal form state.
  */
 function islandora_regenerate_object_derivatives_form_submit(array $form, array &$form_state) {
-  module_load_include('inc', 'islandora', 'includes/derivatives');
   $object = $form_state['object'];
   $batch = islandora_regenerate_object_derivatives_batch($object);
   batch_set($batch);
-  $form_state['redirect'] = "islandora/object/{$object}/manage/properties";
+  $form_state['redirect'] = "islandora/object/{$object->id}/manage/properties";
 }
 
 /**
@@ -95,6 +94,7 @@ function islandora_regenerate_object_derivatives_form_submit(array $form, array 
  *   An array specifying the Drupal batch.
  */
 function islandora_regenerate_object_derivatives_batch(AbstractObject $object) {
+  module_load_include('inc', 'islandora', 'includes/derivatives');
   return array(
     'title' => t('Regenerating all derivatives for @label', array('@label' => $object->label)),
     'operations' => islandora_do_batch_derivatives($object, array('force' => TRUE)),
@@ -116,6 +116,7 @@ function islandora_regenerate_object_derivatives_batch(AbstractObject $object) {
  *   An array specifying the Drupal batch.
  */
 function islandora_regenerate_datastream_derivative_batch(AbstractDatastream $datastream) {
+  module_load_include('inc', 'islandora', 'includes/derivatives');
   return array(
     'title' => t('Regenerating derivatives for the @dsid datastream', array('@dsid' => $datastream->id)),
     'operations' => islandora_do_batch_derivatives($datastream->parent, array(
