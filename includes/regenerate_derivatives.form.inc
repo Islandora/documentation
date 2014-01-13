@@ -107,22 +107,6 @@ function islandora_regenerate_object_derivatives_batch(AbstractObject $object) {
 }
 
 /**
- * Defines the regenerate object derivatives batch operation.
- *
- * @param AbstractObject $object
- *   A AbstractObject representing an object within Fedora.
- * @param array $context
- *   An array containing the context of the current batch.
- */
-function islandora_regenerate_object_derivatives_batch_operation(AbstractObject $object, &$context) {
-  module_load_include('inc', 'islandora', 'includes/derivatives');
-  $logging_results = islandora_do_derivatives($object, array(
-    'force' => TRUE,
-  ));
-  islandora_derivative_logging($logging_results);
-}
-
-/**
  * Creates a batch to go out and re-create the derivative for a datastream.
  *
  * @param AbstractDatastream $datastream
@@ -144,23 +128,6 @@ function islandora_regenerate_datastream_derivative_batch(AbstractDatastream $da
     'file' => drupal_get_path('module', 'islandora') . '/includes/regenerate_derivatives.form.inc',
     'finished' => 'islandora_regenerate_derivative_batch_finished',
   );
-}
-
-/**
- * Defines the regenerate datastream derivative batch operation.
- *
- * @param AbstractDatastream $datastream
- *   A AbstractDatastream representing a datastream on an object within Fedora.
- * @param array $context
- *   An array containing the context of the current batch.
- */
-function islandora_regenerate_datastream_derivative_batch_operation(AbstractDatastream $datastream, &$context) {
-  module_load_include('inc', 'islandora', 'includes/derivatives');
-  $logging_results = islandora_do_derivatives($datastream->parent, array(
-    'force' => TRUE,
-    'destination_dsid' => $datastream->id,
-  ));
-  islandora_derivative_logging($logging_results);
 }
 
 /**
