@@ -447,7 +447,7 @@ function theme_islandora_datastream_regenerate_link(array $vars) {
   $object = $datastream->parent;
   $hooks = islandora_invoke_hook_list(ISLANDORA_DERVIATIVE_CREATION_HOOK, $object->models, array($object));
   foreach ($hooks as $hook) {
-    if ($hook['destination_dsid'] == $datastream->id) {
+    if (isset($hook['source_dsid']) && isset($object[$hook['source_dsid']]) && $hook['destination_dsid'] == $datastream->id) {
       return l(t('regenerate'), "islandora/object/{$datastream->parent->id}/datastream/{$datastream->id}/regenerate");
     }
   }
