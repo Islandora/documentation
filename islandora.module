@@ -1829,3 +1829,20 @@ function islandora_islandora_metadata_display_info() {
     ),
   );
 }
+
+/**
+ * Implements hook_islandora_datastream_access().
+ */
+function islandora_islandora_datastream_access($op, AbstractDatastream $datastream, $user) {
+  if ($op == ISLANDORA_REGENERATE_DERIVATIVES) {
+    $object = $datastream->parent;
+    $hooks = islandora_invoke_hook_list(ISLANDORA_DERVIATIVE_CREATION_HOOK, $object->models, array($object));
+    foreach ($hooks as $hook) {
+      if ($hook['destination_dsid'] == $datastream->id && ((isset($hook['source_dsid']) && isset($object[$hook['source_dsid']]) && islandora_datastream_access(ISLANDORA_VIEW_OBJECTS, $object[$hook['source_dsid']], $user)) || (array_key_exists('source_dsid', $hook) && $hook['source_dsid'] == NULL))) {
+        return TRUE;
+      }
+    }
+    return FALSE;
+  }
+  return NULL;
+}
