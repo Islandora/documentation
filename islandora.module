@@ -1839,7 +1839,7 @@ function islandora_islandora_datastream_access($op, AbstractDatastream $datastre
     $hooks = islandora_invoke_hook_list(ISLANDORA_DERVIATIVE_CREATION_HOOK, $object->models, array($object));
     foreach ($hooks as $hook) {
       if ($hook['destination_dsid'] == $datastream->id && ((isset($hook['source_dsid']) && isset($object[$hook['source_dsid']]) && islandora_datastream_access(ISLANDORA_VIEW_OBJECTS, $object[$hook['source_dsid']], $user)) || (array_key_exists('source_dsid', $hook) && $hook['source_dsid'] == NULL))) {
-        return TRUE;
+        return user_access(ISLANDORA_REGENERATE_DERIVATIVES);
       }
     }
     return FALSE;

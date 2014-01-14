@@ -53,12 +53,14 @@ function islandora_preprocess_islandora_default_edit(array &$variables) {
       'class' => 'datastream-size',
       'data' => islandora_datastream_get_human_readable_size($ds),
     );
-    $row[] = array(
-      'class' => 'datastream-versions',
-      'data' => theme('islandora_datastream_version_link', array(
-        'datastream' => $ds,
-      )),
-    );
+    if (islandora_datastream_access(ISLANDORA_VIEW_DATASTREAM_HISTORY, $ds)) {
+      $row[] = array(
+        'class' => 'datastream-versions',
+        'data' => theme('islandora_datastream_version_link', array(
+          'datastream' => $ds,
+        )),
+      );
+    }
     $row[] = array(
       'class' => 'datastream-download',
       'data' => theme('islandora_datastream_download_link', array(
