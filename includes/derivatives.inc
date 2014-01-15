@@ -41,20 +41,7 @@ function islandora_do_derivatives(AbstractObject $object, array $options) {
   $hooks = islandora_invoke_hook_list(ISLANDORA_DERVIATIVE_CREATION_HOOK, $object->models, array($object));
   uasort($hooks, 'drupal_sort_weight');
   $results = array();
-
-  if (array_key_exists('source_dsid', $options)) {
-    $hooks = array_filter($hooks, function($filter_hook) use($options) {
-      return array_key_exists('source_dsid', $filter_hook) &&
-      $filter_hook['source_dsid'] == $options['source_dsid'];
-    });
-  }
-
-  if (array_key_exists('destination_dsid', $options)) {
-    $hooks = array_filter($hooks, function($filter_hook) use($options) {
-      return array_key_exists('destination_dsid', $filter_hook) &&
-      $filter_hook['destination_dsid'] == $options['destination_dsid'];
-    });
-  }
+  $hooks = islandora_filter_derivatives($hooks, $options, $object);
 
   foreach ($hooks as $hook) {
     if (isset($hook['file'])) {
@@ -148,20 +135,7 @@ function islandora_do_batch_derivatives(AbstractObject $object, array $options) 
   uasort($hooks, 'drupal_sort_weight');
   $operations = array();
 
-  if (array_key_exists('source_dsid', $options)) {
-    $hooks = array_filter($hooks, function($filter_hook) use($options) {
-      return array_key_exists('source_dsid', $filter_hook) &&
-      $filter_hook['source_dsid'] == $options['source_dsid'];
-    });
-  }
-
-  if (array_key_exists('destination_dsid', $options)) {
-    $hooks = array_filter($hooks, function($filter_hook) use($options) {
-      return array_key_exists('destination_dsid', $filter_hook) &&
-      $filter_hook['destination_dsid'] == $options['destination_dsid'];
-    });
-  }
-
+  $hooks = islandora_filter_derivatives($hooks, $options, $object);
   foreach ($hooks as $hook) {
     $file = FALSE;
     if (isset($hook['file'])) {
@@ -177,4 +151,51 @@ function islandora_do_batch_derivatives(AbstractObject $object, array $options) 
     }
   }
   return $operations;
+}
+
+/**
+ * Filter the derivative functions to only call those which are valid.
+ *
+ * @param array $hooks
+ *   An array of hooks to be filtered depending on options.
+ * @param array $options
+ *   An array of options for the derivative generation.
+ * @param AbstractObject $object
+ *   An AbstractObject representing an object within Fedora.
+ *
+ * @return array
+ *   Returns the filtered array of hooks to be ran.
+ */
+function islandora_filter_derivatives($hooks, $options, AbstractObject $object) {
+  if (array_key_exists('source_dsid', $options)) {
+    $hooks = array_filter($hooks, function ($filter_hook) use ($options) {
+      return array_key_exists('source_dsid', $filter_hook) &&
+      $filter_hook['source_dsid'] == $options['source_dsid'];
+    });
+  }
+  if (array_key_exists('destination_dsid', $options)) {
+    $hooks = array_filter($hooks, function ($filter_hook) use ($options) {
+      return array_key_exists('destination_dsid', $filter_hook) &&
+      $filter_hook['destination_dsid'] == $options['destination_dsid'];
+    });
+  }
+  // Do a final filtering to make sure that the source DSID exists on the object
+  // where needed. Using a defined function as opposed to the way above as
+  // it seems to break PHPCS as of 1.4.8.
+  $filter_function = function ($filter_hook) use ($object) {
+    $to_return = FALSE;
+    if (array_key_exists('source_dsid', $filter_hook)) {
+      if ($filter_hook['source_dsid'] != NULL) {
+        if (isset($object[$filter_hook['source_dsid']])) {
+          $to_return = TRUE;
+        }
+      }
+      else {
+        $to_return = TRUE;
+      }
+    }
+    return $to_return;
+  };
+  $hooks = array_filter($hooks, $filter_function);
+  return $hooks;
 }
