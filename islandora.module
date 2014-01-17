@@ -62,6 +62,7 @@ define('ISLANDORA_DERVIATIVE_CREATION_HOOK', 'islandora_derivative');
 
 // Autocomplete paths.
 define('ISLANDORA_CONTENT_MODELS_AUTOCOMPLETE', 'islandora/autocomplete/content-models');
+define('ISLANDORA_MIME_TYPES_AUTOCOMPLETE', 'islandora/autocomplete/mime-types');
 
 /**
  * @deprecated Constants.
@@ -354,6 +355,15 @@ function islandora_menu() {
     'description' => 'Autocomplete a Fedora content model PID.',
     'file' => 'includes/content_model.autocomplete.inc',
     'page callback' => 'islandora_content_model_autocomplete',
+    'page arguments' => array(3),
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_CALLBACK,
+  );
+  $items[ISLANDORA_MIME_TYPES_AUTOCOMPLETE] = array(
+    'title' => 'Autocomplete callback',
+    'description' => 'Autocomplete MIME Types.',
+    'file' => 'includes/mime_type.autocomplete.inc',
+    'page callback' => 'islandora_mime_type_autocomplete',
     'page arguments' => array(3),
     'access arguments' => array('administer site configuration'),
     'type' => MENU_CALLBACK,
