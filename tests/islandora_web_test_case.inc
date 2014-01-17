@@ -203,9 +203,7 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
       if ($fails) {
         return FALSE;
       }
-      else {
-        return TRUE;
-      }
+      return TRUE;
     }
   }
 
