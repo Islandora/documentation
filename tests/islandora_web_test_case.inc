@@ -8,6 +8,13 @@
 class IslandoraWebTestCase extends DrupalWebTestCase {
 
   /**
+   * An array of users that may be created over the course of a test.
+   *
+   * @var array
+   */
+  protected $users = array();
+
+  /**
    * Sets up the Drupal filter to access this test Drupal instances database.
    *
    * @see DrupalWebTestCase::setUp()
@@ -131,6 +138,7 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
     }
     else {
       parent::drupalLogin($account);
+      $this->users[] = $account;
     }
   }
 
@@ -155,6 +163,9 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
    * @see DrupalWebTestCase::tearDown()
    */
   public function tearDown() {
+    foreach ($this->users as $user) {
+      $this->deleteUserCreatedObjects($user);
+    }
     if ($this->configuration['use_drupal_filter']) {
       $this->restoreDrupalFilter();
     }
@@ -170,19 +181,30 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
    *   The PID of the object
    * @param array $datastreams
    *   An array of strings containing datastream names
+   *
+   * @return bool
+   *   TRUE on success, FALSE on fail.
    */
   public function assertDatastreams($object, array $datastreams) {
     if (!is_object($object)) {
       $this->fail("Failed. Object passed in is invalid.", 'Islandora');
     }
     else {
+      $fails = 0;
       foreach ($datastreams as $datastream) {
         if (isset($object[$datastream])) {
           $this->pass("Loaded datastream {$datastream} from PID {$object->id}.", 'Islandora');
         }
         else {
           $this->fail("Failed to load datastream {$datastream} from PID {$object->id}.", 'Islandora');
+          $fails++;
         }
+      }
+      if ($fails) {
+        return FALSE;
+      }
+      else {
+        return TRUE;
       }
     }
   }
@@ -266,7 +288,6 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
       $this->drupalPost($path, $edit, "Permanently remove '{$object->label}' from repository");
     }
     $this->drupalPost($this->url, $edit, t('Delete'));
-    $object = islandora_object_load($pid);
 
     $this->drupalGet("islandora/object/$pid");
     $this->assertResponse(404, "Object $pid successfully deleted.");
@@ -365,6 +386,38 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
     }
 
     return $object;
+  }
+
+  /**
+   * Deletes all objects created by the given user.
+   *
+   * @param object $user
+   *   The user whose objects we'd like to remove.
+   *
+   * @return bool
+   *   TRUE on success, FALSE on failure.
+   */
+  public function deleteUserCreatedObjects($user) {
+    if (is_object($user) && isset($user->name)) {
+      $query = <<<QUERY
+SELECT ?object FROM <#ri> WHERE
+{
+  ?object <fedora-model:ownerId> "$user->name"
+}
+QUERY;
+
+      $objects = $this->admin->repository->ri->sparqlQuery($query);
+      foreach ($objects as $object) {
+        $loaded_object = islandora_object_load($object['object']['value']);
+        islandora_delete_object($loaded_object);
+        $this->assertFalse(islandora_object_load($object['object']['value']), "Object {$object['object']['value']} successfully removed from repository.", 'Islandora');
+      }
+      return TRUE;
+    }
+    else {
+      $this->fail("Invalid user passed in for object deletion.", "Islandora");
+      return FAIL;
+    }
   }
 
 }
