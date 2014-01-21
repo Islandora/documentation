@@ -447,12 +447,12 @@ SELECT ?object FROM <#ri> WHERE
 QUERY;
 
     $objects = $this->admin->repository->ri->sparqlQuery($query);
-    $fail = FALSE;
+    $fail = TRUE;
     foreach ($objects as $object) {
       $loaded_object = islandora_object_load($object['object']['value']);
       islandora_delete_object($loaded_object);
       if ($this->assertFalse(islandora_object_load($object['object']['value']), "Object {$object['object']['value']} successfully removed from repository.", 'Islandora')) {
-        $fail = TRUE;
+        $fail = FALSE;
       }
     }
     return $fail;
