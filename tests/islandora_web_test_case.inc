@@ -434,6 +434,11 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
    *   TRUE on success, FALSE on failure.
    */
   public function deleteUserCreatedObjects($username) {
+    if ($username === $this->configuration['admin_user']) {
+      $this->fail("This function will under no circumstance attempt deletion of all objects owned by the configured Fedora admin user ({$this->configuration['admin_user']}), as this would irreparably damage the repository.", 'Islandora');
+      return FALSE;
+    }
+
     $query = <<<QUERY
 SELECT ?object FROM <#ri> WHERE
 {
