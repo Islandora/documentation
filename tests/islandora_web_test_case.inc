@@ -190,17 +190,17 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
       $this->fail("Failed. Object passed in is invalid.", 'Islandora');
     }
     else {
-      $fails = FALSE;
+      $result = TRUE;
       foreach ($datastreams as $datastream) {
         if (isset($object[$datastream])) {
           $this->pass("Loaded datastream {$datastream} from PID {$object->id}.", 'Islandora');
         }
         else {
           $this->fail("Failed to load datastream {$datastream} from PID {$object->id}.", 'Islandora');
-          $fails = TRUE;
+          $result = FALSE;
         }
       }
-      return $fails;
+      return $result;
     }
   }
 
