@@ -320,7 +320,7 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
     }
     else {
       $this->fail("Cannot delete object {$pid}; it is owned by non-test user {$object->owner}, and this function was called with the safety on.");
-
+      return FALSE;
     }
   }
 
