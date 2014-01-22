@@ -190,17 +190,20 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
       $this->fail("Failed. Object passed in is invalid.", 'Islandora');
     }
     else {
-      $result = TRUE;
-      foreach ($datastreams as $datastream) {
-        if (isset($object[$datastream])) {
-          $this->pass("Loaded datastream {$datastream} from PID {$object->id}.", 'Islandora');
+      $object_datastreams = array_keys($this->admin->repository->api->a->listDatastreams($object->id));
+      $missing_datastreams = implode(', ', array_diff_key($datastreams, $object_datastreams));
+      $present_datastreams = implode(', ', array_intersect_key($datastreams, $object_datastreams));
+
+      if ($missing_datastreams !== '') {
+        $this->fail("Failed to load datastreams {$missing_datastreams} from object {$object->id}.");
+        if ($present_datastreams !== '') {
+          $this->pass("Loaded datastreams {$present_datastreams} from object {$object->id}");
         }
-        else {
-          $this->fail("Failed to load datastream {$datastream} from PID {$object->id}.", 'Islandora');
-          $result = FALSE;
-        }
+        return FALSE;
       }
-      return $result;
+
+      $this->pass("Loaded datastreams {$present_datastreams} from object {$object->id}");
+      return TRUE;
     }
   }
 
@@ -267,56 +270,29 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
   /**
    * Deletes an object using the PID. This does the deletion using the UI.
    *
-   * Deprecated: please use IslandoraWebTestCase::deleteTestObject() instead, as
-   * it doesn't require a label, is safer, and is also not generally ridiculous.
-   *
    * @param string $pid
    *   The PID of the collection to be deleted
    * @param string $button
    *   The label of the first 'Delete' button
-   */
-  public function deleteObject($pid, $button = NULL) {
-    // Hey, good for you coming down to check this out.
-    $message = islandora_deprecated('7.x-1.3', 'Use the "IslandoraWebTestCase::deleteTestObject()" function.');
-    $this->assert('debug', $message, "Debug", array(
-      'file' => "islandora_web_test_case.inc",
-      'function' => "IslandoraWebTestCase->deleteObject()",
-      'line' => '278',
-    ));
-
-    $path = 'islandora/object/' . $pid . '/manage/properties';
-    $edit = array();
-    if (isset($button)) {
-      $this->drupalPost($path, $edit, $button);
-    }
-    else {
-      $object = islandora_object_load($pid);
-      $this->drupalPost($path, $edit, "Permanently remove '{$object->label}' from repository");
-    }
-    $this->drupalPost($this->url, $edit, t('Delete'));
-
-    $this->drupalGet("islandora/object/$pid");
-    $this->assertResponse(404, "Object $pid successfully deleted.");
-  }
-
-  /**
-   * Deletes an object using the PID. This does the deletion using the UI.
-   *
-   * @param string $pid
-   *   The PID of the object.
    * @param bool $safety
    *   If TRUE, this will only delete objects owned by users in $this->users.
-   *
-   * @return bool
-   *   TRUE on success, FALSE on failure.
    */
-  public function deleteTestObject($pid, $safety = TRUE) {
+  public function deleteObject($pid, $button = NULL, $safety = TRUE) {
     $object = islandora_object_load($pid);
     if (!$safety || in_array($object->owner, $this->users)) {
-      $this->drupalPost('islandora/object/' . $pid . '/delete', array(), 'Delete');
-      $this->drupalGet('islandora/object/' . $pid);
-      $this->assertResponse(404, "Successfully deleted object $pid", 'Islandora');
-      return TRUE;
+      $path = 'islandora/object/' . $pid . '/manage/properties';
+      $edit = array();
+      if (isset($button)) {
+        $this->drupalPost($path, $edit, $button);
+      }
+      else {
+        $object = islandora_object_load($pid);
+        $this->drupalPost($path, $edit, "Permanently remove '{$object->label}' from repository");
+      }
+      $this->drupalPost($this->url, $edit, t('Delete'));
+
+      $this->drupalGet("islandora/object/$pid");
+      $this->assertResponse(404, "Object $pid successfully deleted.");
     }
     else {
       $this->fail("Cannot delete object {$pid}; it is owned by non-test user {$object->owner}, and this function was called with the safety on.");
@@ -370,7 +346,7 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
     if (isset($properties['owner'])) {
       $object->owner = $properties['owner'];
     }
-    elseif (is_object($this->loggedInUser)) {
+    elseif ($this->loggedInUser !== FALSE) {
       $object->owner = $this->loggedInUser->name;
     }
 
@@ -435,7 +411,7 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
    */
   public function deleteUserCreatedObjects($username) {
     if ($username === $this->configuration['admin_user']) {
-      $this->fail("This function will under no circumstance attempt deletion of all objects owned by the configured Fedora admin user ({$this->configuration['admin_user']}), as this would irreparably damage the repository.", 'Islandora');
+      $this->fail("This function will under no circumstance attempt deletion of all objects owned by the configured Fedora admin user ({$this->configuration['admin_user']}), as this could irreparably damage the repository.", 'Islandora');
       return FALSE;
     }
 
@@ -447,15 +423,14 @@ SELECT ?object FROM <#ri> WHERE
 QUERY;
 
     $objects = $this->admin->repository->ri->sparqlQuery($query);
-    $fail = TRUE;
     foreach ($objects as $object) {
       $loaded_object = islandora_object_load($object['object']['value']);
       islandora_delete_object($loaded_object);
       if ($this->assertFalse(islandora_object_load($object['object']['value']), "Object {$object['object']['value']} successfully removed from repository.", 'Islandora')) {
-        $fail = FALSE;
+        return FALSE;
       }
+      return TRUE;
     }
-    return $fail;
   }
 
 }
