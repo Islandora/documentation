@@ -190,14 +190,14 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
       $this->fail("Failed. Object passed in is invalid.", 'Islandora');
     }
     else {
-      $missing_datastreams = array_diff($datastreams, array_keys($this->admin->repository->api->a->listDatastreams($object->id)));
+      $missing_datastreams = array_diff_key(array_flip($datastreams), $this->admin->repository->api->a->listDatastreams($object->id));
 
       if (!empty($missing_datastreams)) {
-        $this->fail("Failed to find datastreams " . implode(', ', $missing_datastreams) . " in object {$object->id}.");
+        $this->fail("Failed to find datastream(s) " . implode(', ', array_flip($missing_datastreams)) . " in object {$object->id}.");
         return FALSE;
       }
 
-      $this->pass("Found all required datastreams in object {$object->id}");
+      $this->pass("Found required datastream(s) in object {$object->id}");
       return TRUE;
     }
   }
