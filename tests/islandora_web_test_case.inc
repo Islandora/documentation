@@ -190,10 +190,10 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
       $this->fail("Failed. Object passed in is invalid.", 'Islandora');
     }
     else {
-      $missing_datastreams = implode(', ', array_diff_key($datastreams, array_keys($this->admin->repository->api->a->listDatastreams($object->id))));
+      $missing_datastreams = array_diff($datastreams, array_keys($this->admin->repository->api->a->listDatastreams($object->id)));
 
-      if ($missing_datastreams !== '') {
-        $this->fail("Failed to find datastreams {$missing_datastreams} in object {$object->id}.");
+      if (!empty($missing_datastreams)) {
+        $this->fail("Failed to find datastreams " . implode(', ', $missing_datastreams) . " in object {$object->id}.");
         return FALSE;
       }
 
@@ -275,16 +275,15 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
   public function deleteObject($pid, $button = NULL, $safety = TRUE) {
     $object = islandora_object_load($pid);
     if (!$safety || in_array($object->owner, $this->users)) {
-      $path = 'islandora/object/' . $pid . '/manage/properties';
-      $edit = array();
+      $path = "islandora/object/$pid/manage/properties";
       if (isset($button)) {
-        $this->drupalPost($path, $edit, $button);
+        $this->drupalPost($path, array(), $button);
       }
       else {
         $object = islandora_object_load($pid);
-        $this->drupalPost($path, $edit, "Permanently remove '{$object->label}' from repository");
+        $this->drupalPost($path, array(), "Permanently remove '{$object->label}' from repository");
       }
-      $this->drupalPost($this->url, $edit, t('Delete'));
+      $this->drupalPost($this->url, array(), t('Delete'));
 
       $this->drupalGet("islandora/object/$pid");
       $this->assertResponse(404, "Object $pid successfully deleted.");
