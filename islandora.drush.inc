@@ -70,7 +70,23 @@ function islandora_drush_command() {
     ),
     'bootstrap' => DRUSH_BOOTSTRAP_DRUPAL_LOGIN,
   );
-
+  $commands['islandora-solution-pack-install-content_models'] = array(
+    'description' => dt('Install Solution Pack content models.'),
+    'options' => array(
+      'module' => array(
+        'description' => dt('The module for which to install the content models.'),
+        'required' => TRUE,
+      ),
+    ),
+    'aliases' => array('ispicm'),
+    'drupal dependencies' => array(
+      'islandora',
+    ),
+    'examples' => array(
+      'drush -u 1 ispicm --module=islandora' => dt('Install missing solution pack objects for the "islandora" module.'),
+    ),
+    'bootstrap' => DRUSH_BOOTSTRAP_DRUPAL_LOGIN,
+  );
   return $commands;
 }
 
@@ -83,9 +99,7 @@ function drush_islandora_solution_pack_install_required_objects() {
   $module = drush_get_option('module');
   if (module_exists($module)) {
     islandora_install_solution_pack(
-      $module,
-      'install',
-      drush_get_option('force', FALSE)
+        $module, 'install', drush_get_option('force', FALSE)
     );
   }
   else {
@@ -104,8 +118,7 @@ function drush_islandora_solution_pack_uninstall_required_objects() {
   $module = drush_get_option('module');
   if (module_exists($module)) {
     islandora_uninstall_solution_pack(
-      $module,
-      drush_get_option('force', FALSE)
+        $module, drush_get_option('force', FALSE)
     );
   }
   else {
@@ -150,5 +163,38 @@ function drush_islandora_solution_pack_required_objects_status() {
       );
     }
     drush_print_table($rows, $header, $widths);
+  }
+}
+
+/**
+ * Command callback to install required objects.
+ */
+function drush_islandora_solution_pack_install_content_models() {
+  module_load_include('inc', 'islandora', 'includes/solution_packs');
+  $module = drush_get_option('module');
+  if (module_exists($module)) {
+    $info = islandora_solution_packs_get_required_objects($module);
+    $objects_to_add = array();
+    foreach ($info['objects'] as $key => $candidate) {
+      $object = islandora_object_load($candidate);
+      if (in_array('fedora-system:ContentModel-3.0', $object->models)) {
+        $objects_to_add[] = $candidate;
+      }
+    }
+    foreach ($objects_to_add as $object_to_add) {
+      $old_object = islandora_object_load($object_to_add->id);
+      if ($old_object) {
+        $deleted = islandora_delete_object($old_object);
+        if (!$deleted) {
+          drush_log(dt('@object did not delete.', array('@object' => $old_object->id), 'error'));
+          continue;
+        }
+      }
+      $new_object = islandora_add_object($object_to_add);
+      $verb = $deleted ? dt("Replaced") : dt("Added");
+      if ($new_object) {
+        drush_log("$verb " . $object_to_add->id . " - " . $object_to_add->label);
+      }
+    }
   }
 }
