@@ -13,5 +13,11 @@
 .islandora-solution-pack-fieldset table th,
 .islandora-solution-pack-fieldset table td
 {
-  width: 33%;
+  width: 30%;
+}
+
+.islandora-solution-pack-fieldset table th:first-child,
+.islandora-solution-pack-fieldset table td:first-child
+{
+  width: 10%;
 }

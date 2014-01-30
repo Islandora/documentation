@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * The form displayed that shows the datastream version history.
@@ -10,19 +11,36 @@
 function islandora_datastream_version_table($datastream) {
   module_load_include('inc', 'islandora', 'includes/datastream');
   module_load_include('inc', 'islandora', 'includes/utilities');
-
+  $parent = $datastream->parent;
   drupal_set_title(t("@dsid Previous Versions", array('@dsid' => $datastream->id)));
+  $audit_values = islandora_get_audit_trail($parent->id, $datastream->id);
 
   $header = array();
   $header[] = array('data' => t('Created Date'));
   $header[] = array('data' => t('Size'));
   $header[] = array('data' => t('Label'));
+  $header[] = array('data' => t('Responsibility'));
   $header[] = array('data' => t('Mime type'));
   $header[] = array('data' => t('Operations'), 'colspan' => '2');
   $rows = array();
 
   foreach ($datastream as $version => $datastream_version) {
     $row = array();
+    $reponsibility = $parent->owner;
+    foreach ($audit_values as $audit_value) {
+      $internal = $datastream_version->createdDate;
+      if ($audit_value['date'] == $datastream_version->createdDate) {
+        $reponsibility = $audit_value['responsibility'];
+      }
+    }
+    $user = user_load_by_name($reponsibility);
+    if ($user) {
+      $user_id = $user->uid;
+      $user_val = l($reponsibility, "user/$user_id");
+    }
+    else {
+      $user_val = $reponsibility;
+    }
     $row[] = array(
       'class' => 'datastream-date',
       'data' => theme('islandora_datastream_view_link', array(
@@ -38,6 +56,10 @@ function islandora_datastream_version_table($datastream) {
     $row[] = array(
       'class' => 'datastream-label',
       'data' => $datastream_version->label,
+    );
+    $row[] = array(
+      'class' => 'datastream-responsibility',
+      'data' => $user_val,
     );
     $row[] = array(
       'class' => 'datastream-mime',
@@ -207,4 +229,40 @@ function islandora_revert_datastream_version_form_submit(array $form, array &$fo
         '%o' => $islandora_object->label)));
 
   $form_state['redirect'] = "islandora/object/{$islandora_object->id}/datastream/{$datastream_to_revert->id}/version";
+}
+
+/**
+ * Gets Audit datastream values from foxml.
+ *
+ * @param String $pid
+ *   PID of parent object
+ *
+ * @return array
+ *   Array of audit values
+ */
+function islandora_get_audit_trail($pid, $dsid) {
+  $url = variable_get('islandora_base_url', 'http://localhost:8080/fedora');
+  $connection = islandora_get_tuque_connection(NULL, $url);
+  $xml = $connection->api->m->getObjectXml($pid);
+  $simple_xml = simplexml_load_string($xml);
+  $fox_ns = "info:fedora/fedora-system:def/foxml#";
+  $audit_ns = 'info:fedora/fedora-system:def/audit#';
+  $foxml_nodes = $simple_xml->children($fox_ns);
+  foreach ($foxml_nodes as $node) {
+    if ($node->attributes()->ID == "AUDIT") {
+      $content = $node->datastreamVersion->xmlContent;
+      $audit_nodes = $content->children($audit_ns);
+    }
+  }
+  $audit_values = array();
+  if (isset($audit_nodes)) {
+    foreach ($audit_nodes->auditTrail->record as $record) {
+      if ($dsid == $record->componentID) {
+        $values['responsibility'] = $record->responsibility;
+        $values['date'] = $record->date;
+        $audit_values[] = $values;
+      }
+    }
+  }
+  return $audit_values;
 }

@@ -981,3 +981,17 @@ function islandora_scale_thumbnail($file, $width, $height) {
   }
   return FALSE;
 }
+
+/**
+ * Determines if the server operating system is Windows.
+ *
+ * @return bool
+ *   TRUE if Windows, FALSE otherwise.
+ */
+function islandora_deployed_on_windows() {
+  // Determine if PHP is currently running on Windows.
+  if (strpos(strtolower(php_uname('s')), 'windows') !== FALSE) {
+    return TRUE;
+  }
+  return FALSE;
+}

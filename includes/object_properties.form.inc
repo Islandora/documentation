@@ -26,6 +26,15 @@ function islandora_object_properties_form(array $form, array &$form_state, Abstr
   if (!empty($temp)) {
     $related_objects_pids = array_merge_recursive($related_objects_pids, $temp);
   }
+  $regenerate_derivatives_access = FALSE;
+  if (islandora_object_access(ISLANDORA_REGENERATE_DERIVATIVES, $object)) {
+    module_load_include('inc', 'islandora', 'includes/derivatives');
+    $hooks = islandora_invoke_hook_list(ISLANDORA_DERVIATIVE_CREATION_HOOK, $object->models, array($object));
+    $hooks = islandora_filter_derivatives($hooks, array('force' => TRUE), $object);
+    if (count($hooks) > 1) {
+      $regenerate_derivatives_access = TRUE;
+    }
+  }
   return array(
     'pid' => array(
       '#type' => 'hidden',
@@ -83,6 +92,12 @@ function islandora_object_properties_form(array $form, array &$form_state, Abstr
       ),
       '#submit' => array('islandora_object_properties_form_delete'),
       '#limit_validation_errors' => array(array('pid')),
+    ),
+    'regenerate' => array(
+      '#type' => 'submit',
+      '#access' => $regenerate_derivatives_access,
+      '#value' => t("Regenerate all derivatives"),
+      '#submit' => array('islandora_object_properties_regenerate_derivatives'),
     ),
   );
 }
@@ -166,15 +181,15 @@ function islandora_object_properties_form_delete(array $form, array &$form_state
 /**
  * Updates object state.
  *
- * @param String $pid
+ * @param string $pid
  *   PID of object to be updated
- * @param Boolean $update_states
+ * @param bool $update_states
  *   If TRUE, update object state
- * @param String $state
+ * @param string $state
  *   Desired object state
- * @param Boolean $update_owners
+ * @param bool $update_owners
  *   If TRUE, update Owner
- * @param String $owner
+ * @param string $owner
  *   New Owner
  */
 function islandora_update_object_properties($pid, $update_states, $state, $update_owners, $owner) {
@@ -187,4 +202,16 @@ function islandora_update_object_properties($pid, $update_states, $state, $updat
       $fedora_object->owner = $owner;
     }
   }
+}
+
+/**
+ * Callback function for object properties regenerate all derivatives.
+ *
+ * @param array $form
+ *   The Drupal form.
+ * @param array $form_state
+ *   The Drupal form state.
+ */
+function islandora_object_properties_regenerate_derivatives(array $form, array &$form_state) {
+  drupal_goto("islandora/object/{$form_state['object']}/regenerate");
 }

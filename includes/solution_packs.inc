@@ -140,7 +140,14 @@ function islandora_solution_pack_form(array $form, array &$form_state, $solution
   );
   $status_severities = array_keys($status_info);
   $solution_pack_status_severity = array_search('up_to_date', $status_severities);
-  $table_rows = array();
+
+  // Prepair for tableselect.
+  $header = array(
+    'label' => t('Label'),
+    'pid' => t('PID'),
+    'status' => t('Status'));
+
+  $object_info = array();
   foreach ($objects as $object) {
     $object_status = islandora_check_object_status($object);
     $object_status_info = $status_info[$object_status['status']];
@@ -151,11 +158,15 @@ function islandora_solution_pack_form(array $form, array &$form_state, $solution
     $exists = $object_status['status'] != 'missing';
     $label = $exists ? l($object->label, "islandora/object/{$object->id}") : $object->label;
     $status_msg = "{$object_status_info['image']}&nbsp{$object_status['status_friendly']}";
-    $table_rows[] = array($label, $object->id, $status_msg);
+    $object_info[] = array(
+      'label' => $label,
+      'pid' => $object->id,
+      'status' => $status_msg);
   }
   $solution_pack_status = $status_severities[$solution_pack_status_severity];
   $solution_pack_status_info = $status_info[$solution_pack_status];
-  return array(
+
+  $form = array(
     'solution_pack' => array(
       '#type' => 'fieldset',
       '#collapsible' => FALSE,
@@ -180,17 +191,20 @@ function islandora_solution_pack_form(array $form, array &$form_state, $solution
       ),
       'install_status' => array(
         '#markup' => t('<strong>Object status:</strong> !image !status', array(
-                     '!image' => $solution_pack_status_info['image'],
-                     '!status' => $solution_pack_status_info['solution_pack'],
-          )),
+          '!image' => $solution_pack_status_info['image'],
+          '!status' => $solution_pack_status_info['solution_pack'],
+        )),
         '#prefix' => '<div class="islandora-solution-pack-install-status">',
         '#suffix' => '</div>',
       ),
       'table' => array(
-        '#type' => 'item',
-        '#markup' => theme('table', array(
-                     'header' => array(t('Label'), t('PID'), t('Status')),
-                     'rows' => $table_rows)),
+        '#type' => 'tableselect',
+        '#header' => $header,
+        '#options' => $object_info,
+      ),
+      'tablevalue' => array(
+        '#type' => 'hidden',
+        '#value' => json_encode($object_info),
       ),
       'submit' => array(
         '#type' => 'submit',
@@ -200,6 +214,7 @@ function islandora_solution_pack_form(array $form, array &$form_state, $solution
       ),
     ),
   );
+  return $form;
 }
 
 /**
@@ -211,9 +226,21 @@ function islandora_solution_pack_form(array $form, array &$form_state, $solution
  *   The state of the form submited.
  */
 function islandora_solution_pack_form_submit(array $form, array &$form_state) {
+  $not_checked = array();
+  $object_info = json_decode($form_state['values']['tablevalue']);
+  if (isset($form_state['values']['table'])) {
+    foreach ($form_state['values']['table'] as $key => $value) {
+      if ($value === 0) {
+        $not_checked[] = $object_info[$key]->pid;
+      }
+    }
+  }
   $solution_pack_module = $form_state['values']['solution_pack_module'];
 
-  $batch = islandora_solution_pack_get_batch($solution_pack_module);
+  // Use not_checked instead of checked. Remove not checked item from betch. so
+  // that get batch function can get all object ingest batch if not checked list
+  // is empty.
+  $batch = islandora_solution_pack_get_batch($solution_pack_module, $not_checked);
   batch_set($batch);
   // Hook to let solution pack objects be modified.
   // Not using module_invoke so solution packs can be expanded by other modules.
@@ -227,11 +254,13 @@ function islandora_solution_pack_form_submit(array $form, array &$form_state) {
  * @param string $module
  *   The name of the modules of which to grab the required objects for to setup
  *   the batch.
- *
+ * @param array $not_checked
+ *   The object that will bot be install.
+ * 
  * @return array
  *   An array defining a batch which can be passed on to batch_set().
  */
-function islandora_solution_pack_get_batch($module) {
+function islandora_solution_pack_get_batch($module, $not_checked = array()) {
   $batch = array(
     'title' => t('Installing / Updating solution pack objects'),
     'file' => drupal_get_path('module', 'islandora') . '/includes/solution_packs.inc',
@@ -239,6 +268,14 @@ function islandora_solution_pack_get_batch($module) {
   );
 
   $info = islandora_solution_packs_get_required_objects($module);
+  foreach ($info['objects'] as $key => $object) {
+    foreach ($not_checked as $not) {
+      if ($object->id == $not) {
+        unset($info['objects'][$key]);
+      }
+    }
+  }
+
   foreach ($info['objects'] as $object) {
     $batch['operations'][] = array('islandora_solution_pack_batch_operation_reingest_object', array($object));
   }
@@ -803,7 +840,6 @@ function islandora_get_viewer_callback($viewer_id = NULL) {
   }
   return FALSE;
 }
-
 /**
  * @} End of "defgroup viewer-functions".
  */

@@ -8,7 +8,11 @@
  * @todo Overload functions and apply pre/post hooks.
  */
 
-$islandora_module_path = drupal_get_path('module', 'islandora');
+// This function may not exist when a batch operation is running from a
+// multistep form.
+if (function_exists('drupal_get_path')) {
+  $islandora_module_path = drupal_get_path('module', 'islandora');
+}
 
 // @todo this until we expost these in a module or library
 @include_once 'sites/all/libraries/tuque/Datastream.php';
@@ -294,7 +298,14 @@ class IslandoraFedoraApiM extends FedoraApiM {
 
         default:
           $ret = parent::purgeDatastream($pid, $dsid, $params);
-          islandora_invoke_datastream_hooks(ISLANDORA_DATASTREAM_PURGED_HOOK, $object->models, $dsid, $object, $dsid);
+          // We need to remove this object from the cache and reload it as
+          // Tuque may not have an updated copy. That is the datastream could
+          // still be present within the object even though it's purged out of
+          // Fedora.
+          $tuque = islandora_get_tuque_connection();
+          $tuque->cache->delete($pid);
+          $non_cached_object = islandora_object_load($pid);
+          islandora_invoke_datastream_hooks(ISLANDORA_DATASTREAM_PURGED_HOOK, $non_cached_object->models, $dsid, $non_cached_object, $dsid);
           return $ret;
       }
     }
