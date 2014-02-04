@@ -17,7 +17,7 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
   /**
    * By default, deleteUserCreatedObjects() runs on each tearDown() step.
    */
-  protected $delete_objects_on_teardown = TRUE;
+  protected $deleteObjectsOnTeardown = TRUE;
 
   /**
    * Sets up the Drupal filter to access this test Drupal instances database.
@@ -167,12 +167,12 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
    *
    * To safeguard against leaving test objects in the repository, tearDown()
    * calls deleteUserCreatedObjects() every time by default. This feature can be
-   * toggled by setting $this->delete_objects_on_teardown to TRUE or FALSE.
+   * toggled by setting $this->deleteObjectsOnTeardown to TRUE or FALSE.
    *
    * @see DrupalWebTestCase::tearDown()
    */
   public function tearDown() {
-    if ($this->delete_objects_on_teardown) {
+    if ($this->deleteObjectsOnTeardown) {
       foreach ($this->users as $user) {
         $this->deleteUserCreatedObjects($user);
       }
@@ -410,7 +410,7 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
    *
    * To safeguard against leaving test objects in the repository, this is called
    * each time DrupalTestCase::run() calls tearDown(). This feature can be
-   * toggled by setting $this->delete_objects_on_teardown to TRUE or FALSE.
+   * toggled by setting $this->deleteObjectsOnTeardown to TRUE or FALSE.
    *
    * @param object $username
    *   The user whose objects we'd like to remove.
