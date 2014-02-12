@@ -256,7 +256,7 @@ function islandora_solution_pack_form_submit(array $form, array &$form_state) {
  *   the batch.
  * @param array $not_checked
  *   The object that will bot be install.
- * 
+ *
  * @return array
  *   An array defining a batch which can be passed on to batch_set().
  */
@@ -735,7 +735,6 @@ function islandora_get_viewers($mimetype = NULL, $content_model = NULL) {
     $value['mimetype'] = isset($value['mimetype']) ? $value['mimetype'] : array();
     $value['model'] = isset($value['model']) ? $value['model'] : array();
     if (array_intersect($mimetype, $value['mimetype']) OR in_array($content_model, $value['model'])) {
-    //if (in_array($mimetype, $value['mimetype']) OR in_array($content_model, $value['model'])) {
       $viewers[$key] = $value;
     }
   }
