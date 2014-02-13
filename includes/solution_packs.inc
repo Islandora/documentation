@@ -725,7 +725,7 @@ function islandora_get_viewers($mimetype = array(), $content_model = NULL) {
   $viewers = array();
   $defined_viewers = module_invoke_all('islandora_viewer_info');
 
-  if(!is_array($mimetype)) {
+  if (!is_array($mimetype)) {
     $mimetype = array($mimetype);
   }
 
