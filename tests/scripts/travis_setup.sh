@@ -27,8 +27,8 @@ git clone https://github.com/drush-ops/drush.git
 pushd drush
 git checkout 5.9.0
 chmod +x drush
-ln -s $HOME/drush/drush /usr/local/sbin
 popd
+sudo ln -s $HOME/drush/drush /usr/local/sbin
 
 phpenv rehash
 drush dl --yes drupal
