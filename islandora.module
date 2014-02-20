@@ -880,7 +880,8 @@ function islandora_object_manage_access_callback($perms, $object = NULL) {
 function islandora_manage_overview_object(AbstractObject $object) {
   module_load_include('inc', 'islandora', 'includes/utilities');
   $output = array();
-  foreach (islandora_build_hook_list(ISLANDORA_OVERVIEW_HOOK, $object->models) as $hook) {
+  $hooks = islandora_build_hook_list(ISLANDORA_OVERVIEW_HOOK, $object->models);
+  foreach ($hooks as $hook) {
     $temp = module_invoke_all($hook, $object);
     islandora_as_renderable_array($temp);
     if (!empty($temp)) {
@@ -892,7 +893,7 @@ function islandora_manage_overview_object(AbstractObject $object) {
     $output = islandora_default_islandora_manage_overview_object($object);
   }
   arsort($output);
-  drupal_alter(ISLANDORA_OVERVIEW_HOOK, $object, $output);
+  drupal_alter($hooks, $object, $output);
   islandora_as_renderable_array($output);
   return $output;
 }
