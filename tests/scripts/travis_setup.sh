@@ -21,7 +21,15 @@ pear channel-discover pear.phpqatools.org
 pear channel-discover pear.netpirates.net
 pear install pear/PHP_CodeSniffer-1.4.8
 pear install pear.phpunit.de/phpcpd
-pear install drush/drush-5.9.0
+
+# Install Drush
+git clone https://github.com/drush-ops/drush.git
+pushd drush
+git checkout 5.9.0
+chmod +x drush
+popd
+sudo ln -s $HOME/drush/drush /usr/local/sbin
+
 phpenv rehash
 drush dl --yes drupal
 cd drupal-*
