@@ -216,36 +216,71 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
   /**
    * Attempts to validate an array of datastreams, generally via binary checks.
    *
-   * These functions exist in, and can be added to, datastream_validators.inc,
-   * which is found in this folder.
+   * Datastream validation classes exist in, and can be added to, the file
+   * 'datastream_validators.inc', which is found in this folder. Datastream
+   * validator classes use the naming convention 'PrefixDatastreamValidator',
+   * and that 'Prefix' is what this function uses to determine what class to
+   * instantiate.
    *
-   * $param AbstractObject $object
+   * $param IslandoraFedoraObject $object
    *   The object to load datastreams from.
    * $param array $datastreams
-   *   An array of paired DSIDs, validate function names, and optional params.
+   *   An array of arrays that pair DSIDs, DatastreamValidator class prefixes,
+   *   and optional params - e.g. array(
+   *     array('DSID', 'TIFF'),
+   *     array('DSID2, 'Text', array('param 1', 'param 2')),
+   *   ) and so on.
    */
   public function validateDatastreams($object, array $datastreams) {
+
     if (!is_object($object)) {
-      $this->fail("Failed. Object passed in is invalid.", 'Islandora');
+      $this->fail("Datastream validation failed; Object passed in is invalid.", 'Islandora');
+      return;
     }
+
     module_load_include('inc', 'islandora', 'tests/datastream_validators');
+
     foreach ($datastreams as $datastream) {
-      if (isset($object[$datastream[0]])) {
-        $function = 'islandora_validate_' . $datastream[1] . '_datastream';
-        if (function_exists($function)) {
-          if (isset($datastream[2])) {
-            $results = $function($object, $datastream[0], $datastream[2]);
-          }
-          else {
-            $results = $function($object, $datastream[0]);
-          }
-          foreach ($results as $result) {
-            $this->assertTrue($result[0], $result[1], 'Islandora');
-          }
+      // Let's give them conventional names.
+      $dsid = $datastream[0];
+      $prefix = $datastream[1];
+      $params = array();
+      if (isset($datastream[2])) {
+        $params = $datastream[2];
+      }
+
+      // Legacy tests were created before the CamelCase conventions of the class
+      // system now in place. So, we need to automagically seek out prefixes
+      // that start with a lower-case letter and convert them to the proper
+      // format (rather than fixing every single legacy test).
+      if (ctype_lower(substr($prefix, 0, 1))) {
+        // Handle the case where the prefix is "image".
+        if ($prefix === 'image') {
+          $prefix = 'Image';
         }
+        // Handle the case where the prefix is "text".
+        elseif ($prefix === 'text') {
+          $prefix = 'Text';
+        }
+        // All other cases involve just converting everything to caps.
         else {
-          $this->fail("No {$datastream[0]} validation function exists for the {$datastream[1]} datastream.", 'Islandora');
+          $prefix = strtoupper($prefix);
         }
+      }
+
+      // Instantiate the appropriate class, grab the passes and fails.
+      $class_name = "{$prefix}DatastreamValidator";
+      if (class_exists($class_name)) {
+        $validator = new $class_name($object, $dsid, $params);
+        foreach ($validator->getPasses() as $message => $caller) {
+          $this->assert(TRUE, $message, 'Islandora', $caller);
+        }
+        foreach ($validator->getFails() as $message => $caller) {
+          $this->assert(FALSE, $message, 'Islandora', $caller);
+        }
+      }
+      else {
+        $this->fail("No DatastreamValidator class was found with the name '$class_name'; are you sure the prefix given to IslandoraWebTestCase->validateDatastreams() was entered correctly, or that such a validator exists?", 'Islandora');
       }
     }
   }
