@@ -226,10 +226,8 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
    *   The object to load datastreams from.
    * $param array $datastreams
    *   An array of arrays that pair DSIDs, DatastreamValidator class prefixes,
-   *   and optional params - e.g. array(
-   *     array('DSID', 'TIFF'),
-   *     array('DSID2, 'Text', array('param 1', 'param 2')),
-   *   ) and so on.
+   *   and optional params. You can check some of the existing implementations
+   *   for examples.
    */
   public function validateDatastreams($object, array $datastreams) {
 
