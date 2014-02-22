@@ -56,9 +56,12 @@ function islandora_view_datastream(AbstractDatastream $datastream, $download = F
     $extension = '.' . $mime_detect->getExtension($datastream->mimetype);
 
     // Prevent adding on a duplicate extension.
+    $label = $datastream->label;
     $extension_length = strlen($extension);
-    $duplicate_extension_position = strripos($datastream->label, $extension, -$extension_length);
-    $filename = $datastream->label;
+    $duplicate_extension_position = strlen($label) > $extension_length ?
+      strripos($label, $extension, -$extension_length) :
+      FALSE;
+    $filename = $label;
     if ($duplicate_extension_position === FALSE) {
       $filename .= $extension;
     }

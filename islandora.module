@@ -62,6 +62,7 @@ define('ISLANDORA_DERVIATIVE_CREATION_HOOK', 'islandora_derivative');
 
 // Autocomplete paths.
 define('ISLANDORA_CONTENT_MODELS_AUTOCOMPLETE', 'islandora/autocomplete/content-models');
+define('ISLANDORA_MIME_TYPES_AUTOCOMPLETE', 'islandora/autocomplete/mime-types');
 
 /**
  * @deprecated Constants.
@@ -354,6 +355,15 @@ function islandora_menu() {
     'description' => 'Autocomplete a Fedora content model PID.',
     'file' => 'includes/content_model.autocomplete.inc',
     'page callback' => 'islandora_content_model_autocomplete',
+    'page arguments' => array(3),
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_CALLBACK,
+  );
+  $items[ISLANDORA_MIME_TYPES_AUTOCOMPLETE] = array(
+    'title' => 'Autocomplete callback',
+    'description' => 'Autocomplete MIME Types.',
+    'file' => 'includes/mime_type.autocomplete.inc',
+    'page callback' => 'islandora_mime_type_autocomplete',
     'page arguments' => array(3),
     'access arguments' => array('administer site configuration'),
     'type' => MENU_CALLBACK,
@@ -870,7 +880,8 @@ function islandora_object_manage_access_callback($perms, $object = NULL) {
 function islandora_manage_overview_object(AbstractObject $object) {
   module_load_include('inc', 'islandora', 'includes/utilities');
   $output = array();
-  foreach (islandora_build_hook_list(ISLANDORA_OVERVIEW_HOOK, $object->models) as $hook) {
+  $hooks = islandora_build_hook_list(ISLANDORA_OVERVIEW_HOOK, $object->models);
+  foreach ($hooks as $hook) {
     $temp = module_invoke_all($hook, $object);
     islandora_as_renderable_array($temp);
     if (!empty($temp)) {
@@ -882,7 +893,7 @@ function islandora_manage_overview_object(AbstractObject $object) {
     $output = islandora_default_islandora_manage_overview_object($object);
   }
   arsort($output);
-  drupal_alter(ISLANDORA_OVERVIEW_HOOK, $object, $output);
+  drupal_alter($hooks, $object, $output);
   islandora_as_renderable_array($output);
   return $output;
 }
@@ -1027,11 +1038,9 @@ function islandora_view_object(AbstractObject $object) {
 /**
  * This will prepare an object to be printed.
  *
- * By default, all fedora objects can print DC record data,
- * however, Solution packs that wish to modify the form
- * to be printed must implement hook_islandora_view_print_object_alter,
- * create a theme.tpl.php file, and return its markup by calling
- * theme(themename.tpl.php).
+ * By default all fedora objects can print DC record data. Solution packs that
+ * wish to modify the data to be printed can implement
+ * hook_islandora_view_print_object or hook_islandora_metadata_display_info.
  *
  * @param AbstractObject $object
  *   The object to print.

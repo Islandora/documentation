@@ -528,7 +528,7 @@ function islandora_display_repository_inaccessible_message() {
   $link = l($text, 'admin/islandora/configure', array('attributes' => array('title' => $text)));
   $message = t('Could not connect to the repository. Please check the settings on the !link page.',
   array('!link' => $link));
-  drupal_set_message(check_plain($message), 'error', FALSE);
+  drupal_set_message(filter_xss($message), 'error', FALSE);
 
 }
 
@@ -978,6 +978,20 @@ function islandora_scale_thumbnail($file, $width, $height) {
       array('@trace' => $e->getTraceAsString()),
       WATCHDOG_ERROR
     );
+  }
+  return FALSE;
+}
+
+/**
+ * Determines if the server operating system is Windows.
+ *
+ * @return bool
+ *   TRUE if Windows, FALSE otherwise.
+ */
+function islandora_deployed_on_windows() {
+  // Determine if PHP is currently running on Windows.
+  if (strpos(strtolower(php_uname('s')), 'windows') !== FALSE) {
+    return TRUE;
   }
   return FALSE;
 }
