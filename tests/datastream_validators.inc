@@ -45,6 +45,79 @@ function islandora_hex2int($hex) {
 }
 
 /**
+ * A result from a datastream validator; $type defines TRUE/FALSE as pass/fail.
+ */
+class DatastreamValidatorResult {
+
+  /**
+   * The message for this result.
+   *
+   * @var string
+   */
+  protected $message;
+
+  /**
+   * The caller for this result.
+   *
+   * @var array
+   */
+  protected $caller;
+
+  /**
+   * The type of result this is - TRUE for pass, FALSE for fail.
+   *
+   * @var bool
+   */
+  protected $type;
+
+  /**
+   * Constructs a DatastreamValidatorResult.
+   *
+   * @param bool $type
+   *   Whether this result should indicate a pass (TRUE) or fail (FALSE).
+   * @param string $message
+   *   The message that will be used by this result.
+   * @param array $caller
+   *   The caller for this result.
+   */
+  public function __construct($type, $message, array $caller) {
+    $this->message = $message;
+    $this->caller = $caller;
+    $this->type = $type;
+  }
+
+  /**
+   * Get the message for this result.
+   *
+   * @return string
+   *   The message for this result.
+   */
+  public function getMessage() {
+    return $this->message;
+  }
+
+  /**
+   * Get the caller for this result.
+   *
+   * @return string
+   *   The caller for this result.
+   */
+  public function getCaller() {
+    return $this->caller;
+  }
+
+  /**
+   * Get the type of result.
+   *
+   * @return bool
+   *   The type of pass (TRUE for pass, FALSE for fail).
+   */
+  public function getType() {
+    return $this->type;
+  }
+}
+
+/**
  * Abstraction for datastream validators.
  *
  * Classes extended from DatastreamValidator don't require much to be useful.
@@ -65,13 +138,6 @@ function islandora_hex2int($hex) {
  * into something that DrupalWebTestCase can use.
  */
 abstract class DatastreamValidator {
-
-  /**
-   * This class is skipped when looking for the source of an assertion.
-   *
-   * @see DrupalWebTestCase::skipClasses
-   */
-  protected $skipClasses = array(__CLASS__ => TRUE);
 
   /**
    * The IslandoraFedoraObject containing the datastream to test.
@@ -95,24 +161,13 @@ abstract class DatastreamValidator {
   public $datastreamContent;
 
   /**
-   * An associative array of messages returned from passed tests, and callers.
+   * An array of DatastreamValidatorResults.
    *
-   * This should only be added to using $this->addPass(), so that the caller can
-   * be appropriately determined.
+   * These should be generated using $this->addResult.
    *
-   * @var array
+   * @var DatastreamValidatorResult[]
    */
-  public $passes = array();
-
-  /**
-   * An associative array of messages returned from failed tests, and callers.
-   *
-   * This should only be added to using $this->addFail(), so that the caller can
-   * be appropriately determined.
-   *
-   * @var array
-   */
-  public $fails = array();
+  public $results = array();
 
   /**
    * An array of additional required parameters.
@@ -157,49 +212,26 @@ abstract class DatastreamValidator {
   }
 
   /**
-   * Returns an array of pass messages.
+   * Returns an array of DatastreamValidatorResults.
    *
-   * @return string[]
-   *   The pass messages.
+   * @return DatastreamValidatorResult[]
+   *   The results.
    */
-  public function getPasses() {
-    return $this->passes;
+  public function getResults() {
+    return $this->results;
   }
 
   /**
-   * Returns an array of fail messages.
+   * Adds a result to $this->results.
    *
-   * @return string[]
-   *   The fail messages.
-   */
-  public function getFails() {
-    return $this->fails;
-  }
-
-  /**
-   * Adds a pass to $this->pass.
-   *
-   * Passes are an associative array of messages and callers. Callers should be
-   * obtained using $this->getAssertionCall().
-   *
+   * @param bool $type
+   *   The type of result (TRUE for pass, FALSE for fail).
    * @param string $message
-   *   The message to use.
+   *   The message to put in the result.
    */
-  public function addPass($message) {
-    $this->passes[$message] = $this->getAssertionCall();
-  }
-
-  /**
-   * Adds a fail to $this->fail.
-   *
-   * Fails are an associative array of messages and callers. Callers should be
-   * obtained using $this->getAssertionCall().
-   *
-   * @param string $message
-   *   The message to use.
-   */
-  public function addFail($message) {
-    $this->fails[$message] = $this->getAssertionCall();
+  public function addResult($type, $message) {
+    $result = new DatastreamValidatorResult($type, $message, $this->getAssertionCall());
+    $this->results[] = $result;
   }
 
   /**
@@ -239,12 +271,11 @@ class ImageDatastreamValidator extends DatastreamValidator {
    * Asserts the validity of an image using PHPGD.
    */
   protected function assertImageGeneration() {
-    if (imagecreatefromstring($this->datastreamContent) !== FALSE) {
-      $this->addPass("Image datastream {$this->datastream} is valid.");
-    }
-    else {
-      $this->addFail("Image datastream {$this->datastream} is either invalid or corrupt.");
-    }
+    $assertion = imagecreatefromstring($this->datastreamContent) !== FALSE;
+    $pass = "Image datastream {$this->datastream} is valid.";
+    $fail = "Image datastream {$this->datastream} is either invalid or corrupt.";
+    $message = $assertion ? $pass : $fail;
+    $this->addResult($assertion, $message);
   }
 
 }
@@ -264,17 +295,17 @@ class TIFFDatastreamValidator extends DatastreamValidator {
       // byte-order" (i.e. little-endian) by starting with the characters "II"
       // (repeated so that byte order does not yet need to be significant).
       // The number that follows is '42' in little-endian hex, a number of
-      // 'deep philosophical significance' to the TIFF format creators.
-      $this->addPass("{$this->datastream} datastream asserts that it is a valid Intel-byte-orderded TIF/TIFF file.");
+      // 'deep philosophical significance' to the TIFF format creators.'
+      $this->addResult(TRUE, "{$this->datastream} datastream asserts that it is a valid Intel-byte-orderded TIF/TIFF file.");
     }
     elseif ($datastream_header_hex == "4d4d002a") {
       // In this case, the ingested TIFF is designated as using the "Motorola
       // byte-order" (i.e. big-endian) by starting with the characters "MM"
       // instead. 42 follows once again, this time in big-endian hex.
-      $this->addPass("{$this->datastream} datastream asserts that it is a valid Motorola-byte-ordered TIF/TIFF file.");
+      $this->addResult(TRUE, "{$this->datastream} datastream asserts that it is a valid Motorola-byte-ordered TIF/TIFF file.");
     }
     else {
-      $this->addFail("{$this->datastream} datastream does not assert that it is a valid TIF/TIFF file.");
+      $this->addResult(FALSE, "{$this->datastream} datastream does not assert that it is a valid TIF/TIFF file.");
     }
   }
 
@@ -302,12 +333,11 @@ class JP2DatastreamValidator extends DatastreamValidator {
    * 0x6A502020. This header is in all .jp2s, and we check for it here.
    */
   protected function assertJP2Header() {
-    if (substr(bin2hex($this->datastreamContent), 8, 8) == '6a502020') {
-      $this->addPass("Datastream {$this->datastream} contains the appropriate JP2 header.");
-    }
-    else {
-      $this->addFail("Datastream {$this->datastream} does not contain the appropriate JP2 header.");
-    }
+    $assertion = substr(bin2hex($this->datastreamContent), 8, 8) == '6a502020';
+    $pass = "Datastream {$this->datastream} contains the appropriate JP2 header.";
+    $fail = "Datastream {$this->datastream} does not contain the appropriate JP2 header.";
+    $message = $assertion ? $pass : $fail;
+    $this->addResult($assertion, $message);
   }
 
   /**
@@ -317,12 +347,11 @@ class JP2DatastreamValidator extends DatastreamValidator {
    * checking for it here to see if the .jp2 encoder finished okay.
    */
   protected function assertJP2Marker() {
-    if (substr(bin2hex($this->datastreamContent), strlen(bin2hex($this->datastreamContent)) - 4, 4) == 'ffd9') {
-      $this->addPass("Datastream {$this->datastream} contains the appropriate JP2 ending marker.");
-    }
-    else {
-      $this->addFail("Datastream {$this->datastream} does not contain the appropriate JP2 ending marker. If this is the only JP2 validator that failed, it is likely that derivative generation was interrupted.");
-    }
+    $assertion = substr(bin2hex($this->datastreamContent), strlen(bin2hex($this->datastreamContent)) - 4, 4) == 'ffd9';
+    $pass = "Datastream {$this->datastream} contains the appropriate JP2 ending marker.";
+    $fail = "Datastream {$this->datastream} does not contain the appropriate JP2 ending marker. If this is the only JP2 validator that failed, it is likely that derivative generation was interrupted.";
+    $message = $assertion ? $pass : $fail;
+    $this->addResult($assertion, $message);
   }
 }
 
@@ -335,13 +364,12 @@ class PDFDatastreamValidator extends DatastreamValidator {
    * Validates the PDF signature.
    */
   protected function assertPDFSignature() {
-    if (substr($this->datastreamContent, 0, 5) == '%PDF-') {
-      $pdf_version = substr($this->datastreamContent, 5, 3);
-      $this->addPass("{$this->datastream} datastream asserts that it is a valid PDF file using PDF version {$pdf_version}");
-    }
-    else {
-      $this->addFail("{$this->datastream} datastream binary header appears to be corrupt and missing a valid PDF signature.");
-    }
+    $assertion = substr($this->datastreamContent, 0, 5) == '%PDF-';
+    $pdf_version = substr($this->datastreamContent, 5, 3);
+    $pass = "{$this->datastream} datastream asserts that it is a valid PDF file using PDF version {$pdf_version}";
+    $fail = "{$this->datastream} datastream binary header appears to be corrupt and missing a valid PDF signature.";
+    $message = $assertion ? $pass : $fail;
+    $this->addResult($assertion, $message);
   }
 
   /**
@@ -349,12 +377,11 @@ class PDFDatastreamValidator extends DatastreamValidator {
    */
   protected function assertPDFStreamCount() {
     $pdf_stream_count = substr_count(bin2hex($this->datastreamContent), '0a73747265616d0a');
-    if ($pdf_stream_count !== 0) {
-      $this->addPass("{$this->datastream} datastream reports the existence of {$pdf_stream_count} PDF streams. Note that an extremely low number could still indicate corruption.");
-    }
-    else {
-      $this->addFail("{$this->datastream} datastream contains zero PDF streams, and is likely not a PDF file.");
-    }
+    $assertion = $pdf_stream_count !== 0;
+    $pass = "{$this->datastream} datastream reports the existence of {$pdf_stream_count} PDF streams. Note that an extremely low number could still indicate corruption.";
+    $fail = "{$this->datastream} datastream contains zero PDF streams, and is likely not a PDF file.";
+    $message = $assertion ? $pass : $fail;
+    $this->addResult($assertion, $message);
   }
 
   /**
@@ -364,12 +391,11 @@ class PDFDatastreamValidator extends DatastreamValidator {
    *   TRUE if it was present; FALSE otherwise.
    */
   protected function assertPDFClosingTag() {
-    if (strpos(bin2hex($this->datastreamContent), '0a2525454f460a')) {
-      $this->addPass("{$this->datastream} datastream reports the existence of the closing 'EOF' tag required at the end of PDFs");
-    }
-    else {
-      $this->addFail("{$this->datastream} datastream does not contain the closing 'EOF' tag. If this is the only PDF validation that failed, it is likely that derivative generation was interrupted.");
-    }
+    $assertion = strpos(bin2hex($this->datastreamContent), '0a2525454f460a') == TRUE;
+    $pass = "{$this->datastream} datastream reports the existence of the closing 'EOF' tag required at the end of PDFs";
+    $fail = "{$this->datastream} datastream does not contain the closing 'EOF' tag. If this is the only PDF validation that failed, it is likely that derivative generation was interrupted.";
+    $message = $assertion ? $pass : $fail;
+    $this->addResult($assertion, $message);
   }
 }
 
@@ -387,13 +413,13 @@ class TextDatastreamValidator extends DatastreamValidator {
    */
   protected function assertTextStringCount() {
     if (!isset($this->params[1])) {
-      $this->addFail("TextDatastreamValidator cannot be instantiated without two keys in the 'params' variable.");
+      $this->addResult(FALSE, "TextDatastreamValidator cannot be instantiated without two keys in the 'params' variable.");
       return;
     }
     $string_count = self::getTextStringCount();
     $expected = $this->params[1];
-    $function = $string_count === $expected ? 'addPass' : 'addFail';
-    $this->$function("{$this->datastream} datastream contains the word(s) '{$this->params[0]}' repeated {$string_count} time(s) (expected: {$expected}).");
+    $assertion = $string_count === $expected;
+    $this->addResult($assertion, "{$this->datastream} datastream contains the word(s) '{$this->params[0]}' repeated {$string_count} time(s) (expected: {$expected}).");
   }
 
   /**
@@ -442,36 +468,33 @@ class WAVDatastreamValidator extends DatastreamValidator {
    */
   protected function assertWAVSignature() {
     $signatures = str_split(substr($this->datastreamContent, 0, 24), 8);
-    if ($signatures[0] = '52494646' && $signatures[2] = '57415645') {
-      $this->addPass("Header of the {$this->datastream} datastream contains a valid file signature.");
-    }
-    else {
-      $this->addFail("Header of the {$this->datastream} datastream contains corrupt file signature.");
-    }
+    $assertion = $signatures[0] == '52494646' && $signatures[2] == '57415645';
+    $pass = "Header of the {$this->datastream} datastream contains a valid file signature.";
+    $fail = "Header of the {$this->datastream} datastream contains corrupt file signature.";
+    $message = $assertion ? $pass : $fail;
+    $this->addResult($assertion, $message);
   }
 
   /**
    * Asserts that the chunksize in the header is correct.
    */
   protected function assertWAVChunkSize() {
-    if (islandora_hex2int(substr($this->datastreamContent, 8, 8)) === 36 + self::getDataSubChunkSize()) {
-      $this->addPass("{$this->datastream} datastream chunksize in WAV header is correct");
-    }
-    else {
-      $this->addFail("{$this->datastream} datastream chunksize in WAV header does not match actual chunksize.");
-    }
+    $assertion = islandora_hex2int(substr($this->datastreamContent, 8, 8)) === 36 + self::getDataSubChunkSize();
+    $pass = "{$this->datastream} datastream chunksize in WAV header is correct";
+    $fail = "{$this->datastream} datastream chunksize in WAV header does not match actual chunksize.";
+    $message = $assertion ? $pass : $fail;
+    $this->addResult($assertion, $message);
   }
 
   /**
    * Asserts that the datastream contains a 'fmt' subchunk.
    */
   protected function assertWAVFmtSubChunk() {
-    if (substr($this->datastreamContent, 24, 8) === '666d7420') {
-      $this->addPass("{$this->datastream} datastream contains a 'fmt' subchunk.");
-    }
-    else {
-      $this->addFail("{$this->datastream} datastream is missing the required 'fmt' subchunk.");
-    }
+    $assertion = substr($this->datastreamContent, 24, 8) === '666d7420';
+    $pass = "{$this->datastream} datastream contains a 'fmt' subchunk.";
+    $fail = "{$this->datastream} datastream is missing the required 'fmt' subchunk.";
+    $message = $assertion ? $pass : $fail;
+    $this->addResult($assertion, $message);
   }
 
   /**
@@ -479,24 +502,22 @@ class WAVDatastreamValidator extends DatastreamValidator {
    */
   protected function assertWAVByteRate() {
     $wav_samplerate = islandora_hex2int(substr($this->datastreamContent, 48, 8));
-    if (islandora_hex2int(substr($this->datastreamContent, 56, 8)) === $wav_samplerate * self::getNumChannels() * self::getBytesPerSample()) {
-      $this->addPass("{$this->datastream} datastream byterate in the WAV header is correct.");
-    }
-    else {
-      $this->addFail("{$this->datastream} datastream byterate in the WAV header does not match actual calculated byterate.");
-    }
+    $assertion = islandora_hex2int(substr($this->datastreamContent, 56, 8)) === $wav_samplerate * self::getNumChannels() * self::getBytesPerSample();
+    $pass = "{$this->datastream} datastream byterate in the WAV header is correct.";
+    $fail = "{$this->datastream} datastream byterate in the WAV header does not match actual calculated byterate.";
+    $message = $assertion ? $pass : $fail;
+    $this->addResult($assertion, $message);
   }
 
   /**
    * Asserts that the block alignment is correct.
    */
   protected function assertWAVBlockAlignment() {
-    if (islandora_hex2int(substr($this->datastreamContent, 64, 4)) === self::getNumChannels() * self::getBytesPerSample()) {
-      $this->addPass("{$this->datastream} datastream block alignment is set correctly.");
-    }
-    else {
-      $this->addFail("{$this->datastream} datastream block alignment is off.");
-    }
+    $assertion = islandora_hex2int(substr($this->datastreamContent, 64, 4)) === self::getNumChannels() * self::getBytesPerSample();
+    $pass = "{$this->datastream} datastream block alignment is set correctly.";
+    $fail = "{$this->datastream} datastream block alignment is off.";
+    $message = $assertion ? $pass : $fail;
+    $this->addResult($assertion, $message);
   }
 
   /**
@@ -506,18 +527,17 @@ class WAVDatastreamValidator extends DatastreamValidator {
    */
   protected function assertWAVDataSubChunk() {
     if (substr($this->datastreamContent, 72, 8) !== '64617461') {
-      $this->addFail("{$this->datastream} datastream is missing the 'data' subchunk.");
+      $this->addResult(FALSE, "{$this->datastream} datastream is missing the 'data' subchunk.");
       return;
     }
     else {
-      $this->addPass("{$this->datastream} datastream contains 'data' subchunk.");
+      $this->addResult(TRUE, "{$this->datastream} datastream contains 'data' subchunk.");
       $wav_numsamples = strlen(substr($this->datastreamContent, 88)) / self::getNumChannels() / self::getBytesPerSample() / 2;
-      if (self::getDataSubChunkSize() === $wav_numsamples * self::getNumChannels() * self::getBytesPerSample()) {
-        $this->addPass("{$this->datastream} datastream 'data' chunk is the correct size.");
-      }
-      else {
-        $this->addFail("{$this->datastream} datastream 'data' chunk is sized incorrectly.");
-      }
+      $assertion = self::getDataSubChunkSize() === $wav_numsamples * self::getNumChannels() * self::getBytesPerSample();
+      $pass = "{$this->datastream} datastream 'data' chunk is the correct size.";
+      $fail = "{$this->datastream} datastream 'data' chunk is sized incorrectly.";
+      $message = $assertion ? $pass : $fail;
+      $this->addResult($assertion, $message);
     }
   }
 
@@ -578,11 +598,11 @@ class MP3DatastreamValidator extends DatastreamValidator {
     // out of the way first before we go doing a bunch of potentially pointless
     // math. Check to see if the VBR flag (58696e67) isn't there.
     if (strpos($this->datastreamContent, '58696e67') == FALSE && substr($this->datastreamContent, 0, 4) == 'fffa') {
-      $this->addPass("{$this->datastream} datastream is encoded as a valid MPEG-1 Layer 3 file with CRC protection");
+      $this->addResult(TRUE, "{$this->datastream} datastream is encoded as a valid MPEG-1 Layer 3 file with CRC protection");
       return;
     }
     if (strpos($this->datastreamContent, '58696e67') == FALSE && substr($this->datastreamContent, 0, 4) == 'fffb') {
-      $this->addPass("{$this->datastream} datastream is encoded as a valid unprotected MPEG-1 Layer 3 file");
+      $this->addResult(TRUE, "{$this->datastream} datastream is encoded as a valid unprotected MPEG-1 Layer 3 file");
       return;
     }
 
@@ -610,12 +630,11 @@ class MP3DatastreamValidator extends DatastreamValidator {
       if (($mp3_flag_value + 4) % 4 > 1) {
         $mp3_field_bytes = hexdec(substr($mp3_vbrheader, $mp3_field_offset[0] + 16, 8));
         $mp3_size = strlen($this->datastreamContent) / 2;
-        if ($mp3_size == $mp3_field_bytes) {
-          $this->addPass("{$this->datastream} datastream reported filesize of {$mp3_size} bytes matches size field value of {$mp3_field_bytes}");
-        }
-        else {
-          $this->addFail("{$this->datastream} datastream reported filesize of {$mp3_size} bytes does not match size field value of {$mp3_field_bytes}");
-        }
+        $assertion = $mp3_size == $mp3_field_bytes;
+        $pass = "{$this->datastream} datastream reported filesize of {$mp3_size} bytes matches size field value of {$mp3_field_bytes}";
+        $fail = "{$this->datastream} datastream reported filesize of {$mp3_size} bytes does not match size field value of {$mp3_field_bytes}";
+        $message = $assertion ? $pass : $fail;
+        $this->addResult($assertion, $message);
         $mp3_field_offset[1] += 8;
         $mp3_field_offset[2] += 8;
       }
@@ -628,18 +647,17 @@ class MP3DatastreamValidator extends DatastreamValidator {
       // The fourth flag leads us to VBR quality data, which we can validate.
       if ($mp3_flag_value > 7) {
         $mp3_field_quality = hexdec(substr($mp3_vbrheader, $mp3_field_offset[2] + 16, 8));
-        if ($mp3_field_quality <= 100 && $mp3_field_quality >= 0) {
-          $this->addPass("{$this->datastream} datastream reports valid VBR quality of {$mp3_field_quality} (expected: between 0-100)");
-        }
-        else {
-          $this->addFail("{$this->datastream} datastream reports invalid VBR quality of {$mp3_field_quality} (expected: between 0-100)");
-        }
+        $assertion = $mp3_field_quality <= 100 && $mp3_field_quality >= 0;
+        $pass = "{$this->datastream} datastream reports valid VBR quality of {$mp3_field_quality} (expected: between 0-100)";
+        $fail = "{$this->datastream} datastream reports invalid VBR quality of {$mp3_field_quality} (expected: between 0-100)";
+        $message = $assertion ? $pass : $fail;
+        $this->addResult($assertion, $message);
       }
     }
 
     // If none of that works out, fail.
     else {
-      $this->addFail("{$this->datastream} datastream is corrupt and does not identify as a valid MP3.");
+      $this->addResult(FALSE, "{$this->datastream} datastream is corrupt and does not identify as a valid MP3.");
     }
   }
 
@@ -660,13 +678,12 @@ class MP4DatastreamValidator extends DatastreamValidator {
    * Asserts that the datastream is ISO-formatted video.
    */
   protected function assertISOVideo() {
-    if (strpos($this->datastreamContent, 'ftyp')) {
-      $mp4_ftyp = substr(strpos($this->datastreamContent, 'ftyp'), 4, 4);
-      $this->addPass("{$this->datastream} datastream asserts that it is a valid ISO-formatted video file using ftyp {$mp4_ftyp}");
-    }
-    else {
-      $this->addFail("{$this->datastream} datastream is not a valid ISO-formatted video");
-    }
+    $mp4_ftyp = substr(strpos($this->datastreamContent, 'ftyp'), 4, 4);
+    $assertion = strpos($this->datastreamContent, 'ftyp') !== 0;
+    $pass = "{$this->datastream} datastream asserts that it is a valid ISO-formatted video file using ftyp {$mp4_ftyp}";
+    $fail = "{$this->datastream} datastream is not a valid ISO-formatted video";
+    $message = $assertion ? $pass : $fail;
+    $this->addResult($assertion, $message);
   }
 }
 
@@ -686,36 +703,33 @@ class OGGDatastreamValidator extends DatastreamValidator {
    */
   protected function assertOGGPages() {
     $ogg_pages = substr_count($this->datastreamContent, 'OggS');
-    if ($ogg_pages !== 0) {
-      $this->addPass("{$this->datastream} datastream asserts that it contains {$ogg_pages} Ogg pages (even a very small file should contain several).");
-    }
-    else {
-      $this->addFail("{$this->datastream} datastream contains no Ogg pages.");
-    }
+    $assertion = $ogg_pages !== 0;
+    $pass = "{$this->datastream} datastream asserts that it contains {$ogg_pages} Ogg pages (even a very small file should contain several).";
+    $fail = "{$this->datastream} datastream contains no Ogg pages.";
+    $message = $assertion ? $pass : $fail;
+    $this->addResult($assertion, $message);
   }
 
   /**
    * Asserts that the datastream contains Theora-encoded video.
    */
   protected function assertTheoraVideo() {
-    if (substr_count($this->datastreamContent, 'theora') !== 0) {
-      $this->addPass("{$this->datastream} datastream asserts that it contains Theora-encoded video data.");
-    }
-    else {
-      $this->addFail("{$this->datastream} datastream contains no marker indicating the presence of Theora-encoded video data.");
-    }
+    $assertion = substr_count($this->datastreamContent, 'theora') !== 0;
+    $pass = "{$this->datastream} datastream asserts that it contains Theora-encoded video data.";
+    $fail = "{$this->datastream} datastream contains no marker indicating the presence of Theora-encoded video data.";
+    $message = $assertion ? $pass : $fail;
+    $this->addResult($assertion, $message);
   }
 
   /**
    * Asserts that the datastream contains Vorbis-encoded audio.
    */
   protected function assertVorbisAudio() {
-    if (substr_count($this->datastreamContent, 'vorbis')) {
-      $this->addPass("{$this->datastream} datastream asserts that it contains Vorbis-encoded audio data");
-    }
-    else {
-      $this->addFail("{$this->datastream} datastream contains no marker indicating the presence of Vorbis-encoded audio data.");
-    }
+    $assertion = substr_count($this->datastreamContent, 'vorbis') !== 0;
+    $pass = "{$this->datastream} datastream asserts that it contains Vorbis-encoded audio data";
+    $fail = "{$this->datastream} datastream contains no marker indicating the presence of Vorbis-encoded audio data.";
+    $message = $assertion ? $pass : $fail;
+    $this->addResult($assertion, $message);
   }
 }
 
@@ -735,23 +749,21 @@ class MKVDatastreamValidator extends DatastreamValidator {
    * Asserts that the datastream is an EBML-format file.
    */
   protected function assertEBMLFormat() {
-    if (substr(bin2hex($this->datastreamContent), 0, 8) == '1a45dfa3') {
-      $this->addPass("{$this->datastream} datastream asserts that it is an EBML-formatted file");
-    }
-    else {
-      $this->addFail("{$this->datastream} datastream is not an EBML-formatted file.");
-    }
+    $assertion = substr(bin2hex($this->datastreamContent), 0, 8) == '1a45dfa3';
+    $pass = "{$this->datastream} datastream asserts that it is an EBML-formatted file";
+    $fail = "{$this->datastream} datastream is not an EBML-formatted file.";
+    $message = $assertion ? $pass : $fail;
+    $this->addResult($assertion, $message);
   }
 
   /**
    * Asserts that the datastream contains a matroska marker.
    */
   protected function assertMatroskaMarker() {
-    if (substr_count($this->datastreamContent, 'matroska') == 1) {
-      $this->addPass("{$this->datastream} datastream asserts that its EBML DocType is Matroska");
-    }
-    else {
-      $this->addFail("{$this->datastream} datastream does not contain a Matroska EBML DocType marker.");
-    }
+    $assertion = substr_count($this->datastreamContent, 'matroska') == 1;
+    $pass = "{$this->datastream} datastream asserts that its EBML DocType is Matroska";
+    $fail = "{$this->datastream} datastream does not contain a Matroska EBML DocType marker.";
+    $message = $assertion ? $pass : $fail;
+    $this->addResult($assertion, $message);
   }
 }

@@ -266,15 +266,12 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
         }
       }
 
-      // Instantiate the appropriate class, grab the passes and fails.
+      // Instantiate the appropriate class, and grab the results.
       $class_name = "{$prefix}DatastreamValidator";
       if (class_exists($class_name)) {
         $validator = new $class_name($object, $dsid, $params);
-        foreach ($validator->getPasses() as $message => $caller) {
-          $this->assert(TRUE, $message, 'Islandora', $caller);
-        }
-        foreach ($validator->getFails() as $message => $caller) {
-          $this->assert(FALSE, $message, 'Islandora', $caller);
+        foreach ($validator->getResults() as $result) {
+          $this->assert($result->getType(), $result->getMessage(), 'Islandora', $result->getCaller());
         }
       }
       else {
