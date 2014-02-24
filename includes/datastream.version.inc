@@ -234,7 +234,7 @@ function islandora_revert_datastream_version_form_submit(array $form, array &$fo
 /**
  * Gets Audit datastream values from foxml.
  *
- * @param String $pid
+ * @param string $pid
  *   PID of parent object
  *
  * @return array
