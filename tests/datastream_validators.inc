@@ -186,12 +186,20 @@ abstract class DatastreamValidator {
    * @param array $params
    *   An extra array of parameters the validator might need.
    */
-  public function __construct($object, $datastream, array $params = array()) {
+  public function __construct(IslandoraFedoraObject $object, $datastream, array $params = array()) {
     $this->object = $object;
     $this->datastream = $datastream;
     $this->params = $params;
-    $this->datastreamContent = $object[$datastream]->content;
-    $this->runValidators();
+    if ($object[$datastream]) {
+      $this->datastreamContent = $object[$datastream]->content;
+      $this->runValidators();
+    }
+    else {
+      drupal_set_message(t("Error grabbing content from datastream %datastream in object %id", 'error'), array(
+        '%datastream' => $datastream,
+        '%id' => $object->id,
+      ));
+    }
   }
 
   /**
