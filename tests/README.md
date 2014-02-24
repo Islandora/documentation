@@ -24,7 +24,20 @@ differently.
 
 For classes that require the third parameter (e.g. the TextDatastreamValidator),
 place an additional name.extension.ini file in the datastream_validator_files
-folder (e.g. the existing Text.txt in that folder is paired with Text.txt.ini).
-This .ini file should be structured like a PHP .ini file (e.g. according to the
-format used by http://http://ca1.php.net/parse_ini_file).The generated test will
-parse the .ini file as an array and pass it on to the third parameter.
+folder (e.g. the Text.txt would be paired with Text.txt.ini). This .ini file
+should be structured like a PHP .ini file (e.g. according to the format used by
+http://php.net/parse_ini_file).The generated test will parse the .ini
+file as an array and pass it on to the third parameter.
+
+The following prefixes are currently available for use:
+
+- Image (jpg, png, gif, and other filetypes recognized by PHPGD)
+- TIFF
+- JP2
+- PDF
+- Text (requires a configured .ini)
+- WAV
+- MP3
+- MP4
+- OGG (asserts OGG video; use an .ini with an 'audio' key to test audio only)
+- MKV
