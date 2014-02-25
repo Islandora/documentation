@@ -146,7 +146,6 @@ function islandora_preprocess_islandora_default(&$variables) {
   $variables['dc_array'] = isset($dc_array) ? $dc_array : array();
   $variables['islandora_dublin_core'] = isset($dc_object) ? $dc_object : NULL;
 
-  $variables['parent_collections'] = islandora_get_parents_from_rels_ext($islandora_object);
   $variables['metadata'] = islandora_retrieve_metadata_markup($islandora_object, TRUE);
   $variables['description'] = islandora_retrieve_description_markup($islandora_object);
   $variables['islandora_object_label'] = $islandora_object->label;
