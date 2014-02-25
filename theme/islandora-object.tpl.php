@@ -60,7 +60,7 @@
 ?>
 <div class="islandora-object islandora">
   <h2><?php print t('Details'); ?></h2>
-  
+
   <dl class="islandora-object-tn">
     <dt>
       <?php if (isset($variables['islandora_thumbnail_url'])): ?>
@@ -68,26 +68,10 @@
       <?php endif; ?>
     <dd></dd>
   </dl>
-    <dl class="islandora-inline-metadata islandora-object-fields">
-      <?php $row_field = 0; ?>
-      <?php foreach ($dc_array as $key => $value): ?>
-        <dt class="<?php print $value['class']; ?><?php print $row_field == 0 ? ' first' : ''; ?>">
-          <?php print $value['label']; ?>
-        </dt>
-        <dd class="<?php print $value['class']; ?><?php print $row_field == 0 ? ' first' : ''; ?>">
-          <?php print $value['value']; ?>
-        </dd>
-      <?php $row_field++; ?>
-      <?php endforeach; ?>
-      <?php if ($parent_collections): ?>
-        <dt>Collections</dt>
-        <dd>
-          <?php foreach ($parent_collections as $collection): ?>
-            <div><?php print l($collection->label, "islandora/object/{$collection->id}"); ?></div>
-          <?php endforeach; ?>
-        </dd>
-      <?php endif; ?>
-    </dl>
+  <div class="islandora-default-metadata">
+    <?php print $description; ?>
+    <?php print $metadata; ?>
+  </div>
 </div>
 <fieldset class="collapsible collapsed" style="display: block; clear:both">
 <legend><span class="fieldset-legend"><?php print t('File details'); ?></span></legend>
@@ -112,3 +96,13 @@
 </table>
 </div>
 </fieldset>
+<?php if ($parent_collections): ?>
+  <div>
+    <h2><?php print t('In collections'); ?></h2>
+    <ul>
+      <?php foreach ($parent_collections as $collection): ?>
+        <li><?php print l($collection->label, "islandora/object/{$collection->id}"); ?></li>
+      <?php endforeach; ?>
+    </ul>
+  </div>
+<?php endif; ?>

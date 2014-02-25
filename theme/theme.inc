@@ -109,6 +109,7 @@ function islandora_preprocess_islandora_default(&$variables) {
   $islandora_object = $variables['islandora_object'];
   module_load_include('inc', 'islandora', 'includes/utilities');
   module_load_include('inc', 'islandora', 'includes/datastream');
+  module_load_include('inc', 'islandora', 'includes/metadata');
 
   $variables['parent_collections'] = islandora_get_parents_from_rels_ext($islandora_object);
 
@@ -140,8 +141,14 @@ function islandora_preprocess_islandora_default(&$variables) {
     $dc_object = DublinCore::importFromXMLString($islandora_object['DC']->content);
     $dc_array = $dc_object->asArray();
   }
+  // We should eventually remove the DC object and dc_array code as it only
+  // exists to not break legacy implementations.
   $variables['dc_array'] = isset($dc_array) ? $dc_array : array();
   $variables['islandora_dublin_core'] = isset($dc_object) ? $dc_object : NULL;
+
+  $variables['parent_collections'] = islandora_get_parents_from_rels_ext($islandora_object);
+  $variables['metadata'] = islandora_retrieve_metadata_markup($islandora_object, TRUE);
+  $variables['description'] = islandora_retrieve_description_markup($islandora_object);
   $variables['islandora_object_label'] = $islandora_object->label;
   if (isset($islandora_object['TN']) && islandora_datastream_access(ISLANDORA_VIEW_OBJECTS, $islandora_object['TN'])) {
     $variables['islandora_thumbnail_url'] = url("islandora/object/{$islandora_object->id}/datastream/TN/view");
