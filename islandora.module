@@ -1541,7 +1541,7 @@ function islandora_entity_property_info() {
 function islandora_download_clip(AbstractObject $object) {
   if (isset($_GET['clip'])) {
     $url = $_GET['clip'];
-    if (!preg_match('/^https?:\/\//',$url)) {
+    if (!preg_match('/^https?:\/\//', $url)) {
       $is_https = isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on';
       $http_protocol = $is_https ? 'https' : 'http';
       $url = $http_protocol . '://' . $_SERVER['HTTP_HOST'] . $url;
