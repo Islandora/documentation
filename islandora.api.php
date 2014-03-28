@@ -627,11 +627,14 @@ function hook_CMODEL_PID_islandora_overview_object_alter(AbstractObject &$object
  *   - force: Bool denoting whether we are forcing the generation of
  *     derivatives.
  *   - source_dsid: (Optional) String of the datastream id we are generating
- *     from or NULL if it's the object itself.
+ *     from or NULL if it's the object itself. Does not impact function
+ *     ordering.
  *   - destination_dsid: (Optional) String of the datastream id that is being
- *     created. To be used in the UI.
+ *     created. To be used in the UI. Does not impact function ordering.
  *   - weight: A string denoting the weight of the function. This value is
- *     sorted upon to run functions in order.
+ *     sorted upon to run functions in order. Some derivation steps operate as
+ *     clean up steps. For consistency with ingest steps they use weight:50 it
+ *     is advisable to stay beneath this weight.
  *   - function: An array of function(s) to be ran when constructing
  *     derivatives. Functions that are defined to be called for derivation
  *     creation must have the following structure:
