@@ -5,6 +5,28 @@
  */
 
 /**
+ * Decides which derivative function to call and runs it.
+ *
+ * @param AbstractObject $object
+ *   The object to run the derivative function for.
+ * @param string $dsid
+ *   The DSID to run the derivative function for.
+ */
+function islandora_run_derivatives (AbstractObject $object, $dsid) {
+  if (empty(batch_get())) {
+    $logging_results = islandora_do_derivatives($object, array(
+      'source_dsid' => $dsid,
+    ));
+    islandora_derivative_logging($logging_results);
+  }
+  else {
+    islandora_do_batch_derivatives($object, array(
+      'source_dsid' => $dsid,
+    ));
+  }
+}
+
+/**
  * Kicks off derivative functions based upon hooks and conditions.
  *
  * @param AbstractObject $object

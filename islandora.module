@@ -1695,10 +1695,7 @@ function islandora_islandora_basic_collection_get_query_filters() {
  */
 function islandora_islandora_object_ingested(AbstractObject $object) {
   module_load_include('inc', 'islandora', 'includes/derivatives');
-  $logging_results = islandora_do_derivatives($object, array(
-    'source_dsid' => NULL,
-  ));
-  islandora_derivative_logging($logging_results);
+  islandora_run_derivatives($object, NULL);
 }
 
 /**
@@ -1709,10 +1706,7 @@ function islandora_islandora_object_ingested(AbstractObject $object) {
  */
 function islandora_islandora_datastream_ingested(AbstractObject $object, AbstractDatastream $datastream) {
   module_load_include('inc', 'islandora', 'includes/derivatives');
-  $logging_results = islandora_do_derivatives($object, array(
-    'source_dsid' => $datastream->id,
-  ));
-  islandora_derivative_logging($logging_results);
+  islandora_run_derivatives($object, $datastream->id);
 }
 
 /**
