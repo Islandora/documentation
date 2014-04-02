@@ -769,7 +769,7 @@ function islandora_ingest_form_submit(array $form, array &$form_state) {
     islandora_ingest_form_execute_consecutive_callback_steps($form, $form_state, $step);
   }
   // Ingest the objects.
-  $set_redirect = TRUE;
+  $set_redirect = isset($form_state['redirect']) ? FALSE : TRUE;
   foreach ($form_state['islandora']['objects'] as &$object) {
     try {
       islandora_add_object($object);
