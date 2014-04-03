@@ -1531,6 +1531,11 @@ function islandora_entity_property_info() {
     'label' => t('Content Models'),
     'description' => t('The list of content models which the object has.'),
   );
+  $p['createdDate'] = array(
+    'type' => 'text',
+    'label' => t('Created Date'),
+    'description' => t('When the object was created.'),
+  );
 
   return $info;
 }
