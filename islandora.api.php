@@ -423,13 +423,13 @@ function hook_islandora_undeletable_datastreams(array $models) {
  *   - form_id: The form building function to call to get the form structure
  *     for this step.
  *   - args: An array of arguments to pass to the form building function.
- *   Required "callback" type specific parameters:
- *   - do_function: An associate array including:
+ *   "Callback" type specific parameters:
+ *   - do_function: A required associative array including:
  *       - 'function': The callback function to be called.
  *       - 'args': An array of arguments to pass to the callback function.
  *       - 'file': A file to include (relative to the module's path, including
  *          the file's extension).
- *   - undo_function: An associate array including:
+ *   - undo_function: An optional associative array including:
  *       - 'function': The callback function to be called to reverse the
  *          executed action in the ingest steps.
  *       - 'args': An array of arguments to pass to the callback function.
