@@ -467,12 +467,14 @@ function islandora_ingest_form_undo_consecutive_callback_steps(array $form, arra
  *   The step which the undo callback is being called on.
  */
 function islandora_ingest_form_undo_callback_step(array $form, array &$form_state, array $step) {
-  $args = array(&$form_state);
-  $args = isset($step['undo_function']['args']) ? array_merge($args, $step['undo_function']['args']) : $args;
-  if (isset($step['undo_function']['file'])) {
-    require_once drupal_get_path('module', $step['module']) . "/" . $step['undo_function']['file'];
+  if (isset($step['undo_function'])) {
+    $args = array(&$form_state);
+    $args = isset($step['undo_function']['args']) ? array_merge($args, $step['undo_function']['args']) : $args;
+    if (isset($step['undo_function']['file'])) {
+      require_once drupal_get_path('module', $step['module']) . "/" . $step['undo_function']['file'];
+    }
+    call_user_func_array($step['undo_function']['function'], $args);
   }
-  call_user_func_array($step['undo_function']['function'], $args);
 }
 
 /**
