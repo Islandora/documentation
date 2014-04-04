@@ -14,7 +14,6 @@ export JAVA_OPTS="-Xms1024m -Xmx1024m -XX:MaxPermSize=512m -XX:+CMSClassUnloadin
 cd $HOME
 pear upgrade --force Console_Getopt
 pear upgrade --force pear
-pear upgrade-all
 pear channel-discover pear.drush.org
 pear channel-discover pear.drush.org
 pear channel-discover pear.phpqatools.org
