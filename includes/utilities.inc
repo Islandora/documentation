@@ -46,6 +46,28 @@ function islandora_convert_bytes_to_human_readable($bytes, $precision = 2) {
   }
 }
 
+function islandora_temp_file_entry($file_name, $file_uri) {
+  // Check for this file in the file managed table.
+  $list = db_select('file_managed', 'c')
+      ->fields('c')
+      ->condition('uri', $file_uri, "=")
+      ->execute();
+  $data = $list->fetchObject();
+
+  dsm($data, "existing: ");
+
+  if (!$data) {
+    $file = new stdClass();
+    $file->uri = $file_uri;
+    $file->filename = $file_name;
+    // Temporary.
+    $file->status = 0;
+
+    dsm($file, "file in islandora_temp_file_entry");
+    // Save the temp file to be cleaned up later via cron.
+    file_save($file);
+  }
+}
 /**
  * Creates a label for control group symbols.
  */
