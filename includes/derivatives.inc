@@ -149,7 +149,7 @@ function islandora_do_batch_derivatives(AbstractObject $object, array $options) 
           $file,
           $object->id,
           $options['force'],
-          $hook
+          $hook,
         ),
       );
     }
