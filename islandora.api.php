@@ -635,7 +635,7 @@ function hook_CMODEL_PID_islandora_overview_object_alter(AbstractObject &$object
  *   - function: An array of function(s) to be ran when constructing
  *     derivatives. Functions that are defined to be called for derivation
  *     creation must have the following structure:
- *     module_name_derivative_creation_function($object, $force = FALSE)
+ *     module_name_derivative_creation_function($object, $force = FALSE, $hook)
  *     These functions must return an array in the structure of:
  *     - success: Bool denoting whether the operation was successful.
  *     - messages: An array structure containing zero or more array's with the
