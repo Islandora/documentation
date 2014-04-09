@@ -61,13 +61,13 @@
 <div class="islandora-object islandora">
   <h2><?php print t('Details'); ?></h2>
 
-  <dl class="islandora-object-tn">
-    <dt>
-      <?php if (isset($variables['islandora_thumbnail_url'])): ?>
-        <img src="<?php print $variables['islandora_thumbnail_url']; ?>"/></dt>
-      <?php endif; ?>
-    <dd></dd>
-  </dl>
+  <?php if (isset($variables['islandora_thumbnail_url'])): ?>
+    <dl class="islandora-object-tn">
+      <dt>
+        <img src="<?php print $variables['islandora_thumbnail_url']; ?>"/>
+      </dt>
+    </dl>
+  <?php endif; ?>
   <div class="islandora-default-metadata">
     <?php print $description; ?>
     <?php print $metadata; ?>
