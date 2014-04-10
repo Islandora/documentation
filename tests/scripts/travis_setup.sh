@@ -18,7 +18,7 @@ pear channel-discover pear.drush.org
 pear channel-discover pear.drush.org
 pear channel-discover pear.phpqatools.org
 pear channel-discover pear.netpirates.net
-pear install pear/PHP_CodeSniffer-1.4.8
+pear install pear/PHP_CodeSniffer
 pear install pear.phpunit.de/phpcpd
 
 # Install Drush
