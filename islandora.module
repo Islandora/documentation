@@ -109,7 +109,7 @@ function islandora_menu() {
     'file' => 'includes/metadata.inc',
     'access arguments' => array('administer site configuration'),
   );
-    $items['admin/islandora/solution_pack_config'] = array(
+  $items['admin/islandora/solution_pack_config'] = array(
     'title' => 'Solution pack configuration',
     'description' => 'Configure Islandora solution packs.',
     'access callback' => 'islandora_find_package',
@@ -1852,9 +1852,9 @@ function islandora_repair_drupal_filter() {
   }
 }
 
- /**
-  * Implements hook_islandora_metadata_display_info().
-  */
+/**
+ * Implements hook_islandora_metadata_display_info().
+ */
 function islandora_islandora_metadata_display_info() {
   return array(
     'dublin_core' => array(
@@ -1892,13 +1892,14 @@ function islandora_islandora_datastream_access($op, AbstractDatastream $datastre
   return $result;
 }
 
- /**
+/**
  * Access for submenu items.
  *
  * @param string $package_name
  *   Name of the package
  *
  * @return bool
+ *   Access granted
  */
 function islandora_find_package($package_name) {
   $results = system_get_info('module');
