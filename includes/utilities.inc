@@ -61,7 +61,6 @@ function islandora_temp_file_entry($file_name, $file_uri) {
       ->condition('uri', $file_uri, "=")
       ->execute();
   $data = $list->fetchObject();
-
   if (!$data) {
     $file = new stdClass();
     $file->uri = $file_uri;
@@ -72,6 +71,57 @@ function islandora_temp_file_entry($file_name, $file_uri) {
     file_save($file);
   }
 }
+
+/**
+ * Delete a managed file by uri.
+ *
+ * @param string $file_uri
+ *   The files uri.
+ *
+ * @return bool
+ *   TRUE if success, FALSE otherwise.
+ */
+function islandora_temp_file_delete($file_uri) {
+  $files = file_load_multiple(array(), array('uri' => $file_uri));
+  $file = reset($files);
+  dsm($file, "file to delete: ");
+  $success = file_delete($file);
+  if (!$success) {
+    drupal_set_message(
+      t('An error occurred deleting derivitave file(s). '.
+      'see the system log for more information.'),
+      'error'
+    );
+    watchdog(
+      'islandora',
+      'Attempting to delete %file in islandora_temp_file_delete(). Message %message',
+      array(
+        '%file' => $file_uri,
+        '%message' => $success
+      ),
+      WATCHDOG_WARNING
+    );
+    return FALSE;
+  }
+  drupal_set_message(
+    t('Temp file deleted successfully. '),
+    'status'
+  );
+  return TRUE;
+}
+
+/**
+ * Delete temp files by uri, in an array.
+ *
+ * @param array $file_uri_array
+ *   An arry of file uri's to delete.
+ */
+function islandora_temp_file_delete_multi($file_uri_array) {
+  foreach ($item as $key => $value) {
+    islandora_temp_file_delete($item[$key]);
+  }
+}
+
 /**
  * Creates a label for control group symbols.
  */
