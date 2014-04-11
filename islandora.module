@@ -109,13 +109,35 @@ function islandora_menu() {
     'file' => 'includes/metadata.inc',
     'access arguments' => array('administer site configuration'),
   );
-  $items['admin/islandora/solution_packs'] = array(
-    'title' => 'Solution packs',
+    $items['admin/islandora/solution_pack_config'] = array(
+    'title' => 'Solution pack configuration',
+    'description' => 'Configure Islandora solution packs.',
+    'access callback' => 'islandora_find_package',
+    'access arguments' => array('Islandora Solution Packs'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+  $items['admin/islandora/islandora_viewers'] = array(
+    'title' => 'Islandora Viewers',
+    'description' => 'Configure custom viewers.',
+    'access callback' => 'islandora_find_package',
+    'access arguments' => array('Islandora Viewers'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+  $items['admin/islandora/islandora_utilities'] = array(
+    'title' => 'Islandora Utility Modules',
+    'description' => 'Configure Islandora utility modules.',
+    'access callback' => 'islandora_find_package',
+    'access arguments' => array('Islandora Utilities'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+  $items['admin/islandora/solution_pack_config/solution_packs'] = array(
+    'title' => 'Solution packs required objects',
     'description' => 'Install content models and collections required by installed solution packs.',
     'page callback' => 'islandora_solution_packs_admin',
     'access arguments' => array(ISLANDORA_ADD_DS),
     'file' => 'includes/solution_packs.inc',
     'type' => MENU_NORMAL_ITEM,
+    'weight' => -1,
   );
   $items['islandora'] = array(
     'title' => 'Islandora Repository',
@@ -1868,4 +1890,24 @@ function islandora_islandora_datastream_access($op, AbstractDatastream $datastre
     }
   }
   return $result;
+}
+
+ /**
+ * Access for submenu items.
+ *
+ * @param string $package_name
+ *   Name of the package
+ *
+ * @return bool
+ */
+function islandora_find_package($package_name) {
+  $results = system_get_info('module');
+  $found = FALSE;
+  foreach ($results as $name => $values) {
+    if ($values['package'] == $package_name) {
+      $found = TRUE;
+      break;
+    }
+  }
+  return $found && user_access('administer site configuration');
 }
