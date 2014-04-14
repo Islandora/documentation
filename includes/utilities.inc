@@ -52,16 +52,16 @@ function islandora_convert_bytes_to_human_readable($bytes, $precision = 2) {
  * @param string $file_name
  *   The given file name.
  * @param string $file_uri
- *   The given file uri location.
+ *   The given file URI location.
  */
 function islandora_temp_file_entry($file_name, $file_uri) {
   // Check for this file in the file managed table.
-  $list = db_select('file_managed', 'c')
-      ->fields('c')
-      ->condition('uri', $file_uri, "=")
-      ->execute();
-  $data = $list->fetchObject();
-  if (!$data) {
+  $query = new EntityFieldQuery();
+  $result = $query
+    ->entityCondition('entity_type', 'file')
+    ->propertyCondition('uri', $file_uri)
+    ->execute();
+  if (!isset($result['file'])) {
     $file = new stdClass();
     $file->uri = $file_uri;
     $file->filename = $file_name;
@@ -73,50 +73,51 @@ function islandora_temp_file_entry($file_name, $file_uri) {
 }
 
 /**
- * Delete a managed file by uri.
+ * Delete a managed file by URI.
  *
  * @param string $file_uri
- *   The files uri.
+ *   The files URI.
  *
  * @return bool
  *   TRUE if success, FALSE otherwise.
  */
 function islandora_temp_file_delete($file_uri) {
-  $files = file_load_multiple(array(), array('uri' => $file_uri));
-  $file = reset($files);
-  $success = file_delete($file);
-  if (!$success) {
-    drupal_set_message(
-      t('An error occurred deleting derivitave file(s). see the system log for more information.'),
-      'error'
-    );
+  $querya = new EntityFieldQuery();
+  $result = $querya
+    ->entityCondition('entity_type', 'file')
+    ->propertyCondition('uri', $file_uri)
+    ->execute();
+  $arr_keys = array_keys($result['file']);
+  $file = file_load($arr_keys[0]);
+  file_delete($file);
+  $queryb = new EntityFieldQuery();
+  $resultb = $queryb
+    ->entityCondition('entity_type', 'file')
+    ->propertyCondition('uri', $file_uri)
+    ->execute();
+  if (count($resultb) > 0) {
     watchdog(
       'islandora',
-      'Attempting to delete %file in islandora_temp_file_delete(). Message %message',
+      'Failed to delete temp file %file.',
       array(
         '%file' => $file_uri,
-        '%message' => $success,
       ),
       WATCHDOG_WARNING
     );
     return FALSE;
   }
-  drupal_set_message(
-    t('Temp file deleted successfully.'),
-    'status'
-  );
   return TRUE;
 }
 
 /**
- * Delete temp files by uri, in an array.
+ * Delete temp files by URI, in an array.
  *
  * @param array $file_uri_array
- *   An arry of file uri's to delete.
+ *   An arry of file URI's to delete.
  */
 function islandora_temp_file_delete_multi($file_uri_array) {
-  foreach ($item as $key => $value) {
-    islandora_temp_file_delete($item[$key]);
+  foreach ($file_uri_array as $key => $value) {
+    islandora_temp_file_delete($value);
   }
 }
 
