@@ -84,12 +84,10 @@ function islandora_temp_file_entry($file_name, $file_uri) {
 function islandora_temp_file_delete($file_uri) {
   $files = file_load_multiple(array(), array('uri' => $file_uri));
   $file = reset($files);
-  dsm($file, "file to delete: ");
   $success = file_delete($file);
   if (!$success) {
     drupal_set_message(
-      t('An error occurred deleting derivitave file(s). '.
-      'see the system log for more information.'),
+      t('An error occurred deleting derivitave file(s). see the system log for more information.'),
       'error'
     );
     watchdog(
@@ -97,14 +95,14 @@ function islandora_temp_file_delete($file_uri) {
       'Attempting to delete %file in islandora_temp_file_delete(). Message %message',
       array(
         '%file' => $file_uri,
-        '%message' => $success
+        '%message' => $success,
       ),
       WATCHDOG_WARNING
     );
     return FALSE;
   }
   drupal_set_message(
-    t('Temp file deleted successfully. '),
+    t('Temp file deleted successfully.'),
     'status'
   );
   return TRUE;
