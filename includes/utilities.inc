@@ -79,7 +79,7 @@ function islandora_temp_file_entry($file_name, $file_uri) {
  *   The files URI.
  *
  * @return bool
- *   TRUE if success, FALSE otherwise.
+ *   TRUE if success, FALSE if uncessfull and array() if in use.
  */
 function islandora_temp_file_delete($file_uri) {
   $query = new EntityFieldQuery();
@@ -99,9 +99,8 @@ function islandora_temp_file_delete($file_uri) {
       ),
       WATCHDOG_WARNING
     );
-    return FALSE;
   }
-  return TRUE;
+  return $success;
 }
 
 /**
