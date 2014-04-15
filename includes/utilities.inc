@@ -82,20 +82,15 @@ function islandora_temp_file_entry($file_name, $file_uri) {
  *   TRUE if success, FALSE otherwise.
  */
 function islandora_temp_file_delete($file_uri) {
-  $querya = new EntityFieldQuery();
-  $result = $querya
+  $query = new EntityFieldQuery();
+  $result = $query
     ->entityCondition('entity_type', 'file')
     ->propertyCondition('uri', $file_uri)
     ->execute();
   $arr_keys = array_keys($result['file']);
   $file = file_load($arr_keys[0]);
-  file_delete($file);
-  $queryb = new EntityFieldQuery();
-  $resultb = $queryb
-    ->entityCondition('entity_type', 'file')
-    ->propertyCondition('uri', $file_uri)
-    ->execute();
-  if (count($resultb) > 0) {
+  $success = file_delete($file);
+  if ($success === FALSE) {
     watchdog(
       'islandora',
       'Failed to delete temp file %file.',
