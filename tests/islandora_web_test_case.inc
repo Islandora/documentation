@@ -315,7 +315,8 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
    *   An array containing object information using these keys:
    *   'label' - The object label; randomized if not set.
    *   'pid' - 'namespace:pid', or just 'namespace' to generate the suffix.
-   *   'models' - An array that can contain multiple content model PIDs.
+   *   'models' - An array that can contain multiple content model PIDs, or a
+   *   string containing a single content model PID.
    *   'owner' - The object's owner. Defaults to the currently logged-in user,
    *   if available. It is recommended to set this to a value that can be found
    *   in $this->users; otherwise, this object will have to be manually deleted.
@@ -331,8 +332,7 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
    *   FALSE if the object ingest failed, or the object array if successful.
    */
   public function ingestConstructedObject(array $properties = array(), array $datastreams = array()) {
-    module_load_include('inc', 'islandora', 'includes/tuque');
-    $tuque = new IslandoraTuque();
+    $tuque = islandora_get_tuque_connection($this->admin);
     $repository = $tuque->repository;
     if (!isset($properties['pid'])) {
       $properties['pid'] = "islandora";
@@ -355,13 +355,14 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
       $object->owner = $this->loggedInUser->name;
     }
 
-    if (isset($properties['models']) && is_array($properties['models'])) {
-      foreach ($properties['models'] as $model) {
-        $object->relationships->add(FEDORA_MODEL_URI, 'hasModel', $model);
+    if (isset($properties['models'])) {
+      try {
+        $object->models = (array) $properties['models'];
       }
-    }
-    elseif (isset($properties['models']) && !is_array($properties['models'])) {
-      $this->fail(t("'models' key of properties variable is not an array. Content model(s) will not be set."), 'Islandora');
+      catch (Exception $e) {
+        $this->fail("Encountered an exception when trying to add content models to {$object->id}: $e");
+        return FALSE;
+      }
     }
 
     $repository->ingestObject($object);
