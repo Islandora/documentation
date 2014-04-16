@@ -632,9 +632,7 @@ function hook_CMODEL_PID_islandora_overview_object_alter(AbstractObject &$object
  *   - destination_dsid: (Optional) String of the datastream id that is being
  *     created. To be used in the UI. Does not impact function ordering.
  *   - weight: A string denoting the weight of the function. This value is
- *     sorted upon to run functions in order. Some derivation steps operate as
- *     clean up steps. For consistency with ingest steps they use weight:50 it
- *     is advisable to stay beneath this weight.
+ *     sorted upon to run functions in order.
  *   - function: An array of function(s) to be ran when constructing
  *     derivatives. Functions that are defined to be called for derivation
  *     creation must have the following structure:
