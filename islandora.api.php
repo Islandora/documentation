@@ -423,13 +423,13 @@ function hook_islandora_undeletable_datastreams(array $models) {
  *   - form_id: The form building function to call to get the form structure
  *     for this step.
  *   - args: An array of arguments to pass to the form building function.
- *   Required "callback" type specific parameters:
- *   - do_function: An associate array including:
+ *   "Callback" type specific parameters:
+ *   - do_function: A required associative array including:
  *       - 'function': The callback function to be called.
  *       - 'args': An array of arguments to pass to the callback function.
  *       - 'file': A file to include (relative to the module's path, including
  *          the file's extension).
- *   - undo_function: An associate array including:
+ *   - undo_function: An optional associative array including:
  *       - 'function': The callback function to be called to reverse the
  *          executed action in the ingest steps.
  *       - 'args': An array of arguments to pass to the callback function.
@@ -638,7 +638,7 @@ function hook_CMODEL_PID_islandora_overview_object_alter(AbstractObject &$object
  *   - function: An array of function(s) to be ran when constructing
  *     derivatives. Functions that are defined to be called for derivation
  *     creation must have the following structure:
- *     module_name_derivative_creation_function($object, $force = FALSE)
+ *     module_name_derivative_creation_function($object, $force = FALSE, $hook)
  *     These functions must return an array in the structure of:
  *     - success: Bool denoting whether the operation was successful.
  *     - messages: An array structure containing zero or more array's with the

@@ -71,7 +71,7 @@ function islandora_do_derivatives(AbstractObject $object, array $options) {
     }
     foreach ($hook['function'] as $function) {
       if (function_exists($function)) {
-        $logging = call_user_func($function, $object, $options['force']);
+        $logging = call_user_func($function, $object, $options['force'], $hook);
         if (!empty($logging)) {
           $results[] = $logging;
         }
@@ -164,11 +164,15 @@ function islandora_do_batch_derivatives(AbstractObject $object, array $options) 
       $file = $hook['file'];
     }
     foreach ($hook['function'] as $function) {
-      $operations[] = array('islandora_derivative_perform_batch_operation', array(
-        $function,
-        $file,
-        $object->id,
-        $options['force']),
+      $operations[] = array(
+        'islandora_derivative_perform_batch_operation',
+        array(
+          $function,
+          $file,
+          $object->id,
+          $options['force'],
+          $hook,
+        ),
       );
     }
   }
