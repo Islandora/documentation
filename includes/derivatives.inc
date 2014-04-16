@@ -13,7 +13,8 @@
  *   The DSID to run the derivative function for.
  */
 function islandora_run_derivatives (AbstractObject $object, $dsid) {
-  if (empty(batch_get())) {
+  $batch_array = batch_get();
+  if (empty($batch_array)) {
     $logging_results = islandora_do_derivatives($object, array(
       'source_dsid' => $dsid,
     ));
