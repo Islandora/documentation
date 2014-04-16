@@ -443,4 +443,82 @@ QUERY;
     }
   }
 
+  /**
+   * These are a few quick helper functions to fill in a gap in the standard
+   * DrupalWebTestCase where no function exists to test for the simple existence
+   * or non-existence of an error.
+   */
+
+  /**
+   * Asserts that an error is found in $this->content.
+   *
+   * @param string $message
+   *   The message to pass on to the results.
+   * @param string $group
+   *   The group to place the result in.
+   *
+   * @return bool
+   *   TRUE on success, FALSE on failure.
+   */
+  public function assertError($message = '', $group = 'Other') {
+    if (!$message) {
+      $message = "Error found on current page when error was expected.";
+    }
+    return $this->assertRaw("<div class=\"messages error\">", $message, $group);
+  }
+
+  /**
+   * Asserts that no error is found in $this->content.
+   *
+   * @param string $message
+   *   The message to pass on to the results.
+   * @param string $group
+   *   The group to place the result in.
+   *
+   * @return bool
+   *   TRUE on success, FALSE on failure.
+   */
+  public function assertNoError($message = '', $group = 'Other') {
+    if (!$message) {
+      $message = "No error found on current page when no error was expected.";
+    }
+    return $this->assertNoRaw("<div class=\"messages error\">", $message, $group);
+  }
+
+  /**
+   * Asserts that a warning is found in $this->content.
+   *
+   * @param string $message
+   *   The message to pass on to the results.
+   * @param string $group
+   *   The group to place the result in.
+   *
+   * @return bool
+   *   TRUE on success, FALSE on failure.
+   */
+  public function assertWarning($message = '', $group = 'Other') {
+    if (!$message) {
+      $message = "Warning found on current page when warning was expected.";
+    }
+    return $this->assertRaw("<div class=\"messages warning\">", $message, $group);
+  }
+
+  /**
+   * Asserts that no warning is found in $this->content.
+   *
+   * @param string $message
+   *   The message to pass on to the results.
+   * @param string $group
+   *   The group to place the result in.
+   *
+   * @return bool
+   *   TRUE on success, FALSE on failure.
+   */
+  public function assertNoWarning($message = '', $group = 'Other') {
+    if (!$message) {
+      $message = "No warning found on current page when no warning was expected.";
+    }
+    return $this->assertNoRaw("<div class=\"messages error\">", $message, $group);
+  }
+
 }
