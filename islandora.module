@@ -123,11 +123,11 @@ function islandora_menu() {
     'access arguments' => array('Islandora Viewers'),
     'type' => MENU_NORMAL_ITEM,
   );
-  $items['admin/islandora/islandora_utilities'] = array(
+  $items['admin/islandora/tools'] = array(
     'title' => 'Islandora Utility Modules',
     'description' => 'Configure Islandora utility modules.',
     'access callback' => 'islandora_find_package',
-    'access arguments' => array('Islandora Utilities'),
+    'access arguments' => array('Islandora Tools'),
     'type' => MENU_NORMAL_ITEM,
   );
   $items['admin/islandora/solution_pack_config/solution_packs'] = array(

@@ -256,7 +256,7 @@ function islandora_solution_pack_form_submit(array $form, array &$form_state) {
  *   the batch.
  * @param array $not_checked
  *   The object that will bot be install.
- * 
+ *
  * @return array
  *   An array defining a batch which can be passed on to batch_set().
  */
@@ -367,7 +367,7 @@ function islandora_install_solution_pack($module, $op = 'install', $force = FALS
   $t = get_t();
 
   // Some general replacements.
-  $admin_link = l($t('Solution Pack admin'), 'admin/islandora/solution_packs');
+  $admin_link = l($t('Solution Pack admin'), 'admin/islandora/solution_pack_config');
   $config_link = l($t('Islandora configuration'), 'admin/islandora/configure');
   $t_params = array(
     '@module' => $module,
