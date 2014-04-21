@@ -521,4 +521,54 @@ QUERY;
     return $this->assertNoRaw("<div class=\"messages error\">", $message, $group);
   }
 
+  /**
+   * Makes a drupalPost() request, using the form submit button's ID.
+   *
+   * Because drupalPost() is silly and doesn't let us choose which button we'd
+   * like to select if multiple buttons have the same value, this function
+   * allows us to select whatever button we'd like based on the ID instead.
+   *
+   * This is done via the absolutely hilarious method of fudging the actual
+   * button labels that don't have the ID we want, so that the only one left
+   * with the correct label is the one with the right ID.
+   *
+   * @see DrupalWebTestCase::drupalPost().
+   *
+   * @param $path
+   *   Location of the post form.
+   * @param $edit
+   *   Field data in an associative array.
+   * @param $submit
+   *   Value of the submit button whose click is to be emulated.
+   * @param $id
+   *   ID of the submit button whose click is to be emulated.
+   * @param array $options
+   *   Options to be forwarded to url().
+   * @param array $headers
+   *   An array containing additional HTTP request headers, each formatted as
+   *   "name: value".
+   * @param null $form_html_id
+   *   (optional) HTML ID of the form to be submitted.
+   * @param null $extra_post
+   *   (optional) A string of additional data to append to the POST submission.
+   *
+   * @return bool|string
+   *   The content from the POST request's curlExec, or FALSE on fail.
+   */
+  public function drupalPostByID($path, $edit, $submit, $id, array $options = array(), array $headers = array(), $form_html_id = NULL, $extra_post = NULL) {
+    $buttons = $this->xpath("//input[@type=\"submit\" and @value=\"{$submit}\"]");
+    if (empty($buttons)) {
+      $this->fail("No buttons found on the page with value '$submit'");
+      return FALSE;
+    }
+    $i = 0;
+    foreach ($buttons as $button) {
+      if ($button['id'] !== $id) {
+        $button['value'] .= "_$i";
+        $i++;
+      }
+    }
+    return $this->drupalPost($path, $edit, $submit, $options, $headers, $form_html_id, $extra_post);
+  }
+
 }
