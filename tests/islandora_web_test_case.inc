@@ -532,15 +532,15 @@ QUERY;
    * button labels that don't have the ID we want, so that the only one left
    * with the correct label is the one with the right ID.
    *
-   * @see DrupalWebTestCase::drupalPost().
+   * @see DrupalWebTestCase::drupalPost()
    *
-   * @param $path
+   * @param string $path
    *   Location of the post form.
-   * @param $edit
+   * @param array $edit
    *   Field data in an associative array.
-   * @param $submit
+   * @param string $submit
    *   Value of the submit button whose click is to be emulated.
-   * @param $id
+   * @param string $id
    *   ID of the submit button whose click is to be emulated.
    * @param array $options
    *   Options to be forwarded to url().
