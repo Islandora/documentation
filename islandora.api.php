@@ -643,7 +643,7 @@ function hook_CMODEL_PID_islandora_overview_object_alter(AbstractObject &$object
  *       following fields:
  *       - message: A string passed through t() describing the
  *         outcome of the operation.
- *       - message_sub: (Optional) Substitutions to be passed along to t() or
+ *       - message_sub: (Optional) A substitution array as acceptable by t() or
  *         watchdog.
  *       - type: A string denoting whether the output is to be
  *         drupal_set_messaged (dsm) or watchdogged (watchdog).
