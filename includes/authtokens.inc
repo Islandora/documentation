@@ -36,12 +36,7 @@ define('ISLANDORA_AUTHTOKEN_TOKEN_TIMEOUT', 300);
 function islandora_get_object_token($pid, $dsid, $uses = 1) {
   global $user;
   $time = time();
-  // The function mt_rand is not considered cryptographically secure
-  // and openssl_rando_pseudo_bytes() is only available in PHP > 5.3.
-  // We might be safe in this case because mt_rand should never be using
-  // the same seed, but this is still more secure.
-  $token = hash("sha256", mt_rand() . $time);
-
+  $token = bin2hex(drupal_random_bytes(32));
   $id = db_insert("islandora_authtokens")->fields(
     array(
       'token' => $token,
