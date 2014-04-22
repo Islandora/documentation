@@ -17,7 +17,7 @@ pear upgrade --force Console_Getopt
 pear upgrade --force pear
 pear channel-discover pear.drush.org
 
-composer global require squizlabs/php_codesniffer sebastian/phpcpd
+composer global require 'squizlabs/php_codesniffer=*' 'sebastian/phpcpd=*'
 
 # Install Drush
 git clone https://github.com/drush-ops/drush.git
