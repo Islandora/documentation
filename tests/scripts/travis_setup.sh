@@ -12,14 +12,12 @@ export CATALINA_HOME='.'
 export JAVA_OPTS="-Xms1024m -Xmx1024m -XX:MaxPermSize=512m -XX:+CMSClassUnloadingEnabled -Djavax.net.ssl.trustStore=$CATALINA_HOME/fedora/server/truststore -Djavax.net.ssl.trustStorePassword=tomcat"
 ./bin/startup.sh
 cd $HOME
+pear channel-discover pear.drush.org
 pear upgrade --force Console_Getopt
 pear upgrade --force pear
 pear channel-discover pear.drush.org
-pear channel-discover pear.drush.org
-pear channel-discover pear.phpqatools.org
-pear channel-discover pear.netpirates.net
-pear install pear/PHP_CodeSniffer
-pear install pear.phpunit.de/phpcpd
+
+composer global require squizlabs/php_codesniffer sebastian/phpcpd
 
 # Install Drush
 git clone https://github.com/drush-ops/drush.git
