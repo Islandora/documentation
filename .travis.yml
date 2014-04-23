@@ -6,6 +6,7 @@ branches:
   only:
     - /^7.x/
 env:
+  matrix:
   - FEDORA_VERSION="3.5"
   - FEDORA_VERSION="3.6.2"
   - FEDORA_VERSION="3.7.0"
