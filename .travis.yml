@@ -7,9 +7,9 @@ branches:
     - /^7.x/
 env:
   matrix:
-  - FEDORA_VERSION="3.5"
-  - FEDORA_VERSION="3.6.2"
-  - FEDORA_VERSION="3.7.0"
+    - FEDORA_VERSION="3.5"
+    - FEDORA_VERSION="3.6.2"
+    - FEDORA_VERSION="3.7.0"
   global:
     # This key is unique to the Islandora/islandora repository; logging will
     # fail on forked repositories unless a new unique key is generated for them.
@@ -25,4 +25,4 @@ script:
   - phpcpd --names *.module,*.inc,*.test sites/all/modules/islandora
   - drush test-run --uri=http://localhost:8081 Islandora
 after_failure:
-  - $TRAVIS_BUILD_DIR/tests/scripts/travis_after_install.sh
+  - $ISLANDORA_DIR/tests/scripts/travis_after_install.sh
