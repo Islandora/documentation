@@ -1,8 +1,11 @@
 #!/bin/bash
 
 # Get the end portion of the TRAVIS_REPO_SLUG for the branch name.
-DELIMITED_SLUG = $(echo $TRAVIS_REPO_SLUG | tr "/" "\n")
-CURRENT_REPO = "${DELIMITED_SLUG[1]}"
+IFS=/ read -a DELIMITED_SLUG <<< "$TRAVIS_REPO_SLUG"
+export CURRENT_REPO=${DELIMITED_SLUG[1]}
+
+git config user.name --global islandora-logger
+git config user.email --global noreply@islandora.ca
 
 # Git business
 export VERBOSE_DIR = $HOME/sites/default/files/simpletest/verbose
