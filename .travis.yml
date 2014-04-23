@@ -25,4 +25,4 @@ script:
   - phpcpd --names *.module,*.inc,*.test sites/all/modules/islandora
   - drush test-run --uri=http://localhost:8081 Islandora
 after_failure:
-  - $ISLANDORA_DIR/tests/scripts/travis_after_install.sh
+  - $ISLANDORA_DIR/tests/scripts/travis_after_failure.sh
