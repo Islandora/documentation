@@ -49,19 +49,17 @@ function islandora_convert_bytes_to_human_readable($bytes, $precision = 2) {
 /**
  * Add a file as managed if is not already.
  *
- * @param string $file_name
- *   The given file name.
  * @param string $file_uri
  *   The given file URI location.
  */
-function islandora_temp_file_entry($file_name, $file_uri) {
-  // Check for this file in the file managed table.
+function islandora_temp_file_entry($file_uri) {
   $query = new EntityFieldQuery();
   $result = $query
     ->entityCondition('entity_type', 'file')
     ->propertyCondition('uri', $file_uri)
     ->execute();
-  if (!isset($result['file'])) {
+  if (!isset($result['file']) && file_exists($file_uri)) {
+    $file_name = drupal_basename($file_uri);
     $file = new stdClass();
     $file->uri = $file_uri;
     $file->filename = $file_name;
@@ -82,25 +80,31 @@ function islandora_temp_file_entry($file_name, $file_uri) {
  *   TRUE if success, FALSE if uncessfull and array() if in use.
  */
 function islandora_temp_file_delete($file_uri) {
-  $query = new EntityFieldQuery();
-  $result = $query
-    ->entityCondition('entity_type', 'file')
-    ->propertyCondition('uri', $file_uri)
-    ->execute();
-  $arr_keys = array_keys($result['file']);
-  $file = file_load($arr_keys[0]);
-  $success = file_delete($file);
-  if ($success === FALSE) {
-    watchdog(
-      'islandora',
-      'Failed to delete temp file %file.',
-      array(
-        '%file' => $file_uri,
-      ),
-      WATCHDOG_WARNING
-    );
+  // Basic sanity check.
+  if ($file_uri != FALSE && file_exists($file_uri)) {
+    $query = new EntityFieldQuery();
+    $result = $query
+      ->entityCondition('entity_type', 'file')
+      ->propertyCondition('uri', $file_uri)
+      ->execute();
+    if (isset($result['file'])) {
+      $arr_keys = array_keys($result['file']);
+      $file = file_load($arr_keys[0]);
+      $success = file_delete($file);
+      if ($success === FALSE) {
+        watchdog(
+          'islandora',
+          'Failed to delete temp file %file.',
+          array(
+            '%file' => $file_uri,
+          ),
+          WATCHDOG_WARNING
+        );
+      }
+      return $success;
+    }
   }
-  return $success;
+  return $file_uri;
 }
 
 /**
