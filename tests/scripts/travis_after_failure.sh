@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # Get the end portion of the TRAVIS_REPO_SLUG for the branch name.
-export TRAVIS_REPO_SLUG="Islandora/islandora_stuff"
 IFS=/ read -a DELIMITED_SLUG <<< "$TRAVIS_REPO_SLUG"
 export CURRENT_REPO=${DELIMITED_SLUG[1]}
 
