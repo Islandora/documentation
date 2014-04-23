@@ -27,7 +27,7 @@ function islandora_repository_admin(array $form, array &$form_state) {
       '#type' => 'vertical_tabs',
       'islandora_general' => array(
         '#type' => 'fieldset',
-        '#title' => t('General Configuarion'),
+        '#title' => t('General Configuration'),
         'wrapper' => array(
           '#prefix' => '<div id="islandora-url">',
           '#suffix' => '</div>',

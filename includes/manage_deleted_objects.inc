@@ -332,7 +332,7 @@ function islandora_get_deleted_query($content_models, $offset = 0) {
     $unions .= "UNION {?subject fm:hasModel <info:fedora/$contentmodel>;
                             fm:state fm:Deleted;
                             fm:hasModel ?object;
-                   } 
+                   }
                 ";
   }
   $optional = "OPTIONAL{?subject fm:label ?label}";
