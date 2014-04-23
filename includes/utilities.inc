@@ -51,75 +51,19 @@ function islandora_convert_bytes_to_human_readable($bytes, $precision = 2) {
  *
  * @param string $file_uri
  *   The given file URI location.
+ *
+ * @return object
+ *   The file, as returned from file_save().
  */
 function islandora_temp_file_entry($file_uri) {
-  $return = NULL;
-  $query = new EntityFieldQuery();
-  $result = $query
-    ->entityCondition('entity_type', 'file')
-    ->propertyCondition('uri', $file_uri)
-    ->execute();
-  if (!isset($result['file']) && file_exists($file_uri)) {
-    $file_name = drupal_basename($file_uri);
-    $file = new stdClass();
-    $file->uri = $file_uri;
-    $file->filename = $file_name;
-    // Temporary.
-    $file->status = 0;
-    // Save the temp file to be cleaned up later via cron.
-    $return = file_save($file);
-  }
+  $file_name = drupal_basename($file_uri);
+  $file = new stdClass();
+  $file->uri = $file_uri;
+  $file->status = 0;
+  // Save the temp file to be cleaned up later via cron.
+  $return = file_save($file);
   return $return;
 }
-
-// /**
-//  * Delete a managed file by URI.
-//  *
-//  * @param string $file_uri
-//  *   The files URI.
-//  *
-//  * @return bool
-//  *   TRUE if success, FALSE if uncessfull and array() if in use.
-//  */
-// function islandora_temp_file_delete($file_uri) {
-//   // Basic sanity check.
-//   if ($file_uri != FALSE && file_exists($file_uri)) {
-//     $query = new EntityFieldQuery();
-//     $result = $query
-//       ->entityCondition('entity_type', 'file')
-//       ->propertyCondition('uri', $file_uri)
-//       ->execute();
-//     if (isset($result['file'])) {
-//       $arr_keys = array_keys($result['file']);
-//       $file = file_load($arr_keys[0]);
-//       $success = file_delete($file);
-//       if ($success === FALSE) {
-//         watchdog(
-//           'islandora',
-//           'Failed to delete temp file %file.',
-//           array(
-//             '%file' => $file_uri,
-//           ),
-//           WATCHDOG_WARNING
-//         );
-//       }
-//       return $success;
-//     }
-//   }
-//   return $file_uri;
-// }
-
-// /**
-//  * Delete temp files by URI, in an array.
-//  *
-//  * @param array $file_uri_array
-//  *   An arry of file URI's to delete.
-//  */
-// function islandora_temp_file_delete_multi($file_uri_array) {
-//   foreach ($file_uri_array as $key => $value) {
-//     islandora_temp_file_delete($value);
-//   }
-// }
 
 /**
  * Creates a label for control group symbols.
