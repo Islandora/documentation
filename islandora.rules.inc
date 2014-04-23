@@ -6,10 +6,29 @@
  */
 
 /**
+ * Implements hook_rules_event_info().
+ */
+function islandora_rules_event_info() {
+  return array(
+    'islandora_object_ingested' => array(
+      'group' => t('Islandora'),
+      'label' => t('Object ingested'),
+      'variables' => array(
+        'object' => array(
+          'type' => 'islandora_object',
+          'label' => t('The ingested object'),
+          'description' => t('A Tuque object for the ingested Fedora object, as an entity.'),
+        ),
+      ),
+    ),
+  );
+}
+
+/**
  * Helper function to get reused "parameter" array.
  */
 function islandora_rules_relationship_parameter_array() {
-  $to_return = array(
+  return array(
     'subject' => array(
       'type' => 'islandora_object',
       'label' => t('Subject'),
@@ -39,8 +58,6 @@ function islandora_rules_relationship_parameter_array() {
       'default value' => 0,
     ),
   );
-
-  return $to_return;
 }
 
 /**

@@ -192,7 +192,6 @@ abstract class DatastreamValidator {
     $this->params = $params;
     if ($object[$datastream]) {
       $this->datastreamContent = $object[$datastream]->content;
-      $this->runValidators();
     }
     else {
       drupal_set_message(t("Error grabbing content from datastream %datastream in object %id", 'error'), array(
@@ -226,6 +225,9 @@ abstract class DatastreamValidator {
    *   The results.
    */
   public function getResults() {
+    if (empty($this->results)) {
+      $this->runValidators();
+    }
     return $this->results;
   }
 
@@ -415,19 +417,24 @@ class PDFDatastreamValidator extends DatastreamValidator {
  * integer representing the number of times it should appear in the datastream.
  */
 class TextDatastreamValidator extends DatastreamValidator {
+  /**
+   * Constructor override; blow up if we don't have our two values.
+   */
+  public function __construct(IslandoraFedoraObject $object, $datastream, array $params = array()) {
+    if (count($params) < 2) {
+      throw new InvalidArgumentException('$params must contain at least two values to instantiate a TextDatastreamValidator.');
+    }
+    parent::__construct($object, $datastream, $params);
+  }
 
   /**
    * Asserts that the string given appears the correct number of times.
    */
   protected function assertTextStringCount() {
-    if (!isset($this->params[1])) {
-      $this->addResult(FALSE, "TextDatastreamValidator cannot be instantiated without two keys in the 'params' variable.");
-      return;
-    }
     $string_count = self::getTextStringCount();
-    $expected = $this->params[1];
+    list($string, $expected) = $this->params;
     $assertion = $string_count === $expected;
-    $this->addResult($assertion, "{$this->datastream} datastream contains the word(s) '{$this->params[0]}' repeated {$string_count} time(s) (expected: {$expected}).");
+    $this->addResult($assertion, "{$this->datastream} datastream contains the word(s) '{$string}' repeated {$string_count} time(s) (expected: {$expected}).");
   }
 
   /**
@@ -463,12 +470,9 @@ class WAVDatastreamValidator extends DatastreamValidator {
    * @param array $params
    *   An extra array of parameters the validator might need.
    */
-  public function __construct($object, $datastream, array $params = array()) {
-    $this->object = $object;
-    $this->datastream = $datastream;
-    $this->params = $params;
-    $this->datastreamContent = bin2hex($object[$datastream]->content);
-    $this->runValidators();
+  public function __construct(IslandoraFedoraObject $object, $datastream, array $params = array()) {
+    parent::__construct($object, $datastream, $params);
+    $this->datastreamContent = bin2hex($this->datastreamContent);
   }
 
   /**
