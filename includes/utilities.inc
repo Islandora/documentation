@@ -56,13 +56,22 @@ function islandora_convert_bytes_to_human_readable($bytes, $precision = 2) {
  *   The file, as returned from file_save().
  */
 function islandora_temp_file_entry($file_uri) {
-  $file_name = drupal_basename($file_uri);
-  $file = new stdClass();
-  $file->uri = $file_uri;
+  $query = new EntityFieldQuery();
+  $result = $query
+    ->entityCondition('entity_type', 'file')
+    ->propertyCondition('uri', $file_uri)
+    ->execute();
+  if (isset($result['file'])) {
+    $fid = current($result['file'])->fid;
+    $file = file_load($fid);
+  }
+  else {
+    $file = new stdClass();
+    $file->uri = $file_uri;
+    $file->filename = drupal_basename($file_uri);
+  }
   $file->status = 0;
-  // Save the temp file to be cleaned up later via cron.
-  $return = file_save($file);
-  return $return;
+  return file_save($file);
 }
 
 /**
