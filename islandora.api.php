@@ -627,9 +627,10 @@ function hook_CMODEL_PID_islandora_overview_object_alter(AbstractObject &$object
  *   - force: Bool denoting whether we are forcing the generation of
  *     derivatives.
  *   - source_dsid: (Optional) String of the datastream id we are generating
- *     from or NULL if it's the object itself.
+ *     from or NULL if it's the object itself. Does not impact function
+ *     ordering.
  *   - destination_dsid: (Optional) String of the datastream id that is being
- *     created. To be used in the UI.
+ *     created. To be used in the UI. Does not impact function ordering.
  *   - weight: A string denoting the weight of the function. This value is
  *     sorted upon to run functions in order.
  *   - function: An array of function(s) to be ran when constructing
@@ -642,7 +643,7 @@ function hook_CMODEL_PID_islandora_overview_object_alter(AbstractObject &$object
  *       following fields:
  *       - message: A string passed through t() describing the
  *         outcome of the operation.
- *       - message_sub: (Optional) Substitutions to be passed along to t() or
+ *       - message_sub: (Optional) A substitution array as acceptable by t() or
  *         watchdog.
  *       - type: A string denoting whether the output is to be
  *         drupal_set_messaged (dsm) or watchdogged (watchdog).

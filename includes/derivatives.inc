@@ -5,6 +5,45 @@
  */
 
 /**
+ * Decides which derivative function to call and runs it.
+ *
+ * @param AbstractObject $object
+ *   The object to run the derivative function for.
+ * @param string $dsid
+ *   The DSID to run the derivative function for.
+ */
+function islandora_run_derivatives(AbstractObject $object, $dsid) {
+  $batch_array = batch_get();
+  if (empty($batch_array)) {
+    $logging_results = islandora_do_derivatives($object, array(
+      'source_dsid' => $dsid,
+    ));
+    islandora_derivative_logging($logging_results);
+  }
+  else {
+    batch_set(
+      // Title won't show for batch in a batch.
+      array(
+        'init_message' => t('Preparing derivatives for @label', array('@label' => $object->label)),
+        'error_message' => t('An error occured creating derivatives.'),
+        'progress_message' => t(
+          'Creating derivatives for @label <br/>Time elapsed: @elapsed <br/>
+            Estimated time remaining @estimate.',
+          array('@label' => $object->label)
+        ),
+        'file' => drupal_get_path('module', 'islandora') . '/includes/regenerate_derivatives.form.inc',
+        'operations' => islandora_do_batch_derivatives(
+          $object,
+          array(
+            'source_dsid' => $dsid,
+          )
+        ),
+      )
+    );
+  }
+}
+
+/**
  * Kicks off derivative functions based upon hooks and conditions.
  *
  * @param AbstractObject $object
