@@ -1722,10 +1722,7 @@ function islandora_islandora_basic_collection_get_query_filters() {
  */
 function islandora_islandora_object_ingested(AbstractObject $object) {
   module_load_include('inc', 'islandora', 'includes/derivatives');
-  $logging_results = islandora_do_derivatives($object, array(
-    'source_dsid' => NULL,
-  ));
-  islandora_derivative_logging($logging_results);
+  islandora_run_derivatives($object, NULL);
 }
 
 /**
@@ -1736,10 +1733,7 @@ function islandora_islandora_object_ingested(AbstractObject $object) {
  */
 function islandora_islandora_datastream_ingested(AbstractObject $object, AbstractDatastream $datastream) {
   module_load_include('inc', 'islandora', 'includes/derivatives');
-  $logging_results = islandora_do_derivatives($object, array(
-    'source_dsid' => $datastream->id,
-  ));
-  islandora_derivative_logging($logging_results);
+  islandora_run_derivatives($object, $datastream->id);
 }
 
 /**
@@ -1880,7 +1874,8 @@ function islandora_islandora_datastream_access($op, AbstractDatastream $datastre
     $hooks = islandora_invoke_hook_list(ISLANDORA_DERVIATIVE_CREATION_HOOK, $object->models, array($object));
     $hooks = islandora_filter_derivatives($hooks, array('force' => TRUE), $object);
     foreach ($hooks as $hook) {
-      if ($hook['destination_dsid'] == $datastream->id && islandora_datastream_access(ISLANDORA_VIEW_OBJECTS, $object[$hook['source_dsid']], $user)) {
+      if ($hook['destination_dsid'] == $datastream->id &&
+        (is_null($hook['source_dsid']) || islandora_datastream_access(ISLANDORA_VIEW_OBJECTS, $object[$hook['source_dsid']], $user))) {
         $applicable_hook = TRUE;
         break;
       }
