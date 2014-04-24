@@ -194,10 +194,10 @@ abstract class DatastreamValidator {
       $this->datastreamContent = $object[$datastream]->content;
     }
     else {
-      drupal_set_message(t("Error grabbing content from datastream %datastream in object %id", 'error'), array(
+      drupal_set_message(t("Error grabbing content from datastream %datastream in object %id", array(
         '%datastream' => $datastream,
         '%id' => $object->id,
-      ));
+      )), 'error');
     }
   }
 
