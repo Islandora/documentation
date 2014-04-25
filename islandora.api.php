@@ -423,13 +423,13 @@ function hook_islandora_undeletable_datastreams(array $models) {
  *   - form_id: The form building function to call to get the form structure
  *     for this step.
  *   - args: An array of arguments to pass to the form building function.
- *   Required "callback" type specific parameters:
- *   - do_function: An associate array including:
+ *   "Callback" type specific parameters:
+ *   - do_function: A required associative array including:
  *       - 'function': The callback function to be called.
  *       - 'args': An array of arguments to pass to the callback function.
  *       - 'file': A file to include (relative to the module's path, including
  *          the file's extension).
- *   - undo_function: An associate array including:
+ *   - undo_function: An optional associative array including:
  *       - 'function': The callback function to be called to reverse the
  *          executed action in the ingest steps.
  *       - 'args': An array of arguments to pass to the callback function.
@@ -627,22 +627,23 @@ function hook_CMODEL_PID_islandora_overview_object_alter(AbstractObject &$object
  *   - force: Bool denoting whether we are forcing the generation of
  *     derivatives.
  *   - source_dsid: (Optional) String of the datastream id we are generating
- *     from or NULL if it's the object itself.
+ *     from or NULL if it's the object itself. Does not impact function
+ *     ordering.
  *   - destination_dsid: (Optional) String of the datastream id that is being
- *     created. To be used in the UI.
+ *     created. To be used in the UI. Does not impact function ordering.
  *   - weight: A string denoting the weight of the function. This value is
  *     sorted upon to run functions in order.
  *   - function: An array of function(s) to be ran when constructing
  *     derivatives. Functions that are defined to be called for derivation
  *     creation must have the following structure:
- *     module_name_derivative_creation_function($object, $force = FALSE)
+ *     module_name_derivative_creation_function($object, $force = FALSE, $hook)
  *     These functions must return an array in the structure of:
  *     - success: Bool denoting whether the operation was successful.
  *     - messages: An array structure containing zero or more array's with the
  *       following fields:
  *       - message: A string passed through t() describing the
  *         outcome of the operation.
- *       - message_sub: (Optional) Substitutions to be passed along to t() or
+ *       - message_sub: (Optional) A substitution array as acceptable by t() or
  *         watchdog.
  *       - type: A string denoting whether the output is to be
  *         drupal_set_messaged (dsm) or watchdogged (watchdog).

@@ -256,7 +256,7 @@ function islandora_solution_pack_form_submit(array $form, array &$form_state) {
  *   the batch.
  * @param array $not_checked
  *   The object that will bot be install.
- * 
+ *
  * @return array
  *   An array defining a batch which can be passed on to batch_set().
  */
@@ -367,7 +367,7 @@ function islandora_install_solution_pack($module, $op = 'install', $force = FALS
   $t = get_t();
 
   // Some general replacements.
-  $admin_link = l($t('Solution Pack admin'), 'admin/islandora/solution_packs');
+  $admin_link = l($t('Solution Pack admin'), 'admin/islandora/solution_pack_config');
   $config_link = l($t('Islandora configuration'), 'admin/islandora/configure');
   $t_params = array(
     '@module' => $module,
@@ -712,9 +712,8 @@ function islandora_viewers_form($variable_id = NULL, $mimetype = NULL, $model = 
  * given, than any viewer that supports either the give $mimetype or $model will
  * be listed.
  *
- * @param string $mimetype
- *   Specify a mimetype to return only viewers that support this certain
- *   mimetype.
+ * @param array $mimetype
+ *   List of mimetypes that the viewer supports.
  * @param string $content_model
  *   Specify a content model to return only viewers that support the content
  *   model.
@@ -722,14 +721,19 @@ function islandora_viewers_form($variable_id = NULL, $mimetype = NULL, $model = 
  * @return array
  *   Viewer definitions, or FALSE if none are found.
  */
-function islandora_get_viewers($mimetype = NULL, $content_model = NULL) {
+function islandora_get_viewers($mimetype = array(), $content_model = NULL) {
   $viewers = array();
   $defined_viewers = module_invoke_all('islandora_viewer_info');
+
+  if (!is_array($mimetype)) {
+    $mimetype = array($mimetype);
+  }
+
   // Filter viewers by MIME type.
   foreach ($defined_viewers as $key => $value) {
     $value['mimetype'] = isset($value['mimetype']) ? $value['mimetype'] : array();
     $value['model'] = isset($value['model']) ? $value['model'] : array();
-    if (in_array($mimetype, $value['mimetype']) OR in_array($content_model, $value['model'])) {
+    if (array_intersect($mimetype, $value['mimetype']) OR in_array($content_model, $value['model'])) {
       $viewers[$key] = $value;
     }
   }

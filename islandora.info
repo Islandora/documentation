@@ -22,5 +22,9 @@ files[] = tests/islandora_manage_permissions.test
 files[] = tests/datastream_versions.test
 files[] = tests/datastream_cache.test
 files[] = tests/derivatives.test
+<<<<<<< HEAD
 files[] = tests/islandora_manage_temp_file.test
+=======
+files[] = tests/datastream_validator_tests.test
+>>>>>>> 6c3fcb0381318857b6c2aa7f9059f939ab7ecef5
 php = 5.3
