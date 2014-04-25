@@ -55,7 +55,7 @@ function islandora_convert_bytes_to_human_readable($bytes, $precision = 2) {
  * @return object
  *   The file, as returned from file_save().
  */
-function islandora_temp_file_entry($file_uri) {
+function islandora_temp_file_entry($file_uri, $mime = NULL) {
   $query = new EntityFieldQuery();
   $result = $query
     ->entityCondition('entity_type', 'file')
@@ -69,6 +69,9 @@ function islandora_temp_file_entry($file_uri) {
     $file = new stdClass();
     $file->uri = $file_uri;
     $file->filename = drupal_basename($file_uri);
+    if (isset($mime)) {
+      $file->filemime = $mime;
+    }
   }
   $file->status = 0;
   return file_save($file);
