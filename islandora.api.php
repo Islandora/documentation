@@ -613,13 +613,15 @@ function hook_CMODEL_PID_islandora_overview_object_alter(AbstractObject &$object
   $output = $output . drupal_render(drupal_get_form('some_form', $object));
 }
 
-/*
+/**
  * Defines derivative functions to be executed based on certain conditions.
  *
- * @param AbstractObject $object
- *   Object to which derivatives will be added
  * This hook fires when an object/datastream is ingested or a datastream is
- * modified.
+ * modified. It may also be called to discover the datastream derivative
+ * hierarchy.
+ *
+ * @param AbstractObject $object
+ *   Optional object to which derivatives will be added
  *
  * @return array
  *   An array containing an entry for each derivative to be created. Each entry
@@ -653,7 +655,7 @@ function hook_CMODEL_PID_islandora_overview_object_alter(AbstractObject &$object
  *   - file: A string denoting the path to the file where the function
  *     is being called from.
  */
-function hook_islandora_derivative(AbstractObject $object) {
+function hook_islandora_derivative(AbstractObject $object = NULL) {
 
   $derivatives[] = array(
     'source_dsid' => 'OBJ',
@@ -697,7 +699,6 @@ function hook_CMODEL_PID_islandora_derivative() {
 }
 
 /**
-
  * Retrieves PIDS of related objects for property updating.
  *
  * @param AbstractObject $object
@@ -743,7 +744,7 @@ function hook_islandora_breadcrumbs_alter(&$breadcrumbs, $context, $object = NUL
  *    wishes to default back to the Dublin Core display for the current object.
  *   -configuration (Optional): A path to the administration page for the
  *    metadata display.
-
+ *
  * @see islandora_retrieve_metadata_markup()
  */
 function hook_islandora_metadata_display_info() {
