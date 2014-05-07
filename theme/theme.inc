@@ -23,6 +23,7 @@ function islandora_preprocess_islandora_default_edit(array &$variables) {
   $header[] = array('data' => t('Size'));
   if (user_access(ISLANDORA_VIEW_DATASTREAM_HISTORY)) {
     $header[] = array('data' => t('Versions'));
+    $header[] = array('data' => t('Replace'));
   }
 
   $header[] = array('data' => t('Operations'), 'colspan' => '4');
@@ -57,6 +58,13 @@ function islandora_preprocess_islandora_default_edit(array &$variables) {
       $row[] = array(
         'class' => 'datastream-versions',
         'data' => theme('islandora_datastream_version_link', array(
+          'datastream' => $ds,
+        )),
+      );
+      // Add new datastream content as the lastest version.
+      $row[] = array(
+        'class' => 'datastream-replace',
+        'data' => theme('islandora_datastream_replace_link', array(
           'datastream' => $ds,
         )),
       );
@@ -433,6 +441,28 @@ function theme_islandora_datastream_version_link(array $vars) {
   }
   else {
     return '';
+  }
+}
+
+/**
+ * Renders a link to take you to the datastream add latest version page.
+ *
+ * @param array $vars
+ *   An array containing:
+ *     - datastream: An AbstractDatastream to generate a new version.
+ *
+ * @return string
+ *   Markup.
+ */
+function theme_islandora_datastream_replace_link(array $vars) {
+  $datastream = $vars['datastream'];
+  //TODO: RELS-EXT and RELS-INT should never be replaced, but should
+  // be moved out into configuration somewhere. Hard coded === bad time.
+  if (islandora_datastream_access(ISLANDORA_REPLACE_DATASTREAM, $datastream) &&
+      islandora_datastream_access(ISLANDORA_ADD_NEW_DATASTREAM_VERSION, $datastream)) {
+    if (strcmp('RELS-EXT', $datastream->id) != 0 && strcmp('RELS-INT', $datastream->id) != 0) {
+      return l(t('replace'), "islandora/object/{$datastream->parent->id}/datastream/{$datastream->id}/replace");
+    }
   }
 }
 

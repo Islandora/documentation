@@ -34,10 +34,11 @@ define('ISLANDORA_INGEST', 'ingest fedora objects');
 define('ISLANDORA_PURGE', 'delete fedora objects and datastreams');
 define('ISLANDORA_MANAGE_PROPERTIES', 'manage object properties');
 define('ISLANDORA_VIEW_DATASTREAM_HISTORY', 'view old datastream versions');
+define('ISLANDORA_ADD_NEW_DATASTREAM_VERSION', 'add a new datastream version as latest');
 define('ISLANDORA_MANAGE_DELETED_OBJECTS', 'manage deleted objects');
 define('ISLANDORA_REVERT_DATASTREAM', 'revert to old datastream');
 define('ISLANDORA_REGENERATE_DERIVATIVES', 'regenerate derivatives for an object');
-
+define('ISLANDORA_REPLACE_DATASTREAM', 'replace a datastream with new content, preserving version history');
 
 // Hooks.
 define('ISLANDORA_VIEW_HOOK', 'islandora_view_object');
@@ -317,6 +318,16 @@ function islandora_menu() {
     'access arguments' => array(ISLANDORA_VIEW_DATASTREAM_HISTORY, 4),
     'load arguments' => array(2),
   );
+  $items['islandora/object/%islandora_object/datastream/%islandora_datastream/replace'] = array(
+    'title' => 'Replace Datastream',
+    'page arguments' => array('islandora_datastream_version_replace_form', 4),
+    'page callback' => 'drupal_get_form',
+    'file' => 'includes/datastream.version.inc',
+    'type' => MENU_CALLBACK,
+    'access callback' => 'islandora_datastream_access',
+    'access arguments' => array(ISLANDORA_ADD_NEW_DATASTREAM_VERSION, 4),
+    'load arguments' => array(2),
+  );
   $items['islandora/object/%islandora_object/datastream/%islandora_datastream/version/%/delete'] = array(
     'title' => 'Delete datastream version',
     'page arguments' => array('islandora_delete_datastream_version_form', 4, 6),
@@ -516,6 +527,10 @@ function islandora_theme() {
       'file' => 'theme/theme.inc',
       'variables' => array('datastream' => NULL),
     ),
+    'islandora_datastream_replace_link' => array(
+      'file' => 'theme/theme.inc',
+      'variables' => array('datastream' => NULL),
+    ),
     'islandora_dublin_core_display' => array(
       'file' => 'theme/theme.inc',
       'template' => 'theme/islandora-dublin-core-display',
@@ -582,6 +597,10 @@ function islandora_permission() {
       'title' => t('View datastream history'),
       'description' => t('View all previous versions of a datastream.'),
     ),
+    ISLANDORA_ADD_NEW_DATASTREAM_VERSION => array(
+      'title' => t('Add datastream version'),
+      'description' => t('Add to a datastreams version history as latest.'),
+    ),
     ISLANDORA_REVERT_DATASTREAM => array(
       'title' => t('Revert datastream history'),
       'description' => t('Revert to a previous version of a datastream.'),
@@ -593,6 +612,10 @@ function islandora_permission() {
     ISLANDORA_REGENERATE_DERIVATIVES => array(
       'title' => t('Regenerate derivatives'),
       'description' => t('Regenerate derivatives for an object or per datastream.'),
+    ),
+    ISLANDORA_REPLACE_DERIVATIVES => array(
+      'title' => t('Replace derivatives'),
+      'description' => t('Replace derivatives for an object or per datastream.'),
     ),
   );
 }
@@ -1874,8 +1897,7 @@ function islandora_islandora_datastream_access($op, AbstractDatastream $datastre
     $hooks = islandora_invoke_hook_list(ISLANDORA_DERVIATIVE_CREATION_HOOK, $object->models, array($object));
     $hooks = islandora_filter_derivatives($hooks, array('force' => TRUE), $object);
     foreach ($hooks as $hook) {
-      if ($hook['destination_dsid'] == $datastream->id &&
-        (is_null($hook['source_dsid']) || islandora_datastream_access(ISLANDORA_VIEW_OBJECTS, $object[$hook['source_dsid']], $user))) {
+      if ($hook['destination_dsid'] == $datastream->id && islandora_datastream_access(ISLANDORA_VIEW_OBJECTS, $object[$hook['source_dsid']], $user)) {
         $applicable_hook = TRUE;
         break;
       }
