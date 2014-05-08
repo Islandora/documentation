@@ -613,7 +613,7 @@ function islandora_permission() {
       'title' => t('Regenerate derivatives'),
       'description' => t('Regenerate derivatives for an object or per datastream.'),
     ),
-    ISLANDORA_REPLACE_DERIVATIVES => array(
+    ISLANDORA_REPLACE_DATASTREAM => array(
       'title' => t('Replace derivatives'),
       'description' => t('Replace derivatives for an object or per datastream.'),
     ),
