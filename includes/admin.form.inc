@@ -83,8 +83,20 @@ function islandora_repository_admin(array $form, array &$form_state) {
           ),
         ),
       ),
+      'islandora_ds_replace_exclude' => array(
+        '#type' => 'fieldset',
+        '#title' => t('Excluded DSID'),
+        'islandora_namespace_restriction_enforced' => array(
+          '#type' => 'textfield',
+          '#title' => t('Enforce DSID restrictions'),
+          '#description' => t("A comma seperated list, allowing administrator to restrict user's access to replace a versionable datastreams latest version"),
+          '#default_value' => variable_get('islandora_namespace_restriction_enforced', 'RELS-EXT,RELS-INT'),
+        ),
+      ),
     ),
   );
+  $var_string = variable_get('islandora_namespace_restriction_enforced', 'RELS-EXT,RELS-INT');
+  dsm($var_string, "hehe");
   return system_settings_form($form);
 }
 

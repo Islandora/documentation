@@ -460,7 +460,10 @@ function theme_islandora_datastream_replace_link(array $vars) {
   // be moved out into configuration somewhere. Hard coded === bad time.
   if (islandora_datastream_access(ISLANDORA_REPLACE_DATASTREAM, $datastream) &&
       islandora_datastream_access(ISLANDORA_ADD_NEW_DATASTREAM_VERSION, $datastream)) {
-    if (strcmp('RELS-EXT', $datastream->id) != 0 && strcmp('RELS-INT', $datastream->id) != 0) {
+    $var_string = variable_get("islandora_namespace_restriction_enforced", "RELS-EXT,RELS-INT");
+    $replace_exclude = explode($var_string, ",");
+    dsm($var_string, "var string");
+    if (!in_array($datastream->id, $replace_exclude)) {
       return l(t('replace'), "islandora/object/{$datastream->parent->id}/datastream/{$datastream->id}/replace");
     }
   }
