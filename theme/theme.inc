@@ -456,8 +456,7 @@ function theme_islandora_datastream_version_link(array $vars) {
  */
 function theme_islandora_datastream_replace_link(array $vars) {
   $datastream = $vars['datastream'];
-  if (islandora_datastream_access(ISLANDORA_REPLACE_DATASTREAM, $datastream) &&
-      islandora_datastream_access(ISLANDORA_ADD_NEW_DATASTREAM_VERSION, $datastream)) {
+  if (islandora_datastream_access(ISLANDORA_REPLACE_DATASTREAM_CONTENT, $datastream)) {
     $var_string = variable_get("islandora_ds_replace_exclude_enforced", "RELS-EXT,RELS-INT");
     $replace_exclude = explode(",", $var_string);
     if (!in_array($datastream->id, $replace_exclude)) {

@@ -252,48 +252,35 @@ function islandora_datastream_version_replace_form($form, &$form_state, Abstract
   $form_state['object_id'] = $object->id;
   $form_state['dsid'] = $datastream->id;
   $form_state['object'] = $object;
-
+  $extensions = islandora_get_datastreams_requirements_from_models($object->models);
+  $ext = array(NULL);
+  if(isset($extensions[$datastream->id]['mime'])) {
+    $ext = array(implode(",", $extensions[$datastream->id]['mime']));
+  }
   $upload_size = min((int) ini_get('post_max_size'), (int) ini_get('upload_max_filesize'));
   return array(
-    '#redirect' => "islandora/object/{$object->id}",
-    '#attributes' => array(
-      'enctype' => 'multipart/form-data',
-    ),
     'dsid_fieldset' => array(
       '#type' => 'fieldset',
-      '#title' => 'Update datastream with latest version',
+      '#title' => t("Update datastream with latest version"),
       '#collapsible' => FALSE,
       '#collapsed' => FALSE,
       'dsid' => array(
-        '#disabled' => TRUE,
-        '#default_value' => $datastream->id,
-        '#title' => 'Datastream ID',
-        '#description' => t("The current ID for this stream that is unique to this object."),
-        '#type' => 'textfield',
-        '#size' => 64,
-        '#maxlength' => 64,
-        '#required' => TRUE,
+        '#type' => 'markup',
+        '#markup' => "<div>DSID: <b>$datastream->id</b></div>",
       ),
       'label' => array(
-        '#disabled' => TRUE,
-        '#default_value' => $datastream->label,
-        '#title' => 'Datastream Label',
-        '#required' => TRUE,
-        '#size' => 64,
-        '#maxlength' => 64,
-        '#description' => t('The DSID human-readable label'),
-        '#type' => 'textfield',
+        '#type' => 'markup',
+        '#markup' => "<div>Label: <b>$datastream->label</b></div>",
       ),
       'file' => array(
         '#type' => 'managed_file',
         '#required' => TRUE,
         '#title' => t('Upload Document'),
-        '#size' => 48,
-        '#description' => t('Select a file to upload.<br/>Files must be less than <b>@size MB.</b>', array('@size' => $upload_size)),
-        '#default_value' => isset($form_state['values']['files']) ? $form_state['values']['files'] : NULL,
+        '#size' => 64,
+        '#description' => t('Select a file to upload.<br/>Files must be less than <strong>@size MB.</strong>', array('@size' => $upload_size)),
         '#upload_location' => 'temporary://',
         '#upload_validators' => array(
-          'file_validate_extensions' => array(NULL),
+          'file_validate_extensions' => $ext,
           // Assume its specified in MB.
           'file_validate_size' => array($upload_size * 1024 * 1024),
         ),
@@ -329,12 +316,19 @@ function islandora_datastream_version_replace_form_submit($form, &$form_state) {
     file_delete($file);
   }
   catch (exception $e) {
-    drupal_set_message(t('@message', array('@message' => check_plain($e->getMessage()))), 'error');
+    drupal_set_message(t('An error occurred during datastream updates. See watchlog for more information.'), 'error');
+    watchdog('islandora',
+      'Failed to add new versionable datastream.</br>code: @code<br/>message: @msg',
+      array(
+        '@code' => $e->getCode(),
+        '@msg' => $e->getMessage(),
+      ),
+      WATCHDOG_ERROR
+    );
     file_delete($file);
     return;
   }
   drupal_set_message(t("Successfully Updated Datastream"));
-  $form_state['redirect'] = "islandora/object/{$object->id}";
 }
 
 /**
