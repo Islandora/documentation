@@ -610,7 +610,7 @@ function islandora_permission() {
     ),
     ISLANDORA_REPLACE_DATASTREAM_CONTENT => array(
       'title' => t('Replace datastreams'),
-      'description' => t('Replace datastreams for an object or per datastream.'),
+      'description' => t('Add new datastream content as latest version.'),
     ),
   );
 }
