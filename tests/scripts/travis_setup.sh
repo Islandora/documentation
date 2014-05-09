@@ -32,7 +32,8 @@ popd
 sudo ln -s $HOME/drush/drush /usr/local/sbin
 
 phpenv rehash
-drush dl --yes drupal
+# Drupal 7.28 did something that started breaking batch tests.
+drush dl --yes drupal-7.27
 cd drupal-*
 drush si minimal --db-url=mysql://drupal:drupal@localhost/drupal --yes
 # Needs to make things from Composer be available (PHP CS, primarily)
