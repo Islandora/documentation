@@ -62,6 +62,7 @@ Current maintainers:
 ## Development
 
 If you would like to contribute to this module, please check out our helpful [Documentation for Developers](https://github.com/Islandora/islandora/wiki#wiki-documentation-for-developers) info, as well as our [Developers](http://islandora.ca/developers) section on the Islandora.ca site.
+The tests for this module will not run through Drupal’s UI. They will work using Drush, which works around Drupal’s batch API.
 
 ## License
 
