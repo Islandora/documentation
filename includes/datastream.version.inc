@@ -253,10 +253,14 @@ function islandora_datastream_version_replace_form($form, &$form_state, Abstract
   $form_state['dsid'] = $datastream->id;
   $form_state['object'] = $object;
   $extensions = islandora_get_datastreams_requirements_from_models($object->models);
-  $ext = array(NULL);
-  if(isset($extensions[$datastream->id]['mime'])) {
-    $ext = array(implode(",", $extensions[$datastream->id]['mime']));
+  $mime_detect = new MimeDetect();
+  $ext = array();
+  foreach ($extensions[$datastream->id]['mime'] as $key => $value) {
+    $str = $mime_detect->getExtension($value);
+    array_push($ext, $str);
   }
+  $comma = sizeof($ext) > 1 ? "," : "";
+  $ext = array(implode($comma, $ext));
   $upload_size = min((int) ini_get('post_max_size'), (int) ini_get('upload_max_filesize'));
   return array(
     'dsid_fieldset' => array(
@@ -318,7 +322,7 @@ function islandora_datastream_version_replace_form_submit($form, &$form_state) {
   catch (exception $e) {
     drupal_set_message(t('An error occurred during datastream updates. See watchlog for more information.'), 'error');
     watchdog('islandora',
-      'Failed to add new versionable datastream.</br>code: @code<br/>message: @msg',
+      'Failed to add new versionable datastream.<br/>code: @code<br/>message: @msg',
       array(
         '@code' => $e->getCode(),
         '@msg' => $e->getMessage(),

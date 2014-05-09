@@ -23,10 +23,9 @@ function islandora_preprocess_islandora_default_edit(array &$variables) {
   $header[] = array('data' => t('Size'));
   if (user_access(ISLANDORA_VIEW_DATASTREAM_HISTORY)) {
     $header[] = array('data' => t('Versions'));
-    $header[] = array('data' => t('Replace'));
   }
 
-  $header[] = array('data' => t('Operations'), 'colspan' => '4');
+  $header[] = array('data' => t('Operations'), 'colspan' => '5');
 
   $table_attributes = array('class' => array('manage-datastreams'));
   $rows = array();
