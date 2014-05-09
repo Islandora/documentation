@@ -259,7 +259,7 @@ function islandora_datastream_version_replace_form($form, &$form_state, Abstract
     $str = $mime_detect->getExtension($value);
     array_push($ext, $str);
   }
-  $comma = sizeof($ext) > 1 ? "," : "";
+  $comma = count($ext) > 1 ? "," : "";
   $ext = array(implode($comma, $ext));
   $upload_size = min((int) ini_get('post_max_size'), (int) ini_get('upload_max_filesize'));
   return array(
