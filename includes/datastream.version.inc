@@ -313,7 +313,6 @@ function islandora_datastream_version_replace_form_submit($form, &$form_state) {
   $file = file_load($form_state['values']['file']);
   try {
     $ds = $object[$form_state['dsid']];
-    $ds->label = $form_state['values']['label'];
     $ds->mimetype = $file->filemime;
     $path = drupal_realpath($file->uri);
     $ds->setContentFromFile($path);
