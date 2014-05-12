@@ -25,7 +25,7 @@ function islandora_preprocess_islandora_default_edit(array &$variables) {
     $header[] = array('data' => t('Versions'));
   }
 
-  $header[] = array('data' => t('Operations'), 'colspan' => '4');
+  $header[] = array('data' => t('Operations'), 'colspan' => '5');
 
   $table_attributes = array('class' => array('manage-datastreams'));
   $rows = array();
@@ -57,6 +57,13 @@ function islandora_preprocess_islandora_default_edit(array &$variables) {
       $row[] = array(
         'class' => 'datastream-versions',
         'data' => theme('islandora_datastream_version_link', array(
+          'datastream' => $ds,
+        )),
+      );
+      // Add new datastream content as the lastest version.
+      $row[] = array(
+        'class' => 'datastream-replace',
+        'data' => theme('islandora_datastream_replace_link', array(
           'datastream' => $ds,
         )),
       );
@@ -433,6 +440,27 @@ function theme_islandora_datastream_version_link(array $vars) {
   }
   else {
     return '';
+  }
+}
+
+/**
+ * Renders a link to take you to the datastream add latest version page.
+ *
+ * @param array $vars
+ *   An array containing:
+ *     - datastream: An AbstractDatastream to generate a new version.
+ *
+ * @return string
+ *   Markup.
+ */
+function theme_islandora_datastream_replace_link(array $vars) {
+  $datastream = $vars['datastream'];
+  if (islandora_datastream_access(ISLANDORA_REPLACE_DATASTREAM_CONTENT, $datastream)) {
+    $var_string = variable_get("islandora_ds_replace_exclude_enforced", "RELS-EXT,RELS-INT");
+    $replace_exclude = explode(",", $var_string);
+    if (!in_array($datastream->id, $replace_exclude)) {
+      return l(t('replace'), "islandora/object/{$datastream->parent->id}/datastream/{$datastream->id}/replace");
+    }
   }
 }
 
