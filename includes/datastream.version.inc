@@ -244,7 +244,7 @@ function islandora_revert_datastream_version_form_submit(array $form, array &$fo
  */
 function islandora_get_object_extensions(AbstractObject $object) {
   $extensions = islandora_get_datastreams_requirements_from_models($object->models);
-  foreach($object as $datastream){
+  foreach ($object as $datastream) {
     // Could be a datastream not associated in a content model,
     // such as user added.
     if (!isset($extensions[$datastream->id])) {
