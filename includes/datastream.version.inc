@@ -232,6 +232,34 @@ function islandora_revert_datastream_version_form_submit(array $form, array &$fo
 }
 
 /**
+ * Process available dsids, mime and extensions for a given object.
+ *
+ * @param AbstractObject $object
+ *   The FedoraObject to process available extensions
+ *
+ * @return array()
+ *   An associative array, merged from calls to
+ *   islandora_get_datastreams_requirements_from_content_models()
+ *   and an objects dsid's.
+ */
+function islandora_get_object_extensions(AbstractObject $object) {
+  $extensions = islandora_get_datastreams_requirements_from_models($object->models);
+  foreach($object as $datastream){
+    // Could be a datastream not associated in a content model,
+    // such as user added.
+    if (!isset($extensions[$datastream->id])) {
+      // Add the extensions manually.
+      $extensions[$datastream->id] = array(
+        'id' => $datastream->id,
+        'optional' => TRUE,
+        'mime' => array($datastream->mimeType),
+      );
+    }
+  }
+  return $extensions;
+}
+
+/**
  * The admin replace datastream form.
  *
  * @param array $form
@@ -252,12 +280,15 @@ function islandora_datastream_version_replace_form($form, &$form_state, Abstract
   $form_state['object_id'] = $object->id;
   $form_state['dsid'] = $datastream->id;
   $form_state['object'] = $object;
-  $extensions = islandora_get_datastreams_requirements_from_models($object->models);
+  $extensions = islandora_get_object_extensions($object);
   $mime_detect = new MimeDetect();
   $ext = array();
-  foreach ($extensions[$datastream->id]['mime'] as $key => $value) {
-    $str = $mime_detect->getExtension($value);
-    array_push($ext, $str);
+  if (isset($extensions[$datastream->id])) {
+    foreach ($extensions[$datastream->id]['mime'] as $key => $value) {
+      dsm($value, "getting value for");
+      $str = $mime_detect->getExtension($value);
+      array_push($ext, $str);
+    }
   }
   $comma = count($ext) > 1 ? "," : "";
   $ext = array(implode($comma, $ext));
