@@ -285,7 +285,6 @@ function islandora_datastream_version_replace_form($form, &$form_state, Abstract
   $ext = array();
   if (isset($extensions[$datastream->id])) {
     foreach ($extensions[$datastream->id]['mime'] as $key => $value) {
-      dsm($value, "getting value for");
       $str = $mime_detect->getExtension($value);
       array_push($ext, $str);
     }
