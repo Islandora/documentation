@@ -486,10 +486,12 @@ function islandora_prepare_new_object($namespace = NULL, $label = NULL, $datastr
         // set datastream_file by url for the given scheme. Https (SSL) can
         // cause this to fail, and trigger an output log in watchdog.
         $datastream_file = url($ds['datastream_file'], array('absolute' => TRUE));
-        watchdog('islandora',
-                 'Attempting to ingest %file in islandora_prepare_new_object(), but it does not appear to be readable. We will pass the path through url(), and pass along as such.',
-                 array('%file' => $datastream_file),
-                 WATCHDOG_WARNING);
+        watchdog(
+          'islandora',
+          'Attempting to ingest %file in islandora_prepare_new_object(), but it does not appear to be readable. We will pass the path through url(), and pass along as such.',
+          array('%file' => $datastream_file),
+          WATCHDOG_WARNING
+        );
       }
     }
 
@@ -859,9 +861,9 @@ function islandora_deprecated($release, $solution = NULL) {
   assert($bt[0]['function'] == __FUNCTION__);
   $function = $bt[1]['function'];
   $message = t('@function() has been deprecated. As of @release, please update your code before the next release.', array(
-               '@function' => $function,
-               '@release' => $release,
-             ));
+    '@function' => $function,
+    '@release' => $release,
+  ));
   if (isset($solution)) {
     $message .= "<br/>\n" . $solution;
   }
