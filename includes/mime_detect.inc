@@ -192,33 +192,33 @@ class MimeDetect {
     // PDB.
     "pdb" => "chemical/x-pdb",
     // ChemDraw 3D.
-    "c3d"=>"chemical/x-chem3d",
+    "c3d" => "chemical/x-chem3d",
     // ChemDraw file.
-    "chm" =>"chemical/x-chemdraw",
+    "chm" => "chemical/x-chemdraw",
     // Crystallographic Information File.
-    "cif" =>"chemical/x-cif",
+    "cif" => "chemical/x-cif",
     // Chemical Markup Language.
-    "cml" =>"chemical/x-cml",
+    "cml" => "chemical/x-cml",
     // GAMESS Input.
-    "inp" =>"chemical/x-gamess-input",
+    "inp" => "chemical/x-gamess-input",
     // GAMESS Output.
-    "gam" =>"chemical/x-gamess-input",
+    "gam" => "chemical/x-gamess-input",
     // General output file.
-    "out"=>"application/octet-stream",
-    //Gaussian Cube.
-    "cub" =>"chemical/x-gaussian-cube",
+    "out" => "application/octet-stream",
+    // Gaussian Cube.
+    "cub" => "chemical/x-gaussian-cube",
     // Gaussian 98/03 Cartesian Input.
-    "gau" =>"chemical/x-gaussian-input",
+    "gau" => "chemical/x-gaussian-input",
     // Corel Multimedia Manager v6 Album.
-    "gal" =>"application/octet-stream",
+    "gal" => "application/octet-stream",
     // JCAMP Spectroscopic Data Exchange Format.
-    "jdx" =>"chemical/x-jcamp-dx",
+    "jdx" => "chemical/x-jcamp-dx",
     // OpenDX Grid.
-    "dx" =>"chemical/x-jcamp-dx",
+    "dx" => "chemical/x-jcamp-dx",
     // MOPAC Cartesian.
-    "mop" =>"chemical/x-mopac-input",
+    "mop" => "chemical/x-mopac-input",
     // General Input File.
-    "in" =>"application/octet-stream",
+    "in" => "application/octet-stream",
     // Compressed formats:
     // (note: http://svn.cleancode.org/svn/email/trunk/mime.types)
     "tgz" => "application/x-gzip",
