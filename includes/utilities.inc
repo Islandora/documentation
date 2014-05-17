@@ -47,6 +47,37 @@ function islandora_convert_bytes_to_human_readable($bytes, $precision = 2) {
 }
 
 /**
+ * Add a file as managed if is not already.
+ *
+ * @param string $file_uri
+ *   The given file URI location.
+ *
+ * @return object
+ *   The file, as returned from file_save().
+ */
+function islandora_temp_file_entry($file_uri, $mime = NULL) {
+  $query = new EntityFieldQuery();
+  $result = $query
+    ->entityCondition('entity_type', 'file')
+    ->propertyCondition('uri', $file_uri)
+    ->execute();
+  if (isset($result['file'])) {
+    $fid = current($result['file'])->fid;
+    $file = file_load($fid);
+  }
+  else {
+    $file = new stdClass();
+    $file->uri = $file_uri;
+    $file->filename = drupal_basename($file_uri);
+    if (isset($mime)) {
+      $file->filemime = $mime;
+    }
+  }
+  $file->status = 0;
+  return file_save($file);
+}
+
+/**
  * Creates a label for control group symbols.
  */
 function islandora_control_group_to_human_readable($control_group) {
