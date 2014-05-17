@@ -65,19 +65,6 @@ define('ISLANDORA_CONTENT_MODELS_AUTOCOMPLETE', 'islandora/autocomplete/content-
 define('ISLANDORA_MIME_TYPES_AUTOCOMPLETE', 'islandora/autocomplete/mime-types');
 
 /**
- * @deprecated Constants.
- */
-// @codingStandardsIgnoreStart
-define('DS_COMP_STREAM', ISLANDORA_DS_COMP_STREAM);
-define('FEDORA_VIEW_OBJECTS', ISLANDORA_VIEW_OBJECTS);
-define('FEDORA_METADATA_EDIT', ISLANDORA_METADATA_EDIT);
-define('FEDORA_ADD_DS', ISLANDORA_ADD_DS);
-define('FEDORA_INGEST', ISLANDORA_INGEST);
-define('FEDORA_PURGE', ISLANDORA_PURGE);
-define('FEDORA_MANAGE_PROPERTIES', ISLANDORA_MANAGE_PROPERTIES);
-// @codingStandardsIgnoreEnd
-
-/**
  * Implements hook_menu().
  *
  * We need some standard entry points so we can have consistent urls for
