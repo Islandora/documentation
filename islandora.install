@@ -43,6 +43,11 @@ function islandora_install() {
 function islandora_uninstall() {
   module_load_include('inc', 'islandora', 'includes/solution_packs');
   islandora_install_solution_pack('islandora', 'uninstall');
+  // Add new variables to clean up.
+  $variables = array(
+    'islandora_ds_replace_exclude_enforced',
+  );
+  array_walk($variables, 'variable_del');
 }
 
 /**

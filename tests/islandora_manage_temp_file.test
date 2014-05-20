@@ -1,0 +1,83 @@
+<?php
+
+/**
+ * @file
+ * Tests for our islandora_temp_file_entry() function.
+ */
+
+class IslandoraManageTempfileTestCase extends IslandoraWebTestCase {
+
+  /**
+   * Gets info to display to describe this test.
+   *
+   * @see IslandoraWebTestCase::getInfo()
+   */
+  public static function getInfo() {
+    return array(
+      'name' => 'Islandora Managed Tempfile Interface',
+      'description' => 'Ensure that our managed tempfile interface returns appropriate results.',
+      'group' => 'Islandora',
+    );
+  }
+
+  /**
+   * Creates an admin user and a connection to a fedora repository.
+   *
+   * @see IslandoraWebTestCase::setUp()
+   */
+  public function setUp() {
+    parent::setUp('islandora');
+    $this->tempUri = file_create_filename('temp.txt', 'temporary://');
+    $this->publicUri = file_create_filename('temp.txt', 'public://');
+  }
+
+  /**
+   * Free any objects/resources created for this test.
+   *
+   * @see IslandoraWebTestCase::tearDown()
+   */
+  public function tearDown() {
+    parent::tearDown();
+    file_unmanaged_delete($this->tempUri);
+    file_unmanaged_delete($this->publicUri);
+  }
+
+  /**
+   * Existing files are made temporary.
+   */
+  public function testExistingFile() {
+    $temp_file = file_save_data('blah', $this->tempUri, FILE_EXISTS_REPLACE);
+    $public_file = file_save_data('blah', $this->publicUri, FILE_EXISTS_REPLACE);
+
+    $this->existingFileHelper($temp_file);
+    $this->existingFileHelper($public_file);
+  }
+
+  /**
+   * Helper function; ensure file is permanent (as file_save_data() creates).
+   */
+  protected function existingFileHelper($file_object) {
+    $this->assertEqual($file_object->status & FILE_STATUS_PERMANENT, FILE_STATUS_PERMANENT, 'Existing file is permanent.');
+    $this->baseFileHelper($file_object->uri);
+    $this->assertTrue(file_delete($file_object));
+  }
+
+  /**
+   * Helper function; ensure our function produces an temporary file object.
+   */
+  protected function baseFileHelper($file_uri) {
+    $temp_file = islandora_temp_file_entry($file_uri);
+    $this->assertNotEqual($temp_file->status & FILE_STATUS_PERMANENT, FILE_STATUS_PERMANENT, 'File has been made temporary.');
+  }
+
+  /**
+   * Unmanaged files start being managed.
+   */
+  public function testNewFileUri() {
+    file_put_contents($this->tempUri, 'test');
+    file_put_contents($this->publicUri, 'test');
+
+    $this->baseFileHelper($this->tempUri);
+    $this->baseFileHelper($this->publicUri);
+  }
+}

@@ -51,4 +51,6 @@ drush en --yes simpletest
 drush en --yes potx
 drush en --user=1 --yes islandora
 drush cc all
+# The shebang in this file is a bogeyman that is haunting the web test cases.
+rm /home/travis/.phpenv/rbenv.d/exec/hhvm-switcher.bash
 sleep 20
