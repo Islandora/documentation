@@ -1,0 +1,554 @@
+<?php
+/**
+ * @file
+ * Utilities classes for simpletest.
+ *
+ * These utilities are shared between the Islandora Web and Unit test cases and
+ * can potentially be used for future testing implementations, as they pass back
+ * a consistent style of result.
+ *
+ * Check the implementations in IslandoraUnitTestCase and IslandoraWebTestCase
+ * for some examples of how this is done in a Drupal context; in the future,
+ * more methods for result-passing could potentially be added to this without
+ * breaking existing implementations.
+ */
+
+/**
+ * Parses and returns the settings from the test configuration file.
+ *
+ * If no install specific test_config.ini file is found, it will use the
+ * assumed default configs found in default.test_config.ini.
+ *
+ * @return array
+ *   The test configuration.
+ *
+ * @see parse_ini_file()
+ */
+function islandora_get_test_configuration() {
+  $path = drupal_get_path('module', 'islandora');
+  if (file_exists("$path/tests/test_config.ini")) {
+    return parse_ini_file("$path/tests/test_config.ini");
+  }
+  elseif (file_exists("$path/tests/default.test_config.ini")) {
+    return parse_ini_file("$path/tests/default.test_config.ini");
+  }
+  throw new Exception('Required default.test_config.ini/test_config.ini file not found');
+}
+
+/**
+ * Methods specifically for working with the Drupal filter for tests.
+ */
+class IslandoraDrupalFilterManipulator {
+
+  /**
+   * Parsed test configuration.
+   *
+   * @var array
+   */
+  public $configuration;
+
+  /**
+   * The original contents of the drupal filter.
+   *
+   * @var string
+   */
+  protected $originalDrupalFilterContent;
+
+  /**
+   * Constructs an IslandoraTestUtilities object.
+   *
+   * @param array $configuration
+   *   The parsed test configuration.
+   */
+  public function __construct($configuration) {
+    $this->configuration = $configuration;
+    $this->backUpDrupalFilter();
+  }
+
+  /**
+   * Stores the content of the Drupal Filter for later restoration.
+   */
+  public function restoreDrupalFilter() {
+    $file = $this->configuration['drupal_filter_file'];
+    if (isset($this->originalDrupalFilterContent)) {
+      file_put_contents($file, $this->originalDrupalFilterContent);
+    }
+    elseif (file_exists($file)) {
+      // Remove if there was never an original.
+      drupal_unlink($file);
+    }
+  }
+
+  /**
+   * Sets up a drupal filter that can read for the tests users table.
+   */
+  public function setUpDrupalFilter() {
+    $connection_info = Database::getConnectionInfo('default');
+    $drupal_filter_dom = new DomDocument();
+    $drupal_filter_dom->loadXML($this->originalDrupalFilterContent);
+    $server = $connection_info['default']['host'];
+    $dbname = $connection_info['default']['database'];
+    $user = $connection_info['default']['username'];
+    $password = $connection_info['default']['password'];
+    $port = $connection_info['default']['port'] ? $connection_info['default']['port'] : '3306';
+    $prefix = $connection_info['default']['prefix']['default'];
+    $filter_drupal_connection_node = $drupal_filter_dom->getElementsByTagName('FilterDrupal_Connection')->item(0);
+    $first_connection_node = $drupal_filter_dom->getElementsByTagName('connection')->item(0);
+    $connection_node = $filter_drupal_connection_node->insertBefore($drupal_filter_dom->createElement('connection'), $first_connection_node);
+    $connection_node->setAttributeNode(new DOMAttr('server', $server));
+    $connection_node->setAttributeNode(new DOMAttr('dbname', $dbname));
+    $connection_node->setAttributeNode(new DOMAttr('user', $user));
+    $connection_node->setAttributeNode(new DOMAttr('password', $password));
+    $connection_node->setAttributeNode(new DOMAttr('port', $port));
+    $sql_node = $connection_node->appendChild(new DOMElement('sql'));
+    $sql_node->appendChild($drupal_filter_dom->createTextNode("SELECT DISTINCT u.uid AS userid, u.name AS Name, u.pass AS Pass, r.name AS Role FROM ({$prefix}users u LEFT JOIN {$prefix}users_roles ON u.uid={$prefix}users_roles.uid) LEFT JOIN {$prefix}role r ON r.rid={$prefix}users_roles.rid WHERE u.name=? AND u.pass=?;"));
+    file_put_contents($this->configuration['drupal_filter_file'], $drupal_filter_dom->saveXML());
+  }
+
+  /**
+   * Stores the content of the Drupal Filter for later restoration.
+   */
+  protected function backUpDrupalFilter() {
+    if (file_exists($this->configuration['drupal_filter_file'])) {
+      $this->originalDrupalFilterContent = file_get_contents($this->configuration['drupal_filter_file']);
+    }
+    else {
+      throw new Exception('Failed to find the required Drupal Filter configuration file.');
+    }
+  }
+}
+
+/**
+ * A result from a utility method; $type defines TRUE/FALSE as pass/fail.
+ */
+class IslandoraTestUtilityResult {
+
+  /**
+   * The message for this result.
+   *
+   * @var string
+   */
+  protected $message;
+
+  /**
+   * The caller for this result.
+   *
+   * @var array
+   */
+  protected $caller;
+
+  /**
+   * The type of result this is - TRUE for pass, FALSE for fail.
+   *
+   * @var bool
+   */
+  protected $type;
+
+  /**
+   * Constructs an IslandoraTestUtilityResult.
+   *
+   * @param bool $type
+   *   Whether this result should indicate a pass (TRUE) or fail (FALSE).
+   * @param string $message
+   *   The message that will be used by this result.
+   * @param array $caller
+   *   The caller for this result.
+   */
+  public function __construct($type, $message, array $caller) {
+    $this->message = $message;
+    $this->caller = $caller;
+    $this->type = $type;
+  }
+
+  /**
+   * Get the message for this result.
+   *
+   * @return string
+   *   The message for this result.
+   */
+  public function getMessage() {
+    return $this->message;
+  }
+
+  /**
+   * Get the caller for this result.
+   *
+   * @return string
+   *   The caller for this result.
+   */
+  public function getCaller() {
+    return $this->caller;
+  }
+
+  /**
+   * Get the type of result.
+   *
+   * @return bool
+   *   The type of pass (TRUE for pass, FALSE for fail).
+   */
+  public function getType() {
+    return $this->type;
+  }
+}
+
+/**
+ * Abstraction for test utility classes.
+ *
+ * This is to be implemented in any class that wants to have test utility
+ * functionality (i.e. that wants to pass back results to tests). Check out the
+ * datastream validator class for a good example of how this is implemented.
+ */
+abstract class IslandoraTestUtilityClass {
+
+  /**
+   * An array of IslandoraTestUtilityResults.
+   *
+   * These should be generated using $this->addResult.
+   *
+   * @var IslandoraTestUtilityResult[]
+   */
+  public $results = array();
+
+  /**
+   * Returns an array of IslandoraTestUtilityResults.
+   *
+   * The particular testing implementation you are using should use this to
+   * parse results from utilities and pass them through.
+   *
+   * @return IslandoraTestUtilityResult[]
+   *   The results.
+   */
+  abstract public function getResults();
+
+  /**
+   * Adds a result to $this->results.
+   *
+   * @param bool $type
+   *   The type of result (TRUE for pass, FALSE for fail).
+   * @param string $message
+   *   The message to put in the result.
+   */
+  abstract public function addResult($type, $message);
+
+  /**
+   * Gets the caller of the method that passed a result.
+   *
+   * @return array
+   *   Array representing the true caller.
+   */
+  abstract public function getAssertionCall();
+
+}
+
+class IslandoraTestUtilities extends IslandoraTestUtilityClass {
+
+  protected $configuration;
+
+  protected $params;
+
+  public $results = array();
+
+  protected $repository;
+
+  /**
+   * Constructs an IslandoraTestUtilities object.
+   *
+   * @param array $configuration
+   *   The parsed test configuration.
+   * @param array $params
+   *   Any additional parameters the method called may need to function.
+   */
+  public function __construct($configuration, array $params = array()) {
+    $this->configuration = $configuration;
+    $this->params = $params;
+    // If we have DB access, we want to use the Islandora Tuque wrappers.
+    if ($params['db_access']) {
+      $connection = islandora_get_tuque_connection();
+      $this->repository = $connection->repository;
+    }
+    // Otherwise, get a generic Tuque repository.
+    else {
+      $connection = new RepositoryConnection($this->configuration['fedora_url'], $this->configuration['admin_user'], $this->configuration['admin_pass']);
+      $api = new FedoraApi($connection);
+      $this->repository = new FedoraRepository($api, new SimpleCache());
+    }
+  }
+
+  /**
+   * Returns an array of IslandoraTestUtilityResults.
+   *
+   * @return IslandoraTestUtilityResult[]
+   *   The results.
+   */
+  public function getResults() {
+    return $this->results;
+  }
+
+  /**
+   * Adds a result to $this->results.
+   *
+   * @param bool $type
+   *   The type of result (TRUE for pass, FALSE for fail).
+   * @param string $message
+   *   The message to put in the result.
+   */
+  public function addResult($type, $message) {
+    $result = new IslandoraTestUtilityResult($type, $message, $this->getAssertionCall());
+    $this->results[] = $result;
+  }
+
+  /**
+   * Cycles through backtrace until the first non-assertion method is found.
+   *
+   * This is a manipulated version of DrupalWebTestCase::getAssertionCall().
+   * We use it here so that we can pass back assertion calls from
+   * DatastreamValidator assertions instead of less useful TestCase functions.
+   *
+   * @return array
+   *   Array representing the true caller.
+   */
+  public function getAssertionCall() {
+    $backtrace = debug_backtrace();
+    array_shift($backtrace);
+    return _drupal_get_last_caller($backtrace);
+  }
+
+  /**
+   * Asserts that the given datastreams exist correctly on the object.
+   *
+   * @param AbstractObject $object
+   *   The PID of the object
+   * @param array $datastreams
+   *   An array of strings containing datastream names
+   *
+   * @return bool
+   *   TRUE on success, FALSE on fail.
+   */
+  public function assertDatastreams($object, array $datastreams) {
+    if (!is_object($object)) {
+      $this->addResult(FALSE, "Failed. Object passed in is invalid.", 'Islandora');
+    }
+    else {
+      $missing_datastreams = array_diff_key(array_flip($datastreams), $object->repository->api->a->listDatastreams($object->id));
+
+      if (!empty($missing_datastreams)) {
+        $this->addResult(FALSE, "Failed to find datastream(s) " . implode(', ', array_flip($missing_datastreams)) . " in object {$object->id}.");
+        return FALSE;
+      }
+
+      $this->addResult(TRUE, "Found required datastream(s) in object {$object->id}");
+      return TRUE;
+    }
+  }
+
+  /**
+   * Attempts to validate an array of datastreams, generally via binary checks.
+   *
+   * Datastream validation classes exist in, and can be added to, the file
+   * 'datastream_validators.inc', which is found in this folder. Datastream
+   * validator classes use the naming convention 'PrefixDatastreamValidator',
+   * and that 'Prefix' is what this function uses to determine what class to
+   * instantiate.
+   *
+   * $param IslandoraFedoraObject $object
+   *   The object to load datastreams from.
+   * $param array $datastreams
+   *   An array of arrays that pair DSIDs, DatastreamValidator class prefixes,
+   *   and optional params. You can check some of the existing implementations
+   *   for examples.
+   */
+  public function validateDatastreams($object, array $datastreams) {
+
+    if (!is_object($object)) {
+      $this->addResult(FALSE, "Datastream validation failed; Object passed in is invalid.", 'Islandora');
+      return;
+    }
+
+    module_load_include('inc', 'islandora', 'tests/includes/datastream_validators');
+
+    foreach ($datastreams as $datastream) {
+      // Let's give them conventional names.
+      $dsid = $datastream[0];
+      $prefix = $datastream[1];
+      $params = array();
+      if (isset($datastream[2])) {
+        $params = $datastream[2];
+      }
+
+      // Legacy tests were created before the CamelCase conventions of the class
+      // system now in place. So, we need to automagically seek out prefixes
+      // that start with a lower-case letter and convert them to the proper
+      // format (rather than fixing every single legacy test).
+      if (ctype_lower(substr($prefix, 0, 1))) {
+        // Handle the case where the prefix is "image".
+        if ($prefix === 'image') {
+          $prefix = 'Image';
+        }
+        // Handle the case where the prefix is "text".
+        elseif ($prefix === 'text') {
+          $prefix = 'Text';
+        }
+        // All other cases involve just converting everything to caps.
+        else {
+          $prefix = strtoupper($prefix);
+        }
+      }
+
+      // Instantiate the appropriate class, and grab the results.
+      $class_name = "{$prefix}DatastreamValidator";
+      if (class_exists($class_name)) {
+        $validator = new $class_name($object, $dsid, $params);
+        foreach ($validator->getResults() as $result) {
+          $this->addResult($result->getType(), $result->getMessage());
+        }
+      }
+      else {
+        $this->addResult(FALSE, "No DatastreamValidator class was found with the name '$class_name'; are you sure the prefix given to IslandoraWebTestCase->validateDatastreams() was entered correctly, or that such a validator exists?", 'Islandora');
+      }
+    }
+  }
+
+  /**
+   * Constructs and ingests a Fedora object and datastream(s) via tuque.
+   *
+   * All keys inside the parameter arrays for this function are optional. it
+   * can be run simply by calling the method with no arguments.
+   *
+   * If your test case supports logged in Drupal users, IslandoraTestUtilities
+   * can be instantiated with $params['logged_in_user'] as that user object, and
+   * this method will set the owner of the ingested object as that user by
+   * default.
+   *
+   * @param array $properties
+   *   An array containing object information using these keys:
+   *   'label' - The object label; randomized if not set.
+   *   'pid' - 'namespace:pid', or just 'namespace' to generate the suffix.
+   *   'models' - An array that can contain multiple content model PIDs, or a
+   *   string containing a single content model PID.
+   *   'owner' - The object's owner. Defaults to the currently logged-in user,
+   *   if available. It is recommended to set this to a value that can be found
+   *   in $this->users; otherwise, this object will have to be manually deleted.
+   *   'parent' - The PID of the parent collection.
+   * @param array $datastreams
+   *   An array containing zero or more datastream arrays that use the keys:
+   *   'dsid' - the datastream ID; randomized if not set.
+   *   'path' - The path to the file to use; defaults to fixtures/test.jpg.
+   *   'control_group' - The single-letter control group identifier.
+   *   'mimetype' - The datastream's mimetype.
+   *
+   * @return bool|array
+   *   FALSE if the object ingest failed, or the object array if successful.
+   */
+  public function ingestConstructedObject(array $properties = array(), array $datastreams = array()) {
+    if (!isset($properties['pid'])) {
+      $properties['pid'] = "islandora";
+    }
+    $object = $this->repository->constructObject($properties['pid']);
+
+    // Set the object properties before ingesting it.
+    if (isset($properties['label'])) {
+      $object->label = $properties['label'];
+    }
+    else {
+      $properties['label'] = DrupalUnitTestCase::randomName();
+      $object->label = $properties['label'];
+    }
+
+    if (isset($properties['owner'])) {
+      $object->owner = $properties['owner'];
+    }
+    elseif (isset($this->params['logged_in_user'])) {
+      $object->owner = $this->params['logged_in_user']->name;
+    }
+
+    if (isset($properties['models'])) {
+      try {
+        $object->models = (array) $properties['models'];
+      }
+      catch (Exception $e) {
+        $this->addResult(FALSE, "Encountered an exception when trying to add content models to {$object->id}: $e");
+        return FALSE;
+      }
+    }
+
+    // Chuck in some datastreams.
+    if (!empty($datastreams)) {
+      foreach ($datastreams as $datastream) {
+        if (!isset($datastream['dsid'])) {
+          $datastream['dsid'] = DrupalUnitTestCase::randomName();
+        }
+        if (!isset($datastream['path'])) {
+          $datastream['path'] = drupal_get_path('module', 'islandora') . '/tests/fixtures/test.jpg';
+        }
+        if (!isset($datastream['control_group'])) {
+          $new_datastream = $object->constructDatastream($datastream['dsid']);
+        }
+        else {
+          $new_datastream = $object->constructDatastream($datastream['dsid'], $datastream['control_group']);
+        }
+        $new_datastream->label = $datastream['dsid'];
+        if (isset($datastream['mimetype'])) {
+          $new_datastream->mimetype = $datastream['mimetype'];
+        }
+        $new_datastream->setContentFromFile($datastream['path']);
+        $object->ingestDatastream($new_datastream);
+      }
+    }
+
+    $this->repository->ingestObject($object);
+    if (!$object) {
+      $this->addResult(FALSE, t("Failed to ingest object."), 'Islandora');
+      return FALSE;
+    }
+    else {
+      $this->addResult(TRUE, t("Ingested object %object", array('%object' => $object->id)), 'Islandora');
+    }
+
+    // Add a parent relationship, if necessary.
+    if (isset($properties['parent'])) {
+      $object->relationships->add(FEDORA_RELS_EXT_URI, 'isMemberOfCollection', $properties['parent']);
+    }
+
+    return $object;
+  }
+
+  /**
+   * Deletes all objects created by the given user.
+   *
+   * To safeguard against leaving test objects in the repository, this is called
+   * each time DrupalTestCase::run() calls tearDown(). This feature can be
+   * toggled by setting $this->deleteObjectsOnTeardown to TRUE or FALSE.
+   *
+   * @param object $username
+   *   The user whose objects we'd like to remove.
+   *
+   * @return bool
+   *   TRUE on success, FALSE on failure.
+   */
+  public function deleteUserCreatedObjects($username) {
+    if ($username === $this->configuration['admin_user']) {
+      $this->addResult(FALSE, "This function will under no circumstance attempt deletion of all objects owned by the configured Fedora admin user ({$this->configuration['admin_user']}), as this could irreparably damage the repository.", 'Islandora');
+      return FALSE;
+    }
+
+    $query = <<<QUERY
+SELECT ?object FROM <#ri> WHERE
+{
+  ?object <fedora-model:ownerId> "$username"
+}
+QUERY;
+
+    $objects = $this->repository->ri->sparqlQuery($query);
+    foreach ($objects as $object) {
+      $loaded_object = islandora_object_load($object['object']['value']);
+      $this->repository->api->m->purgeObject($loaded_object->id);
+      if (islandora_object_load($object['object']['value'])) {
+        $this->addResult(TRUE, "Object {$object['object']['value']} successfully removed from repository.");
+        return TRUE;
+      }
+      $this->addResult(FALSE, "Unable to remove object {$object['object']['value']} from the repository.");
+      return FALSE;
+    }
+  }
+
+}
