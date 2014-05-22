@@ -144,7 +144,7 @@ class MimeDetect {
     "ief" => "image/ief",
     "jpeg" => "image/jpeg",
     "jpe" => "image/jpeg",
-    "jpg" => "image/jpg",
+    "jpg" => "image/jpeg",
     "jp2" => "image/jp2",
     "png" => "image/png",
     "tiff" => "image/tiff",
