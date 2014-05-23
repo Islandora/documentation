@@ -276,7 +276,7 @@ function islandora_preprocess_islandora_objects(array &$variables) {
  */
 function theme_islandora_datastream_download_link(array $vars) {
   $datastream = $vars['datastream'];
-  module_load_include('inc', 'islandora', 'includes/utilities');
+  module_load_include('inc', 'islandora', 'includes/datastream');
 
   $label = t('download');
   return islandora_datastream_access(ISLANDORA_VIEW_OBJECTS, $datastream) ?
