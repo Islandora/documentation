@@ -21,25 +21,28 @@ function islandora_run_derivatives(AbstractObject $object, $dsid) {
     islandora_derivative_logging($logging_results);
   }
   else {
-    batch_set(
-      // Title won't show for batch in a batch.
+    $operations = islandora_do_batch_derivatives(
+      $object,
       array(
-        'init_message' => t('Preparing derivatives for @label', array('@label' => $object->label)),
-        'error_message' => t('An error occured creating derivatives.'),
-        'progress_message' => t(
-          'Creating derivatives for @label <br/>Time elapsed: @elapsed <br/>
-            Estimated time remaining @estimate.',
-          array('@label' => $object->label)
-        ),
-        'file' => drupal_get_path('module', 'islandora') . '/includes/regenerate_derivatives.form.inc',
-        'operations' => islandora_do_batch_derivatives(
-          $object,
-          array(
-            'source_dsid' => $dsid,
-          )
-        ),
+        'source_dsid' => $dsid,
       )
     );
+    if ($operations) {
+      batch_set(
+        // Title won't show for batch in a batch.
+        array(
+          'init_message' => t('Preparing derivatives for @label', array('@label' => $object->label)),
+          'error_message' => t('An error occured creating derivatives.'),
+          'progress_message' => t(
+            'Creating derivatives for @label <br/>Time elapsed: @elapsed <br/>
+              Estimated time remaining @estimate.',
+            array('@label' => $object->label)
+          ),
+          'file' => drupal_get_path('module', 'islandora') . '/includes/regenerate_derivatives.form.inc',
+          'operations' => $operations,
+        )
+      );
+    }
   }
 }
 
