@@ -128,11 +128,16 @@ abstract class DatastreamValidator extends IslandoraTestUtilityClass {
    * fails to $this->passes and/or $this->fails.
    */
   public function runValidators() {
-    $methods = get_class_methods($this);
-    foreach ($methods as $method) {
-      if (substr($method, 0, 6) === 'assert') {
-        $this->$method();
+    if ($this->object[$this->datastream]) {
+      $methods = get_class_methods($this);
+      foreach ($methods as $method) {
+        if (substr($method, 0, 6) === 'assert') {
+          $this->$method();
+        }
       }
+    }
+    else {
+      $this->addResult(FALSE, "Unable to load the requested datastream {$this->datastream} from object {$this->object->id}.");
     }
   }
 
