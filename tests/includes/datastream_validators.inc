@@ -343,7 +343,7 @@ class TextDatastreamValidator extends DatastreamValidator {
   /**
    * Constructor override; blow up if we don't have our two values.
    */
-  public function __construct(IslandoraFedoraObject $object, $datastream, array $params = array()) {
+  public function __construct($object, $datastream, array $params = array()) {
     if (count($params) < 2) {
       throw new InvalidArgumentException('$params must contain at least two values to instantiate a TextDatastreamValidator.');
     }
