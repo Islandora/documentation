@@ -69,7 +69,7 @@ abstract class DatastreamValidator extends IslandoraTestUtilityClass {
   /**
    * The IslandoraFedoraObject containing the datastream to test.
    *
-   * @var IslandoraFedoraObject
+   * @var IslandoraFedoraObject|FedoraObject
    */
   public $object;
 
@@ -97,14 +97,14 @@ abstract class DatastreamValidator extends IslandoraTestUtilityClass {
   /**
    * Constructs a DatastreamValidator.
    *
-   * @param IslandoraFedoraObject $object
+   * @param IslandoraFedoraObject|FedoraObject $object
    *   The object to grab the datastream from.
    * @param string $datastream
    *   The DSID of the datastream itself.
    * @param array $params
    *   An extra array of parameters the validator might need.
    */
-  public function __construct(IslandoraFedoraObject $object, $datastream, array $params = array()) {
+  public function __construct($object, $datastream, array $params = array()) {
     $this->object = $object;
     $this->datastream = $datastream;
     $this->params = $params;
