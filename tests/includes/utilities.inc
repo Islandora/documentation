@@ -261,17 +261,9 @@ class IslandoraTestUtilities extends IslandoraTestUtilityClass {
   public function __construct($configuration, array $params = array()) {
     $this->configuration = $configuration;
     $this->params = $params;
-    // If we have DB access, we want to use the Islandora Tuque wrappers.
-    if ($params['db_access']) {
-      $connection = islandora_get_tuque_connection();
-      $this->repository = $connection->repository;
-    }
-    // Otherwise, get a generic Tuque repository.
-    else {
-      $connection = new RepositoryConnection($this->configuration['fedora_url'], $this->configuration['admin_user'], $this->configuration['admin_pass']);
-      $api = new FedoraApi($connection);
-      $this->repository = new FedoraRepository($api, new SimpleCache());
-    }
+    $connection = new RepositoryConnection($this->configuration['fedora_url'], $this->configuration['admin_user'], $this->configuration['admin_pass']);
+    $api = new FedoraApi($connection);
+    $this->repository = new FedoraRepository($api, new SimpleCache());
   }
 
   /**
@@ -317,9 +309,9 @@ class IslandoraTestUtilities extends IslandoraTestUtilityClass {
    * Asserts that the given datastreams exist correctly on the object.
    *
    * @param AbstractObject $object
-   *   The PID of the object
+   *   The object to check.
    * @param array $datastreams
-   *   An array of strings containing datastream names
+   *   An array of strings containing datastream names.
    *
    * @return bool
    *   TRUE on success, FALSE on fail.
@@ -339,6 +331,30 @@ class IslandoraTestUtilities extends IslandoraTestUtilityClass {
       $this->addResult(TRUE, "Found required datastream(s) in object {$object->id}");
       return TRUE;
     }
+  }
+
+  /**
+   * Asserts that the given datastreams do not exist on the object.
+   *
+   * @param AbstractObject $object
+   *   The object to check.
+   * @param array $datastreams
+   *   An array of datastreams to confirm not present.
+   */
+  public function assertNoDatastreams($object, array $datastreams) {
+    if (!is_object($object)) {
+      $this->addResult(FALSE, "Failed. Object passed in is invalid.", 'Islandora');
+      return;
+    }
+    $found_datastreams = array_intersect_key(array_flip($datastreams), $object->repository->api->a->listDatastreams($object->id));
+
+    if (!empty($found_datastreams)) {
+      $this->addResult(FALSE, "Found unwanted datastream(s)" . implode(', ', array_flip($found_datastreams)) . " in object {$object->id}.");
+      return FALSE;
+    }
+
+    $this->addResult(TRUE, "Unwanted datastream(s) not found in object {$object->id}");
+    return TRUE;
   }
 
   /**

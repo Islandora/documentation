@@ -48,7 +48,7 @@ function islandora_hex2int($hex) {
  * Abstraction for datastream validators.
  *
  * Classes extended from DatastreamValidator don't require much to be useful.
- * They accept an IslandoraFedoraObject and a DSID to perform assertions on;
+ * They accept a Fedora object and a DSID to perform assertions on;
  * all you have to do is place a series of functions inside the extended class
  * using the naming convention assertThing(); each of these functions should
  * ideally assert one thing and one thing only (for simplicity's sake), and
@@ -67,9 +67,9 @@ function islandora_hex2int($hex) {
 abstract class DatastreamValidator extends IslandoraTestUtilityClass {
 
   /**
-   * The IslandoraFedoraObject containing the datastream to test.
+   * The Fedora object containing the datastream to test.
    *
-   * @var IslandoraFedoraObject
+   * @var IslandoraFedoraObject|FedoraObject
    */
   public $object;
 
@@ -97,14 +97,14 @@ abstract class DatastreamValidator extends IslandoraTestUtilityClass {
   /**
    * Constructs a DatastreamValidator.
    *
-   * @param IslandoraFedoraObject $object
+   * @param IslandoraFedoraObject|FedoraObject $object
    *   The object to grab the datastream from.
    * @param string $datastream
    *   The DSID of the datastream itself.
    * @param array $params
    *   An extra array of parameters the validator might need.
    */
-  public function __construct(IslandoraFedoraObject $object, $datastream, array $params = array()) {
+  public function __construct($object, $datastream, array $params = array()) {
     $this->object = $object;
     $this->datastream = $datastream;
     $this->params = $params;
@@ -343,7 +343,7 @@ class TextDatastreamValidator extends DatastreamValidator {
   /**
    * Constructor override; blow up if we don't have our two values.
    */
-  public function __construct(IslandoraFedoraObject $object, $datastream, array $params = array()) {
+  public function __construct($object, $datastream, array $params = array()) {
     if (count($params) < 2) {
       throw new InvalidArgumentException('$params must contain at least two values to instantiate a TextDatastreamValidator.');
     }
@@ -386,14 +386,14 @@ class WAVDatastreamValidator extends DatastreamValidator {
   /**
    * We need a special constructor here to get the hex datastream content.
    *
-   * @param IslandoraFedoraObject $object
+   * @param IslandoraFedoraObject|FedoraObject $object
    *   The object to grab the datastream from.
    * @param string $datastream
    *   The DSID of the datastream itself.
    * @param array $params
    *   An extra array of parameters the validator might need.
    */
-  public function __construct(IslandoraFedoraObject $object, $datastream, array $params = array()) {
+  public function __construct($object, $datastream, array $params = array()) {
     parent::__construct($object, $datastream, $params);
     $this->datastreamContent = bin2hex($this->datastreamContent);
   }
