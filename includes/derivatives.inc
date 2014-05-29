@@ -29,7 +29,7 @@ function islandora_run_derivatives(AbstractObject $object, $dsid) {
     );
     if ($operations) {
       batch_set(
-      // Title won't show for batch in a batch.
+        // Title won't show for batch in a batch.
         array(
           'init_message' => t('Preparing derivatives for @label', array('@label' => $object->label)),
           'error_message' => t('An error occured creating derivatives.'),
@@ -40,7 +40,6 @@ function islandora_run_derivatives(AbstractObject $object, $dsid) {
           ),
           'file' => drupal_get_path('module', 'islandora') . '/includes/regenerate_derivatives.form.inc',
           'operations' => $operations,
-          'finished' => 'islandora_regenerate_derivative_batch_finished',
         )
       );
     }
