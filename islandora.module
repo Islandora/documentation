@@ -1818,7 +1818,7 @@ function islandora_repair_drupal_filter() {
     $configuration = islandora_get_test_configuration();
   }
   catch (Exception $e) {
-    drupal_set_message("Unable to get the test configuration: $e", 'error');
+    drupal_set_message(t("Unable to get the test configuration: %e", array('%e' => $e)), 'error');
     return;
   }
 
