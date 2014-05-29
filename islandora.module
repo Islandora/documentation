@@ -1813,18 +1813,13 @@ function islandora_form_simpletest_test_form_alter(array &$form) {
  * Submit handler for islandora_form_simpletest_test_form_alter().
  */
 function islandora_repair_drupal_filter() {
-
-  // Grab the config.
-  $path = drupal_get_path('module', 'islandora');
-  if (file_exists("$path/tests/test_config.ini")) {
-    $configuration = parse_ini_file("$path/tests/test_config.ini");
+  module_load_include('inc', 'islandora', 'tests/includes/utilities');
+  try {
+    $configuration = islandora_get_test_configuration();
   }
-  elseif (file_exists("$path/tests/default.test_config.ini")) {
-    $configuration = parse_ini_file("$path/tests/default.test_config.ini");
-  }
-  else {
-    drupal_set_message(t('Required default.test_config.ini/test_config.ini file not found'), 'error');
-    return FALSE;
+  catch (Exception $e) {
+    drupal_set_message("Unable to get the test configuration: $e", 'error');
+    return;
   }
 
   // Xpath to the filter 'sql' elements.

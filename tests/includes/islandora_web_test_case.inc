@@ -22,13 +22,6 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
   protected $deleteObjectsOnTeardown = TRUE;
 
   /**
-   * An instance of IslandoraDrupalFilterManipulator carried between tests.
-   *
-   * @var IslandoraDrupalFilterManipulator
-   */
-  protected $filterManipulator;
-
-  /**
    * Defers to IslandoraTestUtilities for missing methods.
    *
    * @param string $method
@@ -65,7 +58,7 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
   }
 
   /**
-   * Sets up the Drupal filter to access this test Drupal instances database.
+   * Sets up the web test case.
    *
    * @see DrupalWebTestCase::setUp()
    */
@@ -83,8 +76,7 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
 
     $this->configuration = islandora_get_test_configuration();
     if ($this->configuration['use_drupal_filter']) {
-      $this->filterManipulator = new IslandoraDrupalFilterManipulator($this->configuration);
-      $this->filterManipulator->setUpDrupalFilter();
+      $this->setUpDrupalFilter();
     }
     $this->admin = $this->createAdminUser();
   }
@@ -147,7 +139,7 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
       }
     }
     if ($this->configuration['use_drupal_filter']) {
-      $this->filterManipulator->restoreDrupalFilter();
+      islandora_repair_drupal_filter();
     }
     unset($this->admin);
     unset($this->configuration);

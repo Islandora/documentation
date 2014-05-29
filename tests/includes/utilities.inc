@@ -36,89 +36,6 @@ function islandora_get_test_configuration() {
 }
 
 /**
- * Methods specifically for working with the Drupal filter for tests.
- */
-class IslandoraDrupalFilterManipulator {
-
-  /**
-   * Parsed test configuration.
-   *
-   * @var array
-   */
-  public $configuration;
-
-  /**
-   * The original contents of the drupal filter.
-   *
-   * @var string
-   */
-  protected $originalDrupalFilterContent;
-
-  /**
-   * Constructs an IslandoraTestUtilities object.
-   *
-   * @param array $configuration
-   *   The parsed test configuration.
-   */
-  public function __construct($configuration) {
-    $this->configuration = $configuration;
-    $this->backUpDrupalFilter();
-  }
-
-  /**
-   * Stores the content of the Drupal Filter for later restoration.
-   */
-  public function restoreDrupalFilter() {
-    $file = $this->configuration['drupal_filter_file'];
-    if (isset($this->originalDrupalFilterContent)) {
-      file_put_contents($file, $this->originalDrupalFilterContent);
-    }
-    elseif (file_exists($file)) {
-      // Remove if there was never an original.
-      drupal_unlink($file);
-    }
-  }
-
-  /**
-   * Sets up a drupal filter that can read for the tests users table.
-   */
-  public function setUpDrupalFilter() {
-    $connection_info = Database::getConnectionInfo('default');
-    $drupal_filter_dom = new DomDocument();
-    $drupal_filter_dom->loadXML($this->originalDrupalFilterContent);
-    $server = $connection_info['default']['host'];
-    $dbname = $connection_info['default']['database'];
-    $user = $connection_info['default']['username'];
-    $password = $connection_info['default']['password'];
-    $port = $connection_info['default']['port'] ? $connection_info['default']['port'] : '3306';
-    $prefix = $connection_info['default']['prefix']['default'];
-    $filter_drupal_connection_node = $drupal_filter_dom->getElementsByTagName('FilterDrupal_Connection')->item(0);
-    $first_connection_node = $drupal_filter_dom->getElementsByTagName('connection')->item(0);
-    $connection_node = $filter_drupal_connection_node->insertBefore($drupal_filter_dom->createElement('connection'), $first_connection_node);
-    $connection_node->setAttributeNode(new DOMAttr('server', $server));
-    $connection_node->setAttributeNode(new DOMAttr('dbname', $dbname));
-    $connection_node->setAttributeNode(new DOMAttr('user', $user));
-    $connection_node->setAttributeNode(new DOMAttr('password', $password));
-    $connection_node->setAttributeNode(new DOMAttr('port', $port));
-    $sql_node = $connection_node->appendChild(new DOMElement('sql'));
-    $sql_node->appendChild($drupal_filter_dom->createTextNode("SELECT DISTINCT u.uid AS userid, u.name AS Name, u.pass AS Pass, r.name AS Role FROM ({$prefix}users u LEFT JOIN {$prefix}users_roles ON u.uid={$prefix}users_roles.uid) LEFT JOIN {$prefix}role r ON r.rid={$prefix}users_roles.rid WHERE u.name=? AND u.pass=?;"));
-    file_put_contents($this->configuration['drupal_filter_file'], $drupal_filter_dom->saveXML());
-  }
-
-  /**
-   * Stores the content of the Drupal Filter for later restoration.
-   */
-  protected function backUpDrupalFilter() {
-    if (file_exists($this->configuration['drupal_filter_file'])) {
-      $this->originalDrupalFilterContent = file_get_contents($this->configuration['drupal_filter_file']);
-    }
-    else {
-      throw new Exception('Failed to find the required Drupal Filter configuration file.');
-    }
-  }
-}
-
-/**
  * A result from a utility method; $type defines TRUE/FALSE as pass/fail.
  */
 class IslandoraTestUtilityResult {
@@ -264,6 +181,33 @@ class IslandoraTestUtilities extends IslandoraTestUtilityClass {
     $connection = new RepositoryConnection($this->configuration['fedora_url'], $this->configuration['admin_user'], $this->configuration['admin_pass']);
     $api = new FedoraApi($connection);
     $this->repository = new FedoraRepository($api, new SimpleCache());
+  }
+
+  /**
+   * Sets up a drupal filter that can read for the tests users table.
+   */
+  public function setUpDrupalFilter() {
+    $original_drupal_filter_content = file_get_contents($this->configuration['drupal_filter_file']);
+    $connection_info = Database::getConnectionInfo('default');
+    $drupal_filter_dom = new DomDocument();
+    $drupal_filter_dom->loadXML($original_drupal_filter_content);
+    $server = $connection_info['default']['host'];
+    $dbname = $connection_info['default']['database'];
+    $user = $connection_info['default']['username'];
+    $password = $connection_info['default']['password'];
+    $port = $connection_info['default']['port'] ? $connection_info['default']['port'] : '3306';
+    $prefix = $connection_info['default']['prefix']['default'];
+    $filter_drupal_connection_node = $drupal_filter_dom->getElementsByTagName('FilterDrupal_Connection')->item(0);
+    $first_connection_node = $drupal_filter_dom->getElementsByTagName('connection')->item(0);
+    $connection_node = $filter_drupal_connection_node->insertBefore($drupal_filter_dom->createElement('connection'), $first_connection_node);
+    $connection_node->setAttributeNode(new DOMAttr('server', $server));
+    $connection_node->setAttributeNode(new DOMAttr('dbname', $dbname));
+    $connection_node->setAttributeNode(new DOMAttr('user', $user));
+    $connection_node->setAttributeNode(new DOMAttr('password', $password));
+    $connection_node->setAttributeNode(new DOMAttr('port', $port));
+    $sql_node = $connection_node->appendChild(new DOMElement('sql'));
+    $sql_node->appendChild($drupal_filter_dom->createTextNode("SELECT DISTINCT u.uid AS userid, u.name AS Name, u.pass AS Pass, r.name AS Role FROM ({$prefix}users u LEFT JOIN {$prefix}users_roles ON u.uid={$prefix}users_roles.uid) LEFT JOIN {$prefix}role r ON r.rid={$prefix}users_roles.rid WHERE u.name=? AND u.pass=?;"));
+    file_put_contents($this->configuration['drupal_filter_file'], $drupal_filter_dom->saveXML());
   }
 
   /**
