@@ -203,8 +203,6 @@ class MimeDetect {
     "inp" => "chemical/x-gamess-input",
     // GAMESS Output.
     "gam" => "chemical/x-gamess-input",
-    // General output file.
-    "out" => "application/octet-stream",
     // Gaussian Cube.
     "cub" => "chemical/x-gaussian-cube",
     // Gaussian 98/03 Cartesian Input.
@@ -217,8 +215,6 @@ class MimeDetect {
     "dx" => "chemical/x-jcamp-dx",
     // MOPAC Cartesian.
     "mop" => "chemical/x-mopac-input",
-    // General Input File.
-    "in" => "application/octet-stream",
     // Compressed formats:
     // (note: http://svn.cleancode.org/svn/email/trunk/mime.types)
     "tgz" => "application/x-gzip",
