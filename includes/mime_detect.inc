@@ -191,6 +191,8 @@ class MimeDetect {
     "xyz" => "chemical/x-xyz",
     // PDB.
     "pdb" => "chemical/x-pdb",
+    // ChemDraw CDX.
+    'cdx' => 'chemical/x-cdx',
     // ChemDraw 3D.
     "c3d" => "chemical/x-chem3d",
     // ChemDraw file.
@@ -208,7 +210,7 @@ class MimeDetect {
     // Gaussian 98/03 Cartesian Input.
     "gau" => "chemical/x-gaussian-input",
     // Corel Multimedia Manager v6 Album.
-    "gal" => "application/octet-stream",
+    'gal' => 'chemical/x-gaussian',
     // JCAMP Spectroscopic Data Exchange Format.
     "jdx" => "chemical/x-jcamp-dx",
     // OpenDX Grid.
