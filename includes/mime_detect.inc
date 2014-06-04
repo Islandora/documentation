@@ -204,13 +204,11 @@ class MimeDetect {
     // GAMESS Input.
     "inp" => "chemical/x-gamess-input",
     // GAMESS Output.
-    "gam" => "chemical/x-gamess-input",
+    "gam" => "chemical/x-gamess-output",
     // Gaussian Cube.
     "cub" => "chemical/x-gaussian-cube",
     // Gaussian 98/03 Cartesian Input.
     "gau" => "chemical/x-gaussian-input",
-    // Corel Multimedia Manager v6 Album.
-    'gal' => 'chemical/x-gaussian',
     // JCAMP Spectroscopic Data Exchange Format.
     "jdx" => "chemical/x-jcamp-dx",
     // OpenDX Grid.
