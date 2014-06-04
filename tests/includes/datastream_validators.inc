@@ -28,7 +28,7 @@ function islandora_hex2int($hex) {
     drupal_set_message(t('String passed to islandora_hex2int() contains non-hexidecimal characters.'), 'error');
     return FALSE;
   }
-  if (!strlen($hex) === 4 || !strlen($hex) === 8) {
+  if (!(strlen($hex) == 4 || strlen($hex) == 8)) {
     drupal_set_message(t('String passed to islandora_hex2int() cannot create a 16- or 32-bit little-endian signed integer'), 'error');
     return FALSE;
   }
