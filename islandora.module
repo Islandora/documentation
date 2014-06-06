@@ -1820,7 +1820,7 @@ function islandora_repair_drupal_filter() {
     $configuration = IslandoraTestUtilityClass::getTestConfiguration();
   }
   catch (Exception $e) {
-    drupal_set_message(t("Error parsing test configuration: $e"), 'error');
+    drupal_set_message(t("Error parsing test configuration: %e", array('%e' => $e)), 'error');
     return FALSE;
   }
 
