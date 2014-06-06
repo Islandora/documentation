@@ -1817,7 +1817,7 @@ function islandora_repair_drupal_filter() {
   // Grab the config.
   module_load_include('inc', 'islandora', 'tests/utilities/test_utility_abstraction');
   try {
-    IslandoraTestUtilityClass::getTestConfiguration();
+    $configuration = IslandoraTestUtilityClass::getTestConfiguration();
   }
   catch (Exception $e) {
     drupal_set_message(t("Error parsing test configuration: $e"), 'error');
