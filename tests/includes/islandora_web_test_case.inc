@@ -74,7 +74,7 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
     module_load_include('inc', 'islandora', 'includes/tuque_wrapper');
     module_load_include('inc', 'islandora', 'tests/includes/utilities');
 
-    $this->configuration = islandora_get_test_configuration();
+    $this->configuration = IslandoraTestUtilityClass::getTestConfiguration();
     if ($this->configuration['use_drupal_filter']) {
       $this->setUpDrupalFilter();
     }

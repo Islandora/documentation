@@ -17,6 +17,7 @@ files[] = tests/includes/datastream_validators.inc
 files[] = tests/includes/islandora_web_test_case.inc
 files[] = tests/includes/islandora_unit_test_case.inc
 files[] = tests/includes/utilities.inc
+files[] = tests/includes/test_utility_abstraction.inc
 files[] = tests/authtokens.test
 files[] = tests/hooks.test
 files[] = tests/ingest.test

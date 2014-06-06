@@ -1813,13 +1813,15 @@ function islandora_form_simpletest_test_form_alter(array &$form) {
  * Submit handler for islandora_form_simpletest_test_form_alter().
  */
 function islandora_repair_drupal_filter() {
-  module_load_include('inc', 'islandora', 'tests/includes/utilities');
+
+  // Grab the config.
+  module_load_include('inc', 'islandora', 'tests/utilities/test_utility_abstraction');
   try {
-    $configuration = islandora_get_test_configuration();
+    IslandoraTestUtilityClass::getTestConfiguration();
   }
   catch (Exception $e) {
-    drupal_set_message(t("Unable to get the test configuration: %e", array('%e' => $e)), 'error');
-    return;
+    drupal_set_message(t("Error parsing test configuration: $e"), 'error');
+    return FALSE;
   }
 
   // Xpath to the filter 'sql' elements.

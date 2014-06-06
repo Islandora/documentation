@@ -58,7 +58,7 @@ class IslandoraUnitTestCase extends DrupalUnitTestCase {
     module_load_include('inc', 'islandora', 'includes/tuque');
     module_load_include('inc', 'islandora', 'includes/tuque_wrapper');
 
-    $this->configuration = islandora_get_test_configuration();
+    $this->configuration = IslandoraTestUtilityClass::getTestConfiguration();
     $this->connection = new RepositoryConnection($this->configuration['fedora_url'], $this->configuration['admin_user'], $this->configuration['admin_pass']);
     $api = new FedoraApi($this->connection);
     $this->repository = new FedoraRepository($api, new SimpleCache());
