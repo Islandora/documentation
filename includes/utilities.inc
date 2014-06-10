@@ -445,8 +445,9 @@ function islandora_get_datastreams_requirements_from_content_model(AbstractObjec
 /**
  * Prepare an ingestable object.
  *
- * @param string $namespace
- *   The namespace in which the PID for the new object will be created.
+ * @param string $name_source
+ *   Either a pid or namespace in which the PID for the new object will be
+ *   created.
  * @param string $label
  *   An optional label to apply to the object.
  * @param array $datastreams
@@ -471,10 +472,10 @@ function islandora_get_datastreams_requirements_from_content_model(AbstractObjec
  * @return NewFedoraObject
  *   An ingestable NewFedoraObject.
  */
-function islandora_prepare_new_object($namespace = NULL, $label = NULL, $datastreams = array(), $content_models = array(), $relationships = array()) {
+function islandora_prepare_new_object($name_source = NULL, $label = NULL, $datastreams = array(), $content_models = array(), $relationships = array()) {
   global $user;
   $tuque = islandora_get_tuque_connection();
-  $object = isset($namespace) ? $tuque->repository->constructObject($namespace) : new IslandoraNewFedoraObject(NULL, $tuque->repository);
+  $object = isset($name_source) ? $tuque->repository->constructObject($name_source) : new IslandoraNewFedoraObject(NULL, $tuque->repository);
   $object->owner = isset($user->name) ? $user->name : $object->owner;
   $object->label = isset($label) ? $label : $object->label;
   foreach ($content_models as $content_model) {
