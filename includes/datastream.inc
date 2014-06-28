@@ -291,24 +291,6 @@ function islandora_datastream_get_url(AbstractDatastream $datastream, $type = 'd
 }
 
 /**
- * Gets the delete link.
- *
- * @param AbstractDatastream $datastream
- *   The datastream to generated the url to.
- *
- * @return string
- *   Markup containing the link to the confirm form to delete the datastream.
- */
-function islandora_datastream_get_delete_link(AbstractDatastream $datastream) {
-  $message = islandora_deprecated('7.x-1.2', 'Use the "islandora_datastream_delete_link" theme implementation.');
-  trigger_error(filter_xss($message), E_USER_DEPRECATED);
-
-  return theme('islandora_datastream_delete_link', array(
-    'datastream' => $datastream,
-  ));
-}
-
-/**
  * Gets the edit link.
  *
  * @param AbstractDatastream $datastream
