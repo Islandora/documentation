@@ -338,25 +338,6 @@ function islandora_edit_datastream_registry_render(array $edit_registry) {
 }
 
 /**
- * Get markup for a view link.
- *
- * @param AbstractDatastream $datastream
- *   The datastream for which to generate a link.
- *
- * @return string
- *   Either the link markup if the user has access or a string containing the
- *   datastream ID if the user is not allowed to see the given datastream.
- */
-function islandora_datastream_get_view_link(AbstractDatastream $datastream) {
-  $message = islandora_deprecated('7.x-1.2', 'Use the "islandora_datastream_view_link" theme implementation.');
-  trigger_error(filter_xss($message), E_USER_DEPRECATED);
-
-  return theme('islandora_datastream_view_link', array(
-    'datastream' => $datastream,
-  ));
-}
-
-/**
  * Set the headers for the chunking of our content.
  *
  * @param AbstractDatastream $datastream
