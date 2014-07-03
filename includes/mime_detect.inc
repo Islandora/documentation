@@ -225,6 +225,8 @@ class MimeDetect {
     "zip" => "application/x-zip",
     // others:
     'bin' => 'application/octet-stream',
+    // Web Archives:
+    "warc" => "application/warc",
   );
   protected $protectedFileExtensions;
   protected $extensionExceptions = array(
