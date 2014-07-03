@@ -173,6 +173,30 @@ class IslandoraFedoraObject extends FedoraObject {
       throw $e;
     }
   }
+
+  /**
+   * Inherits.
+   *
+   * Calls parent and invokes object modified and deleted(/purged) hooks.
+   *
+   * @see FedoraObject::modifyObject()
+   */
+  protected function modifyObject($params) {
+    try {
+      parent::modifyObject($params);
+      islandora_invoke_object_hooks(ISLANDORA_OBJECT_MODIFIED_HOOK, $this->models, $this);
+      if ($this->state == 'D') {
+        islandora_invoke_object_hooks(ISLANDORA_OBJECT_PURGED_HOOK, $this->models, $this->id);
+      }
+    }
+    catch (Exception $e) {
+      watchdog('islandora', 'Failed to modify object: @pid</br>code: @code<br/>message: @msg', array(
+          '@pid' => $this->id,
+          '@code' => $e->getCode(),
+          '@msg' => $e->getMessage()), WATCHDOG_ERROR);
+      throw $e;
+    }
+  }
 }
 
 class IslandoraRepositoryConnection extends RepositoryConnection {}
@@ -219,25 +243,10 @@ class IslandoraFedoraApiM extends FedoraApiM {
     if (isset($params['lastModifiedDate'])) {
       $params['lastModifiedDate'] = (string) $object[$dsid]->createdDate;
     }
-    try {
-      if ($context['block']) {
-        throw new Exception('Modify Datastream was blocked.');
-      }
-      $ret = parent::modifyDatastream($pid, $dsid, $params);
-      islandora_invoke_datastream_hooks(ISLANDORA_DATASTREAM_MODIFIED_HOOK, $object->models, $dsid, $object, $datastream);
-      if (isset($params['dsState']) && $params['dsState'] == 'D') {
-        islandora_invoke_datastream_hooks(ISLANDORA_DATASTREAM_PURGED_HOOK, $object->models, $dsid, $object, $dsid);
-      }
-      return $ret;
+    if ($context['block']) {
+      throw new Exception('Modify Datastream was blocked.');
     }
-    catch (Exception $e) {
-      watchdog('islandora', 'Failed to modify datastream @dsid from @pid</br>code: @code<br/>message: @msg', array(
-          '@pid' => $pid,
-          '@dsid' => $dsid,
-          '@code' => $e->getCode(),
-          '@msg' => $e->getMessage()), WATCHDOG_ERROR);
-      throw $e;
-    }
+    return parent::modifyDatastream($pid, $dsid, $params);
   }
 
   /**
@@ -254,24 +263,10 @@ class IslandoraFedoraApiM extends FedoraApiM {
     );
     islandora_alter_object($object, $context);
     $params = $context['params'];
-    try {
-      if ($context['block']) {
-        throw new Exception('Modify Object was blocked.');
-      }
-      $ret = parent::modifyObject($pid, $params);
-      islandora_invoke_object_hooks(ISLANDORA_OBJECT_MODIFIED_HOOK, $object->models, $object);
-      if (isset($params['state']) && $params['state'] == 'D') {
-        islandora_invoke_object_hooks(ISLANDORA_OBJECT_PURGED_HOOK, $object->models, $object->id);
-      }
-      return $ret;
+    if ($context['block']) {
+      throw new Exception('Modify Object was blocked.');
     }
-    catch (Exception $e) {
-      watchdog('islandora', 'Failed to modify object: @pid</br>code: @code<br/>message: @msg', array(
-          '@pid' => $pid,
-          '@code' => $e->getCode(),
-          '@msg' => $e->getMessage()), WATCHDOG_ERROR);
-      throw $e;
-    }
+    return parent::modifyObject($pid, $params);
   }
 
   /**
@@ -377,6 +372,33 @@ class IslandoraNewFedoraDatastream extends NewFedoraDatastream {
 class IslandoraFedoraDatastream extends FedoraDatastream {
   protected $fedoraRelsIntClass = 'IslandoraFedoraRelsInt';
   protected $fedoraDatastreamVersionClass = 'IslandoraFedoraDatastreamVersion';
+
+  /**
+   * Inherits.
+   *
+   * Calls parent and invokes modified and purged hooks.
+   *
+   * @see FedoraDatastream::modifyDatastream()
+   */
+  protected function modifyDatastream(array $args) {
+    try {
+      parent::modifyDatastream($args);
+      // XXX: Reload datastream from parent.
+      $datastream = $this->parent[$this->id];
+      islandora_invoke_datastream_hooks(ISLANDORA_DATASTREAM_MODIFIED_HOOK, $this->parent->models, $this->id, $this->parent, $datastream);
+      if ($datastream->state == 'D') {
+        islandora_invoke_datastream_hooks(ISLANDORA_DATASTREAM_PURGED_HOOK, $this->parent->models, $this->id, $this->parent, $this->id);
+      }
+    }
+    catch (Exception $e) {
+      watchdog('islandora', 'Failed to modify datastream @dsid from @pid</br>code: @code<br/>message: @msg', array(
+          '@pid' => $this->parent->id,
+          '@dsid' => $this->id,
+          '@code' => $e->getCode(),
+          '@msg' => $e->getMessage()), WATCHDOG_ERROR);
+      throw $e;
+    }
+  }
 }
 
 class IslandoraFedoraDatastreamVersion extends FedoraDatastreamVersion {
