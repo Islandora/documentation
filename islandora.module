@@ -142,9 +142,11 @@ function islandora_menu() {
     'access arguments' => array(ISLANDORA_VIEW_OBJECTS, 2),
   );
   $items['islandora/object/%islandora_object/print_object'] = array(
+    'title' => 'Print Object',
+    'weight' => 20,
     'page callback' => 'islandora_printer_object',
     'page arguments' => array(2),
-    'type' => MENU_NORMAL_ITEM,
+    'type' => MENU_LOCAL_TASK,
     'access callback' => 'islandora_object_access',
     'access arguments' => array(ISLANDORA_VIEW_OBJECTS, 2),
   );
@@ -182,6 +184,7 @@ function islandora_menu() {
         ISLANDORA_INGEST,
       ), 2),
   );
+  $islandora_path = drupal_get_path('module', 'islandora');
   $items['islandora/object/%islandora_object/manage/overview'] = array(
     'title' => 'Overview',
     'type' => MENU_DEFAULT_LOCAL_TASK,
@@ -1023,17 +1026,6 @@ function islandora_view_default_object() {
 function islandora_view_object(AbstractObject $object) {
   module_load_include('inc', 'islandora', 'includes/breadcrumb');
   module_load_include('inc', 'islandora', 'includes/utilities');
-
-  // Add the print button via JavaScript.
-  $path = drupal_get_path('module', 'islandora');
-  drupal_add_js(array(
-    'islandora' => array(
-      'print_img' => $path . '/images/print-icon.png'),
-      ), array(
-        'type' => 'setting'));
-
-  drupal_add_js(array('islandora' => array('print_link' => 'islandora/object/' . $object->id . '/print_object')), array('type' => 'setting'));
-  drupal_add_js($path . '/js/add_print.js');
 
   drupal_set_title($object->label);
   drupal_set_breadcrumb(islandora_get_breadcrumbs($object));
@@ -1912,4 +1904,38 @@ function islandora_find_package($package_name) {
     }
   }
   return $found && user_access('administer site configuration');
+}
+
+/**
+ * Implements hook_menu_local_tasks_alter().
+ */
+function islandora_menu_local_tasks_alter(&$data, $router_item, $root_path) {
+  if (strpos($root_path, 'islandora/object/%') === 0) {
+    if (isset($data['tabs'][0]['output'])) {
+      foreach ($data['tabs'][0]['output'] as $key => &$tab) {
+        if ($tab['#link']['path'] == 'islandora/object/%/print_object') {
+          if ($root_path == 'islandora/object/%') {
+            $islandora_path = drupal_get_path('module', 'islandora');
+            $tab['#theme'] = 'link';
+            $tab['#text'] = theme('image', array(
+              'path' => "$islandora_path/images/print-icon.png",
+              'alt' => t('Print Object'),
+              'attributes' => array(
+                'id' => 'print_btn',
+              ),
+            ));
+            $tab['#path'] = "{$router_item['href']}/print_object";
+            $tab['#options'] = array(
+              'attributes' => array(),
+              'html' => TRUE,
+            );
+          }
+          else {
+            unset($data['tabs'][0]['output'][$key]);
+            break;
+          }
+        }
+      }
+    }
+  }
 }
