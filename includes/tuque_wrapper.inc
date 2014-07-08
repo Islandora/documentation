@@ -145,6 +145,41 @@ class IslandoraFedoraObject extends FedoraObject {
   protected $fedoraRelsExtClass = 'IslandoraFedoraRelsExt';
 
   /**
+   * Magical magic, to allow recursive modifications.
+   *
+   * So... Magic functions in PHP are not re-entrant... Meaning that if you
+   * have something which tries to call __set on an object anywhere later in
+   * the callstack after it has already been called, it will not call the
+   * magic method again; instead, it will set the property on the object
+   * proper. Here, we detect the property being set on the object proper, and
+   * restore the magic functionality as long as it keeps getting set...
+   *
+   * Not necessary to try to account for this in Tuque proper, as Tuque itself
+   * does not have a mechanism to trigger modifications resulting from other
+   * modifications.
+   *
+   * @param string $name
+   *   The name of the property being set.
+   * @param mixed $value
+   *   The value to which the property should be set.
+   */
+  public function __set($name, $value) {
+    parent::__set($name, $value);
+
+    // XXX: Due to the structure of the code, we cannot use property_exists()
+    // (because many of the properties are declared in the class, and the magic
+    // triggers due them being NULLed), nor can we use isset() (because it is
+    // implemented as another magic function...).
+    $vars = get_object_vars($this);
+    while (isset($vars[$name])) {
+      $new_value = $this->$name;
+      unset($this->$name);
+      parent::__set($name, $new_value);
+      $vars = get_object_vars($this);
+    }
+  }
+
+  /**
    * Ingest the given datastream.
    *
    * @see FedoraObject::ingestDatastream()
@@ -374,6 +409,41 @@ class IslandoraFedoraDatastream extends FedoraDatastream {
   protected $fedoraDatastreamVersionClass = 'IslandoraFedoraDatastreamVersion';
 
   /**
+   * Magical magic, to allow recursive modifications.
+   *
+   * So... Magic functions in PHP are not re-entrant... Meaning that if you
+   * have something which tries to call __set on an object anywhere later in
+   * the callstack after it has already been called, it will not call the
+   * magic method again; instead, it will set the property on the object
+   * proper. Here, we detect the property being set on the object proper, and
+   * restore the magic functionality as long as it keeps getting set...
+   *
+   * Not necessary to try to account for this in Tuque proper, as Tuque itself
+   * does not have a mechanism to trigger modifications resulting from other
+   * modifications.
+   *
+   * @param string $name
+   *   The name of the property being set.
+   * @param mixed $value
+   *   The value to which the property should be set.
+   */
+  public function __set($name, $value) {
+    parent::__set($name, $value);
+
+    // XXX: Due to the structure of the code, we cannot use property_exists()
+    // (because many of the properties are declared in the class, and the magic
+    // triggers due them being NULLed), nor can we use isset() (because it is
+    // implemented as another magic function...).
+    $vars = get_object_vars($this);
+    while (isset($vars[$name])) {
+      $new_value = $this->$name;
+      unset($this->$name);
+      parent::__set($name, $new_value);
+      $vars = get_object_vars($this);
+    }
+  }
+
+  /**
    * Inherits.
    *
    * Calls parent and invokes modified and purged hooks.
@@ -383,10 +453,8 @@ class IslandoraFedoraDatastream extends FedoraDatastream {
   protected function modifyDatastream(array $args) {
     try {
       parent::modifyDatastream($args);
-      // XXX: Reload datastream from parent.
-      $datastream = $this->parent[$this->id];
-      islandora_invoke_datastream_hooks(ISLANDORA_DATASTREAM_MODIFIED_HOOK, $this->parent->models, $this->id, $this->parent, $datastream);
-      if ($datastream->state == 'D') {
+      islandora_invoke_datastream_hooks(ISLANDORA_DATASTREAM_MODIFIED_HOOK, $this->parent->models, $this->id, $this->parent, $this);
+      if ($this->state == 'D') {
         islandora_invoke_datastream_hooks(ISLANDORA_DATASTREAM_PURGED_HOOK, $this->parent->models, $this->id, $this->parent, $this->id);
       }
     }

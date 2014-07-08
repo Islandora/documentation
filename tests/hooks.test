@@ -109,9 +109,11 @@ class IslandoraHooksTestCase extends IslandoraWebTestCase {
     $this->repository->ingestObject($object);
     $_SESSION['islandora_hooks']['hook'][ISLANDORA_OBJECT_MODIFIED_HOOK] = FALSE;
     $_SESSION['islandora_hooks']['alter'][ISLANDORA_OBJECT_MODIFIED_HOOK] = FALSE;
+    $_SESSION['islandora_hooks']['iteration'][ISLANDORA_OBJECT_MODIFIED_HOOK] = 0;
     $object->label = "New Label!";
     $this->assert($_SESSION['islandora_hooks']['alter'][ISLANDORA_OBJECT_MODIFIED_HOOK], 'Called "hook_islandora_object_alter" when modifying via set magic functions.');
     $this->assert($_SESSION['islandora_hooks']['hook'][ISLANDORA_OBJECT_MODIFIED_HOOK], 'Called ISLANDORA_OBJECT_MODIFIED_HOOK when modifying via set magic functions.');
+    $this->assertEqual('New Label! + 3', $object->label, 'Re-entered ISLANDORA_OBJECT_MODIFIED_HOOK when modifying via set magic functions.');
 
     // Test blocking the modification.
     try {
@@ -191,10 +193,12 @@ class IslandoraHooksTestCase extends IslandoraWebTestCase {
     $ds = $object->constructDatastream('TEST');
     $object->ingestDatastream($ds);
     $_SESSION['islandora_hooks']['hook'][ISLANDORA_DATASTREAM_MODIFIED_HOOK] = FALSE;
+    $_SESSION['islandora_hooks']['iteration'][ISLANDORA_DATASTREAM_MODIFIED_HOOK] = 0;
     $_SESSION['islandora_hooks']['alter'][ISLANDORA_DATASTREAM_MODIFIED_HOOK] = FALSE;
     $ds->label = "New Label!";
     $this->assert($_SESSION['islandora_hooks']['alter'][ISLANDORA_DATASTREAM_MODIFIED_HOOK], 'Called "hook_islandora_datastream_alter" when modifying via set magic functions.');
     $this->assert($_SESSION['islandora_hooks']['hook'][ISLANDORA_DATASTREAM_MODIFIED_HOOK], 'Called ISLANDORA_DATASTREAM_MODIFIED_HOOK when modifying via set magic functions.');
+    $this->assertEqual('New Label! + 3', $ds->label, 'Re-entered ISLANDORA_DATASTREAM_MODIFIED_HOOK when modifying via set magic functions.');
 
     // Test blocking modifying.
     try {
