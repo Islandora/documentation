@@ -1913,3 +1913,19 @@ function islandora_find_package($package_name) {
   }
   return $found && user_access('administer site configuration');
 }
+
+/**
+ * Helper function for ingest steps and batches.
+ *
+ * When batches within batches are triggered within ingest steps
+ * the submit handler becomes out of scope. When it becomes time to execute the
+ * submit the function cannot be found and fails. This pre-submit is to
+ * get around this problem.
+ *
+ * @see https://www.drupal.org/node/2300367
+ *
+ * @see https://www.drupal.org/node/1300928
+ */
+function islandora_ingest_form_pre_submit($form, &$form_state) {
+  module_load_include('inc', 'islandora', 'includes/ingest.form');
+}
