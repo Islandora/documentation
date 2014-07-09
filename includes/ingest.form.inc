@@ -706,7 +706,11 @@ function islandora_ingest_form_ingest_button(array &$form_state) {
   $validate_callback = $form_id . '_validate';
   $validate = function_exists($validate_callback) ? array($validate_callback) : NULL;
   $submit_callback = $form_id . '_submit';
-  $submit = function_exists($submit_callback) ? array($submit_callback, 'islandora_ingest_form_submit') : array('islandora_ingest_form_submit');
+  $submit = function_exists($submit_callback) ? array(
+    $submit_callback,
+    'islandora_ingest_form_pre_submit',
+    'islandora_ingest_form_submit',
+  ) : array('islandora_ingest_form_pre_submit', 'islandora_ingest_form_submit');
   return array(
     '#type' => 'submit',
     '#name' => 'ingest',
