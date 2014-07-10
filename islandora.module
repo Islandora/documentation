@@ -1921,7 +1921,7 @@ function islandora_ingest_form_pre_submit($form, &$form_state) {
   module_load_include('inc', 'islandora', 'includes/ingest.form');
 }
 
-/*
+/**
  * Implements hook_menu_local_tasks_alter().
  */
 function islandora_menu_local_tasks_alter(&$data, $router_item, $root_path) {
@@ -1954,4 +1954,3 @@ function islandora_menu_local_tasks_alter(&$data, $router_item, $root_path) {
     }
   }
 }
-
