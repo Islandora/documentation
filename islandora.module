@@ -184,7 +184,6 @@ function islandora_menu() {
         ISLANDORA_INGEST,
       ), 2),
   );
-  $islandora_path = drupal_get_path('module', 'islandora');
   $items['islandora/object/%islandora_object/manage/overview'] = array(
     'title' => 'Overview',
     'type' => MENU_DEFAULT_LOCAL_TASK,
@@ -1922,7 +1921,7 @@ function islandora_ingest_form_pre_submit($form, &$form_state) {
   module_load_include('inc', 'islandora', 'includes/ingest.form');
 }
 
-/* 
+/*
  * Implements hook_menu_local_tasks_alter().
  */
 function islandora_menu_local_tasks_alter(&$data, $router_item, $root_path) {
