@@ -30,16 +30,16 @@ function islandora_convert_bytes_to_human_readable($bytes, $precision = 2) {
     return $bytes . ' B';
   }
   elseif (($bytes >= $kilobyte) && ($bytes < $megabyte)) {
-    return round($bytes / $kilobyte, $precision) . ' KB';
+    return round($bytes / $kilobyte, $precision) . ' KiB';
   }
   elseif (($bytes >= $megabyte) && ($bytes < $gigabyte)) {
-    return round($bytes / $megabyte, $precision) . ' MB';
+    return round($bytes / $megabyte, $precision) . ' MiB';
   }
   elseif (($bytes >= $gigabyte) && ($bytes < $terabyte)) {
-    return round($bytes / $gigabyte, $precision) . ' GB';
+    return round($bytes / $gigabyte, $precision) . ' GiB';
   }
   elseif ($bytes >= $terabyte) {
-    return round($bytes / $terabyte, $precision) . ' TB';
+    return round($bytes / $terabyte, $precision) . ' TiB';
   }
   else {
     return $bytes . ' B';
