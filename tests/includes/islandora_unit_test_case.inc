@@ -56,7 +56,6 @@ class IslandoraUnitTestCase extends DrupalUnitTestCase {
 
     // It's possible test are running before class autoloading.
     module_load_include('inc', 'islandora', 'includes/tuque');
-    module_load_include('inc', 'islandora', 'includes/tuque_wrapper');
 
     $this->configuration = IslandoraTestUtilityClass::getTestConfiguration();
     $this->connection = new RepositoryConnection($this->configuration['fedora_url'], $this->configuration['admin_user'], $this->configuration['admin_pass']);

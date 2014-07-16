@@ -40,29 +40,24 @@ class IslandoraTestUtilities extends IslandoraTestUtilityClass {
   }
 
   /**
-   * Sets up a drupal filter that can read for the tests users table.
+   * Sets up a drupal filter that can read from the tests users table.
    */
   public function setUpDrupalFilter() {
     $original_drupal_filter_content = file_get_contents($this->configuration['drupal_filter_file']);
     $connection_info = Database::getConnectionInfo('default');
     $drupal_filter_dom = new DomDocument();
     $drupal_filter_dom->loadXML($original_drupal_filter_content);
-    $server = $connection_info['default']['host'];
-    $dbname = $connection_info['default']['database'];
-    $user = $connection_info['default']['username'];
-    $password = $connection_info['default']['password'];
-    $port = $connection_info['default']['port'] ? $connection_info['default']['port'] : '3306';
     $prefix = $connection_info['default']['prefix']['default'];
     $filter_drupal_connection_node = $drupal_filter_dom->getElementsByTagName('FilterDrupal_Connection')->item(0);
     $first_connection_node = $drupal_filter_dom->getElementsByTagName('connection')->item(0);
     $connection_node = $filter_drupal_connection_node->insertBefore($drupal_filter_dom->createElement('connection'), $first_connection_node);
-    $connection_node->setAttributeNode(new DOMAttr('server', $server));
-    $connection_node->setAttributeNode(new DOMAttr('dbname', $dbname));
-    $connection_node->setAttributeNode(new DOMAttr('user', $user));
-    $connection_node->setAttributeNode(new DOMAttr('password', $password));
-    $connection_node->setAttributeNode(new DOMAttr('port', $port));
-    $sql_node = $connection_node->appendChild(new DOMElement('sql'));
-    $sql_node->appendChild($drupal_filter_dom->createTextNode("SELECT DISTINCT u.uid AS userid, u.name AS Name, u.pass AS Pass, r.name AS Role FROM ({$prefix}users u LEFT JOIN {$prefix}users_roles ON u.uid={$prefix}users_roles.uid) LEFT JOIN {$prefix}role r ON r.rid={$prefix}users_roles.rid WHERE u.name=? AND u.pass=?;"));
+    $connection_node->setAttribute('server', $connection_info['default']['host']);
+    $connection_node->setAttribute('dbname', $connection_info['default']['database']);
+    $connection_node->setAttribute('user', $connection_info['default']['username']);
+    $connection_node->setAttribute('password', $connection_info['default']['password']);
+    $connection_node->setAttribute('port', $connection_info['default']['port'] ? $connection_info['default']['port'] : '3306');
+    $sql_node = $drupal_filter_dom->createElement('sql', "SELECT DISTINCT u.uid AS userid, u.name AS Name, u.pass AS Pass, r.name AS Role FROM ({$prefix}users u LEFT JOIN {$prefix}users_roles ON u.uid={$prefix}users_roles.uid) LEFT JOIN {$prefix}role r ON r.rid={$prefix}users_roles.rid WHERE u.name=? AND u.pass=?;");
+    $connection_node->appendChild($sql_node);
     file_put_contents($this->configuration['drupal_filter_file'], $drupal_filter_dom->saveXML());
   }
 
@@ -117,7 +112,7 @@ class IslandoraTestUtilities extends IslandoraTestUtilityClass {
    *   TRUE on success, FALSE on fail.
    */
   public function assertDatastreams($object, array $datastreams) {
-    if (!is_object($object)) {
+    if (!$this->assertFedoraObject($object)) {
       $this->addResult(FALSE, "Failed. Object passed in is invalid.", 'Islandora');
     }
     else {
@@ -142,7 +137,7 @@ class IslandoraTestUtilities extends IslandoraTestUtilityClass {
    *   An array of datastreams to confirm not present.
    */
   public function assertNoDatastreams($object, array $datastreams) {
-    if (!is_object($object)) {
+    if (!$this->assertFedoraObject($object)) {
       $this->addResult(FALSE, "Failed. Object passed in is invalid.", 'Islandora');
       return;
     }
@@ -175,7 +170,7 @@ class IslandoraTestUtilities extends IslandoraTestUtilityClass {
    */
   public function validateDatastreams($object, array $datastreams) {
 
-    if (!is_object($object)) {
+    if (!$this->assertFedoraObject($object)) {
       $this->addResult(FALSE, "Datastream validation failed; Object passed in is invalid.", 'Islandora');
       return;
     }
@@ -183,32 +178,8 @@ class IslandoraTestUtilities extends IslandoraTestUtilityClass {
     module_load_include('inc', 'islandora', 'tests/includes/datastream_validators');
 
     foreach ($datastreams as $datastream) {
-      // Let's give them conventional names.
-      $dsid = $datastream[0];
-      $prefix = $datastream[1];
-      $params = array();
-      if (isset($datastream[2])) {
-        $params = $datastream[2];
-      }
-
-      // Legacy tests were created before the CamelCase conventions of the class
-      // system now in place. So, we need to automagically seek out prefixes
-      // that start with a lower-case letter and convert them to the proper
-      // format (rather than fixing every single legacy test).
-      if (ctype_lower(substr($prefix, 0, 1))) {
-        // Handle the case where the prefix is "image".
-        if ($prefix === 'image') {
-          $prefix = 'Image';
-        }
-        // Handle the case where the prefix is "text".
-        elseif ($prefix === 'text') {
-          $prefix = 'Text';
-        }
-        // All other cases involve just converting everything to caps.
-        else {
-          $prefix = strtoupper($prefix);
-        }
-      }
+      // XXX: The "+ array (2 => array())" is to allow the value to be optional.
+      list($dsid, $prefix, $params) = $datastream + array(2 => array());
 
       // Instantiate the appropriate class, and grab the results.
       $class_name = "{$prefix}DatastreamValidator";
@@ -365,6 +336,19 @@ QUERY;
       $this->addResult(FALSE, "Unable to remove object {$object['object']['value']} from the repository.");
       return FALSE;
     }
+  }
+
+  /**
+   * Asserts that an object is a FedoraObject or an IslandoraFedoraObject.
+   *
+   * @param object $object
+   *   The object to assess.
+   *
+   * @return bool
+   *   TRUE if it is either of those object types, or FALSE otherwise.
+   */
+  public static function assertFedoraObject($object) {
+    return ($object instanceof FedoraObject);
   }
 
 }

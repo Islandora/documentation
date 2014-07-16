@@ -222,7 +222,7 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
     if (!$message) {
       $message = "Error found on current page when error was expected.";
     }
-    return $this->assertRaw("<div class=\"messages error\">", $message, $group);
+    return $this->assertFieldByXPath('//div[contains(@class, "message") and contains(@class, "error")]', NULL, $message, $group);
   }
 
   /**
@@ -240,7 +240,7 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
     if (!$message) {
       $message = "No error found on current page when no error was expected.";
     }
-    return $this->assertNoRaw("<div class=\"messages error\">", $message, $group);
+    return $this->assertNoFieldByXPath('//div[contains(@class, "message") and contains(@class, "error")]', NULL, $message, $group);
   }
 
   /**
@@ -258,7 +258,7 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
     if (!$message) {
       $message = "Warning found on current page when warning was expected.";
     }
-    return $this->assertRaw("<div class=\"messages warning\">", $message, $group);
+    return $this->assertFieldByXPath('//div[contains(@class, "message") and contains(@class, "warning")]', NULL, $message, $group);
   }
 
   /**
@@ -276,7 +276,7 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
     if (!$message) {
       $message = "No warning found on current page when no warning was expected.";
     }
-    return $this->assertNoRaw("<div class=\"messages error\">", $message, $group);
+    return $this->assertNoFieldByXPath('//div[contains(@class, "message") and contains(@class, "warning")]', NULL, $message, $group);
   }
 
   /**
