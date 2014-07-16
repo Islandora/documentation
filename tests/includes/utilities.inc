@@ -112,7 +112,7 @@ class IslandoraTestUtilities extends IslandoraTestUtilityClass {
    *   TRUE on success, FALSE on fail.
    */
   public function assertDatastreams($object, array $datastreams) {
-    if (!$this->assertFedoraObject($object)) {
+    if (!self::assertFedoraObject($object)) {
       $this->addResult(FALSE, "Failed. Object passed in is invalid.", 'Islandora');
     }
     else {
@@ -137,7 +137,7 @@ class IslandoraTestUtilities extends IslandoraTestUtilityClass {
    *   An array of datastreams to confirm not present.
    */
   public function assertNoDatastreams($object, array $datastreams) {
-    if (!$this->assertFedoraObject($object)) {
+    if (!self::assertFedoraObject($object)) {
       $this->addResult(FALSE, "Failed. Object passed in is invalid.", 'Islandora');
       return;
     }
@@ -170,7 +170,7 @@ class IslandoraTestUtilities extends IslandoraTestUtilityClass {
    */
   public function validateDatastreams($object, array $datastreams) {
 
-    if (!$this->assertFedoraObject($object)) {
+    if (!self::assertFedoraObject($object)) {
       $this->addResult(FALSE, "Datastream validation failed; Object passed in is invalid.", 'Islandora');
       return;
     }
