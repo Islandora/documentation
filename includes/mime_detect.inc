@@ -132,7 +132,8 @@ class MimeDetect {
     'wbxml' => 'application/vnd.wap.wbxml',
     'xht' => 'application/xhtml+xml',
     'xhtml' => 'application/xhtml+xml',
-    'xsl' => 'text/xml',
+    'xsl' => 'text/xsl',
+    'xslt' => 'text/xsl',
     'xml' => 'text/xml',
     'csv' => 'text/csv',
     'tsv' => 'text/tab-separated-values',
@@ -224,6 +225,8 @@ class MimeDetect {
     "zip" => "application/x-zip",
     // others:
     'bin' => 'application/octet-stream',
+    // Web Archives:
+    "warc" => "application/warc",
   );
   protected $protectedFileExtensions;
   protected $extensionExceptions = array(

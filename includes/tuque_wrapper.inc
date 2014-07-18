@@ -145,6 +145,41 @@ class IslandoraFedoraObject extends FedoraObject {
   protected $fedoraRelsExtClass = 'IslandoraFedoraRelsExt';
 
   /**
+   * Magical magic, to allow recursive modifications.
+   *
+   * So... Magic functions in PHP are not re-entrant... Meaning that if you
+   * have something which tries to call __set on an object anywhere later in
+   * the callstack after it has already been called, it will not call the
+   * magic method again; instead, it will set the property on the object
+   * proper. Here, we detect the property being set on the object proper, and
+   * restore the magic functionality as long as it keeps getting set...
+   *
+   * Not necessary to try to account for this in Tuque proper, as Tuque itself
+   * does not have a mechanism to trigger modifications resulting from other
+   * modifications.
+   *
+   * @param string $name
+   *   The name of the property being set.
+   * @param mixed $value
+   *   The value to which the property should be set.
+   */
+  public function __set($name, $value) {
+    parent::__set($name, $value);
+
+    // XXX: Due to the structure of the code, we cannot use property_exists()
+    // (because many of the properties are declared in the class, and the magic
+    // triggers due them being NULLed), nor can we use isset() (because it is
+    // implemented as another magic function...).
+    $vars = get_object_vars($this);
+    while (isset($vars[$name])) {
+      $new_value = $this->$name;
+      unset($this->$name);
+      parent::__set($name, $new_value);
+      $vars = get_object_vars($this);
+    }
+  }
+
+  /**
    * Ingest the given datastream.
    *
    * @see FedoraObject::ingestDatastream()
@@ -168,6 +203,30 @@ class IslandoraFedoraObject extends FedoraObject {
       watchdog('islandora', 'Failed to ingest object: @pid</br>code: @code<br/>message: @msg', array(
           '@pid' => $object->id,
           '@dsid' => $datastream->id,
+          '@code' => $e->getCode(),
+          '@msg' => $e->getMessage()), WATCHDOG_ERROR);
+      throw $e;
+    }
+  }
+
+  /**
+   * Inherits.
+   *
+   * Calls parent and invokes object modified and deleted(/purged) hooks.
+   *
+   * @see FedoraObject::modifyObject()
+   */
+  protected function modifyObject($params) {
+    try {
+      parent::modifyObject($params);
+      islandora_invoke_object_hooks(ISLANDORA_OBJECT_MODIFIED_HOOK, $this->models, $this);
+      if ($this->state == 'D') {
+        islandora_invoke_object_hooks(ISLANDORA_OBJECT_PURGED_HOOK, $this->models, $this->id);
+      }
+    }
+    catch (Exception $e) {
+      watchdog('islandora', 'Failed to modify object: @pid</br>code: @code<br/>message: @msg', array(
+          '@pid' => $this->id,
           '@code' => $e->getCode(),
           '@msg' => $e->getMessage()), WATCHDOG_ERROR);
       throw $e;
@@ -219,25 +278,10 @@ class IslandoraFedoraApiM extends FedoraApiM {
     if (isset($params['lastModifiedDate'])) {
       $params['lastModifiedDate'] = (string) $object[$dsid]->createdDate;
     }
-    try {
-      if ($context['block']) {
-        throw new Exception('Modify Datastream was blocked.');
-      }
-      $ret = parent::modifyDatastream($pid, $dsid, $params);
-      islandora_invoke_datastream_hooks(ISLANDORA_DATASTREAM_MODIFIED_HOOK, $object->models, $dsid, $object, $datastream);
-      if (isset($params['dsState']) && $params['dsState'] == 'D') {
-        islandora_invoke_datastream_hooks(ISLANDORA_DATASTREAM_PURGED_HOOK, $object->models, $dsid, $object, $dsid);
-      }
-      return $ret;
+    if ($context['block']) {
+      throw new Exception('Modify Datastream was blocked.');
     }
-    catch (Exception $e) {
-      watchdog('islandora', 'Failed to modify datastream @dsid from @pid</br>code: @code<br/>message: @msg', array(
-          '@pid' => $pid,
-          '@dsid' => $dsid,
-          '@code' => $e->getCode(),
-          '@msg' => $e->getMessage()), WATCHDOG_ERROR);
-      throw $e;
-    }
+    return parent::modifyDatastream($pid, $dsid, $params);
   }
 
   /**
@@ -254,24 +298,10 @@ class IslandoraFedoraApiM extends FedoraApiM {
     );
     islandora_alter_object($object, $context);
     $params = $context['params'];
-    try {
-      if ($context['block']) {
-        throw new Exception('Modify Object was blocked.');
-      }
-      $ret = parent::modifyObject($pid, $params);
-      islandora_invoke_object_hooks(ISLANDORA_OBJECT_MODIFIED_HOOK, $object->models, $object);
-      if (isset($params['state']) && $params['state'] == 'D') {
-        islandora_invoke_object_hooks(ISLANDORA_OBJECT_PURGED_HOOK, $object->models, $object->id);
-      }
-      return $ret;
+    if ($context['block']) {
+      throw new Exception('Modify Object was blocked.');
     }
-    catch (Exception $e) {
-      watchdog('islandora', 'Failed to modify object: @pid</br>code: @code<br/>message: @msg', array(
-          '@pid' => $pid,
-          '@code' => $e->getCode(),
-          '@msg' => $e->getMessage()), WATCHDOG_ERROR);
-      throw $e;
-    }
+    return parent::modifyObject($pid, $params);
   }
 
   /**
@@ -377,6 +407,66 @@ class IslandoraNewFedoraDatastream extends NewFedoraDatastream {
 class IslandoraFedoraDatastream extends FedoraDatastream {
   protected $fedoraRelsIntClass = 'IslandoraFedoraRelsInt';
   protected $fedoraDatastreamVersionClass = 'IslandoraFedoraDatastreamVersion';
+
+  /**
+   * Magical magic, to allow recursive modifications.
+   *
+   * So... Magic functions in PHP are not re-entrant... Meaning that if you
+   * have something which tries to call __set on an object anywhere later in
+   * the callstack after it has already been called, it will not call the
+   * magic method again; instead, it will set the property on the object
+   * proper. Here, we detect the property being set on the object proper, and
+   * restore the magic functionality as long as it keeps getting set...
+   *
+   * Not necessary to try to account for this in Tuque proper, as Tuque itself
+   * does not have a mechanism to trigger modifications resulting from other
+   * modifications.
+   *
+   * @param string $name
+   *   The name of the property being set.
+   * @param mixed $value
+   *   The value to which the property should be set.
+   */
+  public function __set($name, $value) {
+    parent::__set($name, $value);
+
+    // XXX: Due to the structure of the code, we cannot use property_exists()
+    // (because many of the properties are declared in the class, and the magic
+    // triggers due them being NULLed), nor can we use isset() (because it is
+    // implemented as another magic function...).
+    $vars = get_object_vars($this);
+    while (isset($vars[$name])) {
+      $new_value = $this->$name;
+      unset($this->$name);
+      parent::__set($name, $new_value);
+      $vars = get_object_vars($this);
+    }
+  }
+
+  /**
+   * Inherits.
+   *
+   * Calls parent and invokes modified and purged hooks.
+   *
+   * @see FedoraDatastream::modifyDatastream()
+   */
+  protected function modifyDatastream(array $args) {
+    try {
+      parent::modifyDatastream($args);
+      islandora_invoke_datastream_hooks(ISLANDORA_DATASTREAM_MODIFIED_HOOK, $this->parent->models, $this->id, $this->parent, $this);
+      if ($this->state == 'D') {
+        islandora_invoke_datastream_hooks(ISLANDORA_DATASTREAM_PURGED_HOOK, $this->parent->models, $this->id, $this->parent, $this->id);
+      }
+    }
+    catch (Exception $e) {
+      watchdog('islandora', 'Failed to modify datastream @dsid from @pid</br>code: @code<br/>message: @msg', array(
+          '@pid' => $this->parent->id,
+          '@dsid' => $this->id,
+          '@code' => $e->getCode(),
+          '@msg' => $e->getMessage()), WATCHDOG_ERROR);
+      throw $e;
+    }
+  }
 }
 
 class IslandoraFedoraDatastreamVersion extends FedoraDatastreamVersion {
