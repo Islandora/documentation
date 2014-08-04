@@ -54,7 +54,6 @@ function islandora_view_datastream(AbstractDatastream $datastream, $download = F
     // Browsers will not append all extensions.
     $mime_detect = new MimeDetect();
     $extension = '.' . $mime_detect->getExtension($datastream->mimetype);
-
     // Prevent adding on a duplicate extension.
     $label = $datastream->label;
     $extension_length = strlen($extension);
@@ -65,7 +64,6 @@ function islandora_view_datastream(AbstractDatastream $datastream, $download = F
     if ($duplicate_extension_position === FALSE) {
       $filename .= $extension;
     }
-
     header("Content-Disposition: attachment; filename=\"$filename\"");
   }
 

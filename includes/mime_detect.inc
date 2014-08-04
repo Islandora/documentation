@@ -223,6 +223,7 @@ class MimeDetect {
     "tar" => "application/x-tar",
     "gtar" => "application/x-gtar",
     "zip" => "application/x-zip",
+    "rng" => "application/xml",
     // others:
     'bin' => 'application/octet-stream',
     // Web Archives:
