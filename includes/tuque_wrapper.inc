@@ -166,16 +166,21 @@ class IslandoraFedoraObject extends FedoraObject {
   public function __set($name, $value) {
     parent::__set($name, $value);
 
-    // XXX: Due to the structure of the code, we cannot use property_exists()
-    // (because many of the properties are declared in the class, and the magic
-    // triggers due them being NULLed), nor can we use isset() (because it is
-    // implemented as another magic function...).
-    $vars = get_object_vars($this);
-    while (isset($vars[$name])) {
-      $new_value = $this->$name;
-      unset($this->$name);
-      parent::__set($name, $new_value);
+    // Recursion only matters for magic properties... "Plain" properties cannot
+    // call other code in order to start recursing, and in fact we would get
+    // stuck looping with a "plain" property.
+    if ($this->propertyIsMagical($name)) {
+      // XXX: Due to the structure of the code, we cannot use property_exists()
+      // (because many of the properties are declared in the class, and the magic
+      // triggers due them being NULLed), nor can we use isset() (because it is
+      // implemented as another magic function...).
       $vars = get_object_vars($this);
+      while (isset($vars[$name])) {
+        $new_value = $this->$name;
+        unset($this->$name);
+        parent::__set($name, $new_value);
+        $vars = get_object_vars($this);
+      }
     }
   }
 
@@ -430,16 +435,21 @@ class IslandoraFedoraDatastream extends FedoraDatastream {
   public function __set($name, $value) {
     parent::__set($name, $value);
 
-    // XXX: Due to the structure of the code, we cannot use property_exists()
-    // (because many of the properties are declared in the class, and the magic
-    // triggers due them being NULLed), nor can we use isset() (because it is
-    // implemented as another magic function...).
-    $vars = get_object_vars($this);
-    while (isset($vars[$name])) {
-      $new_value = $this->$name;
-      unset($this->$name);
-      parent::__set($name, $new_value);
+    // Recursion only matters for magic properties... "Plain" properties cannot
+    // call other code in order to start recursing, and in fact we would get
+    // stuck looping with a "plain" property.
+    if ($this->propertyIsMagical($name)) {
+      // XXX: Due to the structure of the code, we cannot use property_exists()
+      // (because many of the properties are declared in the class, and the magic
+      // triggers due them being NULLed), nor can we use isset() (because it is
+      // implemented as another magic function...).
       $vars = get_object_vars($this);
+      while (isset($vars[$name])) {
+        $new_value = $this->$name;
+        unset($this->$name);
+        parent::__set($name, $new_value);
+        $vars = get_object_vars($this);
+      }
     }
   }
 
