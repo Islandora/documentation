@@ -46,6 +46,7 @@ function islandora_uninstall() {
   // Add new variables to clean up.
   $variables = array(
     'islandora_ds_replace_exclude_enforced',
+    'islandora_defer_derivataves_on_ingest',
   );
   array_walk($variables, 'variable_del');
 }
