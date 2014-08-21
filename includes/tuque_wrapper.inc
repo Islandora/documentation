@@ -171,9 +171,9 @@ class IslandoraFedoraObject extends FedoraObject {
     // stuck looping with a "plain" property.
     if ($this->propertyIsMagical($name)) {
       // XXX: Due to the structure of the code, we cannot use property_exists()
-      // (because many of the properties are declared in the class, and the magic
-      // triggers due them being NULLed), nor can we use isset() (because it is
-      // implemented as another magic function...).
+      // (because many of the properties are declared in the class, and the
+      // magic triggers due them being NULLed), nor can we use isset() (because
+      // it is implemented as another magic function...).
       $vars = get_object_vars($this);
       while (isset($vars[$name])) {
         $new_value = $this->$name;
@@ -440,9 +440,9 @@ class IslandoraFedoraDatastream extends FedoraDatastream {
     // stuck looping with a "plain" property.
     if ($this->propertyIsMagical($name)) {
       // XXX: Due to the structure of the code, we cannot use property_exists()
-      // (because many of the properties are declared in the class, and the magic
-      // triggers due them being NULLed), nor can we use isset() (because it is
-      // implemented as another magic function...).
+      // (because many of the properties are declared in the class, and the
+      // magic triggers due them being NULLed), nor can we use isset() (because
+      // it is implemented as another magic function...).
       $vars = get_object_vars($this);
       while (isset($vars[$name])) {
         $new_value = $this->$name;
