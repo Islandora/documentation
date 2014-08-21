@@ -95,6 +95,7 @@ function islandora_regenerate_object_derivatives_form_submit(array $form, array 
  */
 function islandora_regenerate_object_derivatives_batch(AbstractObject $object) {
   module_load_include('inc', 'islandora', 'includes/derivatives');
+  islandora_remove_defer_derivatives_flag($object);
   return array(
     'title' => t('Regenerating all derivatives for @label', array('@label' => $object->label)),
     'operations' => islandora_do_batch_derivatives($object, array('force' => TRUE)),
@@ -117,6 +118,7 @@ function islandora_regenerate_object_derivatives_batch(AbstractObject $object) {
  */
 function islandora_regenerate_datastream_derivative_batch(AbstractDatastream $datastream) {
   module_load_include('inc', 'islandora', 'includes/derivatives');
+  islandora_remove_defer_derivatives_flag($object);
   return array(
     'title' => t('Regenerating derivatives for the @dsid datastream', array('@dsid' => $datastream->id)),
     'operations' => islandora_do_batch_derivatives($datastream->parent, array(
