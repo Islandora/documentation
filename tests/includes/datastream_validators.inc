@@ -28,7 +28,7 @@ function islandora_hex2int($hex) {
     drupal_set_message(t('String passed to islandora_hex2int() contains non-hexidecimal characters.'), 'error');
     return FALSE;
   }
-  if (!strlen($hex) === 4 || !strlen($hex) === 8) {
+  if (!(strlen($hex) == 4 || strlen($hex) == 8)) {
     drupal_set_message(t('String passed to islandora_hex2int() cannot create a 16- or 32-bit little-endian signed integer'), 'error');
     return FALSE;
   }
@@ -45,83 +45,10 @@ function islandora_hex2int($hex) {
 }
 
 /**
- * A result from a datastream validator; $type defines TRUE/FALSE as pass/fail.
- */
-class DatastreamValidatorResult {
-
-  /**
-   * The message for this result.
-   *
-   * @var string
-   */
-  protected $message;
-
-  /**
-   * The caller for this result.
-   *
-   * @var array
-   */
-  protected $caller;
-
-  /**
-   * The type of result this is - TRUE for pass, FALSE for fail.
-   *
-   * @var bool
-   */
-  protected $type;
-
-  /**
-   * Constructs a DatastreamValidatorResult.
-   *
-   * @param bool $type
-   *   Whether this result should indicate a pass (TRUE) or fail (FALSE).
-   * @param string $message
-   *   The message that will be used by this result.
-   * @param array $caller
-   *   The caller for this result.
-   */
-  public function __construct($type, $message, array $caller) {
-    $this->message = $message;
-    $this->caller = $caller;
-    $this->type = $type;
-  }
-
-  /**
-   * Get the message for this result.
-   *
-   * @return string
-   *   The message for this result.
-   */
-  public function getMessage() {
-    return $this->message;
-  }
-
-  /**
-   * Get the caller for this result.
-   *
-   * @return string
-   *   The caller for this result.
-   */
-  public function getCaller() {
-    return $this->caller;
-  }
-
-  /**
-   * Get the type of result.
-   *
-   * @return bool
-   *   The type of pass (TRUE for pass, FALSE for fail).
-   */
-  public function getType() {
-    return $this->type;
-  }
-}
-
-/**
  * Abstraction for datastream validators.
  *
  * Classes extended from DatastreamValidator don't require much to be useful.
- * They accept an IslandoraFedoraObject and a DSID to perform assertions on;
+ * They accept a Fedora object and a DSID to perform assertions on;
  * all you have to do is place a series of functions inside the extended class
  * using the naming convention assertThing(); each of these functions should
  * ideally assert one thing and one thing only (for simplicity's sake), and
@@ -137,12 +64,12 @@ class DatastreamValidatorResult {
  * all the test results using getPasses() and getFails() and transforms those
  * into something that DrupalWebTestCase can use.
  */
-abstract class DatastreamValidator {
+abstract class DatastreamValidator extends IslandoraTestUtilityClass {
 
   /**
-   * The IslandoraFedoraObject containing the datastream to test.
+   * The Fedora object containing the datastream to test.
    *
-   * @var IslandoraFedoraObject
+   * @var IslandoraFedoraObject|FedoraObject
    */
   public $object;
 
@@ -161,15 +88,6 @@ abstract class DatastreamValidator {
   public $datastreamContent;
 
   /**
-   * An array of DatastreamValidatorResults.
-   *
-   * These should be generated using $this->addResult.
-   *
-   * @var DatastreamValidatorResult[]
-   */
-  public $results = array();
-
-  /**
    * An array of additional required parameters.
    *
    * @var array
@@ -179,14 +97,14 @@ abstract class DatastreamValidator {
   /**
    * Constructs a DatastreamValidator.
    *
-   * @param IslandoraFedoraObject $object
+   * @param IslandoraFedoraObject|FedoraObject $object
    *   The object to grab the datastream from.
    * @param string $datastream
    *   The DSID of the datastream itself.
    * @param array $params
    *   An extra array of parameters the validator might need.
    */
-  public function __construct(IslandoraFedoraObject $object, $datastream, array $params = array()) {
+  public function __construct($object, $datastream, array $params = array()) {
     $this->object = $object;
     $this->datastream = $datastream;
     $this->params = $params;
@@ -210,18 +128,23 @@ abstract class DatastreamValidator {
    * fails to $this->passes and/or $this->fails.
    */
   public function runValidators() {
-    $methods = get_class_methods($this);
-    foreach ($methods as $method) {
-      if (substr($method, 0, 6) === 'assert') {
-        $this->$method();
+    if ($this->object[$this->datastream]) {
+      $methods = get_class_methods($this);
+      foreach ($methods as $method) {
+        if (substr($method, 0, 6) === 'assert') {
+          $this->$method();
+        }
       }
+    }
+    else {
+      $this->addResult(FALSE, "Unable to load the requested datastream {$this->datastream} from object {$this->object->id}.");
     }
   }
 
   /**
-   * Returns an array of DatastreamValidatorResults.
+   * Returns an array of IslandoraTestUtilityResults.
    *
-   * @return DatastreamValidatorResult[]
+   * @return IslandoraTestUtilityResult[]
    *   The results.
    */
   public function getResults() {
@@ -240,7 +163,7 @@ abstract class DatastreamValidator {
    *   The message to put in the result.
    */
   public function addResult($type, $message) {
-    $result = new DatastreamValidatorResult($type, $message, $this->getAssertionCall());
+    $result = new IslandoraTestUtilityResult($type, $message, $this->getAssertionCall());
     $this->results[] = $result;
   }
 
@@ -254,7 +177,7 @@ abstract class DatastreamValidator {
    * @return array
    *   Array representing the true caller.
    */
-  protected function getAssertionCall() {
+  public function getAssertionCall() {
     $backtrace = debug_backtrace();
 
     // While the current caller's function starts with 'assert', and another one
@@ -420,7 +343,7 @@ class TextDatastreamValidator extends DatastreamValidator {
   /**
    * Constructor override; blow up if we don't have our two values.
    */
-  public function __construct(IslandoraFedoraObject $object, $datastream, array $params = array()) {
+  public function __construct($object, $datastream, array $params = array()) {
     if (count($params) < 2) {
       throw new InvalidArgumentException('$params must contain at least two values to instantiate a TextDatastreamValidator.');
     }
@@ -463,14 +386,14 @@ class WAVDatastreamValidator extends DatastreamValidator {
   /**
    * We need a special constructor here to get the hex datastream content.
    *
-   * @param IslandoraFedoraObject $object
+   * @param IslandoraFedoraObject|FedoraObject $object
    *   The object to grab the datastream from.
    * @param string $datastream
    *   The DSID of the datastream itself.
    * @param array $params
    *   An extra array of parameters the validator might need.
    */
-  public function __construct(IslandoraFedoraObject $object, $datastream, array $params = array()) {
+  public function __construct($object, $datastream, array $params = array()) {
     parent::__construct($object, $datastream, $params);
     $this->datastreamContent = bin2hex($this->datastreamContent);
   }
