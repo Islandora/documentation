@@ -30,6 +30,7 @@ function islandora_download_datastream(AbstractDatastream $datastream) {
  *   The version of the datastream to display
  */
 function islandora_view_datastream(AbstractDatastream $datastream, $download = FALSE, $version = NULL) {
+  module_load_include('inc', 'islandora', 'includes/utilities');
   // XXX: Certain features of the Devel module rely on the use of "shutdown
   // handlers", such as query logging... The problem is that they might blindly
   // add additional output which will break things if what is actually being
@@ -45,7 +46,6 @@ function islandora_view_datastream(AbstractDatastream $datastream, $download = F
       return drupal_not_found();
     }
   }
-
   header('Content-type: ' . $datastream->mimetype);
   if ($datastream->controlGroup == 'M' || $datastream->controlGroup == 'X') {
     header('Content-length: ' . $datastream->size);
@@ -53,7 +53,7 @@ function islandora_view_datastream(AbstractDatastream $datastream, $download = F
   if ($download) {
     // Browsers will not append all extensions.
     $mime_detect = new MimeDetect();
-    $extension = '.' . $mime_detect->getExtension($datastream->mimetype);
+    $extension = '.' . islandora_get_extension_for_mimetype($datastream->mimetype);//$mime_detect->getExtension($datastream->mimetype);
     // Prevent adding on a duplicate extension.
     $label = $datastream->label;
     $extension_length = strlen($extension);

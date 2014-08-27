@@ -46,6 +46,15 @@ function islandora_convert_bytes_to_human_readable($bytes, $precision = 2) {
   }
 }
 
+function islandora_get_extension_for_mimetype($mimetype) {
+  module_load_include('inc', 'file', 'file.mimetypes.inc');
+  dsm($mimetype, "mimetype");
+  $mimetype_mapping = file_default_mimetype_mapping();
+  $extenstion_index = array_search($mimetype, $mimetype_mapping['mimetypes']);
+  $extenstion = array_search($extenstion_index, $mimetype_mapping['extensions']);
+  dsm($extenstion, "extenstion");
+  return $extenstion;
+}
 /**
  * Add a file as managed if is not already.
  *
