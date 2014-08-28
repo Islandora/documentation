@@ -46,15 +46,30 @@ function islandora_convert_bytes_to_human_readable($bytes, $precision = 2) {
   }
 }
 
+/**
+ * Retrieve the correct file extension for a give mimetype.
+ *
+ * @param string $mimetype
+ *   The mimetype whose extension is required.
+ *
+ * @return string
+ *   The extension mapped to the given mimetype.
+ */
 function islandora_get_extension_for_mimetype($mimetype) {
-  module_load_include('inc', 'file', 'file.mimetypes.inc');
-  dsm($mimetype, "mimetype");
-  $mimetype_mapping = file_default_mimetype_mapping();
-  $extenstion_index = array_search($mimetype, $mimetype_mapping['mimetypes']);
-  $extenstion = array_search($extenstion_index, $mimetype_mapping['extensions']);
-  dsm($extenstion, "extenstion");
-  return $extenstion;
+  require_once(DRUPAL_ROOT . '/includes/file.mimetypes.inc');
+
+  $mimetype_mapping = file_mimetype_mapping();
+  $extension_index = array_search($mimetype, $mimetype_mapping['mimetypes']);
+  $mime_array_flipped = array_reverse($mimetype_mapping['extensions']);
+  $extension = array_search($extension_index, $mime_array_flipped);
+
+  // We can only have one mapping in drupal for 'xml'.
+  if ($mimetype == "text/xml") {
+    return "xml";
+  }
+  return $extension;
 }
+
 /**
  * Add a file as managed if is not already.
  *

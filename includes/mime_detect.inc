@@ -134,7 +134,6 @@ class MimeDetect {
     'xhtml' => 'application/xhtml+xml',
     'xsl' => 'text/xsl',
     'xslt' => 'text/xsl',
-    'xml' => 'application/xml',
     'csv' => 'text/csv',
     'tsv' => 'text/tab-separated-values',
     'txt' => 'text/plain',

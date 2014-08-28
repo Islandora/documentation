@@ -1590,6 +1590,7 @@ function islandora_download_clip(AbstractObject $object) {
 function islandora_file_mimetype_mapping_alter(&$mapping) {
   $mime_detect = new MimeDetect();
   $types = $mime_detect->getMimeTypes();
+
   $diff = array_diff_key($types, $mapping['extensions']);
   foreach ($diff as $ext => $mime) {
     $mapping['mimetypes'][] = $mime;
