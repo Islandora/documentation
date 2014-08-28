@@ -53,7 +53,7 @@ function islandora_view_datastream(AbstractDatastream $datastream, $download = F
   if ($download) {
     // Browsers will not append all extensions.
     $mime_detect = new MimeDetect();
-    $extension = '.' . islandora_get_extension_for_mimetype($datastream->mimetype);//$mime_detect->getExtension($datastream->mimetype);
+    $extension = '.' . islandora_get_extension_for_mimetype($datastream->mimetype);
     // Prevent adding on a duplicate extension.
     $label = $datastream->label;
     $extension_length = strlen($extension);
