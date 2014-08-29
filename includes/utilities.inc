@@ -56,7 +56,7 @@ function islandora_convert_bytes_to_human_readable($bytes, $precision = 2) {
  *   The extension mapped to the given mimetype.
  */
 function islandora_get_extension_for_mimetype($mimetype) {
-  require_once(DRUPAL_ROOT . '/includes/file.mimetypes.inc');
+  require_once DRUPAL_ROOT . "/includes/file.mimetypes.inc";
 
   $mimetype_mapping = file_mimetype_mapping();
   $extension_index = array_search($mimetype, $mimetype_mapping['mimetypes']);
