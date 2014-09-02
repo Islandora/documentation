@@ -1814,15 +1814,12 @@ function islandora_form_simpletest_test_form_alter(array &$form) {
 function islandora_repair_drupal_filter() {
 
   // Grab the config.
-  $path = drupal_get_path('module', 'islandora');
-  if (file_exists("$path/tests/test_config.ini")) {
-    $configuration = parse_ini_file("$path/tests/test_config.ini");
+  module_load_include('inc', 'islandora', 'tests/utilities/test_utility_abstraction');
+  try {
+    $configuration = IslandoraTestUtilityClass::getTestConfiguration();
   }
-  elseif (file_exists("$path/tests/default.test_config.ini")) {
-    $configuration = parse_ini_file("$path/tests/default.test_config.ini");
-  }
-  else {
-    drupal_set_message(t('Required default.test_config.ini/test_config.ini file not found'), 'error');
+  catch (Exception $e) {
+    drupal_set_message(t("Error parsing test configuration: %e", array('%e' => $e)), 'error');
     return FALSE;
   }
 

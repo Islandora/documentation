@@ -8,6 +8,7 @@ cd $HOME
 git clone git://github.com/Islandora/tuque.git
 git clone -b $FEDORA_VERSION git://github.com/Islandora/islandora_tomcat.git
 cd islandora_tomcat
+git fsck
 export CATALINA_HOME='.'
 export JAVA_OPTS="-Xms1024m -Xmx1024m -XX:MaxPermSize=512m -XX:+CMSClassUnloadingEnabled -Djavax.net.ssl.trustStore=$CATALINA_HOME/fedora/server/truststore -Djavax.net.ssl.trustStorePassword=tomcat"
 ./bin/startup.sh
@@ -31,7 +32,7 @@ drush si minimal --db-url=mysql://drupal:drupal@localhost/drupal --yes
 sudo chmod a+w sites/default/settings.php
 echo "include_once '$HOME/.composer/vendor/autoload.php';" >> sites/default/settings.php
 sudo chmod a-w sites/default/settings.php
-drush runserver --php-cgi=$HOME/.phpenv/shims/php-cgi localhost:8081 &>/dev/null &
+drush runserver --php-cgi=$HOME/.phpenv/shims/php-cgi localhost:8081 &>/tmp/drush_webserver.log &
 ln -s $ISLANDORA_DIR sites/all/modules/islandora
 mv sites/all/modules/islandora/tests/travis.test_config.ini sites/all/modules/islandora/tests/test_config.ini
 mkdir sites/all/libraries
