@@ -30,7 +30,7 @@ function islandora_download_datastream(AbstractDatastream $datastream) {
  *   The version of the datastream to display
  */
 function islandora_view_datastream(AbstractDatastream $datastream, $download = FALSE, $version = NULL) {
-  module_load_include('inc', 'islandora', 'includes/utilities');
+  module_load_include('inc', 'islandora', 'includes/mimetype.utils');
   // XXX: Certain features of the Devel module rely on the use of "shutdown
   // handlers", such as query logging... The problem is that they might blindly
   // add additional output which will break things if what is actually being
