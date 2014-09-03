@@ -99,7 +99,7 @@ function islandora_regenerate_object_derivatives_batch(AbstractObject $object) {
     'title' => t('Regenerating all derivatives for @label', array('@label' => $object->label)),
     'operations' => islandora_do_batch_derivatives($object, array('force' => TRUE)),
     'init_message' => t('Preparing to regenerate derivatives...'),
-    'progress_message' => t('Time elapsed: @elapsed <br/>Estimated time remaning @estimate.'),
+    'progress_message' => t('Time elapsed: @elapsed <br/>Estimated time remaining @estimate.'),
     'error_message' => t('An error has occurred.'),
     'file' => drupal_get_path('module', 'islandora') . '/includes/regenerate_derivatives.form.inc',
     'finished' => 'islandora_regenerate_derivative_batch_finished',
@@ -124,7 +124,7 @@ function islandora_regenerate_datastream_derivative_batch(AbstractDatastream $da
         'destination_dsid' => $datastream->id,
     )),
     'init_message' => t('Preparing to regenerate derivatives...'),
-    'progress_message' => t('Time elapsed: @elapsed <br/>Estimated time remaning @estimate.'),
+    'progress_message' => t('Time elapsed: @elapsed <br/>Estimated time remaining @estimate.'),
     'error_message' => t('An error has occurred.'),
     'file' => drupal_get_path('module', 'islandora') . '/includes/regenerate_derivatives.form.inc',
     'finished' => 'islandora_regenerate_derivative_batch_finished',
@@ -142,15 +142,17 @@ function islandora_regenerate_datastream_derivative_batch(AbstractDatastream $da
  *   The pid of the object we are performing.
  * @param bool $force
  *   Whether we are forcing derivative regeneration or not.
+ * @param array $hook
+ *   The derivative definition.
  * @param array $context
  *   The context of the current batch operation.
  */
-function islandora_derivative_perform_batch_operation($function, $file, $pid, $force, &$context) {
+function islandora_derivative_perform_batch_operation($function, $file, $pid, $force, $hook, &$context) {
   if ($file) {
     require_once $file;
   }
   if (function_exists($function)) {
-    $logging = call_user_func($function, islandora_object_load($pid), $force);
+    $logging = call_user_func($function, islandora_object_load($pid), $force, $hook);
     if (!empty($logging)) {
       $context['results']['logging'][] = $logging;
     }

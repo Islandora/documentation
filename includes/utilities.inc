@@ -30,20 +30,51 @@ function islandora_convert_bytes_to_human_readable($bytes, $precision = 2) {
     return $bytes . ' B';
   }
   elseif (($bytes >= $kilobyte) && ($bytes < $megabyte)) {
-    return round($bytes / $kilobyte, $precision) . ' KB';
+    return round($bytes / $kilobyte, $precision) . ' KiB';
   }
   elseif (($bytes >= $megabyte) && ($bytes < $gigabyte)) {
-    return round($bytes / $megabyte, $precision) . ' MB';
+    return round($bytes / $megabyte, $precision) . ' MiB';
   }
   elseif (($bytes >= $gigabyte) && ($bytes < $terabyte)) {
-    return round($bytes / $gigabyte, $precision) . ' GB';
+    return round($bytes / $gigabyte, $precision) . ' GiB';
   }
   elseif ($bytes >= $terabyte) {
-    return round($bytes / $terabyte, $precision) . ' TB';
+    return round($bytes / $terabyte, $precision) . ' TiB';
   }
   else {
     return $bytes . ' B';
   }
+}
+
+/**
+ * Add a file as managed if is not already.
+ *
+ * @param string $file_uri
+ *   The given file URI location.
+ *
+ * @return object
+ *   The file, as returned from file_save().
+ */
+function islandora_temp_file_entry($file_uri, $mime = NULL) {
+  $query = new EntityFieldQuery();
+  $result = $query
+    ->entityCondition('entity_type', 'file')
+    ->propertyCondition('uri', $file_uri)
+    ->execute();
+  if (isset($result['file'])) {
+    $fid = current($result['file'])->fid;
+    $file = file_load($fid);
+  }
+  else {
+    $file = new stdClass();
+    $file->uri = $file_uri;
+    $file->filename = drupal_basename($file_uri);
+    if (isset($mime)) {
+      $file->filemime = $mime;
+    }
+  }
+  $file->status = 0;
+  return file_save($file);
 }
 
 /**
@@ -414,8 +445,9 @@ function islandora_get_datastreams_requirements_from_content_model(AbstractObjec
 /**
  * Prepare an ingestable object.
  *
- * @param string $namespace
- *   The namespace in which the PID for the new object will be created.
+ * @param string $name_source
+ *   Either a pid or namespace in which the PID for the new object will be
+ *   created.
  * @param string $label
  *   An optional label to apply to the object.
  * @param array $datastreams
@@ -440,10 +472,10 @@ function islandora_get_datastreams_requirements_from_content_model(AbstractObjec
  * @return NewFedoraObject
  *   An ingestable NewFedoraObject.
  */
-function islandora_prepare_new_object($namespace = NULL, $label = NULL, $datastreams = array(), $content_models = array(), $relationships = array()) {
+function islandora_prepare_new_object($name_source = NULL, $label = NULL, $datastreams = array(), $content_models = array(), $relationships = array()) {
   global $user;
   $tuque = islandora_get_tuque_connection();
-  $object = isset($namespace) ? $tuque->repository->constructObject($namespace) : new IslandoraNewFedoraObject(NULL, $tuque->repository);
+  $object = isset($name_source) ? $tuque->repository->constructObject($name_source) : new IslandoraNewFedoraObject(NULL, $tuque->repository);
   $object->owner = isset($user->name) ? $user->name : $object->owner;
   $object->label = isset($label) ? $label : $object->label;
   foreach ($content_models as $content_model) {
@@ -486,10 +518,12 @@ function islandora_prepare_new_object($namespace = NULL, $label = NULL, $datastr
         // set datastream_file by url for the given scheme. Https (SSL) can
         // cause this to fail, and trigger an output log in watchdog.
         $datastream_file = url($ds['datastream_file'], array('absolute' => TRUE));
-        watchdog('islandora',
-                 'Attempting to ingest %file in islandora_prepare_new_object(), but it does not appear to be readable. We will pass the path through url(), and pass along as such.',
-                 array('%file' => $datastream_file),
-                 WATCHDOG_WARNING);
+        watchdog(
+          'islandora',
+          'Attempting to ingest %file in islandora_prepare_new_object(), but it does not appear to be readable. We will pass the path through url(), and pass along as such.',
+          array('%file' => $datastream_file),
+          WATCHDOG_WARNING
+        );
       }
     }
 
@@ -528,7 +562,7 @@ function islandora_display_repository_inaccessible_message() {
   $link = l($text, 'admin/islandora/configure', array('attributes' => array('title' => $text)));
   $message = t('Could not connect to the repository. Please check the settings on the !link page.',
   array('!link' => $link));
-  drupal_set_message(check_plain($message), 'error', FALSE);
+  drupal_set_message(filter_xss($message), 'error', FALSE);
 
 }
 
@@ -613,54 +647,6 @@ function islandora_directory_exists_message($path) {
  */
 function islandora_system_settings_form_default_value($name, $default_value, array &$form_state) {
   return isset($form_state['values'][$name]) ? $form_state['values'][$name] : variable_get($name, $default_value);
-}
-
-/**
- * Returns basic information about DS-COMPOSITE-MODEL.
- *
- * @deprecated
- *   The pre-existing--and more flexible--
- *   islandora_get_datastreams_requirements_from_content_model() should be
- *   preferred, as it addresses the case where a stream can be allowed to have
- *   one of a set of mimetypes (this functions appears to only return the last
- *   declared mimetype for a given datastream).
- *
- * @param string $pid
- *   The PID of content model containing DS_COMP stream.
- *
- * @return array
- *   An associative array mapping datastream IDs to an associative array
- *   representing the parsed DS-COMPOSITE-MODEL of the form:
- *   - DSID: A string containing the datastream ID.
- *     - "mimetype": A string containing the last mimetype declared for the
- *       given datastream ID.
- *     - "optional": An optional boolean indicating that the given datastream
- *       is optional.
- */
-function islandora_get_comp_ds_mappings($pid) {
-  $message = islandora_deprecated('7.x-1.2', t('Refactor to use the more flexible islandora_get_datastreams_requirements_from_content_model().'));
-  trigger_error(filter_xss($message), E_USER_DEPRECATED);
-
-  $cm_object = islandora_object_load($pid);
-  if (!isset($cm_object) || !isset($cm_object['DS-COMPOSITE-MODEL'])) {
-    return FALSE;
-  }
-  $datastream = $cm_object['DS-COMPOSITE-MODEL'];
-  $ds_comp_stream = $datastream->content;
-  $sxml = new SimpleXMLElement($ds_comp_stream);
-  $mappings = array();
-  foreach ($sxml->dsTypeModel as $ds) {
-    $dsid = (string) $ds['ID'];
-    $optional = (string) $ds['optional'];
-    foreach ($ds->form as $form) {
-      $mime = (string) $form['MIME'];
-      if ($optional) {
-        $mappings[$dsid]['optional'] = $optional;
-      }
-      $mappings[$dsid]['mimetype'] = $mime;
-    }
-  }
-  return $mappings;
 }
 
 /**
@@ -859,9 +845,9 @@ function islandora_deprecated($release, $solution = NULL) {
   assert($bt[0]['function'] == __FUNCTION__);
   $function = $bt[1]['function'];
   $message = t('@function() has been deprecated. As of @release, please update your code before the next release.', array(
-               '@function' => $function,
-               '@release' => $release,
-             ));
+    '@function' => $function,
+    '@release' => $release,
+  ));
   if (isset($solution)) {
     $message .= "<br/>\n" . $solution;
   }

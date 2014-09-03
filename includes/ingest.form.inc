@@ -467,12 +467,14 @@ function islandora_ingest_form_undo_consecutive_callback_steps(array $form, arra
  *   The step which the undo callback is being called on.
  */
 function islandora_ingest_form_undo_callback_step(array $form, array &$form_state, array $step) {
-  $args = array(&$form_state);
-  $args = isset($step['undo_function']['args']) ? array_merge($args, $step['undo_function']['args']) : $args;
-  if (isset($step['undo_function']['file'])) {
-    require_once drupal_get_path('module', $step['module']) . "/" . $step['undo_function']['file'];
+  if (isset($step['undo_function'])) {
+    $args = array(&$form_state);
+    $args = isset($step['undo_function']['args']) ? array_merge($args, $step['undo_function']['args']) : $args;
+    if (isset($step['undo_function']['file'])) {
+      require_once drupal_get_path('module', $step['module']) . "/" . $step['undo_function']['file'];
+    }
+    call_user_func_array($step['undo_function']['function'], $args);
   }
-  call_user_func_array($step['undo_function']['function'], $args);
 }
 
 /**
@@ -704,7 +706,11 @@ function islandora_ingest_form_ingest_button(array &$form_state) {
   $validate_callback = $form_id . '_validate';
   $validate = function_exists($validate_callback) ? array($validate_callback) : NULL;
   $submit_callback = $form_id . '_submit';
-  $submit = function_exists($submit_callback) ? array($submit_callback, 'islandora_ingest_form_submit') : array('islandora_ingest_form_submit');
+  $submit = function_exists($submit_callback) ? array(
+    $submit_callback,
+    'islandora_ingest_form_pre_submit',
+    'islandora_ingest_form_submit',
+  ) : array('islandora_ingest_form_pre_submit', 'islandora_ingest_form_submit');
   return array(
     '#type' => 'submit',
     '#name' => 'ingest',
@@ -769,7 +775,7 @@ function islandora_ingest_form_submit(array $form, array &$form_state) {
     islandora_ingest_form_execute_consecutive_callback_steps($form, $form_state, $step);
   }
   // Ingest the objects.
-  $set_redirect = TRUE;
+  $set_redirect = isset($form_state['redirect']) ? FALSE : TRUE;
   foreach ($form_state['islandora']['objects'] as &$object) {
     try {
       islandora_add_object($object);

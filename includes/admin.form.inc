@@ -27,7 +27,7 @@ function islandora_repository_admin(array $form, array &$form_state) {
       '#type' => 'vertical_tabs',
       'islandora_general' => array(
         '#type' => 'fieldset',
-        '#title' => t('General Configuarion'),
+        '#title' => t('General Configuration'),
         'wrapper' => array(
           '#prefix' => '<div id="islandora-url">',
           '#suffix' => '</div>',
@@ -72,7 +72,7 @@ function islandora_repository_admin(array $form, array &$form_state) {
           '#default_value' => $restrict_namespaces,
         ),
         'islandora_pids_allowed' => array(
-          '#type' => 'textfield',
+          '#type' => 'textarea',
           '#title' => t('PID namespaces allowed in this Drupal install'),
           '#description' => t('A list of PID namespaces, separated by spaces, that users are permitted to access from this Drupal installation. <br /> This could be more than a simple namespace, e.g. <b>demo:mydemos</b>. <br /> The namespace <b>islandora:</b> is reserved, and is always allowed.'),
           '#default_value' => variable_get('islandora_pids_allowed', 'default: demo: changeme: ilives: islandora-book: books: newspapers: '),
@@ -81,6 +81,16 @@ function islandora_repository_admin(array $form, array &$form_state) {
               ':input[name="islandora_namespace_restriction_enforced"]' => array('checked' => FALSE),
             ),
           ),
+        ),
+      ),
+      'islandora_ds_replace_exclude' => array(
+        '#type' => 'fieldset',
+        '#title' => t('Excluded DSID'),
+        'islandora_ds_replace_exclude_enforced' => array(
+          '#type' => 'textfield',
+          '#title' => t('Enforce DSID restrictions'),
+          '#description' => t("A comma seperated list, allowing administrator to restrict user's access to replace a versionable datastreams latest version"),
+          '#default_value' => variable_get('islandora_ds_replace_exclude_enforced', 'RELS-EXT,RELS-INT'),
         ),
       ),
     ),

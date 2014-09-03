@@ -22,6 +22,10 @@ function islandora_add_datastream_form(array $form, array &$form_state, Abstract
   module_load_include('inc', 'islandora', 'includes/content_model');
   module_load_include('inc', 'islandora', 'includes/utilities');
   form_load_include($form_state, 'inc', 'islandora', 'includes/add_datastream.form');
+  $form_state['object_id'] = $object->id;
+
+  // @deprecated Storing objects in $form_state is asking for a bad time...
+  // Causes issues with derivative generation when we try to use it.
   $form_state['object'] = $object;
   $form_state['datastream_requirements'] = islandora_get_missing_datastreams_requirements($object);
   $unused_datastreams = array_keys($form_state['datastream_requirements']);
@@ -93,7 +97,8 @@ function islandora_add_datastream_form(array $form, array &$form_state, Abstract
  *   The Drupal form.
  */
 function islandora_add_datastream_form_field_is_not_an_existing_datastream_id(array $element, array &$form_state, array $form) {
-  if (isset($form_state['object'][$element['#value']])) {
+  $object = islandora_object_load($form_state['object_id']);
+  if (isset($object[$element['#value']])) {
     form_error($element, t("@title already exists in the object.", array('@title' => $element['#title'])));
   }
 }
@@ -183,7 +188,7 @@ function islandora_add_datastream_form_validate(array $form, array &$form_state)
  *   The Drupal form state.
  */
 function islandora_add_datastream_form_submit(array $form, array &$form_state) {
-  $object = $form_state['object'];
+  $object = islandora_object_load($form_state['object_id']);
   $form_state['redirect'] = "islandora/object/{$object->id}";
   $file = file_load($form_state['values']['file']);
   try {

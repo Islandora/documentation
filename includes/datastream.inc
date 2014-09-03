@@ -54,7 +54,6 @@ function islandora_view_datastream(AbstractDatastream $datastream, $download = F
     // Browsers will not append all extensions.
     $mime_detect = new MimeDetect();
     $extension = '.' . $mime_detect->getExtension($datastream->mimetype);
-
     // Prevent adding on a duplicate extension.
     $label = $datastream->label;
     $extension_length = strlen($extension);
@@ -65,7 +64,6 @@ function islandora_view_datastream(AbstractDatastream $datastream, $download = F
     if ($duplicate_extension_position === FALSE) {
       $filename .= $extension;
     }
-
     header("Content-Disposition: attachment; filename=\"$filename\"");
   }
 
@@ -291,42 +289,6 @@ function islandora_datastream_get_url(AbstractDatastream $datastream, $type = 'd
 }
 
 /**
- * Gets the delete link.
- *
- * @param AbstractDatastream $datastream
- *   The datastream to generated the url to.
- *
- * @return string
- *   Markup containing the link to the confirm form to delete the datastream.
- */
-function islandora_datastream_get_delete_link(AbstractDatastream $datastream) {
-  $message = islandora_deprecated('7.x-1.2', 'Use the "islandora_datastream_delete_link" theme implementation.');
-  trigger_error(filter_xss($message), E_USER_DEPRECATED);
-
-  return theme('islandora_datastream_delete_link', array(
-    'datastream' => $datastream,
-  ));
-}
-
-/**
- * Gets the edit link.
- *
- * @param AbstractDatastream $datastream
- *   The datastream to generated the url to.
- *
- * @return string
- *   Markup containing the link to edit the datastream.
- */
-function islandora_datastream_edit_get_link(AbstractDatastream $datastream) {
-  $message = islandora_deprecated('7.x-1.2', 'Use the "islandora_datastream_edit_link" theme implementation.');
-  trigger_error(filter_xss($message), E_USER_DEPRECATED);
-
-  return theme('islandora_datastream_edit_link', array(
-    'datastream' => $datastream,
-  ));
-}
-
-/**
  * Display the edit datastream page.
  *
  * @param AbstractDatastream $datastream
@@ -371,44 +333,6 @@ function islandora_edit_datastream_registry_render(array $edit_registry) {
     '#type' => 'markup',
     '#markup' => $markup,
   );
-}
-
-/**
- * Get markup for a download link.
- *
- * @param AbstractDatastream $datastream
- *   The datastream for which to generate a link.
- *
- * @return string
- *   Either the link markup if the user has access or an empty string if the
- *   user is not allowed to see the given datastream.
- */
-function islandora_datastream_get_download_link(AbstractDatastream $datastream) {
-  $message = islandora_deprecated('7.x-1.2', 'Use the "islandora_datastream_download_link" theme implementation.');
-  trigger_error(filter_xss($message), E_USER_DEPRECATED);
-
-  return theme('islandora_datastream_download_link', array(
-    'datastream' => $datastream,
-  ));
-}
-
-/**
- * Get markup for a view link.
- *
- * @param AbstractDatastream $datastream
- *   The datastream for which to generate a link.
- *
- * @return string
- *   Either the link markup if the user has access or a string containing the
- *   datastream ID if the user is not allowed to see the given datastream.
- */
-function islandora_datastream_get_view_link(AbstractDatastream $datastream) {
-  $message = islandora_deprecated('7.x-1.2', 'Use the "islandora_datastream_view_link" theme implementation.');
-  trigger_error(filter_xss($message), E_USER_DEPRECATED);
-
-  return theme('islandora_datastream_view_link', array(
-    'datastream' => $datastream,
-  ));
 }
 
 /**

@@ -132,8 +132,9 @@ class MimeDetect {
     'wbxml' => 'application/vnd.wap.wbxml',
     'xht' => 'application/xhtml+xml',
     'xhtml' => 'application/xhtml+xml',
-    'xsl' => 'text/xml',
-    'xml' => 'text/xml',
+    'xsl' => 'text/xsl',
+    'xslt' => 'text/xsl',
+    'xml' => 'application/xml',
     'csv' => 'text/csv',
     'tsv' => 'text/tab-separated-values',
     'txt' => 'text/plain',
@@ -184,6 +185,37 @@ class MimeDetect {
     "ogg" => "audio/ogg",
     "flac" => "audio/x-flac",
     "wav" => "audio/vnd.wave",
+    // Chemical:
+    // MDL Molfile.
+    "mol" => "chemical/x-mdl-molfile",
+    // XYZ format.
+    "xyz" => "chemical/x-xyz",
+    // PDB.
+    "pdb" => "chemical/x-pdb",
+    // ChemDraw CDX.
+    'cdx' => 'chemical/x-cdx',
+    // ChemDraw 3D.
+    "c3d" => "chemical/x-chem3d",
+    // ChemDraw file.
+    "chm" => "chemical/x-chemdraw",
+    // Crystallographic Information File.
+    "cif" => "chemical/x-cif",
+    // Chemical Markup Language.
+    "cml" => "chemical/x-cml",
+    // GAMESS Input.
+    "inp" => "chemical/x-gamess-input",
+    // GAMESS Output.
+    "gam" => "chemical/x-gamess-output",
+    // Gaussian Cube.
+    "cub" => "chemical/x-gaussian-cube",
+    // Gaussian 98/03 Cartesian Input.
+    "gau" => "chemical/x-gaussian-input",
+    // JCAMP Spectroscopic Data Exchange Format.
+    "jdx" => "chemical/x-jcamp-dx",
+    // OpenDX Grid.
+    "dx" => "chemical/x-jcamp-dx",
+    // MOPAC Cartesian.
+    "mop" => "chemical/x-mopac-input",
     // Compressed formats:
     // (note: http://svn.cleancode.org/svn/email/trunk/mime.types)
     "tgz" => "application/x-gzip",
@@ -193,6 +225,8 @@ class MimeDetect {
     "zip" => "application/x-zip",
     // others:
     'bin' => 'application/octet-stream',
+    // Web Archives:
+    "warc" => "application/warc",
   );
   protected $protectedFileExtensions;
   protected $extensionExceptions = array(

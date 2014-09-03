@@ -1,0 +1,276 @@
+<?php
+/**
+ * @file
+ * Tests for things that test tests. Madness.
+ */
+
+/**
+ * A test DatastreamValidator for the DatastreamValidatorResultTestCase.
+ */
+class TestDatastreamValidator extends DatastreamValidator {
+
+  /**
+   * Assertion that adds a TRUE result.
+   */
+  protected function assertSomethingSuccessfully() {
+    $this->addResult(TRUE, 'yay you did it', $this->getAssertionCall());
+  }
+
+  /**
+   * Assertion that adds a FALSE result.
+   */
+  protected function assertSomethingFailed() {
+    $this->addResult(FALSE, 'boo you failed', $this->getAssertionCall());
+  }
+}
+
+/**
+ * Tests the ability of DatastreamValidators to produce correct results.
+ */
+class DatastreamValidatorResultTestCase extends IslandoraWebTestCase {
+
+  /**
+   * Returns the info for this test case.
+   *
+   * @see DrupalWebTestCase::getInfo()
+   */
+  public static function getInfo() {
+    return array(
+      'name' => 'Datastream Validator Result Tests',
+      'description' => 'Unit tests for datastream validation result functionality.',
+      'group' => 'Islandora',
+    );
+  }
+
+  /**
+   * Sets up the test.
+   *
+   * @see DrupalWebTestCase::setUp()
+   */
+  public function setUp() {
+    parent::setUp();
+    $user = $this->drupalCreateUser(array_keys(module_invoke_all('permission')));
+    $this->drupalLogin($user);
+    $object = $this->ingestConstructedObject();
+    $validator = new TestDatastreamValidator($object, 'DC');
+    $this->validator_results = $validator->getResults();
+  }
+
+  /**
+   * Generates a generic DatastreamValidatorResult and grabs its properties.
+   */
+  public function testDatastreamValidatorResult() {
+    $result = new IslandoraTestUtilityResult(TRUE, 'true', array());
+    $this->assertEqual($result->getMessage(), 'true', "Result message generated correctly.", 'Islandora');
+    $this->assertEqual($result->getType(), TRUE, "Result type generated correctly.", 'Islandora');
+    $this->assertEqual($result->getCaller(), array(), "Result caller generated correctly.", 'Islandora');
+  }
+
+  /**
+   * Gets the results of TestDatastreamValidator and confirms only 2 exist.
+   */
+  public function testTestDatastreamValidatorResultCount() {
+    $this->assertTrue(isset($this->validator_results[0]), "First of two expected results found.", 'Islandora');
+    $this->assertTrue(isset($this->validator_results[1]), "Second of two expected results found.", 'Islandora');
+    $this->assertFalse(isset($this->validator_results[2]), "No other unexpected results found.", 'Islandora');
+  }
+
+  /**
+   * Confirms the messages from TestDatastreamValidator.
+   */
+  public function testTestDatastreamValidatorMessages() {
+    if (isset($this->validator_results[0]) && isset($this->validator_results[1])) {
+      $this->assertEqual($this->validator_results[0]->getMessage(), 'yay you did it', "Appropriate pass message returned.", 'Islandora');
+      $this->assertEqual($this->validator_results[1]->getMessage(), 'boo you failed', "Appropriate fail message returned.", 'Islandora');
+    }
+  }
+
+  /**
+   * Confirms the types from TestDatastreamValidator.
+   */
+  public function testTestDatastreamValidatorTypes() {
+    if (isset($this->validator_results[0]) && isset($this->validator_results[1])) {
+      $this->assertEqual($this->validator_results[0]->getType(), TRUE, "Appropriate pass type of TRUE returned.", 'Islandora');
+      $this->assertEqual($this->validator_results[1]->getType(), FALSE, "Appropriate fail type of FALSE returned.", 'Islandora');
+    }
+  }
+
+  /**
+   * Confirms the useful information from TestDatastreamValidator.
+   */
+  public function testTestDatastreamValidatorCallers() {
+    if (isset($this->validator_results[0]) && isset($this->validator_results[1])) {
+      // Grab the callers.
+      $first_caller = $this->validator_results[0]->getCaller();
+      $second_caller = $this->validator_results[1]->getCaller();
+
+      // Assert the 'file' key.
+      $this->assertTrue(substr($first_caller['file'], -48) === '/islandora/tests/datastream_validator_tests.test', "Appropriate pass caller file returned.", 'Islandora');
+      $this->assertTrue(substr($first_caller['file'], -48) === substr($second_caller['file'], -48), "Fail caller file matches the pass caller file.", 'Islandora');
+      $this->assertTrue($first_caller['function'] === 'TestDatastreamValidator->assertSomethingSuccessfully()', "Correct pass caller function returned (actual: {$first_caller['function']}; expected: TestDatastreamValidator->assertSomethingSuccessfully()).", 'Islandora');
+      $this->assertTrue($second_caller['function'] === 'TestDatastreamValidator->assertSomethingFailed()', "Correct fail caller function returned (actual: {$second_caller['function']}; expected: TestDatastreamValidator->assertSomethingFailed()).", 'Islandora');
+      $this->assertTrue($first_caller['line'] === 16, "Correct pass line number returned (actual: {$first_caller['line']}; expected: 16).", 'Islandora');
+      $this->assertTrue($second_caller['line'] === 23, "Correct fail line number returned (actual: {$second_caller['line']}; expected: 23).", 'Islandora');
+    }
+  }
+
+}
+
+/**
+ * Procedurally generated tests for DatastreamValidators.
+ */
+class PrefixDatastreamValidatorTestCase extends IslandoraWebTestCase {
+
+  /**
+   * The path to the datastream validator files.
+   *
+   * @var string
+   */
+  protected $path;
+
+  /**
+   * Returns the info for this test case.
+   *
+   * @see DrupalWebTestCase::getInfo()
+   */
+  public static function getInfo() {
+    return array(
+      'name' => 'Datastream File Validation Tests',
+      'description' => 'Tests each file in the islandora/tests/fixtures/datastream_validator_files folder against the appropriate DatastreamValidator class (see the README.md in the tests folder for details).',
+      'group' => 'Islandora',
+    );
+  }
+
+  /**
+   * Sets up the test.
+   *
+   * @see DrupalWebTestCase::setUp()
+   */
+  public function setUp() {
+    parent::setUp();
+    $this->path = DRUPAL_ROOT . drupal_get_path('module', 'islandora') . "/tests/fixtures/datastream_validator_files/";
+  }
+
+  /**
+   * Confirms that a DatastreamValidator class exists for given filename.
+   *
+   * @param string $filename
+   *   The file to grab the DatastreamValidator prefix from.
+   *
+   * @return bool
+   *   TRUE if such a class exists; FALSE otherwise.
+   */
+  protected function confirmValidatorClass($filename) {
+    $prefix = $this->getPrefix($filename);
+    if (!class_exists("{$prefix}DatastreamValidator")) {
+      $this->fail("No such DatastreamValidator exists for the prefix $prefix (filename: $filename).");
+      return FALSE;
+    }
+    return TRUE;
+  }
+
+  /**
+   * Confirms that a file exists at the given path.
+   *
+   * Bundled with lovely return values and fail messages.
+   *
+   * @param string $path
+   *   The path to the file.
+   *
+   * @return bool
+   *   TRUE if the file exists, FALSE otherwise.
+   */
+  protected function confirmValidatorFile($path) {
+    if (!file_exists($path)) {
+      $this->fail("No such file exists at path $path.");
+      return FALSE;
+    }
+    return TRUE;
+  }
+
+  /**
+   * Gets the intended prefix from a filename.
+   *
+   * Uses the portion of the filename before the first period.
+   *
+   * @param string $filename
+   *   The filename to get the prefix for.
+   *
+   * @return string
+   *   The intended prefix.
+   */
+  protected function getPrefix($filename) {
+    return array_shift(explode('.', $filename));
+  }
+
+  /**
+   * Create an object with a datastream generated from the given filename.
+   *
+   * @param string $filename
+   *   The filename to use when adding a datastream.
+   *
+   * @return IslandoraFedoraObject
+   *   The created object.
+   */
+  protected function createObjectWithDatastream($filename) {
+    $prefix = $this->getPrefix($filename);
+    if (!$this->confirmValidatorClass($filename) && !$this->confirmValidatorFile($this->path . $filename)) {
+      return FALSE;
+    }
+
+    $datastreams = array(array(
+      'dsid' => $prefix,
+      'path' => $this->path . $filename,
+      'control_group' => 'M',
+      ),
+    );
+    $object = $this->ingestConstructedObject(array(), $datastreams);
+    return $object;
+  }
+
+  /**
+   * Procedurally test each file in $this->path against a datastream validator.
+   *
+   * Check the README.md in this folder for details.
+   */
+  public function testDatastreamValidators() {
+
+    // Grab everything in the validator files folder except for .ini files.
+    $files = array_intersect(glob("{$this->path}/*"), glob("{$this->path}/*.ini"));
+
+    foreach ($files as $file) {
+      $prefix = $this->getPrefix($file);
+
+      // If createObjectWithDatastream fails, we don't want to continue. We'll
+      // task it with returning fail messages rather than do so here.
+      $object = $this->createObjectWithDatastream($file);
+      if ($object !== FALSE) {
+        // Generate an appropriate validator.
+        $validator_name = "{$prefix}DatastreamValidator";
+        // If the file is paired with an .ini, use it as the third param.
+        if (file_exists("{$this->path}$file.ini")) {
+          $validator = new $validator_name($object, $prefix, parse_ini_file("{$this->path}$file.ini"));
+        }
+        else {
+          $validator = new $validator_name($object, $prefix);
+        }
+
+        // Get the results, check for fails.
+        $results = $validator->getResults();
+        $fails = FALSE;
+        foreach ($results as $result) {
+          if (!$result->getType()) {
+            $fails = TRUE;
+            $caller = $result->getCaller();
+            $this->fail("Failed to validate the test file $file against the assertion {$caller['function']}.");
+          }
+        }
+
+        // If there were no fails, say that the file passed validation.
+        if (!$fails) {
+          $this->pass("Test file $file validated successfully.");
+        }
+      }
+    }
+  }
+}

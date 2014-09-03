@@ -176,8 +176,7 @@ function drush_islandora_solution_pack_install_content_models() {
     $info = islandora_solution_packs_get_required_objects($module);
     $objects_to_add = array();
     foreach ($info['objects'] as $key => $candidate) {
-      $object = islandora_object_load($candidate);
-      if ($object && in_array('fedora-system:ContentModel-3.0', $object->models)) {
+      if (in_array('fedora-system:ContentModel-3.0', $candidate->models)) {
         $objects_to_add[] = $candidate;
       }
     }
@@ -194,7 +193,7 @@ function drush_islandora_solution_pack_install_content_models() {
         $new_object = islandora_add_object($object_to_add);
         $verb = $deleted ? dt("Replaced") : dt("Added");
         if ($new_object) {
-          drush_log("$verb " . $object_to_add->id . " - " . $object_to_add->label);
+          drush_print("$verb " . $object_to_add->id . " - " . $object_to_add->label);
         }
       }
     }

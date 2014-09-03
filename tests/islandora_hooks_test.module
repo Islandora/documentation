@@ -112,6 +112,10 @@ function islandora_hooks_test_islandora_object_ingested(AbstractObject $object) 
 function islandora_hooks_test_islandora_object_modified(AbstractObject $object) {
   if ($object->id == 'test:testModifiedObjectHook') {
     $_SESSION['islandora_hooks']['hook'][ISLANDORA_OBJECT_MODIFIED_HOOK] = TRUE;
+    if ($_SESSION['islandora_hooks']['iteration'][ISLANDORA_OBJECT_MODIFIED_HOOK]++ < 3) {
+      $new_label = 'New Label! + ' . $_SESSION['islandora_hooks']['iteration'][ISLANDORA_OBJECT_MODIFIED_HOOK];
+      $object->label = $new_label;
+    }
   }
 }
 
@@ -139,6 +143,10 @@ function islandora_hooks_test_islandora_datastream_ingested(AbstractObject $obje
 function islandora_hooks_test_islandora_datastream_modified(AbstractObject $object, AbstractDatastream $datastream) {
   if ($object->id == 'test:testModifiedDatastreamHook' && $datastream->id == "TEST") {
     $_SESSION['islandora_hooks']['hook'][ISLANDORA_DATASTREAM_MODIFIED_HOOK] = TRUE;
+    if ($_SESSION['islandora_hooks']['iteration'][ISLANDORA_DATASTREAM_MODIFIED_HOOK]++ < 3) {
+      $new_label = 'New Label! + ' . $_SESSION['islandora_hooks']['iteration'][ISLANDORA_DATASTREAM_MODIFIED_HOOK];
+      $datastream->label = $new_label;
+    }
   }
 }
 

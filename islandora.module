@@ -37,7 +37,7 @@ define('ISLANDORA_VIEW_DATASTREAM_HISTORY', 'view old datastream versions');
 define('ISLANDORA_MANAGE_DELETED_OBJECTS', 'manage deleted objects');
 define('ISLANDORA_REVERT_DATASTREAM', 'revert to old datastream');
 define('ISLANDORA_REGENERATE_DERIVATIVES', 'regenerate derivatives for an object');
-
+define('ISLANDORA_REPLACE_DATASTREAM_CONTENT', 'replace a datastream with new content, preserving version history');
 
 // Hooks.
 define('ISLANDORA_VIEW_HOOK', 'islandora_view_object');
@@ -63,19 +63,6 @@ define('ISLANDORA_DERVIATIVE_CREATION_HOOK', 'islandora_derivative');
 // Autocomplete paths.
 define('ISLANDORA_CONTENT_MODELS_AUTOCOMPLETE', 'islandora/autocomplete/content-models');
 define('ISLANDORA_MIME_TYPES_AUTOCOMPLETE', 'islandora/autocomplete/mime-types');
-
-/**
- * @deprecated Constants.
- */
-// @codingStandardsIgnoreStart
-define('DS_COMP_STREAM', ISLANDORA_DS_COMP_STREAM);
-define('FEDORA_VIEW_OBJECTS', ISLANDORA_VIEW_OBJECTS);
-define('FEDORA_METADATA_EDIT', ISLANDORA_METADATA_EDIT);
-define('FEDORA_ADD_DS', ISLANDORA_ADD_DS);
-define('FEDORA_INGEST', ISLANDORA_INGEST);
-define('FEDORA_PURGE', ISLANDORA_PURGE);
-define('FEDORA_MANAGE_PROPERTIES', ISLANDORA_MANAGE_PROPERTIES);
-// @codingStandardsIgnoreEnd
 
 /**
  * Implements hook_menu().
@@ -109,13 +96,35 @@ function islandora_menu() {
     'file' => 'includes/metadata.inc',
     'access arguments' => array('administer site configuration'),
   );
-  $items['admin/islandora/solution_packs'] = array(
-    'title' => 'Solution packs',
+  $items['admin/islandora/solution_pack_config'] = array(
+    'title' => 'Solution pack configuration',
+    'description' => 'Configure Islandora solution packs.',
+    'access callback' => 'islandora_find_package',
+    'access arguments' => array('Islandora Solution Packs'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+  $items['admin/islandora/islandora_viewers'] = array(
+    'title' => 'Islandora Viewers',
+    'description' => 'Configure custom viewers.',
+    'access callback' => 'islandora_find_package',
+    'access arguments' => array('Islandora Viewers'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+  $items['admin/islandora/tools'] = array(
+    'title' => 'Islandora Utility Modules',
+    'description' => 'Configure Islandora utility modules.',
+    'access callback' => 'islandora_find_package',
+    'access arguments' => array('Islandora Tools'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+  $items['admin/islandora/solution_pack_config/solution_packs'] = array(
+    'title' => 'Solution packs required objects',
     'description' => 'Install content models and collections required by installed solution packs.',
     'page callback' => 'islandora_solution_packs_admin',
     'access arguments' => array(ISLANDORA_ADD_DS),
     'file' => 'includes/solution_packs.inc',
     'type' => MENU_NORMAL_ITEM,
+    'weight' => -1,
   );
   $items['islandora'] = array(
     'title' => 'Islandora Repository',
@@ -133,9 +142,11 @@ function islandora_menu() {
     'access arguments' => array(ISLANDORA_VIEW_OBJECTS, 2),
   );
   $items['islandora/object/%islandora_object/print_object'] = array(
+    'title' => 'Print Object',
+    'weight' => 20,
     'page callback' => 'islandora_printer_object',
     'page arguments' => array(2),
-    'type' => MENU_NORMAL_ITEM,
+    'type' => MENU_LOCAL_TASK,
     'access callback' => 'islandora_object_access',
     'access arguments' => array(ISLANDORA_VIEW_OBJECTS, 2),
   );
@@ -293,6 +304,16 @@ function islandora_menu() {
     'type' => MENU_CALLBACK,
     'access callback' => 'islandora_datastream_access',
     'access arguments' => array(ISLANDORA_VIEW_DATASTREAM_HISTORY, 4),
+    'load arguments' => array(2),
+  );
+  $items['islandora/object/%islandora_object/datastream/%islandora_datastream/replace'] = array(
+    'title' => 'Replace Datastream',
+    'page arguments' => array('islandora_datastream_version_replace_form', 4),
+    'page callback' => 'drupal_get_form',
+    'file' => 'includes/datastream.version.inc',
+    'type' => MENU_CALLBACK,
+    'access callback' => 'islandora_datastream_access',
+    'access arguments' => array(ISLANDORA_REPLACE_DATASTREAM_CONTENT, 4),
     'load arguments' => array(2),
   );
   $items['islandora/object/%islandora_object/datastream/%islandora_datastream/version/%/delete'] = array(
@@ -494,6 +515,10 @@ function islandora_theme() {
       'file' => 'theme/theme.inc',
       'variables' => array('datastream' => NULL),
     ),
+    'islandora_datastream_replace_link' => array(
+      'file' => 'theme/theme.inc',
+      'variables' => array('datastream' => NULL),
+    ),
     'islandora_dublin_core_display' => array(
       'file' => 'theme/theme.inc',
       'template' => 'theme/islandora-dublin-core-display',
@@ -571,6 +596,10 @@ function islandora_permission() {
     ISLANDORA_REGENERATE_DERIVATIVES => array(
       'title' => t('Regenerate derivatives'),
       'description' => t('Regenerate derivatives for an object or per datastream.'),
+    ),
+    ISLANDORA_REPLACE_DATASTREAM_CONTENT => array(
+      'title' => t('Replace datastreams'),
+      'description' => t('Add new datastream content as latest version.'),
     ),
   );
 }
@@ -677,6 +706,7 @@ function islandora_forms($form_id) {
  *   otherwise.
  */
 function islandora_user_access($object_or_datastream, array $permissions, $content_models = array(), $access_any = TRUE, $user = NULL) {
+
   module_load_include('inc', 'islandora', 'includes/utilities');
   $is_repository_accessible = &drupal_static(__FUNCTION__);
 
@@ -880,7 +910,8 @@ function islandora_object_manage_access_callback($perms, $object = NULL) {
 function islandora_manage_overview_object(AbstractObject $object) {
   module_load_include('inc', 'islandora', 'includes/utilities');
   $output = array();
-  foreach (islandora_build_hook_list(ISLANDORA_OVERVIEW_HOOK, $object->models) as $hook) {
+  $hooks = islandora_build_hook_list(ISLANDORA_OVERVIEW_HOOK, $object->models);
+  foreach ($hooks as $hook) {
     $temp = module_invoke_all($hook, $object);
     islandora_as_renderable_array($temp);
     if (!empty($temp)) {
@@ -892,7 +923,7 @@ function islandora_manage_overview_object(AbstractObject $object) {
     $output = islandora_default_islandora_manage_overview_object($object);
   }
   arsort($output);
-  drupal_alter(ISLANDORA_OVERVIEW_HOOK, $object, $output);
+  drupal_alter($hooks, $object, $output);
   islandora_as_renderable_array($output);
   return $output;
 }
@@ -994,17 +1025,6 @@ function islandora_view_default_object() {
 function islandora_view_object(AbstractObject $object) {
   module_load_include('inc', 'islandora', 'includes/breadcrumb');
   module_load_include('inc', 'islandora', 'includes/utilities');
-
-  // Add the print button via JavaScript.
-  $path = drupal_get_path('module', 'islandora');
-  drupal_add_js(array(
-    'islandora' => array(
-      'print_img' => $path . '/images/print-icon.png'),
-      ), array(
-        'type' => 'setting'));
-
-  drupal_add_js(array('islandora' => array('print_link' => 'islandora/object/' . $object->id . '/print_object')), array('type' => 'setting'));
-  drupal_add_js($path . '/js/add_print.js');
 
   drupal_set_title($object->label);
   drupal_set_breadcrumb(islandora_get_breadcrumbs($object));
@@ -1530,6 +1550,11 @@ function islandora_entity_property_info() {
     'label' => t('Content Models'),
     'description' => t('The list of content models which the object has.'),
   );
+  $p['createdDate'] = array(
+    'type' => 'text',
+    'label' => t('Created Date'),
+    'description' => t('When the object was created.'),
+  );
 
   return $info;
 }
@@ -1681,7 +1706,7 @@ function islandora_islandora_basic_collection_get_query_filters() {
   if ($enforced) {
     $namespace_array = islandora_get_allowed_namespaces();
     $namespace_sparql = implode('|', $namespace_array);
-    return format_string('regex(str(?object), "info:fedora/(!namespaces):")', array('!namespaces' => $namespace_sparql));
+    return array('islandora_namespace_restrictions' => format_string('regex(str(?object), "info:fedora/(!namespaces):")', array('!namespaces' => $namespace_sparql)));
   }
 }
 
@@ -1694,10 +1719,7 @@ function islandora_islandora_basic_collection_get_query_filters() {
  */
 function islandora_islandora_object_ingested(AbstractObject $object) {
   module_load_include('inc', 'islandora', 'includes/derivatives');
-  $logging_results = islandora_do_derivatives($object, array(
-    'source_dsid' => NULL,
-  ));
-  islandora_derivative_logging($logging_results);
+  islandora_run_derivatives($object, NULL);
 }
 
 /**
@@ -1708,10 +1730,7 @@ function islandora_islandora_object_ingested(AbstractObject $object) {
  */
 function islandora_islandora_datastream_ingested(AbstractObject $object, AbstractDatastream $datastream) {
   module_load_include('inc', 'islandora', 'includes/derivatives');
-  $logging_results = islandora_do_derivatives($object, array(
-    'source_dsid' => $datastream->id,
-  ));
-  islandora_derivative_logging($logging_results);
+  islandora_run_derivatives($object, $datastream->id);
 }
 
 /**
@@ -1787,15 +1806,12 @@ function islandora_form_simpletest_test_form_alter(array &$form) {
 function islandora_repair_drupal_filter() {
 
   // Grab the config.
-  $path = drupal_get_path('module', 'islandora');
-  if (file_exists("$path/tests/test_config.ini")) {
-    $configuration = parse_ini_file("$path/tests/test_config.ini");
+  module_load_include('inc', 'islandora', 'tests/utilities/test_utility_abstraction');
+  try {
+    $configuration = IslandoraTestUtilityClass::getTestConfiguration();
   }
-  elseif (file_exists("$path/tests/default.test_config.ini")) {
-    $configuration = parse_ini_file("$path/tests/default.test_config.ini");
-  }
-  else {
-    drupal_set_message(t('Required default.test_config.ini/test_config.ini file not found'), 'error');
+  catch (Exception $e) {
+    drupal_set_message(t("Error parsing test configuration: %e", array('%e' => $e)), 'error');
     return FALSE;
   }
 
@@ -1824,9 +1840,9 @@ function islandora_repair_drupal_filter() {
   }
 }
 
- /**
-  * Implements hook_islandora_metadata_display_info().
-  */
+/**
+ * Implements hook_islandora_metadata_display_info().
+ */
 function islandora_islandora_metadata_display_info() {
   return array(
     'dublin_core' => array(
@@ -1852,7 +1868,8 @@ function islandora_islandora_datastream_access($op, AbstractDatastream $datastre
     $hooks = islandora_invoke_hook_list(ISLANDORA_DERVIATIVE_CREATION_HOOK, $object->models, array($object));
     $hooks = islandora_filter_derivatives($hooks, array('force' => TRUE), $object);
     foreach ($hooks as $hook) {
-      if ($hook['destination_dsid'] == $datastream->id && islandora_datastream_access(ISLANDORA_VIEW_OBJECTS, $object[$hook['source_dsid']], $user)) {
+      if ($hook['destination_dsid'] == $datastream->id &&
+        (is_null($hook['source_dsid']) || islandora_datastream_access(ISLANDORA_VIEW_OBJECTS, $object[$hook['source_dsid']], $user))) {
         $applicable_hook = TRUE;
         break;
       }
@@ -1862,4 +1879,75 @@ function islandora_islandora_datastream_access($op, AbstractDatastream $datastre
     }
   }
   return $result;
+}
+
+/**
+ * Access for submenu items.
+ *
+ * @param string $package_name
+ *   Name of the package
+ *
+ * @return bool
+ *   Access granted
+ */
+function islandora_find_package($package_name) {
+  $results = system_get_info('module');
+  $found = FALSE;
+  foreach ($results as $name => $values) {
+    if ($values['package'] == $package_name) {
+      $found = TRUE;
+      break;
+    }
+  }
+  return $found && user_access('administer site configuration');
+}
+
+/**
+ * Helper function for ingest steps and batches.
+ *
+ * When batches within batches are triggered within ingest steps
+ * the submit handler becomes out of scope. When it becomes time to execute the
+ * submit the function cannot be found and fails. This pre-submit is to
+ * get around this problem.
+ *
+ * @see https://www.drupal.org/node/2300367
+ *
+ * @see https://www.drupal.org/node/1300928
+ */
+function islandora_ingest_form_pre_submit($form, &$form_state) {
+  module_load_include('inc', 'islandora', 'includes/ingest.form');
+}
+
+/**
+ * Implements hook_menu_local_tasks_alter().
+ */
+function islandora_menu_local_tasks_alter(&$data, $router_item, $root_path) {
+  if (strpos($root_path, 'islandora/object/%') === 0) {
+    if (isset($data['tabs'][0]['output'])) {
+      foreach ($data['tabs'][0]['output'] as $key => &$tab) {
+        if ($tab['#link']['path'] == 'islandora/object/%/print_object') {
+          if ($root_path == 'islandora/object/%') {
+            $islandora_path = drupal_get_path('module', 'islandora');
+            $tab['#theme'] = 'link';
+            $tab['#text'] = theme('image', array(
+              'path' => "$islandora_path/images/print-icon.png",
+              'alt' => t('Print Object'),
+              'attributes' => array(
+                'id' => 'print_btn',
+              ),
+            ));
+            $tab['#path'] = "{$router_item['href']}/print_object";
+            $tab['#options'] = array(
+              'attributes' => array(),
+              'html' => TRUE,
+            );
+          }
+          else {
+            unset($data['tabs'][0]['output'][$key]);
+            break;
+          }
+        }
+      }
+    }
+  }
 }

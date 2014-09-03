@@ -232,9 +232,141 @@ function islandora_revert_datastream_version_form_submit(array $form, array &$fo
 }
 
 /**
+ * Process available dsids, mime and extensions for a given object.
+ *
+ * @param AbstractObject $object
+ *   The FedoraObject to process available extensions
+ *
+ * @return array()
+ *   An associative array, merged from calls to
+ *   islandora_get_datastreams_requirements_from_content_models()
+ *   and an objects dsid's.
+ */
+function islandora_get_object_extensions(AbstractObject $object) {
+  $extensions = islandora_get_datastreams_requirements_from_models($object->models);
+  foreach ($object as $datastream) {
+    // Could be a datastream not associated in a content model,
+    // such as user added.
+    if (!isset($extensions[$datastream->id])) {
+      // Add the extensions manually.
+      $extensions[$datastream->id] = array(
+        'id' => $datastream->id,
+        'optional' => TRUE,
+        'mime' => array($datastream->mimeType),
+      );
+    }
+  }
+  return $extensions;
+}
+
+/**
+ * The admin replace datastream form.
+ *
+ * @param array $form
+ *   The Drupal form.
+ * @param array $form_state
+ *   The Drupal form state.
+ * @param AbstractDatastream $datastream
+ *   The datastream to be updated.
+ *
+ * @return array
+ *   The drupal form definition.
+ */
+function islandora_datastream_version_replace_form($form, &$form_state, AbstractDatastream $datastream) {
+  module_load_include('inc', 'islandora', 'includes/content_model');
+  module_load_include('inc', 'islandora', 'includes/utilities');
+
+  $object = islandora_object_load($datastream->parent->id);
+  $form_state['object_id'] = $object->id;
+  $form_state['dsid'] = $datastream->id;
+  $form_state['object'] = $object;
+  $datastream_mime_map = islandora_get_object_extensions($object);
+  $mime_detect = new MimeDetect();
+  $ext = array();
+  if (isset($datastream_mime_map[$datastream->id])) {
+    foreach ($datastream_mime_map[$datastream->id]['mime'] as $key => $value) {
+      $extensions = $mime_detect->getValidExtensions($value);
+      $ext = array_merge($ext, $extensions);
+    }
+  }
+  $valid_extensions = implode(' ', $ext);
+  $upload_size = min((int) ini_get('post_max_size'), (int) ini_get('upload_max_filesize'));
+  return array(
+    'dsid_fieldset' => array(
+      '#type' => 'fieldset',
+      '#title' => t("Update datastream with latest version"),
+      '#collapsible' => FALSE,
+      '#collapsed' => FALSE,
+      'dsid' => array(
+        '#type' => 'markup',
+        '#markup' => "<div>DSID: <b>$datastream->id</b></div>",
+      ),
+      'label' => array(
+        '#type' => 'markup',
+        '#markup' => "<div>Label: <b>$datastream->label</b></div>",
+      ),
+      'file' => array(
+        '#type' => 'managed_file',
+        '#required' => TRUE,
+        '#title' => t('Upload Document'),
+        '#size' => 64,
+        '#description' => t('Select a file to upload.<br/>Files must be less than <strong>@size MB.</strong>', array('@size' => $upload_size)),
+        '#upload_location' => 'temporary://',
+        '#upload_validators' => array(
+          'file_validate_extensions' => array($valid_extensions),
+          // Assume its specified in MB.
+          'file_validate_size' => array($upload_size * 1024 * 1024),
+        ),
+      ),
+      'submit' => array(
+        '#type' => 'submit',
+        '#value' => t('Add Contents'),
+      ),
+    ),
+  );
+}
+
+/**
+ * Submit handler for the replace datastream form.
+ *
+ * Adds a new datastream version as latest.
+ *
+ * @param array $form
+ *   The Drupal form.
+ * @param array $form_state
+ *   The Drupal form state.
+ */
+function islandora_datastream_version_replace_form_submit($form, &$form_state) {
+  $object = islandora_object_load($form_state['object_id']);
+  $form_state['redirect'] = "islandora/object/{$object->id}";
+  $file = file_load($form_state['values']['file']);
+  try {
+    $ds = $object[$form_state['dsid']];
+    $ds->mimetype = $file->filemime;
+    $path = drupal_realpath($file->uri);
+    $ds->setContentFromFile($path);
+    file_delete($file);
+  }
+  catch (exception $e) {
+    drupal_set_message(t('An error occurred during datastream updates. See watchlog for more information.'), 'error');
+    watchdog('islandora',
+      'Failed to add new versionable datastream.<br/>code: @code<br/>message: @msg',
+      array(
+        '@code' => $e->getCode(),
+        '@msg' => $e->getMessage(),
+      ),
+      WATCHDOG_ERROR
+    );
+    file_delete($file);
+    return;
+  }
+  drupal_set_message(t("Successfully Updated Datastream"));
+}
+
+/**
  * Gets Audit datastream values from foxml.
  *
- * @param String $pid
+ * @param string $pid
  *   PID of parent object
  *
  * @return array

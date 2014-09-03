@@ -287,7 +287,7 @@ function islandora_get_contentmodels_with_deleted_members() {
 /**
  * Restores deleted object.
  *
- * @param String $pid
+ * @param string $pid
  *   PID of object to be restored
  */
 function islandora_restore_object_by_pid($pid) {
@@ -298,7 +298,7 @@ function islandora_restore_object_by_pid($pid) {
 /**
  * Purges deleted object.
  *
- * @param String $pid
+ * @param string $pid
  *   PID of object to be restored
  */
 function islandora_purge_object_by_pid($pid) {
@@ -314,7 +314,7 @@ function islandora_purge_object_by_pid($pid) {
  * @param int $offset
  *   offset to be added to search
  *
- * @return String
+ * @return string
  *   Sparql query
  */
 function islandora_get_deleted_query($content_models, $offset = 0) {
@@ -332,7 +332,7 @@ function islandora_get_deleted_query($content_models, $offset = 0) {
     $unions .= "UNION {?subject fm:hasModel <info:fedora/$contentmodel>;
                             fm:state fm:Deleted;
                             fm:hasModel ?object;
-                   } 
+                   }
                 ";
   }
   $optional = "OPTIONAL{?subject fm:label ?label}";
