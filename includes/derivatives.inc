@@ -4,6 +4,9 @@
  * Defines functions used when constructing derivatives.
  */
 
+// Relations.
+define('ISLANDORA_DEFER_DERIVATIVES_FLAG', 'deferDerivatives');
+
 /**
  * Decides which derivative function to call and runs it.
  *
@@ -244,4 +247,40 @@ function islandora_filter_derivatives($hooks, $options, AbstractObject $object) 
   };
   $hooks = array_filter($hooks, $filter_function);
   return $hooks;
+}
+
+/**
+ * Set the defer derivatives flag on an object.
+ */
+function islandora_set_defer_derivatives_flag(AbstractObject $object) {
+  $object->relationships->add(
+    ISLANDORA_RELS_EXT_URI,
+    ISLANDORA_DEFER_DERIVATIVES_FLAG,
+    'true',
+    RELS_TYPE_PLAIN_LITERAL
+  );
+}
+
+/**
+ * Get the defer derivatives flag on an object.
+ */
+function islandora_get_defer_derivatives_flag(AbstractObject $object) {
+  return $object->relationships->get(
+    ISLANDORA_RELS_EXT_URI,
+    ISLANDORA_DEFER_DERIVATIVES_FLAG,
+    'true',
+    RELS_TYPE_PLAIN_LITERAL
+  );
+}
+
+/**
+ * Remove the defer derivatives flag on an object.
+ */
+function islandora_remove_defer_derivatives_flag(AbstractObject $object) {
+  $object->relationships->remove(
+    ISLANDORA_RELS_EXT_URI,
+    ISLANDORA_DEFER_DERIVATIVES_FLAG,
+    'true',
+    RELS_TYPE_PLAIN_LITERAL
+  );
 }
