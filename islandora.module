@@ -1564,9 +1564,12 @@ function islandora_entity_property_info() {
  */
 function islandora_download_clip(AbstractObject $object) {
   if (isset($_GET['clip'])) {
-    $is_https = isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on';
-    $http_protocol = $is_https ? 'https' : 'http';
-    $url = $http_protocol . '://' . $_SERVER['HTTP_HOST'] . $_GET['clip'];
+    $url = $_GET['clip'];
+    if (!preg_match('/^https?:\/\//', $url)) {
+      $is_https = isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on';
+      $http_protocol = $is_https ? 'https' : 'http';
+      $url = $http_protocol . '://' . $_SERVER['HTTP_HOST'] . $url;
+    }
     $filename = $object->label;
     header("Content-Disposition: attachment; filename=\"{$filename}.jpg\"");
     header("Content-type: image/jpeg");
