@@ -275,6 +275,7 @@ function islandora_get_object_extensions(AbstractObject $object) {
 function islandora_datastream_version_replace_form($form, &$form_state, AbstractDatastream $datastream) {
   module_load_include('inc', 'islandora', 'includes/content_model');
   module_load_include('inc', 'islandora', 'includes/utilities');
+  module_load_include('inc', 'islandora', 'includes/mimetype.utils');
 
   $object = islandora_object_load($datastream->parent->id);
   $form_state['object_id'] = $object->id;
@@ -290,6 +291,7 @@ function islandora_datastream_version_replace_form($form, &$form_state, Abstract
     }
   }
   $valid_extensions = implode(' ', $ext);
+  $valid_extensions .= ' ' . islandora_get_extension_for_mimetype($datastream->mimetype);
   $upload_size = min((int) ini_get('post_max_size'), (int) ini_get('upload_max_filesize'));
   return array(
     'dsid_fieldset' => array(
