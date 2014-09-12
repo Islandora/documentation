@@ -282,7 +282,11 @@ function islandora_datastream_version_replace_form($form, &$form_state, Abstract
   $form_state['dsid'] = $datastream->id;
   $form_state['object'] = $object;
   $datastream_mime_map = islandora_get_object_extensions($object);
+  $current_mime = $datastream->mimetype;
   $mimes = $datastream_mime_map[$datastream->id]['mime'];
+  if (!in_array($current_mime, $mimes)) {
+    $mimes[] = $current_mime;
+  }
   $extensions = array();
   foreach ($mimes as $mime) {
     $extensions = array_merge($extensions, islandora_get_extensions_for_mimetype($mime));
