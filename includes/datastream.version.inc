@@ -282,16 +282,12 @@ function islandora_datastream_version_replace_form($form, &$form_state, Abstract
   $form_state['dsid'] = $datastream->id;
   $form_state['object'] = $object;
   $datastream_mime_map = islandora_get_object_extensions($object);
-  $mime_detect = new MimeDetect();
-  $ext = array();
-  if (isset($datastream_mime_map[$datastream->id])) {
-    foreach ($datastream_mime_map[$datastream->id]['mime'] as $key => $value) {
-      $extensions = $mime_detect->getValidExtensions($value);
-      $ext = array_merge($ext, $extensions);
-    }
+  $mimes = $datastream_mime_map[$datastream->id]['mime'];
+  $drupal_extensions = array();
+  foreach ($mimes as $mime) {
+    $drupal_extensions = array_merge($drupal_extensions, islandora_get_extensions_for_mimetype($mime));
   }
-  $valid_extensions = implode(' ', $ext);
-  $valid_extensions .= ' ' . islandora_get_extension_for_mimetype($datastream->mimetype);
+  $valid_extensions = implode(' ', $drupal_extensions);
   $upload_size = min((int) ini_get('post_max_size'), (int) ini_get('upload_max_filesize'));
   return array(
     'dsid_fieldset' => array(
