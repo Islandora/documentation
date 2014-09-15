@@ -12,13 +12,13 @@
  *   The mimetype whose extension is required.
  *
  * @return string
- *   The extension mapped to the given mimetype.
+ *   The extension mapped to the given mimetype. Defaults to 'bin'.
  */
 function islandora_get_extension_for_mimetype($mimetype) {
   // file.mimetypes.inc is a part of Drupal core, however is not
   // automatically loaded. Manually require it.
   require_once DRUPAL_ROOT . "/includes/file.mimetypes.inc";
-
+  $extension = 'bin';
   $mimetype_mapping = file_mimetype_mapping();
   $extension_index = array_search($mimetype, $mimetype_mapping['mimetypes']);
   if ($extension_index !== FALSE) {
