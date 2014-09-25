@@ -1770,16 +1770,23 @@ function islandora_form_simpletest_test_form_alter(array &$form) {
   $filter_path = variable_get('islandora_simpletest_drupal_filter_path', '/usr/local/fedora/server/config/filter-drupal.xml');
   $filter_status = is_writable($filter_path);
   if ($filter_status) {
-    $filter_status_message = theme_image(array('path' => 'misc/watchdog-ok.png', 'attributes' => array()));
-    $filter_status_message .= t(" Drupal filter at <b>$filter_path</b> is writable by the server.");
-  } else {
-    $filter_status_message = theme_image(array('path' => 'misc/watchdog-error.png', 'attributes' => array()));
-    $filter_status_message .= t(" Drupal filter at <b>$filter_path</b> is not writable by the server. Please make sure your webserver has permission to write to the Drupal filter. If the path given is incorrect, try setting the correct path in the test settings to see if this error is no longer present."); 
+    $filter_status_message = theme_image(array('path' => 'misc/watchdog-ok.png', 'attributes' => array())) . " ";
+    $filter_status_message .= t("Drupal filter at <b>!filter_path</b> is writable by the server.", array(
+      '!filter_path' => $filter_path,
+    ));
+  }
+  else {
+    $filter_status_message = theme_image(array('path' => 'misc/watchdog-error.png', 'attributes' => array())) . " ";
+    $filter_status_message .= t("Drupal filter at <b>!filter_path</b> is not writable by the server. Please make sure your webserver has permission to write to the Drupal filter. If the path given is incorrect, try setting the correct path in the test settings to see if this error is no longer present.", array(
+      '!filter_path' => $filter_path,
+    ));
   }
   $form['tests'] = array(
     '#type' => 'fieldset',
     '#title' => t('Tests'),
-    '#description' => t("Select the test(s) or test group(s) you would like to run, and click <em>Run tests</em>.<p>NOTE: Tests in groups prefixed with <em>Islandora</em> generally require a configuration file, found in the Islandora module 'tests' folder, as well as the use of the Islandora Drupal filter. Before any tests are run, please ensure that your web server has the appropriate permissions to alter the drupal-filter.xml file in your Fedora config folder. Your original Islandora Drupal filter configuration will NOT be overwritten by tests; HOWEVER, if PHP exits abnormally before the filter is reset, please use the 'Repair Drupal Filter' button below.</p><p><em>Drupal Filter Write Status:</em> $filter_status_message</p>"),
+    '#description' => t("Select the test(s) or test group(s) you would like to run, and click <em>Run tests</em>.<p>NOTE: Tests in groups prefixed with <em>Islandora</em> generally require a configuration file, found in the Islandora module 'tests' folder, as well as the use of the Islandora Drupal filter. Before any tests are run, please ensure that your web server has the appropriate permissions to alter the drupal-filter.xml file in your Fedora config folder. Your original Islandora Drupal filter configuration will NOT be overwritten by tests; HOWEVER, if PHP exits abnormally before the filter is reset, please use the 'Repair Drupal Filter' button below.</p><p><em>Drupal Filter Write Status:</em> !filter_status_message</p>", array(
+      '!filter_status_message' => $filter_status_message,
+    )),
   );
 
   $form['tests']['table'] = array(
@@ -1823,7 +1830,7 @@ function islandora_form_simpletest_test_form_alter(array &$form) {
 }
 
 /**
- * Implements hook_form_simpletest_settings_form_alter()
+ * Implements hook_form_alter().
  */
 function islandora_form_simpletest_settings_form_alter(&$form, &$form_state) {
   $form['islandora_drupal_filter'] = array(
