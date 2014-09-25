@@ -203,7 +203,6 @@ function theme_islandora_object_print(array &$variables) {
  * Implements hook_preprocess_theme().
  */
 function islandora_preprocess_islandora_objects(array &$variables) {
-  module_load_include('inc', 'islandora_paged_content', 'includes/utilities');
   $display = (empty($_GET['display'])) ? 'grid' : $_GET['display'];
   $grid_display = $display == 'grid';
   $list_display = !$grid_display;
@@ -276,7 +275,7 @@ function islandora_preprocess_islandora_objects(array &$variables) {
  */
 function theme_islandora_datastream_download_link(array $vars) {
   $datastream = $vars['datastream'];
-  module_load_include('inc', 'islandora', 'includes/utilities');
+  module_load_include('inc', 'islandora', 'includes/datastream');
 
   $label = t('download');
   return islandora_datastream_access(ISLANDORA_VIEW_OBJECTS, $datastream) ?

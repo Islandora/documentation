@@ -30,16 +30,16 @@ function islandora_convert_bytes_to_human_readable($bytes, $precision = 2) {
     return $bytes . ' B';
   }
   elseif (($bytes >= $kilobyte) && ($bytes < $megabyte)) {
-    return round($bytes / $kilobyte, $precision) . ' KB';
+    return round($bytes / $kilobyte, $precision) . ' KiB';
   }
   elseif (($bytes >= $megabyte) && ($bytes < $gigabyte)) {
-    return round($bytes / $megabyte, $precision) . ' MB';
+    return round($bytes / $megabyte, $precision) . ' MiB';
   }
   elseif (($bytes >= $gigabyte) && ($bytes < $terabyte)) {
-    return round($bytes / $gigabyte, $precision) . ' GB';
+    return round($bytes / $gigabyte, $precision) . ' GiB';
   }
   elseif ($bytes >= $terabyte) {
-    return round($bytes / $terabyte, $precision) . ' TB';
+    return round($bytes / $terabyte, $precision) . ' TiB';
   }
   else {
     return $bytes . ' B';
@@ -445,8 +445,9 @@ function islandora_get_datastreams_requirements_from_content_model(AbstractObjec
 /**
  * Prepare an ingestable object.
  *
- * @param string $namespace
- *   The namespace in which the PID for the new object will be created.
+ * @param string $name_source
+ *   Either a pid or namespace in which the PID for the new object will be
+ *   created.
  * @param string $label
  *   An optional label to apply to the object.
  * @param array $datastreams
@@ -471,10 +472,10 @@ function islandora_get_datastreams_requirements_from_content_model(AbstractObjec
  * @return NewFedoraObject
  *   An ingestable NewFedoraObject.
  */
-function islandora_prepare_new_object($namespace = NULL, $label = NULL, $datastreams = array(), $content_models = array(), $relationships = array()) {
+function islandora_prepare_new_object($name_source = NULL, $label = NULL, $datastreams = array(), $content_models = array(), $relationships = array()) {
   global $user;
   $tuque = islandora_get_tuque_connection();
-  $object = isset($namespace) ? $tuque->repository->constructObject($namespace) : new IslandoraNewFedoraObject(NULL, $tuque->repository);
+  $object = isset($name_source) ? $tuque->repository->constructObject($name_source) : new IslandoraNewFedoraObject(NULL, $tuque->repository);
   $object->owner = isset($user->name) ? $user->name : $object->owner;
   $object->label = isset($label) ? $label : $object->label;
   foreach ($content_models as $content_model) {
@@ -646,54 +647,6 @@ function islandora_directory_exists_message($path) {
  */
 function islandora_system_settings_form_default_value($name, $default_value, array &$form_state) {
   return isset($form_state['values'][$name]) ? $form_state['values'][$name] : variable_get($name, $default_value);
-}
-
-/**
- * Returns basic information about DS-COMPOSITE-MODEL.
- *
- * @deprecated
- *   The pre-existing--and more flexible--
- *   islandora_get_datastreams_requirements_from_content_model() should be
- *   preferred, as it addresses the case where a stream can be allowed to have
- *   one of a set of mimetypes (this functions appears to only return the last
- *   declared mimetype for a given datastream).
- *
- * @param string $pid
- *   The PID of content model containing DS_COMP stream.
- *
- * @return array
- *   An associative array mapping datastream IDs to an associative array
- *   representing the parsed DS-COMPOSITE-MODEL of the form:
- *   - DSID: A string containing the datastream ID.
- *     - "mimetype": A string containing the last mimetype declared for the
- *       given datastream ID.
- *     - "optional": An optional boolean indicating that the given datastream
- *       is optional.
- */
-function islandora_get_comp_ds_mappings($pid) {
-  $message = islandora_deprecated('7.x-1.2', t('Refactor to use the more flexible islandora_get_datastreams_requirements_from_content_model().'));
-  trigger_error(filter_xss($message), E_USER_DEPRECATED);
-
-  $cm_object = islandora_object_load($pid);
-  if (!isset($cm_object) || !isset($cm_object['DS-COMPOSITE-MODEL'])) {
-    return FALSE;
-  }
-  $datastream = $cm_object['DS-COMPOSITE-MODEL'];
-  $ds_comp_stream = $datastream->content;
-  $sxml = new SimpleXMLElement($ds_comp_stream);
-  $mappings = array();
-  foreach ($sxml->dsTypeModel as $ds) {
-    $dsid = (string) $ds['ID'];
-    $optional = (string) $ds['optional'];
-    foreach ($ds->form as $form) {
-      $mime = (string) $form['MIME'];
-      if ($optional) {
-        $mappings[$dsid]['optional'] = $optional;
-      }
-      $mappings[$dsid]['mimetype'] = $mime;
-    }
-  }
-  return $mappings;
 }
 
 /**

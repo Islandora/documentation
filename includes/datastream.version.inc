@@ -275,22 +275,23 @@ function islandora_get_object_extensions(AbstractObject $object) {
 function islandora_datastream_version_replace_form($form, &$form_state, AbstractDatastream $datastream) {
   module_load_include('inc', 'islandora', 'includes/content_model');
   module_load_include('inc', 'islandora', 'includes/utilities');
+  module_load_include('inc', 'islandora', 'includes/mimetype.utils');
 
   $object = islandora_object_load($datastream->parent->id);
   $form_state['object_id'] = $object->id;
   $form_state['dsid'] = $datastream->id;
   $form_state['object'] = $object;
-  $extensions = islandora_get_object_extensions($object);
-  $mime_detect = new MimeDetect();
-  $ext = array();
-  if (isset($extensions[$datastream->id])) {
-    foreach ($extensions[$datastream->id]['mime'] as $key => $value) {
-      $str = $mime_detect->getExtension($value);
-      array_push($ext, $str);
-    }
+  $datastream_mime_map = islandora_get_object_extensions($object);
+  $current_mime = $datastream->mimetype;
+  $mimes = $datastream_mime_map[$datastream->id]['mime'];
+  if (!in_array($current_mime, $mimes)) {
+    $mimes[] = $current_mime;
   }
-  $comma = count($ext) > 1 ? "," : "";
-  $ext = array(implode($comma, $ext));
+  $extensions = array();
+  foreach ($mimes as $mime) {
+    $extensions = array_merge($extensions, islandora_get_extensions_for_mimetype($mime));
+  }
+  $valid_extensions = implode(' ', $extensions);
   $upload_size = min((int) ini_get('post_max_size'), (int) ini_get('upload_max_filesize'));
   return array(
     'dsid_fieldset' => array(
@@ -314,7 +315,7 @@ function islandora_datastream_version_replace_form($form, &$form_state, Abstract
         '#description' => t('Select a file to upload.<br/>Files must be less than <strong>@size MB.</strong>', array('@size' => $upload_size)),
         '#upload_location' => 'temporary://',
         '#upload_validators' => array(
-          'file_validate_extensions' => $ext,
+          'file_validate_extensions' => array($valid_extensions),
           // Assume its specified in MB.
           'file_validate_size' => array($upload_size * 1024 * 1024),
         ),
