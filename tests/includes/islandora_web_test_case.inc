@@ -58,6 +58,34 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
   }
 
   /**
+   * Run all tests in this class.
+   *
+   * Attempts to figure out if the Drupal filter is writable before running any
+   * tests.
+   *
+   * @see DrupalWebTestCase::run()
+   */
+  public function run(array $methods = array()) {
+    $this->configuration = IslandoraTestUtilityClass::getTestConfiguration();
+    if (is_writable($this->configuration['drupal_filter_file'])) {
+      parent::run($methods);
+    }
+    else {
+      $method_info = new ReflectionMethod($this, 'run');
+      $class = get_class($this);
+      set_error_handler(array($this, 'errorHandler'));
+      $caller = array(
+        'file' => $method_info->getFileName(),
+        'line' => $method_info->getStartLine(),
+        'function' => $class . '->run()',
+      );
+      $this->assert(FALSE, "Unable to proceed; the Drupal filter is not writable by the server.", "Completion check", $caller);
+      drupal_get_messages();
+      restore_error_handler();
+    }
+  }
+
+  /**
    * Sets up the web test case.
    *
    * @see DrupalWebTestCase::setUp()
@@ -74,7 +102,6 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
     module_load_include('inc', 'islandora', 'includes/tuque_wrapper');
     module_load_include('inc', 'islandora', 'tests/includes/utilities');
 
-    $this->configuration = IslandoraTestUtilityClass::getTestConfiguration();
     if ($this->configuration['use_drupal_filter']) {
       $this->setUpDrupalFilter();
     }
