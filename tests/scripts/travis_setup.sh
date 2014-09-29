@@ -39,7 +39,7 @@ mv sites/all/modules/islandora/tests/travis.test_config.ini sites/all/modules/is
 mkdir sites/all/libraries
 ln -s $HOME/tuque sites/all/libraries/tuque
 drush dl --yes coder
-drush dl --yes potx
+drush dl --yes potx-7.x-1.0
 drush en --yes coder_review
 drush en --yes simpletest
 drush en --yes potx
