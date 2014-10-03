@@ -214,6 +214,7 @@ class MimeDetect {
     // OpenDX Grid.
     "dx" => "chemical/x-jcamp-dx",
     // MOPAC Cartesian.
+    "mop" => "chemical/x-mopac-input",
     // Compressed formats:
     // (note: http://svn.cleancode.org/svn/email/trunk/mime.types)
     "tgz" => "application/x-gzip",
