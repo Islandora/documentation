@@ -214,7 +214,6 @@ class MimeDetect {
     // OpenDX Grid.
     "dx" => "chemical/x-jcamp-dx",
     // MOPAC Cartesian.
-    "mop" => "chemical/x-mopac-input",
     // Compressed formats:
     // (note: http://svn.cleancode.org/svn/email/trunk/mime.types)
     "tgz" => "application/x-gzip",
@@ -222,6 +221,7 @@ class MimeDetect {
     "tar" => "application/x-tar",
     "gtar" => "application/x-gtar",
     "zip" => "application/x-zip",
+    "dat" => "application/octet-stream",
     // others:
     'bin' => 'application/octet-stream',
     // Web Archives:
