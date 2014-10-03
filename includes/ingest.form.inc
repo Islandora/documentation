@@ -799,7 +799,7 @@ function islandora_ingest_form_submit(array $form, array &$form_state) {
         WATCHDOG_ERROR
       );
       drupal_set_message(
-        t('A problem occured while ingesting "@label" (ID: @pid), please notifiy the administrator.',
+        t('A problem occured while ingesting "@label" (ID: @pid), please notify the administrator.',
         array('@label' => $object->label, '@pid' => $object->id)),
         'error'
       );
