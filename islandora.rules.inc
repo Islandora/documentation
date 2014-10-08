@@ -21,6 +21,49 @@ function islandora_rules_event_info() {
         ),
       ),
     ),
+    'islandora_datastream_ingested' => array(
+      'group' => t('Islandora'),
+      'label' => t('Datastream ingested'),
+      'variables' => array(
+        'object' => array(
+          'type' => 'islandora_object',
+          'label' => t('The ingested object'),
+          'description' => t('A Tuque object for the Fedora object on which the datastream exists, as an entity.'),
+        ),
+        'datastream' => array(
+          'type' => 'text',
+          'label' => t('Datastream ID'),
+          'description' => t('The ID of the ingested datastream.'),
+        ),
+      ),
+    ),
+    'islandora_object_modified' => array(
+      'group' => t('Islandora'),
+      'label' => t('Object modified'),
+      'variables' => array(
+        'object' => array(
+          'type' => 'islandora_object',
+          'label' => t('The modified object'),
+          'description' => t('A Tuque object for the modified Fedora object, as an entity.'),
+        ),
+      ),
+    ),
+    'islandora_datastream_modified' => array(
+      'group' => t('Islandora'),
+      'label' => t('Datastream modified'),
+      'variables' => array(
+        'object' => array(
+          'type' => 'islandora_object',
+          'label' => t('The modified object'),
+          'description' => t('A Tuque object for the Fedora object on which the datastream exists, as an entity.'),
+        ),
+        'datastream' => array(
+          'type' => 'text',
+          'label' => t('Datastream ID'),
+          'description' => t('The ID of the ingested datastream.'),
+        ),
+      ),
+    ),
   );
 }
 
@@ -60,6 +103,32 @@ function islandora_rules_relationship_parameter_array() {
   );
 }
 
+function islandora_rules_base_xpath_parameters() {
+  return array(
+    'object' => array(
+      'type' => 'islandora_object',
+      'label' => t('Object'),
+      'description' => t('The object in which to check the XPath.'),
+    ),
+    'datastream' => array(
+      'type' => 'text',
+      'label' => t('Datastream ID'),
+      'description' => t('The ID of the XML datastream to check.'),
+    ),
+    'xpath' => array(
+      'type' => 'text',
+      'label' => t('XPath'),
+      'description' => t('An XPath to evaluate.'),
+    ),
+    'xpath_namespaces' => array(
+      'type' => 'taxonomy_vocabulary',
+      'label' => t('XPath Namespace Taxonomy'),
+      'description' => t('A flat taxonomy of which the terms are namespace prefixes and the description contains the URI for the namespace.')
+    ),
+  );
+}
+
+
 /**
  * Implements hook_rules_condition_info().
  */
@@ -70,6 +139,11 @@ function islandora_rules_condition_info() {
     'label' => t('Check object for a relationship'),
     'group' => t('Islandora'),
     'parameter' => islandora_rules_relationship_parameter_array(),
+  );
+  $cond['islandora_rules_datastream_has_xpath'] = array(
+    'label' => t('Check for an XPath match in an XML datastream'),
+    'group' => t('Islandora'),
+    'parameter' => islandora_rules_base_xpath_parameters(),
   );
 
   return $cond;
@@ -92,6 +166,7 @@ function islandora_rules_action_info() {
     'group' => t('Islandora'),
     'parameter' => islandora_rules_relationship_parameter_array(),
   );
+
   return $cond;
 }
 /**
@@ -132,4 +207,21 @@ function islandora_object_remove_relationship($sub, $pred_uri, $pred, $object, $
  */
 function islandora_object_add_relationship($sub, $pred_uri, $pred, $object, $type) {
   $sub->relationships->add($pred_uri, $pred, $object, $type);
+}
+
+function islandora_rules_datastream_has_xpath(AbstractObject $object, $datastream_id, $search_xpath, $xpath_vocab) {
+  if (!isset($object[$datastream_id])) {
+    // Datastream does no exists... No match.
+    return FALSE;
+  }
+
+  $datastream = $object[$datastream_id];
+  $doc = new DOMDocument();
+  $doc->loadXML($datastream->content);
+  $xpath = new DOMXPath($doc);
+  foreach (taxonomy_get_tree($xpath_vocab->vid, 0, 1, FALSE) as $term) {
+    $xpath->registerNamespace($term->name, $term->description);
+  }
+  $result = $xpath->query($search_xpath);
+  return $result->length > 0;
 }

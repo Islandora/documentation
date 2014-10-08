@@ -228,6 +228,10 @@ class IslandoraFedoraObject extends FedoraObject {
       if ($this->state == 'D') {
         islandora_invoke_object_hooks(ISLANDORA_OBJECT_PURGED_HOOK, $this->models, $this->id);
       }
+      // Fire of event if rules is enabled.
+      if (module_exists('rules')) {
+        rules_invoke_event('islandora_object_modified', $object);
+      }
     }
     catch (Exception $e) {
       watchdog('islandora', 'Failed to modify object: @pid</br>code: @code<br/>message: @msg', array(

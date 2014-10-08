@@ -1762,6 +1762,10 @@ function islandora_islandora_object_ingested(AbstractObject $object) {
  * equal to the current ingested datastream's id.
  */
 function islandora_islandora_datastream_ingested(AbstractObject $object, AbstractDatastream $datastream) {
+  if (module_exists('rules')) {
+    rules_invoke_event('islandora_datastream_ingested', $object, $datastream->id);
+  }
+
   module_load_include('inc', 'islandora', 'includes/derivatives');
   // Defer derivatives if necessary.
   if (islandora_get_defer_derivatives_flag($object)) {
@@ -1778,6 +1782,10 @@ function islandora_islandora_datastream_ingested(AbstractObject $object, Abstrac
  * existing derivatives will be updated to reflect the change in the source.
  */
 function islandora_islandora_datastream_modified(AbstractObject $object, AbstractDatastream $datastream) {
+  if (module_exists('rules')) {
+    rules_invoke_event('islandora_datastream_modified', $object, $datastream->id);
+  }
+
   module_load_include('inc', 'islandora', 'includes/derivatives');
   $logging_results = islandora_do_derivatives($object, array(
     'source_dsid' => $datastream->id,
