@@ -22,12 +22,26 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
   protected $deleteObjectsOnTeardown = TRUE;
 
   /**
+   * Instantiates an IslandoraWebTestCase with a configuration.
+   *
+   * @throws Exception
+   *   If the required test config file is not found.
+   */
+  public function __construct($test_id = NULL) {
+    $this->configuration = IslandoraTestUtilityClass::getTestConfiguration();
+    parent::__construct($test_id);
+  }
+
+  /**
    * Defers to IslandoraTestUtilities for missing methods.
    *
    * @param string $method
    *   The method being called.
    * @param array $args
    *   The arguments for that method.
+   *
+   * @return bool
+   *   TRUE if the result was a pass, or FALSE otherwise.
    */
   public function __call($method, $args) {
     module_load_include('inc', 'islandora', 'tests/includes/utilities');
@@ -66,10 +80,50 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
    * @see DrupalWebTestCase::run()
    */
   public function run(array $methods = array()) {
-    $this->configuration = IslandoraTestUtilityClass::getTestConfiguration();
+    // Determine if the Drupal filter is writable so we know if we can proceed.
     if (is_writable($this->configuration['drupal_filter_file'])) {
-      parent::run($methods);
+      // Set up the SimpleTest environment.
+      simpletest_verbose(NULL, variable_get('file_public_path', conf_path() . '/files'), get_class($this));
+      $this->httpauth_method = variable_get('simpletest_httpauth_method', CURLAUTH_BASIC);
+      $username = variable_get('simpletest_httpauth_username', NULL);
+      $password = variable_get('simpletest_httpauth_password', NULL);
+      if ($username && $password) {
+        $this->httpauth_credentials = $username . ':' . $password;
+      }
+      set_error_handler(array($this, 'errorHandler'));
+      $class = get_class($this);
+      // Iterate through all the methods in this class, unless a specific list of
+      // methods to run was passed.
+      $class_methods = get_class_methods($class);
+      if ($methods) {
+        $class_methods = array_intersect($class_methods, $methods);
+      }
+      foreach ($class_methods as $method) {
+        // If the current method starts with "test", run it - it's a test.
+        if (strtolower(substr($method, 0, 4)) == 'test') {
+          // Insert a fail record. This will be deleted on completion to ensure
+          // that testing completed.
+          $method_info = new ReflectionMethod($class, $method);
+          $caller = array(
+            'file' => $method_info->getFileName(),
+            'line' => $method_info->getStartLine(),
+            'function' => $class . '->' . $method . '()',
+          );
+          $completion_check_id = DrupalTestCase::insertAssert($this->testId, $class, FALSE, t('The test did not complete due to a fatal error.'), 'Completion check', $caller);
+          try {
+            $this->setUp();
+            $this->$method();
+          }
+          catch (Exception $e) {
+            $this->exceptionHandler($e);
+          }
+          $this->tearDown();
+          // Remove the completion check record.
+          DrupalTestCase::deleteAssert($completion_check_id);
+        }
+      }
     }
+    // If the Drupal filter is not writable, skip testing and error out.
     else {
       $method_info = new ReflectionMethod($this, 'run');
       $class = get_class($this);
@@ -80,9 +134,9 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
         'function' => $class . '->run()',
       );
       $this->assert(FALSE, "Unable to proceed; the Drupal filter is not writable by the server.", "Completion check", $caller);
-      drupal_get_messages();
-      restore_error_handler();
     }
+    drupal_get_messages();
+    restore_error_handler();
   }
 
   /**
@@ -169,7 +223,6 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
       islandora_repair_drupal_filter();
     }
     unset($this->admin);
-    unset($this->configuration);
     parent::tearDown();
   }
 
@@ -205,6 +258,9 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
    *   The label of the first 'Delete' button
    * @param bool $safety
    *   If TRUE, this will only delete objects owned by users in $this->users.
+   *
+   * @return bool
+   *   If the deletion fails, return FALSE TRUE, this will only delete objects owned by users in $this->users.
    */
   public function deleteObject($pid, $button = NULL, $safety = TRUE) {
     $object = islandora_object_load($pid);
