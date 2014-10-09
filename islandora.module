@@ -1511,6 +1511,14 @@ function islandora_entity_info() {
       'label' => 'label',
     ),
   );
+  $entities['islandora_datastream'] = array(
+    'label' => t('Islandora Datastream'),
+    'fieldable' => FALSE,
+    'entity keys' => array(
+      'id' => 'id',
+      'label' => 'label',
+    ),
+  );
 
   return $entities;
 }
@@ -1523,37 +1531,54 @@ function islandora_entity_info() {
 function islandora_entity_property_info() {
   $info = array();
 
-  $p = &$info['islandora_object']['properties'];
+  $object_properties = &$info['islandora_object']['properties'];
+  $datastream_properties = &$info['islandora_datastream']['properties'];
 
-  $p['id'] = array(
+  $object_properties['id'] = array(
     'type' => 'text',
     'label' => t('ID'),
     'description' => t('The identifier of the object.'),
   );
-  $p['label'] = array(
+  $object_properties['label'] = array(
     'type' => 'text',
     'label' => t('Object Label'),
     'description' => t('The label of the object.'),
   );
-  $p['owner'] = array(
+  $object_properties['owner'] = array(
     'type' => 'text',
     'label' => t('Object Owner'),
     'description' => t('The name of the owner of the object.'),
   );
-  $p['state'] = array(
+  $object_properties['state'] = array(
     'type' => 'text',
     'label' => t('Object State'),
     'description' => t('An initial representing the state of the object.'),
   );
-  $p['models'] = array(
+  $object_properties['models'] = array(
     'type' => 'list<text>',
     'label' => t('Content Models'),
     'description' => t('The list of content models which the object has.'),
   );
-  $p['createdDate'] = array(
+  $object_properties['createdDate'] = array(
     'type' => 'text',
     'label' => t('Created Date'),
     'description' => t('When the object was created.'),
+  );
+
+  $datastream_properties['id'] = array(
+    'type' => 'text',
+    'label' => t('ID'),
+    'description' => t('The identifier of the datastream.'),
+  );
+  $datastream_properties['label'] = array(
+    'type' => 'text',
+    'label' => t('Datastream Label'),
+    'description' => t('The label of the datastream.'),
+  );
+  $datastream_properties['mimetype'] = array(
+    'type' => 'text',
+    'label' => t('MIME type'),
+    'description' => t('Content type of the datastream.'),
   );
 
   return $info;
@@ -1982,6 +2007,8 @@ function islandora_menu_local_tasks_alter(&$data, $router_item, $root_path) {
         if ($tab['#link']['path'] == 'islandora/object/%/print_object') {
           if ($root_path == 'islandora/object/%') {
             $islandora_path = drupal_get_path('module', 'islandora');
+            $tab['#prefix'] = '<li>';
+            $tab['#suffix'] = '</li>';
             $tab['#theme'] = 'link';
             $tab['#text'] = theme('image', array(
               'path' => "$islandora_path/images/print-icon.png",
