@@ -1833,7 +1833,7 @@ function islandora_form_simpletest_test_form_alter(array &$form) {
         '#title' => filter_xss($info['name']),
         '#description' => filter_xss($info['description']),
       );
-      if (get_parent_class($class) === 'IslandoraWebTestCase' && !$filter_path) {
+      if (is_subclass_of($class, 'IslandoraWebTestCase') && !$filter_path) {
         $form['tests']['table'][$group][$class]['#disabled'] = TRUE;
       }
     }
