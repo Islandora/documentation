@@ -92,8 +92,8 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
       }
       set_error_handler(array($this, 'errorHandler'));
       $class = get_class($this);
-      // Iterate through all the methods in this class, unless a specific list of
-      // methods to run was passed.
+      // Iterate through all the methods in this class, unless a specific list
+      // of methods to run was passed.
       $class_methods = get_class_methods($class);
       if ($methods) {
         $class_methods = array_intersect($class_methods, $methods);
@@ -260,7 +260,8 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
    *   If TRUE, this will only delete objects owned by users in $this->users.
    *
    * @return bool
-   *   If the deletion fails, return FALSE TRUE, this will only delete objects owned by users in $this->users.
+   *   If the deletion fails, return FALSE TRUE, this will only delete objects
+   *   owned by users in $this->users.
    */
   public function deleteObject($pid, $button = NULL, $safety = TRUE) {
     $object = islandora_object_load($pid);
