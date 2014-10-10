@@ -1543,21 +1543,25 @@ function islandora_entity_property_info() {
     'type' => 'text',
     'label' => t('Object Label'),
     'description' => t('The label of the object.'),
+    'setter callback' => 'entity_property_verbatim_set',
   );
   $object_properties['owner'] = array(
     'type' => 'text',
     'label' => t('Object Owner'),
     'description' => t('The name of the owner of the object.'),
+    'setter callback' => 'entity_property_verbatim_set',
   );
   $object_properties['state'] = array(
     'type' => 'text',
     'label' => t('Object State'),
     'description' => t('An initial representing the state of the object.'),
+    'setter callback' => 'entity_property_verbatim_set',
   );
   $object_properties['models'] = array(
     'type' => 'list<text>',
     'label' => t('Content Models'),
     'description' => t('The list of content models which the object has.'),
+    'setter callback' => 'entity_property_verbatim_set',
   );
   $object_properties['createdDate'] = array(
     'type' => 'text',
@@ -1574,11 +1578,24 @@ function islandora_entity_property_info() {
     'type' => 'text',
     'label' => t('Datastream Label'),
     'description' => t('The label of the datastream.'),
+    'setter callback' => 'entity_property_verbatim_set',
   );
   $datastream_properties['mimetype'] = array(
     'type' => 'text',
     'label' => t('MIME type'),
     'description' => t('Content type of the datastream.'),
+    'setter callback' => 'entity_property_verbatim_set',
+  );
+  $datastream_properties['parent'] = array(
+    'type' => 'islandora_object',
+    'label' => t('Object'),
+    'description' => t('The Tuque object on which this datastream exists.'),
+  );
+  $datastream_properties['content'] = array(
+    'type' => 'text',
+    'label' => t('Datastream content'),
+    'description' => t('The contents of the datastream; only useful when the content is textual.'),
+    'setter callback' => 'entity_property_verbatim_set',
   );
 
   return $info;
@@ -1762,10 +1779,6 @@ function islandora_islandora_object_ingested(AbstractObject $object) {
  * equal to the current ingested datastream's id.
  */
 function islandora_islandora_datastream_ingested(AbstractObject $object, AbstractDatastream $datastream) {
-  if (module_exists('rules')) {
-    rules_invoke_event('islandora_datastream_ingested', $object, $datastream->id);
-  }
-
   module_load_include('inc', 'islandora', 'includes/derivatives');
   // Defer derivatives if necessary.
   if (islandora_get_defer_derivatives_flag($object)) {
@@ -1782,10 +1795,6 @@ function islandora_islandora_datastream_ingested(AbstractObject $object, Abstrac
  * existing derivatives will be updated to reflect the change in the source.
  */
 function islandora_islandora_datastream_modified(AbstractObject $object, AbstractDatastream $datastream) {
-  if (module_exists('rules')) {
-    rules_invoke_event('islandora_datastream_modified', $object, $datastream->id);
-  }
-
   module_load_include('inc', 'islandora', 'includes/derivatives');
   $logging_results = islandora_do_derivatives($object, array(
     'source_dsid' => $datastream->id,

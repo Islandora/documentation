@@ -115,10 +115,6 @@ class IslandoraFedoraRepository extends FedoraRepository {
       foreach ($object as $dsid => $datastream) {
         islandora_invoke_datastream_hooks(ISLANDORA_DATASTREAM_INGESTED_HOOK, $object->models, $dsid, $object, $datastream);
       }
-      // Fire of event if rules is enabled.
-      if (module_exists('rules')) {
-        rules_invoke_event('islandora_object_ingested', $object);
-      }
       return $ret;
     }
     catch (Exception $e) {
@@ -227,10 +223,6 @@ class IslandoraFedoraObject extends FedoraObject {
       islandora_invoke_object_hooks(ISLANDORA_OBJECT_MODIFIED_HOOK, $this->models, $this);
       if ($this->state == 'D') {
         islandora_invoke_object_hooks(ISLANDORA_OBJECT_PURGED_HOOK, $this->models, $this->id);
-      }
-      // Fire of event if rules is enabled.
-      if (module_exists('rules')) {
-        rules_invoke_event('islandora_object_modified', $object);
       }
     }
     catch (Exception $e) {

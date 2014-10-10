@@ -13,6 +13,7 @@ files[] = includes/dublin_core.inc
 files[] = includes/tuque.inc
 files[] = includes/tuque_wrapper.inc
 files[] = includes/object.entity_controller.inc
+files[] = includes/datastream.entity_controller.inc
 files[] = tests/includes/datastream_validators.inc
 files[] = tests/includes/islandora_web_test_case.inc
 files[] = tests/includes/islandora_unit_test_case.inc
