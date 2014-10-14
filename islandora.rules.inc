@@ -299,6 +299,14 @@ function islandora_rules_action_info() {
         'label' => t('XPath query'),
         'description' => t('The XPath query to perform.'),
       ),
+      'context_node' => array(
+        'type' => 'islandora_domnode',
+        'label' => t('Context Node'),
+        'description' => t('If provided, the query will be performed relative to the provided node.'),
+        'optional' => TRUE,
+        'default value' => NULL,
+        'allow null' => TRUE,
+      ),
     ),
     'provides' => array(
       'nodes' => array(
@@ -550,13 +558,16 @@ function islandora_rules_get_domxpath_document_content(DOMXPath $xpath) {
  *   A DOMXPath instance.
  * @param string $query
  *   An XPath query.
+ * @param DOMNode $context_node
+ *   An optional DOMNode. If provided, the query will be performed relative to
+ *   the given node.
  *
  * @return array
  *   An array containing:
  *   - nodes: An array containing the results of the query.
  */
-function islandora_rules_datastream_query_xpath(DOMXPath $xpath, $query) {
-  return array('nodes' => iterator_to_array($xpath->query($query)));
+function islandora_rules_datastream_query_xpath(DOMXPath $xpath, $query, DOMNode $context_node = NULL) {
+  return array('nodes' => iterator_to_array($xpath->query($query, $context_node)));
 }
 
 /**
