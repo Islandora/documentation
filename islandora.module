@@ -1574,6 +1574,12 @@ function islandora_entity_property_info() {
     'label' => t('ID'),
     'description' => t('The identifier of the datastream.'),
   );
+  $datastream_properties['state'] = array(
+    'type' => 'text',
+    'label' => t('Datastream State'),
+    'description' => t('An initial representing the state of the datastream.'),
+    'setter callback' => 'islandora_entity_set_property',
+  );
   $datastream_properties['label'] = array(
     'type' => 'text',
     'label' => t('Datastream Label'),
