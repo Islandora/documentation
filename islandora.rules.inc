@@ -82,7 +82,7 @@ function islandora_rules_event_info() {
         'object' => array(
           'type' => 'islandora_object',
           'label' => t('Object'),
-          'description' => t('A Tuque object for the Fedora object from which the datastream exists, as an entity.'),
+          'description' => t('A Tuque object for the Fedora object on which the datastream existed, as an entity.'),
         ),
         'datastream' => array(
           'type' => 'text',
