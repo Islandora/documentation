@@ -1543,21 +1543,25 @@ function islandora_entity_property_info() {
     'type' => 'text',
     'label' => t('Object Label'),
     'description' => t('The label of the object.'),
+    'setter callback' => 'islandora_entity_set_property',
   );
   $object_properties['owner'] = array(
     'type' => 'text',
     'label' => t('Object Owner'),
     'description' => t('The name of the owner of the object.'),
+    'setter callback' => 'islandora_entity_set_property',
   );
   $object_properties['state'] = array(
     'type' => 'text',
     'label' => t('Object State'),
     'description' => t('An initial representing the state of the object.'),
+    'setter callback' => 'islandora_entity_set_property',
   );
   $object_properties['models'] = array(
     'type' => 'list<text>',
     'label' => t('Content Models'),
     'description' => t('The list of content models which the object has.'),
+    'setter callback' => 'islandora_entity_set_property',
   );
   $object_properties['createdDate'] = array(
     'type' => 'text',
@@ -1570,15 +1574,34 @@ function islandora_entity_property_info() {
     'label' => t('ID'),
     'description' => t('The identifier of the datastream.'),
   );
+  $datastream_properties['state'] = array(
+    'type' => 'text',
+    'label' => t('Datastream State'),
+    'description' => t('An initial representing the state of the datastream.'),
+    'setter callback' => 'islandora_entity_set_property',
+  );
   $datastream_properties['label'] = array(
     'type' => 'text',
     'label' => t('Datastream Label'),
     'description' => t('The label of the datastream.'),
+    'setter callback' => 'islandora_entity_set_property',
   );
   $datastream_properties['mimetype'] = array(
     'type' => 'text',
     'label' => t('MIME type'),
     'description' => t('Content type of the datastream.'),
+    'setter callback' => 'islandora_entity_set_property',
+  );
+  $datastream_properties['parent'] = array(
+    'type' => 'islandora_object',
+    'label' => t('Object'),
+    'description' => t('The Tuque object on which this datastream exists.'),
+  );
+  $datastream_properties['content'] = array(
+    'type' => 'text',
+    'label' => t('Datastream content'),
+    'description' => t('The contents of the datastream; only useful when the content is textual.'),
+    'setter callback' => 'islandora_entity_set_property',
   );
 
   return $info;
@@ -1999,5 +2022,17 @@ function islandora_islandora_object_alter(AbstractObject $object, array &$contex
   if ($context['action'] == 'ingest' && variable_get('islandora_defer_derivatives_on_ingest', FALSE)) {
     module_load_include('inc', 'islandora', 'includes/derivatives');
     islandora_set_defer_derivatives_flag($object);
+  }
+}
+
+/**
+ * Set property on an entity.
+ *
+ * Drupal's usual entity_property_verbatim_set() does not work, as tries to use
+ * ArrayAccess stuff instead of setting properties directly.
+ */
+function islandora_entity_set_property(&$data, $name, $value, $langcode) {
+  if (is_object($data)) {
+    $data->$name = $value;
   }
 }

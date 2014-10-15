@@ -188,11 +188,17 @@ function islandora_describe_repository($url = NULL) {
  */
 function islandora_invoke_hook_list($hook, array $refinements, array $args) {
   $return = array();
-  foreach (islandora_build_hook_list($hook, $refinements) as $hook) {
-    array_unshift($args, $hook);
+  foreach (islandora_build_hook_list($hook, $refinements) as $refined_hook) {
+    array_unshift($args, $refined_hook);
     $result = call_user_func_array('module_invoke_all', $args);
     $return = array_merge_recursive($return, $result);
     array_shift($args);
+  }
+  if (module_exists('rules') && $event = rules_get_cache("event_$hook")) {
+    $parameters = $event->parameterInfo();
+    $rule_args = array_slice($args, 0, count($parameters));
+    array_unshift($rule_args, $hook);
+    $result = call_user_func_array('rules_invoke_event', $rule_args);
   }
   return $return;
 }
