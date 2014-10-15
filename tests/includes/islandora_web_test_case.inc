@@ -260,8 +260,7 @@ class IslandoraWebTestCase extends DrupalWebTestCase {
    *   If TRUE, this will only delete objects owned by users in $this->users.
    *
    * @return bool
-   *   If the deletion fails, return FALSE TRUE, this will only delete objects
-   *   owned by users in $this->users.
+   *   If the deletion fails, return FALSE.
    */
   public function deleteObject($pid, $button = NULL, $safety = TRUE) {
     $object = islandora_object_load($pid);
