@@ -227,6 +227,7 @@ class MimeDetect {
     'bin' => 'application/octet-stream',
     // Web Archives:
     "warc" => "application/warc",
+    "json" => "application/json",
   );
   protected $protectedFileExtensions;
   protected $extensionExceptions = array(
