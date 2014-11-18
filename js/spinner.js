@@ -22,36 +22,39 @@
       });
       for (var base in settings.spinner) {
         var id = '#' + base;
-        $(id, context).once('spinner', function () {
-          var spinner = new Spinner(settings.spinner[base].opts);
-          $(id).parents('form').one('submit', function(event) {
-            if ($(this).data('clicked').is(id)) {
-              event.preventDefault();
-              // Add Message.
-              var message = $('<div/>').text(settings.spinner[base].message);
-              $(id).after(message);
-              // Make UI changes.
-              spinner.spin(this);
-              $('#edit-next').hide();
-              $('#edit-prev').hide(); 
-              // Submit the form after a set timeout, this handles problems with
-              // safari, in that safari submit's immediately..
-              if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) { 
-                $(':submit').attr('disabled', 'disabled');
+        // Don't add spinner to the hidden next/ingest button.
+        if (id != '#edit-hidden-next') {
+          $(id, context).once('spinner', function () {
+            var spinner = new Spinner(settings.spinner[base].opts);
+            $(id).parents('form').one('submit', function (event) {
+              if ($(this).data('clicked').is(id)) {
+                event.preventDefault();
+                // Add Message.
+                var message = $('<div/>').text(settings.spinner[base].message);
+                $(id).after(message);
+                // Make UI changes.
+                spinner.spin(this);
+                $('#edit-next').hide();
+                $('#edit-prev').hide();
+                // Submit the form after a set timeout, this handles problems with
+                // safari, in that safari submit's immediately..
+                if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
+                  $(':submit').attr('disabled', 'disabled');
+                }
+                setTimeout(function () {
+                  // Allow for the button to be clicked, then click it then
+                  // prevent the default behavoir.
+                  $(id).removeAttr('disabled')
+                    .click()
+                    .click(function (event) {
+                      event.preventDefault();
+                    });
+                }, 500);
               }
-              setTimeout(function() {
-                // Allow for the button to be clicked, then click it then
-                // prevent the default behavoir.
-                $(id).removeAttr('disabled')
-                  .click()
-                  .click(function(event) {
-                    event.preventDefault();
-                  });
-              }, 500);
-            }
-            return true;
+              return true;
+            });
           });
-        });
+        }
       }
     }
   };
