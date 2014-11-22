@@ -31,7 +31,7 @@ function islandora_object_properties_form(array $form, array &$form_state, Abstr
     module_load_include('inc', 'islandora', 'includes/derivatives');
     $hooks = islandora_invoke_hook_list(ISLANDORA_DERVIATIVE_CREATION_HOOK, $object->models, array($object));
     $hooks = islandora_filter_derivatives($hooks, array('force' => TRUE), $object);
-    if (count($hooks) > 1) {
+    if (count($hooks) >= 1) {
       $regenerate_derivatives_access = TRUE;
     }
   }
