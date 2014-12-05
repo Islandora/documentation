@@ -281,31 +281,23 @@ function islandora_datastream_version_replace_form($form, &$form_state, Abstract
   $form_state['object_id'] = $object->id;
   $form_state['dsid'] = $datastream->id;
   $form_state['object'] = $object;
-  $datastream_mime_map = islandora_get_object_extensions($object);
-  $current_mime = $datastream->mimetype;
-  $mimes = $datastream_mime_map[$datastream->id]['mime'];
-  if (!in_array($current_mime, $mimes)) {
-    $mimes[] = $current_mime;
-  }
-  $extensions = array();
-  foreach ($mimes as $mime) {
-    $extensions = array_merge($extensions, islandora_get_extensions_for_mimetype($mime));
-  }
+
+  $extensions = islandora_get_extensions_for_datastream($object, $datastream->id);
   $valid_extensions = implode(' ', $extensions);
   $upload_size = min((int) ini_get('post_max_size'), (int) ini_get('upload_max_filesize'));
   return array(
     'dsid_fieldset' => array(
       '#type' => 'fieldset',
-      '#title' => t("Update datastream with latest version"),
+      '#title' => t("Update Datastream"),
       '#collapsible' => FALSE,
       '#collapsed' => FALSE,
       'dsid' => array(
         '#type' => 'markup',
-        '#markup' => "<div>DSID: <b>$datastream->id</b></div>",
+        '#markup' => "<div>DSID: <strong>$datastream->id</strong></div>",
       ),
       'label' => array(
         '#type' => 'markup',
-        '#markup' => "<div>Label: <b>$datastream->label</b></div>",
+        '#markup' => "<div>Label: <strong>$datastream->label</strong></div>",
       ),
       'file' => array(
         '#type' => 'managed_file',
@@ -313,7 +305,7 @@ function islandora_datastream_version_replace_form($form, &$form_state, Abstract
         '#title' => t('Upload Document'),
         '#size' => 64,
         '#description' => t('Select a file to upload.<br/>Files must be less than <strong>@size MB.</strong>', array('@size' => $upload_size)),
-        '#upload_location' => 'temporary://',
+        '#upload_location' => 'public://',
         '#upload_validators' => array(
           'file_validate_extensions' => array($valid_extensions),
           // Assume its specified in MB.

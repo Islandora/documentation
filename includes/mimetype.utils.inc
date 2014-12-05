@@ -58,3 +58,31 @@ function islandora_get_extensions_for_mimetype($mimetype) {
   }
   return $extensions;
 }
+
+/**
+ * Mimes accepted by a datastream.
+ *
+ * @param AbstractObject $object
+ *   Object to check for extensions.
+ * @param string $dsid
+ *   Datastream ID to check for extensions.
+ *
+ * @return array
+ *   Mimes accepted by the datastream ID on the object.
+ */
+function islandora_get_extensions_for_datastream(AbstractObject $object, $dsid) {
+  module_load_include('inc', 'islandora', 'includes/utilities');
+  $datastream_mime_map = islandora_get_datastreams_requirements_from_models($object->models);
+  $mimes = $datastream_mime_map[$dsid]['mime'];
+  if (isset($object[$dsid])) {
+    $current_mime = $object[$dsid]->mimetype;
+    if (!in_array($current_mime, $mimes)) {
+      $mimes[] = $current_mime;
+    }
+  }
+  $extensions = array();
+  foreach ($mimes as $mime) {
+    $extensions = array_merge($extensions, islandora_get_extensions_for_mimetype($mime));
+  }
+  return $extensions;
+}

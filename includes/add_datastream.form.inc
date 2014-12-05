@@ -27,8 +27,8 @@ function islandora_add_datastream_form(array $form, array &$form_state, Abstract
   // @deprecated Storing objects in $form_state is asking for a bad time...
   // Causes issues with derivative generation when we try to use it.
   $form_state['object'] = $object;
-  $form_state['datastream_requirements'] = islandora_get_missing_datastreams_requirements($object);
-  $unused_datastreams = array_keys($form_state['datastream_requirements']);
+  $datastream_requirements = islandora_get_missing_datastreams_requirements($object);
+  $unused_datastreams = array_keys($datastream_requirements);
   $unused_datastreams = "'" . implode("', '", $unused_datastreams) . "'";
   $upload_size = min((int) ini_get('post_max_size'), (int) ini_get('upload_max_filesize'));
   return array(
@@ -38,7 +38,7 @@ function islandora_add_datastream_form(array $form, array &$form_state, Abstract
     ),
     'dsid_fieldset' => array(
       '#type' => 'fieldset',
-      '#title' => 'Add a datastream',
+      '#title' => 'Add a Datastream',
       '#collapsible' => FALSE,
       '#collapsed' => FALSE,
       'dsid' => array(
@@ -60,7 +60,7 @@ function islandora_add_datastream_form(array $form, array &$form_state, Abstract
         '#required' => TRUE,
         '#size' => 64,
         '#maxlength' => 64,
-        '#description' => t('A human-readable label'),
+        '#description' => t('A human-readable label.'),
         '#type' => 'textfield',
         '#element_validate' => array('islandora_add_datastream_form_field_does_not_contain_a_forward_slash'),
       ),
@@ -69,10 +69,11 @@ function islandora_add_datastream_form(array $form, array &$form_state, Abstract
         '#required' => TRUE,
         '#title' => t('Upload Document'),
         '#size' => 48,
-        '#description' => t('Select a file to upload.<br/>Files must be less than <b>@size MB.</b>', array('@size' => $upload_size)),
+        '#description' => t('Select a file to upload.<br/>Files must be less than <strong>@size MB.</strong>', array('@size' => $upload_size)),
         '#default_value' => isset($form_state['values']['files']) ? $form_state['values']['files'] : NULL,
-        '#upload_location' => 'temporary://',
+        '#upload_location' => 'public://',
         '#upload_validators' => array(
+          // Disable default file_validate_extensions; we need direct control.
           'file_validate_extensions' => array(NULL),
           // Assume its specified in MB.
           'file_validate_size' => array($upload_size * 1024 * 1024),
@@ -137,6 +138,26 @@ function islandora_add_datastream_form_field_is_valid_dsid(array $element, array
 }
 
 /**
+ * Validation callback for islandora_add_datastream_form.
+ *
+ * Checks if the given datastream can accept the given MIME type.
+ */
+function islandora_add_datastream_form_validate(array $form, array &$form_state) {
+  module_load_include('inc', 'islandora', 'includes/mimetype.utils');
+  $extensions = islandora_get_extensions_for_datastream(
+    $form_state['object'],
+    $form_state['values']['dsid']
+  );
+  $file = file_load($form_state['values']['file']);
+  if ($file) {
+    $errors = file_validate_extensions($file, implode(' ', $extensions));
+    if (count($errors) > 0) {
+      form_set_error('file', "{$errors[0]} (for the set DSID)");
+    }
+  }
+}
+
+/**
  * Checks if the given form field contains a "/" character.
  *
  * @param array $element
@@ -149,31 +170,6 @@ function islandora_add_datastream_form_field_is_valid_dsid(array $element, array
 function islandora_add_datastream_form_field_does_not_contain_a_forward_slash(array $element, array &$form_state, array $form) {
   if (strpos($element['#value'], '/') !== FALSE) {
     form_error($element, t('@title cannot contain a "/" character.', array('@title' => $element['#title'])));
-  }
-}
-
-/**
- * Checks if the given datastream requires the upload to be a certain MIME type.
- *
- * @param array $form
- *   The Drupal form.
- * @param array $form_state
- *   The Drupal form state.
- */
-function islandora_add_datastream_form_validate(array $form, array &$form_state) {
-  $file = file_load($form_state['values']['file']);
-  $dsid = $form_state['values']['dsid'];
-  if (isset($form_state['datastream_requirements'][$dsid]) && $file) {
-    $allowed_types = $form_state['datastream_requirements'][$dsid]['mime'];
-    $mime_detect = new MimeDetect();
-    $allowed_extensions = array();
-    foreach ($allowed_types as $mime) {
-      $allowed_extensions = array_merge($allowed_extensions, $mime_detect->getValidExtensions($mime));
-    }
-    $errors = file_validate_extensions($file, implode(' ', $allowed_extensions));
-    if (count($errors) > 0) {
-      form_set_error('file', $errors[0]);
-    }
   }
 }
 
