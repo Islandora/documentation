@@ -293,11 +293,11 @@ function islandora_datastream_version_replace_form($form, &$form_state, Abstract
       '#collapsed' => FALSE,
       'dsid' => array(
         '#type' => 'markup',
-        '#markup' => "<div>DSID: <strong>$datastream->id</strong></div>",
+        '#markup' => t("<div>DSID: <strong>@dsid</strong></div>", array('@dsid' => $datastream->id)),
       ),
       'label' => array(
         '#type' => 'markup',
-        '#markup' => "<div>Label: <strong>$datastream->label</strong></div>",
+        '#markup' => t("<div>Label: <strong>@label</strong></div>", array('@label' => $datastream->label)),
       ),
       'file' => array(
         '#type' => 'managed_file',

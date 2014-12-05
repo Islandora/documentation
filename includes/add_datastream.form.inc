@@ -38,7 +38,7 @@ function islandora_add_datastream_form(array $form, array &$form_state, Abstract
     ),
     'dsid_fieldset' => array(
       '#type' => 'fieldset',
-      '#title' => 'Add a Datastream',
+      '#title' => t('Add a Datastream'),
       '#collapsible' => FALSE,
       '#collapsed' => FALSE,
       'dsid' => array(
@@ -152,7 +152,10 @@ function islandora_add_datastream_form_validate(array $form, array &$form_state)
   if ($file) {
     $errors = file_validate_extensions($file, implode(' ', $extensions));
     if (count($errors) > 0) {
-      form_set_error('file', "{$errors[0]} (for the set DSID)");
+      form_set_error(
+        'file',
+        t("!error (for the set DSID)", array('!error' => $errors[0]))
+      );
     }
   }
 }
