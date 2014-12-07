@@ -60,15 +60,15 @@ function islandora_get_extensions_for_mimetype($mimetype) {
 }
 
 /**
- * Mimes accepted by a datastream.
+ * Extensions for the mimes accepted by a datastream.
  *
  * @param AbstractObject $object
  *   Object to check for extensions.
  * @param string $dsid
  *   Datastream ID to check for extensions.
  *
- * @return array
- *   Mimes accepted by the datastream ID on the object.
+ * @return string[]
+ *   Extensions for the mimes accepted by the datastream ID on the object.
  */
 function islandora_get_extensions_for_datastream(AbstractObject $object, $dsid) {
   module_load_include('inc', 'islandora', 'includes/utilities');
