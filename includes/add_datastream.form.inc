@@ -149,7 +149,8 @@ function islandora_add_datastream_form_validate(array $form, array &$form_state)
     $form_state['values']['dsid']
   );
   $file = file_load($form_state['values']['file']);
-  if ($file) {
+  // Only validate extensions if mimes defined in ds-composite.
+  if ($file && $extensions) {
     $errors = file_validate_extensions($file, implode(' ', $extensions));
     if (count($errors) > 0) {
       form_set_error(
