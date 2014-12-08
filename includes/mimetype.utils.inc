@@ -84,5 +84,5 @@ function islandora_get_extensions_for_datastream(AbstractObject $object, $dsid) 
   foreach ($mimes as $mime) {
     $extensions = array_merge($extensions, islandora_get_extensions_for_mimetype($mime));
   }
-  return $extensions;
+  return array_unique($extensions);
 }
