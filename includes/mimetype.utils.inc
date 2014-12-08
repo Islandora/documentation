@@ -73,7 +73,7 @@ function islandora_get_extensions_for_mimetype($mimetype) {
 function islandora_get_extensions_for_datastream(AbstractObject $object, $dsid) {
   module_load_include('inc', 'islandora', 'includes/utilities');
   $datastream_mime_map = islandora_get_datastreams_requirements_from_models($object->models);
-  $mimes = $datastream_mime_map[$dsid]['mime'];
+  $mimes = isset($datastream_mime_map[$dsid]) ? $datastream_mime_map[$dsid]['mime'] : array();
   if (isset($object[$dsid])) {
     $current_mime = $object[$dsid]->mimetype;
     if (!in_array($current_mime, $mimes)) {
@@ -84,5 +84,5 @@ function islandora_get_extensions_for_datastream(AbstractObject $object, $dsid) 
   foreach ($mimes as $mime) {
     $extensions = array_merge($extensions, islandora_get_extensions_for_mimetype($mime));
   }
-  return $extensions;
+  return array_unique($extensions);
 }
