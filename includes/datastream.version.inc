@@ -305,7 +305,7 @@ function islandora_datastream_version_replace_form($form, &$form_state, Abstract
         '#title' => t('Upload Document'),
         '#size' => 64,
         '#description' => t('Select a file to upload.<br/>Files must be less than <strong>@size MB.</strong>', array('@size' => $upload_size)),
-        '#upload_location' => 'public://',
+        '#upload_location' => file_default_scheme() . '://',
         '#upload_validators' => array(
           'file_validate_extensions' => array($valid_extensions),
           // Assume its specified in MB.

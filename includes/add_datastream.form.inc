@@ -71,7 +71,7 @@ function islandora_add_datastream_form(array $form, array &$form_state, Abstract
         '#size' => 48,
         '#description' => t('Select a file to upload.<br/>Files must be less than <strong>@size MB.</strong>', array('@size' => $upload_size)),
         '#default_value' => isset($form_state['values']['files']) ? $form_state['values']['files'] : NULL,
-        '#upload_location' => 'public://',
+        '#upload_location' => file_default_scheme() . '://',
         '#upload_validators' => array(
           // Disable default file_validate_extensions; we need direct control.
           'file_validate_extensions' => array(NULL),
