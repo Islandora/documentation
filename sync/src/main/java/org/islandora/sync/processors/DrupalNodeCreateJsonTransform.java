@@ -46,7 +46,6 @@ public class DrupalNodeCreateJsonTransform implements Processor {
          * subsequent call to Drupal's REST service.
          */
         Message outMessage = exchange.getOut();
-        outMessage.removeHeaders("*");
         outMessage.setHeader(Exchange.HTTP_METHOD, POST);
         outMessage.setHeader(Exchange.CONTENT_TYPE, "application/json");
         outMessage.setBody(outBody.toJSONString());
