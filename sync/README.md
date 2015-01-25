@@ -1,4 +1,4 @@
-# Islandora-Sync [![Build Status](https://travis-ci.org/Islandora/islandora.png?branch=7.x-2.x)](https://travis-ci.org/Islandora-Labs/islandora)
+# Islandora-Sync 
 
 ## Introduction
 
