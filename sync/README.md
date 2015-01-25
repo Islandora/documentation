@@ -2,7 +2,20 @@
 
 ## Introduction
 
-Event driven Apache Camel based middleware that synchronizes a Fedora 4 JCR with a Drupal CMS.  
+Event driven middleware based on Apache Camel that synchronizes a Fedora 4 JCR with a Drupal CMS.  
+
+## Requirements
+
+* Java 7
+* Maven 3
+
+## Compilation
+
+`mvn install`
+
+## Deployment
+
+After successful compilation, copy the resulting jar from the target directory to the deploy directory of your karaf installation.  If you are actively developing, it is advised to install through maven via `osgi:install -s mvn:org.islandora/islandora-sync/VERSION` in the karaf shell.  Be sure to put in the appropriate version number from the pom file.  Afterwards, you can have karaf automatically redeploy anytime you successfully run `mvn install` by issuing the following karaf command: `dev:watch --dev:watch mvn:org.islandora/islandora-sync/VERSION`.
 
 ## Maintainers/Sponsors
 
