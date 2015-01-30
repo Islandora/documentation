@@ -21,7 +21,7 @@ public class DrupalNodeCreateJsonTransform implements Processor {
          *     "und":[
          *       {
          *          "value": "RDF FROM FEDORA",
-         *          "format":"filtered_html"
+         *          "format":"plain_text"
          *       }
          *     ]
          *    },
@@ -41,7 +41,7 @@ public class DrupalNodeCreateJsonTransform implements Processor {
         bodyField.put("und", arr);
         outBody.put("body", bodyField);
 
-        /* 
+        /*
          * Set up the out message to be a POST for the
          * subsequent call to Drupal's REST service.
          */
