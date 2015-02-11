@@ -6,8 +6,8 @@
        http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
        http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd">
 
-  <camelContext id="islandora-sync" xmlns="http://camel.apache.org/schema/blueprint">
-    <package>org.islandora.sync.routes</package>
-  </camelContext>
+    <camelContext id="islandora-sync" xmlns="http://camel.apache.org/schema/blueprint">
+      <package>org.islandora.sync.routes</package>
+    </camelContext>
 
 </blueprint>
