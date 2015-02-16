@@ -1,0 +1,109 @@
+<?php
+
+/**
+ * Implements hook_ctools_plugin_api().
+ */
+function islandora_ctools_plugin_api($owner, $api) {
+  if ($owner == 'services' && $api == 'services') {
+    return array(
+      'version' => 3,
+    );
+  }
+}
+
+/**
+ * Implements hook_default_services_endpoint().
+ */
+function islandora_default_services_endpoint() {
+  $endpoint = new stdClass();
+  $endpoint->disabled = FALSE; /* Edit this to true to make a default endpoint disabled initially */
+  $endpoint->api_version = 3;
+  $endpoint->name = 'islandora';
+  $endpoint->server = 'rest_server';
+  $endpoint->path = 'islandora';
+  $endpoint->authentication = array();
+  $endpoint->server_settings = array();
+  $endpoint->resources = array(
+    'node' => array(
+      'operations' => array(
+        'retrieve' => array(
+          'enabled' => '1',
+        ),
+        'create' => array(
+          'enabled' => '1',
+        ),
+        'update' => array(
+          'enabled' => '1',
+        ),
+        'delete' => array(
+          'enabled' => '1',
+        ),
+        'index' => array(
+          'enabled' => '1',
+        ),
+      ),
+      'relationships' => array(
+        'files' => array(
+          'enabled' => '1',
+        ),
+        'comments' => array(
+          'enabled' => '1',
+        ),
+      ),
+      'targeted_actions' => array(
+        'attach_file' => array(
+          'enabled' => '1',
+        ),
+      ),
+    ),
+    'user' => array(
+      'operations' => array(
+        'retrieve' => array(
+          'enabled' => '1',
+        ),
+        'create' => array(
+          'enabled' => '1',
+        ),
+        'update' => array(
+          'enabled' => '1',
+        ),
+        'delete' => array(
+          'enabled' => '1',
+        ),
+        'index' => array(
+          'enabled' => '1',
+        ),
+      ),
+      'actions' => array(
+        'login' => array(
+          'enabled' => '1',
+        ),
+        'logout' => array(
+          'enabled' => '1',
+        ),
+        'token' => array(
+          'enabled' => '1',
+        ),
+        'request_new_password' => array(
+          'enabled' => '1',
+        ),
+        'register' => array(
+          'enabled' => '1',
+        ),
+      ),
+      'targeted_actions' => array(
+        'cancel' => array(
+          'enabled' => '1',
+        ),
+        'password_reset' => array(
+          'enabled' => '1',
+        ),
+        'resend_welcome_email' => array(
+          'enabled' => '1',
+        ),
+      ),
+    ),
+  );
+  $endpoint->debug = 0;
+  return array($endpoint);
+}
