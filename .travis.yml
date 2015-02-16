@@ -1,0 +1,18 @@
+language: php
+php:
+  - 5.3.3
+  - 5.4
+  - 5.5
+branches:
+  only:
+    - /^7.x/
+before_install:
+  - export ISLANDORA_DIR=$TRAVIS_BUILD_DIR
+  - $TRAVIS_BUILD_DIR/drupal/islandora/tests/scripts/travis_setup.sh
+  - cd $HOME/drupal-*
+script:
+  - ant -buildfile sites/all/modules/islandora/drupal/islandora/build.xml lint
+  - $ISLANDORA_DIR/drupal/islandora/tests/scripts/line_endings.sh sites/all/modules/islandora/drupal/islandora
+  - drush coder-review --reviews=production,security,style,i18n,potx,sniffer islandora
+  - phpcpd --names *.module,*.inc,*.test sites/all/modules/islandora/drupal/islandora
+  - drush test-run --uri=http://localhost:8081 Islandora

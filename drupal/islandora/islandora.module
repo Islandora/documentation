@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * @file
+ * This is the new Islandora module. We need a better doc comment here.
+ */
+
+/**
  * Implements hook_ctools_plugin_api().
  */
 function islandora_ctools_plugin_api($owner, $api) {
