@@ -21,6 +21,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision :shell, :path => "install.sh"
   config.vm.provision :shell, :path => "solr.sh"
   config.vm.provision :shell, :path => "camel.sh"
+  config.vm.provision :shell, :path => "fcrepo-camel.sh"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
