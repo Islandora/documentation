@@ -19,6 +19,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :forwarded_port, guest: 8181, host: 8181 # Karaf
 
   config.vm.provision :shell, :path => "install.sh"
+  config.vm.provision :shell, :path => "solr.sh"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs

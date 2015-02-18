@@ -24,6 +24,10 @@ apt-get -y install maven
 # Tomcat
 apt-get -y install tomcat7
 
+#Wget and curl
+
+apt-get -y install wget curl
+
 # Set some params so it's non-interactive for the lamp-server install
 debconf-set-selections <<< 'mysql-server mysql-server/root_password password islandora'
 debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password islandora'
