@@ -22,9 +22,8 @@ Current maintainers:
 
 ## Development
 
-Ifyou would like to contribute, please check out our helpful [Documentation for Developers](https://github.com/Islandora/islandora/wiki#wiki-documentation-for-developers) info, as well as our [Developers](http://islandora.ca/developers) section on the [Islandora.ca](http://islandora.ca) site.
+If you would like to contribute, please get involved with the [Islandora Fedora 4 Interest Group](https://github.com/Islandora/Islandora-Fedora4-Interest-Group). We love to hear from you!
 
 ## License
 
 [GPLv3](http://www.gnu.org/licenses/gpl-3.0.txt)
-
