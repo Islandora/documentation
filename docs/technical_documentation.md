@@ -123,7 +123,7 @@ The integration of all the various subsystems will be achieved through asynchron
 
 Setting up the software in this manner effectively decouples Fedora and Drupal from each other, both in terms of synchronicity and application logic.  The benefits to this are deep, resulting in:
 - A system that can scale out horizontally because of the use of persistent queues, adapting to heavier load.
-- A system that offers a better user experience due to decreased wait times for page loads.  Only interacting with Fedora when create, update, and deletion operations will prevent us from becoming disk bound due to a high volume of unnecessary read requests to Fedora.
+- A system that offers a better user experience due to decreased wait times for page loads.  Only interacting with Fedora when create, update, and deletion operations occur will prevent us from becoming disk bound due to a high volume of unnecessary read requests to Fedora.
 - The entire Drupal module ecosystem is opened up for Islandora developers, themers, and site builders.  Now when someone says, "But there's a Drupal module for that, right?", we no longer have to sheepishly respond with "Well... that's not how it really works..."
 - Tuque as an object relational mapper for Fedora is no longer required.  Drupal's Node system, which is an ORM that can be configured through a UI, in combination with the fcrepo-camel component can replace this functionality in its entirety.
 - The ability to utilize Drupal for and its relational database for application logic, avoiding the usual hacks such as temporary RELS-EXT statements and an over-reliance on Solr.
@@ -132,8 +132,13 @@ Setting up the software in this manner effectively decouples Fedora and Drupal f
 - GSearch is no longer required.  The fcrepo-camel component can replace this functionality with a few lines of code.  Though it is unlikely that xslts will be eliminated from the stack altogether, at least the massive xslt layer in the current stack can be broken apart in a reasonable manner.  Also, the programmer will have access points to provide custom logic before and after processing.  This makes complicated indexing scenarios like those that require information from multiple objects accessible to a wider audience.
 
 ### Islandora Sync
-When designing systems, it's tempting to be drawn towards what appear to be similarities between requirements at first.  This often leads to a design built around code re-use that seems obvious in the early stages of development.  Unfortunately, as functional requirements shift and use cases are added, more and more of the initial assumptions will be violated.  Over time, this design will start to sag, and its "generic" systems will become more of a hindrance than a benefit.  With this in mind for the middleware, we are simply going to map out space for each operation that must be performed on each type of resource based on message type, content model, and MIME type.  As work progresses and similarities present themselves, we will aggressively refactor in order to maintain code re-use.  But as experience has proven, attempting to make a large systems that handle all use cases will only lead to deterioration, as one by one the initial assumptions will fall by the way side.  We have to give each concept its own room in the code base so that things which at first appear similar can vary independently over the course of development.  This will also allow for eventual bean exposure so that the system can be made pluggable for users with custom use cases.  Ironically, it is by being explicit that we will achieve a more robust and customizable middleware.  
 
+Islandora Sync will be camel based middleware that lives up to its name.  It is the middleman in the interactions between Drupal and Fedora.  It will provide services to Drupal, utilize Drupal's services, and interact with Fedora through the use of JMS Messaging and the REST API.
+
+##### Design Considerations
+When designing systems, it's tempting to be drawn towards what appear to be similarities between requirements at first.  This often leads to a design built around code re-use that seems obvious in the early stages of development.  Unfortunately, as functional requirements shift and use cases are added, more and more of the initial assumptions will be violated.  Over time, this design will start to sag, and its "generic" systems will become more of a hindrance than a benefit.  With this in mind for the middleware, we are simply going to map out space for each operation that must be performed on each type of resource based on message type, resource type, and content model.  As work progresses and similarities present themselves, we will aggressively refactor in order to maintain code re-use.  But as experience has proven, attempting to make a large systems that handle all use cases will only lead to deterioration, as one by one the initial assumptions will fall by the way side.  We have to give each concept its own room in the code base so that things which at first appear similar can vary independently over the course of development.  This will also allow for eventual bean exposure so that the system can be made pluggable for users with custom use cases.  Ironically, it is by being somewhat explicit at the beginning that we will achieve a more robust and customizable middleware.  
+
+##### Routing
 When messages first come in from Fedora through ActiveMQ, there will be a sorting layer that will process each message so that it eventually winds up in the appropriate place.  The things we will have to sort on are:
 - Resource type
   - Container
@@ -175,9 +180,58 @@ RouteBuilder builder = new RouteBuilder() {
     }
 };
 ```
-Of course, this is a simplification for illustrative purposes.  In reality, there will be several of these wired together based on all the criteria presented above in order to route a message to its proper handler.
+Of course, this is a simplification for illustrative purposes.  In reality, there will be several of these wired together based on all the criteria presented above in order to route a message to its proper handler.  Here's a first, basic attempt at the layout of the full routing layer and its subsequent operations (itlalicized):
+- NODE_REMOVED
+    - Container
+        - *Delete Container*
+    - NonRdfSourceDescription
+        - *Delete NonRdfSourceDescription*
+- NODE_ADDED
+    - Container
+        - Image
+            - *Add Image*
+        - PDF
+            - *Add PDF*
+        - Video
+            - *Add Video*
+        - Audio
+            - *Add Audio*
+        - Newspaper
+            - *Add Newspaper*
+        - Book
+            - *Add Book*
+        - Page
+            - *Add Page*
+        - Compound
+            - *Add Compound*
+        - Web ARChive
+            - *Add Web ARChive*
+        - Disk image 
+            - *Add Disk Image*
+    - NonRdfSourceDescription
+        - MODS
+            - *Add MODS to parent Container*
+        - MADS
+            - *Add MADS to parent Container*
+        - PBCore
+            - *Add PBCore to parent Container*
+        - TECHMD
+            - *Add TECHMD to parent Container*
+        - etc.
+            - *Add your random metadata file to parent Container*
+- PROPERTY_UPDATED
+    - Container
+        - *Update Container property*
+    - NonRdfSourceDescription
+        - *Update parent Container property*
 
-### Derivative Creation
+##### Transactions and Routing
+Based on preliminary analysis, utilizing a transaction in Fedora 4 will result in the same messages in the same order as if you didn't use a transaction.  This means we can get away with one set of logic whether or not transactions are taken advantage of.  There is no need for message splitting and ordering in front of the routing layer.
+
+##### Exposing Services To Drupal
+This has been identified as something that will be focused on after the Fedora -> Drupal synchronization has stabilized, but it will essentially expose the same operations as the routing layer above, just accepting input from Drupal's hook system instead of Fedora's JMS Queue.  As Drupal nodes are created, modified, and deleted, similar operations will take place to apply the changes to Fedora.  It will rely heavily on the transactionality that Fedora 4 provides, with each exposed service wrapping a complex sequence of operations within a single transaction.  
+
+##### Derivative Creation
 In order to interact with the various command line programs utilized to create derivatives, we will take advantage of Camel's exec component, which passes the message body into the program that is executed through STDIN.  Here' a trivial example using the word count function in Linux `wc`, demonstrating how to handle the results:
 ```Java
 from("direct:exec")
@@ -194,14 +248,20 @@ from("direct:exec")
 });
 ```
 
-### Drupal Interaction
+### Solr and Triple Store Indexing
+
+The Fedora community offers a [pluggable indexer webapp](https://github.com/fcrepo4/fcrepo-message-consumer), which is slated to be deprecated in favor of a camel based approach.  Since we're already doing this ourselves, isolating our code that provides basic indexing capabilities and providing it to the greater community as a standalone war has been identified as a potential option that may yield in outside development help.  The basic approach is to mimic (read *STEAL*) the functionality of the existing project, using Camel to elegantly handle the messaging.
+
+### Drupal
+
+##### Camel's Interaction with Drupal
 Camel will interact with service exposed through Drupal with the use of the http4 component.  Common operations such as authentication, user management, and CRUD operations on Nodes can all be safely performed by the middleware layer without touching a drop of Drupal code (forgive the terrible pun).
 
 In fact, the main role of the Islandora Drupal module is to provide the REST endpoint and define any common services that will be used independent of content type.  The service module acts much like Drupal Views, allowing the endpoint to be customized in through a UI, and code to be exported and inserted into the Drupal module to provide permanency beyond that of the database.
 
 See the example in the 'Using Camel' section for a look at how we create nodes remotely through the REST interface Drupal provides.
 
-### The Drupal Modules
+##### The Drupal Modules
 With so much of the core functionality being moved out of the Drupal layer, we'll see the Drupal modules we've grown accustomed to shrink in size.  The core purpose of the Drupal modules will be to:
 - Provide custom Islandora content types (One-to-one with content models)
 - Provide custom Islandora views
