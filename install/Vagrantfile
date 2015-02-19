@@ -18,7 +18,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :forwarded_port, guest: 80, host: 8000 # Apache
   config.vm.network :forwarded_port, guest: 8181, host: 8181 # Karaf
 
-  config.vm.provision :shell, :path => "install.sh"
+  config.vm.provision :shell, :path => "bootstrap.sh"
   config.vm.provision :shell, :path => "solr.sh"
   config.vm.provision :shell, :path => "camel.sh"
   config.vm.provision :shell, :path => "fcrepo-camel.sh"
