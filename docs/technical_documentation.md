@@ -5,7 +5,7 @@ Islandora version 7.x-2.x is middleware built using Apache Camel to orchestrate 
 To mitigate these issues, the overall design goals of the 7.x-2.x version of Islandora are:
   - A properly modularized installation procedure so that Islandora can be consistently installed and configured in distributed environments.  As a result of this, a consistent development environment can also be made available to contributors.
   - Asynchronous communication between Fedora and Drupal, so that neither waits on the other nor any of the various processing components of the stack.  This will be achieved through the use of persistent queues, which will also allow the stack to be easily distributed across multiple computers.
-  - Fedora is treated as the source of the truly important data, only containing preservation objects and descriptive metadata.  Metadata can exist either in Fedora's native RDF attached to the resource itself, or as standardized formats such as MODS, MADS, PBCORE, etc... that exist as resources in their own right.  
+  - Fedora is treated as the source of the truly important data, only containing preservation objects and descriptive metadata.  Metadata can exist either in Fedora's native RDF attached to the resource itself, or as standardized formats such as MODS, MADS, PBCore, etc., that exist as resources in their own right.  
   - Data from Fedora is transformed and indexed into the other major system of the stack, most notably Drupal and Solr.  This includes lower quality access copies of preservation masters such as thumbnails or streaming video, which will be stored as managed files for Drupal.
   - Drupal content is represented as Nodes and Fields, allowing the content management system to utilize the relational database it is expecting instead of shimming in a completely different type of datastore.  This will open up the entire Drupal module ecosystem to Islandora.  As an added benefit, viewers (OpenSeadragon, IA Book Viewer, Video.js, etc...) can be written as custom Field renderers, finally giving site builders the ability to control the display of content.  
   - Drupal's Services module will be used to expose RESTful services to middleware layer so that it can sanely perform CRUD operations on Nodes without having to delve into Drupal's internals.
@@ -47,7 +47,7 @@ public class DrupalNodeCreate extends RouteBuilder {
 }
 ```
 
-One of the first things you'll notice when looking at Camel routes is that they almost look as if they're written in English.  This makes them incredibly easy to follow.  Without knowing anything about Camel, you should be able to tell that this route is named "fedoraIn", reads a message from Fedora's Activemq topic, filters out messages that aren't NODE_ADDED, fetches data from Fedora, transforms it into JSON, and sends it off to Drupal.  Phew!  
+One of the first things you'll notice when looking at Camel routes is that they almost look as if they're written in English.  This makes them incredibly easy to follow.  Without knowing anything about Camel, you should be able to tell that this route is named "fedoraIn", reads a message from Fedora's ActiveMQ topic, filters out messages that aren't NODE_ADDED, fetches data from Fedora, transforms it into JSON, and sends it off to Drupal.  Phew!  
 
 So let's take a look a that custom transform and see what's going on.
 ```Java
@@ -108,31 +108,31 @@ The comments in this file give it all away, but let's walk through it anyway.  T
 
 To keep things simple for the purposes of this example, we're leaving out some pretty important details, most notably authentication.  But as you can see, there's not much to it.  In fact, the most difficult part of assembling this example was setting up the Drupal Services module and figuring out what the format Drupal was expecting for the JSON message.
 
-For more on Camel, check out the [Camel API] documentation and the community documentation on the [Camel][Apache Camel] website.  If you're looking for something more than just community and api docs, check out [Camel in Action].  It's well worth the money.
+For more on Camel, check out the [Camel API] documentation and the community documentation on the [Camel][Apache Camel] website.  If you're looking for something more than just community and API docs, check out [Camel in Action].  It's well worth the money.
 
 ### Inversion of Control and Camel
 Camel works very well with both the [Spring] and [Blueprint] Inversion of Control (e.g. Dependency Injection) frameworks.  The routes can even be defined directly in the application context XML's for either.  These sorts of frameworks, while both powerful and valuable, are often a stumbling point for developers who have never been exposed to them.  We will be using the Spring inversion of control framework to bootstrap the application, but routes will be defined in the Java DSL.  It is also advisable to stick to the Camel API, extending custom Processors when extra functionality is needed.  Bean injection and delegation should only happen when interfaces and single inheritance cannot be utilized for code re-use, or to provide a pluggable system (but *only if it's truly necessary*).  We are attempting to keep the application context's XML as simple as possible, and in order to do so, the exposure of beans must be minimal.  Plus, let's be honest, non-programmers and managers aren't going to be manipulating the XML and redeploying if we expose every possible bean reference.  We're programmers, let's do as much in code as possible for all the benefits it provides (code completion, compile time safety, debugging, etc...).
 
 ### Camel and Scripting Languages
-Camel provides extra functionality for scripting language integration, but it is advised to stick to using Camel's provided Simple language for basic filters, expressions, and predicates.  Anything more complicated than the Simple language can handle should be done in Java for compile-time safety and debugging purposes.  The other languages offered by Camel that look attractive (javascript, ruby, python) aren't *The Real McKoy*.  They are JVM implementations of said languages (Rhino, JRuby, Jython), and often have unexpected idiosyncrasies because they're being boiled down to JVM bytecode behind the scenes.  Being explicit with Java is less of a hassle than it may seem, particularly given the fact that you can attach a remote debugger in your IDE and troubleshoot so easily.
+Camel provides extra functionality for scripting language integration, but it is advised to stick to using Camel's provided Simple language for basic filters, expressions, and predicates.  Anything more complicated than the Simple language can handle should be done in Java for compile-time safety and debugging purposes.  The other languages offered by Camel that look attractive (Javascript, ruby, python) aren't *The Real McKoy*.  They are JVM implementations of said languages (Rhino, JRuby, Jython), and often have unexpected idiosyncrasies because they're being boiled down to JVM bytecode behind the scenes.  Being explicit with Java is less of a hassle than it may seem, particularly given the fact that you can attach a remote debugger in your IDE and troubleshoot so easily.
 
 # *THE PLAN*
-The integration of all the various subsystems will be achieved through asynchronous middleware.  This means that Drupal will never explicitly call out to Fedora, and Fedora will never explicitly call out to Drupal.  The middleware will consume messages from Fedora's event queue and utilize Drupal services for information flow from Fedora to Drupal.  For information flow from Drupal to Fedora, Drupal will use services provided by the Camel middeware layer that encapsulate complicated data manipulation and Fedora logic within a single transaction.  This will all be done using Drupal's hook system (which is an event system in a sense), allowing a developer to manipulate node content as if they were working on a normal Drupal site, with operations on Fedora content getting seamlessly deferred to the middleware.  In order to maintain asycnronous behavior, Camel services will accept requests from Drupal, but immediately publish request content as messages onto a persistant queue so that work can be performed when and where it is appropriate.  For those who like diagrams, the following image represents this flow of information between the main three layers of the stack.
+The integration of all the various subsystems will be achieved through asynchronous middleware.  This means that Drupal will never explicitly call out to Fedora, and Fedora will never explicitly call out to Drupal.  The middleware will consume messages from Fedora's event queue and utilize Drupal services for information flow from Fedora to Drupal.  For information flow from Drupal to Fedora, Drupal will use services provided by the Camel middeware layer that encapsulate complicated data manipulation and Fedora logic within a single transaction.  This will all be done using Drupal's hook system (which is an event system in a sense), allowing a developer to manipulate node content as if they were working on a normal Drupal site, with operations on Fedora content getting seamlessly deferred to the middleware.  In order to maintain asynchronous behavior, Camel services will accept requests from Drupal, but immediately publish request content as messages onto a persistent queue so that work can be performed when and where it is appropriate.  For those who like diagrams, the following image represents this flow of information between the main three layers of the stack.
 
 ![Layer Interaction](https://raw.githubusercontent.com/wiki/Islandora-Labs/islandora/images/layer-interaction.gif)
 
 Setting up the software in this manner effectively decouples Fedora and Drupal from each other, both in terms of synchronicity and application logic.  The benefits to this are deep, resulting in:
-- A system that can scale out horizontally because of the use of persistant queues, adapting to heavier load.
-- A system that offers a better user experience due to decreased wait times for page loads.  Only interacting with Fedora when create, update, and deletion operations will prevent us from becoming disk bound due to a high volume of unneccessary read requests to Fedora.
+- A system that can scale out horizontally because of the use of persistent queues, adapting to heavier load.
+- A system that offers a better user experience due to decreased wait times for page loads.  Only interacting with Fedora when create, update, and deletion operations will prevent us from becoming disk bound due to a high volume of unnecessary read requests to Fedora.
 - The entire Drupal module ecosystem is opened up for Islandora developers, themers, and site builders.  Now when someone says, "But there's a Drupal module for that, right?", we no longer have to sheepishly respond with "Well... that's not how it really works..."
 - Tuque as an object relational mapper for Fedora is no longer required.  Drupal's Node system, which is an ORM that can be configured through a UI, in combination with the fcrepo-camel component can replace this functionality in its entirety.
 - The ability to utilize Drupal for and its relational database for application logic, avoiding the usual hacks such as temporary RELS-EXT statements and an over-reliance on Solr.
 - A generic viewer framework!  Our usual js viewers for objects can be rewritten as custom Drupal field renderers, allowing site builders to finally have the control over page display they've always wanted.
 - XML Forms is no longer required.  Between [xpath_field](https://github.com/alxp/xpath_field) and something like [jquery.xmleditor](https://github.com/UNC-Libraries/jquery.xmleditor) or [doctored.js](http://holloway.co.nz/doctored/), xml metadata can be edited and extracted in a manner which is configurable and ties directly into Drupal's display system.
-- Gsearch is no longer required.  The fcrepo-camel component can replace this functionality with a few lines of code.  Though it is unlikely that xslts will be eliminated from the stack altogether, at least the massive xslt layer in the current stack can be broken apart in a reasonable manner.  Also, the programmer will have access points to provide custom logic before and after processing.  This makes complicated indexing scenarios like those that require information from multiple objects accessible to a wider audience.
+- GSearch is no longer required.  The fcrepo-camel component can replace this functionality with a few lines of code.  Though it is unlikely that xslts will be eliminated from the stack altogether, at least the massive xslt layer in the current stack can be broken apart in a reasonable manner.  Also, the programmer will have access points to provide custom logic before and after processing.  This makes complicated indexing scenarios like those that require information from multiple objects accessible to a wider audience.
 
 ### Islandora Sync
-When designing systems, it's tempting to be drawn towards what appear to be similarities between requirements at first.  This often leads to a design built around code re-use that seems obvious in the early stages of development.  Unfortunately, as functional requirements shift and use cases are added, more and more of the initial assumptions will be violated.  Over time, this design will start to sag, and its "generic" systems will become more of a hinderance than a benefit.  With this in mind for the middleware, we are simply going to map out space for each operation that must be performed on each type of resource based on message type, content model, and mimetype.  As work progresses and similarities present themselves, we will aggressively refactor in order to maintain code re-use.  But as experience has proven, attempting to make a large systems that handle all use cases will only lead to deterioration, as one by one the initial assumptions will fall by the way side.  We have to give each concept its own room in the code base so that things which at first appear similar can vary independently over the course of development.  This will also allow for eventual bean exposure so that the system can be made pluggable for users with custom use cases.  Ironically, it is by being explicit that we will achieve a more robust and customizable middleware.  
+When designing systems, it's tempting to be drawn towards what appear to be similarities between requirements at first.  This often leads to a design built around code re-use that seems obvious in the early stages of development.  Unfortunately, as functional requirements shift and use cases are added, more and more of the initial assumptions will be violated.  Over time, this design will start to sag, and its "generic" systems will become more of a hindrance than a benefit.  With this in mind for the middleware, we are simply going to map out space for each operation that must be performed on each type of resource based on message type, content model, and MIME type.  As work progresses and similarities present themselves, we will aggressively refactor in order to maintain code re-use.  But as experience has proven, attempting to make a large systems that handle all use cases will only lead to deterioration, as one by one the initial assumptions will fall by the way side.  We have to give each concept its own room in the code base so that things which at first appear similar can vary independently over the course of development.  This will also allow for eventual bean exposure so that the system can be made pluggable for users with custom use cases.  Ironically, it is by being explicit that we will achieve a more robust and customizable middleware.  
 
 When messages first come in from Fedora through ActiveMQ, there will be a sorting layer that will process each message so that it eventually winds up in the appropriate place.  The things we will have to sort on are:
 - Resource type
@@ -140,20 +140,21 @@ When messages first come in from Fedora through ActiveMQ, there will be a sortin
   - NonRdfSourceDescription
 - Content Model (or content model of parent container)
   - Image
-  - Pdf
+  - PDF
   - Video
   - Audio
   - Newspaper
   - Book
   - Page
   - Compound
-  - Warc
+  - Web ARChive
+  - Disk image
 - Metadata standard (for NonRdfSourceDescriptions)
   - MODS
   - MADS
-  - PBCORE
+  - PBCore
   - TECHMD
-  - etc...
+  - etc.
 - Operation
   - NODE_ADDED
   - PROPERTY_CHANGED
@@ -196,7 +197,7 @@ from("direct:exec")
 ### Drupal Interaction
 Camel will interact with service exposed through Drupal with the use of the http4 component.  Common operations such as authentication, user management, and CRUD operations on Nodes can all be safely performed by the middleware layer without touching a drop of Drupal code (forgive the terrible pun).
 
-In fact, the main role of the Islandora Drupal module is to provide the REST endpoint and define any common services that will be used independent of content type.  The service module acts much like Drupal Views, allowing the endpoint to be customized in through a UI, and code to be exported and inserted into the drupal module to provide permanency beyond that of the database.
+In fact, the main role of the Islandora Drupal module is to provide the REST endpoint and define any common services that will be used independent of content type.  The service module acts much like Drupal Views, allowing the endpoint to be customized in through a UI, and code to be exported and inserted into the Drupal module to provide permanency beyond that of the database.
 
 See the example in the 'Using Camel' section for a look at how we create nodes remotely through the REST interface Drupal provides.
 
