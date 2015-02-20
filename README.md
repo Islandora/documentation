@@ -6,6 +6,13 @@
 
 This is where the Islandora and Fedora 4 development will happen. If you would like to get involved in the community around this project, please check out the Islandora Foundation [Fedora 4 Interest Group](https://github.com/Islandora/Islandora-Fedora4-Interest-Group).
 
+### Repository layout
+
+* [camel](https://github.com/Islandora-Labs/islandora/tree/7.x-2.x/camel/sync) - Islandora-Sync component. Event driven middleware based on Apache Camel that synchronizes a Fedora 4 JCR with a Drupal CMS. 
+* [docs](https://github.com/Islandora-Labs/islandora/tree/7.x-2.x/docs) - Documentation
+* [drupal](https://github.com/Islandora-Labs/islandora/tree/7.x-2.x/drupal/islandora) - Drupal module
+* [install](https://github.com/Islandora-Labs/islandora/tree/7.x-2.x/install) - Vagrant development environment
+
 ## Maintainers/Sponsors
 
 - LYRASIS
@@ -22,7 +29,7 @@ Current maintainers:
 
 ## Development
 
-Ifyou would like to contribute, please check out our helpful [Documentation for Developers](https://github.com/Islandora/islandora/wiki#wiki-documentation-for-developers) info, as well as our [Developers](http://islandora.ca/developers) section on the [Islandora.ca](http://islandora.ca) site.
+If you're interested in contributing, please get involved with the Islandora Foundation [Fedora 4 Interest Group](https://github.com/Islandora/Islandora-Fedora4-Interest-Group).
 
 ## License
 
