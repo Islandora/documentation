@@ -8,6 +8,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # All Vagrant configuration is done here. The most common configuration
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
+  
+  config.vm.hostname = "islandora"
 
   # Every Vagrant virtual environment requires a box to build off of.
   config.vm.box = "ubuntu/trusty64"
@@ -17,11 +19,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :forwarded_port, guest: 5432, host: 5432 # PostgreSQL
   config.vm.network :forwarded_port, guest: 80, host: 8000 # Apache
   config.vm.network :forwarded_port, guest: 8181, host: 8181 # Karaf
+  config.vm.network :forwarded_port, guest: 3030, host: 3030 # Fuseki
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.customize ["modifyvm", :id, "--memory", '1024']
+  end
 
   config.vm.provision :shell, :path => "bootstrap.sh"
   config.vm.provision :shell, :path => "solr.sh"
   config.vm.provision :shell, :path => "camel.sh"
   config.vm.provision :shell, :path => "fcrepo-camel.sh"
+  config.vm.provision :shell, :path => "fuseki.sh"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
