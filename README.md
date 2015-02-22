@@ -10,7 +10,7 @@ This is where the Islandora and Fedora 4 development will happen. If you would l
 
 * [camel](https://github.com/Islandora-Labs/islandora/tree/7.x-2.x/camel/sync) - Islandora-Sync component. Event driven middleware based on Apache Camel that synchronizes a Fedora 4 JCR with a Drupal CMS. 
 * [docs](https://github.com/Islandora-Labs/islandora/tree/7.x-2.x/docs) - Documentation
-* [drupal](https://github.com/Islandora-Labs/islandora/tree/7.x-2.x/drupal/islandora) - Drupal module
+* [drupal](https://github.com/Islandora-Labs/islandora/tree/7.x-2.x/drupal/islandora) - Drupal modules
 * [install](https://github.com/Islandora-Labs/islandora/tree/7.x-2.x/install) - Vagrant development environment
 
 ## Maintainers/Sponsors
