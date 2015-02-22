@@ -12,8 +12,8 @@ apt-get -y install openssh-server
 # Build tools
 apt-get -y install build-essential
 
-# Git
-apt-get -y install git
+# Git vim
+apt-get -y install git vim
 
 # Java
 apt-get -y install openjdk-7-jdk
@@ -24,9 +24,12 @@ apt-get -y install maven
 # Tomcat
 apt-get -y install tomcat7
 
-#Wget and curl
+# Wget and curl
 
 apt-get -y install wget curl
+
+# More helpful packages
+apt-get -y install htop tree zsh
 
 # Set some params so it's non-interactive for the lamp-server install
 debconf-set-selections <<< 'mysql-server mysql-server/root_password password islandora'

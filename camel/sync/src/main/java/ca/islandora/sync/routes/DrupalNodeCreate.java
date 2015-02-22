@@ -1,9 +1,9 @@
-package org.islandora.sync.routes;
+package ca.islandora.sync.routes;
 
 import org.apache.camel.builder.RouteBuilder;
 import org.fcrepo.camel.JmsHeaders;
 import org.fcrepo.camel.RdfNamespaces;
-import org.islandora.sync.processors.DrupalNodeCreateJsonTransform;
+import ca.islandora.sync.processors.DrupalNodeCreateJsonTransform;
 
 public class DrupalNodeCreate extends RouteBuilder {
     public void configure() throws Exception {

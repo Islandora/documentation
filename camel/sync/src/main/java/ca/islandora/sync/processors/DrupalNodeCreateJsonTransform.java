@@ -1,4 +1,4 @@
-package org.islandora.sync.processors;
+package ca.islandora.sync.processors;
 
 import static org.apache.camel.component.http4.HttpMethods.POST;
 
