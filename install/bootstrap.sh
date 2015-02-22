@@ -44,6 +44,16 @@ tasksel install lamp-server
 git clone -b 7.x-2.x https://github.com/Islandora-Labs/islandora.git
 
 ###
+# Build Islandora Sync
+###
+
+cd islandora/camel/sync
+mvn install
+cp target/sync-0.0-SNAPSHOT.war /var/lib/tomcat7/webapps/sync.war
+chown tomcat7:tomcat7 /var/lib/tomcat7/webapps/sync.war
+service tomcat7 restart
+
+###
 # FEDORA
 ###
 FEDORA_VERSION=4.1.0
@@ -56,6 +66,7 @@ chmod g-w /var/lib/tomcat7/fcrepo4-data
 
 wget -O fcrepo.war "https://github.com/fcrepo4/fcrepo4/releases/download/fcrepo-$FEDORA_VERSION/fcrepo-webapp-$FEDORA_VERSION.war"
 mv fcrepo.war /var/lib/tomcat7/webapps
+chown tomcat7:tomcat7 /var/lib/tomcat7/webapps/fcrepo.war
 
 ###
 # DRUPAL
