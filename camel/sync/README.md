@@ -8,6 +8,7 @@ Event driven middleware based on Apache Camel that synchronizes a Fedora 4 JCR w
 
 * Java 7
 * Maven 3
+* A servlet container
 
 ## Compilation
 
@@ -15,7 +16,7 @@ Event driven middleware based on Apache Camel that synchronizes a Fedora 4 JCR w
 
 ## Deployment
 
-After successful compilation, copy the resulting jar from the target directory to the deploy directory of your karaf installation.  If you are actively developing, it is advised to install through maven via `osgi:install -s mvn:org.islandora/islandora-sync/VERSION` in the karaf shell.  Be sure to put in the appropriate version number from the pom file.  Afterwards, you can have karaf automatically redeploy anytime you successfully run `mvn install` by issuing the following karaf command: `dev:watch --dev:watch mvn:org.islandora/islandora-sync/VERSION`.
+After successful compilation, copy the resulting war from the target directory to the deployment directory of your servlet container.
 
 ## Maintainers/Sponsors
 
@@ -31,4 +32,5 @@ If you would like to contribute, please check out our helpful [Documentation for
 ## License
 
 [GPLv3](http://www.gnu.org/licenses/gpl-3.0.txt)
+
 

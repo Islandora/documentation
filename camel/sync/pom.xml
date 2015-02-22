@@ -3,27 +3,31 @@
 
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.islandora</groupId>
-  <artifactId>islandora-sync</artifactId>
-  <packaging>bundle</packaging>
+  <groupId>ca.islandora</groupId>
+  <artifactId>sync</artifactId>
   <version>0.0-SNAPSHOT</version>
 
   <name>Islandora Sync</name>
-  <description>Synchronizes a Fedora 4 JCR Repository with a Drupal CMS</description>
+  <description>Synchronizes Fedora 4 Content in Drupal</description>
   <url>http://www.islandora.ca</url>
+
+  <packaging>war</packaging>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <camel.version>2.14.0</camel.version>
+    <camel.version>2.14.1</camel.version>
+    <spring.version>3.2.11.RELEASE</spring.version>
     <activemq.version>5.10.0</activemq.version>
-    <fcrepo.version>4.0.1-SNAPSHOT</fcrepo.version>
+    <fcrepo.version>4.1.1-SNAPSHOT</fcrepo.version>
     <json-simple.version>1.1.1</json-simple.version>
     <slf4j.version>1.7.7</slf4j.version>
     <log4j.version>1.2.17</log4j.version>
   </properties>
 
   <dependencies>
+
+    <!-- Camel Dependencies -->
     <dependency>
       <groupId>org.apache.camel</groupId>
       <artifactId>camel-core</artifactId>
@@ -31,12 +35,12 @@
     </dependency>
     <dependency>
       <groupId>org.apache.camel</groupId>
-      <artifactId>camel-blueprint</artifactId>
+      <artifactId>camel-spring</artifactId>
       <version>${camel.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.camel</groupId>
-      <artifactId>camel-script</artifactId>
+      <artifactId>camel-stream</artifactId>
       <version>${camel.version}</version>
     </dependency>
     <dependency>
@@ -60,6 +64,12 @@
         <version>${json-simple.version}</version>
     </dependency>
 
+    <!-- Spring Web -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
 
     <!-- logging -->
     <dependency>
@@ -73,11 +83,6 @@
       <version>${slf4j.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>jcl-over-slf4j</artifactId>
-      <version>${slf4j.version}</version>
-    </dependency>
-    <dependency>
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
       <version>${log4j.version}</version>
@@ -86,7 +91,7 @@
     <!-- testing -->
     <dependency>
       <groupId>org.apache.camel</groupId>
-      <artifactId>camel-test-blueprint</artifactId>
+      <artifactId>camel-test-spring</artifactId>
       <version>${camel.version}</version>
       <scope>test</scope>
     </dependency>
@@ -114,29 +119,31 @@
         </configuration>
       </plugin>
 
-      <!-- to generate the MANIFEST-FILE of the bundle -->
+      <!-- plugin so you can run mvn jetty:run -->
       <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
-        <version>2.3.7</version>
-        <extensions>true</extensions>
+        <groupId>org.mortbay.jetty</groupId>
+        <artifactId>jetty-maven-plugin</artifactId>
+        <version>8.1.15.v20140411</version>
         <configuration>
-          <instructions>
-            <Bundle-SymbolicName>islandora-sync</Bundle-SymbolicName>
-            <Private-Package>org.islandora.*</Private-Package>
-            <Import-Package>*</Import-Package>
-          </instructions>
+          <webAppConfig>
+            <contextPath>/</contextPath>
+          </webAppConfig>
+          <systemProperties>
+            <!-- enable easy JMX connection to JConsole -->
+            <systemProperty>
+              <name>com.sun.management.jmxremote</name>
+              <value/>
+            </systemProperty>
+          </systemProperties>
+          <scanIntervalSeconds>10</scanIntervalSeconds>
         </configuration>
       </plugin>
 
-       <!-- to run the example using mvn camel:run -->
+      <!-- plugin to deploy to JBoss AS with: mvn jboss-as:deploy (you can also do redeploy/undeploy) -->
       <plugin>
-        <groupId>org.apache.camel</groupId>
-        <artifactId>camel-maven-plugin</artifactId>
-        <version>${camel.version}</version>
-        <configuration>
-          <useBlueprint>true</useBlueprint>
-        </configuration>
+        <groupId>org.jboss.as.plugins</groupId>
+        <artifactId>jboss-as-maven-plugin</artifactId>
+        <version>7.4.Final</version>
       </plugin>
 
     </plugins>

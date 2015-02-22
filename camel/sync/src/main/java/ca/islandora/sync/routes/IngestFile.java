@@ -1,4 +1,4 @@
-package org.islandora.sync.routes;
+package ca.islandora.sync.routes;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
