@@ -26,6 +26,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.provision :shell, :path => "bootstrap.sh"
+  config.vm.provision :shell, :path => "drupal.sh"
+  config.vm.provision :shell, :path => "fcrepo.sh"
+  config.vm.provision :shell, :path => "sync.sh"
   config.vm.provision :shell, :path => "solr.sh"
   config.vm.provision :shell, :path => "camel.sh"
   config.vm.provision :shell, :path => "fcrepo-camel.sh"
