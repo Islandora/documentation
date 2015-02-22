@@ -19,7 +19,7 @@
     <camel.version>2.14.1</camel.version>
     <spring.version>3.2.11.RELEASE</spring.version>
     <activemq.version>5.10.0</activemq.version>
-    <fcrepo.version>4.1.1-SNAPSHOT</fcrepo.version>
+    <fcrepo.version>4.1.0</fcrepo.version>
     <json-simple.version>1.1.1</json-simple.version>
     <slf4j.version>1.7.7</slf4j.version>
     <log4j.version>1.2.17</log4j.version>
