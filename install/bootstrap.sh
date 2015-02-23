@@ -23,9 +23,10 @@ apt-get -y install maven
 
 # Tomcat
 apt-get -y install tomcat7
+usermod -a -G tomcat7 vagrant
+chmod -R g+w /var/lib/tomcat7
 
 # Wget and curl
-
 apt-get -y install wget curl
 
 # More helpful packages
@@ -39,6 +40,8 @@ debconf-set-selections <<< "postfix postfix/main_mailer_type string 'Internet Si
 
 # Lamp server
 tasksel install lamp-server
+usermod -a -G www-data vagrant
+chmod -R g+w /var/www/html
 
 # Get the repo
 git clone -b 7.x-2.x https://github.com/Islandora-Labs/islandora.git

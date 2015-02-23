@@ -30,7 +30,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision :shell, :path => "fcrepo.sh"
   config.vm.provision :shell, :path => "sync.sh"
   config.vm.provision :shell, :path => "solr.sh"
-  config.vm.provision :shell, :path => "camel.sh"
   config.vm.provision :shell, :path => "fcrepo-camel.sh"
   config.vm.provision :shell, :path => "fuseki.sh"
 
