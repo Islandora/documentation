@@ -1,6 +1,6 @@
 echo "Installing Drupal."
 
-cd ~
+cd /home/vagrant
 
 # Drush and drupal deps
 apt-get -y install php5-gd
@@ -47,5 +47,5 @@ drush dl services
 drush -y en rest_server
 
 # Islandora module
-cp -r ~/islandora/drupal/islandora .
+cp -r /home/vagrant/islandora/drupal/islandora .
 drush -y en islandora

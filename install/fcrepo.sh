@@ -2,7 +2,7 @@ echo "Installing Fedora."
 
 FEDORA_VERSION=4.1.0
 
-cd ~
+cd /home/vagrant
 
 mkdir /var/lib/tomcat7/fcrepo4-data
 chown tomcat7:tomcat7 /var/lib/tomcat7/fcrepo4-data

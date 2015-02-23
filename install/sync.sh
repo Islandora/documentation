@@ -1,6 +1,6 @@
 echo "Installing Sync."
 
-cd ~
+cd /home/vagrant
 
 cd islandora/camel/sync
 mvn install
