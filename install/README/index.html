@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+
+        <title>Vagrant - Islandora documentation</title>
+
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome-4.0.3.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../../css/highlight.css">
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="../../README">Islandora documentation</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../../README">Islandora</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../../camel/sync/README">Islandora-Sync</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../../drupal/islandora/README">Islandora (Drupal module)</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../../technical-design/technical_documentation">Technical Design</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Installation <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li class="active">
+                                <a href=".">Vagrant</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+            
+
+            
+            <!-- Search, Navigation and Repo links -->
+            <ul class="nav navbar-nav navbar-right">
+                
+                <li>
+                    <a href="#searchModal" data-toggle="modal"><i class="fa fa-search"></i> Search</a>
+                </li>
+                
+                
+                <li >
+                    <a rel="next" href="../../technical-design/technical_documentation">
+                        <i class="fa fa-arrow-left"></i> Previous
+                    </a>
+                </li>
+                <li class="disabled">
+                    <a rel="prev" >
+                        Next <i class="fa fa-arrow-right"></i>
+                    </a>
+                </li>
+                
+                
+                <li>
+                    <a href="https://github.com/Islandora-labs/islandora">
+                        
+                            <i class="fa fa-github"></i>
+                        
+                        GitHub
+                    </a>
+                </li>
+                
+            </ul>
+            
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+            
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#introduction">Introduction</a></li>
+        
+    
+        <li class="main "><a href="#requirements">Requirements</a></li>
+        
+    
+        <li class="main "><a href="#use">Use</a></li>
+        
+    
+        <li class="main "><a href="#connect">Connect</a></li>
+        
+    
+        <li class="main "><a href="#environment">Environment</a></li>
+        
+    
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h2 id="introduction">Introduction</h2>
+<p>The is a development environment virtual machine for the Islandora and Fedora 4 project. It should work on any operating system that supports VirtualBox and Vagrant.</p>
+<p>N.B. This virtual machine <strong>should not</strong> be used in production.</p>
+<h2 id="requirements">Requirements</h2>
+<ol>
+<li><a href="https://www.virtualbox.org/">VirtualBox</a></li>
+<li><a href="http://www.vagrantup.com/">Vagrant</a></li>
+</ol>
+<h2 id="use">Use</h2>
+<ol>
+<li><code>git clone https://github.com/islandora-labs/islandora</code></li>
+<li><code>cd islandora/install</code></li>
+<li><code>vagrant up</code></li>
+</ol>
+<h2 id="connect">Connect</h2>
+<p>You can connect to the machine via the browser at <a href="http://localhost:8000">http://localhost:8000</a>.</p>
+<p>The default Drupal login details are:
+  - username: admin
+  - password: islandora</p>
+<p>You can connect to the machine via ssh: <code>ssh -p 2222 vagrant@localhost</code></p>
+<p>The default VM login details are:
+  - username: vagrant
+  - password: vagrant</p>
+<h2 id="environment">Environment</h2>
+<ul>
+<li>Ubuntu 14.04</li>
+<li>Drupal 7.34</li>
+<li>MySQL 5.5.41</li>
+<li>Apache 2.26</li>
+<li>Tomcat 7.0.52</li>
+<li>Solr 4.10.3</li>
+<li>Camel 2.14.1</li>
+<li>Fedora 4.1.0</li>
+<li>Fedora Camel Component 4.1.0</li>
+<li>Fuseki 1.1.1</li>
+<li>Sync 0.0.0</li>
+<li>Islandora 7.x-2.x</li>
+<li>PHP 5.5.9 </li>
+<li>Java 7 (OpenJDK)</li>
+</ul>
+</div>
+            
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+
+        <!-- Search modal.  Not yet supported. -->
+<div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="searchModalLabel">Documentation search</h4>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="../../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../../js/prettify-1.0.min.js"></script>
+        <script src="../../js/highlight.pack.js"></script>
+        <script src="../../js/base.js"></script>
+    </body>
+</html>
