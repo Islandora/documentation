@@ -1,0 +1,23 @@
+site_name: Islandora documentation
+site_dir: docs/site
+site_description: Documentation for Islandora
+
+dev_addr: 'localhost:8111'
+repo_url: https://github.com/Islandora-labs/islandora
+
+docs_dir: /
+
+#use_absolute_urls: true
+
+#include_search: true
+
+pages:
+
+# Introduction
+  - ['../README.md', 'About', 'Islandora']
+  - ['../camel/README.md', 'About', 'Islandora-Sync']
+  - ['../drupal/islandora/README.md', 'About', 'Islandora (Drupal module)']
+  - ['../docs/technical_documentation.md', 'About', 'Technical Design']
+
+# Installation:
+  - ['../install/README.md', 'Installation', 'Vagrant']
