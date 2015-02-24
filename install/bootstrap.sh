@@ -2,7 +2,9 @@
 # BASICS
 ###
 
-cd /home/vagrant
+HOME_DIR=$1
+
+cd $HOME_DIR
 
 # Update
 apt-get -y update && apt-get -y upgrade

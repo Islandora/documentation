@@ -29,15 +29,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
-  config.vm.provision :shell, :path => "bootstrap.sh"
-  config.vm.provision :shell, :path => "drupal.sh"
-  config.vm.provision :shell, :path => "fcrepo.sh"
-  config.vm.provision :shell, :path => "sync.sh"
+  home_dir = "/home/vagrant"
+
+  config.vm.provision :shell, :path => "bootstrap.sh", :args => home_dir
+  config.vm.provision :shell, :path => "drupal.sh", :args => home_dir
+  config.vm.provision :shell, :path => "fcrepo.sh", :args => home_dir
+  config.vm.provision :shell, :path => "sync.sh", :args => home_dir
   config.vm.provision :shell, :path => "solr.sh"
   config.vm.provision :shell, :path => "fcrepo-camel.sh"
   config.vm.provision :shell, :path => "fuseki.sh"
-  config.vm.provision :shell, :path => "post-install.sh"
-  config.vm.provision :shell, :path => "vim.sh" if ENV['VIM']
+  config.vm.provision :shell, :path => "post-install.sh", :args => home_dir
+  config.vm.provision :shell, :path => "vim.sh", :args => home_dir if ENV['VIM']
 
 
   # Disable automatic box update checking. If you disable this, then
