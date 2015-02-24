@@ -4,17 +4,17 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Documentation for Islandora">
         
         
-        
-        <link rel="shortcut icon" href="../img/favicon.ico">
+        <link rel="shortcut icon" href="./img/favicon.ico">
 
-        <title>Islandora - Islandora documentation</title>
+        <title>Islandora documentation</title>
 
-        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
-        <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
-        <link href="../css/base.css" rel="stylesheet">
-        <link rel="stylesheet" href="../css/highlight.css">
+        <link href="./css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="./css/font-awesome-4.0.3.css" rel="stylesheet">
+        <link href="./css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="./css/highlight.css">
 
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -25,7 +25,7 @@
         
     </head>
 
-    <body>
+    <body class="homepage">
 
         <div class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container">
@@ -62,15 +62,15 @@
                             </li>
                         
                             <li >
-                                <a href="../camel/sync/README">Islandora-Sync</a>
+                                <a href="camel/sync/README/">Islandora-Sync</a>
                             </li>
                         
                             <li >
-                                <a href="../drupal/islandora/README">Islandora (Drupal module)</a>
+                                <a href="drupal/islandora/README/">Islandora (Drupal module)</a>
                             </li>
                         
                             <li >
-                                <a href="../technical-design/technical_documentation">Technical Design</a>
+                                <a href="technical-design/technical_documentation/">Technical Design</a>
                             </li>
                         
                         </ul>
@@ -83,7 +83,7 @@
                         <ul class="dropdown-menu">
                         
                             <li >
-                                <a href="../install/README">Vagrant</a>
+                                <a href="install/README/">Vagrant</a>
                             </li>
                         
                         </ul>
@@ -108,7 +108,7 @@
                     </a>
                 </li>
                 <li >
-                    <a rel="prev" href="../camel/sync/README">
+                    <a rel="prev" href="camel/sync/README/">
                         Next <i class="fa fa-arrow-right"></i>
                     </a>
                 </li>
@@ -134,33 +134,52 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#islandora">Islandora</a></li>
+        <li class="main active"><a href="#about-islandora">About Islandora</a></li>
         
-            <li><a href="#introduction">Introduction</a></li>
+            <li><a href="#about-this-guide">About this guide</a></li>
         
-            <li><a href="#maintainerssponsors">Maintainers/Sponsors</a></li>
+            <li><a href="#contributing">Contributing</a></li>
         
-            <li><a href="#development">Development</a></li>
+            <li><a href="#sponsors">Sponsors</a></li>
         
-            <li><a href="#license">License</a></li>
+            <li><a href="#maintainers">Maintainers</a></li>
+        
+            <li><a href="#licensing">Licensing</a></li>
         
     
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
-<h1 id="islandora">Islandora</h1>
-<h2 id="introduction">Introduction</h2>
-<p><a href="http://islandora.ca">Islandora</a> and <a href="http://fedorarepository.org/">Fedora 4</a> Integration Project! </p>
-<p>This is where the Islandora and Fedora 4 development will happen. If you would like to get involved in the community around this project, please check out the Islandora Foundation <a href="https://github.com/Islandora/Islandora-Fedora4-Interest-Group">Fedora 4 Interest Group</a>.</p>
-<h3 id="repository-layout">Repository layout</h3>
+<h1 id="about-islandora">About Islandora</h1>
+<p>Islandora is an open-source software framework designed to help institutions and organizations and their audiences collaboratively manage, and discover digital assets using a best-practices framework.  Islandora was originally developed by the University of Prince Edward Island's Robertson Library, but is now implemented and contributed to by an ever-growing international community.</p>
+<p>Islandora consists of:</p>
 <ul>
-<li><a href="https://github.com/Islandora-Labs/islandora/tree/7.x-2.x/camel/sync">camel</a> - Islandora-Sync component. Event driven middleware based on Apache Camel that synchronizes a Fedora 4 JCR with a Drupal CMS. </li>
-<li><a href="https://github.com/Islandora-Labs/islandora/tree/7.x-2.x/docs">docs</a> - Documentation</li>
-<li><a href="https://github.com/Islandora-Labs/islandora/tree/7.x-2.x/drupal/islandora">drupal</a> - Drupal modules</li>
-<li><a href="https://github.com/Islandora-Labs/islandora/tree/7.x-2.x/install">install</a> - Vagrant development environment</li>
+<li>Sync - Event driven middleware based on Apache Camel that synchronizes a Fedora 4 JCR with a Drupal CMS.</li>
+<li>Islandora - Fedora 4 Repository module</li>
+<li>Install - The is a development environment virtual machine for the Islandora and Fedora 4 project. It should work on any operating system that supports VirtualBox and Vagrant.</li>
 </ul>
-<h2 id="maintainerssponsors">Maintainers/Sponsors</h2>
+<h2 id="about-this-guide">About this guide</h2>
+<p>The <a href="technical-design/technical_documentation/">Technical Design documentation</a> will help you:</p>
+<ul>
+<li>Understand the Islandora 7.x-2.x design rationale</li>
+<li>Importance of using an integration framework</li>
+<li>Using camel</li>
+<li>Inversion of control and camel</li>
+<li>Camel and scripting languages</li>
+<li>Islandora Sync</li>
+<li>Islandora (Drupal)</li>
+<li>Solr and Triple store indexing</li>
+</ul>
+<h3 id="sync">Sync</h3>
+<p>The <a href="camel/sync/README/">Camel section</a> provides and overiew of the camel middleware.</p>
+<h3 id="islandora-drupal-module">Islandora (Drupal module)</h3>
+<p>The <a href="drupal/islandora/README/">Drupal section</a> provides an overview of the Drupal modules in the Islandora environment.</p>
+<h3 id="installation-vagrant">Installation (Vagrant)</h3>
+<p>The <a href="install/README/">installation section</a> will show you how to create a virtual development environment.</p>
+<h2 id="contributing">Contributing</h2>
+<p>If you would like to contribute, please get involved with the <a href="https://github.com/Islandora/Islandora-Fedora4-Interest-Group">Islandora Fedora 4 Interest Group</a>. We love to hear from you!</p>
+<h2 id="sponsors">Sponsors</h2>
 <ul>
 <li>LYRASIS</li>
 <li>York University</li>
@@ -169,15 +188,13 @@
 <li>University of Manitoba</li>
 <li>University of Limerick</li>
 </ul>
-<p>Current maintainers:</p>
+<h2 id="maintainers">Maintainers</h2>
 <ul>
 <li><a href="https://github.com/ruebot">Nick Ruest</a></li>
 <li><a href="https://github.com/daniel-dgi/">Daniel Lamb</a></li>
 </ul>
-<h2 id="development">Development</h2>
-<p>If you would like to contribute, please get involved with the <a href="https://github.com/Islandora/Islandora-Fedora4-Interest-Group">Islandora Fedora 4 Interest Group</a>. We love to hear from you!</p>
-<h2 id="license">License</h2>
-<p><a href="http://www.gnu.org/licenses/gpl-3.0.txt">GPLv3</a></p>
+<h2 id="licensing">Licensing</h2>
+<p>Islandora is licensed under the GNU General Public License, Version 3. See <a href="https://github.com/Islandora-Labs/islandora/blob/7.x-2.x/LICENSE">LICENSE</a> for the full license text.</p>
 </div>
             
         </div>
@@ -207,9 +224,9 @@
 </div>
 
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-        <script src="../js/bootstrap-3.0.3.min.js"></script>
-        <script src="../js/prettify-1.0.min.js"></script>
-        <script src="../js/highlight.pack.js"></script>
-        <script src="../js/base.js"></script>
+        <script src="./js/bootstrap-3.0.3.min.js"></script>
+        <script src="./js/prettify-1.0.min.js"></script>
+        <script src="./js/highlight.pack.js"></script>
+        <script src="./js/base.js"></script>
     </body>
 </html>
