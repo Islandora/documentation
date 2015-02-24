@@ -12,14 +12,14 @@ Islandora consists of:
 
 The [Technical Design documentation](technical-design/technical_documentation.md) will help you:
 
-  - Understand the Islandora 7.x-2.x design rationale
-  - Importance of using an integration framework
-  - Using camel
-  - Inversion of control and camel
-  - Camel and scripting languages
-  - Islandora Sync
-  - Islandora (Drupal)
-  - Solr and Triple store indexing
+  * Understand the Islandora 7.x-2.x design rationale
+  * Importance of using an integration framework
+  * Using camel
+  * Inversion of control and camel
+  * Camel and scripting languages
+  * Islandora Sync
+  * Islandora (Drupal)
+  * Solr and Triple store indexing
 
 ### Sync
 
@@ -39,12 +39,12 @@ If you would like to contribute, please get involved with the [Islandora Fedora 
 
 ## Sponsors
 
-- LYRASIS
-- York University
-- McMaster University
-- University of Prince Edward Island
-- University of Manitoba
-- University of Limerick
+* LYRASIS
+* York University
+* McMaster University
+* University of Prince Edward Island
+* University of Manitoba
+* University of Limerick
 
 ## Maintainers
 
