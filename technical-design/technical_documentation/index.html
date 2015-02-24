@@ -388,11 +388,13 @@ public class DrupalNodeCreateJsonTransform implements Processor {
 <p>In fact, the main role of the Islandora Drupal module is to provide the REST endpoint and define any common services that will be used independent of content type.  The service module acts much like Drupal Views, allowing the endpoint to be customized in through a UI, and code to be exported and inserted into the Drupal module to provide permanency beyond that of the database.</p>
 <p>See the example in the 'Using Camel' section for a look at how we create nodes remotely through the REST interface Drupal provides.</p>
 <h5 id="the-drupal-modules">The Drupal Modules</h5>
-<p>With so much of the core functionality being moved out of the Drupal layer, we'll see the Drupal modules we've grown accustomed to shrink in size.  The core purpose of the Drupal modules will be to:
-- Provide custom Islandora content types (One-to-one with content models)
-- Provide custom Islandora views
-- Provide custom renderers for the access copy derivatives
-- Expose custom services for the middleware layer</p>
+<p>With so much of the core functionality being moved out of the Drupal layer, we'll see the Drupal modules we've grown accustomed to shrink in size.  The core purpose of the Drupal modules will be to:</p>
+<ul>
+  <li>Provide custom Islandora content types (One-to-one with content models)</li>
+  <li>Provide custom Islandora views</li>
+  <li>Provide custom renderers for the access copy derivatives</li>
+  <li>Expose custom services for the middleware layer</li>
+</ul>
 <p>It should be noted that although there will still exist a module for each content model, they will not be in separate git repos.  There is a difference between modularity of code and modularity of revision control.  Managing some thirty odd git repos is a maintenance nightmare, and so you will see all code move into a single repository.  This will help eliminate commit mis-matches between modules, and will synchronize changes with the middleware layer as well.  Over time, as the code base grows, we can consider moving out larger pieces for specific reasons (getting the Islandora modules on drupal.org, for instance), and using git submodules to replace them in the single canonical Islandora Github repository.</p>
 </div>
             
