@@ -22,7 +22,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :forwarded_port, guest: 3030, host: 3030 # Fuseki
 
   config.vm.provider "virtualbox" do |vb|
-    vb.customize ["modifyvm", :id, "--memory", '1024']
+    if ENV['VIM']
+      vb.customize ["modifyvm", :id, "--memory", '2048']
+    else
+      vb.customize ["modifyvm", :id, "--memory", '1024']
+    end
   end
 
   config.vm.provision :shell, :path => "bootstrap.sh"
@@ -33,6 +37,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision :shell, :path => "fcrepo-camel.sh"
   config.vm.provision :shell, :path => "fuseki.sh"
   config.vm.provision :shell, :path => "post-install.sh"
+  config.vm.provision :shell, :path => "vim.sh" if ENV['VIM']
+
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs

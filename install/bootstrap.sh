@@ -30,7 +30,7 @@ usermod -a -G tomcat7 vagrant
 apt-get -y install wget curl
 
 # More helpful packages
-apt-get -y install htop tree zsh
+apt-get -y install htop tree zsh fish
 
 # Set some params so it's non-interactive for the lamp-server install
 debconf-set-selections <<< 'mysql-server mysql-server/root_password password islandora'

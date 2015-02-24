@@ -15,6 +15,8 @@ N.B. This virtual machine **should not** be used in production.
 2. `cd islandora/install`
 3. `vagrant up`
 
+Optionally, if you want to install the vim configuration for Java development, use `VIM=true vagrant up`.  It practically doubles the amount of time to spin up the VM, so only do so if you’re sure you want to develop directly on the VM using vim.  The script merely checks to see if the shell variable has been set, so it’s value can be anything.  That is, `VIM=sandwiches vagrant up` will still trigger the vim configuration install.  So if you don’t want it, don’t set it.
+
 ## Connect
 
 You can connect to the machine via the browser at [http://localhost:8000](http://localhost:8000).
@@ -22,6 +24,12 @@ You can connect to the machine via the browser at [http://localhost:8000](http:/
 The default Drupal login details are:
   - username: admin
   - password: islandora
+
+MySQL:
+  - username: root
+  - password: islandora
+
+The Fedora 4 REST API can be accessed at [http://localhost:8080/fcrepo/rest](http://localhost:8080/fcrepo/rest).  It currently has authentication disabled.
 
 You can connect to the machine via ssh: `ssh -p 2222 vagrant@localhost`
 
