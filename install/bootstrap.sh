@@ -25,8 +25,13 @@ apt-get -y install openjdk-7-jdk
 apt-get -y install maven
 
 # Tomcat
-apt-get -y install tomcat7
+apt-get -y install tomcat7 tomcat7-admin
 usermod -a -G tomcat7 vagrant
+sed -i '$i<user username="islandora" password="islandora" roles="manager-gui"/>' /etc/tomcat7/tomcat-users.xml
+
+# Make the ingest directory
+mkdir /mnt/ingest
+chown -R tomcat7:tomcat7 /mnt/ingest
 
 # Wget and curl
 apt-get -y install wget curl
