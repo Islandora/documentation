@@ -1,6 +1,6 @@
 # Introduction
 
-This documentation is build using [mkdocs](http://www.mkdocs.org/), a static site generator that is geared towards building project documentation. The documentation created in the [Markdown](http://en.wikipedia.org/wiki/Markdown) format, and it all resides in the [`docs`](https://github.com/Islandora-Labs/islandora/tree/7.x-2.x/docs) directory in the repository. The organization of the documenation is controlled by the `mkdocs.yml` in the root of the repository.
+This documentation is built using [mkdocs](http://www.mkdocs.org/), a static site generator that is geared towards building project documentation. The documentation is created in the [Markdown](http://en.wikipedia.org/wiki/Markdown) format, and it all resides in the [`docs`](https://github.com/Islandora-Labs/islandora/tree/7.x-2.x/docs) directory in the repository. The organization of the documenation is controlled by the [`mkdocs.yml`](https://github.com/Islandora-Labs/islandora/blob/7.x-2.x/mkdocs.yml) in the root of the repository.
 
 ## Build and Deploy documentation
 
