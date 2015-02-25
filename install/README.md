@@ -31,6 +31,10 @@ MySQL:
 
 The Fedora 4 REST API can be accessed at [http://localhost:8080/fcrepo/rest](http://localhost:8080/fcrepo/rest).  It currently has authentication disabled.
 
+Tomcat Manager:
+  - username: islandora
+  - password: islandora
+
 You can connect to the machine via ssh: `ssh -p 2222 vagrant@localhost`
 
 The default VM login details are:
