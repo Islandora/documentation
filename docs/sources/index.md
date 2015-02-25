@@ -39,6 +39,7 @@ If you would like to contribute code to the project, you will need to be covered
 * University of Prince Edward Island
 * University of Manitoba
 * University of Limerick
+* Simon Fraser University
 
 ## Maintainers
 

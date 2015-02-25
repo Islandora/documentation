@@ -15,12 +15,13 @@ This is where the Islandora and Fedora 4 development will happen. If you would l
 
 ## Maintainers/Sponsors
 
-- LYRASIS
-- York University
-- McMaster University
-- University of Prince Edward Island
-- University of Manitoba
-- University of Limerick
+* LYRASIS
+* York University
+* McMaster University
+* University of Prince Edward Island
+* University of Manitoba
+* University of Limerick
+* Simon Fraser University
 
 Current maintainers:
 
