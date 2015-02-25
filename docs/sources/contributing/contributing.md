@@ -60,9 +60,9 @@ Contributions to the Islandora codebase should be sent as GitHub pull requests. 
 Take a look at [Creating a pull request](https://help.github.com/articles/creating-a-pull-request).  In a nutshell you
 need to:
 
-1. [Fork](https://help.github.com/articles/fork-a-repo) the Storm GitHub repository at [https://github.com/apache/storm/](https://github.com/apache/storm/) to your personal GitHub account.  See [Fork a repo](https://help.github.com/articles/fork-a-repo) for detailed instructions.
+1. [Fork](https://help.github.com/articles/fork-a-repo) the Islandora GitHub repository at [https://github.com/islandora-labs/islandora](https://github.com/islandora-labs/islandora) to your personal GitHub account.  See [Fork a repo](https://help.github.com/articles/fork-a-repo) for detailed instructions.
 2. Commit any changes to your fork.
-3. Send a [pull request](https://help.github.com/articles/creating-a-pull-request) to the Storm GitHub repository that you forked in step 1.  If your pull request is related to an existing Storm JIRA ticket -- for instance, because you reported a bug/issue earlier -- then prefix the title of your pull request with the corresponding issue number (e.g. `ISLANDORA-123: ...`).
+3. Send a [pull request](https://help.github.com/articles/creating-a-pull-request) to the Islandora GitHub repository that you forked in step 1.  If your pull request is related to an existing Islandora issue -- for instance, because you reported a bug/issue earlier -- then prefix the title of your pull request with the corresponding issue number (e.g. `ISLANDORA-123: ...`).
 
 You may want to read [Syncing a fork](https://help.github.com/articles/syncing-a-fork) for instructions on how to keep your fork up to date with the latest changes of the upstream (official) `islandora` repository.
 

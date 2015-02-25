@@ -22,6 +22,7 @@ This is where the Islandora and Fedora 4 development will happen. If you would l
 * University of Manitoba
 * University of Limerick
 * Simon Fraser University
+* PALS
 
 Current maintainers:
 
