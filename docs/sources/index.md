@@ -18,24 +18,16 @@ The [Technical Design documentation](technical-documentation/technical_design.md
   * Inversion of control and camel
   * Camel and scripting languages
   * Islandora Sync
-  * Islandora (Drupal)
   * Solr and Triple store indexing
+  * Islandora (Drupal)
 
-**Sync**
-
-The [Camel section](camel/sync/README.md) provides and overiew of the camel middleware.
-
-**Islandora (Drupal module)**
-
-The [Drupal section](drupal/islandora/README.md) provides an overview of the Drupal modules in the Islandora environment.
-
-**Installation (Vagrant)**
+## Installation
 
 The [installation section](install/README.md) will show you how to create a virtual development environment.
 
 ## Contributing
 
-If you would like to contribute, please get involved with the [Islandora Fedora 4 Interest Group](https://github.com/Islandora/Islandora-Fedora4-Interest-Group). We love to hear from you!
+If you would like to contribute, please get involved with the [Islandora Fedora 4 Interest Group](https://github.com/Islandora/Islandora-Fedora4-Interest-Group), and check out the [contributing section](contributing/contributing.md). We love to hear from you!
 
 If you would like to contribute code to the project, you will need to be covered by an Islandora Foundation [Contributor License Agreement](http://islandora.ca/sites/default/files/islandora_cla.pdf) or [Corporate Contributor Licencse Agreement](http://islandora.ca/sites/default/files/islandora_ccla.pdf). Please see the [Contributors](http://islandora.ca/resources/contributors) page on Islandora.ca for more information.
 

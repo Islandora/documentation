@@ -20,13 +20,11 @@ pages:
   - ['camel/sync/README.md', 'About', 'Islandora-Sync']
   - ['drupal/islandora/README.md', 'About', 'Islandora (Drupal module)']
 
-# Technical Documentation
-  - ['technical-documentation/technical_design.md', 'Technical Documentation', 'Technical Design']
-
 # Installation:
   - ['install/README.md', 'Installation', 'Vagrant']
 
 # Contributing
-  - ['contributing/contributing.md', 'Contributing', 'License agreements']
-  - ['contributing/coding-standards.md', 'Contributing', 'Coding Standards']
-  - ['contributing/git-guidelines.md', 'Contributing', 'Git guidelines']
+  - ['contributing/contributing.md', 'Contributing', 'How to contribute']
+
+# Technical Documentation
+  - ['technical-documentation/technical_design.md', 'Technical Documentation', 'Technical Design']
