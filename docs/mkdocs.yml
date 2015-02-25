@@ -1,4 +1,4 @@
-site_name: Islandora documentation
+site_name: Islandora
 site_dir: site
 site_description: Documentation for Islandora
 
@@ -9,7 +9,9 @@ docs_dir: sources
   
 use_absolute_urls: true
 
-include_search: true
+#include_search: true
+
+theme: bootstrap
 
 pages:
 
@@ -17,7 +19,14 @@ pages:
   - ['index.md', 'About', 'Islandora']
   - ['camel/sync/README.md', 'About', 'Islandora-Sync']
   - ['drupal/islandora/README.md', 'About', 'Islandora (Drupal module)']
-  - ['technical-design/technical_documentation.md', 'About', 'Technical Design']
+
+# Technical Documentation
+  - ['technical-documentation/technical_design.md', 'Technical Documentation', 'Technical Design']
 
 # Installation:
   - ['install/README.md', 'Installation', 'Vagrant']
+
+# Contributing
+  - ['contributing/contributing.md', 'Contributing', 'License agreements']
+  - ['contributing/coding-standards.md', 'Contributing', 'Coding Standards']
+  - ['contributing/git-guidelines.md', 'Contributing', 'Git guidelines']
