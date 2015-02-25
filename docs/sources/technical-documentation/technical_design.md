@@ -1,3 +1,5 @@
+## Introduction
+
 Islandora version 7.x-2.x is middleware built using Apache Camel to orchestrate distributed data processing and to provide web services required by institutions who would like to use Drupal as a front-end to a Fedora 4 JCR repository.  This goal presents a unique set of challenges, as Drupal is much, much more than a simple display layer.  It is a full blown content management system designed to be built on top of a traditional relational database such as MySQL or Postgres, not a JCR repository.  Additionally, there is a large amount of data processing and manipulation that must be performed for presentation and discovery.  This means that there is much more software that must be integrated than just Drupal and Fedora (Tesseract, ImageMagick, FFmpeg, just to name a few).  To make matters worse, doing all of this processing on the servers containing either Fedora or Drupal is detrimental to the performance of the overall system, resulting in a unusable site during periods of content migration or manipulation.  Plus, as most of us have already found out, systems such as these are incredibly difficult to install, configure, and maintain.
 
 To mitigate these issues, the overall design goals of the 7.x-2.x version of Islandora are:
@@ -9,7 +11,7 @@ To mitigate these issues, the overall design goals of the 7.x-2.x version of Isl
   * Drupal content is represented as Nodes and Fields, allowing the content management system to utilize the relational database it is expecting instead of shimming in a completely different type of datastore.  This will open up the entire Drupal module ecosystem to Islandora.  As an added benefit, viewers (OpenSeadragon, IA Book Viewer, Video.js, etc...) can be written as custom Field renderers, finally giving site builders the ability to control the display of content.  
   * Drupal's Services module will be used to expose RESTful services to middleware layer so that it can sanely perform CRUD operations on Nodes without having to delve into Drupal's internals.
 
-### The Importance of Using an Integration Framework
+## The Importance of Using an Integration Framework
 
 Let's not mince words.  *Islandora is middleware, warts and all.*  The word 'middleware' has plenty of connotations and baggage, but it really is what we're doing.  We have a huge stack with a lot of moving parts, and we have to glue them all together.  So it only makes sense to adopt a integration framework to help us pull this off.  
 
@@ -17,7 +19,7 @@ The framework that has been chosen for the project is [Apache Camel].  It seeks 
 
 But perhaps the greatest advantage of using an integration framework is that lets us focus solely on the application logic that's important to Islandora.  *There is no need for us to engineer any generic systems to get our job done, because we already have one!*  We can identify the operations that need to happen for every supported content type, carve out a space to do the work, and get to it.  It's not particularly sexy, but the work we have to do is difficult and we've already got enough on our plate!  If there's a need to provide pluggable solutions for other Fedora users (Hydra, custom Fedora solutions), we can refactor and properly use bean injection to do so.  Using an integration framework gives us all the power we need, and then some.
 
-### Using Camel
+## Using Camel
 
 Camel, which at first glance appears as terrifying as Java IOC frameworks (more on those later), is actually incredibly straightforward.  A Camel application is known as a [Camel Context], which is really just a collection of messaging [Route]s.  These routes are defined in [Route Builder] classes.  Each route has a starting point (the from() method), from which an initial [Message] is consumed.  The Message is placed in an [Exchange], which contains two messages: one incoming, and another outgoing.  As the Exchange is passed through each step of the route, the outgoing message from one step becomes the incoming message of the next.  Data that must persist between multiple steps in the route can be cached in the Exchange as properties.
 
@@ -111,15 +113,15 @@ To keep things simple for the purposes of this example, we're leaving out some p
 
 For more on Camel, check out the [Camel API] documentation and the community documentation on the [Camel][Apache Camel] website.  If you're looking for something more than just community and API docs, check out [Camel in Action].  It's well worth the money.
 
-### Inversion of Control and Camel
+## Inversion of Control and Camel
 
 Camel works very well with both the [Spring] and [Blueprint] Inversion of Control (e.g. Dependency Injection) frameworks.  The routes can even be defined directly in the application context XML's for either.  These sorts of frameworks, while both powerful and valuable, are often a stumbling point for developers who have never been exposed to them.  We will be using the Spring inversion of control framework to bootstrap the application, but routes will be defined in the Java DSL.  It is also advisable to stick to the Camel API, extending custom Processors when extra functionality is needed.  Bean injection and delegation should only happen when interfaces and single inheritance cannot be utilized for code re-use, or to provide a pluggable system (but *only if it's truly necessary*).  We are attempting to keep the application context's XML as simple as possible, and in order to do so, the exposure of beans must be minimal.  Plus, let's be honest, non-programmers and managers aren't going to be manipulating the XML and redeploying if we expose every possible bean reference.  We're programmers, let's do as much in code as possible for all the benefits it provides (code completion, compile time safety, debugging, etc...).
 
-### Camel and Scripting Languages
+## Camel and Scripting Languages
 
 Camel provides extra functionality for scripting language integration, but it is advised to stick to using Camel's provided Simple language for basic filters, expressions, and predicates.  Anything more complicated than the Simple language can handle should be done in Java for compile-time safety and debugging purposes.  The other languages offered by Camel that look attractive (Javascript, ruby, python) aren't *The Real McKoy*.  They are JVM implementations of said languages (Rhino, JRuby, Jython), and often have unexpected idiosyncrasies because they're being boiled down to JVM bytecode behind the scenes.  Being explicit with Java is less of a hassle than it may seem, particularly given the fact that you can attach a remote debugger in your IDE and troubleshoot so easily.
 
-# *THE PLAN*
+## *THE PLAN*
 
 The integration of all the various subsystems will be achieved through asynchronous middleware.  This means that Drupal will never explicitly call out to Fedora, and Fedora will never explicitly call out to Drupal.  The middleware will consume messages from Fedora's event queue and utilize Drupal services for information flow from Fedora to Drupal.  For information flow from Drupal to Fedora, Drupal will use services provided by the Camel middeware layer that encapsulate complicated data manipulation and Fedora logic within a single transaction.  This will all be done using Drupal's hook system (which is an event system in a sense), allowing a developer to manipulate node content as if they were working on a normal Drupal site, with operations on Fedora content getting seamlessly deferred to the middleware.  In order to maintain asynchronous behavior, Camel services will accept requests from Drupal, but immediately publish request content as messages onto a persistent queue so that work can be performed when and where it is appropriate.  For those who like diagrams, the following image represents this flow of information between the main three layers of the stack.
 
@@ -140,11 +142,11 @@ Setting up the software in this manner effectively decouples Fedora and Drupal f
 
 Islandora Sync will be camel based middleware that lives up to its name.  It is the middleman in the interactions between Drupal and Fedora.  It will provide services to Drupal, utilize Drupal's services, and interact with Fedora through the use of JMS Messaging and the REST API.
 
-##### Design Considerations
+#### Design Considerations
 
 When designing systems, it's tempting to be drawn towards what appear to be similarities between requirements at first.  This often leads to a design built around code re-use that seems obvious in the early stages of development.  Unfortunately, as functional requirements shift and use cases are added, more and more of the initial assumptions will be violated.  Over time, this design will start to sag, and its "generic" systems will become more of a hindrance than a benefit.  With this in mind for the middleware, we are simply going to map out space for each operation that must be performed on each type of resource based on message type, resource type, and content model.  As work progresses and similarities present themselves, we will aggressively refactor in order to maintain code re-use.  But as experience has proven, attempting to make a large systems that handle all use cases will only lead to deterioration, as one by one the initial assumptions will fall by the way side.  We have to give each concept its own room in the code base so that things which at first appear similar can vary independently over the course of development.  This will also allow for eventual bean exposure so that the system can be made pluggable for users with custom use cases.  Ironically, it is by being somewhat explicit at the beginning that we will achieve a more robust and customizable middleware.  
 
-##### Routing
+#### Routing
 
 When messages first come in from Fedora through ActiveMQ, there will be a sorting layer that will process each message so that it eventually winds up in the appropriate place.  The things we will have to sort on are:
 
@@ -234,13 +236,16 @@ Of course, this is a simplification for illustrative purposes.  In reality, ther
     * NonRdfSourceDescription
         * *Update parent Container property*
 
-##### Transactions and Routing
+#### Transactions and Routing
+
 Based on preliminary analysis, utilizing a transaction in Fedora 4 will result in the same messages in the same order as if you didn't use a transaction.  This means we can get away with one set of logic whether or not transactions are taken advantage of.  There is no need for message splitting and ordering in front of the routing layer.
 
-##### Exposing Services To Drupal
+#### Exposing Services To Drupal
+
 This has been identified as something that will be focused on after the Fedora -> Drupal synchronization has stabilized, but it will essentially expose the same operations as the routing layer above, just accepting input from Drupal's hook system instead of Fedora's JMS Queue.  As Drupal nodes are created, modified, and deleted, similar operations will take place to apply the changes to Fedora.  It will rely heavily on the transactionality that Fedora 4 provides, with each exposed service wrapping a complex sequence of operations within a single transaction.  
 
-##### Derivative Creation
+#### Derivative Creation
+
 In order to interact with the various command line programs utilized to create derivatives, we will take advantage of Camel's exec component, which passes the message body into the program that is executed through STDIN.  Here' a trivial example using the word count function in Linux `wc`, demonstrating how to handle the results:
 ```Java
 from("direct:exec")
@@ -263,14 +268,16 @@ The Fedora community offers a [pluggable indexer webapp](https://github.com/fcre
 
 ### Drupal
 
-##### Camel's Interaction with Drupal
+#### Camel's Interaction with Drupal
+
 Camel will interact with service exposed through Drupal with the use of the http4 component.  Common operations such as authentication, user management, and CRUD operations on Nodes can all be safely performed by the middleware layer without touching a drop of Drupal code (forgive the terrible pun).
 
 In fact, the main role of the Islandora Drupal module is to provide the REST endpoint and define any common services that will be used independent of content type.  The service module acts much like Drupal Views, allowing the endpoint to be customized in through a UI, and code to be exported and inserted into the Drupal module to provide permanency beyond that of the database.
 
 See the example in the 'Using Camel' section for a look at how we create nodes remotely through the REST interface Drupal provides.
 
-##### The Drupal Modules
+#### The Drupal Modules
+
 With so much of the core functionality being moved out of the Drupal layer, we'll see the Drupal modules we've grown accustomed to shrink in size.  The core purpose of the Drupal modules will be to:
 
 * Provide custom Islandora content types (One-to-one with content models)
@@ -280,19 +287,21 @@ With so much of the core functionality being moved out of the Drupal layer, we'l
 
 It should be noted that although there will still exist a module for each content model, they will not be in separate git repos.  There is a difference between modularity of code and modularity of revision control.  Managing some thirty odd git repos is a maintenance nightmare, and so you will see all code move into a single repository.  This will help eliminate commit mis-matches between modules, and will synchronize changes with the middleware layer as well.  Over time, as the code base grows, we can consider moving out larger pieces for specific reasons (getting the Islandora modules on drupal.org, for instance), and using git submodules to replace them in the single canonical Islandora Github repository.
 
-[Apache Camel]:http://camel.apache.org/
-[Enterprise Integration Patterns]:http://www.enterpriseintegrationpatterns.com/
-[Camel Context]:http://camel.apache.org/camelcontext.html
-[Route Builder]:http://camel.apache.org/routebuilder.html
-[Route]:http://camel.apache.org/routes.html
-[Message]:http://camel.apache.org/message.html
-[Exchange]:http://camel.apache.org/exchange.html
-[Camel API]:http://camel.apache.org/maven/current/camel-core/apidocs/index.html
-[Camel in Action]:http://www.manning.com/ibsen/
-[Processor]:http://camel.apache.org/processor.html
-[Aaron Coburn]:https://github.com/acoburn
-[fcrepo-camel]:https://github.com/fcrepo4/fcrepo-camel
-[Mustache]:https://mustache.github.io/
-[Spring]:https://spring.io/
-[Blueprint]:http://aries.apache.org/modules/blueprint.html
-[Message Router]:http://camel.apache.org/message-router.html
+### Links/Resources
+
+* [Apache Camel](http://camel.apache.org/)
+* [Enterprise Integration Patterns](http://www.enterpriseintegrationpatterns.com/)
+* [Camel Context](http://camel.apache.org/camelcontext.html)
+* [Route Builder](http://camel.apache.org/routebuilder.html)
+* [Route](http://camel.apache.org/routes.html)
+* [Message](http://camel.apache.org/message.html)
+* [Exchange](http://camel.apache.org/exchange.html)
+* [Camel API](http://camel.apache.org/maven/current/camel-core/apidocs/index.html)
+* [Camel in Action](http://www.manning.com/ibsen/)
+* [Processor](http://camel.apache.org/processor.html)
+* [Aaron Coburn](https://github.com/acoburn)
+* [fcrepo-camel](https://github.com/fcrepo4/fcrepo-camel)
+* [Mustache](https://mustache.github.io/)
+* [Spring](https://spring.io/)
+* [Blueprint](http://aries.apache.org/modules/blueprint.html)
+* [Message Router](http://camel.apache.org/message-router.html)
