@@ -17,6 +17,7 @@ For more information about the project, please see the [project documentation](h
 
 ## Maintainers/Sponsors
 
+* Discoverygarden
 * LYRASIS
 * York University
 * McMaster University

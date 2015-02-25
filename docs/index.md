@@ -35,6 +35,7 @@ If you would like to contribute code to the project, you will need to be covered
 
 ## Sponsors
 
+* Discoverygarden
 * LYRASIS
 * York University
 * McMaster University
