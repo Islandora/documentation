@@ -22,24 +22,28 @@ Optionally, if you want to install the vim configuration for Java development, u
 You can connect to the machine via the browser at [http://localhost:8000](http://localhost:8000).
 
 The default Drupal login details are:
-  - username: admin
-  - password: islandora
+  
+  * username: admin
+  * password: islandora
 
 MySQL:
-  - username: root
-  - password: islandora
+  
+  * username: root
+  * password: islandora
 
 The Fedora 4 REST API can be accessed at [http://localhost:8080/fcrepo/rest](http://localhost:8080/fcrepo/rest).  It currently has authentication disabled.
 
 Tomcat Manager:
-  - username: islandora
-  - password: islandora
+  
+  * username: islandora
+  * password: islandora
 
 You can connect to the machine via ssh: `ssh -p 2222 vagrant@localhost`
 
 The default VM login details are:
-  - username: vagrant
-  - password: vagrant
+  
+  * username: vagrant
+  * password: vagrant
 
 ## Environment
 
