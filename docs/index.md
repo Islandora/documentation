@@ -21,9 +21,11 @@ The [Technical Design documentation](technical-documentation/technical_design.md
   * Solr and Triple store indexing
   * Islandora (Drupal)
 
+The [How to build documentation](technical-documentation/docs-build.md) provides and overview on how the documentation is created, built, and deployed.
+
 ## Installation
 
-The [installation section](install/README.md) will show you how to create a virtual development environment.
+The [installation section](install/README.md) provides and overview on how to create a virtual development environment.
 
 ## Contributing
 
@@ -33,6 +35,7 @@ If you would like to contribute code to the project, you will need to be covered
 
 ## Sponsors
 
+* Discoverygarden
 * LYRASIS
 * York University
 * McMaster University

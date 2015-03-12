@@ -1,6 +1,6 @@
 site_name: Islandora
 site_dir: site
-docs_dir: sources
+docs_dir: docs
 site_description: Documentation for Islandora
 
 dev_addr: 'localhost:8111'
@@ -27,3 +27,4 @@ pages:
 
 # Technical Documentation
   - ['technical-documentation/technical_design.md', 'Technical Documentation', 'Technical Design']
+  - ['technical-documentation/docs-build.md', 'Technical Documentation', 'How to build documenation']
