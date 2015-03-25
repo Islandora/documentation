@@ -13,6 +13,7 @@ Notes:
 
 * fcrepo4 will create a new createDate and lastModifiedDate, we will need to have a stragtegy for presevering the original createdDate and lastModifiedDate since this are not alterable.
 * We will need to figure out a strategy for ownerID
+* state will change with [FCREPO-1363](https://jira.duraspace.org/browse/FCREPO-1363)
 
 ## fcrepo3 Datastream properties to fcrepo4
 
@@ -36,6 +37,7 @@ Notes:
 * fcrepo4 will create a new createDate and lastModifiedDate, we will need to have a stragtegy for presevering the original createdDate and lastModifiedDate since this are not alterable.
 * Do we have a use for or need to migrate State?
 * Discuss fcrepo4 versioning
+* * state will change with [FCREPO-1363](https://jira.duraspace.org/browse/FCREPO-1363)
 * Verify proposed use of hasFixityService and computedChecksum
 * Discuss whether or not we need:
   * Format URI
