@@ -44,6 +44,18 @@ Notes:
   * Alternate IDs
   * Access URL
 
+## fcrepo3 RELS-EXT
+
+```xml
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:fedora="info:fedora/fedora-system:def/relations-external#" xmlns:fedora-model="info:fedora/fedora-system:def/model#" xmlns:islandora="http://islandora.ca/ontology/relsext#">
+  <rdf:Description rdf:about="info:fedora/yul:328697">
+    <fedora:isMemberOfCollection rdf:resource="info:fedora/yul:F0433"></fedora:isMemberOfCollection>
+    <fedora-model:hasModel rdf:resource="info:fedora/islandora:sp_large_image_cmodel"></fedora-model:hasModel>
+    <islandora:inheritXacmlFrom rdf:resource="info:fedora/yul:F0433"></islandora:inheritXacmlFrom>
+  </rdf:Description>
+</rdf:RDF>
+```
+
 ## Diagram
 
 Example Islandora Solution Pack Large Image object Fedora 4 Modeling
