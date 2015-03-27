@@ -17,19 +17,19 @@ Notes:
 
 ## fcrepo3 Datastream properties to fcrepo4
 
-| fcrepo3       | fcrepo4                                    | Example                                        |
-|---------------|--------------------------------------------|------------------------------------------------|
-| DSID          | dcterms:identifier                         | OBJ                                            |
-| Label         | dcterms:title                              | ASC19109.tif                                   |
-| MIME Type     | fedora:mimeType                            | image/tiff                                     |
-| State         | fedora:status                              | Active                                         |
-| Created       | fedora:created                             | 2015-03-16T20:11:06.683Z                       |
-|               | fedora:lastModified                        |                                                |
-| Versionable   | fedora:hasVersions                         | true                                           |
-| Format URI    |                                            |                                                |
-| Alternate IDs |                                            |                                                |
-| Access URL    |                                            |                                                |
-| Checksum      | fedora:hasFixityService + computedChecksum | SHA-1 c91342b705b15cb4f6ac5362cc6a47d9425aec86 |
+| fcrepo3       | fcrepo4                                    | Example                                           |
+|---------------|--------------------------------------------|---------------------------------------------------|
+| DSID          | dcterms:identifier                         | OBJ                                               |
+| Label         | dcterms:title                              | ASC19109.tif                                      |
+| MIME Type     | fedora:mimeType                            | image/tiff                                        |
+| State         | fedora:status                              | Active                                            |
+| Created       | fedora:created                             | 2015-03-16T20:11:06.683Z                          |
+|               | fedora:lastModified                        |                                                   |
+| Versionable   | fedora:hasVersions                         | true                                              |
+| Format URI    |                                            |                                                   |
+| Alternate IDs |                                            |                                                   |
+| Access URL    |                                            |                                                   |
+| Checksum      | premis:hasMessageDigest                    | urn:sha1:c91342b705b15cb4f6ac5362cc6a47d9425aec86 |
 
 Notes:
 
