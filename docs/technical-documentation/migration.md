@@ -37,7 +37,9 @@ Notes:
   * Alternate IDs
   * Access URL
 
-## fcrepo3 RELS-EXT
+## fcrepo3 RELS-EXT to fcrepo4 Mapping
+
+**Sample**
 
 ```xml
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:fedora="info:fedora/fedora-system:def/relations-external#" xmlns:fedora-model="info:fedora/fedora-system:def/model#" xmlns:islandora="http://islandora.ca/ontology/relsext#">
@@ -48,6 +50,12 @@ Notes:
   </rdf:Description>
 </rdf:RDF>
 ```
+
+| fcrepo3                     | Example                                                    | fcrepo4 | Example |
+|-----------------------------|------------------------------------------------------------|---------|---------|
+| fedora:isMemberOfCollection | rdf:resource="info:fedora/yul:F0433"                       |         |         |
+| fedora-model:hasModel       | rdf:resource="info:fedora/islandora:sp_large_image_cmodel" |         |         |
+| islandora:inheritXacmlFrom  | rdf:resource="info:fedora/yul:F0433"                       |         |         |
 
 ## Diagram
 
