@@ -39,20 +39,25 @@ Notes:
 
 ## fcrepo3 RELS-EXT to fcrepo4 Mapping
 
-| fcrepo3                     | Example                                                    | fcrepo4 | Example |
-|-----------------------------|------------------------------------------------------------|---------|---------|
-| fedora:isMemberOfCollection | rdf:resource="info:fedora/yul:F0433"                       |         |         |
-| fedora-model:hasModel       | rdf:resource="info:fedora/islandora:sp_large_image_cmodel" |         |         |
-| islandora:inheritXacmlFrom  | rdf:resource="info:fedora/yul:F0433"                       |         |         |
-| islandora:hasLanguage       | fra                                                        |         |         |
-| islandora:isPageOf          | rdf:resource="info:fedora/yul:336566"                      |         |         |
-| islandora:isSequenceNumber  | 213                                                        |         |         |
-| islandora:isPageNumber      | 213                                                        |         |         |
-| islandora:isSection         | 1                                                          |         |         |
+| fcrepo3                                | Example                                                    | fcrepo4 | Example |
+|----------------------------------------|------------------------------------------------------------|---------|---------|
+| fedora:isMemberOfCollection            | rdf:resource="info:fedora/yul:F0433"                       |         |         |
+| fedora-model:hasModel                  | rdf:resource="info:fedora/islandora:sp_large_image_cmodel" |         |         |
+| islandora:inheritXacmlFrom             | rdf:resource="info:fedora/yul:F0433"                       |         |         |
+| islandora:hasLanguage                  | fra                                                        |         |         |
+| islandora:isPageOf                     | rdf:resource="info:fedora/yul:336566"                      |         |         |
+| islandora:isSequenceNumber             | 213                                                        |         |         |
+| islandora:isPageNumber                 | 213                                                        |         |         |
+| islandora:isSection                    | 1                                                          |         |         |
+| fedora:isConstituentOf                 | rdf:resource="info:fedora/yul:271119"                      |         |         |
+| islandora:isSequenceNumberOfyul_271119 | 1                                                          |         |         |
+| islandora:dateIssued                   | 1945-10-31                                                 |         |         |
+| islandora:isSequenceNumber             | 2023                                                       |         |         |
 
 **Samples**
 
 Large Image object
+* * *
 ```xml
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:fedora="info:fedora/fedora-system:def/relations-external#" xmlns:fedora-model="info:fedora/fedora-system:def/model#" xmlns:islandora="http://islandora.ca/ontology/relsext#">
   <rdf:Description rdf:about="info:fedora/yul:328697">
@@ -64,6 +69,7 @@ Large Image object
 ```
 
 Page object
+* * *
 ```xml
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:fedora="info:fedora/fedora-system:def/relations-external#" xmlns:fedora-model="info:fedora/fedora-system:def/model#" xmlns:islandora="http://islandora.ca/ontology/relsext#">
   <rdf:Description rdf:about="info:fedora/yul:336779">
@@ -75,6 +81,58 @@ Page object
     <islandora:isSection>1</islandora:isSection>
     <fedora:isMemberOf rdf:resource="info:fedora/yul:336566"></fedora:isMemberOf>
     <islandora:inheritXacmlFrom rdf:resource="info:fedora/yul:336566"></islandora:inheritXacmlFrom>
+  </rdf:Description>
+</rdf:RDF>
+```
+
+Compound object (child)
+* * *
+```xml
+<rdf:RDF xmlns:fedora="info:fedora/fedora-system:def/relations-external#" xmlns:fedora-model="info:fedora/fedora-system:def/model#" xmlns:islandora="http://islandora.ca/ontology/relsext#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <rdf:Description rdf:about="info:fedora/yul:271117">
+    <fedora:isMemberOfCollection rdf:resource="info:fedora/yul:F0375"></fedora:isMemberOfCollection>
+    <fedora-model:hasModel rdf:resource="info:fedora/islandora:sp_large_image_cmodel"></fedora-model:hasModel>
+    <islandora:inheritXacmlFrom rdf:resource="info:fedora/yul:F0375"></islandora:inheritXacmlFrom>
+    <fedora:isConstituentOf rdf:resource="info:fedora/yul:271119"></fedora:isConstituentOf>
+    <islandora:isSequenceNumberOfyul_271119>1</islandora:isSequenceNumberOfyul_271119>
+  </rdf:Description>
+</rdf:RDF>
+```
+
+Newspaper object
+* * *
+```xml
+<rdf:RDF>
+  <rdf:Description rdf:about="info:fedora/uofm:1243378">
+    <fedora-model:hasModel rdf:resource="info:fedora/islandora:newspaperCModel"/>
+    <fedora:isMemberOfCollection rdf:resource="info:fedora/uofm:libraries"/>
+  </rdf:Description>
+</rdf:RDF>
+```
+
+Newspaper issue object
+* * *
+```xml
+<rdf:RDF>
+  <rdf:Description rdf:about="info:fedora/uofm:1351347">
+    <fedora:isMemberOf rdf:resource="info:fedora/uofm:1243378"/>
+    <fedora-model:hasModel rdf:resource="info:fedora/islandora:newspaperIssueCModel"/>
+    <islandora:dateIssued>1945-10-31</islandora:dateIssued>
+    <islandora:isSequenceNumber>2023</islandora:isSequenceNumber>
+  </rdf:Description>
+</rdf:RDF>
+```
+
+Newspaper page object
+* * *
+```xml
+<rdf:RDF>
+  <rdf:Description rdf:about="info:fedora/uofm:1351348">
+    <fedora-model:hasModel rdf:resource="info:fedora/islandora:newspaperPageCModel"/>
+    <fedora:isMemberOf rdf:resource="info:fedora/uofm:1351347"/>
+    <islandora:isPageOf rdf:resource="info:fedora/uofm:1351347"/>
+    <islandora:isSequenceNumber>1</islandora:isSequenceNumber>
+    <islandora:isPageNumber>1</islandora:isPageNumber>
   </rdf:Description>
 </rdf:RDF>
 ```
