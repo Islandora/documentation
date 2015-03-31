@@ -11,6 +11,12 @@
 
 *immutable
 
+Notes:
+
+* Penn State ([fedora-migrate](https://github.com/projecthydra-labs/fedora-migrate))
+  * createDate -> dc:dateSubmitted
+  * lastModifiedDate -> dc:dateModified
+
 ## fcrepo3 Datastream properties to fcrepo4
 
 | fcrepo3       | fcrepo4                                    | Example                                           |
@@ -39,20 +45,20 @@ Notes:
 
 ## fcrepo3 RELS-EXT to fcrepo4 Mapping
 
-| fcrepo3                                | Example                                                    | fcrepo4 | Example |
-|----------------------------------------|------------------------------------------------------------|---------|---------|
-| fedora:isMemberOfCollection            | rdf:resource="info:fedora/yul:F0433"                       |         |         |
-| fedora-model:hasModel                  | rdf:resource="info:fedora/islandora:sp_large_image_cmodel" |         |         |
-| islandora:inheritXacmlFrom             | rdf:resource="info:fedora/yul:F0433"                       |         |         |
-| islandora:hasLanguage                  | fra                                                        |         |         |
-| islandora:isPageOf                     | rdf:resource="info:fedora/yul:336566"                      |         |         |
-| islandora:isSequenceNumber             | 213                                                        |         |         |
-| islandora:isPageNumber                 | 213                                                        |         |         |
-| islandora:isSection                    | 1                                                          |         |         |
-| fedora:isConstituentOf                 | rdf:resource="info:fedora/yul:271119"                      |         |         |
-| islandora:isSequenceNumberOfyul_271119 | 1                                                          |         |         |
-| islandora:dateIssued                   | 1945-10-31                                                 |         |         |
-| islandora:isSequenceNumber             | 2023                                                       |         |         |
+| fcrepo3                                | Example                                                    | fcrepo4          | Example              |
+|----------------------------------------|------------------------------------------------------------|------------------|----------------------|
+| fedora:isMemberOfCollection            | rdf:resource="info:fedora/yul:F0433"                       | fedora:hasParent |                      |
+| fedora-model:hasModel                  | rdf:resource="info:fedora/islandora:sp_large_image_cmodel" | rdf:type         | islandora:largeImage | 
+| islandora:inheritXacmlFrom             | rdf:resource="info:fedora/yul:F0433"                       |                  |                      |
+| islandora:hasLanguage                  | fra                                                        | dcterms:language | fra                  |
+| islandora:isPageOf                     | rdf:resource="info:fedora/yul:336566"                      |                  |                      |
+| islandora:isSequenceNumber             | 213                                                        |                  |                      |
+| islandora:isPageNumber                 | 213                                                        |                  |                      |
+| islandora:isSection                    | 1                                                          |                  |                      |
+| fedora:isConstituentOf                 | rdf:resource="info:fedora/yul:271119"                      | fedora:hasParent |                      |
+| islandora:isSequenceNumberOfyul_271119 | 1                                                          |                  |                      |
+| islandora:dateIssued                   | 1945-10-31                                                 |                  |                      |
+| islandora:isSequenceNumber             | 2023                                                       |                  |                      |
 
 **Samples**
 
