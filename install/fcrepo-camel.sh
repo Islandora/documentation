@@ -1,6 +1,6 @@
 echo "Installing Fcrepo Camel Component"
 
-FCREPO_CAMEL_VERSION=4.1.0
+FCREPO_CAMEL_VERSION=4.1.1
 FCREPO_CAMEL_HOME=/usr/share/fcrepo-camel
 
 mkdir $FCREPO_CAMEL_HOME
