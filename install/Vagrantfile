@@ -25,7 +25,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     if ENV['VIM']
       vb.customize ["modifyvm", :id, "--memory", '2048']
     else
-      vb.customize ["modifyvm", :id, "--memory", '1024']
+      vb.customize ["modifyvm", :id, "--memory", '1500']
     end
   end
 
@@ -34,10 +34,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision :shell, :path => "bootstrap.sh", :args => home_dir
   config.vm.provision :shell, :path => "drupal.sh", :args => home_dir
   config.vm.provision :shell, :path => "fcrepo.sh", :args => home_dir
-  config.vm.provision :shell, :path => "sync.sh", :args => home_dir
   config.vm.provision :shell, :path => "solr.sh"
   config.vm.provision :shell, :path => "fcrepo-camel.sh"
   config.vm.provision :shell, :path => "fuseki.sh"
+  config.vm.provision :shell, :path => "sync.sh", :args => home_dir
   config.vm.provision :shell, :path => "post-install.sh", :args => home_dir
   config.vm.provision :shell, :path => "vim.sh", :args => home_dir if ENV['VIM']
 
