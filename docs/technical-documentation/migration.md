@@ -19,19 +19,19 @@ Notes:
 
 ## fcrepo3 Datastream properties to fcrepo4
 
-| fcrepo3       | fcrepo4                                    | Example                                           |
-|---------------|--------------------------------------------|---------------------------------------------------|
-| DSID          | dcterms:identifier                         | OBJ                                               |
-| Label         | dcterms:title                              | ASC19109.tif                                      |
-| MIME Type     | fedora:mimeType*                           | image/tiff                                        |
-| State         | objState                                   | Active                                            |
-| Created       | fedora:created*                            | 2015-03-16T20:11:06.683Z                          |
-|               | fedora:lastModified*                       |                                                   |
-| Versionable   | fedora:hasVersions*                        | true                                              |
-| Format URI    | premis:formatDesignation                   | info:pronom/fmt/156                               |
-| Alternate IDs |                                            |                                                   |
-| Access URL    |                                            |                                                   |
-| Checksum      | premis:hasMessageDigest                    | urn:sha1:c91342b705b15cb4f6ac5362cc6a47d9425aec86 |
+| fcrepo3       | fcrepo4                                                    | Example                                        |
+|---------------|------------------------------------------------------------|------------------------------------------------|
+| DSID          | dcterms:identifier                                         | OBJ                                            |
+| Label         | dcterms:title                                              | ASC19109.tif                                   |
+| MIME Type     | fedora:mimeType*                                           | image/tiff                                     |
+| State         | objState                                                   | Active                                         |
+| Created       | fedora:created*                                            | 2015-03-16T20:11:06.683Z                       |
+|               | fedora:lastModified*                                       |                                                |
+| Versionable   | fedora:hasVersions*                                        | true                                           |
+| Format URI    | premis:formatDesignation                                   | info:pronom/fmt/156                            |
+| Alternate IDs |                                                            |                                                |
+| Access URL    |                                                            |                                                |
+| Checksum      | premis:hasMessageDigestAlgorithm + premis:hasMessageDigest | SHA1, c91342b705b15cb4f6ac5362cc6a47d9425aec86 |
 
 *immutable
 
@@ -142,6 +142,10 @@ Newspaper page object
   </rdf:Description>
 </rdf:RDF>
 ```
+
+## Audit log migration
+
+TODO: Document known audit log events, and provide examples.
 
 ## Diagram
 
