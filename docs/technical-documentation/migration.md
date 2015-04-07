@@ -17,8 +17,9 @@ Notes:
   * createDate -> dc:dateSubmitted
   * lastModifiedDate -> dc:dateModified
 * createDate -> premis:hasDateCreatedByApplication
-* fedora:lastModified -> premis:hasEventDateTime + hasEventType == fcrepo3 migration
-* ownerId -> premis:hasAgentName + premis:hasAgentNote == fcrepo3 migration
+* fedora:lastModified -> premis:hasEventDateTime + hasEventType == [migration](http://id.loc.gov/vocabulary/preservation/eventType/mig.html)
+* ownerId -> premis:hasAgentName + premis:hasAgentNote == [migration](http://id.loc.gov/vocabulary/preservation/eventType/mig.html)
+* Can we nest the combined events, or do they have to flat?
 
 ## fcrepo3 Datastream properties to fcrepo4
 
