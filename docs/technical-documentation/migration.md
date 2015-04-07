@@ -16,6 +16,9 @@ Notes:
 * Penn State ([fedora-migrate](https://github.com/projecthydra-labs/fedora-migrate))
   * createDate -> dc:dateSubmitted
   * lastModifiedDate -> dc:dateModified
+* createDate -> premis:hasDateCreatedByApplication
+* fedora:lastModified -> premis:hasEventDateTime + hasEventType == fcrepo3 migration
+* ownerId -> premis:hasAgentName + premis:hasAgentNote == fcrepo3 migration
 
 ## fcrepo3 Datastream properties to fcrepo4
 
@@ -29,8 +32,8 @@ Notes:
 |               | fedora:lastModified*                                       |                                                |
 | Versionable   | fedora:hasVersions*                                        | true                                           |
 | Format URI    | premis:formatDesignation                                   | info:pronom/fmt/156                            |
-| Alternate IDs |                                                            |                                                |
-| Access URL    |                                                            |                                                |
+| Alternate IDs | dcterms:identifier                                         |                                                |
+| Access URL    | dcterms:identifier                                         |                                                |
 | Checksum      | premis:hasMessageDigestAlgorithm + premis:hasMessageDigest | SHA1, c91342b705b15cb4f6ac5362cc6a47d9425aec86 |
 
 *immutable
