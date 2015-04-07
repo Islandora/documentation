@@ -1,0 +1,10 @@
+<?php
+
+/**
+ * @file
+ * This is the new Islandora Basic Image module.
+ */
+
+function islandora_basic_image_form($node, &$form_state) {
+  return node_content_form($node, $form_state);
+}

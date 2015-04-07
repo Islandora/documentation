@@ -1,0 +1,30 @@
+<?php
+
+function islandora_basic_image_install() {
+  $t = get_t();
+
+  $basic_image_content_type = array(
+    'type' => 'basic_image',
+    'name' => $t('Basic Image'),
+    'base' => 'node_content',
+    'description' => $t('An image object in Fedora'),
+  );
+
+  $basic_image_content_type = node_type_set_defaults($basic_image_content_type);
+
+  $status = node_type_save($basic_image_content_type);
+
+  $t_args = array('%name' => $basic_image_content_type->name);
+
+  if ($status == SAVED_UPDATED) {
+    drupal_set_message($t('Updated %name content type.', $t_args));
+  }
+  elseif ($status == SAVED_NEW) {
+    drupal_set_message($t('Created %name content type.', $t_args));
+  }
+
+}
+
+function islandora_basic_image_uninstall() {
+  node_type_delete('basic_image');
+}
