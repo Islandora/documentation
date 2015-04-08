@@ -151,6 +151,73 @@ Newspaper page object
 
 TODO: Document known audit log events, and provide examples.
 
+**Examples**:
+
+addDatastream
+
+```xml
+<audit:record ID="AUDREC1">
+<audit:process type="Fedora API-M"/>
+<audit:action>addDatastream</audit:action>
+<audit:componentID>TECHMD_FITS</audit:componentID>
+<audit:responsibility>joanna</audit:responsibility>
+<audit:date>2013-06-21T14:54:27.396Z</audit:date>
+<audit:justification>Copied datastream from yul:61282.</audit:justification>
+</audit:record>
+```
+
+modifyDatastreamByReference
+
+```xml
+<audit:record ID="AUDREC4">
+<audit:process type="Fedora API-M"/>
+<audit:action>modifyDatastreamByReference</audit:action>
+<audit:componentID>TN</audit:componentID>
+<audit:responsibility>fedoraAdmin</audit:responsibility>
+<audit:date>2013-06-22T05:14:34.443Z</audit:date>
+<audit:justification></audit:justification>
+</audit:record>
+```
+
+modifyObject
+
+```xml
+<audit:record ID="AUDREC5">
+<audit:process type="Fedora API-M"/>
+<audit:action>modifyObject</audit:action>
+<audit:componentID></audit:componentID>
+<audit:responsibility>joanna</audit:responsibility>
+<audit:date>2013-07-02T14:31:59.699Z</audit:date>
+<audit:justification></audit:justification>
+</audit:record>
+```
+
+modifyDatastreamByValue
+
+```xml
+<audit:record ID="AUDREC16">
+<audit:process type="Fedora API-M"/>
+<audit:action>modifyDatastreamByValue</audit:action>
+<audit:componentID>RELS-EXT</audit:componentID>
+<audit:responsibility>nruest</audit:responsibility>
+<audit:date>2013-11-27T15:42:08.823Z</audit:date>
+<audit:justification></audit:justification>
+</audit:record>
+```
+
+modifyObject (checksum validation)
+
+```xml
+<audit:record ID="AUDREC23">
+<audit:process type="Fedora API-M"/>
+<audit:action>modifyObject</audit:action>
+<audit:componentID></audit:componentID>
+<audit:responsibility>anonymous</audit:responsibility>
+<audit:date>2014-01-22T21:07:43.502Z</audit:date>
+<audit:justification>PREMIS:file=yul:96031+FULL_TEXT+FULL_TEXT.0; PREMIS:eventType=fixity check; PREMIS:eventOutcome=SHA-1 checksum validated.</audit:justification>
+</audit:record>
+```
+
 ## Diagram
 
 Example Islandora Solution Pack Large Image object Fedora 4 Modeling
