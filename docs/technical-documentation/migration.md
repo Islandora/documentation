@@ -192,6 +192,19 @@ modifyObject
 </audit:record>
 ```
 
+modifyObject (checksum validation)
+
+```xml
+<audit:record ID="AUDREC23">
+<audit:process type="Fedora API-M"/>
+<audit:action>modifyObject</audit:action>
+<audit:componentID></audit:componentID>
+<audit:responsibility>anonymous</audit:responsibility>
+<audit:date>2014-01-22T21:07:43.502Z</audit:date>
+<audit:justification>PREMIS:file=yul:96031+FULL_TEXT+FULL_TEXT.0; PREMIS:eventType=fixity check; PREMIS:eventOutcome=SHA-1 checksum validated.</audit:justification>
+</audit:record>
+```
+
 modifyDatastreamByValue
 
 ```xml
@@ -204,18 +217,16 @@ modifyDatastreamByValue
 <audit:justification></audit:justification>
 </audit:record>
 ```
-
-modifyObject (checksum validation)
+purgeDatastream
 
 ```xml
-<audit:record ID="AUDREC23">
+<audit:record ID="AUDREC15">
 <audit:process type="Fedora API-M"/>
-<audit:action>modifyObject</audit:action>
-<audit:componentID></audit:componentID>
-<audit:responsibility>anonymous</audit:responsibility>
-<audit:date>2014-01-22T21:07:43.502Z</audit:date>
-<audit:justification>PREMIS:file=yul:96031+FULL_TEXT+FULL_TEXT.0; PREMIS:eventType=fixity check; PREMIS:eventOutcome=SHA-1 checksum validated.</audit:justification>
-</audit:record>
+<audit:action>purgeDatastream</audit:action>
+<audit:componentID>MKV</audit:componentID>
+<audit:responsibility>fedoraAdmin</audit:responsibility>
+<audit:date>2015-04-08T14:37:54.963Z</audit:date>
+<audit:justification>Purged datastream (ID=MKV), versions ranging from the beginning of time to the end of time.  This resulted in the permanent removal of 1 datastream version(s) (2015-02-19T21:01:56.235Z) and all associated audit records.</audit:justification>
 ```
 
 ## Diagram
