@@ -63,6 +63,7 @@ Notes:
 | islandora:isSequenceNumberOfyul_271119 | 1                                                          |                  |                      |
 | islandora:dateIssued                   | 1945-10-31                                                 |                  |                      |
 | islandora:isSequenceNumber             | 2023                                                       |                  |                      |
+| islandora:isMemberOf                   | islandora:sp_large_image_cmodel                            | fedora:hasParent |                      |
 
 **Samples**
 
