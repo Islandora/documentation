@@ -4,6 +4,15 @@
  * @file
  * This is the new Islandora Basic Image module.
  */
-function islandora_basic_image_form($node, &$form_state) {
+
+/**
+ * Function for using a form.
+ *
+ * @param string $node
+ *   The Drupal node.
+ * @param array $form_state
+ *   The Drupal form state.
+ */
+function islandora_basic_image_form($node, array &$form_state) {
   return node_content_form($node, $form_state);
 }
