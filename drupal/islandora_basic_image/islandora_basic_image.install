@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * @file
+ * This file contains all install related hooks.
+ */
+
+/**
+ * Implements hook_install().
+ */
 function islandora_basic_image_install() {
   $t = get_t();
 
@@ -38,10 +46,13 @@ function islandora_basic_image_install() {
       ),
     );
     field_create_instance($tn_field_instance);
-    drupal_set_message($t('Field %name was created successfully', array('%name' => $tn_field_name))); 
+    drupal_set_message($t('Field %name was created successfully', array('%name' => $tn_field_name)));
   }
 }
 
+/**
+ * Implements hook_uninstall().
+ */
 function islandora_basic_image_uninstall() {
   field_delete_instance(field_info_instance('node_content', 'field_tn', 'basic_image'));
   node_type_delete('basic_image');

@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * @file
+ * This file contains all install related hooks.
+ */
+
+/**
  * Implements hook_install().
  *
  * Defines common fields for various bundles.
@@ -14,6 +19,9 @@ function islandora_install() {
   field_create_field($tn_field);
 }
 
+/**
+ * Implements hook_uninstall().
+ */
 function islandora_uninstall() {
   $tn_field_name = 'field_tn';
   field_delete_field($tn_field_name);
