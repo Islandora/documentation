@@ -64,6 +64,15 @@ Notes:
 | islandora:dateIssued                   | 1945-10-31                                                 |                  |                      |
 | islandora:isSequenceNumber             | 2023                                                       |                  |                      |
 | islandora:isMemberOf                   | islandora:sp_large_image_cmodel                            | fedora:hasParent |                      |
+| fedora:isAnnotationOf                  | rdf:resource="info:fedora/islandora:96                     |                  |                      |
+| islandora:targetedBy                   | admin                                                      |                  |                      |
+| islandora:isAnnotationType             | my type                                                    |                  |                      |
+| islandora:hasURN                       | urn:uuid:C691142D-FCC0-0001-F6B3-1390128014A5              |                  |                      |
+| islandora:targets                      | info:fedora/islandora:96                                   |                  |                      |
+| islandora:isViewableByUser             | nruest                                                     |                  |                      |
+| islandora:isViewableByRole             | islandora creator                                          |                  |                      |
+| islandora:isManageableByUser           | nruest                                                     |                  |                      |
+| islandora:isManageableByRole           | islandora administrator                                    |                  |                      |
 
 **Samples**
 
