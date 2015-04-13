@@ -55,3 +55,12 @@ drush -y en islandora
 # XML Field module
 drush dl xml_field
 drush -y en xml_field xml_field_extras
+
+# Coder & Code Sniffer
+pear install PHP_CodeSniffer
+cd /tmp
+wget http://ftp.drupal.org/files/projects/coder-8.x-2.1.tar.gz
+tar -xzvf coder-8.x-2.1.tar.gz
+mv -v coder /usr/share
+chown -hR vagrant:vagrant /usr/share/coder
+ln -sv /usr/share/coder/coder_sniffer/Drupal /usr/share/php/PHP/CodeSniffer/Standards
