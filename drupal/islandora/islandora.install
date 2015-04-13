@@ -1,0 +1,20 @@
+<?php
+
+/**
+ * Implements hook_install().
+ *
+ * Defines common fields for various bundles.
+ */
+function islandora_install() {
+  $tn_field_name = 'field_tn';
+  $tn_field = array(
+    'field_name' => $tn_field_name,
+    'type' => 'image',
+  );
+  field_create_field($tn_field);
+}
+
+function islandora_uninstall() {
+  $tn_field_name = 'field_tn';
+  field_delete_field($tn_field_name);
+}

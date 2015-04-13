@@ -23,8 +23,26 @@ function islandora_basic_image_install() {
     drupal_set_message($t('Created %name content type.', $t_args));
   }
 
+  $tn_field_name = 'field_tn';
+  if (field_info_field($tn_field_name)) {
+    $tn_field_instance = array(
+      'field_name' => $tn_field_name,
+      'entity_type' => 'node',
+      'bundle' => 'basic_image',
+      'label' => $t("Thumbnail"),
+      'description' => $t("A thumbnail for the Fedora resource"),
+      'required' => FALSE,
+      'settings' => array(
+        'file_extensions' => 'png jpg jpeg gif',
+        'max_filesize' => '1 MB',
+      ),
+    );
+    field_create_instance($tn_field_instance);
+    drupal_set_message($t('Field %name was created successfully', array('%name' => $tn_field_name))); 
+  }
 }
 
 function islandora_basic_image_uninstall() {
+  field_delete_instance(field_info_instance('node_content', 'field_tn', 'basic_image'));
   node_type_delete('basic_image');
 }
