@@ -7,6 +7,7 @@ chown -R vagrant:vagrant "$HOME_DIR/.vim"
 # Copy over the vimrc
 sudo -u vagrant cp "$HOME_DIR/islandora/install/.vimrc" "$HOME_DIR/.vimrc"
 chown vagrant:vagrant "$HOME_DIR/.vimrc"
+chown -R vagrant:vagrant "$HOME_DIR/.vim"
 
 # Install plugins using vundle as the vagrant user
 sudo -u vagrant vim -c "PluginInstall" -c "qa"
@@ -80,12 +81,15 @@ sudo -u vagrant DISPLAY=:1 "$HOME_DIR/eclipse/eclipse" -nosplash -consolelog -de
   -installIU org.scala-ide.sdt.feature.feature.group 
 
 # Get Eclim
-git clone git://github.com/ervandew/eclim.git
+wget -O ~/eclim_2.4.1.jar http://sourceforge.net/projects/eclim/files/eclim/2.4.1/eclim_2.4.1.jar/download
+
+# chown things back to the vagrant user before installing eclim
+chown vagrant:vagrant ~/eclim_2.4.1.jar
+chown -R vagrant:vagrant "$HOME_DIR/eclipse"
 chown -R vagrant:vagrant "$HOME_DIR/eclim"
 
 # Build and install from source (run as the vagrant user)
-cd eclim
-sudo -u vagrant ant -Declipse.home="$HOME_DIR/eclipse" -Dvim.files="$HOME_DIR/.vim"
+sudo -u vagrant java -Dvim.files=$HOME/.vim -Declipse.home=$HOME/eclipse -jar eclim_2.4.1.jar install
 
 # Start Eclim (run as the vagrant user)
 sudo -u vagrant DISPLAY=:1 "$HOME_DIR/eclipse/eclimd" -b

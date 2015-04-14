@@ -48,13 +48,14 @@ cd sites/all/modules
 drush dl services
 drush -y en rest_server
 
-# Islandora module
-cp -r "$HOME_DIR/islandora/drupal/islandora" .
-drush -y en islandora
-
 # XML Field module
 drush dl xml_field
 drush -y en xml_field xml_field_extras
+
+# Islandora modules
+cp -r "$HOME_DIR/islandora/drupal/*" .
+drush -y en islandora
+drush -y en islandora_basic_image
 
 # Coder & Code Sniffer
 pear install PHP_CodeSniffer
