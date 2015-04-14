@@ -1,0 +1,59 @@
+<?php
+
+/**
+ * @file
+ * This file contains all install related hooks.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function islandora_basic_image_install() {
+  $t = get_t();
+
+  $basic_image_content_type = array(
+    'type' => 'basic_image',
+    'name' => $t('Basic Image'),
+    'base' => 'node_content',
+    'description' => $t('An image object in Fedora'),
+  );
+
+  $basic_image_content_type = node_type_set_defaults($basic_image_content_type);
+
+  $status = node_type_save($basic_image_content_type);
+
+  $t_args = array('%name' => $basic_image_content_type->name);
+
+  if ($status == SAVED_UPDATED) {
+    drupal_set_message($t('Updated %name content type.', $t_args));
+  }
+  elseif ($status == SAVED_NEW) {
+    drupal_set_message($t('Created %name content type.', $t_args));
+  }
+
+  $tn_field_name = 'field_tn';
+  if (field_info_field($tn_field_name)) {
+    $tn_field_instance = array(
+      'field_name' => $tn_field_name,
+      'entity_type' => 'node',
+      'bundle' => 'basic_image',
+      'label' => $t("Thumbnail"),
+      'description' => $t("A thumbnail for the Fedora resource"),
+      'required' => FALSE,
+      'settings' => array(
+        'file_extensions' => 'png jpg jpeg gif',
+        'max_filesize' => '1 MB',
+      ),
+    );
+    field_create_instance($tn_field_instance);
+    drupal_set_message($t('Field %name was created successfully', array('%name' => $tn_field_name)));
+  }
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function islandora_basic_image_uninstall() {
+  field_delete_instance(field_info_instance('node_content', 'field_tn', 'basic_image'));
+  node_type_delete('basic_image');
+}
