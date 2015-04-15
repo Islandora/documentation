@@ -53,7 +53,7 @@ drush dl xml_field
 drush -y en xml_field xml_field_extras
 
 # Islandora modules
-cp -r "$HOME_DIR/islandora/drupal/*" .
+cp -R "$HOME_DIR"/islandora/drupal/* .
 drush -y en islandora
 drush -y en islandora_basic_image
 
