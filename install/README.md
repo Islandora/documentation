@@ -56,7 +56,7 @@ The default VM login details are:
 - Camel 2.14.1
 - Fedora 4.1.0
 - Fedora Camel Component 4.1.0
-- Fuseki 1.1.1
+- Fuseki 2.0
 - Sync 0.0.0
 - Islandora 7.x-2.x
 - PHP 5.5.9 

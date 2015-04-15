@@ -18,8 +18,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :forwarded_port, guest: 3306, host: 3306 # MySQL
   config.vm.network :forwarded_port, guest: 5432, host: 5432 # PostgreSQL
   config.vm.network :forwarded_port, guest: 80, host: 8000 # Apache
-  config.vm.network :forwarded_port, guest: 8181, host: 8181 # Karaf
-  config.vm.network :forwarded_port, guest: 3030, host: 3030 # Fuseki
 
   config.vm.provider "virtualbox" do |vb|
     if ENV['VIM']
