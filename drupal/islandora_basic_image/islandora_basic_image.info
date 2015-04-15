@@ -1,0 +1,6 @@
+name = Islandora Basic Image
+description = "Content type, viewer, and hooks for Basic Image objects"
+package = Islandora
+version = 7.x-dev
+core = 7.x
+dependencies[] = islandora 

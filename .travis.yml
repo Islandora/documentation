@@ -12,7 +12,7 @@ before_install:
   - cd $HOME/drupal-*
 script:
   - ant -buildfile sites/all/modules/islandora/drupal/islandora/build.xml lint
-  - $ISLANDORA_DIR/drupal/islandora/tests/scripts/line_endings.sh sites/all/modules/islandora/drupal/islandora
-  - drush coder-review --reviews=production,security,style,i18n,potx,sniffer islandora
-  - phpcpd --names *.module,*.inc,*.test sites/all/modules/islandora/drupal/islandora
+  - $ISLANDORA_DIR/drupal/islandora/tests/scripts/line_endings.sh sites/all/modules/islandora/drupal/islandora sites/all/modules/islandora/drupal/islandora_basic_image
+  - drush coder-review --reviews=production,security,style,i18n,potx,sniffer islandora islandora_basic_image
+  - phpcpd --names *.module,*.inc,*.test sites/all/modules/islandora/drupal/islandora sites/all/modules/islandora/drupal/islandora_basic_image
   - drush test-run --uri=http://localhost:8081 Islandora

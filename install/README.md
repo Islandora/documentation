@@ -54,8 +54,8 @@ The default VM login details are:
 - Tomcat 7.0.52
 - Solr 4.10.3
 - Camel 2.14.1
-- Fedora 4.1.0
-- Fedora Camel Component 4.1.0
+- Fedora 4.1.1
+- Fedora Camel Component 4.1.1
 - Fuseki 2.0
 - Sync 0.0.0
 - Islandora 7.x-2.x
