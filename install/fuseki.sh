@@ -1,15 +1,14 @@
-echo "Installing Fuseki"
+FUSEKI_VERSION=2.0.0
+FUSEKI_DEPLOY=/var/lib/tomcat7/webapps
+FUSEKI_BASE=/etc/fuseki
 
-FUSEKI_VERSION=1.1.2
-FUSEKI_HOME=/usr/share/fuseki
-
-mkdir $FUSEKI_HOME
+mkdir $FUSEKI_BASE
+chown -hR tomcat7:tomcat7 $FUSEKI_BASE
 
 cd /tmp
-wget http://www.apache.org/dist/jena/binaries/jena-fuseki1-"$FUSEKI_VERSION"-distribution.tar.gz
-tar -xzvf jena-fuseki1-"$FUSEKI_VERSION"-distribution.tar.gz
-cd jena-fuseki1-"$FUSEKI_VERSION"
-mv -v * $FUSEKI_HOME
-chown -hR tomcat7:tomcat7 $FUSEKI_HOME
-cd $FUSEKI_HOME
-./fuseki-server --update --mem /fcrepo &
+wget http://www.apache.org/dist/jena/binaries/apache-jena-fuseki-"$FUSEKI_VERSION".tar.gz
+tar -xzvf apache-jena-fuseki-"$FUSEKI_VERSION".tar.gz
+cd apache-jena-fuseki-"$FUSEKI_VERSION"
+mv -v fuseki.war $FUSEKI_DEPLOY
+chown -hR tomcat7:tomcat7 $FUSEKI_DEPLOY/fuseki.war
+service tomcat7 restart
