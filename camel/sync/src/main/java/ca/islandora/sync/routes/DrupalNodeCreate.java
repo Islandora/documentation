@@ -13,7 +13,7 @@ public class DrupalNodeCreate extends RouteBuilder {
             .filter(header(JmsHeaders.EVENT_TYPE).contains(RdfNamespaces.REPOSITORY + "NODE_ADDED"))
                 .to("fcrepo:localhost:8080/fcrepo/rest")
                 .process(new DrupalNodeCreateJsonTransform())
-                .to("http4:localhost:8000/islandora/node")
+                .to("http4:localhost/islandora/node")
                 .log("RESPONSE: ${headers} / ${body}")
                 .to("mock:result");
     }
