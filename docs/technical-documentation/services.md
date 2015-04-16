@@ -82,11 +82,11 @@ Provides requests for manipulating the FITS generated technical metadata for a F
 #### Actions:
 #####GET http://localhost:8080/islandora/services/TECHMD/{id}
 Returns the technical metadata for the Fedora object identified by the provided Drupal node id.
-#####PUT http://localhost:8080/islandora/services/TN/{id}
+#####PUT http://localhost:8080/islandora/services/TECHMD/{id}
 Sets the value of field_techmd for the Drupal node identified by the provided id using the PUT content.
-#####PATCH http://localhost:8080/islandora/services/TN/{id}
+#####PATCH http://localhost:8080/islandora/services/TECHMD/{id}
 Requests the technical metadata for the Fedora object identified by provided Drupal node id be asynchronously generated from its OBJ datastream, with field_techmd for the Drupal node getting set to the results.  
-#####DELETE http://localhost:8080/islandora/services/TN/{id}
+#####DELETE http://localhost:8080/islandora/services/TECHMD/{id}
 Deletes the content of field_techmd for the Drupal node identified by the provided id.
 
 ## TODO:  Add other derivatives, such As MEDIUM_SIZE, JP2, MP3, MP4, MKV, etc...
