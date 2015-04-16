@@ -19,9 +19,9 @@ Retrieves metadata from Fedora for the object associated with the provided Drupa
 #####POST http://localhost:8080/islandora/services/object/{path}
 Creates an object in Fedora and a node in Drupal, associating the newly minted path and node id.  Will require the content model to be supplied in the POST data or the Drupal node will not be able to be created.  The object in Fedora is created as a child to the supplied path.
 #####PUT http://localhost:8080/islandora/services/object/{id}
-Updates metadata in Fedora for the object associated with the provided Drupal node id.
+Updates metadata in Fedora for the object associated with the provided Drupal node id.  Additionally updates all applicable fields in the Drupal node.
 #####PATCH http://localhost:8080/islandora/services/object/{id}
-Partially updates metadata in Feodra for the object associated with the provided Drupal node id.
+Partially updates metadata in Feodra for the object associated with the provided Drupal node id.  Additionally updates all applicable fields in the Drupal node.
 #####DELETE http://localhost:8080/islandora/services/object/{id}
 Deletes the object in Fedora associated with provided Drupal node id.  Also deletes the Drupal node itself.
 
