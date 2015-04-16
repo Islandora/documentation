@@ -17,7 +17,7 @@ Essentially wraps the Fedora 4 API requests for manipulating a resource identifi
 #####GET http://localhost:8080/islandora/services/object/{id}
 Retrieves metadata from Fedora for the object associated with the provided Drupal node id.
 #####POST http://localhost:8080/islandora/services/object/
-Creates an object in Fedora and a node in Drupal, associating the newly minted path and node id.  Will require the content model to be supplied in the POST data or the Drupal node will not be able to be created.  
+Creates an object in Fedora and a node in Drupal, associating the newly minted path and node id.  Will require the content model to be supplied in the POST data or the Drupal node will not be able to be created.  The object in Fedora is created as a child to the supplied path.
 #####PUT http://localhost:8080/islandora/services/object/{id}
 Updates metadata in Fedora for the object associated with the provided Drupal node id.
 #####PATCH http://localhost:8080/islandora/services/object/{id}
