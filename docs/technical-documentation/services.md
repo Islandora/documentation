@@ -28,35 +28,35 @@ Deletes the object in Fedora associated with provided Drupal node id.  Also dele
 # Datastream Services
 ## OBJ Service
 Provides requests for manipulating the OBJ datastream of Fedora resources identified by Drupal node id.
-#### Endpoint: http://localhost:8080/islandora/services/OBJ/
+#### Endpoint: http://localhost:8080/islandora/services/obj/
 #### Actions:
-#####GET http://localhost:8080/islandora/services/OBJ/{id}
+#####GET http://localhost:8080/islandora/services/obj/{id}
 Returns the OBJ datastream for the Fedora object identified by the provided Drupal node id.
-#####PUT http://localhost:8080/islandora/services/OBJ/{id}
+#####PUT http://localhost:8080/islandora/services/obj/{id}
 Creates or updates an OBJ datastream for the Fedora object identified by the provided Drupal node id, setting it's content to the PUT content.
-#####DELETE http://localhost:8080/islandora/services/OBJ/{id}
+#####DELETE http://localhost:8080/islandora/services/obj/{id}
 Deletes the OBJ datastream for the Fedora object identified by the provided Drupal node id.
 
 ## MODS Service
 Provides requests for manipulating the MODS datastream of Fedora resources identified by Drupal node id.
-#### Endpoint: http://localhost:8080/islandora/services/MODS/
+#### Endpoint: http://localhost:8080/islandora/services/mods/
 #### Actions:
-#####GET http://localhost:8080/islandora/services/MODS/{id}
+#####GET http://localhost:8080/islandora/services/mods/{id}
 Returns the MODS datastream for the Fedora object identified by the provided Drupal node id.
-#####PUT http://localhost:8080/islandora/services/MODS/{id}
+#####PUT http://localhost:8080/islandora/services/mods/{id}
 Creates or updates a MODS datastream for the Fedora object identified by the provided Drupal node id, setting it's content to the PUT content.  If the Drupal node identified by the provided id contains field_mods, its contents will get updated as well.
-#####DELETE http://localhost:8080/islandora/services/MODS/{id}
+#####DELETE http://localhost:8080/islandora/services/mods/{id}
 Deletes the MODS datastream for the Fedora object identified by the provided Drupal node id.  If the Drupal node identified by the provided id contains field_mods, its contents will get deleted as well.
 
 ## DC Service
 Provides requests for manipulating the DC datastream of Fedora resources identified by Drupal node id.
-#### Endpoint: http://localhost:8080/islandora/services/DC/
+#### Endpoint: http://localhost:8080/islandora/services/dc/
 #### Actions:
-#####GET http://localhost:8080/islandora/services/DC/{id}
+#####GET http://localhost:8080/islandora/services/dc/{id}
 Returns the DC datastream for the Fedora object identified by the provided Drupal node id.
-#####PUT http://localhost:8080/islandora/services/DC/{id}
+#####PUT http://localhost:8080/islandora/services/dc/{id}
 Creates or updates a DC datastream for the Fedora object identified by the provided Drupal node id, setting it's content to the PUT content.  If the Drupal node identified by the provided id contains field_dc, its contents will get updated as well.
-#####DELETE http://localhost:8080/islandora/services/DC/{id}
+#####DELETE http://localhost:8080/islandora/services/dc/{id}
 Deletes the DC datastream for the Fedora object identified by the provided Drupal node id.  If the Drupal node identified by the provided id contains field_dc, its contents will get deleted as well.
 
 ## TODO:  Add services for other descriptive metadata formats.
@@ -64,29 +64,29 @@ Deletes the DC datastream for the Fedora object identified by the provided Drupa
 # Derivative Services
 ## TN Service
 Provides requests for manipulating the thumbnail for a Fedora resource identified by Drupal node id
-#### Endpoint: http://localhost:8080/islandora/services/TN/
+#### Endpoint: http://localhost:8080/islandora/services/tn/
 #### Actions:
-#####GET http://localhost:8080/islandora/services/TN/{id}
+#####GET http://localhost:8080/islandora/services/tn/{id}
 Returns the thumbnail for the Fedora object identified by the provided Drupal node id.
-#####PUT http://localhost:8080/islandora/services/TN/{id}
+#####PUT http://localhost:8080/islandora/services/tn/{id}
 Sets the value of field_tn for the Drupal node identified by the provided id using the PUT content.
-#####PATCH http://localhost:8080/islandora/services/TN/{id}
+#####PATCH http://localhost:8080/islandora/services/tn/{id}
 Requests the thumbnail for the Fedora object identified by provided Drupal node id be asynchronously generated from its OBJ datastream, with field_tn for the Drupal node getting set to the results.  
-#####DELETE http://localhost:8080/islandora/services/TN/{id}
+#####DELETE http://localhost:8080/islandora/services/tn/{id}
 Deletes the content of field_tn for the Drupal node identified by the provided id.
 
 ## TECHMD Service
 SUBJECT TO CHANGE AS MUCH OF THIS MAY GET PUSHED INTO RDF!!!!
 Provides requests for manipulating the FITS generated technical metadata for a Fedora resource identified by Drupal node id
-#### Endpoint: http://localhost:8080/islandora/services/TECHMD/
+#### Endpoint: http://localhost:8080/islandora/services/techmd/
 #### Actions:
-#####GET http://localhost:8080/islandora/services/TECHMD/{id}
+#####GET http://localhost:8080/islandora/services/techmd/{id}
 Returns the technical metadata for the Fedora object identified by the provided Drupal node id.
-#####PUT http://localhost:8080/islandora/services/TECHMD/{id}
+#####PUT http://localhost:8080/islandora/services/techmd/{id}
 Sets the value of field_techmd for the Drupal node identified by the provided id using the PUT content.
-#####PATCH http://localhost:8080/islandora/services/TECHMD/{id}
+#####PATCH http://localhost:8080/islandora/services/techmd/{id}
 Requests the technical metadata for the Fedora object identified by provided Drupal node id be asynchronously generated from its OBJ datastream, with field_techmd for the Drupal node getting set to the results.  
-#####DELETE http://localhost:8080/islandora/services/TECHMD/{id}
+#####DELETE http://localhost:8080/islandora/services/techmd/{id}
 Deletes the content of field_techmd for the Drupal node identified by the provided id.
 
 ## TODO:  Add other derivatives, such As MEDIUM_SIZE, JP2, MP3, MP4, MKV, etc...
