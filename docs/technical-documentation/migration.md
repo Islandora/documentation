@@ -159,7 +159,16 @@ Newspaper page object
 
 ## Audit log migration
 
-TODO: Document known audit log events, and provide examples.
+**auditTrail mapping**
+
+| fcrepo3 event                      | fcrepo4 Event Type        |
+|------------------------------------|---------------------------|
+| addDatastream                      | premis:capture            |
+| modifyDatastreamByReference        | ucsd:content modification |
+| modifyObject                       | ucsd:content modification |
+| modifyObject (checksum validation) | premis:validation         |
+| modifyDatastreamByValue            | ucsd:content modification |
+| purgeDatastream                    | ucsd:content removal      | 
 
 **Examples**:
 
