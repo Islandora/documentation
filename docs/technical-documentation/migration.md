@@ -161,14 +161,18 @@ Newspaper page object
 
 **auditTrail mapping**
 
-| fcrepo3 event                      | fcrepo4 Event Type        |
-|------------------------------------|---------------------------|
-| addDatastream                      | premis:capture            |
-| modifyDatastreamByReference        | ucsd:content modification |
-| modifyObject                       | ucsd:content modification |
-| modifyObject (checksum validation) | premis:validation         |
-| modifyDatastreamByValue            | ucsd:content modification |
-| purgeDatastream                    | ucsd:content removal      | 
+| fcrepo3 event                      | fcrepo4 Event Type                             |
+|------------------------------------|------------------------------------------------|
+| addDatastream                      | premis:create                                  |
+| modifyDatastreamByReference        | audit:contentModification/metadataModification |
+| modifyObject                       | audit:resourceModification                     |
+| modifyObject (checksum validation) | premis:validation                              |
+| modifyDatastreamByValue            | audit:contentModification/metadataModification |
+| purgeDatastream                    | audit:contentRemoval                           |
+
+Notes:
+
+We could create a mapping of DSIDs, and if the DSID is DC/MODS/RELS-EXT (or any other metadata datastream), then we can use audit:metadataModification, if the DSID is not those, we would use audit:contentModification. If we don't want to map the DSID types, we would just use resourceModification for modifyDatastreamByReference/modifyDatastreamByValue.
 
 **Examples**:
 
