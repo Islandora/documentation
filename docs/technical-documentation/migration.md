@@ -252,8 +252,12 @@ purgeDatastream
 <audit:justification>Purged datastream (ID=MKV), versions ranging from the beginning of time to the end of time.  This resulted in the permanent removal of 1 datastream version(s) (2015-02-19T21:01:56.235Z) and all associated audit records.</audit:justification>
 ```
 
-## Diagram
+## Diagrams
 
 Example Islandora Solution Pack Large Image object Fedora 4 Modeling
 
-![Layer Interaction](https://raw.githubusercontent.com/wiki/Islandora-Labs/islandora/images/Islandora-SP-Large-Image-Fedora4.jpg)
+![Islandora Solution Pack Large Image object Fedora 4 Modeling](https://raw.githubusercontent.com/wiki/Islandora-Labs/islandora/images/Islandora-SP-Large-Image-Fedora4.jpg)
+
+Example Islandora, PCDM, and Fedora 4 structure
+
+![Islandora, PCDM, and Fedora 4 structure](https://raw.githubusercontent.com/wiki/Islandora-Labs/islandora/images/Islandora-PCDM-Fedora4.jpg)
