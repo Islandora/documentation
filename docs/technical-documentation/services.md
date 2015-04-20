@@ -110,7 +110,7 @@ Some example services would include:
 
 # Zip Ingest Services
 
-Instead of multipart/form-data reqeusts, application/zip requests can be accepted to construct a pcdm:Object based on content model.  While this is merely convienent for basic object types, it's practically required for more complicated content models such as Book, Newspaper, and Compound.
+Instead of multipart/form-data reqeusts, application/zip requests can be accepted to construct a pcdm:Object based on content model.  While this is convienent for basic object types, it's required for more complicated content models such as Book, Newspaper, and Compound.  Message bodies are assumed to be in Islandora Zip Importer format.
 
 ## General Convention
 #### Endpoint: http://localhost:8080/islandora/services/zip/ingest/{content_model}/
