@@ -12,10 +12,14 @@ function islandora_basic_image_install() {
   $t = get_t();
 
   $basic_image_content_type = array(
-    'type' => 'basic_image',
+    'type' => ISLANDORA_BASIC_IMAGE_BUNDLE,
     'name' => $t('Basic Image'),
     'base' => 'node_content',
     'description' => $t('An image object in Fedora'),
+    'custom' => 1,
+    'modified' => 1,
+    'locked' => 0,
+    'disabled' => 0,
   );
 
   $basic_image_content_type = node_type_set_defaults($basic_image_content_type);
@@ -31,22 +35,43 @@ function islandora_basic_image_install() {
     drupal_set_message($t('Created %name content type.', $t_args));
   }
 
-  $tn_field_name = 'field_tn';
-  if (field_info_field($tn_field_name)) {
+  if (field_info_field(ISLANDORA_TN_FIELD)) {
     $tn_field_instance = array(
-      'field_name' => $tn_field_name,
+      'field_name' => ISLANDORA_TN_FIELD,
       'entity_type' => 'node',
-      'bundle' => 'basic_image',
+      'bundle' => ISLANDORA_BASIC_IMAGE_BUNDLE,
       'label' => $t("Thumbnail"),
       'description' => $t("A thumbnail for the Fedora resource"),
       'required' => FALSE,
-      'settings' => array(
-        'file_extensions' => 'png jpg jpeg gif',
-        'max_filesize' => '1 MB',
-      ),
     );
     field_create_instance($tn_field_instance);
-    drupal_set_message($t('Field %name was created successfully', array('%name' => $tn_field_name)));
+    drupal_set_message($t('Field %name was created successfully', array('%name' => ISLANDORA_TN_FIELD)));
+  }
+
+  if (field_info_field(ISLANDORA_DC_FIELD)) {
+    $dc_field_instance = array(
+      'field_name' => ISLANDORA_DC_FIELD,
+      'entity_type' => 'node',
+      'bundle' => ISLANDORA_BASIC_IMAGE_BUNDLE,
+      'label' => $t("DC"),
+      'description' => $t("A Dublin Core record for the Fedora resource"),
+      'required' => FALSE,
+    );
+    field_create_instance($dc_field_instance);
+    drupal_set_message($t('Field %name was created successfully', array('%name' => ISLANDORA_DC_FIELD)));
+  }
+
+  if (field_info_field(ISLANDORA_MODS_FIELD)) {
+    $mods_field_instance = array(
+      'field_name' => ISLANDORA_MODS_FIELD,
+      'entity_type' => 'node',
+      'bundle' => ISLANDORA_BASIC_IMAGE_BUNDLE,
+      'label' => $t("MODS"),
+      'description' => $t("A MODS record for the Fedora resource"),
+      'required' => FALSE,
+    );
+    field_create_instance($mods_field_instance);
+    drupal_set_message($t('Field %name was created successfully', array('%name' => ISLANDORA_MODS_FIELD)));
   }
 }
 
@@ -54,6 +79,8 @@ function islandora_basic_image_install() {
  * Implements hook_uninstall().
  */
 function islandora_basic_image_uninstall() {
-  field_delete_instance(field_info_instance('node_content', 'field_tn', 'basic_image'));
-  node_type_delete('basic_image');
+  field_delete_instance(field_info_instance('node_content', ISLANDORA_TN_FIELD, ISLANDORA_BASIC_IMAGE_BUNDLE));
+  field_delete_instance(field_info_instance('node_content', ISLANDORA_DC_FIELD, ISLANDORA_BASIC_IMAGE_BUNDLE));
+  field_delete_instance(field_info_instance('node_content', ISLANDORA_MODS_FIELD, ISLANDORA_BASIC_IMAGE_BUNDLE));
+  node_type_delete(ISLANDORA_BASIC_IMAGE_BUNDLE);
 }

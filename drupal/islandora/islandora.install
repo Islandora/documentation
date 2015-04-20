@@ -11,18 +11,32 @@
  * Defines common fields for various bundles.
  */
 function islandora_install() {
-  $tn_field_name = 'field_tn';
   $tn_field = array(
-    'field_name' => $tn_field_name,
+    'field_name' => ISLANDORA_TN_FIELD,
     'type' => 'image',
   );
   field_create_field($tn_field);
+
+  $dc_field = array(
+    'field_name' => ISLANDORA_DC_FIELD,
+    'type' => 'xml_field_xml',
+  );
+  field_create_field($dc_field);
+
+  $mods_field = array(
+    'field_name' => ISLANDORA_MODS_FIELD,
+    'type' => 'xml_field_xml',
+  );
+  field_create_field($mods_field);
 }
 
 /**
  * Implements hook_uninstall().
+ *
+ * Deletes the fields defined in hook_install().
  */
 function islandora_uninstall() {
-  $tn_field_name = 'field_tn';
-  field_delete_field($tn_field_name);
+  field_delete_field(ISLANDORA_TN_FIELD);
+  field_delete_field(ISLANDORA_DC_FIELD);
+  field_delete_field(ISLANDORA_MODS_FIELD);
 }

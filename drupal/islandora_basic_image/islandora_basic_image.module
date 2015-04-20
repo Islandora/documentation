@@ -5,6 +5,8 @@
  * This is the new Islandora Basic Image module.
  */
 
+define('ISLANDORA_BASIC_IMAGE_BUNDLE', 'basic_image');
+
 /**
  * Function for using a form.
  *

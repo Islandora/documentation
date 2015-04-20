@@ -5,6 +5,10 @@
  * This is the new Islandora module. We need a better doc comment here.
  */
 
+define('ISLANDORA_TN_FIELD', 'field_tn');
+define('ISLANDORA_DC_FIELD', 'field_dc');
+define('ISLANDORA_MODS_FIELD', 'field_mods');
+
 /**
  * Implements hook_ctools_plugin_api().
  */
