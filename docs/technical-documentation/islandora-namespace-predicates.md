@@ -33,8 +33,6 @@
 
 * isPageOf
 * isSequenceNumber
-* isPageOf
-* isSequenceNumber
 * dateIssued
 
 # XACML
