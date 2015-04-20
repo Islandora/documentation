@@ -159,7 +159,20 @@ Newspaper page object
 
 ## Audit log migration
 
-TODO: Document known audit log events, and provide examples.
+**auditTrail mapping**
+
+| fcrepo3 event                      | fcrepo4 Event Type                             |
+|------------------------------------|------------------------------------------------|
+| addDatastream                      | premis:create                                  |
+| modifyDatastreamByReference        | audit:contentModification/metadataModification |
+| modifyObject                       | audit:resourceModification                     |
+| modifyObject (checksum validation) | premis:validation                              |
+| modifyDatastreamByValue            | audit:contentModification/metadataModification |
+| purgeDatastream                    | audit:contentRemoval                           |
+
+Notes:
+
+We could create a mapping of DSIDs, and if the DSID is DC/MODS/RELS-EXT (or any other metadata datastream), then we can use `audit:metadataModification`. If the DSID is not an identified metadata DSID, then we could use `audit:contentModification`. If we don't want to map the DSID types, we could just use `resourceModification` for `modifyDatastreamByReference` or `modifyDatastreamByValue`.
 
 **Examples**:
 
@@ -239,8 +252,12 @@ purgeDatastream
 <audit:justification>Purged datastream (ID=MKV), versions ranging from the beginning of time to the end of time.  This resulted in the permanent removal of 1 datastream version(s) (2015-02-19T21:01:56.235Z) and all associated audit records.</audit:justification>
 ```
 
-## Diagram
+## Diagrams
 
 Example Islandora Solution Pack Large Image object Fedora 4 Modeling
 
-![Layer Interaction](https://raw.githubusercontent.com/wiki/Islandora-Labs/islandora/images/Islandora-SP-Large-Image-Fedora4.jpg)
+![Islandora Solution Pack Large Image object Fedora 4 Modeling](https://raw.githubusercontent.com/wiki/Islandora-Labs/islandora/images/Islandora-SP-Large-Image-Fedora4.jpg)
+
+Example Islandora, PCDM, and Fedora 4 structure
+
+![Islandora, PCDM, and Fedora 4 structure](https://raw.githubusercontent.com/wiki/Islandora-Labs/islandora/images/Islandora-PCDM-Fedora4.jpg)

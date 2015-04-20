@@ -19,7 +19,22 @@ apt-get -y install build-essential
 apt-get -y install git vim
 
 # Java
-apt-get -y install openjdk-7-jdk
+# apt-get -y install openjdk-7-jdk
+## There is no Java8 OpenJDK right now in the Ubuntu repos
+## http://askubuntu.com/questions/464755/how-to-install-openjdk-8-on-14-04-lts
+## We'll use Oracle Java8 for now.
+
+# Java (Oracle)
+sudo apt-get install -y software-properties-common
+sudo apt-get install -y python-software-properties
+sudo add-apt-repository -y ppa:webupd8team/java
+sudo apt-get update
+echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections
+echo debconf shared/accepted-oracle-license-v1-1 seen true | sudo debconf-set-selections
+sudo apt-get install -y oracle-java8-installer
+sudo update-java-alternatives -s java-8-oracle
+sudo apt-get install -y oracle-java8-set-default
+export JAVA_HOME=/usr/lib/jvm/java-8-oracle
 
 # Maven
 apt-get -y install maven
@@ -51,3 +66,6 @@ usermod -a -G www-data vagrant
 
 # Get the repo
 git clone -b 7.x-2.x https://github.com/Islandora-Labs/islandora.git
+
+# Set JAVA_HOME -- Java8 set-default does not seem to do this.
+sed -i 's|#JAVA_HOME=/usr/lib/jvm/openjdk-6-jdk|JAVA_HOME=/usr/lib/jvm/java-8-oracle|g' /etc/default/tomcat7
