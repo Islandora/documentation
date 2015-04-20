@@ -172,7 +172,7 @@ Newspaper page object
 
 Notes:
 
-We could create a mapping of DSIDs, and if the DSID is DC/MODS/RELS-EXT (or any other metadata datastream), then we can use audit:metadataModification, if the DSID is not those, we would use audit:contentModification. If we don't want to map the DSID types, we would just use resourceModification for modifyDatastreamByReference/modifyDatastreamByValue.
+We could create a mapping of DSIDs, and if the DSID is DC/MODS/RELS-EXT (or any other metadata datastream), then we can use `audit:metadataModification`. If the DSID is not an identified metadata DSID, then we could use `audit:contentModification`. If we don't want to map the DSID types, we could just use `resourceModification` for `modifyDatastreamByReference` or `modifyDatastreamByValue`.
 
 **Examples**:
 
