@@ -4,3 +4,5 @@ package = Islandora
 version = 7.x-dev
 core = 7.x
 dependencies[] = rest_server
+dependencies[] = xml_field 
+dependencies[] = xpath_field 
