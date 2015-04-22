@@ -48,19 +48,6 @@ function islandora_basic_image_install() {
     drupal_set_message($t('Field %name was created successfully', array('%name' => ISLANDORA_TN_FIELD)));
   }
 
-  if (field_info_field(ISLANDORA_DC_FIELD)) {
-    $dc_field_instance = array(
-      'field_name' => ISLANDORA_DC_FIELD,
-      'entity_type' => 'node',
-      'bundle' => ISLANDORA_BASIC_IMAGE_BUNDLE,
-      'label' => $t("DC"),
-      'description' => $t("A Dublin Core record for the Fedora resource"),
-      'required' => FALSE,
-    );
-    field_create_instance($dc_field_instance);
-    drupal_set_message($t('Field %name was created successfully', array('%name' => ISLANDORA_DC_FIELD)));
-  }
-
   if (field_info_field(ISLANDORA_MODS_FIELD)) {
     $mods_field_instance = array(
       'field_name' => ISLANDORA_MODS_FIELD,
@@ -80,7 +67,6 @@ function islandora_basic_image_install() {
  */
 function islandora_basic_image_uninstall() {
   field_delete_instance(field_info_instance('node_content', ISLANDORA_TN_FIELD, ISLANDORA_BASIC_IMAGE_BUNDLE));
-  field_delete_instance(field_info_instance('node_content', ISLANDORA_DC_FIELD, ISLANDORA_BASIC_IMAGE_BUNDLE));
   field_delete_instance(field_info_instance('node_content', ISLANDORA_MODS_FIELD, ISLANDORA_BASIC_IMAGE_BUNDLE));
   node_type_delete(ISLANDORA_BASIC_IMAGE_BUNDLE);
 }

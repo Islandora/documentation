@@ -6,7 +6,6 @@
  */
 
 define('ISLANDORA_TN_FIELD', 'field_tn');
-define('ISLANDORA_DC_FIELD', 'field_dc');
 define('ISLANDORA_MODS_FIELD', 'field_mods');
 
 /**

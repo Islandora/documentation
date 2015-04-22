@@ -17,12 +17,6 @@ function islandora_install() {
   );
   field_create_field($tn_field);
 
-  $dc_field = array(
-    'field_name' => ISLANDORA_DC_FIELD,
-    'type' => 'xml_field_xml',
-  );
-  field_create_field($dc_field);
-
   $mods_field = array(
     'field_name' => ISLANDORA_MODS_FIELD,
     'type' => 'xml_field_xml',
@@ -37,6 +31,5 @@ function islandora_install() {
  */
 function islandora_uninstall() {
   field_delete_field(ISLANDORA_TN_FIELD);
-  field_delete_field(ISLANDORA_DC_FIELD);
   field_delete_field(ISLANDORA_MODS_FIELD);
 }
