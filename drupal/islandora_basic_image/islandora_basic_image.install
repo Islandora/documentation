@@ -11,6 +11,7 @@
 function islandora_basic_image_install() {
   $t = get_t();
 
+  // Create basic_image bundle.
   $basic_image_content_type = array(
     'type' => ISLANDORA_BASIC_IMAGE_BUNDLE,
     'name' => $t('Basic Image'),
@@ -33,6 +34,27 @@ function islandora_basic_image_install() {
   }
   elseif ($status == SAVED_NEW) {
     drupal_set_message($t('Created %name content type.', $t_args));
+  }
+
+  // Create medium size field.
+  $medium_size_field = array(
+    'field_name' => ISLANDORA_BASIC_IMAGE_MEDIUM_SIZE,
+    'type' => 'image',
+  );
+  field_create_field($medium_size_field);
+
+  // Add fields instances to bundle.
+  if (field_info_field(ISLANDORA_BASIC_IMAGE_MEDIUM_SIZE)) {
+    $medium_size_field_instance = array(
+      'field_name' => ISLANDORA_BASIC_IMAGE_MEDIUM_SIZE,
+      'entity_type' => 'node',
+      'bundle' => ISLANDORA_BASIC_IMAGE_BUNDLE,
+      'label' => $t("Medium Size"),
+      'description' => $t("A display copy of the image."),
+      'required' => FALSE,
+    );
+    field_create_instance($medium_size_instance);
+    drupal_set_message($t('Field %name was created successfully', array('%name' => ISLANDORA_BASIC_IMAGE_MEDIUM_SIZE)));
   }
 
   if (field_info_field(ISLANDORA_TN_FIELD)) {
@@ -66,6 +88,7 @@ function islandora_basic_image_install() {
  * Implements hook_uninstall().
  */
 function islandora_basic_image_uninstall() {
+  field_delete_instance(field_info_instance('node_content', ISLANDORA_BASIC_IMAGE_MEDIUM_SIZE, ISLANDORA_BASIC_IMAGE_BUNDLE));
   field_delete_instance(field_info_instance('node_content', ISLANDORA_TN_FIELD, ISLANDORA_BASIC_IMAGE_BUNDLE));
   field_delete_instance(field_info_instance('node_content', ISLANDORA_MODS_FIELD, ISLANDORA_BASIC_IMAGE_BUNDLE));
   node_type_delete(ISLANDORA_BASIC_IMAGE_BUNDLE);
