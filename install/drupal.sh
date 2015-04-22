@@ -52,6 +52,10 @@ drush -y en rest_server
 drush dl xml_field
 drush -y en xml_field xml_field_extras
 
+# XPath Field module
+git clone https://github.com/Islandora-Labs/xpath_field.git
+drush -y en xpath_field
+
 # Islandora modules
 cp -R "$HOME_DIR"/islandora/drupal/* .
 drush -y en islandora
