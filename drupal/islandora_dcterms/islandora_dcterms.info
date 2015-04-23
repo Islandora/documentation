@@ -1,0 +1,5 @@
+name = Islandora DC Terms
+description = "Fields and utilities for managing dcterms metadata in Islandora"
+package = Islandora
+version = 7.x-dev
+core = 7.x
