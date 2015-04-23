@@ -58,6 +58,7 @@ drush -y en xpath_field
 
 # Islandora modules
 cp -R "$HOME_DIR"/islandora/drupal/* .
+drush -y en islandora_dcterms
 drush -y en islandora
 drush -y en islandora_basic_image
 
