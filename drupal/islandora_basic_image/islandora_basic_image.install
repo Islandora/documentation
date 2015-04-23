@@ -87,13 +87,3 @@ function islandora_basic_image_install() {
 
   islandora_dcterms_attach_fields_to_bundle(ISLANDORA_BASIC_IMAGE_BUNDLE);
 }
-
-/**
- * Implements hook_uninstall().
- */
-function islandora_basic_image_uninstall() {
-  field_delete_instance(field_info_instance('node_content', ISLANDORA_BASIC_IMAGE_MEDIUM_SIZE, ISLANDORA_BASIC_IMAGE_BUNDLE));
-  field_delete_instance(field_info_instance('node_content', ISLANDORA_TN_FIELD, ISLANDORA_BASIC_IMAGE_BUNDLE));
-  field_delete_instance(field_info_instance('node_content', ISLANDORA_MODS_FIELD, ISLANDORA_BASIC_IMAGE_BUNDLE));
-  node_type_delete(ISLANDORA_BASIC_IMAGE_BUNDLE);
-}

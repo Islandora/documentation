@@ -24,13 +24,3 @@ function islandora_install() {
   field_create_field($mods_field);
 
 }
-
-/**
- * Implements hook_uninstall().
- *
- * Deletes the fields defined in hook_install().
- */
-function islandora_uninstall() {
-  field_delete_field(ISLANDORA_TN_FIELD);
-  field_delete_field(ISLANDORA_MODS_FIELD);
-}
