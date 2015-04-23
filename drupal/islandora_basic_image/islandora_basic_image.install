@@ -38,23 +38,23 @@ function islandora_basic_image_install() {
 
   // Create medium size field.
   $medium_size_field = array(
-    'field_name' => ISLANDORA_BASIC_IMAGE_MEDIUM_SIZE,
+    'field_name' => ISLANDORA_BASIC_IMAGE_MEDIUM_SIZE_FIELD,
     'type' => 'image',
   );
   field_create_field($medium_size_field);
 
   // Add fields instances to bundle.
-  if (field_info_field(ISLANDORA_BASIC_IMAGE_MEDIUM_SIZE)) {
+  if (field_info_field(ISLANDORA_BASIC_IMAGE_MEDIUM_SIZE_FIELD)) {
     $medium_size_field_instance = array(
-      'field_name' => ISLANDORA_BASIC_IMAGE_MEDIUM_SIZE,
+      'field_name' => ISLANDORA_BASIC_IMAGE_MEDIUM_SIZE_FIELD,
       'entity_type' => 'node',
       'bundle' => ISLANDORA_BASIC_IMAGE_BUNDLE,
       'label' => $t("Medium Size"),
       'description' => $t("A display copy of the image."),
       'required' => FALSE,
     );
-    field_create_instance($medium_size_instance);
-    drupal_set_message($t('Field %name was created successfully', array('%name' => ISLANDORA_BASIC_IMAGE_MEDIUM_SIZE)));
+    field_create_instance($medium_size_field_instance);
+    drupal_set_message($t('Field %name was created successfully', array('%name' => ISLANDORA_BASIC_IMAGE_MEDIUM_SIZE_FIELD)));
   }
 
   if (field_info_field(ISLANDORA_TN_FIELD)) {
@@ -81,6 +81,201 @@ function islandora_basic_image_install() {
     );
     field_create_instance($mods_field_instance);
     drupal_set_message($t('Field %name was created successfully', array('%name' => ISLANDORA_MODS_FIELD)));
+  }
+
+  if (field_info_field(ISLANDORA_DC_CONTRIBUTOR_FIELD)) {
+    $dc_contributor_field_instance = array(
+      'field_name' => ISLANDORA_DC_CONTRIBUTOR_FIELD,
+      'entity_type' => 'node',
+      'bundle' => ISLANDORA_BASIC_IMAGE_BUNDLE,
+      'label' => $t("DC Contributor"),
+      'description' => $t("Dublin Core Contributor Metadata"),
+      'required' => FALSE,
+    );
+    field_create_instance($dc_contributor_field_instance);
+    drupal_set_message($t('Field %name was created successfully', array('%name' => ISLANDORA_DC_CONTRIBUTOR_FIELD)));
+  }
+
+  if (field_info_field(ISLANDORA_DC_COVERAGE_FIELD)) {
+    $dc_coverage_field_instance = array(
+      'field_name' => ISLANDORA_DC_COVERAGE_FIELD,
+      'entity_type' => 'node',
+      'bundle' => ISLANDORA_BASIC_IMAGE_BUNDLE,
+      'label' => $t("DC Coverage"),
+      'description' => $t("Dublin Core Coverage Metadata"),
+      'required' => FALSE,
+    );
+    field_create_instance($dc_coverage_field_instance);
+    drupal_set_message($t('Field %name was created successfully', array('%name' => ISLANDORA_DC_COVERAGE_FIELD)));
+  }
+
+  if (field_info_field(ISLANDORA_DC_CREATOR_FIELD)) {
+    $dc_creator_field_instance = array(
+      'field_name' => ISLANDORA_DC_CREATOR_FIELD,
+      'entity_type' => 'node',
+      'bundle' => ISLANDORA_BASIC_IMAGE_BUNDLE,
+      'label' => $t("DC Creator"),
+      'description' => $t("Dublin Core Creator Metadata"),
+      'required' => FALSE,
+    );
+    field_create_instance($dc_creator_field_instance);
+    drupal_set_message($t('Field %name was created successfully', array('%name' => ISLANDORA_DC_CREATOR_FIELD)));
+  }
+
+  if (field_info_field(ISLANDORA_DC_DATE_FIELD)) {
+    $dc_date_field_instance = array(
+      'field_name' => ISLANDORA_DC_DATE_FIELD,
+      'entity_type' => 'node',
+      'bundle' => ISLANDORA_BASIC_IMAGE_BUNDLE,
+      'label' => $t("DC Date"),
+      'description' => $t("Dublin Core Date Metadata"),
+      'required' => FALSE,
+    );
+    field_create_instance($dc_date_field_instance);
+    drupal_set_message($t('Field %name was created successfully', array('%name' => ISLANDORA_DC_DATE_FIELD)));
+  }
+
+  if (field_info_field(ISLANDORA_DC_DESCRIPTION_FIELD)) {
+    $dc_description_field_instance = array(
+      'field_name' => ISLANDORA_DC_DESCRIPTION_FIELD,
+      'entity_type' => 'node',
+      'bundle' => ISLANDORA_BASIC_IMAGE_BUNDLE,
+      'label' => $t("DC Description"),
+      'description' => $t("Dublin Core Description Metadata"),
+      'required' => FALSE,
+    );
+    field_create_instance($dc_description_field_instance);
+    drupal_set_message($t('Field %name was created successfully', array('%name' => ISLANDORA_DC_DESCRIPTION_FIELD)));
+  }
+
+  if (field_info_field(ISLANDORA_DC_FORMAT_FIELD)) {
+    $dc_format_field_instance = array(
+      'field_name' => ISLANDORA_DC_FORMAT_FIELD,
+      'entity_type' => 'node',
+      'bundle' => ISLANDORA_BASIC_IMAGE_BUNDLE,
+      'label' => $t("DC Format"),
+      'description' => $t("Dublin Core Format Metadata"),
+      'required' => FALSE,
+    );
+    field_create_instance($dc_format_field_instance);
+    drupal_set_message($t('Field %name was created successfully', array('%name' => ISLANDORA_DC_FORMAT_FIELD)));
+  }
+
+  if (field_info_field(ISLANDORA_DC_IDENTIFIER_FIELD)) {
+    $dc_identifier_field_instance = array(
+      'field_name' => ISLANDORA_DC_IDENTIFIER_FIELD,
+      'entity_type' => 'node',
+      'bundle' => ISLANDORA_BASIC_IMAGE_BUNDLE,
+      'label' => $t("DC Identfier"),
+      'description' => $t("Dublin Core Identifier Metadata"),
+      'required' => FALSE,
+    );
+    field_create_instance($dc_identifier_field_instance);
+    drupal_set_message($t('Field %name was created successfully', array('%name' => ISLANDORA_DC_IDENTIFIER_FIELD)));
+  }
+
+  if (field_info_field(ISLANDORA_DC_LANGUAGE_FIELD)) {
+    $dc_language_field_instance = array(
+      'field_name' => ISLANDORA_DC_LANGUAGE_FIELD,
+      'entity_type' => 'node',
+      'bundle' => ISLANDORA_BASIC_IMAGE_BUNDLE,
+      'label' => $t("DC Language"),
+      'description' => $t("Dublin Core Language Metadata"),
+      'required' => FALSE,
+    );
+    field_create_instance($dc_language_field_instance);
+    drupal_set_message($t('Field %name was created successfully', array('%name' => ISLANDORA_DC_LANGUAGE_FIELD)));
+  }
+
+  if (field_info_field(ISLANDORA_DC_PUBLISHER_FIELD)) {
+    $dc_publisher_field_instance = array(
+      'field_name' => ISLANDORA_DC_PUBLISHER_FIELD,
+      'entity_type' => 'node',
+      'bundle' => ISLANDORA_BASIC_IMAGE_BUNDLE,
+      'label' => $t("DC Publisher"),
+      'description' => $t("Dublin Core Publisher Metadata"),
+      'required' => FALSE,
+    );
+    field_create_instance($dc_publisher_field_instance);
+    drupal_set_message($t('Field %name was created successfully', array('%name' => ISLANDORA_DC_PUBLISHER_FIELD)));
+  }
+
+  if (field_info_field(ISLANDORA_DC_RELATION_FIELD)) {
+    $dc_relation_field_instance = array(
+      'field_name' => ISLANDORA_DC_RELATION_FIELD,
+      'entity_type' => 'node',
+      'bundle' => ISLANDORA_BASIC_IMAGE_BUNDLE,
+      'label' => $t("DC Relation"),
+      'description' => $t("Dublin Core Relation Metadata"),
+      'required' => FALSE,
+    );
+    field_create_instance($dc_relation_field_instance);
+    drupal_set_message($t('Field %name was created successfully', array('%name' => ISLANDORA_DC_RELATION_FIELD)));
+  }
+
+  if (field_info_field(ISLANDORA_DC_RIGHTS_FIELD)) {
+    $dc_rights_field_instance = array(
+      'field_name' => ISLANDORA_DC_RIGHTS_FIELD,
+      'entity_type' => 'node',
+      'bundle' => ISLANDORA_BASIC_IMAGE_BUNDLE,
+      'label' => $t("DC Rights"),
+      'description' => $t("Dublin Core Rights Metadata"),
+      'required' => FALSE,
+    );
+    field_create_instance($dc_rights_field_instance);
+    drupal_set_message($t('Field %name was created successfully', array('%name' => ISLANDORA_DC_RIGHTS_FIELD)));
+  }
+
+  if (field_info_field(ISLANDORA_DC_SOURCE_FIELD)) {
+    $dc_source_field_instance = array(
+      'field_name' => ISLANDORA_DC_SOURCE_FIELD,
+      'entity_type' => 'node',
+      'bundle' => ISLANDORA_BASIC_IMAGE_BUNDLE,
+      'label' => $t("DC Source"),
+      'description' => $t("Dublin Core Source Metadata"),
+      'required' => FALSE,
+    );
+    field_create_instance($dc_source_field_instance);
+    drupal_set_message($t('Field %name was created successfully', array('%name' => ISLANDORA_DC_SOURCE_FIELD)));
+  }
+
+  if (field_info_field(ISLANDORA_DC_SUBJECT_FIELD)) {
+    $dc_subject_field_instance = array(
+      'field_name' => ISLANDORA_DC_SUBJECT_FIELD,
+      'entity_type' => 'node',
+      'bundle' => ISLANDORA_BASIC_IMAGE_BUNDLE,
+      'label' => $t("DC Subject"),
+      'description' => $t("Dublin Core Subject Metadata"),
+      'required' => FALSE,
+    );
+    field_create_instance($dc_subject_field_instance);
+    drupal_set_message($t('Field %name was created successfully', array('%name' => ISLANDORA_DC_SUBJECT_FIELD)));
+  }
+
+  if (field_info_field(ISLANDORA_DC_TITLE_FIELD)) {
+    $dc_title_field_instance = array(
+      'field_name' => ISLANDORA_DC_TITLE_FIELD,
+      'entity_type' => 'node',
+      'bundle' => ISLANDORA_BASIC_IMAGE_BUNDLE,
+      'label' => $t("DC Title"),
+      'description' => $t("Dublin Core Title Metadata"),
+      'required' => FALSE,
+    );
+    field_create_instance($dc_title_field_instance);
+    drupal_set_message($t('Field %name was created successfully', array('%name' => ISLANDORA_DC_TITLE_FIELD)));
+  }
+
+  if (field_info_field(ISLANDORA_DC_TYPE_FIELD)) {
+    $dc_type_field_instance = array(
+      'field_name' => ISLANDORA_DC_TYPE_FIELD,
+      'entity_type' => 'node',
+      'bundle' => ISLANDORA_BASIC_IMAGE_BUNDLE,
+      'label' => $t("DC Type"),
+      'description' => $t("Dublin Core Type Metadata"),
+      'required' => FALSE,
+    );
+    field_create_instance($dc_type_field_instance);
+    drupal_set_message($t('Field %name was created successfully', array('%name' => ISLANDORA_DC_TYPE_FIELD)));
   }
 }
 

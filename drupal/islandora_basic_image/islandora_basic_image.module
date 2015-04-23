@@ -6,7 +6,7 @@
  */
 
 define('ISLANDORA_BASIC_IMAGE_BUNDLE', 'basic_image');
-define('ISLANDORA_BASIC_IMAGE_MEDIUM_SIZE', 'medium_size');
+define('ISLANDORA_BASIC_IMAGE_MEDIUM_SIZE_FIELD', 'field_medium_size');
 
 /**
  * Function for using a form.
