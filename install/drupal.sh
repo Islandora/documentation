@@ -24,7 +24,7 @@ drush si -y --db-url=mysql://root:islandora@localhost/drupal7 --site-name=island
 drush user-password admin --password=islandora
 
 # Set document root
-sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/drupal|' /etc/apache2/sites-enabled/000-default.conf
+sed -i 's|DocumentRoot /var/www/html$|DocumentRoot /var/www/html/drupal|' /etc/apache2/sites-enabled/000-default.conf
 
 # Set override for drupal directory
 # TODO Don't do this in main apache conf
