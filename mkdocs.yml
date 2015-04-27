@@ -27,4 +27,6 @@ pages:
 
 # Technical Documentation
   - ['technical-documentation/technical_design.md', 'Technical Documentation', 'Technical Design']
+  - ['technical-documentation/services.md', 'Technical Documentation', 'Middleware Services']
+  - ['technical-documentation/migration.md', 'Technical Documentation', 'Migration']
   - ['technical-documentation/docs-build.md', 'Technical Documentation', 'How to build documenation']
