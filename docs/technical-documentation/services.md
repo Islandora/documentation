@@ -1,4 +1,4 @@
-#Islandora 7.x 2.x Middleware Services Doc
+# Middleware Services
 
 Islandora middleware services utilize the Fedora 4 REST API and the Drupal Services module to create an API for the majority of interactions between the two systems.  The Drupal node id will be used to identify pcdm:Objects (and pcdm:Files thereof) when using these services.  The breakdown of services is as follows:
 - There will be a services to provide CRUD operations for pcdm:Collections, pcdm:Objects and pcdm:Files.  
