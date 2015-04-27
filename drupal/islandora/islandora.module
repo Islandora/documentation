@@ -7,6 +7,8 @@
 
 define('ISLANDORA_TN_FIELD', 'field_tn');
 define('ISLANDORA_MODS_FIELD', 'field_mods');
+define('ISLANDORA_FEDORA_HAS_PARENT', 'field_fedora_hasParent');
+define('ISLANDORA_PCDM_HAS_MEMBER', 'field_pcdm_hasMember');
 
 /**
  * Implements hook_ctools_plugin_api().

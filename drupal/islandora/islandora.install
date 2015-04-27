@@ -22,5 +22,4 @@ function islandora_install() {
     'type' => 'xml_field_xml',
   );
   field_create_field($mods_field);
-
 }
