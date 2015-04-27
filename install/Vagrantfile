@@ -34,6 +34,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision :shell, :path => "fcrepo.sh", :args => home_dir
   config.vm.provision :shell, :path => "solr.sh"
   config.vm.provision :shell, :path => "fuseki.sh"
+  config.vm.provision :shell, :path => "services.sh", :args => home_dir
   config.vm.provision :shell, :path => "sync.sh", :args => home_dir
   config.vm.provision :shell, :path => "post-install.sh", :args => home_dir
   if ENV['VIM']

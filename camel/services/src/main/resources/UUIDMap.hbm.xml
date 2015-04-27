@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+ "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
+
+<hibernate-mapping>
+   <class name="ca.islandora.services.uuidmap.UUIDMap" schema="islandora_services" table="uuidmap">
+      <meta attribute="class-description">
+         Mapping from UUID in Drupal to path in Fedora 4. 
+      </meta>
+      <id name="id" column="id" type="int">
+         <generator class="native"/>
+      </id>
+      <property name="uuid" type="string">
+         <column name="uuid" length="32"/>
+      </property>
+      <property name="path" column="path" type="text"/>
+      <property name="pathHash" type="string">
+         <column name="path_hash" length="32"/>
+      </property>
+   </class>
+</hibernate-mapping>

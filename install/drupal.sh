@@ -48,6 +48,15 @@ cd sites/all/modules
 drush dl services
 drush -y en rest_server
 
+# Entity
+drush dl entity
+drush -y en entity
+
+# UUID
+drush dl uuid
+drush -y en uuid
+drush -y en uuid_services
+
 # XML Field module
 drush dl xml_field
 drush -y en xml_field xml_field_extras

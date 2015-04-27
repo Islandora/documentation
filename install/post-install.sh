@@ -16,3 +16,6 @@ chown -R vagrant:vagrant "$HOME_DIR/islandora"
 
 # Disable security for node access/management so POC works
 drush -r /var/www/html/drupal scr "$HOME_DIR/islandora/install/disable_node_access.php"
+
+# Just for good measure
+service tomcat7 restart
