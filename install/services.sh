@@ -6,7 +6,7 @@ mysql --user=root --password=islandora --execute="CREATE DATABASE islandora_serv
 
 cd "$HOME_DIR"
 git clone https://code.google.com/a/apache-extras.org/p/camel-extra/
-cd camel-extra/components/camel-hibernate
+cd camel-extra
 mvn install
 
 cd "$HOME_DIR"/islandora/camel/services
