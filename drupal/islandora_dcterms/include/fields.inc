@@ -12,6 +12,7 @@
  *   The name of the bundle to give the fields.
  */
 function islandora_dcterms_attach_fields_to_bundle($bundle_name) {
+
   $t = get_t();
 
   if (field_info_field(ISLANDORA_DCTERMS_CONTRIBUTOR_FIELD)) {

@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Collection of fields and utility functions for working with DC Metadata. 
+ * Collection of fields and utility functions for working with DC Metadata.
  */
 
 define('ISLANDORA_DCTERMS_CONTRIBUTOR_FIELD', 'field_dcterms_contributor');
