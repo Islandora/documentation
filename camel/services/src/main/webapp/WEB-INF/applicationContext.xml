@@ -14,6 +14,7 @@
         <property name="password" value="islandora"/>
     </bean>
 
+	<!-- Hibernate config -->
     <bean id="hibernate" class="org.apacheextras.camel.component.hibernate.HibernateComponent">
         <property name="sessionFactory" ref="sessionFactory"/>
         <property name="transactionStrategy" ref="springTransactionStrategy"/>
@@ -42,26 +43,18 @@
         <property name="hibernateProperties">
             <value>
                 hibernate.dialect=org.hibernate.dialect.MySQLDialect
-                hibernate.hbm2ddl.auto=create
+                hibernate.hbm2ddl.auto=update
             </value>
         </property>
     </bean>
-
-    <!--
-        Simple camel route which send every one minute a message on the console.
-    -->
-    <bean id="mapBean"
-          class="ca.islandora.services.uuidmap.UUIDMapBean"/>
+	<!-- End Hibernate Config -->
+	
+    <bean id="mapBean" class="ca.islandora.services.uuidmap.UUIDMapService">
+    	<constructor-arg ref="sessionFactory"/>
+    </bean>
 
     <camelContext xmlns="http://camel.apache.org/schema/spring">
-        <route id="generate-orders">
-            <from uri="timer://foo?fixedRate=true&amp;period=5s"/>
-            <transform>
-               <method ref="mapBean" method="generateMap"/>
-            </transform>
-            <to uri="hibernate:ca.islandora.services.uuidmap.UUIDMap"/>
-            <log message="ADDED A MAP!"/>
-        </route>
+    	<package>ca.islandora.services.routes</package>
     </camelContext>
 
 </beans>

@@ -15,5 +15,18 @@
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+    
+      <!-- to setup Camel Servlet -->
+	<servlet>
+		<display-name>Camel Http Transport Servlet</display-name>
+		<servlet-name>CamelServlet</servlet-name>
+		<servlet-class>org.apache.camel.component.servlet.CamelHttpTransportServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+  
+    <servlet-mapping>
+    	<servlet-name>CamelServlet</servlet-name>
+    	<url-pattern>/rest/*</url-pattern>
+    </servlet-mapping>
 
 </web-app>

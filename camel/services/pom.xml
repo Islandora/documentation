@@ -41,7 +41,12 @@
       <artifactId>camel-stream</artifactId>
       <version>2.14.0</version>
     </dependency>
-
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-jackson</artifactId>
+      <version>2.14.0</version>
+    </dependency>
+    
     <!-- MySQL -->
     <dependency>
       <groupId>mysql</groupId>
@@ -90,6 +95,11 @@
       <artifactId>camel-test-spring</artifactId>
       <version>2.14.0</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+    	<groupId>org.apache.camel</groupId>
+    	<artifactId>camel-servlet</artifactId>
+    	<version>2.14.0</version>
     </dependency>
   </dependencies>
 
