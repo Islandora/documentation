@@ -4,7 +4,7 @@
  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
 
 <hibernate-mapping>
-   <class name="ca.islandora.services.uuidmap.UUIDMap" schema="islandora_services" table="uuidmap">
+   <class name="ca.islandora.services.uuid.UUIDMap" schema="islandora_services" table="uuidmap">
       <meta attribute="class-description">
          Mapping from UUID in Drupal to path in Fedora 4. 
       </meta>

@@ -1,0 +1,20 @@
+<?php
+
+/**
+ * @file
+ * This is the new Islandora Basic Image module.
+ */
+
+define('ISLANDORA_COLLECTION_BUNDLE', 'collection');
+
+/**
+ * Function for using a form.
+ *
+ * @param string $node
+ *   The Drupal node.
+ * @param array $form_state
+ *   The Drupal form state.
+ */
+function islandora_collection_form($node, array &$form_state) {
+  return node_content_form($node, $form_state);
+}

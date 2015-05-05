@@ -1,4 +1,4 @@
-package ca.islandora.services.uuidmap;
+package ca.islandora.services.uuid;
 
 public class UUIDMap {
     private int id;
