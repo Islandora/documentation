@@ -49,15 +49,21 @@
   </bean>
   <!-- End Hibernate Config -->
   
+  <!-- Fedora Component Config -->
+  <!-- <bean id="fcrepoTxManager" class="org.fcrepo.camel.FcrepoTransactionManager">
+    <property name="baseUrl" value="http://localhost:8080/fcrepo/rest"/>
+  </bean>
+
+  <bean id="fcrepo" class="org.fcrepo.camel.FcrepoComponent">
+    <property name="transactionManager" ref="fcrepoTxManager"/>
+  </bean> -->
+  <!-- End Fedora Component Config -->
+  
   <bean id="uuidService" class="ca.islandora.services.uuid.UUIDService">
     <constructor-arg ref="sessionFactory"/>
   </bean>
-  
-  <bean id="collectionService" class="ca.islandora.services.collection.CollectionService">
-    <constructor-arg ref="sessionFactory"/>
-  </bean>
 
-  <bean id="postCollectionProcessor" class="ca.islandora.services.collection.PostCollectionProcessor">
+  <bean id="collectionServiceProcessor" class="ca.islandora.services.collection.CollectionServiceProcessorBean">
     <constructor-arg ref="uuidService"/>
   </bean>
   

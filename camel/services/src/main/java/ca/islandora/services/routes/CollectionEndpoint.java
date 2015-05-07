@@ -6,17 +6,20 @@ public class CollectionEndpoint extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        rest("/collection")
+        rest("/collection/")
 
         .post("/{uuid}")
-            .description("Creates a collection.  Uses optional uuid as parent.")
+            .description("Creates a collection using uuid as parent.")
+            .produces("application/json")
             .to("direct:createCollection");
 
         from("direct:createCollection")
-            .transacted()
-            .beanRef("postCollectionProcessor")
+//            .transacted()
+            .beanRef("collectionServiceProcessor", "processForDrupalPOST")
+            .recipientList(simple("http4:{{drupal.baseurl}}/node/${property.collectionUUID}"))
+            .beanRef("collectionServiceProcessor", "processForFedoraPOST")
             .to("fcrepo:{{fcrepo.baseurl}}")
-            .log("HEADERS: ${headers}")
-            .log("BODY: ${body}");
+            .beanRef("collectionServiceProcessor", "processForHibernatePOST")
+            .to("hibernate:ca.islandora.services.uuid.UUIDMap");
     }
 }
