@@ -23,8 +23,12 @@ public class CollectionEndpoint extends RouteBuilder {
             .beanRef("collectionServiceProcessor", "processForDrupalPOST")
             .recipientList(simple("http4:{{drupal.baseurl}}/node/${property.collectionUUID}"))
             .beanRef("collectionServiceProcessor", "processForFedoraPOST")
-            .to("fcrepo:{{fcrepo.baseurl}}")
+            .to("seda:toFedora")
             .beanRef("collectionServiceProcessor", "processForHibernatePOST")
             .to("hibernate:ca.islandora.services.uuid.UUIDMap");
+        
+        // Duck out of the transacted thread for Fedora call so TransactionManagers don't collide.
+        from("seda:toFedora")
+            .to("fcrepo:{{fcrepo.baseurl}}");
     }
 }
