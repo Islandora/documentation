@@ -5,13 +5,18 @@
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
 
+  <!-- Spring - Camel Bridged Properties -->
+  <bean id="bridgePropertyPlaceholder" class="org.apache.camel.spring.spi.BridgePropertyPlaceholderConfigurer">
+    <property name="location" value="classpath:services.properties"/>
+  </bean>
+  
   <!-- JDBC data source -->
   <bean id="dataSource"
         class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-    <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-    <property name="url" value="jdbc:mysql://localhost:3306"/>
-    <property name="username" value="root"/>
-    <property name="password" value="islandora"/>
+    <property name="driverClassName" value="${jdbc.driverClassName}"/>
+    <property name="url" value="${jdbc.url}"/>
+    <property name="username" value="${jdbc.username}"/>
+    <property name="password" value="${jdbc.password}"/>
   </bean>
 
   <!-- Hibernate config -->
@@ -51,7 +56,7 @@
   
   <!-- Fedora Component Config -->
   <!-- <bean id="fcrepoTxManager" class="org.fcrepo.camel.FcrepoTransactionManager">
-    <property name="baseUrl" value="http://localhost:8080/fcrepo/rest"/>
+    <property name="baseUrl" value="http://${fcrepo.baseurl}"/>
   </bean>
 
   <bean id="fcrepo" class="org.fcrepo.camel.FcrepoComponent">
@@ -68,7 +73,6 @@
   </bean>
   
   <camelContext xmlns="http://camel.apache.org/schema/spring">
-    <propertyPlaceholder id="properties" location="classpath:services.properties" />
     <package>ca.islandora.services.routes</package>
   </camelContext>
 

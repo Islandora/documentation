@@ -23,7 +23,7 @@ public class CollectionService extends RouteBuilder {
             .description("Creates a Colleciton node in both Fedora and Drupal and lines them up in the db.")
             .transacted()
             .beanRef("collectionServiceProcessor", "processForDrupalPOST")
-            .recipientList(simple("http4:{{drupal.baseurl}}/node/${property.collectionUUID}"))
+            .recipientList(simple("http4:{{drupal.baseurl}}/node/$simple{property.collectionUUID}"))
             .beanRef("collectionServiceProcessor", "processForFedoraPOST")
             .to("seda:toFedora")
             .beanRef("collectionServiceProcessor", "processForHibernatePOST")
