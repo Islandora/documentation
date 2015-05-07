@@ -12,11 +12,11 @@
          <generator class="native"/>
       </id>
       <property name="uuid" type="string">
-         <column name="uuid" length="36"/>
+         <column name="uuid" length="36" index="IDX_UUID"/>
       </property>
       <property name="path" column="path" type="text"/>
       <property name="pathHash" type="string">
-         <column name="path_hash" length="32"/>
+         <column name="path_hash" length="32" index="IDX_PATH_HASH"/>
       </property>
    </class>
 </hibernate-mapping>
