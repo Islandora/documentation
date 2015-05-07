@@ -29,6 +29,12 @@ public class CollectionServiceProcessorBean {
         exchange.setProperty("parentUUID", parentUUID);
         exchange.getIn().removeHeader("uuid");
         
+        final String rdf = exchange.getIn().getBody(String.class);
+        exchange.setProperty("rdf", rdf);
+        
+        final String contentType = exchange.getIn().getHeader(Exchange.CONTENT_TYPE, String.class);
+        exchange.setProperty("rdfContentType", contentType);
+        
         final String collectionUUID = UUID.randomUUID().toString();
         exchange.setProperty("collectionUUID", collectionUUID);
         
@@ -51,7 +57,8 @@ public class CollectionServiceProcessorBean {
     public void processForFedoraPOST(Exchange exchange) throws ServletException {
         exchange.getIn().removeHeaders("*");
         exchange.getIn().setHeader(Exchange.HTTP_METHOD, POST);
-        exchange.getIn().setBody(null);
+        exchange.getIn().setHeader(Exchange.CONTENT_TYPE, exchange.getProperty("rdfContentType", String.class));
+        exchange.getIn().setBody(exchange.getProperty("rdf", String.class));
         
         final String uuid = exchange.getProperty("parentUUID", String.class);
         if (uuid == null) {

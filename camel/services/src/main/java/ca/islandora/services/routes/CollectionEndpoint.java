@@ -1,6 +1,8 @@
 package ca.islandora.services.routes;
 
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.model.dataformat.JsonLibrary;
+
 
 public class CollectionEndpoint extends RouteBuilder {
 
@@ -10,11 +12,13 @@ public class CollectionEndpoint extends RouteBuilder {
 
         .post("/")
             .description("Creates a collection off the fcrepo root.")
+            .consumes("text/turtle")
             .produces("application/json")
             .to("direct:createCollection")
             
         .post("/{uuid}")
             .description("Creates a collection using uuid as parent.")
+            .consumes("text/turtle")
             .produces("application/json")
             .to("direct:createCollection");
 
@@ -25,7 +29,8 @@ public class CollectionEndpoint extends RouteBuilder {
             .beanRef("collectionServiceProcessor", "processForFedoraPOST")
             .to("seda:toFedora")
             .beanRef("collectionServiceProcessor", "processForHibernatePOST")
-            .to("hibernate:ca.islandora.services.uuid.UUIDMap");
+            .to("hibernate:ca.islandora.services.uuid.UUIDMap")
+            .marshal().json(JsonLibrary.Jackson);
         
         // Duck out of the transacted thread for Fedora call so TransactionManagers don't collide.
         from("seda:toFedora")
