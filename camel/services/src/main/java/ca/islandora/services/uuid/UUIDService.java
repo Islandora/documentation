@@ -6,7 +6,7 @@ import org.hibernate.SessionFactory;
 public class UUIDService {
 
     protected SessionFactory sessionFactory;
-
+    
     public UUIDService(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }

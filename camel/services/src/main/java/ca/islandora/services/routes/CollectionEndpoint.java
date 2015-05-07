@@ -8,13 +8,18 @@ public class CollectionEndpoint extends RouteBuilder {
     public void configure() throws Exception {
         rest("/collection/")
 
+        .post("/")
+            .description("Creates a collection off the fcrepo root.")
+            .produces("application/json")
+            .to("direct:createCollection")
+            
         .post("/{uuid}")
             .description("Creates a collection using uuid as parent.")
             .produces("application/json")
             .to("direct:createCollection");
 
         from("direct:createCollection")
-//            .transacted()
+            .transacted()
             .beanRef("collectionServiceProcessor", "processForDrupalPOST")
             .recipientList(simple("http4:{{drupal.baseurl}}/node/${property.collectionUUID}"))
             .beanRef("collectionServiceProcessor", "processForFedoraPOST")

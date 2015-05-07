@@ -54,11 +54,11 @@ public class CollectionServiceProcessorBean {
         exchange.getIn().setBody(null);
         
         final String uuid = exchange.getProperty("parentUUID", String.class);
-        if ("root".equals(uuid)) {
+        if (uuid == null) {
             return;
         }
         
-        final String path = uuidService.getPathForUUID(exchange.getIn().getHeader("uuid", String.class));
+        final String path = uuidService.getPathForUUID(uuid);
         if (path == null) {
             throw new ServletException("There is no resource associated with UUID " + uuid);
         }
