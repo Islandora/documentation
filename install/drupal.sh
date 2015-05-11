@@ -65,11 +65,20 @@ drush -y en xml_field xml_field_extras
 git clone https://github.com/Islandora-Labs/xpath_field.git
 drush -y en xpath_field
 
+# Relation
+drush dl relation
+drush -y en relation_ui
+
+# Views
+drush dl views
+drush -y en views_ui
+
 # Islandora modules
 cp -R "$HOME_DIR"/islandora/drupal/* .
 drush -y en islandora_dcterms
 drush -y en islandora
 drush -y en islandora_basic_image
+drush -y en islandora_collection
 
 # Coder & Code Sniffer
 pear install PHP_CodeSniffer

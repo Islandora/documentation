@@ -8,6 +8,16 @@
 define('ISLANDORA_COLLECTION_BUNDLE', 'collection');
 
 /**
+ * Implements hook_views_api().
+ */
+function islandora_collection_views_api() {
+  return array(
+    'api' => 3.0,
+    'path' => drupal_get_path('module', 'islandora_collection') . '/include',
+  );
+}
+
+/**
  * Function for using a form.
  *
  * @param string $node
