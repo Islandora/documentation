@@ -2,7 +2,7 @@
 
 /**
  * @file
- * This is the new Islandora Basic Image module.
+ * This is the new Islandora Collection module.
  */
 
 define('ISLANDORA_COLLECTION_BUNDLE', 'collection');
