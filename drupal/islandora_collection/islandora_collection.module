@@ -5,7 +5,7 @@
  * This is the new Islandora Collection module.
  */
 
-define('ISLANDORA_COLLECTION_BUNDLE', 'collection');
+define('ISLANDORA_COLLECTION_CONTENT_TYPE', 'islandora_collection');
 
 /**
  * Implements hook_views_api().
@@ -14,6 +14,20 @@ function islandora_collection_views_api() {
   return array(
     'api' => 3.0,
     'path' => drupal_get_path('module', 'islandora_collection') . '/include',
+  );
+}
+
+/**
+ * Implements hook_node_info().
+ */
+function islandora_collection_node_info() {
+  return array(
+    ISLANDORA_COLLECTION_CONTENT_TYPE => array(
+      'name' => t("Collection"),
+      'base' => ISLANDORA_COLLECTION_CONTENT_TYPE,
+      'description' => t("A Drupal node modeling an pcdm:Collection."),
+      'has_title' => FALSE,
+    ),
   );
 }
 

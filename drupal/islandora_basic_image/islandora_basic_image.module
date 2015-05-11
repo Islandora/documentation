@@ -5,16 +5,25 @@
  * This is the new Islandora Basic Image module.
  */
 
-define('ISLANDORA_BASIC_IMAGE_BUNDLE', 'basic_image');
+define('ISLANDORA_BASIC_IMAGE_CONTENT_TYPE', 'islandora_basic_image');
 define('ISLANDORA_BASIC_IMAGE_MEDIUM_SIZE_FIELD', 'field_medium_size');
 
 /**
- * Function for using a form.
- *
- * @param string $node
- *   The Drupal node.
- * @param array $form_state
- *   The Drupal form state.
+ * Implements hook_node_info().
+ */
+function islandora_basic_image_node_info() {
+  return array(
+    ISLANDORA_BASIC_IMAGE_CONTENT_TYPE => array(
+      'name' => t("Basic Image"),
+      'base' => ISLANDORA_BASIC_IMAGE_CONTENT_TYPE,
+      'description' => t("A Drupal node modeling a basic image pcdm:Object"),
+      'has_title' => FALSE,
+    ),
+  );
+}
+
+/**
+ * Implements hook_form().
  */
 function islandora_basic_image_form($node, array &$form_state) {
   return node_content_form($node, $form_state);

@@ -11,32 +11,10 @@
 function islandora_basic_image_install() {
   module_load_include('inc', 'islandora_dcterms', 'include/fields');
 
+  // Ensure the basic image node type is available.
+  node_types_rebuild();
+
   $t = get_t();
-
-  // Create basic_image bundle.
-  $basic_image_content_type = array(
-    'type' => ISLANDORA_BASIC_IMAGE_BUNDLE,
-    'name' => $t('Basic Image'),
-    'base' => 'node_content',
-    'description' => $t('An image object in Fedora'),
-    'custom' => 1,
-    'modified' => 1,
-    'locked' => 0,
-    'disabled' => 0,
-  );
-
-  $basic_image_content_type = node_type_set_defaults($basic_image_content_type);
-
-  $status = node_type_save($basic_image_content_type);
-
-  $t_args = array('%name' => $basic_image_content_type->name);
-
-  if ($status == SAVED_UPDATED) {
-    drupal_set_message($t('Updated %name content type.', $t_args));
-  }
-  elseif ($status == SAVED_NEW) {
-    drupal_set_message($t('Created %name content type.', $t_args));
-  }
 
   // Create medium size field.
   $medium_size_field = array(
@@ -50,7 +28,7 @@ function islandora_basic_image_install() {
     $medium_size_field_instance = array(
       'field_name' => ISLANDORA_BASIC_IMAGE_MEDIUM_SIZE_FIELD,
       'entity_type' => 'node',
-      'bundle' => ISLANDORA_BASIC_IMAGE_BUNDLE,
+      'bundle' => ISLANDORA_BASIC_IMAGE_CONTENT_TYPE,
       'label' => $t("Medium Size"),
       'description' => $t("A display copy of the image."),
       'required' => FALSE,
@@ -63,7 +41,7 @@ function islandora_basic_image_install() {
     $tn_field_instance = array(
       'field_name' => ISLANDORA_TN_FIELD,
       'entity_type' => 'node',
-      'bundle' => ISLANDORA_BASIC_IMAGE_BUNDLE,
+      'bundle' => ISLANDORA_BASIC_IMAGE_CONTENT_TYPE,
       'label' => $t("Thumbnail"),
       'description' => $t("A thumbnail for the Fedora resource"),
       'required' => FALSE,
@@ -76,7 +54,7 @@ function islandora_basic_image_install() {
     $mods_field_instance = array(
       'field_name' => ISLANDORA_MODS_FIELD,
       'entity_type' => 'node',
-      'bundle' => ISLANDORA_BASIC_IMAGE_BUNDLE,
+      'bundle' => ISLANDORA_BASIC_IMAGE_CONTENT_TYPE,
       'label' => $t("MODS"),
       'description' => $t("A MODS record for the Fedora resource"),
       'required' => FALSE,
@@ -85,5 +63,5 @@ function islandora_basic_image_install() {
     drupal_set_message($t('Field %name was created successfully', array('%name' => ISLANDORA_MODS_FIELD)));
   }
 
-  islandora_dcterms_attach_fields_to_bundle(ISLANDORA_BASIC_IMAGE_BUNDLE);
+  islandora_dcterms_attach_fields_to_bundle(ISLANDORA_BASIC_IMAGE_CONTENT_TYPE);
 }
