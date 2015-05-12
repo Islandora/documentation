@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * @file
+ * RDF mapping utility functions.
+ */
+
+/**
+ * Returns the default mapping for Islandora content types.
+ *
+ * @param string $bundle
+ *   The bundle to associate with the RDF mapping.
+ */
 function islandora_get_default_rdf_mapping($bundle) {
   return array(
     array(
