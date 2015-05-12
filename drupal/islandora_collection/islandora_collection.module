@@ -26,7 +26,6 @@ function islandora_collection_node_info() {
       'name' => t("Collection"),
       'base' => ISLANDORA_COLLECTION_CONTENT_TYPE,
       'description' => t("A Drupal node modeling an pcdm:Collection."),
-      'has_title' => FALSE,
     ),
   );
 }
@@ -41,6 +40,51 @@ function islandora_collection_node_info() {
  */
 function islandora_collection_form($node, array &$form_state) {
   return node_content_form($node, $form_state);
+}
+
+/**
+ * Implements hook_rdf_namespaces().
+ */
+function islandora_collection_rdf_namespaces() {
+  return array(
+    'islandora' => 'http://islandora.ca/ontology/v2/',
+    'fedora' => 'http://fedora.info/definitions/v4/repository#',
+  );
+}
+
+/**
+ * Implements hook_rdf_mapping().
+ */
+function islandora_collection_rdf_mapping() {
+  return array(
+    array(
+      'type' => 'node',
+      'bundle' => ISLANDORA_COLLECTION_CONTENT_TYPE,
+      'mapping' => array(
+        'rdftype' => array('islandora:collection'),
+        'field_dcterms_contributor' => array(
+          'predicates' => array('dc:contributor'),
+          'datatype' => 'xsd:string',
+        ),
+        'field_dcterms_coverage' => array(
+          'predicates' => array('dc:coverage'),
+          'datatype' => 'xsd:string',
+        ),
+        'field_dcterms_creator' => array(
+          'predicates' => array('dc:creator'),
+          'datatype' => 'xsd:string',
+        ),
+        'field_dcterms_date' => array(
+          'predicates' => array('dc:date'),
+          'datatype' => 'xsd:string',
+        ),
+        'field_dcterms_description' => array(
+          'predicates' => array('dc:description'),
+          'datatype' => 'xsd:string',
+        ),
+      ),
+    ),
+  );
 }
 
 /**
