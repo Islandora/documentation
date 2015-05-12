@@ -22,4 +22,22 @@ function islandora_install() {
     'type' => 'xml_field_xml',
   );
   field_create_field($mods_field);
+
+  $fedora_path_field = array(
+    'field_name' => ISLANDORA_FEDORA_PATH_FIELD,
+    'type' => 'text',
+  );
+  field_create_field($fedora_path_field);
+
+  $fedora_has_parent_field = array(
+    'field_name' => ISLANDORA_FEDORA_HAS_PARENT_FIELD,
+    'type' => 'text',
+  );
+  field_create_field($fedora_has_parent_field);
+
+  $pcdm_has_member_field = array(
+    'field_name' => ISLANDORA_PCDM_HAS_MEMBER_FIELD,
+    'type' => 'text',
+  );
+  field_create_field($pcdm_has_member_field);
 }

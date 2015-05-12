@@ -46,36 +46,34 @@ cd sites/all/modules
 
 # Islandora dependencies
 drush dl services
-drush -y en rest_server
 
 # Entity
 drush dl entity
-drush -y en entity
+
+# Views
+drush dl views
 
 # UUID
 drush dl uuid
-drush -y en uuid
-drush -y en uuid_services
 
 # XML Field module
 drush dl xml_field
-drush -y en xml_field xml_field_extras
 
 # XPath Field module
 git clone https://github.com/Islandora-Labs/xpath_field.git
-drush -y en xpath_field
 
 # Relation
 drush dl relation
 drush -y en relation_ui
 
-# Views
-drush dl views
-drush -y en views_ui
+drush dl field_permissions
+
+drush dl field_readonly
+
+drush dl rdfx
 
 # Islandora modules
 cp -R "$HOME_DIR"/islandora/drupal/* .
-drush -y en islandora_dcterms
 drush -y en islandora
 drush -y en islandora_basic_image
 drush -y en islandora_collection
