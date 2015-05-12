@@ -31,12 +31,7 @@ function islandora_collection_node_info() {
 }
 
 /**
- * Function for using a form.
- *
- * @param string $node
- *   The Drupal node.
- * @param array $form_state
- *   The Drupal form state.
+ * Implements hook_form().
  */
 function islandora_collection_form($node, array &$form_state) {
   return node_content_form($node, $form_state);
@@ -63,6 +58,9 @@ function islandora_collection_insert($node) {
    */
 }
 
+/**
+ * Implements hook_update().
+ */
 function islandora_collection_update($node) {
   /*
   if (isset($_SERVER['HTTP_IGNORE_HOOKS']) && strcmp(strtolower($_SERVER['HTTP_IGNORE_HOOKS']), "true") == 0) {
