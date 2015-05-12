@@ -6,6 +6,7 @@
  */
 
 define('ISLANDORA_BASIC_IMAGE_CONTENT_TYPE', 'islandora_basic_image');
+define('ISLANDORA_BASIC_IMAGE_RDF_TYPE', 'islandora:basic_image');
 define('ISLANDORA_BASIC_IMAGE_MEDIUM_SIZE_FIELD', 'field_medium_size');
 
 /**
@@ -33,5 +34,5 @@ function islandora_basic_image_form($node, array &$form_state) {
  */
 function islandora_basic_image_rdf_mapping() {
   module_load_include('inc', 'islandora', 'include/rdf_mapping');
-  return islandora_get_default_rdf_mapping(ISLANDORA_BASIC_IMAGE_CONTENT_TYPE);
+  return islandora_get_default_rdf_mapping(ISLANDORA_BASIC_IMAGE_CONTENT_TYPE, ISLANDORA_BASIC_IMAGE_RDF_TYPE);
 }

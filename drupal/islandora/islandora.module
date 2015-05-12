@@ -5,10 +5,12 @@
  * This is the new Islandora module. We need a better doc comment here.
  */
 
+define('ISLANDORA_NAMESPACE', 'http://islandora.ca/ontology/v2/');
+define('FEDORA_NAMESPACE', 'http://fedora.info/definitions/v4/repository#');
 define('ISLANDORA_TN_FIELD', 'field_tn');
 define('ISLANDORA_MODS_FIELD', 'field_mods');
-define('ISLANDORA_FEDORA_HAS_PARENT', 'field_fedora_hasParent');
-define('ISLANDORA_PCDM_HAS_MEMBER', 'field_pcdm_hasMember');
+define('ISLANDORA_FEDORA_HAS_PARENT', 'field_fedora_has_parent');
+define('ISLANDORA_PCDM_HAS_MEMBER', 'field_pcdm_has_member');
 
 /**
  * Implements hook_ctools_plugin_api().
@@ -26,8 +28,8 @@ function islandora_ctools_plugin_api($owner, $api) {
  */
 function islandora_rdf_namespaces() {
   return array(
-    'islandora' => 'http://islandora.ca/ontology/v2/',
-    'fedora' => 'http://fedora.info/definitions/v4/repository#',
+    'islandora' => ISLANDORA_NAMESPACE,
+    'fedora' => FEDORA_NAMESPACE,
   );
 }
 

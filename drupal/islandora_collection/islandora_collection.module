@@ -6,6 +6,7 @@
  */
 
 define('ISLANDORA_COLLECTION_CONTENT_TYPE', 'islandora_collection');
+define('ISLANDORA_COLLECTION_RDF_TYPE', 'islandora:collection');
 
 /**
  * Implements hook_views_api().
@@ -42,7 +43,7 @@ function islandora_collection_form($node, array &$form_state) {
  */
 function islandora_collection_rdf_mapping() {
   module_load_include('inc', 'islandora', 'include/rdf_mapping');
-  return islandora_get_default_rdf_mapping(ISLANDORA_COLLECTION_CONTENT_TYPE);
+  return islandora_get_default_rdf_mapping(ISLANDORA_COLLECTION_CONTENT_TYPE, ISLANDORA_COLLECTION_RDF_TYPE);
 }
 
 /**
