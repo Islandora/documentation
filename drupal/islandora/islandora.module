@@ -22,6 +22,16 @@ function islandora_ctools_plugin_api($owner, $api) {
 }
 
 /**
+ * Implements hook_rdf_namespaces().
+ */
+function islandora_rdf_namespaces() {
+  return array(
+    'islandora' => 'http://islandora.ca/ontology/v2/',
+    'fedora' => 'http://fedora.info/definitions/v4/repository#',
+  );
+}
+
+/**
  * Implements hook_default_services_endpoint().
  */
 function islandora_default_services_endpoint() {
