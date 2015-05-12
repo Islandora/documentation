@@ -17,7 +17,6 @@ function islandora_basic_image_node_info() {
       'name' => t("Basic Image"),
       'base' => ISLANDORA_BASIC_IMAGE_CONTENT_TYPE,
       'description' => t("A Drupal node modeling a basic image pcdm:Object"),
-      'has_title' => FALSE,
     ),
   );
 }
