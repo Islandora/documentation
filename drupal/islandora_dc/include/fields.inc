@@ -99,7 +99,7 @@ function islandora_dc_add_fields_to_bundle($bundle_name) {
       $message = $t('Field %name was added to %bundle successfully',
                     array(
                       '%name' => $field_name,
-                      '%bundle' => $bundle,
+                      '%bundle' => $bundle_name,
                     ));
       drupal_set_message($message);
     }

@@ -1,0 +1,5 @@
+name = Islandora MODS
+description = "Fields and utilities for managing MODS metadata in Islandora"
+package = Islandora
+version = 7.x-dev
+core = 7.x

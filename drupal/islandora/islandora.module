@@ -9,9 +9,8 @@ define('ISLANDORA_NAMESPACE', 'http://islandora.ca/ontology/v2/');
 define('ISLANDORA_FEDORA_NAMESPACE', 'http://fedora.info/definitions/v4/repository#');
 define('ISLANDORA_PCDM_NAMESPACE', 'http://pcdm.org/models#');
 define('ISLANDORA_TN_FIELD', 'field_tn');
-define('ISLANDORA_MODS_FIELD', 'field_mods');
-define('ISLANDORA_FEDORA_HAS_PARENT', 'field_fedora_has_parent');
-define('ISLANDORA_PCDM_HAS_MEMBER', 'field_pcdm_has_member');
+define('ISLANDORA_FEDORA_HAS_PARENT_FIELD', 'field_fedora_has_parent');
+define('ISLANDORA_PCDM_HAS_MEMBER_FIELD', 'field_pcdm_has_member');
 
 /**
  * Implements hook_ctools_plugin_api().

@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * @file
+ * Install hooks for this module.
+ */
+
+/**
+ * Implements hook_install().
+ *
+ * Creates shared fields for content types using MODS metadata.
+ */
+function islandora_dc_install() {
+  $mods_field = array(
+    'field_name' => ISLANDORA_MODS_FIELD,
+    'type' => 'xml_field_xml',
+  );
+  field_create_field($mods_field);
+}

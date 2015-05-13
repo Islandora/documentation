@@ -17,12 +17,6 @@ function islandora_install() {
   );
   field_create_field($tn_field);
 
-  $mods_field = array(
-    'field_name' => ISLANDORA_MODS_FIELD,
-    'type' => 'xml_field_xml',
-  );
-  field_create_field($mods_field);
-
   $fedora_path_field = array(
     'field_name' => ISLANDORA_FEDORA_PATH_FIELD,
     'type' => 'text',

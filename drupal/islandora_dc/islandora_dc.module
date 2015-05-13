@@ -22,3 +22,12 @@ define('ISLANDORA_DC_SOURCE_FIELD', 'field_dc_source');
 define('ISLANDORA_DC_SUBJECT_FIELD', 'field_dc_subject');
 define('ISLANDORA_DC_TITLE_FIELD', 'field_dc_title');
 define('ISLANDORA_DC_TYPE_FIELD', 'field_dc_type');
+
+/**
+ * Implements hook_rdf_namespaces().
+ */
+function islandora_dc_rdf_namespaces() {
+  return array(
+    ISLANDORA_DC_NAMESPACE_PREFIX => ISLANDORA_DC_NAMESPACE,
+  );
+}

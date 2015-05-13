@@ -47,17 +47,4 @@ function islandora_basic_image_install() {
     field_create_instance($tn_field_instance);
     drupal_set_message($t('Field %name was created successfully', array('%name' => ISLANDORA_TN_FIELD)));
   }
-
-  if (field_info_field(ISLANDORA_MODS_FIELD)) {
-    $mods_field_instance = array(
-      'field_name' => ISLANDORA_MODS_FIELD,
-      'entity_type' => 'node',
-      'bundle' => ISLANDORA_BASIC_IMAGE_CONTENT_TYPE,
-      'label' => $t("MODS"),
-      'description' => $t("A MODS record for the Fedora resource"),
-      'required' => FALSE,
-    );
-    field_create_instance($mods_field_instance);
-    drupal_set_message($t('Field %name was created successfully', array('%name' => ISLANDORA_MODS_FIELD)));
-  }
 }
