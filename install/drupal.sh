@@ -40,8 +40,10 @@ rm /var/www/html/index.html
 # Cycle apache
 service apache2 restart
 
-# Make the modules directory
+# Make the modules and libraries directories
 mkdir -p sites/all/modules
+mkdir -p sites/all/libraries
+
 cd sites/all/modules
 
 # Islandora dependencies
@@ -71,6 +73,14 @@ drush dl field_permissions
 drush dl field_readonly
 
 drush dl rdfx
+
+# Undocumented dependency for rdfx on ARC2 for RDF generation.
+cd ../libraries
+mkdir ARC2
+cd ARC2
+git clone https://github.com/semsol/arc2.git
+mv arc2 arc
+cd ../../modules
 
 # Islandora modules
 cp -R "$HOME_DIR"/islandora/drupal/* .
