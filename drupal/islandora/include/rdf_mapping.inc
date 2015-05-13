@@ -12,7 +12,7 @@
  *   The bundle to associate with the RDF mapping.
  * @param string $rdf_type
  *   The RDF type to associate with the bundle.
- * 
+ *
  * return array
  *   The default RDF mapping for Islandora content types.
  */

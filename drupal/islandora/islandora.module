@@ -6,7 +6,7 @@
  */
 
 define('ISLANDORA_NAMESPACE', 'http://islandora.ca/ontology/v2/');
-define('FEDORA_NAMESPACE', 'http://fedora.info/definitions/v4/repository#');
+define('ISLANDORA_FEDORA_NAMESPACE', 'http://fedora.info/definitions/v4/repository#');
 define('ISLANDORA_TN_FIELD', 'field_tn');
 define('ISLANDORA_MODS_FIELD', 'field_mods');
 define('ISLANDORA_FEDORA_HAS_PARENT', 'field_fedora_has_parent');
