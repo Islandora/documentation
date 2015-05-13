@@ -26,10 +26,10 @@ function islandora_mods_add_fields_to_bundle($bundle_name) {
       'required' => FALSE,
     );
     field_create_instance($mods_field_instance);
-    $message = $t('Field %name was successfully added to %bundle',
+    $message = $t('Field @name was successfully added to @bundle',
                   array(
-                    '%name' => ISLANDORA_MODS_FIELD,
-                    '%bundle' => $bundle_name,
+                    '@name' => ISLANDORA_MODS_FIELD,
+                    '@bundle' => $bundle_name,
                   ));
     drupal_set_message($message);
   }

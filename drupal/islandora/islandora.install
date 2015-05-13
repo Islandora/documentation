@@ -11,27 +11,37 @@
  * Defines common fields for various bundles.
  */
 function islandora_install() {
+  $t = get_t();
+
   $tn_field = array(
     'field_name' => ISLANDORA_TN_FIELD,
     'type' => 'image',
   );
   field_create_field($tn_field);
+  drupal_set_message($t("Created field @field",
+                     array("@field" => ISLANDORA_TN_FIELD)));
 
   $fedora_path_field = array(
     'field_name' => ISLANDORA_FEDORA_PATH_FIELD,
     'type' => 'text',
   );
   field_create_field($fedora_path_field);
+  drupal_set_message($t("Created field @field",
+                     array("@field" => ISLANDORA_FEDORA_PATH_FIELD)));
 
   $fedora_has_parent_field = array(
     'field_name' => ISLANDORA_FEDORA_HAS_PARENT_FIELD,
     'type' => 'text',
   );
   field_create_field($fedora_has_parent_field);
+  drupal_set_message($t("Created field @field",
+                     array("@field" => ISLANDORA_FEDORA_HAS_PARENT_FIELD)));
 
   $pcdm_has_member_field = array(
     'field_name' => ISLANDORA_PCDM_HAS_MEMBER_FIELD,
     'type' => 'text',
   );
   field_create_field($pcdm_has_member_field);
+  drupal_set_message($t("Created field @field",
+                     array("@field" => ISLANDORA_PCDM_HAS_MEMBER_FIELD)));
 }

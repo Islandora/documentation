@@ -91,15 +91,15 @@ function islandora_dc_add_fields_to_bundle($bundle_name) {
         'field_name' => $field_name,
         'entity_type' => 'node',
         'bundle' => $bundle_name,
-        'label' => $t("%label", array("%description" => $field_label)),
-        'description' => $t("%description", array("%description" => $field_description)),
+        'label' => $t("@label", array("@description" => $field_label)),
+        'description' => $t("@description", array("@description" => $field_description)),
         'required' => FALSE,
       );
       field_create_instance($field_instance);
-      $message = $t('Field %name was added to %bundle successfully',
+      $message = $t('Field @name was successfully added to @bundle',
                     array(
-                      '%name' => $field_name,
-                      '%bundle' => $bundle_name,
+                      '@name' => $field_name,
+                      '@bundle' => $bundle_name,
                     ));
       drupal_set_message($message);
     }

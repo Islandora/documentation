@@ -27,11 +27,11 @@ function islandora_get_default_rdf_mapping($bundle, $rdf_type) {
           'predicates' => array('dc11:identifier'),
           'datatype' => 'xsd:ID',
         ),
-        ISLANDORA_FEDORA_HAS_PARENT => array(
+        ISLANDORA_FEDORA_HAS_PARENT_FIELD => array(
           'predicates' => array('fedora:hasParent'),
           'datatype' => 'xsd:string',
         ),
-        ISLANDORA_PCDM_HAS_MEMBER => array(
+        ISLANDORA_PCDM_HAS_MEMBER_FIELD => array(
           'predicates' => array('pcdm:hasMember'),
           'datatype' => 'xsd:string',
         ),

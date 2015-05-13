@@ -10,10 +10,14 @@
  *
  * Creates shared fields for content types using MODS metadata.
  */
-function islandora_dc_install() {
+function islandora_mods_install() {
+  $t = get_t();
+
   $mods_field = array(
     'field_name' => ISLANDORA_MODS_FIELD,
     'type' => 'xml_field_xml',
   );
   field_create_field($mods_field);
+  drupal_set_message($t("Created field @field",
+                     array("@field" => ISLANDORA_MODS_FIELD)));
 }

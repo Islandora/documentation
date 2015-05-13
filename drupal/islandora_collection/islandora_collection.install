@@ -9,14 +9,14 @@
  * Implements hook_install().
  */
 function islandora_collection_install() {
-  module_load_include('inc', 'islandora', 'include/fields.inc');
+  module_load_include('inc', 'islandora', 'include/fields');
   module_load_include('inc', 'islandora_collection', 'include/relations');
 
   // Ensure the collection node type is available.
   node_types_rebuild();
 
   // Add default Islandora fields.
-  islandora_add_fields_to_bundle(ISLANDORA_BASIC_IMAGE_CONTENT_TYPE);
+  islandora_add_fields_to_bundle(ISLANDORA_COLLECTION_CONTENT_TYPE);
 
   // Create the pcdm:hasMember relation.
   islandora_collection_define_relations();

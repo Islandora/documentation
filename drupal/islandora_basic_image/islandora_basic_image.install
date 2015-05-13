@@ -9,7 +9,7 @@
  * Implements hook_install().
  */
 function islandora_basic_image_install() {
-  module_load_include('inc', 'islandora', 'include/fields.inc');
+  module_load_include('inc', 'islandora', 'include/fields');
 
   // Ensure the basic image node type is available.
   node_types_rebuild();
@@ -22,6 +22,8 @@ function islandora_basic_image_install() {
     'type' => 'image',
   );
   field_create_field($medium_size_field);
+  drupal_set_message($t("Created field @field",
+                     array("@field" => ISLANDORA_BASIC_IMAGE_MEDIUM_SIZE_FIELD)));
 
   // Add fields instances to bundle.
   if (field_info_field(ISLANDORA_BASIC_IMAGE_MEDIUM_SIZE_FIELD)) {
@@ -34,7 +36,11 @@ function islandora_basic_image_install() {
       'required' => FALSE,
     );
     field_create_instance($medium_size_field_instance);
-    drupal_set_message($t('Field %name was created successfully', array('%name' => ISLANDORA_BASIC_IMAGE_MEDIUM_SIZE_FIELD)));
+    drupal_set_message($t('Field @name was successfully added to @bundle',
+                          array(
+                            '@name' => ISLANDORA_BASIC_IMAGE_MEDIUM_SIZE_FIELD,
+                            '@bundle' => ISLANDORA_BASIC_IMAGE_CONTENT_TYPE,
+                          )));
   }
 
   islandora_add_fields_to_bundle(ISLANDORA_BASIC_IMAGE_CONTENT_TYPE);

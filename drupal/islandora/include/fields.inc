@@ -22,6 +22,10 @@ function islandora_add_fields_to_bundle($bundle_name) {
       'label' => 'Thumbnail',
       'description' => 'Thumbnail image',
     ),
+    ISLANDORA_FEDORA_PATH_FIELD => array(
+      'label' => 'Fedora Path',
+      'description' => 'Path to resource in Fedora 4',
+    ),
     ISLANDORA_FEDORA_HAS_PARENT_FIELD => array(
       'label' => 'fedora:hasParent',
       'description' => 'Parent resource in Fedora 4',
@@ -29,6 +33,7 @@ function islandora_add_fields_to_bundle($bundle_name) {
     ISLANDORA_PCDM_HAS_MEMBER_FIELD => array(
       'label' => 'pcdm:hasMember',
       'description' => 'Child resources in Fedora 4',
+      'cardinality' => FIELD_CARDINALITY_UNLIMITED,
     ),
   );
 
@@ -42,15 +47,15 @@ function islandora_add_fields_to_bundle($bundle_name) {
         'field_name' => $field_name,
         'entity_type' => 'node',
         'bundle' => $bundle_name,
-        'label' => $t("%label", array("%description" => $field_label)),
-        'description' => $t("%description", array("%description" => $field_description)),
+        'label' => $t("@label", array("@label" => $field_label)),
+        'description' => $t("@description", array("@description" => $field_description)),
         'required' => FALSE,
       );
       field_create_instance($field_instance);
-      $message = $t('Field %name was added to %bundle successfully',
+      $message = $t('Field @name was added to @bundle successfully',
                     array(
-                      '%name' => $field_name,
-                      '%bundle' => $bundle_name,
+                      '@name' => $field_name,
+                      '@bundle' => $bundle_name,
                     ));
       drupal_set_message($message);
     }

@@ -11,6 +11,8 @@
  * Creates shared fields for content types using DC metadata.
  */
 function islandora_dc_install() {
+  $t = get_t();
+
   $field_names = array(
     ISLANDORA_DC_CONTRIBUTOR_FIELD,
     ISLANDORA_DC_COVERAGE_FIELD,
@@ -36,5 +38,7 @@ function islandora_dc_install() {
       'cardinality' => FIELD_CARDINALITY_UNLIMITED,
     );
     field_create_field($field);
+    drupal_set_message($t("Created field @field",
+                       array("@field" => $field_name)));
   }
 }
