@@ -9,6 +9,8 @@
  * Implements hook_install().
  */
 function islandora_basic_image_install() {
+  module_load_include('inc', 'islandora', 'include/fields.inc');
+
   // Ensure the basic image node type is available.
   node_types_rebuild();
 
@@ -35,16 +37,5 @@ function islandora_basic_image_install() {
     drupal_set_message($t('Field %name was created successfully', array('%name' => ISLANDORA_BASIC_IMAGE_MEDIUM_SIZE_FIELD)));
   }
 
-  if (field_info_field(ISLANDORA_TN_FIELD)) {
-    $tn_field_instance = array(
-      'field_name' => ISLANDORA_TN_FIELD,
-      'entity_type' => 'node',
-      'bundle' => ISLANDORA_BASIC_IMAGE_CONTENT_TYPE,
-      'label' => $t("Thumbnail"),
-      'description' => $t("A thumbnail for the Fedora resource"),
-      'required' => FALSE,
-    );
-    field_create_instance($tn_field_instance);
-    drupal_set_message($t('Field %name was created successfully', array('%name' => ISLANDORA_TN_FIELD)));
-  }
+  islandora_add_fields_to_bundle(ISLANDORA_BASIC_IMAGE_CONTENT_TYPE);
 }
