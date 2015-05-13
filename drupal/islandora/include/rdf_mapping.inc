@@ -13,7 +13,7 @@
  * @param string $rdf_type
  *   The RDF type to associate with the bundle.
  *
- * return array
+ * @return array
  *   The default RDF mapping for Islandora content types.
  */
 function islandora_get_default_rdf_mapping($bundle, $rdf_type) {
@@ -25,7 +25,7 @@ function islandora_get_default_rdf_mapping($bundle, $rdf_type) {
         'rdftype' => array($rdf_type),
         'uuid' => array(
           'predicates' => array('dc11:identifier'),
-          'datatype' => 'xsd:ID'
+          'datatype' => 'xsd:ID',
         ),
         ISLANDORA_FEDORA_HAS_PARENT => array(
           'predicates' => array('fedora:hasParent'),

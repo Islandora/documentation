@@ -50,24 +50,12 @@ function islandora_collection_rdf_mapping() {
  * Implements hook_insert().
  */
 function islandora_collection_insert($node) {
-  /*
-  if (isset($_SERVER['HTTP_IGNORE_HOOKS']) && strcmp(strtolower($_SERVER['HTTP_IGNORE_HOOKS']), "true") == 0) {
-    dd("IGNORING SAVING THE COLLECTION");
-  }
-  dd("SAVING A COLLECTION");
-  dd($node);
-   */
+
 }
 
 /**
  * Implements hook_update().
  */
 function islandora_collection_update($node) {
-  /*
-  if (isset($_SERVER['HTTP_IGNORE_HOOKS']) && strcmp(strtolower($_SERVER['HTTP_IGNORE_HOOKS']), "true") == 0) {
-    dd("IGNORING UPDATING THE COLLECTION");
-  }
-  dd("UPDATING A COLLECTION");
-  dd($node);
-  */
+
 }
