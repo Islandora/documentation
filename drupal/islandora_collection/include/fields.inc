@@ -9,8 +9,6 @@
  * Attaches default fields for this module's content type.
  */
 function islandora_collection_attach_default_fields() {
-  module_load_include('inc', 'islandora_dcterms', 'include/fields');
-
   $t = get_t();
 
   // Add thumbnail field.
@@ -40,7 +38,4 @@ function islandora_collection_attach_default_fields() {
     field_create_instance($mods_field_instance);
     drupal_set_message($t('Field %name was created successfully', array('%name' => ISLANDORA_MODS_FIELD)));
   }
-
-  // Add dcterms fields.
-  islandora_dcterms_attach_fields_to_bundle(ISLANDORA_COLLECTION_CONTENT_TYPE);
 }

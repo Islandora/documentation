@@ -9,8 +9,6 @@
  * Implements hook_install().
  */
 function islandora_basic_image_install() {
-  module_load_include('inc', 'islandora_dcterms', 'include/fields');
-
   // Ensure the basic image node type is available.
   node_types_rebuild();
 
@@ -62,6 +60,4 @@ function islandora_basic_image_install() {
     field_create_instance($mods_field_instance);
     drupal_set_message($t('Field %name was created successfully', array('%name' => ISLANDORA_MODS_FIELD)));
   }
-
-  islandora_dcterms_attach_fields_to_bundle(ISLANDORA_BASIC_IMAGE_CONTENT_TYPE);
 }

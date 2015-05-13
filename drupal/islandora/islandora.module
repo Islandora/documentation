@@ -7,6 +7,7 @@
 
 define('ISLANDORA_NAMESPACE', 'http://islandora.ca/ontology/v2/');
 define('ISLANDORA_FEDORA_NAMESPACE', 'http://fedora.info/definitions/v4/repository#');
+define('ISLANDORA_PCDM_NAMESPACE', 'http://pcdm.org/models#');
 define('ISLANDORA_TN_FIELD', 'field_tn');
 define('ISLANDORA_MODS_FIELD', 'field_mods');
 define('ISLANDORA_FEDORA_HAS_PARENT', 'field_fedora_has_parent');
@@ -29,7 +30,8 @@ function islandora_ctools_plugin_api($owner, $api) {
 function islandora_rdf_namespaces() {
   return array(
     'islandora' => ISLANDORA_NAMESPACE,
-    'fedora' => FEDORA_NAMESPACE,
+    'fedora' => ISLANDORA_FEDORA_NAMESPACE,
+    'pcdm' => ISLANDORA_PCDM_NAMESPACE,
   );
 }
 

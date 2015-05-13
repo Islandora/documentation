@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Islandora module for working with DC Metadata.
+ */
+
+define('ISLANDORA_DC_NAMESPACE', 'http://purl.org/dc/elements/1.1/');
+define('ISLANDORA_DC_NAMESPACE_PREFIX', 'dc11');
+define('ISLANDORA_DC_CONTRIBUTOR_FIELD', 'field_dc_contributor');
+define('ISLANDORA_DC_COVERAGE_FIELD', 'field_dc_coverage');
+define('ISLANDORA_DC_CREATOR_FIELD', 'field_dc_creator');
+define('ISLANDORA_DC_DATE_FIELD', 'field_dc_date');
+define('ISLANDORA_DC_DESCRIPTION_FIELD', 'field_dc_description');
+define('ISLANDORA_DC_FORMAT_FIELD', 'field_dc_format');
+define('ISLANDORA_DC_IDENTIFIER_FIELD', 'field_dc_identifier');
+define('ISLANDORA_DC_LANGUAGE_FIELD', 'field_dc_language');
+define('ISLANDORA_DC_PUBLISHER_FIELD', 'field_dc_publisher');
+define('ISLANDORA_DC_RELATION_FIELD', 'field_dc_relation');
+define('ISLANDORA_DC_RIGHTS_FIELD', 'field_dc_rights');
+define('ISLANDORA_DC_SOURCE_FIELD', 'field_dc_source');
+define('ISLANDORA_DC_SUBJECT_FIELD', 'field_dc_subject');
+define('ISLANDORA_DC_TITLE_FIELD', 'field_dc_title');
+define('ISLANDORA_DC_TYPE_FIELD', 'field_dc_type');

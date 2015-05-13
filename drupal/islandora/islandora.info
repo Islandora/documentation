@@ -11,4 +11,4 @@ dependencies[] = views_ui
 dependencies[] = rdfui
 dependencies[] = xml_field
 dependencies[] = xpath_field
-dependencies[] = islandora_dcterms
+dependencies[] = islandora_dc
