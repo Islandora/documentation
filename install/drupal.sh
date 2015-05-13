@@ -85,6 +85,8 @@ cd ../../modules
 # Islandora modules
 cp -R "$HOME_DIR"/islandora/drupal/* .
 drush -y en islandora
+drush -y en islandora_dc
+drush -y en islandora_mods
 drush -y en islandora_basic_image
 drush -y en islandora_collection
 
