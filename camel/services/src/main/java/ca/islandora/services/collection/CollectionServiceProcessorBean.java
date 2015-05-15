@@ -8,6 +8,12 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.fcrepo.camel.FcrepoHeaders;
 import org.json.simple.JSONObject;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.ServletException;
@@ -132,5 +138,11 @@ public class CollectionServiceProcessorBean {
         // Format message in preparation to be sent to Hibernate.
         exchange.getIn().removeHeaders("*");
         exchange.getIn().setBody(map);
+    }
+    
+    public void processNodeToMap(Exchange exchange) throws JsonParseException, JsonMappingException, IOException {
+        final ObjectMapper objectMapper = new ObjectMapper();
+        final Map<?, ?> decoded = objectMapper.readValue(exchange.getIn().getBody(String.class), Map.class);
+        exchange.getIn().setBody(decoded, Map.class);
     }
 }

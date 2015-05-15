@@ -64,15 +64,13 @@ drush dl xml_field
 # XPath Field module
 git clone https://github.com/Islandora-Labs/xpath_field.git
 
-# Relation
-drush dl relation
-drush -y en relation_ui
-
 drush dl field_permissions
 
 drush dl field_readonly
 
 drush dl rdfx
+
+drush dl hook_post_action
 
 # Undocumented dependency for rdfx on ARC2 for RDF generation.
 cd ../libraries

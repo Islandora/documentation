@@ -47,15 +47,35 @@ function islandora_collection_rdf_mapping() {
 }
 
 /**
- * Implements hook_insert().
+ * Implements hook_node_postinsert().
  */
-function islandora_collection_insert($node) {
+function islandora_collection_node_postinsert($node) {
+  // Exit early if it's not a collection.
+  if (strcmp($node->type, ISLANDORA_COLLECTION_CONTENT_TYPE) != 0) {
+    return;
+  }
 
+  $nodes = entity_uuid_load('node', array($node->uuid));
+
+  // Exit early if the node never was successfully inserted in the database.
+  if (empty($nodes)) {
+    return;
+  }
+
+  $node = array_pop($nodes);
+  $response = drupal_http_request("http://localhost:8080/islandora-services/rest/collection",
+                                  array(
+                                    'method' => 'POST',
+                                    'data' => json_encode($node),
+                                  ));
+
+  dd("RESPONSE");
+  dd($response->data);
 }
 
 /**
  * Implements hook_update().
  */
-function islandora_collection_update($node) {
-
+function islandora_collection_node_postupdate($node) {
+  dd("FROM POST UPDATE HOOK");
 }

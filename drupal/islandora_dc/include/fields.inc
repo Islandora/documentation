@@ -12,10 +12,7 @@
  *   The name of the bundle to give the fields.
  */
 function islandora_dc_add_fields_to_bundle($bundle_name) {
-
-  // If this gets called from an install hook, we can't guarantee the t's
-  // existance.
-  $t = get_t();
+  module_load_include('inc', 'islandora', 'include/fields');
 
   // Big list of field names/labels/descriptions.
   $field_data = array(
@@ -86,22 +83,6 @@ function islandora_dc_add_fields_to_bundle($bundle_name) {
     $field_label = $data['label'];
     $field_description = $data['description'];
 
-    if (field_info_field($field_name)) {
-      $field_instance = array(
-        'field_name' => $field_name,
-        'entity_type' => 'node',
-        'bundle' => $bundle_name,
-        'label' => $t("@label", array("@description" => $field_label)),
-        'description' => $t("@description", array("@description" => $field_description)),
-        'required' => FALSE,
-      );
-      field_create_instance($field_instance);
-      $message = $t('Field @name was successfully added to @bundle',
-                    array(
-                      '@name' => $field_name,
-                      '@bundle' => $bundle_name,
-                    ));
-      drupal_set_message($message);
-    }
+    islandora_add_field_to_bundle($bundle_name, $field_name, $field_label, $field_description);
   }
 }

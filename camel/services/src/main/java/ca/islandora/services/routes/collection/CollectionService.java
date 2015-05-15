@@ -19,16 +19,23 @@ public class CollectionService extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         
+        from("direct:derp")
+            .transform().simple("DERPADOODOO");
+        
         from("direct:createCollection")
             .description("Creates a Colleciton node in both Fedora and Drupal and lines them up in the db.")
-            .transacted()
-            .beanRef("collectionServiceProcessor", "processForDrupalPOST")
-            .recipientList(simple("http4:{{drupal.baseurl}}/node/$simple{property.collectionUUID}"))
-            .beanRef("collectionServiceProcessor", "processForFedoraPOST")
-            .to("seda:toFedora")
-            .beanRef("collectionServiceProcessor", "processForHibernatePOST")
-            .to("hibernate:ca.islandora.services.uuid.UUIDMap")
-            .marshal().json(JsonLibrary.Jackson);
+            //.log("RECEIVED: ${body}")
+            .beanRef("collectionServiceProcessor", "processNodeToMap")
+            .log("PROCESSED: ${body}")
+            .transform().simple("{\"msg\": \"YOU DID IT\"}");
+//            .transacted()
+//            .beanRef("collectionServiceProcessor", "processForDrupalPOST")
+//            .recipientList(simple("http4:{{drupal.baseurl}}/node/$simple{property.collectionUUID}"))
+//            .beanRef("collectionServiceProcessor", "processForFedoraPOST")
+//            .to("seda:toFedora")
+//            .beanRef("collectionServiceProcessor", "processForHibernatePOST")
+//            .to("hibernate:ca.islandora.services.uuid.UUIDMap")
+//            .marshal().json(JsonLibrary.Jackson);
         
         from("seda:toFedora")
             .description("Ducks out of a transacted thread for Fedora calls so TransactionManagers don't collide.")

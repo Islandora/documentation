@@ -16,9 +16,12 @@ public class CollectionEndpoint extends RouteBuilder {
     public void configure() throws Exception {
         rest("/collection/")
 
+        .get()
+            .to("direct:derp")
+
         .post("/")
-            .description("Creates a collection off the fcrepo root.")
-            .consumes("text/turtle")
+            .description("Creates a collection off the fcrepo root")
+            .consumes("application/json")
             .produces("application/json")
             .to("direct:createCollection")
             

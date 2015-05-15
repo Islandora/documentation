@@ -17,7 +17,4 @@ function islandora_collection_install() {
 
   // Add default Islandora fields.
   islandora_add_fields_to_bundle(ISLANDORA_COLLECTION_CONTENT_TYPE);
-
-  // Create the pcdm:hasMember relation.
-  islandora_collection_define_relations();
 }
