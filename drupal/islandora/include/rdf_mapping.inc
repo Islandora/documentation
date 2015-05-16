@@ -10,13 +10,26 @@
  *
  * @param string $bundle
  *   The bundle to associate with the RDF mapping.
- * @param string $rdf_type
- *   The RDF type to associate with the bundle.
+ * @param array $rdf_types
+ *   RDF types to apply on top of the Fedora defaults.
  *
  * @return array
  *   The default RDF mapping for Islandora content types.
  */
 function islandora_get_default_rdf_mapping($bundle, $rdf_types) {
+  $default_rdf_types = array(
+    'ldp:RDFSource',
+    'ldp:Container',
+    'nt:hierarchyNode',
+    'nt:folder',
+    'nt:base',
+    'mix:referenceable',
+    'fedora:Resource',
+    'fedora:Container',
+  );
+
+  $rdf_types = array_merge($default_rdf_types, $rdf_types);
+
   return array(
     array(
       'type' => 'node',
@@ -24,7 +37,7 @@ function islandora_get_default_rdf_mapping($bundle, $rdf_types) {
       'mapping' => array(
         'rdftype' => $rdf_types,
         'uuid' => array(
-          'predicates' => array('fedora:uuid'),
+          'predicates' => array('nfo:uuid'),
           'datatype' => 'xsd:string',
         ),
         ISLANDORA_FEDORA_HAS_PARENT_FIELD => array(

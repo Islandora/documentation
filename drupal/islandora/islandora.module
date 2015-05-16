@@ -13,6 +13,14 @@ define('ISLANDORA_PCDM_NAMESPACE', 'http://pcdm.org/models#');
 define('ISLANDORA_PCDM_NAMESPACE_PREFIX', 'pcdm');
 define('ISLANDORA_NFO_NAMESPACE', 'http://www.semanticdesktop.org/ontologies/2007/03/22/nfo/v1.2/');
 define('ISLANDORA_NFO_NAMESPACE_PREFIX', 'nfo');
+define('ISLANDORA_LDP_NAMESPACE', 'http://www.w3.org/ns/ldp#');
+define('ISLANDORA_LDP_NAMESPACE_PREFIX', 'ldp');
+define('ISLANDORA_MIX_NAMESPACE', 'http://www.jcp.org/jcr/mix/1.0');
+define('ISLANDORA_MIX_NAMESPACE_PREFIX', 'mix');
+define('ISLANDORA_NT_NAMESPACE', 'http://www.jcp.org/jcr/nt/1.0');
+define('ISLANDORA_NT_NAMESPACE_PREFIX', 'nt');
+define('ISLANDORA_PCDM_COLLECTION_RDF_TYPE', 'pcdm:Collection');
+define('ISLANDORA_PCDM_OBJECT_RDF_TYPE', 'pcdm:Object');
 define('ISLANDORA_TN_FIELD', 'field_tn');
 define('ISLANDORA_FEDORA_PATH_FIELD', 'field_fedora_path');
 define('ISLANDORA_FEDORA_HAS_PARENT_FIELD', 'field_fedora_has_parent');
@@ -38,6 +46,9 @@ function islandora_rdf_namespaces() {
     ISLANDORA_FEDORA_NAMESPACE_PREFIX => ISLANDORA_FEDORA_NAMESPACE,
     ISLANDORA_PCDM_NAMESPACE_PREFIX => ISLANDORA_PCDM_NAMESPACE,
     ISLANDORA_NFO_NAMESPACE_PREFIX => ISLANDORA_NFO_NAMESPACE,
+    ISLANDORA_NT_NAMESPACE_PREFIX => ISLANDORA_NT_NAMESPACE,
+    ISLANDORA_MIX_NAMESPACE_PREFIX => ISLANDORA_MIX_NAMESPACE,
+    ISLANDORA_LDP_NAMESPACE_PREFIX => ISLANDORA_LDP_NAMESPACE,
   );
 }
 

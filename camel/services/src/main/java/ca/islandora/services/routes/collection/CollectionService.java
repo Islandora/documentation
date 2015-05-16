@@ -23,11 +23,12 @@ public class CollectionService extends RouteBuilder {
             .transform().simple("DERPADOODOO");
         
         from("direct:createCollection")
-            .description("Creates a Colleciton node in both Fedora and Drupal and lines them up in the db.")
-            //.log("RECEIVED: ${body}")
-            .beanRef("collectionServiceProcessor", "processNodeToMap")
-            .log("PROCESSED: ${body}")
-            .transform().simple("{\"msg\": \"YOU DID IT\"}");
+            .description("Creates a Collection node in Fedora from a Drupal node.")
+            .beanRef("collectionServiceProcessor", "deserializeNode")
+            .beanRef("collectionServiceProcessor", "constructSparql")
+            .log("SPARQL: ${body}")
+            .to("fcrepo:{{fcrepo.baseurl}}")
+            .log("RESULTS: ${body}");
 //            .transacted()
 //            .beanRef("collectionServiceProcessor", "processForDrupalPOST")
 //            .recipientList(simple("http4:{{drupal.baseurl}}/node/$simple{property.collectionUUID}"))

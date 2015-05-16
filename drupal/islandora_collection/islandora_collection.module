@@ -43,7 +43,11 @@ function islandora_collection_form($node, array &$form_state) {
  */
 function islandora_collection_rdf_mapping() {
   module_load_include('inc', 'islandora', 'include/rdf_mapping');
-  return islandora_get_default_rdf_mapping(ISLANDORA_COLLECTION_CONTENT_TYPE, ISLANDORA_COLLECTION_RDF_TYPE);
+  $rdf_types = array(
+    ISLANDORA_PCDM_COLLECTION_RDF_TYPE,
+    ISLANDORA_COLLECTION_RDF_TYPE,
+  );
+  return islandora_get_default_rdf_mapping(ISLANDORA_COLLECTION_CONTENT_TYPE, $rdf_types);
 }
 
 /**
@@ -63,6 +67,7 @@ function islandora_collection_node_postinsert($node) {
   }
 
   $node = array_pop($nodes);
+  $node->rdf_namespaces = rdf_get_namespaces();
   $response = drupal_http_request("http://localhost:8080/islandora-services/rest/collection",
                                   array(
                                     'method' => 'POST',

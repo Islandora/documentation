@@ -34,5 +34,9 @@ function islandora_basic_image_form($node, array &$form_state) {
  */
 function islandora_basic_image_rdf_mapping() {
   module_load_include('inc', 'islandora', 'include/rdf_mapping');
-  return islandora_get_default_rdf_mapping(ISLANDORA_BASIC_IMAGE_CONTENT_TYPE, ISLANDORA_BASIC_IMAGE_RDF_TYPE);
+  $rdf_types = array(
+    ISLANDORA_PCDM_OBJECT_RDF_TYPE,
+    ISLANDORA_BASIC_IMAGE_RDF_TYPE,
+  );
+  return islandora_get_default_rdf_mapping(ISLANDORA_BASIC_IMAGE_CONTENT_TYPE, $rdf_types);
 }
