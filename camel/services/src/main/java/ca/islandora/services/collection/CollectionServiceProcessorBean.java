@@ -1,10 +1,13 @@
 package ca.islandora.services.collection;
 
 import org.apache.camel.Exchange;
+
 import static org.apache.camel.component.http4.HttpMethods.POST;
+
 import org.apache.jena.atlas.io.IndentedWriter;
 
 import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hp.hpl.jena.graph.NodeFactory;
@@ -37,10 +40,16 @@ public class CollectionServiceProcessorBean {
      * @throws JsonMappingException
      * @throws IOException
      */
-    public void deserializeNode(Exchange exchange) throws JsonParseException, JsonMappingException, IOException {
+    public Map<?, ?> deserializeNode(String nodeJson) throws JsonParseException, JsonMappingException, IOException {
         final ObjectMapper objectMapper = new ObjectMapper();
-        final Map<?, ?> decoded = objectMapper.readValue(exchange.getIn().getBody(String.class), Map.class);
-        exchange.getIn().setBody(decoded, Map.class);
+        final Map<?, ?> decoded = objectMapper.readValue(nodeJson, Map.class);
+        return decoded;
+    }
+    
+    public String serializeNode(Map<?, ?> node) throws JsonProcessingException {
+        final ObjectMapper objectMapper = new ObjectMapper();
+        final String encoded = objectMapper.writeValueAsString(node);
+        return encoded;
     }
     
     /**
@@ -49,10 +58,7 @@ public class CollectionServiceProcessorBean {
      * @param exchange
      * @throws UnsupportedEncodingException
      */
-    public void constructSparql(Exchange exchange) throws UnsupportedEncodingException {
-        @SuppressWarnings("unchecked")
-        final Map<String, ?> node = exchange.getIn().getBody(Map.class);
-
+    public String nodeToSparqlUpdate(Map<?, ?> node) throws UnsupportedEncodingException {
         @SuppressWarnings("unchecked")
         final Map<String, ?> rdfMapping = (Map<String, ?>)node.get("rdf_mapping");
 
@@ -131,12 +137,7 @@ public class CollectionServiceProcessorBean {
 
         final ByteArrayOutputStream sparqlUpdate = new ByteArrayOutputStream();
         updateRequest.output(new IndentedWriter(sparqlUpdate));;
-        final String query = sparqlUpdate.toString("UTF-8");
-
-        exchange.getIn().removeHeaders("*");
-        exchange.getIn().setHeader(Exchange.HTTP_METHOD, POST);
-        exchange.getIn().setHeader(Exchange.CONTENT_TYPE, "application/sparql-update");
-        exchange.getIn().setBody(query, String.class);
+        return sparqlUpdate.toString("UTF-8");
     }
 
     /**

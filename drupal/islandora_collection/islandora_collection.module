@@ -35,40 +35,7 @@ function islandora_collection_node_info() {
  * Implements hook_form().
  */
 function islandora_collection_form($node, array &$form_state) {
-  $form = node_content_form($node, $form_state);
-  $form['title']['#weight'] = -10;
-  $form['obj'] = array(
-    '#name' => 'obj',
-    '#type' => 'file',
-    '#title' => t('Image'),
-    '#description' => t('This file will be set as the "obj" pcdm:File for this object.'),
-    '#weight' => -5,
-  );
-  return $form;
-}
-
-function islandora_collection_form_node_form_alter(&$form, &$form_state) {
-  $form['actions']['submit']['#submit'][0] = 'islandora_collection_node_form_submit';
-}
-
-function islandora_collection_node_form_submit($form, &$form_state) {
-  //dsm($_SERVER);
-  //dsm($_POST);
-  //dsm($_FILES);
-  //dsm($form);
-  //dsm($form_state);
-  $url_front = "http://localhost:8080/islandora-services/rest/collection";
-  $options['method'] = 'POST';
-  $options['data'] = array(
-    'node' => json_encode($form['#node']),
-    'files' => array(
-      'obj' => $_FILES['obj']['tmp_name'],
-    ),
-  );
-  httprl_request($url_front, $options);
-  $request = httprl_send_request();
-  //echo httprl_pr($request);
-  dsm("IN THE SUBMIT");
+  return node_content_form($node, $form_state);
 }
 
 /**
@@ -101,14 +68,13 @@ function islandora_collection_node_postinsert($node) {
 
   $node = array_pop($nodes);
   $node->rdf_namespaces = rdf_get_namespaces();
-  $response = drupal_http_request("http://localhost:8080/islandora-services/rest/collection",
-                                  array(
-                                    'method' => 'POST',
-                                    'data' => json_encode($node),
-                                  ));
-
-  dd("RESPONSE");
-  dd($response->data);
+  httprl_request("http://localhost:8080/islandora-services/rest/collection",
+                 array(
+                   'method' => 'POST',
+                   'data' => json_encode($node),
+                 ));
+  $response = httprl_send_request();
+  dd($response);
 }
 
 /**

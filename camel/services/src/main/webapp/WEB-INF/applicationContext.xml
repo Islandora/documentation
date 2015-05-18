@@ -11,13 +11,13 @@
   </bean>
   
   <!-- Fedora Component Config -->
-  <!-- <bean id="fcrepoTxManager" class="org.fcrepo.camel.FcrepoTransactionManager">
+  <bean id="fcrepoTxManager" class="org.fcrepo.camel.FcrepoTransactionManager">
     <property name="baseUrl" value="http://${fcrepo.baseurl}"/>
   </bean>
 
   <bean id="fcrepo" class="org.fcrepo.camel.FcrepoComponent">
     <property name="transactionManager" ref="fcrepoTxManager"/>
-  </bean> -->
+  </bean>
   <!-- End Fedora Component Config -->
   
   <bean id="collectionServiceProcessor" class="ca.islandora.services.collection.CollectionServiceProcessorBean"/>
