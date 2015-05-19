@@ -53,6 +53,17 @@ function islandora_rdf_namespaces() {
 }
 
 /**
+ * Implements hook_entity_load().
+ */
+function islandora_entity_load($entities, $type) {
+  foreach ($entities as $entity) {
+    if (strcmp($type, "node") == 0) {
+      $entity->rdf_namespaces = rdf_get_namespaces();
+    }
+  }
+}
+
+/**
  * Implements hook_default_services_endpoint().
  */
 function islandora_default_services_endpoint() {

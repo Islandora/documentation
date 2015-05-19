@@ -1,9 +1,5 @@
 package ca.islandora.services.collection;
 
-import org.apache.camel.Exchange;
-
-import static org.apache.camel.component.http4.HttpMethods.POST;
-
 import org.apache.jena.atlas.io.IndentedWriter;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -40,17 +36,14 @@ public class CollectionServiceProcessorBean {
      * @throws JsonMappingException
      * @throws IOException
      */
-    public Map<?, ?> deserializeNode(String nodeJson) throws JsonParseException, JsonMappingException, IOException {
+    public Map<String, ?> deserializeNode(String nodeJson) throws JsonParseException, JsonMappingException, IOException {
         final ObjectMapper objectMapper = new ObjectMapper();
-        final Map<?, ?> decoded = objectMapper.readValue(nodeJson, Map.class);
+        @SuppressWarnings("unchecked")
+        final Map<String, ?> decoded = objectMapper.readValue(nodeJson, Map.class);
         return decoded;
     }
     
-    public String serializeNode(Map<?, ?> node) throws JsonProcessingException {
-        final ObjectMapper objectMapper = new ObjectMapper();
-        final String encoded = objectMapper.writeValueAsString(node);
-        return encoded;
-    }
+
     
     /**
      * Constructs a SPARQL update query from a Drupal node.
@@ -58,19 +51,25 @@ public class CollectionServiceProcessorBean {
      * @param exchange
      * @throws UnsupportedEncodingException
      */
-    public String nodeToSparqlUpdate(Map<?, ?> node) throws UnsupportedEncodingException {
+    public String nodeToSparqlUpdate(Map<String, ?> node) throws UnsupportedEncodingException {
+        // Get the rdf mapping from the node.
         @SuppressWarnings("unchecked")
         final Map<String, ?> rdfMapping = (Map<String, ?>)node.get("rdf_mapping");
 
+        // Get the rdf namespaces and prefixes from the node.
         @SuppressWarnings("unchecked")
         final Map<String, String> namespaces = (Map<String, String>)node.get("rdf_namespaces");
 
+        // Declare the triples to insert and remove for the SPARQL update query.
         final QuadDataAcc triplesToInsert = new QuadDataAcc();
         final QuadAcc triplesToRemove = new QuadAcc();
 
+        // Incrementing counter for triples to remove so variables are unique.
         int counter = 0;
 
+        // Iterate over the mapping to collect triples.
         for (String key : rdfMapping.keySet()) {
+            // Handle the rdf types separately.
             if ("rdftype".equals(key)) {
                 triplesToRemove.addTriple(new Triple(NodeFactory.createURI(""),
                         NodeFactory.createURI(escapePrefix("rdf:type", namespaces)),
@@ -83,31 +82,40 @@ public class CollectionServiceProcessorBean {
                             NodeFactory.createURI(escapePrefix("rdf:type", namespaces)),
                             NodeFactory.createURI(escapePrefix(type, namespaces))));
                 }
+            // Ignore read only properties.
             } else if ("field_fedora_has_parent".equals(key) ||
                        "field_fedora_path".equals(key)) {
-                // Ignore read only properties.
                 continue;
+            // Handle field values
             } else {
+                // Get the particular rdf mapping, which can have a few different formats.
                 @SuppressWarnings("unchecked")
                 Map<String, ?> mapping = (Map<String, ?>) rdfMapping.get(key);
 
-                String type = (String) mapping.get("datatype");
+                //String type = (String) mapping.get("datatype");
 
+                // Grab the predicates from the mapping
                 @SuppressWarnings("unchecked")
                 List<String> predicates = (List<String>) mapping.get("predicates");
 
+                // Iterate over predicates, parsing out field/property values for each.
                 for (String predicate : predicates) {
+                    // Don't forget to escape the prefixes.  SPARQL updates in Fedora require namespaces
+                    // to be declared in full.
                     predicate = escapePrefix(predicate, namespaces);
+                    
                     triplesToRemove.addTriple(new Triple(NodeFactory.createURI(""),
                             NodeFactory.createURI(predicate),
                             NodeFactory.createVariable("o" + Integer.toString(counter))));
 
                     // Figure out what the heck this is, as it can be lots of things due to bad structure.
+                    // If it's a simple entity property (like uuid), it's just a string.
                     if (node.get(key) instanceof String) {
                         String value = (String) node.get(key);
                         triplesToInsert.addTriple(new Triple(NodeFactory.createURI(""),
                                 NodeFactory.createURI(predicate),
                                 NodeFactory.createLiteral(value)));
+                    // If it's a field, it's got a weird nested structure based on language.
                     } else if (node.get(key) instanceof Map<?, ?>) {
                         String language = (String) node.get("language");
                         @SuppressWarnings("unchecked")

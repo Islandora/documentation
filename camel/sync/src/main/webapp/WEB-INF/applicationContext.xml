@@ -8,6 +8,13 @@
        http://camel.apache.org/schema/spring
        http://camel.apache.org/schema/spring/camel-spring.xsd">
 
+	<!-- Spring - Camel Bridged Properties -->
+    <bean id="bridgePropertyPlaceholder" class="org.apache.camel.spring.spi.BridgePropertyPlaceholderConfigurer">
+      <property name="location" value="classpath:sync.properties"/>
+    </bean>
+  
+    <bean id="drupalNodeCreateProcessor" class="ca.islandora.sync.processors.DrupalNodeCreateProcessorBean" />
+    
     <camelContext xmlns="http://camel.apache.org/schema/spring" id="islandora-sync">
       <package>ca.islandora.sync.routes</package>
     </camelContext>

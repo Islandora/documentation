@@ -54,6 +54,11 @@ function islandora_collection_rdf_mapping() {
  * Implements hook_node_postinsert().
  */
 function islandora_collection_node_postinsert($node) {
+  if (isset($_SERVER['HTTP_IGNORE_HOOKS']) && strcmp(strtolower($_SERVER['HTTP_IGNORE_HOOKS']), "true") == 0) {
+    dd("IGNORING HOOK!");
+    return;
+  }
+
   // Exit early if it's not a collection.
   if (strcmp($node->type, ISLANDORA_COLLECTION_CONTENT_TYPE) != 0) {
     return;
@@ -67,7 +72,6 @@ function islandora_collection_node_postinsert($node) {
   }
 
   $node = array_pop($nodes);
-  $node->rdf_namespaces = rdf_get_namespaces();
   httprl_request("http://localhost:8080/islandora-services/rest/collection",
                  array(
                    'method' => 'POST',
@@ -82,4 +86,8 @@ function islandora_collection_node_postinsert($node) {
  */
 function islandora_collection_node_postupdate($node) {
   dd("FROM POST UPDATE HOOK");
+  if (isset($_SERVER['HTTP_IGNORE_HOOKS']) && strcmp(strtolower($_SERVER['HTTP_IGNORE_HOOKS']), "true") == 0) {
+    dd("IGNORING HOOK!");
+    return;
+  }
 }

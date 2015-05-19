@@ -47,6 +47,7 @@ mkdir -p sites/all/libraries
 cd sites/all/modules
 
 # Islandora dependencies
+drush dl httprl
 drush dl services
 
 # Entity
