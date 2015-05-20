@@ -1,8 +1,8 @@
-# Islandora Sync
+# Islandora Services
 
 ## Introduction
 
-Event driven middleware based on Apache Camel that synchronizes a Fedora 4 JCR with a Drupal CMS.
+Middleware web services based on Apache Camel that are utilized by hooks in the Islandora family of Drupal modules.
 
 ## Requirements
 
