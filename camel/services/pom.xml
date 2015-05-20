@@ -16,6 +16,15 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <camel.version>2.14.1</camel.version>
+    <spring.version>3.2.11.RELEASE</spring.version>
+    <activemq.version>5.10.0</activemq.version>
+    <fcrepo.version>4.1.1</fcrepo.version>
+    <jena.version>2.13.0</jena.version>
+    <slf4j.version>1.7.7</slf4j.version>
+    <log4j.version>1.2.17</log4j.version>
+    <javax.version>3.1.0</javax.version>
+    <apache.commons.version>1.10</apache.commons.version>
   </properties>
 
   <dependencies>
@@ -24,111 +33,89 @@
     <dependency>
       <groupId>org.apache.camel</groupId>
       <artifactId>camel-core</artifactId>
-      <version>2.14.0</version>
+      <version>${camel.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.camel</groupId>
       <artifactId>camel-spring</artifactId>
-      <version>2.14.0</version>
+      <version>${camel.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.camel</groupId>
       <artifactId>camel-stream</artifactId>
-      <version>2.14.0</version>
+      <version>${camel.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.camel</groupId>
       <artifactId>camel-jackson</artifactId>
-      <version>2.14.0</version>
+      <version>${camel.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.camel</groupId>
       <artifactId>camel-servlet</artifactId>
-      <version>2.14.0</version>
+      <version>${camel.version}</version>
     </dependency>
-
+    <dependency>
+    	<groupId>org.apache.camel</groupId>
+    	<artifactId>camel-http4</artifactId>
+    	<version>${camel.version}</version>
+    </dependency>
+    
     <!-- Fedora -->
     <dependency>
       <groupId>org.fcrepo.camel</groupId>
       <artifactId>fcrepo-camel</artifactId>
-      <version>4.1.1</version>
+      <version>${fcrepo.version}</version>
     </dependency>
     
-    <!-- MySQL -->
-    <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-      <version>5.1.35</version>
-    </dependency>
-
     <!-- Spring -->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-web</artifactId>
-      <version>4.1.5.RELEASE</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-orm</artifactId>
-      <version>4.1.5.RELEASE</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-tx</artifactId>
-      <version>4.1.5.RELEASE</version>
+      <version>${spring.version}</version>
     </dependency>
 
 	<!-- SPARQL -->
 	<dependency>
 	  <groupId>org.apache.jena</groupId>
 	  <artifactId>jena-arq</artifactId>
-	  <version>2.13.0</version>
+	  <version>${jena.version}</version>
 	</dependency>
 
     <!-- logging -->
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <version>1.7.10</version>
+      <version>${slf4j.version}</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-log4j12</artifactId>
-      <version>1.7.10</version>
+      <version>${slf4j.version}</version>
     </dependency>
     <dependency>
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
-      <version>1.2.17</version>
+      <version>${log4j.version}</version>
     </dependency>
 
     <!-- testing -->
     <dependency>
       <groupId>org.apache.camel</groupId>
       <artifactId>camel-test-spring</artifactId>
-      <version>2.14.0</version>
+      <version>${camel.version}</version>
       <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
-      <version>3.1.0</version>
-    </dependency>
-    <dependency>
-    	<groupId>org.apache.camel</groupId>
-    	<artifactId>camel-http4</artifactId>
-    	<version>2.14.0</version>
-    </dependency>
-    <dependency>
-    	<groupId>com.googlecode.json-simple</groupId>
-    	<artifactId>json-simple</artifactId>
-    	<version>1.1</version>
+      <version>${javax.version}</version>
     </dependency>
     <dependency>
     	<groupId>commons-codec</groupId>
     	<artifactId>commons-codec</artifactId>
-    	<version>1.10</version>
+    	<version>${apache.commons.version}</version>
     </dependency>
   </dependencies>
 
