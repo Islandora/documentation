@@ -1,4 +1,4 @@
-echo "Installing Islandora Services" 
+echo "Installing Islandora Services"
 
 HOME_DIR=$1
 
