@@ -123,6 +123,11 @@ public class DrupalNodeCreateProcessorBean {
                     @SuppressWarnings("unchecked")
                     List<Map<String, String>> rdfEntry = (List<Map<String, String>>) rdf.get(predicate);
                     
+                    // Carry on if there is no value for the predicate in Fedora.
+                    if (rdfEntry == null) {
+                        continue;
+                    }
+                    
                     // Figure out what the heck this is, as it can be lots of things due to bad structure.
                     // If it's a simple entity property (like title), it's just a string.
                     if (node.get(key) instanceof String) {

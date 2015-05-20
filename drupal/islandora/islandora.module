@@ -7,6 +7,8 @@
 
 define('ISLANDORA_NAMESPACE', 'http://islandora.ca/ontology/v2/');
 define('ISLANDORA_NAMESPACE_PREFIX', 'islandora');
+define('ISLANDORA_RDF_NAMESPACE', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#');
+define('ISLANDORA_RDF_NAMESPACE_PREFIX', 'rdf');
 define('ISLANDORA_FEDORA_NAMESPACE', 'http://fedora.info/definitions/v4/repository#');
 define('ISLANDORA_FEDORA_NAMESPACE_PREFIX', 'fedora');
 define('ISLANDORA_PCDM_NAMESPACE', 'http://pcdm.org/models#');
@@ -43,6 +45,7 @@ function islandora_ctools_plugin_api($owner, $api) {
 function islandora_rdf_namespaces() {
   return array(
     ISLANDORA_NAMESPACE_PREFIX => ISLANDORA_NAMESPACE,
+    ISLANDORA_RDF_NAMESPACE_PREFIX => ISLANDORA_RDF_NAMESPACE,
     ISLANDORA_FEDORA_NAMESPACE_PREFIX => ISLANDORA_FEDORA_NAMESPACE,
     ISLANDORA_PCDM_NAMESPACE_PREFIX => ISLANDORA_PCDM_NAMESPACE,
     ISLANDORA_NFO_NAMESPACE_PREFIX => ISLANDORA_NFO_NAMESPACE,
