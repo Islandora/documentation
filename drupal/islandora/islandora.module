@@ -62,6 +62,7 @@ function islandora_entity_load($entities, $type) {
   foreach ($entities as $entity) {
     if (strcmp($type, "node") == 0) {
       $entity->rdf_namespaces = rdf_get_namespaces();
+      $entity->pcdm_file_mapping = module_invoke_all("pcdm_file_mapping");
     }
   }
 }

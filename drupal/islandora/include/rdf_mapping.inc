@@ -16,7 +16,7 @@
  * @return array
  *   The default RDF mapping for Islandora content types.
  */
-function islandora_get_default_rdf_mapping($bundle, $rdf_types) {
+function islandora_get_default_rdf_mapping($bundle, array $rdf_types) {
   $default_rdf_types = array(
     'ldp:RDFSource',
     'ldp:Container',

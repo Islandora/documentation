@@ -84,7 +84,7 @@ function islandora_add_field_to_bundle($bundle_name, $field_name, $field_label, 
  * @param array $field_definition
  *   Field definition for the desired field.
  */
-function islandora_create_field($field_definition) {
+function islandora_create_field(array $field_definition) {
   // If this gets called from an install hook, we can't guarantee the t's
   // existance.
   $t = get_t();

@@ -55,7 +55,6 @@ function islandora_collection_rdf_mapping() {
  */
 function islandora_collection_node_postinsert($node) {
   if (isset($_SERVER['HTTP_IGNORE_HOOKS']) && strcmp(strtolower($_SERVER['HTTP_IGNORE_HOOKS']), "true") == 0) {
-    dd("IGNORING HOOK!");
     return;
   }
 
@@ -78,16 +77,13 @@ function islandora_collection_node_postinsert($node) {
                    'data' => json_encode($node),
                  ));
   $response = httprl_send_request();
-  dd($response);
 }
 
 /**
  * Implements hook_update().
  */
 function islandora_collection_node_postupdate($node) {
-  dd("FROM POST UPDATE HOOK");
   if (isset($_SERVER['HTTP_IGNORE_HOOKS']) && strcmp(strtolower($_SERVER['HTTP_IGNORE_HOOKS']), "true") == 0) {
-    dd("IGNORING HOOK!");
     return;
   }
 }
