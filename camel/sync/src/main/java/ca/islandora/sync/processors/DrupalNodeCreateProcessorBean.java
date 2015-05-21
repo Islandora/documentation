@@ -57,10 +57,10 @@ public class DrupalNodeCreateProcessorBean {
      * @throws JsonMappingException
      * @throws IOException
      */
-    public Map<String, Object> deserializeNode(String nodeJson) throws JsonParseException, JsonMappingException, IOException {
+    public Map<String, Object> deserializeMap(String mapJson) throws JsonParseException, JsonMappingException, IOException {
         final ObjectMapper objectMapper = new ObjectMapper();
         @SuppressWarnings("unchecked")
-        final Map<String, Object> decoded = objectMapper.readValue(nodeJson, Map.class);
+        final Map<String, Object> decoded = objectMapper.readValue(mapJson, Map.class);
         return decoded;
     }
     
@@ -181,6 +181,10 @@ public class DrupalNodeCreateProcessorBean {
             }
         }
         return node;
+    }
+    
+    public Map<String, Object> createNodeFromRdf(Map<String, Object> rdf) {
+        return rdf;
     }
     
     /**

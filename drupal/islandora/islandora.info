@@ -13,3 +13,4 @@ dependencies[] = xml_field
 dependencies[] = xpath_field
 dependencies[] = islandora_dc
 dependencies[] = islandora_mods
+dependencies[] = islandora_rdf_mapping_service
