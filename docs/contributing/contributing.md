@@ -12,7 +12,7 @@ If you would like to submit a use case for the Islandora and Fedora integration 
 
 ### Documentation
 
-You can contribute documentation in two different ways. One way is to create an issue [here](https://github.com/Islandora-labs/islandora/issues) assign the "documentation" label to the issue. Another way is to by pull request, as same as code contribution. All documentation resides in docs/sources.
+  You can contribute documentation in two different ways. One way is to create an issue [here](https://github.com/Islandora-labs/islandora/issues) assign the "documentation" label to the issue. Another way is to by pull request, as same as code contribution. All documentation resides in [`docs`](https://github.com/Islandora-Labs/islandora/tree/7.x-2.x/docs).
 
 
 ### Request a new feature

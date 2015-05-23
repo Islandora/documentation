@@ -48,7 +48,7 @@ The default VM login details are:
 ## Environment
 
 - Ubuntu 14.04
-- Drupal 7.34
+- Drupal 7.37
 - MySQL 5.5.41
 - Apache 2.26
 - Tomcat 7.0.52

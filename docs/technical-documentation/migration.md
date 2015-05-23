@@ -1,51 +1,35 @@
 ## fcrepo3 Object properties to fcrepo4
 
-| fcrepo 3         | fcrepo4              | Example                  |
-|------------------|----------------------|--------------------------|
-| PID              | dcterms:identifier   | yul:328697               |
-| state            | objState*            | Active                   |
-| label            | dcterms:title        | Elvis Presley            |
-| createDate       | fedora:created*      | 2015-03-16T20:11:06.683Z |
-| lastModifiedDate | fedora:lastModified* | 2015-03-16T20:11:06.683Z |
-| ownerId          | fedora:createdBy*    | nruest                   |
+| fcrepo 3         | fcrepo4                             | Example                  |
+|------------------|-------------------------------------|--------------------------|
+| PID              | dcterms:identifier                  | yul:328697               |
+| state            | fedoraaccess:objState               | Active                   |
+| label            | fedora3model:label†                 | Elvis Presley            |
+| createDate       | premis:hasDateCreatedByApplication  | 2015-03-16T20:11:06.683Z |
+| lastModifiedDate | metadataModification                | 2015-03-16T20:11:06.683Z |
+| ownerId          | fedora3model:ownerId†               | nruest                   |
 
-*immutable
-
-Notes:
-
-* Penn State ([fedora-migrate](https://github.com/projecthydra-labs/fedora-migrate))
-  * createDate -> dc:dateSubmitted
-  * lastModifiedDate -> dc:dateModified
-* createDate -> premis:hasDateCreatedByApplication
-* fedora:lastModified -> premis:hasEventDateTime + hasEventType == [migration](http://id.loc.gov/vocabulary/preservation/eventType/mig.html)
-* ownerId -> premis:hasAgentName + premis:hasAgentNote == [migration](http://id.loc.gov/vocabulary/preservation/eventType/mig.html)
-* Can we nest the combined events, or do they have to flat?
+† The `fedora3model` namespace is not a published namespace. It is a representation of the fcrepo3 namespace `info:fedora/fedora-system:def/model`. <br />
+‡ Not yet implemented
 
 ## fcrepo3 Datastream properties to fcrepo4
 
-| fcrepo3       | fcrepo4                                                    | Example                                        |
-|---------------|------------------------------------------------------------|------------------------------------------------|
-| DSID          | dcterms:identifier                                         | OBJ                                            |
-| Label         | dcterms:title                                              | ASC19109.tif                                   |
-| MIME Type     | fedora:mimeType*                                           | image/tiff                                     |
-| State         | objState                                                   | Active                                         |
-| Created       | fedora:created*                                            | 2015-03-16T20:11:06.683Z                       |
-|               | fedora:lastModified*                                       |                                                |
-| Versionable   | fedora:hasVersions*                                        | true                                           |
-| Format URI    | premis:formatDesignation                                   | info:pronom/fmt/156                            |
-| Alternate IDs | dcterms:identifier                                         |                                                |
-| Access URL    | dcterms:identifier                                         |                                                |
-| Checksum      | premis:hasMessageDigestAlgorithm + premis:hasMessageDigest | SHA1, c91342b705b15cb4f6ac5362cc6a47d9425aec86 |
 
-*immutable
+| fcrepo3       | fcrepo4                                                      | Example                                        |
+|---------------|--------------------------------------------------------------|------------------------------------------------|
+| DSID          | dcterms:identifier                                           | OBJ                                            |
+| Label         | dcterms:title‡                                               | ASC19109.tif                                   |
+| MIME Type     | ebucore:hasMimeType†                                         | image/tiff                                     |
+| State         | fedoraaccess:objState                                        | Active                                         |
+| Created       | premis:hasDateCreatedByApplication                           | 2015-03-16T20:11:06.683Z                       |
+| Versionable   | fedora:hasVersions‡                                          | true                                           |
+| Format URI    | premis:formatDesignation‡                                    | info:pronom/fmt/156                            |
+| Alternate IDs | dcterms:identifier‡                                          |                                                |
+| Access URL    | dcterms:identifier‡                                          |                                                |
+| Checksum      | premis:hasMessageDigestAlgorithm + premis:hasMessageDigest‡  | SHA1, c91342b705b15cb4f6ac5362cc6a47d9425aec86 |
 
-Notes:
-
-* Do we have a use for or need to migrate State?
-* Discuss fcrepo4 versioning
-* Discuss whether or not we need:
-  * Alternate IDs
-  * Access URL
+† The `fedora3model` namespace is not a published namespace. It is a representation of the fcrepo3 namespace `info:fedora/fedora-system:def/model`. <br />
+‡ Not yet implemented
 
 ## fcrepo3 RELS-EXT to fcrepo4 Mapping
 
@@ -161,18 +145,17 @@ Newspaper page object
 
 **auditTrail mapping**
 
-| fcrepo3 event                      | fcrepo4 Event Type                             |
-|------------------------------------|------------------------------------------------|
-| addDatastream                      | premis:create                                  |
-| modifyDatastreamByReference        | audit:contentModification/metadataModification |
-| modifyObject                       | audit:resourceModification                     |
-| modifyObject (checksum validation) | premis:validation                              |
-| modifyDatastreamByValue            | audit:contentModification/metadataModification |
-| purgeDatastream                    | audit:contentRemoval                           |
+| fcrepo3 event                      | fcrepo4 Event Type                              |
+|------------------------------------|-------------------------------------------------|
+| addDatastream                      | premis:create‡                                  |
+| modifyDatastreamByReference        | audit:contentModification/metadataModification‡ |
+| modifyObject                       | audit:resourceModification‡                     |
+| modifyObject (checksum validation) | premis:validation‡                              |
+| modifyDatastreamByValue            | audit:contentModification/metadataModification‡ |
+| purgeDatastream                    | audit:contentRemoval‡                           |
 
-Notes:
-
-We could create a mapping of DSIDs, and if the DSID is DC/MODS/RELS-EXT (or any other metadata datastream), then we can use `audit:metadataModification`. If the DSID is not an identified metadata DSID, then we could use `audit:contentModification`. If we don't want to map the DSID types, we could just use `resourceModification` for `modifyDatastreamByReference` or `modifyDatastreamByValue`.
+† The `fedora3model` namespace is not a published namespace. It is a representation of the fcrepo3 namespace `info:fedora/fedora-system:def/model`. <br />
+‡ Not yet implemented
 
 **Examples**:
 
@@ -254,10 +237,6 @@ purgeDatastream
 
 ## Diagrams
 
-Example Islandora Solution Pack Large Image object Fedora 4 Modeling
-
-![Islandora Solution Pack Large Image object Fedora 4 Modeling](https://raw.githubusercontent.com/wiki/Islandora-Labs/islandora/images/Islandora-SP-Large-Image-Fedora4.jpg)
-
-Example Islandora, PCDM, and Fedora 4 structure
+Example Islandora (Large Image Object), PCDM, and Fedora 4 structure
 
 ![Islandora, PCDM, and Fedora 4 structure](https://raw.githubusercontent.com/wiki/Islandora-Labs/islandora/images/Islandora-PCDM-Fedora4.jpg)
