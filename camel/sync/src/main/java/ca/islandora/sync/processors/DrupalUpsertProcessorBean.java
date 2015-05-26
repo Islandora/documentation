@@ -125,6 +125,14 @@ public class DrupalUpsertProcessorBean {
         return node;
     }
     
+    /**
+     * Generates Drupal node data structure using RDF from Fedora and RDF Mappings from Drupal.
+     * @param mappings
+     * @param rdf
+     * @param contentType
+     * @param uuid
+     * @return
+     */
     public Map<String, Object> createNodeFromRdf(Map<String, Object> mappings,
                                                  @Property("rdf") Map<String, Object> rdf,
                                                  @Property("contentType") String contentType,
