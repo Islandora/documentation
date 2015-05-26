@@ -77,7 +77,9 @@ function islandora_default_services_endpoint() {
   $endpoint->name = 'islandora';
   $endpoint->server = 'rest_server';
   $endpoint->path = 'islandora';
-  $endpoint->authentication = array();
+  $endpoint->authentication = array(
+    'services' => 'services',
+  );
   $endpoint->server_settings = array(
     'formatters' => array(
       'json' => TRUE,
@@ -99,9 +101,6 @@ function islandora_default_services_endpoint() {
     'node' => array(
       'operations' => array(
         'retrieve' => array(
-          'enabled' => '1',
-        ),
-        'create' => array(
           'enabled' => '1',
         ),
         'update' => array(
@@ -128,49 +127,39 @@ function islandora_default_services_endpoint() {
         ),
       ),
     ),
-    'user' => array(
+    'rdf_mapping' => array(
       'operations' => array(
         'retrieve' => array(
           'enabled' => '1',
         ),
-        'create' => array(
-          'enabled' => '1',
-        ),
-        'update' => array(
-          'enabled' => '1',
-        ),
-        'delete' => array(
-          'enabled' => '1',
-        ),
-        'index' => array(
+      ),
+    ),
+    'system' => array(
+      'actions' => array(
+        'connect' => array(
           'enabled' => '1',
         ),
       ),
+    ),
+    'user' => array(
       'actions' => array(
         'login' => array(
           'enabled' => '1',
+          'settings' => array(
+            'services' => array(
+              'resource_api_version' => '1.0',
+            ),
+          ),
         ),
         'logout' => array(
           'enabled' => '1',
+          'settings' => array(
+            'services' => array(
+              'resource_api_version' => '1.0',
+            ),
+          ),
         ),
         'token' => array(
-          'enabled' => '1',
-        ),
-        'request_new_password' => array(
-          'enabled' => '1',
-        ),
-        'register' => array(
-          'enabled' => '1',
-        ),
-      ),
-      'targeted_actions' => array(
-        'cancel' => array(
-          'enabled' => '1',
-        ),
-        'password_reset' => array(
-          'enabled' => '1',
-        ),
-        'resend_welcome_email' => array(
           'enabled' => '1',
         ),
       ),
