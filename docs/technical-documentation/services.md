@@ -9,6 +9,8 @@ Islandora middleware services utilize the Fedora 4 REST API and the Drupal Servi
 * There will be services per derivative type to perform operations based on the node ID of the parent.
   * `PATCH` to generate a new thumbnail for the object with uuid 1.
 
+For more information on PCDM, please see [this](https://wiki.duraspace.org/display/FF/Portland+Common+Data+Model) page.
+
 ## Collection Service
 
 Used for manipulating `pcdm:Collections`. Essentially wraps the Fedora 4 API requests for manipulating a Container identified by Drupal uuid.
