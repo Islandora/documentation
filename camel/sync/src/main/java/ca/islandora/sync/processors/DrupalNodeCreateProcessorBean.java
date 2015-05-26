@@ -3,77 +3,19 @@
  */
 package ca.islandora.sync.processors;
 
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.camel.Property;
-import org.fcrepo.camel.FcrepoHeaders;
-
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author danny
  *
  */
-public class DrupalNodeCreateProcessorBean {
-    /**
-     * Deserializes JSON RDF into Map<String, ?>, ignoring the format=jcr:xml bits.
-     * 
-     * @param rdfJson
-     * @param baseUrl
-     * @param path
-     * @return
-     * @throws JsonParseException
-     * @throws JsonMappingException
-     * @throws IOException
-     */
-    public Map<String, Object> deserializeRdf(String rdfJson,
-                                              @Property(FcrepoHeaders.FCREPO_BASE_URL) String baseUrl,
-                                              @Property(FcrepoHeaders.FCREPO_IDENTIFIER) String path) throws JsonParseException, JsonMappingException, IOException {
-        final ObjectMapper objectMapper = new ObjectMapper();
-        @SuppressWarnings("unchecked")
-        final List<Map<String, Object>> deserialized = objectMapper.readValue(rdfJson, List.class);
-
-        for (Map<String, Object> item : deserialized) {
-            String id = (String) item.get("@id");
-            if (id.equals(baseUrl + path)) {
-                return item;
-            }
-        }
-        
-        return null;
-    }
-    
-    /**
-     * @param nodeJson
-     * @return
-     * @throws JsonParseException
-     * @throws JsonMappingException
-     * @throws IOException
-     */
-    public Map<String, Object> deserializeMap(String mapJson) throws JsonParseException, JsonMappingException, IOException {
-        final ObjectMapper objectMapper = new ObjectMapper();
-        @SuppressWarnings("unchecked")
-        final Map<String, Object> decoded = objectMapper.readValue(mapJson, Map.class);
-        return decoded;
-    }
-    
-    /**
-     * @param node
-     * @return
-     * @throws JsonProcessingException
-     */
-    public String serializeNode(Map<String, Object> node) throws JsonProcessingException {
-        final ObjectMapper objectMapper = new ObjectMapper();
-        final String encoded = objectMapper.writeValueAsString(node);
-        return encoded;
-    }
+public class DrupalUpsertProcessorBean {
     
     /**
      * @param node
@@ -183,8 +125,110 @@ public class DrupalNodeCreateProcessorBean {
         return node;
     }
     
-    public Map<String, Object> createNodeFromRdf(Map<String, Object> rdf) {
-        return rdf;
+    public Map<String, Object> createNodeFromRdf(Map<String, Object> mappings,
+                                                 @Property("rdf") Map<String, Object> rdf,
+                                                 @Property("contentType") String contentType,
+                                                 @Property("uuid") String uuid) {
+        @SuppressWarnings("unchecked")
+        Map<String, Map<String, String>> fileMapping = (Map<String, Map<String, String>>) mappings.get("pcdm_file_mapping");
+        
+        @SuppressWarnings("unchecked")
+        Map<String, String> namespaces = (Map<String, String>) mappings.get("rdf_namespaces");
+        
+        @SuppressWarnings("unchecked")
+        Map<String, Object> rdfMapping = (Map<String, Object>) mappings.get("rdf_mapping");
+        
+        Map<String, Object> node = new HashMap<String, Object>();
+        
+        String language = "und";
+        
+        node.put("type", contentType);
+        node.put("language", language);
+        node.put("status", "1");
+        node.put("promote", "1");
+        node.put("uuid", uuid);
+        
+        // Iterate over the mapping to update node.
+        for (String key : rdfMapping.keySet()) {
+            // Ignore list.
+            if ("rdftype".equals(key) ||
+                "body".equals(key) ||
+                "lastActivity".equals(key)) {
+                continue;
+             
+            // Handle field values
+            } else {
+                // Get the particular rdf mapping, which can have a few different formats.
+                @SuppressWarnings("unchecked")
+                Map<String, Object> mapping = (Map<String, Object>) rdfMapping.get(key);
+
+                //String type = (String) mapping.get("datatype");
+
+                // Grab the predicates from the mapping
+                @SuppressWarnings("unchecked")
+                List<String> predicates = (List<String>) mapping.get("predicates");
+
+                // Iterate over predicates, parsing out field/property values for each.
+                for (String predicate : predicates) {
+                    // Don't forget to escape the prefixes.  The ld+json from Fedora has namespaces
+                    // declared in full.
+                    predicate = escapePrefix(predicate, namespaces);
+                    
+                    @SuppressWarnings("unchecked")
+                    List<Map<String, String>> rdfEntry = (List<Map<String, String>>) rdf.get(predicate);
+                    
+                    // Carry on if there is no value for the predicate in Fedora.
+                    if (rdfEntry == null) {
+                        continue;
+                    }
+                    
+                    // Special case:
+                    // Title is an entity property, not a field
+                    if (isEntityProperty(key)) {
+                        for (Map<String, String> entry : rdfEntry) {
+                            node.put(key, entry.get("@value"));
+                        }
+                    // Everything else is a field
+                    } else {
+                        // Make a new field and populate it from Fedora's RDF.
+                        Map<String, List<Map<String,String>>> field = new HashMap<String, List<Map<String, String>>>();
+                        List<Map<String, String>> fieldValues = new ArrayList<Map<String, String>>();
+                        
+                        for (Map<String, String> entry : rdfEntry) {
+                            Map<String, String> newValue = new HashMap<String, String>();
+                            
+                            // Special case:
+                            // Fedora parent uses @id instead of @value
+                            if ("field_fedora_has_parent".equals(key)) {
+                                newValue.put("value", entry.get("@id"));
+                            }
+                            // Otherwise you use @value.
+                            else {
+                                newValue.put("value", entry.get("@value"));
+                            }
+                            fieldValues.add(newValue);
+                        }
+                        
+                        field.put(language, fieldValues);
+                        node.put(key, field);
+                    }
+                    
+                    
+                }
+                
+                // Another special case:
+                // Fedora path is the @id entry of the rdf, and is NOT in the rdf_mapping from Fedora.
+                Map<String, List<Map<String,String>>> field = new HashMap<String, List<Map<String, String>>>();
+                List<Map<String, String>> fieldValues = new ArrayList<Map<String, String>>();
+                Map<String, String> newValue = new HashMap<String, String>();
+                newValue.put("value", (String) rdf.get("@id"));
+                fieldValues.add(newValue);
+                field.put(language, fieldValues);
+                node.put("field_fedora_path", field);
+            }
+        }
+        
+        return node;
     }
     
     /**
@@ -203,5 +247,42 @@ public class DrupalNodeCreateProcessorBean {
         }
         exploded[0] = namespaces.get(namespace);
         return exploded[0] + exploded[1];
+    }
+    
+    /**
+     * Utility function to determine if rdf maps to an entity property.
+     * @param possibleProperty
+     * @return true if entity property, false if field.
+     */
+    private boolean isEntityProperty(String possibleProperty) {
+        List<String> properties = Arrays.asList("vid",
+                                                "uid",
+                                                "title",
+                                                "log",
+                                                "status",
+                                                "comment",
+                                                "promote",
+                                                "sticky",
+                                                "vuuid",
+                                                "nid",
+                                                "type",
+                                                "language",
+                                                "created",
+                                                "changed",
+                                                "tnid",
+                                                "translate",
+                                                "uuid",
+                                                "revision_timestamp",
+                                                "revision_uid",
+                                                "cid",
+                                                "last_comment_timestamp",
+                                                "last_comment_name",
+                                                "last_commment_uid",
+                                                "comment_count",
+                                                "name",
+                                                "picture",
+                                                "data");
+        
+        return properties.contains(possibleProperty);
     }
 }

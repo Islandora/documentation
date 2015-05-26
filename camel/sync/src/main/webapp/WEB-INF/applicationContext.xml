@@ -13,7 +13,8 @@
       <property name="location" value="classpath:sync.properties"/>
     </bean>
   
-    <bean id="drupalNodeCreateProcessor" class="ca.islandora.sync.processors.DrupalNodeCreateProcessorBean" />
+    <bean id="drupalUpsertProcessor" class="ca.islandora.sync.processors.DrupalUpsertProcessorBean" />
+    <bean id="jsonProcessor" class="ca.islandora.sync.processors.JsonProcessorBean" />
     
     <camelContext xmlns="http://camel.apache.org/schema/spring" id="islandora-sync">
       <package>ca.islandora.sync.routes</package>

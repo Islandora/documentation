@@ -1,0 +1,59 @@
+<?php
+
+/**
+ * @file
+ * Provides a service for retrieving RDF mappings from Drupal.
+ */
+
+/**
+ * Implements hook_permission().
+ */
+function islandora_rdf_mapping_service_permission() {
+  return array(
+    'islandora rdf mapping service retrieve' => array(
+      'title' => t('Retrieve RDF Mappings'),
+      'description' => t('Allows external sources to request RDF mappings.'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_services_resources().
+ */
+function islandora_rdf_mapping_service_services_resources() {
+  return array(
+    'rdf_mapping' => array(
+      'retrieve' => array(
+        'help' => t('Retrieves an RDF mapping using the supplied entity type and bundle.'),
+        'file' => array(
+          'type' => 'inc',
+          'module' => 'islandora_rdf_mapping_service',
+          'name' => 'include/islandora_rdf_mapping_service',
+        ),
+        'callback' => 'islandora_rdf_mapping_service_retrieve',
+        'access callback' => 'user_access',
+        'access arguments' => array('islandora rdf mapping service retrieve'),
+        'args' => array(
+          array(
+            'name' => 'type',
+            'type' => 'string',
+            'description' => t("Entity type to which the RDF mapping belongs."),
+            'source' => array(
+              'path' => 0,
+            ),
+            'optional' => FALSE,
+          ),
+          array(
+            'name' => 'bundle',
+            'type' => 'string',
+            'description' => t("Bundle to which the RDF mapping belongs."),
+            'source' => array(
+              'path' => 1,
+            ),
+            'optional' => FALSE,
+          ),
+        ),
+      ),
+    ),
+  );
+}

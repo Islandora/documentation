@@ -1,0 +1,6 @@
+name = Islandora RDF Mapping Service
+description = "Exposes RDF -> Field mapping for the middleware layer to use."
+package = Islandora
+version = 7.x-dev
+core = 7.x
+dependencies[] = rest_server

@@ -26,48 +26,37 @@ public class DrupalAuthentication extends RouteBuilder {
         DrupalInvalidCSRFPredicate invalidCSRF = new DrupalInvalidCSRFPredicate();
 
         from("direct:drupalAuthenticate")
+            .routeId("drupalAuthenticate")
             .doTry()
-                .log("ATTEMPTING LOGIN")
+                .log("FIRST TIME")
                 .to("direct:drupalLogin")
             .doCatch(HttpOperationFailedException.class).onWhen(invalidCSRF)
-                .log("ATTEMPTING RE-LOGIN DUE TO BAD CSRF")
+                .log("SECOND TIME")
                 .to("direct:drupalLogin")
             .end();
         
-        from("direct:drupalReauthenticate")
-            .to("direct:drupalGetToken")
-            .to("direct:drupalLogout")
-            .to("direct:drupalLogin");
-        
         from("direct:drupalLogin")
+            .routeId("drupalLogin")
             .removeHeaders("*")
             .setHeader(Exchange.HTTP_METHOD, POST)
             .setHeader(Exchange.CONTENT_TYPE, constant("application/json"))
             .setBody().simple("{\"username\": \"{{drupal.username}}\", \"password\" : \"{{drupal.password}}\"}")
             .to("http4:{{drupal.baseurl}}/user/login")
-            .beanRef("drupalNodeCreateProcessor", "deserializeMap")
+            .beanRef("jsonProcessor", "deserializeMap")
             .setProperty("token").simple("${body['token']}")
             .setProperty("cookie").simple("${body['session_name']}=${body['sessid']}");
-                
-        from("direct:drupalGetToken")
-            .removeHeaders("*")
-            .setHeader(Exchange.HTTP_METHOD, POST)
-            .setHeader(Exchange.CONTENT_TYPE, constant("application/json"))
-            .setBody().simple("{\"username\": \"{{drupal.username}}\", \"password\" : \"{{drupal.password}}\"}")
-            .to("http4:{{drupal.baseurl}}/user/token")
-            .beanRef("drupalNodeCreateProcessor", "deserializeMap")
-            .setProperty("token").simple("${body['token']}");
-        
+
         from("direct:drupalLogout")
+            .routeId("drupalLogout")
             .removeHeaders("*")
             .setHeader(Exchange.HTTP_METHOD, POST)
             .setHeader(Exchange.CONTENT_TYPE, constant("application/json"))
             .setHeader("X-CSRF-Token").simple("${property.token}")
-            .setBody().simple("${null}")
-            //.setBody().simple("{\"username\": \"{{drupal.username}}\", \"password\" : \"{{drupal.password}}\"}")
+            .setHeader("Cookie").simple("${property.cookie}")
+//            .setBody().simple("${null}")
+            .setBody().simple("{}")
+//            .setBody().simple("{\"username\": \"{{drupal.username}}\", \"password\" : \"{{drupal.password}}\"}")
             .to("http4:{{drupal.baseurl}}/user/logout");
-                
-
     }
 
 }
