@@ -14,19 +14,18 @@
 
 ## fcrepo3 Datastream properties to fcrepo4
 
-
-| fcrepo3       | fcrepo4                                                      | Example                                        |
-|---------------|--------------------------------------------------------------|------------------------------------------------|
-| DSID          | dcterms:identifier                                           | OBJ                                            |
-| Label         | dcterms:title‡                                               | ASC19109.tif                                   |
-| MIME Type     | ebucore:hasMimeType†                                         | image/tiff                                     |
-| State         | fedoraaccess:objState                                        | Active                                         |
-| Created       | premis:hasDateCreatedByApplication                           | 2015-03-16T20:11:06.683Z                       |
-| Versionable   | fedora:hasVersions‡                                          | true                                           |
-| Format URI    | premis:formatDesignation‡                                    | info:pronom/fmt/156                            |
-| Alternate IDs | dcterms:identifier‡                                          |                                                |
-| Access URL    | dcterms:identifier‡                                          |                                                |
-| Checksum      | premis:hasMessageDigestAlgorithm + premis:hasMessageDigest‡  | SHA1, c91342b705b15cb4f6ac5362cc6a47d9425aec86 |
+| fcrepo3       | fcrepo4                                                      | Example                                                    |
+|---------------|--------------------------------------------------------------|------------------------------------------------------------|
+| DSID          | dcterms:identifier                                           | OBJ                                                        |
+| Label         | dcterms:title‡                                               | ASC19109.tif                                               |
+| MIME Type     | ebucore:hasMimeType†                                         | image/tiff                                                 |
+| State         | fedoraaccess:objState                                        | Active                                                     |
+| Created       | premis:hasDateCreatedByApplication                           | 2015-03-16T20:11:06.683Z                                   |
+| Versionable   | fedora:hasVersions‡                                          | true                                                       |
+| Format URI    | premis:formatDesignation‡                                    | info:pronom/fmt/156                                        |
+| Alternate IDs | dcterms:identifier‡                                          |                                                            |
+| Access URL    | dcterms:identifier‡                                          |                                                            |
+| Checksum      | cryptofunc:_hashalgorithm_‡                                  | cryptofunc:sha1 "c91342b705b15cb4f6ac5362cc6a47d9425aec86" |
 
 † The `fedora3model` namespace is not a published namespace. It is a representation of the fcrepo3 namespace `info:fedora/fedora-system:def/model`. <br />
 ‡ Not yet implemented
@@ -147,7 +146,7 @@ Newspaper page object
 
 | fcrepo3 event                      | fcrepo4 Event Type                              |
 |------------------------------------|-------------------------------------------------|
-| addDatastream                      | premis:create‡                                  |
+| addDatastream                      | premis:ing‡                                     |
 | modifyDatastreamByReference        | audit:contentModification/metadataModification‡ |
 | modifyObject                       | audit:resourceModification‡                     |
 | modifyObject (checksum validation) | premis:validation‡                              |
