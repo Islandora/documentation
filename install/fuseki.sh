@@ -11,4 +11,9 @@ tar -xzvf apache-jena-fuseki-"$FUSEKI_VERSION".tar.gz
 cd apache-jena-fuseki-"$FUSEKI_VERSION"
 mv -v fuseki.war $FUSEKI_DEPLOY
 chown -hR tomcat7:tomcat7 $FUSEKI_DEPLOY/fuseki.war
+
 service tomcat7 restart
+sleep 20
+sed -i 's|^\/$\/\*\* = localhost|\#\/$\/\*\* = localhost|g' $FUSEKI_BASE/shiro.ini
+service tomcat7 restart
+
