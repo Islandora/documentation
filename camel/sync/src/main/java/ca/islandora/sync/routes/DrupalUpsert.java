@@ -5,7 +5,6 @@ package ca.islandora.sync.routes;
 
 import java.util.Map;
 
-import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 
 import ca.islandora.sync.processors.ContentTypeExtractor;

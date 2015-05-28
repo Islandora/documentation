@@ -28,21 +28,19 @@ import java.util.Map;
 public class CollectionServiceProcessorBean {
     
     /**
-     * Deserializes Drupal node JSON into Map<?, ?>.
+     * Deserializes Drupal node JSON into Map<String, Object>.
      * 
      * @param exchange
      * @throws JsonParseException
      * @throws JsonMappingException
      * @throws IOException
      */
-    public Map<String, ?> deserializeNode(String nodeJson) throws JsonParseException, JsonMappingException, IOException {
+    public Map<String, Object> deserializeNode(String nodeJson) throws JsonParseException, JsonMappingException, IOException {
         final ObjectMapper objectMapper = new ObjectMapper();
         @SuppressWarnings("unchecked")
-        final Map<String, ?> decoded = objectMapper.readValue(nodeJson, Map.class);
+        final Map<String, Object> decoded = objectMapper.readValue(nodeJson, Map.class);
         return decoded;
     }
-    
-
     
     /**
      * Constructs a SPARQL update query from a Drupal node.
@@ -50,10 +48,10 @@ public class CollectionServiceProcessorBean {
      * @param exchange
      * @throws UnsupportedEncodingException
      */
-    public String nodeToSparqlUpdate(Map<String, ?> node) throws UnsupportedEncodingException {
+    public String nodeToSparqlUpdate(Map<String, Object> node) throws UnsupportedEncodingException {
         // Get the rdf mapping from the node.
         @SuppressWarnings("unchecked")
-        final Map<String, ?> rdfMapping = (Map<String, ?>)node.get("rdf_mapping");
+        final Map<String, Object> rdfMapping = (Map<String, Object>)node.get("rdf_mapping");
 
         // Get the rdf namespaces and prefixes from the node.
         @SuppressWarnings("unchecked")
@@ -72,7 +70,7 @@ public class CollectionServiceProcessorBean {
             if ("rdftype".equals(key)) {
                 triplesToRemove.addTriple(new Triple(NodeFactory.createURI(""),
                         NodeFactory.createURI(escapePrefix("rdf:type", namespaces)),
-                        NodeFactory.createVariable("o" + Integer.toString(counter))));
+                        NodeFactory.createVariable("o" + Integer.toString(counter++))));
                 @SuppressWarnings("unchecked")
                 List<String> types = (List<String>) rdfMapping.get(key);
                 
@@ -89,7 +87,7 @@ public class CollectionServiceProcessorBean {
             } else {
                 // Get the particular rdf mapping, which can have a few different formats.
                 @SuppressWarnings("unchecked")
-                Map<String, ?> mapping = (Map<String, ?>) rdfMapping.get(key);
+                Map<String, Object> mapping = (Map<String, Object>) rdfMapping.get(key);
 
                 //String type = (String) mapping.get("datatype");
 
@@ -103,14 +101,13 @@ public class CollectionServiceProcessorBean {
                     // to be declared in full.
                     predicate = escapePrefix(predicate, namespaces);
                     
-                    triplesToRemove.addTriple(new Triple(NodeFactory.createURI(""),
-                            NodeFactory.createURI(predicate),
-                            NodeFactory.createVariable("o" + Integer.toString(counter))));
-
                     // Figure out what the heck this is, as it can be lots of things due to bad structure.
                     // If it's a simple entity property (like uuid), it's just a string.
                     if (node.get(key) instanceof String) {
                         String value = (String) node.get(key);
+                        triplesToRemove.addTriple(new Triple(NodeFactory.createURI(""),
+                                NodeFactory.createURI(predicate),
+                                NodeFactory.createVariable("o" + Integer.toString(counter++))));
                         triplesToInsert.addTriple(new Triple(NodeFactory.createURI(""),
                                 NodeFactory.createURI(predicate),
                                 NodeFactory.createLiteral(value)));
@@ -122,6 +119,9 @@ public class CollectionServiceProcessorBean {
                         List<Map<String, String>> languageInstance = field.get(language);
                         for (Map<String, String> valueMap : languageInstance) {
                             String value = valueMap.get("value");
+                            triplesToRemove.addTriple(new Triple(NodeFactory.createURI(""),
+                                    NodeFactory.createURI(predicate),
+                                    NodeFactory.createVariable("o" + Integer.toString(counter++))));
                             triplesToInsert.addTriple(new Triple(NodeFactory.createURI(""),
                                     NodeFactory.createURI(predicate),
                                     NodeFactory.createLiteral(value)));
@@ -129,7 +129,6 @@ public class CollectionServiceProcessorBean {
                     }
                 }
             }
-            counter++;
         }
 
         final UpdateRequest updateRequest = UpdateFactory.create();
@@ -138,12 +137,11 @@ public class CollectionServiceProcessorBean {
         for (String key : namespaces.keySet()) {
             updateRequest.setPrefix(key, namespaces.get(key));
         }
-
         updateRequest.add(new UpdateDeleteWhere(triplesToRemove));
         updateRequest.add(new UpdateDataInsert(triplesToInsert));
 
         final ByteArrayOutputStream sparqlUpdate = new ByteArrayOutputStream();
-        updateRequest.output(new IndentedWriter(sparqlUpdate));;
+        updateRequest.output(new IndentedWriter(sparqlUpdate));
         return sparqlUpdate.toString("UTF-8");
     }
 

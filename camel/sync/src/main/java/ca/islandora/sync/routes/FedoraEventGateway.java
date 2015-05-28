@@ -18,22 +18,13 @@ public class FedoraEventGateway extends RouteBuilder {
             .setProperty(FcrepoHeaders.FCREPO_BASE_URL, header("org.fcrepo.jms.baseURL"))
             .setProperty(FcrepoHeaders.FCREPO_IDENTIFIER, header("org.fcrepo.jms.identifier"))
             .choice()
-                .when(header(JmsHeaders.EVENT_TYPE).contains(RdfNamespaces.REPOSITORY + "NODE_ADDED"))
-                    .to("direct:handleNodeAddedEvent")
-                .when(header(JmsHeaders.EVENT_TYPE).contains(RdfNamespaces.REPOSITORY + "PROPERTY_ADDED"))
-                    .to("direct:handlePropertyAddedEvent")
-                .when(header(JmsHeaders.EVENT_TYPE).contains(RdfNamespaces.REPOSITORY + "PROPERTY_CHANGED"))
-                    .to("direct:handlePropertyChangedEvent")
-                .when(header(JmsHeaders.EVENT_TYPE).contains(RdfNamespaces.REPOSITORY + "PROPERTY_REMOVED"))
-                    .to("direct:handlePropertyRemovedEvent")
                 .when(header(JmsHeaders.EVENT_TYPE).contains(RdfNamespaces.REPOSITORY + "NODE_REMOVED"))
                     .to("direct:handleNodeRemovedEvent")
                 .otherwise()
-                    .log(LoggingLevel.DEBUG, "SKIPPING EVENT: UNDETERMINED EVENT TYPE")
-                    .log(LoggingLevel.DEBUG, "HEADERS OF SKPPIED EVENT: ${headers}");
-        
-        from("direct:handleNodeAddedEvent")
-            .routeId("nodeAddedEvent")
+                    .to("direct:handleNodeUpsertEvent");
+
+        from("direct:handleNodeUpsertEvent")
+            .routeId("nodeUpsertEvent")
             .to("direct:fedoraGetRdf")
             .setProperty("rdf", body(Map.class))
             .process(new UUIDExtractor())
@@ -42,23 +33,9 @@ public class FedoraEventGateway extends RouteBuilder {
                     .to("direct:drupalUpsertNodeFromRdf")
                 .otherwise()
                     .log(LoggingLevel.DEBUG, "SKIPPING EVENT: NO UUID");
-        
-        from("direct:handlePropertyAddedEvent")
-            .routeId("propertyAddedEvent")
-            .log("PROPERTY ADDED NOT IMPLEMENTED YET");
-        
-        from("direct:handlePropertyChangedEvent")
-            .routeId("propertyChangedEvent")
-            .log("PROPERTY CHANGED NOT IMPLEMENTED YET");
-        
-        from("direct:handlePropertyRemovedEvent")
-            .routeId("propertyRemovedEvent")
-            .log("PROPERTY REMOVED NOT IMPLEMENTED YET");
-        
+
         from("direct:handleNodeRemovedEvent")
             .routeId("nodeRemovedEvent")
             .log("NODE REMOVED NOT IMPLEMENTED YET");
-        
-
     }
 }

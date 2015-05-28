@@ -19,6 +19,11 @@ public class CollectionEndpoint extends RouteBuilder {
             .description("Creates a collection off the fcrepo root")
             .consumes("application/json")
             .produces("application/json")
-            .to("direct:createCollection");
+            .to("direct:createCollection")
+        .put("/{uuid}")
+            .description("Updates a collection in Fedora using Drupal node data")
+            .consumes("application/json")
+            .produces("application/json")
+            .to("direct:updateCollection");
     }
 }
