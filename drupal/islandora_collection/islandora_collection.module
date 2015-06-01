@@ -92,10 +92,10 @@ function islandora_collection_node_postupdate($node) {
     return;
   }
 
-  // Unfortunately, there's no way to tell if the db transaction got rolled back in this hook,
-  // so we'll default to doing it anyway so as not to miss any updates.
-  // Open to suggestions on this one.  But we gotta do post_action hooks otherwise
-  // things can get crazy if the db transaction hasn't closed.
+  // Unfortunately, there's no way to tell if the db transaction got rolled
+  // back in this hook, so we'll default to doing it anyway so as not to miss
+  // any updates. Open to suggestions on this one.  But we gotta do post_action
+  // hooks otherwise things can get crazy if the db transaction hasn't closed.
   $nodes = entity_uuid_load('node', array($node->uuid));
 
   // Exit early if something has gone wrong and there's no node info.
