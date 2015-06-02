@@ -15,7 +15,10 @@ N.B. This virtual machine **should not** be used in production.
 2. `cd islandora/install`
 3. `vagrant up`
 
-Optionally, if you want to install the vim configuration for Java development, use `VIM=true vagrant up`.  It practically doubles the amount of time to spin up the VM, so only do so if you’re sure you want to develop directly on the VM using vim.  The script merely checks to see if the shell variable has been set, so it’s value can be anything.  That is, `VIM=sandwiches vagrant up` will still trigger the vim configuration install.  So if you don’t want it, don’t set it.
+### Build Variables
+
+- VIM : If you want to install the vim configuration for Java development, use `VIM=true vagrant up`. It practically doubles the amount of time to spin up the VM, so only do so if you’re sure you want to develop directly on the VM using vim.
+- TRIPLESTORE : If you would like to use Fuskei, it is the default. `vagrant up` will use it. If you would like to use BlazeGraph, use `TRIPLESTORE=blazegraph vagrant up`.
 
 ## Connect
 
@@ -57,6 +60,7 @@ The default VM login details are:
 - Fedora 4.1.1
 - Fedora Camel Component 4.1.1
 - Fuseki 2.0
+- BlazeGraph 1.5.1
 - Sync 0.0.0
 - Islandora 7.x-2.x
 - PHP 5.5.9 
