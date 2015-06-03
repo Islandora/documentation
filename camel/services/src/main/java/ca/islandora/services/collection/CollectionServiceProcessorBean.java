@@ -1,5 +1,8 @@
 package ca.islandora.services.collection;
 
+import static org.apache.camel.component.http4.HttpMethods.POST;
+
+import org.apache.camel.Exchange;
 import org.apache.jena.atlas.io.IndentedWriter;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -17,6 +20,7 @@ import com.hp.hpl.jena.update.UpdateRequest;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +30,52 @@ import java.util.Map;
  * @author danny
  */
 public class CollectionServiceProcessorBean {
+
+    /**
+     * Prepares a message to query the triplestore for a URI in Fedora based on Drupal UUID.
+     * 
+     * @param exchange
+     * @throws UnsupportedEncodingException
+     */
+    public void getCollectionSparqlQuery(Exchange exchange) throws UnsupportedEncodingException {
+        String uuid = exchange.getIn().getHeader("uuid", String.class);
+        
+        exchange.getIn().setBody(null);
+        exchange.getIn().removeHeaders("*");
+        exchange.getIn().setHeader(Exchange.HTTP_METHOD, POST);
+        
+        String query = new StringBuilder()
+                       .append("prefix nfo: <http://www.semanticdesktop.org/ontologies/2007/03/22/nfo/v1.2/>")
+                       .append("select ?s where { ?s nfo:uuid \"" + uuid + "\"^^<http://www.w3.org/2001/XMLSchema#string> . }")
+                       .toString();
+        
+        String encodedQuery = URLEncoder.encode(query, "UTF-8");
+        exchange.getIn().setHeader(Exchange.HTTP_QUERY, "format=json&query=" + encodedQuery);
+    }
+
+    /**
+     * Sets the "fedoraPath" property on the exchange from the results of a SPARQL query.
+     * The property gets set to null if there's no results.
+     * 
+     * @param exchange
+     */
+    public void extractFedoraPathFromSparqlResults(Exchange exchange) {
+        @SuppressWarnings("unchecked")
+        final Map<String, Object> response = exchange.getIn().getBody(Map.class);
+        
+        @SuppressWarnings("unchecked")
+        final Map<String, List<Map<String, Map<String, String>>>> results = (Map<String, List<Map<String, Map<String, String>>>>) response.get("results");
+        
+        List<Map<String, Map<String, String>>> bindings = results.get("bindings");
+        
+        if (bindings.isEmpty()) {
+            exchange.setProperty("fedoraPath", null);
+            return;
+        }
+        
+        String fedoraPath = bindings.get(0).get("s").get("value");
+        exchange.setProperty("fedoraPath", fedoraPath);
+    }
     
     /**
      * Deserializes Drupal node JSON into Map<String, Object>.
@@ -35,7 +85,7 @@ public class CollectionServiceProcessorBean {
      * @throws JsonMappingException
      * @throws IOException
      */
-    public Map<String, Object> deserializeNode(String nodeJson) throws JsonParseException, JsonMappingException, IOException {
+    public Map<String, Object> deserializeMap(String nodeJson) throws JsonParseException, JsonMappingException, IOException {
         final ObjectMapper objectMapper = new ObjectMapper();
         @SuppressWarnings("unchecked")
         final Map<String, Object> decoded = objectMapper.readValue(nodeJson, Map.class);
@@ -161,6 +211,53 @@ public class CollectionServiceProcessorBean {
         }
         exploded[0] = namespaces.get(namespace);
         return exploded[0] + exploded[1];
+    }
+    
+    /**
+     * Sets the "fedoraPath" property on the exchange from a Drupal node.
+     * The property gets set to null if the field isn't set on the node.
+     * 
+     * @param exchange
+     */
+    public void extractFedoraPathFromNode(Exchange exchange) {
+        @SuppressWarnings("unchecked")
+        Map<String, Object> node = (Map<String, Object>) exchange.getProperty("node");
+        
+        if (!node.containsKey("field_fedora_path")) {
+            exchange.setProperty("fedoraPath", null);
+            return;
+        }
+        
+        @SuppressWarnings("unchecked")
+        Map<String, List<Map<String, Object>>> field = (Map<String, List<Map<String, Object>>>) node.get("field_fedora_path");
+        
+        if (!node.containsKey("language")) {
+            exchange.setProperty("fedoraPath", null);
+            return;
+        }
+        
+        String language = (String) node.get("language");
+        
+        if (!field.containsKey(language)) {
+            exchange.setProperty("fedoraPath", null);
+            return;
+        }
+        
+        List<Map<String, Object>> fieldValues = field.get(language);
+        
+        if (fieldValues.isEmpty()) {
+            exchange.setProperty("fedoraPath", null);
+            return;
+        }
+        
+        Map<String, Object> fieldValue = fieldValues.get(0);
+        
+        if (!fieldValue.containsKey("value")) {
+            exchange.setProperty("fedoraPath", null);
+            return;
+        }
+        
+        exchange.setProperty("fedoraPath", fieldValue.get("value"));
     }
 }
 

@@ -15,6 +15,9 @@ public class CollectionEndpoint extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         rest("/collection/")
+        .get("/{uuid}")
+            .description("Gets the collection identified by the provided UUID")
+            .to("direct:getCollection")
         .post("/")
             .description("Creates a collection off the fcrepo root")
             .consumes("application/json")
