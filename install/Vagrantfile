@@ -33,13 +33,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision :shell, :path => "drupal.sh", :args => home_dir
   config.vm.provision :shell, :path => "fcrepo.sh", :args => home_dir
   config.vm.provision :shell, :path => "solr.sh"
-  if ENV['TRIPLESTORE'] == 'blazegraph'
-    config.vm.provision :shell, :path => "blazegraph.sh"
-    config.vm.provision :shell, :path => "fcrepo-camel-toolbox.sh", :args => 'blazegraph'
-  else
-    config.vm.provision :shell, :path => "fuseki.sh"
-    config.vm.provision :shell, :path => "fcrepo-camel-toolbox.sh", :args => 'fuseki'
-  end
+  config.vm.provision :shell, :path => "blazegraph.sh"
+  config.vm.provision :shell, :path => "fcrepo-camel-toolbox.sh"
   config.vm.provision :shell, :path => "sync.sh", :args => home_dir
   config.vm.provision :shell, :path => "services.sh", :args => home_dir
   config.vm.provision :shell, :path => "post-install.sh", :args => home_dir

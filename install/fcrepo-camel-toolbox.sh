@@ -8,10 +8,6 @@ wget -O fcrepo-camel-toolbox.war "https://github.com/fcrepo4-labs/fcrepo-camel-t
 chown tomcat7:tomcat7 /var/lib/tomcat7/webapps/fcrepo-camel-toolbox.war
 
 if [ $(grep -c '\-Dtriplestore.baseUrl=' /etc/default/tomcat7) -eq 0 ]; then
-  if [ "$TRIPLESTORE" == 'fuseki' ]; then
-  	echo "JAVA_OPTS=\"\$JAVA_OPTS -Dtriplestore.baseUrl=localhost:8080/fuseki/test/update\"" >> /etc/default/tomcat7
-  elif [ "$TRIPLESTORE" == 'blazegraph' ]; then
-  	echo "JAVA_OPTS=\"\$JAVA_OPTS -Dtriplestore.baseUrl=localhost:8080/bigdata/sparql\"" >> /etc/default/tomcat7
-  fi
+  echo "JAVA_OPTS=\"\$JAVA_OPTS -Dtriplestore.baseUrl=localhost:8080/bigdata/sparql\"" >> /etc/default/tomcat7
 fi
 /etc/init.d/tomcat7 restart
