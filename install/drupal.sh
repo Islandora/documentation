@@ -49,29 +49,19 @@ cd sites/all/modules
 # Islandora dependencies
 drush dl httprl
 drush dl services
-
-# Entity
-drush dl entity
-
-# Views
-drush dl views
-
-# UUID
-drush dl uuid
-
-# XML Field module
-drush dl xml_field
-
-# XPath Field module
-git clone https://github.com/Islandora-Labs/xpath_field.git
-
 drush dl field_permissions
-
 drush dl field_readonly
-
+drush dl views
 drush dl rdfx
-
+drush dl entity
+drush dl uuid
+drush dl xml_field
+git clone https://github.com/Islandora-Labs/xpath_field.git
 drush dl hook_post_action
+
+# Devel!
+drush dl devel
+drush -y en devel
 
 # Undocumented dependency for rdfx on ARC2 for RDF generation.
 cd ../libraries
