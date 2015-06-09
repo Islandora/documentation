@@ -19,3 +19,7 @@ drush -r /var/www/html/drupal scr "$HOME_DIR/islandora/install/disable_node_acce
 
 # Just for good measure
 service tomcat7 restart
+
+# Fix ApacheSolr config
+drush -r /var/www/html/drupal sqlq "update apachesolr_environment set url='http://localhost:8080/solr' where url='http://localhost:8983/solr'"
+drush -r /var/www/html/drupal cc all

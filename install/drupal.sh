@@ -71,6 +71,14 @@ git clone https://github.com/semsol/arc2.git
 mv arc2 arc
 cd ../../modules
 
+# Apache Solr
+drush dl apachesolr
+drush en -y apachesolr
+
+# Copy new schema files and restart Tomcat
+cp -f apachesolr/solr-conf/solr-4.x/* /var/lib/tomcat7/solr/collection1/conf/
+service tomcat7 restart
+
 # Islandora modules
 cp -R "$HOME_DIR"/islandora/drupal/* .
 drush -y en islandora
@@ -78,6 +86,7 @@ drush -y en islandora_dc
 drush -y en islandora_mods
 drush -y en islandora_basic_image
 drush -y en islandora_collection
+drush -y en islandora_apachesolr
 
 # Coder & Code Sniffer
 pear install PHP_CodeSniffer
