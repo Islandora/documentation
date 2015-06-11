@@ -23,7 +23,7 @@ public class CollectionService extends RouteBuilder {
         from("direct:getCollection")
             .description("Retrieves ld+json RDF metadata for the collection identified by the provided UUID")
             .beanRef("collectionServiceProcessor", "getCollectionSparqlQuery")
-            .to("http4:{{triplestore.baseurl")
+            .to("http4:{{triplestore.baseurl}}")
             .beanRef("collectionServiceProcessor", "deserializeMap")
             .beanRef("collectionServiceProcessor", "extractFedoraPathFromSparqlResults")
             .choice()
