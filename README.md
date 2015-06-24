@@ -17,15 +17,17 @@ For more information about the project, please see the [project documentation](h
 
 ## Maintainers/Sponsors
 
-* Discoverygarden
+* UPEI
+* discoverygarden inc.
 * LYRASIS
-* York University
 * McMaster University
-* University of Prince Edward Island
-* University of Manitoba
 * University of Limerick
+* York University
+* University of Manitoba
 * Simon Fraser University
 * PALS
+* American Philosophical Society
+* common media inc.
 
 Current maintainers:
 
