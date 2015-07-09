@@ -1,0 +1,11 @@
+{
+    "require": {
+        "symfony/console": "2.7.1",
+        "symfony/event-dispatcher": "2.7.1",
+        "hanneskod/classtools": "1.0.0",
+        "easyrdf/easyrdf": "0.9.1"
+    },
+    "autoload": {
+        "psr-4": {"Islandora\\": "src/"}
+    }
+}

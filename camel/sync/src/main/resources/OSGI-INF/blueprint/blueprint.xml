@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.0.0"
+       xsi:schemaLocation="
+       http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
+       http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd">
+
+  <!-- Load Configuration File -->
+  <cm:property-placeholder persistent-id="islandora"/>
+
+  <!-- Force load the http component to make sure the required Exceptions get
+       loaded without having to add a Java class with an import statement. -->
+  <bean id="http" class="org.apache.camel.component.http.HttpComponent"/>
+
+  <!-- Islandora Component Configuration -->
+  <bean id="islandora" class="ca.islandora.camel.component.IslandoraComponent">
+    <argument value="php"/>
+    <argument value="${islandora.php.workingDir}"/>
+    <argument value="${islandora.php.executable}"/>
+  </bean>
+
+  <camelContext id="sync" xmlns="http://camel.apache.org/schema/blueprint">
+    <routeContextRef ref="eventGateway"/>
+    <routeContextRef ref="drupalAuthentication"/>
+  </camelContext>
+
+</blueprint>

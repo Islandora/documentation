@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="
+           http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd">
+
+  <routeContext id="drupalAuthentication" xmlns="http://camel.apache.org/schema/blueprint">
+
+    <route id="getDrupalAuthInfo">
+      <description>Gets Drupal authentication information (cookie, token), and adds it as properties on the exchange</description>
+      <from uri="direct:getDrupalAuthInfo"/>
+        <to uri="direct:getCookieFromCache"/>
+        <to uri="direct:getTokenFromCache"/>
+    </route>
+
+    <route id="getCookieFromCache">
+      <description>Attempts to get the Drupal session cookie from the cache, re-attempting login if it's not found</description>
+      <from uri="direct:getCookieFromCache"/>
+        <setHeader headerName="CamelCacheOperation"><constant>CamelCacheGet</constant></setHeader>
+        <setHeader headerName="CamelCacheKey"><constant>{{islandora.drupal.username}}</constant></setHeader>
+        <to uri="cache://cookies?maxElementsInMemory=1000&amp;eternal=true&amp;timeToIdleSeconds=0&amp;timeToLiveSeconds=0"/>
+        <choice>
+          <when><simple>${headers.CamelCacheElementWasFound} == ${null}</simple>
+            <to uri="direct:drupalAuthenticate"/>
+          </when>
+          <otherwise>
+            <setProperty propertyName="cookie"><simple>${bodyAs(String)}</simple></setProperty>
+          </otherwise>
+        </choice>
+    </route>
+
+    <route id="getTokenFromCache">
+      <description>Attempts to get the Drupal X-CSRF token from the cache, re-attempting login if it's not found</description>
+      <from uri="direct:getTokenFromCache"/>
+        <setHeader headerName="CamelCacheOperation"><constant>CamelCacheGet</constant></setHeader>
+        <setHeader headerName="CamelCacheKey"><constant>{{islandora.drupal.username}}</constant></setHeader>
+        <to uri="cache://tokens?maxElementsInMemory=1000&amp;eternal=true&amp;timeToIdleSeconds=0&amp;timeToLiveSeconds=0"/>
+        <choice>
+          <when><simple>${headers.CamelCacheElementWasFound} == ${null}</simple>
+            <to uri="direct:drupalAuthenticate"/>
+          </when>
+          <otherwise>
+            <setProperty propertyName="token"><simple>${bodyAs(String)}</simple></setProperty>
+          </otherwise>
+        </choice>
+    </route>
+
+    <route id="drupalAuthenticate">
+      <description>Smartly logs into Drupal with error handling</description>
+      <from uri="direct:drupalAuthenticate"/>
+        <doTry>
+          <to uri="direct:drupalLogin"/>
+          <doCatch>
+              <exception>org.apache.camel.component.http.HttpOperationFailedException</exception>
+              <onWhen><simple>${exception.statusCode} == 401 &amp;&amp; ${exception.responseBody} == '["CSRF validation failed"]'</simple></onWhen>
+              <to uri="direct:drupalLogin"/>
+          </doCatch>
+        </doTry>
+    </route>
+
+    <route id="drupalLogin">
+      <description>Logs into Drupal</description>
+      <from uri="direct:drupalLogin"/>
+        <removeHeaders pattern="*"/>
+        <setHeader headerName="CamelHttpMethod"><constant>POST</constant></setHeader>
+        <setHeader headerName="Content-Type"><constant>application/json</constant></setHeader>
+        <setBody><simple>{"username": "{{islandora.drupal.username}}", "password" : "{{islandora.drupal.password}}"}</simple></setBody>
+        <to uri="http:{{islandora.drupal.baseurl}}/user/login"/>
+        <setProperty propertyName="authResponse"><simple>${bodyAs(String)}</simple></setProperty>
+        <to uri="direct:extractDrupalSession"/>
+        <to uri="direct:extractDrupalToken"/>
+    </route>
+
+    <route id="extractDrupalSession">
+      <description>Extracts session cookie from login response</description>
+      <from uri="direct:extractDrupalSession"/>
+        <transform><simple>${property.authResponse}</simple></transform>
+        <setProperty propertyName="sessionName"><jsonpath>$['session_name']</jsonpath></setProperty>
+        <setProperty propertyName="sessionId"><jsonpath>$['sessid']</jsonpath></setProperty>
+        <setProperty propertyName="cookie"><simple>${property.sessionName}=${property.sessionId}</simple></setProperty>
+        <to uri="direct:addCookieToCache"/>
+    </route>
+
+    <route id="addCookieToCache">
+      <description>Adds the Drupal session cookie to the cache</description>
+      <from uri="direct:addCookieToCache"/>
+        <setHeader headerName="CamelCacheOperation"><constant>CamelCacheAdd</constant></setHeader>
+        <setHeader headerName="CamelCacheKey"><constant>{{islandora.drupal.username}}</constant></setHeader>
+        <transform><simple>${property.cookie}</simple></transform>
+        <to uri="cache://cookies"/>
+    </route>
+
+    <route id="extractDrupalToken">
+      <description>Extracts X-CSRF token from login response</description>
+      <from uri="direct:extractDrupalToken"/>
+        <transform><simple>${property.authResponse}</simple></transform>
+        <setProperty propertyName="token"><jsonpath>$['token']</jsonpath></setProperty>
+        <to uri="direct:addTokenToCache"/>
+    </route>
+
+    <route id="addTokenToCache">
+      <description>Adds the Drupal X-CSRF token to the cache</description>
+      <from uri="direct:addTokenToCache"/>
+        <setHeader headerName="CamelCacheOperation"><constant>CamelCacheAdd</constant></setHeader>
+        <setHeader headerName="CamelCacheKey"><constant>{{islandora.drupal.username}}</constant></setHeader>
+        <transform><simple>${property.token}</simple></transform>
+        <to uri="cache://tokens"/>
+    </route>
+
+    <route id="drupalLogout">
+      <description>Logs out of Drupal</description>
+      <from uri="direct:drupalLogout"/>
+        <removeHeaders pattern="*"/>
+        <setHeader headerName="CamelHttpMethod"><constant>POST</constant></setHeader>
+        <setHeader headerName="Content-Type"><constant>application/json</constant></setHeader>
+        <setHeader headerName="X-CSRF-Token"><simple>${property.token}</simple></setHeader>
+        <setHeader headerName="Cookie"><simple>${property.cookie}</simple></setHeader>
+        <setBody><simple>${null}</simple></setBody>
+        <to uri="http:{{islandora.drupal.baseurl}}/user/logout"/>
+    </route>
+
+  </routeContext>
+
+</blueprint>

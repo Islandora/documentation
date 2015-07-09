@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="
+           http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd">
+
+  <routeContext id="eventGateway" xmlns="http://camel.apache.org/schema/blueprint">
+
+    <route>
+      <description>Content based router for incoming Fedora events</description>
+      <from uri="activemq:topic:fedora"/>
+        <log message="GOT A MESSAGE"/>
+        <log message="HEADERS: ${headers}"/>
+        <setProperty propertyName="CamelFcrepoBaseUrl"><simple>${headers[org.fcrepo.jms.baseURL]}</simple></setProperty>
+        <setProperty propertyName="CamelFcrepoIdentifier"><simple>${headers[org.fcrepo.jms.identifier]}</simple></setProperty>
+        <choice>
+          <when>
+              <simple>${headers[org.fcrepo.jms.eventType]} contains 'http://fedora.info/definitions/v4/repository#NODE_REMOVED'</simple>
+              <to uri="direct:handleNodeRemovedEvent"/>
+          </when>
+          <otherwise>
+              <to uri="direct:handleNodeUpsertEvent"/>
+          </otherwise>
+        </choice>
+    </route>
+
+    <route>
+      <description>Event handler for node upsert events</description>
+      <from uri="direct:handleNodeUpsertEvent"/>
+        <to uri="direct:fedoraGetRdf"/>
+        <to uri="direct:extractUUID"/>
+        <to uri="direct:getDrupalAuthInfo"/>
+        <to uri="direct:drupalGetNode"/>
+        <choice>
+          <when>
+            <simple>${property.node} == '[false]'</simple>
+            <to uri="direct:drupalCreateNodeFromRdf"/>
+          </when>
+          <otherwise>
+            <to uri="direct:drupalUpdateNodeFromRdf"/>
+          </otherwise>
+        </choice>
+        <to uri="direct:drupalPutNode"/>
+    </route>
+
+    <route>
+      <description>Event handler for node removed events</description>
+      <from uri="direct:handleNodeRemovedEvent"/>
+        <to uri="direct:getDrupalAuthInfo"/>
+        <to uri="direct:drupalDeleteNodeByFedoraUri"/>
+    </route>
+
+    <route>
+      <description>Gets RDF from Fedora</description>
+      <from uri="direct:fedoraGetRdf"/>
+        <removeHeaders pattern="*"/>
+        <setHeader headerName="CamelHttpMethod"><constant>GET</constant></setHeader>
+        <setHeader headerName="CamelFcrepoBaseUrl"><simple>${property.CamelFcrepoBaseUrl}</simple></setHeader>
+        <setHeader headerName="CamelFcrepoIdentifier"><simple>${property.CamelFcrepoIdentifier}</simple></setHeader>
+        <setHeader headerName="Accept"><constant>application/ld+json</constant></setHeader>
+        <to uri="fcrepo:{{islandora.fcrepo.baseurl}}"/>
+        <setProperty propertyName="rdf"><simple>${bodyAs(String)}</simple></setProperty>
+    </route>
+
+    <route>
+      <description>Extracts a Drupal UUID from Fedora RDF</description>
+      <from uri="direct:extractUUID"/>
+        <setBody><simple>${property.rdf}</simple></setBody>
+        <doTry>
+          <setProperty propertyName="uuid"><jsonpath>$[0]['http://www.semanticdesktop.org/ontologies/2007/03/22/nfo/v1.2/uuid'][0]['@value']</jsonpath></setProperty>
+          <doCatch>
+            <exception>java.lang.Exception</exception>
+            <log message="Error extracting UUID from Fedora RDF.  Aborting node upsert event.\n\nException message: ${exception.message}\n\nRDF from Fedora:\n${property.rdf}" loggingLevel="WARN"/>
+            <stop/>
+          </doCatch>
+        </doTry>
+    </route>
+
+    <route>
+      <description>Gets node JSON from Drupal</description>
+      <from uri="direct:drupalGetNode"/>
+        <removeHeaders pattern="*"/>
+        <setHeader headerName="CamelHttpMethod"><constant>GET</constant></setHeader>
+        <setHeader headerName="Accept"><constant>application/json</constant></setHeader>
+        <setHeader headerName="X-CSRF-Token"><simple>${property.token}</simple></setHeader>
+        <setHeader headerName="Cookie"><simple>${property.cookie}</simple></setHeader>
+        <transform><simple>${null}</simple></transform>
+        <recipientList><simple>http:{{islandora.drupal.baseurl}}/node/${property.uuid}</simple></recipientList>
+        <setProperty propertyName="node"><simple>${bodyAs(String)}</simple></setProperty>
+    </route>
+
+    <route>
+      <description>Creates a Drupal node using RDF</description>
+      <from uri="direct:drupalCreateNodeFromRdf"/>
+        <to uri="direct:extractContentType"/>
+        <to uri="direct:drupalGetRdfMapping"/>
+        <transform><simple>{"rdf" : ${property.rdf}, "contentType" : "${property.contentType}", "uuid" : "${property.uuid}", "mappings" : ${property.mappings}}</simple></transform>
+        <to uri="islandora:rdf:createNode"/>
+    </route>
+
+    <route>
+      <description>Extracts an Islandora content type from RDF</description>
+      <from uri="direct:extractContentType"/>
+        <setBody><simple>${property.rdf}</simple></setBody>
+        <to uri="islandora:rdf:extractContentType"/>
+        <setProperty propertyName="contentType"><simple>${bodyAs(String)}</simple></setProperty>
+    </route>
+
+    <route>
+      <description>Gets an RDF mapping from Drupal</description>
+      <from uri="direct:drupalGetRdfMapping"/>
+        <setHeader headerName="CamelHttpMethod"><constant>GET</constant></setHeader>
+        <setHeader headerName="Accept"><constant>application/json</constant></setHeader>
+        <setHeader headerName="X-CSRF-Token"><simple>${property.token}</simple></setHeader>
+        <setHeader headerName="Cookie"><simple>${property.cookie}</simple></setHeader>
+        <setBody><simple>${null}</simple></setBody>
+        <recipientList><simple>http:{{islandora.drupal.baseurl}}/rdf_mapping/node/${property.contentType}</simple></recipientList>
+        <setProperty propertyName="mappings"><simple>${bodyAs(String)}</simple></setProperty>
+    </route>
+
+    <route>
+      <description>Updates a Drupal node using RDF</description>
+      <from uri="direct:drupalUpdateNodeFromRdf"/>
+        <setBody><simple>{"node" : ${property.node}, "rdf" : ${property.rdf}}</simple></setBody>
+        <to uri="islandora:rdf:updateNode"/>
+    </route>
+
+    <route>
+      <description>PUTs a node using Drupal's services module</description>
+      <from uri="direct:drupalPutNode"/>
+        <removeHeaders pattern="*"/>
+        <setHeader headerName="CamelHttpMethod"><constant>PUT</constant></setHeader>
+        <setHeader headerName="Content-Type"><constant>application/json</constant></setHeader>
+        <setHeader headerName="X-CSRF-Token"><simple>${property.token}</simple></setHeader>
+        <setHeader headerName="Cookie"><simple>${property.cookie}</simple></setHeader>
+        <setHeader headerName="Ignore-Hooks"><simple>true</simple></setHeader>
+        <recipientList><simple>http:{{islandora.drupal.baseurl}}/node/${property.uuid}</simple></recipientList>
+    </route>
+
+    <route>
+      <description>Deletes a node in Drupal using its Fedora URI</description>
+      <from uri="direct:drupalDeleteNodeByFedoraUri"/>
+        <removeHeaders pattern="*"/>
+        <setHeader headerName="CamelHttpMethod"><constant>POST</constant></setHeader>
+        <setHeader headerName="Content-Type"><constant>application/json</constant></setHeader>
+        <setHeader headerName="X-CSRF-Token"><simple>${property.token}</simple></setHeader>
+        <setHeader headerName="Cookie"><simple>${property.cookie}</simple></setHeader>
+        <setHeader headerName="Ignore-Hooks"><simple>true</simple></setHeader>
+        <setBody><simple>{"fedoraUri": "${property.CamelFcrepoBaseUrl}${property.CamelFcrepoIdentifier}"}</simple></setBody>
+        <to uri="http:{{islandora.drupal.baseurl}}/delete_by_fedora_uri"/>
+    </route>
+  </routeContext>
+
+</blueprint>

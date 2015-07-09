@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="
+           http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd">
+
+  <routeContext id="post" xmlns="http://camel.apache.org/schema/blueprint">
+
+    <route id="createCollection">
+      <description>Creates a collection in Fedora based on a node in Drupal</description>
+      <from uri="direct:createCollection"/>
+        <to uri="direct:createCollectionCacheProperties"/>
+        <to uri="direct:createCollectionSparql"/>
+        <to uri="direct:createCollectionInFedora"/>
+    </route>
+
+    <route id="createCollectionCacheProperties">
+      <description>Caches properties on the exchange for use in later routes.</description>
+      <from uri="direct:createCollectionCacheProperties"/>
+        <setProperty propertyName="node"><simple>${body}</simple></setProperty>
+    </route>
+
+    <route id="createCollectionSparql">
+      <description>Creates a SPARQL update query based on a Drupal node</description>
+      <from uri="direct:createCollectionSparql"/>
+        <setBody><simple>${property.node}</simple></setBody>
+        <to uri="islandora:collectionService:nodeToSparql"/>
+    </route>
+
+    <route id="createCollectionInFedora">
+      <description>Posts a SPARQL update query to Fedora in order to create a resource.</description>
+      <from uri="direct:createCollectionInFedora"/>
+        <removeHeaders pattern="*"/>
+        <setHeader headerName="Content-Type"><constant>application/sparql-update</constant></setHeader>
+        <setHeader headerName="CamelHttpMethod"><constant>POST</constant></setHeader>
+        <to uri="fcrepo:{{islandora.fcrepo.baseurl}}"/>
+    </route>
+
+  </routeContext>
+
+</blueprint>

@@ -1,0 +1,48 @@
+<?php
+
+/**
+ * @file
+ * Provides a service for deleting Drupal nodes by Fedora path.
+ */
+
+/**
+ * Implements hook_permission().
+ */
+function islandora_delete_by_fedora_uri_service_permission() {
+  return array(
+    'islandora delete by fedora uri' => array(
+      'title' => t('Delete by Fedora URI.'),
+      'description' => t('Allows external sources to delete Drupal nodes by Fedora URI.'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_services_resources().
+ */
+function islandora_delete_by_fedora_uri_service_services_resources() {
+  return array(
+    'delete_by_fedora_uri' => array(
+      'create' => array(
+        'help' => t('Deletes a Drupal node by the Fedora URI supplied in the POST data.'),
+        'file' => array(
+          'type' => 'inc',
+          'module' => 'islandora_delete_by_fedora_uri_service',
+          'name' => 'include/islandora_delete_by_fedora_uri_service',
+        ),
+        'callback' => 'islandora_delete_by_fedora_uri_service_delete',
+        'access callback' => 'user_access',
+        'access arguments' => array('islandora delete by fedora uri'),
+        'args' => array(
+          array(
+            'name' => 'args',
+            'type' => 'array',
+            'description' => t("JSON data containing arguments to the delete function (e.g. the Fedora URI)"),
+            'source' => 'data',
+            'optional' => FALSE,
+          ),
+        ),
+      ),
+    ),
+  );
+}
