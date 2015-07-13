@@ -1,12 +1,7 @@
 #!/bin/bash
 mysql -u root -e 'create database drupal;'
-#mysql -u root -e "create database fedora;"
-#mysql -u root -e "GRANT ALL PRIVILEGES ON fedora.* To 'fedora'@'localhost' IDENTIFIED BY 'fedora';"
 mysql -u root -e "GRANT ALL PRIVILEGES ON drupal.* To 'drupal'@'localhost' IDENTIFIED BY 'drupal';"
 cd $HOME
-#git clone git://github.com/Islandora/tuque.git
-#wget http://alpha.library.yorku.ca/islandora_tomcat.$FEDORA_VERSION.tar.gz
-#tar xf islandora_tomcat.$FEDORA_VERSION.tar.gz
 cd islandora_tomcat
 export CATALINA_HOME='.'
 export JAVA_OPTS="-Xms1024m -Xmx1024m -XX:MaxPermSize=512m -XX:+CMSClassUnloadingEnabled -Djavax.net.ssl.trustStore=$CATALINA_HOME/fedora/server/truststore -Djavax.net.ssl.trustStorePassword=tomcat"
@@ -35,9 +30,6 @@ cd drupal-*
 drush si minimal --db-url=mysql://drupal:drupal@localhost/drupal --yes
 drush runserver --php-cgi=$HOME/.phpenv/shims/php-cgi localhost:8081 &>/tmp/drush_webserver.log &
 ln -s $ISLANDORA_DIR sites/all/modules/islandora
-mv sites/all/modules/islandora/tests/travis.test_config.ini sites/all/modules/islandora/tests/test_config.ini
-mkdir sites/all/libraries
-ln -s $HOME/tuque sites/all/libraries/tuque
 drush dl --yes coder-7.x-2.4
 drush dl --yes potx-7.x-1.0
 drush en --yes coder_review
@@ -46,6 +38,12 @@ drush en --yes potx
 drush dl --user=1 services
 drush en --user=1 --yes rest_server
 drush en --user=1 --yes islandora
+drush en --user=1 --yes islandora_apachesolr
+drush en --user=1 --yes islandora_basic_image
+drush en --user=1 --yes islandora_collection
+drush en --user=1 --yes islandora_dc
+drush en --user=1 --yes islandora_mods
+drush en --user=1 --yes islandora_rdf_mapping_service
 drush cc all
 # The shebang in this file is a bogeyman that is haunting the web test cases.
 rm /home/travis/.phpenv/rbenv.d/exec/hhvm-switcher.bash

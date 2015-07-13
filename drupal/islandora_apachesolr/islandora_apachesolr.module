@@ -12,4 +12,3 @@ function islandora_apachesolr_apachesolr_index_documents_alter(array &$documents
     $documents[0]->ss_uuid = $entity->uuid;
   }
 }
-
