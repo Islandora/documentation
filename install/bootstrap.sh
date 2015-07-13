@@ -66,6 +66,7 @@ usermod -a -G www-data vagrant
 
 # Get the repo
 git clone -b 7.x-2.x https://github.com/Islandora-Labs/islandora.git
+chown -R vagrant:vagrant islandora
 
 # Set JAVA_HOME -- Java8 set-default does not seem to do this.
 sed -i 's|#JAVA_HOME=/usr/lib/jvm/openjdk-6-jdk|JAVA_HOME=/usr/lib/jvm/java-8-oracle|g' /etc/default/tomcat7
