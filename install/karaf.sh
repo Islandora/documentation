@@ -23,6 +23,7 @@ update-rc.d karaf-service defaults
 
 # Start it
 service karaf-service start
+sleep 10
 
 # You can always log into the karaf console once the service is running by executing:
 # /opt/karaf/bin/client
