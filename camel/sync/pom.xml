@@ -72,6 +72,16 @@
       <resource>
         <directory>src/main/resources</directory>
         <filtering>true</filtering>
+        <excludes>
+          <exclude>OSGI-INF/**/*</exclude>
+        </excludes>
+      </resource>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>false</filtering>
+        <includes>
+          <include>OSGI-INF/**/*</include>
+        </includes>
       </resource>
     </resources>
 
