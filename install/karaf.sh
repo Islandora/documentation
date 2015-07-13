@@ -13,7 +13,7 @@ ln -s /opt/apache-karaf-"$KARAF_VERSION" /opt/karaf
 
 # Run a setup script to add some feature repos and prepare it for running as a service
 /opt/karaf/bin/start
-sleep 5
+sleep 10
 /opt/karaf/bin/client < "$HOME_DIR"/islandora/install/karaf/setup.script
 /opt/karaf/bin/stop
 
