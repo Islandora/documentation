@@ -1,0 +1,14 @@
+<?php
+/**
+ * @file
+ * Islandora Apache Solr integration.
+ */
+
+/**
+ * Implements hook_apachesolr_index_documents_alter().
+ */
+function islandora_apachesolr_apachesolr_index_documents_alter(array &$documents, $entity, $entity_type, $env_id) {
+  if ($entity_type == 'node' && count($documents) > 0 && isset($entity->uuid)) {
+    $documents[0]->ss_uuid = $entity->uuid;
+  }
+}

@@ -27,9 +27,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   home_dir = "/home/vagrant"
 
   config.vm.provision :shell, :path => "bootstrap.sh", :args => home_dir
+  config.vm.provision :shell, :path => "solr.sh"
   config.vm.provision :shell, :path => "drupal.sh", :args => home_dir
   config.vm.provision :shell, :path => "fcrepo.sh", :args => home_dir
-  config.vm.provision :shell, :path => "solr.sh"
   config.vm.provision :shell, :path => "blazegraph.sh"
   config.vm.provision :shell, :path => "fcrepo-camel-toolbox.sh"
   config.vm.provision :shell, :path => "karaf.sh", :args => home_dir

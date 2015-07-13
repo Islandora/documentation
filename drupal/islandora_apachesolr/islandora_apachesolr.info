@@ -1,0 +1,6 @@
+name = Islandora Apache Solr Integration
+description = A module which allows the Solr indexing and searching of Islandora resources.
+core = 7.x
+package = Islandora
+dependencies[] = apachesolr
+dependencies[] = uuid
