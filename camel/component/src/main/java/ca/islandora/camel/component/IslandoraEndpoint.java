@@ -69,10 +69,11 @@ public class IslandoraEndpoint extends DefaultEndpoint {
 
     /**
      * Sets the Islandora command to be executed by the Islandora script. The
-     * command must not be empty or * <code>null</code>. The Islandora scirpt
+     * command must not be empty or * <code>null</code>. The Islandora script
      * is automatically prefixed to the supplied args.
      *
      *  @param args
+     *             the arument string
      */
     public void setArgs(String args) {
         ObjectHelper.notEmpty(args, "args");
@@ -92,6 +93,7 @@ public class IslandoraEndpoint extends DefaultEndpoint {
      * The timeout, in milliseconds, after which the executable should be terminated. If execution has not completed within the timeout, the component will send a termination request.
      *
      * @param timeout
+     *            the timeout, in milliseconds, after which the executable should be terminated
      */
     public void setTimeout(long timeout) {
         if (timeout <= 0) {
@@ -109,6 +111,7 @@ public class IslandoraEndpoint extends DefaultEndpoint {
      * If no outFile is set, the standard output (stdout) of the executable will be used instead.
      *
      * @param outFile
+     *            the name of a file, created by the executable, that should be considered as its output.
      */
     public void setOutFile(String outFile) {
         ObjectHelper.notEmpty(outFile, "outFile");
@@ -131,6 +134,7 @@ public class IslandoraEndpoint extends DefaultEndpoint {
      * A boolean indicating that when stdout is empty, this component will populate the Camel Message Body with stderr. This behavior is disabled (false) by default.
      *
      * @param useStderrOnEmptyStdout
+     *            a boolean indicating that when stdout is empty, this component will populate the Camel Message Body with stderr
      */
     public void setUseStderrOnEmptyStdout(boolean useStderrOnEmptyStdout) {
         this.useStderrOnEmptyStdout = useStderrOnEmptyStdout;
