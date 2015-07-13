@@ -8,23 +8,20 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # All Vagrant configuration is done here. The most common configuration
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
-  
+
   config.vm.hostname = "islandora"
 
   # Every Vagrant virtual environment requires a box to build off of.
   config.vm.box = "ubuntu/trusty64"
 
   config.vm.network :forwarded_port, guest: 8080, host: 8080 # Tomcat
+  config.vm.network :forwarded_port, guest: 8181, host: 8181 # Karaf
   config.vm.network :forwarded_port, guest: 3306, host: 3306 # MySQL
   config.vm.network :forwarded_port, guest: 5432, host: 5432 # PostgreSQL
   config.vm.network :forwarded_port, guest: 80, host: 8000 # Apache
 
   config.vm.provider "virtualbox" do |vb|
-    if ENV['VIM']
-      vb.customize ["modifyvm", :id, "--memory", '2048']
-    else
-      vb.customize ["modifyvm", :id, "--memory", '1500']
-    end
+    vb.customize ["modifyvm", :id, "--memory", '2048']
   end
 
   home_dir = "/home/vagrant"
@@ -35,12 +32,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision :shell, :path => "solr.sh"
   config.vm.provision :shell, :path => "blazegraph.sh"
   config.vm.provision :shell, :path => "fcrepo-camel-toolbox.sh"
+  config.vm.provision :shell, :path => "karaf.sh", :args => home_dir
+  config.vm.provision :shell, :path => "hawtio.sh", :args => home_dir
+  config.vm.provision :shell, :path => "camel.sh", :args => home_dir
+  config.vm.provision :shell, :path => "fcrepo-camel.sh", :args => home_dir
+  config.vm.provision :shell, :path => "activemq.sh", :args => home_dir
+  config.vm.provision :shell, :path => "config.sh", :args => home_dir
+  config.vm.provision :shell, :path => "islandora-component.sh", :args => home_dir
   config.vm.provision :shell, :path => "sync.sh", :args => home_dir
   config.vm.provision :shell, :path => "services.sh", :args => home_dir
   config.vm.provision :shell, :path => "post-install.sh", :args => home_dir
-  if ENV['VIM']
-    config.vm.provision :shell, :path => "vim.sh", :args => home_dir
-  end
 
 
   # Disable automatic box update checking. If you disable this, then

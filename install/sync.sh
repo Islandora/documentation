@@ -3,6 +3,6 @@ echo "Installing Sync."
 HOME_DIR=$1
 
 cd "$HOME_DIR/islandora/camel/sync"
-mvn install
-cp target/sync-0.0-SNAPSHOT.war /var/lib/tomcat7/webapps/islandora-sync.war
-chown tomcat7:tomcat7 /var/lib/tomcat7/webapps/islandora-sync.war
+
+sudo -u vagrant mvn install
+/opt/karaf/bin/client < "$HOME_DIR"/islandora/install/karaf/sync.script
