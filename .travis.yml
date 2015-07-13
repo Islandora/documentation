@@ -20,7 +20,11 @@ script:
   - mvn install -B -V
   - mvn javadoc:jar
   - mvn javadoc:test-aggregate
-  - cd $TRAVIS_BUILD_DIR/camel/services
+  - cd $TRAVIS_BUILD_DIR/camel/services/collection-service
+  - mvn install -B -V
+  - mvn javadoc:jar
+  - mvn javadoc:test-aggregate
+  - cd $TRAVIS_BUILD_DIR/camel/component
   - mvn install -B -V
   - mvn javadoc:jar
   - mvn javadoc:test-aggregate
