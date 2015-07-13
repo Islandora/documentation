@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * 
  * Mimics ExecProducer
  * 
- * @see {link ExecProducer}
+ * @see {link IslandoraProducer}
  */
 public class IslandoraProducer extends DefaultProducer {
 
