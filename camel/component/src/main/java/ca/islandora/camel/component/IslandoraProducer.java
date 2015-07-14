@@ -14,11 +14,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Islandora producer.
+ * Islandora producer. {@link IslandoraProducer}
  * 
  * Mimics ExecProducer
- * 
- * @see {link ExecProducer}
  */
 public class IslandoraProducer extends DefaultProducer {
 

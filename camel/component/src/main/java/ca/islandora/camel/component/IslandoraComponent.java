@@ -8,7 +8,7 @@ import org.apache.camel.impl.UriEndpointComponent;
 import org.apache.camel.util.ObjectHelper;
 
 /**
- * Represents the component that manages {@link ExecEndpoint}. With the
+ * Represents the component that manages {@link IslandoraEndpoint}. With the
  * component it is possible to execute system commands.
  */
 public class IslandoraComponent extends UriEndpointComponent {
