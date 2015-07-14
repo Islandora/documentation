@@ -124,7 +124,7 @@
             <Export-Package>${islandora.osgi.export.pkg};version=${project.version}</Export-Package>
             <Import-Package>
               ${islandora.osgi.import.pkg},
-              org.apache.camel*;version="${camel.version.range}",
+              org.apache.camel.*;version="${camel.version.range}",
               *
             </Import-Package>
             <Implementation-Title>${project.name}</Implementation-Title>
