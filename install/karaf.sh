@@ -21,6 +21,9 @@ sleep 60
 ln -s /opt/karaf/bin/karaf-service /etc/init.d/
 update-rc.d karaf-service defaults
 
+# Add the vagrant user's maven repository
+sed -i "s|#org.ops4j.pax.url.mvn.localRepository=|org.ops4j.pax.url.mvn.localRepository=$HOME_DIR/.m2/repository|" /opt/karaf/etc/org.ops4j.pax.url.mvn.cfg
+
 # Start it
 service karaf-service start
 sleep 60
