@@ -11,8 +11,8 @@ chmod -R g+w /var/lib/tomcat7
 chown -R www-data:www-data /var/www/html
 chmod -R g+w /var/www/html
 
-# Chown islandora repo
-chown -R vagrant:vagrant "$HOME_DIR/islandora"
+# Chown the home directory for good measure
+chown -R vagrant:vagrant "$HOME_DIR"
 
 # Just for good measure
 service tomcat7 restart
