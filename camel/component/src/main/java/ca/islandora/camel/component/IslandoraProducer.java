@@ -45,7 +45,7 @@ public class IslandoraProducer extends DefaultProducer {
         ObjectHelper.notNull(result, "The command executor must return a not-null result");
         if (result.getExitValue() != 0) {
             log.error("The command {} returned exit value {}", execCommand, result.getExitValue());
-            String errMsg = IOUtils.toString(result.getStdout(), StandardCharsets.UTF_8);
+            String errMsg = IOUtils.toString(result.getStderr(), StandardCharsets.UTF_8);
             throw new IslandoraPHPException(errMsg);
         }
         log.info("The command {} had exit value {}", execCommand, result.getExitValue());
