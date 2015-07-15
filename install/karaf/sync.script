@@ -1,7 +1,4 @@
 feature:repo-add file:/home/vagrant/islandora/camel/sync/target/classes/features.xml
-sleep -s 60
 feature:install islandora-sync-gateway
-sleep -s 60
 bundle:watch --start mvn:ca.islandora.camel.sync/islandora-sync-gateway/0.0.0-SNAPSHOT
-sleep -s 60
 logout

@@ -1,7 +1,4 @@
 feature:repo-add file:/home/vagrant/islandora/camel/component/target/classes/features.xml
-sleep -s 60
 feature:install islandora-camel-component
-sleep -s 60
 bundle:watch --start mvn:ca.islandora.camel.component/islandora-camel-component/0.0.0-SNAPSHOT
-sleep -s 60
 logout
