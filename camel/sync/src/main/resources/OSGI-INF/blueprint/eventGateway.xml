@@ -10,8 +10,6 @@
     <route>
       <description>Content based router for incoming Fedora events</description>
       <from uri="activemq:topic:fedora"/>
-        <log message="GOT A MESSAGE"/>
-        <log message="HEADERS: ${headers}"/>
         <setProperty propertyName="CamelFcrepoBaseUrl"><simple>${headers[org.fcrepo.jms.baseURL]}</simple></setProperty>
         <setProperty propertyName="CamelFcrepoIdentifier"><simple>${headers[org.fcrepo.jms.identifier]}</simple></setProperty>
         <choice>

@@ -10,7 +10,6 @@
     <route id="updateCollection">
       <description>Updates a collection in Fedora based on a node in Drupal</description>
       <from uri="direct:updateCollection"/>
-        <log message="PUT"/>
         <to uri="direct:updateCollectionCacheProperties"/>
         <to uri="direct:getCollectionUri"/>
         <to uri="direct:createCollectionSparql"/>

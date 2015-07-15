@@ -10,7 +10,6 @@
     <route id="getCollection">
       <description>Gets RDF from Fedora for collection identified by Drupal UUID</description>
       <from uri="direct:getCollection"/>
-        <log message="GET"/>
         <to uri="direct:getCollectionCacheProperties"/>
         <to uri="direct:getCollectionUri"/>
         <to uri="direct:getCollectionRdf"/>

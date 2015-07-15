@@ -10,7 +10,6 @@
     <route id="deleteCollection">
       <description>Deletes a collection in Fedora by Drupal UUID</description>
       <from uri="direct:deleteCollection"/>
-        <log message="DELETE"/>
         <to uri="direct:deleteCollectionCacheProperties"/>
         <to uri="direct:getCollectionUri"/>
         <to uri="direct:deleteCollectionInFedora"/>
