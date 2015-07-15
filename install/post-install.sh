@@ -14,9 +14,13 @@ chmod -R g+w /var/www/html
 # Chown the home directory for good measure
 chown -R vagrant:vagrant "$HOME_DIR"
 
-# Also just for good measure
+# Cycle tomcat
 service tomcat7 restart
+
+# Cycle karaf and watch the maven bundles
 service karaf-service restart
+sleep 60
+/opt/karaf/bin/client < "$HOME_DIR"/islandora/install/karaf/watch.script
 
 # Fix ApacheSolr config
 drush -r /var/www/html/drupal sqlq "update apachesolr_environment set url='http://localhost:8080/solr' where url='http://localhost:8983/solr'"

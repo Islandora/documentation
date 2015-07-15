@@ -1,4 +1,3 @@
 feature:repo-add file:/home/vagrant/islandora/camel/component/target/classes/features.xml
 feature:install islandora-camel-component
-bundle:watch --start mvn:ca.islandora.camel.component/islandora-camel-component/0.0.0-SNAPSHOT
 logout

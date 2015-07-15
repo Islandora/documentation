@@ -1,4 +1,3 @@
 feature:repo-add file:/home/vagrant/islandora/camel/services/collection-service/target/classes/features.xml
 feature:install islandora-collection-service
-bundle:watch --start mvn:ca.islandora.camel.services/islandora-collection-service/0.0.0-SNAPSHOT
 logout
