@@ -3,5 +3,4 @@
 .project
 .*.swp
 workbench.xmi
-bin
 target
