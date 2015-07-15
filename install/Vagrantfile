@@ -32,6 +32,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision :shell, :path => "fcrepo.sh", :args => home_dir
   config.vm.provision :shell, :path => "blazegraph.sh"
   config.vm.provision :shell, :path => "fcrepo-camel-toolbox.sh"
+  config.vm.provision :shell, :path => "islandora-commands.sh", :args => home_dir
   config.vm.provision :shell, :path => "karaf.sh", :args => home_dir
   config.vm.provision :shell, :path => "hawtio.sh", :args => home_dir
   config.vm.provision :shell, :path => "camel.sh", :args => home_dir
