@@ -14,6 +14,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Every Vagrant virtual environment requires a box to build off of.
   config.vm.box = "ubuntu/trusty64"
 
+  # Setup the shared folder
+  home_dir = "/home/vagrant"
+  config.vm.synced_folder "../", home_dir + "/islandora"
+
   config.vm.network :forwarded_port, guest: 8080, host: 8080 # Tomcat
   config.vm.network :forwarded_port, guest: 8181, host: 8181 # Karaf
   config.vm.network :forwarded_port, guest: 3306, host: 3306 # MySQL
@@ -23,8 +27,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--memory", '2048']
   end
-
-  home_dir = "/home/vagrant"
 
   config.vm.provision :shell, :path => "bootstrap.sh", :args => home_dir
   config.vm.provision :shell, :path => "solr.sh"

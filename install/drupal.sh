@@ -80,7 +80,7 @@ cp -f apachesolr/solr-conf/solr-4.x/* /var/lib/tomcat7/solr/collection1/conf/
 service tomcat7 restart
 
 # Islandora modules
-cp -R "$HOME_DIR"/islandora/drupal/* .
+ln -s "$HOME_DIR"/islandora/drupal islandora
 drush -y en islandora
 drush -y en islandora_dc
 drush -y en islandora_mods
