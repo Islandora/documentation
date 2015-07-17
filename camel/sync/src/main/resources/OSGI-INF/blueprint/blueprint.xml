@@ -15,9 +15,7 @@
 
   <!-- Islandora Component Configuration -->
   <bean id="islandora" class="ca.islandora.camel.component.IslandoraComponent">
-    <argument value="php"/>
     <argument value="${islandora.php.workingDir}"/>
-    <argument value="${islandora.php.executable}"/>
   </bean>
 
   <camelContext id="sync" xmlns="http://camel.apache.org/schema/blueprint">

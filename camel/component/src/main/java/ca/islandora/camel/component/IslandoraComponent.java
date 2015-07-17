@@ -17,14 +17,15 @@ public class IslandoraComponent extends UriEndpointComponent {
     private String workingDir;
     private String islandoraScript;
     
-    public IslandoraComponent(String executable, String workingDir, String islandoraScript) {
+    public IslandoraComponent(String workingDir) {
         super(IslandoraEndpoint.class);
-        ObjectHelper.notEmpty(executable, "executable");
-        this.executable = executable;
+
+        this.executable = "php";
+
         ObjectHelper.notEmpty(workingDir, "workingDir");
         this.workingDir = workingDir;
-        ObjectHelper.notEmpty(islandoraScript, "islandoraScript");
-        this.islandoraScript = islandoraScript;
+
+        this.islandoraScript = "islandora.php";
     }
 
     @Override
