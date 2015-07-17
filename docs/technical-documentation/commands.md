@@ -1,10 +1,13 @@
 # Islandora Commands
 
 ## Introduction
+
 Sometimes you need to do deeper logic in a Camel route than can realistically be done within a Blueprint xml.  Since Apache Camel is an *integration* framework, we can call out to command line PHP instead of having to use Java for the majority of our tasks.  Though Java is still always an option to those who are inclined (and may be required for more advanced use cases), there are many advantages to sticking with PHP.  Not only is it the language we're most comfortable with as a community, but its also well suited for dealing with both ld+json from Fedora and node content from Drupal (much more so than Java).  We also get the full advantages of modern PHP, including object oriented programming and tools like Composer.    
 
 ## Basic Usage
+
 In your git project's root, head on over to the `bin` folder of the `camel/commands` directory and execute the `islandora.php` script to see what it has to say.
+
 ```bash
 vagrant@islandora:~/islandora$ cd camel/commands/bin
 vagrant@islandora:~/islandora/camel/commands/bin$ php islandora.php
@@ -218,7 +221,9 @@ Hello World!
 ```
 
 ## Working with JSON data
+
 Most of the time, we're dealing with JSON output.  Often, we're working with node data from Drupal or ld+json RDF from Fedora 4.  As a convienence, the JsonInputIslandoraCommand can be extended instead of IslandoraCommand.  With a JsonInputIslandoraCommand, `$this->data` is an associative array that is automatically parsed from JSON input through STDIN.  Let's trying writing another Greeter, only this time it will accept JSON input of the form `{"name": "some_name"}`.
+
 ```php
 <?php
 

@@ -1,7 +1,9 @@
 # Architecture
 
 ## Overview
+
 Islandora 7.x-2.x is a large and comprehensive technology stack that encompasses a Fedora 4 repository, a Drupal CMS, and an Apache Camel based middleware layer to integrate the two along with all of the other complementary technologies required for digital asset management and preservation (full text search engine, triplestore, command line tools, etc...).  Here is a (somewhat) exhaustive list of the technologies in an Islandora stack:
+
 - Fedora 4 (deployed in a servlet container such as Tomcat or Jetty)
 - Drupal 7 (deployed in an Apache 2 web server), which includes:
     - A relational database such as MySQL or PostgreSQL
@@ -27,6 +29,7 @@ Here's an image representing the various components of the stack and how they in
 
 ## Scalability
 One of the main goals with the 7.x-2.x project is to allow for horizontal scalability, and the architecture of the stack has been designed with this in mind.  No assumptions are made requiring any of the components to be on the same machine, so it can all be split apart onto multiple resources.  Most of the components also provide some sort of horizontal scalability through sharding, replication, or both.  If desired, the following components can be clustered through configuration and their respective installation procedures:
+
 - Fedora 4
     - Fedora 4 sits on top of Modeshape, which provides both replication and sharding capabilities.  See https://docs.jboss.org/author/display/MODE/Clustering
 - Apache Solr
