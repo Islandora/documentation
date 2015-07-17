@@ -10,10 +10,11 @@ Islandora consists of:
 
 ## About this guide
 
-The [Technical Design documentation](technical-documentation/technical_design.md) will help you:
+The Technical documentation will help you:
 
-  * Understand the Islandora 7.x-2.x design rationale
-  * Importance of using an integration framework
+  * Technical design considerations
+  * Understand the Islandora 7.x-2.x architecture
+  * IslandoraCommand
   * Using camel
   * Inversion of control and camel
   * Camel and scripting languages

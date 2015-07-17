@@ -26,7 +26,8 @@ pages:
   - ['contributing/contributing.md', 'Contributing', 'How to contribute']
 
 # Technical Documentation
-  - ['technical-documentation/technical_design.md', 'Technical Documentation', 'Technical Design']
+  - ['technical-documentation/architecture.md', 'Technical Documentation', 'Architecture']
   - ['technical-documentation/services.md', 'Technical Documentation', 'Middleware Services']
+  - ['technical-documentation/commands.md', 'Technical Documentation', 'Commands']
   - ['technical-documentation/migration.md', 'Technical Documentation', 'Migration']
   - ['technical-documentation/docs-build.md', 'Technical Documentation', 'How to build documenation']
