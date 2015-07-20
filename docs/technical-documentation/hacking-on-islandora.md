@@ -11,7 +11,8 @@ OR
 If you're already a developer and have previously forked and cloned Islandora, just add the 7.x-2.x branch from Islandora-Labs to your existing checkout:
 ```bash
 ~ $ cd /path/to/islandora
-/path/to/islandora $ git fetch https://github.com/Islandora-Labs/islandora.git
+/path/to/islandora $ git remote add labs https://github.com/Islandora-Labs/islandora.git
+/path/to/islandora $ git fetch labs
 /path/to/islandora $ git checkout 7.x-2.x
 ```
 5. Navigate into the `install` directory of your 7.x-2.x checkout
