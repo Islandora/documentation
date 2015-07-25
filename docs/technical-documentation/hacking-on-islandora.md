@@ -60,7 +60,7 @@ Many ports are forwarded from your virtual machine to your personal computer, so
 
 At any point in time, you can edit how the ports are forwarded by clicking on the Port Forwarding button in your virtual machine's Network settings in Virtualbox.
 
-INSERT PICTURE OF PORT FORWARDING SETTINGS IN VIRTUALBOX
+![port-settings](https://raw.githubusercontent.com/wiki/Islandora-Labs/islandora/images/vm-ports.png)
 
 You can also edit the section of the Vagrantfile that controls the default port forwarding, which looks something like this:
 ```ruby
