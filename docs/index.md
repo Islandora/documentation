@@ -10,19 +10,15 @@ Islandora consists of:
 
 ## About this guide
 
-The Technical documentation will help you:
+The Technical documentation will help you understand:
 
-  * Technical design considerations
-  * Understand the Islandora 7.x-2.x architecture
+  * 7.x-2.x archtecture
+  * Middleware services
   * IslandoraCommand
-  * Using camel
-  * Inversion of control and camel
-  * Camel and scripting languages
-  * Islandora Sync
-  * Solr and Triple store indexing
-  * Islandora (Drupal)
 
 The [How to build documentation](technical-documentation/docs-build.md) provides and overview on how the documentation is created, built, and deployed.
+
+The [Migration](migration/migration.md) provides and overview of Fedora 3 -> Fedora 4 mappings, along with lists of Fedora and Islandora namespace predicates that are in use in a standard Islandora installation.
 
 ## Installation
 
