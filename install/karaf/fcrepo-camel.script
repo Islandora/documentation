@@ -1,2 +1,2 @@
-feature:repo-add mvn:org.fcrepo.camel/fcrepo-camel/LATEST/xml/features
+feature:repo-add mvn:org.fcrepo.camel/fcrepo-camel/4.3.0/xml/features
 logout
