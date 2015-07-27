@@ -24,10 +24,15 @@ pages:
 
 # Contributing
   - ['contributing/contributing.md', 'Contributing', 'How to contribute']
+  - ['contributing/hacking-on-islandora.md', 'Contributing', 'Hacking on Islandora']
 
 # Technical Documentation
   - ['technical-documentation/architecture.md', 'Technical Documentation', 'Architecture']
   - ['technical-documentation/services.md', 'Technical Documentation', 'Middleware Services']
   - ['technical-documentation/commands.md', 'Technical Documentation', 'Commands']
-  - ['technical-documentation/migration.md', 'Technical Documentation', 'Migration']
   - ['technical-documentation/docs-build.md', 'Technical Documentation', 'How to build documenation']
+
+# Migration
+  - ['migration/migration.md', 'Migration', 'Migration']
+  - ['migration/fedora-namespace-predicates.md', 'Migration', 'Fedora namespace predicates']
+  - ['migration/islandora-namespace-predicates.md', 'Migration', 'Islandora namespace predicates']
