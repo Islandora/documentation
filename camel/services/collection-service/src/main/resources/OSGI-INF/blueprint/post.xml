@@ -7,18 +7,26 @@
 
   <routeContext id="post" xmlns="http://camel.apache.org/schema/blueprint">
 
+    <route id="createSubCollection">
+      <description>Creates a collection as a child of the collection identified by the provided Drupal UUID</description>
+      <from uri="direct:createSubCollection"/>
+        <!-- <transacted ref="txPolicy"/> -->
+        <setProperty propertyName="node"><simple>${bodyAs(String)}</simple></setProperty>
+        <setProperty propertyName="uuid"><simple>${headers.uuid}</simple></setProperty>
+        <to uri="direct:getCollectionUri"/>
+        <to uri="direct:createCollectionSparql"/>
+        <to uri="direct:createCollectionInFedora"/>
+        <setProperty propertyName="childUri"><simple>${bodyAs(String)}</simple></setProperty>
+        <to uri="direct:addAsMember"/>
+    </route>
+
     <route id="createCollection">
       <description>Creates a collection in Fedora based on a node in Drupal</description>
       <from uri="direct:createCollection"/>
-        <to uri="direct:createCollectionCacheProperties"/>
+        <setProperty propertyName="node"><simple>${body}</simple></setProperty>
+        <setProperty propertyName="uri"><simple>{{islandora.fcrepo.baseurl}}</simple></setProperty>
         <to uri="direct:createCollectionSparql"/>
         <to uri="direct:createCollectionInFedora"/>
-    </route>
-
-    <route id="createCollectionCacheProperties">
-      <description>Caches properties on the exchange for use in later routes.</description>
-      <from uri="direct:createCollectionCacheProperties"/>
-        <setProperty propertyName="node"><simple>${body}</simple></setProperty>
     </route>
 
     <route id="createCollectionSparql">
@@ -35,6 +43,16 @@
         <setHeader headerName="Content-Type"><constant>application/sparql-update</constant></setHeader>
         <setHeader headerName="CamelHttpMethod"><constant>POST</constant></setHeader>
         <to uri="fcrepo:{{islandora.fcrepo.baseurl}}"/>
+    </route>
+
+    <route id="addAsMember">
+      <description>Updates the pcdm:hasMember field of a collection with a new member</description>
+      <from uri="direct:addAsMember"/>
+        <to uri="mustache:templates/addAsMemberOfCollectionSparql.mustache"/>
+        <removeHeaders pattern="*"/>
+        <setHeader headerName="Content-Type"><constant>application/sparql-update</constant></setHeader>
+        <setHeader headerName="CamelHttpMethod"><constant>PATCH</constant></setHeader>
+        <recipientList><simple>fcrepo:${property.uri}</simple></recipientList>
     </route>
 
   </routeContext>

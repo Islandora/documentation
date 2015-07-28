@@ -30,6 +30,56 @@ function islandora_basic_image_form($node, array &$form_state) {
 }
 
 /**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function islandora_basic_image_form_islandora_basic_image_node_form_alter(&$form, array &$form_state, $form_id) {
+  $form['title']['#weight'] = -6;
+  $form['obj'] = array(
+    '#type' => 'file',
+    '#title' => t('Basic Image'),
+    '#description' => t('Upload your archival object to put in Fedora.  This will generate new derivatives'),
+    '#weight' => -5,
+  );
+
+  // Add a collection picker if node is new (e.g. this is an insert form).
+  if (!isset($node->nid) || isset($node->is_new)) {
+    // Construct list of options from db and a default.
+    $default = array('' => t('None'));
+    $from_db = db_select('node', 'n')
+        ->fields('n', array('uuid', 'title'))
+        ->condition('n.type', ISLANDORA_COLLECTION_CONTENT_TYPE)
+        ->execute()
+        ->fetchAllKeyed();
+    $options = $default + $from_db; 
+    
+    // Add the select to the form.
+    $form['parent_collection'] = array(
+      '#type' => 'select',
+      '#title' => t('Parent Collection'),
+      '#description' => t('Select the parent collection to add this to.  Select "Fedora Root" if you want it to be a top-level collection'),
+      '#options' => $options,
+      '#default_value' => '', 
+      '#weight' => -4,
+    );
+
+    // Keep title on top.
+    $form['title']['#weight'] = -7;
+
+    // Tack on a custom submit handler to attach data on the entity for use
+    // later on in the post action hooks.
+    array_unshift($form['#submit'], 'islandora_basic_image_add_parent_uuid');
+  }
+}
+
+function islandora_basic_image_add_parent_uuid($form, &$form_state) {
+  $node = $form_state['node'];
+  $node->parent_collection = "";
+  if (isset($form_state['parent_collection']['#value'])) {
+    $node->parent_collection = $form_state['parent_collection']['#value'];
+  }
+}
+
+/**
  * Implements hook_rdf_mapping().
  */
 function islandora_basic_image_rdf_mapping() {
@@ -39,4 +89,71 @@ function islandora_basic_image_rdf_mapping() {
     ISLANDORA_BASIC_IMAGE_RDF_TYPE,
   );
   return islandora_get_default_rdf_mapping(ISLANDORA_BASIC_IMAGE_CONTENT_TYPE, $rdf_types);
+}
+
+function islandora_basic_image_node_postinsert($node) {
+  if (isset($_SERVER['HTTP_IGNORE_HOOKS']) && strcmp(strtolower($_SERVER['HTTP_IGNORE_HOOKS']), "true") == 0) {
+    return;
+  }
+
+  // Exit early if it's not a basic_image.
+  if (strcmp($node->type, ISLANDORA_BASIC_IMAGE_CONTENT_TYPE) != 0) {
+    return;
+  }
+
+  $nodes = entity_uuid_load('node', array($node->uuid));
+
+  // Exit early if the node never was successfully inserted in the database.
+  if (empty($nodes)) {
+    return;
+  }
+
+  $node = array_pop($nodes);
+
+  // Don't forget the trailing slash.
+  httprl_request("http://localhost:8181/islandora/rest/basic-image/{$node->uuid}",
+                array(
+                  'method' => 'PUT',
+                  'data' => json_encode($node),
+                ));
+  $response = httprl_send_request();
+}
+
+function islandora_basic_image_node_postupdate($node) {
+  if (isset($_SERVER['HTTP_IGNORE_HOOKS']) && strcmp(strtolower($_SERVER['HTTP_IGNORE_HOOKS']), "true") == 0) {
+    return;
+  }
+
+  // Exit early if it's not a basic image.
+  if (strcmp($node->type, ISLANDORA_BASIC_IMAGE_CONTENT_TYPE) != 0) {
+    return;
+  }
+
+  $nodes = entity_uuid_load('node', array($node->uuid));
+  if (empty($nodes)) {
+    return;
+  }
+  $node = array_pop($nodes);
+
+  // Set the options for httprl.
+  $options = array(
+    'method' => 'PUT',
+    'data' => array(
+      'node' => json_encode($node),
+    ),
+  );
+
+  // Add the obj file to the options if it exists.
+  $has_obj = isset($_FILES['files']['tmp_name']['obj']);
+  if ($has_obj) {
+    $options['data']['files'] = array(
+      'obj' => array(
+        $_FILES['files']['tmp_name']['obj'],
+      ),
+    );
+  }
+
+  httprl_request("http://localhost:8181/islandora/rest/basic-image/$uuid",
+                 $options);
+  $response = httprl_send_request();
 }

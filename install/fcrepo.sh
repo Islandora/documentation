@@ -1,7 +1,7 @@
 echo "Installing Fedora."
 
 HOME_DIR=$1
-FEDORA_VERSION=4.2.0
+FEDORA_VERSION=4.3.0
 
 cd $HOME_DIR
 

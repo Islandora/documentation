@@ -3,27 +3,26 @@
 
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>ca.islandora.camel.sync</groupId>
-  <artifactId>islandora-sync-gateway</artifactId>
+  <groupId>ca.islandora.camel.services</groupId>
+  <artifactId>islandora-basic-image-service</artifactId>
   <packaging>bundle</packaging>
   <version>0.0.0-SNAPSHOT</version>
 
-  <name>Islandora Sync Gateway</name>
+  <name>Islandora Basic Image Service</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <camel.version>2.15.2</camel.version>
-    <camel.version.range>[2.15, 3)</camel.version.range>
+    <camel.version.range>[2.15,3)</camel.version.range>
     <fcrepo.camel.version>4.3.0</fcrepo.camel.version>
-    <activemq.version>5.11.1</activemq.version>
     <slf4j.version>1.7.12</slf4j.version>
     <log4j.version>1.2.17</log4j.version>
     <compiler.plugin.version>2.5.1</compiler.plugin.version>
     <java.version>1.8</java.version>
     <resources.plugin.version>2.6</resources.plugin.version>
     <bundle.plugin.version>2.3.7</bundle.plugin.version>
-    <islandora.osgi.export.pkg>ca.islandora.camel.sync.*</islandora.osgi.export.pkg>
+    <islandora.osgi.export.pkg>ca.islandora.camel.services.*</islandora.osgi.export.pkg>
     <islandora.osgi.import.pkg />
   </properties>
 
@@ -62,7 +61,6 @@
       <artifactId>camel-test-blueprint</artifactId>
       <version>${camel.version}</version>
     </dependency>
-
   </dependencies>
 
   <build>
@@ -114,7 +112,6 @@
        </executions>
       </plugin>
 
-      <!-- to generate the MANIFEST-FILE of the bundle -->
       <plugin>
         <groupId>org.apache.felix</groupId>
         <artifactId>maven-bundle-plugin</artifactId>

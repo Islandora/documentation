@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.0.0"
+       xsi:schemaLocation="
+       http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
+       http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd">
+
+  <!-- reference the shared http server -->
+  <reference id="sharedNettyHttpServer" interface="org.apache.camel.component.netty.http.NettySharedHttpServer"/>
+
+  <!-- Load Configuration File -->
+  <cm:property-placeholder persistent-id="islandora"/>
+
+  <!-- Islandora Component Configuration -->
+  <bean id="islandora" class="ca.islandora.camel.component.IslandoraComponent">
+    <argument value="${islandora.php.workingDir}"/>
+  </bean>
+
+  <camelContext id="basicImageService" xmlns="http://camel.apache.org/schema/blueprint">
+
+    <routeContextRef ref="get"/>
+
+    <restConfiguration component="netty-http"
+                       contextPath="/islandora/rest/collection">
+      <componentProperty key="configuration" value="#configuration"/> 
+      <endpointProperty key="nettySharedHttpServer" value="#sharedNettyHttpServer"/> 
+    </restConfiguration>
+
+    <rest path="/islandora/rest/basic-image">
+      <get>
+        <description>Gets the collection RDF in Fedora using Drupal UUID</description>
+        <to uri="direct:getBasicImage"/>
+      </get>
+    </rest>
+
+  </camelContext>
+
+</blueprint>
