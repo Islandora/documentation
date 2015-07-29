@@ -6,8 +6,9 @@
        http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
        http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd">
 
-  <!-- reference the shared http server -->
+  <!-- reference the shared http server
   <reference id="sharedNettyHttpServer" interface="org.apache.camel.component.netty.http.NettySharedHttpServer"/>
+ -->
 
   <!-- Load Configuration File -->
   <cm:property-placeholder persistent-id="islandora"/>
@@ -38,10 +39,8 @@
     <routeContextRef ref="put"/>
     <routeContextRef ref="delete"/>
 
-    <restConfiguration component="netty-http"
-                       contextPath="/islandora/rest/collection">
-      <componentProperty key="configuration" value="#configuration"/> 
-      <endpointProperty key="nettySharedHttpServer" value="#sharedNettyHttpServer"/> 
+    <restConfiguration component="jetty"
+                       port="8181">
     </restConfiguration>
 
     <rest path="/islandora/rest/collection">

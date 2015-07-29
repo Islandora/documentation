@@ -110,12 +110,24 @@ function islandora_basic_image_node_postinsert($node) {
 
   $node = array_pop($nodes);
 
-  // Don't forget the trailing slash.
-  httprl_request("http://localhost:8181/islandora/rest/basic-image/{$node->uuid}",
-                array(
-                  'method' => 'PUT',
-                  'data' => json_encode($node),
-                ));
+  // Set the options for httprl.
+  $options = array(
+    'method' => 'POST',
+    'data' => array(
+      'files' => array(
+        'node' => array(json_encode($node)),
+      ),
+    ),
+  );
+
+  // Add the obj file to the options if it exists.
+  $has_obj = isset($_FILES['files']['tmp_name']['obj']);
+  if ($has_obj) {
+    $options['data']['files']['obj'] = array($_FILES['files']['tmp_name']['obj']);
+  }
+
+  httprl_request("http://10.0.2.15:8888/islandora/rest/basic-image/?uuid={$node->uuid}",
+                 $options);
   $response = httprl_send_request();
 }
 
@@ -153,7 +165,9 @@ function islandora_basic_image_node_postupdate($node) {
     );
   }
 
-  httprl_request("http://localhost:8181/islandora/rest/basic-image/$uuid",
+  dd($options);
+
+  httprl_request("http://10.0.2.15:8888/islandora/rest/basic-image?uuid={$node->uuid}",
                  $options);
   $response = httprl_send_request();
 }

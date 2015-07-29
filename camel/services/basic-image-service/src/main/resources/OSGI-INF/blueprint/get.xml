@@ -8,11 +8,32 @@
   <routeContext id="get" xmlns="http://camel.apache.org/schema/blueprint">
 
     <route id="getBasicImage">
-      <description>Gets RDF from Fedora for collection identified by Drupal UUID</description>
+      <description>Creates a basic image in Fedora using Drupal data</description>
       <from uri="direct:getBasicImage"/>
-        <transform><simple>DERP</simple></transform>
+        <log message="HEADERS: ${headers}"/>
+        <log message="BODY: ${body}"/>
+        <transform><constant>DERP</constant></transform>
     </route>
 
+    <route id="createBasicImage">
+      <description>Creates a basic image in Fedora using Drupal data</description>
+      <from uri="direct:createBasicImage"/>
+        <log message="HEADERS: ${headers}"/>
+        <transform>
+          <javaScript>
+            request.hasAttachments(); 
+          </javaScript>
+        </transform>
+        <log message="BODY: ${body}"/>
+    </route>
+
+    <route id="updateBasicImage">
+      <description>Updates a basic image in Fedora using Drupal data</description>
+      <from uri="direct:updateBasicImage"/>
+        <log message="HEADERS: ${headers}"/>
+        <to uri="bean:multipartDecoder"/>
+        <log message="JUST THE NODE: ${body}"/>
+    </route>
   </routeContext>
 
 </blueprint>

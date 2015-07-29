@@ -6,9 +6,6 @@
        http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
        http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd">
 
-  <!-- reference the shared http server -->
-  <reference id="sharedNettyHttpServer" interface="org.apache.camel.component.netty.http.NettySharedHttpServer"/>
-
   <!-- Load Configuration File -->
   <cm:property-placeholder persistent-id="islandora"/>
 
@@ -19,20 +16,52 @@
 
   <camelContext id="basicImageService" xmlns="http://camel.apache.org/schema/blueprint">
 
+    <route>
+      <from uri="jetty:http://0.0.0.0:8888/islandora/rest/basic-image?httpMethodRestrict=POST"/>
+        <setProperty propertyName="uuid"><simple>${headers.uuid}</simple></setProperty>
+        <setProperty propertyName="node"><simple>${headers.node}</simple></setProperty>
+        <setProperty propertyName="attachments"><javaScript>request.getAttachments()</javaScript></setProperty>
+        <log message="POST ATTACHMENTS: ${property.attachments}"/>
+    </route>
+
+    <route>
+      <from uri="jetty:http://0.0.0.0:8888/islandora/rest/basic-image/?httpMethodRestrict=PUT"/>
+        <setProperty propertyName="uuid"><simple>${headers.uuid}</simple></setProperty>
+        <setProperty propertyName="node"><simple>${headers.node}</simple></setProperty>
+        <setProperty propertyName="attachments"><javaScript>request.getAttachments()</javaScript></setProperty>
+        <log message="PUT ATTACHMENTS: ${property.attachments}"/>
+        <log message="PUT HEADERS: ${headers}"/>
+<!--
+          <transform>
+            <javaScript>
+              request.getAttachments().values().toArray()[0].getContent(); 
+            </javaScript>
+          </transform>
+-->
+    </route>
+<!--
     <routeContextRef ref="get"/>
 
-    <restConfiguration component="netty-http"
-                       contextPath="/islandora/rest/collection">
-      <componentProperty key="configuration" value="#configuration"/> 
-      <endpointProperty key="nettySharedHttpServer" value="#sharedNettyHttpServer"/> 
+    <restConfiguration component="jetty"
+                       port="8181">
+      <endpointProperty key="enableMultipartFilter" value="true"/>
     </restConfiguration>
 
     <rest path="/islandora/rest/basic-image">
       <get>
-        <description>Gets the collection RDF in Fedora using Drupal UUID</description>
+        <description>Creates a basic image in Fedora using Drupal data</description>
         <to uri="direct:getBasicImage"/>
       </get>
+      <post uri="/{uuid}" consumes="multipart/form-encoded">
+        <description>Creates a basic image in Fedora using Drupal data</description>
+        <to uri="direct:createBasicImage"/>
+      </post>
+      <put uri="/{uuid}" consumes="multipart/form-encoded">
+        <description>Updates a basic image in Fedora using Drupal data</description>
+        <to uri="direct:updateBasicImage"/>
+      </put>
     </rest>
+-->
 
   </camelContext>
 
