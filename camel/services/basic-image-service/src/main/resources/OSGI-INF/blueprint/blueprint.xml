@@ -16,6 +16,7 @@
 
   <camelContext id="basicImageService" xmlns="http://camel.apache.org/schema/blueprint">
 
+<!--
     <route>
       <from uri="jetty:http://0.0.0.0:8888/islandora/rest/basic-image?httpMethodRestrict=POST"/>
         <setProperty propertyName="uuid"><simple>${headers.uuid}</simple></setProperty>
@@ -23,14 +24,35 @@
         <setProperty propertyName="attachments"><javaScript>request.getAttachments()</javaScript></setProperty>
         <log message="POST ATTACHMENTS: ${property.attachments}"/>
     </route>
+-->
+    <routeContextRef ref="get"/> 
 
     <route>
-      <from uri="jetty:http://0.0.0.0:8888/islandora/rest/basic-image/?httpMethodRestrict=PUT"/>
-        <setProperty propertyName="uuid"><simple>${headers.uuid}</simple></setProperty>
-        <setProperty propertyName="node"><simple>${headers.node}</simple></setProperty>
-        <setProperty propertyName="attachments"><javaScript>request.getAttachments()</javaScript></setProperty>
-        <log message="PUT ATTACHMENTS: ${property.attachments}"/>
-        <log message="PUT HEADERS: ${headers}"/>
+      <from uri="jetty:http://0.0.0.0:8888/islandora/rest/basic-image/"/>
+        <choice>
+          <when><simple>${headers.CamelHttpMethod} == 'GET'</simple>
+            <log message="GOT A GET"/>  
+            <setProperty propertyName="uuid"><simple>${headers.uuid}</simple></setProperty>
+          </when>
+          <when><simple>${headers.CamelHttpMethod} == 'POST'</simple>
+            <log message="GOT A POST"/>  
+            <setProperty propertyName="uuid"><simple>${headers.uuid}</simple></setProperty>
+            <setProperty propertyName="node"><simple>${headers.node}</simple></setProperty>
+            <setProperty propertyName="attachments"><javaScript>request.getAttachments()</javaScript></setProperty>
+            <to uri="vm:getCollectionUri"/>
+            <to uri="direct:createBasicImage"/>
+          </when>
+          <when><simple>${headers.CamelHttpMethod} == 'PUT'</simple>
+            <log message="GOT A PUT"/>  
+            <setProperty propertyName="uuid"><simple>${headers.uuid}</simple></setProperty>
+            <setProperty propertyName="node"><simple>${headers.node}</simple></setProperty>
+            <setProperty propertyName="attachments"><javaScript>request.getAttachments()</javaScript></setProperty>
+          </when>
+          <when><simple>${headers.CamelHttpMethod} == 'DELETE'</simple>
+            <log message="GOT A DELETE"/>  
+            <setProperty propertyName="uuid"><simple>${headers.uuid}</simple></setProperty>
+          </when>
+        </choice>
 <!--
           <transform>
             <javaScript>
@@ -40,8 +62,6 @@
 -->
     </route>
 <!--
-    <routeContextRef ref="get"/>
-
     <restConfiguration component="jetty"
                        port="8181">
       <endpointProperty key="enableMultipartFilter" value="true"/>

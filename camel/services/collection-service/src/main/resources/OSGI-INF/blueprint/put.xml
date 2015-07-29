@@ -11,7 +11,7 @@
       <description>Updates a collection in Fedora based on a node in Drupal</description>
       <from uri="direct:updateCollection"/>
         <to uri="direct:updateCollectionCacheProperties"/>
-        <to uri="direct:getCollectionUri"/>
+        <to uri="vm:getCollectionUri"/>
         <to uri="direct:createCollectionSparql"/>
         <to uri="direct:updateCollectionInFedora"/>
     </route>

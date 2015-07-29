@@ -8,25 +8,51 @@
   <routeContext id="get" xmlns="http://camel.apache.org/schema/blueprint">
 
     <route id="getBasicImage">
-      <description>Creates a basic image in Fedora using Drupal data</description>
+      <description>Gets RDF for a basic image in Fedora using Drupal UUID</description>
       <from uri="direct:getBasicImage"/>
-        <log message="HEADERS: ${headers}"/>
-        <log message="BODY: ${body}"/>
         <transform><constant>DERP</constant></transform>
     </route>
 
     <route id="createBasicImage">
       <description>Creates a basic image in Fedora using Drupal data</description>
       <from uri="direct:createBasicImage"/>
-        <log message="HEADERS: ${headers}"/>
-        <transform>
-          <javaScript>
-            request.hasAttachments(); 
-          </javaScript>
-        </transform>
+        <log message="CREATING AN IMAGE"/>
+        <to uri="direct:createBasicImageSparql"/>
+        <to uri="direct:createBasicImageInFedora"/>
+        <log message="BEFORE ADDING MEMBER"/>
+        <to uri="vm:addAsMember"/>
+        <log message="AFTER ADDING MEMBER"/>
         <log message="BODY: ${body}"/>
     </route>
 
+    <route id="createBasicImageSparql">
+      <description>Creates a SPARQL update query based on a Drupal node</description>
+      <from uri="direct:createBasicImageSparql"/>
+        <setBody><simple>${property.node}</simple></setBody>
+        <to uri="islandora:collectionService:nodeToSparql"/>
+    </route>
+
+    <route id="createBasicImageInFedora">
+      <description>Posts a SPARQL update query to Fedora in order to create a resource.</description>
+      <from uri="direct:createBasicImageInFedora"/>
+        <removeHeaders pattern="*"/>
+        <setHeader headerName="Content-Type"><constant>application/sparql-update</constant></setHeader>
+        <setHeader headerName="CamelHttpMethod"><constant>POST</constant></setHeader>
+        <to uri="fcrepo:{{islandora.fcrepo.baseurl}}"/>
+        <setProperty propertyName="childUri"><simple>${bodyAs(String)}</simple></setProperty>
+    </route>
+
+    <!-- <route id="addAsMember"> 
+    <route>
+      <description>Updates the pcdm:hasMember field of a collection with a new member</description>
+      <from uri="direct:addAsMember"/>
+        <to uri="mustache:templates/addAsMemberOfCollectionSparql.mustache"/>
+        <removeHeaders pattern="*"/>
+        <setHeader headerName="Content-Type"><constant>application/sparql-update</constant></setHeader>
+        <setHeader headerName="CamelHttpMethod"><constant>PATCH</constant></setHeader>
+        <recipientList><simple>fcrepo:${property.uri}</simple></recipientList>
+    </route>
+-->
     <route id="updateBasicImage">
       <description>Updates a basic image in Fedora using Drupal data</description>
       <from uri="direct:updateBasicImage"/>

@@ -11,7 +11,7 @@
       <description>Gets RDF from Fedora for collection identified by Drupal UUID</description>
       <from uri="direct:getCollection"/>
         <to uri="direct:getCollectionCacheProperties"/>
-        <to uri="direct:getCollectionUri"/>
+        <to uri="vm:getCollectionUri"/>
         <to uri="direct:getCollectionRdf"/>
     </route>
 
@@ -24,7 +24,7 @@
 
     <route id="getCollectionUri">
       <description>Gets the Fedora URI for a collection identified by Drupal UUID.  Creates the SPARQL query using a mustache template, uses javascript to url encode it, and sends it to the triplestore.</description>
-      <from uri="direct:getCollectionUri"/>
+      <from uri="vm:getCollectionUri?waitForTaskToComplete=Always"/>
         <to uri="mustache:templates/getCollectionUriSparql.mustache"/>
         <transform><javaScript>encodeURI(request.body)</javaScript></transform>
         <removeHeaders pattern="*"/>
@@ -41,7 +41,7 @@
         <doTry>
           <transform><jsonpath>$['results']['bindings'][0]['s']['value']</jsonpath></transform>
           <transform><javaScript>request.body.substr(request.body.indexOf('://') + 3)</javaScript></transform>
-          <setProperty propertyName="uri"><simple>${body}</simple></setProperty>
+          <setProperty propertyName="uri"><simple>${bodyAs(String)}</simple></setProperty>
           <doCatch>
             <exception>java.lang.Exception</exception>
             <to uri="direct:getCollectionExtractUriError"/>

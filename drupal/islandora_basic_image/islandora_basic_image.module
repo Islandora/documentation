@@ -101,6 +101,8 @@ function islandora_basic_image_node_postinsert($node) {
     return;
   }
 
+  $parent_collection = $node->parent_collection;
+
   $nodes = entity_uuid_load('node', array($node->uuid));
 
   // Exit early if the node never was successfully inserted in the database.
@@ -114,21 +116,24 @@ function islandora_basic_image_node_postinsert($node) {
   $options = array(
     'method' => 'POST',
     'data' => array(
-      'files' => array(
-        'node' => array(json_encode($node)),
-      ),
+      'node' => json_encode($node),
     ),
   );
 
   // Add the obj file to the options if it exists.
   $has_obj = isset($_FILES['files']['tmp_name']['obj']);
   if ($has_obj) {
-    $options['data']['files']['obj'] = array($_FILES['files']['tmp_name']['obj']);
+    $options['data']['files'] = array(
+      'obj' => array(
+        $_FILES['files']['tmp_name']['obj'],
+      ),
+    );
   }
 
-  httprl_request("http://10.0.2.15:8888/islandora/rest/basic-image/?uuid={$node->uuid}",
+  httprl_request("http://10.0.2.15:8888/islandora/rest/basic-image/?uuid=$parent_collection",
                  $options);
   $response = httprl_send_request();
+  dd($response);
 }
 
 function islandora_basic_image_node_postupdate($node) {
@@ -167,7 +172,7 @@ function islandora_basic_image_node_postupdate($node) {
 
   dd($options);
 
-  httprl_request("http://10.0.2.15:8888/islandora/rest/basic-image?uuid={$node->uuid}",
+  httprl_request("http://10.0.2.15:8888/islandora/rest/basic-image/?uuid={$node->uuid}",
                  $options);
   $response = httprl_send_request();
 }
