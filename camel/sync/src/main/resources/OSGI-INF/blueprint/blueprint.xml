@@ -18,6 +18,8 @@
     <argument value="${islandora.php.workingDir}"/>
   </bean>
 
+  <bean id="base64" class="org.apache.camel.dataformat.base64.Base64DataFormat"/>
+
   <camelContext id="sync" xmlns="http://camel.apache.org/schema/blueprint">
     <routeContextRef ref="eventGateway"/>
     <routeContextRef ref="drupalAuthentication"/>

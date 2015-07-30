@@ -12,5 +12,6 @@
     <feature version="${camel.version.range}">camel-jsonpath</feature>
     <feature version="${camel.version.range}">camel-script</feature>
     <feature version="${camel.version.range}">camel-script-javascript</feature>
+    <feature version="${camel.version.range}">camel-base64</feature>
   </feature>
 </features>

@@ -26,9 +26,30 @@
     <route>
       <description>Event handler for node upsert events</description>
       <from uri="direct:handleNodeUpsertEvent"/>
-        <to uri="direct:fedoraGetRdf"/>
-        <to uri="direct:extractUUID"/>
         <to uri="direct:getDrupalAuthInfo"/>
+        <to uri="direct:fedoraGetRdf"/>
+        <transform><simple>${property.rdf}</simple></transform>
+        <transform><jsonpath>$[0]['@type']</jsonpath></transform>
+        <choice>
+          <when><simple>"http://www.w3.org/ns/ldp#NonRDFSource" in ${body}</simple>
+            <to uri="direct:upsertNonRdfResource"/>
+          </when>
+          <otherwise>
+            <to uri="direct:upsertRdfResource"/>
+          </otherwise>
+        </choice>
+    </route>
+
+    <route>
+      <description>Event handler for node removed events</description>
+      <from uri="direct:handleNodeRemovedEvent"/>
+        <to uri="direct:getDrupalAuthInfo"/>
+        <to uri="direct:drupalDeleteNodeByFedoraUri"/>
+    </route>
+
+    <route>
+      <from uri="direct:upsertRdfResource"/>
+        <to uri="direct:extractUUID"/>
         <to uri="direct:drupalGetNode"/>
         <choice>
           <when>
@@ -40,13 +61,6 @@
           </otherwise>
         </choice>
         <to uri="direct:drupalPutNode"/>
-    </route>
-
-    <route>
-      <description>Event handler for node removed events</description>
-      <from uri="direct:handleNodeRemovedEvent"/>
-        <to uri="direct:getDrupalAuthInfo"/>
-        <to uri="direct:drupalDeleteNodeByFedoraUri"/>
     </route>
 
     <route>
@@ -147,6 +161,71 @@
         <setHeader headerName="Ignore-Hooks"><simple>true</simple></setHeader>
         <setBody><simple>{"fedoraUri": "${property.CamelFcrepoBaseUrl}${property.CamelFcrepoIdentifier}"}</simple></setBody>
         <to uri="http:{{islandora.drupal.baseurl}}/delete_by_fedora_uri"/>
+    </route>
+
+    <route>
+      <from uri="direct:upsertNonRdfResource"/>
+        <transform><simple>${property.rdf}</simple></transform>
+        <setProperty propertyName="parentUri"><jsonpath>$[1]['http://fedora.info/definitions/v4/repository#hasParent'][0]['@id']</jsonpath></setProperty>
+        <to uri="direct:getParentUUID"/>
+        <to uri="direct:fedoraGetBinary"/>
+        <to uri="direct:drupalAddMediumSize"/>
+    </route>
+
+    <route>
+      <from uri="direct:getParentUUID"/>
+        <transform><simple>${null}</simple></transform>
+        <removeHeaders pattern="*"/>
+        <setHeader headerName="CamelHttpMethod"><constant>GET</constant></setHeader>
+        <setHeader headerName="Accept"><constant>application/ld+json</constant></setHeader>
+        <recipientList><simple>${property.parentUri}</simple></recipientList>
+        <setProperty propertyName="parentRdf"><simple>${bodyAs(String)}</simple></setProperty>
+        <transform><simple>${property.parentRdf}</simple></transform>
+        <setProperty propertyName="parentUuid"><jsonpath>$[0]['http://www.semanticdesktop.org/ontologies/2007/03/22/nfo/v1.2/uuid'][0]['@value']</jsonpath></setProperty>
+    </route>
+
+    <route>
+      <description>Gets a binary from Fedora</description>
+      <from uri="direct:fedoraGetBinary"/>
+        <removeHeaders pattern="*"/>
+        <setBody><simple>${null}</simple></setBody>
+        <setHeader headerName="CamelHttpMethod"><constant>GET</constant></setHeader>
+        <recipientList><simple>${property.CamelFcrepoBaseUrl}/${property.CamelFcrepoIdentifier}</simple></recipientList>
+        <setProperty propertyName="binary"><simple>${body}</simple></setProperty>
+        <setProperty propertyName="filesize"><simple>${headers.Content-Length}</simple></setProperty>
+        <setProperty propertyName="mimetype"><simple>${headers.Content-Type}</simple></setProperty>
+    </route>
+
+    <route>
+      <description>Adds a binary from Fedora to Drupal as a thumbnail</description>
+      <from uri="direct:drupalAddTn"/>
+        <removeHeaders pattern="*"/>
+        <setBody><simple>${property.binary}</simple></setBody>
+        <marshal ref="base64"/>
+        <setProperty propertyName="b64file"><simple>${body}</simple></setProperty>
+        <transform><simple>{ "uuid" : "${property.parentUuid}", "file" : "${property.b64file}", "mimetype" : "${property.mimetype}"}</simple></transform>
+        <setHeader headerName="CamelHttpMethod"><constant>POST</constant></setHeader>
+        <setHeader headerName="Content-Type"><constant>application/json</constant></setHeader>
+        <setHeader headerName="X-CSRF-Token"><simple>${property.token}</simple></setHeader>
+        <setHeader headerName="Cookie"><simple>${property.cookie}</simple></setHeader>
+        <setHeader headerName="Ignore-Hooks"><simple>true</simple></setHeader>
+        <recipientList><simple>http:{{islandora.drupal.baseurl}}/tn</simple></recipientList>
+    </route>
+
+    <route>
+      <description>Adds a binary from Fedora to Drupal as a medium size image</description>
+      <from uri="direct:drupalAddMediumSize"/>
+        <removeHeaders pattern="*"/>
+        <setBody><simple>${property.binary}</simple></setBody>
+        <marshal ref="base64"/>
+        <setProperty propertyName="b64file"><simple>${body}</simple></setProperty>
+        <transform><simple>{ "uuid" : "${property.parentUuid}", "file" : "${property.b64file}", "mimetype" : "${property.mimetype}"}</simple></transform>
+        <setHeader headerName="CamelHttpMethod"><constant>POST</constant></setHeader>
+        <setHeader headerName="Content-Type"><constant>application/json</constant></setHeader>
+        <setHeader headerName="X-CSRF-Token"><simple>${property.token}</simple></setHeader>
+        <setHeader headerName="Cookie"><simple>${property.cookie}</simple></setHeader>
+        <setHeader headerName="Ignore-Hooks"><simple>true</simple></setHeader>
+        <recipientList><simple>http:{{islandora.drupal.baseurl}}/medium_size</simple></recipientList>
     </route>
   </routeContext>
 
