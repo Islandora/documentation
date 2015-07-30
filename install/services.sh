@@ -9,4 +9,10 @@ cd "$HOME_DIR"/islandora/camel/services
 
 cd collection-service
 sudo -u vagrant mvn install
+
+cd "$HOME_DIR"/islandora/camel/services
+
+cd basic-image-service
+sudo -u vagrant mvn install
+
 /opt/karaf/bin/client < "$HOME_DIR"/islandora/install/karaf/services.script

@@ -7,7 +7,8 @@
     <feature version="${fcrepo.camel.version}">fcrepo-camel</feature>
     <feature version="${project.version}">islandora-camel-component</feature>
     <feature version="${camel.version.range}">camel-http</feature>
-    <feature version="${camel.version.range}">camel-servlet</feature>
+    <feature version="${camel.version.range}">camel-jetty</feature>
+    <feature version="${camel.version.range}">camel-rest</feature>
     <feature version="${camel.version.range}">camel-jsonpath</feature>
     <feature version="${camel.version.range}">camel-script</feature>
     <feature version="${camel.version.range}">camel-script-javascript</feature>
