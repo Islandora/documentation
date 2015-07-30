@@ -116,6 +116,7 @@ function islandora_basic_image_node_postinsert($node) {
   $options = array(
     'method' => 'POST',
     'data' => array(
+      'mimetype' => $_FILES['files']['type']['obj'],
       'node' => json_encode($node),
     ),
   );
@@ -130,10 +131,9 @@ function islandora_basic_image_node_postinsert($node) {
     );
   }
 
-  httprl_request("http://10.0.2.15:8888/islandora/rest/basic-image/?uuid=$parent_collection",
+  httprl_request("http://10.0.2.15:8181/islandora/rest/basic-image/?uuid=$parent_collection",
                  $options);
   $response = httprl_send_request();
-  dd($response);
 }
 
 function islandora_basic_image_node_postupdate($node) {
@@ -156,6 +156,7 @@ function islandora_basic_image_node_postupdate($node) {
   $options = array(
     'method' => 'PUT',
     'data' => array(
+      'mimetype' => $_FILES['files']['type']['obj'],
       'node' => json_encode($node),
     ),
   );
@@ -170,9 +171,7 @@ function islandora_basic_image_node_postupdate($node) {
     );
   }
 
-  dd($options);
-
-  httprl_request("http://10.0.2.15:8888/islandora/rest/basic-image/?uuid={$node->uuid}",
+  httprl_request("http://10.0.2.15:8181/islandora/rest/basic-image/?uuid={$node->uuid}",
                  $options);
   $response = httprl_send_request();
 }

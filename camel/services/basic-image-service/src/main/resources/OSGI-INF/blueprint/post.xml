@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="
+           http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd">
+
+  <routeContext id="post" xmlns="http://camel.apache.org/schema/blueprint">
+
+    <route id="createBasicImage">
+      <description>Creates a basic image in Fedora using Drupal data</description>
+      <from uri="direct:createBasicImage"/>
+        <log message="CREATING AN IMAGE"/>
+        <to uri="direct:createBasicImageSparql"/>
+        <to uri="direct:createBasicImageInFedora"/>
+        <to uri="vm:addAsMember"/>
+        <to uri="direct:upsertBasicImageOBJ"/>
+    </route>
+
+    <route id="createBasicImageSparql">
+      <description>Creates a SPARQL update query based on a Drupal node</description>
+      <from uri="direct:createBasicImageSparql"/>
+        <setBody><simple>${property.node}</simple></setBody>
+        <to uri="islandora:collectionService:nodeToSparql"/>
+    </route>
+
+    <route id="createBasicImageInFedora">
+      <description>Posts a SPARQL update query to Fedora in order to create a resource.</description>
+      <from uri="direct:createBasicImageInFedora"/>
+        <removeHeaders pattern="*"/>
+        <setHeader headerName="Content-Type"><constant>application/sparql-update</constant></setHeader>
+        <setHeader headerName="CamelHttpMethod"><constant>POST</constant></setHeader>
+        <to uri="fcrepo:{{islandora.fcrepo.baseurl}}"/>
+        <setProperty propertyName="childUri"><simple>${bodyAs(String)}</simple></setProperty>
+        <setProperty propertyName="imageUri"><simple>${property.childUri}/OBJ</simple></setProperty>
+    </route>
+
+    <route id="upsertBasicImageOBJ">
+      <from uri="direct:upsertBasicImageOBJ"/>
+        <setBody><javaScript>exchange.getProperty("attachment").getContent()</javaScript></setBody>
+        <removeHeaders pattern="*"/>
+        <setHeader headerName="Content-Type"><simple>${property.mimetype}</simple></setHeader>
+        <setHeader headerName="CamelHttpMethod"><constant>PUT</constant></setHeader>
+        <recipientList><simple>fcrepo:${property.imageUri}</simple></recipientList>
+    </route>
+  </routeContext>
+
+</blueprint>

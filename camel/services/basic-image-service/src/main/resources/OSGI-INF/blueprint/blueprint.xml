@@ -14,6 +14,7 @@
     <argument value="${islandora.php.workingDir}"/>
   </bean>
 
+
   <camelContext id="basicImageService" xmlns="http://camel.apache.org/schema/blueprint">
 
 <!--
@@ -26,6 +27,8 @@
     </route>
 -->
     <routeContextRef ref="get"/> 
+    <routeContextRef ref="post"/> 
+    <routeContextRef ref="put"/> 
 
     <route>
       <from uri="jetty:http://0.0.0.0:8888/islandora/rest/basic-image/"/>
@@ -33,12 +36,13 @@
           <when><simple>${headers.CamelHttpMethod} == 'GET'</simple>
             <log message="GOT A GET"/>  
             <setProperty propertyName="uuid"><simple>${headers.uuid}</simple></setProperty>
+            <to uri="direct:getBasicImage"/>
           </when>
           <when><simple>${headers.CamelHttpMethod} == 'POST'</simple>
-            <log message="GOT A POST"/>  
             <setProperty propertyName="uuid"><simple>${headers.uuid}</simple></setProperty>
             <setProperty propertyName="node"><simple>${headers.node}</simple></setProperty>
-            <setProperty propertyName="attachments"><javaScript>request.getAttachments()</javaScript></setProperty>
+            <setProperty propertyName="attachment"><javaScript>request.getAttachments().values().toArray()[0]</javaScript></setProperty>
+            <setProperty propertyName="mimetype"><simple>${headers.mimetype}</simple></setProperty>
             <to uri="vm:getCollectionUri"/>
             <to uri="direct:createBasicImage"/>
           </when>
@@ -46,7 +50,9 @@
             <log message="GOT A PUT"/>  
             <setProperty propertyName="uuid"><simple>${headers.uuid}</simple></setProperty>
             <setProperty propertyName="node"><simple>${headers.node}</simple></setProperty>
-            <setProperty propertyName="attachments"><javaScript>request.getAttachments()</javaScript></setProperty>
+            <setProperty propertyName="attachment"><javaScript>request.getAttachments().values().toArray()[0]</javaScript></setProperty>
+            <setProperty propertyName="mimetype"><simple>${headers.mimetype}</simple></setProperty>
+            <to uri="direct:updateBasicImage"/>
           </when>
           <when><simple>${headers.CamelHttpMethod} == 'DELETE'</simple>
             <log message="GOT A DELETE"/>  
