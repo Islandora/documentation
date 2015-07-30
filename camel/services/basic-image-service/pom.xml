@@ -37,18 +37,8 @@
       <artifactId>camel-blueprint</artifactId>
       <version>${camel.version}</version>
     </dependency>
-    <dependency>
-      <groupId>org.apache.camel</groupId>
-      <artifactId>camel-netty4-http</artifactId>
-      <version>${camel.version}</version>
-    </dependency>
-<dependency>
-	<groupId>io.netty</groupId>
-	<artifactId>netty-handler</artifactId>
-	<version>4.0.27.Final</version>
-</dependency>
 
-    
+
     <!-- logging -->
     <dependency>
       <groupId>org.slf4j</groupId>

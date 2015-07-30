@@ -53,15 +53,15 @@ function islandora_collection_form_islandora_collection_node_form_alter(&$form, 
         ->condition('n.type', ISLANDORA_COLLECTION_CONTENT_TYPE)
         ->execute()
         ->fetchAllKeyed();
-    $options = $default + $from_db; 
-    
+    $options = $default + $from_db;
+
     // Add the select to the form.
     $form['parent_collection'] = array(
       '#type' => 'select',
       '#title' => t('Parent Collection'),
       '#description' => t('Select the parent collection to add this to.  Select "Fedora Root" if you want it to be a top-level collection'),
       '#options' => $options,
-      '#default_value' => '', 
+      '#default_value' => '',
       '#weight' => -4,
     );
 
@@ -117,7 +117,7 @@ function islandora_collection_node_postinsert($node) {
   }
 
   $node = array_pop($nodes);
-  $url = "http://localhost:8181/islandora/rest/collection/$parent_collection";
+  $url = "http://127.0.0.1:8181/islandora/rest/collection/$parent_collection";
   dd("REQUEST URL: $url");
 
   // Don't forget the trailing slash.
@@ -155,7 +155,7 @@ function islandora_collection_node_postupdate($node) {
 
   $node = array_pop($nodes);
   $uuid = $node->uuid;
-  httprl_request("http://localhost:8181/islandora/rest/collection/$uuid",
+  httprl_request("http://127.0.0.1:8181/islandora/rest/collection/$uuid",
                  array(
                    'method' => 'PUT',
                    'data' => json_encode($node),
@@ -177,7 +177,7 @@ function islandora_collection_node_postdelete($node) {
   }
 
   $uuid = $node->uuid;
-  httprl_request("http://localhost:8181/islandora/rest/collection/$uuid",
+  httprl_request("http://127.0.0.1:8181/islandora/rest/collection/$uuid",
                  array(
                    'method' => 'DELETE',
                  ));

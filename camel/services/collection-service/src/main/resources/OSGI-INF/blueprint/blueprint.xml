@@ -6,9 +6,18 @@
        http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
        http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd">
 
-  <!-- reference the shared http server
-  <reference id="sharedNettyHttpServer" interface="org.apache.camel.component.netty.http.NettySharedHttpServer"/>
- -->
+  <!-- Boiler plate to bootstrap the servlet -->
+  <reference id="httpService" interface="org.osgi.service.http.HttpService"/>
+
+  <bean class="org.apache.camel.component.servlet.osgi.OsgiServletRegisterer"
+        init-method="register"
+        destroy-method="unregister">
+    <property name="alias" value="/islandora/rest/collection"/>
+    <property name="httpService" ref="httpService"/>
+    <property name="servlet" ref="camelServlet"/>
+  </bean>
+
+  <bean id="camelServlet" class="org.apache.camel.component.servlet.CamelHttpTransportServlet"/>
 
   <!-- Load Configuration File -->
   <cm:property-placeholder persistent-id="islandora"/>
@@ -39,11 +48,10 @@
     <routeContextRef ref="put"/>
     <routeContextRef ref="delete"/>
 
-    <restConfiguration component="jetty"
-                       port="8181">
+    <restConfiguration component="servlet" port="8181" contextPath="/islandora/rest/collection">
     </restConfiguration>
 
-    <rest path="/islandora/rest/collection">
+    <rest>
       <get uri="/{uuid}">
         <description>Gets the collection RDF in Fedora using Drupal UUID</description>
         <to uri="direct:getCollection"/>

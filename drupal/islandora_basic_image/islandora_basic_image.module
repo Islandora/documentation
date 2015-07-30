@@ -50,15 +50,15 @@ function islandora_basic_image_form_islandora_basic_image_node_form_alter(&$form
         ->condition('n.type', ISLANDORA_COLLECTION_CONTENT_TYPE)
         ->execute()
         ->fetchAllKeyed();
-    $options = $default + $from_db; 
-    
+    $options = $default + $from_db;
+
     // Add the select to the form.
     $form['parent_collection'] = array(
       '#type' => 'select',
       '#title' => t('Parent Collection'),
       '#description' => t('Select the parent collection to add this to.  Select "Fedora Root" if you want it to be a top-level collection'),
       '#options' => $options,
-      '#default_value' => '', 
+      '#default_value' => '',
       '#weight' => -4,
     );
 
@@ -131,7 +131,7 @@ function islandora_basic_image_node_postinsert($node) {
     );
   }
 
-  httprl_request("http://10.0.2.15:8888/islandora/rest/basic-image/?uuid=$parent_collection",
+  httprl_request("http://127.0.0.1:8888/islandora/rest/basic-image/?uuid=$parent_collection",
                  $options);
   $response = httprl_send_request();
 }
@@ -171,7 +171,7 @@ function islandora_basic_image_node_postupdate($node) {
     );
   }
 
-  httprl_request("http://10.0.2.15:8888/islandora/rest/basic-image/?uuid={$node->uuid}",
+  httprl_request("http://127.0.0.1:8888/islandora/rest/basic-image/?uuid={$node->uuid}",
                  $options);
   $response = httprl_send_request();
 }
