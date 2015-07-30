@@ -87,7 +87,7 @@ drush -y en islandora_mods
 drush -y en islandora_basic_image
 drush -y en islandora_collection
 drush -y en islandora_apachesolr
-drush -y en islandora_delete_by_fedora_uri
+drush -y en islandora_delete_by_fedora_uri_service
 drush -y en islandora_medium_size_service
 drush -y en islandora_tn_service
 
