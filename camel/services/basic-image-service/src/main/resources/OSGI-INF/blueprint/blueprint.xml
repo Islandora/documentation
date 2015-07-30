@@ -17,18 +17,10 @@
 
   <camelContext id="basicImageService" xmlns="http://camel.apache.org/schema/blueprint">
 
-<!--
-    <route>
-      <from uri="jetty:http://0.0.0.0:8888/islandora/rest/basic-image?httpMethodRestrict=POST"/>
-        <setProperty propertyName="uuid"><simple>${headers.uuid}</simple></setProperty>
-        <setProperty propertyName="node"><simple>${headers.node}</simple></setProperty>
-        <setProperty propertyName="attachments"><javaScript>request.getAttachments()</javaScript></setProperty>
-        <log message="POST ATTACHMENTS: ${property.attachments}"/>
-    </route>
--->
     <routeContextRef ref="get"/> 
     <routeContextRef ref="post"/> 
     <routeContextRef ref="put"/> 
+    <routeContextRef ref="delete"/> 
 
     <route>
       <from uri="jetty:http://0.0.0.0:8888/islandora/rest/basic-image/"/>
@@ -43,7 +35,7 @@
             <setProperty propertyName="node"><simple>${headers.node}</simple></setProperty>
             <setProperty propertyName="attachment"><javaScript>request.getAttachments().values().toArray()[0]</javaScript></setProperty>
             <setProperty propertyName="mimetype"><simple>${headers.mimetype}</simple></setProperty>
-            <to uri="vm:getCollectionUri"/>
+            <to uri="direct:getCollectionUri"/>
             <to uri="direct:createBasicImage"/>
           </when>
           <when><simple>${headers.CamelHttpMethod} == 'PUT'</simple>
@@ -57,6 +49,7 @@
           <when><simple>${headers.CamelHttpMethod} == 'DELETE'</simple>
             <log message="GOT A DELETE"/>  
             <setProperty propertyName="uuid"><simple>${headers.uuid}</simple></setProperty>
+            <to uri="direct:deleteBasicImage"/>
           </when>
         </choice>
 <!--

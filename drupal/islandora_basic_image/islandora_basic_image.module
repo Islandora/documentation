@@ -131,7 +131,7 @@ function islandora_basic_image_node_postinsert($node) {
     );
   }
 
-  httprl_request("http://10.0.2.15:8181/islandora/rest/basic-image/?uuid=$parent_collection",
+  httprl_request("http://10.0.2.15:8888/islandora/rest/basic-image/?uuid=$parent_collection",
                  $options);
   $response = httprl_send_request();
 }
@@ -171,7 +171,7 @@ function islandora_basic_image_node_postupdate($node) {
     );
   }
 
-  httprl_request("http://10.0.2.15:8181/islandora/rest/basic-image/?uuid={$node->uuid}",
+  httprl_request("http://10.0.2.15:8888/islandora/rest/basic-image/?uuid={$node->uuid}",
                  $options);
   $response = httprl_send_request();
 }

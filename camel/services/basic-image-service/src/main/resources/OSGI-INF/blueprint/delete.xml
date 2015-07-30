@@ -7,23 +7,16 @@
 
   <routeContext id="delete" xmlns="http://camel.apache.org/schema/blueprint">
 
-    <route id="deleteCollection">
+    <route id="deleteBasicImage">
       <description>Deletes a collection in Fedora by Drupal UUID</description>
-      <from uri="direct:deleteCollection"/>
-        <to uri="direct:deleteCollectionCacheProperties"/>
-        <to uri="direct:getCollectionUri"/>
-        <to uri="direct:deleteCollectionInFedora"/>
+      <from uri="direct:deleteBasicImage"/>
+        <to uri="direct:getObjectUri"/>
+        <to uri="direct:deleteBasicImageInFedora"/>
     </route>
 
-    <route id="deleteCollectionCacheProperties">
-      <description>Caches properties on the exchange for deleting a collection.</description>
-      <from uri="direct:deleteCollectionCacheProperties"/>
-        <setProperty propertyName="uuid"><simple>${headers.uuid}</simple></setProperty>
-    </route>
-
-    <route id="deleteCollectionInFedora">
+    <route id="deleteBasicImageInFedora">
       <description>Deletes a collection in Fedora</description>
-      <from uri="direct:deleteCollectionInFedora"/>
+      <from uri="direct:deleteBasicImageInFedora"/>
         <removeHeaders pattern="*"/>
         <setHeader headerName="CamelHttpMethod"><constant>DELETE</constant></setHeader>
         <recipientList><simple>fcrepo:${property.uri}</simple></recipientList>

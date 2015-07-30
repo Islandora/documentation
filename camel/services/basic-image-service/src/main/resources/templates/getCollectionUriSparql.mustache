@@ -1,0 +1,7 @@
+PREFIX nfo: <http://www.semanticdesktop.org/ontologies/2007/03/22/nfo/v1.2/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX pcdm: <http://pcdm.org/models#>
+SELECT ?s WHERE {
+  ?s nfo:uuid "{{exchange.properties.uuid}}"^^<http://www.w3.org/2001/XMLSchema#string> .
+  ?s rdf:type pcdm:Collection .
+}

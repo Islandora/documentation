@@ -13,11 +13,11 @@
         <!-- <transacted ref="txPolicy"/> -->
         <setProperty propertyName="node"><simple>${bodyAs(String)}</simple></setProperty>
         <setProperty propertyName="uuid"><simple>${headers.uuid}</simple></setProperty>
-        <to uri="vm:getCollectionUri"/>
+        <to uri="direct:getCollectionUri"/>
         <to uri="direct:createCollectionSparql"/>
         <to uri="direct:createCollectionInFedora"/>
         <setProperty propertyName="childUri"><simple>${bodyAs(String)}</simple></setProperty>
-        <to uri="vm:addAsMember"/>
+        <to uri="direct:addAsMember"/>
     </route>
 
     <route id="createCollection">
@@ -47,7 +47,7 @@
 
     <route id="addAsMember">
       <description>Updates the pcdm:hasMember field of a collection with a new member</description>
-      <from uri="vm:addAsMember?waitForTaskToComplete=Always"/>
+      <from uri="direct:addAsMember"/>
         <to uri="mustache:templates/addAsMemberOfCollectionSparql.mustache"/>
         <removeHeaders pattern="*"/>
         <setHeader headerName="Content-Type"><constant>application/sparql-update</constant></setHeader>

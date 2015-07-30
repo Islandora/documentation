@@ -58,6 +58,42 @@
         <recipientList><simple>http://${property.uri}/OBJ</simple></recipientList>
     </route>
 
+    <route id="getCollectionUri">
+      <description>Gets the Fedora URI for a collection identified by Drupal UUID.  Creates the SPARQL query using a mustache template, uses javascript to url encode it, and sends it to the triplestore.</description>
+      <from uri="direct:getCollectionUri"/>
+        <to uri="mustache:templates/getCollectionUriSparql.mustache"/>
+        <transform><javaScript>encodeURI(request.body)</javaScript></transform>
+        <removeHeaders pattern="*"/>
+        <setHeader headerName="CamelHttpMethod"><constant>POST</constant></setHeader>
+        <setHeader headerName="CamelHttpQuery"><simple>format=json&amp;query=${bodyAs(String)}</simple></setHeader>
+        <setBody><simple>${null}</simple></setBody>
+        <to uri="http:{{islandora.triplestore.baseurl}}"/>
+        <to uri="direct:getCollectionExtractUri"/>
+    </route>
+
+    <route id="getCollectionExtractUri">
+      <description>Uses JSONPath and Javascript to parse SPARQL query results and set collection URI as an exchange property</description>
+      <from uri="direct:getCollectionExtractUri"/>
+        <doTry>
+          <transform><jsonpath>$['results']['bindings'][0]['s']['value']</jsonpath></transform>
+          <transform><javaScript>request.body.substr(request.body.indexOf('://') + 3)</javaScript></transform>
+          <setProperty propertyName="uri"><simple>${bodyAs(String)}</simple></setProperty>
+          <doCatch>
+            <exception>java.lang.Exception</exception>
+            <to uri="direct:getCollectionExtractUriError"/>
+            <stop/>
+          </doCatch>
+        </doTry>
+    </route>
+
+    <route id="getCollectionExtractUriError">
+      <description>Returns a helpful message if there is an error extracting the Fedora URI from SPARQL results</description>
+      <from uri="direct:getCollectionExtractUriError"/>
+      <setBody><simple>Failure extracting URI for collection identified by ${property.uuid} from SPARQL results.  Are you certain the resource exists in Fedora?\n${exception.message}\n</simple></setBody>
+      <removeHeaders pattern="*"/>
+      <setHeader headerName="Content-Type"><constant>text/plain</constant></setHeader>
+      <setHeader headerName="CamelHttpResponseCode"><constant>500</constant></setHeader>
+    </route>
   </routeContext>
 
 </blueprint>

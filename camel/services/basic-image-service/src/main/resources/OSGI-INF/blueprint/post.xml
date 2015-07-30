@@ -13,7 +13,7 @@
         <log message="CREATING AN IMAGE"/>
         <to uri="direct:createBasicImageSparql"/>
         <to uri="direct:createBasicImageInFedora"/>
-        <to uri="vm:addAsMember"/>
+        <to uri="direct:addAsMember"/>
         <to uri="direct:upsertBasicImageOBJ"/>
     </route>
 
@@ -43,6 +43,17 @@
         <setHeader headerName="CamelHttpMethod"><constant>PUT</constant></setHeader>
         <recipientList><simple>fcrepo:${property.imageUri}</simple></recipientList>
     </route>
+
+    <route id="addAsMember">
+      <description>Updates the pcdm:hasMember field of a collection with a new member</description>
+      <from uri="direct:addAsMember"/>
+        <to uri="mustache:templates/addAsMemberOfCollectionSparql.mustache"/>
+        <removeHeaders pattern="*"/>
+        <setHeader headerName="Content-Type"><constant>application/sparql-update</constant></setHeader>
+        <setHeader headerName="CamelHttpMethod"><constant>PATCH</constant></setHeader>
+        <recipientList><simple>fcrepo:${property.uri}</simple></recipientList>
+    </route>
+
   </routeContext>
 
 </blueprint>
