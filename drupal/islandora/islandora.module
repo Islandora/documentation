@@ -98,6 +98,13 @@ function islandora_default_services_endpoint() {
     ),
   );
   $endpoint->resources = array(
+    'delete_by_fedora_uri' => array(
+      'operations' => array(
+        'create' => array(
+          'enabled' => '1',
+        ),
+      ),
+    ),
     'node' => array(
       'operations' => array(
         'retrieve' => array(
@@ -168,3 +175,14 @@ function islandora_default_services_endpoint() {
   $endpoint->debug = 0;
   return array($endpoint);
 }
+
+
+
+
+
+
+
+
+
+
+
