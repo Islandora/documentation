@@ -91,6 +91,12 @@ drush -y en islandora_delete_by_fedora_uri_service
 drush -y en islandora_medium_size_service
 drush -y en islandora_tn_service
 
+# Set default theme to bootstrap
+cd ../themes
+drush -y dl bootstrap
+drush -y en bootstrap
+drush vset theme_default bootstrap
+
 # Coder & Code Sniffer
 pear install PHP_CodeSniffer
 cd /tmp
