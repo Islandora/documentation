@@ -71,7 +71,15 @@ function islandora_basic_image_form_islandora_basic_image_node_form_alter(&$form
   }
 }
 
-function islandora_basic_image_add_parent_uuid($form, &$form_state) {
+/**
+ * Custom submit handler to pass along parent uuid.
+ *
+ * @param array $form
+ *   Drupal form.
+ * @param array $form_state
+ *   Drupal form state.
+ */
+function islandora_basic_image_add_parent_uuid(array $form, array &$form_state) {
   $node = $form_state['node'];
   $node->parent_collection = "";
   if (isset($form_state['parent_collection']['#value'])) {
@@ -91,6 +99,9 @@ function islandora_basic_image_rdf_mapping() {
   return islandora_get_default_rdf_mapping(ISLANDORA_BASIC_IMAGE_CONTENT_TYPE, $rdf_types);
 }
 
+/**
+ * Implements hook_node_postinsert().
+ */
 function islandora_basic_image_node_postinsert($node) {
   if (isset($_SERVER['HTTP_IGNORE_HOOKS']) && strcmp(strtolower($_SERVER['HTTP_IGNORE_HOOKS']), "true") == 0) {
     return;
@@ -136,6 +147,9 @@ function islandora_basic_image_node_postinsert($node) {
   $response = httprl_send_request();
 }
 
+/**
+ * Implements hook_node_postupdate().
+ */
 function islandora_basic_image_node_postupdate($node) {
   if (isset($_SERVER['HTTP_IGNORE_HOOKS']) && strcmp(strtolower($_SERVER['HTTP_IGNORE_HOOKS']), "true") == 0) {
     return;

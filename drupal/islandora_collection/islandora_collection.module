@@ -74,7 +74,15 @@ function islandora_collection_form_islandora_collection_node_form_alter(&$form, 
   }
 }
 
-function islandora_collection_add_parent_uuid($form, &$form_state) {
+/**
+ * Custom submit handler to pass along parent uuid.
+ *
+ * @param array $form
+ *   Drupal form.
+ * @param array $form_state
+ *   Drupal form state.
+ */
+function islandora_collection_add_parent_uuid(array $form, array &$form_state) {
   $node = $form_state['node'];
   $node->parent_collection = "";
   if (isset($form_state['parent_collection']['#value'])) {
@@ -108,7 +116,6 @@ function islandora_collection_node_postinsert($node) {
   }
 
   $parent_collection = $node->parent_collection;
-  dd("PARENT UUID: $parent_collection");
   $nodes = entity_uuid_load('node', array($node->uuid));
 
   // Exit early if the node never was successfully inserted in the database.
@@ -118,7 +125,6 @@ function islandora_collection_node_postinsert($node) {
 
   $node = array_pop($nodes);
   $url = "http://127.0.0.1:8181/islandora/rest/collection/$parent_collection";
-  dd("REQUEST URL: $url");
 
   // Don't forget the trailing slash.
   httprl_request($url,
