@@ -2,7 +2,7 @@ echo "Installing Drupal."
 
 HOME_DIR=$1
 
-cd $HOME_DIR
+cd "$HOME_DIR"
 
 # Drush and drupal deps
 apt-get -y install php5-gd
@@ -48,16 +48,29 @@ cd sites/all/modules
 
 # Islandora dependencies
 drush dl httprl
+drush -y en httprl
 drush dl services
+drush -y en services
 drush dl field_permissions
+drush -y en field_permissions
 drush dl field_readonly
+drush -y en field_readonly
 drush dl views
+drush -y en views
 drush dl rdfx
+drush -y en rdfx
 drush dl entity
+drush -y en entity
 drush dl uuid
+drush -y en uuid
 drush dl xml_field
+drush -y en xml_field
+drush dl jquery_update
+drush -y en jquery_update
 git clone https://github.com/Islandora-Labs/xpath_field.git
+drush -y en xpath_field
 drush dl hook_post_action
+drush -y en hook_post_action
 
 # Devel!
 drush dl devel
