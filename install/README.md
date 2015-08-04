@@ -18,7 +18,6 @@ N.B. This virtual machine **should not** be used in production.
 ### Build Variables
 
 - VIM : If you want to install the vim configuration for Java development, use `VIM=true vagrant up`. It practically doubles the amount of time to spin up the VM, so only do so if you’re sure you want to develop directly on the VM using vim.
-- TRIPLESTORE : If you would like to use Fuskei, it is the default. `vagrant up` will use it. If you would like to use BlazeGraph, use `TRIPLESTORE=blazegraph vagrant up`.
 
 ## Connect
 
@@ -59,7 +58,6 @@ The default VM login details are:
 - Camel 2.14.1
 - Fedora 4.2.0
 - Fedora Camel Component 4.2.0
-- Fuseki 2.0
 - BlazeGraph 1.5.1
 - Sync 0.0.0
 - Islandora 7.x-2.x
