@@ -25,3 +25,6 @@ sleep 60
 # Fix ApacheSolr config
 drush -r /var/www/html/drupal sqlq "update apachesolr_environment set url='http://localhost:8080/solr' where url='http://localhost:8983/solr'"
 drush -r /var/www/html/drupal cc all
+
+# Add DC as some default fields for folks.
+drush -r /var/www/html/drupal scr add_default_fields.php
