@@ -27,4 +27,4 @@ drush -r /var/www/html/drupal sqlq "update apachesolr_environment set url='http:
 drush -r /var/www/html/drupal cc all
 
 # Add DC as some default fields for folks.
-drush -r /var/www/html/drupal scr add_default_fields.php
+drush -r /var/www/html/drupal scr "$HOME_DIR"/islandora/install/add_default_fields.php
