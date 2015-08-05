@@ -58,7 +58,7 @@ function islandora_basic_image_form_islandora_basic_image_node_form_alter(&$form
       '#description' => t('Select the parent collection to add this to.'),
       '#options' => $from_db,
       '#weight' => -4,
-      '#required' => TRUE, 
+      '#required' => TRUE,
     );
 
     // Keep title on top.
