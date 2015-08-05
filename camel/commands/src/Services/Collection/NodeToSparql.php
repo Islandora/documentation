@@ -135,6 +135,7 @@ class NodeToSparql extends PrefixEscapingCommand
      */
     private function _formatObject($object, $rdf_map)
     {
+        $object = addslashes($object);
         // Do nothing for the 'rel' types.  This will have to get reworked since
         // uid gets mapped to sioc:has_creator by default, but the value is
         // the uid itself, not http://your_drupal/users/the_uid....

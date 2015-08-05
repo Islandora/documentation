@@ -1,4 +1,3 @@
-feature:repo-add activemq 5.11.1
 feature:install wrapper
 shell:sleep 1000
 wrapper:install

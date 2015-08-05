@@ -42,24 +42,23 @@ function islandora_basic_image_form_islandora_basic_image_node_form_alter(&$form
   );
 
   // Add a collection picker if node is new (e.g. this is an insert form).
+  $node = $form_state['node'];
   if (!isset($node->nid) || isset($node->is_new)) {
     // Construct list of options from db and a default.
-    $default = array('' => t('None'));
     $from_db = db_select('node', 'n')
         ->fields('n', array('uuid', 'title'))
         ->condition('n.type', ISLANDORA_COLLECTION_CONTENT_TYPE)
         ->execute()
         ->fetchAllKeyed();
-    $options = $default + $from_db;
 
     // Add the select to the form.
     $form['parent_collection'] = array(
       '#type' => 'select',
       '#title' => t('Parent Collection'),
-      '#description' => t('Select the parent collection to add this to.  Select "Fedora Root" if you want it to be a top-level collection'),
-      '#options' => $options,
-      '#default_value' => '',
+      '#description' => t('Select the parent collection to add this to.'),
+      '#options' => $from_db,
       '#weight' => -4,
+      '#required' => TRUE, 
     );
 
     // Keep title on top.

@@ -20,10 +20,6 @@ function islandora_get_default_rdf_mapping($bundle, array $rdf_types) {
   $default_rdf_types = array(
     'ldp:RDFSource',
     'ldp:Container',
-    'nt:hierarchyNode',
-    'nt:folder',
-    'nt:base',
-    'mix:referenceable',
     'fedora:Resource',
     'fedora:Container',
   );

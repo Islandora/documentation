@@ -22,6 +22,7 @@
       <from uri="direct:createBasicImageSparql"/>
         <setBody><simple>${property.node}</simple></setBody>
         <to uri="islandora:collectionService:nodeToSparql"/>
+        <setProperty propertyName="sparql"><simple>${body}</simple></setProperty>
     </route>
 
     <route id="createBasicImageInFedora">
@@ -30,6 +31,7 @@
         <removeHeaders pattern="*"/>
         <setHeader headerName="Content-Type"><constant>application/sparql-update</constant></setHeader>
         <setHeader headerName="CamelHttpMethod"><constant>POST</constant></setHeader>
+        <setBody><simple>${property.sparql}</simple></setBody>
         <to uri="fcrepo:{{islandora.fcrepo.baseurl}}"/>
         <setProperty propertyName="childUri"><simple>${bodyAs(String)}</simple></setProperty>
         <setProperty propertyName="imageUri"><simple>${property.childUri}/OBJ</simple></setProperty>
