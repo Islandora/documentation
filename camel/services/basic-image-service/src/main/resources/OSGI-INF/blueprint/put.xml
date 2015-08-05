@@ -11,10 +11,12 @@
       <description>Updates a basic image in Fedora using Drupal data</description>
       <from uri="direct:updateBasicImage"/>
         <to uri="direct:getObjectUri"/>
-        <log message="PUT URI: ${property.uri}"/>
         <to uri="direct:createBasicImageSparql"/>
         <to uri="direct:updateBasicImageInFedora"/>
-        <to uri="direct:upsertBasicImageOBJ"/>
+        <filter>
+          <simple>${property.attachment}</simple>
+          <to uri="direct:upsertBasicImageOBJ"/>
+        </filter>
     </route>
 
     <route>

@@ -17,71 +17,45 @@
 
   <camelContext id="basicImageService" xmlns="http://camel.apache.org/schema/blueprint">
 
-    <routeContextRef ref="get"/> 
-    <routeContextRef ref="post"/> 
-    <routeContextRef ref="put"/> 
-    <routeContextRef ref="delete"/> 
+    <routeContextRef ref="get"/>
+    <routeContextRef ref="post"/>
+    <routeContextRef ref="put"/>
+    <routeContextRef ref="delete"/>
 
     <route>
       <from uri="jetty:http://0.0.0.0:8888/islandora/rest/basic-image/"/>
         <choice>
           <when><simple>${headers.CamelHttpMethod} == 'GET'</simple>
-            <log message="GOT A GET"/>  
             <setProperty propertyName="uuid"><simple>${headers.uuid}</simple></setProperty>
             <to uri="direct:getBasicImage"/>
           </when>
           <when><simple>${headers.CamelHttpMethod} == 'POST'</simple>
             <setProperty propertyName="uuid"><simple>${headers.uuid}</simple></setProperty>
             <setProperty propertyName="node"><simple>${headers.node}</simple></setProperty>
-            <setProperty propertyName="attachment"><javaScript>request.getAttachments().values().toArray()[0]</javaScript></setProperty>
+            <filter>
+              <javaScript>request.hasAttachments()</javaScript>
+              <setProperty propertyName="attachment"><javaScript>request.getAttachments().values().toArray()[0]</javaScript></setProperty>
+            </filter>
             <setProperty propertyName="mimetype"><simple>${headers.mimetype}</simple></setProperty>
             <to uri="direct:getCollectionUri"/>
             <to uri="direct:createBasicImage"/>
           </when>
           <when><simple>${headers.CamelHttpMethod} == 'PUT'</simple>
-            <log message="GOT A PUT"/>  
             <setProperty propertyName="uuid"><simple>${headers.uuid}</simple></setProperty>
             <setProperty propertyName="node"><simple>${headers.node}</simple></setProperty>
-            <setProperty propertyName="attachment"><javaScript>request.getAttachments().values().toArray()[0]</javaScript></setProperty>
+            <filter>
+              <javaScript>request.hasAttachments()</javaScript>
+              <setProperty propertyName="attachment"><javaScript>request.getAttachments().values().toArray()[0]</javaScript></setProperty>
+            </filter>
             <setProperty propertyName="mimetype"><simple>${headers.mimetype}</simple></setProperty>
             <to uri="direct:updateBasicImage"/>
           </when>
           <when><simple>${headers.CamelHttpMethod} == 'DELETE'</simple>
-            <log message="GOT A DELETE"/>  
             <setProperty propertyName="uuid"><simple>${headers.uuid}</simple></setProperty>
             <to uri="direct:deleteBasicImage"/>
           </when>
         </choice>
-<!--
-          <transform>
-            <javaScript>
-              request.getAttachments().values().toArray()[0].getContent(); 
-            </javaScript>
-          </transform>
--->
     </route>
-<!--
-    <restConfiguration component="jetty"
-                       port="8181">
-      <endpointProperty key="enableMultipartFilter" value="true"/>
-    </restConfiguration>
-
-    <rest path="/islandora/rest/basic-image">
-      <get>
-        <description>Creates a basic image in Fedora using Drupal data</description>
-        <to uri="direct:getBasicImage"/>
-      </get>
-      <post uri="/{uuid}" consumes="multipart/form-encoded">
-        <description>Creates a basic image in Fedora using Drupal data</description>
-        <to uri="direct:createBasicImage"/>
-      </post>
-      <put uri="/{uuid}" consumes="multipart/form-encoded">
-        <description>Updates a basic image in Fedora using Drupal data</description>
-        <to uri="direct:updateBasicImage"/>
-      </put>
-    </rest>
--->
-
   </camelContext>
 
 </blueprint>
