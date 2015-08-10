@@ -1,6 +1,10 @@
+#!/bin/bash
 echo "RUNNING POST-INSTALL COMMANDS"
 
 HOME_DIR=$1
+if [ -f "$HOME_DIR/islandora/install/configs/variables" ]; then
+  . "$HOME_DIR"/islandora/install/configs/variables
+fi
 
 # Chown and chmod tomcat directory
 chown -R tomcat7:tomcat7 /var/lib/tomcat7
@@ -15,16 +19,17 @@ chmod -R g+w /var/www/html
 chown -R vagrant:vagrant "$HOME_DIR"
 
 # Cycle tomcat
+cd /var/lib/tomcat7
 service tomcat7 restart
 
 # Cycle karaf and watch the maven bundles
 service karaf-service restart
 sleep 60
-/opt/karaf/bin/client < "$HOME_DIR"/islandora/install/karaf/watch.script
+"$KARAF_CLIENT" < "$KARAF_CONFIGS/watch.script"
 
 # Fix ApacheSolr config
-drush -r /var/www/html/drupal sqlq "update apachesolr_environment set url='http://localhost:8080/solr' where url='http://localhost:8983/solr'"
-drush -r /var/www/html/drupal cc all
+drush -r "$DRUPAL_HOME" sqlq "update apachesolr_environment set url='http://localhost:8080/solr' where url='http://localhost:8983/solr'"
+drush -r "$DRUPAL_HOME" cc all
 
 # Add DC as some default fields for folks.
-drush -r /var/www/html/drupal scr "$HOME_DIR"/islandora/install/add_default_fields.php
+drush -r "$DRUPAL_HOME" scr "$HOME_DIR"/islandora/install/configs/add_default_fields.php

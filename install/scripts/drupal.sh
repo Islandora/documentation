@@ -1,6 +1,12 @@
+#!/bin/bash
+
 echo "Installing Drupal."
 
 HOME_DIR=$1
+
+if [ -f "$HOME_DIR/islandora/install/configs/variables" ]; then
+  . "$HOME_DIR"/islandora/install/configs/variables
+fi
 
 cd "$HOME_DIR"
 
@@ -19,8 +25,8 @@ chown -R www-data:www-data drupal
 chmod -R g+w drupal
 
 # Do the install
-cd drupal
-drush si -y --db-url=mysql://root:islandora@localhost/drupal7 --site-name=islandora-fedora4.org
+cd "$DRUPAL_HOME"
+drush si -y --db-url=mysql://root:islandora@localhost/drupal7 --site-name=Islandora-7.x-2.x
 drush user-password admin --password=islandora
 
 # Set document root
@@ -41,10 +47,15 @@ rm /var/www/html/index.html
 service apache2 restart
 
 # Make the modules and libraries directories
-mkdir -p sites/all/modules
-mkdir -p sites/all/libraries
+if [ ! -d "$DRUPAL_HOME/sites/all/modules" ]; then
+  mkdir "$DRUPAL_HOME/sites/all/modules"
+fi
 
-cd sites/all/modules
+if [ ! -d "$DRUPAL_HOME/sites/all/libraries" ]; then
+  mkdir "$DRUPAL_HOME/sites/all/libraries"
+fi
+
+cd "$DRUPAL_HOME/sites/all/modules"
 
 # Islandora dependencies
 drush dl httprl
@@ -65,19 +76,19 @@ drush dl devel
 drush -y en devel
 
 # Undocumented dependency for rdfx on ARC2 for RDF generation.
-cd ../libraries
+cd "$DRUPAL_HOME/sites/all/libraries"
 mkdir ARC2
 cd ARC2
 git clone https://github.com/semsol/arc2.git
 mv arc2 arc
-cd ../../modules
+cd "$DRUPAL_HOME/sites/all/modules"
 
 # Apache Solr
 drush dl apachesolr
 drush en -y apachesolr
 
 # Copy new schema files and restart Tomcat
-cp -f apachesolr/solr-conf/solr-4.x/* /var/lib/tomcat7/solr/collection1/conf/
+cp -f "$DRUPAL_HOME/apachesolr/solr-conf/solr-4.x/*" "$SOLR_HOME/collection1/conf/"
 service tomcat7 restart
 
 # Islandora modules
@@ -93,16 +104,20 @@ drush -y en islandora_medium_size_service
 drush -y en islandora_tn_service
 
 # Set default theme to bootstrap
-cd ../themes
+cd "$DRUPAL_HOME/sites/all/themes"
 drush -y dl bootstrap
 drush -y en bootstrap
 drush vset theme_default bootstrap
 
 # Coder & Code Sniffer
 pear install PHP_CodeSniffer
+if [ ! -f "$DOWNLOAD_DIR/coder-8.x-2.1.tar.gz" ]; then
+  echo "Downloading coder"
+  wget -q -O "$DOWNLOAD_DIR/coder-8.x-2.1.tar.gz" http://ftp.drupal.org/files/projects/coder-8.x-2.1.tar.gz
+fi
+cp -v "$DOWNLOAD_DIR/coder-8.x-2.1.tar.gz" /tmp
 cd /tmp
-wget http://ftp.drupal.org/files/projects/coder-8.x-2.1.tar.gz
 tar -xzvf coder-8.x-2.1.tar.gz
-mv -v coder /usr/share
+mv -v /tmp/coder /usr/share
 chown -hR vagrant:vagrant /usr/share/coder
 ln -sv /usr/share/coder/coder_sniffer/Drupal /usr/share/php/PHP/CodeSniffer/Standards

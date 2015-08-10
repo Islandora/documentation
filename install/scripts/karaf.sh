@@ -1,11 +1,21 @@
-KARAF_VERSION=3.0.4
+#!/bin/bash
+echo "Installing Karaf"
 
 HOME_DIR=$1
 
-cd $HOME_DIR
+if [ -f "$HOME_DIR/islandora/install/configs/variables" ]; then
+  . "$HOME_DIR"/islandora/install/configs/variables
+fi
+
+if [ ! -f "$DOWNLOAD_DIR/apache-karaf-$KARAF_VERSION.tar.gz" ]; then
+  echo "Downloading Karaf"
+  wget -q -O "$DOWNLOAD_DIR/apache-karaf-$KARAF_VERSION.tar.gz" "http://mirror.csclub.uwaterloo.ca/apache/karaf/$KARAF_VERSION/apache-karaf-$KARAF_VERSION.tar.gz"
+fi
+
+cd "$HOME_DIR"
 
 # Download and install Karaf
-wget http://mirror.csclub.uwaterloo.ca/apache/karaf/"$KARAF_VERSION"/apache-karaf-"$KARAF_VERSION".tar.gz
+cp -v "$DOWNLOAD_DIR/apache-karaf-$KARAF_VERSION.tar.gz" "$HOME_DIR"
 tar zxvf apache-karaf-"$KARAF_VERSION".tar.gz
 rm apache-karaf-"$KARAF_VERSION".tar.gz
 mv apache-karaf-"$KARAF_VERSION" /opt
@@ -14,7 +24,7 @@ ln -s /opt/apache-karaf-"$KARAF_VERSION" /opt/karaf
 # Run a setup script to add some feature repos and prepare it for running as a service
 /opt/karaf/bin/start
 sleep 60
-/opt/karaf/bin/client < "$HOME_DIR"/islandora/install/karaf/setup.script
+"$KARAF_CLIENT" < "$KARAF_CONFIGS/setup.script"
 /opt/karaf/bin/stop
 
 # Add it as a Linux service
@@ -27,6 +37,3 @@ sed -i "s|#org.ops4j.pax.url.mvn.localRepository=|org.ops4j.pax.url.mvn.localRep
 # Start it
 service karaf-service start
 sleep 60
-
-# You can always log into the karaf console once the service is running by executing:
-# /opt/karaf/bin/client
