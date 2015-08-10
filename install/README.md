@@ -15,10 +15,6 @@ N.B. This virtual machine **should not** be used in production.
 2. `cd islandora/install`
 3. `vagrant up`
 
-### Build Variables
-
-- VIM : If you want to install the vim configuration for Java development, use `VIM=true vagrant up`. It practically doubles the amount of time to spin up the VM, so only do so if you’re sure you want to develop directly on the VM using vim.
-
 ## Connect
 
 You can connect to the machine via the browser at [http://localhost:8000](http://localhost:8000).
@@ -56,10 +52,11 @@ The default VM login details are:
 - Tomcat 7.0.52
 - Solr 4.10.3
 - Camel 2.14.1
-- Fedora 4.2.0
+- Fedora 4.3.0
 - Fedora Camel Component 4.2.0
 - BlazeGraph 1.5.1
+- Karaf 3.0.4
 - Sync 0.0.0
 - Islandora 7.x-2.x
 - PHP 5.5.9 
-- Java 7 (OpenJDK)
+- Java 8 (Oracle)
