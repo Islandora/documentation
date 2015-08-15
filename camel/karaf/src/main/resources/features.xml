@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<features xmlns="http://karaf.apache.org/xmlns/features/v1.0.0" name="${project.artifactId}-${project.version}">
+
+  <repository>mvn:org.fcrepo.camel/fcrepo-camel/${fcrepo.camel.version}/xml/features</repository>
+  <repository>mvn:org.apache.activemq/activemq-karaf/${activemq.version}/xml/features</repository>
+  <repository>mvn:org.apache.camel.karaf/apache-camel/${camel.version}/xml/features</repository>
+
+  <feature name="islandora-sync-gateway" version="${project.version}" resolver="(obr)" start-level="50">
+    <details>Installs the Islandora synchronization gateway</details>
+
+    <feature version="${camel.version.range}">camel</feature>
+    <feature version="${camel.version.range}">camel-http</feature>
+    <feature version="${camel.version.range}">camel-cache</feature>
+    <feature version="${camel.version.range}">camel-jsonpath</feature>
+    <feature version="${camel.version.range}">camel-script</feature>
+    <feature version="${camel.version.range}">camel-script-javascript</feature>
+    <feature version="${camel.version.range}">camel-base64</feature>
+    <feature version="${activemq.version}">activemq-camel</feature>
+    <feature version="${fcrepo.camel.version}">fcrepo-camel</feature>
+    <feature version="${project.version}">islandora-camel-component</feature>
+
+    <bundle start-level="80">mvn:ca.islandora.camel.sync/islandora-sync-gateway/${project.version}</bundle>
+
+    <configfile finalname="/etc/ca.islandora.camel.sync.cfg">mvn:ca.islandora.camel.sync/islandora-sync-gateway/${project.version}/cfg/configuration</configfile>
+  </feature>
+
+  <feature name="islandora-basic-image-service" version="${project.version}" resolver="(obr)" start-level="50">
+    <details>Installs the Islandora basic image service</details>
+
+    <feature version="${camel.version.range}">camel</feature>
+    <feature version="${camel.version.range}">camel-http</feature>
+    <feature version="${camel.version.range}">camel-jetty</feature>
+    <feature version="${camel.version.range}">camel-jsonpath</feature>
+    <feature version="${camel.version.range}">camel-script</feature>
+    <feature version="${camel.version.range}">camel-script-javascript</feature>
+    <feature version="${camel.version.range}">camel-mustache</feature>
+    <feature version="${fcrepo.camel.version}">fcrepo-camel</feature>
+    <feature version="${project.version}">islandora-camel-component</feature>
+
+    <bundle start-level="80">mvn:ca.islandora.camel.services/islandora-basic-image-service/${project.version}</bundle>
+
+    <configfile finalname="/etc/ca.islandora.camel.services.basic.image.cfg">mvn:ca.islandora.camel.services/islandora-basic-image-service/${project.version}/cfg/configuration</configfile>
+  </feature>
+
+  <feature name="islandora-collection-service" version="${project.version}" resolver="(obr)" start-level="50">
+    <details>Installs the Islandora collection service</details>
+
+    <feature version="${camel.version.range}">camel</feature>
+    <feature version="${camel.version.range}">camel-http</feature>
+    <feature version="${camel.version.range}">camel-servlet</feature>
+    <feature version="${camel.version.range}">camel-jsonpath</feature>
+    <feature version="${camel.version.range}">camel-script</feature>
+    <feature version="${camel.version.range}">camel-script-javascript</feature>
+    <feature version="${camel.version.range}">camel-mustache</feature>
+    <feature version="${fcrepo.camel.version}">fcrepo-camel</feature>
+    <feature version="${project.version}">islandora-camel-component</feature>
+
+    <bundle start-level="80">mvn:ca.islandora.camel.services/islandora-collection-services/${project.version}</bundle>
+
+    <configfile finalname="/etc/ca.islandora.services.collection.cfg">mvn:ca.islandora.camel.services/islandora-collection-services/cfg/configuration</configfile>
+  </feature>
+
+  <feature name="islandora-camel-component" version="${project.version}" resolver="(obr)" start-level="50">
+    <details>Installs the Islandora camel component</details>
+
+    <feature version="${camel.version.range}">camel</feature>
+    <feature version="${camel.version.range}">camel-exec</feature>
+
+    <bundle dependency="true">mvn:commons-io/commons-io/${commons-io.version}</bundle>
+
+    <bundle start-level="80">mvn:ca.islandora.camel.component/islandora-camel-component/${project.version}</bundle>
+  </feature>
+</features>

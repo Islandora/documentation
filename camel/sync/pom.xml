@@ -3,6 +3,12 @@
 
   <modelVersion>4.0.0</modelVersion>
 
+  <parent>
+    <groupId>ca.islandora.camel</groupId>
+    <artifactId>islandora-parent</artifactId>
+    <version>0.0.0-SNAPSHOT</version>
+  </parent>
+
   <groupId>ca.islandora.camel.sync</groupId>
   <artifactId>islandora-sync-gateway</artifactId>
   <packaging>bundle</packaging>
@@ -10,57 +16,34 @@
 
   <name>Islandora Sync Gateway</name>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <camel.version>2.15.2</camel.version>
-    <camel.version.range>[2.15, 3)</camel.version.range>
-    <fcrepo.camel.version>4.3.0</fcrepo.camel.version>
-    <activemq.version>5.11.1</activemq.version>
-    <slf4j.version>1.7.12</slf4j.version>
-    <log4j.version>1.2.17</log4j.version>
-    <compiler.plugin.version>2.5.1</compiler.plugin.version>
-    <java.version>1.8</java.version>
-    <resources.plugin.version>2.6</resources.plugin.version>
-    <bundle.plugin.version>2.3.7</bundle.plugin.version>
-    <islandora.osgi.export.pkg>ca.islandora.camel.sync.*</islandora.osgi.export.pkg>
-    <islandora.osgi.import.pkg />
-  </properties>
-
   <dependencies>
     <dependency>
       <groupId>org.apache.camel</groupId>
       <artifactId>camel-core</artifactId>
-      <version>${camel.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.camel</groupId>
       <artifactId>camel-blueprint</artifactId>
-      <version>${camel.version}</version>
     </dependency>
 
     <!-- logging -->
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <version>${slf4j.version}</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-log4j12</artifactId>
-      <version>${slf4j.version}</version>
     </dependency>
     <dependency>
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
-      <version>${log4j.version}</version>
     </dependency>
 
     <!-- Testing & Camel Plugin -->
     <dependency>
       <groupId>org.apache.camel</groupId>
       <artifactId>camel-test-blueprint</artifactId>
-      <version>${camel.version}</version>
     </dependency>
 
   </dependencies>
@@ -68,72 +51,43 @@
   <build>
     <defaultGoal>install</defaultGoal>
 
-    <resources>
-      <resource>
-        <directory>src/main/resources</directory>
-        <filtering>true</filtering>
-        <excludes>
-          <exclude>OSGI-INF/**/*</exclude>
-        </excludes>
-      </resource>
-      <resource>
-        <directory>src/main/resources</directory>
-        <filtering>false</filtering>
-        <includes>
-          <include>OSGI-INF/**/*</include>
-        </includes>
-      </resource>
-    </resources>
-
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>${compiler.plugin.version}</version>
-        <configuration>
-          <source>${java.version}</source>
-          <target>${java.version}</target>
-        </configuration>
       </plugin>
 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-resources-plugin</artifactId>
-        <version>${resources.plugin.version}</version>
-        <configuration>
-          <encoding>UTF-8</encoding>
-        </configuration>
-       <executions>
-         <execution>
-           <id>filter</id>
-           <phase>generate-resources</phase>
-           <goals>
-             <goal>resources</goal>
-           </goals>
-         </execution>
-       </executions>
       </plugin>
 
       <!-- to generate the MANIFEST-FILE of the bundle -->
       <plugin>
         <groupId>org.apache.felix</groupId>
         <artifactId>maven-bundle-plugin</artifactId>
-        <version>${bundle.plugin.version}</version>
-        <extensions>true</extensions>
-        <configuration>
-          <instructions>
-            <Bundle-Name>${project.artifactId}</Bundle-Name>
-            <Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>
-            <Export-Package>${islandora.osgi.export.pkg};version=${project.version}</Export-Package>
-            <Import-Package>
-              ${islandora.osgi.import.pkg},
-              org.apache.camel*;version="${camel.version.range}",
-              *
-            </Import-Package>
-            <Implementation-Title>${project.name}</Implementation-Title>
-            <Implementation-Version>${project.version}</Implementation-Version>
-          </instructions>
-        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>attach-artifact</goal>
+            </goals>
+            <configuration>
+              <artifacts>
+                <artifact>
+                  <file>src/main/cfg/ca.islandora.sync.cfg</file>
+                  <type>cfg</type>
+                  <classifier>configuration</classifier>
+                </artifact>
+              </artifacts>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
 
     </plugins>
