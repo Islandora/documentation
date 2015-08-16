@@ -5,9 +5,9 @@
            xsi:schemaLocation="
            http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd">
 
-  <routeContext id="eventGateway" xmlns="http://camel.apache.org/schema/blueprint">
+  <routeContext id="syncEventGateway" xmlns="http://camel.apache.org/schema/blueprint">
 
-    <route>
+    <route id="fedoraEventStream">
       <description>Content based router for incoming Fedora events</description>
       <from uri="activemq:topic:fedora"/>
         <setProperty propertyName="CamelFcrepoBaseUrl"><simple>${headers[org.fcrepo.jms.baseURL]}</simple></setProperty>
@@ -23,7 +23,7 @@
         </choice>
     </route>
 
-    <route>
+    <route id="nodeUpsertHandler">
       <description>Event handler for node upsert events</description>
       <from uri="direct:handleNodeUpsertEvent"/>
         <to uri="direct:getDrupalAuthInfo"/>
@@ -40,14 +40,15 @@
         </choice>
     </route>
 
-    <route>
+    <route id="nodeRemoveHandler">
       <description>Event handler for node removed events</description>
       <from uri="direct:handleNodeRemovedEvent"/>
         <to uri="direct:getDrupalAuthInfo"/>
         <to uri="direct:drupalDeleteNodeByFedoraUri"/>
     </route>
 
-    <route>
+    <route id="fedoraContainerToDrupalHandler">
+      <description>Replicate changes to a fedora container node to Drupal</description>
       <from uri="direct:upsertRdfResource"/>
         <to uri="direct:extractUUID"/>
         <to uri="direct:drupalGetNode"/>
@@ -63,7 +64,7 @@
         <to uri="direct:drupalPutNode"/>
     </route>
 
-    <route>
+    <route id="fedoraRdfEnhancer">
       <description>Gets RDF from Fedora</description>
       <from uri="direct:fedoraGetRdf"/>
         <removeHeaders pattern="*"/>
@@ -75,7 +76,7 @@
         <setProperty propertyName="rdf"><simple>${bodyAs(String)}</simple></setProperty>
     </route>
 
-    <route>
+    <route id="uuidExtractor">
       <description>Extracts a Drupal UUID from Fedora RDF</description>
       <from uri="direct:extractUUID"/>
         <setBody><simple>${property.rdf}</simple></setBody>
@@ -89,7 +90,7 @@
         </doTry>
     </route>
 
-    <route>
+    <route id="drupalNodeAsJsonHandler">
       <description>Gets node JSON from Drupal</description>
       <from uri="direct:drupalGetNode"/>
         <removeHeaders pattern="*"/>
@@ -102,7 +103,7 @@
         <setProperty propertyName="node"><simple>${bodyAs(String)}</simple></setProperty>
     </route>
 
-    <route>
+    <route id="drupalNodeCreator">
       <description>Creates a Drupal node using RDF</description>
       <from uri="direct:drupalCreateNodeFromRdf"/>
         <to uri="direct:extractContentType"/>
@@ -111,7 +112,7 @@
         <to uri="islandora:rdf:createNode"/>
     </route>
 
-    <route>
+    <route id="islandoraCTypeDecorator">
       <description>Extracts an Islandora content type from RDF</description>
       <from uri="direct:extractContentType"/>
         <setBody><simple>${property.rdf}</simple></setBody>
@@ -119,7 +120,7 @@
         <setProperty propertyName="contentType"><simple>${bodyAs(String)}</simple></setProperty>
     </route>
 
-    <route>
+    <route id="drupalRdfMappingDecorator">
       <description>Gets an RDF mapping from Drupal</description>
       <from uri="direct:drupalGetRdfMapping"/>
         <setHeader headerName="CamelHttpMethod"><constant>GET</constant></setHeader>
@@ -131,14 +132,14 @@
         <setProperty propertyName="mappings"><simple>${bodyAs(String)}</simple></setProperty>
     </route>
 
-    <route>
+    <route id="drupalNodeUpdateHandler">
       <description>Updates a Drupal node using RDF</description>
       <from uri="direct:drupalUpdateNodeFromRdf"/>
         <setBody><simple>{"node" : ${property.node}, "rdf" : ${property.rdf}}</simple></setBody>
         <to uri="islandora:rdf:updateNode"/>
     </route>
 
-    <route>
+    <route id="drupalNodeUpdateIdempotent">
       <description>PUTs a node using Drupal's services module</description>
       <from uri="direct:drupalPutNode"/>
         <removeHeaders pattern="*"/>
@@ -150,7 +151,7 @@
         <recipientList><simple>http:{{islandora.drupal.baseurl}}/node/${property.uuid}</simple></recipientList>
     </route>
 
-    <route>
+    <route id="drupalNodeDelete">
       <description>Deletes a node in Drupal using its Fedora URI</description>
       <from uri="direct:drupalDeleteNodeByFedoraUri"/>
         <removeHeaders pattern="*"/>
@@ -163,7 +164,8 @@
         <to uri="http:{{islandora.drupal.baseurl}}/delete_by_fedora_uri"/>
     </route>
 
-    <route>
+    <route id="drupalUpsertBinary">
+      <description>Get a binay object from Fedora and put a derivative version in Drupal</description>
       <from uri="direct:upsertNonRdfResource"/>
         <transform><simple>${property.rdf}</simple></transform>
         <setProperty propertyName="parentUri"><jsonpath>$[1]['http://fedora.info/definitions/v4/repository#hasParent'][0]['@id']</jsonpath></setProperty>
@@ -172,7 +174,8 @@
         <to uri="direct:drupalAddMediumSize"/>
     </route>
 
-    <route>
+    <route id="fedoraGetParentAsJsonLd">
+      <description>Get the parent resource from fedora as JSON-LD</description>
       <from uri="direct:getParentUUID"/>
         <transform><simple>${null}</simple></transform>
         <removeHeaders pattern="*"/>
@@ -184,7 +187,7 @@
         <setProperty propertyName="parentUuid"><jsonpath>$[0]['http://www.semanticdesktop.org/ontologies/2007/03/22/nfo/v1.2/uuid'][0]['@value']</jsonpath></setProperty>
     </route>
 
-    <route>
+    <route id="fedoraGetBinary">
       <description>Gets a binary from Fedora</description>
       <from uri="direct:fedoraGetBinary"/>
         <removeHeaders pattern="*"/>
@@ -196,7 +199,7 @@
         <setProperty propertyName="mimetype"><simple>${headers.Content-Type}</simple></setProperty>
     </route>
 
-    <route>
+    <route id="drupalAddThumbnail">
       <description>Adds a binary from Fedora to Drupal as a thumbnail</description>
       <from uri="direct:drupalAddTn"/>
         <removeHeaders pattern="*"/>
@@ -212,7 +215,7 @@
         <recipientList><simple>http:{{islandora.drupal.baseurl}}/tn</simple></recipientList>
     </route>
 
-    <route>
+    <route id="drupalAddMediumSize">
       <description>Adds a binary from Fedora to Drupal as a medium size image</description>
       <from uri="direct:drupalAddMediumSize"/>
         <removeHeaders pattern="*"/>
