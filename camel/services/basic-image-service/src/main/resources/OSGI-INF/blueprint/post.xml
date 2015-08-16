@@ -5,7 +5,7 @@
            xsi:schemaLocation="
            http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd">
 
-  <routeContext id="post" xmlns="http://camel.apache.org/schema/blueprint">
+  <routeContext id="basicImagePostService" xmlns="http://camel.apache.org/schema/blueprint">
 
     <route id="createBasicImage">
       <description>Creates a basic image in Fedora using Drupal data</description>
@@ -40,6 +40,7 @@
     </route>
 
     <route id="upsertBasicImageOBJ">
+      <description>Update a Binary object in Fedora</description>
       <from uri="direct:upsertBasicImageOBJ"/>
         <setBody><javaScript>exchange.getProperty("attachment").getContent()</javaScript></setBody>
         <removeHeaders pattern="*"/>

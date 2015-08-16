@@ -59,8 +59,7 @@
     <routeContextRef ref="put"/>
     <routeContextRef ref="delete"/>
 
-    <restConfiguration component="servlet" port="8181" contextPath="/islandora/rest/collection">
-    </restConfiguration>
+    <restConfiguration component="servlet" port="8181" contextPath="/islandora/rest/collection"/>
 
     <rest>
       <get uri="/{uuid}">
