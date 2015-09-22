@@ -1,1 +1,1 @@
-contributing.md
+../../contributing.md
