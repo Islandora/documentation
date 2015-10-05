@@ -6,4 +6,4 @@ if [ -f "$HOME_DIR/islandora/install/configs/variables" ]; then
   . "$HOME_DIR"/islandora/install/configs/variables
 fi
 
-cp "$HOME_DIR"/islandora/camel/config/islandora.cfg /opt/karaf/etc
+cp "$HOME_DIR"/islandora/camel/sync/src/main/cfg/ca.islandora.sync.cfg /opt/karaf/etc
