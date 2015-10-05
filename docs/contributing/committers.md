@@ -64,9 +64,9 @@ This section describes the process for handling the voting of a new committer.
 
 Summary:
 
-1. Call a vote ([templates/committerVote.txt](https://gist.github.com/ruebot/7a360c8c22ec0d7f75ac))
-2. Close a vote ([templates/closeCommitterVote.txt](https://gist.github.com/ruebot/5193094fedbfc38ed873))
-3. Invite the new committer ([templates/committerInvite.txt](https://gist.github.com/ruebot/4644cad37e3fecaeffda)), if no CLA is on file ([templates/committerInviteCLA.txt](https://gist.github.com/ruebot/0b677f0ee4326a857748))
+1. Call a vote ([templates/committerVote.txt](https://raw.githubusercontent.com/Islandora-Labs/islandora/7.x-2.x/docs/contributing/templates/committerVote.txt))
+2. Close a vote ([templates/closeCommitterVote.txt](https://raw.githubusercontent.com/Islandora-Labs/islandora/7.x-2.x/docs/contributing/templates/closeCommitterVote.txt))
+3. Invite the new committer ([templates/committerInvite.txt](https://raw.githubusercontent.com/Islandora-Labs/islandora/7.x-2.x/docs/contributing/templates/committerInvite.txt)), if no CLA is on file ([templates/committerInviteCLA.txt](https://raw.githubusercontent.com/Islandora-Labs/islandora/7.x-2.x/docs/contributing/templates/committerInviteCLA.txt))
 
 If they accept, then do:
 
@@ -74,4 +74,4 @@ If they accept, then do:
 2. Add to Committer team of GitHub Islandora-Labs organization
 3. Add to islandora-committers google-group
 4. Add to committers wiki page: Islandora Committers 
-5. Announce the new committer ([template/committerAnnounce.txt](https://gist.github.com/ruebot/ce97f18d7a7711564a1e))
+5. Announce the new committer ([template/committerAnnounce.txt](https://raw.githubusercontent.com/Islandora-Labs/islandora/7.x-2.x/docs/contributing/templates/committerAnnounce.txt))
