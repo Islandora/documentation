@@ -17,10 +17,10 @@
 
   <camelContext id="basicImageService" xmlns="http://camel.apache.org/schema/blueprint">
 
-    <routeContextRef ref="get"/>
-    <routeContextRef ref="post"/>
-    <routeContextRef ref="put"/>
-    <routeContextRef ref="delete"/>
+    <routeContextRef ref="basicImageGetService"/>
+    <routeContextRef ref="basicImagePostService"/>
+    <routeContextRef ref="basicImagePutService"/>
+    <routeContextRef ref="basicImageDeleteService"/>
 
     <route>
       <from uri="jetty:http://0.0.0.0:8888/islandora/rest/basic-image/"/>

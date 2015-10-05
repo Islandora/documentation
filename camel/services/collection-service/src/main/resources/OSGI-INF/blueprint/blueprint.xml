@@ -43,10 +43,10 @@
 
   <camelContext id="collectionService" xmlns="http://camel.apache.org/schema/blueprint">
 
-    <routeContextRef ref="get"/>
-    <routeContextRef ref="post"/>
-    <routeContextRef ref="put"/>
-    <routeContextRef ref="delete"/>
+    <routeContextRef ref="collectionGetService"/>
+    <routeContextRef ref="collectionPostService"/>
+    <routeContextRef ref="collectionPutService"/>
+    <routeContextRef ref="collectionDeleteService"/>
 
     <restConfiguration component="servlet" port="8181" contextPath="/islandora/rest/collection"/>
 
