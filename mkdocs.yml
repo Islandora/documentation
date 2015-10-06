@@ -24,7 +24,9 @@ pages:
 
 # Contributing
   - ['contributing/contributing.md', 'Contributing', 'How to contribute']
+  - ['contributing/committers.md', 'Contributing', 'Committers']
   - ['contributing/hacking-on-islandora.md', 'Contributing', 'Hacking on Islandora']
+
 
 # Technical Documentation
   - ['technical-documentation/architecture.md', 'Technical Documentation', 'Architecture']

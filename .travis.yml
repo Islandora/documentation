@@ -17,15 +17,7 @@ script:
   - phpcpd --names *.module,*.inc,*.test sites/all/modules/islandora/drupal/islandora sites/all/modules/islandora/drupal/islandora_apachesolr sites/all/modules/islandora/drupal/islandora_basic_image sites/all/modules/islandora/drupal/islandora_collection sites/all/modules/islandora/drupal/islandora_dc sites/all/modules/islandora/drupal/islandora_mods sites/all/modules/islandora/drupal/islandora_rdf_mapping_service
   - drush test-run --uri=http://localhost:8081 Islandora
   - export JAVA_HOME=/usr/lib/jvm/java-8-oracle
-  - cd $TRAVIS_BUILD_DIR/camel/sync
-  - mvn install -B -V
-  - mvn javadoc:jar
-  - mvn javadoc:test-aggregate
-  - cd $TRAVIS_BUILD_DIR/camel/services/collection-service
-  - mvn install -B -V
-  - mvn javadoc:jar
-  - mvn javadoc:test-aggregate
-  - cd $TRAVIS_BUILD_DIR/camel/component
+  - cd $TRAVIS_BUILD_DIR/camel
   - mvn install -B -V
   - mvn javadoc:jar
   - mvn javadoc:test-aggregate
