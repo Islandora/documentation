@@ -9,6 +9,7 @@
 
   <!-- Load Configuration File -->
   <cm:property-placeholder id="properties" persistent-id="ca.islandora.services.basic.image" update-strategy="reload">
+
     <cm:default-properties>
       <cm:property name="islandora.drupal.baseurl" value="localhost/islandora"/>
       <cm:property name="islandora.drupal.username" value=""/>
@@ -32,7 +33,7 @@
     <routeContextRef ref="put"/>
     <routeContextRef ref="delete"/>
 
-    <route>
+    <route id="changeme3">
       <from uri="jetty:http://0.0.0.0:8888/islandora/rest/basic-image/"/>
         <choice>
           <when><simple>${headers.CamelHttpMethod} == 'GET'</simple>
