@@ -33,7 +33,7 @@ try {
         $std_err->writeln("\n" . $event->getException()->getTraceAsString());
     });
 
-    $application = new Application('Islandora Command Tool', '0.0.0-SNAPSHOT');
+    $application = new Application('Islandora Command Tool', '0.0.1-SNAPSHOT');
     $application->setDispatcher($dispatcher);
 
     // A little magic to find all IslandoraCommand classes and dynamically
