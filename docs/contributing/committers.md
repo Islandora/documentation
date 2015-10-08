@@ -29,7 +29,9 @@ The following is an alphabetized list of the current Islandora committers:
 
 | Name             | Organization                      |
 |------------------|-----------------------------------|
+| Aaron Coburn     | Amherst College                   |
 | Danny Lamb       | discoverygarden inc.              |
+| Diego Pino       | REUNA                             | 
 | Nick Ruest       | York University                   |
 | Jared Whiklo     | University of Manitoba            |
 
