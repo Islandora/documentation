@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<sparql xmlns="http://www.w3.org/2005/sparql-results#">
+  <head>
+    <variable name="s"/>
+    <variable name="o"/>
+    <variable name="p"/>
+  </head>
+  <results>
+    <result>
+      <binding name="s">
+        <uri>http://example.org/book/book5</uri>
+      </binding>
+      <binding name="o">
+        <uri>http://purl.org/dc/elements/1.1/title</uri>
+      </binding>
+      <binding name="p">
+        <literal>Harry Potter and the Order of the Phoenix</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="s">
+        <uri>http://example.org/book/book6</uri>
+      </binding>
+      <binding name="o">
+        <uri>http://purl.org/dc/elements/1.1/creator</uri>
+      </binding>
+      <binding name="p">
+        <literal>J.K. Rowling</literal>
+      </binding>
+    </result>
+  </results>
+</sparql>
