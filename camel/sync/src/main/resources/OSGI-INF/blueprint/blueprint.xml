@@ -30,8 +30,8 @@
   <bean id="base64" class="org.apache.camel.dataformat.base64.Base64DataFormat"/>
 
   <camelContext id="IslandoraSync" xmlns="http://camel.apache.org/schema/blueprint">
-    <routeContextRef ref="eventGateway"/>
-    <routeContextRef ref="drupalAuthentication"/>
+    <routeContextRef ref="syncEventGateway"/>
+    <routeContextRef ref="syncDrupalAuthentication"/>
   </camelContext>
 
 </blueprint>

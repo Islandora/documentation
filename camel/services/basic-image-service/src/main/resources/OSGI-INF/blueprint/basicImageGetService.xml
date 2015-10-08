@@ -5,7 +5,7 @@
            xsi:schemaLocation="
            http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd">
 
-  <routeContext id="get" xmlns="http://camel.apache.org/schema/blueprint">
+  <routeContext id="basicImageGetService" xmlns="http://camel.apache.org/schema/blueprint">
 
     <route id="getBasicImage">
       <description>Gets RDF for a basic image in Fedora using Drupal UUID</description>
@@ -52,6 +52,7 @@
     </route>
 
     <route id="getObjectOBJ">
+      <description>Gets a NonRdfSource Binary from Fedora</description>
       <from uri="direct:getObjectOBJ"/>
         <removeHeaders pattern="*"/>
         <setHeader headerName="CamelHttpMethod"><constant>GET</constant></setHeader>

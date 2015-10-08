@@ -5,44 +5,48 @@
            xsi:schemaLocation="
            http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd">
 
-  <routeContext id="post" xmlns="http://camel.apache.org/schema/blueprint">
+  <routeContext id="basicImagePostService" xmlns="http://camel.apache.org/schema/blueprint">
 
-    <route id="createSubCollection">
-      <description>Creates a collection as a child of the collection identified by the provided Drupal UUID</description>
-      <from uri="direct:createSubCollection"/>
-        <!-- <transacted ref="txPolicy"/> -->
-        <setProperty propertyName="node"><simple>${bodyAs(String)}</simple></setProperty>
-        <setProperty propertyName="uuid"><simple>${headers.uuid}</simple></setProperty>
-        <to uri="direct:getCollectionUri"/>
-        <to uri="direct:createCollectionSparql"/>
-        <to uri="direct:createCollectionInFedora"/>
-        <setProperty propertyName="childUri"><simple>${bodyAs(String)}</simple></setProperty>
+    <route id="createBasicImage">
+      <description>Creates a basic image in Fedora using Drupal data</description>
+      <from uri="direct:createBasicImage"/>
+        <to uri="direct:createBasicImageSparql"/>
+        <to uri="direct:createBasicImageInFedora"/>
         <to uri="direct:addAsMember"/>
+        <filter>
+          <simple>${property.attachment}</simple>
+          <to uri="direct:upsertBasicImageOBJ"/>
+        </filter>
     </route>
 
-    <route id="createCollection">
-      <description>Creates a collection in Fedora based on a node in Drupal</description>
-      <from uri="direct:createCollection"/>
-        <setProperty propertyName="node"><simple>${body}</simple></setProperty>
-        <setProperty propertyName="uri"><simple>{{islandora.fcrepo.baseurl}}</simple></setProperty>
-        <to uri="direct:createCollectionSparql"/>
-        <to uri="direct:createCollectionInFedora"/>
-    </route>
-
-    <route id="createCollectionSparql">
+    <route id="createBasicImageSparql">
       <description>Creates a SPARQL update query based on a Drupal node</description>
-      <from uri="direct:createCollectionSparql"/>
+      <from uri="direct:createBasicImageSparql"/>
         <setBody><simple>${property.node}</simple></setBody>
         <to uri="islandora:collectionService:nodeToSparql"/>
+        <setProperty propertyName="sparql"><simple>${body}</simple></setProperty>
     </route>
 
-    <route id="createCollectionInFedora">
+    <route id="createBasicImageInFedora">
       <description>Posts a SPARQL update query to Fedora in order to create a resource.</description>
-      <from uri="direct:createCollectionInFedora"/>
+      <from uri="direct:createBasicImageInFedora"/>
         <removeHeaders pattern="*"/>
         <setHeader headerName="Content-Type"><constant>application/sparql-update</constant></setHeader>
         <setHeader headerName="CamelHttpMethod"><constant>POST</constant></setHeader>
+        <setBody><simple>${property.sparql}</simple></setBody>
         <to uri="fcrepo:{{islandora.fcrepo.baseurl}}"/>
+        <setProperty propertyName="childUri"><simple>${bodyAs(String)}</simple></setProperty>
+        <setProperty propertyName="imageUri"><simple>${property.childUri}/OBJ</simple></setProperty>
+    </route>
+
+    <route id="upsertBasicImageOBJ">
+      <description>Update a Binary object in Fedora</description>
+      <from uri="direct:upsertBasicImageOBJ"/>
+        <setBody><javaScript>exchange.getProperty("attachment").getContent()</javaScript></setBody>
+        <removeHeaders pattern="*"/>
+        <setHeader headerName="Content-Type"><simple>${property.mimetype}</simple></setHeader>
+        <setHeader headerName="CamelHttpMethod"><constant>PUT</constant></setHeader>
+        <recipientList><simple>fcrepo:${property.imageUri}</simple></recipientList>
     </route>
 
     <route id="addAsMember">
