@@ -6,13 +6,12 @@
   <parent>
     <groupId>ca.islandora.camel</groupId>
     <artifactId>islandora-services</artifactId>
-    <version>0.0.0-SNAPSHOT</version>
+    <version>0.0.1-SNAPSHOT</version>
   </parent>
 
   <groupId>ca.islandora.camel.services</groupId>
   <artifactId>islandora-collection-service</artifactId>
   <packaging>bundle</packaging>
-  <version>0.0.0-SNAPSHOT</version>
 
   <name>Islandora Collection Service</name>
 

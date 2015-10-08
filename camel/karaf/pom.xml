@@ -6,13 +6,12 @@
   <parent>
     <groupId>ca.islandora.camel</groupId>
     <artifactId>islandora-parent</artifactId>
-    <version>0.0.0-SNAPSHOT</version>
+    <version>0.0.1-SNAPSHOT</version>
   </parent>
 
   <groupId>ca.islandora.camel</groupId>
   <artifactId>islandora-karaf</artifactId>
   <packaging>pom</packaging>
-  <version>0.0.0-SNAPSHOT</version>
 
   <name>Karaf Provisioning Features for Islandora</name>
 

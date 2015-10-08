@@ -6,13 +6,12 @@
   <parent>
     <groupId>ca.islandora.camel</groupId>
     <artifactId>islandora-parent</artifactId>
-    <version>0.0.0-SNAPSHOT</version>
+    <version>0.0.1-SNAPSHOT</version>
   </parent>
 
   <groupId>ca.islandora.camel.sync</groupId>
   <artifactId>islandora-sync-gateway</artifactId>
   <packaging>bundle</packaging>
-  <version>0.0.0-SNAPSHOT</version>
 
   <name>Islandora Sync Gateway</name>
 
