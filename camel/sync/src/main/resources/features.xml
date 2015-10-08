@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<features xmlns="http://karaf.apache.org/xmlns/features/v1.0.0" name="${project.artifactId}-${project.version}">
+  <feature name="${project.artifactId}" version="${project.version}" resolver="(obr)" start-level="50">
+    <details>Installs ${project.name}</details>
+    <bundle start-level="80">mvn:${project.groupId}/${project.artifactId}/${project.version}</bundle>
+    <feature version="${camel.version.range}">camel</feature>
+    <feature version="${activemq.version}">activemq-camel</feature>
+    <feature version="${fcrepo.camel.version}">fcrepo-camel</feature>
+    <feature version="${project.version}">islandora-camel-component</feature>
+    <feature version="${camel.version.range}">camel-http</feature>
+    <feature version="${camel.version.range}">camel-cache</feature>
+    <feature version="${camel.version.range}">camel-jsonpath</feature>
+    <feature version="${camel.version.range}">camel-script</feature>
+    <feature version="${camel.version.range}">camel-script-javascript</feature>
+    <feature version="${camel.version.range}">camel-base64</feature>
+  </feature>
+</features>
