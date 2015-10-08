@@ -40,7 +40,7 @@ You can see a list of all available namespaces and commands at any time by going
 ```bash
 vagrant@islandora:~$ cd ~/islandora/camel/commands/bin
 vagrant@islandora:~/islandora/camel/commands/bin$ php islandora.php
-Islandora Command Tool version 0.0.1-SNAPSHOT
+Islandora Command Tool version 0.0.0-SNAPSHOT
 
 Usage:
   command [options] [arguments]
