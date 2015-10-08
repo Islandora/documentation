@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "Installing Islandora Component"
 
-sleep 15
+#sleep 15
 
 HOME_DIR=$1
 
@@ -15,4 +15,4 @@ chown -R vagrant:vagrant "$HOME_DIR/.m2"
 cd "$HOME_DIR"/islandora/camel/component
 
 sudo -u vagrant mvn install
-"$KARAF_CLIENT" < "$KARAF_CONFIGS/component.script"
+#"$KARAF_CLIENT" -f $KARAF_CONFIGS/component.script

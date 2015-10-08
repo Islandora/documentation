@@ -88,11 +88,13 @@ drush dl apachesolr
 drush en -y apachesolr
 
 # Copy new schema files and restart Tomcat
-cp -f "$DRUPAL_HOME/apachesolr/solr-conf/solr-4.x/*" "$SOLR_HOME/collection1/conf/"
+cp -f "$DRUPAL_HOME/sites/all/modules/apachesolr/solr-conf/solr-4.x/*" "$SOLR_HOME/collection1/conf/"
 service tomcat7 restart
 
 # Islandora modules
-ln -s "$HOME_DIR"/islandora/drupal islandora
+if [ ! -f "islandora" ]; then
+  ln -s "$HOME_DIR/islandora/drupal/" islandora
+fi
 drush -y en islandora
 drush -y en islandora_dc
 drush -y en islandora_mods

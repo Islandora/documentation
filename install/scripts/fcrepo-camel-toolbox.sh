@@ -7,4 +7,4 @@ if [ -f "$HOME_DIR/islandora/install/configs/variables" ]; then
   . "$HOME_DIR"/islandora/install/configs/variables
 fi
 
-"$KARAF_CLIENT" < "$KARAF_CONFIGS/fcrepo_camel_toolbox.script"
+"$KARAF_CLIENT" -f "$KARAF_CONFIGS/fcrepo_camel_toolbox.script"

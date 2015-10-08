@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "Installing Islandora Services"
 
-sleep 15
+#sleep 15
 
 HOME_DIR=$1
 
@@ -22,4 +22,4 @@ cd "$HOME_DIR"/islandora/camel/services
 cd basic-image-service
 sudo -u vagrant mvn install
 
-"$KARAF_CLIENT" < "$KARAF_CONFIGS/services.script"
+#"$KARAF_CLIENT" -f $KARAF_CONFIGS/services.script

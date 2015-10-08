@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "Deploying Karaf Configuration"
 
-sleep 15
+#sleep 15
 
 HOME_DIR=$1
 if [ -f "$HOME_DIR/islandora/install/configs/variables" ]; then
