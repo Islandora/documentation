@@ -52,7 +52,7 @@
         <doTry>
           <to uri="direct:drupalLogin"/>
           <doCatch>
-              <exception>org.apache.camel.component.http.HttpOperationFailedException</exception>
+              <exception>org.apache.camel.component.http4.HttpOperationFailedException</exception>
               <onWhen><simple>${exception.statusCode} == 401 &amp;&amp; ${exception.responseBody} == '["CSRF validation failed"]'</simple></onWhen>
               <to uri="direct:drupalLogin"/>
           </doCatch>
@@ -66,7 +66,7 @@
         <setHeader headerName="CamelHttpMethod"><constant>POST</constant></setHeader>
         <setHeader headerName="Content-Type"><constant>application/json</constant></setHeader>
         <setBody><simple>{"username": "{{islandora.drupal.username}}", "password" : "{{islandora.drupal.password}}"}</simple></setBody>
-        <to uri="http:{{islandora.drupal.baseurl}}/user/login"/>
+        <to uri="http4:{{islandora.drupal.baseurl}}/user/login"/>
         <setProperty propertyName="authResponse"><simple>${bodyAs(String)}</simple></setProperty>
         <to uri="direct:extractDrupalSession"/>
         <to uri="direct:extractDrupalToken"/>

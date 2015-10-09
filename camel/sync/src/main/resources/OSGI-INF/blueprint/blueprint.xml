@@ -20,7 +20,7 @@
 
   <!-- Force load the http component to make sure the required Exceptions get
        loaded without having to add a Java class with an import statement. -->
-  <bean id="http" class="org.apache.camel.component.http.HttpComponent"/>
+  <bean id="http4" class="org.apache.camel.component.http4.HttpComponent"/>
 
   <!-- Islandora Component Configuration -->
   <bean id="islandora" class="ca.islandora.camel.component.IslandoraComponent">
