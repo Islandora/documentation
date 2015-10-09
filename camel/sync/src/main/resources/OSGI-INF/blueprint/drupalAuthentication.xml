@@ -117,7 +117,7 @@
         <setHeader headerName="X-CSRF-Token"><simple>${property.token}</simple></setHeader>
         <setHeader headerName="Cookie"><simple>${property.cookie}</simple></setHeader>
         <setBody><simple>${null}</simple></setBody>
-        <to uri="http:{{islandora.drupal.baseurl}}/user/logout"/>
+        <to uri="http4:{{islandora.drupal.baseurl}}/user/logout"/>
     </route>
 
   </routeContext>

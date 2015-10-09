@@ -160,7 +160,7 @@
         <setHeader headerName="Cookie"><simple>${property.cookie}</simple></setHeader>
         <setHeader headerName="Ignore-Hooks"><simple>true</simple></setHeader>
         <setBody><simple>{"fedoraUri": "${property.CamelFcrepoBaseUrl}${property.CamelFcrepoIdentifier}"}</simple></setBody>
-        <to uri="http:{{islandora.drupal.baseurl}}/delete_by_fedora_uri"/>
+        <to uri="http4:{{islandora.drupal.baseurl}}/delete_by_fedora_uri"/>
     </route>
 
     <route>
