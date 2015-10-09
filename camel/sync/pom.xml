@@ -15,6 +15,11 @@
 
   <name>Islandora Sync Gateway</name>
 
+  <properties>
+    <islandora.osgi.import.pkg>ca.islandora.camel.component.*</islandora.osgi.import.pkg>
+    <islandora.osgi.export.pkg>ca.islandora.camel.sync.*</islandora.osgi.export.pkg>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>org.apache.camel</groupId>

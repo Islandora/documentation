@@ -29,7 +29,7 @@
     <!-- OSGi -->
     <islandora.osgi.export.pkg/>
     <islandora.osgi.import.pkg/>
-    <islandora.osgi.private.pgk/>
+    <islandora.osgi.private.pkg/>
   </properties>
 
   <modules>

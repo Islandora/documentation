@@ -36,9 +36,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision :shell, :path => "./scripts/drupal.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/fcrepo.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/blazegraph.sh", :args => home_dir
-  config.vm.provision :shell, :path => "./scripts/islandora-commands.sh", :args => home_dir
-  config.vm.provision :shell, :path => "./scripts/islandora-component.sh", :args => home_dir
-  config.vm.provision :shell, :path => "./scripts/islandora-services.sh", :args => home_dir
+  #config.vm.provision :shell, :path => "./scripts/islandora-commands.sh", :args => home_dir
+  #config.vm.provision :shell, :path => "./scripts/islandora-component.sh", :args => home_dir
+  #config.vm.provision :shell, :path => "./scripts/islandora-services.sh", :args => home_dir
+  config.vm.provision :shell, :path => "./scripts/islandora-camel.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/sync.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/karaf.sh", :args => home_dir
   #config.vm.provision :shell, :path => "./scripts/hawtio.sh", :args => home_dir
