@@ -25,7 +25,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     override.vm.box = "dummy"
     override.ssh.username = "ubuntu"
     override.ssh.private_key_path = ENV['AWS_KEYPATH']
-    config.vm.network :forwarded_port, guest: 80, host: 80
+    override.vm.network :forwarded_port, guest: 80, host: 80
   end
   
   # This should work fine out of the box if environment variables are declared
@@ -39,10 +39,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     provider.image = 'ubuntu-14-04-x64'
     provider.region = 'tor1'
     provider.size = '4gb'
-    config.vm.network :forwarded_port, guest: 80, host: 80
+    override.vm.network :forwarded_port, guest: 80, host: 80
   end
   
-    # Every Vagrant virtual environment requires a box to build off of.
+  # Every Vagrant virtual environment requires a box to build off of.
   config.vm.box = "ubuntu/trusty64"
 
   # Setup the shared folder
