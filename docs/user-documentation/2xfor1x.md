@@ -33,7 +33,7 @@ In Fedora 3:
 * Fill out a metadata form
 * Upload object/Ingest
 
-In Fedora 3:
+In Fedora 4:
 * Click *Add Content* (like any Drupal node)
 * Select content type 
 * Fill out a metadata form
