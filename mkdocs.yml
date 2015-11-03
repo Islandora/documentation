@@ -29,6 +29,8 @@ pages:
   
 # User Documentation
   - ['user-documentation/2xfor1x.md', 'User Documentation', 'Islandora 2.x for Islandora 1.x Users']
+  - ['user-documentation/creating-collections-in-deux.md', 'User Documentation', 'Creating Collections in Deux']
+  - ['user-documentation/adding-object-to-collection-in-deux.md', 'User Documentation', 'Adding an object to a collection in Deux']
 
 # Technical Documentation
   - ['technical-documentation/architecture.md', 'Technical Documentation', 'Architecture']
