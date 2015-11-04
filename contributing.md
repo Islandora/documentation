@@ -6,7 +6,7 @@ If you are reading this document then you are interested in contributing to the 
 
 For the time being, the community around this project is centred at the [Islandora Foundation, Fedora 4 Interest Group](https://github.com/Islandora/Islandora-Fedora4-Interest-Group). The group meets on the fourth Friday of each month at 1PM EST. The meetings usually happen via Skype, and meeting announcements/agendas are posted to the [Islandora community list](https://groups.google.com/forum/#!forum/islandora) and the [Islandora developers list](https://groups.google.com/forum/#!forum/islandora-dev). You can view meeting agendas and minutes [here](https://github.com/islandora-interest-groups/Islandora-Fedora4-Interest-Group/tree/master/meetings).
 
-There is an additional 7.x-2.x Tech Call that occurs each week at 1:00pm Eastern Daylight Time US (UTC-4). Agendas with call-in details can be found [here](https://github.com/Islandora-Labs/islandora/wiki#islandora-7x-2x-tech-calls).
+There is an additional 7.x-2.x Tech Call that occurs each Wednesday at 1:00pm Eastern Daylight Time US (UTC-4). Agendas with call-in details can be found [here](https://github.com/Islandora-Labs/islandora/wiki#islandora-7x-2x-tech-calls).
 
 
 ### Use cases
