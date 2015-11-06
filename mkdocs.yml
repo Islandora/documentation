@@ -29,8 +29,10 @@ pages:
   
 # User Documentation
   - ['user-documentation/2xfor1x.md', 'User Documentation', 'Islandora 2.x for Islandora 1.x Users']
-  - ['user-documentation/creating-collections-in-deux.md', 'User Documentation', 'Creating Collections in Deux']
-  - ['user-documentation/adding-object-to-collection-in-deux.md', 'User Documentation', 'Adding an object to a collection in Deux']
+  - ['user-documentation/creating-collections-in-islandora-7.x-2.x.md', 'User Documentation', 'Creating Collections in Islandora 7.x-2.x']
+  - ['user-documentation/adding-object-to-collection-in-islandora-7.x-2.x.md', 'User Documentation', 'Adding an object to a collection in Islandora 7.x-2.x']
+  - ['user-documentation/editing-basic-image-form-in-islandora-7.x-2.x.md', 'User Documentation', 'Editing the Basic Image Form in Islandora 7.x-2.x']
+  - ['user-documentation/form-field-select-taxonomy-in-islandora-7.x-2.x.md', 'User Documentation', 'Adding a Drupal Taxonomy in Islandora 7.x-2.x']
 
 # Technical Documentation
   - ['technical-documentation/architecture.md', 'Technical Documentation', 'Architecture']
