@@ -26,7 +26,7 @@ In Fedora 4 , what we would have called `objects` are now refered to as `resourc
 * `Conainter`: Roughly equivalent to a Fedora 3 object - a conceptual representation of a thing that can contain files or other containers.
 * `Non-RDF Source`: Roughly equivilant to a datastream. A Non-RDF Source (or binary) is simply a bitstream (e.g. JPG, PDF, MP3, etc.).
 
-####PIDS
+####PIDs
 Every object in a Fedora 3 repository had a Persistent Identifier following the pattern `namespace:pid`. Fedora 4 resources do not have PIDs. Instead, since Fedora 4 is an LDP server, their identifiers are fundamentally their URIs. The PIDs of objects migrated from a Fedora 3 repository can still be stored in Feodra 4, as additional properties on the new Fedora 4 resource.
 
 
