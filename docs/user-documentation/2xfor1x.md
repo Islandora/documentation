@@ -23,7 +23,7 @@ Fedora 3 objects are are FOXML (Fedora Object eXtensible Markup Language) docume
 
 In Fedora 4 , what we would have called `objects` are now refered to as `resources` and are not composed of XML; instead, they are stored in ModeShape as nodes with RDF properties. They can contain the following elements:
 
-*`Conainter`: Roughly equivalent to a Fedora 3 object - a conceptual representation of a thing that can contain files or other containers.
+* `Conainter`: Roughly equivalent to a Fedora 3 object - a conceptual representation of a thing that can contain files or other containers.
 * `Non-RDF Source`: Roughly equivilant to a datastream. A Non-RDF Source (or binary) is simply a bitstream (e.g. JPG, PDF, MP3, etc.).
 
 ####PIDS
