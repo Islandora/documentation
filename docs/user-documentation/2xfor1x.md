@@ -17,11 +17,17 @@ Fedora 4 differs considerably in that there is an innate tree hierarchy to the r
 ###Object Structure
 Fedora 3 objects are are FOXML (Fedora Object eXtensible Markup Language) documents, with three elements:
 
-* Digital Object Identifier: A unique, persistent identifier for the digital object.
-* System Properties: A set of system-defined descriptive properties that is necessary to manage and track the object in the repository.
-* Datastream(s): The element in a Fedora digital object that represents a content item.
+* `Digital Object Identifier`: A unique, persistent identifier for the digital object. Also knowns as the PID.
+* `System Propertie`s: A set of system-defined descriptive properties that is necessary to manage and track the object in the repository.
+* `Datastream(s)`: The element in a Fedora digital object that represents a content item.
 
-Fedora 4 'objects' are called resources and are not composed of XML; instead, they are stored in ModeShape as nodes with RDF properties. They can contain the following elements:
+In Fedora 4 , what we would have called `objects` are now refered to as `resources` and are not composed of XML; instead, they are stored in ModeShape as nodes with RDF properties. They can contain the following elements:
+
+*`Conainter`: Roughly equivalent to a Fedora 3 object - a conceptual representation of a thing that can contain files or other containers.
+* `Non-RDF Source`: Roughly equivilant to a datastream. A Non-RDF Source (or binary) is simply a bitstream (e.g. JPG, PDF, MP3, etc.).
+
+####PIDS
+Every object in a Fedora 3 repository had a Persistent Identifier following the pattern `namespace:pid`. Fedora 4 resources do not have PIDs. Instead, since Fedora 4 is an LDP server, their identifiers are fundamentally their URIs. The PIDs of objects migrated from a Fedora 3 repository can still be stored in Feodra 4, as additional properties on the new Fedora 4 resource.
 
 
 ##Islandora
@@ -30,13 +36,13 @@ Fedora 4 'objects' are called resources and are not composed of XML; instead, th
 
 In Fedora 3:
 * Go to a collection
-* Click *Manage*
+* Click `Manage`
 * Add an object
 * Fill out a metadata form
 * Upload object/Ingest
 
 In Fedora 4:
-* Click *Add Content* (like any Drupal node)
+* Click `Add Content` (like any Drupal node)
 * Select content type 
 * Fill out a metadata form
     * Add thumbnail, select parent collection, upload object, configure standard Drupal node options (comments, url path, etc)
