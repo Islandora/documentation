@@ -13,11 +13,12 @@ The `Basic Image` content type provides the user with the option to upload a gif
  ![Add content - Basic Image](https://lh3.googleusercontent.com/OO4G5LhE67PKbTa4XQMGSg-QQI5P-I6AQgqGDHBTCeE=s500 "Add content - Basic Image")
 
  2. Fill in the fields in the associated metadata form. Ensure you include:
-   - the title,
-   - the image upload, and
-   - associate a parent collection.
+   1. the title,
+   2. the image upload, and
+   3. associate a parent collection.
 
 ![Basic Image - Add file and metadata](https://lh3.googleusercontent.com/NOQNXSN8aExOpPNBM0qpb-IwHKxYebrWhJOEFz6bbKQ=s500 "Basic Image - Add file and metadata")
+
  3. Select `Save` to create a new `Basic Image`.
 
  4. Your new `Basic Image` displayed in Drupal.
