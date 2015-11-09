@@ -1,4 +1,4 @@
-# Islandora [![Build Status](https://travis-ci.org/Islandora-Labs/islandora.png?branch=7.x-2.x)](https://travis-ci.org/Islandora-Labs/islandora)
+# Islandora [![Build Status](https://travis-ci.org/Islandora-CLAW/CLAW.png?branch=7.x-2.x)](https://travis-ci.org/Islandora-CLAW/CLAW)
 
 ## Introduction
 
