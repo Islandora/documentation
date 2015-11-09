@@ -18,19 +18,19 @@ Fedora 4 differs considerably in that there is an innate tree hierarchy to the r
 Fedora 3 objects are are FOXML (Fedora Object eXtensible Markup Language) documents, with three elements:
 
 * `Digital Object Identifier`: A unique, persistent identifier for the digital object. Also knowns as the PID.
-* `System Propertie`s: A set of system-defined descriptive properties that is necessary to manage and track the object in the repository.
+* `System Properties`: A set of system-defined descriptive properties that is necessary to manage and track the object in the repository.
 * `Datastream(s)`: The element in a Fedora digital object that represents a content item.
 
-In Fedora 4 , what we would have called `objects` are now refered to as `resources` and are not composed of XML; instead, they are stored in ModeShape as nodes with RDF properties. They can contain the following elements:
+In Fedora 4 , what we would have called `objects` are now referred to as `resources` and are not composed of XML; instead, they are stored in ModeShape as nodes with RDF properties. They can contain the following elements:
 
-* `Conainter`: Roughly equivalent to a Fedora 3 object - a conceptual representation of a thing that can contain files or other containers.
-* `Non-RDF Source`: Roughly equivilant to a datastream. A Non-RDF Source (or binary) is simply a bitstream (e.g. JPG, PDF, MP3, etc.).
+* `Container`: Roughly equivalent to a Fedora 3 object - a conceptual representation of a thing that can contain files or other containers.
+* `Non-RDF Source`: Roughly equivalent to a datastream. A Non-RDF Source (or binary) is simply a bitstream (e.g. JPG, PDF, MP3, etc.).
 
 ###Datastreams
 In Islandora 7.x-2.x, RDF datastreams (RELS-EXT and RELS-INT) are stored as pure RDF in Fedora. Binary datastreams (files, images) are `Files` (see [PCDM]()). Metadata datastreams (MODS, DC, DwC, PBCore, etc) are whatever you want them to be: either binary files of XML, or mapped to your choice of RDF.
 
 ####PIDs
-Every object in a Fedora 3 repository had a Persistent Identifier following the pattern `namespace:pid`. Fedora 4 resources do not have PIDs. Instead, since Fedora 4 is an LDP server, their identifiers are fundamentally their URIs. The PIDs of objects migrated from a Fedora 3 repository can still be stored in Feodra 4, as additional properties on the new Fedora 4 resource.
+Every object in a Fedora 3 repository had a Persistent Identifier following the pattern `namespace:pid`. Fedora 4 resources do not have PIDs. Instead, since Fedora 4 is an LDP server, their identifiers are fundamentally their URIs. The PIDs of objects migrated from a Fedora 3 repository can still be stored in Fedora 4, as additional properties on the new Fedora 4 resource.
 
 Since resources are stored as `nodes` on the Drupal side of Islandora 7.x-2.x, they also have Drupal uuids.
 
@@ -54,9 +54,9 @@ In Fedora 4:
 * Ingest occurs asynchronously soon after. 
 
 ###Collections
-Because objects in Fedora 3 were stored in a flat graph structure instead of a hierarchy, what were presented as collection in Islandora 7.x-1.x were actually objects on the same level as their child objects, with the 'container' or 'folder' aspect of them being a fiction for display created by the relationshbips between the objects. In Fedora 4, resources do have a true hierarchical structure and must have a `fedora:hasParent` relationship to know where they belong in a given repository. Indeed, to migrate objects over from Fedora 3 to Fedora 4, parents must arrive before their children.
+Because objects in Fedora 3 were stored in a flat graph structure instead of a hierarchy, what were presented as collection in Islandora 7.x-1.x were actually objects on the same level as their child objects, with the 'container' or 'folder' aspect of them being a fiction for display created by the relationships between the objects. In Fedora 4, resources do have a true hierarchical structure and must have a `fedora:hasParent` relationship to know where they belong in a given repository. Indeed, to migrate objects over from Fedora 3 to Fedora 4, parents must arrive before their children.
 
-In its current incarnation, Islandora 7.x-2.x does not include a default display for collections. Instead, Drupal Views can be used ot build collections around the `fedora:hasParent` value. For more information, please see [How To Create A Collection View]().
+In its current incarnation, Islandora 7.x-2.x does not include a default display for collections. Instead, Drupal Views can be used to build collections around the `fedora:hasParent` value. For more information, please see [How To Create A Collection View]().
 
 ###Forms
 `Islandora XML Form Builder` has not yet been replicated in Islandora 7.x-2.x. Instead, ingest forms can be edited as `content types` in Drupal, using basic Drupal field management and display tools, and then mapped to RDF in Fedora. For more information, please see [Editing the Basic Image Form]() or Drupal.org's [Working with content types and fields (Drupal 7 and later)](https://www.drupal.org/documentation/modules/field-ui)
