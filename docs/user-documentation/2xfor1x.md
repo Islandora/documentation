@@ -32,6 +32,8 @@ In Islandora 7.x-2.x, RDF datastreams (RELS-EXT and RELS-INT) are stored as pure
 ####PIDs
 Every object in a Fedora 3 repository had a Persistent Identifier following the pattern `namespace:pid`. Fedora 4 resources do not have PIDs. Instead, since Fedora 4 is an LDP server, their identifiers are fundamentally their URIs. The PIDs of objects migrated from a Fedora 3 repository can still be stored in Feodra 4, as additional properties on the new Fedora 4 resource.
 
+Since resources are stored as `nodes` on the Drupal side of Islandora 7.x-2.x, they also have Drupal uuids.
+
 
 ##Islandora
 
@@ -52,11 +54,14 @@ In Fedora 4:
 * Ingest occurs asynchronously soon after. 
 
 ###Collections
+Because objects in Fedora 3 were stored in a flat graph structure instead of a hierarchy, what were presented as collection in Islandora 7.x-1.x were actually objects on the same level as their child objects, with the 'container' or 'folder' aspect of them being a fiction for display created by the relationshbips between the objects. In Fedora 4, resources do have a true hierarchical structure and must have a `fedora:hasParent` relationship to know where they belong in a given repository. Indeed, to migrate objects over from Fedora 3 to Fedora 4, parents must arrive before their children.
+
+In its current incarnation, Islandora 7.x-2.x does not include a default display for collections. Instead, Drupal Views can be used ot build collections around the `fedora:hasParent` value. For more information, please see [How To Create A Collection View]().
 
 ###Forms
+`Islandora XML Form Builder` has not yet been replicated in Islandora 7.x-2.x. Instead, ingest forms can be edited as `content types` in Drupal, using basic Drupal field management and display tools, and then mapped to RDF in Fedora. For more information, please see [Editing the Basic Image Form]() or Drupal.org's [Working with content types and fields (Drupal 7 and later)](https://www.drupal.org/documentation/modules/field-ui)
 
 ###Display
 
 ###Derivatives
 In Islandora 7.x-2.x, derivatives are done with `Camel`. If you used microservices in 7.x-1.x, this will feel very familiar. When an object is created, a message is sent to a queue, and Camel processes it, using rules to figure out what derivative code to run. The aforementioned derivative code (i.e. the calls to ffmpeg, imagemagick, etc) are written in Java (or PHP that is NON-DRUPAL-RELATED.) 
-
