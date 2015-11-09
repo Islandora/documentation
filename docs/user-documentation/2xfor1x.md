@@ -4,6 +4,11 @@ In the most basic terms, Islandora 7.x-2.x is the version of Islandora that work
 
 Moving from Islandora 7.x-1.x to 7.x-2.x requires a migration of objects, which you can learn about [here](migration/migration.md). It also requires some adjustments in how you think about your objects and their relationships, and how to manage them in Islandora, which we will cover below.
 
+You can also check out some of the documentation provided by the Fedora project:
+* [Concept Mapping - Fedora 3 to 4](https://wiki.duraspace.org/display/FEDORA4x/Concept+Mapping+-+Fedora+3+to+4)
+* [The Fedora 4 object model](https://wiki.duraspace.org/display/FEDORA4x/The+Fedora+4+object+model)
+* [Fedora 3 to 4 Upgration](https://wiki.duraspace.org/display/FF/Fedora+3+to+4+Upgration)
+
 ##Fedora 
 
 ###Repository Structure
