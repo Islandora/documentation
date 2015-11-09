@@ -26,6 +26,9 @@ In Fedora 4 , what we would have called `objects` are now refered to as `resourc
 * `Conainter`: Roughly equivalent to a Fedora 3 object - a conceptual representation of a thing that can contain files or other containers.
 * `Non-RDF Source`: Roughly equivilant to a datastream. A Non-RDF Source (or binary) is simply a bitstream (e.g. JPG, PDF, MP3, etc.).
 
+###Datastreams
+In Islandora 7.x-2.x, RDF datastreams (RELS-EXT and RELS-INT) are stored as pure RDF in Fedora. Binary datastreams (files, images) are `Files` (see [PCDM]()). Metadata datastreams (MODS, DC, DwC, PBCore, etc) are whatever you want them to be: either binary files of XML, or mapped to your choice of RDF.
+
 ####PIDs
 Every object in a Fedora 3 repository had a Persistent Identifier following the pattern `namespace:pid`. Fedora 4 resources do not have PIDs. Instead, since Fedora 4 is an LDP server, their identifiers are fundamentally their URIs. The PIDs of objects migrated from a Fedora 3 repository can still be stored in Feodra 4, as additional properties on the new Fedora 4 resource.
 
@@ -55,5 +58,5 @@ In Fedora 4:
 ###Display
 
 ###Derivatives
-
+In Islandora 7.x-2.x, derivatives are done with `Camel`. If you used microservices in 7.x-1.x, this will feel very familiar. When an object is created, a message is sent to a queue, and Camel processes it, using rules to figure out what derivative code to run. The aforementioned derivative code (i.e. the calls to ffmpeg, imagemagick, etc) are written in Java (or PHP that is NON-DRUPAL-RELATED.) 
 
