@@ -53,40 +53,6 @@
         <recipientList><simple>direct:${headers.operationName}</simple></recipientList>
     </route>
 
-    <!--<route>-->
-      <!--<from uri="jetty:http://0.0.0.0:8888/islandora/rest/basic-image/"/>-->
-        <!--<choice>-->
-          <!--<when><simple>${headers.CamelHttpMethod} == 'GET'</simple>-->
-            <!--<setProperty propertyName="uuid"><simple>${headers.uuid}</simple></setProperty>-->
-            <!--<to uri="direct:getBasicImage"/>-->
-          <!--</when>-->
-          <!--<when><simple>${headers.CamelHttpMethod} == 'POST'</simple>-->
-            <!--<setProperty propertyName="uuid"><simple>${headers.uuid}</simple></setProperty>-->
-            <!--<setProperty propertyName="node"><simple>${headers.node}</simple></setProperty>-->
-            <!--<filter>-->
-              <!--<javaScript>request.hasAttachments()</javaScript>-->
-              <!--<setProperty propertyName="attachment"><javaScript>request.getAttachments().values().toArray()[0]</javaScript></setProperty>-->
-            <!--</filter>-->
-            <!--<setProperty propertyName="mimetype"><simple>${headers.mimetype}</simple></setProperty>-->
-            <!--<to uri="direct:getCollectionUri"/>-->
-            <!--<to uri="direct:createBasicImage"/>-->
-          <!--</when>-->
-          <!--<when><simple>${headers.CamelHttpMethod} == 'PUT'</simple>-->
-            <!--<setProperty propertyName="uuid"><simple>${headers.uuid}</simple></setProperty>-->
-            <!--<setProperty propertyName="node"><simple>${headers.node}</simple></setProperty>-->
-            <!--<filter>-->
-              <!--<javaScript>request.hasAttachments()</javaScript>-->
-              <!--<setProperty propertyName="attachment"><javaScript>request.getAttachments().values().toArray()[0]</javaScript></setProperty>-->
-            <!--</filter>-->
-            <!--<setProperty propertyName="mimetype"><simple>${headers.mimetype}</simple></setProperty>-->
-            <!--<to uri="direct:updateBasicImage"/>-->
-          <!--</when>-->
-          <!--<when><simple>${headers.CamelHttpMethod} == 'DELETE'</simple>-->
-            <!--<setProperty propertyName="uuid"><simple>${headers.uuid}</simple></setProperty>-->
-            <!--<to uri="direct:deleteBasicImage"/>-->
-          <!--</when>-->
-        <!--</choice>-->
-    <!--</route>-->
   </camelContext>
 
 </blueprint>
