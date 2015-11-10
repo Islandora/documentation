@@ -10,7 +10,6 @@
     <route id="createBasicImage">
       <description>Creates a basic image in Fedora using Drupal data</description>
       <from uri="direct:createBasicImage"/>
-        <log message="GOT MESSAGE"/>
         <setProperty propertyName="uuid"><simple>${headers.uuid}</simple></setProperty>
         <setProperty propertyName="node"><simple>${headers.node}</simple></setProperty>
         <setProperty propertyName="attachment"><simple>${body}</simple></setProperty>
