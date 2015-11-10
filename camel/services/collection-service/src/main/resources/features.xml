@@ -5,9 +5,10 @@
     <bundle start-level="80">mvn:${project.groupId}/${project.artifactId}/${project.version}</bundle>
     <feature version="${camel.version.range}">camel</feature>
     <feature version="${fcrepo.camel.version}">fcrepo-camel</feature>
+    <feature version="${cxf.version}">cxf</feature>
     <feature version="${project.version}">islandora-camel-component</feature>
+    <feature version="${camel.version.range}">camel-cxf</feature>
     <feature version="${camel.version.range}">camel-http</feature>
-    <feature version="${camel.version.range}">camel-servlet</feature>
     <feature version="${camel.version.range}">camel-jsonpath</feature>
     <feature version="${camel.version.range}">camel-script</feature>
     <feature version="${camel.version.range}">camel-script-javascript</feature>
