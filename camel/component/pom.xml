@@ -5,19 +5,19 @@
   <artifactId>islandora-camel-component</artifactId>
   <packaging>bundle</packaging>
 
-  <version>0.0.0-SNAPSHOT</version>
+  <version>0.0.1-SNAPSHOT</version>
 
   <name>Islandora Camel Component</name>
 
   <properties>
-    <camel.version>2.15.2</camel.version>
-    <camel.version.range>[2.15,3)</camel.version.range>
+    <camel.version>2.16.0</camel.version>
+    <camel.version.range>[2.16,3)</camel.version.range>
     <commons-io.version>2.4</commons-io.version>
     <compiler.plugin.version>2.5.1</compiler.plugin.version>
     <java.version>1.8</java.version>
     <resources.plugin.version>2.6</resources.plugin.version>
     <bundle.plugin.version>2.3.7</bundle.plugin.version>
-    <islandora.osgi.export.pkg>ca.islandora.camel.component.*</islandora.osgi.export.pkg>
+    <islandora.osgi.export.pkg>ca.islandora.camel.component*</islandora.osgi.export.pkg>
     <islandora.osgi.import.pkg />
   </properties>
 
