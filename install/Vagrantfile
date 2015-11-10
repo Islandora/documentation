@@ -69,6 +69,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision :shell, :path => "./scripts/karaf.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/hawtio.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/camel.sh", :args => home_dir
+  config.vm.provision :shell, :path => "./scripts/cxf.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/fcrepo-camel.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/activemq.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/config.sh", :args => home_dir
