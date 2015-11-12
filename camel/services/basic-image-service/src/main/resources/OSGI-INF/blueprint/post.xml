@@ -13,6 +13,7 @@
         <to uri="direct:createBasicImageSparql"/>
         <to uri="direct:createBasicImageInFedora"/>
         <to uri="direct:addAsMember"/>
+        <log message="property.attachment is ${property.attachment}" loggingLevel="DEBUG"/>
         <filter>
           <simple>${property.attachment}</simple>
           <to uri="direct:upsertBasicImageOBJ"/>
@@ -22,14 +23,19 @@
     <route id="createBasicImageSparql">
       <description>Creates a SPARQL update query based on a Drupal node</description>
       <from uri="direct:createBasicImageSparql"/>
+        <log message="in createBasicImageSparql" loggingLevel="DEBUG" />
+        <log message="property.node is ${property.node}" loggingLevel="DEBUG" />
         <setBody><simple>${property.node}</simple></setBody>
         <to uri="islandora:collectionService:nodeToSparql"/>
         <setProperty propertyName="sparql"><simple>${body}</simple></setProperty>
+        <log message="sparql is ${property.sparql}" loggingLevel="DEBUG" />
     </route>
 
     <route id="createBasicImageInFedora">
       <description>Posts a SPARQL update query to Fedora in order to create a resource.</description>
       <from uri="direct:createBasicImageInFedora"/>
+        <log message="in createBasicImageInFedora" loggingLevel="DEBUG" />
+        <log message="property.sparql is ${property.sparql}" loggingLevel="DEBUG" />
         <removeHeaders pattern="*"/>
         <setHeader headerName="Content-Type"><constant>application/sparql-update</constant></setHeader>
         <setHeader headerName="CamelHttpMethod"><constant>POST</constant></setHeader>
@@ -37,25 +43,34 @@
         <to uri="fcrepo:{{islandora.fcrepo.baseurl}}"/>
         <setProperty propertyName="childUri"><simple>${bodyAs(String)}</simple></setProperty>
         <setProperty propertyName="imageUri"><simple>${property.childUri}/OBJ</simple></setProperty>
+        <log message="childUri is ${property.childUri}" loggingLevel="DEBUG" />
+        <log message="imageUri is ${property.imageUri}" loggingLevel="DEBUG" />
     </route>
 
     <route id="upsertBasicImageOBJ">
       <from uri="direct:upsertBasicImageOBJ"/>
+        <log message="in upsertBasicImageOBJ" loggingLevel="DEBUG" />
         <setBody><javaScript>exchange.getProperty("attachment").getContent()</javaScript></setBody>
         <removeHeaders pattern="*"/>
         <setHeader headerName="Content-Type"><simple>${property.mimetype}</simple></setHeader>
         <setHeader headerName="CamelHttpMethod"><constant>PUT</constant></setHeader>
         <recipientList><simple>fcrepo:${property.imageUri}</simple></recipientList>
+        <log message="sending Image to ${property.imageUri} with mimetype ${property.mimetype}" loggingLevel="DEBUG" />
     </route>
 
     <route id="addAsMember">
       <description>Updates the pcdm:hasMember field of a collection with a new member</description>
       <from uri="direct:addAsMember"/>
+        <log message="in addAsMember" loggingLevel="DEBUG" />
         <to uri="mustache:templates/addAsMemberOfCollectionSparql.mustache"/>
+        <setProperty propertyName="sparql"><simple>${body}</simple></setProperty>
+        <setBody><simple>${property.sparql}</simple></setBody>
         <removeHeaders pattern="*"/>
         <setHeader headerName="Content-Type"><constant>application/sparql-update</constant></setHeader>
         <setHeader headerName="CamelHttpMethod"><constant>PATCH</constant></setHeader>
         <recipientList><simple>fcrepo:${property.uri}</simple></recipientList>
+        <log message="Patching ${property.uri}" loggingLevel="DEBUG" />
+        <log message="Sparql ${property.sparql}" loggingLevel="DEBUG" />
     </route>
 
   </routeContext>

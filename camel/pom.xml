@@ -15,7 +15,7 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>1.8</java.version>
     <activemq.version>5.11.1</activemq.version>
-    <camel.version>2.15.1</camel.version>
+    <camel.version>2.15.2</camel.version>
     <camel.version.range>[2.15, 3)</camel.version.range>
     <commons-io.version>2.4</commons-io.version>
     <fcrepo.camel.version>4.3.0</fcrepo.camel.version>

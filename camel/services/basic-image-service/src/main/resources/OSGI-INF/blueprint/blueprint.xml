@@ -24,7 +24,6 @@
     <argument value="${islandora.php.workingDir}"/>
   </bean>
 
-
   <camelContext id="basicImageService" xmlns="http://camel.apache.org/schema/blueprint">
 
     <routeContextRef ref="get"/>
@@ -33,7 +32,8 @@
     <routeContextRef ref="delete"/>
 
     <route>
-      <from uri="jetty:http://0.0.0.0:8888/islandora/rest/basic-image/"/>
+      <from uri="jetty:http://0.0.0.0:8888/islandora/rest/basic-image/?enableMultipartFilter=true"/>
+        <!--<to uri="log:?level=DEBUG&amp;showAll=true"/>-->
         <choice>
           <when><simple>${headers.CamelHttpMethod} == 'GET'</simple>
             <setProperty propertyName="uuid"><simple>${headers.uuid}</simple></setProperty>
@@ -42,9 +42,14 @@
           <when><simple>${headers.CamelHttpMethod} == 'POST'</simple>
             <setProperty propertyName="uuid"><simple>${headers.uuid}</simple></setProperty>
             <setProperty propertyName="node"><simple>${headers.node}</simple></setProperty>
+            <setProperty propertyName="files"><javaScript>exchange.getIn().getAttachments().isEmpty()</javaScript></setProperty>
+            <log message="body is (${property.files})" loggingLevel="DEBUG"/>
+            <setProperty propertyName="files"><javaScript>request.getAttachmentNames()</javaScript></setProperty>
+            <log message="attachment files (${property.files})" loggingLevel="DEBUG"/>
             <filter>
-              <javaScript>request.hasAttachments()</javaScript>
-              <setProperty propertyName="attachment"><javaScript>request.getAttachments().values().toArray()[0]</javaScript></setProperty>
+              <javaScript>request.getAttachments().length > 0</javaScript>
+              <setProperty propertyName="attachment"><javaScript>request.getAttachments()</javaScript></setProperty>
+              <log message="attachment is ${property.attachment}" loggingLevel="DEBUG"/>
             </filter>
             <setProperty propertyName="mimetype"><simple>${headers.mimetype}</simple></setProperty>
             <to uri="direct:getCollectionUri"/>
@@ -55,7 +60,7 @@
             <setProperty propertyName="node"><simple>${headers.node}</simple></setProperty>
             <filter>
               <javaScript>request.hasAttachments()</javaScript>
-              <setProperty propertyName="attachment"><javaScript>request.getAttachments().values().toArray()[0]</javaScript></setProperty>
+              <setProperty propertyName="attachment"><javaScript>request.getAttachments().values()</javaScript></setProperty>
             </filter>
             <setProperty propertyName="mimetype"><simple>${headers.mimetype}</simple></setProperty>
             <to uri="direct:updateBasicImage"/>
