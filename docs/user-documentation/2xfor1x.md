@@ -38,7 +38,7 @@ In Islandora 7.x-2.x, RDF datastreams (RELS-EXT and RELS-INT) are stored as pure
 ####PIDs
 Every object in a Fedora 3 repository had a Persistent Identifier following the pattern `namespace:pid`. Fedora 4 resources do not have PIDs. Instead, since Fedora 4 is an LDP server, their identifiers are fundamentally their URIs. The PIDs of objects migrated from a Fedora 3 repository can still be stored in Fedora 4, as additional properties on the new Fedora 4 resource.
 
-Since resources are stored as `nodes` on the Drupal side of Islandora 7.x-2.x, they also have Drupal uuids.
+Since resources are stored as `nodes` on the Drupal side of Islandora 7.x-2.x, they also have Drupal UUIDs.
 
 
 ##Islandora
@@ -62,7 +62,7 @@ In Fedora 4:
 ###Collections
 Because objects in Fedora 3 were stored in a flat graph structure instead of a hierarchy, what were presented as collection in Islandora 7.x-1.x were actually objects on the same level as their child objects, with the 'container' or 'folder' aspect of them being a fiction for display created by the relationships between the objects. In Fedora 4, resources do have a true hierarchical structure and must have a `fedora:hasParent` relationship to know where they belong in a given repository. Indeed, to migrate objects over from Fedora 3 to Fedora 4, parents must arrive before their children.
 
-In its current incarnation, Islandora 7.x-2.x does not include a default display for collections. Instead, Drupal Views can be used to build collections around the `pcdm:hasMember` value. For more information, please see [How To Create A Collection View](user-documentation/editing-basic-image-form-in-islandora-7.x-2.x.md).
+In its current incarnation, Islandora 7.x-2.x does not include a default display for collections. Instead, Drupal Views can be used to build collections around the `pcdm:hasMember` value. For more information, please see [How To Create A Collection View]()).
 
 ###Forms
 `Islandora XML Form Builder` has not yet been replicated in Islandora 7.x-2.x. Instead, ingest forms can be edited as `content types` in Drupal, using basic Drupal field management and display tools, and then mapped to RDF in Fedora. For more information, please see [Editing the Basic Image Form](user-documentation/editing-basic-image-form-in-islandora-7.x-2.x.md) or Drupal.org's [Working with content types and fields (Drupal 7 and later)](https://www.drupal.org/documentation/modules/field-ui)
