@@ -21,7 +21,7 @@ Fedora 3 stored all objects at the top level of the repository, although present
 Fedora 4 differs considerably in that there is an innate tree hierarchy to the repository rather than a flat structure. Put less simply, "a Fedora 4 repository consists of a directed acyclic graph of resources where edges represent a parent-child relation" ([Fedora 4](https://wiki.duraspace.org/display/FEDORA4x/The+Fedora+4+object+model)).
 
 ###Object Structure
-Fedora 3 objects are are FOXML (Fedora Object eXtensible Markup Language) documents, with three elements:
+Fedora 3 objects are FOXML (Fedora Object eXtensible Markup Language) documents, with three elements:
 
 * `Digital Object Identifier`: A unique, persistent identifier for the digital object. Also knowns as the PID.
 * `System Properties`: A set of system-defined descriptive properties that is necessary to manage and track the object in the repository.
