@@ -23,7 +23,7 @@
     <java.version>1.8</java.version>
     <resources.plugin.version>2.6</resources.plugin.version>
     <bundle.plugin.version>2.3.7</bundle.plugin.version>
-    <islandora.osgi.export.pkg>ca.islandora.camel.services*</islandora.osgi.export.pkg>
+    <islandora.osgi.export.pkg>ca.islandora.camel.services.image.basic*</islandora.osgi.export.pkg>
     <islandora.osgi.import.pkg />
   </properties>
 
