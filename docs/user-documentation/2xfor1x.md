@@ -30,7 +30,7 @@ Fedora 3 objects are are FOXML (Fedora Object eXtensible Markup Language) docume
 In Fedora 4 , what we would have called `objects` are now referred to as `resources` and are not composed of XML; instead, they are stored in ModeShape as nodes with RDF properties. They can contain the following elements:
 
 * `Container`: Roughly equivalent to a Fedora 3 object - a conceptual representation of a thing that can contain files or other containers.
-* `Non-RDF Source`: Roughly equivalent to a datastream. A Non-RDF Source (or binary) is simply a bitstream (e.g. JPG, PDF, MP3, etc.).
+* `Non-RDF Source`: Roughly equivalent to a datastream. A Non-RDF Source (or binary) is simply a bitstream (e.g. JPG, PDF, XML, MP3, etc.).
 
 ###Datastreams
 In Islandora 7.x-2.x, RDF datastreams (RELS-EXT and RELS-INT) are stored as pure RDF in Fedora. Binary datastreams (files, images) are files or `nonRdfResources` (see [PCDM](https://github.com/duraspace/pcdm/wiki)). Metadata datastreams (MODS, DC, DwC, PBCore, etc) are whatever you want them to be: either binary files of XML, or mapped to your choice of RDF.
@@ -60,7 +60,7 @@ In Fedora 4:
 * Ingest occurs asynchronously soon after. 
 
 ###Collections
-Because objects in Fedora 3 were stored in a flat graph structure instead of a hierarchy, what were presented as collection in Islandora 7.x-1.x were actually objects on the same level as their child objects, with the 'container' or 'folder' aspect of them being a fiction for display created by the relationships between the objects. In Fedora 4, resources do have a true hierarchical structure and must have a `fedora:hasParent` relationship to know where they belong in a given repository. Indeed, to migrate objects over from Fedora 3 to Fedora 4, parents must arrive before their children.
+Because objects in Fedora 3 were stored in a flat graph structure instead of a hierarchy, what were presented as collection in Islandora 7.x-1.x were actually objects on the same level as their child objects, with the 'container' or 'folder' aspect of them being a fiction for display created by the relationships between the objects. In Fedora 4, resources do have a true hierarchical structure and must have a `fedora:hasParent` relationship to know where they belong in a given repository. Indeed, to migrate objects over from Fedora 3 to Fedora 4, parents must arrive before their children. In its current incarnation, all objects in a 7.x-2.x repository have the Fedora root as a parent and relationships are managed via a ```pcdm:hasMember``` triple 
 
 In its current incarnation, Islandora 7.x-2.x does not include a default display for collections. Instead, Drupal Views can be used to build collections around the `pcdm:hasMember` value. For more information, please see [How To Create A Collection View]()).
 
