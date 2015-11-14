@@ -2,10 +2,16 @@
 <blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0"
+       xmlns:camel="http://camel.apache.org/schema/blueprint"
+       xmlns:cxf="http://camel.apache.org/schema/blueprint/cxf"
+       xmlns:jaxrs="http://cxf.apache.org/blueprint/jaxrs"
        xsi:schemaLocation="
        http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0 http://aries.apache.org/schemas/blueprint-cm/blueprint-cm-1.1.0.xsd
        http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
-       http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd">
+       http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd
+       http://camel.apache.org/schema/blueprint/cxf http://camel.apache.org/schema/cxf/camel-cxf.xsd
+       http://cxf.apache.org/blueprint/jaxrs http://cxf.apache.org/schemas/blueprint/jaxrs.xsd"
+       default-activation="lazy">
 
   <!-- Boiler plate to bootstrap the servlet -->
   <reference id="httpService" interface="org.osgi.service.http.HttpService"/>
@@ -52,38 +58,22 @@
     <property name="transactionManager" ref="fcrepoTxManager"/>
   </bean>
 
-  <camelContext id="collectionService" xmlns="http://camel.apache.org/schema/blueprint">
+  <!-- Define the server endpoint to create the cxf-rs consumer -->
+  <cxf:rsServer id="collectionServer" address="/islandora/collection"
+      serviceClass="ca.islandora.camel.services.collection.CollectionController">
+  </cxf:rsServer>
+
+  <camelContext id="collectionService" xmlns="http://camel.apache.org/schema/blueprint" streamCache="true">
 
     <routeContextRef ref="get"/>
     <routeContextRef ref="post"/>
     <routeContextRef ref="put"/>
     <routeContextRef ref="delete"/>
 
-    <restConfiguration component="servlet" port="8181" contextPath="/islandora/rest/collection">
-    </restConfiguration>
-
-    <rest>
-      <get uri="/{uuid}">
-        <description>Gets the collection RDF in Fedora using Drupal UUID</description>
-        <to uri="direct:getCollection"/>
-      </get>
-      <post uri="/" consumes="application/json">
-        <description>Creates a collection as a child of the Fedora root</description>
-        <to uri="direct:createCollection"/>
-      </post>
-      <post uri="/{uuid}" consumes="application/json">
-        <description>Creates a collection as a child of the collection identified by the provided Drupal UUID</description>
-        <to uri="direct:createSubCollection"/>
-      </post>
-      <put uri="/{uuid}" consumes="application/json">
-        <description>Updates a collection in Fedora using Drupal node data</description>
-        <to uri="direct:updateCollection"/>
-      </put>
-      <delete uri="/{uuid}">
-        <description>Deletes a collection in Fedora using Drupal UUID</description>
-        <to uri="direct:deleteCollection"/>
-      </delete>
-    </rest>
+    <route id="collectionCxfrs">
+      <from uri="cxfrs://bean://collectionServer?bindingStyle=SimpleConsumer"/>
+        <recipientList><simple>direct:${headers.operationName}</simple></recipientList>
+    </route>
 
   </camelContext>
 

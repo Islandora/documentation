@@ -10,6 +10,10 @@
     <route id="updateBasicImage">
       <description>Updates a basic image in Fedora using Drupal data</description>
       <from uri="direct:updateBasicImage"/>
+        <setProperty propertyName="uuid"><simple>${headers.uuid}</simple></setProperty>
+        <setProperty propertyName="node"><simple>${headers.node}</simple></setProperty>
+        <setProperty propertyName="attachment"><simple>${body}</simple></setProperty>
+        <setProperty propertyName="mimetype"><simple>${headers.mimetype}</simple></setProperty>
         <to uri="direct:getObjectUri"/>
         <to uri="direct:createBasicImageSparql"/>
         <to uri="direct:updateBasicImageInFedora"/>

@@ -10,6 +10,7 @@
     <route id="getBasicImage">
       <description>Gets RDF for a basic image in Fedora using Drupal UUID</description>
       <from uri="direct:getBasicImage"/>
+        <setProperty propertyName="uuid"><simple>${headers.uuid}</simple></setProperty>
         <to uri="direct:getObjectUri"/>
         <to uri="direct:getObjectOBJ"/>
     </route>
@@ -23,7 +24,7 @@
         <setHeader headerName="CamelHttpMethod"><constant>POST</constant></setHeader>
         <setHeader headerName="CamelHttpQuery"><simple>format=json&amp;query=${bodyAs(String)}</simple></setHeader>
         <setBody><simple>${null}</simple></setBody>
-        <to uri="http4:{{islandora.triplestore.baseurl}}"/>
+        <to uri="http:{{islandora.triplestore.baseurl}}"/>
         <to uri="direct:getObjectExtractUri"/>
     </route>
 

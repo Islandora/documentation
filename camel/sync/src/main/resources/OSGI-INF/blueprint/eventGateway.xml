@@ -160,13 +160,14 @@
         <setHeader headerName="Cookie"><simple>${property.cookie}</simple></setHeader>
         <setHeader headerName="Ignore-Hooks"><simple>true</simple></setHeader>
         <setBody><simple>{"fedoraUri": "${property.CamelFcrepoBaseUrl}${property.CamelFcrepoIdentifier}"}</simple></setBody>
-        <to uri="http4:{{islandora.drupal.baseurl}}/delete_by_fedora_uri"/>
+        <to uri="http:{{islandora.drupal.baseurl}}/delete_by_fedora_uri"/>
     </route>
 
     <route>
       <from uri="direct:upsertNonRdfResource"/>
         <transform><simple>${property.rdf}</simple></transform>
         <setProperty propertyName="parentUri"><jsonpath>$[1]['http://fedora.info/definitions/v4/repository#hasParent'][0]['@id']</jsonpath></setProperty>
+        <log message="parentUri is (${property.parentUri})" loggingLevel="DEBUG"/>
         <to uri="direct:getParentUUID"/>
         <to uri="direct:fedoraGetBinary"/>
         <to uri="direct:drupalAddMediumSize"/>
@@ -178,6 +179,7 @@
         <removeHeaders pattern="*"/>
         <setHeader headerName="CamelHttpMethod"><constant>GET</constant></setHeader>
         <setHeader headerName="Accept"><constant>application/ld+json</constant></setHeader>
+        
         <recipientList><simple>${property.parentUri}</simple></recipientList>
         <setProperty propertyName="parentRdf"><simple>${bodyAs(String)}</simple></setProperty>
         <transform><simple>${property.parentRdf}</simple></transform>

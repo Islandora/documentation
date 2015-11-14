@@ -15,10 +15,11 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>1.8</java.version>
     <activemq.version>5.11.1</activemq.version>
-    <camel.version>2.15.2</camel.version>
-    <camel.version.range>[2.15, 3)</camel.version.range>
+    <camel.version>2.16.0</camel.version>
+    <camel.version.range>[2.16, 3)</camel.version.range>
     <commons-io.version>2.4</commons-io.version>
-    <fcrepo.camel.version>4.3.0</fcrepo.camel.version>
+    <cxf.version>3.1.4</cxf.version>
+    <fcrepo.camel.version>4.4.0</fcrepo.camel.version>
     <slf4j.version>1.7.12</slf4j.version>
     <log4j.version>1.2.17</log4j.version>
     <!-- plugins -->
@@ -27,7 +28,7 @@
     <bundle.plugin.version>2.3.7</bundle.plugin.version>
     <build.helper.plugin.version>1.9.1</build.helper.plugin.version>
     <!-- OSGi -->
-    <islandora.osgi.export.pkg/>
+    <islandora.osgi.export.pkg>ca.islandora.camel.component*</islandora.osgi.export.pkg>
     <islandora.osgi.import.pkg/>
     <islandora.osgi.private.pkg/>
   </properties>
@@ -60,6 +61,11 @@
         <groupId>commons-io</groupId>
         <artifactId>commons-io</artifactId>
         <version>${commons-io.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-rt-frontend-jaxrs</artifactId>
+        <version>${cxf.version}</version>
       </dependency>
 
       <!-- logging -->

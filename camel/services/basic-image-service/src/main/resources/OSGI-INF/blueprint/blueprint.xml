@@ -2,10 +2,16 @@
 <blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0"
+       xmlns:camel="http://camel.apache.org/schema/blueprint"
+       xmlns:cxf="http://camel.apache.org/schema/blueprint/cxf"
+       xmlns:jaxrs="http://cxf.apache.org/blueprint/jaxrs"
        xsi:schemaLocation="
        http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0 http://aries.apache.org/schemas/blueprint-cm/blueprint-cm-1.1.0.xsd
        http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
-       http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd">
+       http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd
+       http://camel.apache.org/schema/blueprint/cxf http://camel.apache.org/schema/cxf/camel-cxf.xsd
+       http://cxf.apache.org/blueprint/jaxrs http://cxf.apache.org/schemas/blueprint/jaxrs.xsd"
+       default-activation="lazy">
 
   <!-- Load Configuration File -->
   <cm:property-placeholder id="properties" persistent-id="ca.islandora.services.basic.image" update-strategy="reload">
@@ -24,53 +30,37 @@
     <argument value="${islandora.php.workingDir}"/>
   </bean>
 
-  <camelContext id="basicImageService" xmlns="http://camel.apache.org/schema/blueprint">
+   <!-- Fcrepo Component Configuration -->
+  <bean id="fcrepoTxManager" class="org.fcrepo.camel.FcrepoTransactionManager">
+    <property name="baseUrl" value="http://${islandora.fcrepo.baseurl}"/>
+  </bean>
+
+  <bean id="fcrepo" class="org.fcrepo.camel.FcrepoComponent">
+    <property name="transactionManager" ref="fcrepoTxManager"/>
+  </bean>
+
+  <!-- Transaction policy -->
+  <bean id="txPolicy" class="org.apache.camel.spring.spi.SpringTransactionPolicy">
+    <property name="transactionManager" ref="fcrepoTxManager"/>
+  </bean>
+
+  <!-- Define the server endpoint to create the cxf-rs consumer -->
+  <cxf:rsServer id="basicImageServer" address="/islandora/image"
+      serviceClass="ca.islandora.camel.services.image.basic.BasicImageController">
+  </cxf:rsServer>
+
+  <camelContext id="basicImageService" xmlns="http://camel.apache.org/schema/blueprint" streamCache="true">
 
     <routeContextRef ref="get"/>
     <routeContextRef ref="post"/>
     <routeContextRef ref="put"/>
     <routeContextRef ref="delete"/>
 
-    <route>
-      <from uri="jetty:http://0.0.0.0:8888/islandora/rest/basic-image/?enableMultipartFilter=true"/>
-        <!--<to uri="log:?level=DEBUG&amp;showAll=true"/>-->
-        <choice>
-          <when><simple>${headers.CamelHttpMethod} == 'GET'</simple>
-            <setProperty propertyName="uuid"><simple>${headers.uuid}</simple></setProperty>
-            <to uri="direct:getBasicImage"/>
-          </when>
-          <when><simple>${headers.CamelHttpMethod} == 'POST'</simple>
-            <setProperty propertyName="uuid"><simple>${headers.uuid}</simple></setProperty>
-            <setProperty propertyName="node"><simple>${headers.node}</simple></setProperty>
-            <setProperty propertyName="files"><javaScript>exchange.getIn().getAttachments().isEmpty()</javaScript></setProperty>
-            <log message="body is (${property.files})" loggingLevel="DEBUG"/>
-            <setProperty propertyName="files"><javaScript>request.getAttachmentNames()</javaScript></setProperty>
-            <log message="attachment files (${property.files})" loggingLevel="DEBUG"/>
-            <filter>
-              <javaScript>request.getAttachments().length > 0</javaScript>
-              <setProperty propertyName="attachment"><javaScript>request.getAttachments()</javaScript></setProperty>
-              <log message="attachment is ${property.attachment}" loggingLevel="DEBUG"/>
-            </filter>
-            <setProperty propertyName="mimetype"><simple>${headers.mimetype}</simple></setProperty>
-            <to uri="direct:getCollectionUri"/>
-            <to uri="direct:createBasicImage"/>
-          </when>
-          <when><simple>${headers.CamelHttpMethod} == 'PUT'</simple>
-            <setProperty propertyName="uuid"><simple>${headers.uuid}</simple></setProperty>
-            <setProperty propertyName="node"><simple>${headers.node}</simple></setProperty>
-            <filter>
-              <javaScript>request.hasAttachments()</javaScript>
-              <setProperty propertyName="attachment"><javaScript>request.getAttachments().values()</javaScript></setProperty>
-            </filter>
-            <setProperty propertyName="mimetype"><simple>${headers.mimetype}</simple></setProperty>
-            <to uri="direct:updateBasicImage"/>
-          </when>
-          <when><simple>${headers.CamelHttpMethod} == 'DELETE'</simple>
-            <setProperty propertyName="uuid"><simple>${headers.uuid}</simple></setProperty>
-            <to uri="direct:deleteBasicImage"/>
-          </when>
-        </choice>
+    <route id="basicImageCxfrs">
+      <from uri="cxfrs://bean://basicImageServer?bindingStyle=SimpleConsumer"/>
+        <recipientList><simple>direct:${headers.operationName}</simple></recipientList>
     </route>
+
   </camelContext>
 
 </blueprint>

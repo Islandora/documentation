@@ -9,7 +9,7 @@
     <details>Installs the Islandora synchronization gateway</details>
 
     <feature version="${camel.version.range}">camel</feature>
-    <feature version="${camel.version.range}">camel-http4</feature>
+    <feature version="${camel.version.range}">camel-http</feature>
     <feature version="${camel.version.range}">camel-cache</feature>
     <feature version="${camel.version.range}">camel-jsonpath</feature>
     <feature version="${camel.version.range}">camel-script</feature>
@@ -29,9 +29,10 @@
     <details>Installs the Islandora basic image service</details>
 
     <feature version="${camel.version.range}">camel</feature>
-    <feature version="${camel.version.range}">camel-http4</feature>
-    <feature version="${camel.version.range}">camel-jetty9</feature>
+    <feature version="${camel.version.range}">camel-http</feature>
+    <feature version="${camel.version.range}">camel-servlet</feature>
     <feature version="${camel.version.range}">camel-jsonpath</feature>
+    <feature version="${camel.version.range}">camel-cxf</feature>
     <feature version="${camel.version.range}">camel-script</feature>
     <feature version="${camel.version.range}">camel-script-javascript</feature>
     <feature version="${camel.version.range}">camel-mustache</feature>
@@ -47,9 +48,10 @@
     <details>Installs the Islandora collection service</details>
 
     <feature version="${camel.version.range}">camel</feature>
-    <feature version="${camel.version.range}">camel-http4</feature>
+    <feature version="${camel.version.range}">camel-http</feature>
     <feature version="${camel.version.range}">camel-servlet</feature>
     <feature version="${camel.version.range}">camel-jsonpath</feature>
+    <feature version="${camel.version.range}">camel-cxf</feature>
     <feature version="${camel.version.range}">camel-script</feature>
     <feature version="${camel.version.range}">camel-script-javascript</feature>
     <feature version="${camel.version.range}">camel-mustache</feature>

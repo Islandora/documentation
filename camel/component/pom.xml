@@ -14,7 +14,7 @@
   <name>Islandora Camel Component</name>
 
   <properties>
-    <islandora.osgi.export.pkg>ca.islandora.camel.component.*</islandora.osgi.export.pkg>
+    <islandora.osgi.export.pkg>ca.islandora.camel.component*</islandora.osgi.export.pkg>
   </properties>
 
   <dependencies>
