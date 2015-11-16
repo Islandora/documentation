@@ -2,7 +2,7 @@
 
 In the most basic terms, Islandora 7.x-2.x is the version of Islandora that works with [Fedora 4](https://wiki.duraspace.org/display/FEDORA4x/Fedora+4.x+Documentation). Because Fedora 4 is a vastly different platform than Fedora 3, so too is Islandora 7.x-2.x a major departure from what came before. Switching to 7.x-2.x represents not just a typical upgrade with improvements, features, and bug fixes, but rather a major shift in how objects are stored and managed. 
 
-Moving from Islandora 7.x-1.x to 7.x-2.x requires a migration of objects, which you can learn about [here](migration/migration.md). It also requires some adjustments in how you think about your objects and their relationships, and how to manage them in Islandora, which we will cover below.
+Moving from Islandora 7.x-1.x to 7.x-2.x requires a migration of objects, which you can learn about [here](../migration/migration.md). It also requires some adjustments in how you think about your objects and their relationships, and how to manage them in Islandora, which we will cover below.
 
 You can also check out some of the documentation provided by the Fedora project:
 * [Concept Mapping - Fedora 3 to 4](https://wiki.duraspace.org/display/FEDORA4x/Concept+Mapping+-+Fedora+3+to+4)
@@ -65,7 +65,7 @@ Because objects in Fedora 3 were stored in a flat graph structure instead of a h
 In its current incarnation, Islandora 7.x-2.x does not include a default display for collections. Instead, Drupal Views can be used to build collections around the `pcdm:hasMember` value. For more information, please see [How To Create A Collection View]()).
 
 ###Forms
-`Islandora XML Form Builder` has not yet been replicated in Islandora 7.x-2.x. Instead, ingest forms can be edited as `content types` in Drupal, using basic Drupal field management and display tools, and then mapped to RDF in Fedora. For more information, please see [Editing the Basic Image Form](user-documentation/editing-basic-image-form-in-islandora-7.x-2.x.md) or Drupal.org's [Working with content types and fields (Drupal 7 and later)](https://www.drupal.org/documentation/modules/field-ui)
+`Islandora XML Form Builder` has not yet been replicated in Islandora 7.x-2.x. Instead, ingest forms can be edited as `content types` in Drupal, using basic Drupal field management and display tools, and then mapped to RDF in Fedora. For more information, please see [Editing the Basic Image Form](editing-basic-image-form-in-islandora-7.x-2.x.md) or Drupal.org's [Working with content types and fields (Drupal 7 and later)](https://www.drupal.org/documentation/modules/field-ui)
 
 ###Derivatives
 In Islandora 7.x-2.x, derivatives are done with `Camel`. If you used microservices in 7.x-1.x, this will feel very familiar. When an object is created, a message is sent to a queue, and Camel processes it, using rules to figure out what derivative code to run. The aforementioned derivative code (i.e. the calls to ffmpeg, imagemagick, etc) are written in Java (or PHP that is NON-DRUPAL-RELATED.) 
