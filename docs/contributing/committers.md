@@ -56,7 +56,7 @@ How do we evaluate? By the interactions they have through mail. Do they help to 
 
 How do we evaluate? By time, by sticking through tough issues, by helping on not-so-fun tasks as well.
 
-#### Personal skill/ability
+### Personal skill/ability
 
 How do we evaluate? A solid general understanding of the project. Quality of discussion in mail. Patches (where applicable) easy to apply with only a cursory review.
 
