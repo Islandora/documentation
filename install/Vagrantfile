@@ -75,6 +75,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision :shell, :path => "./scripts/config.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/islandora-component.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/sync.sh", :args => home_dir
-  config.vm.provision :shell, :path => "./scripts/services.sh", :args => home_dir
+  config.vm.provision :shell, :path => "./scripts/collection-service.sh", :args => home_dir
+  config.vm.provision :shell, :path => "./scripts/basic-image-service.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/post-install.sh", :args => home_dir
 end
