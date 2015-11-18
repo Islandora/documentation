@@ -16,13 +16,10 @@ fi
 
 cd "$DOWNLOAD_DIR"
 tar -xzvf fcrepo-camel-toolbox.tar.gz
+sed -i 's#fuseki/test/update#bigdata/sparql#g' "$DOWNLOAD_DIR"/fcrepo-camel-toolbox-fcrepo-camel-toolbox-4.4.0/fcrepo-indexing-triplestore/src/main/cfg/org.fcrepo.camel.indexing.triplestore.cfg "$DOWNLOAD_DIR"/fcrepo-camel-toolbox-fcrepo-camel-toolbox-4.4.0/fcrepo-audit-triplestore/src/main/cfg/org.fcrepo.camel.audit.cfg
 cd fcrepo-camel-toolbox-fcrepo-camel-toolbox-"$FCREPO_CAMEL_VERSION"
 MAVEN_OPTS="-Xmx1024m" sudo -u vagrant mvn install
 
 "$KARAF_CLIENT" < "$KARAF_CONFIGS/fcrepo-camel-toolbox.script"
 
-if [ $(grep -c '\-Dtriplestore.baseUrl=' /etc/default/tomcat7) -eq 0 ]; then
-  echo "JAVA_OPTS=\"\$JAVA_OPTS -Dtriplestore.baseUrl=localhost:8080/bigdata/sparql\"" >> /etc/default/tomcat7
-fi
-
-service tomcat7 restart
+sed -i "s#fuseki/test/update#bigdata/sparql#g' /opt/karaf/etc/org.fcrepo.camel.indexing.triplestore.cfg
