@@ -16,7 +16,7 @@ fi
 
 cd "$DOWNLOAD_DIR"
 tar -xzvf fcrepo-camel-toolbox.tar.gz
-cd fcrepo-camel-toolbox
+cd fcrepo-camel-toolbox-fcrepo-camel-toolbox-"$FCREPO_CAMEL_VERSION"
 MAVEN_OPTS="-Xmx1024m" sudo -u vagrant mvn install
 
 "$KARAF_CLIENT" < "$KARAF_CONFIGS/fcrepo-camel-toolbox.script"
