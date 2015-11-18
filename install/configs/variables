@@ -2,7 +2,7 @@
 
 HOME_DIR=$1
 DOWNLOAD_DIR="$HOME_DIR/islandora/install/downloads"
-FEDORA_VERSION=4.3.0
+FEDORA_VERSION=4.4.0
 KARAF_VERSION=3.0.4
 KARAF_CLIENT="/opt/karaf/bin/client"
 KARAF_CONFIGS="$HOME_DIR/islandora/install/configs/karaf/"
