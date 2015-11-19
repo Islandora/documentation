@@ -14,4 +14,4 @@ cd "$HOME_DIR"/islandora/camel/services
 cd basic-image-service
 sudo -u vagrant mvn install
 
-"$KARAF_CLIENT" < "$KARAF_CONFIGS/basic-image-service.script"
+"$KARAF_CLIENT" -u karaf -h localhost -a 8101 -f "$KARAF_CONFIGS/basic-image-service.script"

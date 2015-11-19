@@ -24,7 +24,7 @@ ln -s /opt/apache-karaf-"$KARAF_VERSION" /opt/karaf
 # Run a setup script to add some feature repos and prepare it for running as a service
 /opt/karaf/bin/start
 sleep 60
-"$KARAF_CLIENT" < "$KARAF_CONFIGS/setup.script"
+"$KARAF_CLIENT" -u karaf -h localhost -a 8101 -f "$KARAF_CONFIGS/setup.script"
 /opt/karaf/bin/stop
 
 # Add it as a Linux service

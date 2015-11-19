@@ -12,4 +12,4 @@ chown -R vagrant:vagrant "$HOME_DIR/.m2"
 cd "$HOME_DIR/islandora/camel/sync"
 
 sudo -u vagrant mvn install
-"$KARAF_CLIENT" < "$KARAF_CONFIGS/sync.script"
+"$KARAF_CLIENT" -u karaf -h localhost -a 8101 -f "$KARAF_CONFIGS/sync.script"

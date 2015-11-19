@@ -6,4 +6,4 @@ if [ -f "$HOME_DIR/islandora/install/configs/variables" ]; then
   . "$HOME_DIR"/islandora/install/configs/variables
 fi
 
-"$KARAF_CLIENT" < "$KARAF_CONFIGS/camel.script"
+"$KARAF_CLIENT" -u karaf -h localhost -a 8101 -f "$KARAF_CONFIGS/camel.script"

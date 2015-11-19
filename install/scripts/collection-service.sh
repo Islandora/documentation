@@ -14,4 +14,4 @@ cd "$HOME_DIR"/islandora/camel/services
 cd collection-service
 sudo -u vagrant mvn install
 
-"$KARAF_CLIENT" < "$KARAF_CONFIGS/collection-service.script"
+"$KARAF_CLIENT" -u karaf -h localhost -a 8101 -f "$KARAF_CONFIGS/collection-service.script"

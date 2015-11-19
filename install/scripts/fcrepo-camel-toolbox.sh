@@ -3,7 +3,7 @@ echo "Installing Fcrepo-Camel-Toolbox"
 
 HOME_DIR=$1
 
-cd $HOME_DIR
+cd "$HOME_DIR"
 
 if [ -f "$HOME_DIR/islandora/install/configs/variables" ]; then
   . "$HOME_DIR"/islandora/install/configs/variables
@@ -20,6 +20,6 @@ sed -i 's#fuseki/test/update#bigdata/sparql#g' "$DOWNLOAD_DIR"/fcrepo-camel-tool
 cd fcrepo-camel-toolbox-fcrepo-camel-toolbox-"$FCREPO_CAMEL_VERSION"
 MAVEN_OPTS="-Xmx1024m" sudo -u vagrant mvn install
 
-"$KARAF_CLIENT" < "$KARAF_CONFIGS/fcrepo-camel-toolbox.script"
+"$KARAF_CLIENT" -u karaf -h localhost -a 8101 -f "$KARAF_CONFIGS/fcrepo-camel-toolbox.script"
 
-sed -i "s#fuseki/test/update#bigdata/sparql#g' /opt/karaf/etc/org.fcrepo.camel.indexing.triplestore.cfg
+sed -i 's#fuseki/test/update#bigdata/sparql#g' /opt/karaf/etc/org.fcrepo.camel.indexing.triplestore.cfg
