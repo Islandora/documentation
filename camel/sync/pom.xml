@@ -16,7 +16,7 @@
   <name>Islandora Sync Gateway</name>
 
   <properties>
-    <islandora.osgi.export.pkg>ca.islandora.camel.sync*</islandora.osgi.export.pkg>
+    <islandora.osgi.export.pkg>ca.islandora.camel.sync.islandora-sync-gateway</islandora.osgi.export.pkg>
   </properties>
 
   <dependencies>
@@ -27,6 +27,23 @@
     <dependency>
       <groupId>org.apache.camel</groupId>
       <artifactId>camel-blueprint</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-http</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-script</artifactId>
+    </dependency>    
+    <dependency>
+      <groupId>org.fcrepo.camel</groupId>
+      <artifactId>fcrepo-camel</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>ca.islandora.camel.component</groupId>
+      <artifactId>islandora-camel-component</artifactId>
+      <version>${project.version}</version>
     </dependency>
 
     <!-- logging -->

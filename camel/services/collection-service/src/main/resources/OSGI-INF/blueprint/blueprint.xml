@@ -13,19 +13,6 @@
        http://cxf.apache.org/blueprint/jaxrs http://cxf.apache.org/schemas/blueprint/jaxrs.xsd"
        default-activation="lazy">
 
-  <!-- Boiler plate to bootstrap the servlet -->
-  <reference id="httpService" interface="org.osgi.service.http.HttpService"/>
-
-  <bean class="org.apache.camel.component.servlet.osgi.OsgiServletRegisterer"
-        init-method="register"
-        destroy-method="unregister">
-    <property name="alias" value="/islandora/rest/collection"/>
-    <property name="httpService" ref="httpService"/>
-    <property name="servlet" ref="camelServlet"/>
-  </bean>
-
-  <bean id="camelServlet" class="org.apache.camel.component.servlet.CamelHttpTransportServlet"/>
-
   <!-- Load Configuration File -->
   <cm:property-placeholder id="properties" persistent-id="ca.islandora.services.collection" update-strategy="reload">
     <cm:default-properties>

@@ -30,20 +30,6 @@
     <argument value="${islandora.php.workingDir}"/>
   </bean>
 
-   <!-- Fcrepo Component Configuration -->
-  <bean id="fcrepoTxManager" class="org.fcrepo.camel.FcrepoTransactionManager">
-    <property name="baseUrl" value="http://${islandora.fcrepo.baseurl}"/>
-  </bean>
-
-  <bean id="fcrepo" class="org.fcrepo.camel.FcrepoComponent">
-    <property name="transactionManager" ref="fcrepoTxManager"/>
-  </bean>
-
-  <!-- Transaction policy -->
-  <bean id="txPolicy" class="org.apache.camel.spring.spi.SpringTransactionPolicy">
-    <property name="transactionManager" ref="fcrepoTxManager"/>
-  </bean>
-
   <!-- Define the server endpoint to create the cxf-rs consumer -->
   <cxf:rsServer id="basicImageServer" address="/islandora/image"
       serviceClass="ca.islandora.camel.services.image.basic.BasicImageController">

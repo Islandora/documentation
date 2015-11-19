@@ -16,7 +16,7 @@
   <name>Islandora Collection Service</name>
 
   <properties>
-    <islandora.osgi.export.pkg>ca.islandora.camel.services.collection*</islandora.osgi.export.pkg>
+    <islandora.osgi.export.pkg>ca.islandora.camel.services.collection</islandora.osgi.export.pkg>
   </properties>
 
   <dependencies>
@@ -29,8 +29,24 @@
       <artifactId>camel-blueprint</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-http</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-mustache</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-script</artifactId>
+    </dependency>    
+    <dependency>
       <groupId>org.apache.cxf</groupId>
       <artifactId>cxf-rt-frontend-jaxrs</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.google.code.scriptengines</groupId>
+      <artifactId>scriptengines-javascript</artifactId>
     </dependency>
 
     <!-- logging -->
