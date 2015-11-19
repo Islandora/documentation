@@ -167,7 +167,7 @@
       <from uri="direct:upsertNonRdfResource"/>
         <transform><simple>${property.rdf}</simple></transform>
         <doTry>
-          <setProperty propertyName="parentUri"><jsonpath>$[1]['http://fedora.info/definitions/v4/repository#hasParent'][0]['@id']</jsonpath></setProperty>
+          <setProperty propertyName="parentUri"><jsonpath>$[0]['http://fedora.info/definitions/v4/repository#hasParent'][0]['@id']</jsonpath></setProperty>
           <to uri="direct:getParentUUID"/>
           <to uri="direct:fedoraGetBinary"/>
           <to uri="direct:drupalAddMediumSize"/>
