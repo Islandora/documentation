@@ -185,7 +185,7 @@ function islandora_basic_image_node_postupdate($node) {
     );
   }
 
-  httprl_request("http://127.0.0.1:8888/cxf/islandora/image/{$node->uuid}",
+  httprl_request("http://127.0.0.1:8181/cxf/islandora/image/{$node->uuid}",
                  $options);
   $response = httprl_send_request();
 }

@@ -166,11 +166,17 @@
     <route>
       <from uri="direct:upsertNonRdfResource"/>
         <transform><simple>${property.rdf}</simple></transform>
-        <setProperty propertyName="parentUri"><jsonpath>$[1]['http://fedora.info/definitions/v4/repository#hasParent'][0]['@id']</jsonpath></setProperty>
-        <log message="parentUri is (${property.parentUri})" loggingLevel="DEBUG"/>
-        <to uri="direct:getParentUUID"/>
-        <to uri="direct:fedoraGetBinary"/>
-        <to uri="direct:drupalAddMediumSize"/>
+        <doTry>
+          <setProperty propertyName="parentUri"><jsonpath>$[0]['http://fedora.info/definitions/v4/repository#hasParent'][0]['@id']</jsonpath></setProperty>
+          <log message="parentUri is (${property.parentUri})" loggingLevel="DEBUG"/>
+          <to uri="direct:getParentUUID"/>
+          <to uri="direct:fedoraGetBinary"/>
+          <to uri="direct:drupalAddMediumSize"/>
+          <doCatch>
+            <exception>java.lang.Exception</exception>
+            <log message="Error upserting NonRdfResource. Aborting node upsert event.\n\nException message: ${exception.message}\n\nRDF from Fedora:\n${property.rdf}" loggingLevel="WARN"/>
+          </doCatch>
+        </doTry>
     </route>
 
     <route>

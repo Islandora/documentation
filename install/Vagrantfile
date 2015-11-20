@@ -39,6 +39,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision :shell, :path => "./scripts/islandora-commands.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/islandora-camel.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/karaf.sh", :args => home_dir
+  config.vm.provision :shell, :path => "./scripts/islandora-karaf-components.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/config.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/post-install.sh", :args => home_dir
 end

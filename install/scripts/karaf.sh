@@ -8,7 +8,7 @@ if [ -f "$HOME_DIR/islandora/install/configs/variables" ]; then
 fi
 
 if [ ! -f "$DOWNLOAD_DIR/apache-karaf-${KARAF_VERSION}.tar.gz" ]; then
-  echo "Downloading Karaf"
+  echo "Downloading Karaf version $KARAF_VERSION"
   wget -q -O "$DOWNLOAD_DIR/apache-karaf-${KARAF_VERSION}.tar.gz" "http://mirror.csclub.uwaterloo.ca/apache/karaf/$KARAF_VERSION/apache-karaf-${KARAF_VERSION}.tar.gz"
 fi
 
@@ -59,8 +59,6 @@ if ! grep -q "$HOME_DIR/.m2/repository" $KARAF_DIR/etc/org.ops4j.pax.url.mvn.cfg
     echo " done"
 fi
 
-# Copy modified karaf features 
-#cp "$KARAF_CONFIGS/org.apache.karaf.features.cfg" $KARAF_DIR/etc/
 # Copy modified karaf logging
 cp "$KARAF_CONFIGS/org.ops4j.pax.logging.cfg" $KARAF_DIR/etc/
 
@@ -75,19 +73,4 @@ service karaf-service start
 sleep 60
 echo "done"
 
-$KARAF_CLIENT -f $KARAF_CONFIGS/islandora_sync_gateway.script
-sleep 30
-$KARAF_CLIENT -f $KARAF_CONFIGS/islandora_basic_image.script
-sleep 30
-$KARAF_CLIENT -f $KARAF_CONFIGS/islandora_collection.script
-
-#echo "Stop Karaf..."
-#service karaf-service stop
-#sleep 30
-#echo "done"
-#
-#echo "Start Karaf again..."
-#service karaf-service start
-#sleep 60
-#echo "done"
 
