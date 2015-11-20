@@ -5,6 +5,7 @@
   <repository>mvn:org.fcrepo.camel/fcrepo-camel-toolbox/${fcrepo.camel.version}/xml/features</repository>
   <repository>mvn:org.apache.activemq/activemq-karaf/${activemq.version}/xml/features</repository>
   <repository>mvn:org.apache.camel.karaf/apache-camel/${camel.version}/xml/features</repository>
+  <repository>mvn:org.apache.cxf.karaf/apache-cxf/${cxf.version}/xml/features</repository>
 
   <feature name="islandora-camel-component" version="${project.version}" start-level="50">
     <details>Installs the Islandora camel component</details>
@@ -25,7 +26,6 @@
 
     <feature prerequisite="true">wrap</feature>
     <feature version="${camel.version}">camel</feature>
-    <feature version="${camel.version}">camel-core</feature>
     <feature version="${camel.version}">camel-cache</feature>
     <feature version="${camel.version}">camel-jsonpath</feature>
     <feature version="${camel.version}">camel-http</feature>
@@ -33,7 +33,6 @@
     <feature version="${camel.version}">camel-script-javascript</feature>
     <feature version="${camel.version}">camel-base64</feature>
     <feature version="${camel.version}">camel-mustache</feature>
-    <feature version="${camel.version}">camel-spring</feature>
     <feature version="${activemq.version}">activemq-camel</feature>
     <feature version="${fcrepo.camel.version}">fcrepo-camel</feature>
     <feature version="${fcrepo.camel.version}">fcrepo-indexing-triplestore</feature>
@@ -49,8 +48,8 @@
     <details>Installs the Islandora basic image service</details>
 
     <feature prerequisite="true">wrap</feature>
+    <feature version="${cxf.version}">cxf</feature>
     <feature version="${camel.version}">camel</feature>
-    <feature version="${camel.version}">camel-core</feature>
     <feature version="${camel.version}">camel-http</feature>
     <feature version="${camel.version}">camel-servlet</feature>
     <feature version="${camel.version}">camel-jsonpath</feature>
@@ -58,7 +57,6 @@
     <feature version="${camel.version}">camel-script</feature>
     <feature version="${camel.version}">camel-script-javascript</feature>
     <feature version="${camel.version}">camel-mustache</feature>
-    <feature version="${camel.version}">camel-spring</feature>
     <feature version="${fcrepo.camel.version}">fcrepo-camel</feature>
     <feature version="${fcrepo.camel.version}">fcrepo-indexing-triplestore</feature>
     <feature prerequisite="true" version="${project.version}">islandora-camel-component</feature>
@@ -73,17 +71,15 @@
     <details>Installs the Islandora collection service</details>
 
     <feature prerequisite="true">wrap</feature>
+    <feature version="${cxf.version}">cxf</feature>
     <feature version="${camel.version}">camel</feature>
-    <feature version="${camel.version}">camel-core</feature>
     <feature version="${camel.version}">camel-http</feature>
-    <feature version="${camel.version}">camel-http4</feature>
     <feature version="${camel.version}">camel-servlet</feature>
     <feature version="${camel.version}">camel-jsonpath</feature>
     <feature version="${camel.version}">camel-cxf</feature>
     <feature version="${camel.version}">camel-script</feature>
     <feature version="${camel.version}">camel-script-javascript</feature>
-    <feature prerequisite="true" version="${camel.version}">camel-mustache</feature>
-    <feature version="${camel.version}">camel-spring</feature>
+    <feature version="${camel.version}">camel-mustache</feature>
     <feature version="${fcrepo.camel.version}">fcrepo-camel</feature>
     <feature version="${fcrepo.camel.version}">fcrepo-indexing-triplestore</feature>
     <feature version="${project.version}">islandora-camel-component</feature>
