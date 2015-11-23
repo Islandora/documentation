@@ -1,3 +1,0 @@
-feature:repo-add file:/home/vagrant/islandora/camel/sync/target/classes/features.xml
-feature:install islandora-sync-gateway
-logout

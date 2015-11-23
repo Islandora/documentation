@@ -7,13 +7,13 @@ if [ -f "$HOME_DIR/islandora/install/configs/variables" ]; then
   . "$HOME_DIR"/islandora/install/configs/variables
 fi
 
-if [ ! -f "$DOWNLOAD_DIR/bigdata.war" ]; then
-  echo "Downloading Blazegraph"
-  wget -q -O "$DOWNLOAD_DIR/bigdata.war" "http://sourceforge.net/projects/bigdata/files/bigdata/$BLAZEGRAPH_VERSION/bigdata.war/download"
+if [ ! -f "$DOWNLOAD_DIR/bigdata-$BLAZEGRAPH_VERSION.war" ]; then
+  echo "Downloading Blazegraph version $BLAZEGRAPH_VERSION"
+  wget -q -O "$DOWNLOAD_DIR/bigdata-$BLAZEGRAPH_VERSION.war" "http://sourceforge.net/projects/bigdata/files/bigdata/$BLAZEGRAPH_VERSION/bigdata.war/download"
 fi
 
 cd /var/lib/tomcat7/webapps
-cp -v "$DOWNLOAD_DIR/bigdata.war" "/var/lib/tomcat7/webapps"
+cp -v "$DOWNLOAD_DIR/bigdata-$BLAZEGRAPH_VERSION.war" "/var/lib/tomcat7/webapps/bigdata.war"
 chown tomcat7:tomcat7 /var/lib/tomcat7/webapps/bigdata.war
 
 if [ $(grep -c 'com.bigdata.rdf.sail.webapp' /etc/default/tomcat7) -eq 0 ]; then
