@@ -3,21 +3,23 @@ echo "Installing Fcrepo-Camel-Toolbox"
 
 HOME_DIR=$1
 
+cd "$HOME_DIR"
+
 if [ -f "$HOME_DIR/islandora/install/configs/variables" ]; then
   . "$HOME_DIR"/islandora/install/configs/variables
 fi
 
-if [ ! -f "$DOWNLOAD_DIR/fcrepo-camel-toolbox.war" ]; then
+if [ ! -f "$DOWNLOAD_DIR/fcrepo-camel-toolbox.tar.gz" ]; then
   echo "Downloading fcrepo-camel-toolbox"
-  wget -O "$DOWNLOAD_DIR/fcrepo-camel-toolbox.war" "https://github.com/fcrepo4-labs/fcrepo-camel-toolbox/releases/download/fcrepo-camel-toolbox-$CAMEL_VERSION/fcrepo-camel-webapp-at-is-it-$CAMEL_VERSION.war"
+  wget -O "$DOWNLOAD_DIR/fcrepo-camel-toolbox.tar.gz" https://github.com/fcrepo4-exts/fcrepo-camel-toolbox/archive/fcrepo-camel-toolbox-"$FCREPO_CAMEL_VERSION".tar.gz
 fi
 
-cd /var/lib/tomcat7/webapps
-cp -v "$DOWNLOAD_DIR/fcrepo-camel-toolbox.war" "/var/lib/tomcat7/webapps"
-chown tomcat7:tomcat7 /var/lib/tomcat7/webapps/fcrepo-camel-toolbox.war
+cd "$DOWNLOAD_DIR"
+tar -xzvf fcrepo-camel-toolbox.tar.gz
+sed -i 's#fuseki/test/update#bigdata/sparql#g' "$DOWNLOAD_DIR"/fcrepo-camel-toolbox-fcrepo-camel-toolbox-4.4.0/fcrepo-indexing-triplestore/src/main/cfg/org.fcrepo.camel.indexing.triplestore.cfg "$DOWNLOAD_DIR"/fcrepo-camel-toolbox-fcrepo-camel-toolbox-4.4.0/fcrepo-audit-triplestore/src/main/cfg/org.fcrepo.camel.audit.cfg
+cd fcrepo-camel-toolbox-fcrepo-camel-toolbox-"$FCREPO_CAMEL_VERSION"
+MAVEN_OPTS="-Xmx1024m" sudo -u vagrant mvn install
 
-if [ $(grep -c '\-Dtriplestore.baseUrl=' /etc/default/tomcat7) -eq 0 ]; then
-  echo "JAVA_OPTS=\"\$JAVA_OPTS -Dtriplestore.baseUrl=localhost:8080/bigdata/sparql\"" >> /etc/default/tomcat7
-fi
+"$KARAF_CLIENT" -u karaf -h localhost -a 8101 -f "$KARAF_CONFIGS/fcrepo-camel-toolbox.script"
 
-service tomcat7 restart
+sed -i 's#fuseki/test/update#bigdata/sparql#g' /opt/karaf/etc/org.fcrepo.camel.indexing.triplestore.cfg

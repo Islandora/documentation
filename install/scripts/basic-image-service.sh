@@ -11,12 +11,7 @@ chown -R vagrant:vagrant "$HOME_DIR/.m2"
 
 cd "$HOME_DIR"/islandora/camel/services
 
-cd collection-service
-sudo -u vagrant mvn install
-
-cd "$HOME_DIR"/islandora/camel/services
-
 cd basic-image-service
 sudo -u vagrant mvn install
 
-"$KARAF_CLIENT" < "$KARAF_CONFIGS/services.script"
+"$KARAF_CLIENT" -u karaf -h localhost -a 8101 -f "$KARAF_CONFIGS/basic-image-service.script"

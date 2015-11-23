@@ -1,0 +1,3 @@
+feature:repo-add file:/home/vagrant/islandora/camel/services/basic-image-service/target/classes/features.xml
+feature:install islandora-basic-image-service
+logout

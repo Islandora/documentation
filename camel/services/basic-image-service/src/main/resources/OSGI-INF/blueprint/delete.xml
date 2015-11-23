@@ -10,6 +10,7 @@
     <route id="deleteBasicImage">
       <description>Deletes a collection in Fedora by Drupal UUID</description>
       <from uri="direct:deleteBasicImage"/>
+        <setProperty propertyName="uuid"><simple>${headers.uuid}</simple></setProperty>
         <to uri="direct:getObjectUri"/>
         <to uri="direct:deleteBasicImageInFedora"/>
     </route>

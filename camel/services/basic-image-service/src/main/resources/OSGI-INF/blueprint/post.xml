@@ -10,6 +10,11 @@
     <route id="createBasicImage">
       <description>Creates a basic image in Fedora using Drupal data</description>
       <from uri="direct:createBasicImage"/>
+        <setProperty propertyName="uuid"><simple>${headers.uuid}</simple></setProperty>
+        <setProperty propertyName="node"><simple>${headers.node}</simple></setProperty>
+        <setProperty propertyName="attachment"><simple>${body}</simple></setProperty>
+        <setProperty propertyName="mimetype"><simple>${headers.mimetype}</simple></setProperty>
+        <to uri="direct:getCollectionUri"/>
         <to uri="direct:createBasicImageSparql"/>
         <to uri="direct:createBasicImageInFedora"/>
         <to uri="direct:addAsMember"/>
@@ -41,7 +46,7 @@
 
     <route id="upsertBasicImageOBJ">
       <from uri="direct:upsertBasicImageOBJ"/>
-        <setBody><javaScript>exchange.getProperty("attachment").getContent()</javaScript></setBody>
+        <setBody><simple>${property.attachment}</simple></setBody>
         <removeHeaders pattern="*"/>
         <setHeader headerName="Content-Type"><simple>${property.mimetype}</simple></setHeader>
         <setHeader headerName="CamelHttpMethod"><constant>PUT</constant></setHeader>

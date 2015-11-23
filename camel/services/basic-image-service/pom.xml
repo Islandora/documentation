@@ -6,23 +6,24 @@
   <groupId>ca.islandora.camel.services</groupId>
   <artifactId>islandora-basic-image-service</artifactId>
   <packaging>bundle</packaging>
-  <version>0.0.0-SNAPSHOT</version>
+  <version>0.0.1-SNAPSHOT</version>
 
   <name>Islandora Basic Image Service</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <camel.version>2.15.2</camel.version>
-    <camel.version.range>[2.15,3)</camel.version.range>
-    <fcrepo.camel.version>4.3.0</fcrepo.camel.version>
+    <camel.version>2.15.1</camel.version>
+    <camel.version.range>[2.15.1,3)</camel.version.range>
+    <fcrepo.camel.version>4.4.0</fcrepo.camel.version>
+    <cxf.version>3.1.4</cxf.version>
     <slf4j.version>1.7.12</slf4j.version>
     <log4j.version>1.2.17</log4j.version>
     <compiler.plugin.version>2.5.1</compiler.plugin.version>
     <java.version>1.8</java.version>
     <resources.plugin.version>2.6</resources.plugin.version>
     <bundle.plugin.version>2.3.7</bundle.plugin.version>
-    <islandora.osgi.export.pkg>ca.islandora.camel.services.*</islandora.osgi.export.pkg>
+    <islandora.osgi.export.pkg>ca.islandora.camel.services.image.basic*</islandora.osgi.export.pkg>
     <islandora.osgi.import.pkg />
   </properties>
 
@@ -36,6 +37,11 @@
       <groupId>org.apache.camel</groupId>
       <artifactId>camel-blueprint</artifactId>
       <version>${camel.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-frontend-jaxrs</artifactId>
+      <version>${cxf.version}</version>
     </dependency>
 
 
