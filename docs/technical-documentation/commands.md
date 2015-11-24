@@ -11,7 +11,7 @@ In your git project's root, head on over to the `bin` folder of the `camel/comma
 ```bash
 vagrant@islandora:~/islandora$ cd camel/commands/bin
 vagrant@islandora:~/islandora/camel/commands/bin$ php islandora.php
-Islandora Command Tool version 0.0.1-SNAPSHOT
+Islandora Command Tool version 0.0.0-SNAPSHOT
 
 Usage:
  command [options] [arguments]
@@ -188,7 +188,7 @@ So let's try it out! Go back to the `camel/commands/bin` directory and get a lis
 ```bash
 vagrant@islandora:~/islandora/camel/commands/bin$ cd ~/islandora/camel/commands/bin
 vagrant@islandora:~/islandora/camel/commands/bin$ php islandora.php
-Islandora Command Tool version 0.0.1-SNAPSHOT
+Islandora Command Tool version 0.0.0-SNAPSHOT
 
 Usage:
  command [options] [arguments]
@@ -290,7 +290,7 @@ This command is almost exactly the same as the last, except it extends JsonInput
 Let's make sure the command is available.
 ```bash
 vagrant@islandora:~/islandora/camel/commands/bin$ php islandora.php
-Islandora Command Tool version 0.0.1-SNAPSHOT
+Islandora Command Tool version 0.0.0-SNAPSHOT
 
 Usage:
  command [options] [arguments]

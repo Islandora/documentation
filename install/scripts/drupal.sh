@@ -75,8 +75,9 @@ drush dl hook_post_action
 drush dl devel
 drush -y en devel
 
-# Undocumented dependency for rdfx on ARC2 for RDF generation.
+# Undocumented dependency for rdfx on ARC2 for RDF generation, and spyc.
 cd "$DRUPAL_HOME/sites/all/libraries"
+git clone https://github.com/mustangostang/spyc.git
 mkdir ARC2
 cd ARC2
 git clone https://github.com/semsol/arc2.git

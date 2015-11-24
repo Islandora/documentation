@@ -1,40 +1,36 @@
-site_name: Islandora
+site_name: Islandora 7.x-2.x
 site_dir: site
 docs_dir: docs
-site_description: Documentation for Islandora
+site_description: Documentation for Islandora 7.x-2.x
 
 dev_addr: 'localhost:8111'
-repo_url: https://github.com/Islandora-labs/islandora
+repo_url: https://github.com/Islandora-CLAW/CLAW
 
-use_absolute_urls: true
-
-#include_search: true
-
-theme: bootstrap
+theme: readthedocs
 
 pages:
-
-# Introduction
-  - ['index.md', 'About', 'Islandora']
-  - ['camel/sync/README.md', 'About', 'Islandora-Sync']
-  - ['drupal/islandora/README.md', 'About', 'Islandora (Drupal module)']
-
-# Installation:
-  - ['install/README.md', 'Installation', 'Vagrant']
-
-# Contributing
-  - ['contributing/contributing.md', 'Contributing', 'How to contribute']
-  - ['contributing/committers.md', 'Contributing', 'Committers']
-  - ['contributing/hacking-on-islandora.md', 'Contributing', 'Hacking on Islandora']
-
-
-# Technical Documentation
-  - ['technical-documentation/architecture.md', 'Technical Documentation', 'Architecture']
-  - ['technical-documentation/services.md', 'Technical Documentation', 'Middleware Services']
-  - ['technical-documentation/commands.md', 'Technical Documentation', 'Commands']
-  - ['technical-documentation/docs-build.md', 'Technical Documentation', 'How to build documenation']
-
-# Migration
-  - ['migration/migration.md', 'Migration', 'Migration']
-  - ['migration/fedora-namespace-predicates.md', 'Migration', 'Fedora namespace predicates']
-  - ['migration/islandora-namespace-predicates.md', 'Migration', 'Islandora namespace predicates']
+- About: 
+    - 'Islandora 7.x-2.x': 'index.md'
+    - 'Islandora-Sync': 'camel/sync/README.md'
+    - 'Islandora (Drupal module)': 'drupal/islandora/README.md'
+- Installation:
+    - 'Installation (Vagrant)': 'install/README.md'
+- Contributing:
+    - 'How to contribute': 'contributing/contributing.md'
+    - 'Committers': 'contributing/committers.md'
+    - 'Hacking on Islandora': 'contributing/hacking-on-islandora.md'
+- User Documentation:
+    - 'Islandora 2.x for Islandora 1.x Users': 'user-documentation/2xfor1x.md'
+    - 'Creating Collections in Islandora 7.x-2.x': 'user-documentation/creating-collections-in-islandora-7.x-2.x.md'
+    - 'Adding an object to a collection in Islandora 7.x-2.x': 'user-documentation/adding-object-to-collection-in-islandora-7.x-2.x.md'
+    - 'Editing the Basic Image Form in Islandora 7.x-2.x': 'user-documentation/editing-basic-image-form-in-islandora-7.x-2.x.md'
+    - 'Adding a Drupal Taxonomy in Islandora 7.x-2.x': 'user-documentation/form-field-select-taxonomy-in-islandora-7.x-2.x.md'
+- Technical Documentation:
+    - 'Architecture': 'technical-documentation/architecture.md'
+    - 'Middleware Services': 'technical-documentation/services.md'
+    - 'Commands': 'technical-documentation/commands.md'
+    - 'How to build documenation': 'technical-documentation/docs-build.md'
+- Migration:
+    - 'Migration': 'migration/migration.md'
+    - 'Fedora namespace predicates': 'migration/fedora-namespace-predicates.md'
+    - 'Islandora namespace predicates': 'migration/islandora-namespace-predicates.md'

@@ -175,6 +175,7 @@
           <doCatch>
             <exception>java.lang.Exception</exception>
             <log message="Error upserting NonRdfResource. Aborting node upsert event.\n\nException message: ${exception.message}\n\nRDF from Fedora:\n${property.rdf}" loggingLevel="WARN"/>
+            <stop/>
           </doCatch>
         </doTry>
     </route>

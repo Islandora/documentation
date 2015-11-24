@@ -10,9 +10,38 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # please see the online documentation at vagrantup.com.
   config.vm.provider "virtualbox" do |v|
     v.name = "Islandora 7.x-2.x"
+    config.vm.network :forwarded_port, guest: 80, host: 8000 # Apache
   end
-  config.vm.hostname = "islandora"
+  
+  config.vm.hostname = "islandora-deux"
 
+  # THIS NEEDS SOME LOVE. WEIRD SSH LOGIN ISSUES.
+  # IT GETS STUCK AT: Waiting for ssh..
+  config.vm.provider :aws do |aws, override|
+    aws.access_key_id = ENV['AWS_KEY']
+    aws.secret_access_key = ENV['AWS_SECRET']
+    aws.keypair_name = ENV['AWS_KEYNAME']
+    aws.ami = "ami-4feaad2a"
+    override.vm.box = "dummy"
+    override.ssh.username = "ubuntu"
+    override.ssh.private_key_path = ENV['AWS_KEYPATH']
+    override.vm.network :forwarded_port, guest: 80, host: 80
+  end
+  
+  # This should work fine out of the box if environment variables are declared
+  config.vm.provider :digital_ocean do |provider, override|
+    provider.ssh_key_name = ENV['DIGITALOCEAN_KEYNAME']
+    override.ssh.private_key_path = ENV['DIGITALOCEAN_KEYPATH']
+    override.ssh.username = "vagrant"
+    override.vm.box = 'digital_ocean'
+    override.vm.box_url = "https://github.com/smdahlen/vagrant-digitalocean/raw/master/box/digital_ocean.box"
+    provider.token = ENV['DIGITALOCEAN_TOKEN']
+    provider.image = 'ubuntu-14-04-x64'
+    provider.region = 'tor1'
+    provider.size = '4gb'
+    override.vm.network :forwarded_port, guest: 80, host: 80
+  end
+  
   # Every Vagrant virtual environment requires a box to build off of.
   config.vm.box = "ubuntu/trusty64"
 
@@ -24,7 +53,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :forwarded_port, guest: 8181, host: 8181 # Karaf
   config.vm.network :forwarded_port, guest: 3306, host: 3306 # MySQL
   config.vm.network :forwarded_port, guest: 5432, host: 5432 # PostgreSQL
-  config.vm.network :forwarded_port, guest: 80, host: 8000 # Apache
 
   config.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--memory", '2048']

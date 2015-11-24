@@ -11,9 +11,36 @@ N.B. This virtual machine **should not** be used in production.
 
 ## Use
 
-1. `git clone https://github.com/islandora-labs/islandora`
-2. `cd islandora/install`
+VirtualBox:
+
+1. `git clone https://github.com/Islandora-CLAW/CLAW`
+2. `cd CLAW/install`
 3. `vagrant up`
+
+DigitalOcean:
+
+1. `git clone https://github.com/Islandora-CLAW/CLAW`
+2. `cd CLAW/install`
+3. `vagrant plugin install vagrant-digitalocean`
+4. Set the following environment variables:
+  * `DIGITALOCEAN_TOKEN` -- Your DigitalOcean API token
+  * `DIGITALOCEAN_KEYNAME` -- Your DigitalOcean ssh key name
+  * `DIGITALOCEAN_KEYPATH` -- Path to your ssh keys that you've setup with DigitalOcean
+5. `vagrant up --provider=digital_ocean`
+
+Amazon:
+
+1. `git clone https://github.com/Islandora-CLAW/CLAW`
+2. `cd CLAW/install`
+3. `vagrant plugin install vagrant-aws`
+4. Set the following environment variables:
+  * `AWS_KEY`
+  * `AWS_SECRET`
+  * `AWS_KEYNAME`
+  * `AWS_KEYPATH`
+5. `vagrant up --provider=aws`
+
+N.B. You may not be able to connect to your AWS instance depending on VPC settings.
 
 ## Connect
 

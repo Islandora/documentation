@@ -26,7 +26,7 @@ function islandora_collection_node_info() {
     ISLANDORA_COLLECTION_CONTENT_TYPE => array(
       'name' => t("Collection"),
       'base' => ISLANDORA_COLLECTION_CONTENT_TYPE,
-      'description' => t("A Drupal node modeling an pcdm:Collection."),
+      'description' => t("A Drupal node modeling a pcdm:Collection."),
     ),
   );
 }
