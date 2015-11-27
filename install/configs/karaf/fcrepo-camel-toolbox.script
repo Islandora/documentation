@@ -1,6 +1,0 @@
-feature:repo-add mvn:org.fcrepo.camel/fcrepo-camel-toolbox/4.4.0/xml/features
-feature:install fcrepo-indexing-triplestore
-feature:install fcrepo-audit-triplestore
-feature:install fcrepo-reindexing
-feature:install fcrepo-fixity
-logout

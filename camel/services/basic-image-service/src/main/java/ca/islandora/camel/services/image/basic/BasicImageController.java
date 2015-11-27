@@ -54,4 +54,3 @@ public interface BasicImageController {
     @Path("/{uuid}")
     public InputStream deleteBasicImage(@PathParam("uuid") String uuid);
 }
-

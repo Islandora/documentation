@@ -168,6 +168,7 @@
         <transform><simple>${property.rdf}</simple></transform>
         <doTry>
           <setProperty propertyName="parentUri"><jsonpath>$[0]['http://fedora.info/definitions/v4/repository#hasParent'][0]['@id']</jsonpath></setProperty>
+          <log message="parentUri is (${property.parentUri})" loggingLevel="DEBUG"/>
           <to uri="direct:getParentUUID"/>
           <to uri="direct:fedoraGetBinary"/>
           <to uri="direct:drupalAddMediumSize"/>
@@ -185,6 +186,7 @@
         <removeHeaders pattern="*"/>
         <setHeader headerName="CamelHttpMethod"><constant>GET</constant></setHeader>
         <setHeader headerName="Accept"><constant>application/ld+json</constant></setHeader>
+        
         <recipientList><simple>${property.parentUri}</simple></recipientList>
         <setProperty propertyName="parentRdf"><simple>${bodyAs(String)}</simple></setProperty>
         <transform><simple>${property.parentRdf}</simple></transform>
