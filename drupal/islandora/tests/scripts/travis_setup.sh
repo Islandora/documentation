@@ -15,11 +15,6 @@ sudo apt-get install -y oracle-java8-set-default
 export JAVA_HOME=/usr/lib/jvm/java-8-oracle
 
 cd $HOME
-pear channel-discover pear.drush.org
-pear upgrade --force Console_Getopt
-pear upgrade --force pear
-pear channel-discover pear.drush.org
-
 # "prefer-source" required due to SSL shenanigans on the Travis boxes...
 composer global require --prefer-source 'squizlabs/php_codesniffer=*' 'sebastian/phpcpd=*'
 composer global require --prefer-source drush/drush:6.x
