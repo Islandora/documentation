@@ -15,6 +15,12 @@ sudo apt-get install -y oracle-java8-set-default
 export JAVA_HOME=/usr/lib/jvm/java-8-oracle
 
 cd $HOME
+
+git clone git://github.com/phpenv/phpenv.git .phpenv
+echo 'export PATH="$HOME/.phpenv/bin:$PATH"' >> ~/.bash_profile
+echo 'eval "$(phpenv init -)"' >> ~/.bash_profile
+exec $SHELL
+
 # "prefer-source" required due to SSL shenanigans on the Travis boxes...
 composer global require --prefer-source 'squizlabs/php_codesniffer=*' 'sebastian/phpcpd=*'
 composer global require --prefer-source drush/drush:6.x
