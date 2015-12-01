@@ -20,13 +20,17 @@ pear upgrade --force Console_Getopt
 pear upgrade --force pear
 pear channel-discover pear.drush.org
 
+
+# "prefer-source" required due to SSL shenanigans on the Travis boxes...
+composer global require --prefer-source 'squizlabs/php_codesniffer=*' 'sebastian/phpcpd=*'
+# Because we can't add to the PATH here and this file is used in many repos,
+# let's just throw symlinks in.
+find $HOME/.composer/vendor/bin -executable \! -type d -exec sudo ln -s {}  /usr/local/sbin/ \;
+
 wget http://alpha.library.yorku.ca/drush-6.3.tar.gz
 tar xf drush-6.3.tar.gz
 sudo mv drush-6.3 /opt/
 sudo ln -s /opt/drush-6.3/drush /usr/bin/drush
-
-wget http://alpha.library.yorku.ca/PHP_CodeSniffer-1.5.6.tgz
-pear install PHP_CodeSniffer-1.5.6.tgz
 
 wget http://alpha.library.yorku.ca/phpcpd.phar
 sudo mv phpcpd.phar /usr/local/bin/phpcpd
