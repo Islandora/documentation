@@ -16,11 +16,6 @@ export JAVA_HOME=/usr/lib/jvm/java-8-oracle
 
 cd $HOME
 
-git clone git://github.com/phpenv/phpenv.git .phpenv
-echo 'export PATH="$HOME/.phpenv/bin:$PATH"' >> ~/.bash_profile
-echo 'eval "$(phpenv init -)"' >> ~/.bash_profile
-exec $SHELL
-
 # "prefer-source" required due to SSL shenanigans on the Travis boxes...
 composer global require --prefer-source 'squizlabs/php_codesniffer=*' 'sebastian/phpcpd=*'
 composer global require --prefer-source drush/drush:6.x
@@ -31,6 +26,10 @@ find $HOME/.composer/vendor/bin -executable \! -type d -exec sudo ln -s {}  /usr
 wget http://alpha.library.yorku.ca/phpcpd.phar
 sudo mv phpcpd.phar /usr/local/bin/phpcpd
 sudo chmod +x /usr/local/bin/phpcpd
+
+drush -v
+phpcpd -v
+phpenv -v
 
 phpenv rehash
 drush dl --yes drupal
