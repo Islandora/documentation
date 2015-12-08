@@ -4,7 +4,6 @@ namespace Islandora\TransactionService;
 
 require_once __DIR__.'/../vendor/autoload.php';
 
-use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use Islandora\Chullo\Chullo;
 use Silex\Application;
@@ -17,8 +16,7 @@ $app = new Application();
 $app['debug'] = true;
 
 $app['fedora'] = function () use ($app) {
-    $client = new Client(['base_uri' => 'http://127.0.0.1:8080/fcrepo/rest']);
-    return new Chullo($client);
+    return Chullo::create('http://127.0.0.1:8080/fcrepo/rest');
 };
 
 $app->post(
