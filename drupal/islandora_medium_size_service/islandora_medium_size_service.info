@@ -1,0 +1,6 @@
+name = Islandora Medium Size Service
+description = "Adds medium size images to nodes"
+package = Islandora
+version = 7.x-dev
+core = 7.x
+dependencies[] = rest_server

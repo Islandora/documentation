@@ -98,6 +98,13 @@ function islandora_default_services_endpoint() {
     ),
   );
   $endpoint->resources = array(
+    'medium_size' => array(
+      'operations' => array(
+        'create' => array(
+          'enabled' => '1',
+        ),
+      ),
+    ),
     'node' => array(
       'operations' => array(
         'retrieve' => array(
@@ -137,6 +144,13 @@ function islandora_default_services_endpoint() {
     'system' => array(
       'actions' => array(
         'connect' => array(
+          'enabled' => '1',
+        ),
+      ),
+    ),
+    'tn' => array(
+      'operations' => array(
+        'create' => array(
           'enabled' => '1',
         ),
       ),

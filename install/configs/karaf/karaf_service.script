@@ -1,0 +1,4 @@
+feature:install wrapper
+shell:sleep 1000
+wrapper:install
+logout

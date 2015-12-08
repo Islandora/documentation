@@ -11,14 +11,36 @@ N.B. This virtual machine **should not** be used in production.
 
 ## Use
 
-1. `git clone https://github.com/islandora-labs/islandora`
-2. `cd islandora/install`
+VirtualBox:
+
+1. `git clone https://github.com/Islandora-CLAW/CLAW`
+2. `cd CLAW/install`
 3. `vagrant up`
 
-### Build Variables
+DigitalOcean:
 
-- VIM : If you want to install the vim configuration for Java development, use `VIM=true vagrant up`. It practically doubles the amount of time to spin up the VM, so only do so if you’re sure you want to develop directly on the VM using vim.
-- TRIPLESTORE : If you would like to use Fuskei, it is the default. `vagrant up` will use it. If you would like to use BlazeGraph, use `TRIPLESTORE=blazegraph vagrant up`.
+1. `git clone https://github.com/Islandora-CLAW/CLAW`
+2. `cd CLAW/install`
+3. `vagrant plugin install vagrant-digitalocean`
+4. Set the following environment variables:
+  * `DIGITALOCEAN_TOKEN` -- Your DigitalOcean API token
+  * `DIGITALOCEAN_KEYNAME` -- Your DigitalOcean ssh key name
+  * `DIGITALOCEAN_KEYPATH` -- Path to your ssh keys that you've setup with DigitalOcean
+5. `vagrant up --provider=digital_ocean`
+
+Amazon:
+
+1. `git clone https://github.com/Islandora-CLAW/CLAW`
+2. `cd CLAW/install`
+3. `vagrant plugin install vagrant-aws`
+4. Set the following environment variables:
+  * `AWS_KEY`
+  * `AWS_SECRET`
+  * `AWS_KEYNAME`
+  * `AWS_KEYPATH`
+5. `vagrant up --provider=aws`
+
+N.B. You may not be able to connect to your AWS instance depending on VPC settings.
 
 ## Connect
 
@@ -57,11 +79,11 @@ The default VM login details are:
 - Tomcat 7.0.52
 - Solr 4.10.3
 - Camel 2.14.1
-- Fedora 4.2.0
+- Fedora 4.3.0
 - Fedora Camel Component 4.2.0
-- Fuseki 2.0
 - BlazeGraph 1.5.1
+- Karaf 3.0.4
 - Sync 0.0.0
 - Islandora 7.x-2.x
 - PHP 5.5.9 
-- Java 7 (OpenJDK)
+- Java 8 (Oracle)

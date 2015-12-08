@@ -2,4 +2,5 @@ cache.properties
 .DS_Store
 tests/test_config.ini
 install/.vagrant
+install/downloads
 site/

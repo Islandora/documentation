@@ -2,7 +2,7 @@
 
 | fcrepo 3         | fcrepo4                             | Example                  |
 |------------------|-------------------------------------|--------------------------|
-| PID              | dcterms:identifier                  | yul:328697               |
+| PID              | fedora3model:PID†                   | yul:328697               |
 | state            | fedoraaccess:objState               | Active                   |
 | label            | fedora3model:label†                 | Elvis Presley            |
 | createDate       | premis:hasDateCreatedByApplication  | 2015-03-16T20:11:06.683Z |

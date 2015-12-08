@@ -29,6 +29,7 @@ function islandora_install() {
     array(
       'field_name' => ISLANDORA_PCDM_HAS_MEMBER_FIELD,
       'type' => 'text',
+      'cardinality' => FIELD_CARDINALITY_UNLIMITED,
     ),
   );
 
