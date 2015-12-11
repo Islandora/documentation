@@ -1,8 +1,14 @@
 {
     "name": "islandora/transaction-service",
     "description": "RESTful service providing transactions in Fedora 4",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "/Users/danny/Git/chullo"
+        }
+    ],
     "require": {
-        "islandora/chullo": "^0.0.1",
+        "islandora/chullo": "dev-master",
         "silex/silex": "^1.3"
     },
     "autoload": {
