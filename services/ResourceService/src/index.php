@@ -52,7 +52,8 @@ $app->get("/islandora/resource/{uuid}/{child}",function (\Silex\Application $app
      $app->abort(404, 'Failed getting resource Path for {$uuid}');
    } 
    $tx = $request->query->get('tx',"");
-   $response = $app['fedora']->getResource($app->escape($app['data.resourcepath']) . '/' . $child, $request->headers->all(), $tx);
+   $metadata = $request->query->get('metadata',FALSE) ? '/fcr:metadata' : ""; 
+   $response = $app['fedora']->getResource($app->escape($app['data.resourcepath']) . '/' . $child . $metadata , $request->headers->all(), $tx);
    if (NULL === $response )
      {
        $app->abort(404, 'Failed getting resource from Fedora4');
