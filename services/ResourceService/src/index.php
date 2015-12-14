@@ -44,19 +44,24 @@ $app['data.resourcepath'] = NULL;
 $app->view(function (ResponseInterface $psr7) {
   return new Response($psr7->getBody(), $psr7->getStatusCode(), $psr7->getHeaders());
 });
-
-$app->get("/islandora/resource/{uuid}",function (\Silex\Application $app, Request $request, $uuid) {
+/**
+ * resource GET route. takes an UUID as first value to match, optional a child resource
+ */
+$app->get("/islandora/resource/{uuid}/{child}",function (\Silex\Application $app, Request $request, $uuid, $child) {
    if (NULL === $app['data.resourcepath']) {
      $app->abort(404, 'Failed getting resource Path for {$uuid}');
    } 
    $tx = $request->query->get('tx',"");
-   $response = $app['fedora']->getResource($app->escape($app['data.resourcepath']), $request->headers->all(), $tx);
+   $response = $app['fedora']->getResource($app->escape($app['data.resourcepath']) . '/' . $child, $request->headers->all(), $tx);
    if (NULL === $response )
      {
        $app->abort(404, 'Failed getting resource from Fedora4');
      }
    return $response;
-})->before(function (Request $request) use ($app) {
+})
+->value('child',"")
+->assert('uuid','([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})')
+->before(function (Request $request) use ($app) {
   // In case the request was made by a browser, avoid 
   // returning the whole Fedora4 API Rest interface page.
     if (0 === strpos($request->headers->get('Accept'),'text/html')) {
