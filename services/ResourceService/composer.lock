@@ -246,7 +246,7 @@
             "source": {
                 "type": "git",
                 "url": "/Users/dpino/Desktop/Development/ISLANDORAWORK/CLAW_MICRO/chullo",
-                "reference": "4d2e2bea4b2f1b1cc54d9b0ee5c49744031f810c"
+                "reference": "f8a03d7cd4bff0712c4e5e925d70108d03d17829"
             },
             "require": {
                 "easyrdf/easyrdf": "0.9.0",
@@ -289,7 +289,7 @@
                 "issues": "https://github.com/islandora-claw/chullo/issues",
                 "irc": "irc://irc.freenode.net/islandora"
             },
-            "time": "2015-12-14 13:59:22"
+            "time": "2015-12-16 17:32:51"
         },
         {
             "name": "ml/iri",
