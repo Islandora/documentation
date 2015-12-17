@@ -62,8 +62,8 @@ $app->view(function (ResponseInterface $psr7) {
   return new Response($psr7->getBody(), $psr7->getStatusCode(), $psr7->getHeaders());
 });
 /**
- * resource GET route. takes an UUID as first value to match, optional a child resource
- * takes 'rx' and/or 'metadata' as query arguments
+ * resource GET route. takes an UUID as first value to match, optional a child resource path
+ * takes 'rx' and/or 'metadata' as optional query arguments
  * @see https://wiki.duraspace.org/display/FEDORA40/RESTful+HTTP+API#RESTfulHTTPAPI-GETRetrievethecontentoftheresource
  */
 $app->get("/islandora/resource/{uuid}/{child}",function (\Silex\Application $app, Request $request, $uuid, $child) {
@@ -85,14 +85,15 @@ $app->get("/islandora/resource/{uuid}/{child}",function (\Silex\Application $app
 
 /**
  * resource POST route. takes an UUID for the parent resource as first value to match
- * takes rx and/or $checksum as query arguments
+ * takes 'rx' and/or 'checksum' as optional query arguments
  * @see https://wiki.duraspace.org/display/FEDORA40/RESTful+HTTP+API#RESTfulHTTPAPI-BluePOSTCreatenewresourceswithinaLDPcontainer
  */
-$app->post("/islandora/resource/{uuid}/{checksum}",function (\Silex\Application $app, Request $request, $uuid, $checksum) {
+$app->post("/islandora/resource/{uuid}",function (\Silex\Application $app, Request $request, $uuid, $checksum) {
    if (NULL === $app['data.resourcepath']) {
      $app->abort(404, 'Failed getting resource Path for {$uuid}');
    } 
    $tx = $request->query->get('tx',"");
+   $checksum = $request->query->get('checksum',"");
    $response = $app['fedora']->createResource($app->escape($app['data.resourcepath']), $request->getContent(), $request->headers->all(), $tx, $checksum);
    if (NULL === $response )
      {
@@ -100,7 +101,32 @@ $app->post("/islandora/resource/{uuid}/{checksum}",function (\Silex\Application 
      }
    return $response;
 })
-->value('checksum',"")
+->assert('uuid','([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})')
+->before($getPathFromTriple);
+
+$app->after(function (Request $request, Response $response, \Silex\Application $app) {
+});
+
+/**
+ * resource PUT route. takes an UUID for the resource to be update/created as first value to match, 
+ * optional a Child resource relative path
+ * takes 'rx' and/or 'checksum' as query arguments
+ * @see https://wiki.duraspace.org/display/FEDORA40/RESTful+HTTP+API#RESTfulHTTPAPI-BluePOSTCreatenewresourceswithinaLDPcontainer
+ */
+$app->put("/islandora/resource/{uuid}/{child}",function (\Silex\Application $app, Request $request, $uuid, $child) {
+   if (NULL === $app['data.resourcepath']) {
+     $app->abort(404, 'Failed getting resource Path for {$uuid}');
+   } 
+   $tx = $request->query->get('tx',"");
+   $checksum = $request->query->get('checksum',"");
+   $response = $app['fedora']->saveResource($app->escape($app['data.resourcepath']) . '/' . $child, $request->getContent(), $request->headers->all(), $tx, $checksum);
+   if (NULL === $response )
+     {
+       $app->abort(404, 'Failed putting resource into Fedora4');
+     }
+   return $response;
+})
+->value('child',"")
 ->assert('uuid','([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})')
 ->before($getPathFromTriple);
 
