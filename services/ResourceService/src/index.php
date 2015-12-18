@@ -22,18 +22,21 @@ $app = new \Silex\Application();
 $app['debug'] = true;
 
 $app->register(new \Silex\Provider\TwigServiceProvider(), array(
-    'twig.path' => __DIR__.'/../templates',
+  'twig.path' => __DIR__.'/../templates',
 ));
 
 $app['twig'] = $app->share($app->extend('twig', function($twig, $app) {
-    return $twig;
+
+  return $twig;
 }));
 
 $app['fedora'] =  $app->share(function() {
-    return Chullo::create('http://localhost:8080/rest');
+
+  return Chullo::create('http://localhost:8080/rest');
 });
 
 $app['triplestore'] = $app->share(function() {
+
   return TriplestoreClient::create('http://localhost:9999/bigdata/sparql');
 });
 
@@ -42,41 +45,46 @@ $app['data.resourcepath'] = NULL;
 $getPathFromTriple = function (Request $request,\Silex\Application $app) {
   // In case the request was made by a browser, avoid 
   // returning the whole Fedora4 API Rest interface page.
-    if (0 === strpos($request->headers->get('Accept'),'text/html')) {
-      $request->headers->set('Accept', 'text/turtle', TRUE);
-    }
-    $sparql_query = $app['twig']->render('getResourceByUUIDfromTS.sparql', array(
-      'uuid' => $request->attributes->get('uuid'),
-    ));
+  if (0 === strpos($request->headers->get('Accept'),'text/html')) {
+    $request->headers->set('Accept', 'text/turtle', TRUE);
+  }
+  $sparql_query = $app['twig']->render('getResourceByUUIDfromTS.sparql', array(
+    'uuid' => $request->attributes->get('uuid'),
+  ));
    
-    $sparql_result = $app['triplestore']->query($sparql_query);
-    foreach ($sparql_result  as $triple) {
-        $app['data.resourcepath'] = $triple->s->getUri();
-    }
+  $sparql_result = $app['triplestore']->query($sparql_query);
+  // We only assign one in case of multiple ones
+  // Will have to check for edge cases?
+  foreach ($sparql_result as $triple) {
+    $app['data.resourcepath'] = $triple->s->getUri();
+  }
+  // Abort the routes if we don't get a subject from the tripple.
+  if (NULL === $app['data.resourcepath']) {
+    $app->abort(404, sprintf('Failed getting resource Path for "%s"', $uuid));
+  }
 };
 
 /**
  * Convert returned Guzzle responses to Symfony responses.
  */
 $app->view(function (ResponseInterface $psr7) {
+  
   return new Response($psr7->getBody(), $psr7->getStatusCode(), $psr7->getHeaders());
 });
+
 /**
  * resource GET route. takes an UUID as first value to match, optional a child resource path
  * takes 'rx' and/or 'metadata' as optional query arguments
  * @see https://wiki.duraspace.org/display/FEDORA40/RESTful+HTTP+API#RESTfulHTTPAPI-GETRetrievethecontentoftheresource
  */
 $app->get("/islandora/resource/{uuid}/{child}",function (\Silex\Application $app, Request $request, $uuid, $child) {
-   if (NULL === $app['data.resourcepath']) {
-     $app->abort(404, 'Failed getting resource Path for {$uuid}');
-   } 
-   $tx = $request->query->get('tx',"");
-   $metadata = $request->query->get('metadata',FALSE) ? '/fcr:metadata' : ""; 
+   $tx = $request->query->get('tx', "");
+   $metadata = $request->query->get('metadata', FALSE) ? '/fcr:metadata' : ""; 
    $response = $app['fedora']->getResource($app->escape($app['data.resourcepath']) . '/' . $child . $metadata , $request->headers->all(), $tx);
-   if (NULL === $response )
-     {
-       $app->abort(404, 'Failed getting resource from Fedora4');
-     }
+   if (NULL === $response) {
+     $app->abort(404, 'Failed getting resource from Fedora4');
+   }
+     
    return $response;
 })
 ->value('child',"")
@@ -89,50 +97,59 @@ $app->get("/islandora/resource/{uuid}/{child}",function (\Silex\Application $app
  * @see https://wiki.duraspace.org/display/FEDORA40/RESTful+HTTP+API#RESTfulHTTPAPI-BluePOSTCreatenewresourceswithinaLDPcontainer
  */
 $app->post("/islandora/resource/{uuid}",function (\Silex\Application $app, Request $request, $uuid, $checksum) {
-   if (NULL === $app['data.resourcepath']) {
-     $app->abort(404, 'Failed getting resource Path for {$uuid}');
-   } 
-   $tx = $request->query->get('tx',"");
-   $checksum = $request->query->get('checksum',"");
+   $tx = $request->query->get('tx', "");
+   $checksum = $request->query->get('checksum', "");
    $response = $app['fedora']->createResource($app->escape($app['data.resourcepath']), $request->getContent(), $request->headers->all(), $tx, $checksum);
-   if (NULL === $response )
-     {
-       $app->abort(404, 'Failed creating resource from Fedora4');
-     }
+   if (NULL === $response) {
+     $app->abort(404, 'Failed creating resource in Fedora4');
+   }
+   
    return $response;
 })
 ->assert('uuid','([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})')
 ->before($getPathFromTriple);
 
-$app->after(function (Request $request, Response $response, \Silex\Application $app) {
-});
-
 /**
  * resource PUT route. takes an UUID for the resource to be update/created as first value to match, 
  * optional a Child resource relative path
- * takes 'rx' and/or 'checksum' as query arguments
- * @see https://wiki.duraspace.org/display/FEDORA40/RESTful+HTTP+API#RESTfulHTTPAPI-BluePOSTCreatenewresourceswithinaLDPcontainer
+ * takes 'rx' and/or 'checksum' as optional query arguments
+ * @see https://wiki.duraspace.org/display/FEDORA40/RESTful+HTTP+API#RESTfulHTTPAPI-YellowPUTCreatearesourcewithaspecifiedpath,orreplacethetriplesassociatedwitharesourcewiththetriplesprovidedintherequestbody.
  */
 $app->put("/islandora/resource/{uuid}/{child}",function (\Silex\Application $app, Request $request, $uuid, $child) {
-   if (NULL === $app['data.resourcepath']) {
-     $app->abort(404, 'Failed getting resource Path for {$uuid}');
-   } 
-   $tx = $request->query->get('tx',"");
-   $checksum = $request->query->get('checksum',"");
-   $response = $app['fedora']->saveResource($app->escape($app['data.resourcepath']) . '/' . $child, $request->getContent(), $request->headers->all(), $tx, $checksum);
-   if (NULL === $response )
-     {
-       $app->abort(404, 'Failed putting resource into Fedora4');
-     }
+   $tx = $request->query->get('tx', "");
+   $checksum = $request->query->get('checksum', "");
+   $response = $app['fedora']->saveResource($app->escape($app['data.resourcepath']).'/'.$child, $request->getContent(), $request->headers->all(), $tx, $checksum);
+   if (NULL === $response) {
+     $app->abort(404, 'Failed putting resource into Fedora4');
+   }
+     
    return $response;
 })
 ->value('child',"")
 ->assert('uuid','([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})')
 ->before($getPathFromTriple);
 
+/**
+* resource PATCH route. takes an UUID for the resource to be modified via SPARQL as first value to match, 
+* optional a Child resource relative path
+* takes 'rx' as optional query argument
+* @see https://wiki.duraspace.org/display/FEDORA40/RESTful+HTTP+API#RESTfulHTTPAPI-GreenPATCHModifythetriplesassociatedwitharesourcewithSPARQL-Update
+*/
+$app->patch("/islandora/resource/{uuid}/{child}",function (\Silex\Application $app, Request $request, $uuid, $child) {
+  $tx = $request->query->get('tx', "");
+  $response = $app['fedora']->modifyResource($app->escape($app['data.resourcepath']).'/'.$child, $request->getContent(), $request->headers->all(), $tx);
+  if (NULL === $response) {
+    $app->abort(404, 'Failed modifying resource in Fedora4');
+  }
+  
+  return $response;
+})
+->value('child',"")
+->assert('uuid','([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})')
+->before($getPathFromTriple);
+
 $app->after(function (Request $request, Response $response, \Silex\Application $app) {
+  // Todo a closing controller, not sure what now but i had an idea.
 });
-
-
 
 $app->run();
