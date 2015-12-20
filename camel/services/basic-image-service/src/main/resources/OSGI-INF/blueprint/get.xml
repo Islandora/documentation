@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:sparql="http://www.w3.org/2005/sparql-results#"
            xsi:schemaLocation="
            http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd">
 
@@ -22,19 +22,19 @@
         <transform><javaScript>encodeURI(request.body)</javaScript></transform>
         <removeHeaders pattern="*"/>
         <setHeader headerName="CamelHttpMethod"><constant>POST</constant></setHeader>
-        <setHeader headerName="CamelHttpQuery"><simple>format=json&amp;query=${bodyAs(String)}</simple></setHeader>
+        <setHeader headerName="CamelHttpQuery"><simple>format=xml&amp;query=${bodyAs(String)}</simple></setHeader>
         <setBody><simple>${null}</simple></setBody>
         <to uri="http:{{islandora.triplestore.baseurl}}"/>
         <to uri="direct:getObjectExtractUri"/>
     </route>
 
     <route id="getObjectExtractUri">
-      <description>Uses JSONPath and Javascript to parse SPARQL query results and set collection URI as an exchange property</description>
+      <description>Uses XPath and Javascript to parse SPARQL query results and set collection URI as an exchange property</description>
       <from uri="direct:getObjectExtractUri"/>
         <doTry>
-          <transform><jsonpath>$['results']['bindings'][0]['s']['value']</jsonpath></transform>
+          <transform><xpath resultType="java.lang.String">//sparql:results/sparql:result[1]/sparql:binding[@name='s']/sparql:uri/text()</xpath></transform>
           <transform><javaScript>request.body.substr(request.body.indexOf('://') + 3)</javaScript></transform>
-          <setProperty propertyName="uri"><simple>${bodyAs(String)}</simple></setProperty>
+          <setProperty propertyName="uri"><simple>${body}</simple></setProperty>
           <doCatch>
             <exception>java.lang.Exception</exception>
             <to uri="direct:getObjectExtractUriError"/>
@@ -66,19 +66,19 @@
         <transform><javaScript>encodeURI(request.body)</javaScript></transform>
         <removeHeaders pattern="*"/>
         <setHeader headerName="CamelHttpMethod"><constant>POST</constant></setHeader>
-        <setHeader headerName="CamelHttpQuery"><simple>format=json&amp;query=${bodyAs(String)}</simple></setHeader>
+        <setHeader headerName="CamelHttpQuery"><simple>format=xml&amp;query=${bodyAs(String)}</simple></setHeader>
         <setBody><simple>${null}</simple></setBody>
         <to uri="http:{{islandora.triplestore.baseurl}}"/>
         <to uri="direct:getCollectionExtractUri"/>
     </route>
 
     <route id="getCollectionExtractUri">
-      <description>Uses JSONPath and Javascript to parse SPARQL query results and set collection URI as an exchange property</description>
+      <description>Uses XPath and Javascript to parse SPARQL query results and set collection URI as an exchange property</description>
       <from uri="direct:getCollectionExtractUri"/>
         <doTry>
-          <transform><jsonpath>$['results']['bindings'][0]['s']['value']</jsonpath></transform>
+          <transform><xpath resultType="java.lang.String">//sparql:results/sparql:result[1]/sparql:binding[@name='s']/sparql:uri/text()</xpath></transform>
           <transform><javaScript>request.body.substr(request.body.indexOf('://') + 3)</javaScript></transform>
-          <setProperty propertyName="uri"><simple>${bodyAs(String)}</simple></setProperty>
+          <setProperty propertyName="uri"><simple>${body}</simple></setProperty>
           <doCatch>
             <exception>java.lang.Exception</exception>
             <to uri="direct:getCollectionExtractUriError"/>

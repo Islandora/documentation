@@ -15,6 +15,7 @@
 
   <!-- Load Configuration File -->
   <cm:property-placeholder id="properties" persistent-id="ca.islandora.services.basic.image" update-strategy="reload">
+
     <cm:default-properties>
       <cm:property name="islandora.drupal.baseurl" value="localhost/islandora"/>
       <cm:property name="islandora.drupal.username" value=""/>
