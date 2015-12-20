@@ -1,5 +1,6 @@
 package ca.islandora.services.basic.image;
 
+import static java.net.URLEncoder.encode;
 import static java.util.UUID.randomUUID;
 import static org.apache.camel.Exchange.HTTP_METHOD;
 import static org.apache.camel.Exchange.HTTP_QUERY;
@@ -72,13 +73,13 @@ public class GetRoutesTest extends CamelBlueprintTestSupport {
         resultEndpoint.expectedPropertyReceived("uuid", uuid);
         resultEndpoint.message(0).header(HTTP_METHOD).equals("POST");
         resultEndpoint.message(0).header(HTTP_QUERY).equals(
-                "format=xml&query=" +
-                "PREFIX%20nfo:%20%3chttp://www.semanticdesktop.org/ontologies/2007/03/22/nfo/v1.2/%3e%0a" +
-                "PREFIX%20rdf:%20%3chttp://www.w3.org/1999/02/22-rdf-syntax-ns#%3e%0a" +
-                "PREFIX%20pcdm:%20%3chttp://pcdm.org/models#%3e%0a" +
-                "SELECT%20?s%20WHERE%20%7b%0a" +
-                "%20%20?s%20nfo:uuid%20%22" + uuid + "%22%5e%5e%3chttp://www.w3.org/2001/XMLSchema#string%3e%20.%0a" +
-                "%20%20?s%20rdf:type%20pcdm:Object%20.%0a%7d%0a");
+                "format=xml&query=" + encode(
+                "PREFIX nfo: <http://www.semanticdesktop.org/ontologies/2007/03/22/nfo/v1.2/>\n" +
+                "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
+                "PREFIX pcdm: <http://pcdm.org/models#>\n" +
+                "SELECT ?s WHERE {\n" +
+                "  ?s nfo:uuid \"" + uuid + "\"^^<http://www.w3.org/2001/XMLSchema#string> .\n" +
+                "  ?s rdf:type pcdm:Object .\n}\n", "UTF-8"));
 
         final Exchange exchange = new DefaultExchange(context);
         exchange.setProperty("uuid", uuid);
@@ -108,13 +109,13 @@ public class GetRoutesTest extends CamelBlueprintTestSupport {
         resultEndpoint.expectedPropertyReceived("uuid", uuid);
         resultEndpoint.message(0).header(HTTP_METHOD).equals("POST");
         resultEndpoint.message(0).header(HTTP_QUERY).equals(
-                "format=xml&query=" +
-                "PREFIX%20nfo:%20%3chttp://www.semanticdesktop.org/ontologies/2007/03/22/nfo/v1.2/%3e%0a" +
-                "PREFIX%20rdf:%20%3chttp://www.w3.org/1999/02/22-rdf-syntax-ns#%3e%0a" +
-                "PREFIX%20pcdm:%20%3chttp://pcdm.org/models#%3e%0a" +
-                "SELECT%20?s%20WHERE%20%7b%0a" +
-                "%20%20?s%20nfo:uuid%20%22" + uuid + "%22%5e%5e%3chttp://www.w3.org/2001/XMLSchema#string%3e%20.%0a" +
-                "%20%20?s%20rdf:type%20pcdm:Collection%20.%0a%7d%0a");
+                "format=xml&query=" + encode(
+                "PREFIX nfo: <http://www.semanticdesktop.org/ontologies/2007/03/22/nfo/v1.2/>\n" +
+                "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
+                "PREFIX pcdm: <http://pcdm.org/models#>\n" +
+                "SELECT ?s WHERE {\n" +
+                "  ?s nfo:uuid \"" + uuid + "\"^^<http://www.w3.org/2001/XMLSchema#string> .\n" +
+                "  ?s rdf:type pcdm:Collection .\n}\n", "UTF-8"));
 
         final Exchange exchange = new DefaultExchange(context);
         exchange.setProperty("uuid", uuid);
