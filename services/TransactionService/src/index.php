@@ -16,9 +16,9 @@ $app = new Application();
 
 $app['debug'] = true;
 
-$app['fedora'] = function () use ($app) {
+$app['fedora'] = $app->share(function () {
     return FedoraApi::create('http://127.0.0.1:8080/fcrepo/rest');
-};
+});
 
 /**
  * Convert returned Guzzle responses to Symfony responses.
