@@ -138,7 +138,7 @@ $app->get("/islandora/resource/{id}/{child}",function (Application $app, Request
  * takes 'rx' and/or 'checksum' as optional query arguments
  * @see https://wiki.duraspace.org/display/FEDORA40/RESTful+HTTP+API#RESTfulHTTPAPI-BluePOSTCreatenewresourceswithinaLDPcontainer
  */
-$app->post("/islandora/resource/{id}",function (Application $app, Request $request, $id, $checksum) {
+$app->post("/islandora/resource/{id}",function (Application $app, Request $request, $id) {
    $tx = $request->query->get('tx', "");
    $checksum = $request->query->get('checksum', "");
    try {
