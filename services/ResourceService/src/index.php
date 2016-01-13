@@ -100,8 +100,17 @@ $idToUri = function ($id) use ($app) {
     // If $id is empty then assume we are dealing with fedora base rest endpoint
     return $app['config']['islandora']['fedoraProtocol'].'://'.$app['config']['islandora']['fedoraHost'].$app['config']['islandora']['fedoraPath'];
   }
-    
 };
+
+/** 
+ * Apply middleware to all controllers
+*/
+$app['controllers']
+    ->convert('id', $idToUri)
+    ->assert('id',$app['config']['islandora']['resourceIdRegex'])
+    ->before($htmlHeaderToTurtle) 
+    ->before($hostHeaderNormalize)
+;
 
 /**
  * Convert returned Guzzle responses to Symfony responses.
@@ -126,12 +135,8 @@ $app->get("/islandora/resource/{id}/{child}",function (Application $app, Request
    }
    return $response;
 })
-->value('child',"")
 ->value('id',"")
-->convert('id', $idToUri)
-->assert('id',$app['config']['islandora']['resourceIdRegex'])
-->before($htmlHeaderToTurtle) 
-->before($hostHeaderNormalize); 
+->value('child',"");
 
 /**
  * Resource POST route. takes $id (valid UUID or empty) for the parent resource as first value to match
@@ -149,10 +154,7 @@ $app->post("/islandora/resource/{id}",function (Application $app, Request $reque
    }
    return $response;
 })
-->value('id',"")
-->assert('id',$app['config']['islandora']['resourceIdRegex'])
-->before($htmlHeaderToTurtle)
-->before($hostHeaderNormalize);
+->value('id',"");
 
 /**
  * Resource PUT route. takes $id (valid UUID or empty) for the resource to be update/created as first value to match, 
@@ -171,10 +173,8 @@ $app->put("/islandora/resource/{id}/{child}",function (Application $app, Request
    }
    return $response;
 })
-->value('child',"")
-->assert('id',$app['config']['islandora']['resourceIdRegex'])
-->before($htmlHeaderToTurtle)
-->before($hostHeaderNormalize);
+->value('id',"")
+->value('child',"");
 
 /**
 * Resource PATCH route. takes $id (valid UUID or empty) for the resource to be modified via SPARQL as first value to match, 
@@ -192,10 +192,8 @@ $app->patch("/islandora/resource/{id}/{child}",function (Application $app, Reque
   }
   return $response;
 })
-->value('child',"")
-->assert('id',$app['config']['islandora']['resourceIdRegex'])
-->before($htmlHeaderToTurtle)
-->before($hostHeaderNormalize);
+->value('id',"")
+->value('child',"");
 
 /**
 * Resource DELETE route. takes $id (valid UUID or empty) for the resource to be modified via SPARQL as first value to match, 
@@ -218,10 +216,8 @@ $app->delete("/islandora/resource/{id}/{child}",function (Application $app, Requ
   }
   return $response;
 })
-->value('child',"")
-->assert('id',$app['config']['islandora']['resourceIdRegex'])
-->before($htmlHeaderToTurtle)
-->before($hostHeaderNormalize);
+->value('id',"")
+->value('child',"");
 
 $app->after(function (Request $request, Response $response, Application $app) {
   // Todo a closing controller, not sure what now but i had an idea.
