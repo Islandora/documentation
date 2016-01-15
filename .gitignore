@@ -4,3 +4,5 @@ tests/test_config.ini
 install/.vagrant
 install/downloads
 site/
+
+services/ResourceService/composer.lock
