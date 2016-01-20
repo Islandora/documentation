@@ -43,20 +43,20 @@ $app->error(function (\Symfony\Component\HttpKernel\Exception\HttpException $e, 
   if ($app['debug']) {
     return;
   }
-  return new response(sprintf('Islandora Resource Service exception: %s / HTTP %d response', $e->getMessage(), $code), $code);
+  return new Response(sprintf('Islandora Resource Service exception: %s / HTTP %d response', $e->getMessage(), $code), $code);
 });
 $app->error(function (\Symfony\Component\HttpKernel\Exception\NotFoundHttpException $e, $code) use ($app){
   if ($app['debug']) {
     return;
   }
   //Not sure what the best "verbose" message is
-  return new response(sprintf('Islandora Resource Service exception: %s / HTTP %d response', $e->getMessage(), $code), $code);
+  return new Response(sprintf('Islandora Resource Service exception: %s / HTTP %d response', $e->getMessage(), $code), $code);
 });
 $app->error(function (\Exception $e, $code) use ($app){
   if ($app['debug']) {
     return;
   }  
-  return new response(sprintf('Islandora Resource Service uncatched exception: %s %d response', $e->getMessage(), $code), $code);
+  return new Response(sprintf('Islandora Resource Service uncatched exception: %s %d response', $e->getMessage(), $code), $code);
 });
 
 
