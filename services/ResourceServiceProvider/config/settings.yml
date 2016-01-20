@@ -1,0 +1,8 @@
+islandora:
+  fedoraProtocol: http
+  fedoraHost: "localhost:8080"
+  fedoraPath: /fcrepo/rest
+  tripleProtocol: http
+  tripleHost: "localhost:8080"
+  triplePath: /bigdata/sparql
+  resourceIdRegex: "(?:[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})?"
