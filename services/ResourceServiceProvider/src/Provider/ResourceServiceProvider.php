@@ -89,7 +89,6 @@ class ResourceServiceProvider implements ServiceProviderInterface, ControllerPro
        $sparql_query = $app['twig']->render('getResourceByUUIDfromTS.sparql', array(
          'uuid' => $id,
        ));
-       error_log($sparql_query);
         try {
           $sparql_result = $app['triplestore']->query($sparql_query);
         }
