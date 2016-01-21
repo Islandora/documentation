@@ -1,0 +1,3 @@
+#!/bin/sh
+readonly DIR=$(readlink -f `dirname $0`)
+$DIR/docker-run-ansible ansible-doc "$@"

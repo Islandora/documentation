@@ -1,0 +1,5 @@
+---
+drupal_database_url: "{{ mysql_bind_address }}"
+drupal_database_port: "{{ mysql_port }}"
+drupal_database_root_user: "{{ mysql_root_username }}"
+drupal_database_root_password: "{{ mysql_root_password }}"

@@ -1,0 +1,5 @@
+---
+apache_service: apache2
+apache_user: www-data
+apache_group: www-data
+apache_document_root: /var/www/html

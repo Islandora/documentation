@@ -1,6 +1,12 @@
+*~
+.#*
 cache.properties
 .DS_Store
 tests/test_config.ini
 install/.vagrant
+install/credentials
 install/downloads
+install/vagrant/*
+install/vagrant/!example*
+install/vagrant/!create_default_configuration.sh
 site/

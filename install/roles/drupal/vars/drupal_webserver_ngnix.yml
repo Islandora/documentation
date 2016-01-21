@@ -1,0 +1,6 @@
+---
+drupal_webserver_document_root: "{{ ngnix_document_root }}"
+drupal_home: "{{ drupal_webserver_document_root }}/drupal"
+drupal_webserver_user: "{{ ngnix_user }}"
+drupal_webserver_group: "{{ ngnix_group }}"
+drupal_webserver_service: "{{ ngnix_service }}"

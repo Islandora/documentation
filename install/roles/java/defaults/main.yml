@@ -1,0 +1,5 @@
+---
+java_home: /usr/lib/jvm/java-8-oracle
+java_opts: >-
+  -Djava.awt.headless=true -Dfile.encoding=UTF-8 -server -Xms2048m -Xmx2048m -XX:NewSize=256m -XX:MaxNewSize=256m 
+  -Dcom.bigdata.rdf.sail.webapp.ConfigParams.propertyFile={{ catalina_base }}/webapps/bigdata/WEB-INF/RWStore.properties

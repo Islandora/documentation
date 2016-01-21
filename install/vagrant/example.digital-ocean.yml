@@ -1,0 +1,8 @@
+---
+# Documentation: https://github.com/smdahlen/vagrant-digitalocean
+ssh_key_name: DEFAULT
+private_key_path: /home/user/.ssh/id_rsa
+token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  
+region: tor1
+image: docker 
+size: 4gb

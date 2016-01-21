@@ -1,73 +1,195 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+require 'yaml'
+
+#########################################################
+# Looks for a settings file related to a given provider #
+#########################################################
+def load_settings(file)
+  dir = File.dirname(File.expand_path(__FILE__))
+  if !File.exist?("#{dir}/vagrant/#{file}.yml")
+    raise "Settings file not found! Please copy vagrant/example.#{file}.yml to vagrant/#{file}.yml and try again."
+  end
+  YAML.load_file "vagrant/#{file}.yml"
+end
+
+##################################################
+# Maps the ports given in the providers settings #
+##################################################
+def map_ports(override, settings)
+  if (settings.include?('port_mapping'))
+    for port_mapping in settings['port_mapping'];
+      override.vm.network "forwarded_port", guest: port_mapping['guest'], host: port_mapping['host']
+    end
+  end
+end
+
+#####################################################
+# Syncs the folders given in the providers settings #
+#####################################################
+def sync_folders(override, settings)
+  synced_folders = settings.include?('synced_folders') ? settings['synced_folders'] : []
+
+  # Get value of option if defined, or use a default.
+  def option_value(synced_folder, option, default)
+    return synced_folder.include?(option) ? synced_folder[option] : default;
+  end
+
+  # Set the value of an option if defined.
+  def set_option(options, option, synced_folder)
+    if (synced_folder.include?(option))
+      options[option] = synced_folder[option]
+    end
+  end
+
+  # Set up each sync folder
+  for synced_folder in synced_folders;
+    options = {
+      rsync__auto: "true",
+      rsync__exclude: option_value(synced_folder, 'excluded_paths', []),
+      create: option_value(synced_folder, 'create', true),
+      mount_options: option_value(synced_folder, 'mount_options', [])
+    }
+    set_option(options, 'type', synced_folder)
+    set_option(options, 'owner', synced_folder)
+    set_option(options, 'group', synced_folder)
+    override.vm.synced_folder synced_folder['local_path'], synced_folder['destination'], options
+  end
+end
+
 VAGRANTFILE_API_VERSION = "2"
-
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  # All Vagrant configuration is done here. The most common configuration
-  # options are documented and commented below. For a complete reference,
-  # please see the online documentation at vagrantup.com.
-  config.vm.provider "virtualbox" do |v|
-    v.name = "Islandora 7.x-2.x"
-    config.vm.network :forwarded_port, guest: 80, host: 8000 # Apache
-  end
-  
+  ###################
+  # Global Settings #
+  ###################
+  config.vm.define "islandora-deux"
   config.vm.hostname = "islandora-deux"
+  config.ssh.username = "vagrant"
+  config.ssh.forward_agent = true
 
-  # THIS NEEDS SOME LOVE. WEIRD SSH LOGIN ISSUES.
-  # IT GETS STUCK AT: Waiting for ssh..
-  config.vm.provider :aws do |aws, override|
-    aws.access_key_id = ENV['AWS_KEY']
-    aws.secret_access_key = ENV['AWS_SECRET']
-    aws.keypair_name = ENV['AWS_KEYNAME']
-    aws.ami = "ami-4feaad2a"
-    override.vm.box = "dummy"
-    override.ssh.username = "ubuntu"
-    override.ssh.private_key_path = ENV['AWS_KEYPATH']
-    override.vm.network :forwarded_port, guest: 80, host: 80
+  #####################
+  # Global Provisions #
+  #####################
+
+  # Fix for the 'no tty' error's displayed during provisioning
+  config.vm.provision "fix-no-tty", type: "shell" do |shell|
+    shell.privileged = false
+    shell.inline = "sudo sed -i '/tty/!s/mesg n/tty -s \\&\\& mesg n/' /root/.profile"
   end
-  
-  # This should work fine out of the box if environment variables are declared
+
+  # Install Docker on Guest (required for Ansible)
+  config.vm.provision :shell, name: "Install Docker",
+                      path: "./scripts/install-docker.sh", args: "/vagrant"
+
+  # Allows us to call Docker apps everywhere.
+  config.vm.provision :shell, name: "Link Docker Executables", inline: <<-EOT
+    for script in /vagrant/bin/*; do
+      dest=/usr/local/bin/$(echo $script | cut -d/ -f4);
+      if [ ! -f $dest ]; then
+        ln -s $script $dest;
+      fi
+    done
+  EOT
+
+  # Copy .gitconfig if present
+  if !File.exist?("~/.gitconfig")
+    config.vm.provision "file", source: "~/.gitconfig", destination: "~/.gitconfig"
+  end
+
+  # Provsion using Ansible
+  config.vm.provision :shell, name: "Download required roles", keep_color: true, privileged: false,
+                      inline: "/vagrant/bin/ansible-galaxy install -r /vagrant/requirements.yml"
+
+  ########################
+  # Virtual Box Provider #
+  ########################
+  config.vm.provider :virtualbox do |provider, override|
+    settings = load_settings 'virtualbox'
+    provider.name = settings['name']
+    provider.cpus = settings['cpus']
+    provider.memory = settings['memory']
+    override.vm.box = settings['box']
+    # We must use rsync rather than virtual folders as Docker and Virtualbox
+    # shared folders do not work with each other at all, Docker will hold onto
+    # old versions of the files.
+    override.vm.synced_folder "./", "/vagrant",
+                              type: 'rsync',
+                              create: true,
+                              owner: "vagrant",
+                              group: "vagrant"
+    override.vm.synced_folder "../", "/home/vagrant/islandora",
+                              create: true,
+                              owner: "vagrant",
+                              group: "vagrant"
+    map_ports override, settings
+    sync_folders override, settings
+    override.vm.provision :shell, name: "Provision with Ansible", keep_color: true, privileged: false,
+                          inline: "/vagrant/bin/ansible-playbook --limit dockerhost -e ansible_user=vagrant /vagrant/full-stack.yml"
+  end
+
+  ##########################
+  # Digital Ocean Provider #
+  ##########################
   config.vm.provider :digital_ocean do |provider, override|
-    provider.ssh_key_name = ENV['DIGITALOCEAN_KEYNAME']
-    override.ssh.private_key_path = ENV['DIGITALOCEAN_KEYPATH']
-    override.ssh.username = "vagrant"
+    settings = load_settings 'digital-ocean'
+    provider.name = settings['name']
+    provider.image = settings['image']
+    provider.ssh_key_name = settings['ssh_key_name']
+    provider.token = settings['token']
+    provider.region = settings['region']
+    provider.size = settings['size']
     override.vm.box = 'digital_ocean'
     override.vm.box_url = "https://github.com/smdahlen/vagrant-digitalocean/raw/master/box/digital_ocean.box"
-    provider.token = ENV['DIGITALOCEAN_TOKEN']
-    provider.image = 'ubuntu-14-04-x64'
-    provider.region = 'tor1'
-    provider.size = '4gb'
-    override.vm.network :forwarded_port, guest: 80, host: 80
-  end
-  
-  # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "ubuntu/trusty64"
-
-  # Setup the shared folder
-  home_dir = "/home/vagrant"
-  config.vm.synced_folder "../", home_dir + "/islandora"
-
-  config.vm.network :forwarded_port, guest: 8080, host: 8080 # Tomcat
-  config.vm.network :forwarded_port, guest: 8181, host: 8181 # Karaf
-  config.vm.network :forwarded_port, guest: 3306, host: 3306 # MySQL
-  config.vm.network :forwarded_port, guest: 5432, host: 5432 # PostgreSQL
-
-  config.vm.provider "virtualbox" do |vb|
-    vb.customize ["modifyvm", :id, "--memory", '2048']
+    override.ssh.private_key_path = settings['private_key_path']
+    override.vm.synced_folder "./", "/vagrant",
+                              create: true,
+                              owner: "vagrant",
+                              group: "vagrant"
+    override.vm.synced_folder "../", "/home/vagrant/islandora",
+                              create: true,
+                              owner: "vagrant",
+                              group: "vagrant"
+    map_ports override, settings
+    sync_folders override, settings
+    # We have to hard code the user do to odd behavoir with which user is used
+    # for ssh. The first time the user will be root, but subsequent calls to
+    # provision will use the vagrant user.
+    override.vm.provision :shell, name: "Provision with Ansible", keep_color: true, privileged: false,
+                          inline: "/vagrant/bin/ansible-playbook --limit dockerhost -e ansible_user=vagrant /vagrant/full-stack.yml"
   end
 
-  config.vm.provision :shell, inline: "sudo sed -i '/tty/!s/mesg n/tty -s \\&\\& mesg n/' /root/.profile", :privileged =>false
-  config.vm.provision :shell, :path => "./scripts/bootstrap.sh", :args => home_dir
-  config.vm.provision :shell, :path => "./scripts/solr.sh", :args => home_dir
-  config.vm.provision :shell, :path => "./scripts/drupal.sh", :args => home_dir
-  config.vm.provision :shell, :path => "./scripts/fcrepo.sh", :args => home_dir
-  config.vm.provision :shell, :path => "./scripts/blazegraph.sh", :args => home_dir
-  config.vm.provision :shell, :path => "./scripts/islandora-commands.sh", :args => home_dir
-  config.vm.provision :shell, :path => "./scripts/islandora-camel.sh", :args => home_dir
-  config.vm.provision :shell, :path => "./scripts/karaf.sh", :args => home_dir
-  config.vm.provision :shell, :path => "./scripts/islandora-karaf-components.sh", :args => home_dir
-  config.vm.provision :shell, :path => "./scripts/config.sh", :args => home_dir
-  config.vm.provision :shell, :path => "./scripts/post-install.sh", :args => home_dir
+  ################
+  # AWS Provider #
+  ################
+  config.vm.provider :aws do |provider, override|
+    # Currently only supports EC2, VPS is not yet exposed.
+    settings = load_settings 'aws'
+    provider.access_key_id = settings['access_key_id']
+    provider.secret_access_key = settings['secret_access_key']
+    provider.session_token = settings['session_token']
+    provider.keypair_name = settings['keypair_name']
+    provider.ami = settings['ami']
+    provider.region = settings['region']
+    override.vm.box = "dummy"
+    override.ssh.username = settings["ssh_username"]
+    override.ssh.private_key_path = settings['private_key_path']
+    override.vm.synced_folder "./", "/vagrant",
+                              create: true,
+                              owner: "ubuntu",
+                              group: "ubuntu"
+    override.vm.synced_folder "../", "/home/ubuntu/islandora",
+                              create: true,
+                              owner: "ubuntu",
+                              group: "ubuntu"
+    map_ports override, settings
+    sync_folders override, settings
+    override.vm.provision :shell, name: "Provision with Ansible", keep_color: true, privileged: false,
+                          inline: "/vagrant/bin/ansible-playbook --limit dockerhost -e ansible_user=ubuntu /vagrant/full-stack.yml"
+  end
+
+  ###################
+  # Docker Provider #
+  ###################
+  # @todo
 end

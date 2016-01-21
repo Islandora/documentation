@@ -1,0 +1,8 @@
+---
+# Download and install the given module if not present or installed
+
+- name: Enable Drupal Module
+  drupal_module: >-
+    name={{ item }} state=enabled
+    chdir={{ drupal_home }}/sites/{{ drupal_site | default('all') }}
+  with_items: "{{ modules }}"

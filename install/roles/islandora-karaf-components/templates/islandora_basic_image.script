@@ -1,0 +1,2 @@
+repo-add file:{{ install_directory }}/camel/karaf/target/classes/features.xml
+feature:install islandora-basic-image-service

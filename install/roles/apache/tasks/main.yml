@@ -1,0 +1,31 @@
+---
+# Installs and configures Apache
+
+- name: Install Apache Required Packages
+  apt: name={{ item }} state=present
+  with_items:
+    - apache2
+    - libapache2-mod-php5
+    - libapache2-mod-auth-mysql
+
+- name: Add User to Apache Group
+  user: user={{ ansible_user }} groups={{ apache_group }} append=yes
+
+- name: Set Apache to start at boot
+  service: name={{ apache_service }} enabled=yes
+
+- name: Enable Apache mod-rewrite
+  apache2_module: name=rewrite state=present
+  notify: restart apache
+
+- name: Set Owner/Group and Perms of Apache Document Root
+  file: >-
+    path=/var/www
+    owner={{ apache_user }} group={{ apache_group }}
+    mode=ug+rw recurse=yes
+
+- name: Start Apache
+  service: name={{ apache_service }} state=started enabled=yes
+ 
+- name: Wait for Apache to Start
+  wait_for: port=80

@@ -1,0 +1,53 @@
+---
+# Install Solr into Tomcat
+
+- name: Download Solr
+  get_url: >-
+    url=http://archive.apache.org/dist/lucene/solr/{{ solr_version }}/solr-{{ solr_version }}.tgz
+    dest={{ download_directory }}/solr-{{ solr_version }}.tgz
+
+- name: Create Solr Home
+  file: >-
+    path={{ solr_home }} state=directory
+    owner={{ tomcat_user }} group={{ tomcat_group }}
+
+- name: Unarchive Solr
+  unarchive: >-
+    src={{ download_directory }}/solr-{{ solr_version }}.tgz dest={{ download_directory }}
+    creates={{ download_directory }}/solr-{{ solr_version }}
+    owner={{ tomcat_user }} group={{ tomcat_group }} copy=no
+    
+  # Shouldn't this log be in the /var/log/tomcat7 directory?
+- name: Create Velocity Log
+  file: >
+    state=touch path={{ catalina_base }}/velocity.log
+    owner={{ tomcat_user }} group={{ tomcat_group }}
+
+- name: Deploy required jars (Solr)
+  command: >-
+    cp {{ download_directory }}/solr-{{ solr_version }}/example/lib/ext/{{ item }}
+       {{ catalina_home }}/lib/{{ item }}
+    creates={{ catalina_home }}/lib/{{ item }}
+  with_items:
+    - log4j-{{ solr_log4j_version }}.jar
+    - slf4j-api-{{ solr_slf4j_api_version }}.jar
+    - slf4j-log4j{{ solr_slf4j_log4j_version }}.jar
+  notify: restart tomcat
+
+- name: Deploy Solr Config
+  shell: >
+    cp -R {{ download_directory }}/solr-{{ solr_version }}/example/solr/* {{ solr_home }}/
+    creates={{ solr_home }}/collection1/conf/solrconfig.xml
+  become: yes
+  become_user: "{{ tomcat_user }}"
+  notify: restart tomcat
+
+- name: Deploy solr.war
+  command: >-
+    cp {{ download_directory }}/solr-{{ solr_version }}/dist/solr-{{ solr_version }}.war
+       {{ catalina_base }}/webapps/solr.war
+    creates={{ catalina_base }}/webapps/solr.war
+  become: yes
+  become_user: "{{ tomcat_user }}"
+
+- meta: flush_handlers

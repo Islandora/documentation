@@ -1,0 +1,13 @@
+---
+# Install Islandora Camel
+
+- name: Set Permissions on Maven Repository
+  file: >-
+    path=/home/{{ ansible_env.SUDO_USER }}/.m2 recurse=yes state=directory
+    owner={{ ansible_env.SUDO_USER }} group={{ ansible_env.SUDO_USER }}
+
+- name: Maven Install Islandora Camel
+  command: mvn install chdir={{ install_directory }}/camel
+  become_user: "{{ ansible_env.SUDO_USER }}"
+  async: 300
+  poll: 5

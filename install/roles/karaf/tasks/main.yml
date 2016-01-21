@@ -1,0 +1,81 @@
+---
+# Install Karaf
+
+- name: Download Karaf
+  get_url: >-
+    url=http://mirror.csclub.uwaterloo.ca/apache/karaf/{{ karaf_version }}/apache-karaf-{{ karaf_version }}.tar.gz
+    dest={{ download_directory }}/apache-karaf-{{ karaf_version }}.tar.gz
+
+- stat: path=/etc/init.d/karaf-service
+  register: karaf_service
+
+- block:
+
+    - name: Extract Karaf
+      unarchive: >-
+        src={{ download_directory }}/apache-karaf-{{ karaf_version }}.tar.gz
+        dest={{ download_directory }} copy=no
+
+    - name: Link Karaf
+      file: >-
+        src={{ download_directory }}/apache-karaf-{{ karaf_version }} dest={{ karaf_home }}
+        state=link
+
+    - name: Manually Start Karaf
+      shell: "{{ karaf_home }}/bin/start && sleep 60"
+
+    - name: Wait for Karaf to be ready.
+      shell: "{{ karaf_home }}/bin/status"
+      register: result
+      until: result.rc == 0
+      retries: 10
+      delay: 5
+      changed_when: false
+
+    - name: Install Karaf Wrapper
+      shell: "{{ karaf_client }} feature:install wrapper && sleep 10"
+
+    - name: Install Karaf OS Service
+      shell: "{{ karaf_client }} wrapper:install && sleep 10"
+
+    - name: Manually Stop Karaf Service
+      shell: "{{ karaf_home }}/bin/stop && sleep 30"
+
+    - name: Add it as a Linux service
+      file: >-
+        src={{ karaf_home }}/bin/karaf-service dest=/etc/init.d/karaf-service
+        state=link
+
+    - name: Set Karaf to start on boot
+      service: >-
+        name=karaf-service enabled=yes
+
+    - name: Delete Karaf Data Directory
+      file: state=absent path={{ karaf_home }}/data
+
+  environment:
+    JAVA_HOME: "{{ java_home }}"
+  rescue:
+    - file: path=/etc/init.d/karaf-service state=absent
+    - shell: "{{ karaf_home }}/bin/stop && sleep 30"
+  when: karaf_service.stat.exists == False
+
+- name: Add Users Maven Repository to Karaf
+  lineinfile: >-
+    dest={{ karaf_home }}/etc/org.ops4j.pax.url.mvn.cfg state=present
+    line="org.ops4j.pax.url.mvn.localRepository=/home/{{ ansible_env.SUDO_USER }}/.m2/repository"
+
+- name: Copy modified karaf logging
+  copy: src=org.ops4j.pax.logging.cfg dest={{ karaf_home }}/etc
+
+- name: Start Karaf Service
+  service: >-
+    name=karaf-service state=started sleep=30
+
+- name: Wait for Karaf to be ready.
+  shell: "service karaf-service status"
+  register: result
+  until: result.rc == 0
+  retries: 10
+  delay: 5
+  changed_when: false

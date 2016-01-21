@@ -1,0 +1,14 @@
+#!/bin/bash
+readonly DIR=$(readlink -f `dirname $0`)
+
+$DIR/docker-run-ansible ansible-galaxy "$@"
+
+# Handle bug where ansible-galaxy returns non-zero when checking --help
+EXIT=$?
+
+if [[ "$@" =~ '--help' ]];
+then
+    exit 0;
+fi
+
+exit $EXIT

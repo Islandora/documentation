@@ -1,0 +1,15 @@
+---
+- name: Remove default vhost settings
+  file: path=/etc/apache2/sites-enabled/000-default.conf state=absent
+
+- name: Deploy vhost settings
+  template: >-
+    src=apache-vhost.conf
+    dest=/etc/apache2/sites-available/drupal-{{ drupal_site_directory }}.conf
+
+- name: Enable vhost settings
+  file: >-
+    src=/etc/apache2/sites-available/drupal-{{ drupal_site_directory }}.conf
+    dest=/etc/apache2/sites-enabled/drupal-{{ drupal_site_directory }}.conf
+    state=link
+  notify: restart apache
