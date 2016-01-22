@@ -12,7 +12,7 @@ port_mapping:
     host: 8000
   # Tomcat
   - guest: 8080
-    host: 8082
+    host: 8080
   # Karaf
   - guest: 8181
     host: 8181
