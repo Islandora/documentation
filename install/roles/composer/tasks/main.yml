@@ -1,0 +1,16 @@
+---
+# Install Composer
+
+- stat: path=/usr/local/bin/composer
+  register: composer
+  
+- name: Install Composer
+  shell: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin creates=/usr/local/bin/composer
+  when: composer.stat.exists == False
+  
+- name: Rename composer.phar to composer
+  command: mv /usr/local/bin/composer.phar /usr/local/bin/composer creates=/usr/local/bin/composer
+  when: composer.stat.exists == False
+
+- name: Make Composer Executable
+  file: path=/usr/local/bin/composer mode=a+x state=file

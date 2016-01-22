@@ -1,0 +1,25 @@
+---
+# Install and Configure Drupal
+# Drupal can support different webservers (apache, ngnix) and different
+# databases (mysql, postgresql, etc).
+
+- include_vars: "drupal_webserver_{{ drupal_webserver }}.yml"
+- include_vars: "drupal_database_{{ drupal_database }}.yml"  
+ 
+- name: Download Drupal
+  shell: >-
+    drush dl drupal-{{ drupal_version }} --drupal-project-rename=drupal
+    chdir={{ drupal_webserver_document_root }} creates={{ drupal_home }}
+  become: yes
+  become_user: "{{ drupal_webserver_user }}"
+   
+- name: Create Drupal Library and Module Folders
+  file: >-
+    path={{ drupal_home }}/sites/all/{{ item }} state=directory
+    owner={{ drupal_webserver_user }} group={{ drupal_webserver_group }} mode=ug+rw
+  with_items:
+    - libraries
+    - modules
+    - modules/contrib
+    - modules/custom
+    - modules/features

@@ -1,0 +1,5 @@
+---
+drupal_database_url: "{{ postgresql_database_url }}"
+drupal_database_port: "{{ postgresql_database_port }}"
+drupal_database_root_user: "{{ postgresql_root_user }}"
+drupal_database_root_password: "{{ postgresql_root_password }}"

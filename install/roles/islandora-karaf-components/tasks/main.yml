@@ -1,0 +1,38 @@
+---
+# Install Islandora Karaf Compontents
+
+- name: Deploy Compontents
+  template: >-
+    src={{ item }} dest={{ download_directory }}/{{ item }}
+  with_items:
+    - islandora_sync_gateway.script
+    - islandora_basic_image.script
+    - islandora_collection.script
+
+  # Unfortunately couldn't get rid of the sleep it was unreliable without it.
+- name: "Install Islandora Karaf Components"
+  shell: >
+    {{ karaf_client }} -f {{ download_directory }}/{{ item.script }} && sleep 10
+    creates={{ karaf_home}}/etc/{{ item.creates }}
+  environment:
+    JAVA_HOME: "{{ java_home }}" 
+  with_items:
+    - script: islandora_sync_gateway.script
+      creates: ca.islandora.camel.sync.cfg
+    - script: islandora_basic_image.script
+      creates: ca.islandora.camel.services.basic.image.cfg
+    - script: islandora_collection.script
+      creates: ca.islandora.services.collection.cfg
+  notify: restart karaf
+
+  # We have to overide the default settings with the appropriate passwords etc.
+- name: Deploy Karaf Configuration
+  template: >
+    src={{ item }} dest={{ karaf_home }}/etc
+  with_items:
+    - ca.islandora.camel.services.basic.image.cfg
+    - ca.islandora.camel.sync.cfg
+    - ca.islandora.services.collection.cfg
+    - ca.islandora.sync.cfg
+    - org.fcrepo.camel.indexing.triplestore.cfg
+  notify: restart karaf

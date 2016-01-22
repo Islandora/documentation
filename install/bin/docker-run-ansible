@@ -1,0 +1,114 @@
+#!/bin/bash
+# Runs Ansible from a Docker Container.
+#
+# Shares a number of resources with the host:
+#  - Docker daemon socket (Communicate with docker, provision containers).
+#  - Docker login information (~/.docker, required to push to Docker Hub).
+#  - Host ssh-agent (Provision the host, pull from git repos etc.)
+#  - 'dockerhost' used in provisioning the host system.
+#  - /vagrant (The install directory with the ansible scripts).
+#
+# Also sets the working directory to the /vagrant so playbooks can be called
+# without a path.
+
+# Get the IP for accessing the Docker host machine
+dockerhost_ip() {
+    ip route | awk '/docker0/ { print $NF }'
+}
+
+# Checks if the given container exists
+container_exists() {
+    local container=$1
+    sudo docker ps -aqf "name=$container" | egrep -q '.'
+}
+
+# Creates SSH key to use for communication between Docker container and the
+# Docker host.
+create_ssh_key() {
+    # Create directory to house the key
+    if [ ! -d $HOME/credentials ]; then
+        mkdir $HOME/credentials
+    fi
+    # Generate the key
+    if [ ! -e $HOME/credentials/id_rsa ]; then
+        ssh-keygen -q -t rsa -N '' -f $HOME/credentials/id_rsa
+    fi
+}
+
+# Checks the give authorized_keys file to see if the key is present.
+missing_ssh_key() {
+    local authorized_keys=$1
+    sudo grep -Fxq "$(cat $HOME/credentials/id_rsa.pub)" $authorized_keys
+    [ $? -ne 0 ]
+}
+
+authorize_ssh_key() {
+    local authorized_keys=$1
+    sudo bash -c "cat $HOME/credentials/id_rsa.pub >> $authorized_keys"
+}
+
+authorize_ssh_key_for_user() {
+    local authorized_keys=$HOME/.ssh/authorized_keys
+    if missing_ssh_key $authorized_keys; then
+        authorize_ssh_key $authorized_keys
+    fi
+}
+
+authorize_ssh_key_for_root() {
+    local authorized_keys=/root/.ssh/authorized_keys
+    if sudo [ ! -d /root/.ssh ]; then
+        sudo mkdir /root/.ssh
+        sudo chmod 700 /root/.ssh
+    fi
+    if missing_ssh_key $authorized_keys; then
+        authorize_ssh_key $authorized_keys
+    fi
+}
+
+# Create data volume container for Ansible
+create_ansible_data_volume_container() {
+    # When creating a volume we create a key for it that we then add to our
+    # authorized_keys, so the container can access the host via SSH. It will
+    # only be able to ssh as the current user or root, so make sure you set
+    # 'ansible_user' correctly when calling ansible-playbook.
+    create_ssh_key
+    authorize_ssh_key_for_user
+    authorize_ssh_key_for_root
+    sudo docker run -d --name ansible-volume \
+         -v /etc/ansible/roles \
+         -v /var/run/docker.sock:/var/run/docker.sock \
+         -v $HOME/.docker:/root/.docker \
+         -v $HOME/credentials:/root/credentials \
+         -v $HOME/credentials/id_rsa:/root/.ssh/id_rsa \
+         -v /vagrant:/vagrant \
+         nigelgbanks/ansible /bin/true > /dev/null
+}
+
+ssh_agent_docker_arguments() {
+    # SSH Agent is mounted as needed rather than in the persitant volume as it
+    # may change overtime.
+    local ssh_auth_sock=$(readlink -f $SSH_AUTH_SOCK)
+    if [ ! -z $ssh_auth_sock ]; then
+        echo "-v $ssh_auth_sock:/ssh-agent -e SSH_AUTH_SOCK=/ssh-agent -e DOCKERHOST_SSH_AUTH_SOCK=$ssh_auth_sock"
+    fi
+    echo ""
+}
+
+# Create data volume container for Ansible
+docker_run() {
+    sudo docker run -t --rm \
+         $(ssh_agent_docker_arguments) \
+         --add-host=dockerhost:$(dockerhost_ip) \
+         --volumes-from ansible-volume \
+         -w /vagrant \
+         nigelgbanks/ansible "$@"
+}
+
+# Entry point
+main() {
+    if ! container_exists "ansible-volume"; then
+        create_ansible_data_volume_container
+    fi
+    docker_run "$@"
+}
+main "$@"

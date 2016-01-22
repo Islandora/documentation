@@ -1,0 +1,6 @@
+---
+drupal_webserver_document_root: "{{ apache_document_root }}"
+drupal_home: "{{ drupal_webserver_document_root }}/drupal"
+drupal_webserver_user: "{{ apache_user }}"
+drupal_webserver_group: "{{ apache_group }}"
+drupal_webserver_service: "{{ apache_service }}"

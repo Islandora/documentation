@@ -1,0 +1,17 @@
+---
+# Install Drush
+
+- name: Download Drush
+  git: >-
+    repo=https://github.com/drush-ops/drush.git
+    dest=/usr/local/src/drush
+    version={{ drush_version }}
+
+- name: Install Drush Dependancies
+  composer: >-
+    command="install" working_dir=/usr/local/src/drush
+    
+- name: Link Drush to $PATH
+  file: >-
+    src=/usr/local/src/drush/drush dest=/usr/local/bin/drush
+    state=link group=root owner=root

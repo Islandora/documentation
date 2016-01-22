@@ -1,0 +1,7 @@
+---
+solr_home: "{{ catalina_base }}/solr"
+solr_version: 4.10.3
+# Bundled with the Solr Distribution
+solr_log4j_version: 1.2.17
+solr_slf4j_api_version: 1.7.6
+solr_slf4j_log4j_version: 12-1.7.6

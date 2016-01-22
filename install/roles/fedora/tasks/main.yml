@@ -1,0 +1,35 @@
+---
+# Installs Fedora
+
+- name: Create Fedora Ingest Directory
+  file: >-
+    path={{ fedora_ingest_directory }} state=directory
+    owner={{ tomcat_user }} group={{ tomcat_group }}
+
+- name: Download Fedora
+  get_url: >-
+    url=https://github.com/fcrepo4/fcrepo4/releases/download/fcrepo-{{ fedora_version }}/fcrepo-webapp-{{ fedora_version }}.war
+    dest={{ download_directory }}/fcrepo-webapp-{{ fedora_version }}.war
+
+- name: Create Fedora Data Directory
+  file: >-
+    path={{ catalina_base }}/fcrepo4-data state=directory
+    owner={{ tomcat_user }} group={{ tomcat_group }} mode=g-w
+
+- name: Deploy Fedora to Tomcat
+  command: >-
+    cp {{ download_directory }}/fcrepo-webapp-{{ fedora_version }}.war
+       {{ catalina_base }}/webapps/fcrepo.war
+    creates={{ catalina_base }}/webapps/fcrepo.war
+  become: yes
+  become_user: "{{ tomcat_user }}" 
+  notify: restart tomcat
+
+- meta: flush_handlers
+
+- name: Wait for Fedora to be Available
+  command: curl --head --silent localhost:8080/fcrepo
+  register: result
+  until: result.stdout.find("200") or results.stdout.find("304")
+  retries: 10
+  delay: 5

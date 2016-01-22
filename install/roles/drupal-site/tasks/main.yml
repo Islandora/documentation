@@ -1,0 +1,35 @@
+---
+# Installs a Drupal subsite from the given parameters.
+
+- block:
+
+    - name: Install Drupal Site
+      command: >
+        drush si -y
+          --sites-subdir={{ drupal_site_directory }}
+          --site-name="{{ drupal_site_name }}"
+          --site-mail="{{ drupal_site_email }}"
+          --locale={{ drupal_site_locale }}
+          --account-name="{{ drupal_site_account_name }}"
+          --account-pass="{{ drupal_site_account_password }}"
+          --account-mail="{{ drupal_site_account_email }}"
+          --db-url="mysql://{{ drupal_site_db_user }}:{{ drupal_site_db_password }}@{{ drupal_database_url }}:{{ drupal_database_port }}/{{ drupal_site_db_name }}"
+          --db-su="{{ drupal_database_root_user }}" --db-su-pw="{{ drupal_database_root_password }}"
+        chdir={{ drupal_home }}
+        creates={{ drupal_home }}/sites/{{ drupal_site_directory }}/settings.php
+        
+  become: yes
+  become_user: "{{ drupal_webserver_user }}"
+ 
+- name: Create Drupal Site Library and Module Folders
+  file: >-
+    path={{ drupal_home }}/sites/{{ drupal_site_directory }}/{{ item }} state=directory
+    owner={{ drupal_webserver_user }} group={{ drupal_webserver_group }} mode=ug+rw
+  with_items:
+    - libraries
+    - modules
+    - modules/contrib
+    - modules/custom
+    - modules/features
+
+- include: "config-{{ drupal_webserver }}-vhost.yml" 

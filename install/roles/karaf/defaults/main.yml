@@ -1,0 +1,4 @@
+---
+karaf_version: 4.0.2
+karaf_home: /opt/karaf
+karaf_client: "{{ karaf_home }}/bin/client"

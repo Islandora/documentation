@@ -1,0 +1,38 @@
+---
+# Installs and configures Tomcat
+
+- name: Install Tomcat Required Packages
+  apt: name={{ item }} state=present
+  with_items:
+    - tomcat7
+    - tomcat7-admin
+    # Should help with slow startup
+    - haveged
+    
+- name: Set Tomcat to start at boot
+  service: name={{ tomcat_service }} enabled=yes
+
+- name: Add User to Tomcat Group
+  user: user={{ ansible_user }} groups={{ tomcat_group }} append=yes
+  
+- name: Configure Tomcat
+  template: >-
+    src={{ item.src }} dest={{ item.dest }}
+    owner={{ tomcat_user }} group={{ tomcat_group }}
+  with_items:
+    - { src: tomcat-users.xml, dest: /etc/tomcat7/tomcat-users.xml }
+    - { src: defaults.tomcat7, dest: /etc/default/tomcat7 }
+  notify: restart tomcat
+
+- name: Set CATALINA_HOME Permissions and Ownership
+  file: >-
+    path={{ item }} state=directory recurse=yes follow=yes
+    owner={{ tomcat_user }} group={{ tomcat_group }} mode=ug+rwx
+  with_items:
+    - "{{ catalina_home }}"
+    - "{{ catalina_base }}"
+
+- meta: flush_handlers
+ 
+- name: Wait for Tomcat to Start
+  wait_for: port={{ tomcat_ports.http }}

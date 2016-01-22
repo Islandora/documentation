@@ -1,0 +1,14 @@
+---
+catalina_home: /usr/share/tomcat7
+catalina_base: /var/lib/tomcat7 
+tomcat_ports:
+  http: 8080
+  ssl: 8443
+  ajp: 8009
+  shutdown: 8005
+tomcat_user: tomcat7
+tomcat_group: tomcat7
+tomcat_service: tomcat7
+tomcat_admin_user: islandora
+tomcat_admin_password: islandora
+tomcat_enable_remote_debug: False

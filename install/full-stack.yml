@@ -1,0 +1,61 @@
+---
+# Setups up full stack on a single server.
+#
+# This playbook assumes Ubuntu 14.04 in a vagrant enviroment.
+- hosts: all
+  become: yes
+  vars:
+    # Must be deployed here by vagrant or the variable overridden from the
+    # command line with the location this repository has been deployed to.
+    install_directory: /home/{{ ansible_user }}/islandora
+    drupal_webserver: apache
+    drupal_database: mysql
+    mysql_bind_address: localhost
+    mysql_port: 3306
+    mysql_root_password_update: yes
+    mysql_root_password: "{{ lookup('password', '/home/{{ ansible_user }}/credentials/mysql_password') }}"
+    tomcat_admin_password: "{{ lookup('password', '/home/{{ ansible_user }}/credentials/tomcat_password') }}"
+    drupal_site_account_password: "{{ lookup('password', '/home/{{ ansible_user }}/credentials/drupal_default_admin_password') }}"
+    drupal_site_db_password: "{{ lookup('password', '/home/{{ ansible_user }}/credentials/drupal_default_db_password') }}"
+
+  roles:
+
+    - common
+    - geerlingguy.mysql
+    - blazegraph
+    - fedora
+    - solr
+    - coder
+    - drupal-site
+    - islandora
+    - islandora-karaf-components
+    - { role: drupal-module, modules: [ devel, bootstrap ] }
+
+  post_tasks:
+
+      # We never fail on this since we can detect that it completed before and
+      # it will fail on subsequent runs.
+    - name: Add DC as some default fields
+      command: >-
+        drush scr {{ playbook_dir }}/files/add_default_fields.php
+        chdir={{ drupal_home }}
+        failed_when=false
+
+    - name: Set default theme
+      command: >
+        drush vset theme_default bootstrap
+        chdir={{ drupal_home }}
+
+    - name: Wait for Karaf to be ready.
+      shell: "service karaf-service status"
+      register: result
+      until: result.rc == 0
+      retries: 10
+      delay: 5
+      changed_when: false
+
+    - name: Karaf watch maven bundles
+      command: >
+        {{ karaf_client }} -f {{ playbook_dir }}/files/watch.script
+      environment:
+        JAVA_HOME: "{{ java_home }}"

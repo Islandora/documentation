@@ -1,0 +1,20 @@
+---
+# Install and Configure Coder
+
+- name: Download Coder
+  get_url: >-
+    url=http://ftp.drupal.org/files/projects/coder-{{ coder_version }}.tar.gz
+    dest={{ download_directory }}/coder-{{ coder_version }}.tar.gz 
+
+- name: Unarchive Coder
+  unarchive: >-
+    src={{ download_directory }}/coder-{{ coder_version }}.tar.gz dest=/usr/share copy=no
+
+- name: Install Code Sniffer
+  pear: name=PHP_CodeSniffer state=present
+
+- name: Add Drupal Standards to Code Sniffer
+  file: >-
+    src=/usr/share/coder/coder_sniffer/Drupal
+    dest=/usr/share/php/PHP/CodeSniffer/Standards/Drupal
+    state=link

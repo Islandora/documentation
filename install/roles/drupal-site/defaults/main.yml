@@ -1,0 +1,11 @@
+---
+drupal_site_name: Islandora Claw
+drupal_site_directory: default
+drupal_site_email: webmaster@localhost.com
+drupal_site_locale: en-US
+drupal_site_account_name: admin
+drupal_site_account_password: password
+drupal_site_account_email: webmaster@localhost.com
+drupal_site_db_name: drupal_default
+drupal_site_db_user: drupal
+drupal_site_db_password: password

@@ -1,0 +1,13 @@
+---
+# Install the Commons Logging in Tomcat
+
+- name: Download Commons Logging
+  get_url: >-
+    url=http://repo1.maven.org/maven2/commons-logging/commons-logging/{{ commons_loggin_version }}/commons-logging-{{ commons_loggin_version }}.jar
+    dest={{ download_directory }}/commons-logging-{{ commons_loggin_version }}.jar
+    
+- name: Deploy Commons Logging
+  command: >-
+    cp {{ download_directory }}/commons-logging-{{ commons_loggin_version }}.jar
+       {{ catalina_home }}/lib/commons-logging-{{ commons_loggin_version }}.jar
+    creates={{ catalina_home }}/lib/commons-logging-{{ commons_loggin_version }}.jar

@@ -1,0 +1,7 @@
+---
+# Install Islandora Commands
+
+- name: Install Islandora Commands
+  composer: >-
+    command=install
+    working_dir={{ install_directory }}/camel/commands

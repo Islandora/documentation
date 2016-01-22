@@ -1,0 +1,24 @@
+---
+name: Islandora Claw
+box: williamyeh/ubuntu-trusty64-docker
+memory: 2048
+cpus: 1
+synced_folders:
+  - local_path: credentials
+    destination: /home/vagrant/credentials
+port_mapping:
+  # Apache
+  - guest: 80
+    host: 8000
+  # Tomcat
+  - guest: 8080
+    host: 8080
+  # Karaf
+  - guest: 8181
+    host: 8181
+  # MySQL
+  - guest: 3306
+    host: 3306
+  # PostgreSQL
+  - guest: 5432
+    host: 5432
