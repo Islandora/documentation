@@ -42,6 +42,7 @@
     <module>services</module>
     <module>component</module>
     <module>karaf</module>
+    <module>islandora-indexing-triplestore</module>
   </modules>
 
   <dependencyManagement>
