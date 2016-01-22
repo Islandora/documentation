@@ -36,8 +36,12 @@ $app->register(new \Islandora\ResourceService\Provider\UuidServiceProvider(), ar
   'UuidServiceProvider.default_namespace' => $app['config']['islandora']['defaultNamespaceDomainUuuidV5'],
 ));
 
+//$app['uuid'] = $app['islandora.uuid5'](rand());
 $app['uuid'] = $app['islandora.uuid4'];
 
+/**
+ * Still Not used, this function will check for content type
+*/
 $isFedora4Content = function (Request $request) use ($app) {
   $rdf_content_types = array(
     "text/turtle",
@@ -52,31 +56,31 @@ $isFedora4Content = function (Request $request) use ($app) {
     return true;
   }
   return false;
-}
+};
 
 /**
  * Convert returned Guzzle responses to Symfony responses.
  */
+
 $app->view(function (ResponseInterface $psr7) {
   return new Response($psr7->getBody(), $psr7->getStatusCode(), $psr7->getHeaders());
 });
 
 /**
- * Resource POST route. takes $id (valid UUID or empty) for the parent resource as first value to match
+ * Collection POST route test. Does nothing more than redirect from collection to mounted 
  * takes 'rx' and/or 'checksum' as optional query arguments
- * @see https://wiki.duraspace.org/display/FEDORA40/RESTful+HTTP+API#RESTfulHTTPAPI-BluePOSTCreatenewresourceswithinaLDPcontainer
  */
 $app->post("/islandora/collection",function (Application $app, Request $request) {
-  
    error_log($app['uuid']);
    $tx = $request->query->get('tx', "");
    $url = $request->getUriForPath('/islandora/resource/');
+   error_log($url);
    //static public Request create(string $uri, string $method = 'GET', array $parameters = array(), array $cookies = array(), array $files = array(), array $server = array(), string $content = null)
-   $subRequest = Request::create($url, 'POST', array(), $request->cookies->all(), $request->files->all(), $request->server->all());
+   $subRequest = Request::create($url, 'GET', array(), $request->cookies->all(), $request->files->all(), $request->server->all());
    error_log($subRequest->__toString());
-   //$response = $app->handle($subRequest, HttpKernelInterface::SUB_REQUEST, false);
-   return "ok";//$response;
-})
+   $response = $app->handle($subRequest, HttpKernelInterface::SUB_REQUEST, false);
+   return $response;
+});
 
 $app->error(function (\Symfony\Component\HttpKernel\Exception\HttpException $e, $code) use ($app){
   if ($app['debug']) {
