@@ -3,16 +3,17 @@
     "description": "RESTful service providing resources in Fedora 4",
     "repositories": [
         {
-            "type": "vcs",
-            "url": "/Users/dpino/Desktop/Development/ISLANDORAWORK/CLAW_MICRO/chullo"
+	    "type": "vcs",
+            "url": "https://github.com/Islandora-CLAW/chullo"
+
         },
         {
-            "type": "vcs",
+            "type": "path",
             "url": "/Users/dpino/Desktop/Development/ISLANDORAWORK/CLAW_MICRO/islandora/services/ResourceServiceProvider"
         }    
     ],
     "require": {
-        "islandora/chullo": "dev-api",
+        "islandora/chullo": "dev-master",
         "islandora/resource-service" : "dev-sprint-002",
         "silex/silex": "^1.3",
         "symfony/config": "^3.0",
