@@ -8,6 +8,7 @@ N.B. This virtual machine **should not** be used in production.
 
 1. [VirtualBox](https://www.virtualbox.org/)
 2. [Vagrant](http://www.vagrantup.com/)
+3. [git](https://git-scm.com/)
 
 ## Use
 
