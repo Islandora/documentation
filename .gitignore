@@ -6,3 +6,5 @@ install/downloads
 site/
 
 services/ResourceService/composer.lock
+
+services/ResourceServiceProvider/composer.lock
