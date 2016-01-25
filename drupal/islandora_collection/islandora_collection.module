@@ -136,6 +136,9 @@ function islandora_collection_node_postinsert($node) {
                    'data' => json_encode($node),
                  ));
   $response = httprl_send_request();
+
+  module_load_include('inc', 'islandora', 'include/triplestore');
+  islandora_triplestore_upsert($node);
 }
 
 /**
@@ -173,6 +176,9 @@ function islandora_collection_node_postupdate($node) {
                    'data' => json_encode($node),
                  ));
   $response = httprl_send_request();
+
+  module_load_include('inc', 'islandora', 'include/triplestore');
+  islandora_triplestore_upsert($node);
 }
 
 /**
@@ -194,4 +200,7 @@ function islandora_collection_node_postdelete($node) {
                    'method' => 'DELETE',
                  ));
   $response = httprl_send_request();
+
+  module_load_include('inc', 'islandora', 'include/triplestore');
+  islandora_triplestore_delete($node);
 }

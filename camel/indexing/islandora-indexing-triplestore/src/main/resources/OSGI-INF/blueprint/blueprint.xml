@@ -8,12 +8,12 @@
        http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd">
 
   <!-- OSGI blueprint property placeholder -->
-  <!--<cm:property-placeholder id="properties" persistent-id="ca.islandora.camel.indexing.triplestore" update-strategy="reload" />-->
+  <cm:property-placeholder id="properties" persistent-id="ca.islandora.camel.indexing.triplestore" update-strategy="reload" />
 
   <!-- configuration of activemq component -->
-  <!--<bean id="activemq" class="org.apache.activemq.camel.component.ActiveMQComponent">-->
-    <!--<property name="brokerURL" value="${jms.brokerUrl}"/>-->
-  <!--</bean>-->
+  <bean id="activemq" class="org.apache.activemq.camel.component.ActiveMQComponent">
+    <property name="brokerURL" value="${jms.brokerUrl}"/>
+  </bean>
 
   <camelContext id="IslandoraTriplestoreIndexer" xmlns="http://camel.apache.org/schema/blueprint">
     <package>ca.islandora.camel.indexing.triplestore</package>
