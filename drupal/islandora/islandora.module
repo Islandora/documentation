@@ -29,6 +29,24 @@ define('ISLANDORA_FEDORA_HAS_PARENT_FIELD', 'field_fedora_has_parent');
 define('ISLANDORA_PCDM_HAS_MEMBER_FIELD', 'field_pcdm_has_member');
 
 /**
+ * Implements hook_menu().
+ */
+function islandora_menu() {
+  $items = array(
+    'admin/islandora/config' => array(
+      'title' => t('Islandora'),
+      'description' => t('Configure settings for Islandora'),
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('islandora_config_form'),
+      'file' => '/include/admin.form.inc',
+      'access arguments' => array('administer site configuration'),
+      'type' => MENU_NORMAL_ITEM,
+    ),
+  );
+  return $items;
+}
+
+/**
  * Implements hook_ctools_plugin_api().
  */
 function islandora_ctools_plugin_api($owner, $api) {
