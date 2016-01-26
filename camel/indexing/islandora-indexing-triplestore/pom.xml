@@ -38,6 +38,10 @@
       <artifactId>islandora-camel-component</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.fcrepo.camel</groupId>
+      <artifactId>fcrepo-camel</artifactId>
+    </dependency>
 
     <!-- logging -->
     <dependency>
