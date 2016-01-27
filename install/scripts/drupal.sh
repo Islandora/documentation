@@ -12,6 +12,7 @@ cd "$HOME_DIR"
 
 # Drush and drupal deps
 apt-get -y install php5-gd
+apt-get -y install php5-stomp
 apt-get -y install drush
 a2enmod rewrite
 service apache2 reload

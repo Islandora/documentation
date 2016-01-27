@@ -26,6 +26,7 @@ public class TriplestoreIndexer extends RouteBuilder {
 
         from("{{input.stream}}")
             .routeId("IslandoraTriplestoreIndexerRouter")
+            .log("It's Poppin!")
             .filter(isValid)
                 .choice()
                     .when(header("action").isEqualTo("delete"))

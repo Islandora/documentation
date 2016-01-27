@@ -15,3 +15,6 @@ $KARAF_CLIENT -f $KARAF_CONFIGS/islandora_basic_image.script
 sleep 10
 echo "Installing Islandora Collection Service"
 $KARAF_CLIENT -f $KARAF_CONFIGS/islandora_collection.script
+sleep 10
+echo "Installing Islandora Triplestore Indexer"
+$KARAF_CLIENT -f $KARAF_CONFIGS/islandora_indexing_triplestore.script
