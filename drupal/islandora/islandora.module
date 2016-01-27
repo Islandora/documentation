@@ -86,6 +86,72 @@ function islandora_entity_load($entities, $type) {
 }
 
 /**
+ * Implements hook_node_postinsert().
+ */
+function islandora_node_postinsert($node) {
+  module_load_include('inc', 'islandora', 'include/utils');
+  if (islandora_ignore_hooks()) {
+    return;
+  }
+
+  dd("NODE");
+  dd($node);
+
+  $nodes = entity_uuid_load('node', array($node->uuid));
+  dd("NODES");
+  dd($nodes);
+
+  // Exit early if the node never was successfully inserted in the database.
+  if (empty($nodes)) {
+    return;
+  }
+
+  $node = array_pop($nodes);
+
+  module_load_include('inc', 'islandora', 'include/triplestore');
+  islandora_triplestore_upsert($node);
+}
+
+/**
+ * Implements hook_node_postupdate().
+ */
+function islandora_node_postupdate($node) {
+  module_load_include('inc', 'islandora', 'include/utils');
+  if (islandora_ignore_hooks()) {
+    return;
+  }
+
+  // Unfortunately, there's no way to tell if the db transaction got rolled
+  // back in this hook, so we'll default to doing it anyway so as not to miss
+  // any updates. Open to suggestions on this one.  But we gotta do post_action
+  // hooks otherwise things can get crazy if the db transaction hasn't closed.
+  $nodes = entity_uuid_load('node', array($node->uuid));
+
+  // Exit early if something has gone wrong and there's no node info.
+  if (empty($nodes)) {
+    return;
+  }
+
+  $node = array_pop($nodes);
+
+  module_load_include('inc', 'islandora', 'include/triplestore');
+  islandora_triplestore_upsert($node);
+}
+
+/**
+ * Implements hook_node_postdelete().
+ */
+function islandora_node_postdelete($node) {
+  module_load_include('inc', 'islandora', 'include/utils');
+  if (islandora_ignore_hooks()) {
+    return;
+  }
+
+  module_load_include('inc', 'islandora', 'include/triplestore');
+  islandora_triplestore_delete($node);
+}
+
+/**
  * Implements hook_default_services_endpoint().
  */
 function islandora_default_services_endpoint() {
