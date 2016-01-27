@@ -2,9 +2,20 @@
 
 /**
  * @file
- * Admin form
+ * Admin form.
  */
 
+/**
+ * Form function for module config.
+ *
+ * @param array $form
+ *   Drupal renderable array.
+ * @param array $form_state
+ *   Drupal form state.
+ *
+ * @return array
+ *   Final form to render.
+ */
 function islandora_config_form(array $form, array &$form_state) {
   $form = array(
     'islandora_stomp_url' => array(
@@ -27,13 +38,24 @@ function islandora_config_form(array $form, array &$form_state) {
   return system_settings_form($form);
 }
 
+/**
+ * Stomp broker url validator.
+ *
+ * @param array $element
+ *   Form element for stomp broker url.
+ * @param array $form_state
+ *   Drupal form state.
+ * @param array $form
+ *   Drupal renderable array.
+ */
 function islandora_config_form_validate_stomp_url(array $element, array &$form_state, array $form) {
   // Try to connect to the server.
   try {
     $url = $element['#value'];
     $stomp = new Stomp($url);
     unset($stomp);
-  } catch(StompException $e) {
+  }
+  catch (StompException $e) {
     form_error($element, t('Connection failed for @url: @message', array('@url' => $url, '@message' => $e->getMessage())));
   }
 }
