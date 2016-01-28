@@ -94,12 +94,7 @@ function islandora_node_postinsert($node) {
     return;
   }
 
-  dd("NODE");
-  dd($node);
-
   $nodes = entity_uuid_load('node', array($node->uuid));
-  dd("NODES");
-  dd($nodes);
 
   // Exit early if the node never was successfully inserted in the database.
   if (empty($nodes)) {
