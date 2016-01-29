@@ -106,7 +106,8 @@ function islandora_collection_rdf_mapping() {
  * Implements hook_node_postinsert().
  */
 function islandora_collection_node_postinsert($node) {
-  if (isset($_SERVER['HTTP_IGNORE_HOOKS']) && strcmp(strtolower($_SERVER['HTTP_IGNORE_HOOKS']), "true") == 0) {
+  module_load_include('inc', 'islandora', 'include/utils');
+  if (islandora_ignore_hooks()) {
     return;
   }
 
@@ -142,7 +143,8 @@ function islandora_collection_node_postinsert($node) {
  * Implements hook_node_postupdate().
  */
 function islandora_collection_node_postupdate($node) {
-  if (isset($_SERVER['HTTP_IGNORE_HOOKS']) && strcmp(strtolower($_SERVER['HTTP_IGNORE_HOOKS']), "true") == 0) {
+  module_load_include('inc', 'islandora', 'include/utils');
+  if (islandora_ignore_hooks()) {
     return;
   }
 
@@ -179,7 +181,8 @@ function islandora_collection_node_postupdate($node) {
  * Implements hook_node_postdelete().
  */
 function islandora_collection_node_postdelete($node) {
-  if (isset($_SERVER['HTTP_IGNORE_HOOKS']) && strcmp(strtolower($_SERVER['HTTP_IGNORE_HOOKS']), "true") == 0) {
+  module_load_include('inc', 'islandora', 'include/utils');
+  if (islandora_ignore_hooks()) {
     return;
   }
 
