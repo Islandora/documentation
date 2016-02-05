@@ -24,10 +24,6 @@ $islandoraTransactionService = new \Islandora\TransactionService\Provider\Transa
 $app->register($islandoraTransactionService);
 $app->mount("/islandora", $islandoraTransactionService);
 
-$app['fedora'] = $app->share(function () {
-    return FedoraApi::create('http://127.0.0.1:8080/fcrepo/rest');
-});
-
 /**
  * Convert returned Guzzle responses to Symfony responses.
  */
