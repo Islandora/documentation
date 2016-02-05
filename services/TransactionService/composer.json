@@ -3,12 +3,17 @@
     "description": "RESTful service providing transactions in Fedora 4",
     "repositories": [
         {
-            "type": "vcs",
-            "url": "/Users/dpino/Desktop/Development/ISLANDORAWORK/CLAW_MICRO/chullo"
+            "type": "path",
+            "url": "../ResourceServiceProvider"
+        },
+        {
+            "type": "path",
+            "url": "../../../chullo"
         }
     ],
     "require": {
         "islandora/chullo": "dev-master",
+        "islandora/resource-service": "dev-sprint-002",
         "silex/silex": "^1.3"
     },
     "autoload": {
@@ -18,6 +23,10 @@
         {
             "name": "Daniel Lamb",
             "email": "daniel@discoverygarden.ca"
+        },
+        {
+            "name": "Jared Whiklo",
+            "email": "jwhiklo@gmail.com"
         }
     ]
 }
