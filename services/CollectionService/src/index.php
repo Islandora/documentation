@@ -54,10 +54,12 @@ $app->view(function (ResponseInterface $psr7) {
  */
 $app->post("/islandora/collection/{id}", function (Request $request, $id) use ($app) {
   $tx = $request->query->get('tx', "");
+  
+  
   //Check for format
   $format = NULL;
   try {
-    $format = \EasyRdf_Format::getFormat($request->headers->get('Content-Type'));
+    $format = \EasyRdf_Format::getFormat($contentType = $request->headers->get('Content-Type', 'text/turtle'));
   } catch (\EasyRdf_Exception $e) {
     $app->abort(415, $e->getMessage());
   }
@@ -84,7 +86,7 @@ $app->post("/islandora/collection/{id}", function (Request $request, $id) use ($
 
     //Check if we got an UUID inside posted RDF. We won't validate it here because it's the caller responsability
     if (NULL != $graph->countValues($fakeIri, '<http://www.semanticdesktop.org/ontologies/2007/03/22/nfo/v1.1/uuid>')) {
-      $existingUuid = $graph->getLiteral($uri, '<http://www.semanticdesktop.org/ontologies/2007/03/22/nfo/v1.1/uuid>');
+      $existingUuid = $graph->getLiteral($fakeIri, '<http://www.semanticdesktop.org/ontologies/2007/03/22/nfo/v1.1/uuid>');
       $graph->addResource($fakeIri, 'http://www.islandora.ca/ontologies/2016/02/28/isl/v1.0/hasURN', 'urn:uuid:'.$existingUuid); //Testing an Islandora Ontology!
     } else {
       //No UUID from the caller in RDF, lets put something there
@@ -97,9 +99,10 @@ $app->post("/islandora/collection/{id}", function (Request $request, $id) use ($
   }
 
   $urlRoute = $request->getUriForPath('/islandora/resource/');
-  $request->headers->set('Content-Type', 'text/turtle');
-  $subRequestPost = Request::create($urlRoute.$id, 'POST', array(), $request->cookies->all(), $request->files->all(), $request->server->all(), $pcmd_collection_rdf);
+ 
+  $subRequestPost = Request::create($urlRoute.$id, 'POST', array(), $request->cookies->all(), array(), $request->server->all(), $pcmd_collection_rdf);
   $subRequestPost->query->set('tx', $tx);
+  $subRequestPost->headers->set('Content-Type', 'text/turtle');
   $responsePost = $app->handle($subRequestPost, HttpKernelInterface::SUB_REQUEST, false);
 
   if (201 == $responsePost->getStatusCode()) {// OK, collection created
@@ -113,6 +116,7 @@ $app->post("/islandora/collection/{id}", function (Request $request, $id) use ($
     $subRequestPut->headers->set('Slug', 'members');
     //Can't use in middleware, but needed. Without Fedora 4 throws big java errors!
     $subRequestPut->headers->set('Host', $app['config']['islandora']['fedoraHost'], TRUE);
+    $subRequestPut->headers->set('Content-Type', 'text/turtle');
     //Here is the thing. We don't know if UUID of the collection we just created is already in the tripple store.
     //So what to do? We could just try to use our routes directly, but UUID check agains triplestore we could fail!
     //lets invoke the controller method directly
