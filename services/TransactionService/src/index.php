@@ -31,13 +31,6 @@ $app->view(function (ResponseInterface $psr7) {
     return new Response($psr7->getBody(), $psr7->getStatusCode(), $psr7->getHeaders());
 });
 
-/**
- * Convert returned Guzzle responses to Symfony responses.
- */
-$app->view(function (ResponseInterface $psr7) {
-    return new Response($psr7->getBody(), $psr7->getStatusCode(), $psr7->getHeaders());
-});
-
 $app->after(function (Request $request, Response $response, Application $app) {
   // Todo a closing controller, not sure what now but i had an idea.
 });
