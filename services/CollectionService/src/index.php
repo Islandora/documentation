@@ -95,7 +95,7 @@ $app->post("/islandora/collection/{id}", function (Request $request, $id) use ($
       $graph->addResource($fakeIri,"http://www.islandora.ca/ontologies/2016/02/28/isl/v1.0/hasURN",'urn:uuid:'.$tmpUuid); //Testing an Islandora Ontology
     }
     //Restore LDP <> IRI on serialised graph
-    $pcmd_collection_rdf= preg_replace('/'.$fakeIri.'/', '', $graph->serialise('turtle'));
+    $pcmd_collection_rdf= str_replace($fakeIri, '', $graph->serialise('turtle'));
   }
 
   $urlRoute = $request->getUriForPath('/islandora/resource/');
