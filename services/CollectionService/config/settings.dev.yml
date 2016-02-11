@@ -1,5 +1,6 @@
 # Islandora Dev Settings to be used with $app['debug'] == TRUE
 islandora:
+  apiVersion: 0.0.1
   fedoraProtocol: http
   fedoraHost: "localhost:8080"
   fedoraPath: /rest
@@ -7,3 +8,5 @@ islandora:
   tripleHost: "localhost:9999"
   triplePath: /bigdata/sparql
   resourceIdRegex: "(?:[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})?"
+  # This domain is used as namespace (hashed) when generating UUID V5 identifiers, replace with your own
+  defaultNamespaceDomainUuuidV5: "www.islandora.ca"

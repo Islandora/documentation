@@ -1,4 +1,5 @@
 islandora:
+  apiVersion: 0.0.1
   fedoraProtocol: http
   fedoraHost: "localhost:8080"
   fedoraPath: /fcrepo/rest
@@ -6,3 +7,5 @@ islandora:
   tripleHost: "localhost:8080"
   triplePath: /bigdata/sparql
   resourceIdRegex: "(?:[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})?"
+  # This domain is used as namespace (hashed) when generating UUID V5 identifiers, replace with your own
+  defaultNamespaceDomainUuuidV5: "www.islandora.ca"

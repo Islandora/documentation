@@ -22,6 +22,9 @@ class ResourceServiceProvider implements ServiceProviderInterface, ControllerPro
     //
     // Define controller services
     //
+    //This is the base path for the application. Used to change the location
+    //of yaml config files when registerd somewhere else
+    $app['islandora.BasePath'] = __DIR__.'/..';
     $app['islandora.resourcecontroller'] = $app->share(function() use ($app) {
       return new \Islandora\ResourceService\Controller\ResourceController($app);
     });
@@ -45,12 +48,14 @@ class ResourceServiceProvider implements ServiceProviderInterface, ControllerPro
     */
     if (!isset($app['config'])) {
       $app['config'] = $app->share(function() use ($app){
-        if ($app['debug']) {
-          $configFile = __DIR__.'/../../config/settings.dev.yml';
-        }
-        else {
-          $configFile = __DIR__.'/../../config/settings.yml';
-        }
+         {
+          if ($app['debug']) {
+            $configFile = $app['islandora.BasePath'].'/../config/settings.dev.yml';
+          }
+          else {
+            $configFile = $app['islandora.BasePath'].'/../config/settings.yml';
+          }
+        }    
         $settings = Yaml::parse(file_get_contents($configFile));
         return $settings;
       });
@@ -118,49 +123,32 @@ class ResourceServiceProvider implements ServiceProviderInterface, ControllerPro
    * Part of ControllerProviderInterface
    */
   public function connect(Application $app) {
-    $controllers = $app['controllers_factory'];
+    $ResourceControllers = $app['controllers_factory'];
     //
     // Define routing referring to controller services
     //
-    $controllers->get("/resource/{id}/{child}", "islandora.resourcecontroller:get")
+    $ResourceControllers
       ->convert('id', $app['islandora.idToUri'])
       ->assert('id',$app['config']['islandora']['resourceIdRegex'])
       ->before($app['islandora.hostHeaderNormalize']) 
       ->before($app['islandora.htmlHeaderToTurtle'])
-      ->value('id',"")
+      ->value('id',"");
+    
+    
+    $ResourceControllers->get("/resource/{id}/{child}", "islandora.resourcecontroller:get")
       ->value('child',"")
       ->bind('islandora.resourceGet');
-    $controllers->post("/resource/{id}", "islandora.resourcecontroller:post")
-      ->convert('id', $app['islandora.idToUri'])
-      ->assert('id',$app['config']['islandora']['resourceIdRegex'])
-      ->before($app['islandora.hostHeaderNormalize']) 
-      ->before($app['islandora.htmlHeaderToTurtle'])
-      ->value('id',"")
+    $ResourceControllers->post("/resource/{id}", "islandora.resourcecontroller:post")
       ->bind('islandora.resourcePost');
-    $controllers->put("/resource/{id}/{child}", "islandora.resourcecontroller:put")
-      ->convert('id', $app['islandora.idToUri'])
-      ->assert('id',$app['config']['islandora']['resourceIdRegex'])
-      ->before($app['islandora.hostHeaderNormalize']) 
-      ->before($app['islandora.htmlHeaderToTurtle'])
-      ->value('id',"")
+    $ResourceControllers->put("/resource/{id}/{child}", "islandora.resourcecontroller:put")
       ->value('child',"")
       ->bind('islandora.resourcePut');
-    $controllers->patch("/resource/{id}/{child}", "islandora.resourcecontroller:patch")
-      ->convert('id', $app['islandora.idToUri'])
-      ->assert('id',$app['config']['islandora']['resourceIdRegex'])
-      ->before($app['islandora.hostHeaderNormalize']) 
-      ->before($app['islandora.htmlHeaderToTurtle'])
-      ->value('id',"")
+    $ResourceControllers->patch("/resource/{id}/{child}", "islandora.resourcecontroller:patch")
       ->value('child',"")
       ->bind('islandora.resourcePatch');
-    $controllers->delete("/resource/{id}/{child}", "islandora.resourcecontroller:delete")
-      ->convert('id', $app['islandora.idToUri'])
-      ->assert('id',$app['config']['islandora']['resourceIdRegex'])
-      ->before($app['islandora.hostHeaderNormalize']) 
-      ->before($app['islandora.htmlHeaderToTurtle'])
-      ->value('id',"")
+    $ResourceControllers->delete("/resource/{id}/{child}", "islandora.resourcecontroller:delete")
       ->value('child',"")
       ->bind('islandora.resourceDelete');
-    return $controllers;
+    return $ResourceControllers;
   }
 }
