@@ -49,13 +49,13 @@ $app->view(function (ResponseInterface $psr7) {
 });
 
 /**
- * Collection POST route. takes $id (valid UUID or empty) for the parent resource as first value to match
- * takes 'rx' as optional query arguments
+ * Collection POST route. 
+ * Takes $id (valid UUID or empty) for the parent resource as first value to match, 
+ * and also takes 'rx' as an optional query argument.
  */
 $app->post("/islandora/collection/{id}", function (Request $request, $id) use ($app) {
   $tx = $request->query->get('tx', "");
-  
-  
+
   //Check for format
   $format = NULL;
   try {
