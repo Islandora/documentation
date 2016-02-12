@@ -127,7 +127,7 @@ $app->post("/islandora/collection/{id}", function (Request $request, $id) use ($
       //Guzzle psr7 response objects are inmutable. So we have to make this an array and add directly
       $putHeaders['Link'] = array('<'.$urlRoute.$tmpUuid.'/members>; rel="alternate"');
 
-      return new Response($responsePut->getBody(), 200, $putHeaders);
+      return new Response($responsePut->getBody(), 201, $putHeaders);
     }
 
     return $responsePut;
