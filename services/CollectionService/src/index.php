@@ -122,12 +122,14 @@ $app->post("/islandora/collection/{id}", function (Request $request, $id) use ($
     //lets invoke the controller method directly
     $responsePut = $app['islandora.resourcecontroller']->put($app, $subRequestPut, $responsePost->headers->get('location'), "members");
     if (201 == $responsePut->getStatusCode()) {// OK, indirect container created
-      //Return only the last created resource
+      //Include headers from the parent one, some of the last one. Basically rewrite everything
       $putHeaders = $responsePut->getHeaders();
       //Guzzle psr7 response objects are inmutable. So we have to make this an array and add directly
-      $putHeaders['Link'] = array('<'.$urlRoute.$tmpUuid.'/members>; rel="alternate"');
-
-      return new Response($responsePut->getBody(), 201, $putHeaders);
+      $putHeaders['Link'] = array('<'.$responsePut->getBody().'>; rel="alternate"');
+      $putHeaders['Link'] = array('<'.$urlRoute.$tmpUuid.'/members>; rel="member"');
+      $putHeaders['Location'] = array($urlRoute.$tmpUuid);
+      //Should i care about the etag?
+      return new Response($putHeaders['Location'][0], 201, $putHeaders);
     }
 
     return $responsePut;
