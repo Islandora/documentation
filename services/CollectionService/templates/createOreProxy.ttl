@@ -1,0 +1,5 @@
+@prefix pcdm: <http://pcdm.org/models#> .
+@prefix ore: <http://www.openarchives.org/ore/terms/> .
+ 
+<> a pcdm:Object ;
+  ore:proxyFor <{{ resource }}> .
