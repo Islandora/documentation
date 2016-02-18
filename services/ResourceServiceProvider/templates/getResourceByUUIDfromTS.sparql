@@ -1,5 +1,0 @@
-PREFIX nfo: <http://www.semanticdesktop.org/ontologies/2007/03/22/nfo/v1.2/>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-SELECT ?s WHERE {
-  ?s nfo:uuid "{{uuid}}"^^<http://www.w3.org/2001/XMLSchema#string> .
-}
