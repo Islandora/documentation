@@ -126,7 +126,7 @@ $app->post("/islandora/collection/{id}", function (Request $request, $id) use ($
       $putHeaders = $responsePut->getHeaders();
       //Guzzle psr7 response objects are inmutable. So we have to make this an array and add directly
       $putHeaders['Link'] = array('<'.$responsePut->getBody().'>; rel="alternate"');
-      $putHeaders['Link'] = array('<'.$urlRoute.$tmpUuid.'/members>; rel="member"');
+      $putHeaders['Link'] = array('<'.$urlRoute.$tmpUuid.'/members>; rel="hub"');
       $putHeaders['Location'] = array($urlRoute.$tmpUuid);
       //Should i care about the etag?
       return new Response($putHeaders['Location'][0], 201, $putHeaders);
