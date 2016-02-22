@@ -4,15 +4,11 @@
     "repositories": [
         {
             "type": "path",
-            "url": "../ResourceServiceProvider"
-        },
-        {
-            "type": "path",
-            "url": "../../../chullo"
+            "url": "../ResourceService"
         }
     ],
     "require": {
-        "islandora/chullo": "dev-master",
+        "islandora/chullo": "^0.0",
         "islandora/resource-service": "dev-sprint-002",
         "silex/silex": "^1.3"
     },

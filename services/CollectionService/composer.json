@@ -3,7 +3,7 @@
     "description": "RESTful service providing PCDM Collections in Fedora 4",
     "repositories": [{
                 "type": "path",
-                "url": "../ResourceServiceProvider"
+                "url": "../ResourceService"
     }],
     "require": {
         "islandora/chullo": "^0.0",
