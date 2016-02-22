@@ -15,6 +15,7 @@
       <cm:property name="islandora.drupal.password" value=""/>
       <cm:property name="islandora.fcrepo.baseurl" value="localhost:8080/fcrepo/rest"/>
       <cm:property name="islandora.php.workingDir" value="/home/vagrant/islandora/camel/commands/bin"/>
+      <cm:property name="islandora.brokerUrl" value="localhost:61616"/>
     </cm:default-properties>
   </cm:property-placeholder>
 
@@ -36,7 +37,7 @@
 
   <!-- configuration of activemq component -->
   <bean id="activemq" class="org.apache.activemq.camel.component.ActiveMQComponent">
-    <property name="islandora.brokerUrl" value="${jms.islandora.brokerUrl}"/>
+    <property name="islandora.brokerUrl" value="${islandora.brokerUrl}"/>
   </bean>
 
 </blueprint>
