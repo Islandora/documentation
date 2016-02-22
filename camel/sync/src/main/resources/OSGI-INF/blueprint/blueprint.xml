@@ -34,4 +34,9 @@
     <routeContextRef ref="drupalAuthentication"/>
   </camelContext>
 
+  <!-- configuration of activemq component -->
+  <bean id="activemq" class="org.apache.activemq.camel.component.ActiveMQComponent">
+    <property name="islandora.brokerUrl" value="${jms.islandora.brokerUrl}"/>
+  </bean>
+
 </blueprint>
