@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "72756d6164e1895017dfad6f7dc6b745",
-    "content-hash": "073e008f0fc4878ea71877e80327b11c",
+    "hash": "938f9e89bb878a9379e291e95cb77256",
+    "content-hash": "6592a8879be3307f007a1547f49dc981",
     "packages": [
         {
             "name": "easyrdf/easyrdf",
@@ -296,11 +296,11 @@
         },
         {
             "name": "islandora/resource-service",
-            "version": "dev-sprint-002-CollectionServ",
+            "version": "dev-CLAW-153",
             "dist": {
                 "type": "path",
-                "url": "../ResourceServiceProvider/",
-                "reference": "e003f44811a41d385508795975428a03",
+                "url": "../ResourceService/",
+                "reference": "8a9d96c842c9148f4d2165ae06691d37b9389def",
                 "shasum": null
             },
             "require": {
@@ -556,16 +556,16 @@
         },
         {
             "name": "ramsey/uuid",
-            "version": "3.1.0",
+            "version": "3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ramsey/uuid.git",
-                "reference": "3cc2dd253e296ce05f99635b2f633048adfbaa96"
+                "reference": "adee1ba4a6885ed800021a98dd69ae2394d695ec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ramsey/uuid/zipball/3cc2dd253e296ce05f99635b2f633048adfbaa96",
-                "reference": "3cc2dd253e296ce05f99635b2f633048adfbaa96",
+                "url": "https://api.github.com/repos/ramsey/uuid/zipball/adee1ba4a6885ed800021a98dd69ae2394d695ec",
+                "reference": "adee1ba4a6885ed800021a98dd69ae2394d695ec",
                 "shasum": ""
             },
             "require": {
@@ -579,11 +579,12 @@
                 "ircmaxell/random-lib": "^1.1",
                 "jakub-onderka/php-parallel-lint": "^0.9.0",
                 "moontoast/math": "^1.1",
-                "phpunit/phpunit": "^4.7",
+                "phpunit/phpunit": "^4.7|^5.0",
                 "satooshi/php-coveralls": "^0.6.1",
                 "squizlabs/php_codesniffer": "^2.3"
             },
             "suggest": {
+                "ext-libsodium": "Provides the PECL libsodium extension for use with the SodiumRandomGenerator",
                 "ext-uuid": "Provides the PECL UUID extension for use with the PeclUuidTimeGenerator and PeclUuidRandomGenerator",
                 "ircmaxell/random-lib": "Provides RandomLib for use with the RandomLibAdapter",
                 "moontoast/math": "Provides support for converting UUID to 128-bit integer (in string form).",
@@ -622,7 +623,7 @@
                 "identifier",
                 "uuid"
             ],
-            "time": "2015-12-17 15:21:44"
+            "time": "2016-02-17 23:32:34"
         },
         {
             "name": "silex/silex",
