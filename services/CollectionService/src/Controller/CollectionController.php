@@ -5,6 +5,7 @@ namespace Islandora\CollectionService\Controller;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Islandora\Chullo\Uuid\IUuidGenerator;
 
 class CollectionController {
 
@@ -34,7 +35,7 @@ class CollectionController {
           \EasyRdf_Namespace::set('ldp', 'http://www.w3.org/ns/ldp');
 
           //Fake IRI, default LDP one for current resource "<>" is not a valid IRI!
-          $fakeUuid = $uuidGenerator->generateV5("derp");
+          $fakeUuid = $this->uuidGenerator->generateV5("derp");
           $fakeIri = new \EasyRdf_ParsedUri('urn:uuid:' . $fakeUuid);
 
           $graph = new \EasyRdf_Graph();

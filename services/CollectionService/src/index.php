@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Psr\Http\Message\ResponseInterface;
 use Silex\Provider\TwigServiceProvider;
+use Islandora\CollectionService\Controller\CollectionController;
 
 date_default_timezone_set('UTC');
 
@@ -22,6 +23,13 @@ $app->register(new \Silex\Provider\ServiceControllerServiceProvider());
 $app->register(new \Silex\Provider\TwigServiceProvider(), array(
   'twig.path' => __DIR__.'/../templates',
 ));
+
+$islandoraResourceServiceProvider = new \Islandora\ResourceService\Provider\ResourceServiceProvider;
+//Registers Resource Service and defines current app's path for config context
+$app->register($islandoraResourceServiceProvider, array(
+  'islandora.BasePath' => __DIR__,
+));
+$app->mount("/islandora", $islandoraResourceServiceProvider);
 
 $app['collection.controller'] = $app->share(function() {
     return new CollectionController(new UuidGenerator());
