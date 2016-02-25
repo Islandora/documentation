@@ -6,6 +6,7 @@ use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Islandora\Chullo\Uuid\IUuidGenerator;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 class CollectionController {
 
@@ -30,7 +31,7 @@ class CollectionController {
         if ($format) { //EasyRdf_Format
           //@see http://www.w3.org/2011/rdfa-context/rdfa-1.1 for defaults
           \EasyRdf_Namespace::set('pcdm', 'http://pcdm.org/models#');
-          \EasyRdf_Namespace::set('nfo', 'http://www.semanticdesktop.org/ontologies/2007/03/22/nfo/v1.1/');
+          \EasyRdf_Namespace::set('nfo', 'http://www.semanticdesktop.org/ontologies/2007/03/22/nfo/v1.2/');
           \EasyRdf_Namespace::set('isl', 'http://www.islandora.ca/ontologies/2016/02/28/isl/v1.0/');
           \EasyRdf_Namespace::set('ldp', 'http://www.w3.org/ns/ldp');
 
@@ -48,13 +49,22 @@ class CollectionController {
           $graph->resource($fakeIri, 'pcdm:Collection');
 
           //Check if we got an UUID inside posted RDF. We won't validate it here because it's the caller responsability
-          if (NULL != $graph->countValues($fakeIri, '<http://www.semanticdesktop.org/ontologies/2007/03/22/nfo/v1.1/uuid>')) {
-            $existingUuid = $graph->getLiteral($fakeIri, '<http://www.semanticdesktop.org/ontologies/2007/03/22/nfo/v1.1/uuid>');
-            $graph->addResource($fakeIri, 'http://www.islandora.ca/ontologies/2016/02/28/isl/v1.0/hasURN', 'urn:uuid:'.$existingUuid); //Testing an Islandora Ontology!
+          if (NULL != $graph->countValues($fakeIri, 'nfo:uuid')) {
+            $existingUuid = $graph->getLiteral($fakeIri, 'nfo:uuid');
+            error_log("Has a UUID of " . $existingUuid);
+            if (NULL != $graph->countValues($fakeIri, 'isl:hasURN')) {
+              $graph->delete($fakeIri, 'isl:hasURN');
+            }
+            $graph->addResource($fakeIri, 'isl:hasURN', 'urn:uuid:'.$existingUuid); //Testing an Islandora Ontology!
           } else {
             //No UUID from the caller in RDF, lets put something there
-            $graph->addLiteral($fakeIri,"http://www.semanticdesktop.org/ontologies/2007/03/22/nfo/v1.1/uuid",$fakeUuid); //Keeps compat for now with other services
-            $graph->addResource($fakeIri,"http://www.islandora.ca/ontologies/2016/02/28/isl/v1.0/hasURN",'urn:uuid:'.$fakeUuid); //Testing an Islandora Ontology
+            // Need a random UUID because there wasn't one provided.
+            $newUuid = $this->uuidGenerator->generateV4();
+            if (NULL != $graph->countValues($fakeIri, 'isl:hasURN')) {
+              $graph->delete($fakeIri, 'isl:hasURN');
+            }
+            $graph->addLiteral($fakeIri,"nfo:uuid",$newUuid); //Keeps compat for now with other services
+            $graph->addResource($fakeIri,"isl:hasURN",'urn:uuid:'.$newUuid); //Testing an Islandora Ontology
           }
           //Restore LDP <> IRI on serialised graph
           $pcmd_collection_rdf= str_replace($fakeIri, '', $graph->serialise('turtle'));
@@ -98,5 +108,27 @@ class CollectionController {
         }
         //Abort if PCDM collection object could not be created
         $app->abort($responsePost->getStatusCode(), 'Failed creating PCDM Collection');
+    }
+    
+    public function addMember(Application $app, Request $request, $id, $member) {
+      $tx = $request->query->get('tx', "");
+
+      $urlRoute = $request->getUriForPath('/islandora/resource/');
+
+      $members_proxy_rdf = $app['twig']->render('createOreProxy.ttl', array(
+        'resource' => $app['islandora.idToUri']($member),
+      ));
+
+      $fullUri = $app['islandora.idToUri']($id) . '/members';
+
+      $newRequest = Request::create($urlRoute . $id . '/members-add/' . $member , 'POST', array(), $request->cookies->all(), array(), $request->server->all(), $members_proxy_rdf);
+      $newRequest->headers->set('Content-type', 'text/turtle');
+      $response = $app['islandora.resourcecontroller']->post($app, $newRequest, $fullUri);
+      if (201 == $response->getStatusCode()) {
+        return new Response($response->getBody(), 201, $response->getHeaders());
+      }
+      //Abort if PCDM collection object could not be created
+      $app->abort($response->getStatusCode(), 'Failed adding member to PCDM Collection');
+
     }
 }

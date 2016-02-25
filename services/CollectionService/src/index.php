@@ -37,6 +37,8 @@ $app['collection.controller'] = $app->share(function() {
 
 $app->post("/islandora/collection/{id}", "collection.controller:create")
 ->value('id',"");
+$app->post("/islandora/collection/{id}/add-member/{member}", "collection.controller:addMember");
+
 
 /**
  * Convert returned Guzzle responses to Symfony responses.
