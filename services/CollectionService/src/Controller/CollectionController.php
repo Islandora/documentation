@@ -51,7 +51,7 @@ class CollectionController {
           //Check if we got an UUID inside posted RDF. We won't validate it here because it's the caller responsability
           if (NULL != $graph->countValues($fakeIri, 'nfo:uuid')) {
             $existingUuid = $graph->getLiteral($fakeIri, 'nfo:uuid');
-            error_log("Has a UUID of " . $existingUuid);
+            // Delete isl:hasURN to make it match the uuid
             if (NULL != $graph->countValues($fakeIri, 'isl:hasURN')) {
               $graph->delete($fakeIri, 'isl:hasURN');
             }
