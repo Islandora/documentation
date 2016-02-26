@@ -13,6 +13,7 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Psr\Http\Message\ResponseInterface;
 use Silex\Provider\TwigServiceProvider;
 use Islandora\CollectionService\Controller\CollectionController;
+use Islandora\TransactionService\Provider\TransactionServiceProvider;
 
 date_default_timezone_set('UTC');
 
@@ -24,12 +25,17 @@ $app->register(new \Silex\Provider\TwigServiceProvider(), array(
   'twig.path' => __DIR__.'/../templates',
 ));
 
-$islandoraResourceServiceProvider = new \Islandora\ResourceService\Provider\ResourceServiceProvider;
+$islandoraResourceServiceProvider = new ResourceServiceProvider;
 //Registers Resource Service and defines current app's path for config context
 $app->register($islandoraResourceServiceProvider, array(
   'islandora.BasePath' => __DIR__,
 ));
 $app->mount("/islandora", $islandoraResourceServiceProvider);
+
+$islandoraTransactionService = new TransactionServiceProvider;
+
+$app->register($islandoraTransactionService);
+$app->mount("/islandora", $islandoraTransactionService);
 
 $app['collection.controller'] = $app->share(function() {
     return new CollectionController(new UuidGenerator());
@@ -37,7 +43,8 @@ $app['collection.controller'] = $app->share(function() {
 
 $app->post("/islandora/collection/{id}", "collection.controller:create")
 ->value('id',"");
-$app->post("/islandora/collection/{id}/add-member/{member}", "collection.controller:addMember");
+$app->post("/islandora/collection/{id}/member/{member}", "collection.controller:addMember");
+$app->delete("/islandora/collection/{id}/member/{member}", "collection.controller:removeMember");
 
 
 /**

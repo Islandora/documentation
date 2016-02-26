@@ -110,6 +110,18 @@ class CollectionController {
         $app->abort($responsePost->getStatusCode(), 'Failed creating PCDM Collection');
     }
     
+    /**
+     * Add a proxy object to the collection for the member object.
+     *
+     * @param Application $app
+     *   The silex application.
+     * @param Request $request
+     *   The Symfony request.
+     * @param string $id
+     *   The UUID of the collection.
+     * @param string $member
+     *   The UUID of the object to add to the collection.
+     */
     public function addMember(Application $app, Request $request, $id, $member) {
       $tx = $request->query->get('tx', "");
 
@@ -130,5 +142,60 @@ class CollectionController {
       //Abort if PCDM collection object could not be created
       $app->abort($response->getStatusCode(), 'Failed adding member to PCDM Collection');
 
+    }
+    
+    /**
+     * Remove the proxy object for the member from the collection.
+     *
+     * @param Application $app
+     *   The silex application.
+     * @param Request $request
+     *   The Symfony request.
+     * @param string $id
+     *   The UUID of the collection.
+     * @param string $member
+     *   The UUID of the object to remove from the collection.
+     */
+    public function removeMember(Application $app, Request $request, $id, $member) {
+      $tx = $request->query->get('tx', "");
+
+      $urlRoute = $request->getUriForPath('/islandora/resource/');
+
+      $sparql_query = $app['twig']->render('findOreProxy.sparql', array(
+         'collection_member' => $app['islandora.idToUri']($id) . '/members',
+         'resource' => $app['islandora.idToUri']($member),
+      ));
+      try {
+        $sparql_result = $app['triplestore']->query($sparql_query);
+      }
+      catch (\Exception $e) {
+        $app->abort(503, 'Chullo says "Triple Store Not available"');
+      }
+      if (count($sparql_result) > 0) {
+        $existing_transaction = (!empty($tx));
+        $newRequest = Request::create($urlRoute . 'dummy/delete', 'POST', array(), $request->cookies->all(), array(), $request->server->all());
+        if (!$existing_transaction) {
+          // If we don't have a transaction create one here
+          $response = $app['islandora.transactioncontroller']->create($app, $newRequest);
+          $response = new Response($response->getBody(), $response->getStatusCode(), $response->getHeaders());
+          $tx = "tx:" . explode('tx:', $response->headers->get('location'))[1];
+        }
+        $newRequest = Request::create($urlRoute . 'dummy/delete?force=true&tx=' . $tx, 'DELETE', array(), $request->cookies->all(), array(), $request->server->all());
+        foreach ($sparql_result as $triple) {
+          $response = $app['islandora.resourcecontroller']->delete($app, $newRequest, $triple->obj->getUri(), "");
+        }
+        if (!$existing_transaction) {
+          // If this is not a passed in transaction, then we can commit it here.
+          $response = $app['islandora.transactioncontroller']->commit($app, $newRequest, $tx);
+          if (204 == $response->getStatusCode()) {
+            return $response;
+          }
+          else {
+            $app->abort($response->getStatusCode(), 'Failed removing member from PCDM Collection');
+          }
+        }
+      }
+      // Not sure what to return if the transaction hasn't been committed yet.
+      return true;
     }
 }
