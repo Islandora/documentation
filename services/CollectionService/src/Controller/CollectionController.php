@@ -158,12 +158,23 @@ class CollectionController {
      */
     public function removeMember(Application $app, Request $request, $id, $member) {
       $tx = $request->query->get('tx', "");
+      $force = $request->query->get('force', 'FALSE');
 
       $urlRoute = $request->getUriForPath('/islandora/resource/');
 
+      $collection_uri = $app['islandora.idToUri']($id);
+      if (is_object($collection_uri)) {
+        return $collection_uri;
+      }
+
+      $member_uri = $app['islandora.idToUri']($member);
+      if (is_object($member_uri)) {
+        return $member_uri;
+      }
+
       $sparql_query = $app['twig']->render('findOreProxy.sparql', array(
-         'collection_member' => $app['islandora.idToUri']($id) . '/members',
-         'resource' => $app['islandora.idToUri']($member),
+         'collection_member' =>  $collection_uri . '/members',
+         'resource' => $member_uri,
       ));
       try {
         $sparql_result = $app['triplestore']->query($sparql_query);
@@ -177,12 +188,14 @@ class CollectionController {
         if (!$existing_transaction) {
           // If we don't have a transaction create one here
           $response = $app['islandora.transactioncontroller']->create($app, $newRequest);
-          $response = new Response($response->getBody(), $response->getStatusCode(), $response->getHeaders());
-          $tx = "tx:" . explode('tx:', $response->headers->get('location'))[1];
+          $tx = $app['islandora.transactioncontroller']->getId($response);
         }
-        $newRequest = Request::create($urlRoute . 'dummy/delete?force=true&tx=' . $tx, 'DELETE', array(), $request->cookies->all(), array(), $request->server->all());
+        $newRequest = Request::create($urlRoute . 'dummy/delete?force=' . $force . '&tx=' . $tx, 'DELETE', array(), $request->cookies->all(), array(), $request->server->all());
         foreach ($sparql_result as $triple) {
           $response = $app['islandora.resourcecontroller']->delete($app, $newRequest, $triple->obj->getUri(), "");
+          if (204 != $response->getStatusCode()) {
+            $app->abort($response->getStatusCode(), 'Error deleting object');
+          }
         }
         if (!$existing_transaction) {
           // If this is not a passed in transaction, then we can commit it here.
@@ -196,6 +209,6 @@ class CollectionController {
         }
       }
       // Not sure what to return if the transaction hasn't been committed yet.
-      return true;
+      return Response::create("", 204, array());
     }
 }

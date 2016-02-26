@@ -106,7 +106,8 @@ class ResourceServiceProvider implements ServiceProviderInterface, ControllerPro
          return $triple->s->getUri();
        }
        // Abort the routes if we don't get a subject from the tripple.
-       $app->abort(404, sprintf('Failed getting resource Path for "%s" from triple store', $id));
+       //$app->abort(404, sprintf('Failed getting resource Path for "%s" from triple store', $id));
+       return Response::create(sprintf('Failed getting resource Path for "%s" from triple store', $id), 404);
      } 
      else {
        // If $id is empty then assume we are dealing with fedora base rest endpoint

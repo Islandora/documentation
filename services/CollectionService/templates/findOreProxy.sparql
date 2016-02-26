@@ -1,0 +1,6 @@
+PREFIX ore: <http://www.openarchives.org/ore/terms/>
+PREFIX ldp: <http://www.w3.org/ns/ldp#>
+SELECT ?obj WHERE {
+  <{{ collection_member }}> ldp:contains ?obj .
+  ?obj ore:proxyFor <{{ resource }}> .
+}

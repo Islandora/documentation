@@ -4,10 +4,19 @@
     "repositories": [{
                 "type": "path",
                 "url": "../ResourceService"
+    },
+    {
+                "type": "path",
+                "url": "../TransactionService"
+    },
+    {
+                "type" : "path",
+                "url" : "../../../chullo"
     }],
     "require": {
-        "islandora/chullo": "^0.0",
-        "islandora/resource-service" : "dev-sprint-002",
+        "islandora/chullo": "dev-thinCollectionController",
+        "islandora/resource-service" : "dev-updates-thinCollection",
+        "islandora/transaction-service" : "dev-updates-thinCollection",
         "silex/silex": "^1.3",
         "symfony/config": "^3.0",
         "twig/twig": "^1.23",
@@ -22,6 +31,10 @@
         {
             "name": "Diego Pino Navarro",
             "email": "dpino@krayon.cl"
+        },
+        {
+            "name": "Jared Whiklo",
+            "email": "jwhiklo@gmail.com"
         }
     ]
 }
