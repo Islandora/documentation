@@ -15,6 +15,7 @@
       <cm:property name="islandora.drupal.password" value=""/>
       <cm:property name="islandora.fcrepo.baseurl" value="localhost:8080/fcrepo/rest"/>
       <cm:property name="islandora.php.workingDir" value="/home/vagrant/islandora/camel/commands/bin"/>
+      <cm:property name="islandora.brokerUrl" value="tcp://localhost:61616"/>
     </cm:default-properties>
   </cm:property-placeholder>
 
@@ -33,5 +34,10 @@
     <routeContextRef ref="eventGateway"/>
     <routeContextRef ref="drupalAuthentication"/>
   </camelContext>
+
+  <!-- configuration of activemq component -->
+  <bean id="activemq" class="org.apache.activemq.camel.component.ActiveMQComponent">
+    <property name="brokerURL" value="${islandora.brokerUrl}"/>
+  </bean>
 
 </blueprint>
