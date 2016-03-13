@@ -33,6 +33,10 @@
   <camelContext id="IslandoraSync" xmlns="http://camel.apache.org/schema/blueprint">
     <routeContextRef ref="eventGateway"/>
     <routeContextRef ref="drupalAuthentication"/>
+    <dataFormats>
+      <!-- base64 encoded for transmission as part of JSON should not include CRLF characters. -->
+      <base64 lineLength="0" id="base64JSONSafe" />
+    </dataFormats>
   </camelContext>
 
   <!-- configuration of activemq component -->
