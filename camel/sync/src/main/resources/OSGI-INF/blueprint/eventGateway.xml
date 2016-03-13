@@ -210,7 +210,7 @@
       <from uri="direct:drupalAddTn"/>
         <removeHeaders pattern="*"/>
         <setBody><simple>${property.binary}</simple></setBody>
-        <marshal ref="base64"/>
+        <marshal ref="base64JSONSafe"/>
         <setProperty propertyName="b64file"><simple>${body}</simple></setProperty>
         <transform><simple>{ "uuid" : "${property.parentUuid}", "file" : "${property.b64file}", "mimetype" : "${property.mimetype}"}</simple></transform>
         <setHeader headerName="CamelHttpMethod"><constant>POST</constant></setHeader>
@@ -226,7 +226,7 @@
       <from uri="direct:drupalAddMediumSize"/>
         <removeHeaders pattern="*"/>
         <setBody><simple>${property.binary}</simple></setBody>
-        <marshal ref="base64"/>
+        <marshal ref="base64JSONSafe"/>
         <setProperty propertyName="b64file"><simple>${body}</simple></setProperty>
         <transform><simple>{ "uuid" : "${property.parentUuid}", "file" : "${property.b64file}", "mimetype" : "${property.mimetype}"}</simple></transform>
         <setHeader headerName="CamelHttpMethod"><constant>POST</constant></setHeader>
