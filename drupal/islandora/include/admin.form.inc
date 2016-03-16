@@ -84,8 +84,8 @@ function islandora_config_form_validate_karaf_url(array $element, array &$form_s
   $handle = curl_init($url);
   curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
   $response = curl_exec($handle);
-  $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
-  if($httpCode != 200) {
+  $http_code = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+  if($http_code != 200) {
     form_error($element, t('Connection failed for @url', array('@url' => $url)));
   }
   curl_close($handle);
