@@ -141,8 +141,8 @@ function islandora_basic_image_node_postinsert($node) {
       ),
     );
   }
-
-  $url = "http://127.0.0.1:8181/cxf/islandora/image/$parent_collection";
+  $url = variable_get('islandora_karaf_url', 'http://127.0.0.1:8181');
+  $url = "$url/cxf/islandora/image/$parent_collection";
   httprl_request($url,
                  $options);
   $response = httprl_send_request();

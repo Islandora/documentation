@@ -192,7 +192,8 @@ function islandora_collection_node_postdelete($node) {
   }
 
   $uuid = $node->uuid;
-  httprl_request("http://127.0.0.1:8181/cxf/islandora/collection/$uuid",
+  $url = variable_get('islandora_karaf_url', 'http://127.0.0.1:8181');
+  httprl_request("$url/cxf/islandora/collection/$uuid",
                  array(
                    'method' => 'DELETE',
                  ));
