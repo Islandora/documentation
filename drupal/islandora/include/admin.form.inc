@@ -80,7 +80,7 @@ function islandora_config_form_validate_stomp_url(array $element, array &$form_s
  */
 function islandora_config_form_validate_karaf_url(array $element, array &$form_state, array $form) {
   // Try to connect to the server.
-  $url = $element['#value'] + '/cxf';
+  $url = $element['#value'] . '/cxf';
   $handle = curl_init($url);
   curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
   $response = curl_exec($handle);
