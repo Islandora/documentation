@@ -141,9 +141,8 @@ function islandora_basic_image_node_postinsert($node) {
       ),
     );
   }
-
-  $url = "http://127.0.0.1:8181/cxf/islandora/image/$parent_collection";
-  httprl_request($url,
+  $karaf_url = variable_get('islandora_karaf_url', 'http://127.0.0.1:8181');
+  httprl_request("$karaf_url/cxf/islandora/image/$parent_collection",
                  $options);
   $response = httprl_send_request();
 }
@@ -186,8 +185,8 @@ function islandora_basic_image_node_postupdate($node) {
       ),
     );
   }
-
-  httprl_request("http://127.0.0.1:8181/cxf/islandora/image/{$node->uuid}",
+  $karaf_url = variable_get('islandora_karaf_url', 'http://127.0.0.1:8181');
+  httprl_request("$karaf_url/cxf/islandora/image/{$node->uuid}",
                  $options);
   $response = httprl_send_request();
 }
@@ -207,7 +206,8 @@ function islandora_basic_image_node_postdelete($node) {
   }
 
   $uuid = $node->uuid;
-  httprl_request("http://127.0.0.1:8181/cxf/islandora/image/$uuid",
+  $karaf_url = variable_get('islandora_karaf_url', 'http://127.0.0.1:8181');
+  httprl_request("$karaf_url/cxf/islandora/image/$uuid",
                  array(
                    'method' => 'DELETE',
                  ));

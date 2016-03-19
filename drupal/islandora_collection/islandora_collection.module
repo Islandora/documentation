@@ -125,10 +125,9 @@ function islandora_collection_node_postinsert($node) {
   }
 
   $node = array_pop($nodes);
-  $url = "http://127.0.0.1:8181/cxf/islandora/collection/$parent_collection";
-
+  $karaf_url = variable_get('islandora_karaf_url', 'http://127.0.0.1:8181');
   // Don't forget the trailing slash.
-  httprl_request($url,
+  httprl_request("$karaf_url/cxf/islandora/collection/$parent_collection",
                  array(
                    'method' => 'POST',
                    'headers' => array(
@@ -166,7 +165,8 @@ function islandora_collection_node_postupdate($node) {
 
   $node = array_pop($nodes);
   $uuid = $node->uuid;
-  httprl_request("http://127.0.0.1:8181/cxf/islandora/collection/$uuid",
+  $karaf_url = variable_get('islandora_karaf_url', 'http://127.0.0.1:8181');
+  httprl_request("$karaf_url/cxf/islandora/collection/$uuid",
                  array(
                    'method' => 'PUT',
                    'headers' => array(
@@ -192,7 +192,8 @@ function islandora_collection_node_postdelete($node) {
   }
 
   $uuid = $node->uuid;
-  httprl_request("http://127.0.0.1:8181/cxf/islandora/collection/$uuid",
+  $karaf_url = variable_get('islandora_karaf_url', 'http://127.0.0.1:8181');
+  httprl_request("$karaf_url/cxf/islandora/collection/$uuid",
                  array(
                    'method' => 'DELETE',
                  ));
