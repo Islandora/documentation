@@ -135,7 +135,6 @@ class CollectionController {
       $members_proxy_rdf = $app['twig']->render('createOreProxy.ttl', array(
         'resource' => $members_uri,
       ));
-      error_log($members_proxy_rdf);
 
       $fullUri = $app['islandora.idToUri']($id);
       if (is_a($fullUri, 'Symfony\Component\HttpFoundation\Response')) {
