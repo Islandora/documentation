@@ -1,5 +1,3 @@
 bundle:watch --start mvn:ca.islandora.camel.component/islandora-camel-component/0.0.1-SNAPSHOT
 bundle:watch --start mvn:ca.islandora.camel.sync/islandora-sync-gateway/0.0.1-SNAPSHOT
-bundle:watch --start mvn:ca.islandora.camel.services/islandora-collection-service/0.0.1-SNAPSHOT
-bundle:watch --start mvn:ca.islandora.camel.services/islandora-basic-image-service/0.0.1-SNAPSHOT
 logout

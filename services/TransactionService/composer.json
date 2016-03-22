@@ -5,15 +5,11 @@
         {
             "type": "path",
             "url": "../ResourceService"
-        },
-        {
-            "type": "path",
-            "url": "../../../chullo"
         }
     ],
     "require": {
-        "islandora/chullo": "dev-thinCollectionController",
-        "islandora/resource-service": "dev-updates-thinCollection",
+        "islandora/chullo": "^0.0",
+        "islandora/resource-service": "dev-sprint-002-working-vagrant",
         "silex/silex": "^1.3"
     },
     "autoload": {

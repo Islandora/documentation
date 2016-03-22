@@ -37,7 +37,6 @@
 
   <modules>
     <module>sync</module>
-    <module>services</module>
     <module>component</module>
     <module>karaf</module>
   </modules>
