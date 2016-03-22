@@ -12,7 +12,7 @@ class CollectionController {
 
     protected $uuidGenerator;
 
-    public function __construct(IUuidGenerator $uuidGenerator) {
+    public function __construct(Application $app, IUuidGenerator $uuidGenerator) {
         $this->uuidGenerator = $uuidGenerator;
     }
 
@@ -127,11 +127,22 @@ class CollectionController {
 
       $urlRoute = $request->getUriForPath('/islandora/resource/');
 
-      $members_proxy_rdf = $app['twig']->render('createOreProxy.ttl', array(
-        'resource' => $app['islandora.idToUri']($member),
-      ));
+      $members_uri = $app['islandora.idToUri']($member);
+      if (is_a($members_uri, 'Symfony\Component\HttpFoundation\Response')) {
+        return $members_uri;
+      }
 
-      $fullUri = $app['islandora.idToUri']($id) . '/members';
+      $members_proxy_rdf = $app['twig']->render('createOreProxy.ttl', array(
+        'resource' => $members_uri,
+      ));
+      error_log($members_proxy_rdf);
+
+      $fullUri = $app['islandora.idToUri']($id);
+      if (is_a($fullUri, 'Symfony\Component\HttpFoundation\Response')) {
+        return $fullUri;
+      }
+
+      $fullUri .=  '/members';
 
       $newRequest = Request::create($urlRoute . $id . '/members-add/' . $member , 'POST', array(), $request->cookies->all(), array(), $request->server->all(), $members_proxy_rdf);
       $newRequest->headers->set('Content-type', 'text/turtle');
@@ -140,7 +151,8 @@ class CollectionController {
         return new Response($response->getBody(), 201, $response->getHeaders());
       }
       //Abort if PCDM collection object could not be created
-      $app->abort($response->getStatusCode(), 'Failed adding member to PCDM Collection');
+      return $response;
+      //return new Response($response->getStatusCode(), 'Failed adding member to PCDM Collection');
 
     }
     

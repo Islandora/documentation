@@ -6,13 +6,13 @@ require_once __DIR__.'/../vendor/autoload.php';
 
 use Silex\Application;
 use Islandora\Chullo\Uuid\UuidGenerator;
-use Islandora\ResourceService\Provider\ResourceServiceProvider;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Psr\Http\Message\ResponseInterface;
 use Silex\Provider\TwigServiceProvider;
-use Islandora\CollectionService\Controller\CollectionController;
+use Islandora\ResourceService\Provider\ResourceServiceProvider;
+use Islandora\CollectionService\Provider\CollectionServiceProvider;
 use Islandora\TransactionService\Provider\TransactionServiceProvider;
 
 date_default_timezone_set('UTC');
@@ -37,15 +37,12 @@ $islandoraTransactionService = new TransactionServiceProvider;
 $app->register($islandoraTransactionService);
 $app->mount("/islandora", $islandoraTransactionService);
 
-$app['collection.controller'] = $app->share(function() {
-    return new CollectionController(new UuidGenerator());
-});
+$islandoraCollectionService = new CollectionServiceProvider;
 
-$app->post("/islandora/collection/{id}", "collection.controller:create")
-->value('id',"");
-$app->post("/islandora/collection/{id}/member/{member}", "collection.controller:addMember");
-$app->delete("/islandora/collection/{id}/member/{member}", "collection.controller:removeMember");
-
+$app->register($islandoraCollectionService, array(
+  'UuidGenerator' => new UuidGenerator(),
+));
+$app->mount("/islandora", $islandoraCollectionService);
 
 /**
  * Convert returned Guzzle responses to Symfony responses.
