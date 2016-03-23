@@ -7,12 +7,12 @@
 # Currently selected branch in git
 CURRENT_BRANCH=$(git branch | grep '*' | cut -d' ' -f2)
 # List of directories to change composer.json in 
-AFFECTS_DIR="CollectionService TransactionService"
+AFFECTS_DIR=". CollectionService TransactionService"
 
-echo -e "Altering composer.json to use branch 'dev-${CURRENT_BRANCH}'..."
+echo "Altering composer.json to use branch 'dev-${CURRENT_BRANCH}'..."
 for i in $AFFECTS_DIR; do
   mv $i/composer.json $i/composer.json_bkup
-  awk -v BRANCH=$CURRENT_BRANCH '/islandora\/(resource|transaction)/ { print gensub(/(.+):\s*"dev-[^"]+/, "\\1: \"dev-"BRANCH, 1)} !/islandora\/(resource|transaction)/ { print $0}' $i/composer.json_bkup > $i/composer.json
+  awk -v BRANCH=$CURRENT_BRANCH '/islandora\/(resource|transaction|collection)/ { print gensub(/(.+):\s*"dev-[^"]+/, "\\1: \"dev-"BRANCH, 1)} !/islandora\/(resource|transaction|collection)/ { print $0}' $i/composer.json_bkup > $i/composer.json
 done
-echo "done"
+echo "Done"
 
