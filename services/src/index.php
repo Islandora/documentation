@@ -32,9 +32,15 @@ $islandoraResourceServiceProvider = new ResourceServiceProvider;
 $islandoraCollectionServiceProvider = new CollectionServiceProvider;
 $islandoraTransactionServiceProvider = new TransactionServiceProvider;
 
-$app->register($islandoraResourceServiceProvider);
-$app->register($islandoraCollectionServiceProvider);
-$app->register($islandoraTransactionServiceProvider);
+$app->register($islandoraResourceServiceProvider, array(
+  'islandora.BasePath' => __DIR__,
+));
+$app->register($islandoraCollectionServiceProvider, array(
+  'islandora.BasePath' => __DIR__,
+));
+$app->register($islandoraTransactionServiceProvider, array(
+  'islandora.BasePath' => __DIR__,
+));
 $app->mount("/islandora", $islandoraResourceServiceProvider);
 $app->mount("/islandora", $islandoraCollectionServiceProvider);
 $app->mount("/islandora", $islandoraTransactionServiceProvider);
