@@ -129,6 +129,7 @@ class CollectionController {
 
       $members_uri = $app['islandora.idToUri']($member);
       if (is_a($members_uri, 'Symfony\Component\HttpFoundation\Response')) {
+        // If this is a response, it is a failure. Pass it back to the client.
         return $members_uri;
       }
 
@@ -138,6 +139,7 @@ class CollectionController {
 
       $fullUri = $app['islandora.idToUri']($id);
       if (is_a($fullUri, 'Symfony\Component\HttpFoundation\Response')) {
+        // If this is a response, it is a failure. Pass it back to the client.
         return $fullUri;
       }
 
@@ -150,8 +152,7 @@ class CollectionController {
         return new Response($response->getBody(), 201, $response->getHeaders());
       }
       //Abort if PCDM collection object could not be created
-      return $response;
-      //return new Response($response->getStatusCode(), 'Failed adding member to PCDM Collection');
+      return new Response($response->getStatusCode(), 'Failed adding member to PCDM Collection');
 
     }
     
@@ -174,12 +175,14 @@ class CollectionController {
       $urlRoute = $request->getUriForPath('/islandora/resource/');
 
       $collection_uri = $app['islandora.idToUri']($id);
-      if (is_object($collection_uri)) {
+      if (is_a($collection_uri, 'Symfony\Component\HttpFoundation\Response')) {
+        // If this is a response, it is a failure. Pass it back to the client.
         return $collection_uri;
       }
 
       $member_uri = $app['islandora.idToUri']($member);
-      if (is_object($member_uri)) {
+      if (is_a($member_uri, 'Symfony\Component\HttpFoundation\Response')) {
+          // If this is a response, it is a failure. Pass it back to the client.
         return $member_uri;
       }
 
