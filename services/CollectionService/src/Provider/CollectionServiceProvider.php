@@ -81,7 +81,6 @@ class CollectionServiceProvider implements ServiceProviderInterface, ControllerP
     //
     // Define routing referring to controller services
     //
-    $CollectionControllers->before($app['islandora.hostHeaderNormalize']);
 
     $CollectionControllers->post("/collection/{id}", "islandora.collectioncontroller:create")
       ->value('id',"")
