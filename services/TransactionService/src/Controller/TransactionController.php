@@ -44,4 +44,41 @@ class TransactionController {
      return $response;
   }
 
+  /**
+   * Parse a response to get the transaction ID.
+   *
+   * @param $response
+   *   Either a Symfony or Guzzle/Psr7 response.
+   * @return string
+   *   The transaction ID.
+   */
+  public function getId($response) {
+    if (get_class($response) == 'Symfony\Component\HttpFoundation\Response') {
+      if ($response->headers->has('location')) {
+        return $this->parseTransactionId($response->headers->get('location'));
+      }
+    }
+    if (get_class($response) == 'GuzzleHttp\Psr7\Response') {
+      if ($response->hasHeader('location')) {
+        return $this->parseTransactionId($response->getHeader('location'));
+      }
+    }
+    return NULL;
+  }
+
+  /**
+   * Utility function to get the transaction ID from the Header.
+   *
+   * @param array|string $header
+   *   array of headers or the single string.
+   * @return string
+   *   the transaction ID.
+   */
+  private function parseTransactionId($header) {
+    if (is_array($header)) {
+      $header = reset($header);
+    }
+    $ids = explode('tx:', $header);
+    return 'tx:' . $ids[1];
+  }
 }
