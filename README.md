@@ -4,9 +4,9 @@
 
 [Islandora](http://islandora.ca) and [Fedora 4](http://fedorarepository.org/) Integration Project! 
 
-This is where the Islandora and Fedora 4 development will happen. If you would like to get involved in the community around this project, please check out the Islandora Foundation [Fedora 4 Interest Group](https://github.com/Islandora/Islandora-Fedora4-Interest-Group).
+This is where the Islandora and Fedora 4 development will happen. If you would like to get involved in the community around this project, please consider attending our weekly [Tech Call](https://github.com/Islandora-CLAW/CLAW/wiki).
 
-For more information about the project, please see the [project documentation](http://islandora-claw.github.io/CLAW/).
+For more information about the project, please see the [project documentation](http://islandora-claw.github.io/CLAW/) or project news on [islandora.ca](http://islandora.ca/CLAW).
 
 ### Repository layout
 
@@ -36,7 +36,7 @@ Current maintainers:
 
 ## Development
 
-If you would like to contribute, please get involved with the [Islandora Fedora 4 Interest Group](https://github.com/Islandora/Islandora-Fedora4-Interest-Group). We love to hear from you!
+If you would like to contribute, please get involved by attending our weekly [Tech Call](https://github.com/Islandora-CLAW/CLAW/wiki). We love to hear from you!
 
 If you would like to contribute code to the project, you need to be covered by an Islandora Foundation [Contributor License Agreement](http://islandora.ca/sites/default/files/islandora_cla.pdf) or [Corporate Contributor Licencse Agreement](http://islandora.ca/sites/default/files/islandora_ccla.pdf). Please see the [Contributors](http://islandora.ca/resources/contributors) pages on Islandora.ca for more information.
 
