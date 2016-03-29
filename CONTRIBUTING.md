@@ -4,27 +4,24 @@ If you are reading this document then you are interested in contributing to the 
 
 ## Workflows
 
-For the time being, the community around this project is centred at the [Islandora Foundation, Fedora 4 Interest Group](https://github.com/Islandora/Islandora-Fedora4-Interest-Group). The group meets on the fourth Friday of each month at 1PM EST. The meetings usually happen via Skype, and meeting announcements/agendas are posted to the [Islandora community list](https://groups.google.com/forum/#!forum/islandora) and the [Islandora developers list](https://groups.google.com/forum/#!forum/islandora-dev). You can view meeting agendas and minutes [here](https://github.com/islandora-interest-groups/Islandora-Fedora4-Interest-Group/tree/master/meetings).
-
-There is an additional 7.x-2.x Tech Call that occurs each Wednesday at 1:00pm Eastern Daylight Time US (UTC-4). Agendas with call-in details can be found [here](https://github.com/Islandora-CLAW/CLAW/wiki#islandora-7x-2x-tech-calls).
-
+The group meets each Wednesday at 1PM Eastern. Meeting notes and announcements are posted to the [Islandora community list](https://groups.google.com/forum/#!forum/islandora) and the [Islandora developers list](https://groups.google.com/forum/#!forum/islandora-dev). You can view meeting agendas, notes, and call-in information [here](https://github.com/Islandora-CLAW/CLAW/wiki#islandora-7x-2x-tech-calls). Anybody is welcome to join the calls, and add items to the agenda.
 
 ### Use cases
 
-If you would like to submit a use case for the Islandora and Fedora integration project, please submit and issue [here](https://github.com/Islandora/Islandora-Fedora4-Interest-Group/issues) using the [Use Case template](https://github.com/Islandora/Islandora-Fedora4-Interest-Group/wiki/Use-Case-template), assign the "use case" label to the issue.
+If you would like to submit a use case for the Islandora and Fedora integration project, please submit and issue [here](https://github.com/Islandora-CLAW/CLAW/issues/new) using the [Use Case template](https://github.com/Islandora/Islandora-Fedora4-Interest-Group/wiki/Use-Case-template), assign the "use case" label to the issue.
 
 ### Documentation
 
-  You can contribute documentation in two different ways. One way is to create an issue [here](https://github.com/Islandora-CLAW/CLAW/issues) assign the "documentation" label to the issue. Another way is to by pull request, as same as code contribution. All documentation resides in [`docs`](https://github.com/Islandora-CLAW/CLAW/tree/7.x-2.x/docs).
+You can contribute documentation in two different ways. One way is to create an issue [here](https://github.com/Islandora-CLAW/CLAW/issues/new) assign the "documentation" label to the issue. Another way is to by pull request, same process as [Contribute Code](https://github.com/Islandora-CLAW/CLAW/blob/7.x-2.x/contributing.md#contribute-code). All documentation resides in [`docs`](https://github.com/Islandora-CLAW/CLAW/tree/7.x-2.x/docs).
 
 
 ### Request a new feature
 
-To request a new feature you should [open an issue](https://github.com/Islandora-CLAW/CLAW/issues) or create a [use case](https://github.com/Islandora/Islandora-Fedora4-Interest-Group/issues) (see _use case_ section above), and summarize the desired functionality. Select the label "enhancement" if creating an issue on the project repo, and "use case" if creating a use case in the interest group repo.
+To request a new feature you should [open an issue](https://github.com/Islandora-CLAW/CLAW/issues/new) or create a [use case](https://github.com/Islandora-CLAW/CLAW/blob/7.x-2.x/CONTRIBUTING.md#use-cases) (see _use case_ section above), and summarize the desired functionality. Select the label "enhancement" if creating an issue on the project repo, and "use case" if creating a use case in the interest group repo.
 
 ### Report a bug
 
-To report a bug you should [open an issue](https://github.com/Islandora-CLAW/CLAW/issues) that summarizes the bug. Set the label to "bug".
+To report a bug you should [open an issue](https://github.com/Islandora-CLAW/CLAW/issues/new) that summarizes the bug. Set the label to "bug".
 
 In order to help us understand and fix the bug it would be great if you could provide us with:
 
@@ -36,7 +33,7 @@ Feel free to search the issue queue for existing issues (aka tickets) that alrea
 
 **If you want to provide a pull along with your bug report:**
 
-That is great! In this case please send us a pull request as described in section _Create a pull request_ below.
+That is great! In this case please send us a pull request as described in section _[Create a pull request](https://github.com/Islandora-CLAW/CLAW/blob/7.x-2.x/CONTRIBUTING.md#create-a-pull-request)_ below.
 
 ### Contribute code
 
@@ -60,8 +57,7 @@ Contributions to the Islandora codebase should be sent as GitHub pull requests. 
 
 ### Create a pull request
 
-Take a look at [Creating a pull request](https://help.github.com/articles/creating-a-pull-request).  In a nutshell you
-need to:
+Take a look at [Creating a pull request](https://help.github.com/articles/creating-a-pull-request). In a nutshell you need to:
 
 1. [Fork](https://help.github.com/articles/fork-a-repo) the Islandora GitHub repository at [https://github.com/Islandora-CLAW/CLAW](https://github.com/Islandora-CLAW/CLAW) to your personal GitHub account. If you already have a fork of [https://github.com/Islandora/islandora](https://github.com/Islandora/islandora) Github will prevent you from creating a new fork; in such a case you can continue to use [https://github.com/Islandora/islandora](https://github.com/Islandora/islandora) to issue pull request, be cautious of which branches you work from though (you'll want to base your work off of 7.x-2.x). Also be cautious of which repository your issuing your Pull Request to (you'll want to issue your pull request to [https://github.com/Islandora-CLAW/CLAW](https://github.com/Islandora-CLAW/CLAW)). See [Fork a repo](https://help.github.com/articles/fork-a-repo) for detailed instructions.
 2. Commit any changes to your fork.
