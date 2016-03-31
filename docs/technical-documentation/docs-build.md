@@ -4,6 +4,12 @@ This documentation is built using [mkdocs](http://www.mkdocs.org/), a static sit
 
 ## Build and Deploy documentation
 
+Make sure you have a recent version of Mkdocs:
+`pip install --upgrade mkdocs`
+
+Make sure you have the cinder theme installed:
+`pip install mkdocs-cinder`
+
 Documentation is build by running to the following command in the root of the repository:
 
 `mkdocs build --clean`
