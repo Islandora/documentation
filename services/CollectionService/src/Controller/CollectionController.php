@@ -39,7 +39,6 @@ class CollectionController {
           try {
             $graph->parse($request->getContent(), $format->getName(), $fakeParsedIri);
             $jsonld = $graph->serialise('jsonld');
-            error_log("from rdf -> $jsonld");
           } catch (\EasyRdf_Exception $e) {
             $app->abort(415, $e->getMessage());
           }
