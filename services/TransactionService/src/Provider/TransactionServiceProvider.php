@@ -22,6 +22,10 @@ class TransactionServiceProvider implements ServiceProviderInterface, Controller
     //
     // Define controller services
     //
+    if (!isset($app['islandora.BasePath'])) {
+      $app['islandora.BasePath'] = __DIR__ . '/..';
+    }
+    
     $app['islandora.transactioncontroller'] = $app->share(function() use ($app) {
       return new \Islandora\TransactionService\Controller\TransactionController($app);
     });
@@ -42,10 +46,10 @@ class TransactionServiceProvider implements ServiceProviderInterface, Controller
     if (!isset($app['config'])) {
       $app['config'] = $app->share(function() use ($app){
         if ($app['debug']) {
-          $configFile = __DIR__.'/../../config/settings.dev.yml';
+          $configFile = $app['islandora.BasePath'] . '/../config/settings.dev.yml';
         }
         else {
-          $configFile = __DIR__.'/../../config/settings.yml';
+          $configFile = $app['islandora.BasePath'] . '/../config/settings.yml';
         }
         $settings = Yaml::parse(file_get_contents($configFile));
         return $settings;

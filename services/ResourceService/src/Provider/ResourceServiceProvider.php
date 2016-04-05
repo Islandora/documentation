@@ -24,7 +24,9 @@ class ResourceServiceProvider implements ServiceProviderInterface, ControllerPro
     //
     //This is the base path for the application. Used to change the location
     //of yaml config files when registerd somewhere else
-    $app['islandora.BasePath'] = __DIR__.'/..';
+    if (!isset($app['islandora.BasePath'])) {
+      $app['islandora.BasePath'] = __DIR__.'/..';
+    }
     $app['islandora.resourcecontroller'] = $app->share(function() use ($app) {
       return new \Islandora\ResourceService\Controller\ResourceController($app);
     });
