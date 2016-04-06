@@ -64,7 +64,10 @@ Tomcat Manager:
   * username: islandora
   * password: islandora
 
-You can connect to the machine via ssh: `ssh -p 2222 vagrant@localhost`
+You can connect to the machine via ssh: 
+  
+  * `ssh -p 2222 vagrant@localhost`
+  * `vagrant ssh`
 
 The default VM login details are:
   
