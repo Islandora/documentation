@@ -1,0 +1,12 @@
+{
+  "@context" : {
+    "ldp" : "http://www.w3.org/ns/ldp#",
+    "pcdm" : "http://pcdm.org/models#",
+    "ore" : "http://www.openarchives.org/ore/terms/",
+    "pcdmObject" : { "@id" : "pcdm:Object", "@type" : "@id" },
+    "proxyFor" : {"@id" : "ore:proxyFor", "@type" : "@id" }
+  },
+  "@id" : "",
+  "@type" : "pcdmObject",
+  "proxyFor" : "{{ resource }}"
+}

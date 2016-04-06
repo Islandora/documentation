@@ -57,10 +57,10 @@ class CollectionController {
           }
           if (($results = $node->getProperty('http://www.semanticdesktop.org/ontologies/2007/03/22/nfo/v1.2/uuid')) !== NULL) {
             if (is_array($results)) {
-              $uuid = reset($results);
+              $uuid = reset($results)->getValue();
             }
             else {
-              $uuid = $results;
+              $uuid = $results->getValue();
             }
           }
           else {
@@ -85,6 +85,8 @@ class CollectionController {
         $subRequestPost = Request::create($urlRoute.$id, 'POST', array(), $request->cookies->all(), array(), $request->server->all(), $pcdm_collection_rdf);
         $subRequestPost->query->set('tx', $tx);
         $subRequestPost->headers->set('Content-Type', 'application/ld+json');
+        // Reset the Content-Length incase the end user supplied some RDF.
+        $subRequestPost->headers->set('Content-Length', strlen($pcdm_collection_rdf));
         $responsePost = $app->handle($subRequestPost, HttpKernelInterface::SUB_REQUEST, false);
 
         if (201 == $responsePost->getStatusCode()) {// OK, collection created
@@ -99,6 +101,7 @@ class CollectionController {
           //Can't use in middleware, but needed. Without Fedora 4 throws big java errors!
           $subRequestPut->headers->set('Host', $app['config']['islandora']['fedoraHost'], TRUE);
           $subRequestPut->headers->set('Content-Type', 'application/ld+json');
+          $subRequestPut->headers->set('Content-Length', strlen($indirect_container_rdf));
           //Here is the thing. We don't know if UUID of the collection we just created is already in the tripple store.
           //So what to do? We could just try to use our routes directly, but UUID check agains triplestore we could fail!
           //lets invoke the controller method directly
@@ -155,6 +158,7 @@ class CollectionController {
 
       $newRequest = Request::create($urlRoute . $id . '/members-add/' . $member , 'POST', array(), $request->cookies->all(), array(), $request->server->all(), $members_proxy_rdf);
       $newRequest->headers->set('Content-type', 'application/ld+json');
+      $newRequest->headers->set('Content-Length', strlen($members_proxy_rdf));
       $response = $app['islandora.resourcecontroller']->post($app, $newRequest, $fullUri);
       if (201 == $response->getStatusCode()) {
         return new Response($response->getBody(), 201, $response->getHeaders());
