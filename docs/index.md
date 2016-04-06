@@ -12,7 +12,7 @@ Islandora consists of:
 
 The Technical documentation will help you understand:
 
-  * CLAW archtecture
+  * Islandora CLAW architecture
   * Middleware services
   * IslandoraCommand
 
