@@ -61,6 +61,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provision :shell, inline: "sudo sed -i '/tty/!s/mesg n/tty -s \\&\\& mesg n/' /root/.profile", :privileged =>false
   config.vm.provision :shell, :path => "./scripts/bootstrap.sh", :args => home_dir
+  config.vm.provision :shell, :path => "./scripts/lamp-server.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/solr.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/drupal.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/fcrepo.sh", :args => home_dir

@@ -15,6 +15,8 @@ cd "$HOME_DIR"
 # Set apt-get for non-interactive mode
 export DEBIAN_FRONTEND=noninteractive
 
+# include new repository for PHP 5.6
+add-apt-repository -y ppa:ondrej/php5-5.6
 # Update
 apt-get -y update && apt-get -y upgrade
 
@@ -76,13 +78,6 @@ debconf-set-selections <<< 'mysql-server mysql-server/root_password password isl
 debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password islandora'
 debconf-set-selections <<< "postfix postfix/mailname string islandora-fedora4.org"
 debconf-set-selections <<< "postfix postfix/main_mailer_type string 'Internet Site'"
-
-# Lamp server
-tasksel install lamp-server
-usermod -a -G www-data vagrant
-
-# Get the repo
-chown -R vagrant:vagrant islandora
 
 # Set JAVA_HOME -- Java8 set-default does not seem to do this.
 sed -i 's|#JAVA_HOME=/usr/lib/jvm/openjdk-6-jdk|JAVA_HOME=/usr/lib/jvm/java-8-oracle|g' /etc/default/tomcat7

@@ -21,8 +21,17 @@ cp "$HOME_DIR/islandora/install/scripts/align_branches.sh" "/opt/islandora/servi
 cd /opt/islandora/services
 ./align_branches.sh
 
-php -r "readfile('https://getcomposer.org/installer');" > composer-setup.php
-php -r "if (hash('SHA384', file_get_contents('composer-setup.php')) === '41e71d86b40f28e771d4bb662b997f79625196afcca95a5abf44391188c695c6c1456e16154c75a211d238cc3bc5cb47') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+cp "$HOME_DIR/islandora/install/composer-setup.php" "/opt/islandora/services"
+cp "$HOME_DIR/islandora/install/composer.sha384sum" "/opt/islandora/services"
+cd "/opt/islandora/services"
+
+sha384sum -c composer.sha384sum
+if [ "$?" != "0" ]; then
+  echo "Composer-setup.php did not match the expected SHA-384 hash, did you update the version of composer and not the stored hash?"
+  exit
+fi
+
 php composer-setup.php
 php -r "unlink('composer-setup.php');"
 php composer.phar update
+
