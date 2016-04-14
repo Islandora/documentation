@@ -7,3 +7,5 @@ PACKAGES="libwrap0 ssl-cert libterm-readkey-perl mysql-client-5.5 libdbi-perl li
 apt-get install -y $PACKAGES
 
 usermod -a -G www-data vagrant
+
+chown -R vagrant:vagrant islandora
