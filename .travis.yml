@@ -3,9 +3,19 @@ php:
   - 5.3.3
   - 5.4
   - 5.5
+  - 5.6
+  - 7.0
+  - hhvm
+
+matrix:
+    allow_failures:
+        - php: hhvm
+
 branches:
   only:
     - 7.x-2.x
+    - sprint-002
+
 before_install:
   - export ISLANDORA_DIR=$TRAVIS_BUILD_DIR
   - $TRAVIS_BUILD_DIR/drupal/islandora/tests/scripts/travis_setup.sh
