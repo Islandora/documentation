@@ -15,7 +15,12 @@ cd "$HOME_DIR"
 # Set apt-get for non-interactive mode
 export DEBIAN_FRONTEND=noninteractive
 
-# Update
+# Add repo for Oracle's JDK 8, rationale #L36-38
+add-apt-repository -y ppa:webupd8team/java
+# Add repo for PHP 5.6
+add-apt-repository -y ppa:ondrej/php5-5.6
+
+# Update all the things.
 apt-get -y update && apt-get -y upgrade
 
 # SSH
@@ -31,17 +36,14 @@ apt-get -y install git vim
 ## There is no Java8 OpenJDK right now in the Ubuntu repos
 ## http://askubuntu.com/questions/464755/how-to-install-openjdk-8-on-14-04-lts
 ## We'll use Oracle Java8 for now.
-
 # Java (Oracle)
-sudo apt-get install -y software-properties-common
-sudo apt-get install -y python-software-properties
-sudo add-apt-repository -y ppa:webupd8team/java
-sudo apt-get update
+apt-get install -y software-properties-common
+apt-get install -y python-software-properties
 echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections
 echo debconf shared/accepted-oracle-license-v1-1 seen true | sudo debconf-set-selections
-sudo apt-get install -y oracle-java8-installer
-sudo update-java-alternatives -s java-8-oracle
-sudo apt-get install -y oracle-java8-set-default
+apt-get install -y oracle-java8-installer
+update-java-alternatives -s java-8-oracle
+apt-get install -y oracle-java8-set-default
 export JAVA_HOME=/usr/lib/jvm/java-8-oracle
 
 # Maven
@@ -76,13 +78,6 @@ debconf-set-selections <<< 'mysql-server mysql-server/root_password password isl
 debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password islandora'
 debconf-set-selections <<< "postfix postfix/mailname string islandora-fedora4.org"
 debconf-set-selections <<< "postfix postfix/main_mailer_type string 'Internet Site'"
-
-# Lamp server
-tasksel install lamp-server
-usermod -a -G www-data vagrant
-
-# Get the repo
-chown -R vagrant:vagrant islandora
 
 # Set JAVA_HOME -- Java8 set-default does not seem to do this.
 sed -i 's|#JAVA_HOME=/usr/lib/jvm/openjdk-6-jdk|JAVA_HOME=/usr/lib/jvm/java-8-oracle|g' /etc/default/tomcat7
