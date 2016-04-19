@@ -56,7 +56,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :forwarded_port, guest: 5432, host: 5432 # PostgreSQL
 
   config.vm.provider "virtualbox" do |vb|
-    vb.customize ["modifyvm", :id, "--memory", '2048']
+    #vb.customize ["modifyvm", :id, "--memory", '2048']
+    vb.customize ["modifyvm", :id, "--memory", '3048']
+    #vb.customize ["modifyvm", :id, "--cpus", '2']
+    vb.customize ["modifyvm", :id, "--cpus", '2']
+    vb.customize ["modifyvm", :id, "--description", 'Islandora CLAW https://github.com/Islandora-CLAW/CLAW']
   end
 
   config.vm.provision :shell, inline: "sudo sed -i '/tty/!s/mesg n/tty -s \\&\\& mesg n/' /root/.profile", :privileged =>false

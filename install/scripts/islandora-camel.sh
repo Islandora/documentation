@@ -12,5 +12,5 @@ chown -R vagrant:vagrant "$HOME_DIR/.m2"
 
 cd "$HOME_DIR/islandora/camel"
 
-sudo -u vagrant mvn install
+sudo -u vagrant mvn -q install
 
