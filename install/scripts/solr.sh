@@ -20,21 +20,21 @@ fi
 
 cp -v "$DOWNLOAD_DIR/solr-$SOLR_VERSION.tgz" /tmp
 cd /tmp
-tar -xzvf solr-"$SOLR_VERSION".tgz
-cp -v "solr-$SOLR_VERSION/dist/solr-$SOLR_VERSION.war" /var/lib/tomcat7/webapps/solr.war
+tar -xzf solr-"$SOLR_VERSION".tgz
+cp "solr-$SOLR_VERSION/dist/solr-$SOLR_VERSION.war" /var/lib/tomcat7/webapps/solr.war
 chown tomcat7:tomcat7 /var/lib/tomcat7/webapps/solr.war
 
 if [ ! -f "$DOWNLOAD_DIR/commons-logging-1.1.2.jar" ]; then
   echo "Downloading commons-logging-1.1.2.jar"
   wget -q -O "$DOWNLOAD_DIR/commons-logging-1.1.2.jar" "http://repo1.maven.org/maven2/commons-logging/commons-logging/1.1.2/commons-logging-1.1.2.jar"
 fi
-cp -v "$DOWNLOAD_DIR/commons-logging-1.1.2.jar" cd /usr/share/tomcat7/lib
+cp "$DOWNLOAD_DIR/commons-logging-1.1.2.jar" cd /usr/share/tomcat7/lib
 cp /tmp/solr-"$SOLR_VERSION"/example/lib/ext/slf4j* /usr/share/tomcat7/lib
 cp /tmp/solr-"$SOLR_VERSION"/example/lib/ext/log4j* /usr/share/tomcat7/lib
 
 chown -hR tomcat7:tomcat7 /usr/share/tomcat7/lib
 
-cp -Rv /tmp/solr-"$SOLR_VERSION"/example/solr/* "$SOLR_HOME"
+cp -R /tmp/solr-"$SOLR_VERSION"/example/solr/* "$SOLR_HOME"
 
 chown -hR tomcat7:tomcat7 "$SOLR_HOME"
 
