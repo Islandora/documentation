@@ -94,8 +94,6 @@ If you receive errors involving `\r` (end of line) you have two options:
 
 1. Clone down the current development branch using `--single-branch`.
 
-  Our current development branch (`sprint-002` as of 04-2016-23) will automatically take care of line endings for you. 
-
   ```
   git clone --single-branch --branch sprint-002 git@github.com:Islandora-CLAW/CLAW.git <optional directory name>
   ```
