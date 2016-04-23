@@ -87,3 +87,17 @@ The default VM login details are:
 - Islandora 7.x-2.x
 - PHP 5.5.9 
 - Java 8 (Oracle)
+
+## Windows Troubleshooting
+
+If you receive errors involving `\r` (end of line):
+
+Edit the global `.gitconfig` file, find the line:
+```
+autocrlf = true
+```
+and change it to
+```
+autocrlf = false
+```
+Remove and clone again. This will prevent Windows git clients from automatically replacing Unix line endings LF with Windows line endings CRLF.
