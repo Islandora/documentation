@@ -82,13 +82,31 @@ class CollectionServiceProvider implements ServiceProviderInterface, ControllerP
     // Define routing referring to controller services
     //
 
+    $CollectionControllers->get("/collection/{id}", "islandora.resourcecontroller:get")
+      ->convert('id', $app['islandora.idToUri'])
+      ->value('id',"")
+      ->value('child', "")
+      ->before(function(Request $request) { 
+        if (isset($request->attributes->parameters) && $request->attributes->parameters->has('id')) {
+          // To get this to work we need to GET /islandora/resource//tx:id
+          // So we move the $id to the $child parameter.
+          $id = $request->attributes->parameters->get('id');
+          $request->attributes->parameters->set('child', $id);
+          $request->attributes->parameters->set('id', '');
+        }
+      })
+      ->bind('islandora.collectionGet');
+
     $CollectionControllers->post("/collection/{id}", "islandora.collectioncontroller:create")
       ->value('id',"")
       ->bind('islandora.collectionCreate');
+
     $CollectionControllers->post("/collection/{id}/member/{member}", "islandora.collectioncontroller:addMember")
       ->bind('islandora.collectionAddMember');
+
     $CollectionControllers->delete("/collection/{id}/member/{member}", "islandora.collectioncontroller:removeMember")
       ->bind('islandora.collectionRemoveMember');
+
     return $CollectionControllers;
   }
 }
