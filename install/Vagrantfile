@@ -4,6 +4,11 @@
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
 
+$cpus   = ENV.fetch("ISLANDORA_VAGRANT_CPUS", "1")
+$memory = ENV.fetch("ISLANDORA_VAGRANT_MEMORY", "2048")
+$hostname = ENV.fetch("ISLANDORA_VAGRANT_HOSTNAME", "islandora-deux")
+$virtualBoxDescription = ENV.fetch("ISLANDORA_VAGRANT_VIRTUALBOXDESCRIPTION", "IslandoraCLAW")
+
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # All Vagrant configuration is done here. The most common configuration
   # options are documented and commented below. For a complete reference,
@@ -13,7 +18,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.network :forwarded_port, guest: 80, host: 8000 # Apache
   end
   
-  config.vm.hostname = "islandora-deux"
+  config.vm.hostname = $hostname
 
   # THIS NEEDS SOME LOVE. WEIRD SSH LOGIN ISSUES.
   # IT GETS STUCK AT: Waiting for ssh..
@@ -56,7 +61,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :forwarded_port, guest: 5432, host: 5432 # PostgreSQL
 
   config.vm.provider "virtualbox" do |vb|
-    vb.customize ["modifyvm", :id, "--memory", '2048']
+    vb.customize ["modifyvm", :id, "--memory", $memory]
+    vb.customize ["modifyvm", :id, "--cpus", $cpus]
+    vb.customize ["modifyvm", :id, "--description", $virtualBoxDescription]
   end
 
   config.vm.provision :shell, inline: "sudo sed -i '/tty/!s/mesg n/tty -s \\&\\& mesg n/' /root/.profile", :privileged =>false
