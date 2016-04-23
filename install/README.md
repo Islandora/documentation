@@ -92,22 +92,23 @@ The default VM login details are:
 
 If you receive errors involving `\r` (end of line) you have two options:
 
-#### Clone down the current development branch using `--single-branch`.
+1. Clone down the current development branch using `--single-branch`.
 
-Our current development branch (`sprint-002` as of 04-2016-23) will automatically take care of line endings for you. A benifit to this approach is that files created or edited on a Windows environment will be pushed back to your fork with appropriate `LF` endings.
+  Our current development branch (`sprint-002` as of 04-2016-23) will automatically take care of line endings for you. 
 
-```
-git clone --single-branch --branch sprint-002 git@github.com:Islandora-CLAW/CLAW.git <optional directory name>
-```
+  ```
+  git clone --single-branch --branch sprint-002 git@github.com:Islandora-CLAW/CLAW.git <optional directory name>
+  ```
+  A benifit to this approach is that files created or edited on a Windows environment will be pushed back to your fork with appropriate `LF` endings.
 
-#### Modify your global `.gitconfig` file to disable the Windows behavior of `autocrlf` entirely.
+2. Modify your global `.gitconfig` file to disable the Windows behavior of `autocrlf` entirely.
 
-Edit the global `.gitconfig` file, find the line:
-```
-autocrlf = true
-```
-and change it to
-```
-autocrlf = false
-```
-Remove and clone again. This will prevent Windows git clients from automatically replacing Unix line endings LF with Windows line endings CRLF.
+  Edit the global `.gitconfig` file, find the line:
+  ```
+  autocrlf = true
+  ```
+  and change it to
+  ```
+  autocrlf = false
+  ```
+  Remove and clone again. This will prevent Windows git clients from automatically replacing Unix line endings LF with Windows line endings CRLF.
