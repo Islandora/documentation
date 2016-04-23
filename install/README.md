@@ -90,7 +90,16 @@ The default VM login details are:
 
 ## Windows Troubleshooting
 
-If you receive errors involving `\r` (end of line):
+If you receive errors involving `\r` (end of line) you have two options:
+
+#### Clone down the current development branch using ``--single-branch``.
+
+Our current development branch (`sprint-002` as of 04-2016-23) will automatically take care of line endings for you. A benifit to this approach is that files created or edited on a Windows environment will be pushed back to your fork with appropriate `LF` endings.
+
+``git clone --single-branch --branch sprint-002 git@github.com:Islandora-CLAW/CLAW.git <optional directory name>``
+
+
+#### Modify your global `.gitconfig` file to disable the Windows behavior of `autocrlf` entirely.
 
 Edit the global `.gitconfig` file, find the line:
 ```
