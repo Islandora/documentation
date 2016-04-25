@@ -1,4 +1,5 @@
-# Islandora Dev Settings to be used with $app['debug'] == TRUE
+# Rename this file to settings.yml for production use or
+# rename it to settings.dev.yml to be used with $app['debug'] == TRUE
 islandora:
   apiVersion: 0.0.1
   fedoraProtocol: http
