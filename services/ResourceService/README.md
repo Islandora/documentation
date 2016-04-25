@@ -1,6 +1,6 @@
 # ResourceService
 
-This a Islandora PHP Microservice to perform some middleware functions such as
+This an Islandora PHP Microservice to perform some middleware functions such as
 
 1. UUID -> Fedora4 path translation
 2. UUID validation
@@ -16,7 +16,7 @@ and pass the request to Chullo.
 
 ## Installation
 
-You will need to copy the configuration file _example.settings.yml_ to either **settings.yml** or **settings.dev.yml** (if $app['debug'] = TRUE) and change any required settings.
+You will need to copy the configuration file [_example.settings.yml_](config/example.settings.yml) to either **settings.yml** or **settings.dev.yml** (if $app['debug'] = TRUE) and change any required settings.
 
 You can run just this service using PHP by executing 
 

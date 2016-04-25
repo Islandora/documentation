@@ -1,6 +1,6 @@
 # CollectionService
 
-This a Islandora PHP Microservice to create PCDM:Collections and add/remove PCDM:Objects to a PCDM:Collection.
+This an Islandora PHP Microservice to create PCDM:Collections and add/remove PCDM:Objects to a PCDM:Collection.
 
 ## Requirements
 
@@ -12,7 +12,7 @@ This a Islandora PHP Microservice to create PCDM:Collections and add/remove PCDM
 
 ## Installation
 
-You will need to copy the configuration file _example.settings.yml_ to either **settings.yml** or **settings.dev.yml** (if $app['debug'] = TRUE) and change any required settings.
+You will need to copy the configuration file [_example.settings.yml_](config/example.settings.yml) to either **settings.yml** or **settings.dev.yml** (if $app['debug'] = TRUE) and change any required settings.
 
 You can run just this service using PHP by executing 
 

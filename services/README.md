@@ -1,6 +1,6 @@
 # Services
 
-This is a top level container for the various microservices. It allows you to mount the various endpoints at one port on one machine and makes a development vagrant/docker configuration easier to produce.
+This is a top level container for the various Islandora CLAW microservices. It allows you to mount the various endpoints at one port on one machine and makes a development vagrant/docker configuration easier to produce.
 
 ## Requirements
 
@@ -13,7 +13,7 @@ This is a top level container for the various microservices. It allows you to mo
 
 ## Installation
 
-You will need to copy the configuration file _example.settings.yml_ to either **settings.yml** or **settings.dev.yml** (if $app['debug'] = TRUE) and change any required settings.
+You will need to copy the configuration file [_example.settings.yml_](config/example.settings.yml) to either **settings.yml** or **settings.dev.yml** (if $app['debug'] = TRUE) and change any required settings.
 
 You can run just this service using PHP by executing 
 

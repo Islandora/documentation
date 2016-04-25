@@ -1,6 +1,6 @@
 # TransactionService
 
-This a Islandora PHP Microservice to create/extend/commit or rollback Fedora 4 transactions
+This an Islandora PHP Microservice to create/extend/commit or rollback Fedora 4 transactions
 
 ## Requirements
 
@@ -11,7 +11,7 @@ This a Islandora PHP Microservice to create/extend/commit or rollback Fedora 4 t
 
 ## Installation
 
-You will need to copy the configuration file _example.settings.yml_ to either **settings.yml** or **settings.dev.yml** (if $app['debug'] = TRUE) and change any required settings.
+You will need to copy the configuration file [_example.settings.yml_](config/example.settings.yml) to either **settings.yml** or **settings.dev.yml** (if $app['debug'] = TRUE) and change any required settings.
 
 You can run just this service using PHP by executing 
 
