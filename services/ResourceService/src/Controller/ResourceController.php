@@ -65,20 +65,51 @@ class ResourceController {
     }
     return $response;
   }
+    /**
+   * Resource DELETE route controller. takes $id (valid UUID) for the parent resource as first value to match
+   * takes 'rx' and/or 'checksum' as optional query arguments
+   * @see https://wiki.duraspace.org/display/FEDORA40/RESTful+HTTP+API#RESTfulHTTPAPI-RedDELETEDeletearesource
+   */
   public function delete(Application $app, Request $request, $id, $child) {
     $tx = $request->query->get('tx', "");
     $force = $request->query->get('force', FALSE);
+      
+    error_log('---START OF DELETE RESOURCE REQUEST: ');
+    error_log($id);
+    $delete_queue = array($app->escape($id).'/'.$child, );
+    $sparql_query = $app['twig']->render('findAllOreProxy.sparql', array(
+       'resource' => $id,
+    ));
     try {
-      $response = $app['api']->deleteResource($app->escape($id).'/'.$child, $tx);
-      //remove tombstone also if 'force' == true and previous response is 204
-      if ((204 == $response->getStatusCode() || 410 == $response->getStatusCode()) && $force) {
-        $response= $app['api']->deleteResource($app->escape($id).'/'.$child.'/fcr:tombstone', $tx);
-      }
+      $sparql_result = $app['triplestore']->query($sparql_query);
     }
     catch (\Exception $e) {
-      $app->abort(503, '"Chullo says Fedora4 Repository is Not available"');
+      $app->abort(503, 'Chullo says "Triple Store Not available"');
     }
-    return $response;
+    if (count($sparql_result) > 0) {
+      foreach ($sparql_result as $ore_proxy) {
+        $delete_queue[] = $ore_proxy->obj->getUri();
+      }
+    }
+    error_log(implode(',', $delete_queue));
+    foreach($delete_queue as $object_uri) {
+      try {
+        $response = $app['api']->deleteResource($object_uri, $tx);
+        // Check to ensure we've removed the object.
+        // @TODO what is a 410 response?
+        if (204 != $response->getStatusCode() || 410 != $response->getStatusCode()) {
+          $app->abort($response->getStatusCode(), 'Failed to delete object at ' . $object_uri);
+        }
+        // Remove fcr:tombstone if 'force' == true.
+        if ($force) {
+          $response = $app['api']->deleteResource($object_uri.'/fcr:tombstone', $tx);
+        }
+      }
+      catch (\Exception $e) {
+        $app->abort(503, '"Chullo says Fedora4 Repository is Not available"');
+      }
+      error_log($response->getStatusCode());
+    }
   }
   
 }
