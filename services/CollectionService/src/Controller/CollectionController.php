@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Islandora\Chullo\Uuid\IUuidGenerator;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
+use ML\JsonLd\JsonLd;
 
 class CollectionController {
 
@@ -28,57 +29,69 @@ class CollectionController {
 
         //Now check if body can be parsed in that format
         if ($format) { //EasyRdf_Format
-          //@see http://www.w3.org/2011/rdfa-context/rdfa-1.1 for defaults
-          \EasyRdf_Namespace::set('pcdm', 'http://pcdm.org/models#');
-          \EasyRdf_Namespace::set('nfo', 'http://www.semanticdesktop.org/ontologies/2007/03/22/nfo/v1.2/');
-          \EasyRdf_Namespace::set('isl', 'http://www.islandora.ca/ontologies/2016/02/28/isl/v1.0/');
-          \EasyRdf_Namespace::set('ldp', 'http://www.w3.org/ns/ldp');
 
           //Fake IRI, default LDP one for current resource "<>" is not a valid IRI!
           $fakeUuid = $this->uuidGenerator->generateV5("derp");
-          $fakeIri = new \EasyRdf_ParsedUri('urn:uuid:' . $fakeUuid);
+          $fakeIri = "urn:uuid:$fakeUuid";
+          $fakeParsedIri = new \EasyRdf_ParsedUri($fakeIri);
 
           $graph = new \EasyRdf_Graph();
           try {
-            $graph->parse($request->getContent(), $format->getName(), $fakeIri);
+            $graph->parse($request->getContent(), $format->getName(), $fakeParsedIri);
+            $jsonld = $graph->serialise('jsonld');
           } catch (\EasyRdf_Exception $e) {
             $app->abort(415, $e->getMessage());
           }
-          //Add a pcmd:Collection type
-          $graph->resource($fakeIri, 'pcdm:Collection');
-
-          //Check if we got an UUID inside posted RDF. We won't validate it here because it's the caller responsability
-          if (NULL != $graph->countValues($fakeIri, 'nfo:uuid')) {
-            $existingUuid = $graph->getLiteral($fakeIri, 'nfo:uuid');
-            // Delete isl:hasURN to make it match the uuid
-            if (NULL != $graph->countValues($fakeIri, 'isl:hasURN')) {
-              $graph->delete($fakeIri, 'isl:hasURN');
+          
+          // Get the JSON-LD DocumentInstance.
+          $json_doc = JsonLd::getDocument($jsonld);
+          // Get the default graph.
+          $graph = $json_doc->getGraph();
+          // Try to get the node based on the fakeIri
+          $node = $graph->getNode($fakeIri);
+          if (is_null($node)) {
+            $nodes = $graph->getNodes();
+            if (count($nodes) == 0) {
+               $node = $graph->createNode($fakeIri);
             }
-            $graph->addResource($fakeIri, 'isl:hasURN', 'urn:uuid:'.$existingUuid); //Testing an Islandora Ontology!
-          } else {
-            //No UUID from the caller in RDF, lets put something there
-            // Need a random UUID because there wasn't one provided.
-            $newUuid = $this->uuidGenerator->generateV4();
-            if (NULL != $graph->countValues($fakeIri, 'isl:hasURN')) {
-              $graph->delete($fakeIri, 'isl:hasURN');
-            }
-            $graph->addLiteral($fakeIri,"nfo:uuid",$newUuid); //Keeps compat for now with other services
-            $graph->addResource($fakeIri,"isl:hasURN",'urn:uuid:'.$newUuid); //Testing an Islandora Ontology
           }
+          if (($results = $node->getProperty('http://www.semanticdesktop.org/ontologies/2007/03/22/nfo/v1.2/uuid')) !== NULL) {
+            if (is_array($results)) {
+              $uuid = reset($results)->getValue();
+            }
+            else {
+              $uuid = $results->getValue();
+            }
+          }
+          else {
+            $uuid = $this->uuidGenerator->generateV4();
+            $node->addPropertyValue('http://www.semanticdesktop.org/ontologies/2007/03/22/nfo/v1.2/uuid', $uuid);
+          }
+          if (($pcdm_coll = $graph->getNode('http://pcdm.org/models#Collection')) === NULL) {
+            $pcdm_coll = $graph->createNode('http://pcdm.org/models#Collection');
+          }
+          $node->addType($pcdm_coll);
+          $node->removeProperty('http://www.islandora.ca/ontologies/2016/02/28/isl/v1.0/hasURN');
+          $node->addPropertyValue('http://www.islandora.ca/ontologies/2016/02/28/isl/v1.0/hasURN', 'urn:uuid:' . $uuid);
+
           //Restore LDP <> IRI on serialised graph
-          $pcmd_collection_rdf= str_replace($fakeIri, '', $graph->serialise('turtle'));
+          $compact = JsonLd::compact($json_doc->toJsonLd());
+          $pcdm_collection_rdf = str_replace($fakeIri, '', JsonLd::toString($compact));
+
         }
 
         $urlRoute = $request->getUriForPath('/islandora/resource/');
 
-        $subRequestPost = Request::create($urlRoute.$id, 'POST', array(), $request->cookies->all(), array(), $request->server->all(), $pcmd_collection_rdf);
+        $subRequestPost = Request::create($urlRoute.$id, 'POST', array(), $request->cookies->all(), array(), $request->server->all(), $pcdm_collection_rdf);
         $subRequestPost->query->set('tx', $tx);
-        $subRequestPost->headers->set('Content-Type', 'text/turtle');
+        $subRequestPost->headers->set('Content-Type', 'application/ld+json');
+        // Reset the Content-Length incase the end user supplied some RDF.
+        $subRequestPost->headers->set('Content-Length', strlen($pcdm_collection_rdf));
         $responsePost = $app->handle($subRequestPost, HttpKernelInterface::SUB_REQUEST, false);
 
         if (201 == $responsePost->getStatusCode()) {// OK, collection created
           //Lets take the location header in the response
-          $indirect_container_rdf = $app['twig']->render('createIndirectContainerfromTS.ttl', array(
+          $indirect_container_rdf = $app['twig']->render('createIndirectContainerfromTS.json', array(
             'resource' => $responsePost->headers->get('location'),
           ));
 
@@ -87,7 +100,8 @@ class CollectionController {
           $subRequestPut->headers->set('Slug', 'members');
           //Can't use in middleware, but needed. Without Fedora 4 throws big java errors!
           $subRequestPut->headers->set('Host', $app['config']['islandora']['fedoraHost'], TRUE);
-          $subRequestPut->headers->set('Content-Type', 'text/turtle');
+          $subRequestPut->headers->set('Content-Type', 'application/ld+json');
+          $subRequestPut->headers->set('Content-Length', strlen($indirect_container_rdf));
           //Here is the thing. We don't know if UUID of the collection we just created is already in the tripple store.
           //So what to do? We could just try to use our routes directly, but UUID check agains triplestore we could fail!
           //lets invoke the controller method directly
@@ -97,9 +111,8 @@ class CollectionController {
             $putHeaders = $responsePut->getHeaders();
             //Guzzle psr7 response objects are inmutable. So we have to make this an array and add directly
             $putHeaders['Link'] = array('<'.$responsePut->getBody().'>; rel="alternate"');
-            $return_uuid = (isset($existingUuid) ? $existingUuid : $newUuid);
-            $putHeaders['Link'] = array('<'.$urlRoute.$return_uuid.'/members>; rel="hub"');
-            $putHeaders['Location'] = array($urlRoute.$return_uuid);
+            $putHeaders['Link'] = array('<'.$urlRoute.$uuid.'/members>; rel="hub"');
+            $putHeaders['Location'] = array($urlRoute.$uuid);
             //Should i care about the etag?
             return new Response($putHeaders['Location'][0], 201, $putHeaders);
           }
@@ -132,7 +145,7 @@ class CollectionController {
         return $members_uri;
       }
 
-      $members_proxy_rdf = $app['twig']->render('createOreProxy.ttl', array(
+      $members_proxy_rdf = $app['twig']->render('createOreProxy.json', array(
         'resource' => $members_uri,
       ));
 
@@ -144,7 +157,8 @@ class CollectionController {
       $fullUri .=  '/members';
 
       $newRequest = Request::create($urlRoute . $id . '/members-add/' . $member , 'POST', array(), $request->cookies->all(), array(), $request->server->all(), $members_proxy_rdf);
-      $newRequest->headers->set('Content-type', 'text/turtle');
+      $newRequest->headers->set('Content-type', 'application/ld+json');
+      $newRequest->headers->set('Content-Length', strlen($members_proxy_rdf));
       $response = $app['islandora.resourcecontroller']->post($app, $newRequest, $fullUri);
       if (201 == $response->getStatusCode()) {
         return new Response($response->getBody(), 201, $response->getHeaders());
