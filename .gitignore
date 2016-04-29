@@ -7,4 +7,9 @@ site/
 installer
 composer.phar
 vendor
-
+services/CollectionService/composer.json_bkup
+services/TransactionService/composer.json_bkup
+services/align_branches.sh
+services/composer.json_bkup
+services/composer.lock
+services/composer.sha384sum
