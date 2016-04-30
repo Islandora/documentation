@@ -2,27 +2,27 @@
 
 Used to start, commit, and rollback transactions.
 
-**Endpoint**: http://localhost:8080/islandora/transaction/
+**Endpoint**: http://localhost:8282/islandora/transaction/
 
 **Actions**:
 
-* `POST` http://localhost:8080/islandora-services/transaction/
+* `POST` http://localhost:8282/islandora-services/transaction/
 
     * Creates a transaction in fedora, returning the id of the newly made transaction
 
-* `POST` http://localhost:8080/islandora-services/transaction/{tx_id}/extend
+* `POST` http://localhost:8282/islandora-services/transaction/{tx_id}/extend
 
     * Extends a transaction
 
     * Returns 204 - No Content
 
-* `POST` http://localhost:8080/islandora-services/transaction/{tx_id}/commit
+* `POST` http://localhost:8282/islandora-services/transaction/{tx_id}/commit
 
     * Commits a transaction
 
     * Returns 204 - No Content
 
-* `POST` http://localhost:8080/islandora-services/transaction/{tx_id}/rollback
+* `POST` http://localhost:8282/islandora-services/transaction/{tx_id}/rollback
 
     * Rolls back a transaction
 
@@ -32,35 +32,35 @@ Used to start, commit, and rollback transactions.
 
 Exposes basic CRUD operations on repository resources identified by a UUID.
 
-**Endpoint**: http://localhost:8080/islandora/resource/
+**Endpoint**: http://localhost:8282/islandora/resource/
 
 **Actions**:
 
-* `GET` http://localhost:8080/islandora/resource/{uuid}?tx={tx_id}
+* `GET` http://localhost:8282/islandora/resource/{uuid}?tx={tx_id}
 
     * Returns RDF metadata for the resource identified by the provided UUID.  Respects all headers the Fedora 4 API respects.
 
     * Optional transaction id will ensure the returned the RDF represents the current status of the resource within said transaction.
 
-* `POST` http://localhost:8080/islandora/resource/?tx={tx_id}
+* `POST` http://localhost:8282/islandora/resource/?tx={tx_id}
 
     * Creates a resource in Fedora 4.  Respects all headers the Fedora 4 API respects.
 
     * Optional transaction id will ensure the resource is created within said transaction.
 
-* `PUT` http://localhost:8080/islandora/resource/{uuid}?tx={tx_id}
+* `PUT` http://localhost:8282/islandora/resource/{uuid}?tx={tx_id}
 
     * Updates a resource in Fedora 4.  Respects all headers the Fedora 4 API respects.
 
     * Optional transaction id will ensure the resource is updated within said transaction.
 
-* `PATCH` http://localhost:8080/islandora/resource/{uuid}?tx={tx_id}
+* `PATCH` http://localhost:8282/islandora/resource/{uuid}?tx={tx_id}
 
     * Applies a SPARQL/Update query against a resource in Fedora 4.  Respects all headers the Fedora 4 API respects.
 
     * Optional transaction id will ensure the resource is updated within said transaction.
 
-* `DELETE` http://localhost:8080/islandora-services/resource/{uuid}?tx={tx_id}
+* `DELETE` http://localhost:8282/islandora-services/resource/{uuid}?tx={tx_id}
 
     * Deletes the resource in Fedora 4.
 
@@ -70,11 +70,11 @@ Exposes basic CRUD operations on repository resources identified by a UUID.
 
 Convenience operations for pcdm:Collections in Fedora 4.
 
-**Endpoint**: http://localhost:8080/islandora/collection/
+**Endpoint**: http://localhost:8282/islandora/collection/
 
 **Actions**:
 
-* `POST` http://localhost:8080/islandora/collection/?tx={tx_id}
+* `POST` http://localhost:8282/islandora/collection/?tx={tx_id}
 
     * Creates a pcdm:Collection in Fedora 4.  Respects all headers the Fedora 4 API respects.  Creates the appropriate indirect containers, with slug "members", to manage the pcdm:hasMember relationship or its inverse.
 
@@ -84,11 +84,11 @@ Convenience operations for pcdm:Collections in Fedora 4.
 
 Convenience operations for pcdm:Objects in Fedora 4.
 
-**Endpoint**: http://localhost:8080/islandora/object/
+**Endpoint**: http://localhost:8282/islandora/object/
 
 **Actions**:
 
-* `POST` http://localhost:8080/islandora/object/?tx={tx_id}
+* `POST` http://localhost:8282/islandora/object/?tx={tx_id}
 
     * Creates a pcdm:Object in Fedora 4.  Respects all headers the Fedora 4 API respects.  Adds the appropriate containers to manage the pcdm:hasMember and pcdm:hasFile relationships and their inverses.
 
@@ -100,27 +100,27 @@ Operations to add/remove members from pcdm:Objects and pcdm:Collections.
 
 **Endpoints**:
 
-http://localhost:8080/islandora/object/{uuid}/members
+http://localhost:8282/islandora/object/{uuid}/members
 
-http://localhost:8080/islandora/collection/{uuid}/members
+http://localhost:8282/islandora/collection/{uuid}/members
 
 **Actions**:
 
 For brevity, only one of the two endpoints is described in the following section.
 
-* `GET` http://localhost:8080/islandora/object/{parent_uuid}/members?tx={tx_id}
+* `GET` http://localhost:8282/islandora/object/{parent_uuid}/members?tx={tx_id}
 
     * Retrieves a list of members associated with object identified by parent_uuid.
 
     * Optional transaction id will return the state of the list of members within said transaction.
 
-* `POST` http://localhost:8080/islandora/object/{parent_uuid}/members/{child_uuid}?tx={tx_id}
+* `POST` http://localhost:8282/islandora/object/{parent_uuid}/members/{child_uuid}?tx={tx_id}
 
     * Adds the resource identified by child_uuid to the object/collection identified by parent_uuid
 
     * Optional transaction id will ensure the operation is performed within said transaction.
 
-* `DELETE` http://localhost:8080/islandora/object/{parent_uuid}/members/{child_uuid}?tx={tx_id}
+* `DELETE` http://localhost:8282/islandora/object/{parent_uuid}/members/{child_uuid}?tx={tx_id}
 
     * Removes the resource identified by child_uuid from the object/collection identified by parent_uuid
 
@@ -130,11 +130,11 @@ For brevity, only one of the two endpoints is described in the following section
 
 Lists all files for a pcdm:Object.
 
-**Endpoint**:  http://localhost:8080/islandora/object/{uuid}/files
+**Endpoint**:  http://localhost:8282/islandora/object/{uuid}/files
 
 **Actions**:
 
-* `GET` http://localhost:8080/islandora/object/{parent_uuid}/files?tx={tx_id}
+* `GET` http://localhost:8282/islandora/object/{parent_uuid}/files?tx={tx_id}
 
     * Retrieves a list of files associated with object identified by parent_uuid.
 
@@ -144,23 +144,23 @@ Lists all files for a pcdm:Object.
 
 CRUD operations for thumbnails
 
-**Endpoint**:  http://localhost:8080/islandora/object/{uuid}/thumbnail
+**Endpoint**:  http://localhost:8282/islandora/object/{uuid}/thumbnail
 
 **Actions**:
 
-* `GET` http://localhost:8080/islandora/object/{uuid}/thumbnail?tx={tx_id}
+* `GET` http://localhost:8282/islandora/object/{uuid}/thumbnail?tx={tx_id}
 
     * Retrieves the thumbnail for the object identified by the provided uuid.  Setting the accept header to an RDF mimetype will return the RDF for the file.  Setting it to a binary mimetype will return the contents of the file.
 
     * Optional transaction id will return the thumbnail within said transaction.
 
-* `PUT` http://localhost:8080/islandora/object/{uuid}/thumbnail?tx={tx_id}
+* `PUT` http://localhost:8282/islandora/object/{uuid}/thumbnail?tx={tx_id}
 
     * Saves the thumbnail provided in the message body to the object identified by the provided uuid.  
 
     * Optional transaction id will save the thumbnail within said transaction.
 
-* `DELETE` http://localhost:8080/islandora/object/{uuid}/thumbnail?tx={tx_id}
+* `DELETE` http://localhost:8282/islandora/object/{uuid}/thumbnail?tx={tx_id}
 
     * Removes the thumbnail for the object identified by the provided uuid.  
 
@@ -170,25 +170,28 @@ CRUD operations for thumbnails
 
 CRUD operations for preservation masters
 
-**Endpoint**:  http://localhost:8080/islandora/object/{uuid}/preservationMaster
+**Endpoint**:  http://localhost:8282/islandora/object/{uuid}/preservationMaster
 
 **Actions**:
 
-* `GET` http://localhost:8080/islandora/object/{uuid}/preservationMaster?tx={tx_id}
+* `GET` http://localhost:8282/islandora/object/{uuid}/preservationMaster?tx={tx_id}
 
     * Retrieves the preservation master for the object identified by the provided uuid.  Setting the accept header to an RDF mimetype will return the RDF for the file.  Setting it to a binary mimetype will return the contents of the file.
 
     * Optional transaction id will return the file within said transaction.
 
-* `PUT` http://localhost:8080/islandora/object/{uuid}/preservationMaster?tx={tx_id}
+* `PUT` http://localhost:8282/islandora/object/{uuid}/preservationMaster?tx={tx_id}
 
     * Saves the preservation master provided in the message body to the object identified by the provided uuid.  
 
     * Optional transaction id will save the file within said transaction.
 
-* `DELETE` http://localhost:8080/islandora/object/{uuid}/preservationMaster?tx={tx_id}
+* `DELETE` http://localhost:8282/islandora/object/{uuid}/preservationMaster?tx={tx_id}
 
     * Removes the preservation master for the object identified by the provided uuid.  
 
     * Optional transaction id will delete the file within said transaction.
 
+## Original Document
+
+Lives on as a Google Document located [here](https://docs.google.com/document/d/1FxnS28S_I18LnxoVT6J2k7T-m70xJ4F57pyRqBTI7EE/edit).
