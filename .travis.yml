@@ -35,7 +35,8 @@ script:
   - mvn install -B -V
   - mvn javadoc:jar
   - mvn javadoc:test-aggregate
-  - services/vendor/bin/phpcs --standard=PSR2 services/src
-  - services/vendor/bin/phpcs --standard=PSR2 services/TransactionService/src
-  - services/vendor/bin/phpcs --standard=PSR2 services/ResourceService/src
-  - services/vendor/bin/phpcs --standard=PSR2 services/TransactionService/src
+  - cd $TRAVIS_BUILD_DIR
+  - php services/vendor/bin/phpcs --standard=PSR2 services/src
+  - php services/vendor/bin/phpcs --standard=PSR2 services/TransactionService/src
+  - php services/vendor/bin/phpcs --standard=PSR2 services/ResourceService/src
+  - php services/vendor/bin/phpcs --standard=PSR2 services/TransactionService/src
