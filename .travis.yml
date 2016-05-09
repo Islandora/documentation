@@ -23,7 +23,7 @@ script:
   - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo `curl -s $PR | jq -r .head.ref`; fi)
   - cd $TRAVIS_BUILD_DIR/services
   - $TRAVIS_BUILD_DIR/install/scripts/align_branches.sh "$BRANCH"
-  - composer update
+  - composer install
   - cd $HOME/drupal-*
   - ant -buildfile sites/all/modules/islandora/drupal/islandora/build.xml lint
   - $ISLANDORA_DIR/drupal/islandora/tests/scripts/line_endings.sh sites/all/modules/islandora/drupal/islandora sites/all/modules/islandora/drupal/islandora_apachesolr sites/all/modules/islandora/drupal/islandora_basic_image sites/all/modules/islandora/drupal/islandora_collection sites/all/modules/islandora/drupal/islandora_dc sites/all/modules/islandora/drupal/islandora_mods sites/all/modules/islandora/drupal/islandora_rdf_mapping_service
