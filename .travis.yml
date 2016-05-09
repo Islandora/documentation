@@ -20,7 +20,7 @@ before_install:
   - export ISLANDORA_DIR=$TRAVIS_BUILD_DIR
   - $TRAVIS_BUILD_DIR/drupal/islandora/tests/scripts/travis_setup.sh
   - $TRAVIS_BUILD_DIR/install/scripts/align_branches.sh
-  - cd services && COMPOSER_ROOT_VERSION=dev-sprint-002 composer update
+  - cd services && composer update
   - cd $HOME/drupal-*
 
 script:
