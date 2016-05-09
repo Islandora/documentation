@@ -1,7 +1,5 @@
 language: php
 php:
-  - 5.3.3
-  - 5.4
   - 5.5
   - 5.6
   - 7.0
@@ -37,7 +35,7 @@ script:
   - mvn install -B -V
   - mvn javadoc:jar
   - mvn javadoc:test-aggregate
-  - php vendor/bin/phpcs --standard=PSR2 services/src
-  - php vendor/bin/phpcs --standard=PSR2 services/TransactionService/src
-  - php vendor/bin/phpcs --standard=PSR2 services/ResourceService/src
-  - php vendor/bin/phpcs --standard=PSR2 services/TransactionService/src
+  - php services/vendor/bin/phpcs --standard=PSR2 services/src
+  - php services/vendor/bin/phpcs --standard=PSR2 services/TransactionService/src
+  - php services/vendor/bin/phpcs --standard=PSR2 services/ResourceService/src
+  - php services/vendor/bin/phpcs --standard=PSR2 services/TransactionService/src

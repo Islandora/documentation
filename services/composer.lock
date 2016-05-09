@@ -301,7 +301,7 @@
             "dist": {
                 "type": "path",
                 "url": "CollectionService/",
-                "reference": "5f0af3f225c6b320f337cc04d61da03aeeb02f9d",
+                "reference": "",
                 "shasum": null
             },
             "require": {
@@ -352,7 +352,7 @@
             "dist": {
                 "type": "path",
                 "url": "ResourceService/",
-                "reference": "18e07ef879707404a549ba5f071c244c78184a3c",
+                "reference": "",
                 "shasum": null
             },
             "require": {
@@ -400,7 +400,7 @@
             "dist": {
                 "type": "path",
                 "url": "TransactionService/",
-                "reference": "786a7161a737caccfafda833036ce7e7489e1b88",
+                "reference": "",
                 "shasum": null
             },
             "require": {
@@ -1301,12 +1301,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/routing.git",
-                "reference": "6ab6fd5ee754fb53a303a5621ae35f3afd5970ac"
+                "reference": "a6cd168310066176599442aa21f5da86c3f8e0b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/routing/zipball/6ab6fd5ee754fb53a303a5621ae35f3afd5970ac",
-                "reference": "6ab6fd5ee754fb53a303a5621ae35f3afd5970ac",
+                "url": "https://api.github.com/repos/symfony/routing/zipball/a6cd168310066176599442aa21f5da86c3f8e0b3",
+                "reference": "a6cd168310066176599442aa21f5da86c3f8e0b3",
                 "shasum": ""
             },
             "require": {
@@ -1368,7 +1368,7 @@
                 "uri",
                 "url"
             ],
-            "time": "2016-04-28 09:48:42"
+            "time": "2016-05-03 12:23:49"
         },
         {
             "name": "symfony/yaml",
