@@ -17,6 +17,7 @@ branches:
     - sprint-002
 
 before_install:
+  - COMPOSER_ROOT_VERSION=dev-sprint-002 composer install
   - export ISLANDORA_DIR=$TRAVIS_BUILD_DIR
   - $TRAVIS_BUILD_DIR/drupal/islandora/tests/scripts/travis_setup.sh
   - $TRAVIS_BUILD_DIR/install/scripts/align_branches.sh
