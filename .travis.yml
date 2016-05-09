@@ -20,7 +20,7 @@ before_install:
   - export ISLANDORA_DIR=$TRAVIS_BUILD_DIR
   - $TRAVIS_BUILD_DIR/drupal/islandora/tests/scripts/travis_setup.sh
   - cd $HOME/drupal-*
-  - cd services composer install
+  - cd services && composer install
 
 script:
   - ant -buildfile sites/all/modules/islandora/drupal/islandora/build.xml lint
