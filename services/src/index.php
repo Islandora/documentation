@@ -47,7 +47,7 @@ $app->mount("/islandora", $islandoraTransactionServiceProvider);
  * Convert returned Guzzle responses to Symfony responses, type hinted.
  */
 $app->view(function (ResponseInterface $psr7) {
-  return new Response($psr7->getBody(), $psr7->getStatusCode(), $psr7->getHeaders());
+    return new Response($psr7->getBody(), $psr7->getStatusCode(), $psr7->getHeaders());
 });
 
 $app->run();

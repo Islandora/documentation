@@ -20,6 +20,8 @@ before_install:
   - export ISLANDORA_DIR=$TRAVIS_BUILD_DIR
   - $TRAVIS_BUILD_DIR/drupal/islandora/tests/scripts/travis_setup.sh
   - cd $HOME/drupal-*
+  - cd services composer install
+
 script:
   - ant -buildfile sites/all/modules/islandora/drupal/islandora/build.xml lint
   - $ISLANDORA_DIR/drupal/islandora/tests/scripts/line_endings.sh sites/all/modules/islandora/drupal/islandora sites/all/modules/islandora/drupal/islandora_apachesolr sites/all/modules/islandora/drupal/islandora_basic_image sites/all/modules/islandora/drupal/islandora_collection sites/all/modules/islandora/drupal/islandora_dc sites/all/modules/islandora/drupal/islandora_mods sites/all/modules/islandora/drupal/islandora_rdf_mapping_service
@@ -31,3 +33,7 @@ script:
   - mvn install -B -V
   - mvn javadoc:jar
   - mvn javadoc:test-aggregate
+  - php vendor/bin/phpcs --standard=PSR2 services/src
+  - php vendor/bin/phpcs --standard=PSR2 services/TransactionService/src
+  - php vendor/bin/phpcs --standard=PSR2 services/ResourceService/src
+  - php vendor/bin/phpcs --standard=PSR2 services/TransactionService/src

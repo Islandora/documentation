@@ -1,6 +1,10 @@
 {
     "name": "islandora/services",
     "description": "RESTful services container",
+    "support": {
+        "issues": "https://github.com/islandora-claw/CLAW/issues",
+        "irc": "irc://irc.freenode.net/islandora"
+    },
     "repositories": [
       {
                 "type": "path",
@@ -25,11 +29,20 @@
         "symfony/yaml": "^3.0",
         "ramsey/uuid": "^3.1"
     },
+    "require-dev": {
+        "phpunit/phpunit": "^4.8",
+        "squizlabs/php_codesniffer": "^2.0@dev"
+    },
     "autoload": {
         "psr-4": {"Islandora\\Services\\": "src/"}
     },
     "minimum-stability" : "dev",
     "authors": [
+        {
+            "name": "Islandora Foundation",
+            "email": "community@islandora.ca",
+            "role": "Owner"
+        },
         {
             "name": "Jared Whiklo",
             "email": "jwhiklo@gmail.com"

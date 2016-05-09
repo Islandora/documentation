@@ -20,10 +20,19 @@
         "easyrdf/easyrdf": "^0.9.1",
         "ml/json-ld": "^1.0"
     },
+    "require-dev": {
+        "phpunit/phpunit": "^4.8",
+        "squizlabs/php_codesniffer": "^2.0@dev"
+    },
     "autoload": {
         "psr-4": {"Islandora\\CollectionService\\": "src/"}
     },
     "authors": [
+        {
+            "name": "Islandora Foundation",
+            "email": "community@islandora.ca",
+            "role": "Owner"
+        },
         {
             "name": "Diego Pino Navarro",
             "email": "dpino@krayon.cl"
@@ -31,6 +40,10 @@
         {
             "name": "Jared Whiklo",
             "email": "jwhiklo@gmail.com"
+        },
+        {
+            "name": "Nick Ruest",
+            "email": "ruestn@gmail.com"
         }
     ]
 }
