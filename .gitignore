@@ -7,4 +7,8 @@ site/
 installer
 composer.phar
 vendor
-
+services/CollectionService/config/settings.dev.yml
+services/ResourceService/config/settings.dev.yml
+services/TransactionService/config/settings.dev.yml
+services/config/settings.dev.yml
+install/scripts/composer.json

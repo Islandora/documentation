@@ -21,15 +21,21 @@ $app = new Application();
 
 $app['debug'] = true;
 $app->register(new \Silex\Provider\ServiceControllerServiceProvider());
-$app->register(new \Silex\Provider\TwigServiceProvider(), array(
-  'twig.path' => __DIR__.'/../templates',
-));
+$app->register(
+    new \Silex\Provider\TwigServiceProvider(),
+    array(
+      'twig.path' => __DIR__.'/../templates',
+    )
+);
 
 $islandoraResourceServiceProvider = new ResourceServiceProvider;
 //Registers Resource Service and defines current app's path for config context
-$app->register($islandoraResourceServiceProvider, array(
-  'islandora.BasePath' => __DIR__,
-));
+$app->register(
+    $islandoraResourceServiceProvider,
+    array(
+      'islandora.BasePath' => __DIR__,
+    )
+);
 $app->mount("/islandora", $islandoraResourceServiceProvider);
 
 $islandoraTransactionService = new TransactionServiceProvider;
@@ -39,53 +45,89 @@ $app->mount("/islandora", $islandoraTransactionService);
 
 $islandoraCollectionService = new CollectionServiceProvider;
 
-$app->register($islandoraCollectionService, array(
-  'UuidGenerator' => new UuidGenerator(),
-));
+$app->register(
+    $islandoraCollectionService,
+    array(
+      'UuidGenerator' => new UuidGenerator(),
+    )
+);
 $app->mount("/islandora", $islandoraCollectionService);
 
 /**
  * Convert returned Guzzle responses to Symfony responses.
  */
 
-$app->view(function (ResponseInterface $psr7) {
-  return new Response($psr7->getBody(), $psr7->getStatusCode(), $psr7->getHeaders());
-});
+$app->view(
+    function (ResponseInterface $psr7) {
+        return new Response($psr7->getBody(), $psr7->getStatusCode(), $psr7->getHeaders());
+    }
+);
 
 
-$app->after(function (Request $request, Response $response) use ($app) {
-  $response->headers->set('X-Powered-By', 'Islandora Collection REST API v'.$app['config']['islandora']['apiVersion'], TRUE); //Nice
-
-});
+$app->after(
+    function (Request $request, Response $response) use ($app) {
+        $response->headers->set('X-Powered-By', 'Islandora Collection REST API v'
+        .$app['config']['islandora']['apiVersion'], true); //Nice
+    }
+);
 
 //Common error Handling
-$app->error(function (\EasyRdf_Exception $e, $code) use ($app) {
-  if ($app['debug']) {
-    return;
-  }
+$app->error(
+    function (\EasyRdf_Exception $e, $code) use ($app) {
+        if ($app['debug']) {
+            return;
+        }
 
-  return new response(sprintf('RDF Library exception', $e->getMessage(), $code), $code);
-});
-$app->error(function (\Symfony\Component\HttpKernel\Exception\HttpException $e, $code) use ($app) {
-  if ($app['debug']) {
-    return;
-  }
+        return new response(sprintf('RDF Library exception', $e->getMessage(), $code), $code);
+    }
+);
+$app->error(
+    function (\Symfony\Component\HttpKernel\Exception\HttpException $e, $code) use ($app) {
+        if ($app['debug']) {
+            return;
+        }
 
-  return new response(sprintf('Islandora Collection Service exception: %s / HTTP %d response', $e->getMessage(), $code), $code);
-});
-$app->error(function (\Symfony\Component\HttpKernel\Exception\NotFoundHttpException $e, $code) use ($app) {
-  if ($app['debug']) {
-    return;
-  }
-  //Not sure what the best "verbose" message is
-  return new response(sprintf('Islandora Collection Service exception: %s / HTTP %d response', $e->getMessage(), $code), $code);
-});
-$app->error(function (\Exception $e, $code) use ($app) {
-  if ($app['debug']) {
-    return;
-  }
+        return new response(
+            sprintf(
+                'Islandora Collection Service exception: %s / HTTP %d response',
+                $e->getMessage(),
+                $code
+            ),
+            $code
+        );
+    }
+);
+$app->error(
+    function (\Symfony\Component\HttpKernel\Exception\NotFoundHttpException $e, $code) use ($app) {
+        if ($app['debug']) {
+            return;
+        }
+        //Not sure what the best "verbose" message is
+        return new response(
+            sprintf(
+                'Islandora Collection Service exception: %s / HTTP %d response',
+                $e->getMessage(),
+                $code
+            ),
+            $code
+        );
+    }
+);
+$app->error(
+    function (\Exception $e, $code) use ($app) {
+        if ($app['debug']) {
+            return;
+        }
 
-  return new response(sprintf('Islandora Collection Service uncatched exception: %s %d response', $e->getMessage(), $code), $code);
-});
+        return new response(
+            sprintf(
+                'Islandora Collection Service uncatched exception: %s %d response',
+                $e->getMessage(),
+                $code
+            ),
+            $code
+        );
+    }
+);
 
 $app->run();
