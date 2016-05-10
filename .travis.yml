@@ -1,7 +1,5 @@
 language: php
 php:
-  - 5.3.3
-  - 5.4
   - 5.5
   - 5.6
   - 7.0
@@ -19,8 +17,14 @@ branches:
 before_install:
   - export ISLANDORA_DIR=$TRAVIS_BUILD_DIR
   - $TRAVIS_BUILD_DIR/drupal/islandora/tests/scripts/travis_setup.sh
-  - cd $HOME/drupal-*
+
 script:
+  - export PR=https://api.github.com/repos/$TRAVIS_REPO_SLUG/pulls/$TRAVIS_PULL_REQUEST
+  - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo `curl -s $PR | jq -r .head.ref`; fi)
+  - cd $TRAVIS_BUILD_DIR/services
+  - $TRAVIS_BUILD_DIR/install/scripts/align_branches.sh "$BRANCH"
+  - composer install
+  - cd $HOME/drupal-*
   - ant -buildfile sites/all/modules/islandora/drupal/islandora/build.xml lint
   - $ISLANDORA_DIR/drupal/islandora/tests/scripts/line_endings.sh sites/all/modules/islandora/drupal/islandora sites/all/modules/islandora/drupal/islandora_apachesolr sites/all/modules/islandora/drupal/islandora_basic_image sites/all/modules/islandora/drupal/islandora_collection sites/all/modules/islandora/drupal/islandora_dc sites/all/modules/islandora/drupal/islandora_mods sites/all/modules/islandora/drupal/islandora_rdf_mapping_service
   - drush coder-review --reviews=production,security,style,i18n,potx,sniffer islandora islandora_apachesolr islandora_basic_image islandora_collection islandora_dc islandora_mods islandora_rdf_mapping_service
@@ -31,3 +35,8 @@ script:
   - mvn install -B -V
   - mvn javadoc:jar
   - mvn javadoc:test-aggregate
+  - cd $TRAVIS_BUILD_DIR
+  - php services/vendor/bin/phpcs --standard=PSR2 services/src
+  - php services/vendor/bin/phpcs --standard=PSR2 services/TransactionService/src
+  - php services/vendor/bin/phpcs --standard=PSR2 services/ResourceService/src
+  - php services/vendor/bin/phpcs --standard=PSR2 services/TransactionService/src

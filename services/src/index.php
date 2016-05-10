@@ -32,9 +32,13 @@ $islandoraResourceServiceProvider = new ResourceServiceProvider;
 $islandoraCollectionServiceProvider = new CollectionServiceProvider;
 $islandoraTransactionServiceProvider = new TransactionServiceProvider;
 
-$app->register($islandoraResourceServiceProvider);
-$app->register($islandoraCollectionServiceProvider);
-$app->register($islandoraTransactionServiceProvider);
+$basepath = array(
+  'islandora.BasePath' => __DIR__,
+);
+
+$app->register($islandoraResourceServiceProvider, $basepath);
+$app->register($islandoraCollectionServiceProvider, $basepath);
+$app->register($islandoraTransactionServiceProvider, $basepath);
 $app->mount("/islandora", $islandoraResourceServiceProvider);
 $app->mount("/islandora", $islandoraCollectionServiceProvider);
 $app->mount("/islandora", $islandoraTransactionServiceProvider);
@@ -43,7 +47,7 @@ $app->mount("/islandora", $islandoraTransactionServiceProvider);
  * Convert returned Guzzle responses to Symfony responses, type hinted.
  */
 $app->view(function (ResponseInterface $psr7) {
-  return new Response($psr7->getBody(), $psr7->getStatusCode(), $psr7->getHeaders());
+    return new Response($psr7->getBody(), $psr7->getStatusCode(), $psr7->getHeaders());
 });
 
 $app->run();

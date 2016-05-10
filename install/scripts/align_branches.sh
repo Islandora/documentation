@@ -4,8 +4,13 @@
 # Changes the version for islandora/resource-service or
 # islandora/transaction-service to 'dev-<current branch>'
 
-# Currently selected branch in git
-CURRENT_BRANCH=$(git branch | grep '*' | cut -d' ' -f2)
+if [ $# -gt 0 ]; then
+  # Take branch name from arguments
+  CURRENT_BRANCH="$1"
+else
+  # Currently selected branch in git
+  CURRENT_BRANCH=$(git branch | grep '*' | cut -d' ' -f2)
+fi
 # List of directories to change composer.json in 
 AFFECTS_DIR=". CollectionService TransactionService"
 
