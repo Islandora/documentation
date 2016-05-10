@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "da253245beb7845e08e3b72691d19862",
-    "content-hash": "9af93e654b35a662109222f3b0eada6b",
+    "hash": "ef74a8745a28385e26b7cf9a6de3ced6",
+    "content-hash": "b9c4018e1765abb8739fc99cd2c33961",
     "packages": [
         {
             "name": "easyrdf/easyrdf",
@@ -297,18 +297,18 @@
         },
         {
             "name": "islandora/collection-service",
-            "version": "dev-issue-215",
+            "version": "dev-sprint-002",
             "dist": {
                 "type": "path",
-                "url": "CollectionService/",
-                "reference": "",
+                "url": "CollectionService",
+                "reference": "3b8d55953d3916ebdce5c454d2c70dd364185661",
                 "shasum": null
             },
             "require": {
                 "easyrdf/easyrdf": "^0.9.1",
                 "islandora/chullo": "^0.0",
-                "islandora/resource-service": "dev-issue-215",
-                "islandora/transaction-service": "dev-issue-215",
+                "islandora/resource-service": "dev-sprint-002",
+                "islandora/transaction-service": "dev-sprint-002",
                 "ml/json-ld": "^1.0",
                 "silex/silex": "^1.3",
                 "symfony/config": "^3.0",
@@ -348,11 +348,11 @@
         },
         {
             "name": "islandora/resource-service",
-            "version": "dev-issue-215",
+            "version": "dev-sprint-002",
             "dist": {
                 "type": "path",
-                "url": "ResourceService/",
-                "reference": "",
+                "url": "ResourceService",
+                "reference": "18e07ef879707404a549ba5f071c244c78184a3c",
                 "shasum": null
             },
             "require": {
@@ -396,16 +396,16 @@
         },
         {
             "name": "islandora/transaction-service",
-            "version": "dev-issue-215",
+            "version": "dev-sprint-002",
             "dist": {
                 "type": "path",
-                "url": "TransactionService/",
-                "reference": "",
+                "url": "TransactionService",
+                "reference": "ae5a46f9221abc2005217811cf1faf5d513b96fd",
                 "shasum": null
             },
             "require": {
                 "islandora/chullo": "^0.0",
-                "islandora/resource-service": "dev-issue-215",
+                "islandora/resource-service": "dev-sprint-002",
                 "silex/silex": "^1.3"
             },
             "require-dev": {
@@ -1160,12 +1160,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-kernel.git",
-                "reference": "1eb9646fe5fbe2d81e0de21bc4e5951c2077bd92"
+                "reference": "710fdc71161656d48cff0d788c5c3a2886e4ee40"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-kernel/zipball/1eb9646fe5fbe2d81e0de21bc4e5951c2077bd92",
-                "reference": "1eb9646fe5fbe2d81e0de21bc4e5951c2077bd92",
+                "url": "https://api.github.com/repos/symfony/http-kernel/zipball/710fdc71161656d48cff0d788c5c3a2886e4ee40",
+                "reference": "710fdc71161656d48cff0d788c5c3a2886e4ee40",
                 "shasum": ""
             },
             "require": {
@@ -1234,7 +1234,7 @@
             ],
             "description": "Symfony HttpKernel Component",
             "homepage": "https://symfony.com",
-            "time": "2016-05-03 12:23:49"
+            "time": "2016-05-09 22:35:04"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -1893,12 +1893,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "ac4dfb003d2d89e8f474fa15b0f9714ac1b45899"
+                "reference": "cb07302bcc264a177461bd8112c73eb2cd19aed6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/ac4dfb003d2d89e8f474fa15b0f9714ac1b45899",
-                "reference": "ac4dfb003d2d89e8f474fa15b0f9714ac1b45899",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/cb07302bcc264a177461bd8112c73eb2cd19aed6",
+                "reference": "cb07302bcc264a177461bd8112c73eb2cd19aed6",
                 "shasum": ""
             },
             "require": {
@@ -1957,7 +1957,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-04-29 09:30:21"
+            "time": "2016-05-10 17:50:22"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
