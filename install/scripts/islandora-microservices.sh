@@ -20,7 +20,7 @@ fi
 cp "$HOME_DIR/islandora/install/scripts/align_branches.sh" "/opt/islandora/services"
 cd /opt/islandora/services
 ./align_branches.sh
-cp "/opt/islandora/services/config/example.settings.yml" "/opt/services/config/settings.dev.yml"
+cp "/opt/islandora/services/config/example.settings.yml" "/opt/islandora/services/config/settings.dev.yml"
 
 cp "$HOME_DIR/islandora/install/composer-setup.php" "/opt/islandora/services"
 cp "$HOME_DIR/islandora/install/composer.sha384sum" "/opt/islandora/services"
