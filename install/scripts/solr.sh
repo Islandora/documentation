@@ -28,7 +28,7 @@ if [ ! -f "$DOWNLOAD_DIR/commons-logging-1.1.2.jar" ]; then
   echo "Downloading commons-logging-1.1.2.jar"
   wget -q -O "$DOWNLOAD_DIR/commons-logging-1.1.2.jar" "http://repo1.maven.org/maven2/commons-logging/commons-logging/1.1.2/commons-logging-1.1.2.jar"
 fi
-cp "$DOWNLOAD_DIR/commons-logging-1.1.2.jar" cd /usr/share/tomcat7/lib
+cp "$DOWNLOAD_DIR/commons-logging-1.1.2.jar" /usr/share/tomcat7/lib
 cp /tmp/solr-"$SOLR_VERSION"/example/lib/ext/slf4j* /usr/share/tomcat7/lib
 cp /tmp/solr-"$SOLR_VERSION"/example/lib/ext/log4j* /usr/share/tomcat7/lib
 

@@ -22,7 +22,7 @@
 
   <feature name="islandora-sync-gateway" version="${project.version}" start-level="80">
     <details>Installs the Islandora synchronization gateway</details>
-    
+
 
     <feature prerequisite="true">wrap</feature>
     <feature version="${camel.version}">camel</feature>
@@ -40,7 +40,7 @@
 
     <bundle dependency="true">wrap:mvn:com.github.spullara.mustache.java/compiler/${mustache.version}</bundle>
     <bundle>mvn:ca.islandora.camel.sync/islandora-sync-gateway/${project.version}</bundle>
-    
+
     <configfile finalname="/etc/ca.islandora.camel.sync.cfg">mvn:ca.islandora.camel.sync/islandora-sync-gateway/${project.version}/cfg/configuration</configfile>
   </feature>
 
@@ -90,5 +90,16 @@
     <configfile finalname="/etc/ca.islandora.services.collection.cfg">mvn:ca.islandora.camel.services/islandora-collection-service/${project.version}/cfg/configuration</configfile>
   </feature>
 
+  <feature name="islandora-indexing-triplestore" version="${project.version}" start-level="80">
+    <details>Indexes the triplestore from Drupal nodes</details>
 
+    <feature version="${camel.version}">camel</feature>
+    <feature version="${activemq.version}">activemq-camel</feature>
+    <feature version="${project.version}">islandora-camel-component</feature>
+
+    <bundle>mvn:ca.islandora.camel.indexing/islandora-indexing-triplestore/${project.version}</bundle>
+
+    <configfile finalname="/etc/ca.islandora.camel.indexing.triplestore.cfg">mvn:ca.islandora.camel.indexing/islandora-indexing-triplestore/${project.version}/cfg/configuration</configfile>
+
+  </feature>
 </features>

@@ -9,7 +9,7 @@
     ],
     "require": {
         "islandora/chullo": "^0.0",
-        "islandora/resource-service": "dev-spring-002",
+        "islandora/resource-service": "dev-sprint-002",
         "silex/silex": "^1.3"
     },
     "autoload": {

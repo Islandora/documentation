@@ -29,6 +29,24 @@ define('ISLANDORA_FEDORA_HAS_PARENT_FIELD', 'field_fedora_has_parent');
 define('ISLANDORA_PCDM_HAS_MEMBER_FIELD', 'field_pcdm_has_member');
 
 /**
+ * Implements hook_menu().
+ */
+function islandora_menu() {
+  $items = array(
+    'admin/islandora/config' => array(
+      'title' => 'Islandora',
+      'description' => 'Configure settings for Islandora',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('islandora_config_form'),
+      'file' => '/include/admin.form.inc',
+      'access arguments' => array('administer site configuration'),
+      'type' => MENU_NORMAL_ITEM,
+    ),
+  );
+  return $items;
+}
+
+/**
  * Implements hook_ctools_plugin_api().
  */
 function islandora_ctools_plugin_api($owner, $api) {
@@ -65,6 +83,67 @@ function islandora_entity_load($entities, $type) {
       $entity->pcdm_file_mapping = module_invoke_all("pcdm_file_mapping");
     }
   }
+}
+
+/**
+ * Implements hook_node_postinsert().
+ */
+function islandora_node_postinsert($node) {
+  module_load_include('inc', 'islandora', 'include/utils');
+  if (islandora_ignore_hooks()) {
+    return;
+  }
+
+  $nodes = entity_uuid_load('node', array($node->uuid));
+
+  // Exit early if the node never was successfully inserted in the database.
+  if (empty($nodes)) {
+    return;
+  }
+
+  $node = array_pop($nodes);
+
+  module_load_include('inc', 'islandora', 'include/triplestore');
+  islandora_triplestore_upsert($node);
+}
+
+/**
+ * Implements hook_node_postupdate().
+ */
+function islandora_node_postupdate($node) {
+  module_load_include('inc', 'islandora', 'include/utils');
+  if (islandora_ignore_hooks()) {
+    return;
+  }
+
+  // Unfortunately, there's no way to tell if the db transaction got rolled
+  // back in this hook, so we'll default to doing it anyway so as not to miss
+  // any updates. Open to suggestions on this one.  But we gotta do post_action
+  // hooks otherwise things can get crazy if the db transaction hasn't closed.
+  $nodes = entity_uuid_load('node', array($node->uuid));
+
+  // Exit early if something has gone wrong and there's no node info.
+  if (empty($nodes)) {
+    return;
+  }
+
+  $node = array_pop($nodes);
+
+  module_load_include('inc', 'islandora', 'include/triplestore');
+  islandora_triplestore_upsert($node);
+}
+
+/**
+ * Implements hook_node_postdelete().
+ */
+function islandora_node_postdelete($node) {
+  module_load_include('inc', 'islandora', 'include/utils');
+  if (islandora_ignore_hooks()) {
+    return;
+  }
+
+  module_load_include('inc', 'islandora', 'include/triplestore');
+  islandora_triplestore_delete($node);
 }
 
 /**
