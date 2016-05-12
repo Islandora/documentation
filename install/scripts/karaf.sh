@@ -9,7 +9,7 @@ fi
 
 if [ ! -f "$DOWNLOAD_DIR/apache-karaf-${KARAF_VERSION}.tar.gz" ]; then
   echo "Downloading Karaf version $KARAF_VERSION"
-  wget -q -O "$DOWNLOAD_DIR/apache-karaf-${KARAF_VERSION}.tar.gz" "http://mirror.csclub.uwaterloo.ca/apache/karaf/$KARAF_VERSION/apache-karaf-${KARAF_VERSION}.tar.gz"
+  wget -q -O "$DOWNLOAD_DIR/apache-karaf-${KARAF_VERSION}.tar.gz" "http://archive.apache.org/dist/karaf/$KARAF_VERSION/apache-karaf-${KARAF_VERSION}.tar.gz"
 fi
 
 cd "$HOME_DIR"
