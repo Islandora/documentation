@@ -85,8 +85,6 @@ class ResourceController
     $tx = $request->query->get('tx', "");
     $force = $request->query->get('force', false);
 
-    error_log('---START OF DELETE RESOURCE REQUEST: ');
-    error_log($app->escape($id) . '/' . $child);
     $delete_queue = array($app->escape($id) . '/' . $child);
     $sparql_query = $app['twig']->render('findAllOreProxy.sparql', array(
       'resource' => $id,
@@ -101,7 +99,6 @@ class ResourceController
         $delete_queue[] = $ore_proxy->obj->getUri();
       }
     }
-    error_log(implode(',', $delete_queue));
     $response = '';
     // To the reader: I'm leaving this try outside of the foreach since we're doing fedora connection checking.
     try {
