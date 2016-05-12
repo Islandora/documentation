@@ -11,14 +11,16 @@ fi
 cd "$HOME_DIR"
 
 # Drush and drupal deps
-apt-get -y -qq install php5-gd
-apt-get -y -qq install drush
+apt-get -y -qq install php5.6-gd php5.6-xml php5.6-mysql php5.6-curl php5.6-json php-stomp
+cd /tmp && wget http://files.drush.org/drush.phar
+chmod +x drush.phar
+mv drush.phar /usr/local/bin/drush
 a2enmod rewrite
 service apache2 reload
 cd /var/www/html
 
 # Download Drupal
-drush dl drupal --drupal-project-rename=drupal
+drush dl drupal-7 --drupal-project-rename=drupal
 
 # Permissions
 chown -R www-data:www-data drupal
@@ -111,16 +113,3 @@ cd "$DRUPAL_HOME/sites/all/themes"
 drush -y dl bootstrap
 drush -y en bootstrap
 drush vset theme_default bootstrap
-
-# Coder & Code Sniffer
-pear install PHP_CodeSniffer
-if [ ! -f "$DOWNLOAD_DIR/coder-8.x-2.1.tar.gz" ]; then
-  echo "Downloading coder"
-  wget -q -O "$DOWNLOAD_DIR/coder-8.x-2.1.tar.gz" http://ftp.drupal.org/files/projects/coder-8.x-2.1.tar.gz
-fi
-cp "$DOWNLOAD_DIR/coder-8.x-2.1.tar.gz" /tmp
-cd /tmp
-tar -xzf coder-8.x-2.1.tar.gz
-mv /tmp/coder /usr/share
-chown -hR vagrant:vagrant /usr/share/coder
-ln -s /usr/share/coder/coder_sniffer/Drupal /usr/share/php/PHP/CodeSniffer/Standards

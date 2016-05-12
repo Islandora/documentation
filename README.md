@@ -15,40 +15,6 @@ For more information about the project, please see the [project documentation](h
 * [drupal](https://github.com/Islandora-Labs/islandora/tree/7.x-2.x/drupal) - Drupal modules
 * [install](https://github.com/Islandora-Labs/islandora/tree/7.x-2.x/install) - Vagrant development environment
 
-
-## Requirements
-
-1. [VirtualBox](https://www.virtualbox.org/)
-2. [Vagrant](http://www.vagrantup.com)
-3. [git](https://git-scm.com/)
-
-## Variables
-
-### System Resources
-
-By default the virtual machine that is built uses 2GB of RAM. Your host machine will need to be able to support the additional memory use. You can override the CPU and RAM allocation by creating `ISLANDORA_VAGRANT_CPUS` and `ISLANDORA_VAGRANT_MEMORY` environment variables and setting the values. For example, on an Ubuntu host you could add to `~/.bashrc`:
-
-```bash
-export ISLANDORA_VAGRANT_CPUS=4
-export ISLANDORA_VAGRANT_MEMORY=4096
-```
-
-### Hostname and Description
-
-If you use a DNS or host file management plugin with Vagrant, you may want to set a specific hostname for the virtual machine. You can do that with the `ISLANDORA_VAGRANT_HOSTNAME` variable.  The `ISLANDORA_VAGRANT_VIRTUALBOXDESCRIPTION` variables can be used to track the VM build. For example:
-
-```bash
-export ISLANDORA_VAGRANT_HOSTNAME="islandora-deux"
-export ISLANDORA_VAGRANT_VIRTUALBOXDESCRIPTION="Islandora CLAW"
-```
-
-## Use
-
-1. `git clone https://github.com/Islandora-CLAW/CLAW`
-2. `cd CLAW`
-3. `vagrant up`
-
-
 ## Maintainers/Sponsors
 
 * UPEI

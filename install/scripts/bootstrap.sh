@@ -18,7 +18,7 @@ export DEBIAN_FRONTEND=noninteractive
 # Add repo for Oracle's JDK 8, rationale #L36-38
 add-apt-repository -y ppa:webupd8team/java
 # Add repo for PHP 5.6
-add-apt-repository -y ppa:ondrej/php5-5.6
+add-apt-repository -y ppa:ondrej/php
 
 # Update all the things.
 apt-get -y -qq update && apt-get -y -qq upgrade
