@@ -1,5 +1,0 @@
-name = Islandora DC
-description = "Fields and utilities for managing DC 1.1 metadata in Islandora"
-package = Islandora
-version = 7.x-dev
-core = 7.x
