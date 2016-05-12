@@ -11,7 +11,8 @@ class ResourceController
      * Resource GET controller takes $id (valid UUID or empty) as first value to match, optional a child resource path
      * takes 'rx' and/or 'metadata' as optional query arguments
      *
-     * @see https://wiki.duraspace.org/display/FEDORA40/RESTful+HTTP+API#RESTfulHTTPAPI-GETRetrievethecontentoftheresource
+     * @see
+     * https://wiki.duraspace.org/display/FEDORA40/RESTful+HTTP+API#RESTfulHTTPAPI-GETRetrievethecontentoftheresource
      */
     public function get(Application $app, Request $request, $id, $child)
     {
@@ -57,8 +58,8 @@ class ResourceController
     }
 
     /**
-     * Resource PUT route. takes $id (valid UUID or empty) for the resource to be update/created as first value to match,
-     * optional a Child resource relative path
+     * Resource PUT route. takes $id (valid UUID or empty) for the resource to be update/created
+     * as first value to match, optional a Child resource relative path
      * takes 'rx' and/or 'checksum' as optional query arguments
      *
      * @see https://wiki.duraspace.org/display/FEDORA4x/RESTful+HTTP+API (Create a resource with a specified path...)
@@ -130,7 +131,7 @@ class ResourceController
             foreach ($delete_queue as $object_uri) {
                 $response = $app['api']->deleteResource($object_uri, $tx);
                 $status = $response->getStatusCode();
-                // Abort if we do not get a success (codes 204 or 410) from Fedora.
+                // Abort if we do not get a success (codes 204 or 410) from Fedora
                 if (204 != $status && 410 != $status) {
                     $app->abort(503, 'Could not delete resource or proxy at ' .
                         $object_uri);
