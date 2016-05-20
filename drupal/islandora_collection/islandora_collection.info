@@ -1,8 +1,0 @@
-name = Islandora Collection
-description = "Content type, view, and hooks for Collections"
-package = Islandora
-version = 7.x-dev
-core = 7.x
-dependencies[] = islandora
-dependencies[] = hook_post_action
-dependencies[] = httprl

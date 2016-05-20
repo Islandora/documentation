@@ -1,6 +1,0 @@
-name = Islandora Delete By Fedora URI Service
-description = "Deletes Drupal nodes by Fedora URI.  Needed for Sync to handle delete events that don't originate from Drupal."
-package = Islandora
-version = 7.x-dev
-core = 7.x
-dependencies[] = rest_server
