@@ -1,21 +1,35 @@
-# Islandora [![Build Status](https://travis-ci.org/Islandora-CLAW/CLAW.png?branch=7.x-2.x)](https://travis-ci.org/Islandora-CLAW/CLAW)
+# ![Islandora CLAW](https://camo.githubusercontent.com/738dd7cbd90a3ef06b9bb55a4cf5ed385a048fd4/687474703a2f2f69736c616e646f72612e63612f73697465732f64656661756c742f66696c65732f696d616765732f6c6f6273746572434c41572e706e67) Islandora CLAW
 
 ## Introduction
 
-[Islandora](http://islandora.ca) and [Fedora 4](http://fedorarepository.org/) Integration Project! 
+Islandora CLAW (also known as Islandora 7.x-2.x) is the next generation of Islandora. Still in development, this major upgrade will be compatible with Fedora 4 (link is external).
 
-This is where the Islandora and Fedora 4 development will happen. If you would like to get involved in the community around this project, please check out the Islandora Foundation [Fedora 4 Interest Group](https://github.com/Islandora/Islandora-Fedora4-Interest-Group).
+For more details, please check out the following resources:
+* [Weekly Tech Calls](https://github.com/Islandora-CLAW/CLAW/wiki#islandora-7x-2x-tech-calls)
+  * [2015](https://github.com/Islandora-CLAW/CLAW/wiki/2015)
+  * [2016](https://github.com/Islandora-CLAW/CLAW/wiki/2016)
+* CLAW Lessons - webinars on how to develop CLAW 
+  * Week 01: [Intro to Fedora 4.x](http://connect.scholarsportal.info/p1yw6tqj5ri/?launcher=false&fcsContent=true&pbMode=normal)
+  * Week 02: [Hands-on Creating Fedora 4.x Resources](http://connect.scholarsportal.info/p4vgnyej4yc/?launcher=false&fcsContent=true&pbMode=normal)
+  * Week 03: [Data Flow in the CLAW](http://connect.scholarsportal.info/p1m4snlupg1/?launcher=false&fcsContent=true&pbMode=normal)
+  * Week 04: [Intro Drupal side of CLAW and some Camel](http://connect.scholarsportal.info/p1gtdr1tmgs/?launcher=false&fcsContent=true&pbMode=normal&smartPause=false)
+  * Week 05: [Microservices 101 (Part 1)](http://connect.scholarsportal.info/p2sbci2pf75/)
+  * Week 06: [Microservices 101 (Part 2)](http://connect.scholarsportal.info/p7e7gqilgzg/)
+  * Week 07: [Drupal is Dead. Long Live Drupal (Drupal 8)](http://connect.scholarsportal.info/p45l482w49w/)
+  * Week 08: [Data Modeling in Claw, Migration to FCRepo 4, Derivatives](http://connect.scholarsportal.info/p5b25a6ptqs/)
+  * Week 09: How to get involved and contribute!
 
-For more information about the project, please see the [project documentation](http://islandora-labs.github.io/islandora/).
+## Repository Structure
 
-### Repository layout
+* Alpaca: Event driven middleware based on Apache Camel that synchronizes a Fedora 4 with Drupal.  
+* Chullo: A PHP client for Fedora 4 built using Guzzle and EasyRdf. 
+* Crayfish: Top level container for the various Islandora CLAW microservices, lovingly known as Crayfish.
+* docs: Documentation!
+* install: Bleeding edge development environment
+* islandora: CLAW Drupal modules 
+* PDX: Top level container for the various PCDM specific Islandora CLAW microservices. 
 
-* [camel](https://github.com/Islandora-Labs/islandora/tree/7.x-2.x/camel) - Middleware layer based on Apache Camel that synchronizes a Fedora 4 JCR with a Drupal CMS.
-* [docs](https://github.com/Islandora-Labs/islandora/tree/7.x-2.x/docs) - Documentation
-* [drupal](https://github.com/Islandora-Labs/islandora/tree/7.x-2.x/drupal) - Drupal modules
-* [install](https://github.com/Islandora-Labs/islandora/tree/7.x-2.x/install) - Vagrant development environment
-
-## Maintainers/Sponsors
+## Sponsors
 
 * UPEI
 * discoverygarden inc.
@@ -29,17 +43,15 @@ For more information about the project, please see the [project documentation](h
 * American Philosophical Society
 * common media inc.
 
-Current maintainers:
+## Maintainers
 
 * [Nick Ruest](https://github.com/ruebot)
 * [Daniel Lamb](https://github.com/daniel-dgi/)
+* [Jared Whiklo](https://github.com/whikloj)
+* [Diego Pino](https://github.com/DiegoPino)
 
 ## Development
 
-If you would like to contribute, please get involved with the [Islandora Fedora 4 Interest Group](https://github.com/Islandora/Islandora-Fedora4-Interest-Group). We love to hear from you!
+If you would like to contribute, please get involved by attending our weekly [Tech Call](https://github.com/Islandora-CLAW/CLAW/wiki). We love to hear from you!
 
 If you would like to contribute code to the project, you need to be covered by an Islandora Foundation [Contributor License Agreement](http://islandora.ca/sites/default/files/islandora_cla.pdf) or [Corporate Contributor Licencse Agreement](http://islandora.ca/sites/default/files/islandora_ccla.pdf). Please see the [Contributors](http://islandora.ca/resources/contributors) pages on Islandora.ca for more information.
-
-## License
-
-[GPLv3](http://www.gnu.org/licenses/gpl-3.0.txt)

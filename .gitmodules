@@ -1,0 +1,15 @@
+[submodule "Crayfish"]
+	path = Crayfish
+	url = https://github.com/Islandora-CLAW/Crayfish
+[submodule "Alpaca"]
+	path = Alpaca
+	url = https://github.com/Islandora-CLAW/Alpaca
+[submodule "pdx"]
+	path = pdx
+	url = https://github.com/Islandora-CLAW/pdx
+[submodule "chullo"]
+	path = chullo
+	url = https://github.com/Islandora-CLAW/chullo
+[submodule "islandora"]
+	path = islandora
+	url = https://github.com/Islandora-CLAW/islandora
