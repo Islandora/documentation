@@ -1,2 +1,2 @@
-repo-add file:/home/vagrant/islandora/camel/karaf/target/classes/features.xml
+repo-add file:/home/vagrant/Alpaca/karaf/target/classes/features.xml
 feature:install islandora-collection-service
