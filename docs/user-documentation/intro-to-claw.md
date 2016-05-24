@@ -1,6 +1,6 @@
-#Intro to Islandora CLAW
+# Intro to Islandora CLAW
 
-#What is Islandora CLAW
+## What is Islandora CLAW
 Islandora CLAW is the project name for development of Islandora to work with Fedora 4. The current release of Islandora, known as 7.x-1.x, works as a bridge between Drupal 7.x and Fedora 3. Put simply, Islandora 7.x-1.x is middleware between Fedora 3 and Drupal 7.x, sometimes expressed as a hamburger:
 
 ![image](https://cloud.githubusercontent.com/assets/2371345/15516210/2ac2c2ec-21c8-11e6-8d34-ce6199d169a3.png)
