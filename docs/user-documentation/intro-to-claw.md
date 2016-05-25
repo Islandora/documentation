@@ -15,6 +15,15 @@ This new structure has several advantages:
 * Easier to keep up-to-date as not all pices must be versioned together.
 * Installations tools (ansible, Docker, Vagrant) can automate uniting the pieces in a simple, clean installation process.
 
+### Ecosystem
+
+#### Alpaca
+#### Chullo
+#### CLAW
+#### Crayfish
+#### Islandora
+#### PDX
+
 ## Why Switch?
 
 Islandora 7.x-1.x is a tried and tested product with a vibrant user and contributor community and many tools and add-ons available to customize and expand its uses. Islandora CLAW is a major departure, representing a great deal of work both in development of the software, and to migrate and upgrade existing Islandora sites. So why make the change?
