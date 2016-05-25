@@ -1,2 +1,0 @@
-repo-add file:/home/vagrant/Alpaca/karaf/target/classes/features.xml
-feature:install islandora-basic-image-service
