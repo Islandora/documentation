@@ -11,18 +11,11 @@ cd /opt/microservices
 git clone https://github.com/Islandora-CLAW/Crayfish.git
 git clone https://github.com/Islandora-CLAW/pdx.git
 
-cp "$HOME_DIR/islandora/install/configs/001-crayfish.conf" "/etc/apache2/sites-enabled/"
+cp "$HOME_DIR/islandora/install/configs/001-microservices.conf" "/etc/apache2/sites-enabled/"
 
 if [ $(grep -c 'Listen 8282' /etc/apache2/ports.conf) != 1 ]; then
   echo "Adding Listen 8282 to Apache ports.conf"
   sed -i '/Listen 80$/a \Listen 8282' /etc/apache2/ports.conf
-fi
-
-cp "$HOME_DIR/islandora/install/configs/002-pdx.conf" "/etc/apache2/sites-enabled/"
-
-if [ $(grep -c 'Listen 8383' /etc/apache2/ports.conf) != 1 ]; then
-  echo "Adding Listen 8383 to Apache ports.conf"
-  sed -i '/Listen 80$/a \Listen 8383' /etc/apache2/ports.conf
 fi
 
 /etc/init.d/apache2 restart
