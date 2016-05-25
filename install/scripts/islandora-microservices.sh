@@ -6,7 +6,10 @@ if [ -f "$HOME_DIR/islandora/install/configs/variables" ]; then
   . "$HOME_DIR"/islandora/install/configs/variables
 fi
 
-ln -s "$HOME_DIR/islandora" "/opt/islandora"
+mkdir /opt/microservices
+cd /opt/microservices
+git clone https://github.com/Islandora-CLAW/Crayfish.git
+git clone https://github.com/Islandora-CLAW/pdx.git
 
 cp "$HOME_DIR/islandora/install/configs/001-microservices.conf" "/etc/apache2/sites-enabled/"
 
@@ -17,22 +20,11 @@ fi
 
 /etc/init.d/apache2 restart
 
-cp "$HOME_DIR/islandora/install/scripts/align_branches.sh" "/opt/islandora/services"
-cd /opt/islandora/services
-./align_branches.sh
-cp "/opt/islandora/services/config/example.settings.yml" "/opt/islandora/services/config/settings.dev.yml"
+cp "/opt/microservices/Crayfish/config/example.settings.yml" "/opt/microservices/Crayfish/config/settings.dev.yml"
+cd "/opt/microservices/Crayfish"
+composer update
+cp "/opt/microservices/pdx/config/example.settings.yml" "/opt/microservices/pdx/config/settings.dev.yml"
+cd "/opt/microservices/pdx"
+composer update
 
-cp "$HOME_DIR/islandora/install/composer-setup.php" "/opt/islandora/services"
-cp "$HOME_DIR/islandora/install/composer.sha384sum" "/opt/islandora/services"
-cd "/opt/islandora/services"
-
-sha384sum -c composer.sha384sum
-if [ "$?" != "0" ]; then
-  echo "Composer-setup.php did not match the expected SHA-384 hash, did you update the version of composer and not the stored hash?"
-  exit
-fi
-
-php composer-setup.php
-php -r "unlink('composer-setup.php');"
-php composer.phar update
-
+chown -hR vagrant:vagrant /opt/microservices

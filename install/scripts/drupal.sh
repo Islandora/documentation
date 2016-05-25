@@ -94,10 +94,8 @@ drush en -y apachesolr
 cp -a "$DRUPAL_HOME"/sites/all/modules/apachesolr/solr-conf/solr-4.x/. "$SOLR_HOME"/collection1/conf/
 service tomcat7 restart
 
-# Islandora modules
-if [ ! -f "islandora" ]; then
-  ln -s "$HOME_DIR/islandora/drupal/" islandora
-fi
+cd "$DRUPAL_HOME/sites/all/modules"
+git clone https://github.com/Islandora-CLAW/islandora.git
 drush -y en islandora
 drush -y en islandora_dc
 drush -y en islandora_mods
