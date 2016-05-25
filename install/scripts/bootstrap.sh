@@ -15,6 +15,8 @@ cd "$HOME_DIR"
 # Set apt-get for non-interactive mode
 export DEBIAN_FRONTEND=noninteractive
 
+cp "$HOME_DIR"/islandora/install/configs/motd /etc/motd
+
 # Add repo for Oracle's JDK 8, rationale #L36-38
 add-apt-repository -y ppa:webupd8team/java
 # Add repo for PHP 5.6
