@@ -26,3 +26,5 @@ composer update
 cp "/opt/microservices/pdx/config/example.settings.yml" "/opt/microservices/pdx/config/settings.dev.yml"
 cd "/opt/microservices/pdx"
 composer update
+
+chown -hR vagrant:vagrant /opt/microservices
