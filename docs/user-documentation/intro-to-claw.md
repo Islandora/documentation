@@ -13,7 +13,7 @@ This new structure has several advantages:
 * Parcelling out the various services and dependencies allows for more horizontal scalability
 * Changing the relationship between Drupal and Fedora allows for a more flexible approach to front-end management (i.e, it need not be Drupal) while also taking much greater advantage of features available from Drupal (i.e, Fedora objects are treated more like nodes, for the purposes of using Drupal contrib modules. Many Islandora 7.x-1.x modules are redundant in Islandora CLAW because they reproduce existing Drupal contrib modules that can be used out of the box in Islandora CLAW).
 * Easier to keep up-to-date as not all pices must be versioned together.
-* Installations tools (ansible, Docker, Vagrant) can automate uniting the pieces in a simple, clean installation process.
+* Installations tools (Ansible, Docker, Vagrant) can automate uniting the pieces in a simple, clean installation process.
 
 ### Ecosystem
 
