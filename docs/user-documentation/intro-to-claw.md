@@ -46,7 +46,7 @@ The primary motive for moving to Islandora CLAW is to stay current with the repo
 * Fedora 3 experiences significant slowdown when repositories reach a large (millions) number of objects. Fedora 4 is much more scalable, and is specifically engineered to be horizontally scalable in ways that Fedora 3 cannot.
 
 ### Drupal
-[Drupal 8](https://www.drupal.org/8) has been officially released and development has begun on Drupal 9. Official Drupal policy will see Drupal 7 become unsupported when Drupal 9 is released, putting it int the same precarious territory as Fedora 3. 
+[Drupal 8](https://www.drupal.org/8) has been officially released and development has begun on Drupal 9. Official Drupal policy will see Drupal 7 become unsupported when Drupal 9 is released, putting it in the same precarious territory as Fedora 3. 
 
 Current Islandora CLAW development works with Drupal 7 as a front-end, but Islandora's CLAW's structure has been built with a pivot to Drupal 8 in mind from its very inception, and work is underway to ensure that when the Islandora community is ready to switch to Drupal 8, Islandora will be there with a solid Drupal 8/Fedora 4 platform. 
 
