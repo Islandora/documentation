@@ -13,7 +13,7 @@ This new structure has several advantages:
 * Parcelling out the various services and dependencies allows for more horizontal scalability
 * Changing the relationship between Drupal and Fedora allows for a more flexible approach to front-end management (i.e, it need not be Drupal) while also taking much greater advantage of features available from Drupal (i.e, Fedora objects are treated more like nodes, for the purposes of using Drupal contrib modules. Many Islandora 7.x-1.x modules are redundant in Islandora CLAW because they reproduce existing Drupal contrib modules that can be used out of the box in Islandora CLAW).
 * Easier to keep up-to-date as not all pices must be versioned together.
-* Installations tools (Ansible, Docker, Vagrant) can automate uniting the pieces in a simple, clean installation process.
+* Installations tools (Ansible, Docker, Vagrant) can automate uniting the pieces in a simple, clean installation process. Islandora has always beena turn-key repository solution, in the sense that it needs no customization once installed. With Islandora CLAW, that installtion process is much smoother, with automated solutions that can be used in production.
 
 ### Ecosystem
 
@@ -55,3 +55,9 @@ Current Islandora CLAW development works with Drupal 7 as a front-end, but Islan
 The Islandora community has grown significantly since the project began, both in terms of users and contributors. For the first time, we are in a position to have a truly community-driven development process, in which any Islandora user can participate at whatever level fits their interests and abilities. Islandora CLAW has worked with the broader Islandora community to solicit use-cases, put forward prospectuses and project plans for review and editing, and has been developed with a mix of funding from Islandora Foundation members and volunteer developers working on sprints.
 
 Islandora CLAW is developed _by_ the Islandora community, _for_ the Islandora community. As a member of the Islandora community, you can help to steer the direction it takes.
+
+### Linked Data
+
+### Interoperability
+
+Islandora CLAW works with the [Portland Common Data Model](https://github.com/duraspace/pcdm/wiki), "a flexible, extensible domain model that is intended to underlie a wide array of repository and DAMS applications." What does this mean in practice? Objects stored in Islandora CLAW will have a a data model that can be recognized by Hydra and other custom Fedora 4 based repository heads, and vice versa. By working together with the Hydra and Fedora communities, we can leverage a broader community of developers, librarians, and other digital repository users to build better tools and share reosurces.
