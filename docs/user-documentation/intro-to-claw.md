@@ -1,6 +1,6 @@
 # Intro to Islandora CLAW
 
-## What is Islandora CLAW
+## What is Islandora CLAW?
 Islandora CLAW is the project name for development of Islandora to work with Fedora 4. The current release of Islandora, known as 7.x-1.x, works as a bridge between Drupal 7.x and Fedora 3. Put simply, Islandora 7.x-1.x is middleware between Fedora 3 and Drupal 7.x, sometimes expressed as a hamburger:
 
 ![image](https://cloud.githubusercontent.com/assets/2371345/15516210/2ac2c2ec-21c8-11e6-8d34-ce6199d169a3.png)
@@ -17,12 +17,23 @@ This new structure has several advantages:
 
 ### Ecosystem
 
-#### Alpaca
-#### Chullo
-#### CLAW
-#### Crayfish
-#### Islandora
-#### PDX
+#### [Alpaca](https://github.com/Islandora-CLAW/Alpaca)
+Event driven middleware based on Apache Camel that synchronizes a Fedora 4 with Drupal.
+
+#### [Chullo](https://github.com/Islandora-CLAW/chullo)
+A PHP client for Fedora 4 built using Guzzle and EasyRdf.
+
+#### [CLAW](https://github.com/Islandora-CLAW/CLAW)
+A container with references to all of the other components that make up Islandora CLAW. Also contains documentation and project discussions.
+
+#### [Crayfish](https://github.com/Islandora-CLAW/Crayfish)
+Top level container for the various Islandora CLAW microservices.
+
+#### [Islandora](https://github.com/Islandora-CLAW/islandora)
+The Drupal modules associated with CLAW. Work in underway to have this as a project on [drupal.org](https://www.drupal.org/).
+
+#### [PDX](https://github.com/Islandora-CLAW/pdx)
+Top level container for the various PCDM specific Islandora CLAW microservices.
 
 ## Why Switch?
 
@@ -38,3 +49,9 @@ The primary motive for moving to Islandora CLAW is to stay current with the repo
 [Drupal 8](https://www.drupal.org/8) has been officially released and development has begun on Drupal 9. Official Drupal policy will see Drupal 7 become unsupported when Drupal 9 is released, putting it int the same precarious territory as Fedora 3. 
 
 Current Islandora CLAW development works with Drupal 7 as a front-end, but Islandora's CLAW's structure has been built with a pivot to Drupal 8 in mind from its very inception, and work is underway to ensure that when the Islandora community is ready to switch to Drupal 8, Islandora will be there with a solid Drupal 8/Fedora 4 platform. 
+
+### Community-Driven Design
+
+The Islandora community has grown significantly since the project began, both in terms of users and contributors. For the first time, we are in a position to have a truly community-driven development process, in which any Islandora user can participate at whatever level fits their interests and abilities. Islandora CLAW has worked with the broader Islandora community to solicit use-cases, put forward prospectuses and project plans for review and editing, and has been developed with a mix of funding from Islandora Foundation members and volunteer developers working on sprints.
+
+Islandora CLAW is developed _by_ the Islandora community, _for_ the Islandora community. As a member of the Islandora community, you can help to steer the direction it takes.
