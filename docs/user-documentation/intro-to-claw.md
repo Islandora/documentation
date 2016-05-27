@@ -1,9 +1,8 @@
 # Intro to Islandora CLAW
 
-## What is Islandora CLAW?
 Islandora CLAW is the project name for development of Islandora to work with Fedora 4. The current release of Islandora, known as 7.x-1.x, works as a bridge between Drupal 7.x and Fedora 3. Put simply, Islandora 7.x-1.x is middleware between Fedora 3 and Drupal 7.x, sometimes expressed as a hamburger:
 
-![image](https://cloud.githubusercontent.com/assets/2371345/15516210/2ac2c2ec-21c8-11e6-8d34-ce6199d169a3.png)
+![image](https://cloud.githubusercontent.com/assets/2371345/15615690/20e0a050-2416-11e6-813b-509fd2e197ed.png)
 
 Islandora CLAW (or Islandora 7.x-2.x) does more than simply replace that base layer with Fedora 4. It is a total re-architecting of the interaction between the various pieces. Rather than a hamburger, Islandora CLAW is a chimera:
 ![image](https://cloud.githubusercontent.com/assets/2371345/15516273/76704a5c-21c8-11e6-9ca0-8c188313dbd1.png)
@@ -15,7 +14,7 @@ This new structure has several advantages:
 * Easier to keep up-to-date as not all pices must be versioned together.
 * Installations tools (Ansible, Docker, Vagrant) can automate uniting the pieces in a simple, clean installation process. Islandora has always beena turn-key repository solution, in the sense that it needs no customization once installed. With Islandora CLAW, that installtion process is much smoother, with automated solutions that can be used in production.
 
-### Ecosystem
+## Ecosystem
 
 #### [Alpaca](https://github.com/Islandora-CLAW/Alpaca)
 Event driven middleware based on Apache Camel that synchronizes a Fedora 4 with Drupal.
