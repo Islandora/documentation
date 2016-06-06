@@ -16,12 +16,12 @@ This new structure has several advantages:
 * Parcelling out the various services and dependencies allows for more horizontal scalability
 * Changing the relationship between Drupal and Fedora allows for a more flexible approach to front-end management (i.e, it need not be Drupal) while also taking much greater advantage of features available from Drupal (i.e, Fedora objects are treated more like nodes, for the purposes of using Drupal contrib modules. Many Islandora 7.x-1.x modules are redundant in Islandora CLAW because they reproduce existing Drupal contrib modules that can be used out of the box in Islandora CLAW).
 * Easier to keep up-to-date as not all pices must be versioned together.
-* Installations tools (Ansible, Docker, Vagrant) can automate uniting the pieces in a simple, clean installation process. Islandora has always beena turn-key repository solution, in the sense that it needs no customization once installed. With Islandora CLAW, that installtion process is much smoother, with automated solutions that can be used in production.
+* Installations tools (Ansible, Docker, Vagrant) can automate uniting the pieces in a simple, clean installation process. Islandora has always been a turn-key repository solution, in the sense that it needs no customization once installed. With Islandora CLAW, that installation process is much smoother, with automated solutions that can be used in production.
 
 ## Ecosystem
 
 #### [Alpaca](https://github.com/Islandora-CLAW/Alpaca)
-Event driven middleware based on Apache Camel that synchronizes a Fedora 4 with Drupal.
+Event driven middleware based on Apache Camel that synchronizes Fedora 4 with Drupal.
 
 #### [Chullo](https://github.com/Islandora-CLAW/chullo)
 A PHP client for Fedora 4 built using Guzzle and EasyRdf.
@@ -33,7 +33,7 @@ A container with references to all of the other components that make up Islandor
 Top level container for the various Islandora CLAW microservices.
 
 #### [Islandora](https://github.com/Islandora-CLAW/islandora)
-The Drupal modules associated with CLAW. Work in underway to have this as a project on [drupal.org](https://www.drupal.org/).
+The Drupal modules associated with CLAW. Work is underway to have this as a project on [drupal.org](https://www.drupal.org/).
 
 #### [PDX](https://github.com/Islandora-CLAW/pdx)
 Top level container for the various PCDM specific Islandora CLAW microservices.
