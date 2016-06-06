@@ -9,7 +9,8 @@ Islandora CLAW (or Islandora 7.x-2.x) does more than simply replace that base la
 ![image](https://cloud.githubusercontent.com/assets/2371345/15516273/76704a5c-21c8-11e6-9ca0-8c188313dbd1.png)
 
 Or, for a diagram that doesn't involve food or animals: 
-![image](https://cloud.githubusercontent.com/assets/2371345/15835256/7e97229a-2c05-11e6-8cc2-8715234216f7.png)
+
+![image](https://cloud.githubusercontent.com/assets/2371345/15835346/e9e6ae4e-2c05-11e6-88ac-1bf72932e701.png)
 
 This new structure has several advantages:
 
