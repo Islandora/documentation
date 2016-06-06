@@ -1,11 +1,15 @@
 # Intro to Islandora CLAW
 
 Islandora CLAW is the project name for development of Islandora to work with Fedora 4. The current release of Islandora, known as 7.x-1.x, works as a bridge between Drupal 7.x and Fedora 3. Put simply, Islandora 7.x-1.x is middleware between Fedora 3 and Drupal 7.x, sometimes expressed as a hamburger:
-
+## Islandora 7.x-1.x (with Fedora 3)
 ![image](https://cloud.githubusercontent.com/assets/2371345/15615690/20e0a050-2416-11e6-813b-509fd2e197ed.png)
 
 Islandora CLAW (or Islandora 7.x-2.x) does more than simply replace that base layer with Fedora 4. It is a total re-architecting of the interaction between the various pieces. Rather than a hamburger, Islandora CLAW is a chimera:
+## Islandora CLAW/Islandora 7.x-2.x (with Fedora 4)
 ![image](https://cloud.githubusercontent.com/assets/2371345/15516273/76704a5c-21c8-11e6-9ca0-8c188313dbd1.png)
+
+Or, for a diagram that doesn't involve food or animals: 
+![image](https://cloud.githubusercontent.com/assets/2371345/15831747/702256cc-2bf5-11e6-828b-7e3bc81d6c7f.png)
 
 This new structure has several advantages:
 
@@ -59,4 +63,4 @@ Islandora CLAW is developed _by_ the Islandora community, _for_ the Islandora co
 
 ### Interoperability
 
-Islandora CLAW works with the [Portland Common Data Model](https://github.com/duraspace/pcdm/wiki), "a flexible, extensible domain model that is intended to underlie a wide array of repository and DAMS applications." What does this mean in practice? Objects stored in Islandora CLAW will have a a data model that can be recognized by Hydra and other custom Fedora 4 based repository heads, and vice versa. By working together with the Hydra and Fedora communities, we can leverage a broader community of developers, librarians, and other digital repository users to build better tools and share reosurces.
+Islandora CLAW works with the [Portland Common Data Model](https://github.com/duraspace/pcdm/wiki), "a flexible, extensible domain model that is intended to underlie a wide array of repository and DAMS applications." What does this mean in practice? Objects stored in Islandora CLAW will have a a data model that can be recognized by Hydra and other custom Fedora 4 based repository heads, and vice versa. By working together with the Hydra and Fedora communities, we can leverage a broader community of developers, librarians, and other digital repository users to build better tools and share resources.
