@@ -28,8 +28,5 @@ sleep 60
 $KARAF_CLIENT -f $KARAF_CONFIGS/watch.script
 
 # Fix ApacheSolr config
-drush -r "$DRUPAL_HOME" sqlq "update apachesolr_environment set url='http://localhost:8080/solr' where url='http://localhost:8983/solr'"
-drush -r "$DRUPAL_HOME" cc all
-
-# Add DC as some default fields for folks.
-drush -r "$DRUPAL_HOME" scr "$HOME_DIR"/islandora/install/configs/add_default_fields.php
+#drush -r "$DRUPAL_HOME" sqlq "update apachesolr_environment set url='http://localhost:8080/solr' where url='http://localhost:8983/solr'"
+#drush -r "$DRUPAL_HOME" cc all
