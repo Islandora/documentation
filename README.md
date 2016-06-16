@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Islandora CLAW (also known as Islandora 7.x-2.x) is the next generation of Islandora. Still in development, this major upgrade will be compatible with Fedora 4 (link is external).
+Islandora CLAW is the next generation of Islandora. Still in development, this major upgrade will be compatible with [Fedora 4](https://wiki.duraspace.org/display/FF/Fedora+Repository+Home).
 
 For more details, please check out the following resources:
 * [Weekly Tech Calls](https://github.com/Islandora-CLAW/CLAW/wiki#islandora-7x-2x-tech-calls)
@@ -21,13 +21,13 @@ For more details, please check out the following resources:
 
 ## Repository Structure
 
-* Alpaca: Event driven middleware based on Apache Camel that synchronizes a Fedora 4 with Drupal.  
-* Chullo: A PHP client for Fedora 4 built using Guzzle and EasyRdf. 
-* Crayfish: Top level container for the various Islandora CLAW microservices, lovingly known as Crayfish.
-* docs: Documentation!
-* install: Bleeding edge development environment
-* islandora: CLAW Drupal modules 
-* PDX: Top level container for the various PCDM specific Islandora CLAW microservices. 
+* [Alpaca](https://github.com/islandora-claw/Alpaca): Event driven middleware based on Apache Camel that synchronizes a Fedora 4 with Drupal.  
+* [Chullo](https://github.com/Islandora-CLAW/Chullo): A PHP client for Fedora 4 built using Guzzle and EasyRdf. 
+* [Crayfish](https://github.com/Islandora-CLAW/Crayfish): Top level container for the various Islandora CLAW microservices, lovingly known as Crayfish.
+* [docs](./docs): Documentation!
+* [install](./install): Bleeding edge development environment
+* [islandora](https://github.com/Islandora-CLAW/islandora): Islandora CLAW Drupal modules 
+* [PDX](https://github.com/Islandora-CLAW/pdx): Top level container for the various [PCDM](http://pcdm.org/) specific Islandora CLAW microservices. 
 
 ## Sponsors
 
