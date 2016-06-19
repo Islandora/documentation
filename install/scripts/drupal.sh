@@ -45,6 +45,12 @@ sed -i '$i</Directory>' /etc/apache2/apache2.conf
 # Torch the default index.html
 rm /var/www/html/index.html
 
+cat >> "$DRUPAL_HOME"/sites/default/settings.php <<EOF
+\$settings['trusted_host_patterns'] = array(
+'^localhost$',
+);
+EOF
+
 # Cycle apache
 service apache2 restart
 
@@ -117,6 +123,7 @@ drush -y en devel
 #drush dl apachesolr
 #drush en -y apachesolr
 drush dl search_api
+drush -y pm-uninstall search
 drush en -y search_api
 
 # Copy new schema files and restart Tomcat
