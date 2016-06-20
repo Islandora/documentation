@@ -45,11 +45,16 @@ sed -i '$i</Directory>' /etc/apache2/apache2.conf
 # Torch the default index.html
 rm /var/www/html/index.html
 
+## Trusted Host Settings
 cat >> "$DRUPAL_HOME"/sites/default/settings.php <<EOF
 \$settings['trusted_host_patterns'] = array(
 '^localhost$',
 );
 EOF
+
+## The always_populate_raw_post_data PHP setting should be set to -1 in PHP version 5.6
+sed -i 's|#;always_populate_raw_post_data = -1|always_populate_raw_post_data = -1|g' /etc/php/5.6/apache2/php.ini
+sed -i 's|#;always_populate_raw_post_data = -1|always_populate_raw_post_data = -1|g' /etc/php/5.6/cli/php.ini
 
 # Cycle apache
 service apache2 restart
