@@ -76,18 +76,18 @@ The default VM login details are:
 
 ## Environment
 
-- Ubuntu 14.04.4
-- Drupal 8.1.3
-- MySQL 5.5.49
-- Apache 2.24.7
+- Ubuntu 14.04
+- Drupal 7.37
+- MySQL 5.5.41
+- Apache 2.26
 - Tomcat 7.0.52
 - Solr 4.10.3
 - Camel 2.14.1
-- Fedora 4.5.1
+- Fedora 4.3.0
 - Fedora Camel Component 4.2.0
 - BlazeGraph 1.5.1
-- Karaf 4.0.5
+- Karaf 3.0.4
 - Sync 0.0.0
 - Islandora 7.x-2.x
-- PHP 5.6.22 and 7.0.7
+- PHP 5.5.9 
 - Java 8 (Oracle)
