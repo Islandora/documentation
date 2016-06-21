@@ -9,7 +9,7 @@ fi
 
 if [ ! -f "$DOWNLOAD_DIR/fcrepo-$FEDORA_VERSION.war" ]; then
   echo "Downloading Fedora 4 version $FEDORA_VERSION"
-  wget -q -O "$DOWNLOAD_DIR/fcrepo-$FEDORA_VERSION.war" "https://github.com/fcrepo4/fcrepo4/releases/download/fcrepo-$FEDORA_VERSION/fcrepo-webapp-$FEDORA_VERSION.war"
+  wget -q -O "$DOWNLOAD_DIR/fcrepo-$FEDORA_VERSION.war" "https://github.com/fcrepo4-exts/fcrepo-webapp-plus/releases/download/fcrepo-webapp-plus-$FEDORA_VERSION/fcrepo-webapp-plus-$FEDORA_VERSION.war"
 fi
 
 cd "$HOME_DIR"
