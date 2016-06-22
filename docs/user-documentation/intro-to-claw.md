@@ -52,7 +52,7 @@ The primary motive for moving to Islandora CLAW is to stay current with the repo
 ### Drupal
 [Drupal 8](https://www.drupal.org/8) has been officially released and development has begun on Drupal 9. Official Drupal policy will see Drupal 7 become unsupported when Drupal 9 is released, putting it in the same precarious territory as Fedora 3. 
 
-Current Islandora CLAW development works with Drupal 7 as a front-end, but Islandora's CLAW's structure has been built with a pivot to Drupal 8 in mind from its very inception, and work is underway to ensure that when the Islandora community is ready to switch to Drupal 8, Islandora will be there with a solid Drupal 8/Fedora 4 platform. 
+The intial phases of Islandora CLAW development worked with Drupal 7 as a front-end, but Islandora's CLAW's structure has been built with a pivot to Drupal 8 in mind from its very inception. As of June, 2016, Islandora CLAW development has pivoted fully to Drupal 8, ensuring that when the Islandora Community is ready to make the move, there will be a version of Islandora that functions with the latest and best-supported versions of both our front-end and repositry layers by pairing Drupal 8 with Fedora 4.
 
 ### Community-Driven Design
 
@@ -61,6 +61,42 @@ The Islandora community has grown significantly since the project began, both in
 Islandora CLAW is developed _by_ the Islandora community, _for_ the Islandora community. As a member of the Islandora community, you can help to steer the direction it takes.
 
 ### Linked Data
+
+Linked Data is a big concept. A [definition by Tim Bernes-Lee](https://www.w3.org/DesignIssues/LinkedData.html) from 2006 articulates the basic idea in the context of the "Semantic Web":   
+
+>It is about making links, so that a person or machine can explore the web of data.  With linked data, when you have some of it, you can find other, related, data.
+
+>Like the web of hypertext, the web of data is constructed with documents on the web. However,  unlike the web of hypertext,  where links are relationships anchors in hypertext documents written in HTML, for data they links  between arbitrary things described by RDF,.  The URIs identify any kind of object or  concept.   But for HTML or RDF, the same expectations apply to make the web grow:
+
+> 1. Use URIs as names for things
+
+> 1. Use HTTP URIs so that people can look up those names.
+
+> 1. When someone looks up a URI, provide useful information, using the standards (RDF*, SPARQL)
+
+> 1. Include links to other URIs. so that they can discover more things.
+
+LDP is an official W3C recommendation. According to [their spec](https://www.w3.org/TR/ldp/), Linked Data Platform (LDP) defines a set of rules for HTTP operations on web resources, some based on RDF, to provide an architecture for read-write Linked Data on the web. Put more simply: An LDP server is a web server that lets you manage relationships in RDF by creating URLs you can perform CRUD (Create Read Update Delete)
+operation on:
+* `http://my_url/some_resource`
+* `http://my_url/some_resource/children`
+* `http://my_url/some_resource/children/child_resource`
+* `<> prefix:isChildOf <http://my_url/some_resource>`
+
+An LDP server also lets you request the RDF graph for a resource with varying levels of additional information for discovery:
+* The resource itself
+* The resource plus child resources
+* The resource plus all other resources that reference it (inbound references)
+* The resource plus children plus inbound references
+
+Fedora 4 is an LDP implementation. It stores metadata using RDF (Resource Description Framework), a standard format for data interchange on the web. RDF data is formatted as triples, like so: `<resource_uri> <predicate_uri> <object_uri>` and can be exported in many different formats:
+
+* JSON-LD
+* RDF/XML
+* Turtle
+* N-Triples
+
+Working with RDF is not entirely new in the Islandora/Fedora context, as RELS-EXT and RELS-INT have always been RDF/XML. Related objects can be included in RDF, so it functions as a graph you can traverse in order to discover more information.
 
 ### Interoperability
 
