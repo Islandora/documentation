@@ -52,7 +52,7 @@ The primary motive for moving to Islandora CLAW is to stay current with the repo
 ### Drupal
 [Drupal 8](https://www.drupal.org/8) has been officially released and development has begun on Drupal 9. Official Drupal policy will see Drupal 7 become unsupported when Drupal 9 is released, putting it in the same precarious territory as Fedora 3. 
 
-The intial phases of Islandora CLAW development worked with Drupal 7 as a front-end, but Islandora's CLAW's structure has been built with a pivot to Drupal 8 in mind from its very inception. As of June, 2016, Islandora CLAW development has pivoted fully to Drupal 8, ensuring that when the Islandora Community is ready to make the move, there will be a version of Islandora that functions with the latest and best-supported versions of both our front-end and repositry layers by pairing Drupal 8 with Fedora 4.
+The initial phases of Islandora CLAW development worked with Drupal 7 as a front-end, but Islandora CLAW has been architected with a pivot to Drupal 8 in mind from its very inception. As of June, 2016, Islandora CLAW development has pivoted fully to Drupal 8, ensuring that when the Islandora Community is ready to make the move, there will be a version of Islandora that functions with the latest and best-supported versions of both our front-end and repository layers by pairing Drupal 8 with Fedora 4.
 
 ### Community-Driven Design
 
@@ -96,7 +96,33 @@ Fedora 4 is an LDP implementation. It stores metadata using RDF (Resource Descri
 * Turtle
 * N-Triples
 
-Working with RDF is not entirely new in the Islandora/Fedora context, as RELS-EXT and RELS-INT have always been RDF/XML. Related objects can be included in RDF, so it functions as a graph you can traverse in order to discover more information.
+Working with RDF is not entirely new in the Islandora/Fedora context, as RELS-EXT and RELS-INT have always been RDF/XML. Related objects can be included in RDF, so it functions as a graph you can traverse in order to discover more information. 
+
+#### Example: Dublin Core as XML and RDF using the dc namespace
+
+Dublin Core XML you store with the resource.
+```
+<?xml version="1.0"?>
+<metadata
+  xmlns="http://example.org/myapp/"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://example.org/myapp/ http://example.org/myapp/schema.xsd"
+  xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <dc:title>
+    Islandora
+  </dc:title>
+  <dc:description>
+    Islandora is an open-source software framework designed to help institutions and organizations and their audiences collaboratively manage, and discover digital assets using a best-practices framework.
+  </dc:description>
+</metadata>
+```
+vs RDF (which is actually properties of the resource)
+```
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+<http://islandora.ca/> dc:title "Islandora" ;
+   dc:description "Islandora is an open-source software framework designed to help institutions and organizations and their audiences collaboratively manage, and discover digital assets using a best-practices framework." .
+```
+
 
 ### Interoperability
 
