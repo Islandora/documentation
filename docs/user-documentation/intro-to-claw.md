@@ -1,6 +1,8 @@
 # Intro to Islandora CLAW
 
-Islandora CLAW is the project name for development of Islandora to work with Fedora 4. The current release of Islandora, known as 7.x-1.x, works as a bridge between Drupal 7.x and Fedora 3. Put simply, Islandora 7.x-1.x is middleware between Fedora 3 and Drupal 7.x, sometimes expressed as a hamburger:
+Islandora CLAW is the project name for development of Islandora to work with Fedora 4, also known as Islandora 7.x-2.x. To fully understand Islandora CLAW, it is best to start by looking at its contrasts to the previous version of Islandora, known as 7.x-1.x. 
+
+Islandora 7.x-1.x works as a bridge between Drupal 7.x and Fedora 3. Put simply, Islandora 7.x-1.x is middleware between Fedora 3 and Drupal 7.x, sometimes expressed as a hamburger:
 ## Islandora 7.x-1.x (with Fedora 3)
 ![image](https://github.com/Islandora-CLAW/CLAW/blob/master/docs/assets/hamburger.png)
 
@@ -16,7 +18,7 @@ This new structure has several advantages:
 
 * Parcelling out the various services and dependencies allows for more horizontal scalability
 * Changing the relationship between Drupal and Fedora allows for a more flexible approach to front-end management (i.e, it need not be Drupal) while also taking much greater advantage of features available from Drupal (i.e, Fedora objects are treated more like nodes, for the purposes of using Drupal contrib modules. Many Islandora 7.x-1.x modules are redundant in Islandora CLAW because they reproduce existing Drupal contrib modules that can be used out of the box in Islandora CLAW).
-* Easier to keep up-to-date as not all pices must be versioned together.
+* Easier to keep up-to-date as not all pieces must be versioned together.
 * Installations tools (Ansible, Docker, Vagrant) can automate uniting the pieces in a simple, clean installation process. Islandora has always been a turn-key repository solution, in the sense that it needs no customization once installed. With Islandora CLAW, that installation process is much smoother, with automated solutions that can be used in production.
 
 ## Ecosystem
