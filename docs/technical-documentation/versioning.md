@@ -1,6 +1,6 @@
 # Versioning Policy
 
-Islandora CLAW uses semantic versioning where possible.
+Islandora CLAW uses [semantic versioning](http://semver.org/) where possible.
 
 ## Semantic Versioning
 
