@@ -1,8 +1,13 @@
 # Versioning Policy
 
-Islandora CLAW uses [semantic versioning](http://semver.org/) where possible.
+Islandora CLAW uses [semantic versioning](http://semver.org/).
 
-## Semantic Versioning
+**Major version** . **Minor version** . **Patch**
+ - Major version; Major changes, and breaks the API
+ - Minor version; New features, and does not break the API
+ - Patch; Bug fixes, and never breaks backward compatability
+
+## Components
 
 * [Alpaca](https://github.com/Islandora-CLAW/alpaca)
 * [Chullo](https://github.com/Islandora-CLAW/chullo)
@@ -26,6 +31,4 @@ Islandora CLAW uses [semantic versioning](http://semver.org/) where possible.
 * [claw-tomcat](https://github.com/Islandora-CLAW/claw-docker-tomcat)
 * [claw-ansible](https://github.com/Islandora-CLAW/claw-ansible)
 * [claw_install_profile](https://github.com/Islandora-CLAW/claw_install_profile)
-
-## Drupal Versioning
 * [Islandora](https://github.com/Islandora-CLAW/islandora)
