@@ -61,7 +61,8 @@ class ResourceService extends StackTests
     $responseGet = $this->client->claw->request('GET', "/islandora/resource/$uuid", [
       'headers' => [
         'Accept' => 'application/ld+json'
-      ]
+      ],
+      'http_errors' => true
     ]);
     $this->assertEquals($responseGet->getStatusCode(), 200, 'Could not get back UUID ' . $uuid);
 
@@ -210,40 +211,5 @@ class ResourceService extends StackTests
       ]
     ]);
     // TODO: Parse JSON-LD and compare sha1 to $sha1
-    $document = JsonLD::getDocument($fix_resp->getBody());
-
-
-  }
-
-  /**
-   * @group dev
-   */
-  public function testParseJsonLD()
-  {
-    $resp = $this->client->fedora->request(
-      'GET',
-      "http://localhost:8080/fcrepo/rest/63/d0/88/fb/63d088fb-ceae-408a-b727-3d7171488be3/fcr:fixity",
-      [
-        'headers' => [
-          'Accept' => 'application/ld+json'
-        ]
-      ]);
-    $this->assertEquals($resp->getStatusCode(), 200, "Couldn't get fixity result");
-
-    print "body is " . $resp->getBody();
-
-    $document = JsonLD::getDocument((string) $resp->getBody());
-
-    print "graphs\n";
-    foreach ($document->getGraphNames() as $graph) {
-      error_log($graph);
-    }
-    print "end graphs\nnodes\n";
-    foreach ($document->getGraph()->getNodes() as $node) {
-      print "graphname is " . $node->
-      print "id is " . $node->getId() . "\n";
-    }
-    print "end nodes\n";
-    print JsonLD::toString($document);
   }
 }
