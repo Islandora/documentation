@@ -20,3 +20,4 @@ services/config/settings.dev.yml
 install/scripts/composer.json
 CONTRIBUTING/
 README/
+config/settings.yml
