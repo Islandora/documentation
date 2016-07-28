@@ -1,0 +1,11 @@
+{
+  "@context" : {
+    "nfo" : "http://www.semanticdesktop.org/ontologies/2007/03/22/nfo/v1.2/",
+    "dcterms" : "http://purl.org/dc/elements/1.1/",
+    "title" : { "@id" : "dcterms:title" },
+    "created" : { "@id" : "dcterms:created"},
+  },
+  "@id" : "",
+  "title" : "General Sir Bernard L. Montgomery standing in nave of ruined church.",
+  "created": "1943-12-13"
+}
