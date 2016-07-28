@@ -18,3 +18,4 @@ services/ResourceService/config/settings.dev.yml
 services/TransactionService/config/settings.dev.yml
 services/config/settings.dev.yml
 install/scripts/composer.json
+config/settings.yml
