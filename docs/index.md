@@ -45,7 +45,7 @@ If you would like to contribute code to the project, you will need to be covered
 ## Maintainers
 
 * [Nick Ruest](https://github.com/ruebot)
-* [Daniel Lamb](https://github.com/daniel-dgi/)
+* [Daniel Lamb](https://github.com/dannylamb/)
 
 ## Licensing
 
