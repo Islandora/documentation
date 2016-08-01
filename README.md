@@ -46,7 +46,7 @@ For more details, please check out the following resources:
 ## Maintainers
 
 * [Nick Ruest](https://github.com/ruebot)
-* [Daniel Lamb](https://github.com/daniel-dgi/)
+* [Daniel Lamb](https://github.com/dannylamb/)
 * [Jared Whiklo](https://github.com/whikloj)
 * [Diego Pino](https://github.com/DiegoPino)
 
