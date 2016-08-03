@@ -29,6 +29,8 @@ For more details, please check out the following resources:
 * [islandora](https://github.com/Islandora-CLAW/islandora): Islandora CLAW Drupal modules 
 * [PDX](https://github.com/Islandora-CLAW/pdx): Top level container for the various [PCDM](http://pcdm.org/) specific Islandora CLAW microservices. 
 
+Note: the [Ansible](https://github.com/Islandora-CLAW/claw-ansible) and [Docker](https://github.com/Islandora-CLAW?utf8=%E2%9C%93&query=docker) repositories are early, experimental provisioning tools for the CLAW stack. For context see [this](https://github.com/Islandora-CLAW/CLAW/issues/182). Development is focused on the vagrant / bash environment referenced above, which is the recommended starting point for working with CLAW.
+
 ## Sponsors
 
 * UPEI
