@@ -11,7 +11,7 @@ fi
 cd "$HOME_DIR"
 
 # Drush and drupal deps
-apt-get -y -qq install php5.6-gd php5.6-xml php5.6-mysql php5.6-curl php5.6-json php-stomp
+apt-get -y -qq install php7.0-gd php7.0-xml php7.0-mysql php7.0-curl php7.0-json php-stomp
 cd /tmp && wget http://files.drush.org/drush.phar
 chmod +x drush.phar
 mv drush.phar /usr/local/bin/drush
