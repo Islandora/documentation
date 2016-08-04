@@ -43,7 +43,7 @@ Note: the [Ansible](https://github.com/Islandora-CLAW/claw-ansible) and [Docker]
 * Simon Fraser University
 * PALS
 * American Philosophical Society
-* common media inc.
+* Common Media Inc.
 
 ## Maintainers
 
