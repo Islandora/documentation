@@ -4,15 +4,17 @@ Islandora CLAW is the project name for development of Islandora to work with Fed
 
 Islandora 7.x-1.x works as a bridge between Drupal 7.x and Fedora 3. Put simply, Islandora 7.x-1.x is middleware between Fedora 3 and Drupal 7.x, sometimes expressed as a hamburger:
 ## Islandora 7.x-1.x (with Fedora 3)
-![image](https://github.com/Islandora-CLAW/CLAW/blob/master/docs/assets/hamburger.png)
+
+![image](../assets/hamburger.png)
 
 Islandora CLAW (or Islandora 7.x-2.x) does more than simply replace that base layer with Fedora 4. It is a total re-architecting of the interaction between the various pieces. Rather than a hamburger, Islandora CLAW is a chimera:
-## Islandora CLAW/Islandora 7.x-2.x (with Fedora 4)
-![image](https://github.com/Islandora-CLAW/CLAW/blob/master/docs/assets/claw-chimera.png)
+## Islandora CLAW (with Fedora 4)
+
+![image](../assets/claw-chimera.png)
 
 Or, for a diagram that doesn't involve food or animals: 
 
-![image](https://github.com/Islandora-CLAW/CLAW/blob/master/docs/assets/claw-diagram.png)
+![image](../assets/claw-diagram.png)
 
 This new structure has several advantages:
 
@@ -66,9 +68,9 @@ Islandora CLAW is developed _by_ the Islandora community, _for_ the Islandora co
 
 Linked Data is a big concept. A [definition by Tim Bernes-Lee](https://www.w3.org/DesignIssues/LinkedData.html) from 2006 articulates the basic idea in the context of the "Semantic Web":   
 
->It is about making links, so that a person or machine can explore the web of data.  With linked data, when you have some of it, you can find other, related, data.
+>It is about making links, so that a person or machine can explore the web of data. With linked data, when you have some of it, you can find other, related, data.
 
->Like the web of hypertext, the web of data is constructed with documents on the web. However,  unlike the web of hypertext,  where links are relationships anchors in hypertext documents written in HTML, for data they links  between arbitrary things described by RDF,.  The URIs identify any kind of object or  concept.   But for HTML or RDF, the same expectations apply to make the web grow:
+>Like the web of hypertext, the web of data is constructed with documents on the web. However, unlike the web of hypertext, where links are relationships anchors in hypertext documents written in HTML, for data they links between arbitrary things described by RDF. The URIs identify any kind of object or concept. But for HTML or RDF, the same expectations apply to make the web grow:
 
 > 1. Use URIs as names for things
 
@@ -80,12 +82,14 @@ Linked Data is a big concept. A [definition by Tim Bernes-Lee](https://www.w3.or
 
 LDP is an official W3C recommendation. According to [their spec](https://www.w3.org/TR/ldp/), Linked Data Platform (LDP) defines a set of rules for HTTP operations on web resources, some based on RDF, to provide an architecture for read-write Linked Data on the web. Put more simply: An LDP server is a web server that lets you manage relationships in RDF by creating URLs you can perform CRUD (Create Read Update Delete)
 operation on:
+
 * `http://my_url/some_resource`
 * `http://my_url/some_resource/children`
 * `http://my_url/some_resource/children/child_resource`
 * `<> prefix:isChildOf <http://my_url/some_resource>`
 
 An LDP server also lets you request the RDF graph for a resource with varying levels of additional information for discovery:
+
 * The resource itself
 * The resource plus child resources
 * The resource plus all other resources that reference it (inbound references)

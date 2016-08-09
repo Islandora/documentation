@@ -8,6 +8,13 @@ repo_url: https://github.com/Islandora-CLAW/CLAW
 
 theme: material
 
+extra:
+  font:
+    text: 'Roboto'
+    code: 'Roboto Mono'
+  author:
+    twitter: 'islandora'
+
 pages:
 - About: 
     - 'Islandora CLAW': 'index.md'
