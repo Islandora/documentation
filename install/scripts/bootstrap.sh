@@ -31,7 +31,7 @@ apt-get -y -qq install git vim
 
 # Java
 apt-get -y install openjdk-8-jdk openjdk-8-jdk-headless openjdk-8-jre
-sed -i '$sJAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64' /etc/environment
+sed -i '$iJAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64' /etc/environment
 export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 
 # Maven
