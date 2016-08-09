@@ -4,20 +4,20 @@ If you are reading this document then you are interested in contributing to the 
 
 ## Workflows
 
-The group meets each Wednesday at 1PM Eastern. Meeting notes and announcements are posted to the [Islandora community list](https://groups.google.com/forum/#!forum/islandora) and the [Islandora developers list](https://groups.google.com/forum/#!forum/islandora-dev). You can view meeting agendas, notes, and call-in information [here](https://github.com/Islandora-CLAW/CLAW/wiki#islandora-7x-2x-tech-calls). Anybody is welcome to join the calls, and add items to the agenda.
+The group meets each Wednesday at 1PM Eastern. Meeting notes and announcements are posted to the [Islandora community list](https://groups.google.com/forum/#!forum/islandora) and the [Islandora developers list](https://groups.google.com/forum/#!forum/islandora-dev). You can view meeting agendas, notes, and call-in information [here](https://github.com/Islandora-CLAW/CLAW/wiki#islandora-claw-tech-calls). Anybody is welcome to join the calls, and add items to the agenda.
 
 ### Use cases
 
-If you would like to submit a use case for the Islandora and Fedora integration project, please submit and issue [here](https://github.com/Islandora-CLAW/CLAW/issues/new) using the [Use Case template](https://github.com/Islandora/Islandora-Fedora4-Interest-Group/wiki/Use-Case-template), assign the "use case" label to the issue.
+If you would like to submit a use case for the Islandora and Fedora integration project, please submit and issue [here](https://github.com/Islandora-CLAW/CLAW/issues/new) using the [Use Case template](https://github.com/Islandora-CLAW/CLAW/wiki/Use-Case-template), assign the "use case" label to the issue.
 
 ### Documentation
 
-You can contribute documentation in two different ways. One way is to create an issue [here](https://github.com/Islandora-CLAW/CLAW/issues/new) assign the "documentation" label to the issue. Another way is to by pull request, same process as [Contribute Code](https://github.com/Islandora-CLAW/CLAW/blob/7.x-2.x/contributing.md#contribute-code). All documentation resides in [`docs`](https://github.com/Islandora-CLAW/CLAW/tree/7.x-2.x/docs).
+You can contribute documentation in two different ways. One way is to create an issue [here](https://github.com/Islandora-CLAW/CLAW/issues/new) assign the "documentation" label to the issue. Another way is to by pull request, same process as [Contribute Code](https://github.com/Islandora-CLAW/CLAW/blob/master/CONTRIBUTING.md#contribute-code). All documentation resides in [`docs`](https://github.com/Islandora-CLAW/CLAW/tree/master/docs).
 
 
 ### Request a new feature
 
-To request a new feature you should [open an issue](https://github.com/Islandora-CLAW/CLAW/issues/new) or create a [use case](https://github.com/Islandora-CLAW/CLAW/blob/7.x-2.x/CONTRIBUTING.md#use-cases) (see _use case_ section above), and summarize the desired functionality. Select the label "enhancement" if creating an issue on the project repo, and "use case" if creating a use case in the interest group repo.
+To request a new feature you should [open an issue](https://github.com/Islandora-CLAW/CLAW/issues/new) or create a [use case](https://github.com/Islandora-CLAW/CLAW/blob/master/CONTRIBUTING.md#use-cases) (see _use case_ section above), and summarize the desired functionality. Select the label "enhancement" if creating an issue on the project repo, and "use case" if creating a use case in the interest group repo.
 
 ### Report a bug
 
