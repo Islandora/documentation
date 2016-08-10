@@ -5,6 +5,7 @@
 Islandora CLAW is the next generation of Islandora. Still in development, this major upgrade will be compatible with [Fedora 4](https://wiki.duraspace.org/display/FF/Fedora+Repository+Home).
 
 For more details, please check out the following resources:
+
 * [Weekly Tech Calls](https://github.com/Islandora-CLAW/CLAW/wiki#islandora-7x-2x-tech-calls)
   * [2015](https://github.com/Islandora-CLAW/CLAW/wiki/2015)
   * [2016](https://github.com/Islandora-CLAW/CLAW/wiki/2016)
@@ -29,6 +30,8 @@ For more details, please check out the following resources:
 * [islandora](https://github.com/Islandora-CLAW/islandora): Islandora CLAW Drupal modules 
 * [PDX](https://github.com/Islandora-CLAW/pdx): Top level container for the various [PCDM](http://pcdm.org/) specific Islandora CLAW microservices. 
 
+Note: the [Ansible](https://github.com/Islandora-CLAW/claw-ansible) and [Docker](https://github.com/Islandora-CLAW?utf8=%E2%9C%93&query=docker) repositories are early, experimental provisioning tools for the CLAW stack. For context see [this](https://github.com/Islandora-CLAW/CLAW/issues/182). Development is focused on the vagrant / bash environment referenced above, which is the recommended starting point for working with CLAW.
+
 ## Sponsors
 
 * UPEI
@@ -41,7 +44,7 @@ For more details, please check out the following resources:
 * Simon Fraser University
 * PALS
 * American Philosophical Society
-* common media inc.
+* Common Media Inc.
 
 ## Maintainers
 

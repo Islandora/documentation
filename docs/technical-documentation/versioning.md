@@ -3,9 +3,10 @@
 Islandora CLAW uses [semantic versioning](http://semver.org/).
 
 **Major version** . **Minor version** . **Patch**
- - Major version; Major changes, and breaks the API
- - Minor version; New features, and does not break the API
- - Patch; Bug fixes, and never breaks backward compatability
+
+- **Major version**; Major changes, and breaks the API
+- **Minor version**; New features, and does not break the API
+- **Patch**; Bug fixes, and never breaks backward compatability
 
 ## Components
 

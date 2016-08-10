@@ -8,7 +8,7 @@ The Islandora 7.x-2.x Project committers have asked [New Committer] to become a 
 ### add specific details here ###
 
 Further details of the rights and responsibilities of being a Islandora committer can be found here:
-http://islandora-labs.github.io/islandora/contributing/committers/
+http://islandora-claw.github.io/CLAW/contributing/committers/
 
 Regards,
 
