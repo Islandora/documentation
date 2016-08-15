@@ -37,7 +37,6 @@ echo "Symlinking Apache Karaf... "
 ln -s "/opt/apache-karaf-$KARAF_VERSION" $KARAF_DIR
 echo " done"
 
-
 if [ ! -L "/etc/init.d/karaf-service" ]; then
     echo "Installing Karaf as a service... "
     # Run a setup script to add some feature repos and prepare it for running as a service
@@ -72,6 +71,4 @@ fi
 echo "Starting Karaf as a service... "
 service karaf-service start
 sleep 60
-echo "done"
-
-
+echo " done"
