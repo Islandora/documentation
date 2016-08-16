@@ -48,7 +48,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
   
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "ubuntu/trusty64"
+  config.vm.box = "bento/ubuntu-16.04"
 
   # Setup the shared folder
   home_dir = "/home/vagrant"
@@ -72,7 +72,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision :shell, :path => "./scripts/fits.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/solr.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/composer.sh", :args => home_dir
-  config.vm.provision :shell, :path => "./scripts/twigcextensions.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/drupal.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/fcrepo.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/blazegraph.sh", :args => home_dir

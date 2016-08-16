@@ -2,7 +2,7 @@
 
 echo "Installing LAMP server packages"
 
-PACKAGES="libwrap0 ssl-cert libterm-readkey-perl mysql-client-5.5 libdbi-perl libmysqlclient18 mysql-server-core-5.5 mysql-common apache2 mysql-server-5.5 mysql-client-core-5.5 tcpd libaio1 mysql-server libdbd-mysql-perl libhtml-template-perl php5.6 libapache2-mod-php5.6"
+PACKAGES="libwrap0 ssl-cert libterm-readkey-perl mysql-client libdbi-perl libmysqlclient20 mysql-client-core-5.7 mysql-common apache2 mysql-server mysql-server-core-5.7 tcpd libaio1 mysql-server libdbd-mysql-perl libhtml-template-perl php7.0 php7.0-dev libapache2-mod-php7.0 php7.0-mbstring"
 
 apt-get -qq install -y $PACKAGES
 

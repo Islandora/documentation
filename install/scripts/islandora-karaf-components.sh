@@ -8,6 +8,7 @@ if [ -f "$HOME_DIR/islandora/install/configs/variables" ]; then
 fi
 
 echo "Installing Islandora Sync Gateway"
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 $KARAF_CLIENT -f $KARAF_CONFIGS/islandora_sync_gateway.script
 sleep 10
 echo "Installing Islandora Triplestore Indexer"
