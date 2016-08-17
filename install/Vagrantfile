@@ -59,6 +59,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :forwarded_port, guest: 8282, host: 8282 # Islandora Microservices
   config.vm.network :forwarded_port, guest: 3306, host: 3306 # MySQL
   config.vm.network :forwarded_port, guest: 5432, host: 5432 # PostgreSQL
+  config.vm.network :forwarded_port, guest: 8383, host: 8383 # Loris
 
   config.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--memory", $memory]
@@ -71,6 +72,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision :shell, :path => "./scripts/lamp-server.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/fits.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/solr.sh", :args => home_dir
+  config.vm.provision :shell, :path => "./scripts/loris.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/composer.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/drupal.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/fcrepo.sh", :args => home_dir
