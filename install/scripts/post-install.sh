@@ -21,3 +21,8 @@ chown -R vagrant:vagrant "$HOME_DIR"
 # Cycle tomcat
 cd /var/lib/tomcat7
 service tomcat7 restart
+
+# Cycle karaf and watch the maven bundles
+service karaf-service restart
+sleep 60
+$KARAF_CLIENT -f $KARAF_CONFIGS/watch.script
