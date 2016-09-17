@@ -1,2 +1,2 @@
-repo-add file:/home/vagrant/Alpaca/karaf/target/classes/features.xml
+repo-add file:/home/vagrant/Alpaca/karaf/build/resources/main/features.xml
 feature:install islandora-sync-gateway
