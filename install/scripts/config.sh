@@ -6,8 +6,6 @@ if [ -f "$HOME_DIR/islandora/install/configs/variables" ]; then
   . "$HOME_DIR"/islandora/install/configs/variables
 fi
 
-cp "$HOME_DIR"/Alpaca/sync/src/main/cfg/ca.islandora.sync.cfg /opt/karaf/etc
-
 if [ ! -f "$KARAF_DIR/etc/org.fcrepo.camel.indexing.triplestore.cfg" ]; then
   # Wait a minute for Karaf to finish starting up
   echo  "$KARAF_DIR/etc/org.fcrepo.camel.indexing.triplestore.cfg doesn't exist, waiting a minute"
