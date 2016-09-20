@@ -18,6 +18,9 @@ chmod -R g+w /var/www/html
 # Chown the home directory for good measure
 chown -R vagrant:vagrant "$HOME_DIR"
 
+# Fix FITS log
+sed -i 's|log4j.appender.FILE.File=${catalina.home}/logs/fits-service.log|log4j.appender.FILE.File=/var/log/tomcat7/fits-service.log|g' /var/lib/tomcat7/webapps/fits/WEB-INF/classes/log4j.properties
+
 # Cycle tomcat
 cd /var/lib/tomcat7
 service tomcat7 restart
@@ -25,8 +28,3 @@ service tomcat7 restart
 # Cycle karaf and watch the maven bundles
 service karaf-service restart
 sleep 60
-$KARAF_CLIENT -f $KARAF_CONFIGS/watch.script
-
-# Fix ApacheSolr config
-#drush -r "$DRUPAL_HOME" sqlq "update apachesolr_environment set url='http://localhost:8080/solr' where url='http://localhost:8983/solr'"
-#drush -r "$DRUPAL_HOME" cc all

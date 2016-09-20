@@ -151,3 +151,8 @@ drush en -y search_api
 drush -y dl bootstrap
 drush -y en bootstrap
 drush -y config-set system.theme default bootstrap
+
+# Permissions
+cd /var/www/html
+chown -R www-data:www-data drupal
+chmod -R g+w drupal

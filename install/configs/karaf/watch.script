@@ -1,4 +1,2 @@
-bundle:watch --start mvn:ca.islandora.component/islandora-camel-component/0.0.1-SNAPSHOT
-bundle:watch --start mvn:ca.islandora.sync/islandora-sync-gateway/0.0.1-SNAPSHOT
-bundle:watch --start mvn:ca.islandora.indexing/islandora-indexing-triplestore/0.0.1-SNAPSHOT
+bundle:watch --start mvn:ca.islandora.indexing/islandora-indexing-triplestore/0.1.0-SNAPSHOT
 logout

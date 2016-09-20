@@ -19,20 +19,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
   
   config.vm.hostname = $hostname
-
-  # THIS NEEDS SOME LOVE. WEIRD SSH LOGIN ISSUES.
-  # IT GETS STUCK AT: Waiting for ssh..
-  config.vm.provider :aws do |aws, override|
-    aws.access_key_id = ENV['AWS_KEY']
-    aws.secret_access_key = ENV['AWS_SECRET']
-    aws.keypair_name = ENV['AWS_KEYNAME']
-    aws.ami = "ami-4feaad2a"
-    override.vm.box = "dummy"
-    override.ssh.username = "ubuntu"
-    override.ssh.private_key_path = ENV['AWS_KEYPATH']
-    override.vm.network :forwarded_port, guest: 80, host: 80
-  end
-  
+ 
   # This should work fine out of the box if environment variables are declared
   config.vm.provider :digital_ocean do |provider, override|
     provider.ssh_key_name = ENV['DIGITALOCEAN_KEYNAME']
@@ -74,12 +61,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision :shell, :path => "./scripts/solr.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/loris.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/composer.sh", :args => home_dir
+  config.vm.provision :shell, :path => "./scripts/drupal-console.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/drupal.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/fcrepo.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/blazegraph.sh", :args => home_dir
-  config.vm.provision :shell, :path => "./scripts/alpaca.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/karaf.sh", :args => home_dir
-  config.vm.provision :shell, :path => "./scripts/islandora-karaf-components.sh", :args => home_dir
+  config.vm.provision :shell, :path => "./scripts/fcrepo-camel-toolbox.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/config.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/post-install.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/islandora-microservices.sh", :args => home_dir

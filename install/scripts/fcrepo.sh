@@ -21,6 +21,8 @@ fi
 chown tomcat7:tomcat7 /var/lib/tomcat7/fcrepo4-data
 chmod g-w /var/lib/tomcat7/fcrepo4-data
 
+echo "CATALINA_OPTS=\"\${CATALINA_OPTS} -Dfcrepo.modeshape.configuration=classpath:/config/minimal-default/repository.json\"" >> /etc/default/tomcat7;
+
 cp -v "$DOWNLOAD_DIR/fcrepo-$FEDORA_VERSION.war" /var/lib/tomcat7/webapps/fcrepo.war
 chown tomcat7:tomcat7 /var/lib/tomcat7/webapps/fcrepo.war
 sed -i 's#JAVA_OPTS="-Djava.awt.headless=true -Xmx128m -XX:+UseConcMarkSweepGC"#JAVA_OPTS="-Djava.awt.headless=true -Dfile.encoding=UTF-8 -server -Xms512m -Xmx1024m -XX:NewSize=256m -XX:MaxNewSize=256m -XX:PermSize=256m -XX:MaxPermSize=256m"#g' /etc/default/tomcat7
