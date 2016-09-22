@@ -52,10 +52,6 @@ cat >> "$DRUPAL_HOME"/sites/default/settings.php <<EOF
 );
 EOF
 
-## The always_populate_raw_post_data PHP setting should be set to -1 in PHP version 5.6
-sed -i 's|#;always_populate_raw_post_data = -1|always_populate_raw_post_data = -1|g' /etc/php/5.6/apache2/php.ini
-sed -i 's|#;always_populate_raw_post_data = -1|always_populate_raw_post_data = -1|g' /etc/php/5.6/cli/php.ini
-
 # Cycle apache
 service apache2 restart
 
@@ -70,7 +66,7 @@ drush en -y rest
 # Islandora dependencies
 
 # RDF UI
-drush dl rdfui
+drush dl rdfui --dev
 drush en -y rdfui
 drush en -y rdf_builder
 
@@ -110,7 +106,8 @@ drush en -y search_api
 cd "$DRUPAL_HOME/modules"
 git clone https://github.com/DiegoPino/claw-jsonld.git
 drush en -y jsonld
-cp -r "$HOME_DIR"/islandora/islandora .
+
+ln -s "$HOME_DIR"/islandora .
 drush en -y islandora
 
 # Set default theme to bootstrap
