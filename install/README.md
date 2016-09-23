@@ -7,7 +7,7 @@ N.B. This virtual machine **should not** be used in production.
 ## Requirements
 
 1. [VirtualBox](https://www.virtualbox.org/)
-2. [Vagrant 1.8.5+](http://www.vagrantup.com/)
+2. [Vagrant](http://www.vagrantup.com/) 1.8.5+
 3. [git](https://git-scm.com/)
 
 ## Variables
