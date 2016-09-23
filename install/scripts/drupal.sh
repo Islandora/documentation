@@ -107,7 +107,7 @@ cd "$DRUPAL_HOME/modules"
 git clone https://github.com/DiegoPino/claw-jsonld.git
 drush en -y jsonld
 
-ln -s "$HOME_DIR"/islandora .
+ln -s "$HOME_DIR"/islandora/islandora .
 drush en -y islandora
 
 # Set default theme to bootstrap
