@@ -63,6 +63,9 @@ Amazon:
 
 N.B. You may not be able to connect to your AWS instance depending on VPC settings.
 
+### Why aren't I seeing my changes?
+If you're developing locally and testing the install but not seeing your changes reflected, you need to update your submodules to point to a commit with your changes.  
+
 ## Connect
 
 You can connect to the machine via the browser at [http://localhost:8000](http://localhost:8000).
@@ -131,6 +134,3 @@ If you receive errors involving `\r` (end of line) you have two options:
   autocrlf = false
   ```
   Remove and clone again. This will prevent Windows git clients from automatically replacing Unix line endings LF with Windows line endings CRLF.
-
-## Why aren't I seeing my changes?
-If you're developing locally and testing the install but not seeing your changes reflected, you need to update your submodules to point to a commit with your changes.  
