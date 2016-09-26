@@ -35,36 +35,36 @@ export ISLANDORA_VAGRANT_VIRTUALBOXDESCRIPTION="Islandora CLAW"
 VirtualBox:
 
 1. `git clone https://github.com/Islandora-CLAW/CLAW`
-2. `cd CLAW/install`
-3. `vagrant up`
+2. If testing development changes, make sure submodule are pointing to the correct commit(s).
+3. `cd CLAW/install`
+4. `vagrant up`
 
 DigitalOcean:
 
 1. `git clone https://github.com/Islandora-CLAW/CLAW`
-2. `cd CLAW/install`
-3. `vagrant plugin install vagrant-digitalocean`
-4. Set the following environment variables:
+2. If testing development changes, make sure submodule are pointing to the correct commit(s).
+3. `cd CLAW/install`
+4. `vagrant plugin install vagrant-digitalocean`
+5. Set the following environment variables:
   * `DIGITALOCEAN_TOKEN` -- Your DigitalOcean API token
   * `DIGITALOCEAN_KEYNAME` -- Your DigitalOcean ssh key name
   * `DIGITALOCEAN_KEYPATH` -- Path to your ssh keys that you've setup with DigitalOcean
-5. `vagrant up --provider=digital_ocean`
+6. `vagrant up --provider=digital_ocean`
 
 Amazon:
 
 1. `git clone https://github.com/Islandora-CLAW/CLAW`
-2. `cd CLAW/install`
-3. `vagrant plugin install vagrant-aws`
-4. Set the following environment variables:
+2. If testing development changes, make sure submodule are pointing to the correct commit(s).
+3. `cd CLAW/install`
+4. `vagrant plugin install vagrant-aws`
+5. Set the following environment variables:
   * `AWS_KEY`
   * `AWS_SECRET`
   * `AWS_KEYNAME`
   * `AWS_KEYPATH`
-5. `vagrant up --provider=aws`
+6. `vagrant up --provider=aws`
 
 N.B. You may not be able to connect to your AWS instance depending on VPC settings.
-
-### Why aren't I seeing my changes?
-If you're developing locally and testing the install but not seeing your changes reflected, you need to update your submodules to point to a commit with your changes.  
 
 ## Connect
 
