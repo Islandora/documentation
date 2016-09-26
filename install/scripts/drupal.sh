@@ -52,14 +52,11 @@ cat >> "$DRUPAL_HOME"/sites/default/settings.php <<EOF
 );
 EOF
 
-## The always_populate_raw_post_data PHP setting should be set to -1 in PHP version 5.6
-sed -i 's|#;always_populate_raw_post_data = -1|always_populate_raw_post_data = -1|g' /etc/php/5.6/apache2/php.ini
-sed -i 's|#;always_populate_raw_post_data = -1|always_populate_raw_post_data = -1|g' /etc/php/5.6/cli/php.ini
-
 # Cycle apache
 service apache2 restart
 
 #Enable Core modules
+drush en -y rdf
 drush en -y responsive_image
 drush en -y syslog
 drush en -y serialization
@@ -67,66 +64,37 @@ drush en -y basic_auth
 drush en -y rest
 
 # Islandora dependencies
-## HAS NOT BEEN PORTED TO DRUPAL 8
-#drush dl httprl
 
-## Drupal 8 Alpha
-drush dl services
-drush -y en services
+# RDF UI
+drush dl rdfui --dev
+drush en -y rdfui
+drush en -y rdf_builder
 
-## Drupal 8 Alpha
-drush dl libraries
-drush -y en libraries
+# REST UI
+drush dl restui
+drush en -y restui
 
-## HAS NOT BEEN PORTED TO DRUPAL 8
-#drush dl field_permissions
+# Inline entity form
+drush dl inline_entity_form
+drush en -y inline_entity_form
 
-## HAS NOT BEEN PORTED TO DRUPAL 8
-#drush dl field_readonly
+# Media entity ecosystem
+drush dl media_entity
+drush en -y media_entity
 
-## INCLUDED IN DRUPAL CORE
-#drush dl views
-
-## HAS NOT BEEN PORTED TO DRUPAL 8
-#drush dl rdfx
-
-## Drupal 8 Alpha
-drush dl entity
-drush -y en entity
-
-## HAS NOT BEEN PORTED TO DRUPAL 8
-#drush dl uuid
-
-## HAS NOT BEEN PORTED TO DRUPAL 8
-#drush dl xml_field
-
-## INCLUDED IN DRUPAL CORE
-#drush dl jquery_update
-
-#git clone https://github.com/Islandora-Labs/xpath_field.git
-
-## Drupal 8 Beta
-drush dl hook_post_action
-drush -y en hook_post_action
+drush dl media_entity_image
+drush en -y media_entity_image
 
 # Devel
-## Drupal 8 Alpha
 drush dl devel
 drush -y en devel
 
-# Undocumented dependency for rdfx on ARC2 for RDF generation, and spyc.
-#cd "$DRUPAL_HOME/sites/all/libraries"
-#git clone https://github.com/mustangostang/spyc.git
-#mkdir ARC2
-#cd ARC2
-#git clone https://github.com/semsol/arc2.git
-#mv arc2 arc
-#cd "$DRUPAL_HOME/sites/all/modules"
+# Web Profiler
+drush dl webprofiler
+drush en -y webprofiler
 
 # Apache Solr
 ## https://www.drupal.org/node/2613470
-#drush dl apachesolr
-#drush en -y apachesolr
 drush dl search_api
 drush -y pm-uninstall search
 drush en -y search_api
@@ -135,17 +103,12 @@ drush en -y search_api
 #cp -a "$DRUPAL_HOME"/sites/all/modules/apachesolr/solr-conf/solr-4.x/. "$SOLR_HOME"/collection1/conf/
 #service tomcat7 restart
 
-#cd "$DRUPAL_HOME/sites/all/modules"
-#git clone https://github.com/Islandora-CLAW/islandora.git
-#drush -y en islandora
-#drush -y en islandora_dc
-#drush -y en islandora_mods
-#drush -y en islandora_basic_image
-#drush -y en islandora_collection
-#drush -y en islandora_apachesolr
-#drush -y en islandora_delete_by_fedora_uri_service
-#drush -y en islandora_medium_size_service
-#drush -y en islandora_tn_service
+cd "$DRUPAL_HOME/modules"
+git clone https://github.com/DiegoPino/claw-jsonld.git
+drush en -y jsonld
+
+ln -s "$HOME_DIR"/islandora/islandora .
+drush en -y islandora
 
 # Set default theme to bootstrap
 drush -y dl bootstrap

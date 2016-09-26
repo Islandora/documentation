@@ -28,3 +28,6 @@ service tomcat7 restart
 # Cycle karaf and watch the maven bundles
 service karaf-service restart
 sleep 60
+
+# Clear drupal cache
+drush -r "$DRUPAL_HOME" cache-rebuild
