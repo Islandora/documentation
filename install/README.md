@@ -35,36 +35,23 @@ export ISLANDORA_VAGRANT_VIRTUALBOXDESCRIPTION="Islandora CLAW"
 VirtualBox:
 
 1. `git clone https://github.com/Islandora-CLAW/CLAW`
-2. If testing development changes, make sure submodule are pointing to the correct commit(s).
-3. `cd CLAW/install`
+2. `cd CLAW`
+2. `git submodule update --init --recursive`
+3. `cd install`
 4. `vagrant up`
 
 DigitalOcean:
 
 1. `git clone https://github.com/Islandora-CLAW/CLAW`
-2. If testing development changes, make sure submodule are pointing to the correct commit(s).
-3. `cd CLAW/install`
-4. `vagrant plugin install vagrant-digitalocean`
-5. Set the following environment variables:
+2. `cd CLAW`
+3. `git submodule update --init --recursive`
+4. `cd install`
+5. `vagrant plugin install vagrant-digitalocean`
+6. Set the following environment variables:
   * `DIGITALOCEAN_TOKEN` -- Your DigitalOcean API token
   * `DIGITALOCEAN_KEYNAME` -- Your DigitalOcean ssh key name
   * `DIGITALOCEAN_KEYPATH` -- Path to your ssh keys that you've setup with DigitalOcean
-6. `vagrant up --provider=digital_ocean`
-
-Amazon:
-
-1. `git clone https://github.com/Islandora-CLAW/CLAW`
-2. If testing development changes, make sure submodule are pointing to the correct commit(s).
-3. `cd CLAW/install`
-4. `vagrant plugin install vagrant-aws`
-5. Set the following environment variables:
-  * `AWS_KEY`
-  * `AWS_SECRET`
-  * `AWS_KEYNAME`
-  * `AWS_KEYPATH`
-6. `vagrant up --provider=aws`
-
-N.B. You may not be able to connect to your AWS instance depending on VPC settings.
+7. `vagrant up --provider=digital_ocean`
 
 ## Connect
 
@@ -96,20 +83,21 @@ The default VM login details are:
 
 ## Environment
 
-- Ubuntu 14.04.4
-- Drupal 8.1.3
-- MySQL 5.5.49
-- Apache 2.24.7
-- Tomcat 7.0.52
+- Ubuntu 16.04.1
+- Drupal 8.1.10
+- MySQL 5.7.15
+- Apache 2.4.18
+- Tomcat 7.0.68.0
 - Solr 4.10.3
-- Camel 2.14.1
-- Fedora 4.5.1
-- Fedora Camel Component 4.2.0
+- Camel 2.15.1
+- Fedora 4.6.0
+- Fedora Camel Component 4.4.0
 - BlazeGraph 1.5.1
 - Karaf 4.0.5
-- Sync 0.0.0
-- Islandora 7.x-2.x
-- PHP 5.6.22 and 7.0.7
+- Alpaca 0.0.1-SNAPSHOT
+- Islandora 8.x-1.x
+- Loris HEAD
+- PHP 7.0.8
 - Java 8 (Oracle)
 
 ## Windows Troubleshooting
