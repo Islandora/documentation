@@ -7,7 +7,7 @@
 <dcterms = 'http://purl.org/dc/terms/'>
 <dwc = 'http://rs.tdwg.org/dwc/terms/'>
 <exif = 'http://www.w3.org/2003/12/exif/ns#'>
-<fedoramodel = 'info:fedora/fedora-system =def/model#'>
+<fedoramodel = 'info:fedora/fedora-system:def/model#'>
 <geo = 'http://www.w3.org/2003/01/geo/wgs84_pos#'>
 <gn = 'http://www.geonames.org/ontology#'>
 <iana = 'http://www.iana.org/assignments/relation/'>
