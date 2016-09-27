@@ -27,3 +27,7 @@ cp -v "$DOWNLOAD_DIR/fcrepo-$FEDORA_VERSION.war" /var/lib/tomcat7/webapps/fcrepo
 chown tomcat7:tomcat7 /var/lib/tomcat7/webapps/fcrepo.war
 sed -i 's#JAVA_OPTS="-Djava.awt.headless=true -Xmx128m -XX:+UseConcMarkSweepGC"#JAVA_OPTS="-Djava.awt.headless=true -Dfile.encoding=UTF-8 -server -Xms512m -Xmx1024m -XX:NewSize=256m -XX:MaxNewSize=256m -XX:PermSize=256m -XX:MaxPermSize=256m"#g' /etc/default/tomcat7
 service tomcat7 restart
+
+sleep 10
+cp -v $HOME_DIR/islandora/install/configs/repository.json /var/lib/tomcat7/webapps/fcrepo/WEB-INF/classes/config/minimal-default/repository.json
+service tomcat7 restart
