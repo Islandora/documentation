@@ -14,7 +14,6 @@
 <islandorarelsext = 'http://islandora.ca/ontology/relsext#'>
 <islandorarelsint = 'http://islandora.ca/ontology/relsint#'>
 <ldp = 'http://www.w3.org/ns/ldp#'>
-<mode = 'http://www.modeshape.org/1.0'>
 <nfo = 'http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#'>
 <ore = 'http://www.openarchives.org/ore/terms/'>
 <owl = 'http://www.w3.org/2002/07/owl#'>
@@ -29,8 +28,6 @@
 <rel = 'http://id.loc.gov/vocabulary/relators/'>
 <schema = 'http://schema.org'>
 <skos = 'http://www.w3.org/2004/02/skos/core#'>
-<sv = 'http://www.jcp.org/jcr/sv/1.0'>
-<test = 'info:fedora/test/'>
 <xml = 'http://www.w3.org/XML/1998/namespace'>
 <xmlns = 'http://www.w3.org/2000/xmlns/'>
 <xs = 'http://www.w3.org/2001/XMLSchema'>
