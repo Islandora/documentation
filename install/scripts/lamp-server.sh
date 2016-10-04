@@ -9,3 +9,5 @@ apt-get -qq install -y $PACKAGES
 usermod -a -G www-data vagrant
 
 chown -R vagrant:vagrant islandora
+
+sed -i '$idate.timezone=America/Toronto' /etc/php/7.0/cli/php.ini
