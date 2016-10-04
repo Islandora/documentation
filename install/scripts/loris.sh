@@ -22,7 +22,7 @@ cd /opt
 mkdir djatoka
 cd /tmp || exit
 cp "$DOWNLOAD_DIR/adore-djatoka.tar.gz" /tmp
-tar -xzvf adore-djatoka.tar.gz
+tar -xzf adore-djatoka.tar.gz
 cd adore-djatoka-1.1 || exit
 mv -v ./* /opt/djatoka
 ln -s /opt/djatoka/bin/Linux-x86-64/kdu_compress /usr/local/bin/kdu_compress
