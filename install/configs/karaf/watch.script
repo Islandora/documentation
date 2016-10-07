@@ -1,2 +1,1 @@
-bundle:watch --start mvn:ca.islandora.indexing/islandora-indexing-triplestore/0.1.0-SNAPSHOT
 logout
