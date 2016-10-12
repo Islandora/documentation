@@ -1,2 +1,2 @@
-repo-add file:/home/vagrant/Alpaca/karaf/build/resources/main/features.xml
+repo-add file:/home/vagrant/islandora/Alpaca/karaf/build/resources/main/features.xml
 feature:install islandora-indexing-triplestore
