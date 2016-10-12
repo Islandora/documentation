@@ -54,20 +54,20 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vb.customize ["modifyvm", :id, "--description", $virtualBoxDescription]
   end
 
-#  config.vm.provision :shell, inline: "sudo sed -i '/tty/!s/mesg n/tty -s \\&\\& mesg n/' /root/.profile", :privileged =>false
-#  config.vm.provision :shell, :path => "./scripts/bootstrap.sh", :args => home_dir
-#  config.vm.provision :shell, :path => "./scripts/lamp-server.sh", :args => home_dir
-#  config.vm.provision :shell, :path => "./scripts/fits.sh", :args => home_dir
-#  config.vm.provision :shell, :path => "./scripts/solr.sh", :args => home_dir
-#  config.vm.provision :shell, :path => "./scripts/loris.sh", :args => home_dir
-#  config.vm.provision :shell, :path => "./scripts/composer.sh", :args => home_dir
-#  config.vm.provision :shell, :path => "./scripts/drupal-console.sh", :args => home_dir
-#  config.vm.provision :shell, :path => "./scripts/drupal.sh", :args => home_dir
-#  config.vm.provision :shell, :path => "./scripts/fcrepo.sh", :args => home_dir
-#  config.vm.provision :shell, :path => "./scripts/blazegraph.sh", :args => home_dir
-#  config.vm.provision :shell, :path => "./scripts/karaf.sh", :args => home_dir
-#  config.vm.provision :shell, :path => "./scripts/fcrepo-camel-toolbox.sh", :args => home_dir
-#  config.vm.provision :shell, :path => "./scripts/alpaca.sh", :args => home_dir
+  config.vm.provision :shell, inline: "sudo sed -i '/tty/!s/mesg n/tty -s \\&\\& mesg n/' /root/.profile", :privileged =>false
+  config.vm.provision :shell, :path => "./scripts/bootstrap.sh", :args => home_dir
+  config.vm.provision :shell, :path => "./scripts/lamp-server.sh", :args => home_dir
+  config.vm.provision :shell, :path => "./scripts/fits.sh", :args => home_dir
+  config.vm.provision :shell, :path => "./scripts/solr.sh", :args => home_dir
+  config.vm.provision :shell, :path => "./scripts/loris.sh", :args => home_dir
+  config.vm.provision :shell, :path => "./scripts/composer.sh", :args => home_dir
+  config.vm.provision :shell, :path => "./scripts/drupal-console.sh", :args => home_dir
+  config.vm.provision :shell, :path => "./scripts/drupal.sh", :args => home_dir
+  config.vm.provision :shell, :path => "./scripts/fcrepo.sh", :args => home_dir
+  config.vm.provision :shell, :path => "./scripts/blazegraph.sh", :args => home_dir
+  config.vm.provision :shell, :path => "./scripts/karaf.sh", :args => home_dir
+  config.vm.provision :shell, :path => "./scripts/fcrepo-camel-toolbox.sh", :args => home_dir
+  config.vm.provision :shell, :path => "./scripts/alpaca.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/islandora-karaf-components.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/config.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/post-install.sh", :args => home_dir
