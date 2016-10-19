@@ -19,6 +19,7 @@ For more details, please check out the following resources:
   * Week 07: [Drupal is Dead. Long Live Drupal (Drupal 8)](http://connect.scholarsportal.info/p45l482w49w/)
   * Week 08: [Data Modeling in Claw, Migration to FCRepo 4, Derivatives](http://connect.scholarsportal.info/p5b25a6ptqs/)
   * Week 09: [How to get involved and contribute!](http://connect.scholarsportal.info/p70dsdwogbr/)
+  * [Slides and Companion Notes to CLAW Lessons](https://drive.google.com/drive/folders/0B3lcyfjAf3G3bV9zZHRZSENjWGc?usp=sharing)
 
 ## Repository Structure
 
