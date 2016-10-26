@@ -30,7 +30,7 @@ These are what are considered the minimum requirements for a functional Islandor
 ### Overview
 Islandora is composed of four broad categories of technologies. On one end, there is the administrative interface, which users and other clients will interact with. On the other is a repository, which will hold binary data and RDF triples. In between the two are connectors, which are small pieces of software that react to events from either administrative interface or the repository. These connectors will utilize microservices -- small utilities exposed as web services either internally or out on the internet at large.
 
-![HiIgh Level Diagram of Islandora CLAW](/docs/assets/image11.png)
+![High Level Diagram of Islandora CLAW](/docs/assets/image11.png)
  
 ### Administrative Interface
 
