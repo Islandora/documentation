@@ -1,4 +1,4 @@
-#What's Different Between Islandora 1.x and CLAW
+#What's Different Between Islandora 1.x and Islandora CLAW
 
 In the most basic terms, Islandora CLAW is the version of Islandora that works with [Fedora 4](https://wiki.duraspace.org/display/FEDORA4x/Fedora+4.x+Documentation). Because Fedora 4 is a vastly different platform than Fedora 3, so too is Islandora CLAW a major departure from what came before. Switching to CLAW represents not just a typical upgrade with improvements, features, and bug fixes, but rather a major shift in how objects are stored and managed. 
 
