@@ -16,9 +16,16 @@ extra:
     twitter: 'islandora'
 
 pages:
-- About: 
-    - 'Islandora CLAW': 'index.md'
+
+- User Documentation:
     - 'Introduction to Islandora CLAW': 'user-documentation/intro-to-claw.md'
+    - 'Islandora CLAW for 1.x Users': 'user-documentation/2xfor1x.md'
+- Technical Documentation:
+    - 'Minimum Viable Product': 'mvp/mvp_doc.md'
+    - 'How to build documenation': 'technical-documentation/docs-build.md'
+    - 'Semantic Versioning Policy': 'technical-documentation/versioning.md'
+- Components: 
+    - 'Islandora CLAW': 'index.md'
     - 'Alpaca': 'alpaca/README.md'
     - 'Chullo': 'chullo/README.md'
     - 'Crayfish': 'crayfish/README.md'
@@ -30,18 +37,6 @@ pages:
     - 'How to contribute': 'contributing/CONTRIBUTING.md'
     - 'Committers': 'contributing/committers.md'
     - 'Hacking on Islandora': 'contributing/hacking-on-islandora.md'
-- User Documentation:
-    - 'Islandora CLAW for Islandora 1.x Users': 'user-documentation/2xfor1x.md'
-    - 'Creating Collections in Islandora CLAW': 'user-documentation/creating-collections-in-islandora-7.x-2.x.md'
-    - 'Adding an object to a collection in Islandora CLAW': 'user-documentation/adding-object-to-collection-in-islandora-7.x-2.x.md'
-    - 'Editing the Basic Image Form in Islandora CLAW': 'user-documentation/editing-basic-image-form-in-islandora-7.x-2.x.md'
-    - 'Adding a Drupal Taxonomy in Islandora CLAW': 'user-documentation/form-field-select-taxonomy-in-islandora-7.x-2.x.md'
-- Technical Documentation:
-    - 'Architecture': 'technical-documentation/architecture.md'
-    - 'Middleware Services': 'technical-documentation/services.md'
-    - 'Commands': 'technical-documentation/commands.md'
-    - 'How to build documenation': 'technical-documentation/docs-build.md'
-    - 'Semantic Versioning Policy': 'technical-documentation/versioning.md'
 - Migration:
     - 'Migration': 'migration/migration.md'
     - 'Fedora namespace predicates': 'migration/fedora-namespace-predicates.md'

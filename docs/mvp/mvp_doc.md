@@ -30,7 +30,7 @@ These are what are considered the minimum requirements for a functional Islandor
 ### Overview
 Islandora is composed of four broad categories of technologies. On one end, there is the administrative interface, which users and other clients will interact with. On the other is a repository, which will hold binary data and RDF triples. In between the two are connectors, which are small pieces of software that react to events from either administrative interface or the repository. These connectors will utilize microservices -- small utilities exposed as web services either internally or out on the internet at large.
 
-![High Level Diagram of Islandora CLAW](/docs/assets/image11.png)
+![High Level Diagram of Islandora CLAW](https://raw.githubusercontent.com/Islandora-CLAW/CLAW/masterhttps://raw.githubusercontent.com/Islandora-CLAW/CLAW/master/docs/assets/image11.png)
  
 ### Administrative Interface
 
@@ -114,81 +114,81 @@ Here are the proposed flows for all the different types of requests you can make
 
 Suppose a client views a resource in Islandora through their browser. A request is made to Drupal, which looks up the resource in an SQL database, and its representation is returned to the user.
 
-![Read a Resource](/docs/assets/image00.png)
+![Read a Resource](https://raw.githubusercontent.com/Islandora-CLAW/CLAW/masterhttps://raw.githubusercontent.com/Islandora-CLAW/CLAW/master/docs/assets/image00.png)
 
 ### Create a Resource
 
 Suppose a client submits a form to create a new Resource, or provides a json-ld or binary representation to an entity REST endpoint. The supplied representation is used to create an entity in Drupal. In response to the entity being saved, an event is emitted with supplied representation as the body. The response is then sent back to the client. If using a browser, the client should be redirected to the newly created resource.  
 
-![Create a Resource](/docs/assets/image03.png)
+![Create a Resource](https://raw.githubusercontent.com/Islandora-CLAW/CLAW/master/docs/assets/image03.png)
 
 Meanwhile, Salmon will receive the creation event, and ingest the supplied representation in Fedora. Fedora will then emit a creation event.  
 
-![Emit a creation event](/docs/assets/image02.png)
+![Emit a creation event](https://raw.githubusercontent.com/Islandora-CLAW/CLAW/master/docs/assets/image02.png)
 
 The ID Mapping connector will react, retrieving the Fedora representation and extracting an ID out of the RDF. That ID will be indexed in the ID Mapping microservice.
 
-![ID indexed in the ID Mapping microservice](/docs/assets/image07.png)
+![ID indexed in the ID Mapping microservice](https://raw.githubusercontent.com/Islandora-CLAW/CLAW/master/docs/assets/image07.png)
 
 The triple store connector will also react, retrieving RDF and indexing it in the triple store.
 
-![Retrieving RDF and indexing it in the triple store](/docs/assets/image01.png)
+![Retrieving RDF and indexing it in the triple store](https://raw.githubusercontent.com/Islandora-CLAW/CLAW/master/docs/assets/image01.png)
 
 If the node created was a preservation master, then Alpaca will respond by inspecting the list of derivative generation services bound as extensions on the preservation master in API-X. Each will be invoked, with the new resource getting ingested into Drupal.  
 
-![New resource ingested into Drupal](/docs/assets/image10.png)
+![New resource ingested into Drupal](https://raw.githubusercontent.com/Islandora-CLAW/CLAW/master/docs/assets/image10.png)
 
 The process repeats itself again, with new events being emitted for the new entities getting created in Drupal. Salmon responds and ingests the derivatives into Fedora.
 
-![Salmon responds and ingests derivatives into Fedora](/docs/assets/image02.png)
+![Salmon responds and ingests derivatives into Fedora](https://raw.githubusercontent.com/Islandora-CLAW/CLAW/master/docs/assets/image02.png)
 
 Fedora emits the creation events, but since none are a preservation master, Alpaca does not respond and the cycle is broken.
 
-![Alpaca does not respond and the cycle is broken](/docs/assets/image08.png)
+![Alpaca does not respond and the cycle is broken](https://raw.githubusercontent.com/Islandora-CLAW/CLAW/master/docs/assets/image08.png)
 
 ### Update a Resource
 
 Suppose a client submits a form to update a new Resource, or provides a json-ld or binary representation to an entity REST endpoint.  In response to the entity being saved, an event is emitted with supplied representation as the body. The response is then sent back to the client.
 
-![Update a Resource](/docs/assets/image03.png)
+![Update a Resource](https://raw.githubusercontent.com/Islandora-CLAW/CLAW/master/docs/assets/image03.png)
 
 Meanwhile, Salmon will receive the update event, and apply it against the representation in Fedora. Fedora will then emit an update event.  
 
-![Fedora will emit an update event](/docs/assets/image04.png)
+![Fedora will emit an update event](https://raw.githubusercontent.com/Islandora-CLAW/CLAW/master/docs/assets/image04.png)
 
 The triple store connector will also react, retrieving RDF and indexing it in the triple store.
 
-![Triple store connector reacts](/docs/assets/image01.png)
+![Triple store connector reacts](https://raw.githubusercontent.com/Islandora-CLAW/CLAW/master/docs/assets/image01.png)
 
 If a binary of a presentation master was updated, then Alpaca will respond by inspecting the list of derivative generation services bound as extensions on the preservation master in API-X. Each will be invoked, with the new resource overwriting its predecessor in Drupal.
 
-![New resource overwriting its processor in Drupal](/docs/assets/image09.png)
+![New resource overwriting its processor in Drupal](https://raw.githubusercontent.com/Islandora-CLAW/CLAW/master/docs/assets/image09.png)
 
 The process repeats itself again, with new events being emitted for the derivative entities getting updated in Drupal. Salmon responds and ingests the derivatives into Fedora.
 
-![Salmon responds and ingests derivatives into Fedora](/docs/assets/image01.png)
+![Salmon responds and ingests derivatives into Fedora](https://raw.githubusercontent.com/Islandora-CLAW/CLAW/master/docs/assets/image01.png)
 
 Fedora emits the creation events, but since none are a preservation master, Alpaca does not respond and the cycle is broken.
 
-![Alpaca does not respond and the cycle is broken](/docs/assets/image03.png)
+![Alpaca does not respond and the cycle is broken](https://raw.githubusercontent.com/Islandora-CLAW/CLAW/master/docs/assets/image03.png)
 
 ### Delete a Resource
 
 Suppose a client deletes a resource through the browser or API. In response to the entity being deleted, an event is emitted. The response is then sent back to the client.
 
-![Delete a Resource](/docs/assets/image08.png)
+![Delete a Resource](https://raw.githubusercontent.com/Islandora-CLAW/CLAW/master/docs/assets/image08.png)
 
 Meanwhile, Salmon will receive the delete event, and remove the corresponding resource in Fedora.
 
-!Salmon receives the event and deletes the corresponding resource in Fedora](/docs/assets/image04.png)
+!Salmon receives the event and deletes the corresponding resource in Fedora](https://raw.githubusercontent.com/Islandora-CLAW/CLAW/master/docs/assets/image04.png)
 
 The ID Mapping connector will respond to the delete event by removing the resource’s entry.
 
-![ID Mapping connector responds to the delete event by removing the resource’s entry](/docs/assets/image05.png)
+![ID Mapping connector responds to the delete event by removing the resource’s entry](https://raw.githubusercontent.com/Islandora-CLAW/CLAW/master/docs/assets/image05.png)
 
 The triple store connector will also respond, deleting all triples with subject of the resource.
 
-![The triple store connector responds, deleting all triples with subject of the resource](/docs/assets/image13.png)
+![The triple store connector responds, deleting all triples with subject of the resource](https://raw.githubusercontent.com/Islandora-CLAW/CLAW/master/docs/assets/image13.png)
 
 ## Content Modeling in Fedora
 
@@ -310,7 +310,7 @@ Ingests and edits can be done for an entire graph of entities using [inline enti
 
 Here’s an example of what an ingest form could look like using inline entity forms:
 
-![Example ingest form](/docs/assets/image06.jpg)
+![Example ingest form](https://raw.githubusercontent.com/Islandora-CLAW/CLAW/master/docs/assets/image06.jpg)
 
 
 Here’s a list of the entities required to meet our goals. Each of these entities must have basic RESTful CRUD operations exposed for clients.
