@@ -88,7 +88,7 @@ The default VM login details are:
 - MySQL 5.7.15
 - Apache 2.4.18
 - Tomcat 7.0.68.0
-- Solr 4.10.3
+- Solr 6.2.1
 - Camel 2.15.1
 - Fedora 4.6.0
 - Fedora Camel Component 4.4.0
