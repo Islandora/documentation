@@ -16,7 +16,7 @@ chown -R www-data:www-data /var/www/html
 chmod -R g+w /var/www/html
 
 # Chown the home directory for good measure
-chown -R vagrant:vagrant "$HOME_DIR"
+chown -R ubuntu:ubuntu "$HOME_DIR"
 
 # Fix FITS log
 sed -i 's|log4j.appender.FILE.File=${catalina.home}/logs/fits-service.log|log4j.appender.FILE.File=/var/log/tomcat7/fits-service.log|g' /var/lib/tomcat7/webapps/fits/WEB-INF/classes/log4j.properties

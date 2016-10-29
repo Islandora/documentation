@@ -35,7 +35,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
   
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "bento/ubuntu-16.04"
+  config.vm.box = "ubuntu/xenial64"
 
   # Setup the shared folder
   home_dir = "/home/vagrant"
