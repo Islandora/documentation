@@ -180,7 +180,7 @@ Suppose a client deletes a resource through the browser or API. In response to t
 
 Meanwhile, Salmon will receive the delete event, and remove the corresponding resource in Fedora.
 
-!Salmon receives the event and deletes the corresponding resource in Fedora](https://raw.githubusercontent.com/Islandora-CLAW/CLAW/master/docs/assets/image04.png)
+![Salmon receives the event and deletes the corresponding resource in Fedora](https://raw.githubusercontent.com/Islandora-CLAW/CLAW/master/docs/assets/image04.png)
 
 The ID Mapping connector will respond to the delete event by removing the resource’s entry.
 
