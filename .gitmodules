@@ -1,16 +1,20 @@
 [submodule "Crayfish"]
-	path = Crayfish
-	url = https://github.com/Islandora-CLAW/Crayfish
+  path = Crayfish
+  url = https://github.com/Islandora-CLAW/Crayfish
+  branch = master
 [submodule "Alpaca"]
-	path = Alpaca
-	url = https://github.com/Islandora-CLAW/Alpaca
+  path = Alpaca
+  url = https://github.com/Islandora-CLAW/Alpaca
+  branch = master
 [submodule "pdx"]
-	path = pdx
-	url = https://github.com/Islandora-CLAW/pdx
+  path = pdx
+  url = https://github.com/Islandora-CLAW/pdx
+  branch = master
 [submodule "chullo"]
-	path = chullo
-	url = https://github.com/Islandora-CLAW/chullo
+  path = chullo
+  url = https://github.com/Islandora-CLAW/chullo
+  branch = master
 [submodule "islandora"]
-	path = islandora
-	url = https://github.com/Islandora-CLAW/islandora
-	branch = 8.x-1.x
+  path = islandora
+  url = https://github.com/Islandora-CLAW/islandora
+  branch = 8.x-1.x

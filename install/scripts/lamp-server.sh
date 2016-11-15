@@ -6,8 +6,8 @@ PACKAGES="libwrap0 ssl-cert libterm-readkey-perl mysql-client libdbi-perl libmys
 
 apt-get -qq install -y $PACKAGES
 
-usermod -a -G www-data vagrant
+usermod -a -G www-data ubuntu
 
-chown -R vagrant:vagrant islandora
+chown -R ubuntu:ubuntu islandora
 
 sed -i '$idate.timezone=America/Toronto' /etc/php/7.0/cli/php.ini

@@ -52,9 +52,9 @@ if [ ! -L "/etc/init.d/karaf-service" ]; then
     echo " done"
 fi
 
-# Add the vagrant user's maven repository
+# Add the ubuntu user's maven repository
 if ! grep -q "$HOME_DIR/.m2/repository" $KARAF_DIR/etc/org.ops4j.pax.url.mvn.cfg ; then
-    echo "Adding vagrant user's Maven repository... "
+    echo "Adding ubuntu user's Maven repository... "
     sed -i "s|#org.ops4j.pax.url.mvn.localRepository=|org.ops4j.pax.url.mvn.localRepository=$HOME_DIR/.m2/repository|" $KARAF_DIR/etc/org.ops4j.pax.url.mvn.cfg
     echo " done"
 fi

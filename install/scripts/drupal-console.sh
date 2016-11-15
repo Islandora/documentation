@@ -23,7 +23,7 @@ if [ -f ".console/config.yml" ]; then
   rm .console/config.yml
 fi
 cp $HOME_DIR/islandora/install/configs/config.yml $HOME_DIR/.console/config.yml
-chown -hR vagrant:vagrant /home/vagrant/.console
+chown -hR ubuntu:ubuntu /home/ubuntu/.console
 sed -i -e "\$asource \"$HOME/.console/console.rc\" 2>/dev/null" $HOME/.bashrc
 
 # Fix drupal-console
