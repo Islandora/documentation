@@ -11,8 +11,8 @@ fi
 cd "$HOME_DIR"
 git clone https://github.com/Islandora-CLAW/Alpaca.git
 cd Alpaca
-chown -R vagrant:vagrant "$HOME_DIR/Alpaca"
-sudo -u vagrant ./gradlew build
+chown -R ubuntu:ubuntu "$HOME_DIR/Alpaca"
+sudo -u ubuntu ./gradlew build
 
-# Chown everything over to the vagrant user just in case
-chown -R vagrant:vagrant "$HOME_DIR/Alpaca"
+# Chown everything over to the ubuntu user just in case
+chown -R ubuntu:ubuntu "$HOME_DIR/Alpaca"

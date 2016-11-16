@@ -3,6 +3,7 @@ cache.properties
 tests/test_config.ini
 install/.vagrant
 install/downloads
+install/ubuntu-xenial-16.04-cloudimg-console.log
 site/
 installer
 composer.phar
