@@ -30,4 +30,6 @@ service tomcat7 restart
 
 sleep 10
 cp -v $HOME_DIR/islandora/install/configs/repository.json /var/lib/tomcat7/webapps/fcrepo/WEB-INF/classes/config/minimal-default/repository.json
+echo "CATALINA_OPTS=\"\${CATALINA_OPTS} -Dfcrepo.modeshape.configuration=CATALINA_OPTS="${CATALINA_OPTS} -Dfcrepo.modeshape.configuration=classpath:/config/minimal-default/repository.json"
+\"" >> /etc/default/tomcat7
 service tomcat7 restart
