@@ -1,0 +1,6 @@
+feature:repo-add mvn:edu.amherst.acdc/acrepo-karaf/1.0.5/xml/features
+feature:install acrepo-services-activemq
+feature:install acrepo-services-mint
+feature:install acrepo-connector-broadcast
+feature:install acrepo-connector-idiomatic-mysql
+feature:install acrepo-connector-idiomatic
