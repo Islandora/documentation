@@ -21,7 +21,7 @@ fi
 chown tomcat7:tomcat7 /var/lib/tomcat7/fcrepo4-data
 chmod g-w /var/lib/tomcat7/fcrepo4-data
 
-echo "CATALINA_OPTS=\"\${CATALINA_OPTS} -Dfcrepo.modeshape.configuration=classpath:/config/minimal-default/repository.json\"" >> /etc/default/tomcat7;
+echo "CATALINA_OPTS=\"\${CATALINA_OPTS} -Dfcrepo.modeshape.configuration=classpath:/config/file-simple/repository.json\"" >> /etc/default/tomcat7;
 
 cp -v "$DOWNLOAD_DIR/fcrepo-$FEDORA_VERSION.war" /var/lib/tomcat7/webapps/fcrepo.war
 chown tomcat7:tomcat7 /var/lib/tomcat7/webapps/fcrepo.war
@@ -29,7 +29,5 @@ sed -i 's#JAVA_OPTS="-Djava.awt.headless=true -Xmx128m -XX:+UseConcMarkSweepGC"#
 service tomcat7 restart
 
 sleep 10
-cp -v $HOME_DIR/islandora/install/configs/repository.json /var/lib/tomcat7/webapps/fcrepo/WEB-INF/classes/config/minimal-default/repository.json
-echo "CATALINA_OPTS=\"\${CATALINA_OPTS} -Dfcrepo.modeshape.configuration=CATALINA_OPTS="${CATALINA_OPTS} -Dfcrepo.modeshape.configuration=classpath:/config/minimal-default/repository.json"
-\"" >> /etc/default/tomcat7
+cp -v $HOME_DIR/islandora/install/configs/repository.json /var/lib/tomcat7/webapps/fcrepo/WEB-INF/classes/config/file-simple/repository.json
 service tomcat7 restart
