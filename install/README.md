@@ -122,3 +122,16 @@ If you receive errors involving `\r` (end of line) you have two options:
   autocrlf = false
   ```
   Remove and clone again. This will prevent Windows git clients from automatically replacing Unix line endings LF with Windows line endings CRLF.
+
+###Windows Connect
+
+You can make ssh connections to the virtual machine using puTTY.  Before doing so you need to convert the key file using puTTYgen as keys generated with openssh will not work. 
+Both of these can be downloaded from: http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html
+
+1. Convert the key with puttygen
+ * Conversions->Import key, then click Browse and select the private key generated with openssh (e.g. id_rsa).
+ Then click on Save private key (e.g. id_rsa_putty.ppk)
+2. Login with putty
+ * Category Session->Host Name enter localhost and change Port to 2222
+ * Data->Auto-login Username enter ubuntu
+ * Connection->SSH->Auth. Click Browse, and select your private key file (e.g. id_rsa_putty.ppk), go back to Session and save the session.
