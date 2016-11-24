@@ -38,7 +38,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "ubuntu/xenial64"
 
   # Setup the shared folder
-  home_dir = "/home/vagrant"
+  home_dir = "/home/ubuntu"
   config.vm.synced_folder "../", home_dir + "/islandora"
 
   config.vm.network :forwarded_port, guest: 8080, host: 8080 # Tomcat
