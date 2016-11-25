@@ -27,4 +27,4 @@ cp "/opt/microservices/pdx/config/example.settings.yml" "/opt/microservices/pdx/
 cd "/opt/microservices/pdx"
 composer update
 
-chown -hR vagrant:vagrant /opt/microservices
+chown -hR ubuntu:ubuntu /opt/microservices
