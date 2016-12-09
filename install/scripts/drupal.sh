@@ -65,6 +65,14 @@ drush en -y rest
 
 # Islandora dependencies
 
+# Typed Data
+drush dl typed_data
+drush en -y typed_data
+
+# Rules
+drush dl rules
+drush en -y rules
+
 # RDF UI
 drush dl rdfui --dev
 drush en -y rdfui
