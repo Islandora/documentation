@@ -1,2 +1,3 @@
 repo-add file:/home/ubuntu/Alpaca/karaf/build/resources/main/features.xml
+feature:install islandora-connector-broadcast
 feature:install islandora-indexing-triplestore

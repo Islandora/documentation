@@ -22,5 +22,5 @@ cp mysql-connector-java-"$MYSQL_CONNECTOR_VERSION"/mysql-connector-java-"$MYSQL_
 echo "Installing ID Mapping Service"
 $KARAF_CLIENT -f $KARAF_CONFIGS/islandora_id_mapping_service.script
 
-echo "Installing Islandora Triplestore Indexer"
-$KARAF_CLIENT -f $KARAF_CONFIGS/islandora_indexing_triplestore.script
+echo "Installing Alpaca"
+$KARAF_CLIENT -f $KARAF_CONFIGS/alpaca.script
