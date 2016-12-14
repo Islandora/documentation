@@ -25,7 +25,6 @@ cp -v $HOME_DIR/islandora/install/configs/claw.cnd /opt/fcrepo/configs
 chown -hR tomcat7:tomcat7 /opt/fcrepo
 
 chown tomcat7:tomcat7 /var/lib/tomcat7/fcrepo4-data
-chmod g-w /var/lib/tomcat7/fcrepo4-data
 
 echo "CATALINA_OPTS=\"\${CATALINA_OPTS} -Dfcrepo.modeshape.configuration=file:///opt/fcrepo/configs/repository.json\"" >> /etc/default/tomcat7;
 
