@@ -41,6 +41,10 @@ apt-get -y -qq install maven
 apt-get -y -qq install tomcat7 tomcat7-admin
 usermod -a -G tomcat7 ubuntu
 sed -i '$i<user username="islandora" password="islandora" roles="manager-gui"/>' /etc/tomcat7/tomcat-users.xml
+chown -R tomcat7:tomcat7 /var/lib/tomcat7
+chown -R tomcat7:tomcat7 /var/log/tomcat7
+chmod -R g+w /var/lib/tomcat7
+chmod -R g+w /var/log/tomcat7
 
 # Wget and curl
 apt-get -y -qq install wget curl
