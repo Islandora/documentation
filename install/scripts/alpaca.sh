@@ -12,6 +12,7 @@ cd "$HOME_DIR"
 git clone https://github.com/Islandora-CLAW/Alpaca.git
 cd Alpaca
 chown -R ubuntu:ubuntu "$HOME_DIR/Alpaca"
+chown -R ubuntu:ubuntu "$HOME_DIR/.m2"
 sudo -u ubuntu ./gradlew clean build install
 
 # Chown everything over to the ubuntu user just in case
