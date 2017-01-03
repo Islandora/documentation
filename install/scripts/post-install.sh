@@ -30,4 +30,4 @@ service karaf-service restart
 sleep 60
 
 # Clear drupal cache
-drush -r "$DRUPAL_HOME" cache-rebuild
+$DRUSH_CMD cache-rebuild
