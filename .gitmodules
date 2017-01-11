@@ -2,10 +2,6 @@
   path = Alpaca
   url = https://github.com/Islandora-CLAW/Alpaca
   branch = master
-[submodule "chullo"]
-  path = chullo
-  url = https://github.com/Islandora-CLAW/chullo
-  branch = master
 [submodule "islandora"]
   path = islandora
   url = https://github.com/Islandora-CLAW/islandora
