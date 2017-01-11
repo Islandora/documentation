@@ -1,14 +1,6 @@
-[submodule "Crayfish"]
-  path = Crayfish
-  url = https://github.com/Islandora-CLAW/Crayfish
-  branch = master
 [submodule "Alpaca"]
   path = Alpaca
   url = https://github.com/Islandora-CLAW/Alpaca
-  branch = master
-[submodule "pdx"]
-  path = pdx
-  url = https://github.com/Islandora-CLAW/pdx
   branch = master
 [submodule "chullo"]
   path = chullo
