@@ -23,7 +23,7 @@ Fedora 4 differs considerably in that there is an innate tree hierarchy to the r
 ###Object Structure
 Fedora 3 objects are FOXML (Fedora Object eXtensible Markup Language) documents, with three elements:
 
-* `Digital Object Identifier`: A unique, persistent identifier for the digital object. Also knowns as the PID.
+* `Digital Object Identifier`: A unique, persistent identifier for the digital object. Also known as the PID.
 * `System Properties`: A set of system-defined descriptive properties that is necessary to manage and track the object in the repository.
 * `Datastream(s)`: The element in a Fedora digital object that represents a content item.
 
@@ -60,7 +60,7 @@ In Fedora 4:
 * Ingest occurs asynchronously soon after. 
 
 ###Collections
-Because objects in Fedora 3 were stored in a flat graph structure instead of a hierarchy, what were presented as collection in Islandora 7.x-1.x were actually objects on the same level as their child objects, with the 'container' or 'folder' aspect of them being a fiction for display created by the relationships between the objects. In Fedora 4, resources do have a true hierarchical structure and must have a `fedora:hasParent` relationship to know where they belong in a given repository. Indeed, to migrate objects over from Fedora 3 to Fedora 4, parents must arrive before their children. In its current incarnation, all objects in a 7.x-2.x repository have the Fedora root as a parent and relationships are managed via the ```pcdm:hasMember``` predicate. 
+Because objects in Fedora 3 were stored in a flat graph structure instead of a hierarchy, what were presented as collections in Islandora 7.x-1.x were actually objects on the same level as their child objects, with the 'container' or 'folder' aspect of them being a fiction for display created by the relationships between the objects. In Fedora 4, resources do have a true hierarchical structure and must have a `fedora:hasParent` relationship to know where they belong in a given repository. Indeed, to migrate objects over from Fedora 3 to Fedora 4, parents must arrive before their children. In its current incarnation, all objects in a 7.x-2.x repository have the Fedora root as a parent and relationships are managed via the ```pcdm:hasMember``` predicate. 
 
 In its current incarnation, Islandora 7.x-2.x does not include a default display for collections. Instead, Drupal Views can be used to build collections around the `pcdm:hasMember` value. For more information, please see [How To Create A Collection View]()).
 
