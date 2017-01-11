@@ -27,9 +27,6 @@ pages:
 - Components: 
     - 'Islandora CLAW': 'index.md'
     - 'Alpaca': 'alpaca/README.md'
-    - 'Chullo': 'chullo/README.md'
-    - 'Crayfish': 'crayfish/README.md'
-    - 'PDX': 'pdx/README.md'
     - 'Islandora (Drupal module)': 'islandora/README.md'
 - Installation:
     - 'Installation (Vagrant)': 'install/README.md'
