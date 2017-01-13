@@ -9,17 +9,8 @@ For more details, please check out the following resources:
 * [Weekly Tech Calls](https://github.com/Islandora-CLAW/CLAW/wiki#islandora-7x-2x-tech-calls)
   * [2015](https://github.com/Islandora-CLAW/CLAW/wiki/2015)
   * [2016](https://github.com/Islandora-CLAW/CLAW/wiki/2016)
-* CLAW Lessons - webinars on how to develop CLAW 
-  * Week 01: [Intro to Fedora 4.x](http://connect.scholarsportal.info/p1yw6tqj5ri/?launcher=false&fcsContent=true&pbMode=normal)
-  * Week 02: [Hands-on Creating Fedora 4.x Resources](http://connect.scholarsportal.info/p4vgnyej4yc/?launcher=false&fcsContent=true&pbMode=normal)
-  * Week 03: [Data Flow in the CLAW](http://connect.scholarsportal.info/p1m4snlupg1/?launcher=false&fcsContent=true&pbMode=normal)
-  * Week 04: [Intro Drupal side of CLAW and some Camel](http://connect.scholarsportal.info/p1gtdr1tmgs/?launcher=false&fcsContent=true&pbMode=normal&smartPause=false)
-  * Week 05: [Microservices 101 (Part 1)](http://connect.scholarsportal.info/p2sbci2pf75/)
-  * Week 06: [Microservices 101 (Part 2)](http://connect.scholarsportal.info/p7e7gqilgzg/)
-  * Week 07: [Drupal is Dead. Long Live Drupal (Drupal 8)](http://connect.scholarsportal.info/p45l482w49w/)
-  * Week 08: [Data Modeling in Claw, Migration to FCRepo 4, Derivatives](http://connect.scholarsportal.info/p5b25a6ptqs/)
-  * Week 09: [How to get involved and contribute!](http://connect.scholarsportal.info/p70dsdwogbr/)
-  * [Slides and Companion Notes to CLAW Lessons](https://drive.google.com/drive/folders/0B3lcyfjAf3G3bV9zZHRZSENjWGc?usp=sharing)
+  * [2017](https://github.com/Islandora-CLAW/CLAW/wiki/2016)
+* [Contributing](https://github.com/Islandora-CLAW/CLAW/blob/master/CONTRIBUTING.md)
 
 ## Repository Structure
 

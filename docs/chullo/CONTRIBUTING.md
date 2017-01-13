@@ -1,1 +1,0 @@
-../../chullo/CONTRIBUTING.md
