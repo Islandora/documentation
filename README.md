@@ -9,7 +9,7 @@ For more details, please check out the following resources:
 * [Weekly Tech Calls](https://github.com/Islandora-CLAW/CLAW/wiki#islandora-7x-2x-tech-calls)
   * [2015](https://github.com/Islandora-CLAW/CLAW/wiki/2015)
   * [2016](https://github.com/Islandora-CLAW/CLAW/wiki/2016)
-  * [2017](https://github.com/Islandora-CLAW/CLAW/wiki/2016)
+  * [2017](https://github.com/Islandora-CLAW/CLAW/wiki/2017)
 * [Contributing](https://github.com/Islandora-CLAW/CLAW/blob/master/CONTRIBUTING.md)
 
 ## Repository Structure
