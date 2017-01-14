@@ -19,7 +19,8 @@ cd /var/www/html
 # Download Drupal
 git clone https://github.com/Islandora-CLAW/drupal-project drupal
 cd "$DRUPAL_HOME"
-composer --prefer-source --no-dev install
+composer config -g github-oauth.github.com $GITHUB_TOKEN
+composer install
 
 # Setup drush and drupal console aliases
 touch "$HOME_DIR/.bash_aliases"
@@ -94,3 +95,5 @@ $DRUSH_CMD -y config-set system.theme default bootstrap
 # Permissions
 chown -R www-data:www-data "$DRUPAL_HOME"
 chmod -R g+w "$DRUPAL_HOME"
+usermod -a -G www-data ubuntu
+
