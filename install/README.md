@@ -39,7 +39,7 @@ VirtualBox:
 2. `git submodule update --init --recursive`
 3. `cd install`
 4. Visit https://github.com/settings/tokens and get an oauth token (check the 'repos' checkbox when making it) and place it [here](https://github.com/dannylamb/CLAW/blob/c3d7c1c74560b8a130ab94f4660b44125a22e457/install/configs/variables#L21)
-4. `vagrant up`
+5. `vagrant up`
 
 DigitalOcean:
 
@@ -52,7 +52,8 @@ DigitalOcean:
   * `DIGITALOCEAN_TOKEN` -- Your DigitalOcean API token
   * `DIGITALOCEAN_KEYNAME` -- Your DigitalOcean ssh key name
   * `DIGITALOCEAN_KEYPATH` -- Path to your ssh keys that you've setup with DigitalOcean
-7. `vagrant up --provider=digital_ocean`
+7. Visit https://github.com/settings/tokens and get an oauth token (check the 'repos' checkbox when making it) and place it [here](https://github.com/dannylamb/CLAW/blob/c3d7c1c74560b8a130ab94f4660b44125a22e457/install/configs/variables#L21)
+8. `vagrant up --provider=digital_ocean`
 
 ## Connect
 
