@@ -62,7 +62,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision :shell, :path => "./scripts/solr.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/composer.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/drupal.sh", :args => home_dir
-  config.vm.provision :shell, :path => "./scripts/drupal-console.sh", :args => home_dir, :privileged => false
   config.vm.provision :shell, :path => "./scripts/fcrepo.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/blazegraph.sh", :args => home_dir
   config.vm.provision :shell, :path => "./scripts/karaf.sh", :args => home_dir

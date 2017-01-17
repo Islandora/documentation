@@ -11,32 +11,33 @@ fi
 cd "$HOME_DIR"
 
 # Drush and drupal deps
-apt-get -y -qq install php7.0-gd php7.0-xml php7.0-mysql php7.0-curl php7.0-json php-stomp
-cd /tmp && wget http://files.drush.org/drush.phar
-chmod +x drush.phar
-mv drush.phar /usr/local/bin/drush
+apt-get -y -qq install php7.0-gd php7.0-xml php7.0-mysql php7.0-curl php7.0-json
 a2enmod rewrite
 service apache2 reload
 cd /var/www/html
 
 # Download Drupal
-drush dl drupal-"$DRUPAL_VERSION" --drupal-project-rename=drupal
+git clone https://github.com/Islandora-CLAW/drupal-project drupal
+cd "$DRUPAL_HOME"
+composer config -g github-oauth.github.com $GITHUB_TOKEN
+composer install
 
-# Permissions
-chown -R www-data:www-data drupal
-chmod -R g+w drupal
+# Setup drush and drupal console aliases
+touch "$HOME_DIR/.bash_aliases"
+echo "alias drush=\"$DRUSH_CMD\"" >> "$HOME_DIR/.bash_aliases"
+echo "alias drupal=\"$DRUPAL_CMD\"" >> "$HOME_DIR/.bash_aliases"
 
 # Do the install
-cd "$DRUPAL_HOME"
-drush si -y --db-url=mysql://root:islandora@localhost/drupal8 --site-name=Islandora-CLAW
-drush user-password admin --password=islandora
+cd "$DRUPAL_HOME/web"
+$DRUSH_CMD si -y --db-url=mysql://root:islandora@localhost/drupal8 --site-name=Islandora-CLAW
+$DRUSH_CMD user-password admin --password=islandora
 
 # Set document root
-sed -i 's|DocumentRoot /var/www/html$|DocumentRoot /var/www/html/drupal|' /etc/apache2/sites-enabled/000-default.conf
+sed -i 's|DocumentRoot /var/www/html$|DocumentRoot /var/www/html/drupal/web|' /etc/apache2/sites-enabled/000-default.conf
 
 # Set override for drupal directory
 # TODO Don't do this in main apache conf
-sed -i '$i<Directory /var/www/html/drupal>' /etc/apache2/apache2.conf
+sed -i '$i<Directory /var/www/html/drupal/web>' /etc/apache2/apache2.conf
 sed -i '$i\\tOptions Indexes FollowSymLinks' /etc/apache2/apache2.conf
 sed -i '$i\\tAllowOverride All' /etc/apache2/apache2.conf
 sed -i '$i\\tRequire all granted' /etc/apache2/apache2.conf
@@ -46,7 +47,7 @@ sed -i '$i</Directory>' /etc/apache2/apache2.conf
 rm /var/www/html/index.html
 
 ## Trusted Host Settings
-cat >> "$DRUPAL_HOME"/sites/default/settings.php <<EOF
+cat >> "$DRUPAL_HOME"/web/sites/default/settings.php <<EOF
 \$settings['trusted_host_patterns'] = array(
 '^localhost$',
 );
@@ -56,74 +57,43 @@ EOF
 service apache2 restart
 
 #Enable Core modules
-drush en -y rdf
-drush en -y responsive_image
-drush en -y syslog
-drush en -y serialization
-drush en -y basic_auth
-drush en -y rest
+$DRUSH_CMD en -y rdf
+$DRUSH_CMD en -y responsive_image
+$DRUSH_CMD en -y syslog
+$DRUSH_CMD en -y serialization
+$DRUSH_CMD en -y basic_auth
+$DRUSH_CMD en -y rest
 
 # Islandora dependencies
 
-# Typed Data
-drush dl typed_data
-drush en -y typed_data
-
-# Rules
-drush dl rules
-drush en -y rules
-
-# RDF UI
-drush dl rdfui --dev
-drush en -y rdfui
-drush en -y rdf_builder
-
 # REST UI
-drush dl restui
-drush en -y restui
-
-# Inline entity form
-drush dl inline_entity_form
-drush en -y inline_entity_form
+$DRUSH_CMD en -y restui
 
 # Media entity ecosystem
-drush dl media_entity
-drush en -y media_entity
+$DRUSH_CMD en -y media_entity
 
-drush dl media_entity_image
-drush en -y media_entity_image
+$DRUSH_CMD en -y media_entity_image
 
 # Devel
-drush dl devel
-drush -y en devel
+$DRUSH_CMD -y en devel
 
 # Web Profiler
-drush dl webprofiler
-drush en -y webprofiler
+$DRUSH_CMD en -y webprofiler
 
 # Apache Solr
 ## https://www.drupal.org/node/2613470
-drush dl search_api
-drush -y pm-uninstall search
-drush en -y search_api
+$DRUSH_CMD -y pm-uninstall search
+$DRUSH_CMD en -y search_api
 
-# Copy new schema files and restart Tomcat
-#cp -a "$DRUPAL_HOME"/sites/all/modules/apachesolr/solr-conf/solr-4.x/. "$SOLR_HOME"/collection1/conf/
-#service tomcat7 restart
-
-cd "$DRUPAL_HOME/modules"
-git clone https://github.com/DiegoPino/claw-jsonld.git
-drush en -y jsonld
-
-git clone https://github.com/Islandora-CLAW/islandora.git
-drush en -y islandora
+$DRUSH_CMD en -y islandora
+$DRUSH_CMD en -y islandora_collection
 
 # Set default theme to bootstrap
-drush -y dl bootstrap
-drush -y en bootstrap
-drush -y config-set system.theme default bootstrap
+$DRUSH_CMD -y en bootstrap
+$DRUSH_CMD -y config-set system.theme default bootstrap
 
 # Permissions
-cd /var/www/html
-chown -R www-data:www-data drupal
-chmod -R g+w drupal
+chown -R www-data:www-data "$DRUPAL_HOME"
+chmod -R g+w "$DRUPAL_HOME"
+usermod -a -G www-data ubuntu
+
