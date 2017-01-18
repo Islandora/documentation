@@ -60,28 +60,41 @@ DigitalOcean:
 You can connect to the machine via the browser at [http://localhost:8000](http://localhost:8000).
 
 The default Drupal login details are:
-  
+
   * username: admin
   * password: islandora
 
 MySQL:
-  
+
   * username: root
   * password: islandora
 
 The Fedora 4 REST API can be accessed at [http://localhost:8080/fcrepo/rest](http://localhost:8080/fcrepo/rest).  It currently has authentication disabled.
 
 Tomcat Manager:
-  
+
   * username: islandora
   * password: islandora
 
-You can connect to the machine via ssh: `ssh -p 2222 vagrant@localhost`
+Vagrant VM:
 
-The default VM login details are:
-  
-  * username: vagrant
-  * password: vagrant
+You can connect to the machine via ssh: `vagrant ssh`
+
+Alternatively, for password based authentication you can use `ssh -p 2222 ubuntu@localhost`. To set the password, run
+
+`vagrant ssh`
+
+...
+ubuntu@islandora-deux:~$ sudo passwd ubuntu
+Enter new UNIX password:
+Retype new UNIX password:
+passwd: password updated successfully
+exit
+...
+
+`ssh -p 2222 ubuntu@localhost`
+
+Then enter your password.
 
 ## Environment
 
