@@ -29,7 +29,7 @@ pages:
     - 'Alpaca': 'alpaca/README.md'
     - 'Islandora (Drupal module)': 'islandora/README.md'
 - Installation:
-    - 'Installation (Vagrant)': 'install/README.md'
+    - 'Installation (Vagrant)': 'claw_vagrant/README.md'
 - Contributing:
     - 'How to contribute': 'contributing/CONTRIBUTING.md'
     - 'Committers': 'contributing/committers.md'
