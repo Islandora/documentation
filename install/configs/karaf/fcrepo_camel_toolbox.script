@@ -1,3 +1,0 @@
-feature:repo-add mvn:org.fcrepo.camel/toolbox-features/4.6.2/xml/features
-feature:install fcrepo-service-activemq
-feature:install fcrepo-indexing-triplestore
