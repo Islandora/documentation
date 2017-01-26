@@ -27,13 +27,13 @@ Committers share the following responsibilities:
 
 The following is an alphabetized list of the current Islandora committers:
 
-| Name             | Organization                      |
-|------------------|-----------------------------------|
-| Aaron Coburn     | Amherst College                   |
-| Danny Lamb       | Islandora Foundation              |
-| Diego Pino       | METRO                             | 
-| Nick Ruest       | York University                   |
-| Jared Whiklo     | University of Manitoba            |
+| Name             | Organization                      | irc nick   |
+|------------------|-----------------------------------|------------|
+| Aaron Coburn     | Amherst College                   | acoburn    |
+| Danny Lamb       | Islandora Foundation              | dhlamb     |
+| Diego Pino       | METRO                             | diegopino  |
+| Nick Ruest       | York University                   | ruebot     |
+| Jared Whiklo     | University of Manitoba            | whikloj    |
 
 
 ## Guidelines for assessing new candidates for committership
