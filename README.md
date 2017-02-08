@@ -15,14 +15,13 @@ For more details, please check out the following resources:
 ## Repository Structure
 
 * [Alpaca](https://github.com/islandora-claw/Alpaca): Event driven middleware based on Apache Camel that synchronizes a Fedora 4 with Drupal.  
-* [Chullo](https://github.com/Islandora-CLAW/Chullo): A PHP client for Fedora 4 built using Guzzle and EasyRdf. 
-* [Crayfish](https://github.com/Islandora-CLAW/Crayfish): Top level container for the various Islandora CLAW microservices, lovingly known as Crayfish.
 * [docs](./docs): Documentation!
-* [install](https://github.com/Islandora-CLAW/claw_vagrant): Bleeding edge development environment
-* [islandora](https://github.com/Islandora-CLAW/islandora): Islandora CLAW Drupal modules 
-* [PDX](https://github.com/Islandora-CLAW/pdx): Top level container for the various [PCDM](http://pcdm.org/) specific Islandora CLAW microservices. 
+* [claw_install](https://github.com/Islandora-CLAW/claw_vagrant): Bleeding edge development environment
+* [islandora](https://github.com/Islandora-CLAW/islandora): Islandora CLAW Drupal core module
+* [islandora_collection](https://github.com/Islandora-CLAW/islandora_collection): Islandora CLAW Drupal collection module
+* [islandora_image](https://github.com/Islandora-CLAW/islandora_image): Islandora CLAW Drupal image module
 
-Note: the [Ansible](https://github.com/Islandora-CLAW/claw-ansible) and [Docker](https://github.com/Islandora-CLAW?utf8=%E2%9C%93&query=docker) repositories are early, experimental provisioning tools for the CLAW stack. For context see [this](https://github.com/Islandora-CLAW/CLAW/issues/182). Development is focused on the vagrant / bash environment referenced above, which is the recommended starting point for working with CLAW.
+**Note**: the [Ansible](https://github.com/Islandora-CLAW/claw-ansible) and [Docker](https://github.com/Islandora-CLAW?utf8=%E2%9C%93&query=docker) repositories were early experimental provisioning tools for the CLAW stack, and are currently **not** supported. For context see [this](https://github.com/Islandora-CLAW/CLAW/issues/182). Development is focused on [claw_vagrant](https://github.com/islandora-claw/claw_vagrant), which is the recommended starting point for working with CLAW.
 
 ## Sponsors
 
