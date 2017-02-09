@@ -24,12 +24,15 @@ pages:
     - 'Minimum Viable Product': 'mvp/mvp_doc.md'
     - 'How to build documenation': 'technical-documentation/docs-build.md'
     - 'Semantic Versioning Policy': 'technical-documentation/versioning.md'
-- Components: 
+- Components:
     - 'Islandora CLAW': 'index.md'
     - 'Alpaca': 'alpaca/README.md'
-    - 'Islandora (Drupal module)': 'islandora/README.md'
+    - Drupal modules:
+      - 'Islandora': 'islandora/README.md'
+      - 'Islandora Collection': 'islandora_collection/README.md'
+      - 'Islandora Image': 'islandora_image/README.md'
 - Installation:
-    - 'Installation (Vagrant)': 'claw_vagrant/README.md'
+    - 'Installation (Vagrant)': 'install/README.md'
 - Contributing:
     - 'How to contribute': 'contributing/CONTRIBUTING.md'
     - 'Committers': 'contributing/committers.md'
