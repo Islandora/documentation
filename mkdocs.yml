@@ -14,6 +14,13 @@ extra:
     code: 'Roboto Mono'
   author:
     twitter: 'islandora'
+  palette:
+    primary: 'red'
+    accent: 'red'
+  logo: 'assets/claw.png'
+  social:
+    - type: 'twitter'
+      link: 'https://twitter.com/islandora'
 
 pages:
 
