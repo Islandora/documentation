@@ -33,7 +33,7 @@ Feel free to search the issue queue for existing issues (aka tickets) that alrea
 
 **If you want to provide a pull along with your bug report:**
 
-That is great! In this case please send us a pull request as described in section _[Create a pull request](https://github.com/Islandora-CLAW/CLAW/blob/7.x-2.x/CONTRIBUTING.md#create-a-pull-request)_ below.
+That is great! In this case please send us a pull request as described in section _[Create a pull request](https://github.com/Islandora-CLAW/CLAW/blob/master/CONTRIBUTING.md#create-a-pull-request)_ below.
 
 ### Contribute code
 
@@ -59,9 +59,9 @@ Contributions to the Islandora codebase should be sent as GitHub pull requests. 
 
 Take a look at [Creating a pull request](https://help.github.com/articles/creating-a-pull-request). In a nutshell you need to:
 
-1. [Fork](https://help.github.com/articles/fork-a-repo) the Islandora GitHub repository at [https://github.com/Islandora-CLAW/CLAW](https://github.com/Islandora-CLAW/CLAW) to your personal GitHub account. If you already have a fork of [https://github.com/Islandora/islandora](https://github.com/Islandora/islandora) Github will prevent you from creating a new fork; in such a case you can continue to use [https://github.com/Islandora/islandora](https://github.com/Islandora/islandora) to issue pull request, be cautious of which branches you work from though (you'll want to base your work off of 7.x-2.x). Also be cautious of which repository your issuing your Pull Request to (you'll want to issue your pull request to [https://github.com/Islandora-CLAW/CLAW](https://github.com/Islandora-CLAW/CLAW)). See [Fork a repo](https://help.github.com/articles/fork-a-repo) for detailed instructions.
+1. [Fork](https://help.github.com/articles/fork-a-repo) the Islandora GitHub repository at [https://github.com/Islandora-CLAW/CLAW](https://github.com/Islandora-CLAW/CLAW) to your personal GitHub account. If you already have a fork of [https://github.com/Islandora/islandora](https://github.com/Islandora/islandora) Github will prevent you from creating a new fork; in such a case you can continue to use [https://github.com/Islandora/islandora](https://github.com/Islandora/islandora) to issue pull request, be cautious of which branches you work from though (you'll want to base your work off of master). Also be cautious of which repository your issuing your Pull Request to (you'll want to issue your pull request to [https://github.com/Islandora-CLAW/CLAW](https://github.com/Islandora-CLAW/CLAW)). See [Fork a repo](https://help.github.com/articles/fork-a-repo) for detailed instructions.
 2. Commit any changes to your fork.
-3. Send a [pull request](https://help.github.com/articles/creating-a-pull-request) to the Islandora GitHub repository that you forked in step 1.  If your pull request is related to an existing issue -- for instance, because you reported a [bug/issue](https://github.com/Islandora-CLAW/CLAW/issues) earlier -- prefix the title of your pull request with the corresponding issue number (e.g. `issue-123: ...`). Please also include a reference to the issue in the description of the pull. This can be done by using '#' plus the issue number like so '#123', also try to pick an appropriate name for the branch in which you're issuing the pull request from. 
+3. Send a [pull request](https://help.github.com/articles/creating-a-pull-request) to the Islandora GitHub repository that you forked in step 1.  If your pull request is related to an existing issue -- for instance, because you reported a [bug/issue](https://github.com/Islandora-CLAW/CLAW/issues) earlier -- prefix the title of your pull request with the corresponding issue number (e.g. `issue-123: ...`). Please also include a reference to the issue in the description of the pull. This can be done by using '#' plus the issue number like so '#123', also try to pick an appropriate name for the branch in which you're issuing the pull request from.
 
 You may want to read [Syncing a fork](https://help.github.com/articles/syncing-a-fork) for instructions on how to keep your fork up to date with the latest changes of the upstream (official) `islandora` repository.
 
