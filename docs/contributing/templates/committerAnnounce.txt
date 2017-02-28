@@ -3,7 +3,7 @@ Subject: New committer: [New Committer]
 
 Body:
 ================================
-The Islandora 7.x-2.x Project committers have asked [New Committer] to become a committer and we are pleased to announce that they have accepted.
+The Islandora CLAW Project committers have asked [New Committer] to become a committer and we are pleased to announce that they have accepted.
 
 ### add specific details here ###
 

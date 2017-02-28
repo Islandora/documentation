@@ -1,18 +1,18 @@
 # Intro to Islandora CLAW
 
-Islandora CLAW is the project name for development of Islandora to work with Fedora 4, also known as Islandora 7.x-2.x. To fully understand Islandora CLAW, it is best to start by looking at its contrasts to the previous version of Islandora, known as 7.x-1.x. 
+Islandora CLAW is the project name for development of Islandora to work with Fedora 4, also known as Islandora CLAW. To fully understand Islandora CLAW, it is best to start by looking at its contrasts to the previous version of Islandora, known as 7.x-1.x.
 
 Islandora 7.x-1.x works as a bridge between Drupal 7.x and Fedora 3. Put simply, Islandora 7.x-1.x is middleware between Fedora 3 and Drupal 7.x, sometimes expressed as a hamburger:
 ## Islandora 7.x-1.x (with Fedora 3)
 
 ![image](../assets/hamburger.png)
 
-Islandora CLAW (or Islandora 7.x-2.x) does more than simply replace that base layer with Fedora 4. It is a total re-architecting of the interaction between the various pieces. Rather than a hamburger, Islandora CLAW is a chimera:
-## Islandora CLAW (with Fedora 4)
+Islandora CLAW does more than simply replace that base layer with Fedora 4. It is a total re-architecting of the interaction between the various pieces. Rather than a hamburger, Islandora CLAW is a chimera:
+## Islandora CLAW
 
 ![image](../assets/claw-chimera.png)
 
-Or, for a diagram that doesn't involve food or animals: 
+Or, for a diagram that doesn't involve food or animals:
 
 ![image](../assets/claw-diagram.png)
 
@@ -50,11 +50,11 @@ Islandora 7.x-1.x is a tried and tested product with a vibrant user and contribu
 ### Fedora
 The primary motive for moving to Islandora CLAW is to stay current with the repository layer of our ecosystem. Moving to Fedora 4 is vital for the long-term utility of the project.
 
-* Fedora 3 is End-of-Life and has not been supported since 2015. This means that there will be no improvements, bug fixes, or security patches released for the software, drastically increasing individual maintenance needs for adopters. 
+* Fedora 3 is End-of-Life and has not been supported since 2015. This means that there will be no improvements, bug fixes, or security patches released for the software, drastically increasing individual maintenance needs for adopters.
 * Fedora 3 experiences significant slowdown when repositories reach a large (millions) number of objects. Fedora 4 is much more scalable, and is specifically engineered to be horizontally scalable in ways that Fedora 3 cannot.
 
 ### Drupal
-[Drupal 8](https://www.drupal.org/8) has been officially released and development has begun on Drupal 9. Official Drupal policy will see Drupal 7 become unsupported when Drupal 9 is released, putting it in the same precarious territory as Fedora 3. 
+[Drupal 8](https://www.drupal.org/8) has been officially released and development has begun on Drupal 9. Official Drupal policy will see Drupal 7 become unsupported when Drupal 9 is released, putting it in the same precarious territory as Fedora 3.
 
 The initial phases of Islandora CLAW development worked with Drupal 7 as a front-end, but Islandora CLAW has been architected with a pivot to Drupal 8 in mind from its very inception. As of June, 2016, Islandora CLAW development has pivoted fully to Drupal 8, ensuring that when the Islandora Community is ready to make the move, there will be a version of Islandora that functions with the latest and best-supported versions of both our front-end and repository layers by pairing Drupal 8 with Fedora 4.
 
@@ -66,7 +66,7 @@ Islandora CLAW is developed _by_ the Islandora community, _for_ the Islandora co
 
 ### Linked Data
 
-Linked Data is a big concept. A [definition by Tim Bernes-Lee](https://www.w3.org/DesignIssues/LinkedData.html) from 2006 articulates the basic idea in the context of the "Semantic Web":   
+Linked Data is a big concept. A [definition by Tim Bernes-Lee](https://www.w3.org/DesignIssues/LinkedData.html) from 2006 articulates the basic idea in the context of the "Semantic Web":
 
 >It is about making links, so that a person or machine can explore the web of data. With linked data, when you have some of it, you can find other, related, data.
 
@@ -102,7 +102,7 @@ Fedora 4 is an LDP implementation. It stores metadata using RDF (Resource Descri
 * Turtle
 * N-Triples
 
-Working with RDF is not entirely new in the Islandora/Fedora context, as RELS-EXT and RELS-INT have always been RDF/XML. Related objects can be included in RDF, so it functions as a graph you can traverse in order to discover more information. 
+Working with RDF is not entirely new in the Islandora/Fedora context, as RELS-EXT and RELS-INT have always been RDF/XML. Related objects can be included in RDF, so it functions as a graph you can traverse in order to discover more information.
 
 #### Example: Dublin Core as XML and RDF using the dc namespace
 
