@@ -1,0 +1,12 @@
+# This configuration file is for the full stack integration tests
+# 
+# Rename this file to settings.yml and edit as needed.
+claw:
+  protocol: http
+  host: localhost
+  port: 8282
+fedora:
+  protocol: http
+  host: localhost
+  port: 8080
+  path: /fcrepo/rest/
