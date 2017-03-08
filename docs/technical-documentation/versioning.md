@@ -17,6 +17,7 @@ Example: 1.2.3
 * [Alpaca](https://github.com/Islandora-CLAW/alpaca)
 * [CLAW](https://github.com/Islandora-CLAW/CLAW)
 * [claw_vagrant](https://github.com/Islandora-CLAW/claw_vagrant)
+* [Syn](https://github.com/Islandora-CLAW/Syn)
 
 ### [Drupal Contrib Versioning](https://www.drupal.org/docs/8/choosing-a-drupal-version/what-do-version-numbers-mean-on-contributed-modules-and-themes)
 
