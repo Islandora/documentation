@@ -98,13 +98,13 @@ A connector will listen to Fedora events and index unique IDs contained in RDF u
 
 A connector will listen to Fedora events and index RDF in a SPARQL 1.1 triplestore. This is provided by the Fedora community as part of the [fcrepo-camel-toolbox](https://github.com/fcrepo4-exts/fcrepo-camel-toolbox/tree/master/fcrepo-indexing-triplestore) project.
 
-#### Salmon (formerly Sync)
+#### Sync
 
-[Salmon](https://github.com/Islandora-CLAW/Salmon) is a sub-project that provides two connectors for keeping information between Fedora and Drupal in sync. One, which indexes content in Fedora from Drupal events, is always running. The other, which indexes content in Drupal based on state in Fedora, is manually triggered through a re-indexing process like other fcrepo-camel-toolbox connectors.
+A a sub-project of [Alpaca](https://github.com/Islandora-CLAW/Alpaca) that provides two connectors for keeping information between Fedora and Drupal in sync. One, which indexes content in Fedora from Drupal events, is always running. The other, which indexes content in Drupal based on state in Fedora, is manually triggered through a re-indexing process like other fcrepo-camel-toolbox connectors.
 
 #### Alpaca
 
-[Alpaca](https://github.com/Islandora-CLAW/Alpaca) responds to creation and update events for binary files and creates derivative files based on the microservices it finds available for that type of binary in API-X. Derivatives are then ingested into Drupal, with Salmon making sure they get flushed back to Fedora.
+[Alpaca](https://github.com/Islandora-CLAW/Alpaca) responds to creation and update events for binary files and creates derivative files based on the microservices it finds available for that type of binary in API-X. Derivatives are then ingested into Drupal, with Sync making sure they get flushed back to Fedora.
 
 ## Request Flows
 
@@ -122,7 +122,7 @@ Suppose a client submits a form to create a new Resource, or provides a json-ld 
 
 ![Create a Resource](https://raw.githubusercontent.com/Islandora-CLAW/CLAW/master/docs/assets/image03.png)
 
-Meanwhile, Salmon will receive the creation event, and ingest the supplied representation in Fedora. Fedora will then emit a creation event.  
+Meanwhile, Sync will receive the creation event, and ingest the supplied representation in Fedora. Fedora will then emit a creation event.  
 
 ![Emit a creation event](https://raw.githubusercontent.com/Islandora-CLAW/CLAW/master/docs/assets/image02.png)
 
@@ -138,9 +138,9 @@ If the node created was a preservation master, then Alpaca will respond by inspe
 
 ![New resource ingested into Drupal](https://raw.githubusercontent.com/Islandora-CLAW/CLAW/master/docs/assets/image10.png)
 
-The process repeats itself again, with new events being emitted for the new entities getting created in Drupal. Salmon responds and ingests the derivatives into Fedora.
+The process repeats itself again, with new events being emitted for the new entities getting created in Drupal. Sync responds and ingests the derivatives into Fedora.
 
-![Salmon responds and ingests derivatives into Fedora](https://raw.githubusercontent.com/Islandora-CLAW/CLAW/master/docs/assets/image02.png)
+![Sync responds and ingests derivatives into Fedora](https://raw.githubusercontent.com/Islandora-CLAW/CLAW/master/docs/assets/image02.png)
 
 Fedora emits the creation events, but since none are a preservation master, Alpaca does not respond and the cycle is broken.
 
@@ -152,7 +152,7 @@ Suppose a client submits a form to update a new Resource, or provides a json-ld 
 
 ![Update a Resource](https://raw.githubusercontent.com/Islandora-CLAW/CLAW/master/docs/assets/image03.png)
 
-Meanwhile, Salmon will receive the update event, and apply it against the representation in Fedora. Fedora will then emit an update event.  
+Meanwhile, Sync will receive the update event, and apply it against the representation in Fedora. Fedora will then emit an update event.  
 
 ![Fedora will emit an update event](https://raw.githubusercontent.com/Islandora-CLAW/CLAW/master/docs/assets/image04.png)
 
@@ -164,9 +164,9 @@ If a binary of a presentation master was updated, then Alpaca will respond by in
 
 ![New resource overwriting its processor in Drupal](https://raw.githubusercontent.com/Islandora-CLAW/CLAW/master/docs/assets/image09.png)
 
-The process repeats itself again, with new events being emitted for the derivative entities getting updated in Drupal. Salmon responds and ingests the derivatives into Fedora.
+The process repeats itself again, with new events being emitted for the derivative entities getting updated in Drupal. Sync responds and ingests the derivatives into Fedora.
 
-![Salmon responds and ingests derivatives into Fedora](https://raw.githubusercontent.com/Islandora-CLAW/CLAW/master/docs/assets/image01.png)
+![Sync responds and ingests derivatives into Fedora](https://raw.githubusercontent.com/Islandora-CLAW/CLAW/master/docs/assets/image01.png)
 
 Fedora emits the creation events, but since none are a preservation master, Alpaca does not respond and the cycle is broken.
 
@@ -178,9 +178,9 @@ Suppose a client deletes a resource through the browser or API. In response to t
 
 ![Delete a Resource](https://raw.githubusercontent.com/Islandora-CLAW/CLAW/master/docs/assets/image08.png)
 
-Meanwhile, Salmon will receive the delete event, and remove the corresponding resource in Fedora.
+Meanwhile, Sync will receive the delete event, and remove the corresponding resource in Fedora.
 
-![Salmon receives the event and deletes the corresponding resource in Fedora](https://raw.githubusercontent.com/Islandora-CLAW/CLAW/master/docs/assets/image04.png)
+![Sync receives the event and deletes the corresponding resource in Fedora](https://raw.githubusercontent.com/Islandora-CLAW/CLAW/master/docs/assets/image04.png)
 
 The ID Mapping connector will respond to the delete event by removing the resource’s entry.
 
