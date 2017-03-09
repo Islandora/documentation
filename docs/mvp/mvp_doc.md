@@ -100,7 +100,7 @@ A connector will listen to Fedora events and index RDF in a SPARQL 1.1 triplesto
 
 #### Sync
 
-A a sub-project of [Alpaca](https://github.com/Islandora-CLAW/Alpaca) that provides two connectors for keeping information between Fedora and Drupal in sync. One, which indexes content in Fedora from Drupal events, is always running. The other, which indexes content in Drupal based on state in Fedora, is manually triggered through a re-indexing process like other fcrepo-camel-toolbox connectors.
+A sub-project of [Alpaca](https://github.com/Islandora-CLAW/Alpaca) that provides two connectors for keeping information between Fedora and Drupal in sync. One, which indexes content in Fedora from Drupal events, is always running. The other, which indexes content in Drupal based on state in Fedora, is manually triggered through a re-indexing process like other fcrepo-camel-toolbox connectors.
 
 #### Alpaca
 
