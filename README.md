@@ -6,7 +6,7 @@ Islandora CLAW is the next generation of Islandora. Still in development, this m
 
 For more details, please check out the following resources:
 
-* [Weekly Tech Calls](https://github.com/Islandora-CLAW/CLAW/wiki#islandora-7x-2x-tech-calls)
+* [Weekly Tech Calls](https://github.com/Islandora-CLAW/CLAW/wiki#islandora-claw-tech-calls)
   * [2015](https://github.com/Islandora-CLAW/CLAW/wiki/2015)
   * [2016](https://github.com/Islandora-CLAW/CLAW/wiki/2016)
   * [2017](https://github.com/Islandora-CLAW/CLAW/wiki/2017)
@@ -14,7 +14,7 @@ For more details, please check out the following resources:
 
 ## Repository Structure
 
-* [Alpaca](https://github.com/islandora-claw/Alpaca): Event driven middleware based on Apache Camel that synchronizes a Fedora 4 with Drupal.  
+* [Alpaca](https://github.com/islandora-claw/Alpaca): Event driven middleware based on Apache Camel that synchronizes a Fedora 4 with Drupal.
 * [docs](./docs): Documentation!
 * [claw_install](https://github.com/Islandora-CLAW/claw_vagrant): Bleeding edge development environment
 * [islandora](https://github.com/Islandora-CLAW/islandora): Islandora CLAW Drupal core module
