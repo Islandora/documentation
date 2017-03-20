@@ -26,7 +26,7 @@ pages:
 
 - User Documentation:
     - 'Introduction to Islandora CLAW': 'user-documentation/intro-to-claw.md'
-    - 'Islandora CLAW for 1.x Users': 'user-documentation/2xfor1x.md'
+    - 'Islandora CLAW for 1.x Users': 'user-documentation/CLAWfor1x.md'
 - Technical Documentation:
     - 'Minimum Viable Product': 'mvp/mvp_doc.md'
     - 'How to build documenation': 'technical-documentation/docs-build.md'
