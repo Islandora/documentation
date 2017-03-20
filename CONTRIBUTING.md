@@ -1,6 +1,6 @@
 # Welcome!
 
-If you are reading this document then you are interested in contributing to the Islandora CLAW. All contributions are welcome: use-cases, documentation, code, patches, bug reports, feature requests, etc. You do not need to be a programmer to speak up!
+If you are reading this document then you are interested in contributing to Islandora CLAW. All contributions are welcome: use-cases, documentation, code, patches, bug reports, feature requests, etc. You do not need to be a programmer to speak up!
 
 ## Workflows
 
