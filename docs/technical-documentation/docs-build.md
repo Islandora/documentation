@@ -14,8 +14,11 @@ Install material theme:
 
 `sudo -H pip install mkdocs-material`
 
-
 ## Build and Deploy documentation
+
+Make sure you have all the submodules:
+
+`git submodule update --init --recursive`
 
 Documentation is build by running to the following command in the root of the repository:
 
