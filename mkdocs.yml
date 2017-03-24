@@ -30,6 +30,7 @@ pages:
 - Technical Documentation:
     - 'Minimum Viable Product': 'mvp/mvp_doc.md'
     - 'How to build documenation': 'technical-documentation/docs-build.md'
+    - 'Syncing Drupal Project': 'technical-documentation/drupal-project.md'
     - 'Versioning Policy': 'technical-documentation/versioning.md'
 - Components:
     - 'Islandora CLAW': 'index.md'
