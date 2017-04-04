@@ -3,7 +3,7 @@ echo "Setup database for Drupal"
 mysql -u root -e 'create database drupal;'
 mysql -u root -e "GRANT ALL PRIVILEGES ON drupal.* To 'drupal'@'127.0.0.1' IDENTIFIED BY 'drupal';"
 
-./$SCRIPT_DIR/travis_setup_php.sh
+$SCRIPT_DIR/travis_setup_php.sh
 
 echo "Install utilities needed for testing"
 mkdir /opt/utils
