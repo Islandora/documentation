@@ -1,4 +1,4 @@
-# Alpaca Technology Stack
+# Alpaca Technical Stack
 Alpaca contains several OSGI modules or bundles. They are grouped together as features and deployed to Karaf container.
 
 ## [OSGi](https://www.osgi.org/developer/architecture/)
