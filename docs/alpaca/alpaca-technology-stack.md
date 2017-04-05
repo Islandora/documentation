@@ -1,17 +1,18 @@
-Alpaca contains several OSGI modules or bundles.  They are grouped together as features and deployed to Karaf container.
+# Alpaca Technology Stack
+Alpaca contains several OSGI modules or bundles. They are grouped together as features and deployed to Karaf container.
 
 ## [OSGi](https://www.osgi.org/developer/architecture/)
-OSGi is a specification to develop and deploy modular Java applications.  It allows for dynamic deployment (hot deployment) and dependency management. 
+OSGi is a specification to develop and deploy modular Java applications. It allows for dynamic deployment (hot deployment) and dependency management. 
 
-The base unit of resources is called a bundle.  Bundle is similar to a jar file, with additional information to be processed as an OSGi component.  Several bundles can be grouped together into a Feature and installed together.  OSGi bundles can be run on containers implementing the OSGi specification.  Apache Karaf one such container
+The base unit of resources is called a bundle. Bundle is similar to a jar file, with additional information to be processed as an OSGi component. Several bundles can be grouped together into a Feature and installed together.  OSGi bundles can be run on containers implementing the OSGi specification. Apache Karaf one such container
 
 ## [Karaf](https://karaf.apache.org/manual/latest/overview.html)
 Apache Karaf is a container that can be used to deploy an array of applications such servlets, apache camel components, jars etc. 
 
 ### Karaf - Bundle - Hello World 
-Download a bundle to the vagrant.  An example hello world bundle is here: https://github.com/moghaddam/developmentor/blob/master/helloworld/target/helloworld-1.0.0.jar
+Download a bundle to the vagrant. An example hello world bundle is here: https://github.com/moghaddam/developmentor/blob/master/helloworld/target/helloworld-1.0.0.jar
 
-In Islandora CLAW vagrant, you can login to Karaf using ssh.  The password is karaf.  Note that you can use linux commands such as grep in addition to Karaf commands.  
+In Islandora CLAW vagrant, you can login to Karaf using ssh. The password is karaf. Note that you can use linux commands such as grep in addition to Karaf commands.  
 
 ```
 ssh -p 8101 karaf@localhost
@@ -24,9 +25,9 @@ karaf@root(bundle)> install file:///home/helloworld2-1.0.0.jar
 Bundle ID: 242
 ```
 
-The installation will return a bundle id.  You can issue the list command to verify that bundle is on the list.  Initially it will have *Installed* status.
+The installation will return a bundle id. You can issue the list command to verify that bundle is on the list.  Initially it will have *Installed* status.
 
-As per OSGi specification, before a bundle can be started, it has to be Resolved.  To resolve, issue the following command.  
+As per OSGi specification, before a bundle can be started, it has to be Resolved. To resolve, issue the following command.  
 ```
 karaf@root(bundle)> resolve 242
 ```
@@ -41,7 +42,7 @@ karaf@root(bundle)>
 ```
 
 ### Karaf - Features - Hello World 
-Karaf Features allows for bundles to be grouped, managed and deployed together.  Features can be nested as well.  Feature files of frameworks such as Apache Camel or Apache ActiveMQ can be used to deploy those services.  
+Karaf Features allows for bundles to be grouped, managed and deployed together. Features can be nested as well. Feature files of frameworks such as Apache Camel or Apache ActiveMQ can be used to deploy those services.  
 
 A simple Features file is as below.  
 
@@ -75,7 +76,7 @@ Goodbye World!
 ```
 
 ## [Gradle](https://docs.gradle.org/current/userguide/tutorial_using_tasks.html)
-Gradle is used by Alpaca as a build and package management tool.  It is similar to Maven.  
+Gradle is used by Alpaca as a build and package management tool. It is similar to Maven.  
 
 
 ## [Apache Camel](http://camel.apache.org/book-getting-started.html)
@@ -168,13 +169,13 @@ artifacts {
 ```
 
 #### Building the bundle
-To build this project, we have to update the Alpaca build settings.  Include and add the project in Alpaca -> settings.gradle.
+To build this project, we have to update the Alpaca build settings. Include and add the project in Alpaca -> settings.gradle.
 ```
 include ':islandora-connector-helloworld'
 project(':islandora-connector-helloworld').projectDir = "$rootDir/islandora-connector-helloworld" as File
 ```
 
-Normally, we would also have to update the karaf -> src -> main -> resources -> features.xml file to include this bundle.  However, we will be deploying the bundle directly into Karaf's Hot deployment directory.  Thus, not needed at this time.
+Normally, we would also have to update the karaf -> src -> main -> resources -> features.xml file to include this bundle. However, we will be deploying the bundle directly into Karaf's Hot deployment directory. Thus, not needed at this time.
 
 To build it from command line in Linux.
 ```
@@ -204,15 +205,17 @@ You should see a message like below:
 ```
 
 ## [Apache ActiveMQ](http://activemq.apache.org/getting-started.html)
-Apache ActiveMQ is a JMS compliant Messaging Queue.  Messaging client can make use of JMS to send messages.
+Apache ActiveMQ is a JMS compliant Messaging Queue. Messaging client can make use of JMS to send messages.
 
 ### Installing ActiveMQ
-Installing ActiveMQ is relatively easy.  Download the release folder from the project: http://activemq.apache.org/download.html.  Go to the activemq_install_dir/bin.  Start the ActiveMQ by using the activemq script or batch file and start command.
+Installing ActiveMQ is relatively easy. Download the release folder from the project: http://activemq.apache.org/download.html.  Go to the activemq_install_dir/bin. Start the ActiveMQ by using the activemq script or batch file and start command.
 ```
 ubuntu:~/Applications/apache-activemq/bin$./activemq start
 ```
 
-When ActiveMQ gets started, go to http://localhost:8161/admin/.  You can login using admin:admin.
+When ActiveMQ gets started, go to http://localhost:8161/admin/. You can login using admin:admin.
+
+Note that ActiveMQ in CLAW vagrant does not have a UI.  
 
 ## References
 * [OSGI for Beginners](http://www.theserverside.com/news/1363825/OSGi-for-Beginners)
