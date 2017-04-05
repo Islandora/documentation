@@ -211,7 +211,7 @@ Apache ActiveMQ is a JMS compliant Messaging Queue. Messaging client can make us
 Installing ActiveMQ is relatively easy. Download the release folder from the project: http://activemq.apache.org/download.html. Go to the activemq_install_dir/bin. Start the ActiveMQ by using the activemq script or batch file and start command.
 
 ```
-ubuntu:/apps/apache-activemq/bin$./activemq start
+ubuntu:/apps/activemq_install_dir/bin$./activemq start
 ```
 
 When ActiveMQ gets started, go to http://localhost:8161/admin/. You can login using admin:admin.
