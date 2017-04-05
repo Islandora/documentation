@@ -4,7 +4,7 @@ Alpaca contains several OSGI modules or bundles. They are grouped together as fe
 ## [OSGi](https://www.osgi.org/developer/architecture/)
 OSGi is a specification to develop and deploy modular Java applications. It allows for dynamic deployment (hot deployment) and dependency management. 
 
-The base unit of resources is called a bundle. Bundle is similar to a jar file, with additional information to be processed as an OSGi component. Several bundles can be grouped together into a Feature and installed together. OSGi bundles can be run on containers implementing the OSGi specification. Apache Karaf one such container
+The base unit of resources is called a bundle. Bundle is similar to a jar file, with additional information to be processed as an OSGi component. Several bundles can be grouped together into a Feature and installed together. OSGi bundles can be run on containers implementing the OSGi specification. Apache Karaf is one such container
 
 ## [Karaf](https://karaf.apache.org/manual/latest/overview.html)
 Apache Karaf is a container that can be used to deploy an array of applications such servlets, apache camel components, jars etc. 
