@@ -32,6 +32,7 @@ pages:
     - 'How to build documenation': 'technical-documentation/docs-build.md'
     - 'Syncing Drupal Project': 'technical-documentation/drupal-project.md'
     - 'Versioning Policy': 'technical-documentation/versioning.md'
+    - 'Alpaca Technical Stack': 'alpaca/alpaca-technical-stack.md'
 - Components:
     - 'Islandora CLAW': 'index.md'
     - 'Alpaca': 'alpaca/README.md'
