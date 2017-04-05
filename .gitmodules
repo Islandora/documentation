@@ -11,8 +11,8 @@
   url = https://github.com/Islandora-CLAW/claw_vagrant
   branch = master
 [submodule "islandora_collection"]
-	path = islandora_collection
-	url = https://github.com/Islandora-CLAW/islandora_collection.git
+  path = islandora_collection
+  url = https://github.com/Islandora-CLAW/islandora_collection.git
 [submodule "islandora_image"]
-	path = islandora_image
-	url = https://github.com/Islandora-CLAW/islandora_image.git
+  path = islandora_image
+  url = https://github.com/Islandora-CLAW/islandora_image.git
