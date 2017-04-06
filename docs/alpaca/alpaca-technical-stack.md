@@ -104,7 +104,7 @@ We need to rename the configuration, java and build files to reflect the hellowo
 * `src/main/java/ca/islandora/alpaca/connector/helloworld`
 * `src/main/java/ca/islandora/alpaca/connector/helloworld/HelloworldRouter.java`
 
-* Also change the content of the above file to log Hello World
+Also change the content of the above file to log Hello World
 
 ```
 package ca.islandora.alpaca.connector.helloworld;
@@ -131,12 +131,8 @@ public class HelloworldRouter extends RouteBuilder {
 
 ```
 
-* `src/main/resource/OSGI-INF/blueprint/blueprint.xml`
-
-Change the content of this file to reflect Helloworld package.  
-
+* `src/main/resource/OSGI-INF/blueprint/blueprint.xml` - Change the content of this file to reflect Helloworld package.  
 * `src/build.gradle`
-
 ```
 apply plugin: 'osgi'
 
