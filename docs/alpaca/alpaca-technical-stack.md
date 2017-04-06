@@ -7,10 +7,10 @@ OSGi is a specification to develop and deploy modular Java applications. It allo
 The base unit of resources is called a bundle. Bundle is similar to a jar file, with additional information to be processed as an OSGi component. Several bundles can be grouped together into a Feature and installed together. OSGi bundles can be run on containers implementing the OSGi specification. Apache Karaf is one such container
 
 ## [Karaf](https://karaf.apache.org/manual/latest/overview.html)
-Apache Karaf is a container that can be used to deploy an array of applications such servlets, apache camel components, jars etc. 
+Apache Karaf is a container that can be used to deploy an array of applications such servlets, Apache Camel components, jars etc. 
 
 ### Karaf - Bundle - Hello World 
-Download a bundle to the claw vagrant (ex to /home directory). An example hello world bundle is [here](https://github.com/moghaddam/developmentor/blob/master/helloworld/target/helloworld-1.0.0.jar). 
+Download a bundle to the [CLAW vagrant](https://github.com/Islandora-CLAW/claw_vagrant) (ex to /home directory). An example hello world bundle is [here](https://github.com/moghaddam/developmentor/blob/master/helloworld/target/helloworld-1.0.0.jar). 
 
 In Islandora CLAW vagrant, you can login to Karaf using ssh. The password is karaf. You can also use the client here: /opt/karaf/bin/client. Karaf client allows the use of linux commands such as ```grep``` in addition to Karaf commands.  
 
