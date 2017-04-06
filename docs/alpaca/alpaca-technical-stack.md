@@ -10,9 +10,9 @@ The base unit of resources is called a bundle. Bundle is similar to a jar file, 
 Apache Karaf is a container that can be used to deploy an array of applications such servlets, apache camel components, jars etc. 
 
 ### Karaf - Bundle - Hello World 
-Download a bundle to the vagrant. An example hello world bundle is here: https://github.com/moghaddam/developmentor/blob/master/helloworld/target/helloworld-1.0.0.jar
+Download a bundle to the claw vagrant (ex to /home directory). An example hello world bundle is [here](https://github.com/moghaddam/developmentor/blob/master/helloworld/target/helloworld-1.0.0.jar). 
 
-In Islandora CLAW vagrant, you can login to Karaf using ssh. The password is karaf. Note that you can use linux commands such as grep in addition to Karaf commands.  
+In Islandora CLAW vagrant, you can login to Karaf using ssh. The password is karaf. You can also use the client here: /opt/karaf/bin/client. Karaf client allows the use of linux commands such as ```grep``` in addition to Karaf commands.  
 
 ```
 ssh -p 8101 karaf@localhost
@@ -21,7 +21,7 @@ ssh -p 8101 karaf@localhost
 Install the bundle:
 ```
 karaf@root()> bundle
-karaf@root(bundle)> install file:///home/helloworld2-1.0.0.jar
+karaf@root(bundle)> install file:///home/helloworld-1.0.0.jar
 Bundle ID: 242
 ```
 
@@ -76,7 +76,7 @@ Goodbye World!
 ```
 
 ## [Gradle](https://docs.gradle.org/current/userguide/tutorial_using_tasks.html)
-Gradle is used by Alpaca as a build and package management tool. It is similar to Maven.  
+Gradle is used by Alpaca as a build and package management tool. It is similar to [Maven](https://maven.apache.org/).  
 
 
 ## [Apache Camel](http://camel.apache.org/book-getting-started.html)
@@ -100,10 +100,12 @@ Open the project in your IDE. In Eclipse, you can go to File | Open Projects fro
 
 We need to rename the configuration, java and build files to reflect the helloworld project.  
 
-* src -> main -> cfg -> ca.islandora.alpaca.connector.helloworld.cfg
-* src -> main -> java -> ca -> islandora -> alpaca -> connector -> helloworld
-* src -> main -> java -> ca -> islandora -> alpaca -> connector -> helloworld -> HelloworldRouter.java
+* ```src/main/cfg/ca.islandora.alpaca.connector.helloworld.cfg```
+* ```src/main/java/ca/islandora/alpaca/connector/helloworld```
+* ```src/main/java/ca/islandora/alpaca/connector/helloworld/HelloworldRouter.java```
+
 * Also change the content of the above file to log Hello World
+
 ```
 package ca.islandora.alpaca.connector.helloworld;
 
@@ -129,10 +131,12 @@ public class HelloworldRouter extends RouteBuilder {
 
 ```
 
-* src -> main -> resource -> OSGI-INF -> blueprint -> blueprint.xml 
+* ```src/main/resource/OSGI-INF/blueprint/blueprint.xml```
+
 Change the content of this file to reflect Helloworld package.  
 
-* src -> build.gradle
+* ```src/build.gradle```
+
 ```
 apply plugin: 'osgi'
 
@@ -169,13 +173,13 @@ artifacts {
 ```
 
 #### Building the bundle
-To build this project, we have to update the Alpaca build settings. Include and add the project in Alpaca -> settings.gradle.
+To build this project, we have to update the Alpaca build settings. Include and add the project in ```Alpaca/settings.gradle```.
 ```
 include ':islandora-connector-helloworld'
 project(':islandora-connector-helloworld').projectDir = "$rootDir/islandora-connector-helloworld" as File
 ```
 
-Normally, we would also have to update the karaf -> src -> main -> resources -> features.xml file to include this bundle. However, we will be deploying the bundle directly into Karaf's Hot deployment directory. Thus, not needed at this time.
+Normally, we would also have to update the ```karaf/src/main/resources/features.xml``` file to include this bundle. However, we will be deploying the bundle directly into Karaf's Hot deployment directory. Thus, not needed at this time.
 
 To build it from command line in Linux.
 ```
@@ -184,7 +188,7 @@ ubuntu:~/workspace/Alpaca$ sudo gradle w build
 
 #### Deploying the bundle
 * Upload the bundle to the Apache Karaf deploy directory: /opt/apache-karaf-4.0.5/deploy
-* Login to Karaf
+* Login to Karaf.  You can also use the Karaf client here: /opt/karaf/bin/client.
 ```
 ssh -p 8101 karaf@localhost
 ```
@@ -208,7 +212,7 @@ You should see a message like below:
 Apache ActiveMQ is a JMS compliant Messaging Queue. Messaging client can make use of JMS to send messages.
 
 ### Installing ActiveMQ
-Installing ActiveMQ is relatively easy. Download the release folder from the project: http://activemq.apache.org/download.html. Go to the activemq_install_dir/bin. Start the ActiveMQ by using the activemq script or batch file and start command.
+Installing ActiveMQ is relatively easy. Download the latest stable release [here](http://activemq.apache.org/download.html). Go to the activemq_install_dir/bin. Start the ActiveMQ by using the activemq script or batch file and start command.
 
 ```
 ubuntu:/apps/activemq_install_dir/bin$./activemq start
