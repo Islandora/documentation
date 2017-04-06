@@ -10,9 +10,9 @@ The base unit of resources is called a bundle. Bundle is similar to a jar file, 
 Apache Karaf is a container that can be used to deploy an array of applications such servlets, Apache Camel components, jars etc. 
 
 ### Karaf - Bundle - Hello World 
-Download a bundle to the [CLAW vagrant](https://github.com/Islandora-CLAW/claw_vagrant) (ex to /home directory). An example hello world bundle is [here](https://github.com/moghaddam/developmentor/blob/master/helloworld/target/helloworld-1.0.0.jar). 
+Download a bundle to the [CLAW vagrant](https://github.com/Islandora-CLAW/claw_vagrant) (ex to `/home/ubuntu directory`). An example hello world bundle is [here](https://github.com/moghaddam/developmentor/blob/master/helloworld/target/helloworld-1.0.0.jar). 
 
-In Islandora CLAW vagrant, you can login to Karaf using ssh. The password is karaf. You can also use the client here: /opt/karaf/bin/client. Karaf client allows the use of linux commands such as ```grep``` in addition to Karaf commands.  
+In Islandora CLAW vagrant, you can login to Karaf using ssh. The password is karaf. You can also use the client here: `/opt/karaf/bin/client`. Karaf client allows the use of linux commands such as `grep` in addition to Karaf commands.  
 
 ```
 ssh -p 8101 karaf@localhost
@@ -21,7 +21,7 @@ ssh -p 8101 karaf@localhost
 Install the bundle:
 ```
 karaf@root()> bundle
-karaf@root(bundle)> install file:///home/helloworld-1.0.0.jar
+karaf@root(bundle)> install file:///home/ubuntu/helloworld-1.0.0.jar
 Bundle ID: 242
 ```
 
@@ -49,15 +49,15 @@ A simple Features file is as below.
 ```
 <features>
   <feature name='greeter_server' version='1.0'>
-    <bundle>file:///home/helloworld-1.0.0.jar</bundle>
-    <bundle>file:///home/helloworld2-1.0.0.jar</bundle>
+    <bundle>file:///home/ubuntu/helloworld-1.0.0.jar</bundle>
+    <bundle>file:///home/ubuntu/helloworld2-1.0.0.jar</bundle>
   </feature>
 </features>
 ```
 
 You can add the features to Karaf as below:
 ```
-karaf@root()> feature:repo-add file:///home/features.xml
+karaf@root()> feature:repo-add file:///home/ubuntu/features.xml
 ```
 You can install the feature's bundles as below.  
 
@@ -85,12 +85,12 @@ Apache Camel is an integration framework that aids in implementing integration p
 ### Alpaca - Apache Camel HelloWorld
 Maven has camel-archetype-blueprint which can be used to create apache-camel OSGi bundle project structure.  
 
-#### Creating a project / bundle under Alpaca
+#### Creating a project/bundle under Alpaca
 ```
 mvn archetype:generate -DarchetypeGroupId=org.apache.camel.archetypes -DarchetypeArtifactId=camel-archetype-blueprint -DarchetypeVersion=2.9.0 -DarchetypeRepository=https://repository.apache.org/content/groups/snapshots-g
 ```
 
-However, it is easier to copy the structure of an existing project such as islandora-connector-broadcast[](https://github.com/Islandora-CLAW/Alpaca/tree/master/islandora-connector-broadcast).
+However, it is easier to copy the structure of an existing project such as [islandora-connector-broadcast](https://github.com/Islandora-CLAW/Alpaca/tree/master/islandora-connector-broadcast).
 
 ```
 cp -R islandora-connector-broadcast/ islandora-connector-helloworld
@@ -100,9 +100,9 @@ Open the project in your IDE. In Eclipse, you can go to File | Open Projects fro
 
 We need to rename the configuration, java and build files to reflect the helloworld project.  
 
-* ```src/main/cfg/ca.islandora.alpaca.connector.helloworld.cfg```
-* ```src/main/java/ca/islandora/alpaca/connector/helloworld```
-* ```src/main/java/ca/islandora/alpaca/connector/helloworld/HelloworldRouter.java```
+* `src/main/cfg/ca.islandora.alpaca.connector.helloworld.cfg`
+* `src/main/java/ca/islandora/alpaca/connector/helloworld`
+* `src/main/java/ca/islandora/alpaca/connector/helloworld/HelloworldRouter.java`
 
 * Also change the content of the above file to log Hello World
 
@@ -131,11 +131,11 @@ public class HelloworldRouter extends RouteBuilder {
 
 ```
 
-* ```src/main/resource/OSGI-INF/blueprint/blueprint.xml```
+* `src/main/resource/OSGI-INF/blueprint/blueprint.xml`
 
 Change the content of this file to reflect Helloworld package.  
 
-* ```src/build.gradle```
+* `src/build.gradle`
 
 ```
 apply plugin: 'osgi'
@@ -173,13 +173,13 @@ artifacts {
 ```
 
 #### Building the bundle
-To build this project, we have to update the Alpaca build settings. Include and add the project in ```Alpaca/settings.gradle```.
+To build this project, we have to update the Alpaca build settings. Include and add the project in `Alpaca/settings.gradle`.
 ```
 include ':islandora-connector-helloworld'
 project(':islandora-connector-helloworld').projectDir = "$rootDir/islandora-connector-helloworld" as File
 ```
 
-Normally, we would also have to update the ```karaf/src/main/resources/features.xml``` file to include this bundle. However, we will be deploying the bundle directly into Karaf's Hot deployment directory. Thus, not needed at this time.
+Normally, we would also have to update the `karaf/src/main/resources/features.xml` file to include this bundle. However, we will be deploying the bundle directly into Karaf's Hot deployment directory. Thus, not needed at this time.
 
 To build it from command line in Linux.
 ```
@@ -187,8 +187,8 @@ ubuntu:~/workspace/Alpaca$ sudo gradle w build
 ```
 
 #### Deploying the bundle
-* Upload the bundle to the Apache Karaf deploy directory: /opt/apache-karaf-4.0.5/deploy
-* Login to Karaf.  You can also use the Karaf client here: /opt/karaf/bin/client.
+* Upload the bundle to the Apache Karaf deploy directory: `/opt/apache-karaf-4.0.5/deploy`
+* Login to Karaf. You can also use the Karaf client here: `/opt/karaf/bin/client`.
 ```
 ssh -p 8101 karaf@localhost
 ```
@@ -212,7 +212,7 @@ You should see a message like below:
 Apache ActiveMQ is a JMS compliant Messaging Queue. Messaging client can make use of JMS to send messages.
 
 ### Installing ActiveMQ
-Installing ActiveMQ is relatively easy. Download the latest stable release [here](http://activemq.apache.org/download.html). Go to the activemq_install_dir/bin. Start the ActiveMQ by using the activemq script or batch file and start command.
+Installing ActiveMQ is relatively easy. Download the latest stable release [here](http://activemq.apache.org/download.html). Go to the `activemq_install_dir/bin`. Start the ActiveMQ by using the activemq script or batch file and start command.
 
 ```
 ubuntu:/apps/activemq_install_dir/bin$./activemq start
