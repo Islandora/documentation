@@ -10,7 +10,7 @@ The base unit of resources is called a bundle. Bundle is similar to a jar file, 
 Apache Karaf is a container that can be used to deploy an array of applications such servlets, Apache Camel components, jars etc. 
 
 ### Karaf - Bundle - Hello World 
-Download a bundle to the [CLAW vagrant](https://github.com/Islandora-CLAW/claw_vagrant) (ex to `/home/ubuntu directory`). An example hello world bundle is [here](https://github.com/moghaddam/developmentor/blob/master/helloworld/target/helloworld-1.0.0.jar). 
+Download a bundle to the [CLAW vagrant](https://github.com/Islandora-CLAW/claw_vagrant) (ex to `/home/ubuntu` directory). An example hello world bundle is [here](https://github.com/moghaddam/developmentor/blob/master/helloworld/target/helloworld-1.0.0.jar). 
 
 In Islandora CLAW vagrant, you can login to Karaf using ssh. The password is karaf. You can also use the client here: `/opt/karaf/bin/client`. Karaf client allows the use of linux commands such as `grep` in addition to Karaf commands.  
 
