@@ -77,7 +77,7 @@ Linked Data is a big concept. A [definition by Tim Bernes-Lee](https://www.w3.or
 
 > 4. Include links to other URIs. so that they can discover more things.
 
-LDP is an official W3C recommendation. According to [their spec](https://www.w3.org/TR/ldp/), Linked Data Platform (LDP) defines a set of rules for HTTP operations on web resources, some based on RDF, to provide an architecture for read-write Linked Data on the web. Put more simply: An LDP server is a web server that lets you manage relationships in RDF by creating URLs you can perform CRUD (Create Read Update Delete) operation on:
+LDP is an official W3C recommendation. According to [the spec](https://www.w3.org/TR/ldp/), Linked Data Platform (LDP) defines a set of rules for HTTP operations on web resources, some based on RDF, to provide an architecture for read-write Linked Data on the web. Put more simply: An LDP server is a web server that lets you manage relationships in RDF by creating URLs you can perform CRUD (Create Read Update Delete) operation on:
 
 * `http://my_url/some_resource`
 * `http://my_url/some_resource/children`

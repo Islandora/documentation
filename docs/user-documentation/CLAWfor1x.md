@@ -33,9 +33,9 @@ In Fedora 4 , what we would have called `objects` are now referred to as `resour
 * `Non-RDF Source`: Roughly equivalent to a datastream. A Non-RDF Source (or binary) is simply a bitstream (e.g. JPG, PDF, XML, MP3, etc.).
 
 ### Datastreams
-In Islandora CLAW, RDF datastreams (RELS-EXT and RELS-INT) are stored as RDF in Fedora. Binary datastreams are files or `nonRdfResources` (see [PCDM](https://github.com/duraspace/pcdm/wiki)). Descriptive metadata datastreams (MODS, DC, DwC, PBCore, etc) are will be stored as RDF.
+In Islandora CLAW, RDF datastreams (RELS-EXT and RELS-INT) are stored as RDF in Fedora. Binary datastreams are files or `nonRdfResources` (see [PCDM](https://github.com/duraspace/pcdm/wiki)). Descriptive metadata datastreams (MODS, DC, DwC, PBCore, etc) are stored as RDF.
 
 #### PIDs
-Every object in a Fedora 3 repository had a Persistent Identifier following the pattern `namespace:pid`. Fedora 4 resources do not have PIDs. Instead, since Fedora 4 is an LDP server, their identifiers are fundamentally their URIs. The PIDs of objects migrated from a Fedora 3 repository can still be stored in Fedora 4, as additional properties on the new Fedora 4 resource.
+Every object in a Fedora 3 repository had a Persistent Identifier following the pattern `namespace:pid`. Fedora 4 resources do not have PIDs. Instead, since Fedora 4 is an [LDP server](https://www.w3.org/ns/ldp), their identifiers are fundamentally their URIs. The PIDs of objects migrated from a Fedora 3 repository can still be stored in Fedora 4, as additional properties on the new Fedora 4 resource.
 
 Since resources are stored as `nodes` on the Drupal side of Islandora CLAW, they also have Drupal UUIDs.
