@@ -26,7 +26,7 @@ This new structure has several advantages:
 ## Ecosystem
 
 #### [Alpaca](https://github.com/Islandora-CLAW/Alpaca)
-Event driven middleware based on Apache Camel that synchronizes Fedora 4 with Drupal.
+The plumbing for Islandora's asynchronous workflows.  It handles reading from and writing to message queues, with appropriate retry rules and error handling.
 
 #### [Chullo](https://github.com/Islandora-CLAW/chullo)
 A PHP client for Fedora 4 built using Guzzle and EasyRdf.
@@ -39,9 +39,6 @@ Top level container for the various Islandora CLAW microservices.
 
 #### [Islandora](https://github.com/Islandora-CLAW/islandora)
 The Drupal modules associated with CLAW. Work is underway to have this as a project on [drupal.org](https://www.drupal.org/).
-
-#### [PDX](https://github.com/Islandora-CLAW/pdx)
-Top level container for the various PCDM specific Islandora CLAW microservices.
 
 ## Why Switch?
 
@@ -74,14 +71,13 @@ Linked Data is a big concept. A [definition by Tim Bernes-Lee](https://www.w3.or
 
 > 1. Use URIs as names for things
 
-> 1. Use HTTP URIs so that people can look up those names.
+> 2. Use HTTP URIs so that people can look up those names.
 
-> 1. When someone looks up a URI, provide useful information, using the standards (RDF*, SPARQL)
+> 3. When someone looks up a URI, provide useful information, using the standards (RDF*, SPARQL)
 
-> 1. Include links to other URIs. so that they can discover more things.
+> 4. Include links to other URIs. so that they can discover more things.
 
-LDP is an official W3C recommendation. According to [their spec](https://www.w3.org/TR/ldp/), Linked Data Platform (LDP) defines a set of rules for HTTP operations on web resources, some based on RDF, to provide an architecture for read-write Linked Data on the web. Put more simply: An LDP server is a web server that lets you manage relationships in RDF by creating URLs you can perform CRUD (Create Read Update Delete)
-operation on:
+LDP is an official W3C recommendation. According to [their spec](https://www.w3.org/TR/ldp/), Linked Data Platform (LDP) defines a set of rules for HTTP operations on web resources, some based on RDF, to provide an architecture for read-write Linked Data on the web. Put more simply: An LDP server is a web server that lets you manage relationships in RDF by creating URLs you can perform CRUD (Create Read Update Delete) operation on:
 
 * `http://my_url/some_resource`
 * `http://my_url/some_resource/children`
