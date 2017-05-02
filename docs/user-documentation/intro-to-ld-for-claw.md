@@ -28,11 +28,13 @@ This section takes a look at SPARQL, the query language that allows you to ask l
 - [DBpedia's SPARQL Endpoint](https://dbpedia.org/sparql)
 
 # RDF Serialization Formats
-RDF data can be translated into many different formats. RDF/XML is the original way that RDF data was shared, but there are much more human-friendly serialization formats like Turtle which is great for beginners. JSON-LD is the easiest format for applications to use, and is the serialization format that CLAW uses internally.
+RDF data can be translated into many different formats. RDF/XML is the original way that RDF data was shared, but there are much more human-friendly serialization formats like Turtle which is great for beginners. JSON-LD is the easiest format for applications to use, and is the serialization format that CLAW uses internally. Make sure to check out the [JSON-LD Playground](http://json-ld.org/playground/) for an interactive learning experience.
 - [Wikipedia article on Serialization](https://en.wikipedia.org/wiki/Serialization)
 - [W3C’s RDF/XML Syntax Specification](https://www.w3.org/TR/REC-rdf-syntax/)
 - [W3C’s RDF 1.1 Turtle](https://www.w3.org/TR/turtle/)
 - [W3C’s JSON-LD 1.0](https://www.w3.org/TR/json-ld/)
+- [JSON-LD Website](http://json-ld.org/)
+- [JSON-LD Playground](http://json-ld.org/playground/)
 
 # Ontology & Vocabulary Basics
 Ontologies & vocabularies are created by communities of people to describe things, and once created, anyone can use an ontology or vocabulary to describe their resources. This section goes over some of the more popular ontologies & vocabularies in use.

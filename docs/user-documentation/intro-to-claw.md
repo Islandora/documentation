@@ -13,7 +13,7 @@ Islandora CLAW does more than simply replace that base layer with Fedora 4. It i
 
 ![image](../assets/claw-chimera.png)
 
-Like Islandora 7.x-1.x, Islandora CLAW uses Drupal modules to extend Drupal's native functionality to handle new types of content (Fedora resources), but unlike Islandora 7.x-1.x, Islandora CLAW contains a completely new layer of "plumbing" between Drupal, Fedora, Blazegraph (CLAW's default triplestore), Solr and any other [microservices](https://en.wikipedia.org/wiki/Microservices) to allow all of these systems to pass messages to each other and stay in sync. This new structure has several advantages:
+Like Islandora 7.x-1.x, Islandora CLAW uses Drupal modules to extend Drupal's native functionality to handle new types of content (Fedora Resources), but unlike Islandora 7.x-1.x, Islandora CLAW contains a completely new layer of "plumbing" between Drupal, Fedora, Blazegraph (CLAW's default triplestore), Solr and any other [microservices](https://en.wikipedia.org/wiki/Microservices) to allow all of these systems to pass messages to each other and stay in sync. This new structure has several advantages:
 
 * Parcelling out the various services and dependencies allows for more horizontal scalability
 * Changing the relationship between Drupal and Fedora allows for a more flexible approach to front-end management (i.e, it need not be Drupal) while also taking much greater advantage of features available from Drupal (i.e, Fedora objects are treated more like nodes, for the purposes of using Drupal contrib modules. Many Islandora 7.x-1.x modules are redundant in Islandora CLAW because they reproduce existing Drupal contrib modules that can be used out of the box in Islandora CLAW).
