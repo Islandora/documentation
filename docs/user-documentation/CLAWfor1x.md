@@ -36,6 +36,8 @@ In Islandora 7.x-1.x, every object has a specific content model which defined wh
 
 Binary files, such as JPGs, PNGs, MP3s, and PDFs, are handled via `pcdm:Files` which are contained by a parent `pcdm:Object`, similar to how an Islandora 7.x-1.x cmodel may hold a PDF or JPG as a datastream. Unlike Islandora 7.x-1.x, these binary files can actually have their own technical metadata attached them. This is because `pcdm:Collections`, `pcdm:Objects` and even `pcdm:Files` are all `RDF Sources` containing only RDF data, with `pcdm:Files` having links to the URL of the `Non-RDF Source` (binary file) they represent as part of their RDF data in addition to whatever other metadata you may want about the file. Using this system, a `pcdm:Object` can contain as many `pcdm:Files` as necessary, and each `pcdm:File` can have separate metadata about itself and its relationship to other `pcdm:Files` attached to the parent `pcdm:Object`, serving the same purpose RELS-INT datastreams served in Islandora 7.x-1.x.
 
+Note that you *can* use a `pcdm:File` to represent a file of metadata, such as MODS, DC, or PBCore, in case you would like to preserve a copy of an object's legacy metadata when migrating into Fedora 4. These metadata files will be treated like any other binary file in Islandora CLAW, and will not be indexed or editable through the GUI.
+
 #### PIDs
 Every object in a Fedora 3 repository had a Persistent Identifier following the pattern `namespace:pid`. Fedora 4 resources do not have PIDs. Instead, since Fedora 4 is an [LDP server](https://www.w3.org/ns/ldp), their identifiers are fundamentally their URIs. The PIDs of objects migrated from a Fedora 3 repository can still be stored in Fedora 4, as additional properties on the new Fedora 4 resource.
 
