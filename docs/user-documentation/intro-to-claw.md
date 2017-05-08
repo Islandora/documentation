@@ -2,19 +2,16 @@
 
 Islandora CLAW is the project name for development of Islandora to work with Fedora 4. To fully understand Islandora CLAW, it is best to start by looking at its contrasts to the previous version of Islandora, known as 7.x-1.x.
 
-Islandora 7.x-1.x works as a bridge between Drupal 7.x and Fedora 3. Put simply, Islandora 7.x-1.x is middleware between Fedora 3 and Drupal 7.x, sometimes expressed as a hamburger:
 ## Islandora 7.x-1.x (with Fedora 3)
+Islandora 7.x-1.x is "middleware", it allows Drupal 7.x to talk to a Fedora 3 server instead of Drupal's database. This is sometimes expressed as a hamburger:
 
 ![image](../assets/hamburger.png)
 
-Islandora CLAW does more than simply replace that base layer with Fedora 4. It is a total re-architecting of the interaction between the various pieces. Rather than a hamburger, Islandora CLAW is a chimera:
 ## Islandora CLAW (with Fedora 4)
 
+Islandora CLAW does more than simply replace that base layer with Fedora 4. It is a total re-architecting of the interaction between the various pieces, acting as middleware for not only Drupal 8.x and Fedora 4, but also Solr, Blazegraph, and any [microservices](https://en.wikipedia.org/wiki/Microservices) added to the stack. Islandora CLAW achieves this by implementing a system of "plumbing" using Apache Camel to pass messages between all the different parts of the stack to keep them in sync with each other. Rather than a hamburger, Islandora CLAW is a [chimera](https://en.wikipedia.org/wiki/Chimera_(mythology)):
+
 ![image](../assets/claw-chimera.png)
-
-Or, for a diagram that doesn't involve food or animals:
-
-![image](../assets/claw-diagram.png)
 
 This new structure has several advantages:
 
