@@ -8,7 +8,7 @@ $SCRIPT_DIR/travis_setup_php.sh
 echo "Install utilities needed for testing"
 mkdir /opt/utils
 cd /opt/utils
-composer require squizlabs/php_codesniffer
+composer require squizlabs/php_codesniffer ^2.9
 composer require drupal/coder
 composer require sebastian/phpcpd
 sudo ln -s /opt/utils/vendor/bin/phpcs /usr/bin/phpcs
