@@ -36,10 +36,15 @@ pages:
 - Components:
     - 'Islandora CLAW': 'index.md'
     - 'Alpaca': 'alpaca/README.md'
+    - 'Chullo': 'chullo/README.md'
+    - 'Crayfish': 'crayfish/README.md'
+    - 'Crayfish-Commons': 'crayfish-commons/README.md'
+    - 'Syn': 'syn/README.md'
     - Drupal modules:
       - 'Islandora': 'islandora/README.md'
       - 'Islandora Collection': 'islandora_collection/README.md'
       - 'Islandora Image': 'islandora_image/README.md'
+      - 'jsonld': 'jsonld/README.md'
 - Installation:
     - 'Installation (Vagrant)': 'install/README.md'
 - Contributing:
