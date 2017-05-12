@@ -16,3 +16,21 @@
 [submodule "islandora_image"]
   path = islandora_image
   url = https://github.com/Islandora-CLAW/islandora_image.git
+[submodule "chullo"]
+	path = chullo
+	url = git@github.com:Islandora-CLAW/chullo.git
+[submodule "Crayfish"]
+	path = Crayfish
+	url = git@github.com:Islandora-CLAW/Crayfish.git
+[submodule "jsonld"]
+	path = jsonld
+	url = git@github.com:Islandora-CLAW/jsonld.git
+[submodule "Syn"]
+	path = Syn
+	url = git@github.com:Islandora-CLAW/Syn.git
+[submodule "Crayfish-Commons"]
+	path = Crayfish-Commons
+	url = git@github.com:Islandora-CLAW/Crayfish-Commons.git
+[submodule "drupal-project"]
+	path = drupal-project
+	url = git@github.com:Islandora-CLAW/drupal-project.git
