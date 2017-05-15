@@ -15,7 +15,7 @@ For more details, please check out the following resources:
 ## Repository Structure
 
 * [Alpaca](https://github.com/islandora-claw/Alpaca): Event driven middleware based on Apache Camel that synchronizes a Fedora 4 with Drupal.
-* [docs](./docs): Documentation!
+* [docs](https://github.com/Islandora-CLAW/CLAW/tree/master/docs): Documentation!
 * [chullo](https://github.com/islandora-claw/chullo/): PHP client for Fedora 4 built using Guzzle and EasyRdf
 * [Crayfish](https://github.com/islandora-claw/Crayfish): A collection of Islandora CLAW microservices
 * [Crayfish-Commons](https://github.com/Islandora-CLAW/Crayfish-Commons): A library housing shared code for Crayfish microservices
