@@ -29,13 +29,30 @@
 
 ## Administrative Tasks
 
+### How to Create a Collection
+1. Click the **Manage** tab from the top toolbar.
+2. Select **Content** tab from the resulting menu.
+3. Click on **Fedora Resources** tab (3rd tab).
+![Alt text](../assets/gettingstarted_fedoraResources.png "Content Fedora Resources page")
+4. Click on **Add Fedora resource** button.
+5. Click on **Collection** link. This will load the *Create of bundle Collection* page.
+6. Fill out form fields.
+    * Name
+    * Description
+    * memberOf
+    * Authored by
+    * "Promoted to front page" checkbox.
+    * "Sticky at top of lists" checkbox.
+    * Revision log message
+7. Click the **Save** button.
+
 ### How to Add an Item to a Collection
 1. Click the **Manage** tab from the top toolbar.
 2. Select **Content** tab from the resulting menu.
 3. Click on **Fedora Resources** tab (3rd tab).
 ![Alt text](../assets/gettingstarted_fedoraResources.png "Content Fedora Resources page")
 4. Click on **Add Fedora resource** button.
-5. Click on **Islandora image** link. This will load the *Create of bundle Islandora image* page.
+5. Click on **Islandora Image** link. This will load the *Create of bundle Islandora image* page.
 6. Fill out form fields.  [NOTE: currently the generation of image derivatives is not supported.]
     * Name
     * Authored by
@@ -52,7 +69,7 @@
     * "Promoted to front page" checkbox.
     * "Sticky at top of lists" checkbox.
     * Revision log message
-    * Click "Save" button.
+7. Click the **Save** button.
     * Once you upload a file, you can Edit or Remove it.
 
 
