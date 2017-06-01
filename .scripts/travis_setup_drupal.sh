@@ -32,7 +32,7 @@ drush si --db-url=mysql://drupal:drupal@127.0.0.1/drupal --yes
 drush runserver 127.0.0.1:8282 &
 until curl -s 127.0.0.1:8282; do true; done > /dev/null
 echo "Enable simpletest module"
-drush --uri=127.0.0.1:8282 en -y simpletest
+drush --uri=127.0.0.1:8282 en -y simpletest rest
 
 echo "Setup ActiveMQ"
 cd /opt
