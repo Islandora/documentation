@@ -13,7 +13,7 @@
 1. Click the **Manage** tab from the top toolbar.
 2. Select **People** tab from the resulting menu.
 3. Click the **Roles** tab in the set of tabs above the *Add User* button.
-4. Click the **Add role** button 
+4. Click the **Add role** button.
  ![Alt text](../assets/gettingstarted_roles.png "Roles page")
 5. Name the role in a way that it can be disambiguated from related activities or similar groups
     * I.e. use the course code for a particular class of students working on a particular collection.
