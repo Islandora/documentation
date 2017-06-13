@@ -19,7 +19,7 @@
     * I.e. use the course code for a particular class of students working on a particular collection.
 6. Click the **Save** button.
 7. To edit the permissions for a role, click on the **Edit** dropdown menu to the right of the role and select **Edit Permissions**.
-8. Scroll down until you see the *Node* section of options, until you see options that have an *Islandora* preffix. For example, *Islandora Collection: Create new content*.
+8. Scroll down until you see the *Node* section of options, then look for the options that have an *Islandora* prefix. For example, *Islandora Collection: Create new content*.
 ![Alt text](../assets/gettingstarted_permissions.png "Permissions page")
 
 ## Administrative Tasks
