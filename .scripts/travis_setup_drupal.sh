@@ -35,12 +35,13 @@ echo "Enable simpletest module"
 drush --uri=127.0.0.1:8282 en -y simpletest
 
 # Set default theme to carapace (and download dependencies, will composer-ize later)
-cd modules/contrib
+cd /opt/drupal
 composer require "drupal/adaptivetheme:^2.0" "drupal/at_tools:^2.0" "drupal/layout_plugin:^1.0@alpha"
 drush en -y at_tools
 drush en -y layout_plugin
 mkdir /opt/drupal/web/themes/custom
 git clone https://github.com/Islandora-CLAW/carapace /var/www/html/drupal/web/themes/custom/carapace
+cd web
 drush en -y carapace
 drush -y config-set system.theme default carapace
 
