@@ -41,7 +41,7 @@ cd web
 drush en -y at_tools
 drush en -y layout_plugin
 mkdir /opt/drupal/web/themes/custom
-git clone https://github.com/Islandora-CLAW/carapace /var/www/html/drupal/web/themes/custom/carapace
+git clone https://github.com/Islandora-CLAW/carapace /opt/drupal/web/themes/custom/carapace
 drush en -y carapace
 drush -y config-set system.theme default carapace
 
