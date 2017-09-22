@@ -36,7 +36,7 @@ core.entity_form_display.node.your_content_type.default.yml
 core.entity_form_display.node.your_content_type.inline.yml
 ```
 
-There is a configuration file for each combination of bundle - display mode - Manage display.  Usually, Manage display would have `default` and `teaser` modes for `content types` and `default` and `content` modes for media bundles.
+There is a configuration file for each combination of bundle - display mode - Manage display.  Usually, Manage display would have `default` and `teaser` modes for content types and `default` and `content` modes for media bundles.
 ```
 core.entity_view_display.media.your_media_bundle.default.yml
 core.entity_view_display.media.your_media_bundle.content.yml
