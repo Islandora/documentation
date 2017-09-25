@@ -4,7 +4,7 @@ In Islandora CLAW, [content models](https://github.com/Islandora/islandora/wiki/
 
 Content types and media bundles can be thought of as web [forms](https://www.drupal.org/docs/user_guide/en/structure-widgets.html) consisting of fields. Drupal provides [widgets](https://www.drupal.org/docs/8/creating-custom-modules/create-a-custom-field-widget) to define the behavior of a field and field storage to define how the data is stored in the database. Drupal provides various [display modes](https://www.drupal.org/docs/8/api/entity-api/display-modes-view-modes-and-form-modes) to show the forms to user when they are editing (Manage form display) or viewing (Manage display). 
 
-A content model is package as a module for installation. All yml files are put in `config/install` folder of the module.  Example content models: [islandora_collection](https://github.com/Islandora-CLAW/islandora_collection), [islandora_image](https://github.com/Islandora-CLAW/islandora_image). Note that not all content models would contain media bundles.  
+A content model is packaged as a module for installation. All yml files are put in `config/install` folder of the module.  Example content models: [islandora_collection](https://github.com/Islandora-CLAW/islandora_collection), [islandora_image](https://github.com/Islandora-CLAW/islandora_image). Note that not all content models would contain media bundles.  
 
 The following files define the bundles themselves. It contains some metadata about the bundle and lists its dependencies.  
 ```
@@ -27,7 +27,7 @@ field.storage.node.field_new_name3.yml
 field.storage.media.field__new_name3.yml
 ```
 
-There is a configuration file for each combination of bundle - display mode - Manage form display. Usually, Manage form display would have `default` and `inline` modes.  
+There is a configuration file for each combination of bundle / display mode when managing form displays. Usually, form displays will have `default` and `inline` modes.
 ```
 core.entity_form_display.media.your_media_bundle.default.yml
 core.entity_form_display.media.your_media_bundle.inline.yml
@@ -36,7 +36,7 @@ core.entity_form_display.node.your_content_type.default.yml
 core.entity_form_display.node.your_content_type.inline.yml
 ```
 
-There is a configuration file for each combination of bundle - display mode - Manage display. Usually, Manage display would have `default` and `teaser` modes for content types and `default` and `content` modes for media bundles.
+There is a configuration file for each combination of bundle / display mode when managing displays. Usually, displays will have `default` and `teaser` modes for content types and `default` and `content` modes for media bundles.
 ```
 core.entity_view_display.media.your_media_bundle.default.yml
 core.entity_view_display.media.your_media_bundle.content.yml
@@ -45,7 +45,7 @@ core.entity_view_display.node.your_content_type.default.yml
 core.entity_view_display.node.your_content_type.teaser.yml
 ```
 
-In addition, CLAW needs RDF mapping to express the content in RDF and to sync to fedora. There will be one rdf mapper per bundle.
+In addition, CLAW needs a RDF mapping to express the content in RDF and to sync to fedora. There will be one rdf mapping per bundle.
 ```
 rdf.mapping.media.your_media_bundle.yml
 rdf.mapping.node.your_content_type.yml
