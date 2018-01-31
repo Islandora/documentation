@@ -10,6 +10,7 @@ For more details, please check out the following resources:
   * [2015](https://github.com/Islandora-CLAW/CLAW/wiki/2015)
   * [2016](https://github.com/Islandora-CLAW/CLAW/wiki/2016)
   * [2017](https://github.com/Islandora-CLAW/CLAW/wiki/2017)
+  * [2018](https://github.com/Islandora-CLAW/CLAW/wiki/2018)
 * [Contributing](https://github.com/Islandora-CLAW/CLAW/blob/master/CONTRIBUTING.md)
 
 ## Repository Structure
@@ -20,14 +21,16 @@ For more details, please check out the following resources:
 * [Crayfish](https://github.com/islandora-claw/Crayfish): A collection of Islandora CLAW microservices
 * [Crayfish-Commons](https://github.com/Islandora-CLAW/Crayfish-Commons): A library housing shared code for Crayfish microservices
 * [drupal-project](https://github.com/Islandora-CLAW/drupal-project): Composer template for Islandora CLAW Drupal
-* [claw_install](https://github.com/Islandora-CLAW/claw_vagrant): Bleeding edge development environment
+* [claw-playbook](https://github.com/Islandora-Devops/claw-playbook): Bleeding edge development environment
 * [islandora](https://github.com/Islandora-CLAW/islandora): Islandora CLAW Drupal core module
 * [islandora_collection](https://github.com/Islandora-CLAW/islandora_collection): Islandora CLAW Drupal collection module
 * [islandora_image](https://github.com/Islandora-CLAW/islandora_image): Islandora CLAW Drupal image module
 * [jsonld](https://github.com/islandora-claw/jsonld): JSON-LD Serializer for Drupal 8 and Islandora CLAW
 * [Syn](https://github.com/islandora-claw/Syn): Tomcat valve for JWT Authentication
 
-**Note**: the [Ansible](https://github.com/Islandora-CLAW/claw-ansible) and [Docker](https://github.com/Islandora-CLAW?utf8=%E2%9C%93&query=docker) repositories were early experimental provisioning tools for the CLAW stack, and are currently **not** supported. For context see [this](https://github.com/Islandora-CLAW/CLAW/issues/182). Development is focused on [claw_vagrant](https://github.com/islandora-claw/claw_vagrant), which is the recommended starting point for working with CLAW.
+
+## Installation
+Islandora CLAW provides Ansible [claw-playbook](https://github.com/Islandora-Devops/claw-playbook) to fully deploy the stack to a vagrant, bare-metal server or multi server enviornments.
 
 ## Sponsors
 
@@ -56,4 +59,4 @@ If you would like to contribute, please get involved by attending our weekly [Te
 
 If you would like to contribute code to the project, you need to be covered by an Islandora Foundation [Contributor License Agreement](http://islandora.ca/sites/default/files/islandora_cla.pdf) or [Corporate Contributor Licencse Agreement](http://islandora.ca/sites/default/files/islandora_ccla.pdf). Please see the [Contributors](http://islandora.ca/resources/contributors) pages on Islandora.ca for more information.
 
-If you want to pull down the submodules for development, don't forget to run `git submodule update --init --recursive` after cloning.
+We recommend using the [claw-playbook](https://github.com/Islandora-Devops/claw-playbook) to get started.  If you want to pull down the submodules for development, don't forget to run `git submodule update --init --recursive` after cloning.
