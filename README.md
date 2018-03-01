@@ -10,6 +10,8 @@ For more details, please check out the following resources:
   * [2015](https://github.com/Islandora-CLAW/CLAW/wiki/2015)
   * [2016](https://github.com/Islandora-CLAW/CLAW/wiki/2016)
   * [2017](https://github.com/Islandora-CLAW/CLAW/wiki/2017)
+  * [2018](https://github.com/Islandora-CLAW/CLAW/wiki/2018)
+
 * [Contributing](https://github.com/Islandora-CLAW/CLAW/blob/master/CONTRIBUTING.md)
 
 ## Repository Structure
