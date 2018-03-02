@@ -30,7 +30,7 @@ For more details, please check out the following resources:
 
 
 ## Installation
-Islandora CLAW provides Ansible [claw-playbook](https://github.com/Islandora-Devops/claw-playbook) to fully deploy the stack to a vagrant, bare-metal server or multi server enviornments.
+Islandora CLAW provides an Ansible [claw-playbook](https://github.com/Islandora-Devops/claw-playbook) to fully deploy the stack to a vagrant, bare-metal server or multi server environments.
 
 ## Sponsors
 
