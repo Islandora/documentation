@@ -20,7 +20,11 @@ echo "Composer install drupal site"
 cd /opt
 git clone https://github.com/Islandora-CLAW/drupal-project.git drupal
 cd drupal
-composer install
+if [ -n "$COMPOSER_PATH" ]; then
+  composer install
+else
+  php -dmemory_limit=-1 $COMPOSER_PATH install
+fi
 
 echo "Setup Drush"
 sudo ln -s /opt/drupal/vendor/bin/drush /usr/bin/drush
@@ -36,7 +40,11 @@ drush --uri=127.0.0.1:8282 en -y simpletest
 
 # Set default theme to carapace (and download dependencies, will composer-ize later)
 cd /opt/drupal
-composer require "drupal/adaptivetheme:^2.0" "drupal/at_tools:^2.0" "drupal/layout_plugin:^1.0@alpha"
+if [ -n "$COMPOSER_PATH" ]; then
+  composer require "drupal/adaptivetheme:^2.0" "drupal/at_tools:^2.0" "drupal/layout_plugin:^1.0@alpha"
+else
+  php -dmemory_limit=-1 $COMPOSER_PATH require "drupal/adaptivetheme:^2.0" "drupal/at_tools:^2.0" "drupal/layout_plugin:^1.0@alpha"
+fi
 cd web
 drush en -y at_tools
 drush en -y layout_plugin
