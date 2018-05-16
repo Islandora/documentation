@@ -35,6 +35,7 @@ The following is an alphabetized list of the current Islandora committers:
 | Natkeeran Ledchumykanthan   | University of Toronto Scarborough | Natkeeran   |
 | Diego Pino                  | METRO                             | diegopino   |
 | Nick Ruest                  | York University                   | ruebot      |
+| Seth Shaw                   | University of Nevada, Las Vegas   | seth-shaw   |
 | Jared Whiklo                | University of Manitoba            | whikloj     |
 
 
