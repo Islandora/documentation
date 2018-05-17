@@ -10,7 +10,7 @@ Islandora CLAW uses [semantic versioning](http://semver.org/), except for Drupal
 
 - **Major version**; Major changes, and breaks the API
 - **Minor version**; New features, and does not break the API
-- **Patch**; Bug fixes, and never breaks backward compatability
+- **Patch**; Bug fixes, and never breaks backward compatibility
 
 Example: 1.2.3
 

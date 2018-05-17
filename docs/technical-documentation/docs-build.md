@@ -32,6 +32,6 @@ You can preview any changes you have made to the documentation by running the fo
 
 And then visiting http://localhost:8111 in your browser.
 
-To deploy documenation to GitHub Pages, issue the following command:
+To deploy documentation to GitHub Pages, issue the following command:
 
 `mkdocs gh-deploy --clean`

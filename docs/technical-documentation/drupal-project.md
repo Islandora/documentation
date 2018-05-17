@@ -1,10 +1,10 @@
 # Introduction
 
-Islandora CLAW makes use of [drupal-project](https://github.com/drupal-composer/drupal-project), a composer template for Drupal projects. We augment it with Islandora CLAW specific changes, and need to occassionaly pull in upstream changes. The process below outlines how we will do it in a consistent manner.
+Islandora CLAW makes use of [drupal-project](https://github.com/drupal-composer/drupal-project), a composer template for Drupal projects. We augment it with Islandora CLAW specific changes, and need to occasionally pull in upstream changes. The process below outlines how we will do it in a consistent manner.
 
 # Pull in upstream changes
 
-1. Clone a fork of our fork to your or your institions GitHub organization:
+1. Clone a fork of our fork to your or your institution's GitHub organization:
 <br />  `git clone fork`
 2. Add the drupal-composer repository as a remote:
 <br /> `git remote add upstream https://github.com/drupal-composer/drupal-project.git`
