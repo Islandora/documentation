@@ -25,7 +25,7 @@ Committers share the following responsibilities:
 
 ## Committers
 
-The following is an alphabetized list of the current Islandora committers:
+The following is an alphabetized list of the current Islandora CLAW committers:
 
 | Name                        | Organization                      | irc nick    |
 |-----------------------------|-----------------------------------|-------------|
@@ -34,9 +34,16 @@ The following is an alphabetized list of the current Islandora committers:
 | Danny Lamb                  | Islandora Foundation              | dhlamb      |
 | Natkeeran Ledchumykanthan   | University of Toronto Scarborough | Natkeeran   |
 | Diego Pino                  | METRO                             | diegopino   |
-| Nick Ruest                  | York University                   | ruebot      |
 | Seth Shaw                   | University of Nevada, Las Vegas   | seth-shaw   |
 | Jared Whiklo                | University of Manitoba            | whikloj     |
+
+## Emeritus Committers
+
+The following is an alphabetized list of the prior Islandora CLAW committers:
+
+| Name                        | Organization                      | irc nick    |
+|-----------------------------|-----------------------------------|-------------|
+| Nick Ruest                  | York University                   | ruebot      |
 
 
 ## Guidelines for assessing new candidates for committership
@@ -55,7 +62,7 @@ How do we evaluate? By the interactions they have through mail. By how clear the
 
 How do we evaluate? By the interactions they have through mail. Do they help to answer questions raised on the mailing list; do they show a helpful attitude and respect for other's ideas.
 
-### Committment
+### Commitment
 
 How do we evaluate? By time, by sticking through tough issues, by helping on not-so-fun tasks as well.
 
