@@ -6,9 +6,9 @@
   path = islandora
   url = https://github.com/Islandora-CLAW/islandora
   branch = 8.x-1.x
-[submodule "claw_vagrant"]
-  path = claw_vagrant
-  url = https://github.com/Islandora-CLAW/claw_vagrant
+[submodule "claw_playbook"]
+  path = claw_playbook
+  url = https://github.com/Islandora-Devops/claw-playbook
   branch = master
 [submodule "islandora_collection"]
   path = islandora_collection
