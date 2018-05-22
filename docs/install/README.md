@@ -1,1 +1,1 @@
-../../claw_vagrant/README.md
+../../claw_playbook/README.md
