@@ -17,7 +17,6 @@ Example: 1.2.3
 * [Alpaca](https://github.com/Islandora-CLAW/alpaca)
 * [Chullo](https://islandora-claw.github.io/CLAW/chullo)
 * [CLAW](https://github.com/Islandora-CLAW/CLAW)
-* [claw_vagrant](https://github.com/Islandora-CLAW/claw_vagrant)
 * [Crayfish](https://islandora-claw.github.io/CLAW/Crayfish)
 * [Crayfish Commons](https://islandora-claw.github.io/CLAW/Crayfish-Commons)
 * [Syn](https://github.com/Islandora-CLAW/Syn)

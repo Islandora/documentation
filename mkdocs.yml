@@ -36,7 +36,7 @@ pages:
     - 'Versioning Policy': 'technical-documentation/versioning.md'
     - 'Alpaca Technical Stack': 'alpaca/alpaca-technical-stack.md'
     - 'RDF Mapping': 'islandora/rdf-mapping.md'
-    - 'Dupal Bundle Configurations': 'islandora/drupal-bundle-configurations.md'
+    - 'Drupal Bundle Configurations': 'islandora/drupal-bundle-configurations.md'
 - Components:
     - 'Islandora CLAW': 'index.md'
     - 'Alpaca': 'alpaca/README.md'
