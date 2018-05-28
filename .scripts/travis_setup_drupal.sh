@@ -21,8 +21,10 @@ cd /opt
 git clone https://github.com/Islandora-CLAW/drupal-project.git drupal
 cd drupal
 if [ -n "$COMPOSER_PATH" ]; then
+  composer drupal-scaffold
   composer install
 else
+  php -dmemory_limit=-1 $COMPOSER_PATH drupal-scaffold
   php -dmemory_limit=-1 $COMPOSER_PATH install
 fi
 
