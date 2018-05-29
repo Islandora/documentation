@@ -20,12 +20,12 @@ echo "Composer install drupal site"
 cd /opt
 git clone https://github.com/Islandora-CLAW/drupal-project.git drupal
 cd drupal
-if [ -n "$COMPOSER_PATH" ]; then
-  composer drupal-scaffold
+if [ -z "$COMPOSER_PATH" ]; then
   composer install
+  composer drupal-scaffold
 else
-  php -dmemory_limit=-1 $COMPOSER_PATH drupal-scaffold
   php -dmemory_limit=-1 $COMPOSER_PATH install
+  php -dmemory_limit=-1 $COMPOSER_PATH drupal-scaffold
 fi
 
 echo "Setup Drush"
