@@ -8,9 +8,15 @@ $SCRIPT_DIR/travis_setup_php.sh
 echo "Install utilities needed for testing"
 mkdir /opt/utils
 cd /opt/utils
-composer require squizlabs/php_codesniffer ^2.9
-composer require drupal/coder
-composer require sebastian/phpcpd
+if [ -z "$COMPOSER_PATH" ]; then
+  composer require squizlabs/php_codesniffer ^2.9
+  composer require drupal/coder
+  composer require sebastian/phpcpd
+else
+  php -dmemory_limit=-1 $COMPOSER_PATH require squizlabs/php_codesniffer ^2.9
+  php -dmemory_limit=-1 $COMPOSER_PATH require drupal/coder
+  php -dmemory_limit=-1 $COMPOSER_PATH require sebastian/phpcpd
+fi
 sudo ln -s /opt/utils/vendor/bin/phpcs /usr/bin/phpcs
 sudo ln -s /opt/utils/vendor/bin/phpcpd /usr/bin/phpcpd
 phpenv rehash
@@ -42,7 +48,7 @@ drush --uri=127.0.0.1:8282 en -y simpletest
 
 # Set default theme to carapace (and download dependencies, will composer-ize later)
 cd /opt/drupal
-if [ -n "$COMPOSER_PATH" ]; then
+if [ -z "$COMPOSER_PATH" ]; then
   composer require "drupal/adaptivetheme:^2.0" "drupal/at_tools:^2.0" "drupal/layout_plugin:^1.0@alpha"
 else
   php -dmemory_limit=-1 $COMPOSER_PATH require "drupal/adaptivetheme:^2.0" "drupal/at_tools:^2.0" "drupal/layout_plugin:^1.0@alpha"
