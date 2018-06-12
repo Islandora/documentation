@@ -3,8 +3,6 @@ echo "Setup database for Drupal"
 mysql -u root -e 'create database drupal;'
 mysql -u root -e "GRANT ALL PRIVILEGES ON drupal.* To 'drupal'@'127.0.0.1' IDENTIFIED BY 'drupal';"
 
-$SCRIPT_DIR/travis_setup_php.sh
-
 echo "Install utilities needed for testing"
 mkdir /opt/utils
 cd /opt/utils
@@ -58,7 +56,7 @@ drush en -y at_tools
 drush en -y layout_plugin
 mkdir /opt/drupal/web/themes/custom
 git clone https://github.com/Islandora-CLAW/carapace /opt/drupal/web/themes/custom/carapace
-drush en -y carapace
+drush then -y carapace
 drush -y config-set system.theme default carapace
 
 echo "Setup ActiveMQ"
