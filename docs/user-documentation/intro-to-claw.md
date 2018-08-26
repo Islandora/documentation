@@ -60,7 +60,7 @@ Islandora CLAW is developed _by_ the Islandora community, _for_ the Islandora co
 
 ### Linked Data
 
-Linked Data is a big concept. A [definition by Tim Bernes-Lee](https://www.w3.org/DesignIssues/LinkedData.html) from 2006 articulates the basic idea in the context of the "Semantic Web":
+Linked Data is a big concept. A [definition by Tim Berners-Lee](https://www.w3.org/DesignIssues/LinkedData.html) from 2006 articulates the basic idea in the context of the "Semantic Web":
 
 >It is about making links, so that a person or machine can explore the web of data. With linked data, when you have some of it, you can find other, related, data.
 
