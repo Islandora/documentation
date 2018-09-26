@@ -7,11 +7,9 @@ echo "Install utilities needed for testing"
 mkdir /opt/utils
 cd /opt/utils
 if [ -z "$COMPOSER_PATH" ]; then
-  composer require squizlabs/php_codesniffer ^2.9
   composer require drupal/coder
   composer require sebastian/phpcpd
 else
-  php -dmemory_limit=-1 $COMPOSER_PATH require squizlabs/php_codesniffer ^2.9
   php -dmemory_limit=-1 $COMPOSER_PATH require drupal/coder
   php -dmemory_limit=-1 $COMPOSER_PATH require sebastian/phpcpd
 fi
