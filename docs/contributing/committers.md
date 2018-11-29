@@ -33,6 +33,7 @@ The following is an alphabetized list of the current Islandora CLAW committers:
 | Jonathan Green              | LYRASIS                           | jonathangee |
 | Danny Lamb                  | Islandora Foundation              | dhlamb      |
 | Natkeeran Ledchumykanthan   | University of Toronto Scarborough | Natkeeran   |
+| Rosie Le Faive              | University of Prince Edward Island| rlefaive    |
 | Diego Pino                  | METRO                             | diegopino   |
 | Seth Shaw                   | University of Nevada, Las Vegas   | seth-shaw   |
 | Jared Whiklo                | University of Manitoba            | whikloj     |
