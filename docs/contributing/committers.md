@@ -31,6 +31,7 @@ The following is an alphabetized list of the current Islandora CLAW committers:
 |-----------------------------|-----------------------------------|-------------|
 | Aaron Coburn                | Amherst College                   | acoburn     |
 | Jonathan Green              | LYRASIS                           | jonathangee |
+| Mark Jordan                 | Simon Fraser University           | mjordan     |
 | Danny Lamb                  | Islandora Foundation              | dhlamb      |
 | Natkeeran Ledchumykanthan   | University of Toronto Scarborough | Natkeeran   |
 | Rosie Le Faive              | University of Prince Edward Island| rlefaive    |
