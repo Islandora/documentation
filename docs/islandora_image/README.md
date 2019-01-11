@@ -1,1 +1,0 @@
-../../islandora_image/README.md
