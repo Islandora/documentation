@@ -24,10 +24,8 @@ git clone https://github.com/Islandora-CLAW/drupal-project.git drupal
 cd drupal
 if [ -z "$COMPOSER_PATH" ]; then
   composer install
-  composer drupal-scaffold
 else
   php -dmemory_limit=-1 $COMPOSER_PATH install
-  php -dmemory_limit=-1 $COMPOSER_PATH drupal-scaffold
 fi
 
 echo "Setup Drush"
