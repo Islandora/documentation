@@ -11,6 +11,7 @@ For more details, please check out the following resources:
   * [2016](https://github.com/Islandora-CLAW/CLAW/wiki/2016)
   * [2017](https://github.com/Islandora-CLAW/CLAW/wiki/2017)
   * [2018](https://github.com/Islandora-CLAW/CLAW/wiki/2018)
+  * [2019](https://github.com/Islandora-CLAW/CLAW/wiki/2019)
 
 * [Documentation](https://islandora-claw.github.io/CLAW/)
 * [Contributing](https://github.com/Islandora-CLAW/CLAW/blob/master/CONTRIBUTING.md)
