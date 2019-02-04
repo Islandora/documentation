@@ -55,6 +55,20 @@ git clone https://github.com/Islandora-CLAW/carapace /opt/drupal/web/themes/cust
 drush then -y carapace
 drush -y config-set system.theme default carapace
 
+mkdir libraries
+cd libraries
+wget "https://github.com/mozilla/pdf.js/releases/download/v2.0.943/pdfjs-2.0.943-dist.zip"
+unzip pdfjs-2.0.943-dist.zip pdf.js
+rm pdfjs-2.0.943-dist.zip
+
+# Get the pdf module
+if [ -z "$COMPOSER_PATH" ]; then
+  composer require "drupal/pdf:1.x-dev"
+else
+  php -dmemory_limit=-1 $COMPOSER_PATH require "drupal/pdf:1.x-dev"
+fi
+drush -y en pdf
+
 echo "Setup ActiveMQ"
 cd /opt
 wget "http://archive.apache.org/dist/activemq/5.14.3/apache-activemq-5.14.3-bin.tar.gz"
