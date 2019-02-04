@@ -58,7 +58,8 @@ drush -y config-set system.theme default carapace
 mkdir libraries
 cd libraries
 wget "https://github.com/mozilla/pdf.js/releases/download/v2.0.943/pdfjs-2.0.943-dist.zip"
-unzip pdfjs-2.0.943-dist.zip pdf.js
+mkdir pdf.js
+unzip pdfjs-2.0.943-dist.zip -d pdf.js
 rm pdfjs-2.0.943-dist.zip
 
 # Get the pdf module
