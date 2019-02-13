@@ -1,0 +1,24 @@
+[submodule "Alpaca"]
+	path = Alpaca
+	url = https://github.com/Islandora-CLAW/Alpaca
+[submodule "islandora"]
+	path = islandora
+	url = https://github.com/Islandora-CLAW/islandora
+[submodule "claw-playbook"]
+	path = claw-playbook
+	url = https://github.com/Islandora-Devops/claw-playbook
+[submodule "chullo"]
+	path = chullo
+	url = https://github.com/Islandora-CLAW/chullo
+[submodule "Crayfish"]
+	path = Crayfish
+	url = https://github.com/Islandora-CLAW/Crayfish
+[submodule "jsonld"]
+	path = jsonld
+	url = https://github.com/Islandora-CLAW/jsonld
+[submodule "Syn"]
+	path = Syn
+	url = https://github.com/Islandora-CLAW/Syn
+[submodule "Crayfish-Commons"]
+	path = Crayfish-Commons
+	url = https://github.com/Islandora-CLAW/Crayfish-Commons
