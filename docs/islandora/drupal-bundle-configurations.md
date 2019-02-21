@@ -4,7 +4,7 @@ In Islandora CLAW, [content models](https://github.com/Islandora/islandora/wiki/
 
 Content types and media bundles can be thought of as web [forms](https://www.drupal.org/docs/user_guide/en/structure-widgets.html) consisting of fields. Drupal provides [widgets](https://www.drupal.org/docs/8/creating-custom-modules/create-a-custom-field-widget) to define the behavior of a field and field storage to define how the data is stored in the database. Drupal provides various [display modes](https://www.drupal.org/docs/8/api/entity-api/display-modes-view-modes-and-form-modes) to show the forms to user when they are editing (Manage form display) or viewing (Manage display). 
 
-A content model is packaged as a module for installation. All yml files are put in `config/install` folder of the module.  Example content models: [islandora_collection](https://github.com/Islandora-CLAW/islandora_collection), [islandora_image](https://github.com/Islandora-CLAW/islandora_image). Note that not all content models would contain media bundles.  
+A content model is packaged as a module for installation. All yml files are put in `config/install` folder of the module. Note that not all content models would contain media bundles.  
 
 The following files define the bundles themselves. It contains some metadata about the bundle and lists its dependencies.  
 ```

@@ -1,33 +1,24 @@
 [submodule "Alpaca"]
-  path = Alpaca
-  url = https://github.com/Islandora-CLAW/Alpaca
-  branch = master
+	path = Alpaca
+	url = https://github.com/Islandora-CLAW/Alpaca
 [submodule "islandora"]
-  path = islandora
-  url = https://github.com/Islandora-CLAW/islandora
-  branch = 8.x-1.x
-[submodule "claw_playbook"]
-  path = claw_playbook
-  url = https://github.com/Islandora-Devops/claw-playbook
-  branch = master
-[submodule "islandora_image"]
-  path = islandora_image
-  url = https://github.com/Islandora-CLAW/islandora_image.git
+	path = islandora
+	url = https://github.com/Islandora-CLAW/islandora
+[submodule "claw-playbook"]
+	path = claw-playbook
+	url = https://github.com/Islandora-Devops/claw-playbook
 [submodule "chullo"]
 	path = chullo
-	url = git@github.com:Islandora-CLAW/chullo.git
+	url = https://github.com/Islandora-CLAW/chullo
 [submodule "Crayfish"]
 	path = Crayfish
-	url = git@github.com:Islandora-CLAW/Crayfish.git
+	url = https://github.com/Islandora-CLAW/Crayfish
 [submodule "jsonld"]
 	path = jsonld
-	url = git@github.com:Islandora-CLAW/jsonld.git
+	url = https://github.com/Islandora-CLAW/jsonld
 [submodule "Syn"]
 	path = Syn
-	url = git@github.com:Islandora-CLAW/Syn.git
+	url = https://github.com/Islandora-CLAW/Syn
 [submodule "Crayfish-Commons"]
 	path = Crayfish-Commons
-	url = git@github.com:Islandora-CLAW/Crayfish-Commons.git
-[submodule "drupal-project"]
-	path = drupal-project
-	url = git@github.com:Islandora-CLAW/drupal-project.git
+	url = https://github.com/Islandora-CLAW/Crayfish-Commons

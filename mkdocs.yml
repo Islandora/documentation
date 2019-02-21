@@ -7,6 +7,8 @@ dev_addr: 'localhost:8111'
 repo_url: https://github.com/Islandora-CLAW/CLAW
 
 theme: material
+markdown_extensions:
+  - admonition
 
 extra:
   font:
@@ -22,40 +24,41 @@ extra:
     - type: 'twitter'
       link: 'https://twitter.com/islandora'
 
-pages:
-
-- User Documentation:
-    - 'Introduction to Islandora CLAW': 'user-documentation/intro-to-claw.md'
-    - 'Islandora CLAW for 1.x Users': 'user-documentation/CLAWfor1x.md'
-    - 'Introduction to Linked Data for CLAW': 'user-documentation/intro-to-ld-for-claw.md'
-    - 'Getting Started with Islandora CLAW': 'user-documentation/getting-started-with-islandora-claw.md'
-- Technical Documentation:
-    - 'Minimum Viable Product': 'mvp/mvp_doc.md'
-    - 'How to build documenation': 'technical-documentation/docs-build.md'
-    - 'Syncing Drupal Project': 'technical-documentation/drupal-project.md'
-    - 'Versioning Policy': 'technical-documentation/versioning.md'
-    - 'Alpaca Technical Stack': 'alpaca/alpaca-technical-stack.md'
-    - 'RDF Mapping': 'islandora/rdf-mapping.md'
-    - 'Drupal Bundle Configurations': 'islandora/drupal-bundle-configurations.md'
-- Components:
-    - 'Islandora CLAW': 'index.md'
-    - 'Alpaca': 'alpaca/README.md'
-    - 'Chullo': 'chullo/README.md'
-    - 'Crayfish': 'crayfish/README.md'
-    - 'Crayfish-Commons': 'crayfish-commons/README.md'
-    - 'Syn': 'syn/README.md'
-    - Drupal modules:
-      - 'Islandora': 'islandora/README.md'
-      - 'Islandora Collection': 'islandora_collection/README.md'
-      - 'Islandora Image': 'islandora_image/README.md'
-      - 'jsonld': 'jsonld/README.md'
-- Installation:
-    - 'Installation (Vagrant)': 'install/README.md'
-- Contributing:
-    - 'How to contribute': 'contributing/CONTRIBUTING.md'
-    - 'Committers': 'contributing/committers.md'
-    - 'Hacking on Islandora': 'contributing/hacking-on-islandora.md'
-- Migration:
-    - 'Migration': 'migration/migration.md'
-    - 'Fedora namespace predicates': 'migration/fedora-namespace-predicates.md'
-    - 'Islandora namespace predicates': 'migration/islandora-namespace-predicates.md'
+nav:
+  - Summary: 'index.md'
+  - User Documentation:
+      - 'Intro': 'user-documentation/user-intro.md'
+      - 'Objects are Nodes': 'user-documentation/objects.md'
+      - 'Metadata are Fields': 'user-documentation/metadata.md'
+      - 'Datastreams are Media': 'user-documentation/datastreams.md'
+      - 'Derivatives': 'user-documentation/derivatives.md'
+      - 'Organizing your Collections': 'user-documentation/collections.md'
+      - 'Access Control': 'user-documentation/access-control.md'
+      - 'Objects in Fedora/RDF': 'user-documentation/fedora-rdf.md'
+      - 'Solr': 'user-documentation/solr.md'
+      - 'Introduction to Islandora CLAW [old]': 'user-documentation/intro-to-claw.md'
+      - 'Islandora CLAW for 1.x Users [old]': 'user-documentation/CLAWfor1x.md'
+      - 'Introduction to Linked Data for CLAW [old]': 'user-documentation/intro-to-ld-for-claw.md'
+      - 'Getting Started with Islandora CLAW [old]': 'user-documentation/getting-started-with-islandora-claw.md'
+  - Technical Documentation:
+      - 'Structure': 'technical-documentation/structure.md'
+      - 'Components':
+          - 'Alpaca': 'alpaca/README.md'
+          - 'Chullo': 'chullo/README.md'
+          - 'Crayfish': 'crayfish/README.md'
+          - 'Crayfish Commons': 'crayfish-commons/README.md'
+          - 'Syn': 'syn/README.md'
+          - 'Islandora (Drupal Module)': 'islandora/README.md'
+          - 'Jsonld (Drupal Module)': 'jsonld/README.md'
+      - 'Minimum Viable Product': 'mvp/mvp_doc.md'
+      - 'How to build documenation': 'technical-documentation/docs-build.md'
+      - 'Syncing Drupal Project': 'technical-documentation/drupal-project.md'
+      - 'Versioning Policy': 'technical-documentation/versioning.md'
+  - Contributing:
+      - 'How to contribute': 'contributing/CONTRIBUTING.md'
+      - 'Committers': 'contributing/committers.md'
+      - 'Hacking on Islandora': 'contributing/hacking-on-islandora.md'
+  - Migration:
+      - 'Migration': 'migration/migration.md'
+      - 'Fedora namespace predicates': 'migration/fedora-namespace-predicates.md'
+      - 'Islandora namespace predicates': 'migration/islandora-namespace-predicates.md'

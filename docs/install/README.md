@@ -1,1 +1,0 @@
-../../claw_playbook/README.md

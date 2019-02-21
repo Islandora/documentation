@@ -29,6 +29,4 @@ Example: 8.x-1.1
 
 * [drupal-project](https://github.com/Islandora-CLAW/drupal-project)
 * [islandora](https://github.com/Islandora-CLAW/islandora)
-* [islandora collection](https://github.com/Islandora-CLAW/islandora_collection)
-* [islandora image](https://github.com/Islandora-CLAW/islandora_image)
 * [jsonld](https://github.com/Islandora-CLAW/jsonld)
