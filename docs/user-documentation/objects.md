@@ -1,6 +1,19 @@
-Islandora has the concept of an "Object", a bundle of files and their associated metadata. It's a remnant of the Islandora 7.x model, which was grounded in the Fedora 3.x object model, but we haven't entirely dropped it because our community still relies on this concept.
+## What is an Islandora 8 object?
 
-However, in CLAW, an object is distributed. In Drupal it is distributed over a graph of related Drupal Entities, and in Fedora it is distributed over a number of Fedora "objects" including RDF and non-RDF sources.
+Islandora 7 has the concept of an "object" that is based on the Fedora 3.x object model: an object has properties such as an owner, date created, date modified, and status, and each object contains a set of files (known as "datastreams"), such as RELS-EXT, DC, MODS, and OBJ. The relationships between the object and its datastreams is highly constrained: datastreams cannot exist without a parent object, and each object can have only one DC datastream, one RELS-EXT datastream, and so on.
+
+In Islandora 8, we can also talk about "objects", but the underlying relationships between a collecion of properties and its associated files differ substantially from those that make up an Islandora 7.x object as we visualize it. An object in Islandora 8 is a Drupal node, along with associated "media" (which is Drupal 8's name for files and their associated properties). For example, a node created by the Drupal user "admin" (user ID 1) on February 24, 2019, has the following properties:
+
+```
+schema:author <http://localhost:8000/user/1?_format=jsonld>
+schema:dateCreated <>
+dcterms:title "I am an Islandora 8 object"@en
+```
+
+In Islandora 8, using Fedora is optional (although most Islandora instances will use it). If an Islandora 8 site uses Fedora, Fedora stores copies of some (or optionally all) of an object's media and also some of statements about the object. These statements are stored in Fedora as RDF, and include things like creator, date modified, date updated, and so on. Even if an Islandora instance does not use Fedora, Drupal can provide an object's properties as RDF.
+
+An object has one or more media associated with it. Unlike in Islandora 7.x, where each object is aware of all of its datastreams, in Islandora 8, the object doesn't know what media are associated with it. The relationship is the other way around: each media knows what node it is attached to. The relationship that defines a media's parent object is expressed by Drupal as .. and within Fedora, as ...
+
 
 todo: insert a diagram.
 
