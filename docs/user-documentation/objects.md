@@ -1,6 +1,6 @@
 ## What is an Islandora 8 object?
 
-### Structure and properties
+### Object structure and properties
 
 Islandora 7 has the concept of an "object" that is based on the Fedora 3.x object model: an object has properties such as an owner, date created, date modified, and status, and each object contains a set of files (known as "datastreams") identified by datastream IDs, such as RELS-EXT, DC, MODS, and OBJ. The relationships between the object and its datastreams is highly constrained: datastreams cannot exist without a parent object, and each object can have only one DC datastream, one RELS-EXT datastream, and so on.
 
@@ -28,7 +28,7 @@ status | status
 
 In addition to these basic node properties, Islandora 8 objects (like all Drupal nodes) can have fields, which is where most of what we would think of as metadata is stored. The section on [metadata](metadata.md) describes how fields work.
 
-## Media
+### Media
 
 If Drupal nodes are the Islandora 8 equivelant of Islandora 7.x objects, "media" are the equivalent of Islandora 7.x datastreams. In Drupal 8, media are wrappers around files (images, audio files, video files, XML files, etc.) that provide information about the files, such as their MIME type, size, created data, etc. Like Drupal nodes, media can have fields and tags. One important set of tags defined by Islandora is the "Media Use" vocabulary, and it is this vocabulary that defines what is the closest to what we know in Islandora 7.x as datastream IDs. Tags from this vocabulary include "Original File" (analogous to Islandora 7.x' OBJ datastream ID), "Preservation master", "Thumbnail" (analogous to the TN datastream ID), "FITS File", and "Extracted text" (analogous to the OCR datastream ID).
 
@@ -57,7 +57,7 @@ Even though Fedora is optional in Islandora 8, most repositories will use it sin
 In Islandora repositories that use Fedora, all properties about Drupal nodes are mirrored in Fedora as RDF properties. But, even if an Islandora instance does not use Fedora, Drupal can provide an object's properties as RDF (again, Drupal is the primary source of data in Islandora 8). In addition, the Drupal media associated with Islandora 8 objects are persisted to Fedora, although exactly which media is configurable within the Islandora 8 admin interface. Just as Drupal out of the box has a public and private filesystem, Islandora adds a third filesystem to Drupal called, not surprisigly, "fedora", and it is to this filesystem that media are persisted. We will provide more information about Fedora's role in an Islandora 8 repository in the [metadata](metadata.md) and [media](media.md) sections.
 
 
-# Pre March 2019 sprint notes below
+### Pre March 2019 sprint notes below
 
 although most Islandora instances will use it). If an Islandora 8 site uses Fedora, Fedora stores copies of some (or optionally all) of an object's media and also some of statements about the object. These statements are stored in Fedora as RDF, and include things like creator, date modified, date updated, and so on. Even if an Islandora instance does not use Fedora, Drupal can provide an object's properties as RDF.
 
