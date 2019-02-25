@@ -12,6 +12,10 @@ Because the Media Use vocabulary is a standard Drupal vocabulary, Islandora 8 si
 
 Islandora 8 generates derivatives much like Islandora 7 does. Just as Islandora 7.x's derivatives get assigned datastream IDs, Islandora 8's derivatives are assigned values from the Media Use vocabulary. For example, a thumbnail generated from am image is assigned the "Thumbnail image" tag. The derivatives are listed along with the rest of an Islandora 8 object's media, within the "Media" tab in the object:
 
+![Media tab](../assets/media_tab.png)
+
+For this image, we can see that a "Service File" and a "Thumbnail Image" derivatives have been generated and added to the object's list of media:
+
 ![Media tab](../assets/islandora_8_derivatives_sample.png)
 
 
