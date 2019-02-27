@@ -23,10 +23,12 @@ Islandora 7.x object properties | Islandora 8.x node/object properties
 owner | userid
 dc.title | title
 PID | uuid
-cmodel | type
+content model | type (and also ... tags)
 status | status
 
 In addition to these basic node properties, Islandora 8 objects (like all Drupal nodes) can have fields, which is where most of what we would think of as metadata is stored. The section on [metadata](metadata.md) describes how fields work.
+
+Islandora's 7.x's content models do not exist in Islandora 8. [finish this section]
 
 ### Media
 
