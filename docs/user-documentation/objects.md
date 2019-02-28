@@ -23,12 +23,16 @@ Islandora 7.x object properties | Islandora 8.x node/object properties
 owner | userid
 dc.title | title
 PID | uuid
-content model | type (and also ... tags)
+content model | type (and also tags from the Model vocabulary)
 status | status
 
 In addition to these basic node properties, Islandora 8 objects (like all Drupal nodes) can have fields, which is where most of what we would think of as metadata is stored. The section on [metadata](metadata.md) describes how fields work.
 
-Islandora's 7.x's content models do not exist in Islandora 8. [finish this section]
+Islandora's 7.x's content models do not exist in Islandora 8. The primary way that Islandora 8 identifies what we think of as a conetent model in Islandora 7.x is using taxonomy terms from the "Islandora Models" vocabulary. To indicate that an Islandora 8 object is an image, video, etc, the user selects a model from a select list:
+
+![Media tab](../assets/object_model_tags.png)
+
+The combination of Drupal content type (e.g., islandora_object) and a value from the "Islandora Models" vocabulary (e.g. "Image") are the equivalent of Islandora 7.x's content models. In Islandora 7.x, an object's content model is immutable, but in Islandora 8, an object's model can be changed from within its node edit form using a select list.
 
 ### Media
 
