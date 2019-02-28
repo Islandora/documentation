@@ -14,8 +14,8 @@ Let's look at the example of how Context can determine how an object is diplayed
 
 ![Open Seadragon Context configuration](../assets/context_openseadragon_configuration.png)
 
-One important group of functionality in Islandora 8 repositories that admins might want to control is what types of [media](datastreams.md) get persisted to Fedora. Unlike in Islandora 7.x, Islandora 8 allows administrators to choose what types of media get persisted to Fedora. For example, you may only want the "Preservation Master" and "Original File" media persisted to Feodra, but not "Thumbnails". This is dertermined using Contexts.
+One important group of functionality in Islandora 8 repositories that admins might want to control is what types of [media](datastreams.md) get persisted to Fedora. Unlike in Islandora 7.x, Islandora 8 allows administrators to choose what types of media get persisted to Fedora. For example, you may want to persist your thumbnails to Fedora along with your "Preservation Master" and "Original File" files. This is be accomplished using Context.
 
-[add the example of not persisting thumbnails to Fedora here]
+[Issue for persisting thumbnails to Fedora is as https://github.com/Islandora-CLAW/CLAW/issues/1037]
 
-Most Islandora 8 repository administrators will not need to alter or configure the Contexts that perform these operations. But since much of Islandora 8's underlying functionality is governed by Context, administrators should be comfortable using it to customize their repositories.
+Most Islandora 8 repository administrators will not need to alter or configure any Contexts. But since much of Islandora 8's underlying functionality is governed by this powerful Drupal contib module, administrators should be comfortable using it to customize their repositories.
