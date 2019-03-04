@@ -20,4 +20,4 @@ For this image, we can see that a "Service File" and a "Thumbnail Image" derivat
 
 ### Media revisions
 
-To be complted on resolutino of https://github.com/Islandora-CLAW/CLAW/issues/1035.
+To be complted on resolution of https://github.com/Islandora-CLAW/CLAW/issues/1035.
