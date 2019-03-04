@@ -55,7 +55,7 @@ Even though Fedora is optional in Islandora 8, most repositories will use it sin
 
 * flexible, and configurable, disk storage architecture
 * fixity digest generation
-* Momento versioning
+* Memento versioning
 * integration with RDF/Linked Data triplestores
 * integration with microservices
 * access control mechanisms
