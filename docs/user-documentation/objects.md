@@ -7,7 +7,7 @@ Islandora 7 has the concept of an "object" that is based on the Fedora 3.x objec
 In Islandora 8, we can also talk about "objects", but the underlying relationships between a collection of properties and its associated files differ substantially from those that make up an Islandora 7.x object. An object in Islandora 8 is a Drupal node, along with associated "media" (which is Drupal 8's name for files and their properties; media are described in detail [elsewhere](datastreams.md).) For example, an Islandora 8 object created by the Drupal user "admin" (user ID 1) on February 24, 2019, has the following properties:
 
 ```
-userid: 1
+uid: 1
 title: "I am an Islandora 8 object"
 created: 1550703004
 changed: 1550703512
