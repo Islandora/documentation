@@ -16,11 +16,11 @@ Let's look at the example of how Context can determine how an object is diplayed
 
 ![Open Seadragon Context configuration](../assets/context_openseadragon_configuration.png)
 
-## Context and Actions
+### Context and Actions
 
-Context in Drupal 8 uses Drupal Actions to execute the "then that" part of their logic. An important implication of this is some configuration options relevant to the outcome of the "then that" reaction are configured in the Action admin interface (located at `admin/config/system/actions`), not within the Context admin interface (located at `admin/structure/context`). While this makes for a clunky admin experience, the advantage is that it allows the reuse of a single piece of Drupal code in multiple Contexts.
+Context in Drupal 8 uses Drupal Actions to execute the "then that" part of their logic. An implication of this is some configuration options relevant to the outcome of the "then that" reaction are configured in the Action admin interface (located at `admin/config/system/actions`), not within the Context admin interface (located at `admin/structure/context`). While this makes for a clunky admin experience, the advantage is that it allows the reuse of a single piece of Drupal code in multiple Contexts.
 
-One important group of functionality in Islandora 8 repositories that admins might want to control is what types of [media](datastreams.md) get persisted to Fedora. Islandora 8 allows administrators to choose what types of media get persisted to Fedora and what types of media get persisted to the Drupal public file system. For example, you may want to persist your thumbnails to Fedora along with your "Preservation Master" and "Original File" files. This is be accomplished using Context.
+One important group of functionality in Islandora 8 repositories that admins might want to control is what types of [media](datastreams.md) get persisted to Fedora. Islandora 8 allows administrators to choose what types of media get persisted to Fedora and what types of media get persisted to the Drupal public file system. For example, you may want to persist your thumbnails to Fedora along with your "Preservation Master" and "Original File" files. This can be accomplished using Context.
 
 By default Islandora 8 stores thumbnails in Drupal's public file system, not in Fedora. Thumbnails are automatically gererated by a Context (the "Image Service File" Context to be specific), but if you want to change the file system where your thumbnails are stored to the Fedora file system, you need to change that setting in the "Image - Generate a thumbnail from a service file" Action, not in the Context that uses that action:
 
