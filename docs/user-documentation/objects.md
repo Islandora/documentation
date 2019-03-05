@@ -34,7 +34,7 @@ One implication of assigning a "content model" using a Drupal vocabulary is that
 
 ### Drupal Content Types as Islandora Metadata Profiles
 
-In addition to the basic node properties identified above, Islandora 8 objects (like all Drupal nodes) can have fields, which is where most of what we would think of as descriptive metadata is stored. Since a specific set of fields is assigned to a Drupal content type, we can create different "metadata profiles", or in other words groups of required and optional fields, to different Drupal content types. For example, you might have a content type for a set of repository objects that have very specialized metadata requirements but another content type for generic repository objects that share a more general set of metadata fields. The section on [metadata](metadata.md) describes in more detail how fields on Islandora objects work.
+In addition to the basic node properties identified above, Islandora 8 objects (like all Drupal nodes) can have fields, which is where most of what we would think of as descriptive metadata is stored. Since a specific set of fields is assigned to a Drupal content type, we can create different "metadata profiles", or in other words groups of required and optional fields, as different Drupal content types. For example, you might have a content type for a set of repository objects that have very specialized metadata requirements but another content type for generic repository objects that share a more general set of metadata fields. The section on [metadata](metadata.md) describes in more detail how fields on Islandora objects work.
 
 ### Media
 
