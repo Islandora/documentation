@@ -4,7 +4,7 @@
 
 > If an object's namespace is 'customnamespace', render the block containing the rights statement "Please contact Special Collections before reusing this item".
 
-The Context project page on drupal.org says "You can think of each context as representing a 'section' of your site", but that doesn't tell the whole story, since it gives the impression that Context is all about defining subsites. Context in Drupal 8 is much more powerful in Drupal 8 than in Drupal 7 due to how it interacts with the rest of Drupal (specifically, through Drupal 8's new plugin API). Because of this increased flexibility and power, and because Context provides a ready-made user interface for site administrators to combine conditions and reactions, Islandora 8 uses Context to drive the logic underlying many important aspects of Islandora, including which derivatives get generated and how objects are displayed. In Islandora 7, many of these things were managed (and often hard-coded) within solution packs and utility modules.
+The Context project page on drupal.org says "You can think of each context as representing a 'section' of your site", but that doesn't tell the whole story, since it gives the impression that Context is all about defining subsites. Context in Drupal 8 is much more powerful than in Drupal 7 due to how it interacts with the rest of Drupal (specifically, through Drupal 8's new plugin API). Because of this increased flexibility and power, and because Context provides a ready-made user interface for site administrators to combine conditions and reactions, Islandora 8 uses Context to drive the logic underlying many important aspects of Islandora, including which derivatives get generated and how objects are displayed. In Islandora 7, many of these things are managed (and often hard-coded) within solution packs and utility modules.
 
 ### An Example
 
@@ -22,7 +22,7 @@ Context in Drupal 8 uses Drupal Actions to execute the "then that" part of their
 
 One important group of functionality in Islandora 8 repositories that admins might want to control is what types of [media](datastreams.md) get persisted to Fedora. Islandora 8 allows administrators to choose what types of media get persisted to Fedora and what types of media get persisted to the Drupal public file system. For example, you may want to persist your thumbnails to Fedora along with your "Preservation Master" and "Original File" files. This can be accomplished using Context.
 
-By default Islandora 8 stores thumbnails in Drupal's public file system, not in Fedora. Thumbnails are automatically gererated by a Context (the "Image Service File" Context to be specific), but if you want to change the file system where your thumbnails are stored to the Fedora file system, you need to change that setting in the "Image - Generate a thumbnail from a service file" Action, not in the Context that uses that action:
+By default Islandora 8 stores thumbnails in Drupal's public file system, not in Fedora. Thumbnails are automatically gererated by a Context (the "Image Service File" Context to be specific), but if you want to change the file system where your thumbnails are stored to the be Fedora file system, you need to change that setting in the "Image - Generate a thumbnail from a service file" Action, not in the Context that uses that action:
 
 ![Thumbnail location Context configuration](../assets/context_thumbnail_file_system.png)
 
