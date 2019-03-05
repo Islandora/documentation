@@ -6,9 +6,9 @@ Islandora uses [Flysystem](https://github.com/thephpleague/flysystem) and the [a
 
 "[Flysystem](https://flysystem.thephpleague.com/docs/) is a filesystem abstraction library for PHP" which allows applications to read from and write to a variety of data source beyond the local file system, such as an [SFTP server](https://flysystem.thephpleague.com/docs/adapter/sftp/), [Amazon S3](https://flysystem.thephpleague.com/docs/adapter/aws-s3/), and [Zip files](https://flysystem.thephpleague.com/docs/adapter/zip-archive/) provided an [Adapter](https://flysystem.thephpleague.com/docs/advanced/creating-an-adapter/) is available to support it. Flysystem Adapters extend a single class implementing `League\Flysystem\FilesystemInterface` although some separate adapter traits for common actions and properties, such as the StreamedCopyTrait, are available.
 
-The [Flysystem Drupal module](https://www.drupal.org/project/flysystem) extends Flysystem to work within the Drupal filesystem structure. Drupal flysystem plugins include a Flysystem adapter (if not provided by default or in another library) and a class implementing `Drupal\flysystem\Plugin\FlysystemPluginInterface` which instantiates the Flysystem adapter based on the Drupal site's configuration.
+The [Drupal Flysystem module](https://www.drupal.org/project/flysystem) extends Flysystem to work within the Drupal filesystem structure. Drupal flysystem plugins include a Flysystem adapter (if not provided by default or in another library) and a class implementing `Drupal\flysystem\Plugin\FlysystemPluginInterface` which instantiates the Flysystem adapter based on the Drupal site's configuration.
 
-The Drupal filesystem descriptors are configured in the site's `settings.php` file; including the filesystem prefix, adapter (driver), and any adapter-specific configurations such as API endpoints and authorization information.
+The Drupal Flysystem module uses [flysystem stream wrappers](https://github.com/twistor/flysystem-stream-wrapper) to define filesystem descriptors which are configured in the site's `settings.php` file. The configurations including the filesystem prefix, adapter (driver), and any adapter-specific configurations such as API endpoints and authorization information.
 
 ## Islandora's Implementation
 
@@ -39,7 +39,7 @@ Islandora is configured to have all Media use the Fedora file system by default 
 
 However, there are methods for saving files that can explicitly set a different filesystem than the default. Migrations can explicitly set which file system a file is saved to and Islandora can emit events that also specify which file system a derivative should be saved to.
 
-# Derivatives
+### Derivatives
 
 As hinted in the previous section, Islandora, by default saves derivatives to the Drupal public file system.
 
