@@ -23,16 +23,18 @@ Islandora 7.x object properties | Islandora 8.x node/object properties
 owner | userid
 dc.title | title
 PID | uuid
-content model | type (and also tags from the Islandora Models vocabulary)
+content model | a tag from the Islandora Models vocabulary
 status | status
-
-In addition to these basic node properties, Islandora 8 objects (like all Drupal nodes) can have fields, which is where most of what we would think of as metadata is stored. The section on [metadata](metadata.md) describes how fields work.
 
 Islandora's 7.x's content models do not exist in Islandora 8. The primary way that Islandora 8 identifies what we think of as a conetent model in Islandora 7.x is using taxonomy terms from the "Islandora Models" vocabulary. To indicate that an Islandora 8 object is an image, video, etc, the user selects a model from a select list:
 
 ![Media tab](../assets/object_model_tags.png)
 
-The combination of Drupal content type (e.g., islandora_object) and a value from the "Islandora Models" vocabulary (e.g. "Image") are the equivalent of Islandora 7.x's content models. In Islandora 7.x, an object's content model is immutable, but in Islandora 8, an object's model can be changed from within its node edit form using a select list.
+One implication of assigning a "content model" using a Drupal vocabulary is that in Islandora 7.x, an object's content model is immutable, but since it is possible to change the value of a taxonomy term assigned to a node, in Islandora 8, an object's model can be changed easily.
+
+### Drupal Content Types as Islandora Metadata Profiles
+
+In addition to the basic node properties identified above, Islandora 8 objects (like all Drupal nodes) can have fields, which is where most of what we would think of as descriptive metadata is stored. Since a specific set of fields is assigned to a Drupal content type, we can create different "metadata profiles", or in other words groups of required and optional fields, to different Drupal content types. For example, you might have a content type for a set of repository objects that have very specialized metadata requirements but another content type for generic repository objects that share a more general set of metadata fields. The section on [metadata](metadata.md) describes in more detail how fields on Islandora objects work.
 
 ### Media
 
