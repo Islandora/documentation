@@ -28,6 +28,21 @@ By default Islandora 8 stores thumbnails in Drupal's public file system, not in 
 
 This configuration should be done as part of your initial Islandora 8 setup, since there is currently no way to move thumbnails that were persisted to Drupal's public file system to Fedora, or vice versa. But, at least site admins can choose one or the other using this Action.
 
+You can create custom actions and then use them in Contexts. For example, if you want to present a message to the user every time they upload a media tagged as "Preservation Master File", create an Action of type "Display a message to the user" and enter your message:
+
+![Context - thank user for preservation file: action](../assets/context_thank_user_for_preservation_master.png)
+
+Then, create a Context that uses this Action as its Reaction and as its Condition, "Media has term" with a value of "Presrevation Master File":
+
+![Context - thank user for preservation file: context](../assets/context_thank_user_context.png)
+
+Now when a user creates a Media and tags it as a "Preservation Master File", they will be shown the message you created in your Action:
+
+![Context - thank user for preservation file: dsm](../assets/context_thanks_dsm.png)
+
+How neat is that?
+
+
 ### Increased Flexibility
 
 Most Islandora 8 repository administrators will not need to alter or configure any Contexts. But since much of Islandora 8's underlying functionality is governed by this powerful Drupal contib module, administrators should become comfortable using it to customize their repositories. Also, since Islandora 8 objects are ordinary Drupal nodes, Islandora objects can take advantage of standard Drupal 8 Context functionality out of the box.
