@@ -20,7 +20,7 @@ These are Drupal node properties, which all Drupal nodes have (although not all 
 
 Islandora 7.x object properties | Islandora 8.x node/object properties
 ------------ | -------------
-owner | userid
+owner | uid
 dc.title | title
 PID | uuid
 content model | a tag from the Islandora Models vocabulary
