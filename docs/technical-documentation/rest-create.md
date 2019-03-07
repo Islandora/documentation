@@ -94,7 +94,7 @@ So the body of the request will be:
 }
 ```
 
-**Note**: You **must** include a **Content-type** header of type `application/json` on your request
+**Note**: You **must** include an **appropriate** Content-type header for the format you're requesting
 
 **Other Note**: You **must** include some authentication credentials to say who you are and so Drupal can check if you are allowed to create this object. Otherwise you will receive a `401 Unauthorized` response. 
 
@@ -144,6 +144,8 @@ Consequently there is a REST endpoint not listed in the REST UI, because it is n
 This endpoint is available at `http://localhost:8000/node/{node id}/media/{media type}/{media use}`
 
 It only accepts PUT requests. If the media and file don't exist they are created, if they exist the file is updated with the new body.
+
+The node and taxonomy term are used to search (via an [entity query](https://api.drupal.org/api/drupal/core!lib!Drupal.php/function/Drupal%3A%3AentityQuery/8.6.x)) for a media. If this media exists the body of the file is replaced with the new content, otherwise a new file is created to hold the contents.
 
 The tokens to this URI are as follows:
 
