@@ -50,19 +50,14 @@ Now let’s move our new field to a different part of the form. In the Admin men
 
 Finally, let’s change how the results of this field are displayed. As things stand now, our new field shows up at the bottom of repository object pages:
 
-[screentshot]
-
+![a screenshot of a "Needs Review?" field in the node display](/docs/assets/islandora8_fieldindisplay.png)
 
 In the Admin menu, return to Structure > Content Types and find the Repository Item content type again. Select Manage display.
 
-1. Find the Needs Review? We can change how the field title is display (inline/above/hidden entirely) and replace the options displayed with variations on a binary choice (yes/no, enabled/disabled, checkmark/X) or hide the field completely. 
+1. Find the *Needs Review?* We can change how the field title is display (inline/above/hidden entirely) and replace the options displayed with variations on a binary choice (yes/no, enabled/disabled, checkmark/X) or hide the field completely. 
 1. We can also drag the field into the Disabled section so that neither its label or its contents appear in the display, although the area saved on the node.
-1. Drag the field to Disabled and Save.
-1. We no longer see the field on the display, but it is available when editing the node:
-
-[screenshot]
-
-[screenshot]
+1. Drag the field to "Disabled" and save.
+1. We no longer see the field on the display, but it is available when editing the node.
 
 ## Create a Content Type
 
