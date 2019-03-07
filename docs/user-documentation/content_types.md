@@ -22,7 +22,7 @@ Let’s add a new field where a user can indicate if the repository item needs t
 
 1. Click “Add Field”
 1. Since this is a “yes/no” decision, we will use “Boolean” and give the field a name. [List of Drupal 8 FieldTypes, FieldWidgets, and FieldFormatters](https://www.drupal.org/docs/8/api/entity-api/fieldtypes-fieldwidgets-and-fieldformatters)
-1. Now we configure how the field is stored in the Drupal database. For this field type we can select how many values will be allowed. Set this value to "1":
+1. Now we configure how the field is stored in the Drupal database. For this field type we can select how many values will be allowed. Set this value to "1."
 1. Now we configure how the field is described (including its display label and the help text for when it appears on a form) and constraints on its use. In this case, the field will be required for this Content Type, and will be set to “on” by default: 
 
 ![a screenshot of the field settings page](/docs/assets/islandora8_fieldsettings.png)
@@ -35,7 +35,7 @@ And it appears in the ingest form when we try to create a new repository object:
 
 ![a screenshot of a "Needs Review?" field appearing at the bottom of a new node form](/docs/assets/islandora8_newfieldinform.png)
 
-!!! tip New fields, with the exception of Typed Relation fields, are not automatically indexed in Fedora and the triple-store. Update the Content Type's RDF Mapping [link that section of the docs] to enable indexing the field. 
+!!! tip New fields, with the exception of Typed Relation fields, are not automatically indexed in Fedora and the triple-store. Update the Content Type's RDF Mapping to enable indexing the field (see below). 
 
 !!! tip To add new behavior based on the results of this new field, check out [link to Context docs]
 
@@ -63,14 +63,15 @@ In the Admin menu, return to Structure > Content Types and find the Repository I
 
 To create your own custom content type from scratch, please refer to [this guide](https://www.drupal.org/docs/8/administering-drupal-8-site/managing-content-0/create-a-custom-content-type) on Drupal.org.
 
+Custom content types are not synced to Fedora or indexed by the triple-store by default. Repository managers must add them to the "Content" ('repository_content') context before their nodes are synced to Fedora and indexed by the triple-store. Any of the custom content type's nodes that were created before updating the context will need to have the indexing action manually triggered.
 
 ## Update / Create an RDF Mapping
 
-RDF mapping is aligning drupal fields to RDF ontology properties. For example the title field of a content model can be mapped to dcterms:title and/or schema:title. In Islandora 8, triples expressed by these mappings get synced to Fedora and indexed in the Blazegraph triplestore. RDF mappings are defined/stored in Drupal as a YAML file. Currently, Drupal 8 does not have a UI to create/update RDF mappings to ontologies other than Schema.org. This requires repository managers to update the configuration files themselves. 
+RDF mapping is aligning drupal fields to RDF ontology properties. For example the title field of a content model can be mapped to dcterms:title and/or schema:title. In Islandora 8, triples expressed by these mappings get synced to Fedora and indexed in the Blazegraph triplestore. RDF mappings are defined/stored in Drupal as a YAML file (to learn more about YAML, there are [several tutorials on the web](https://duckduckgo.com/?q=yaml+tutorial). Currently, Drupal 8 does not have a UI to create/update RDF mappings to ontologies other than Schema.org. This requires repository managers to update the configuration files themselves. 
 
 The Drupal 8 Configuration Synchronization export (e.g. `http://localhost:8000/admin/config/development/configuration/single/export`) and import (e.g. `http://localhost:8000/admin/config/development/configuration/single/import`) can be used to get a copy of the mappings for editing in a text editor before being uploaded again. Alternatively, a repository manager can update the configuration on the server and use Features to import the edits.
 
-RDF mappings, like all Drupal configuration files, are written in [YAML](https://yaml.org/). YAML is out of scope for this documentation, but there are [several tutorials on the web](https://duckduckgo.com/?q=yaml+tutorial). 
+RDF mappings, like all Drupal configuration files, are written in [YAML](https://yaml.org/). 
 
 An RDF mapping configuration file has two main areas, the mapping's metadata and the mapping itself. Most of the mapping's metadata should be left alone unless you are creating a brand new mapping for a new Content Type or Taxonomy Vocabulary. 
 
@@ -78,7 +79,7 @@ The required mapping metadata fields when creating a brand-new mapping include t
 
 The mapping itself consists of the `types`' and `fieldMappings` configurations.
 
-All the mappings use RDF namespaces instead of fully-qualified URIs. For example, the repository item's type is `pcdm:Object` instead of `http://pcdm.org/models#Object`. Unfortunately, the available namespaces are defined in module hooks (hook_rdf_namespaces) rather than in a configuration file. Repository managers need to create their own module and implement hook_rdf_namespaces to make additional namespaces available. See the islandora_demo hook implementation for an example.
+All the mappings use RDF namespaces instead of fully-qualified URIs. For example, the repository item's type is `pcdm:Object` instead of `http://pcdm.org/models#Object`. Unfortunately, the available namespaces are defined in module hooks (hook_rdf_namespaces) rather than in a configuration file. Repository managers need to create their own module and implement hook_rdf_namespaces to make additional namespaces available. See the [islandora_demo](https://github.com/Islandora-CLAW/islandora_demo/blob/8.x-1.x/islandora_demo.module) hook implementation for an example.
 
 Namespaces currently supported (ordered by the module that supplies them) include:
  * rdf
@@ -112,7 +113,7 @@ Namespaces currently supported (ordered by the module that supplies them) includ
       * org: https://www.w3.org/TR/vocab-org/#org:
       * xs: http://www.w3.org/2001/XMLSchema#
 
-The `types` corresponds to the `rdf:type` predicate (which corresponds to JSON-LD's `@type`) and can have multiple values. This type value will be applied to every node or taxonomy term using the mapped type or vocabulary.
+The `types` corresponds to the `rdf:type` predicate (which corresponds to JSON-LD's `@type`) and can have multiple values. This type value will be applied to every node or taxonomy term using the mapped content type or vocabulary.
 
 In some cases a repository may want a node or taxonomy term's `rdf:type` to be configurable. For example, the Corporate Body Vocabulary (provided by the Controlled Access Terms Default Configuration module) has `schema:Organization` set as the default type in the RDF mapping. However, more granular types may apply to one organization and not another, such as `schema:GovernmentOrganization` or `schema:Corporation`. The `alter_jsonld_type` Context reaction allows Content Types and Taxonomy Vocabularies to add a field's values as `rdf:types` to its JSON-LD serialization (the format used to index a node or taxonomy term in Fedora and the triple-store).
 
