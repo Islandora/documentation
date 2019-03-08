@@ -33,6 +33,7 @@ nav:
       - 'Datastreams are Media': 'user-documentation/datastreams.md'
       - 'Derivatives': 'user-documentation/derivatives.md'
       - 'Organizing your Collections': 'user-documentation/collections.md'
+      - 'Managing Users': 'user-documentation/users.md'
       - 'Access Control': 'user-documentation/access-control.md'
       - 'Objects in Fedora/RDF': 'user-documentation/fedora-rdf.md'
       - 'Solr': 'user-documentation/solr.md'
