@@ -188,9 +188,9 @@ Content-Type: text/html; charset=UTF-8
 The parts of the above request are:
 
 1. `-i` - return the response headers 
-1. `-X PUT` - send a POST request
+1. `-X PUT` - send a PUT request
 1. `-u admin:islandora` - use these basic authentication credentials
-1. `-H"Content-type: image/pnd"` - send the content-type header
+1. `-H"Content-type: image/png"` - send the content-type header
 1. `--data-binary "@my-image.png"` - send the contents of the file located at my-image.png as binary
 1. `-H"Content-Location: public://images/my-image.png"` - store the file in the public scheme at the path `images/my-image.png`
 1. `'http://localhost:8000/node/3/media/image/16'` - the endpoint of the request specifying the node, media type and taxonomy term.
