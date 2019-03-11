@@ -192,6 +192,6 @@ The parts of the above request are:
 1. `-u admin:islandora` - use these basic authentication credentials
 1. `-H"Content-type: image/png"` - send the content-type header
 1. `--data-binary "@my-image.png"` - send the contents of the file located at my-image.png as binary
-1. `-H"Content-Location: public://images/my-image.png"` - store the file in the public scheme at the path `images/my-image.png`
+1. `-H"Content-Location: public://images/my-image.png"` - store the file in the public scheme (ie. in Drupal) at the path `images/my-image.png`, to store the file in Fedora use the `fedora//` scheme (ie. fedora://images/my-image.png)
 1. `'http://localhost:8000/node/3/media/image/16'` - the endpoint of the request specifying the node, media type and taxonomy term.
 
