@@ -349,6 +349,7 @@ curl -u admin:islandora http://localhost:8000/media/2?_format=json
 }
 ```
 
+`field_media_of` indicates which node(s) the media is associated with. The node can be referenced using the value of the `target_id` key (in this example, 1) or the `target_uuid` key (8322e36e-f8ec-4fd9-919d-52aed7b17a52).
 
 ## Files
 
