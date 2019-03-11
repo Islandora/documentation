@@ -2,6 +2,12 @@
 
 PATCH requests allow you to update resources in place via a REST call. In this case you send a few required fields and then any changed fields. PATCH requests are available for nodes and media entities, but _not_ for files. PATCH requests are very consistent between node and media entities so we will just show one set of examples here.
 
+Our example node is at `http://localhost:8000/node/3`.
+
+If you perform a [GET](./rest-get.md) against another node or media you can see all of the fields, some of these are calculated (change based on others, ie. "changed"), some are references to other entities (nodes,media,files in Drupal. ie. "field_model") and others are pure text fields (ie. "title"). 
+
+The fields will be different between different node types and media types, but the syntax to update them is the same.
+
 ## Authorization
 
 If you have restricted access to view your content, you will need to use one of the configured authorization methods to access your content, media and/or files.
@@ -9,12 +15,6 @@ If you have restricted access to view your content, you will need to use one of 
 These are defined under [Authorization](./using-rest-endpoints.md#authorization) on the overview.
 
 This with assume you have already created a [node](./rest-create.md#content-nodes) or [media](./rest-create.md#files-and-media) at some location.
-
-Our example node is at `http://localhost:8000/node/3`.
-
-If you perform a [GET](./rest-get.md#content-nodes) against `http://localhost:8000/node/3?_format=json` you can see all of the fields, some of these are calculated (change based on others, ie. "changed"), some are references to other entities (nodes,media,files in Drupal. ie. "field_model") and others are pure text fields (ie. "title"). 
-
-The fields will be different for media entities, but the syntax to update them is the same.
 
 ## Change a text field
 
