@@ -10,15 +10,15 @@ To access the search indexing settings navigate to '/admin/config/search/search-
 
 ### SOLR Server Configuration
 
-Use the 'Solr Server' link to view the SOLR server's configuration and the 'Default Solr content index' link to view or update the index settings. In most cases, were the site was built using ansible, the 'Solr Server' settings were configured during installation should be left alone.
+Use the 'Solr Server' link to view the SOLR server's configuration and the 'Default Solr content index' link to view or update the index settings. In most cases, where the site was built using ansible, the 'Solr Server' settings that were configured during installation should be left alone.
 
 ### SOLR Index Configuration
 
-The content index user interface is divided into four tabs: 'View', 'Edit', 'Fields', and 'Processors'.
+The Default Solr content index user interface is divided into four tabs: 'View', 'Edit', 'Fields', and 'Processors'.
 
 #### View Tab
 
-The 'View' tab gives an overview of the index and it's status:
+The 'View' tab gives an overview of the index and its status:
 - 'Index status' is a progress bar that indicates how many items have been indexed.
 - 'Status' allows you to enable/disable the index from being used.
 - 'Datasource' indicates what types of entities are being indexed and how many have.
