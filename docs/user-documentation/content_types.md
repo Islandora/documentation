@@ -14,50 +14,54 @@ If you have deployed your Islandora 8 with the Islandora Demo configuration, you
 
 ![a screenshot of the Add Content Type page](/docs/assets/islandora8_managefields.png)
 
-You will see a list of the fields that are already available in this content type. 
+You will see a list of the fields that are already available in the *Repository Item* content type. 
 
 ### Add a Field
 
 Let’s add a new field where a user can indicate if the repository item needs to be reviewed:
 
 1. Click “Add Field”
-1. Since this is a “yes/no” decision, we will use “Boolean” and give the field a name. [List of Drupal 8 FieldTypes, FieldWidgets, and FieldFormatters](https://www.drupal.org/docs/8/api/entity-api/fieldtypes-fieldwidgets-and-fieldformatters)
-1. Now we configure how the field is stored in the Drupal database. For this field type we can select how many values will be allowed. Set this value to "1."
-1. Now we configure how the field is described (including its display label and the help text for when it appears on a form) and constraints on its use. In this case, the field will be required for this Content Type, and will be set to “on” by default: 
+1. Since this is a “yes/no” decision, choose "Boolean" from the dropdown menu and give the Label field a name. [List of Drupal 8 FieldTypes, FieldWidgets, and FieldFormatters](https://www.drupal.org/docs/8/api/entity-api/fieldtypes-fieldwidgets-and-fieldformatters)
+1. Next, configure how the field is stored in the Drupal database. For this field type you can select how many values will be allowed. Set this value to "Limited""1"
+1. Then configure how the field is described (including its display label and the help text for when it appears on a form) and constraints on its use. In this case, the field will be required for this Content Type, and will be set to “on” by default. Choose "Required field" and set to Default Value. *Save settings.*
+
+
 
 ![a screenshot of the field settings page](/docs/assets/islandora8_fieldsettings.png)
 
-*Save*. Now we have added our new field: 
+The new field has been added:
 
 ![a screenshot of a "Needs Review?" field in the Drupal field UI](/docs/assets/islandora8_newfield.png)
 
-And it appears in the ingest form when we try to create a new repository object:
+And it appears in the ingest form when we try to create a new repository object. To test this, go to Content >> Add content >> Repository item:
 
 ![a screenshot of a "Needs Review?" field appearing at the bottom of a new node form](/docs/assets/islandora8_newfieldinform.png)
 
 !!! tip New fields, with the exception of Typed Relation fields, are not automatically indexed in Fedora and the triple-store. Update the Content Type's RDF Mapping to enable indexing the field (see below). 
 
-!!! tip To add new behavior based on the results of this new field, check out [link to Context docs]
+!!! tip To add new behavior based on the results of this new field, check out [link to Context docs](docs/user-documentation/searching.md)
 
 ### Change the Form Display
 
 Now let’s move our new field to a different part of the form. In the Admin menu, return to Structure > Content Types and find the Repository Item content type again. Select Manage form display.
 
-1. All of the fields in this content type are available, in a list, with a simple drag-and-place UI. Drag the *Needs Review?* Field to the top of the form. We can also change the way the Boolean options are displayed, with radio buttons as opposed to a single checkbox. Different display options will be available depending on field type. For more information, please check out [List of Drupal 8 FieldTypes, FieldWidgets, and FieldFormatters](https://www.drupal.org/docs/8/api/entity-api/fieldtypes-fieldwidgets-and-fieldformatters)
-1. Save. When creating a new Repository Item, the *Needs Review?* Field appears at the top, as a set of radio buttons.
+1. All of the fields in this content type are available, in a list, with a simple drag-and-place UI. Drag the new field to the top of the form. We can also change the way the Boolean options are displayed, with radio buttons as opposed to a single checkbox. Different display options will be available from the dropdown menu depending on field type. For more information, please check out [List of Drupal 8 FieldTypes, FieldWidgets, and FieldFormatters](https://www.drupal.org/docs/8/api/entity-api/fieldtypes-fieldwidgets-and-fieldformatters)
+1. Save.
+
+When creating a new Repository Item, the new field appears at the top, as a set of radio buttons.
 
 ### Change the Content Display
 
-Finally, let’s change how the results of this field are displayed. As things stand now, our new field shows up at the bottom of repository object pages:
+Finally, let’s change how the results of this field are displayed. Now the new field shows up at the bottom of repository object pages:
 
 ![a screenshot of a "Needs Review?" field in the node display](/docs/assets/islandora8_fieldindisplay.png)
 
-In the Admin menu, return to Structure > Content Types and find the Repository Item content type again. Select Manage display.
+In the Admin menu, return to Structure > Content Types and find the Repository Item content type again. Select Manage display from the dropdown menu.
 
-1. Find the *Needs Review?* We can change how the field title is display (inline/above/hidden entirely) and replace the options displayed with variations on a binary choice (yes/no, enabled/disabled, checkmark/X) or hide the field completely. 
-1. We can also drag the field into the Disabled section so that neither its label or its contents appear in the display, although the area saved on the node.
+1. Find the new field. You can change how the field title or Label is displayed. Click the dropdown menu to choose from inline/above/hidden/visually hidden. You can also replace the options displayed with variations on a binary choice. Click the gear to choose from the following: On/Off, Yes/No, Enabled/Disabled, 1/0. checkmark/X, or hide the field completely.
+1. You can also drag the field into the Disabled section so that neither its label or its contents appear in the display, although the field is saved on the node.
 1. Drag the field to "Disabled" and save.
-1. We no longer see the field on the display, but it is available when editing the node.
+1. You no longer see the field on the display, but it is available when editing the node.
 
 ## Create a Content Type
 
