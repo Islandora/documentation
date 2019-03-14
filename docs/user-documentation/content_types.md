@@ -52,7 +52,7 @@ When creating a new Repository Item, the new field appears at the top, as a set 
 
 ### Change the Content Display
 
-Finally, let’s change how the results of this field are displayed. Now the new field shows up at the bottom of repository object pages:
+Finally, let’s change how the results of this field are displayed. Initially the new field shows up at the bottom of repository object pages:
 
 ![a screenshot of a "Needs Review?" field in the node display](/docs/assets/islandora8_fieldindisplay.png)
 
@@ -71,11 +71,9 @@ Custom content types are not synced to Fedora or indexed by the triple-store by 
 
 ## Update / Create an RDF Mapping
 
-RDF mapping is aligning drupal fields to RDF ontology properties. For example the title field of a content model can be mapped to dcterms:title and/or schema:title. In Islandora 8, triples expressed by these mappings get synced to Fedora and indexed in the Blazegraph triplestore. RDF mappings are defined/stored in Drupal as a YAML file (to learn more about YAML, there are [several tutorials on the web](https://duckduckgo.com/?q=yaml+tutorial). Currently, Drupal 8 does not have a UI to create/update RDF mappings to ontologies other than Schema.org. This requires repository managers to update the configuration files themselves. 
+RDF mapping is aligning drupal fields to RDF ontology properties. For example the title field of a content model can be mapped to dcterms:title and/or schema:title. In Islandora 8, triples expressed by these mappings get synced to Fedora and indexed in the Blazegraph triplestore. RDF mappings are defined/stored in Drupal as a [YAML](https://yaml.org/) file (to learn more about YAML, there are [several tutorials on the web](https://duckduckgo.com/?q=yaml+tutorial). Currently, Drupal 8 does not have a UI to create/update RDF mappings to ontologies other than Schema.org. This requires repository managers to update the configuration files themselves. 
 
-The Drupal 8 Configuration Synchronization export (e.g. `http://localhost:8000/admin/config/development/configuration/single/export`) and import (e.g. `http://localhost:8000/admin/config/development/configuration/single/import`) can be used to get a copy of the mappings for editing in a text editor before being uploaded again. Alternatively, a repository manager can update the configuration on the server and use Features to import the edits.
-
-RDF mappings, like all Drupal configuration files, are written in [YAML](https://yaml.org/). 
+The Drupal 8 Configuration Synchronization export (e.g. `http://localhost:8000/admin/config/development/configuration/single/export`) and import (e.g. `http://localhost:8000/admin/config/development/configuration/single/import`) can be used to get a copy of the mappings for editing in a text editor before being uploaded again. Alternatively, a repository manager can update the configuration on the server and use Features to import the edits. 
 
 An RDF mapping configuration file has two main areas, the mapping's metadata and the mapping itself. Most of the mapping's metadata should be left alone unless you are creating a brand new mapping for a new Content Type or Taxonomy Vocabulary. 
 
