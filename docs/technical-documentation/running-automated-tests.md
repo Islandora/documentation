@@ -2,7 +2,7 @@
  
 ## User Interface
 
-![image](../assets/tests_ui.png)
+![Running tests from the user interface](../assets/tests_ui.png)
 
 To run automated tests via a web browser, you can to Admin > Configuration > Testing 
 (http://localhost:8000/admin/config/development/testing) in the admin toolbar.  From 
