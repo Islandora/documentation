@@ -85,7 +85,6 @@ Link: <http://localhost:8000/node?node=1>; rel="https://drupal.org/link-relation
 # These are provided by Islandora
 Link: <http://localhost:8000/node/2>; rel="related"; title="Member of"
 Link: <http://purl.org/coar/resource_type/c_c513>; rel="tag"; title="Image"
-Link: <http://localhost:8000/taxonomy/term/11>; rel="tag"; title="Still Image"
 Link: <http://localhost:8000/media/1>; rel="related"; title="Original File"
 Link: <http://localhost:8000/media/2>; rel="related"; title="Service File"
 Link: <http://localhost:8000/media/3>; rel="related"; title="Thumbnail Image"
@@ -115,5 +114,7 @@ Link: <http://localhost:8000/media/1>; rel="https://drupal.org/link-relations/re
 Link: <http://localhost:8000/node/1>; rel="related"; title="Media of"
 Link: <http://pcdm.org/use#OriginalFile>; rel="tag"; title="Original File"
 Link: <http://localhost:8000/media/1?_format=jsonld>; rel="alternate"; type="application/ld+json"
+Link: <http://localhost:8000/media/1/source>; rel="edit-media"
 Link: <http://localhost:8000/_flysystem/fedora/2019-03/IF-Org-Chart_0.jpg>; rel="describes"; type="image/jpeg"
+
 ```
