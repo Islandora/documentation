@@ -4,12 +4,12 @@ Signposting is a technique used in RESTful APIs where other relevant resources a
 `GET` and `HEAD` requests.  These `Link` headers follow a standard format as specified in [RFC8288](
 https://tools.ietf.org/html/rfc8288).  Drupal already makes use of this technique for content entities, and Islandora takes it
 even further by providing additional `Link` headers that enable the client to navigate the repository and discover
-additional information about various resources.  Because the links are returned in response headers, they can be relied upon
+additional information about various resources.  Because the links are returned in respionse headers, they can be relied upon
 without having to parse the message body.  This makes them consistent across all serialization formats that can be returned in a message body 
 (XML, JSON, JSONLD, etc...).
 
 As a general precaution, link headers for Drupal entities are not exposed to users that do not have the permissions to view
-the entity linked in the header.  So making GET and HEAD requests as anonymous will yield a different set of headers than
+the entity linked in the header.  So making GET and HEAD requests anonymously will yield a different set of headers than
 what an authenticated user would see.  For example, anonymous users don't have the `view media` permission, so they will not
 see the link headers for media associated with a node.
 
@@ -33,8 +33,8 @@ For example, if `http://example.org/node/1` has an entity reference field name "
 ### Referenced Taxonomy Terms
 
 Entity reference fields for taxonomy terms get special handling.  The taxonomy terms used to tag content are exposed as link headers 
-with `rel="tag"` and a title equal to the taxonomy term's display label.  If the term has an external uri in a controlled vocabulary, 
-then that uri is provided.  Otherwise, the local Drupal uri is provided.  For example, if a piece of content is tagged with 
+with `rel="tag"` and a title equal to the taxonomy term's display label.  If the term has an external URI in a controlled vocabulary, 
+then that URI is provided.  Otherwise, the local Drupal URI is provided.  For example, if a piece of content is tagged with 
 `taxonomy/term/1`, which has a display label of "Example Term", then the link header returned in a GET or HEAD response would look like 
 
 `Link: <http://example.org/taxonomy/term/1>; rel="tag"; title="Example Term"`
@@ -47,14 +47,14 @@ header would look like
 ### Associated Media
 
 Media entities belonging to nodes are exposed as link headers with `rel="related"` and a title equal to the display label of
-their `field_media_use` taxonomy term.  For example, if a Media is tagged as `Original File` indicating
+their `field_media_use` taxonomy term.  For example, if a media is tagged as `Original File` indicating
 that it is the initial file uploaded, the link header returned in a GET or HEAD response for a node would look like
 
 `Link: <http://example.org/media/1>; rel="related"; title="Original File"`.
 
 ### Source Files
 
-Files that are the source for Media entities are exposed as Link headers in the GET and HEAD responses with `rel="describes"`.
+Files that are the source for media entities are exposed as Link headers in the GET and HEAD responses with `rel="describes"`.
 The endpoint to edit the contents of the source file is also exposed using `rel="edit-media"`. For example, if 
 `http://example.org/media/1` has the source file `http://example.org/file.txt`, then a GET or HEAD response would contain
 both
@@ -66,8 +66,8 @@ both
 
 ### Requesting a Node
 
-After creating a Node, adding it to a Collection, uploading a file and kicking off derivatives, the link headers returned 
-for said Node would look like the following.  Note that non-Link headers have been removed for brevity:
+After creating a node, adding it to a Collection, uploading a file and kicking off derivatives, the link headers returned 
+for said node would look like the following.  Note that non-Link headers have been removed for brevity:
 
 ```bash
 vagrant@claw:~$ curl -I http://localhost:8000/node/1?_format=json
@@ -93,7 +93,7 @@ Link: <http://localhost:8000/node/1?_format=jsonld>; rel="alternate"; type="appl
 ```
 
 ### Requesting a Media
-If we were to inspect one of the Media associated with this Node (which we would've gotten in the response above), the
+If we were to inspect one of the Media associated with this node (which we would've gotten in the response above), the
 results would look like:
 
 ```bash
