@@ -164,6 +164,27 @@ Content-Type: text/html; charset=UTF-8
 
 Subsequent requests to the media return `404 Not Found` statuses.
 
+```
+> curl -i -u admin:islandora -X GET 'http://localhost:8000/media/1?_format=json'
+
+HTTP/1.1 404 Not Found
+Date: Fri, 15 Mar 2019 15:13:45 GMT
+Server: Apache/2.4.18 (Ubuntu)
+X-Powered-By: PHP/7.1.26-1+ubuntu16.04.1+deb.sury.org+1
+Cache-Control: must-revalidate, no-cache, private
+X-UA-Compatible: IE=edge
+Content-language: en
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+Expires: Sun, 19 Nov 1978 05:00:00 GMT
+Vary: 
+X-Generator: Drupal 8 (https://www.drupal.org)
+Content-Length: 153
+Content-Type: application/json
+
+{"message":"The \u0022media\u0022 parameter was not converted for the path \u0022\/media\/{media}\u0022 (route name: \u0022rest.entity.media.GET\u0022)"}
+```
+
 ## Files
 
 You'll need the file id, there is more information at the top of the [GET requests for files](./rest-get.md#files) documentation.
