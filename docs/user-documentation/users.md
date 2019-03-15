@@ -8,7 +8,7 @@
 1. Click the blue **Add user** button to bring up the *Add user* page.
 1. Enter all required fields, as indicated by red asterisks, in the *Add user* page.
 1. In the *Roles* section, click on the roles that the new user will need.
-  - Click on "Administrator" if the new user will need to be able to run adminsitrative tasks in Drupal or Islandora 8.
+  - Click on "Administrator" if the new user will need to be able to run administrative tasks in Drupal or Islandora 8.
   - Click on "fedoraAdmin" if the new user will need to be able to run certain tasks in Fedora. This is required by the WebAC authentication so Islandora 8 and Fedora can communicate.
 1. Review other settings available for a new user such as:
   - Site language
