@@ -1,5 +1,9 @@
 ## Creating resources, media and files - POST/PUT Requests 
 
+* [Authorization](#authorization)
+* [Content](#content-nodes)
+* [Files and Media](#files-and-media)
+
 ## Authorization
 
 You will need to use one of the configured authorization methods to create content, media and/or files.
@@ -69,7 +73,9 @@ Lastly look for the **field_model** element
 
 You can find the models by browsing the taxonomy terms available at `http://localhost:8000/admin/structure/taxonomy/manage/islandora_models/overview`
 
-24 is an "Image", but let's create a collection which is 23.
+In my example installation 24 is an "Image", but let's create a collection which is 23.
+
+**Note**: Taxonomy terms may vary between instances and you should verify the correct number for your installation.
 
 So the body of the request will be:
 ```

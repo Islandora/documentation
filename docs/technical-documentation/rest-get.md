@@ -1,5 +1,10 @@
 # Getting resources, media and files - GET Requests 
 
+* [Authorization](#authorization)
+* [Content](#content-nodes)
+* [Media](#media)
+* [Files](#files)
+
 ## Authorization
 
 If you have restricted access to view your content, you will need to use one of the configured authorization methods to access your content, media and/or files.
@@ -479,3 +484,7 @@ Content-Type: application/json
   ]
 }
 ```
+
+The `uri: url:` is the path to your file, so for the above example of `"url": "\\/sites\\/default\\/files\\/2019-03\\/1-Service%20File.jpg"`.
+
+I can perform a `GET` against `<my hostname>/sites/default/files/2019-03/1-Service%20File.jpg` and get the contents of this file.
