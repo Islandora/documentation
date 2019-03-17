@@ -44,7 +44,7 @@ Navigate to the block we just placed on the block placement page, and click its 
 the block to show only for certain roles or content types.  You can also explicitly set a white or black list of pages,
 which is what we'll do.
 
-![Pages tab in block config UI]()
+![Pages tab in block config UI](../assets/pages_tab_in_block_config_ui.png)
 
 Click the Pages tab and you'll have a text area you can list pages in.  We're going to enter
 `<front>`, which is a special value that means "The front page of your site".  Underneath the text area, you can select
@@ -52,11 +52,11 @@ whether you are showing or hiding the block for this list of pages.  We want to 
 leave it set at "Show for the listed pages".  Click "Save block" and go back to a piece of content.  You shouldn't see
 the development menu.
 
-![No devel menu]()
+![No devel menu](../assets/no_devel_menu.png)
 
 But go to the frontpage and...
 
-![Still got that ugly devel menu]()
+![Still got that ugly devel menu](../assets/still_got_that_ugly_devel_menu.png)
 
 The visibility conditions in the block placment UI are simple and effective.  They cover the majority of use cases,
 however, there are times when you need even more control.  This is where the Context module really shines. 
@@ -68,33 +68,30 @@ All of our content is the same content type (Repository Item), and Collections a
 "Collection" taxonomy term.  Using the admin toolbar, if you navigate to Admin > Structure > Context (admin/structure/context),
 you should see a list of all contexts available to the site.
 
-![Context UI]()
+![Context UI](../assets/context_ui.png)
 
 Click the "Configure" button on the "Collection" context.
 
-![Collection Context]()
+![Collection Context](../assets/collection_context.png)
 
 You can see in its "Condition" section, we have the "Node has term" condition, which checks for content tagged with the
 term provided by the user.  In this case, it's set to look for the "Collection" tag.  Underneath, in the "Reaction" section,
 you can see that the "Block" reaction has been selected, and its configuration looks a lot like the core block placement
 UI.  
-
-![Block reaction config]()
-
-The main difference here is that when the "Include blocks from block layout" box is checked, you are only placing the blocks
+The only difference here is that when the "Include blocks from block layout" box is checked, you are only placing the blocks
 you want to add in addtion to an already existing block layout.  If you uncheck the box, you are creating an entirely new
 block layout from scratch, and will have to replace basic things like breadcrumbs and menus.
 
-![Collection block]()
+![Collection block](../assets/collection_block.png)
 
 Here you can see we've added only the members block to this block layout.  If we go and navigate to a collection, you'll
 see its list of members underneath its content.
 
-![Collection page]()
+![Collection page with block](../assets/collection_page_with_block.png)
 
-If we edit the collection and remove its "Collection" tag, you'll see the block disappears!
+If we edit the collection and change its model tag from "Collection" to anything else, you'll see the block disappears!
 
-![Collection without block]()
+![Collection page without block](../assets/collection_page_without_block.png)
 
 As you can see, block placement can be very flexible, and allow you to customize your site in a very granular fashion.
 Between using core block placement and the context module, there's no block you can't get into the right place on your site.
