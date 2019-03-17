@@ -8,36 +8,36 @@ allowing you to conditionally show/hide them as appropriate.  Blocks are made av
 modules that provide them, and there's lots out there to choose from.  Placing blocks is an essential skill for any site
 administrator, so let's jump right in and get our hands dirty.
 
-![Block placement page]()
+![Block placement page](../assets/block_placement_page.png)
 
 Using the admin toolbar, navigate to Admin > Structure > Block layout (admin/structure/block).  You will see a table listing
 all of the available regions provided by the current theme for block placement.  You can switch between available themes
 using the tabs above the table.  For each region, enabled blocks are listed and can be re-arranged.  Take a look at the 
 "Main Content" region for example.
 
-![Main content region]()
+![Main content region](../assets/main_content_region.png)
 
 If you wanted to move the content above its tabs, you could drag the "Main page content" block above the "Tabs" block.
 If you scroll all the way down to the bottom and click the "Save blocks" button, now when you go to view content you
 should see something like this
 
-![Content above tabs]()
+![Content above tabs](../assets/content_above_tabs.png)
 
 If you want to add a new block to a region, hit the "Add block" button for that region and you'll be brought to a modal
 that will let you select which block to place.
 
-![Block selection UI]()
+![Block selection UI](../assets/block_selection_ui.png)
 
 After selecting your block, you will be brought to its configuration form.
 
-![Block config UI]()
+![Block config UI](../assets/block_config_ui.png)
 
 Here you can give the block a different title, change its region using a dropdown, and control its visibility settings by
 configuring various conditions. In our case, we're adding the "Development" block to the "Footer" region. And since we want
 to see this block everywhere, we'll leave the visibility settings alone for now.  Click the "Save block" button, and now if
 we go view some content we should see the "Development" menu in the footer of our site.
 
-![Devel menu in footer]()
+![Devel menu in footer](../assets/devel_menu_in_footer.png)
 
 If we want to limit this eyesore to only the front page of our site, we can revisit the visibility settings of the block.
 Navigate to the block we just placed on the block placement page, and click its "Configure" button.  Here you can limit
