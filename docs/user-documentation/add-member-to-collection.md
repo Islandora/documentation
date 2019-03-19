@@ -10,4 +10,4 @@ To add a member to a collection, please follow these steps:
 
 You will now see the Drupal node of the item you just created. You will see a field 'Member of' which links to the Collection node which now contains this item. If you click on the name of the Collection you will view the Collection node and see the item listed under `Members'.
 
-Please note that this item does not yet contain any media. Please proceed to [Make Media (and upload a file)](https://islandora-claw.github.io/CLAW/)
+Please note that this item does not yet contain any media. Please proceed to [Make Media (and upload a file)](https://islandora-claw.github.io/CLAW/docs/user-documentation/loading-media.md)
