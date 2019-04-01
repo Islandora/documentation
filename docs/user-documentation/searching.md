@@ -24,7 +24,7 @@ The 'View' tab gives an overview of the index and its status:
 - 'Datasource' indicates what types of entities are being indexed and how many have.
 - 'Tracker' states which item tracker is being used.
 - 'Server' provides a link to the SOLR server's configuration page.
-- 'Server index status' is a count of the total number of items returned from an unfiltered empty search. Generally speaking, this should match the total number of items indexed. See the [Drupal 7 Search API FAQ](https://www.drupal.org/node/2009804#server-index-status) for more details.
+- 'Server index status' is a count of the total number of items returned from an unfiltered empty search. Generally speaking, this should match the total number of items indexed. See the [Drupal 8 Search API FAQ](https://www.drupal.org/docs/8/modules/search-api/getting-started/frequently-asked-questions#server-index-status) for more details.
 - 'Cron batch size' displays how many items will be indexed when Drupal's cron runs.
 
 The 'View' tab also provides links to some common actions. 'Start Indexing Now' allows you to start a indexing job for a specified number of items (default is 'all'). You can also specify how many items should be indexed in each batch (default is '50'). The other links allow a repository manager to queue all objects for reindexing, clear the index, or rebuild tracking information.
