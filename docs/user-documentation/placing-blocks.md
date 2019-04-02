@@ -1,5 +1,7 @@
 # Placing Blocks
 
+## Using Block Layout
+
 In Drupal, blocks are snippets of content that can be placed on pages within your website's layout. Some examples of blocks
 are your site's menu, breadcrumbs, search block, etc...  You have a lot of control over when and where you see blocks using
 Drupal's administrative interface.   You can create and delete blocks, as well as move them around in different locations 
@@ -23,7 +25,7 @@ should see something like this
 
 ![Content above tabs](../assets/content_above_tabs.png)
 
-If you want to add a new block to a region, hit the "Add block" button for that region and you'll be brought to a modal
+If you want to add a new block to a region, hit the "Place block" button for that region and you'll be brought to a modal
 that will let you select which block to place.
 
 ![Block selection UI](../assets/block_selection_ui.png)
@@ -57,6 +59,8 @@ the development menu.
 But go to the frontpage and...
 
 ![Still got that ugly devel menu](../assets/still_got_that_ugly_devel_menu.png)
+
+## Using Context
 
 The visibility conditions in the block placment UI are simple and effective.  They cover the majority of use cases,
 however, there are times when you need even more control.  This is where the Context module really shines. 
