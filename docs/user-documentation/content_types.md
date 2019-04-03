@@ -1,6 +1,6 @@
 # Create / Update a Content Type
 
-!!! tip The screenshots and pre-existing data in this documentation assume that you are using the [Islandora Demo](https://github.com/Islandora-CLAW/islandora_demo) configuration. 
+!!! tip The screenshots and pre-existing data in this documentation assume that you are using the [Islandora Demo](https://github.com/Islandora-CLAW/islandora_demo) configuration.
 
 !!! tip This page will address how to create and modify ingest forms (or rather, content types) via the GUI. For help working with forms via the API, please check out the [Further Reading](#further-reading) section for links to more advanced Drupal documentation.
 
@@ -14,7 +14,7 @@ If you have deployed your Islandora 8 with the Islandora Demo configuration, you
 
 ![a screenshot of the Add Content Type page](/docs/assets/islandora8_managefields.png)
 
-You will see a list of the fields that are already available in the *Repository Item* content type. 
+You will see a list of the fields that are already available in the *Repository Item* content type.
 
 ### Add a Field
 
@@ -37,7 +37,9 @@ And it appears in the ingest form when we try to create a new repository object.
 
 ![a screenshot of a "Needs Review?" field appearing at the bottom of a new node form](/docs/assets/islandora8_newfieldinform.png)
 
-!!! tip New fields, with the exception of Typed Relation fields, are not automatically indexed in Fedora and the triple-store. Update the Content Type's RDF Mapping to enable indexing the field (see below). 
+!!! tip New fields, with the exception of Typed Relation fields, are not automatically indexed in Fedora and the triple-store. Update the Content Type's RDF Mapping to enable indexing the field (see below).
+
+!!! tip New fields will not automatically be searchable. They need to be added to the SOLR index configuration. See the ['Setup and Configure Search'](searching.md) page for more information.
 
 !!! tip To add new behavior based on the results of this new field, check out [link to Context docs](docs/user-documentation/searching.md)
 
@@ -71,11 +73,11 @@ Custom content types are not synced to Fedora or indexed by the triple-store by 
 
 ## Update / Create an RDF Mapping
 
-RDF mapping is aligning drupal fields to RDF ontology properties. For example the title field of a content model can be mapped to dcterms:title and/or schema:title. In Islandora 8, triples expressed by these mappings get synced to Fedora and indexed in the Blazegraph triplestore. RDF mappings are defined/stored in Drupal as a [YAML](https://yaml.org/) file (to learn more about YAML, there are [several tutorials on the web](https://duckduckgo.com/?q=yaml+tutorial). Currently, Drupal 8 does not have a UI to create/update RDF mappings to ontologies other than Schema.org. This requires repository managers to update the configuration files themselves. 
+RDF mapping is aligning drupal fields to RDF ontology properties. For example the title field of a content model can be mapped to dcterms:title and/or schema:title. In Islandora 8, triples expressed by these mappings get synced to Fedora and indexed in the Blazegraph triplestore. RDF mappings are defined/stored in Drupal as a [YAML](https://yaml.org/) file (to learn more about YAML, there are [several tutorials on the web](https://duckduckgo.com/?q=yaml+tutorial). Currently, Drupal 8 does not have a UI to create/update RDF mappings to ontologies other than Schema.org. This requires repository managers to update the configuration files themselves.
 
-The Drupal 8 Configuration Synchronization export (e.g. `http://localhost:8000/admin/config/development/configuration/single/export`) and import (e.g. `http://localhost:8000/admin/config/development/configuration/single/import`) can be used to get a copy of the mappings for editing in a text editor before being uploaded again. Alternatively, a repository manager can update the configuration on the server and use Features to import the edits. 
+The Drupal 8 Configuration Synchronization export (e.g. `http://localhost:8000/admin/config/development/configuration/single/export`) and import (e.g. `http://localhost:8000/admin/config/development/configuration/single/import`) can be used to get a copy of the mappings for editing in a text editor before being uploaded again. Alternatively, a repository manager can update the configuration on the server and use Features to import the edits.
 
-An RDF mapping configuration file has two main areas, the mapping's metadata and the mapping itself. Most of the mapping's metadata should be left alone unless you are creating a brand new mapping for a new Content Type or Taxonomy Vocabulary. 
+An RDF mapping configuration file has two main areas, the mapping's metadata and the mapping itself. Most of the mapping's metadata should be left alone unless you are creating a brand new mapping for a new Content Type or Taxonomy Vocabulary.
 
 The required mapping metadata fields when creating a brand-new mapping include the `id`, `status`, `targetEntityType`, and `bundle`. (`uuid` and `_core`  will be added by Drupal automatically.) `bundle` should be the machine name for the Content Type or Taxonomy Vocabulary you are creating the mapping for. `targetEntityType` will be `node` if the bundle is a Content Types or `taxonomy_term` if the bundle is a Taxonomy Vocabulary. The `id` configuration is a concatenation of target entity type and bundle. The `id` is also included in the configuration file name: e.g. `rdf.mapping.node.islandora_object.yml` is `rdf.mapping.` plus the id and then `.yml`.
 
@@ -125,5 +127,3 @@ In some cases a repository may want a node or taxonomy term's `rdf:type` to be c
 
 * [Drupal.org Introduction to Form API](https://www.drupal.org/docs/8/api/form-api/introduction-to-form-api)
 * [Step by step method to create a custom form in Drupal 8](https://www.valuebound.com/resources/blog/step-by-step-method-to-create-a-custom-form-in-drupal-8)
-
-
