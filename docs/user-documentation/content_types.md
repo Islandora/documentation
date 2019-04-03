@@ -73,17 +73,50 @@ Custom content types are not synced to Fedora or indexed by the triple-store by 
 
 ## Update / Create an RDF Mapping
 
-RDF mapping is aligning drupal fields to RDF ontology properties. For example the title field of a content model can be mapped to dcterms:title and/or schema:title. In Islandora 8, triples expressed by these mappings get synced to Fedora and indexed in the Blazegraph triplestore. RDF mappings are defined/stored in Drupal as a [YAML](https://yaml.org/) file (to learn more about YAML, there are [several tutorials on the web](https://duckduckgo.com/?q=yaml+tutorial). Currently, Drupal 8 does not have a UI to create/update RDF mappings to ontologies other than Schema.org. This requires repository managers to update the configuration files themselves.
+RDF mapping aligns Drupal fields with RDF ontology properties. For example, the title field of a content model can be mapped to dcterms:title and/or schema:title. In Islandora 8, triples expressed by these mappings get synced to Fedora and indexed in the Blazegraph triplestore. RDF mappings are defined/stored in Drupal as a [YAML](https://yaml.org/) file (to learn more about YAML, there are [several tutorials on the web](https://duckduckgo.com/?q=yaml+tutorial). Currently, Drupal 8 does not have a UI to create/update RDF mappings to ontologies other than Schema.org. This requires repository managers to update the configuration files themselves. Consider using the RDF mappings included in islandora_demo as templates by copying and modifying one to meet your needs.
 
 The Drupal 8 Configuration Synchronization export (e.g. `http://localhost:8000/admin/config/development/configuration/single/export`) and import (e.g. `http://localhost:8000/admin/config/development/configuration/single/import`) can be used to get a copy of the mappings for editing in a text editor before being uploaded again. Alternatively, a repository manager can update the configuration on the server and use Features to import the edits.
 
-An RDF mapping configuration file has two main areas, the mapping's metadata and the mapping itself. Most of the mapping's metadata should be left alone unless you are creating a brand new mapping for a new Content Type or Taxonomy Vocabulary.
+An RDF mapping configuration file has two main areas, the mapping's metadata and the mapping itself. Most of the mapping's metadata should be left alone unless you are creating a brand new mapping for a new Content Type or Taxonomy Vocabulary. A _partial_ example from [islandora_demo's islandora_object (Repository Item)](https://github.com/Islandora-CLAW/islandora_demo/blob/8.x-1.x/config/install/rdf.mapping.node.islandora_object.yml) is included below:
 
-The required mapping metadata fields when creating a brand-new mapping include the `id`, `status`, `targetEntityType`, and `bundle`. (`uuid` and `_core`  will be added by Drupal automatically.) `bundle` should be the machine name for the Content Type or Taxonomy Vocabulary you are creating the mapping for. `targetEntityType` will be `node` if the bundle is a Content Types or `taxonomy_term` if the bundle is a Taxonomy Vocabulary. The `id` configuration is a concatenation of target entity type and bundle. The `id` is also included in the configuration file name: e.g. `rdf.mapping.node.islandora_object.yml` is `rdf.mapping.` plus the id and then `.yml`.
+```
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.islandora_object
+  enforced:
+    module:
+      - islandora_demo
+  module:
+    - node
+id: node.islandora_object
+targetEntityType: node
+bundle: islandora_object
+types:
+  - 'pcdm:Object'
+fieldMappings:
+  title:
+    properties:
+      - 'dc:title'
+  field_alternative_title:
+    properties:
+      - 'dc:alternative'
+  field_edtf_date:
+    properties:
+      - 'dc:date'
+    datatype_callback:
+      callable: 'Drupal\controlled_access_terms\EDTFConverter::dateIso8601Value'
+  field_description:
+    properties:
+      - 'dc:description'
+```
+
+The required mapping metadata fields when creating a brand-new mapping include the `id`, `status`, `targetEntityType`, and `bundle`. (`uuid` and `_core`, not seen in the example above but may be present in exported copies,  will be added by Drupal automatically.) `bundle` is the machine name for the Content Type or Taxonomy Vocabulary you are creating the mapping for. `targetEntityType` is `node` for Content Types or `taxonomy_term` for Taxonomy Vocabularies. The `id` configuration is a concatenation of target entity type and bundle ('node' and 'islandora_object' in the example above). The `id` is also used to name the configuration file: e.g. `rdf.mapping.node.islandora_object.yml` is `rdf.mapping.` plus the id (`node.islandora_object`) and then `.yml`.
 
 The mapping itself consists of the `types`' and `fieldMappings` configurations.
 
-All the mappings use RDF namespaces instead of fully-qualified URIs. For example, the repository item's type is `pcdm:Object` instead of `http://pcdm.org/models#Object`. Unfortunately, the available namespaces are defined in module hooks (hook_rdf_namespaces) rather than in a configuration file. Repository managers need to create their own module and implement hook_rdf_namespaces to make additional namespaces available. See the [islandora_demo](https://github.com/Islandora-CLAW/islandora_demo/blob/8.x-1.x/islandora_demo.module) hook implementation for an example.
+All the mappings use RDF namespaces instead of fully-qualified URIs. For example, the type for islandora_object is `pcdm:Object` instead of `http://pcdm.org/models#Object`. Unfortunately, the available namespaces are defined in module hooks (hook_rdf_namespaces) rather than in a configuration file. Repository managers wanting to add additional namespaces need to create their own module and implement hook_rdf_namespaces. See the [islandora_demo](https://github.com/Islandora-CLAW/islandora_demo/blob/8.x-1.x/islandora_demo.module) hook implementation for an example.
 
 Namespaces currently supported (ordered by the module that supplies them) include:
  * rdf
