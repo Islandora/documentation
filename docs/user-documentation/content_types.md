@@ -69,7 +69,15 @@ In the Admin menu, return to Structure > Content Types and find the Repository I
 
 To create your own custom content type from scratch, please refer to [this guide](https://www.drupal.org/docs/8/administering-drupal-8-site/managing-content-0/create-a-custom-content-type) on Drupal.org.
 
-Custom content types are not synced to Fedora or indexed by the triple-store by default. Repository managers must add them to the "Content" ('repository_content') context before their nodes are synced to Fedora and indexed by the triple-store. Any of the custom content type's nodes that were created before updating the context will need to have the indexing action manually triggered.
+Custom content types are not synced to Fedora or indexed by the triple-store by default. Repository managers must add them to the "Content" ('repository_content') context before their nodes are synced to Fedora and indexed by the triple-store.
+
+1. Navigate to the Contexts configuration page ('/admin/structure/context').
+1. Find the 'Content' context and click the corresponding 'Edit' button ('/admin/structure/context/repository_content').
+1. Find the 'Node Bundle' condition in the 'Conditions' section.
+1. Click the checkbox for the new Content Type.
+1. Scroll down to the bottom of the page and click 'Save and continue'.
+
+Updating contexts does not retroactively fire any actions. Any of the custom content type's nodes that were created before updating the context will need to have the indexing action manually triggered.
 
 ## Update / Create an RDF Mapping
 
