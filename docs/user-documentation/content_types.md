@@ -21,11 +21,12 @@ You will see a list of the fields that are already available in the *Repository 
 Let’s add a new field where a user can indicate if the repository item needs to be reviewed:
 
 1. Click “Add Field”
-1. Since this is a “yes/no” decision, choose "Boolean" from the dropdown menu and give the Label field a name. [List of Drupal 8 FieldTypes, FieldWidgets, and FieldFormatters](https://www.drupal.org/docs/8/api/entity-api/fieldtypes-fieldwidgets-and-fieldformatters)
-1. Next, configure how the field is stored in the Drupal database. For this field type you can select how many values will be allowed. Set this value to "Limited""1"
-1. Then configure how the field is described (including its display label and the help text for when it appears on a form) and constraints on its use. In this case, the field will be required for this Content Type, and will be set to “on” by default. Choose "Required field" and set to Default Value. *Save settings.*
-
-
+1. In some cases an existing field may be available to use instead of creating a new one. The dropdown box labeled 'Re-use an existing field' has a list of available fields. For our example we will create a brand-new field. Since our example field is a “yes/no” decision (whether the item needs review or not), choose "Boolean" from the dropdown menu and give the Label field a name. [See the list of Drupal 8 FieldTypes, FieldWidgets, and FieldFormatters](https://www.drupal.org/docs/8/api/entity-api/fieldtypes-fieldwidgets-and-fieldformatters) for descriptions of the different types available by default. Additional modules, such as the controlled_access_terms module, can provide their own Field types to choose from as well.
+1. Click "Save and continue."
+1. Next, configure how the field is stored in the Drupal database. For this field type you can select how many values will be allowed. The default settings, "Limited" in the dropdown box and "1" for the allowed number of values works for our example.
+1. Click "Save field settings."
+1. Then configure how the field is described (including its display label and the help text for when it appears on a form) and constraints on its use. In this case, the field will be required for this Content Type, and will be set to “on” by default. In the "Default Value" section, click the checkbox next to "Needs Review" to indicate all new repository items need review by default.
+1. Click "Save settings."
 
 ![a screenshot of the field settings page](/docs/assets/islandora8_fieldsettings.png)
 
