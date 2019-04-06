@@ -28,8 +28,6 @@ For this example, we added six collection items to Islandora 8. Now, in total th
     
 ### Task2: Add a new view to only show collections
 
-**[Note to reviewer, I really don't have much experience with Drupal so there may be a more efficient way for placing a view on the frontpage?]**
-
 For this example, we create a new view as a block and place the new block to only display on the frontpage. We will add the new collection list block below the existing frontpage view that list items.
 
 1.	Using your Web browser open the Islandora 8 Frontpage (localhost:8000 or your test Islandora)
