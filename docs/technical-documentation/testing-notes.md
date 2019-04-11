@@ -1,4 +1,4 @@
-## How to look up a Gemini entry for a node?
+## How to look up a [Gemini](https://github.com/Islandora-CLAW/Crayfish/tree/master/Gemini) entry for a node?
 To locate a particular Gemini entry for a node, you need to know the uuid of the node. You can get the uuid for the node by looking at the devel tab in Drupal or you can get it from json representation: `http://localhost:8000/node/2?_format=json`.  
 
 You can look up Gemini entries for node  using the Gemini service via curl or a REST client such as POSTman. 
