@@ -42,7 +42,7 @@ And it appears in the ingest form when we try to create a new repository object.
 
 !!! tip New fields will not automatically be searchable. They need to be added to the SOLR index configuration. See the ['Setup and Configure Search'](searching.md) page for more information.
 
-!!! tip To add new behavior based on the results of this new field, check out [link to Context docs](docs/user-documentation/searching.md)
+!!! tip To add new behavior based on the results of this new field, check out [link to Context docs](searching.md)
 
 ### Change the Form Display
 

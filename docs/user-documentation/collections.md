@@ -1,11 +1,9 @@
-# Collection Overview
-
 Collections are groups of repository content that can be described themselves. Repository content is aggregated in a collection by setting the `field_member_of`
 entity reference field to point to a collection. Generally speaking, anything can behave as a collection, and anything with `field_member_of` can be a member of a collection.
 However, collections are 'officially' designated as such by applying the "Collection" taxonomy term to an item's `field_model` field.  Collections and their members are
 independent of each other, and removing something from a collection does not delete it.  Similarly, deleting a collection does not delete its members.
 
-# Creating a Collection
+## Creating a Collection
 
 From the front page, click on Add content. This is under Tools.
 
@@ -27,7 +25,7 @@ Click Save when done.
 
 The collection has been created. Now let's add some members to this collection.
 
-# Add Existing Items to a Collection
+## Add Existing Items to a Collection
 
 To populate a collection with existing items, return to any existing content and click on its Edit tab. This brings up the form for this item.
 
@@ -46,7 +44,7 @@ To confirm, return to the collection and verify the new item appears in the coll
 
 ![To confirm, return to the collection and verify the new item appears in the collection's 'Members' block.](../assets/snowfall-collection.jpg)
 
-# Add a New Item as a Member of a Collection
+## Add a New Item as a Member of a Collection
 
 To create an item and add it as a member to a collection in one step, visit a collection and click on its `Members` tab. From the
 `Members` tab, you can manage the members of a collection and perform actions on them.
