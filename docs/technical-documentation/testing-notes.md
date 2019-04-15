@@ -16,7 +16,7 @@ select * from Gemini where uuid="uuid_value";
 Files in Fedora have the file URI in Gemini. However, Media for files in Fedora aren't indexed in Gemini because they are not reliable. To look up file metadata, go to `file_uri + /fcr:metadata`.
 
 ## How do I search for a object in the Triplestore?
-* Got to `http://localhost:8080/bigdata/#query`
+* Go to `http://localhost:8080/bigdata/#query`
 * Under namespaces (`http://localhost:8080/bigdata/#namespaces`), make sure `islandora` is selected.  
 * To check if an object is subject of any triples, you can use the following query:
 
@@ -29,3 +29,13 @@ Example:
 select ?p ?o  where { <http://localhost:8000/media/8?_format=jsonld> ?p ?o }
 ```
 
+## How do I search for a object in the Solr?
+* Go to `http://localhost:8983/solr/#/CLAW/query`
+* Issue a solr query.
+
+Example
+```
+ss_search_api_id:"entity:node/4:en"
+```
+
+ 
