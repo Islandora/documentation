@@ -1,6 +1,6 @@
 To create a new item in your Islandora 8 digital repository, we start by creating a node.
 A node holds the descriptive metadata for content, as well as grouping together an original file and
-all of the derivatives files generated from it. To create node, click on Add content.
+all of the derivatives files generated from it. To create a new node, click on Add content.
 This is under Tools.
 
 ![Click on add content](../assets/add-content-loading-media.jpg)
