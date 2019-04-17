@@ -1,8 +1,10 @@
 # Create / Update a Content Type
 
-!!! tip The screenshots and pre-existing data in this documentation assume that you are using the [Islandora Demo](https://github.com/Islandora-CLAW/islandora_demo) configuration.
+!!! info
+    The screenshots and pre-existing data in this documentation assume that you are using the [Islandora Demo](https://github.com/Islandora-CLAW/islandora_demo) configuration.
 
-!!! tip This page will address how to create and modify ingest forms (or rather, content types) via the GUI. For help working with forms via the API, please check out the [Further Reading](#further-reading) section for links to more advanced Drupal documentation.
+!!! info
+    This page will address how to create and modify ingest forms (or rather, content types) via the GUI. For help working with forms via the API, please check out the [Further Reading](#further-reading) section for links to more advanced Drupal documentation.
 
 Since objects in Islandora 8 are stored in Drupal as Nodes, we use the standard Drupal Content Types system to create and edit our ‘ingest forms’ [Content Types in Drupal 8](https://www.drupal.org/docs/8/administering-drupal-8-site/managing-content-0/working-with-content-types-and-fields). Islandora 8 forms are Drupal forms, and if you are already familiar with Drupal Field UI, you’re already well equipped to create and modify your own ingest forms in Islandora 8.
 
@@ -12,7 +14,7 @@ This page will address how to create and modify ingest forms (or rather, content
 
 If you have deployed your Islandora 8 with the Islandora Demo configuration, you will already have a Repository Item content type available, with pre-configured fields. In the Admin menu, go to Structure >> Content Types and find the Repository Item content type. Select *Manage Fields*.
 
-![a screenshot of the Add Content Type page](/docs/assets/islandora8_managefields.png)
+![a screenshot of the Add Content Type page](../assets/islandora8_managefields.png)
 
 You will see a list of the fields that are already available in the *Repository Item* content type.
 
@@ -28,21 +30,24 @@ Let’s add a new field where a user can indicate if the repository item needs t
 1. Then configure how the field is described (including its display label and the help text for when it appears on a form) and constraints on its use. In this case, the field will be required for this Content Type, and will be set to “on” by default. In the "Default Value" section, click the checkbox next to "Needs Review" to indicate all new repository items need review by default.
 1. Click "Save settings."
 
-![a screenshot of the field settings page](/docs/assets/islandora8_fieldsettings.png)
+![a screenshot of the field settings page](../assets/islandora8_fieldsettings.png)
 
 The new field has been added:
 
-![a screenshot of a "Needs Review?" field in the Drupal field UI](/docs/assets/islandora8_newfield.png)
+![a screenshot of a "Needs Review?" field in the Drupal field UI](../assets/islandora8_newfield.png)
 
 And it appears in the ingest form when we try to create a new repository object. To test this, go to Content >> Add content >> Repository item:
 
-![a screenshot of a "Needs Review?" field appearing at the bottom of a new node form](/docs/assets/islandora8_newfieldinform.png)
+![a screenshot of a "Needs Review?" field appearing at the bottom of a new node form](../assets/islandora8_newfieldinform.png)
 
-!!! tip New fields, with the exception of Typed Relation fields, are not automatically indexed in Fedora and the triple-store. Update the Content Type's RDF Mapping to enable indexing the field (see below).
+!!! tip "RDF Mappings"
+    New fields, with the exception of Typed Relation fields, are not automatically indexed in Fedora and the triple-store. Update the Content Type's RDF Mapping to enable indexing the field (see below).
 
-!!! tip New fields will not automatically be searchable. They need to be added to the SOLR index configuration. See the ['Setup and Configure Search'](searching.md) page for more information.
+!!! tip "Search"
+    New fields will not automatically be searchable. They need to be added to the SOLR index configuration. See the ['Setup and Configure Search'](searching.md) page for more information.
 
-!!! tip To add new behavior based on the results of this new field, check out [link to Context docs](searching.md)
+!!! tip "Context"
+    To add new behavior based on the results of this new field, check out [link to Context docs](searching.md)
 
 ### Change the Form Display
 
@@ -57,7 +62,7 @@ When creating a new Repository Item, the new field appears at the top, as a set 
 
 Finally, let’s change how the results of this field are displayed. Initially the new field shows up at the bottom of repository object pages:
 
-![a screenshot of a "Needs Review?" field in the node display](/docs/assets/islandora8_fieldindisplay.png)
+![a screenshot of a "Needs Review?" field in the node display](../assets/islandora8_fieldindisplay.png)
 
 In the Admin menu, return to Structure > Content Types and find the Repository Item content type again. Select Manage display from the dropdown menu.
 

@@ -36,7 +36,7 @@ changed | Timestamp of when a node was last updated
 type | Content type (e.g. which group of fields are present on the node)
 status | Published, unpublished, etc...
 
-!!! Note
+!!! note "Compared to Islandora 7"
     These node properties directly correspond to following Islandora 7.x object properties:
 
     Islandora 7 | Islandora 8
@@ -65,7 +65,7 @@ of how to handle the node in response to certain events, like choosing a viewer 
 
 ![Model tags](../assets/object_model_tags.png)
 
-!!! Note
+!!! note "Compared to Islandora 7"
     Content models in Islandora 7 were immutable, and contained restrictions as to what
     types of datastreams could be associated with an object.  Islandora 8 imposes no such
     restrictions. Content models can be changed at any time, and they in no way dictate what
@@ -79,7 +79,7 @@ model of Collection. Membership (to a Collection or otherwise) is denoted using 
 field, "Member Of".  The "Member Of" field can hold multiple references, so it is possible for a
 single child to belong to multiple parents.
 
-!!! Note
+!!! Note "Compared to Islandora 7"
     In Islandora 7, there was a distinction between belonging to a collection and belonging to
     a compound object.  In Islandora 8, this distinction is not present, essentially making every object
     a compound object.

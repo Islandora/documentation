@@ -2,7 +2,7 @@ Drupal 8 recognizes files (such as images, audio files, video files, etc.) but w
 "media" to allow us to attach fields to files. It is in a media's fields that we store information about the media's file, such as file
 size, width and height (for images), alt text (for images), creation date, and so on.
 
-!!! Note
+!!! note "Compared to Islandora 7"
     In Islandora 7, this sort of technical metadata would have been stored in a single RELS-INT datastream.
     In Islandora 8, each datastream holds its own technical metadata using media entities.
 
@@ -11,7 +11,7 @@ size, width and height (for images), alt text (for images), creation date, and s
 Islandora 8 objects can have any number of media associated with them. Media advertise which object they belong to using a special field,
 "Media Of". By editing this field, you can change the what node owns the media, and therefore, where it gets displayed or managed.
 
-!!! Note
+!!! note "Compared to Islandora 7"
     The direction of the relationship between objects and datastreams is reversed when compared to Islandora 7.  Generally speaking,
     objects are unaware of their datastreams, and it's a Drupal view that lists datastreams for an object.
 
@@ -23,7 +23,7 @@ terms, and in turn, these local terms can be used to identify media that have so
 
 ![Media tab](../assets/media_use_vocabulary_media_form.png)
 
-!!! Note
+!!! note "Compared to Islandora 7"
     Terms from the Media Usage vocabulary are very similar to DSIDs in Islandora 7.  The only difference is that a DSID is immutable,
     but a media's usage can be changed at any time through the media's edit form.
 
