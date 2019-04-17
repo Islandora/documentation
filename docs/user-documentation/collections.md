@@ -1,7 +1,11 @@
 Collections are groups of repository content that can be described themselves. Repository content is aggregated in a collection by setting the `field_member_of`
 entity reference field to point to a collection. Generally speaking, anything can behave as a collection, and anything with `field_member_of` can be a member of a collection.
-However, collections are 'officially' designated as such by applying the "Collection" taxonomy term to an item's `field_model` field.  Collections and their members are
-independent of each other, and removing something from a collection does not delete it.  Similarly, deleting a collection does not delete its members.
+However, collections are 'officially' designated as such by applying the "Collection" taxonomy term to an item's `field_model` field.  By default, Islandora 8 has a context configured to handle collections by looking for that term.
+
+!!! Tip
+    Collections and their members are
+    independent of each other, and removing something from a collection does not delete it.  **Similarly, deleting a     
+    collection does not delete its members.**
 
 ## Creating a Collection
 
