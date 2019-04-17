@@ -32,7 +32,7 @@ We want to add an image, so clicking on "Image" is appropriate in most circumsta
 any type of image that can be viewed natively in the browser as an "Image".  For other image types that
 require special viewers, such as Tiffs, you have to choose "File"
 
-![Click on image option](/assets/image-option.png)
+![Click on image option](../assets/image-option.png)
 
 You are now presented with the form for the technical metadata of the file.  There are three required
 parts of the form:
@@ -47,4 +47,4 @@ generation, select "Original File" from the drop down box.
 Click save when done, and the file will be uploaded (to Fedora by default).  Now return to the node
 you created and you should see the image along with its descriptive metadata.
 
-![The file is now loaded, return to the main site to view](/assets/final-loaded-image.jpg)
+![The file is now loaded, return to the main site to view](../assets/final-loaded-image.jpg)
