@@ -9,7 +9,7 @@ size, width and height (for images), alt text (for images), creation date, and s
 ## Media Ownership
 
 Islandora 8 objects can have any number of media associated with them. Media advertise which object they belong to using a special field,
-"Media Of". By editing this field, you can change the what node owns the media, and therefore, where it gets displayed or managed.
+"Media Of". By editing this field, you can change what node owns the media, and therefore, where it gets displayed or managed.
 
 !!! note "Compared to Islandora 7"
     The direction of the relationship between objects and datastreams is reversed when compared to Islandora 7.  Generally speaking,
@@ -30,7 +30,9 @@ terms, and in turn, these local terms can be used to identify media that have so
 ## Derivatives
 
 Islandora generates derivatives based on Media Usage for a Media and the Model of the node that owns it.  All of this is configurable
-using context, but by default, derivatives are generated from "Original Files". When an Original File is uploaded, if the node that
+using context.
+
+By default, derivatives are generated from "Original Files". When an Original File is uploaded, if the node that
 owns it has an "Image" model, image derivatives are created.  If it's a "Video", then video derivatives are generated, etc...
 
 ![Media tab](../assets/islandora_8_derivatives_sample.png)
