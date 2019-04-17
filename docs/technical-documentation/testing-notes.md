@@ -7,7 +7,7 @@ You can look up Gemini entries for node  using the Gemini service via curl or a 
 curl -H "Authorization:Bearer islandora" http://localhost:8000/gemini/uuid_value
 ```
 
-Alternatively, you can login to mysql database, select the gemini database and issue the following query:
+Alternatively, you can login to MySQL database, select the gemini database and issue the following query:
 `
 select * from Gemini where uuid="uuid_value";
 `
