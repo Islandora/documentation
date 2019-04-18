@@ -3,7 +3,9 @@ Islandora 8 enables you to build full fledged multilingual repositories leveragi
 Drupal 8 comes with four modules for [multilingual support](https://www.drupal.org/docs/8/multilingual/choosing-and-installing-multilingual-modules). Islandora 8 enables Language and Content Translation modules by default.
 
 ## Adding Languages
-From the top menu, go to Configuration >> Regional and language >> Languages (`http://localhost:8000/admin/config/regional/language`). Add a language. You can place the default language selector block to switch between languages.To create the language switcher block go to Structure >> Block layout. Click Place block in a region of your choice.  Search for `Language switcher` block and click `Place block`.
+From the top menu, go to Configuration >> Regional and language >> Languages (`http://localhost:8000/admin/config/regional/language`). Add a language. 
+
+You can place the default language selector block to switch between languages. To create the language switcher block go to Structure >> Block layout. Click Place block in a region of your choice.  Search for `Language switcher` block and click `Place block`.
 
 ## Adding Multilingual Menu
 From the top menu, go to Configuration >> Regional and language >> Content language and translation. Check `Custom menu link` under `Custom language settings`. Scroll down to `Custom menu link` section and check all the relevant fields and Save the configurations. Clear the cache.  
