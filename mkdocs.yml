@@ -54,6 +54,7 @@ nav:
       - 'Versioning Policy': 'technical-documentation/versioning.md'
       - 'Documentation Style Guide': 'technical-documentation/docs_style_guide.md'
       - 'How to Build Documentation': 'technical-documentation/docs-build.md'
+      - 'Testing Notes': 'technical-documentation/testing-notes.md'
   - Migration:
       - 'CSV': 'technical-documentation/migrate-csv.md'
       - 'Islandora 7': 'technical-documentation/migrate-7x.md'
