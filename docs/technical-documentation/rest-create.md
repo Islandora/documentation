@@ -22,7 +22,7 @@ For the islandora_demo included Repository Item these are:
 
 1. A type - this tells Drupal what content type we are creating
 1. A title - this is a required field of all nodes.
-1. A model - this is a required by Islandora to tell the type of object (ie. Image, Audio, Collection)
+1. A model - this is a required by Islandora to tell the type of object (i.e. Image, Audio, Collection)
 
 A good way to make your first POST request is to perform a GET request against an existing node and erase all the extra content.
 
@@ -104,7 +104,7 @@ So the body of the request will be:
 
 **Other Note**: You **must** include some authentication credentials to say who you are and so Drupal can check if you are allowed to create this object. Otherwise you will receive a `401 Unauthorized` response. 
 
-If you do provide credentials but don't have permission, you will recieve a `403 Forbidden` response.
+If you do provide credentials but don't have permission, you will receive a `403 Forbidden` response.
 
 You can find more information about [Authorization here](./using-rest-endpoints.md#authorization)
 
@@ -156,7 +156,7 @@ The node and taxonomy term are used to search (via an [entity query](https://api
 The tokens to this URI are as follows:
 
 1. node id : The numeric ID of the node you wish to link this media/file to.
-1. media type : The media type name you wish to create (ie. image, file, audio)
+1. media type : The media type name you wish to create (i.e. image, file, audio)
 1. media use : The numeric ID of the media use taxonomy term to set for this media 
 
 You can find the media use taxonomy terms at `http://localhost:8000/admin/structure/taxonomy/manage/islandora_media_use/overview`

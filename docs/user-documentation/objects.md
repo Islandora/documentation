@@ -26,7 +26,7 @@ PID | uuid
 content model | a tag from the Islandora Models vocabulary
 status | status
 
-Islandora's 7.x's content models do not exist in Islandora 8. The primary way that Islandora 8 identifies what we think of as a conetent model in Islandora 7.x is using taxonomy terms from the "Islandora Models" vocabulary. To indicate that an Islandora 8 object is an image, video, etc, the user selects a model from a select list:
+Islandora's 7.x's content models do not exist in Islandora 8. The primary way that Islandora 8 identifies what we think of as a content model in Islandora 7.x is using taxonomy terms from the "Islandora Models" vocabulary. To indicate that an Islandora 8 object is an image, video, etc, the user selects a model from a select list:
 
 ![Media tab](../assets/object_model_tags.png)
 
@@ -38,14 +38,14 @@ In addition to the basic node properties identified above, Islandora 8 objects (
 
 ### Media
 
-If Drupal nodes are the Islandora 8 equivelant of Islandora 7.x objects, "media" are the equivalent of Islandora 7.x datastreams. In Drupal 8, media are wrappers around files (images, audio files, video files, XML files, etc.) that provide information about the files, such as their MIME type, size, created data, etc. Like Drupal nodes, media can have fields and tags. One important set of tags defined by Islandora is the "Media Use" vocabulary, and it is this vocabulary that defines what is the closest to what we know in Islandora 7.x as datastream IDs. Tags from this vocabulary include "Original File" (analogous to Islandora 7.x' OBJ datastream ID), "Preservation master", "Thumbnail" (analogous to the TN datastream ID), "FITS File", and "Extracted text" (analogous to the OCR datastream ID).
+If Drupal nodes are the Islandora 8 equivalent of Islandora 7.x objects, "media" are the equivalent of Islandora 7.x datastreams. In Drupal 8, media are wrappers around files (images, audio files, video files, XML files, etc.) that provide information about the files, such as their MIME type, size, created data, etc. Like Drupal nodes, media can have fields and tags. One important set of tags defined by Islandora is the "Media Use" vocabulary, and it is this vocabulary that defines what is the closest to what we know in Islandora 7.x as datastream IDs. Tags from this vocabulary include "Original File" (analogous to Islandora 7.x' OBJ datastream ID), "Preservation master", "Thumbnail" (analogous to the TN datastream ID), "FITS File", and "Extracted text" (analogous to the OCR datastream ID).
 
-Unlike Islandora 7.x objects, Islandora 8 objects do not know what media are attached to themselves; instead, each media knows what Drupal node it is associated with. In other words, the relationship bewtween nodes and media is defined from the media's perspective, not the node's perspective. From an admin user's perspective, all the media associated with an Islandora 8 object are listed in the object's "Media" tab, which appears alongside its "View", "Edit", and "Delete" tabs:
+Unlike Islandora 7.x objects, Islandora 8 objects do not know what media are attached to themselves; instead, each media knows what Drupal node it is associated with. In other words, the relationship between nodes and media is defined from the media's perspective, not the node's perspective. From an admin user's perspective, all the media associated with an Islandora 8 object are listed in the object's "Media" tab, which appears alongside its "View", "Edit", and "Delete" tabs:
 
 ![Media tab](../assets/media_tab.png)
 
 
-From a general user's perspective, the media in Islandora 8 are rendered within the parent node just like they are rendered within the parent object in Islandora 7.x. Additional information about media in Islandora 8 is availble [elsewhere](datastreams.md).
+From a general user's perspective, the media in Islandora 8 are rendered within the parent node just like they are rendered within the parent object in Islandora 7.x. Additional information about media in Islandora 8 is available [elsewhere](datastreams.md).
 
 ### Fedora
 
@@ -62,6 +62,6 @@ Even though Fedora is optional in Islandora 8, most repositories will use it sin
 * Integration with Microservices via API-X
 * WebAC Policies for access control
 
-In Islandora repositories that use Fedora, all properties about Drupal nodes are mirrored in Fedora as RDF properties. But, even if an Islandora instance does not use Fedora, Drupal can provide an object's properties as RDF (again, Drupal is the primary source of data in Islandora 8). In addition, the Drupal media associated with Islandora 8 objects are persisted to Fedora, although exactly which media is configurable within the Islandora 8 admin interface. Just as Drupal out of the box has a public and private filesystem, Islandora adds a third filesystem to Drupal called, not surprisigly, "fedora", and it is to this filesystem that media are persisted. We will provide more information about Fedora's role in an Islandora 8 repository in the [metadata](metadata.md) and [media](media.md) sections.
+In Islandora repositories that use Fedora, all properties about Drupal nodes are mirrored in Fedora as RDF properties. But, even if an Islandora instance does not use Fedora, Drupal can provide an object's properties as RDF (again, Drupal is the primary source of data in Islandora 8). In addition, the Drupal media associated with Islandora 8 objects are persisted to Fedora, although exactly which media is configurable within the Islandora 8 admin interface. Just as Drupal out of the box has a public and private filesystem, Islandora adds a third filesystem to Drupal called, not surprisingly, "fedora", and it is to this filesystem that media are persisted. We will provide more information about Fedora's role in an Islandora 8 repository in the [metadata](metadata.md) and [media](media.md) sections.
 
 
