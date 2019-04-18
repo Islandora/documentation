@@ -10,7 +10,8 @@ Then, you can look up the entry for that UUID using the Gemini service. It's a R
 curl -H "Authorization:Bearer islandora" http://localhost:8000/gemini/[uuid_value]
 ```
 
-Alternatively, you can login to the mysql database, select the gemini database, and issue the following query:
+Alternatively, you can login to your SQL database, choose the gemini database, and issue the following query:
+
 `
 select * from Gemini where uuid="uuid_value";
 `

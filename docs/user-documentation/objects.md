@@ -55,8 +55,6 @@ For example, you might have a content type for a set of repository objects that 
 another content type for generic repository objects that share a more general set of metadata fields.
 The section on [metadata](metadata.md) describes in more detail how fields on Islandora objects work.
 
-## Content Models
-
 Islandora has a notion of a _content model_, which is used to identify what type of content is
 being represented by a node (e.g. an image, a video, a collection of other items, etc...). This is done
 using a special field, "Model", which accepts taxonomy terms from the "Islandora Models" vocabulary.

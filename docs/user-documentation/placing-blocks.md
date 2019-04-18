@@ -62,7 +62,7 @@ But go to the frontpage and...
 
 ## Using Context
 
-The visibility conditions in the block placment UI are simple and effective.  They cover the majority of use cases,
+The visibility conditions in the block placement UI are simple and effective.  They cover the majority of use cases,
 however, there are times when you need even more control.  This is where the Context module really shines. 
 Any condition available to the Context module can be used to control block visibility.  And you can even combine conditions
 using boolean (AND/OR) logic.
@@ -83,7 +83,7 @@ term provided by the user.  In this case, it's set to look for the "Collection" 
 you can see that the "Block" reaction has been selected, and its configuration looks a lot like the core block placement
 UI.  
 The only difference here is that when the "Include blocks from block layout" box is checked, you are only placing the blocks
-you want to add in addtion to an already existing block layout.  If you uncheck the box, you are creating an entirely new
+you want to add in addition to an already existing block layout.  If you uncheck the box, you are creating an entirely new
 block layout from scratch, and will have to replace basic things like breadcrumbs and menus.
 
 ![Collection block](../assets/collection_block.png)
