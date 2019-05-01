@@ -1,9 +1,9 @@
 # Create / Update a Content Type
 
-!!! info
+!!! note "Islandora Demo"
     The screenshots and pre-existing data in this documentation assume that you are using the [Islandora Demo](https://github.com/Islandora-CLAW/islandora_demo) configuration.
 
-!!! info
+!!! note "Graphical User Interface"
     This page will address how to create and modify ingest forms (or rather, content types) via the GUI. For help working with forms via the API, please check out the [Further Reading](#further-reading) section for links to more advanced Drupal documentation.
 
 Since objects in Islandora 8 are stored in Drupal as Nodes, we use the standard Drupal Content Types system to create and edit our ‘ingest forms’ [Content Types in Drupal 8](https://www.drupal.org/docs/8/administering-drupal-8-site/managing-content-0/working-with-content-types-and-fields). Islandora 8 forms are Drupal forms, and if you are already familiar with Drupal Field UI, you’re already well equipped to create and modify your own ingest forms in Islandora 8.
@@ -40,13 +40,13 @@ And it appears in the ingest form when we try to create a new repository object.
 
 ![a screenshot of a "Needs Review?" field appearing at the bottom of a new node form](../assets/islandora8_newfieldinform.png)
 
-!!! tip "RDF Mappings"
-    New fields, with the exception of Typed Relation fields, are not automatically indexed in Fedora and the triple-store. Update the Content Type's RDF Mapping to enable indexing the field (see below).
+!!! note "RDF Mappings"
+    New fields, with the exception of Typed Relation fields, are not automatically indexed in Fedora and the triple-store. Update the    Content Type's RDF Mapping to enable indexing the field (see below).
 
-!!! tip "Search"
+!!! note "Search"
     New fields will not automatically be searchable. They need to be added to the SOLR index configuration. See the ['Setup and Configure Search'](searching.md) page for more information.
 
-!!! tip "Context"
+!!! note "Context"
     To add new behavior based on the results of this new field, check out [link to Context docs](searching.md)
 
 ### Change the Form Display
@@ -133,36 +133,36 @@ The mapping itself consists of the `types`' and `fieldMappings` configurations.
 All the mappings use RDF namespaces instead of fully-qualified URIs. For example, the type for islandora_object is `pcdm:Object` instead of `http://pcdm.org/models#Object`. Unfortunately, the available namespaces are defined in module hooks (hook_rdf_namespaces) rather than in a configuration file. Repository managers wanting to add additional namespaces need to create their own module and implement hook_rdf_namespaces. See the [islandora_demo](https://github.com/Islandora-CLAW/islandora_demo/blob/8.x-1.x/islandora_demo.module) hook implementation for an example.
 
 Namespaces currently supported (ordered by the module that supplies them) include:
- * rdf
-      * content: http://purl.org/rss/1.0/modules/content/
-      * dc: http://purl.org/dc/terms/
-      * foaf: http://xmlns.com/foaf/0.1/
-      * og: http://ogp.me/ns#
-      * rdfs: http://www.w3.org/2000/01/rdf-schema#
-      * schema: http://schema.org/
-      * sioc: http://rdfs.org/sioc/ns#
-      * sioct: http://rdfs.org/sioc/types#
-      * skos: http://www.w3.org/2004/02/skos/core#
-      * xsd: http://www.w3.org/2001/XMLSchema#
- * islandora
-      * ldp: http://www.w3.org/ns/ldp#
-      * dc11: http://purl.org/dc/elements/1.1/
-      * nfo: http://www.semanticdesktop.org/ontologies/2007/03/22/nfo/v1.1/
-      * ebucore: http://www.ebu.ch/metadata/ontologies/ebucore/ebucore#
-      * fedora: http://fedora.info/definitions/v4/repository#
-      * owl: http://www.w3.org/2002/07/owl#
-      * ore: http://www.openarchives.org/ore/terms/
-      * rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
-      * islandora: http://islandora.ca/CLAW/
-      * pcdm: http://pcdm.org/models#
-      * use: http://pcdm.org/use#
-      * iana: http://www.iana.org/assignments/relation/
- * islandora_demo
-      * relators: http://id.loc.gov/vocabulary/relators/
- * controlled_access_terms
-      * wgs84_pos: http://www.w3.org/2003/01/geo/wgs84_pos#
-      * org: https://www.w3.org/TR/vocab-org/#org:
-      * xs: http://www.w3.org/2001/XMLSchema#
+ - rdf
+      - content: http://purl.org/rss/1.0/modules/content/
+      - dc: http://purl.org/dc/terms/
+      - foaf: http://xmlns.com/foaf/0.1/
+      - og: http://ogp.me/ns#
+      - rdfs: http://www.w3.org/2000/01/rdf-schema#
+      - schema: http://schema.org/
+      - sioc: http://rdfs.org/sioc/ns#
+      - sioct: http://rdfs.org/sioc/types#
+      - skos: http://www.w3.org/2004/02/skos/core#
+      - xsd: http://www.w3.org/2001/XMLSchema#
+ - islandora
+      - ldp: http://www.w3.org/ns/ldp#
+      - dc11: http://purl.org/dc/elements/1.1/
+      - nfo: http://www.semanticdesktop.org/ontologies/2007/03/22/nfo/v1.1/
+      - ebucore: http://www.ebu.ch/metadata/ontologies/ebucore/ebucore#
+      - fedora: http://fedora.info/definitions/v4/repository#
+      - owl: http://www.w3.org/2002/07/owl#
+      - ore: http://www.openarchives.org/ore/terms/
+      - rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+      - islandora: http://islandora.ca/CLAW/
+      - pcdm: http://pcdm.org/models#
+      - use: http://pcdm.org/use#
+      - iana: http://www.iana.org/assignments/relation/
+ - islandora_demo
+      - relators: http://id.loc.gov/vocabulary/relators/
+ - controlled_access_terms
+      - wgs84_pos: http://www.w3.org/2003/01/geo/wgs84_pos#
+      - org: https://www.w3.org/TR/vocab-org/#org:
+      - xs: http://www.w3.org/2001/XMLSchema#
 
 The `types` corresponds to the `rdf:type` predicate (which corresponds to JSON-LD's `@type`) and can have multiple values. This type value will be applied to every node or taxonomy term using the mapped content type or vocabulary.
 
@@ -172,5 +172,5 @@ In some cases a repository may want a node or taxonomy term's `rdf:type` to be c
 
 ## Further Reading:
 
-* [Drupal.org Introduction to Form API](https://www.drupal.org/docs/8/api/form-api/introduction-to-form-api)
-* [Step by step method to create a custom form in Drupal 8](https://www.valuebound.com/resources/blog/step-by-step-method-to-create-a-custom-form-in-drupal-8)
+- [Drupal.org Introduction to Form API](https://www.drupal.org/docs/8/api/form-api/introduction-to-form-api)
+- [Step by step method to create a custom form in Drupal 8](https://www.valuebound.com/resources/blog/step-by-step-method-to-create-a-custom-form-in-drupal-8)
