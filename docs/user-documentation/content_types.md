@@ -133,36 +133,37 @@ The mapping itself consists of the `types`' and `fieldMappings` configurations.
 All the mappings use RDF namespaces instead of fully-qualified URIs. For example, the type for islandora_object is `pcdm:Object` instead of `http://pcdm.org/models#Object`. Unfortunately, the available namespaces are defined in module hooks (hook_rdf_namespaces) rather than in a configuration file. Repository managers wanting to add additional namespaces need to create their own module and implement hook_rdf_namespaces. See the [islandora_demo](https://github.com/Islandora-CLAW/islandora_demo/blob/8.x-1.x/islandora_demo.module) hook implementation for an example.
 
 Namespaces currently supported (ordered by the module that supplies them) include:
- - rdf
-      - content: http://purl.org/rss/1.0/modules/content/
-      - dc: http://purl.org/dc/terms/
-      - foaf: http://xmlns.com/foaf/0.1/
-      - og: http://ogp.me/ns#
-      - rdfs: http://www.w3.org/2000/01/rdf-schema#
-      - schema: http://schema.org/
-      - sioc: http://rdfs.org/sioc/ns#
-      - sioct: http://rdfs.org/sioc/types#
-      - skos: http://www.w3.org/2004/02/skos/core#
-      - xsd: http://www.w3.org/2001/XMLSchema#
- - islandora
-      - ldp: http://www.w3.org/ns/ldp#
-      - dc11: http://purl.org/dc/elements/1.1/
-      - nfo: http://www.semanticdesktop.org/ontologies/2007/03/22/nfo/v1.1/
-      - ebucore: http://www.ebu.ch/metadata/ontologies/ebucore/ebucore#
-      - fedora: http://fedora.info/definitions/v4/repository#
-      - owl: http://www.w3.org/2002/07/owl#
-      - ore: http://www.openarchives.org/ore/terms/
-      - rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
-      - islandora: http://islandora.ca/CLAW/
-      - pcdm: http://pcdm.org/models#
-      - use: http://pcdm.org/use#
-      - iana: http://www.iana.org/assignments/relation/
- - islandora_demo
-      - relators: http://id.loc.gov/vocabulary/relators/
- - controlled_access_terms
-      - wgs84_pos: http://www.w3.org/2003/01/geo/wgs84_pos#
-      - org: https://www.w3.org/TR/vocab-org/#org:
-      - xs: http://www.w3.org/2001/XMLSchema#
+
+- rdf
+    - content: http://purl.org/rss/1.0/modules/content/
+    - dc: http://purl.org/dc/terms/
+    - foaf: http://xmlns.com/foaf/0.1/
+    - og: http://ogp.me/ns#
+    - rdfs: http://www.w3.org/2000/01/rdf-schema#
+    - schema: http://schema.org/
+    - sioc: http://rdfs.org/sioc/ns#
+    - sioct: http://rdfs.org/sioc/types#
+    - skos: http://www.w3.org/2004/02/skos/core#
+    - xsd: http://www.w3.org/2001/XMLSchema#
+- islandora
+    - ldp: http://www.w3.org/ns/ldp#
+    - dc11: http://purl.org/dc/elements/1.1/
+    - nfo: http://www.semanticdesktop.org/ontologies/2007/03/22/nfo/v1.1/
+    - ebucore: http://www.ebu.ch/metadata/ontologies/ebucore/ebucore#
+    - fedora: http://fedora.info/definitions/v4/repository#
+    - owl: http://www.w3.org/2002/07/owl#
+    - ore: http://www.openarchives.org/ore/terms/
+    - rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+    - islandora: http://islandora.ca/CLAW/
+    - pcdm: http://pcdm.org/models#
+    - use: http://pcdm.org/use#
+    - iana: http://www.iana.org/assignments/relation/
+- islandora_demo
+    - relators: http://id.loc.gov/vocabulary/relators/
+- controlled_access_terms
+    - wgs84_pos: http://www.w3.org/2003/01/geo/wgs84_pos#
+    - org: https://www.w3.org/TR/vocab-org/#org:
+    - xs: http://www.w3.org/2001/XMLSchema#
 
 The `types` corresponds to the `rdf:type` predicate (which corresponds to JSON-LD's `@type`) and can have multiple values. This type value will be applied to every node or taxonomy term using the mapped content type or vocabulary.
 
