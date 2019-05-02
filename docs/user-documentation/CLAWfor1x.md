@@ -23,7 +23,7 @@ Fedora 4 differs considerably in that there is an innate tree hierarchy to the r
 ### Object Structure
 Fedora 3 objects are FOXML (Fedora Object eXtensible Markup Language) documents, with three elements:
 
-* `Digital Object Identifier`: A unique, persistent identifier for the digital object. Also knowns as the PID.
+* `Digital Object Identifier`: A unique, persistent identifier for the digital object. Also known as the PID.
 * `System Properties`: A set of system-defined descriptive properties that is necessary to manage and track the object in the repository.
 * `Datastream(s)`: The element in a Fedora digital object that represents a content item.
 

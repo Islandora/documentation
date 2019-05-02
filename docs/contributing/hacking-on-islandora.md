@@ -54,7 +54,7 @@ Last login: Fri Jul 17 13:51:38 2015 from 10.0.2.2
 vagrant@islandora:~$
 ```
 
-You'll be logged in as the vagrant user, with your github repo in your home directory.
+You'll be logged in as the vagrant user, with your GitHub repo in your home directory.
 
 ## Port Forwarding
 
@@ -64,7 +64,7 @@ Many ports are forwarded from your virtual machine to your personal computer, so
 - Karaf: 8181 -> 8181
 - MySQL: 3306 -> 3306
 
-At any point in time, you can edit how the ports are forwarded by clicking on the Port Forwarding button in your virtual machine's Network settings in Virtualbox.
+At any point in time, you can edit how the ports are forwarded by clicking on the Port Forwarding button in your virtual machine's Network settings in VirtualBox.
 
 You can also edit the section of the Vagrantfile that controls the default port forwarding, which looks something like this:
 ```ruby
@@ -92,7 +92,7 @@ You can also edit the section of the Vagrantfile that controls the default port 
 
 ## Shared folders
 
-By default, the vagrant environment uses a shared folder between your computer and the virtual machine it has created. This folder points to your Islandora CLAW github repo on your computer and is available at `~/CLAW` (`/home/vagrant/CLAW`) on the virtual machine. On top of that, in Drupal, `sites/all/modules/islandora` is a symlink pointing to `~/CLAW/islandora`.  This has a few profound consequences:
+By default, the vagrant environment uses a shared folder between your computer and the virtual machine it has created. This folder points to your Islandora CLAW GitHub repo on your computer and is available at `~/CLAW` (`/home/vagrant/CLAW`) on the virtual machine. On top of that, in Drupal, `sites/all/modules/islandora` is a symlink pointing to `~/CLAW/islandora`.  This has a few profound consequences:
 
 - You can use the IDE you're comfortable with on your own machine, without the need to scp/rsync code over to the development environment
 - Changes to Drupal module code are automatically reflected on your Drupal site since that code is symlinked (although you may need to be ssh'd in to `drush cc all` on occassion)

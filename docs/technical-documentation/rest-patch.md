@@ -4,7 +4,7 @@ PATCH requests allow you to update resources in place via a REST call. In this c
 
 Our example node is at `http://localhost:8000/node/3`.
 
-If you perform a [GET](./rest-get.md) against another node or media you can see all of the fields, some of these are calculated (change based on others, ie. "changed"), some are references to other entities (nodes, media, files in Drupal. ie. "field_model") and others are pure text fields (ie. "title").
+If you perform a [GET](./rest-get.md) against another node or media you can see all of the fields, some of these are calculated (change based on others, i.e. "changed"), some are references to other entities (nodes, media, files in Drupal. i.e. "field_model") and others are pure text fields (i.e. "title").
 
 The fields will be different between different node types and media types, but the syntax to update them is the same.
 

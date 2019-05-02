@@ -1,1 +1,0 @@
-../../islandora/README.md

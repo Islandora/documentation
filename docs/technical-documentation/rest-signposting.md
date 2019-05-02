@@ -4,7 +4,7 @@ Signposting is a technique used in RESTful APIs where other relevant resources a
 `GET` and `HEAD` requests.  These `Link` headers follow a standard format as specified in [RFC8288](
 https://tools.ietf.org/html/rfc8288).  Drupal already makes use of this technique for content entities, and Islandora takes it
 even further by providing additional `Link` headers that enable the client to navigate the repository and discover
-additional information about various resources.  Because the links are returned in respionse headers, they can be relied upon
+additional information about various resources.  Because the links are returned in response headers, they can be relied upon
 without having to parse the message body.  This makes them consistent across all serialization formats that can be returned in a message body 
 (XML, JSON, JSONLD, etc...).
 
