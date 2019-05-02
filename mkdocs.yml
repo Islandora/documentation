@@ -40,6 +40,8 @@ nav:
       - 'Views': 'user-documentation/create_update_views.md'
       - 'Users': 'user-documentation/users.md'
       - 'Blocks': 'user-documentation/placing-blocks.md'
+      - 'Usage Stats': 'user-documentation/usage-stats.md'
+      - 'Multilingual': 'user-documentation/multilingual.md'      
   - REST Documentation:
       - 'Introduction': 'technical-documentation/using-rest-endpoints.md'
       - 'GET': 'technical-documentation/rest-get.md'
