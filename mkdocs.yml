@@ -37,6 +37,7 @@ nav:
       - 'Access Control': 'user-documentation/access-control.md'
       - 'Objects in Fedora/RDF': 'user-documentation/fedora-rdf.md'
       - 'Solr': 'user-documentation/solr.md'
+      - 'Multilingual': 'user-documentation/multilingual.md'      
       - 'Introduction to Islandora CLAW [old]': 'user-documentation/intro-to-claw.md'
       - 'Islandora CLAW for 1.x Users [old]': 'user-documentation/CLAWfor1x.md'
       - 'Introduction to Linked Data for CLAW [old]': 'user-documentation/intro-to-ld-for-claw.md'
