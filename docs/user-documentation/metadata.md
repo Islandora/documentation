@@ -2,9 +2,8 @@
 
 > TL;DR: In Islandora 8 metadata values are stored in _fields_ attached to _entities_ (objects) which are then serialized as JSON-LD before being submitted to Fedora and/or indexed in a triple-store.
 
-> !!! note "Drupal 8 terminology":
->
-> In Drupal 8, Fields can be attached to _entity sub-types_ (e.g. Content types, Vocabularies) or _entities_ (Users, Files). For more on Fields, see ["2.3 Content Entities and Fields"](https://www.drupal.org/docs/user_guide/en/planning-data-types.html) and ["6.3 Adding Basic Fields to a Content Type"](https://www.drupal.org/docs/user_guide/en/structure-fields.html) in the Official Guide.
+!!! note "Drupal 8 Terminology"
+    In Drupal 8, Fields can be attached to _entity sub-types_ (e.g. Content types, Vocabularies) or _entities_ (Users, Files). For more on Fields, see ["2.3 Content Entities and Fields"](https://www.drupal.org/docs/user_guide/en/planning-data-types.html) and ["6.3 Adding Basic Fields to a Content Type"](https://www.drupal.org/docs/user_guide/en/structure-fields.html) in the Official Guide.
 
 As described in the [objects section](objects.md), Islandora 8 digital objects are comprised of _nodes_ for descriptive metadata, _media_ for technical metadata, and _files_ for the binary objects. This section describes how descriptive metadata is managed in Islandora 8.
 
@@ -16,14 +15,14 @@ For example, the 'islandora_demo' module provides a _Repository Item_ content ty
 
 ![Screenshot of the "Manage fields" page for the "Repository Item" content type from islandora_demo.](../assets/metadata_content_type_screenshot.png)
 
-> !!! tip: The included title field is limited to 255 characters; if your content has longer titles it is encouraged to create a separate long_title field to store the full title and reserve the default title field for a display title.
+!!! tip "Titles"
+    The included title field is limited to 255 characters; if your content has longer titles it is encouraged to create a separate long_title field to store the full title and reserve the default title field for a display title.
 
-> !!! tip "7.x Migration Note: What about my XML?"
->
-> In 7.x, metadata were (usually) stored within XML datastreams such as MODS or DC. In Islandora 8 we are breaking out
-individual metadata elements into fields instead of using an attached XML document. The Metadata Interest Group is developing a default mapping which will provide a basic, yet customizable, transform between MODS metadata and Drupal fields in Islandora Demo.
->
-> It is still possible to attach an XML file to a Islandora 8 object as a Media (see Datastreams), however there is no mechanism in Islandora 8 for editing XML in a user-friendly way.
+!!! tip "7.x Migration Note: What about my XML?"
+    In 7.x, metadata were (usually) stored within XML datastreams such as MODS or DC. In Islandora 8 we are breaking out
+    individual metadata elements into fields instead of using an attached XML document. The Metadata Interest Group is developing a default mapping which will provide a basic, yet customizable, transform between MODS metadata and Drupal fields in Islandora Demo.
+
+    It is still possible to attach an XML file to a Islandora 8 object as a Media (see Datastreams), however there is no mechanism in Islandora 8 for editing XML in a user-friendly way.
 
 A specific instance of a content type is called a _node_. In other words, a _node_ is the descriptive metadata for a particular digital object and the _content type_ is the node's metadata profile. Once a node is created, it cannot change its content type. To change a digital object's metadata profile (content type) a repository manager would need to create a new descriptive record (node) using the new metadata profile and then update the corresponding media records to point to the new descriptive record.
 
@@ -31,9 +30,9 @@ A specific instance of a content type is called a _node_. In other words, a _nod
 
 In Drupal, _Taxonomy Vocabularies_ (or simply 'Vocabularies') are also entity subtypes that group fields and their configurations. Unlike content types, they are intended to be used as descriptive attributes of content and have hierarchy built in. Whereas instances of content types are called nodes, items in a vocabulary are called _terms_.
 
-For example, Islandora includes the 'Islandora Models' vocabulary which includes the terms 'Audio', 'Binary', 'Collection', 'Image', and 'Video'. By linking to one of these terms in the 'Islandora Models' vocabulary a repository manager can tell that the node (digital object) should be considered an 'Image' or 'Audio', etcetera. The Controlled Access Terms module provides additional vocabularies representing Corporate Bodies, Persons, Families, Geographic Locations, and Subjects. Each of these vocabularies has its own set of fields allowing repositories to further describe them. Repository item nodes can then reference terms in these vocabularies. See 'Entity Reference fields' in the 'Field Types' section below.
+For example, Islandora includes the 'Islandora Models' vocabulary which includes the terms 'Audio', 'Binary', 'Collection', 'Image', and 'Video'. By linking to one of these terms in the 'Islandora Models' vocabulary a repository manager can tell that the node (digital object) should be considered an 'Image' or 'Audio', et cetera. The Controlled Access Terms module provides additional vocabularies representing Corporate Bodies, Persons, Families, Geographic Locations, and Subjects. Each of these vocabularies has its own set of fields allowing repositories to further describe them. Repository item nodes can then reference terms in these vocabularies. See 'Entity Reference fields' in the 'Field Types' section below.
 
-<!--[Geographic Location currently has hierarchy turned off. This section will apply once https://github.com/Islandora-CLAW/controlled_access_terms/pull/21 is merged.] Another example, this time illustrating hierarchy, is the 'Geographic Location' vocabulary. Although no terms are listed by default, a repository could create a 'Western Hemisphere' term and then create a 'North America' term as a child of the 'Western Hemisphere' term, etcetera.
+<!--[Geographic Location currently has hierarchy turned off. This section will apply once https://github.com/Islandora-CLAW/controlled_access_terms/pull/21 is merged.] Another example, this time illustrating hierarchy, is the 'Geographic Location' vocabulary. Although no terms are listed by default, a repository could create a 'Western Hemisphere' term and then create a 'North America' term as a child of the 'Western Hemisphere' term, et cetera.
 
 ![Screenshot of the Geographic Locations vocabulary showing example terms in a hierarchy.](../assets/metadata_geographic_location_list.png)
 -->

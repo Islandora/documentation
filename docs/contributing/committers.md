@@ -27,7 +27,7 @@ Committers share the following responsibilities:
 
 The following is an alphabetized list of the current Islandora CLAW committers:
 
-| Name                        | Organization                      | irc nick    |
+| Name                        | Organization                      | IRC nick    |
 |-----------------------------|-----------------------------------|-------------|
 | Aaron Coburn                | Amherst College                   | acoburn     |
 | Jonathan Green              | LYRASIS                           | jonathangee |
@@ -43,7 +43,7 @@ The following is an alphabetized list of the current Islandora CLAW committers:
 
 The following is an alphabetized list of the prior Islandora CLAW committers:
 
-| Name                        | Organization                      | irc nick    |
+| Name                        | Organization                      | IRC nick    |
 |-----------------------------|-----------------------------------|-------------|
 | Nick Ruest                  | York University                   | ruebot      |
 
