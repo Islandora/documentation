@@ -10,7 +10,7 @@ To access the search indexing settings navigate to '/admin/config/search/search-
 
 ### SOLR Server Configuration
 
-Use the 'Solr Server' link to view the SOLR server's configuration and the 'Default Solr content index' link to view or update the index settings. In most cases, where the site was built using ansible, the 'Solr Server' settings that were configured during installation should be left alone.
+Use the 'Solr Server' link to view the SOLR server's configuration and the 'Default Solr content index' link to view or update the index settings. In most cases, where the site was built using Ansible, the 'Solr Server' settings that were configured during installation should be left alone.
 
 ### SOLR Index Configuration
 

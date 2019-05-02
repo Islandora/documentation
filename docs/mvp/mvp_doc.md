@@ -31,7 +31,7 @@ These are what are considered the minimum requirements for a functional Islandor
 Islandora is composed of four broad categories of technologies. On one end, there is the administrative interface, which users and other clients will interact with. On the other is a repository, which will hold binary data and RDF triples. In between the two are connectors, which are small pieces of software that react to events from either administrative interface or the repository. These connectors will utilize microservices -- small utilities exposed as web services either internally or out on the internet at large.
 
 ![High Level Diagram of Islandora CLAW](https://raw.githubusercontent.com/Islandora-CLAW/CLAW/masterhttps://raw.githubusercontent.com/Islandora-CLAW/CLAW/master/docs/assets/image11.png)
- 
+
 ### Administrative Interface
 
 #### Drupal 8
@@ -76,7 +76,7 @@ The [FITS web service](http://projects.iq.harvard.edu/fits/downloads#fits-servle
 
 [API-X](https://wiki.duraspace.org/display/FF/Design+-+API+Extension+Architecture) allows Islandora to extend the Fedora 4 API.  Microservices are registered in API-X and then ‘bound’ to repository content. A proxy sitting in front of Fedora exposes microservices as functions on repository content, which all HTTP requests must be routed through.  
 
-For example, suppose Islandora is running the FITS web service described above.  Then let’s say we ‘bind’ it to all binaries in Fedora, with an identifier of ‘fits’. If we have a binary file at [http://fedora-host.com/fcrepo/rest/binaries/example](http://example.org/fcrepo/rest/binaries/example), then instead of writing code to retreive the content and forward it to our FITS service, we simply visit the proxy at [http://apix-host.com/fcrepo/rest/binaries/example/fits](http://apix-host.com/fcrepo/rest/binaries/example/fits). 
+For example, suppose Islandora is running the FITS web service described above.  Then let’s say we ‘bind’ it to all binaries in Fedora, with an identifier of ‘fits’. If we have a binary file at [http://fedora-host.com/fcrepo/rest/binaries/example](http://example.org/fcrepo/rest/binaries/example), then instead of writing code to retrieve the content and forward it to our FITS service, we simply visit the proxy at [http://apix-host.com/fcrepo/rest/binaries/example/fits](http://apix-host.com/fcrepo/rest/binaries/example/fits).
 
 Since services can be described, and that information is made available to interested clients, other applications can make informed decisions about what services are available for particular resources.
 
@@ -92,7 +92,7 @@ Connectors will often delegate larger chunks of work to microservices, either bo
 
 #### ID Indexer
 
-A connector will listen to Fedora events and index unique IDs contained in RDF using the ID Mapping microservice. The predicate used to notate unique IDs can be controlled through configuration. 
+A connector will listen to Fedora events and index unique IDs contained in RDF using the ID Mapping microservice. The predicate used to notate unique IDs can be controlled through configuration.
 
 #### Triplestore Indexer
 
