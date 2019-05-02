@@ -7,8 +7,8 @@ From the top menu, go to Configuration >> Regional and language >> Languages (`h
 
 You can place the default language selector block to switch between languages. To create the language switcher block go to Structure >> Block layout. Click Place block in a region of your choice.  Search for `Language switcher` block and click `Place block`.
 
-## Adding Multilingual Menu
-From the top menu, go to Configuration >> Regional and language >> Content language and translation. Check `Custom menu link` under `Custom language settings`. Scroll down to `Custom menu link` section and check all the relevant fields and Save the configurations. Clear the cache.  
+## Adding Multilingual Menus
+From the top menu, go to Configuration >> Regional and language >> Content language and translation. Check `Custom menu link` under `Custom language settings`. Scroll down to `Custom menu link` section and check all the relevant fields and Save the configurations. Clear the cache (Configuration >> Development >> Performance).  
 
 From the top menu, go to Structure >> Menu. Edit "Main navigation" menu. Default home menu item cannot be translated due to [this issue](https://www.drupal.org/project/drupal/issues/2838106). Disable that menu item. Click `Add link` to create a new menu item. Provide a menu title (i.e Home) and input `<front>` for the link field. Save. Right click on the Operations beside the new menu link and click the Translate button. Translate the menu link title for the language added above and save.
 
