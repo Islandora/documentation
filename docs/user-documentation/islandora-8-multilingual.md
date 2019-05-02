@@ -15,12 +15,12 @@ From the top menu, go to Structure >> Menu. Edit "Main navigation" menu. Default
 Go back to home. The language switcher will enable you to switch the language/content of the menu and content.
 
 ## Adding a Multilingual Repository Item
-From the top menu, go to Content >> Add content >> Repository item. Provide the required fields and save the object. Click the Translate tab of the object, provide a title in the second language and fill any translatable fields (i.e description). Add the media for the object. Media object can be translated similar to the repositiry item node.
+From the top menu, go to Content >> Add content >> Repository item. Provide the required fields and save the object. Click the Translate tab of the object, provide a title in the second language and fill any translatable fields (i.e description). Add the media for the object. Media object can be translated similar to the repository item node.
 
 Go back to home, you should be able to view content in the language selected in the language switcher.  
 
 ## Field Label Translations
-If you need the field labels of the Repositiry Item displayed in a different language, additional configuration is needed. `Configuration translation` module in the core needs to be enabled. Note that this will enable User Interface translation as well. Each field label needs to be translated. Cache should be cleared to see the changes.
+If you need the field labels of the repository Item displayed in a different language, additional configuration is needed. `Configuration translation` module in the core needs to be enabled. Note that this will enable User Interface translation as well. Each field label needs to be translated. Cache should be cleared to see the changes.
 
 
 ## Further Reading
