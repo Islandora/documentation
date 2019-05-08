@@ -1,26 +1,33 @@
-## How to look up a Gemini entry for a node?
+## How to find things in Fedora?
 
-Gemini is a service that maps Drupal URIs to their corresponding Fedora URIs. Each entry is keyed on the UUID assigned by Drupal. 
+The map between Drupal URIs and their corresponding Fedora URIs is stored in a service called Gemini. To get the corresponding Fedora URI to a Drupal node, it used to require querying Gemini directly. Instructions are provided below.
 
-To get the UUID of a node, taxonomy term, or media entity (see Note below) in Drupal, you can look in the Devel tab or in the JSON representation, e.g.: `http://localhost:8000/node/2?_format=json`.  
+To display the Fedora URI on a Drupal node or taxonomy term, go to Manage > Configuration > Islandora and select all the bundles for which you would like the Fedora URI displayed. A valid Gemini URL is required. On the [playbook](https://github.com/Islandora-Devops/claw-playbook), Gemini is at http://localhost:8080/gemini. 
 
-Then, you can look up the entry for that UUID using the Gemini service. It's a REST interface, so you can use a REST client such as POSTman, or a command-line tool such as `curl`: 
+## How to look up a Fedora URI through Gemini
+
+In Gemini, each entry is keyed on the UUID assigned by Drupal (the long one, not the node id). To get the UUID of a node, taxonomy term, or media entity (see Note below) in Drupal, you can look in the Devel tab or in the JSON representation, e.g.: `http://localhost:8000/node/2?_format=json`.  
+
+Then, query the Gemini REST service (using a REST client such as POSTman, or a command-line tool such as `curl`) for that UUID: 
 
 ```
 curl -H "Authorization:Bearer islandora" http://localhost:8000/gemini/[uuid_value]
 ```
 
-Alternatively, you can login to your SQL database, choose the gemini database, and issue the following query:
+Alternatively, you can login to SQL, choose the gemini database, and issue a query. With the playbook's default setup:
 
 `
-select * from Gemini where uuid="uuid_value";
+vagrant ssh
+mysql -uroot -pislandora gemini
+select fedora_uri from Gemini where drupal_uri = 'http://localhost:8000/node/[nid]?_format=jsonld';
 `
 
-Note: Media objects for files in Fedora aren't indexed in Gemini because they are not reliable. See [Github Issue #1079](https://github.com/Islandora-CLAW/CLAW/issues/1079).
+Note: Media objects aren't indexed in Gemini, as they have no direct correlation in Fedora. The information contained in the fields of the media object are recorded as properties of the file in Fedora.  
 
 ## How to look up a file metadata in Fedora?
-Files in Fedora have the file URI in Gemini. However, Media for files in Fedora aren't indexed in Gemini because they are not reliable. To look up file metadata, go to `file_uri + /fcr:metadata`.
+Files in Fedora have the file URI in Gemini. To see file metadata in Fedora, go to `file_uri + /fcr:metadata`. 
 
+For more information about the Gemini service, see the [Gemini README](https://github.com/Islandora-CLAW/Crayfish/tree/master/Gemini).
 
 ## How do I search for a object in the Solr?
 * Go to `http://localhost:8983/solr/#/CLAW/query`
@@ -68,7 +75,3 @@ Example:
 ```
 select ?s where { ?s <http://pcdm.org/models#fileOf> <http://localhost:8000/node/4?_format=jsonld> }
 ```
-
-Files in Fedora have their file URIs in Gemini. To see file metadata in Fedora, go to `file_uri + /fcr:metadata`. 
-
-For more information about the Gemini service, see the [Gemini README](https://github.com/Islandora-CLAW/Crayfish/tree/master/Gemini).
