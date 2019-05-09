@@ -1,8 +1,8 @@
 ## How to find things in Fedora?
 
-The map between Drupal URIs and their corresponding Fedora URIs is stored in a service called Gemini. To get the corresponding Fedora URI to a Drupal node, it used to require querying Gemini directly. Instructions are provided below.
+The map between Drupal URIs and their corresponding Fedora URIs is stored in a service called Gemini. To get the corresponding Fedora URI to a Drupal node, a pseudo-field can be enabled that displays it on the node. This used to require querying Gemini directly (and still does for files). Those instructions are provided below.
 
-To display the Fedora URI on a Drupal node or taxonomy term, go to Manage > Configuration > Islandora and select all the bundles for which you would like the Fedora URI displayed. A valid Gemini URL is required. On the [playbook](https://github.com/Islandora-Devops/claw-playbook), Gemini is at http://localhost:8080/gemini. 
+To display the Fedora URI  pseudo-field on a Drupal node or taxonomy term, go to Manage > Configuration > Islandora and select all the bundles for which you would like the Fedora URI displayed. A valid Gemini URL is required. On the [playbook](https://github.com/Islandora-Devops/claw-playbook), Gemini is at http://localhost:8080/gemini. Once you have selected the bundles, you can alter where in the display the Fedora URI field appears, by going to the "Manage Display" page for the bundle. For example, for a Repository Item, you'd go to http://localhost:8000/admin/structure/types/manage/islandora_object/display. In that list you should see `Fedora URI` which you can move around (or hide) as desired. Clearing cache may be necessary to refresh the node display.
 
 ## How to look up a Fedora URI through Gemini
 
