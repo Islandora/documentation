@@ -1,12 +1,17 @@
 ## How to find things in Fedora?
 
-The map between Drupal URIs and their corresponding Fedora URIs is stored in a service called Gemini. To get the corresponding Fedora URI to a Drupal node, a pseudo-field can be enabled that displays it on the node. This used to require querying Gemini directly (and still does for files). Those instructions are provided below.
+The map between Drupal URIs and their corresponding Fedora URIs is stored in a service called Gemini. An Islandora "pseudo-field" can be enabled that will display the corresponding Fedora URI on the page of a node, taxonomy term, or media object.  You can also query Gemini directly. Instructions for doing that are provided below.
 
-To display the Fedora URI  pseudo-field on a Drupal node or taxonomy term, go to Manage > Configuration > Islandora and select all the bundles for which you would like the Fedora URI displayed. A valid Gemini URL is required. On the [playbook](https://github.com/Islandora-Devops/claw-playbook), Gemini is at http://localhost:8080/gemini. Once you have selected the bundles, you can alter where in the display the Fedora URI field appears, by going to the "Manage Display" page for the bundle. For example, for a Repository Item, you'd go to http://localhost:8000/admin/structure/types/manage/islandora_object/display. In that list you should see `Fedora URI` which you can move around (or hide) as desired. Clearing cache may be necessary to refresh the node display.
+For more information about the Gemini service, see the [Gemini README](https://github.com/Islandora-CLAW/Crayfish/tree/master/Gemini).
 
-## How to look up a Fedora URI through Gemini
+## Fedora URI Pseudo-field
 
-In Gemini, each entry is keyed on the UUID assigned by Drupal (the long one, not the node id). To get the UUID of a node, taxonomy term, or media entity (see Note below) in Drupal, you can look in the Devel tab or in the JSON representation, e.g.: `http://localhost:8000/node/2?_format=json`.  
+To display the Fedora URI  pseudo-field on a Drupal node, media, or taxonomy term, go to Manage > Configuration > Islandora and select all the bundles for which you would like the Fedora URI displayed. A valid Gemini URL is required. On the [playbook](https://github.com/Islandora-Devops/claw-playbook), Gemini is at http://localhost:8080/gemini. Once you have selected the bundles, and cleared the cache, the new pseudo-field will appear at the bottom of all display modes. You can alter where in the display the Fedora URI field appears, by going to the "Manage Display" page for the bundle. For example, for a Repository Item, you'd go to http://localhost:8000/admin/structure/types/manage/islandora_object/display. In that list you should see `Fedora URI` which you can move around (or hide) as desired. Clearing cache may be necessary to refresh the node display.
+
+
+## How to look up a Fedora URI through Gemini (nodes and taxonomy terms)
+
+In Gemini, each entry is keyed on the UUID assigned by Drupal (the long one, not the node id). To get the UUID of a node, or taxonomy term in Drupal, you can look in the Devel tab or in the JSON representation, e.g.: `http://localhost:8000/node/2?_format=json`.  
 
 Then, query the Gemini REST service (using a REST client such as POSTman, or a command-line tool such as `curl`) for that UUID: 
 
@@ -22,12 +27,18 @@ mysql -uroot -pislandora gemini
 select fedora_uri from Gemini where drupal_uri = 'http://localhost:8000/node/[nid]?_format=jsonld';
 `
 
-Note: Media objects aren't indexed in Gemini, as they have no direct correlation in Fedora. The information contained in the fields of the media object are recorded as properties of the file in Fedora.  
+## How to look up a Fedora URI through Gemini (files)?
+Files in Fedora have the file URI in Gemini, and can be queried based on the UUID (accessible from the Media's json) or their URI.
 
-## How to look up a file metadata in Fedora?
-Files in Fedora have the file URI in Gemini. To see file metadata in Fedora, go to `file_uri + /fcr:metadata`. 
+`
+select fedora_uri from Gemini where drupal_uri = 'http://localhost:8000/_flysystem/fedora/2019-05/639647.jpg';
+`
 
-For more information about the Gemini service, see the [Gemini README](https://github.com/Islandora-CLAW/Crayfish/tree/master/Gemini).
+## Media and Gemini
+Media objects aren't indexed in Gemini. Their Fedora counterparts are located at the Fedora URI of the file, appended with `/fcr:metadata`. This is an RDF document in Fedora that describes _the binary file itself_, and it contains all the information describing the file that is present in the fields of the Media. 
+
+When you enable the pseudo-field on a media object, you see the URI of its Fedora counterpart, `file_uri + /fcr:metadata`,  constructed using the Gemini mapping of its attached file.  
+
 
 ## How do I search for a object in the Solr?
 * Go to `http://localhost:8983/solr/#/CLAW/query`
