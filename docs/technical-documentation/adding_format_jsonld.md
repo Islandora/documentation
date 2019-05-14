@@ -13,5 +13,4 @@ If you are using claw-playbook and are provisioning new environments for your ol
 variables in your inventory that control this config.
 
 - `crayfish_milliner_strip_format_jsonld: true`
-- `webserver_app_jsonld: yes`
 - `webserver_app_jsonld_remove_format: 1`
