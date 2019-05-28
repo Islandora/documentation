@@ -6,7 +6,16 @@ site_description: Documentation for Islandora CLAW
 dev_addr: 'localhost:8111'
 repo_url: https://github.com/Islandora-CLAW/CLAW
 
-theme: material
+theme:
+  name: 'material'
+  palette:
+    primary: 'red'
+    accent: 'red'
+  font:
+    text: 'Roboto'
+    code: 'Roboto Mono'
+  logo: 'assets/claw.png'
+  language: 'en'
 markdown_extensions:
   - admonition
 
