@@ -29,7 +29,6 @@ The following is an alphabetized list of the current Islandora CLAW committers:
 
 | Name                        | Organization                      | IRC nick    |
 |-----------------------------|-----------------------------------|-------------|
-| Aaron Coburn                | Amherst College                   | acoburn     |
 | Jonathan Green              | LYRASIS                           | jonathangee |
 | Mark Jordan                 | Simon Fraser University           | mjordan     |
 | Danny Lamb                  | Islandora Foundation              | dhlamb      |
@@ -45,6 +44,7 @@ The following is an alphabetized list of the prior Islandora CLAW committers:
 
 | Name                        | Organization                      | IRC nick    |
 |-----------------------------|-----------------------------------|-------------|
+| Aaron Coburn                | Amherst College                   | acoburn     |
 | Nick Ruest                  | York University                   | ruebot      |
 
 
