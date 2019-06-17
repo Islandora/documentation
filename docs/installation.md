@@ -193,7 +193,7 @@ $ ansible-playbook -i inventory/production playbook.yml -e "islandora_distro=cen
 ## Troubleshooting
 
 Ansible caches the code used to provision the environment, so if you've already installed once you may not be getting the latest version
-of things even if you've `git pull`d the latest playbook.  The code is stored in `roles/external`, so if you want to clear it out you can
+of things even if you've `git pull`'d the latest playbook.  The code is stored in `roles/external`, so if you want to clear it out you can
 run
 
 ```bash
