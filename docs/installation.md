@@ -162,7 +162,9 @@ matomo_site_url: http://example.org
 #### hosts
 You'll need the ssh particulars for logging into your server in the hosts file.  This example is set up to login as `root` using
 an ssh key. You'll need to get the details for logging into your remote server from your hosting provider (AWS, Digital Ocean, etc...)
-or your systems administrator if you're running the server in-house. See this page for more details about what you can put into a
+or your systems administrator if you're running the server in-house. See
+[this page](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html#connecting-to-hosts-behavioral-inventory-parameters)
+for more details about what you can put into a
 host file
 
 ```
