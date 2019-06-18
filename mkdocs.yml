@@ -4,7 +4,7 @@ docs_dir: docs
 site_description: Documentation for Islandora 8
 
 dev_addr: 'localhost:8111'
-repo_url: https://github.com/Islandora-CLAW/islandora
+repo_url: https://github.com/Islandora-CLAW/CLAW
 
 theme:
   name: 'material'
