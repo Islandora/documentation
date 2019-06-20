@@ -27,7 +27,7 @@ They can represent everything from simple labels to more complex concepts such a
 
 Islandora 7.x basically inherits its object model from Fedora 3.x. In 7.x, Fedora stores all properties and content associated with an object - not only its owner, dc.title, status, PID, and status, but also any content files such as OBJ, DC, MODS, and RELS-EXT. In Islandora 7.x, Fedora is the authoritative, primary source for all aspects of an object. Fedora 3.x is not an optional component of an Islandora 7.x repository, it is the primary datastore.
 
-In Islandora 8, using Fedora is optional. That's right, optional. Drupal, and not Fedora, is the primary source of all aspects of an Islandora 8 object, and, with some variations, Drupal, not Fedora, is the primary datastore in an Islandora repository. If Fedora is present in an Islandora 8 repository, content in it is a tightly syncronized copy of object properties and files managed by Drupal.
+In Islandora 8, using Fedora is optional. That's right, optional. Drupal, and not Fedora, is the primary source of all aspects of an Islandora 8 object, and, with some variations, Drupal, not Fedora, is the primary datastore in an Islandora repository. If Fedora is present in an Islandora 8 repository, content in it is a tightly synchronized copy of object properties and files managed by Drupal.
 
 Even though Fedora is optional in Islandora 8, most repositories will use it since it provides its own set of services that are worth taking advantage of, such as:
 
