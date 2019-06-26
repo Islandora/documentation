@@ -1,14 +1,14 @@
-# Islandora CLAW MVP
+# Islandora 8 MVP
 
 ## Motivation
 
-The Islandora CLAW project is currently transitioning from a prototype into a competitive product, and has had a requirements change from integration with Drupal 7 to Drupal 8. In order to aid in that transition, we are defining the minimum viable product. This will defend against scope creep, give clearly defined goals for community members to work towards, and present the point at which the CLAW team feels the software is ready to be tested out in small installations.
+The Islandora 8 project is currently transitioning from a prototype into a competitive product, and has had a requirements change from integration with Drupal 7 to Drupal 8. In order to aid in that transition, we are defining the minimum viable product. This will defend against scope creep, give clearly defined goals for community members to work towards, and present the point at which the development team feels the software is ready to be tested out in small installations.
 
 Needless to say, since this is a minimum product, a lot of parts of the previous prototype are either going to get replaced by an existing project to ease the maintenance load, or be removed altogether until time and resources allow other development.
 
 
 ## High Level Features
-These are what are considered the minimum requirements for a functional Islandora CLAW that is worthy of a 1.0.0 release.
+These are what are considered the minimum requirements for a functional Islandora 8 that is worthy of a 1.0.0 release.
 
 
 * Content modeled in Drupal as Entities using [PCDM](https://github.com/duraspace/pcdm/wiki) 1.0
@@ -30,7 +30,7 @@ These are what are considered the minimum requirements for a functional Islandor
 ### Overview
 Islandora is composed of four broad categories of technologies. On one end, there is the administrative interface, which users and other clients will interact with. On the other is a repository, which will hold binary data and RDF triples. In between the two are connectors, which are small pieces of software that react to events from either administrative interface or the repository. These connectors will utilize microservices -- small utilities exposed as web services either internally or out on the internet at large.
 
-![High Level Diagram of Islandora CLAW](https://raw.githubusercontent.com/Islandora-CLAW/CLAW/masterhttps://raw.githubusercontent.com/Islandora-CLAW/CLAW/master/docs/assets/image11.png)
+![High Level Diagram of Islandora 8](https://raw.githubusercontent.com/Islandora-CLAW/CLAW/masterhttps://raw.githubusercontent.com/Islandora-CLAW/CLAW/master/docs/assets/image11.png)
 
 ### Administrative Interface
 

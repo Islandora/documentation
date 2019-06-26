@@ -1,6 +1,6 @@
 # Welcome!
 
-If you are reading this document then you are interested in contributing to Islandora CLAW. All contributions are welcome: use-cases, documentation, code, patches, bug reports, feature requests, etc. You do not need to be a programmer to speak up!
+If you are reading this document then you are interested in contributing to Islandora 8. All contributions are welcome: use-cases, documentation, code, patches, bug reports, feature requests, etc. You do not need to be a programmer to speak up!
 
 ## Workflows
 
@@ -8,7 +8,7 @@ The group meets each Wednesday at 1:00 PM Eastern. Meeting notes and announcemen
 
 ### Use cases
 
-If you would like to submit a use case to the Islandora CLAW project, please submit an issue [here](https://github.com/Islandora-CLAW/CLAW/issues/new) using the [Use Case template](https://github.com/Islandora-CLAW/CLAW/wiki/Use-Case-template), prepending "Use Case:" to the title of the issue.
+If you would like to submit a use case to the Islandora 8 project, please submit an issue [here](https://github.com/Islandora-CLAW/CLAW/issues/new) using the [Use Case template](https://github.com/Islandora-CLAW/CLAW/wiki/Use-Case-template), prepending "Use Case:" to the title of the issue.
 
 ### Documentation
 

@@ -1,7 +1,7 @@
 # Create / Update a Content Type
 
 !!! note "Islandora Demo"
-    The screenshots and pre-existing data in this documentation assume that you are using the [Islandora Demo](https://github.com/Islandora-CLAW/islandora_demo) configuration.
+    The screenshots and pre-existing data in this documentation assume that you are using the [Islandora Defaults](https://github.com/Islandora-CLAW/islandora_demo) configuration.
 
 !!! note "Graphical User Interface"
     This page will address how to create and modify ingest forms (or rather, content types) via the GUI. For help working with forms via the API, please check out the [Further Reading](#further-reading) section for links to more advanced Drupal documentation.

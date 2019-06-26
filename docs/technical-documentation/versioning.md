@@ -1,6 +1,6 @@
 # Versioning Policy
 
-Islandora CLAW uses [semantic versioning](http://semver.org/), except for Drupal modules.
+Islandora 8 uses [semantic versioning](http://semver.org/), except for Drupal modules.
 
 ## Components
 
