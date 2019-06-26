@@ -45,7 +45,7 @@ core.entity_view_display.node.your_content_type.default.yml
 core.entity_view_display.node.your_content_type.teaser.yml
 ```
 
-In addition, CLAW needs a RDF mapping to express the content in RDF and to sync to fedora. There will be one rdf mapping per bundle.
+In addition, CLAW needs a RDF mapping to express the content in RDF and to sync to fedora. There will be one RDF mapping per bundle.
 ```
 rdf.mapping.media.your_media_bundle.yml
 rdf.mapping.node.your_content_type.yml

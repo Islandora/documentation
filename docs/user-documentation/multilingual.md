@@ -1,4 +1,4 @@
-Islandora 8 enables you to build full fledged multilingual repositories leveraging the multilingual support provided by Drupal core modules. The multilingual content gets indexed into Fedora repository as well as the Triplestore (blazegraph), and can be queried using the SPARQL endpoint. In this guide, we will describe the steps needed to setup a basic multilingual Islandora 8 site.  
+Islandora 8 enables you to build full fledged multilingual repositories leveraging the multilingual support provided by Drupal core modules. The multilingual content gets indexed into Fedora repository as well as the Triplestore (Blazegraph), and can be queried using the SPARQL endpoint. In this guide, we will describe the steps needed to setup a basic multilingual Islandora 8 site.  
 
 ## Drupal 8 Configurations
 Drupal 8 comes with four modules for [multilingual support](https://www.drupal.org/docs/8/multilingual/choosing-and-installing-multilingual-modules). Islandora 8 enables Language and Content Translation modules by default.
