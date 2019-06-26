@@ -4,6 +4,15 @@
 [submodule "islandora"]
 	path = islandora
 	url = https://github.com/Islandora-CLAW/islandora
+[submodule "islandora_defaults"]
+	path = islandora_defaults
+	url = https://github.com/Islandora-CLAW/islandora_defaults
+[submodule "migrate_islandora_csv"]
+	path = migrate_islandora_csv
+	url = https://github.com/Islandora-CLAW/migrate_islandora_csv
+[submodule "controlled_access_terms"]
+	path = controlled_access_terms
+	url = https://github.com/Islandora-CLAW/controlled_access_terms
 [submodule "claw-playbook"]
 	path = claw-playbook
 	url = https://github.com/Islandora-Devops/claw-playbook
@@ -22,3 +31,15 @@
 [submodule "Crayfish-Commons"]
 	path = Crayfish-Commons
 	url = https://github.com/Islandora-CLAW/Crayfish-Commons
+[submodule "carapace"]
+	path = carapace
+	url = https://github.com/Islandora-CLAW/carapace
+[submodule "openseadragon"]
+	path = openseadragon
+	url = https://github.com/Islandora-CLAW/openseadragon
+[submodule "drupal-project"]
+	path = drupal-project
+	url = https://github.com/Islandora-CLAW/drupal-project
+[submodule "migrate_7x_claw"]
+	path = migrate_7x_claw
+	url = https://github.com/Islandora-Devops/migrate_7x_claw
