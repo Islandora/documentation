@@ -1,7 +1,7 @@
-site_name: Islandora CLAW
+site_name: Islandora 8
 site_dir: site
 docs_dir: docs
-site_description: Documentation for Islandora CLAW
+site_description: Documentation for Islandora 8
 
 dev_addr: 'localhost:8111'
 repo_url: https://github.com/Islandora-CLAW/CLAW
