@@ -42,14 +42,14 @@ When you enable the pseudo-field on a media object, you see the URI of its Fedor
 
 ## How do I search for a object in the Solr?
 * Go to `http://localhost:8983/solr/#/CLAW/query`
-* Issue a solr query.
+* Issue a Solr query.
 
 Example
 ```
 ss_search_api_id:"entity:node/4:en"
 ```
 
-## Sample Tripestore queries
+## Sample Triplestore queries
 * Go to `http://localhost:8080/bigdata/#query`
 * Under namespaces (`http://localhost:8080/bigdata/#namespaces`), make sure `islandora` is selected.  
 

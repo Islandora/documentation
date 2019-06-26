@@ -2,9 +2,9 @@ By default, Islandora deploys with the `jsonld` module and `Milliner` microservi
 `_format` query parameter.  This means that when your content is indexed in Fedora, the triplestore, etc... it's URI will
 be something like `http://localhost:8000/node/1` and not `http://localhost:8000/node/1?_format=jsonld`.
 
-If you are using a __very__ early version of Islandora 8 (pre-release), then you may have uris with `_format=jsonld` at the
+If you are using a __very__ early version of Islandora 8 (pre-release), then you may have URIs with `_format=jsonld` at the
 end of them.  If you update to newer code, you will need to ensure that your site is configured to add `?_format=jsonld`
-back to the urls if you want to maintain consistency.
+back to the URLs if you want to maintain consistency.
 
 - Go to `admin/config/search/jsonld` and confirm the 'Remove jsonld parameter from @ids' checkbox is unchecked.
 - Add `strip_format_jsonld: false` to `/var/www/html/Crayfish/Milliner/cfg/config.yaml`
