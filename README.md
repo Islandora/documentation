@@ -1,8 +1,8 @@
-# ![Islandora CLAW](https://camo.githubusercontent.com/738dd7cbd90a3ef06b9bb55a4cf5ed385a048fd4/687474703a2f2f69736c616e646f72612e63612f73697465732f64656661756c742f66696c65732f696d616765732f6c6f6273746572434c41572e706e67) Islandora CLAW
+# ![Islandora 8](https://camo.githubusercontent.com/738dd7cbd90a3ef06b9bb55a4cf5ed385a048fd4/687474703a2f2f69736c616e646f72612e63612f73697465732f64656661756c742f66696c65732f696d616765732f6c6f6273746572434c41572e706e67) Islandora 8
 
 ## Introduction
 
-Islandora CLAW is the next generation of Islandora. Still in development, this major upgrade will be compatible with [Fedora 4](https://wiki.duraspace.org/display/FF/Fedora+Repository+Home).
+Islandora 8 is the next generation of Islandora. It pairs [Drupal 8](https://www.drupal.org/8) with [Fedora 5](https://wiki.duraspace.org/display/FF/Fedora+Repository+Home)
 
 For more details, please check out the following resources:
 
@@ -21,19 +21,19 @@ For more details, please check out the following resources:
 * [Alpaca](https://github.com/islandora-claw/Alpaca): Event driven middleware based on Apache Camel that synchronizes a Fedora 4 with Drupal.
 * [docs](https://github.com/Islandora-CLAW/CLAW/tree/master/docs): Documentation!
 * [chullo](https://github.com/islandora-claw/chullo/): PHP client for Fedora 4 built using Guzzle and EasyRdf
-* [Crayfish](https://github.com/islandora-claw/Crayfish): A collection of Islandora CLAW microservices
+* [Crayfish](https://github.com/islandora-claw/Crayfish): A collection of Islandora 8 microservices
 * [Crayfish-Commons](https://github.com/Islandora-CLAW/Crayfish-Commons): A library housing shared code for Crayfish microservices
-* [drupal-project](https://github.com/Islandora-CLAW/drupal-project): Composer template for Islandora CLAW Drupal
+* [drupal-project](https://github.com/Islandora-CLAW/drupal-project): Composer template for Islandora 8 Drupal
 * [claw-playbook](https://github.com/Islandora-Devops/claw-playbook): Bleeding edge development environment
-* [islandora](https://github.com/Islandora-CLAW/islandora): Islandora CLAW Drupal core module
-* [islandora_collection](https://github.com/Islandora-CLAW/islandora_collection): Islandora CLAW Drupal collection module
-* [islandora_image](https://github.com/Islandora-CLAW/islandora_image): Islandora CLAW Drupal image module
-* [jsonld](https://github.com/islandora-claw/jsonld): JSON-LD Serializer for Drupal 8 and Islandora CLAW
+* [islandora](https://github.com/Islandora-CLAW/islandora): Islandora 8 Drupal core module
+* [islandora_collection](https://github.com/Islandora-CLAW/islandora_collection): Islandora 8 Drupal collection module
+* [islandora_image](https://github.com/Islandora-CLAW/islandora_image): Islandora 8 Drupal image module
+* [jsonld](https://github.com/islandora-claw/jsonld): JSON-LD Serializer for Drupal 8 and Islandora 8
 * [Syn](https://github.com/islandora-claw/Syn): Tomcat valve for JWT Authentication
 
 
 ## Installation
-Islandora CLAW provides an Ansible [claw-playbook](https://github.com/Islandora-Devops/claw-playbook) to fully deploy the stack to a vagrant, bare-metal server or multi server environments.
+Islandora 8 provides an Ansible [claw-playbook](https://github.com/Islandora-Devops/claw-playbook) to fully deploy the stack to a vagrant, bare-metal server or multi server environments.
 
 ## Sponsors
 
