@@ -1,6 +1,10 @@
 # Welcome!
 
-If you are reading this document then you are interested in contributing to Islandora CLAW. All contributions are welcome: use-cases, documentation, code, patches, bug reports, feature requests, etc. You do not need to be a programmer to speak up!
+If you are reading this document then you are interested in contributing to Islandora 8. All contributions are welcome: use-cases, documentation, code, patches, bug reports, feature requests, etc. You do not need to be a programmer to speak up!
+
+We also have an irc channel -- #islandora -- on freenode.net. Feel free to hang out there, ask questions, and help others out if you can.
+
+Please note that this project operates under the [Islandora Community Code of Conduct](http://islandora.ca/codeofconduct). By participating in this project you agree to abide by its terms.
 
 ## Workflows
 
@@ -8,7 +12,7 @@ The group meets each Wednesday at 1:00 PM Eastern. Meeting notes and announcemen
 
 ### Use cases
 
-If you would like to submit a use case to the Islandora CLAW project, please submit an issue [here](https://github.com/Islandora-CLAW/CLAW/issues/new) using the [Use Case template](https://github.com/Islandora-CLAW/CLAW/wiki/Use-Case-template), prepending "Use Case:" to the title of the issue.
+If you would like to submit a use case to the Islandora 8 project, please submit an issue [here](https://github.com/Islandora-CLAW/CLAW/issues/new) using the [Use Case template](https://github.com/Islandora-CLAW/CLAW/wiki/Use-Case-template), prepending "Use Case:" to the title of the issue.
 
 ### Documentation
 
@@ -16,11 +20,11 @@ You can contribute documentation in two different ways. One way is to create an 
 
 ### Request a new feature
 
-To request a new feature you should [open an issue in the CLAW repository](https://github.com/Islandora-CLAW/CLAW/issues/new) or create a use case (see the _Use cases_ section above), and summarize the desired functionality. Prepend "Enhancement:" if creating an issue on the project repo, and "Use Case:" if creating a use case.
+To request a new feature you should [open an issue in the Islandora 8 repository](https://github.com/Islandora-CLAW/CLAW/issues/new) or create a use case (see the _Use cases_ section above), and summarize the desired functionality. Prepend "Enhancement:" if creating an issue on the project repo, and "Use Case:" if creating a use case.
 
 ### Report a bug
 
-To report a bug you should [open an issue in the CLAW repository](https://github.com/Islandora-CLAW/CLAW/issues/new) that summarizes the bug. Prepend the label "Bug:" to the title of the issue.
+To report a bug you should [open an issue in the Islandora 8 repository](https://github.com/Islandora-CLAW/CLAW/issues/new) that summarizes the bug. Prepend the label "Bug:" to the title of the issue.
 
 In order to help us understand and fix the bug it would be great if you could provide us with:
 
@@ -66,4 +70,4 @@ You may want to read [Syncing a fork](https://help.github.com/articles/syncing-a
 
 ## License Agreements
 
-The Islandora Foundation requires that contributors complete a [Contributor License Agreement](http://islandora.ca/sites/default/files/islandora_cla.pdf) or be covered by a [Corporate Contributor License Agreement](http://islandora.ca/sites/default/files/islandora_ccla.pdf). The signed copy of the license agreement should be sent to <a href="mailto:community@islandora.ca?Subject=Contributor%20License%20Agreement" target="_top">community@islandora.ca</a>. This license is for your protection as a contributor as well as the protection of the Foundation and its users; it does not change your rights to use your own contributions for any other purpose.
+The Islandora Foundation requires that contributors complete a [Contributor License Agreement](http://islandora.ca/sites/default/files/islandora_cla.pdf) or be covered by a [Corporate Contributor License Agreement](http://islandora.ca/sites/default/files/islandora_ccla.pdf). The signed copy of the license agreement should be sent to <a href="mailto:community@islandora.ca?Subject=Contributor%20License%20Agreement" target="_top">community@islandora.ca</a>. This license is for your protection as a contributor as well as the protection of the Foundation and its users; it does not change your rights to use your own contributions for any other purpose. A list of current CLAs is kept [here](https://github.com/Islandora/islandora/wiki/Contributor-License-Agreements).

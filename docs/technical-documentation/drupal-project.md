@@ -1,6 +1,6 @@
 # Introduction
 
-Islandora CLAW makes use of [drupal-project](https://github.com/drupal-composer/drupal-project), a composer template for Drupal projects. We augment it with Islandora CLAW specific changes, and need to occasionally pull in upstream changes. The process below outlines how we will do it in a consistent manner.
+Islandora 8 makes use of [drupal-project](https://github.com/drupal-composer/drupal-project), a composer template for Drupal projects. We augment it with Islandora specific changes, and need to occasionally pull in upstream changes. The process below outlines how we will do it in a consistent manner.
 
 # Pull in upstream changes
 
@@ -10,7 +10,7 @@ Islandora CLAW makes use of [drupal-project](https://github.com/drupal-composer/
 <br /> `git remote add upstream https://github.com/drupal-composer/drupal-project.git`
 3. Fetch everything:
 <br /> `git fetch --all`
-4. Create a branch to pull in changes that is based off the Islandora-CLAW 8.x-1.x branch: 
+4. Create a branch to pull in changes that is based off the Islandora 8.x-1.x branch:
 <br /> `git checkout -b sync-upstream`
 5. Rebase upstream changes:
 <br /> `git rebase upstream/8.x` (fix any merge conflicts, and then `git rebase --continue`)
