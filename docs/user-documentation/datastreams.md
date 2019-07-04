@@ -19,7 +19,7 @@ Islandora 8 objects can have any number of media associated with them. Media adv
 
 Islandora 8 media express their intended use with a special "Media Use" field, which accepts taxonomy terms from the "Media Usage"
 vocabulary. Because the Media Usage vocabulary is an ordinary Drupal vocabulary, Islandora 8 site administrators can add their own
-terms, and in turn, these local terms can be used to identify media that have some custom local purpose.
+terms, and in turn, these local terms can be used to identify media that have some custom local purpose. However, most of the default set of "Media Use" terms are taken from the [PCDM Use Extension](https://pcdm.org/2015/05/12/use) vocabulary:
 
 ![Media tab](../assets/media_use_vocabulary_media_form.png)
 
