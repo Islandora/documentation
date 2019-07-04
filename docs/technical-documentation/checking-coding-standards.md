@@ -1,6 +1,6 @@
 # Checking Code Style
 
-Before opening a pull request, you should check your code style. If you are running the Vagrant, you can run `phpcs` within the Drupal installation directory (on the Vagrant, that is `/var/www/html/drupal`) or from within the `web` directory (`/var/www/html/drupal/web`) as follows:
+Before opening a pull request, you should check your code style. If you are using the [Vagrant](https://github.com/Islandora-Devops/claw-playbook), you can run `phpcs` within the Drupal installation directory (on the Vagrant, that is `/var/www/html/drupal`) or from within the `web` directory (`/var/www/html/drupal/web`) as follows:
 
 * from within Drupal's root directory: `./vendor/bin/phpcs --standard=/var/www/html/drupal/vendor/drupal/coder/coder_sniffer/Drupal yourfile`, where `yourfile` is the path to the PHP file you want to check.
 * from within Drupal's `web` directory: `../vendor/bin/phpcs --standard=/vendor/drupal/coder/coder_sniffer/Drupal yourfile`, where `yourfile` is the path to the PHP file you want to check.
@@ -8,4 +8,4 @@ Before opening a pull request, you should check your code style. If you are runn
 In both cases:
 
 * the path to the coding standard file can be relative to where you are running it from, e.g. when in `web`: `--standard=../vendor/drupal/coder/coder_sniffer/Drupal`
-* you can specify a single file to check, or a directory; in the latter case, all files in that directory will be checked.
+* you can specify a single file to check, or a directory path; in the latter case, all files in that directory will be checked.
