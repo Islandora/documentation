@@ -7,11 +7,11 @@ echo "Install utilities needed for testing"
 mkdir /opt/utils
 cd /opt/utils
 if [ -z "$COMPOSER_PATH" ]; then
-  composer require drupal/coder
-  composer require sebastian/phpcpd
+  composer require drupal/coder ^8.3.5
+  composer require sebastian/phpcpd ^4.1
 else
-  php -dmemory_limit=-1 $COMPOSER_PATH require drupal/coder
-  php -dmemory_limit=-1 $COMPOSER_PATH require sebastian/phpcpd
+  php -dmemory_limit=-1 $COMPOSER_PATH require drupal/coder ^8.3.5
+  php -dmemory_limit=-1 $COMPOSER_PATH require sebastian/phpcpd ^4.1
 fi
 sudo ln -s /opt/utils/vendor/bin/phpcs /usr/bin/phpcs
 sudo ln -s /opt/utils/vendor/bin/phpcpd /usr/bin/phpcpd
