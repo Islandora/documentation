@@ -19,7 +19,7 @@ Islandora 8 objects can have any number of media associated with them. Media adv
 
 Islandora 8 media express their intended use with a special "Media Use" field, which accepts taxonomy terms from the "Media Usage"
 vocabulary. Because the Media Usage vocabulary is an ordinary Drupal vocabulary, Islandora 8 site administrators can add their own
-terms, and in turn, these local terms can be used to identify media that have some custom local purpose.
+terms, and in turn, these local terms can be used to identify media that have some custom local purpose. However, most of the default set of "Media Use" terms are taken from the [PCDM Use Extension](https://pcdm.org/2015/05/12/use) vocabulary:
 
 ![Media tab](../assets/media_use_vocabulary_media_form.png)
 
@@ -30,7 +30,7 @@ terms, and in turn, these local terms can be used to identify media that have so
 ## Derivatives
 
 Islandora generates derivatives based on Media Usage for a Media and the Model of the node that owns it.  All of this is configurable
-using context.
+using Context.
 
 By default, derivatives are generated from "Original Files". When an Original File is uploaded, if the node that
 owns it has an "Image" model, image derivatives are created.  If it's a "Video", then video derivatives are generated, etc...
@@ -40,7 +40,7 @@ owns it has an "Image" model, image derivatives are created.  If it's a "Video",
 Within an node's media tab, you can see all of its media, including derivatives, listed along with their usage. For example, from the
 Original File, a lower quality "Service File" and a smaller "Thumbnail Image" file were generated.
 
-For more information on how to set configure derivatives, see the section on context.
+For more information on how to set configure derivatives, see the section on [Context](context.md).
 
 ## Media revisions
 

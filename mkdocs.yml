@@ -39,7 +39,7 @@ pages:
   - User Documentation:
       - 'Introduction': 'user-documentation/user-intro.md'
       - 'Nodes': 'user-documentation/objects.md'
-      - 'Media': 'user-documentation/datastreams.md'
+      - 'Media': 'user-documentation/media.md'
       - 'Make an Image': 'user-documentation/creating-an-object.md'
       - 'Collections': 'user-documentation/collections.md'
       - 'Metadata': 'user-documentation/metadata.md'
