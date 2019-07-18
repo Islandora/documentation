@@ -93,3 +93,21 @@ All nodes can contain any number of media.  The media for any node can be manage
 the "Members" tab, Actions can be performed in bulk using the check boxes and Actions drop down.
 
 ![Media tab](../assets/islandora_8_derivatives_sample.png)
+
+## Display Hints
+
+Media are displayed in Islandora 8 via "view modes". View modes are Drupal's name for alternative ways to present content to users. In Islandora, the view mode determines whether a media is displayed using the OpenSeadragon viewer or the PDFjs viewer, for example. View modes can be set explicitly in the node edit form, or you can configure Islandora to use a specific view mode for all media with a specific Mime type.
+
+At the node level, in the "Display Hints" field, simply check the display mode you want to use for that node:
+
+![Display hints](../assets/display_hints.png)
+
+The selected view mode will then be used when the node is viewed.
+
+At a global level, you can create a [Context](context.md) that will detect the media's Mime type and use the configured view mode automatically. To do this, go to Drupal's "Structure" menu, then "Context" and create a new Context. Then, add a "Media has Mime type" condition and specify the Mime type, and add a "Change View mode" Reaction that selects the desired view mode:
+
+![Display hints](../assets/view_mode_context.png)
+
+Finally, save your Context.
+
+These two approaches are not exclusive to one another. You can configure the view mode globally and override it at the node level if you want.
