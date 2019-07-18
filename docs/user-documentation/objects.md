@@ -98,7 +98,7 @@ the "Members" tab, Actions can be performed in bulk using the check boxes and Ac
 
 Media are displayed in Islandora 8 via "view modes". View modes are Drupal's name for alternative ways to present content to users. In Islandora, the view mode determines whether a media is displayed using the OpenSeadragon viewer or the PDFjs viewer, for example. View modes can be set explicitly in the node edit form, or you can configure Islandora to use a specific view mode for all media with a specific Mime type.
 
-At the node level, in the "Display Hints" field, simply check the display mode you want to use for that node:
+At the node level, in the "Display hints" field, simply check the display mode you want to use for that node:
 
 ![Display hints](../assets/display_hints.png)
 
@@ -108,6 +108,6 @@ At a global level, you can create a [Context](context.md) that will detect the m
 
 ![Display hints](../assets/view_mode_context.png)
 
-Finally, save your Context.
+Finally, save your Context. From that point on, whenever the media for a node has the configured Mime type, Drupal will render the media using the corresponding view mode.
 
-These two approaches are not exclusive to one another. You can configure the view mode globally and override it at the node level if you want.
+The node-level and global approaches are not exclusive to one another. You can configure the view mode globally and override it at the node level if you want.
