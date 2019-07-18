@@ -17,6 +17,8 @@ Islandora 8 objects can have any number of media associated with them. Media adv
 
 ## Media Usage
 
+### Adding media
+
 Islandora 8 media express their intended use with a special "Media Use" field, which accepts taxonomy terms from the "Media Usage"
 vocabulary. Because the Media Usage vocabulary is an ordinary Drupal vocabulary, Islandora 8 site administrators can add their own
 terms, and in turn, these local terms can be used to identify media that have some custom local purpose. However, most of the default set of "Media Use" terms are taken from the [PCDM Use Extension](https://pcdm.org/2015/05/12/use) vocabulary:
@@ -26,6 +28,17 @@ terms, and in turn, these local terms can be used to identify media that have so
 !!! note "Compared to Islandora 7"
     Terms from the Media Usage vocabulary are very similar to DSIDs in Islandora 7.  The only difference is that a DSID is immutable,
     but a media's usage can be changed at any time through the media's edit form.
+
+### Replacing media
+
+To replace a media, you must first remove it and then replace it with another file. To do this, click on the media's Edit tab, then click on the "Remove" button. The file will disappear but the rest of the media's fields will remain, like this:
+
+![Replace media](../assets/replace_media.png)
+
+At this point, you can upload your replacement file, or edit any of the other field data avaliable in the Media form.
+
+!!! note "Replacing Media via REST"
+    It is also possible to add and replace media via Islandora's REST interface.	
 
 ## Derivatives
 
