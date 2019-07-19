@@ -2,7 +2,7 @@
 
 ## Background
 
-Ubuntu removed JPEG2000 support from ImageMagick since Vivid Vervet's 8:6.8.9.9-5 version. The PPA that we have created adds JPEG2000 support back into ImageMagick for Ubuntu 16.04 and 18.04. More information on why JPEG2000 support was removed can be found [here](https://bugs.launchpad.net/ubuntu/+source/imagemagick/+bug/1447968).
+Ubuntu removed JPEG2000 support from ImageMagick since Vivid Vervet's 8:6.8.9.9-5 version. The PPA that we have created adds JPEG2000 support back into ImageMagick for Ubuntu 16.04 and 18.04. More information on why JPEG2000 support was removed can be found [here](https://bugs.launchpad.net/ubuntu/+source/imagemagick/+bug/1447968), and more information on `openjpeg` in Ubuntu can be found [here](https://bugs.launchpad.net/ubuntu/+source/openjpeg2/+bug/711061).
 
 ## Prerequisites
 
