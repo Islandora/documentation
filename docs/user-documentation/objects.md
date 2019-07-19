@@ -106,7 +106,7 @@ The selected View mode will then be used when the node is rendered.
 
 At a global level, there are a couple of ways to tell Drupal to use the PDFjs viewer to render the content of the media field whenever the media has a Mime type of `application/pdf`.
 
-The first way is to edit the "PDFjs" Context. By default, this Context tells Drupal to use the PDFjs viewer if the node has the tag "PDFjs" (yes, that's a taxonomy tag):
+The first way is to edit the "PDFjs" Context. By default, this Context tells Drupal to use the PDFjs viewer if the node has the term "PDFjs" (yes, that's a taxonomy term):
 
 ![Default PDFjs Context](../assets/pdfjs_context_default.png)
 
