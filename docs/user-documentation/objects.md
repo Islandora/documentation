@@ -93,3 +93,33 @@ All nodes can contain any number of media.  The media for any node can be manage
 the "Members" tab, Actions can be performed in bulk using the check boxes and Actions drop down.
 
 ![Media tab](../assets/islandora_8_derivatives_sample.png)
+
+## Display Hints
+
+Media are displayed in Islandora 8 via "View modes". View modes are Drupal's name for alternative ways to present content to users. You may be familiar with the "full" and "teaser" versions of nodes, which are rendered using two corresponding kinds of View modes. In Islandora, media content is displayed within a node field, and the View mode applies to that field. Islandora provides two View modes, one which renders the OpenSeadragon viewer and the other which renders the PDFjs viewer. These two View modes can be set explicitly in the node edit form, or you can configure Islandora to use a specific View mode for all media with a specific Mime type.
+
+At the node level, in the "Display hints" field, simply check the View mode you want to use for that node:
+
+![Display hints](../assets/display_hints.png)
+
+The selected View mode will then be used when the node is rendered.
+
+At a global level, there are a couple of ways to tell Drupal to use the PDFjs viewer to render the content of the media field whenever the media has a Mime type of `application/pdf`.
+
+The first way is to edit the "PDFjs" Context. By default, this Context tells Drupal to use the PDFjs viewer if the node has the term "PDFjs" (yes, that's a taxonomy term):
+
+![Default PDFjs Context](../assets/pdfjs_context_default.png)
+
+If you add the Condition "Media has Mime type" and configure it to use `application/pdf` as the Mime type, like this:
+
+![PDFjs Context with Mimetype Condition](../assets/pdfjs_context_with_mimetype.png)
+
+Context will use whichever Condition applies (as long as you don't check "Require all conditions"). That is, if the "PDFjs" display hint option in the node edit form is checked, *or* if the node's media has a Mime type of `application/pdf`, the media content will be rendered using the PDFjs viewer.
+
+The second way to use the media's Mime type to render its content with the PDFjs viewer is to create separate Context that will detect the media's Mime type and use the configured View mode automatically. To do this, create a new Context. Add a "Media has Mime type" condition and specify the Mime type, and then add a "Change View mode" Reaction that selects the desired view mode:
+
+![Display hints](../assets/view_mode_context.png)
+
+Finally, save your Context. From that point on, whenever the media for a node has the configured Mime type, Drupal will render the media using the corresponding view mode.
+
+The node-level and global approaches are not exclusive to one another. One Context can override another depending the order of execution. Whichever Condition applies last between the node-level Condition (which in this case is the "Node has term" condition) the global Condition (which is "Media has Mime type"), that one will override the other. An example of having the View mode specified in the node edit form intentionally override the View mode based on Mime type is to have media with the `image/jp2` mimetype configured to use to use the OpenSeadragon viewer, but to manually select the Openseadragon view mode for nodes with JPEG media (for example, a very large JPEG image of a map, where the OpenSeadragon's pan and zoom features would be useful).
