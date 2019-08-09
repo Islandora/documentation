@@ -34,6 +34,86 @@ Review the [Ubuntu Packaging Guide](http://packaging.ubuntu.com/html/). Key item
 - Build the package:
   - `debuild -S`
 
+## Example Patch
+
+```diff
+Index: imagemagick-6.9.7.4+dfsg/debian/control
+===================================================================
+--- imagemagick-6.9.7.4+dfsg.orig/debian/control
++++ imagemagick-6.9.7.4+dfsg/debian/control
+@@ -26,8 +26,7 @@ Build-Depends: debhelper (>= 10),
+  libx11-dev, libxext-dev, libxt-dev,
+ # for plugins
+  ghostscript, libdjvulibre-dev, libexif-dev,
+- libjpeg-dev,
+-# libopenjp2-7-dev, Needed for JPEG2000 but not in main see MIR #711061
++ libjpeg-dev, libopenjp2-7-dev,
+  libopenexr-dev, libperl-dev, libpng-dev, libtiff-dev,
+  libwmf-dev,
+ # libgraphviz-dev, incompatible license against fftw
+@@ -273,8 +272,7 @@ Depends: libmagickcore-6-headers (= ${so
+  libmagickcore-6.q16-3 (= ${binary:Version}),
+  libmagickcore-6.q16-3-extra (= ${binary:Version}),
+  libbz2-dev, libdjvulibre-dev,
+- libexif-dev, libfreetype6-dev, libjpeg-dev,
+-# libopenjp2-7-dev, Needed for JPEG2000 but not in main see MIR #711061
++ libexif-dev, libfreetype6-dev, libjpeg-dev, libopenjp2-7-dev,
+  liblcms2-dev, liblqr-1-0-dev, libltdl-dev, libopenexr-dev, libpng-dev,
+  librsvg2-dev, libtiff-dev, libwmf-dev, libx11-dev, libxext-dev, libxml2-dev,
+  libxt-dev, zlib1g-dev,
+@@ -483,8 +481,7 @@ Depends: libmagickcore-6-headers (= ${so
+  libmagickcore-6.q16hdri-3 (= ${binary:Version}),
+  libmagickcore-6.q16hdri-3-extra (= ${binary:Version}),
+  libbz2-dev, libdjvulibre-dev,
+- libexif-dev, libfreetype6-dev, libjpeg-dev,
+-# libopenjp2-7-dev, Needed for JPEG2000 but not in main see MIR #711061
++ libexif-dev, libfreetype6-dev, libjpeg-dev, libopenjp2-7-dev,
+  liblcms2-dev, liblqr-1-0-dev, libltdl-dev, libopenexr-dev, libpng-dev,
+  librsvg2-dev, libtiff-dev, libwmf-dev, libx11-dev, libxext-dev, libxml2-dev,
+  libxt-dev, zlib1g-dev,
+Index: imagemagick-6.9.7.4+dfsg/debian/control.d/noquantum.in
+===================================================================
+--- imagemagick-6.9.7.4+dfsg.orig/debian/control.d/noquantum.in
++++ imagemagick-6.9.7.4+dfsg/debian/control.d/noquantum.in
+@@ -26,8 +26,7 @@ Build-Depends: debhelper (>= 10),
+  libx11-dev, libxext-dev, libxt-dev,
+ # for plugins
+  ghostscript, libdjvulibre-dev, libexif-dev,
+- libjpeg-dev,
+-# libopenjp2-7-dev, Needed for JPEG2000 but not in main see MIR #711061
++ libjpeg-dev, libopenjp2-7-dev,
+  libopenexr-dev, libperl-dev, libpng-dev, libtiff-dev,
+  libwmf-dev,
+ # libgraphviz-dev, incompatible license against fftw
+Index: imagemagick-6.9.7.4+dfsg/debian/control.d/quantum.in
+===================================================================
+--- imagemagick-6.9.7.4+dfsg.orig/debian/control.d/quantum.in
++++ imagemagick-6.9.7.4+dfsg/debian/control.d/quantum.in
+@@ -78,8 +78,7 @@ Depends: libmagickcore-${IMVERSION}-head
+  libmagickcore-${IMVERSION}.${QUANTUMDEPTH}-${CORESOVERSION} (= ${binary:Version}),
+  libmagickcore-${IMVERSION}.${QUANTUMDEPTH}-${CORESOVERSION}-extra (= ${binary:Version}),
+  libbz2-dev, libdjvulibre-dev,
+- libexif-dev, libfreetype6-dev, libjpeg-dev,
+-# libopenjp2-7-dev, Needed for JPEG2000 but not in main see MIR #711061
++ libexif-dev, libfreetype6-dev, libjpeg-dev, libopenjp2-7-dev,
+  liblcms2-dev, liblqr-1-0-dev, libltdl-dev, libopenexr-dev, libpng-dev,
+  librsvg2-dev, libtiff-dev, libwmf-dev, libx11-dev, libxext-dev, libxml2-dev,
+  libxt-dev, zlib1g-dev,
+Index: imagemagick-6.9.7.4+dfsg/debian/rules
+===================================================================
+--- imagemagick-6.9.7.4+dfsg.orig/debian/rules
++++ imagemagick-6.9.7.4+dfsg/debian/rules
+@@ -98,7 +98,7 @@ STATIC_CONFIGURE_OPTIONS := \
+ 	--with-gs-font-dir=/usr/share/fonts/type1/gsfonts \
+ 	--with-magick-plus-plus \
+ 	--with-djvu \
+-        --with-openjp2 \
++  --with-openjp2 \
+ 	--with-wmf \
+ 	--without-gvc \
+ 	--enable-shared \
+```
+
 ## Uploading to Lyrasis PPA
 
 Once the package is built successfully, you'll upload the `changes` file to Launchpad. For example:
