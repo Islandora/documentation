@@ -68,6 +68,8 @@ pages:
     - 'How to Build Documentation': 'technical-documentation/docs-build.md'
     - 'Testing Notes': 'technical-documentation/testing-notes.md'
     - 'Adding back ?_format=jsonld': 'technical-documentation/adding_format_jsonld.md'
+    - 'Updating a `deb` and adding it to Lyrasis PPA': 'technical-documentation/ppa-documentation.md'
+
   - Migration:
       - 'CSV': 'technical-documentation/migrate-csv.md'
       - 'Islandora 7': 'technical-documentation/migrate-7x.md'
