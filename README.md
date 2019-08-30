@@ -20,15 +20,19 @@ For more details, please check out the following resources:
 
 * [Alpaca](https://github.com/islandora-claw/Alpaca): Event driven middleware based on Apache Camel that synchronizes a Fedora with Drupal.
 * [docs](https://github.com/Islandora-CLAW/CLAW/tree/master/docs): Documentation!
-* [chullo](https://github.com/islandora-claw/chullo/): PHP client for Fedora built using Guzzle and EasyRdf
-* [Crayfish](https://github.com/islandora-claw/Crayfish): A collection of Islandora 8 microservices
+* [carapace](https://github.com/islandora-claw/carapace/): A starter theme for an Islandora 8 repository. 
+* [chullo](https://github.com/islandora-claw/chullo/): PHP client for Fedora 4 built using Guzzle and EasyRdf.
+* [claw-playbook](https://github.com/Islandora-Devops/claw-playbook): Ansible installer.
+* [controlled_access_terms](https://github.com/islandora-claw/controlled_access_terms/): Drupal module for subjects and agents. 
+* [Crayfish](https://github.com/islandora-claw/Crayfish): A collection of Islandora 8 microservices.
 * [Crayfish-Commons](https://github.com/Islandora-CLAW/Crayfish-Commons): A library housing shared code for Crayfish microservices
 * [drupal-project](https://github.com/Islandora-CLAW/drupal-project): Composer template for Islandora 8 Drupal
-* [claw-playbook](https://github.com/Islandora-Devops/claw-playbook): Bleeding edge development environment
 * [islandora](https://github.com/Islandora-CLAW/islandora): Islandora 8 Drupal core module
-* [islandora_collection](https://github.com/Islandora-CLAW/islandora_collection): Islandora 8 Drupal collection module
-* [islandora_image](https://github.com/Islandora-CLAW/islandora_image): Islandora 8 Drupal image module
-* [jsonld](https://github.com/islandora-claw/jsonld): JSON-LD Serializer for Drupal 8 and Islandora 8
+* [islandora_defaults](https://github.com/Islandora-CLAW/islandora_defaults): Starter configuration for an Islandora 8 repository 
+* [jsonld](https://github.com/islandora-claw/jsonld): JSON-LD Serializer for Drupal 8
+* [migrate_islandora_csv](https://github.com/Islandora-Devops/claw-playbook): Tutorial and example migration into Islandora 8 using a CSV file.
+* [migrate_7x_claw](https://github.com/Islandora-Devops/migrate_7x_claw): Starter migration for Islandora 7 -> 8.
+* [openseadragon](https://github.com/islandora-claw/openseadragon): Drupal 8 Field Formatter for OpenSeadragon
 * [Syn](https://github.com/islandora-claw/Syn): Tomcat valve for JWT Authentication
 
 
@@ -51,7 +55,6 @@ Islandora 8 provides an Ansible [claw-playbook](https://github.com/Islandora-Dev
 
 ## Maintainers
 
-* [Nick Ruest](https://github.com/ruebot)
 * [Daniel Lamb](https://github.com/dannylamb/)
 * [Jared Whiklo](https://github.com/whikloj)
 * [Diego Pino](https://github.com/DiegoPino)
