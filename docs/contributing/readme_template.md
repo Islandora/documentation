@@ -47,7 +47,7 @@
 
 `## Documentation`
 
-`Further documentation for this module is available [herehttps://islandora-claw.github.io/CLAW/]`
+`Further documentation for this module is available on the [Islandora 8 documentation site](https://islandora-claw.github.io/CLAW/).`
 
 `## Troubleshooting/Issues`
 
