@@ -35,7 +35,7 @@ $ cd claw-playbook
 $ vagrant up
 ```
 
-By default, this provisions an Ubuntu 16.04 environment.  If you would prefer to use CENTOS 7 instead, set the `ISLANDORA_DISTRO`
+By default, this provisions an Ubuntu 18.04 environment.  If you would prefer to use CENTOS 7 instead, set the `ISLANDORA_DISTRO`
 environment variable to `centos/7`. To prevent having to do this every time you open a new shell, add the following command to
 your `.bashrc` file
 
