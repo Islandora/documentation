@@ -51,6 +51,8 @@ pages:
       - 'Blocks': 'user-documentation/placing-blocks.md'
       - 'Usage Stats': 'user-documentation/usage-stats.md'
       - 'Multilingual': 'user-documentation/multilingual.md'
+  - Manager Documentation:
+      - 'RDF Generation': 'islandora/rdf-mapping.md'
   - Developer Documentation:
     - REST Documentation:
       - 'Introduction': 'technical-documentation/using-rest-endpoints.md'
