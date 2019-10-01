@@ -42,6 +42,7 @@ In an out-of-the-box claw-playbook, the RDF mappings that exist were loaded from
 
 - `[drupal modules directory]/islandora/modules/islandora_core_feature/config/install/` (media and taxonomy terms)
 - `[drupal modules directory]/islandora_defaults/config/install/` (`repository_item` and the `islandora_access` vocabulary)
+- `[drupal modules directory]/controlled_access_terms/modules/controlled_access_terms_defaults/config/install/` (the default `corporate_body`, `family`, `geo_location`, `person`, `resource_type` and `subject` vocabularies)
 - `[drupal web root]/core/profiles/standard/config/install/` (articles, pages, comments, and tags).
 
 Once loaded by modules, configuration .yml files are not live so **editing them will not change the existing configuration**. However, for modules that are Features, it is possible to re-import the changed configuration files at `admin/config/development/features` (todo: link to further reading on Features).
@@ -50,8 +51,8 @@ Once loaded by modules, configuration .yml files are not live so **editing them 
 
 Once loaded, RDF mappings can be customized for the needs of a particular site through Drupal's Configuration Synchronization UI at `admin/config/development/configuration`. They can be exported, modified, and re-imported one-at-a-time by choosing the "Single Item" option on the Export/Import tabs.  You can also create new RDF mappings (e.g. for a custom content type) and load them through this interface, by copying an existing mapping and changing the appropriate values.
 
-!!! note "Possible future UI for RDF Mappings"
-    A custom module `rdfui` exists, and is installed-but-not-enabled on boxes provisioned by the claw-playbook. We don't use it because it is very rudimentary and limited to the schema.org vocabulary. There is a project underway to develop a [UI](https://github.com/Islandora-CLAW/CLAW/issues/647) to support RDF mappings to any ontology.
+!!! note "Contributed module for RDF Mappings"
+    A custom module `rdfui` exists, and is installed-but-not-enabled on boxes provisioned by the claw-playbook. We don't use it because it is very rudimentary and limited to the schema.org vocabulary. We have an [open ticket](https://github.com/Islandora-CLAW/CLAW/issues/647) to develop a UI to support RDF mappings to any ontology. Contributions welcome.
 
 - A number of namespaces such as `ldp`, `ebucore`, `pcdm`, are `premis` are registered in `islandora.module` using `hook_rdf_namespaces()`. To register your own namespaces, you will need to create a custom module that implements that hook.
 - If you import a configuration that uses a namespace that is not registered, bad things will happen silently.
@@ -61,10 +62,11 @@ Once loaded, RDF mappings can be customized for the needs of a particular site t
 Below is an example of an RDF mapping as a .yml (YAML) file. It is the current version of the RDF mapping of the Repository Item (`islandora_object`) bundle, provided by `islandora_defaults` and exportable as `rdf.mapping.node.islandora_object.yml`).
 
 - The top level key `types` specifies the `rdf:type` of the resource or content model. `field_model`, a required field of Islandora objects, also gets mapped to `rdf:type` through an arcane back-end process.
-- The top level key `fieldMappings` specifies fields attached to that bundl,e and their RDF property mappings. One field can be mapped to more than one RDF property. It is a simple flat list.
+- The top level key `fieldMappings` specifies fields attached to that bundle and their RDF property mappings. One field can be mapped to more than one RDF property. It is a simple flat list.
 - `datatype_callback` : [needs documentation]
 - `mapping_type: rel` : [needs documentation]
 
+## Sample RDF Mapping
 ```yml
 langcode: en
 status: true
