@@ -40,12 +40,12 @@ until curl -s 127.0.0.1:8282; do true; done > /dev/null
 echo "Enable simpletest module"
 drush --uri=127.0.0.1:8282 en -y simpletest
 
-# Set default theme to carapace (and download dependencies, will composer-ize later)
+# Install pdfjs
 cd /opt/drupal
 if [ -z "$COMPOSER_PATH" ]; then
-  composer require "zaporylie/composer-drupal-optimizations:^1.0" "drupal/adaptivetheme:^2.0" "drupal/at_tools:^2.0" "drupal/layout_plugin:^1.0@alpha" "drupal/pdf:1.x-dev"
+  composer require "zaporylie/composer-drupal-optimizations:^1.0" "drupal/pdf:1.x-dev"
 else
-  php -dmemory_limit=-1 $COMPOSER_PATH require "zaporylie/composer-drupal-optimizations:^1.0" "drupal/adaptivetheme:^2.0" "drupal/at_tools:^2.0" "drupal/layout_plugin:^1.0@alpha" "drupal/pdf:1.x-dev"
+  php -dmemory_limit=-1 $COMPOSER_PATH require "zaporylie/composer-drupal-optimizations:^1.0" "drupal/pdf:1.x-dev"
 fi
 
 cd web
@@ -57,12 +57,6 @@ unzip pdfjs-2.0.943-dist.zip -d pdf.js
 rm pdfjs-2.0.943-dist.zip
 
 cd ..
-drush en -y at_tools
-drush en -y layout_plugin
-mkdir /opt/drupal/web/themes/custom
-git clone https://github.com/Islandora-CLAW/carapace /opt/drupal/web/themes/custom/carapace
-drush then -y carapace
-drush -y config-set system.theme default carapace
 drush -y en pdf
 
 echo "Setup ActiveMQ"
