@@ -171,7 +171,7 @@ host file
 default ansible_ssh_host=example.org ansible_ssh_user=root ansible_ssh_private_key_file='/home/username/.ssh/id_rsa'
 ```
 
-### Running the remote installler
+### Running the remote installer
 
 First, you'll want to get the ansible roles that are needed for the version of Islandora you are trying to install.  This can be done
 with

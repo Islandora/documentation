@@ -65,7 +65,7 @@ But go to the frontpage and...
 The visibility conditions in the block placement UI are simple and effective.  They cover the majority of use cases,
 however, there are times when you need even more control.  This is where the Context module really shines. 
 Any condition available to the Context module can be used to control block visibility.  And you can even combine conditions
-using boolean (AND/OR) logic.
+using Boolean (AND/OR) logic.
 
 For example, in the `islandora_demo` feature, we provide a context specifically for showing a list of members of a collection.
 All of our content is the same content type (Repository Item), and Collections are distinguished by being tagged with the

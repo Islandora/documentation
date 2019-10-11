@@ -55,7 +55,7 @@ fieldMappings:
 
 ### Viewing RDF mapping of a resource
 Please see the following tutorial to configure and view resources via REST request:
-[An Introduction to RESTful Web Services in Drupal 8](https://drupalize.me/blog/201401/introduction-restful-web-services-drupal-8).  To get the JsonLD mapping, use jsonld format. Example request url: `http://localhost:8000/node/1?_format=jsonld`
+[An Introduction to RESTful Web Services in Drupal 8](https://drupalize.me/blog/201401/introduction-restful-web-services-drupal-8).  To get the JsonLD mapping, use jsonld format. Example request URL: `http://localhost:8000/node/1?_format=jsonld`
 
 ### Altering an existing RDF mapping
 Each Islandora content models come with a RDF mapping. It can be exported similar to above article's rdf mapping, modified and imported back by going to here: `http://localhost:8000/admin/config/development/configuration/single/import`.  
@@ -64,7 +64,7 @@ Each Islandora content models come with a RDF mapping. It can be exported simila
 A RDF mapping need to be created for a new or custom content model/type. The following steps describe the procedure:
 * Export RDF mapping of a similar content type
 * Export form display yml to get the list of the fields (ex `core.entity_form_display.node.your_content_type.default.yml`)
-* Remove any cache and uuid related elements
+* Remove any cache and UUID related elements
 * Add/modify the fields and ontology properties as needed, following the same syntax
 * Name it following the convention (ex `rdf.mapping.node_type.your_content_type.yml`)
 * Import it by going to `http://localhost:8000/admin/config/development/configuration/single/import`
