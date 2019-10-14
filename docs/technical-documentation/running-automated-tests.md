@@ -2,6 +2,11 @@
  
 ## User Interface
 
+!!! warning
+    Some of islandora's dependencies include deprecated code. This will cause the tests to
+    fail when run through the GUI. To avoid this, use the command-line method with the
+    `--suppress-deprecations` tag.
+
 ![Running tests from the user interface](../assets/tests_ui.png)
 
 To run automated tests via a web browser, you can to Admin > Configuration > Testing 
@@ -24,7 +29,10 @@ vagrant@claw:/var/www/html/drupal/web$ sudo -u www-data php core/scripts/run-tes
 --module "islandora"
 ```
 
-Let's unpack it
+Then wait - running these tests may take a while.
+
+Let's unpack it:
+
 - You need to run this as the apache user for filesystem access, hence `sudo -u www-data`
 - Despite having a `.sh` extension, you run the command with php: `php core/scripts/run-tests.sh`
 - `--suppress-deprecations` tells the script not to count deprecation warnings as test failures
