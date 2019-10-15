@@ -35,7 +35,7 @@ To replace a media, you must first remove it and then replace it with another fi
 
 ![Replace media](../assets/replace_media.png)
 
-At this point, you can upload your replacement file, or edit any of the other field data avaliable in the Media form.
+At this point, you can upload your replacement file, or edit any of the other field data available in the Media form.
 
 !!! note "Replacing Media via REST"
     It is also possible to add and replace media via Islandora's REST interface.	

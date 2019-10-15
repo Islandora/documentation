@@ -1,4 +1,4 @@
-# Updating a `deb` and adding it to Lyrasis PPA
+# Updating a `deb` and adding it to LYRASIS PPA
 
 ## Background
 
@@ -16,7 +16,7 @@ Review the [Ubuntu Packaging Guide](http://packaging.ubuntu.com/html/). Key item
 - Configure your shell with some exports for `debuild`:
   - export DEBFULLNAME="Bob Dobbs"
   - export DEBEMAIL="subgenius@example.com"
-- Contact [Jonathan Green](https://github.com/jonathangreen) to get setup on the [Lyrasis PPA team](https://launchpad.net/~lyrasis).
+- Contact [Jonathan Green](https://github.com/jonathangreen) to get setup on the [LYRASIS PPA team](https://launchpad.net/~lyrasis).
 
 ## Patching source
 
@@ -114,7 +114,7 @@ Index: imagemagick-6.9.7.4+dfsg/debian/rules
  	--enable-shared \
 ```
 
-## Uploading to Lyrasis PPA
+## Uploading to LYRASIS PPA
 
 Once the package is built successfully, you'll upload the `changes` file to Launchpad. For example:
 

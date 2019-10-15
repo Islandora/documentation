@@ -35,7 +35,7 @@
 
 `To upload the image drag the image into the comment section of an existing Pull Request. `
 
-`This will generate the image url link for you`
+`This will generate the image URL link for you`
   `![Configuration Screenshot](https://user-images.githubusercontent.com/2857697/39014759-e2ef9c1e-43e0-11e8-921c-c2a3234d65d2.jpg)`
 
 `Video example on [How to attach an Image in README.md file with Github](https://youtu.be/wVHJtL-y7P0)`

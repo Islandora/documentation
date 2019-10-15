@@ -20,7 +20,7 @@ The Fedora Flysystem adapter does not use Gemini to map the relationship between
 
 ### Configuration
 
-The fedora file system is configured in the site's `settings.php` file. An example configuration can be seen in the claw-playbook webserver role's [drupal tasks](https://github.com/Islandora-Devops/claw-playbook/blob/master/roles/internal/webserver-app/tasks/drupal.yml#L12-L19):
+The fedora file system is configured in the site's `settings.php` file. An example configuration can be seen in the claw-playbook web server role's [drupal tasks](https://github.com/Islandora-Devops/claw-playbook/blob/master/roles/internal/webserver-app/tasks/drupal.yml#L12-L19):
 ```
 $settings['flysystem'] = [
   'fedora' => [

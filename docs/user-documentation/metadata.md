@@ -39,7 +39,7 @@ For example, Islandora includes the 'Islandora Models' vocabulary which includes
 
 ## Field Types
 
-Each field in Drupal has a _type_ that defines its _properties_ and behavior such as text, date, number, and boolean fields. These field types also have _widgets_ and _formatters_ that control entry forms and display, respectively. The [Drupal 8 documentation on FieldTypes, FieldWidgets, and FieldFormatters](https://www.drupal.org/docs/8/api/entity-api/fieldtypes-fieldwidgets-and-fieldformatters) includes a list of the core field types.
+Each field in Drupal has a _type_ that defines its _properties_ and behavior such as text, date, number, and Boolean fields. These field types also have _widgets_ and _formatters_ that control entry forms and display, respectively. The [Drupal 8 documentation on FieldTypes, FieldWidgets, and FieldFormatters](https://www.drupal.org/docs/8/api/entity-api/fieldtypes-fieldwidgets-and-fieldformatters) includes a list of the core field types.
 
 _Entity Reference_ fields are a special type of field that creates a relationship between two entities. The field's configuration options include which kind of entities can be referenced. The 'Repository Item' content type, provided by islandora_demo, includes several entity reference fields that reference vocabularies defined by the islandora and controlled_access_terms modules.
 
