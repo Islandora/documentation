@@ -27,25 +27,26 @@ Committers share the following responsibilities:
 
 The following is an alphabetized list of the current Islandora CLAW committers:
 
-| Name                        | Organization                      | IRC nick    |
+| Name                        | Organization                      | Github username |
 |-----------------------------|-----------------------------------|-------------|
-| Jonathan Green              | LYRASIS                           | jonathangee |
+| Jonathan Green              | LYRASIS                           | jonathangreen |
+| Jonathan Hunt               | Catalyst.Net                      | kayakr      | 
 | Mark Jordan                 | Simon Fraser University           | mjordan     |
-| Danny Lamb                  | Islandora Foundation              | dhlamb      |
-| Natkeeran Ledchumykanthan   | University of Toronto Scarborough | Natkeeran   |
-| Rosie Le Faive              | University of Prince Edward Island| rlefaive    |
-| Diego Pino                  | METRO                             | diegopino   |
-| Seth Shaw                   | University of Nevada, Las Vegas   | seth-shaw   |
+| Danny Lamb                  | Islandora Foundation              | dannylamb   |
+| Natkeeran Ledchumykanthan   | University of Toronto Scarborough | natkeeran   |
+| Rosie Le Faive              | University of Prince Edward Island| rosiel      |
+| Seth Shaw                   | University of Nevada, Las Vegas   | seth-shaw-unlv |
 | Jared Whiklo                | University of Manitoba            | whikloj     |
 
 ## Emeritus Committers
 
 The following is an alphabetized list of the prior Islandora CLAW committers:
 
-| Name                        | Organization                      | IRC nick    |
-|-----------------------------|-----------------------------------|-------------|
-| Aaron Coburn                | Amherst College                   | acoburn     |
-| Nick Ruest                  | York University                   | ruebot      |
+| Name                        | Organization                      |
+|-----------------------------|-----------------------------------|
+| Aaron Coburn                | Amherst College                   |
+| Diego Pino                  | METRO                             |
+| Nick Ruest                  | York University                   |
 
 
 ## Guidelines for assessing new candidates for committership
