@@ -30,8 +30,8 @@
 `Include a screenshot of configuration page. When using your choice of screenshot software, resize your browser`
 `first to avoid wide screenshots. Here are a few browser extension examples to take screenshots.`
 
-  `* [Fireshots](https://chrome.google.com/webstore/detail/take-webpage-screenshots/mcbpblocgmgfnpjjppndjkmgjaogfceg)`
-  `* [Nimbus](https://chrome.google.com/webstore/detail/nimbus-screenshot-screen/bpconcjcammlapcogcnnelfmaeghhagj)`
+  `- [Fireshots](https://chrome.google.com/webstore/detail/take-webpage-screenshots/mcbpblocgmgfnpjjppndjkmgjaogfceg)`
+  `- [Nimbus](https://chrome.google.com/webstore/detail/nimbus-screenshot-screen/bpconcjcammlapcogcnnelfmaeghhagj)`
 
 `To upload the image drag the image into the comment section of an existing Pull Request. `
 
@@ -47,14 +47,14 @@
 
 `## Documentation`
 
-`Further documentation for this module is available on the [Islandora 8 documentation site](https://islandora-claw.github.io/CLAW/).`
+`Further documentation for this module is available on the [Islandora 8 documentation site](https://islandora.github.io/documentation/).`
 
 `## Troubleshooting/Issues`
 
 `Having problems or solved a problem? Check out the Islandora google groups for a solution.`
 
-`* [Islandora Group](https://groups.google.com/forum/?hl=en&fromgroups#!forum/islandora)`
-`* [Islandora Dev Group](https://groups.google.com/forum/?hl=en&fromgroups#!forum/islandora-dev)`
+`- [Islandora Group](https://groups.google.com/forum/?hl=en&fromgroups#!forum/islandora)`
+`- [Islandora Dev Group](https://groups.google.com/forum/?hl=en&fromgroups#!forum/islandora-dev)`
 
 `## FAQ`
 
@@ -66,20 +66,20 @@
 
 `Current maintainers:`
 
-`* [Maintainer Name](https://github.com/maintainer_github)`
-`* [Another Maintainer](https://github.com/maintainer_github)`
+`- [Maintainer Name](https://github.com/maintainer_github)`
+`- [Another Maintainer](https://github.com/maintainer_github)`
 
 `This project has been sponsored by:`
 
-`* Some really awesome sponsor`
+`- Some really awesome sponsor`
 
 `## Development`
 
-`If you would like to contribute, please get involved by attending our weekly [Tech Call](https://github.com/Islandora-CLAW/CLAW/wiki). We love to hear from you!`
+`If you would like to contribute, please get involved by attending our weekly [Tech Call](https://github.com/Islandora/documentation/wiki). We love to hear from you!`
 
 `If you would like to contribute code to the project, you need to be covered by an Islandora Foundation [Contributor License Agreement](http://islandora.ca/sites/default/files/islandora_cla.pdf) or [Corporate Contributor License Agreement](http://islandora.ca/sites/default/files/islandora_ccla.pdf). Please see the [Contributors](http://islandora.ca/resources/contributors) pages on Islandora.ca for more information.`
 
-``We recommend using the [claw-playbook](https://github.com/Islandora-Devops/claw-playbook) to get started.  If you want to pull down the submodules for development, don't forget to run `git submodule update --init --recursive` after cloning.``
+``We recommend using the [islandora-playbook](https://github.com/Islandora-Devops/islandora-playbook) to get started.  If you want to pull down the submodules for development, don't forget to run `git submodule update --init --recursive` after cloning.``
 
 `Also include any Travis gotcha's here. `
 
