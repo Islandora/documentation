@@ -55,6 +55,7 @@ Islandora 8 provides an Ansible [islandora-playbook](https://github.com/Islandor
 
 ## Maintainers
 
+* [Melissa Anez](https://github.com/manez/)
 * [Daniel Lamb](https://github.com/dannylamb/)
 * [Jared Whiklo](https://github.com/whikloj)
 
