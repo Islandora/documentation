@@ -22,7 +22,7 @@ For more details, please check out the following resources:
 * [docs](https://github.com/Islandora/documentation/tree/master/docs): Documentation!
 * [carapace](https://github.com/islandora/carapace/): A starter theme for an Islandora 8 repository. 
 * [chullo](https://github.com/islandora/chullo/): PHP client for Fedora 4 built using Guzzle and EasyRdf.
-* [claw-playbook](https://github.com/Islandora-Devops/islandora-playbook): Ansible installer.
+* [islandora-playbook](https://github.com/Islandora-Devops/islandora-playbook): Ansible installer.
 * [controlled_access_terms](https://github.com/islandora/controlled_access_terms/): Drupal module for subjects and agents. 
 * [Crayfish](https://github.com/islandora/Crayfish): A collection of Islandora 8 microservices.
 * [Crayfish-Commons](https://github.com/Islandora/Crayfish-Commons): A library housing shared code for Crayfish microservices
