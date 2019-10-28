@@ -6,38 +6,38 @@ Islandora 8 is the next generation of Islandora. It pairs [Drupal 8](https://www
 
 For more details, please check out the following resources:
 
-* [Weekly Tech Calls](https://github.com/Islandora-CLAW/CLAW/wiki#islandora-claw-tech-calls)
+* [Weekly Tech Calls](https://github.com/Islandora/documentation/wiki#islandora-8-tech-calls)
   * [2015](https://github.com/Islandora-CLAW/CLAW/wiki/2015)
   * [2016](https://github.com/Islandora-CLAW/CLAW/wiki/2016)
   * [2017](https://github.com/Islandora-CLAW/CLAW/wiki/2017)
   * [2018](https://github.com/Islandora-CLAW/CLAW/wiki/2018)
   * [2019](https://github.com/Islandora-CLAW/CLAW/wiki/2019)
 
-* [Documentation](https://islandora-claw.github.io/CLAW/)
-* [Contributing](https://github.com/Islandora-CLAW/CLAW/blob/master/CONTRIBUTING.md)
+* [Documentation](https://islandora.github.io/documentation/)
+* [Contributing](https://github.com/Islandora/documentation/blob/master/CONTRIBUTING.md)
 
 ## Repository Structure
 
-* [Alpaca](https://github.com/islandora-claw/Alpaca): Event driven middleware based on Apache Camel that synchronizes a Fedora with Drupal.
-* [docs](https://github.com/Islandora-CLAW/CLAW/tree/master/docs): Documentation!
-* [carapace](https://github.com/islandora-claw/carapace/): A starter theme for an Islandora 8 repository. 
-* [chullo](https://github.com/islandora-claw/chullo/): PHP client for Fedora 4 built using Guzzle and EasyRdf.
-* [claw-playbook](https://github.com/Islandora-Devops/claw-playbook): Ansible installer.
-* [controlled_access_terms](https://github.com/islandora-claw/controlled_access_terms/): Drupal module for subjects and agents. 
-* [Crayfish](https://github.com/islandora-claw/Crayfish): A collection of Islandora 8 microservices.
-* [Crayfish-Commons](https://github.com/Islandora-CLAW/Crayfish-Commons): A library housing shared code for Crayfish microservices
-* [drupal-project](https://github.com/Islandora-CLAW/drupal-project): Composer template for Islandora 8 Drupal
-* [islandora](https://github.com/Islandora-CLAW/islandora): Islandora 8 Drupal core module
-* [islandora_defaults](https://github.com/Islandora-CLAW/islandora_defaults): Starter configuration for an Islandora 8 repository 
-* [jsonld](https://github.com/islandora-claw/jsonld): JSON-LD Serializer for Drupal 8
-* [migrate_islandora_csv](https://github.com/Islandora-Devops/claw-playbook): Tutorial and example migration into Islandora 8 using a CSV file.
+* [Alpaca](https://github.com/islandora/Alpaca): Event driven middleware based on Apache Camel that synchronizes a Fedora with Drupal.
+* [docs](https://github.com/Islandora/documentation/tree/master/docs): Documentation!
+* [carapace](https://github.com/islandora/carapace/): A starter theme for an Islandora 8 repository. 
+* [chullo](https://github.com/islandora/chullo/): PHP client for Fedora 4 built using Guzzle and EasyRdf.
+* [claw-playbook](https://github.com/Islandora-Devops/islandora-playbook): Ansible installer.
+* [controlled_access_terms](https://github.com/islandora/controlled_access_terms/): Drupal module for subjects and agents. 
+* [Crayfish](https://github.com/islandora/Crayfish): A collection of Islandora 8 microservices.
+* [Crayfish-Commons](https://github.com/Islandora/Crayfish-Commons): A library housing shared code for Crayfish microservices
+* [drupal-project](https://github.com/Islandora/drupal-project): Composer template for Islandora 8 Drupal
+* [islandora](https://github.com/Islandora/islandora/tree/8.x-1.x): Islandora 8 Drupal core module
+* [islandora_defaults](https://github.com/Islandora/islandora_defaults): Starter configuration for an Islandora 8 repository 
+* [jsonld](https://github.com/islandora/jsonld): JSON-LD Serializer for Drupal 8
+* [migrate_islandora_csv](https://github.com/Islandora/migrate_islandora_csv): Tutorial and example migration into Islandora 8 using a CSV file.
 * [migrate_7x_claw](https://github.com/Islandora-Devops/migrate_7x_claw): Starter migration for Islandora 7 -> 8.
 * [openseadragon](https://github.com/islandora-claw/openseadragon): Drupal 8 Field Formatter for OpenSeadragon
-* [Syn](https://github.com/islandora-claw/Syn): Tomcat valve for JWT Authentication
+* [Syn](https://github.com/islandora/Syn): Tomcat valve for JWT Authentication
 
 
 ## Installation
-Islandora 8 provides an Ansible [claw-playbook](https://github.com/Islandora-Devops/claw-playbook) to fully deploy the stack to a vagrant, bare-metal server or multi server environments.
+Islandora 8 provides an Ansible [islandora-playbook](https://github.com/Islandora-Devops/islandora-playbook) to fully deploy the stack to a vagrant, bare-metal server or multi server environments.
 
 ## Sponsors
 
@@ -57,12 +57,11 @@ Islandora 8 provides an Ansible [claw-playbook](https://github.com/Islandora-Dev
 
 * [Daniel Lamb](https://github.com/dannylamb/)
 * [Jared Whiklo](https://github.com/whikloj)
-* [Diego Pino](https://github.com/DiegoPino)
 
 ## Development
 
-If you would like to contribute, please get involved by attending our weekly [Tech Call](https://github.com/Islandora-CLAW/CLAW/wiki). We love to hear from you!
+If you would like to contribute, please get involved by attending our weekly [Tech Call](https://github.com/Islandora/documentation/wiki#islandora-8-tech-calls). We love to hear from you!
 
 If you would like to contribute code to the project, you need to be covered by an Islandora Foundation [Contributor License Agreement](http://islandora.ca/sites/default/files/islandora_cla.pdf) or [Corporate Contributor Licencse Agreement](http://islandora.ca/sites/default/files/islandora_ccla.pdf). Please see the [Contributors](http://islandora.ca/resources/contributors) pages on Islandora.ca for more information.
 
-We recommend using the [claw-playbook](https://github.com/Islandora-Devops/claw-playbook) to get started.  If you want to pull down the submodules for development, don't forget to run `git submodule update --init --recursive` after cloning.
+We recommend using the [islandora-playbook](https://github.com/Islandora-Devops/islandora-playbook) to get started.  If you want to pull down the submodules for development, don't forget to run `git submodule update --init --recursive` after cloning.
