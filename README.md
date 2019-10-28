@@ -13,7 +13,7 @@ For more details, please check out the following resources:
   * [2018](https://github.com/Islandora-CLAW/CLAW/wiki/2018)
   * [2019](https://github.com/Islandora-CLAW/CLAW/wiki/2019)
 
-* [Documentation](https://islandora-claw.github.io/CLAW/)
+* [Documentation](https://islandora.github.io/documentation/)
 * [Contributing](https://github.com/Islandora-CLAW/CLAW/blob/master/CONTRIBUTING.md)
 
 ## Repository Structure
