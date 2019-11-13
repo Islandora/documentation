@@ -63,7 +63,7 @@ using a special field, _Model_, which accepts taxonomy terms from the _Islandora
 By applying a term from the Islandora Models vocabulary to a node, Islandora will become aware
 of how to handle the node in response to certain events, like choosing a viewer or generating derivatives.
 
-![Model tags](../assets/object_model_tags.png)
+![Model tags](../assets/objects_model_tags.png)
 
 !!! note "Compared to Islandora 7"
     Content models in Islandora 7 were immutable and contained restrictions as to what
@@ -177,7 +177,7 @@ on the _Re-order Children_ button on the _Children_ tab of the parent resource n
 Re-ordering children resource nodes on this page and clicking _Save_ will cause 
 each child resource node's weight value to be updated using sequential values.
 
-!!! Why not Drupal's book or weight modules?"
+!!! note "Why not Drupal's book or weight modules?"
     Drupal provides the [book module in core](https://www.drupal.org/docs/8/core/modules/book)
     for creating multi-level ordered content, such as books and manuals.
     However, this module stores structure and pagination separately from the nodes making serializing
