@@ -17,21 +17,34 @@ The below configuration will establish `localhost` as a trusted host pattern, bu
 
 **Before**:
 > 789 |   'driver' => 'pgsql',
+
 > 790 | );
 
 **After**:
 > 789 |   'driver' => 'pgsql',
+
 > 790 | );
+
 > 791 | $settings['trusted_host_patterns'] = [
+
 > 792 |   'localhost',
+
 > 793 | ];
+
 > 794 | $settings['flysystem'] = [
+
 > 795 |   'fedora' => [
+
 > 796 |     'driver' => 'fedora',
+
 > 797 |     'config' => [
+
 > 798 |       'root' => 'http://localhost:8080/fcrepo/rest/',
+
 > 799 |     ],
+
 > 800 |   ],
+
 > 801 | ];
 
 Once this is done, refresh the cache to take hold of the new settings.
