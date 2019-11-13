@@ -56,7 +56,9 @@ Log in to the Drupal site at `/user` using the sitewide administrator username a
 
 Fill out the server addition form using the following options:
 
-**PICTURE TO COME**
+![Adding a Solr Search Server](../../assets/adding_a_solr_search_server.png)
+
+![Configuring the Standard Solr Connector](../../assets/configuring_standard_solr_connector.png)
 
 - `SERVER_NAME`: `islandora8`
     - This is completely arbitrary, and is simply used to differentiate this search server configuration from all others. **Write down** or otherwise pay attention to the `machine_name` generated next to the server name you type in; this will be used in the next step.

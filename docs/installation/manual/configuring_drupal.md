@@ -108,13 +108,13 @@ To allow our installation to talk to other services via Syn, we need to establis
 
 Log onto your site as an administrator at `/user`, then navigate to `/admin/config/system/keys/add`. Some of the settings here are unimportant, but pay close attention to the **Key type**, which should match the key we created earlier (an RSA key), and the **File location**, which should be the ultimate location of the key we created for Syn on the filesystem, `/opt/keys/syn_private.key`.
 
-**PICTURE TO COME**
+![Adding a JWT RSA Key](../../assets/adding_a_jwt_rsa_key.png)
 
 Click **Save** to create the key.
 
 Once this key is created, navigate to `/admin/config/system/jwt` to select the key you just created from the list. Note that before the key will show up in the **Private Key** list, you need to select that key's type in the **Algorithm** section, namely `RSASSA-PKCS1-v1_5 using SHA-256 (RS256)`.
 
-**PICTURE TO COME**
+![Configuring the JWT RSA Key for Use](../../assets/configuring_the_jwt_rsa_key_for_use.png)
 
 Click **Save configuration** to establish this as the JWT key configuration.
 
@@ -122,16 +122,16 @@ Click **Save configuration** to establish this as the JWT key configuration.
 
 Navigate to the Islandora core configuration page at `/admin/config/islandora/core` to set up the core configuration to connect to Gemini. Of note here, the **Gemini URL** will need to be established to facilitate the connection to Fedora, and the appropriate **Bundles with Gemini URI pseudo field** types will need to be checked off.
 
-**PICTURE TO COME**
+![Configuring Islandora](../../assets/configuring_islandora.png)
 
 ### Configuring Islandora IIIF
 
 Navigate to `/admin/config/islandora/iiif` to ensure that Islandora IIIF is pointing to our Cantaloupe server.
 
-**PICTURE TO COME**
+![Configuring Islandora IIIF](../../assets/configuring_iiif.png)
 
 ### Establishing Flysystem as the Default Download Method
 
 Finally, navigate to `/admin/config/media/file-system` to set the **Default download method** to the one we created in our `settings.php`.
 
-**PICTURE TO COME**
+![Configuring Flysystem to Use Fedora](../../assets/configuring_flysystem_to_use_fedora.png)
