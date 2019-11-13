@@ -30,10 +30,10 @@ on the _Re-order Children_ button on the _Children_ tab of the parent resource n
 
 ![Re-order Children button](../assets/paged_content_reorder_children_button.png)
 
-![Re-order Children form](../assets/paged_content_reorder_children_form.png)
-
 Re-ordering children resource nodes on this page and clicking _Save_ will cause 
 each child resource node's weight value to be updated using sequential values.
+
+![Re-order Children form](../assets/paged_content_reorder_children_form.png)
 
 !!! note "Why not Drupal's book or weight modules?"
     Drupal provides the [book module in core](https://www.drupal.org/docs/8/core/modules/book)
