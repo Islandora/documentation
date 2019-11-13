@@ -63,7 +63,7 @@ using a special field, _Model_, which accepts taxonomy terms from the _Islandora
 By applying a term from the Islandora Models vocabulary to a node, Islandora will become aware
 of how to handle the node in response to certain events, like choosing a viewer or generating derivatives.
 
-![Model tags](../assets/objects_model_tags.png)
+![Model tags](../assets/resource_nodes_model_tags.png)
 
 !!! note "Compared to Islandora 7"
     Content models in Islandora 7 were immutable and contained restrictions as to what
@@ -76,7 +76,7 @@ of how to handle the node in response to certain events, like choosing a viewer 
 All resource nodes can be linked to any number of media.  The media associated with a resource node can be managed using the "Media" tab when viewing a node.  Much like
 the "Members" tab, Actions can be performed in bulk using the checkboxes and Actions dropdown.
 
-![Media tab](../assets/objects_media_tab.png)
+![Media tab](../assets/resource_nodes_media_tab.png)
 
 See [the media section](media.md) for more details.
 
@@ -86,7 +86,7 @@ Drupal uses "View Modes" to provide alternative ways to present content to users
 
 To set it explicitly on the resource node's edit form, simply check the View mode you want to use for that node in the _Display hints_ field:
 
-![Display hints](../assets/objects_display_hints.png)
+![Display hints](../assets/resource_nodes_display_hints.png)
 
 The selected View mode will then be used when the resource node's page is rendered.
 
@@ -94,17 +94,17 @@ At a global level, there are a couple of ways to tell Drupal to use the PDFjs vi
 
 The first way is to edit the "PDFjs" Context. By default, this Context tells Drupal to use the PDFjs viewer if the node has the term "PDFjs" (yes, that's a taxonomy term):
 
-![Default PDFjs Context](../assets/objects_pdfjs_context_default.png)
+![Default PDFjs Context](../assets/resource_nodes_pdfjs_context_default.png)
 
 If you add the Condition "Media has Mime type" and configure it to use `application/pdf` as the Mime type, like this:
 
-![PDFjs Context with Mimetype Condition](../assets/objects_pdfjs_context_with_mimetype.png)
+![PDFjs Context with Mimetype Condition](../assets/resource_nodes_pdfjs_context_with_mimetype.png)
 
 Context will use whichever Condition applies (as long as you don't check "Require all conditions"). That is, if the "PDFjs" display hint option in the node edit form is checked, *or* if the node's media has a Mime type of `application/pdf`, the media content will be rendered using the PDFjs viewer.
 
 The second way to use the media's Mime type to render its content with the PDFjs viewer is to create a separate Context that will detect the media's Mime type and use the configured View mode automatically. To do this, create a new Context. Add a "Media has Mime type" condition and specify the Mime type, and then add a "Change View mode" Reaction that selects the desired view mode:
 
-![Display hints](../assets/objects_view_mode_context.png)
+![Display hints](../assets/resource_nodes_view_mode_context.png)
 
 Finally, save your Context. From that point on, whenever the media for a node has the configured Mime type, Drupal will render the media using the corresponding view mode.
 
@@ -134,4 +134,4 @@ For any node, its **Children** tab can be used to see all its members.  You can 
 bulk on members using the checkboxes and the Actions dropdown as well as clicking
 on the **Re-order Children** tab to adjust the order in which they display.
 
-![Members tab](../assets/objects_children_tab.png)
+![Members tab](../assets/resource_nodes_children_tab.png)

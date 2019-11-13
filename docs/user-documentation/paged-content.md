@@ -1,5 +1,5 @@
 Paged content, books, periodicals, photographs with the front and back, etcetera, can use the members structure.
-(See [the section describing resource node membership](objects.md#members).)
+(See [the section describing resource node membership](resource-nodes.md#members).)
 This involves creating a resource node for the root record (e.g. the book or the photograph)
 and child resource nodes for each sub-component (e.g. "Page 1" and "Page 2" or "recto" and "verso")
 with their corresponding media. Each "child" resource node contains a reference to their "parent" resource node
@@ -28,9 +28,9 @@ weight value `10` and before the child with the weight value `20`.
 Child resource nodes can be reordered using a drag-and-drop interface by clicking
 on the _Re-order Children_ button on the _Children_ tab of the parent resource node.
 
-![Re-order Children button](../assets/objects_reorder_children_button.png)
+![Re-order Children button](../assets/paged_content_reorder_children_button.png)
 
-![Re-order Children form](../assets/objects_reorder_children_form.png)
+![Re-order Children form](../assets/paged_content_reorder_children_form.png)
 
 Re-ordering children resource nodes on this page and clicking _Save_ will cause 
 each child resource node's weight value to be updated using sequential values.

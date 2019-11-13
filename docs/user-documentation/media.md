@@ -79,6 +79,6 @@ Naming conventions can be configured by editing each derivative action's _File p
 Within a node's media tab, you can see all of its media, including derivatives, listed along with their usage. For example, from the
 Original File, a lower quality "Service File" and a smaller "Thumbnail Image" file were generated.
 
-![Media tab](../assets/objects_media_tab.png)
+![Media tab](../assets/resource_nodes_media_tab.png)
 
 For more information on how to set configure derivatives, see the section on [Context](context.md).
