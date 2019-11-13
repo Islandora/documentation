@@ -1,6 +1,6 @@
 Collections are groups of repository content that can be described themselves. Repository content is aggregated in a collection by setting the `field_member_of`
 entity reference field to point to a collection. Generally speaking, anything can behave as a collection, and anything with `field_member_of` can be a member of a collection.
-However, collections are 'officially' designated as such by applying the "Collection" taxonomy term to an item's `field_model` field.  By default, Islandora 8 has a context configured to handle collections by looking for that term.
+However, collections are 'officially' designated as such by applying the "Collection" taxonomy term to an item's `field_model` field.  By default, Islandora 8 has a context configured to display a view of child resource nodes when the currently displayed resource node uses that term.
 
 !!! Tip "Collections and Deleting"
     Collections and their members are
