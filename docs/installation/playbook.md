@@ -1,16 +1,18 @@
-Islandora 8 is installed through an Ansible Playbook called [claw-playbook](https://github.com/Islandora-Devops/claw-playbook).
+The fastest way to get up and running with Islandora 8 is through an Ansible Playbook called [islandora-playbook](https://github.com/Islandora-Devops/islandora-playbook). It can be used to spin up a local environment using [Vagrant](https://www.vagrantup.com/), or to provision an existing machine.
 
 ## Requirements
 
 Download and install the following:
 
 1. [Virtual Box](https://www.virtualbox.org/)
-1. [Vagrant](https://www.vagrantup.com/) (version 2.0 or required)
+1. [Vagrant](https://www.vagrantup.com/) (version 2.0 or higher required)
 
 Use your package manager of choice to get [Git](https://git-scm.com/) and [Ansible](https://www.ansible.com/community) if
 you don't have them already.
 
-For example, if you're using Ubuntu and `apt`
+#### Ubuntu/Debian
+
+Most components on Ubuntu are available via `apt`:
 
 ```
 $ sudo apt-get install software-properties-common
@@ -19,7 +21,20 @@ $ sudo apt-get update
 $ sudo apt-get install git ansible
 ```
 
-If you want to provision a CENTOS 7 environment, you'll also need to install the [vbguest](https://github.com/dotless-de/vagrant-vbguest)
+#### MacOS
+
+For the installation of Ansible, consider using [homebrew](https://brew.sh/):
+
+```
+# Use xcode-select to install command line components, including git
+$ xcode-select --install
+$ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+$ brew install ansible
+```
+
+#### Optional steps
+
+If you want to provision a CentOS 7 environment, you'll also need to install the [vbguest](https://github.com/dotless-de/vagrant-vbguest)
 plugin for Vagrant
 
 ```bash
@@ -28,31 +43,41 @@ $ vagrant plugin install vagrant-vbguest
 
 ## Installing a local development environment
 
-Once you've installed all the requirements, you can spin up a local development environment with
+#### Ubuntu 18.04
+
 ```bash
-$ git clone https://github.com/Islandora-Devops/claw-playbook
-$ cd claw-playbook
+$ git clone https://github.com/Islandora-Devops/islandora-playbook
+$ cd islandora-playbook
 $ vagrant up
 ```
 
-By default, this provisions an Ubuntu 18.04 environment.  If you would prefer to use CENTOS 7 instead, set the `ISLANDORA_DISTRO`
-environment variable to `centos/7`. To prevent having to do this every time you open a new shell, add the following command to
-your `.bashrc` file
+#### CentOS 7
 
 ```bash
-$ export ISLANDORA_DISTRO="centos/7"
+$ git clone https://github.com/Islandora-Devops/islandora-playbook
+$ cd islandora-playbook
+$ ISLANDORA_DISTRO="centos/7" vagrant up
+```
+
+Or, for simplicity's sake, add the following to your user profile (e.g., `.bashrc` on Ubuntu/Debian environments, or `.bash_profile` on MacOS):
+
+```bash
+export ISLANDORA_DISTRO="centos/7"
 ```
 
 ## Installing a remote environment
 
-If you want to provision a remote server using the playbook, there's a handful of configuration entries you need to update to include your
-usernames/passwords and IP addresses. You'll also want Apache to serve at port 80 as opposed to 8000, which we use for development
-purposes.  To start, take the inventory for the vagrant development environment and copy it. Be sure to
-give it an appropriate name. Here we're using `example`.
+If you want to provision a remote server using the playbook, the configuration entries in `inventory` need to be changed; this includes:
+
+- Changing usernames and passwords to something more sensible than the default
+- Changing IP addresses to use the remote machine's actual IP
+- Changing Apache to serve at port 80 (as opposed to 8000, which we use for development purposes)
+
+To start, take the inventory for the vagrant development environment and copy it. Be sure to give it an appropriate name. Here we're using `example`.
 
 ```bash
-$ git clone https://github.com/Islandora-Devops/claw-playbook
-$ cd claw-playbook
+$ git clone https://github.com/Islandora-Devops/islandora-playbook
+$ cd islandora-playbook
 $ cp -r inventory/vagrant inventory/example
 ```
 
@@ -89,6 +114,7 @@ crayfish_recast_gemini_base_url: http://example.org/gemini
 ```
 
 #### group_vars/karaf.yml
+
 Unfortunately, you have to copy/paste this whole chunk into the yml, even though you're only updating the URLs and
 the `token.value` entry.
 
@@ -133,6 +159,7 @@ alpaca_blueprint_settings:
 ```
 
 #### group_vars/tomcat.yml
+
 ```yml
 fcrepo_allowed_external_content:
   - http://example.org/
@@ -140,12 +167,14 @@ cantaloupe_HttpResolver_BasicLookupStrategy_url_prefix: http://example.org/
 ```
 
 #### group_vars/webserver/apache.yml
+
 Here's where you set the port to 80 instead of 8000.
 ```yml
 apache_listen_port: 80
 ```
 
 #### group_vars/webserver/drupal.yml
+
 ```yml
 drupal_trusted_hosts:
   - ^localhost$
@@ -154,14 +183,16 @@ fedora_base_url: "http://example.org:8080/fcrepo/rest/"
 ```
 
 #### group_vars/webserver/general.yml
+
 ```yml
 openseadragon_iiiv_server: http://example.org:8080/cantaloupe/iiif/2
 matomo_site_url: http://example.org
 ```
 
 #### hosts
-You'll need the ssh particulars for logging into your server in the hosts file.  This example is set up to login as `root` using
-an ssh key. You'll need to get the details for logging into your remote server from your hosting provider (AWS, Digital Ocean, etc...)
+
+You'll need the SSH particulars for logging into your server in the hosts file.  This example is set up to login as `root` using
+an SSH key. You'll need to get the details for logging into your remote server from your hosting provider (AWS, Digital Ocean, etc...)
 or your systems administrator if you're running the server in-house. See
 [this page](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html#connecting-to-hosts-behavioral-inventory-parameters)
 for more details about what you can put into a
@@ -186,7 +217,7 @@ Then, depending on the operating system installed on the remote environment, you
 $ ansible-playbook -i inventory/production playbook.yml -e "islandora_distro=ubuntu/xenial64"
 ```
 
-or for CENTOS 7
+or for CentOS 7
 
 ```bash
 $ ansible-playbook -i inventory/production playbook.yml -e "islandora_distro=centos/7"
