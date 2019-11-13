@@ -53,7 +53,7 @@ To confirm, return to the collection and verify the new item appears in the coll
 To create an item and add it as a member to a collection in one step, visit a collection and click on its `Members` tab. From the
 `Members` tab, you can manage the members of a collection and perform actions on them.
 
-![From the 'Members' tab, you can manage the members of a collection and perform bulk operations on them.](../assets/members-tab.png)
+![From the 'Members' tab, you can manage the members of a collection and perform bulk operations on them.](../assets/objects_children_tab.png)
 
 Click on the `+Add member` button, and then select 'Repository Item' to give your new item a Content Type.  Only content types that
 have the `field_member_of` field will be available from this list.

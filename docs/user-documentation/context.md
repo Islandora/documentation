@@ -10,7 +10,7 @@ The Context project page on drupal.org says "You can think of each context as re
 
 Let's look at the example of how Context can determine how an object is displayed. Drupal 8 has the idea of "view modes", which allow site builders to choose what happens when an object is viewed by the user (it has nothing to do with Drupal Views). In the node edit form for Islandora objects, there is a checkbox that, if checked, tells Drupal to render the image using the OpenSeadragon viewer:
 
-![Display Hints field in node edit form](../assets/context_display_hints.png)
+![Display Hints field in node edit form](../assets/objects_display_hints.png)
 
  This  functionality is accomplished via the "Open Seadragon" Context, which, as its configuration suggests, checks as its condition whether the node as the "Open Seadragon" tag and if so, reacts by using the view mode "Open Seadragon":
 
