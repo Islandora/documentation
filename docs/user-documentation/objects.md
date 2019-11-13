@@ -113,8 +113,6 @@ The node-level and global approaches are not exclusive to one another. One Conte
 ## Members
 
 Islandora has a notion of _membership_, which is used to create a parent/child relationship between
-two resource nodes. Any two nodes can be related in this way, though typically, the parent node has a content
-model of _Collection_ or _Paged Content_. Membership (to a Collection or otherwise) is denoted using another special
 two resource nodes. Membership is denoted using another special field, "Member Of".  
 The "Member Of" field _can_ hold multiple references, so it is possible for a
 single child to belong to multiple parents, but may also complicate the creation of breadcrumbs.
