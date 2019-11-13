@@ -14,6 +14,10 @@ This guide assumes the user has some knowledge:
 
 ## Conventions Used in This Guide
 
+### Chronological Organization
+
+The steps in this guide are listed in chronological order of installation and configuration. Some sections will reference variables and rely on components installed in previous sections. It does not account for skipping over or otherwise changing the order of installation steps; bear this in mind if you decide to do things out of the provided order.
+
 ### Replacement Variables
 
 It is expected that the person setting up the site may want to use different usernames, passwords, and other such variables than the ones presented by default in this guide. Additionally, some defaults can't be provided, such as up-to-date version information for externally-provided components. In such cases, the replacement variables will be placed in all capital letters, and a description of the variables, any possible defaults, and how to get up-to-date information, will be listed below.
