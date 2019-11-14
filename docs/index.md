@@ -4,7 +4,7 @@ Out of the box, this includes:
 
 - A suite of customized Drupal resource types and configurations, packaged as the [Islandora 8 Drupal module](https://github.com/Islandora/islandora), that streamline the process of creating preservable digital resources natively within Drupal as nodes, media, files, and taxonomy terms
 - Complete integration between Drupal resources and Duraspace's [Fedora 5.x Repository](https://wiki.duraspace.org/display/FF/Fedora+Repository+Home), including RDF conversion and asset storage
-- The [Crayfish](https://github.com/Islandora/crayfish) suite of microservices that provides resource mapping to Fedora and automated generation of derivative files, and which can be extended to provide even more services
+- The [Crayfish](https://github.com/Islandora/crayfish) suite of microservices that Islandora uses to provide automated resource mapping to Fedora and automated generation of derivative files, and which can be extended to provide even more services
 - The [Alpaca](https://github.com/Islandora/Alpaca) suite of middleware that asynchronously manages and queues microservices in the background - like the ones bundled with Crayfish - providing scalability
 - A [batch import/migration framework](https://github.com/Islandora/migrate_islandora_csv) to serve as a launching point to get your existing data into Islandora 8
 - Preservation tools like [controlled access terms](https://github.com/Islandora/controlled_access_terms) for subjects and agents and a [full configuration for exposing OAI-PMH](https://github.com/Islandora/islandora_defaults/tree/8.x-1.x/modules/islandora_oaipmh) to metadata harvesters
