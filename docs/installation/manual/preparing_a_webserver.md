@@ -18,6 +18,7 @@ sudo apt-get -y install apache2 apache2-utils
 ```
 
 This will install:
+
 - A `systemd` service that will ensure Apache can be stopped and started, and will run when the machine is powered on
 - A set of Apache configurations in `/etc/apache2`, including the basic configuration, ports configuration, enabled mods, and enabled sites
 - An Apache webroot in `/var/www/html`, configured to be the provided server on port `:80` in `/etc/apache2/sites-enabled/000-default.conf`; we’ll make changes and additions to this file later
@@ -25,7 +26,7 @@ This will install:
 
 ### Enable Apache Mods
 
-We’re going to enable a couple of mods as well that will be important for later use:
+We’re going to enable a couple of Apache mods that Drupal highly recommends installing, and which are de-facto considered required by Islandora:
 
 ```bash
 sudo a2enmod ssl
@@ -35,7 +36,9 @@ sudo systemctl restart apache2
 
 ### Add the Current User to the `www-data` Group
 
-Since the user we are currently logged in as is going to work quite a bit inside the Drupal directory, we want to give it group permissions to anything the `www-data` group has access to:
+Since the user we are currently logged in as is going to work quite a bit inside the Drupal directory, we want to give it group permissions to anything the `www-data` group has access to.
+
+**N.B.** This code block uses **backticks**, not single quotes; this is an important distinction as backticks have special meaning in `bash`.
 
 ```bash
 sudo usermod -a -G www-data `whoami`
@@ -54,10 +57,11 @@ sudo apt-get -y install php7.2 php7.2-cli php7.2-common php7.2-curl php7.2-dev p
 ```
 
 This will install a series of PHP configurations and mods in `/etc/php/7.2`, including:
-- A mods-available folder (from which everything is typically enabled by default)
-- A configuration for PHP when run from Apache in the apache2 folder
-- A configuration for PHP when run from the command line - including when run via Drush - in the cli folder
-- unzip, which is important for PHP’s zip module to function correctly despite it not being a direct dependency of the module.
+
+- A `mods-available` folder (from which everything is typically enabled by default)
+- A configuration for PHP when run from Apache in the `apache2` folder
+- A configuration for PHP when run from the command line - including when run via Drush - in the `cli` folder
+- `unzip`, which is important for PHP’s zip module to function correctly despite it not being a direct dependency of the module. We will also need to unzip some things later, so this is convenient to have in place early in the installation process.
 
 ## PostgreSQL 10
 
@@ -70,6 +74,7 @@ sudo apt-get -y install postgresql
 ```
 
 This will install:
+
 - A user at the system level named `postgres`; this will be the only user, by default, that has permission to run the `psql` binary and have access to Postgres configurations
 - A binary executable at `/usr/bin/psql`, which anyone - even `root` - will get kicked out of the moment they run it, since only the `postgres` user has permission to run any Postgres commands
 - A series of configurations that live in `/etc/postgresql/10/main` which can be used to modify how PostgreSQL works.

@@ -21,7 +21,7 @@ sudo apt-get update
 sudo apt-get -y install imagemagick tesseract-ocr ffmpeg poppler-utils
 ```
 
-### Preparing a Crayfish Database
+### Preparing a Gemini Database
 
 This database will be set up (and function) mostly the same as the other databases we’ve previously installed.
 
@@ -32,10 +32,9 @@ create user CRAYFISH_DB_USER with encrypted password 'CRAYFISH_DB_PASSWORD';
 grant all privileges on database CRAYFISH_DB to CRAYFISH_DB_USER;
 \q
 ```
-- `CRAYFISH_DB`: `crayfish`
-    - Crayfish will use this database to store and disseminate information.
-- `CRAYFISH_DB_USER`: `crayfish`
-- `CRAYFISH_DB_PASSWORD`: `crayfish`
+- `CRAYFISH_DB`: `gemini`
+- `CRAYFISH_DB_USER`: `gemini`
+- `CRAYFISH_DB_PASSWORD`: `gemini`
     - As always, this should be a secure password of some kind, and not this default.
 
 ### Cloning and Installing Crayfish
@@ -67,7 +66,8 @@ sudo chown www-data:www-data /var/log/islandora
 
 Each Crayfish component requires a `.yaml` file to ensure everything is wired up correctly.
 
-The following configuration files represent somewhat sensible defaults; you should take consideration of the logging levels in use, as this can vary in desirability from installation to installation. Also note that in all cases, `http` URLs are being used, as this guide does not deal with setting up https support. In a production installation, this should not be the case.
+!!! notice
+    The following configuration files represent somewhat sensible defaults; you should take consideration of the logging levels in use, as this can vary in desirability from installation to installation. Also note that in all cases, `http` URLs are being used, as this guide does not deal with setting up https support. In a production installation, this should not be the case. These files also assume a connection to a PostgreSQL database; use a `pdo_mysql` driver and the appropriate `3306` port if using MySQL.
 
 `/opt/crayfish/Gemini/cfg/config.yaml | www-data:www-data/644`
 ```yaml
@@ -83,10 +83,10 @@ db.options:
   password: CRAYFISH_DB_PASSWORD
 log:
   level: NOTICE
-  file: /var/log/gemini.log
+  file: /var/log/islandora/gemini.log
 syn:
   enable: true
-  config: /opt/crayfish/syn-settings.xml
+  config: /opt/fcrepo/config/syn-settings.xml
 ```
 
 `/opt/crayfish/Homarus/cfg/config.yaml | www-data:www-data/644`
@@ -123,7 +123,7 @@ log:
   file: /var/log/islandora/homarus.log
 syn:
   enable: true
-  config: /opt/crayfish/syn-settings.xml
+  config: /opt/fcrepo/config/syn-settings.xml
 ```
 
 `/opt/crayfish/Houdini/cfg/config.yaml | www-data:www-data/644`
@@ -145,7 +145,7 @@ log:
   file: /var/log/islandora/houdini.log
 syn:
   enable: true
-  config: /opt/crayfish/syn-settings.xml
+  config: /opt/fcrepo/config/syn-settings.xml
 ```
 
 `/opt/crayfish/Hypercube/cfg/config.yaml | www-data:www-data/644`
@@ -161,7 +161,7 @@ log:
   file: /var/log/islandora/hypercube.log
 syn:
   enable: true
-  config: /opt/crayfish/syn-settings.xml
+  config: /opt/fcrepo/config/syn-settings.xml
 ```
 
 `/opt/crayfish/Milliner/cfg/config.yaml | www-data:www-data/644`
@@ -185,7 +185,7 @@ log:
   file: /var/log/islandora/milliner.log
 syn:
   enable: true
-  config: /opt/crayfish/syn-settings.xml
+  config: /opt/fcrepo/config/syn-settings.xml
 ```
 
 `/opt/crayfish/Recast/cfg/config.yaml | www-data:www-data/644`
@@ -201,7 +201,7 @@ log:
   file: /var/log/islandora/recast.log
 syn:
   enable: true
-  config: /opt/crayfish/syn-settings.xml
+  config: /opt/fcrepo/config/syn-settings.xml
 namespaces:
 -
   acl: "http://www.w3.org/ns/auth/acl#"
@@ -214,27 +214,14 @@ namespaces:
   vcard: "http://www.w3.org/2006/vcard/ns#"
 ```
 
-### Providing Syn Connectors for Crayfish Components
+### Installing the Gemini Database
 
-This will function similarly to our initial Syn installation. Crayfish will be given a single public/private keypair that will be configured for use in `syn-settings.xml` files for each microservice.
+Our Gemini database is unusable until it's installed.
 
 ```bash
-sudo openssl genrsa -out "/opt/keys/crayfish_private.key" 2048
-sudo openssl rsa -pubout -in "/opt/keys/crayfish_private.key" -out "/opt/keys/crayfish_public.key"
+cd /opt/crayfish/Gemini
+php bin/console --no-interaction migrations:migrate
 ```
-
-`/opt/crayfish/syn-settings.xml | www-data:www-data/600`
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<config version='1'>
-    <site algorithm='RS256' encoding='PEM' path='/opt/keys/crayfish_public.key' default='true' anonymous='true'/>
-    <token user='islandora' roles='fedoraAdmin'>
-        CRAYFISH_SYN_TOKEN
-    </token>
-</config>
-```
-- `CRAYFISH_SYN_TOKEN`: `islandora`
-    - This should be a securely-generated token rather than this default when used in a production setting. We’ll need to configure this in Drupal later.
 
 ### Creating Apache Configurations for Crayfish Components
 
@@ -242,7 +229,8 @@ Finally, we need appropriate Apache configurations for Crayfish; these will allo
 
 Each endpoint we need to be able to connect to will get its own `.conf` file, which we will then enable.
 
-**N.B.** these configurations would potentially have collisions with Drupal routes, if any are created in Drupal with the same name. If this is a concern, it would likely be better to reserve a subdomain or another port specifically for Crayfish. For the purposes of this installation guide, these endpoints will suffice.
+!!! notice
+    these configurations would potentially have collisions with Drupal routes, if any are created in Drupal with the same name. If this is a concern, it would likely be better to reserve a subdomain or another port specifically for Crayfish. For the purposes of this installation guide, these endpoints will suffice.
 
 `/etc/apache2/conf-available/Gemini.conf | root:root/644`
 ```

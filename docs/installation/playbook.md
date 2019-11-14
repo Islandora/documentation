@@ -32,16 +32,9 @@ $ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/inst
 $ brew install ansible
 ```
 
-#### Optional steps
-
-If you want to provision a CentOS 7 environment, you'll also need to install the [vbguest](https://github.com/dotless-de/vagrant-vbguest)
-plugin for Vagrant
-
-```bash
-$ vagrant plugin install vagrant-vbguest
-```
-
 ## Installing a local development environment
+
+Before provisioning a local environment, you should likely double check that no [required ports](#port-clashes-for-local-environments) are currently in use.
 
 #### Ubuntu 18.04
 
@@ -56,6 +49,7 @@ $ vagrant up
 ```bash
 $ git clone https://github.com/Islandora-Devops/islandora-playbook
 $ cd islandora-playbook
+$ vagrant plugin install vagrant-vbguest
 $ ISLANDORA_DISTRO="centos/7" vagrant up
 ```
 
@@ -67,13 +61,13 @@ export ISLANDORA_DISTRO="centos/7"
 
 ## Installing a remote environment
 
-If you want to provision a remote server using the playbook, the configuration entries in `inventory` need to be changed; this includes:
+A remote environment can be provisioned by providing SSH credentials to `claw-playbook` and using the `ansible-galaxy` installer instead of Vagrant. Some preparation of configuration entries in the `inventory` also need to be changed to be aware of the particulars of your remote environment; this includes:
 
 - Changing usernames and passwords to something more sensible than the default
 - Changing IP addresses to use the remote machine's actual IP
 - Changing Apache to serve at port 80 (as opposed to 8000, which we use for development purposes)
 
-To start, take the inventory for the vagrant development environment and copy it. Be sure to give it an appropriate name. Here we're using `example`.
+We're going to build up this new remote environment configuration from the default provided Vagrant configuration. To start, take the inventory for the vagrant development environment and make a copy of it. Be sure to give it an appropriate name. Here we're using `example`.
 
 ```bash
 $ git clone https://github.com/Islandora-Devops/islandora-playbook
@@ -115,8 +109,7 @@ crayfish_recast_gemini_base_url: http://example.org/gemini
 
 #### group_vars/karaf.yml
 
-Unfortunately, you have to copy/paste this whole chunk into the yml, even though you're only updating the URLs and
-the `token.value` entry.
+For Alpaca, only the `token.value` and various URLs are of particular importance, but the entire configuration chunk is provided here for convenience.
 
 ```yml
 alpaca_settings:
@@ -168,7 +161,7 @@ cantaloupe_HttpResolver_BasicLookupStrategy_url_prefix: http://example.org/
 
 #### group_vars/webserver/apache.yml
 
-Here's where you set the port to 80 instead of 8000.
+This is where we specify that the webserver is listening on the default port 80, instead of the development machine port 8000.
 ```yml
 apache_listen_port: 80
 ```
@@ -225,13 +218,37 @@ $ ansible-playbook -i inventory/production playbook.yml -e "islandora_distro=cen
 
 ## Troubleshooting
 
+### Out of date playbooks
+
 Ansible caches the code used to provision the environment, so if you've already installed once you may not be getting the latest version
 of things even if you've `git pull`'d the latest playbook.  The code is stored in `roles/external`, so if you want to clear it out you can
-run
+remove these before attempting to provision an environment
 
 ```bash
 $ rm -rf roles/external
 ```
+
+### Port clashes for local environments
+
+When provisioning using a local environment, you should be aware of any ports that are already in use by your computer that are also going to be
+used by Vagrant, as these may clash and cause problems during and after provisioning. These include:
+
+- 8000 (Apache)
+- 8080 (Tomcat)
+- 3306 (MySQL)
+- 5432 (PostgreSQL)
+- 8983 (Solr)
+- 8161 (ActiveMQ)
+- 8081 (API-X)
+
+If there are port clashes for any of these, you will need to either find and replace them in the configuration .yml files under
+`inventory/vagrant/group_vars`, or provide new values for the different playbooks that support changing the ports (for example, `postgresql_databases`
+supports adding a `port` property which is currently simply unused). You will also need to replace the port forwarding values in `Vagrantfile`.
+
+Additionally, Ansible attempts to use port 2200 for SSH. If this port is already in use, your local environment cannot be provisioned. To
+change this, set a new value for `ansible_port` in `inventory/vagrant/hosts`.
+
+### Help
 
 If you run into any issues installing the environment, do not hesitate to email the [mailing list](mailto:islandora@googlegroups.com) to
 ask for help.  If you think you've stumbled across a bug in the installer, please create an issue in the

@@ -11,19 +11,26 @@
 The Solr binaries can be found at the [Solr downloads page](https://lucene.apache.org/solr/downloads.html); the most recent stable release of Solr 8 should be used.
 
 ```bash
-wget -O solr.tar.gz SOLR_DOWNLOAD_LINK
-tar -xzvf solr.tar.gz
+# While generally we download tarballs as .tar.gz files without version
+# information, the Solr installer is a bit particular in that it expects a .tgz
+# file with the same name as the extracted folder it contains. It's odd, and we
+# can't really get around it.
+wget SOLR_DOWNLOAD_LINK
+tar -xzvf SOLR_TARBALL
 ```
 - `SOLR_DOWNLOAD_LINK`: This will depend on a few different things, not least of all the current version of Solr. The link to the `.tgz` for the binary on the downloads page will take you to a list of mirrors that Solr can be downloaded from, and provide you with a preferred mirror at the top. This preferred mirror should be used as the `SOLR_DOWNLOAD_LINK`.
+- `SOLR_TARBALL`: The filename that was downloaded, e.g., `solr-8.3.0.tgz`
 
 ## Running the Solr Installer
 
 Solr includes an installer that does most of the heavy lifting of ensuring we have a Solr user, a location where Solr lives, and configurations in place to ensure it’s running on boot.
 
 ```bash
-sudo UNTARRED_SOLR_FOLDER/bin/install_solr_service.sh solr.tar.gz
+sudo UNTARRED_SOLR_FOLDER/bin/install_solr_service.sh solr.tgz
 ```
 - `UNTARRED_SOLR_FOLDER`: This will likely simply be `solr-VERSION`, where `VERSION` is the version number that was downloaded.
+
+The port that Solr runs on can potentially be configured at ths point, but we'll expect it to be running on `8983`.
 
 ### Creating a New Solr Core
 
@@ -44,7 +51,7 @@ Rather than use an out-of-the-box configuration that won’t be suitable for our
 
 ```bash
 cd /opt/drupal
-composer require drupal/search_api_solr:^3.0
+sudo -u www-data composer require drupal/search_api_solr:^3.0
 drush -y en search_api_solr
 ```
 
@@ -60,8 +67,13 @@ Fill out the server addition form using the following options:
 
 ![Configuring the Standard Solr Connector](../../assets/configuring_standard_solr_connector.png)
 
+![Setting the Solr Install Directory](../../assets/setting_the_solr_install_directory.png)
+
 - `SERVER_NAME`: `islandora8`
     - This is completely arbitrary, and is simply used to differentiate this search server configuration from all others. **Write down** or otherwise pay attention to the `machine_name` generated next to the server name you type in; this will be used in the next step.
+
+!!! notice
+    You can ignore the error about an incompatible Solr schema; we're going to set this up in the next step. In fact, if you refresh the page after restarting Solr in the next step, you should see the error disappear.
 
 ### Generating and Applying Solr Configurations
 
@@ -75,3 +87,13 @@ sudo cp ~/solrconfig/* /var/solr/data/SOLR_CORE/conf
 sudo systemctl restart solr
 ```
 - `SERVER_MACHINE_NAME`: This should be the `machine_name` that was automatically generated when creating the configuration in the above step.
+
+### Adding an Index
+
+In order for content to be indexed back into Solr, a search index needs to be added to our server. Navigate to `/admin/config/search/search-api/add-index` and check off the things you'd like to be indexed.
+
+![Adding a Search Index](../../assets/adding_a_search_index.png)
+
+![Specifying the Solr Server](../../assets/specifying_the_solr_server.png)
+
+Click **Save** to add your index and kick off indexing of existing items.

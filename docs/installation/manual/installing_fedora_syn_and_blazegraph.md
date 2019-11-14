@@ -266,13 +266,13 @@ While not strictly necessary, we can use the `tomcat-users.xml` file to give us 
 Fedora `.war` files are packaged up as releases on the official GitHub repository; you can find the latest version at the releases page; the official GitHub repository is labelled as fcrepo4 but does actually contain more recent versions than 4. You should download the most recent stable release.
 
 ```bash
-wget -O fcrepo.war FCREPO_WAR_URL
+sudo wget -O fcrepo.war FCREPO_WAR_URL
 sudo mv fcrepo.war /opt/tomcat/webapps
 sudo chown tomcat:tomcat /opt/tomcat/webapps/fcrepo.war
 ```
 - `FCREPO_WAR_URL`: This can be found at the [fcrepo downloads page](https://wiki.duraspace.org/display/FF/Downloads); you should download the WAR for the most recent 5.x web application.
 
-#3# Restarting the Tomcat Service
+### Restarting the Tomcat Service
 
 As before, restart the Tomcat service to get Fedora up and running.
 
@@ -289,10 +289,10 @@ A compiled JAR of Syn can be found on the [Syn releases page](https://github.com
 ```
 sudo wget -P /opt/tomcat/lib SYN_JAR_URL
 # Ensure the library has the correct permissions.
-sudo chown tomcat:tomcat /opt/tomcat/lib/*.jar
-sudo chmod 640 /opt/tomcat/lib/*.jar
+sudo chown -R tomcat:tomcat /opt/tomcat/lib
+sudo chmod -R 640 /opt/tomcat/lib
 ```
-- `SYN_JAR_URL`: The latest stable release of the Syn JAR from the releases page. Specifically, the JAR compiled as `-all.jar` is required.
+- `SYN_JAR_URL`: The latest stable release of the Syn JAR from the [releases page](https://github.com/Islandora/Syn/releases). Specifically, the JAR compiled as `-all.jar` is required.
 
 ### Generating an SSL Key for Syn
 
@@ -302,6 +302,7 @@ For Islandora and Fedora to talk to each other, an SSL key needs to be generated
 sudo mkdir /opt/keys
 sudo openssl genrsa -out "/opt/keys/syn_private.key" 2048
 sudo openssl rsa -pubout -in "/opt/keys/syn_private.key" -out "/opt/keys/syn_public.key"
+sudo chown www-data:www-data /opt/keys/syn*
 ```
 
 ### Placing the Syn Settings
@@ -325,13 +326,16 @@ Referencing the valve we’ve created in our `syn-settings.xml` involves creatin
 `/opt/tomcat/conf/context.xml`
 
 **Before**:
-> 29 |     -->
-> 30 | </Context>
+> 29 |     `-->`
+
+> 30 | `</Context>`
 
 **After**:
-> 29 |    -->
-> 30 |    <Valve className="ca.islandora.syn.valve.SynValve" pathname="/opt/fcrepo/config/syn-settings.xml"/>
-> 31 | </Context>
+> 29 |    `-->`
+
+> 30 |    `<Valve className="ca.islandora.syn.valve.SynValve" pathname="/opt/fcrepo/config/syn-settings.xml"/>`
+
+> 31 | `</Context>`
 
 ### Restarting Tomcat
 
@@ -359,7 +363,9 @@ The Blazegraph `.war` file can be found in a few different places, but to ensure
 
 ```bash
 cd /opt
-sudo -u tomcat wget -P /opt/tomcat/webapps -O blazegraph.war BLAZEGRAPH_WARFILE_LINK
+sudo wget -O blazegraph.war BLAZEGRAPH_WARFILE_LINK
+sudo mv blazegraph.war /opt/tomcat/webapps
+sudo chown tomcat:tomcat /opt/tomcat/webapps/blazegraph.war
 ```
 - BLAZEGRAPH_WAR_URL: You can find a link to this at the [Maven repository for Blazegraph](http://repo1.maven.org/maven2/com/blazegraph/bigdata-war/); you’ll want to click the link for the latest version of Blazegraph 2.1.x, then get the link to the `.war` file within that version folder.
 
@@ -369,7 +375,7 @@ Once this is downloaded, give it a moment to expand before moving on to the next
 
 We would like to have an appropriate logging configuration for Blazegraph, which can be useful for looking at incoming traffic and determining if anything has gone wrong with Blazegraph. Our logger isn’t going to be much different than the default logger; it can be made more or less verbose by changing the default `WARN` levels. There are several other loggers that can be enabled, like a SPARQL query trace or summary query evaluation log; if these are desired they should be added in. Consult the Blazegraph documentation for more details.
 
-`/var/log/blazegraph/log4j.properties | tomcat:tomcat/644`
+`/opt/blazegraph/conf/log4j.properties | tomcat:tomcat/644`
 ```
 log4j.rootCategory=WARN, dest1
 
@@ -473,5 +479,9 @@ The two other files we created, `blazegraph.properties` and `inference.nt`, cont
 
 ```bash
 curl -X POST -H "Content-Type: text/plain" --data-binary @/opt/blazegraph/conf/blazegraph.properties http://localhost:8080/blazegraph/namespace
+# If this worked correctly, Blazegraph should respond with "CREATED: islandora"
+# to let us know it created the islandora namespace.
 curl -X POST -H "Content-Type: text/plain" --data-binary @/opt/blazegraph/conf/inference.nt http://localhost:8080/blazegraph/namespace/islandora/sparql
+# If this worked correctly, Blazegraph should respond with some XML letting us
+# know it added the 2 entries from inference.nt to the namespace.
 ```

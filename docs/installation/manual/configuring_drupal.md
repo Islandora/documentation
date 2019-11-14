@@ -13,7 +13,7 @@ Some additional settings will need to be established in your default `settings.p
 
 The below configuration will establish `localhost` as a trusted host pattern, but on production sites this will need to be expanded to include the actual host patterns used by the site.
 
-`/opt/drupal/www/sites/default/settings.php`
+`/opt/drupal/web/sites/default/settings.php`
 
 **Before**:
 > 789 |   'driver' => 'pgsql',
@@ -65,7 +65,7 @@ Islandora also provides an [`islandora_defaults`](https://github.com/Islandora/i
 Take note of some of the other comments in the below bash script for an idea of what the other components are expected, and which may be considered optional.
 
 ```bash
-cd /opt/drupal/web
+cd /opt/drupal
 # This is a convenience piece that will help speed up most of the rest of our
 # process working with Composer and Drupal.
 sudo -u www-data composer require zaporylie/composer-drupal-optimizations:^1.0
@@ -81,9 +81,6 @@ sudo -u www-data composer require drupal/facets:^1.3
 sudo -u www-data composer require drupal/restui:^1.16
 sudo -u www-data composer require drupal/rdfui:^1.0-beta1
 sudo -u www-data composer require drupal/content_browser:^1.0@alpha
-# Solr should already exist from the Solr installation step, but is included
-# here just in case.
-sudo -u www-data composer require drupal/search_api_solr:^3.0
 # These tend to be good to enable for a development environment, or just for a
 # higher quality of life when managing Islandora. That being said, devel should
 # NEVER be enabled on a production environment, as it intentionally gives the
@@ -104,7 +101,7 @@ Components we've now downloaded using `composer require` can be enabled simultan
     This list of modules assumes that all of the above components were downloaded using `composer require`; if this is not the case, you may need to pare down this list manually. It also includes `devel`, which again, should not be enabled on production sites.
 
 ```bash
-cd /opt/drupal/web
+cd /opt/drupal
 drush -y en rdf responsive_image devel syslog serialization basic_auth rest restui search_api_solr search_api_solr_defaults facets content_browser pdf admin_toolbar islandora_defaults controlled_access_terms_defaults islandora_breadcrumbs islandora_iiif islandora_oaipmh
 # If Carapace was downloaded, now is the time to enable and set it as well.
 drush -y theme:enable carapace
@@ -135,6 +132,9 @@ Click **Save configuration** to establish this as the JWT key configuration.
 
 Navigate to the Islandora core configuration page at `/admin/config/islandora/core` to set up the core configuration to connect to Gemini. Of note here, the **Gemini URL** will need to be established to facilitate the connection to Fedora, and the appropriate **Bundles with Gemini URI pseudo field** types will need to be checked off.
 
+!!! notice
+    Any other Drupal content types you wish to synchronize with Fedora should also be checked off here.
+
 ![Configuring Islandora](../../assets/configuring_islandora.png)
 
 ### Configuring Islandora IIIF
@@ -143,8 +143,21 @@ Navigate to `/admin/config/islandora/iiif` to ensure that Islandora IIIF is poin
 
 ![Configuring Islandora IIIF](../../assets/configuring_iiif.png)
 
+Next, configure Openseadragon by navigating to `/admin/config/media/openseadragon` and ensuring everything is set up properly.
+
+![Configuring Openseadragon](../../assets/configuring_openseadragon.png)
+
 ### Establishing Flysystem as the Default Download Method
 
-Finally, navigate to `/admin/config/media/file-system` to set the **Default download method** to the one we created in our `settings.php`.
+Navigate to `/admin/config/media/file-system` to set the **Default download method** to the one we created in our `settings.php`.
 
 ![Configuring Flysystem to Use Fedora](../../assets/configuring_flysystem_to_use_fedora.png)
+
+### Running Feature Migrations
+
+Finally, to get everything up and running, run the Islandora Core Features and Islandora Defaults migrations.
+
+```bash
+cd /opt/drupal
+drush -y -l localhost --userid=1 mim --group=islandora
+```

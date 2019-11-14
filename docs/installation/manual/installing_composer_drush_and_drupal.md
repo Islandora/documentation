@@ -27,13 +27,16 @@ sudo mv composer.phar /usr/local/bin/composer
 Before we can fully install Drupal, we’re going to need to clone `drupal-project` and provision it using Composer. We’re going to install it into the `/opt` directory:
 
 ```bash
-# Start by giving Drupal somewhere to live. The Drupal project is installed to an existing, empty folder.
+# Start by giving Drupal somewhere to live. The Drupal project is installed to
+# an existing, empty folder.
 sudo mkdir /opt/drupal
 sudo chown www-data:www-data /opt/drupal
 sudo chmod 775 /opt/drupal
 # Clone drupal-project and build it in our newly-created folder.
-git clone https://github.com/drupal-composer/drupal-project
+git clone https://github.com/drupal-composer/drupal-project.git
 cd drupal-project
+# Expect this to take a little while, as this is grabbing the entire
+# requirements set for Drupal.
 sudo -u www-data composer create-project drupal-composer/drupal-project:8.x-dev /opt/drupal --no-interaction
 ```
 
@@ -48,6 +51,9 @@ sudo ln -s /opt/drupal/vendor/drush/drush/drush /usr/local/bin/drush
 ### Make the new webroot accessible in Apache
 
 Before we can proceed with the actual site installation, we’re going to need to make our new Drupal installation the default web-accessible location Apache serves up. This will include an appropriate `ports.conf` file, and replacing the default enabled site.
+
+!!! notice
+    Out of the box, these files will contain support for SSL, which we will not be setting up in this guide (and therefore removing with these overwritten configurations), but which are **absolutely indispensible** to a production site. This guide does not recommend any particular SSL certificate authority or installation method, but you may find [DigitalOcean's tutorial](https://www.digitalocean.com/community/tutorials/how-to-install-an-ssl-certificate-from-a-commercial-certificate-authority) helpful.
 
 `/etc/apache2/ports.conf | root:root/644`
 ```
@@ -83,7 +89,8 @@ sudo systemctl restart apache2
 PostgreSQL roles are directly tied to users. We’re going to ensure a user is in place, create a role for them in PostgreSQL, and create a database for them that we can use to install Drupal.
 
 ```bash
-# Run psql as the postgres user, the only user currently with any PostgreSQL access.
+# Run psql as the postgres user, the only user currently with any PostgreSQL
+# access.
 sudo -u postgres psql
 # Then, run these commands within psql itself:
 create database DRUPAL_DB;
@@ -104,7 +111,8 @@ grant all privileges on database DRUPAL_DB to DRUPAL_DB_USER;
 The standard Drupal installation method involves navigating to your site’s front page and navigating through a series of form steps, but we can fast-track this using Drush’s `site-install` command.
 
 ```bash
-# Rather than defining the root directory in our Drush command, we're going to do this from the site root context.
+# Rather than defining the root directory in our Drush command, we're going to
+# do this from the site root context.
 cd /opt/drupal/web
 drush -y site-install standard --db-url="pgsql://DRUPAL_DB_USER:DRUPAL_DB_PASSWORD@127.0.0.1:5432/DRUPAL_DB" --site-name="SITE_NAME" --account-name=DRUPAL_LOGIN --account-pass=DRUPAL_PASS
 ```

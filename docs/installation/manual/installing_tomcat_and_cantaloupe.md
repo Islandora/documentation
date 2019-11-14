@@ -2,7 +2,7 @@
 
 ## In this section, we will install:
 - [Tomcat 8](https://tomcat.apache.org/download-80.cgi), the Java servlet container that will serve up some Java applications on various endpoints, including, importantly, Fedora
-- [Cantaloupe 4], the image tileserver - running in Tomcat - that will be used to serve up large images in a web-accessible fashion
+- [Cantaloupe 4](https://cantaloupe-project.github.io/), the image tileserver - running in Tomcat - that will be used to serve up large images in a web-accessible fashion
 
 ## Tomcat 8
 
@@ -26,7 +26,7 @@ update-alternatives --list java
 
 Apache Tomcat, and all its processes, will be owned and managed by a specific user for the purposes of keeping parts of the stack segregated and accountable.
 
-```shell
+```bash
 sudo addgroup tomcat
 sudo adduser tomcat --ingroup tomcat --home /opt/tomcat --shell /usr/bin
 ```
@@ -43,7 +43,7 @@ We’re going to download the latest version of Tomcat to `/opt` and set it up s
 cd /opt
 sudo wget -O tomcat.tar.gz TOMCAT_TARBALL_LINK
 sudo tar -zxvf tomcat.tar.gz
-sudo ln -s /opt/TOMCAT_DIRECTORY /opt/tomcat
+sudo mv /opt/TOMCAT_DIRECTORY/* /opt/tomcat
 sudo chown -R tomcat:tomcat /opt/TOMCAT_DIRECTORY
 ```
 - `TOMCAT_TARBALL_LINK`: No default can be provided here; you should navigate to the [Tomcat 8 downloads page](https://tomcat.apache.org/download-80.cgi) and grab the link to the latest `.tar.gz` file under the “Core” section of “Binary Distributions”. It is highly recommended to grab the latest version of Tomcat 8, as it will come with associated security patches and fixes.
@@ -54,7 +54,7 @@ sudo chown -R tomcat:tomcat /opt/TOMCAT_DIRECTORY
 When Tomcat runs, some configuration needs to be pre-established as a series of environment variables that will be used by the script that runs it.
 
 `/opt/tomcat/bin/setenv.sh | tomcat:tomcat/755`
-```bash
+```
 export CATALINA_HOME="/opt/tomcat"
 export JAVA_HOME="PATH_TO_JAVA_HOME"
 export JAVA_OPTS="-Djava.awt.headless=true -server -Xmx1500m -Xms1000m"
@@ -123,7 +123,7 @@ Cantaloupe pulls its configuration from a file called `cantaloupe.properties`; t
 
 Creating these files from scratch is *not* recommended; rather, we’re going to take the default cantaloupe configurations and plop them into their own folder so we can work with them.
 
-```shell
+```bash
 sudo mkdir /opt/cantaloupe_config
 sudo cp CANTALOUPE_DIR/cantaloupe.properties.sample /opt/cantaloupe_config/cantaloupe.properties
 sudo cp CANTALOUPE_DIR/delegates.rb.sample /opt/cantaloupe_config/delegates.rb

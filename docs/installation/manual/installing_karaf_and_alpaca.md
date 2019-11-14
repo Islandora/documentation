@@ -48,7 +48,7 @@ sudo tar -xzvf karaf.tar.gz
 sudo chown -R karaf:karaf KARAF_DIRECTORY
 sudo mv KARAF_DIRECTORY/* /opt/karaf
 ```
-- `KARAF_TARBALL_LINK`: It’s recommended to get the most recent version of Karaf 4.x. This will depend on the current version of Karaf, which can be found on the Karaf downloads page under “Karaf Runtime”. Like Solr, you can’t directly `wget` these links, but clicking on the `.tar.gz` link for the binary distribution will bring you to a list of mirrors, as well as provide you with a recommended mirror you can use here.
+- `KARAF_TARBALL_LINK`: It’s recommended to get the most recent version of Karaf 4.x. This will depend on the current version of Karaf, which can be found on the [Karaf downloads page](https://karaf.apache.org/download.html) under “Karaf Runtime”. Like Solr, you can’t directly `wget` these links, but clicking on the `.tar.gz` link for the binary distribution will bring you to a list of mirrors, as well as provide you with a recommended mirror you can use here.
 - `KARAF_DIRECTORY`: This will depend on the exact version being used, but will likely be `/opt/apache-karaf-VERSION`, where `VERSION` is the current Karaf version number.
 
 ### Configuring Karaf Logging
@@ -107,14 +107,14 @@ Similar to Tomcat, our Karaf service is going to rely on a `setenv` shell script
 #!/bin/sh
 export JAVA_HOME="PATH_TO_JAVA_HOME"
 ```
-- `PATH_TO_JAVA_HOME`: This will be the same `JAVA_HOME` we used when installing Tomcat , and can be found using the same method.
+- `PATH_TO_JAVA_HOME`: This will be the same `JAVA_HOME` we used when installing Tomcat , and can be found using the same method (i.e., still `/usr/lib/jvm/java-8-openjdk-amd64` if that's what it was before).
 
 ### Initializing Karaf
 
 We’re going to start Karaf, then run the installer to put our configurations in place and generate a Karaf service. Once these are installed, we’re going to stop Karaf, as from there on out its start/stop management should be handled via that service.
 
 ```bash
-/opt/karaf/bin/start
+sudo -u karaf /opt/karaf/bin/start
 # You may want to wait a bit for Karaf to start.
 # If you're not sure whether or not it's running, you can always run:
 # ps aux | grep karaf
@@ -148,7 +148,8 @@ For the Karaf features we’re going to install, we need a few different reposit
 /opt/karaf/bin/client repo-add mvn:org.apache.activemq/activemq-karaf/ACTIVEMQ_KARAF_VERSION/xml/features
 /opt/karaf/bin/client repo-add mvn:org.apache.camel.karaf/apache-camel/APACHE_CAMEL_VERSION/xml/features
 /opt/karaf/bin/client repo-add mvn:ca.islandora.alpaca/islandora-karaf/1.0.1/xml/features
-# XXX: This shouldn't be strictly necessary, but appears to be a missing upstream dependency for some fcrepo features.
+# XXX: This shouldn't be strictly necessary, but appears to be a missing
+# upstream dependency for some fcrepo features.
 /opt/karaf/bin/client repo-add mvn:org.apache.jena/jena-osgi-features/3.1.1/xml/features
 ```
 - `ACTIVEMQ_KARAF_VERSION`: The most recent version of `activemq-karaf` 5.x.x you can find on the [activemq-karaf Maven repository page](https://mvnrepository.com/artifact/org.apache.activemq/activemq-karaf).
@@ -160,6 +161,7 @@ Before we can configure the features we’re going to use, they need to be insta
 
 ```bash
 /opt/karaf/bin/client feature:install fcrepo-service-activemq
+/opt/karaf/bin/client feature:install jena
 /opt/karaf/bin/client feature:install fcrepo-camel
 /opt/karaf/bin/client feature:install fcrepo-indexing-triplestore
 /opt/karaf/bin/client feature:install islandora-http-client
