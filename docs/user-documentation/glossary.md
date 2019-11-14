@@ -29,7 +29,7 @@ The Fedora repository functions as the standard _smart storage_ for Islandora.
 Data of a certain type that is attached to a content entity. For instance, on a Resource Node content type, you might have fields for a title, description, display hints, subjects, and other metadata. 
  
 ## Flysystem
-Flysystem is a filesystem abstraction library for PHP. Islandora uses Flystsem to swap about different backend filesystem applications. Islandora provides a custom Flystsem adapter for Fedora.
+Flysystem is a filesystem abstraction library for PHP. Islandora uses Flysystem to swap about different backend filesystem applications. Islandora provides a custom Flysystem adapter for Fedora.
  
 ## Ingest
 To ingest an object is to add an entry for it in Islandora. This is done primarily through the Drupal interface. 
@@ -46,7 +46,7 @@ A software development technique —a variant of the service-oriented architectu
 Software (usually PHP, JavaScript, and/or CSS) that extends site features and adds functionality. Drupal modules conform to a specific structure allowing them to integrate with the Drupal architecture. 
  
 ## Node
-A node is any piece of individual content, such as a page, poll, article, forum topic, or a blog entry. All content on a Drupal website is stored and treated as "nodes". For information about nodes specific to Islandora, see "Resource Node."
+A node is any piece of individual content, such as a page, article, forum topic, or a blog entry. All content on a Drupal website is stored and treated as "nodes". For information about nodes specific to Islandora, see "Resource Node."
 
 ## Open Source
 Open source describes a method of software development that promotes access to the end product's source code. Islandora is an open source product with an active development community, operating under the GPL license (2.0) for Drupal components and the MIT license for non-Drupal components. 
@@ -63,7 +63,7 @@ A term used to classify content, such as a tag or a category.
 Software and asset files (images, CSS, PHP code, and/or templates) that determine the style and layout of the site. The Drupal project distinguishes between core and contributed themes. 
  
 ## View 
-An abstract query configuration used to generate lists and tables of content entities or specific content entity fields. Drupal provides a powerful administrator interface for creating and editing View configurations.
+A database query used to generate lists or tables of content. Drupal provides a powerful administrator interface for creating and editing views without any coding.
  
 ## Viewer
 A "Viewer" is an add-on package that allows a solution pack to embed, display, or playback a particular object in a web accessible format. Viewers are typically a combination of a Drupal Library and a Drupal Module. The Drupal Library is the package of code that represents the player or display mechanism, and the Drupal Module is the code package that allows the Drupal Library to be accessed from within the Drupal environment.
