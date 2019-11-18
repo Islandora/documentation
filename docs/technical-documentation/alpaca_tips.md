@@ -1,12 +1,12 @@
 # Alpaca Tips
 
-[Alpaca](https://github.com/Islandora/Alpaca) is event-driven middleware based on [Apachel Camel](https://camel.apache.org/) for Islandora
+[Alpaca](https://github.com/Islandora/Alpaca) is event-driven middleware based on [Apache Camel](https://camel.apache.org/) for Islandora
 
 Currently, Alpaca ships with four event-driven components which are being run with [Apache Karaf](https://karaf.apache.org/)
-- islandora-connector-derivative
-- islandora-http-client
-- islandora-indexing-fcrepo
-- islandora-indexing-triplestore
+- [islandora-connector-derivative](#islandora-connector-derivative)
+- [islandora-http-client](#islandora-http-client)
+- [islandora-indexing-fcrepo](#islandora-indexing-fcrepo)
+- [islandora-indexing-triplestore](#islandora-indexing-triplestore)
 
 ## islandora-connector-derivative
 This service receives requests from Drupal when it wants to create derivatives and passes that request along to a microservice in [Crayfish](https://github.com/Islandora/Crayfish). When it receives the derivative file back from the microservice, it passes the file back to Drupal.
