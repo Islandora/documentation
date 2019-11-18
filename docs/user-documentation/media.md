@@ -17,13 +17,8 @@ with the media's fields accessible at `/fcrepo/rest/2019-11/test.jpg/fcr:metadat
 
 The metadata associated with a file can be updated by clicking the _Edit_ tab while on the media's page and clicking **Save**.
 
-The _Create new revision_ checkbox is selected by default which will prompt Fedora to make a new version of the media
+The _Create new revision_ checkbox is selected by default which will prompt Fedora to make a new version of the media's metadata
 before updating its resource record. A message can be added to the revision which is stored in Drupal but is not currently saved in Fedora.
-
-!!! note "Versioning binary resources is not currently supported"
-    Drupal does not like users replacing files with the same name. 
-
-_Something_ is not allowing us to replace binaries. So, Media metadata can be versioned, but adding a new file will create a new Fedora Binary/Resource pair. Need to explore _why_.
 
 ### Do not replace a media's file
 
