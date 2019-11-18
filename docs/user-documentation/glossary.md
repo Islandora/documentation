@@ -40,7 +40,7 @@ The word 'ingest' is used in repository language because repository software, ra
 A drop-in replacement for the Drupal core upload field with a unified User Interface where editors and administrators can upload, manage, and reuse files and multimedia assets. 
  
 ## Microservice
-A software development technique —a variant of the service-oriented architecture (SOA) structural style— that arranges an application as a collection of loosely coupled services[1] In a microservices architecture, services are fine-grained and the protocols are lightweight.
+A software development technique — a variant of the service-oriented architecture (SOA) structural style — that arranges an application as a collection of loosely coupled services. In a microservices architecture, services are fine-grained and the protocols are lightweight.
  
 ## Module
 Software (usually PHP, JavaScript, and/or CSS) that extends site features and adds functionality. Drupal modules conform to a specific structure allowing them to integrate with the Drupal architecture. 
