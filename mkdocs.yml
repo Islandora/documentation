@@ -76,5 +76,5 @@ pages:
       - 'Islandora 7': 'technical-documentation/migrate-7x.md'
   - Contributing:
       - 'How to contribute': 'contributing/CONTRIBUTING.md'
-      - 'Documentation Style Guide': 'technical-documentation/docs_style_guide.md'
+      - 'Documentation Style Guide': 'contributing/docs_style_guide.md'
       - 'Committers': 'contributing/committers.md'
