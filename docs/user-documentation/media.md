@@ -32,7 +32,7 @@ Second, because Drupal does not want users to reuse a file path uploading a file
 Third, because the new file is now associated with the media, the media will now be used to represent the metadata for the new file and will no longer be used for the existing one.
 
 !!! note "Replacing Media via REST"
-    REST can circumvent Drupal form behavior making it possible to add and replace media and files via Islandora's REST interface.	
+    REST can circumvent Drupal form behavior making it possible to add and replace media and files via [Islandora's REST interface](../technical-documentation/using-rest-endpoints.md).	
 
 ## Media Ownership
 
