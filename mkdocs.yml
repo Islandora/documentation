@@ -66,7 +66,6 @@ pages:
     - 'Flysystem': 'technical-documentation/flysystem.md'
     - 'JWT Authentication': 'technical-documentation/jwt.md'
     - 'Versioning Policy': 'technical-documentation/versioning.md'
-    - 'Documentation Style Guide': 'technical-documentation/docs_style_guide.md'
     - 'How to Build Documentation': 'technical-documentation/docs-build.md'
     - 'Testing Notes': 'technical-documentation/testing-notes.md'
     - 'Adding back ?_format=jsonld': 'technical-documentation/adding_format_jsonld.md'
@@ -77,4 +76,5 @@ pages:
       - 'Islandora 7': 'technical-documentation/migrate-7x.md'
   - Contributing:
       - 'How to contribute': 'contributing/CONTRIBUTING.md'
+      - 'Documentation Style Guide': 'technical-documentation/docs_style_guide.md'
       - 'Committers': 'contributing/committers.md'
