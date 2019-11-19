@@ -10,9 +10,10 @@ and effort when implementing your repository with Islandora.
 ## Properties
 
 Resource nodes have some basic properties that are common to all nodes, regardless 
-of its content type.  These properties are not fields.  This means that their settings cannot be
-changed and they cannot be removed. Their name, what type of data they hold, etc... are all baked in.
-Here's an example of the basic properties you'll see on a node:
+of its content type.  These properties are not fields.  This means that they 
+cannot be removed and have limited configurability. Their name, what type of 
+data they hold, etc... are all baked in.
+Here's an example of the basic properties on nodes:
 
 ```
 nid: 1
@@ -46,6 +47,18 @@ status | Published, unpublished, etc...
     dc.title | title
     PID | uuid
     status | status
+
+The small amount of configurability available for these properties is found on the 
+content type editing form where a user can choose to change the label of the
+title field, whether or not to display author information on the node's page,
+etcetera. These settings will only apply to nodes of that particular content type.
+
+![The Repository Item content type edit form.](../assets/resource_nodes_repo_item_edit_form.png)
+
+To view all of a node's property and field values administrators can use the 'Devel'
+tab's 'Load' section:
+
+![Screenshot of a Repository Item node's properties as seen on its 'Devel' tab.](../assets/resource_nodes_properties_devel.png)
 
 ## Fields
 
