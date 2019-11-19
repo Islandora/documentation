@@ -1,6 +1,6 @@
-# Hacking on Islandora CLAW
+# Hacking on Islandora 8
 
-One of the goals of the Islandora CLAW project is to lower the barrier to entry for working on and with Islandora. A shared, consistent environment amongst developers is one of the best ways to do this. To get started hacking on Islandora CLAW with your very own development environment, all you need to do follow these steps:
+One of the goals of the Islandora 8 project is to lower the barrier to entry for working on and with Islandora. A shared, consistent environment amongst developers is one of the best ways to do this. To get started hacking on Islandora 8 with your very own development environment, all you need to do follow these steps:
 
 1. Install [VirtualBox](https://www.virtualbox.org/)
 2. Install [Vagrant](https://www.vagrantup.com/)

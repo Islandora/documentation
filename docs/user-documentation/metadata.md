@@ -32,7 +32,7 @@ In Drupal, _Taxonomy Vocabularies_ (or simply 'Vocabularies') are also entity su
 
 For example, Islandora includes the 'Islandora Models' vocabulary which includes the terms 'Audio', 'Binary', 'Collection', 'Image', and 'Video'. By linking to one of these terms in the 'Islandora Models' vocabulary a repository manager can tell that the node (digital object) should be considered an 'Image' or 'Audio', et cetera. The Controlled Access Terms module provides additional vocabularies representing Corporate Bodies, Persons, Families, Geographic Locations, and Subjects. Each of these vocabularies has its own set of fields allowing repositories to further describe them. Repository item nodes can then reference terms in these vocabularies. See 'Entity Reference fields' in the 'Field Types' section below.
 
-<!--[Geographic Location currently has hierarchy turned off. This section will apply once https://github.com/Islandora-CLAW/controlled_access_terms/pull/21 is merged.] Another example, this time illustrating hierarchy, is the 'Geographic Location' vocabulary. Although no terms are listed by default, a repository could create a 'Western Hemisphere' term and then create a 'North America' term as a child of the 'Western Hemisphere' term, et cetera.
+<!--[Geographic Location currently has hierarchy turned off. This section will apply once https://github.com/Islandora/controlled_access_terms/pull/21 is merged.] Another example, this time illustrating hierarchy, is the 'Geographic Location' vocabulary. Although no terms are listed by default, a repository could create a 'Western Hemisphere' term and then create a 'North America' term as a child of the 'Western Hemisphere' term, et cetera.
 
 ![Screenshot of the Geographic Locations vocabulary showing example terms in a hierarchy.](../assets/metadata_geographic_location_list.png)
 -->
@@ -72,7 +72,7 @@ The above sections described how Drupal manages and stores metadata, but the key
 
 The JSON-LD module works by taking node or term and its corresponding RDF mapping to create a JSON-LD serialization. The RDF mapping for a content type or vocabulary lists its fields and the RDF predicates that should be used for them.
 
-For example, below is the JSON-LD serialization for an example Repository item node created in a standard claw-playbook based vagrant VM:
+For example, below is the JSON-LD serialization for an example Repository item node created in a standard islandora-playbook based vagrant VM:
 ```
 {
   "@graph":[
