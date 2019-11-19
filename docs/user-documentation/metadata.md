@@ -20,7 +20,7 @@ For example, the 'islandora_defaults' module provides a _Repository Item_ conten
 ![Screenshot of the "Manage fields" page for the "Repository Item" content type from islandora_defaults.](../assets/metadata_content_type_screenshot.png)
 
 !!! tip "Titles"
-    Note that the "Title" field does not appear in this list, as it is built-in and included with every content type. You can edit the label of the Title field under the "Edit" tab for that content type. The built-in title "field" is limited to 255 characters; if your content has longer titles it is encouraged to create a separate long_title field to store the full title and reserve the default title field for a display title. There is also a contributed module called [Node Title Length](https://www.drupal.org/project/title_length) but we do not know if anyone in the community is using it.
+    Note that the "Title" field does not appear in this list, as it is built-in and included with every content type. You can edit the label if you want it called something other than "Title" under the "Edit" tab for that content type. This built-in title "field" is limited to 255 characters; if your content has longer titles it is encouraged to create a separate long_title field to store the full title and reserve the default title field for a display title. There is also a contributed module called [Node Title Length](https://www.drupal.org/project/title_length) but we do not know if anyone in the community is using it.
 
 <!-- I am here. --> 
 !!! tip "7.x Migration Note: What about my XML?"
