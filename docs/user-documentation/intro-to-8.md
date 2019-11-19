@@ -9,11 +9,7 @@ Islandora 7.x-1.x is "middleware", it allows Drupal 7.x to talk to a Fedora 3 se
 
 ## Islandora 8 (with Fedora X)
 
-_Note_: The Fedora project adopted [semantic versioning](https://wiki.duraspace.org/display/FF/Policy+-+Semantic+Versioning) and no longer can be 
-referred to by a single verison number like "Fedora 3" could  be with regards to Islandora 7.x-1.x. Due to this change and because with the 
-adoption of the [Fedora API specification](https://wiki.duraspace.org/display/FEDORAAPI/Fedora+Specification) we can support multiple versions
-of Fedora with minimal or no change to our implementation, we use the term "Fedora X" to refer to all current and future Fedora versions supported 
-by Islandora 8 in this document.
+_Note_: The Fedora project adopted [semantic versioning](https://wiki.duraspace.org/display/FF/Policy+-+Semantic+Versioning) and no longer can be referred to by a single verison number like "Fedora 3" could  be with regards to Islandora 7.x-1.x. Due to this change and because with the adoption of the [Fedora API specification](https://wiki.duraspace.org/display/FEDORAAPI/Fedora+Specification) we can support multiple versions of Fedora with minimal or no change to our implementation, we use the term "Fedora X" to refer to all current and future Fedora versions supported by Islandora 8 in this document.
 
 Islandora 8 does more than simply replace that base layer with Fedora X. It is a total re-architecting of the interaction between the various pieces, acting as middleware for not only Drupal 8.x and Fedora X, but also Solr, Blazegraph, and any [microservices](https://en.wikipedia.org/wiki/Microservices) added to the stack. Islandora 8 achieves this by implementing a system of "plumbing" using Apache Camel to pass messages between all the different parts of the stack to keep them in sync with each other. Rather than a hamburger, Islandora 8 is a [chimera](https://en.wikipedia.org/wiki/Chimera_(mythology)):
 
