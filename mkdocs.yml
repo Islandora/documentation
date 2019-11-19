@@ -40,7 +40,7 @@ pages:
       - 'Introduction': 'user-documentation/user-intro.md'
       - 'Nodes': 'user-documentation/objects.md'
       - 'Media': 'user-documentation/media.md'
-      - 'Make an Image': 'user-documentation/creating-an-object.md'
+      - 'Create a Resource Node': 'user-documentation/creating-a-node.md'
       - 'Collections': 'user-documentation/collections.md'
       - 'Metadata': 'user-documentation/metadata.md'
       - 'Content Types': 'user-documentation/content_types.md'
