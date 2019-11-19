@@ -12,9 +12,10 @@ Currently, Alpaca ships with four event-driven components which are being run wi
 This service receives requests from Drupal when it wants to create derivatives and passes that request along to a microservice in [Crayfish](https://github.com/Islandora/Crayfish). When it receives the derivative file back from the microservice, it passes the file back to Drupal.
 
 ## islandora-http-client
+This service overrides the default http client with Islandora specific configuration.
 
 ## islandora-indexing-fcrepo
-This service receives requests from Drupal when a node is created, edited, or deleted, and when a media is created or edited, and when an item is created, edited or deleted. These requests are passed along to [Milliner](https://github.com/Islandora/Crayfish/tree/dev/Milliner) microservice in [Crayfish](https://github.com/Islandora/Crayfish) to convert Drupal entities into Fedora resources and communicate with Fedora (via [Chullo](https://github.com/Islandora-CLAW/chullo)).
+This service receives requests from Drupal in response to write operations on entities. These requests are passed along to [Milliner](https://github.com/Islandora/Crayfish/tree/dev/Milliner) microservice in [Crayfish](https://github.com/Islandora/Crayfish) to convert Drupal entities into Fedora resources and communicate with Fedora (via [Chullo](https://github.com/Islandora-CLAW/chullo)).
 
 ## islandora-indexing-triplestore
 This service receives requests from Drupal on indexing and deleting in order to persist/delete content in the triplestore.
