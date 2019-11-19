@@ -1,9 +1,12 @@
 # Metadata in Islandora 8
 
-> TL;DR: In Islandora 8, metadata is stored in _fields_ attached to _entities_ (nodes or media). Metadata values are serialized as RDF in the form of JSON-LD before being submitted to Fedora and/or indexed in a triplestore.
+> TL;DR: In Islandora 8, metadata is stored in _fields_ attached to _entities_ (nodes or media). Metadata values can be serialized as RDF in the form of JSON-LD before being submitted to Fedora and/or indexed in a triplestore.
 
 !!! note "Drupal 8 Terminology"
-    In Drupal 8, Fields can be attached to _entity sub-types_ [(formerly called _bundles_](https://www.drupal.org/project/drupal/issues/1380720) (e.g. Content types, Media types, Vocabularies) or _entities_ (Users, Files). For more on Fields, see ["2.3 Content Entities and Fields"](https://www.drupal.org/docs/user_guide/en/planning-data-types.html) and ["6.3 Adding Basic Fields to a Content Type"](https://www.drupal.org/docs/user_guide/en/structure-fields.html) in the Official Drupal Guide.
+    In Drupal 8, Fields can be attached to _bundles_ (sometimes called _entity sub-types_ -- e.g. Content types, Media types, Vocabularies) or _entities_ (e.g. Users). For more on Fields, see ["2.3 Content Entities and Fields"](https://www.drupal.org/docs/user_guide/en/planning-data-types.html) and ["6.3 Adding Basic Fields to a Content Type"](https://www.drupal.org/docs/user_guide/en/structure-fields.html) in the Official Drupal Guide.
+
+<!-- Next revision: check status of changing 'bundles' to 'entity sub-types' (https://www.drupal.org/project/drupal/issues/1380720). -->
+
 
 As described in the [Nodes section](objects.md), Islandora 8 digital objects are comprised of _nodes_ for descriptive metadata, _media_ for technical metadata, and _files_ for the binary objects. This section describes how descriptive metadata is managed in Islandora 8.
 
@@ -11,15 +14,15 @@ As described in the [Nodes section](objects.md), Islandora 8 digital objects are
 
 In Drupal, _Content Types_ are sub-types of _Nodes_. Content types contain fields and configurations for how those fields can be edited or displayed. Each content type is essentially a _metadata profile_ for a digital resource's descriptive record. For each field in a content type, an administrator can configure how data is entered, how it can be displayed, how many values can be stored, and how long the value can be. Some configurations, such as data entry and display, can be changed at any time. Others, such as how long a value can be or what options are available in a Select list, cannot be changed once content has been created without first deleting all content of that type.
 
-<!-- I am here -->
 
-For example, the 'islandora_demo' module provides a _Repository Item_ content type that defines several fields including "Alternative Title" and "Date". The "Manage fields" page for Repository Item shows a list of the fields it includes as well as tabs for changing the input forms and display modes. The "Title" field does not appear in this list but it is still included with every content type. (See the "[Create / Update a Content Type](content_types.md)" section for more details on creating and configuring fields.)
+For example, the 'islandora_defaults' module provides a _Repository Item_ content type that defines several fields including "Alternative Title" and "Date Issued". Under the management menu for Repository Item you can see a list of the fields it includes ("Manage fields" as well as tabs for changing the input forms ("Manage form display") and display modes ("Manage display"). (See the "[Create / Update a Content Type](content_types.md)" section for more details on creating and configuring fields.)
 
-![Screenshot of the "Manage fields" page for the "Repository Item" content type from islandora_demo.](../assets/metadata_content_type_screenshot.png)
+![Screenshot of the "Manage fields" page for the "Repository Item" content type from islandora_defaults.](../assets/metadata_content_type_screenshot.png)
 
 !!! tip "Titles"
-    The included title field is limited to 255 characters; if your content has longer titles it is encouraged to create a separate long_title field to store the full title and reserve the default title field for a display title.
+    Note that the "Title" field does not appear in this list, as it is built-in and included with every content type. You can edit the label of the Title field under the "Edit" tab for that content type. The built-in title "field" is limited to 255 characters; if your content has longer titles it is encouraged to create a separate long_title field to store the full title and reserve the default title field for a display title. There is also a contributed module called [Node Title Length](https://www.drupal.org/project/title_length) but we do not know if anyone in the community is using it.
 
+<!-- I am here. --> 
 !!! tip "7.x Migration Note: What about my XML?"
     In 7.x, metadata were (usually) stored within XML datastreams such as MODS or DC. In Islandora 8 we are breaking out
     individual metadata elements into fields instead of using an attached XML document. The Metadata Interest Group is developing a default mapping which will provide a basic, yet customizable, transform between MODS metadata and Drupal fields in Islandora Demo.
