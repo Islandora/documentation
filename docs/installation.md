@@ -1,4 +1,4 @@
-Islandora 8 is installed through an Ansible Playbook called [claw-playbook](https://github.com/Islandora-Devops/claw-playbook).
+Islandora 8 is installed through an Ansible Playbook called [islandora-playbook](https://github.com/Islandora-Devops/islandora-playbook).
 
 ## Requirements
 
@@ -30,8 +30,8 @@ $ vagrant plugin install vagrant-vbguest
 
 Once you've installed all the requirements, you can spin up a local development environment with
 ```bash
-$ git clone https://github.com/Islandora-Devops/claw-playbook
-$ cd claw-playbook
+$ git clone https://github.com/Islandora-Devops/islandora-playbook
+$ cd islandora-playbook
 $ vagrant up
 ```
 
@@ -51,8 +51,8 @@ purposes.  To start, take the inventory for the vagrant development environment 
 give it an appropriate name. Here we're using `example`.
 
 ```bash
-$ git clone https://github.com/Islandora-Devops/claw-playbook
-$ cd claw-playbook
+$ git clone https://github.com/Islandora-Devops/islandora-playbook
+$ cd islandora-playbook
 $ cp -r inventory/vagrant inventory/example
 ```
 

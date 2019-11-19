@@ -1,62 +1,65 @@
-# Intro to Islandora CLAW
+# Intro to Islandora 8
 
-Islandora CLAW is the project name for development of Islandora to work with Fedora 4. To fully understand Islandora CLAW, it is best to start by looking at its contrasts to the previous version of Islandora, known as 7.x-1.x.
+To fully understand Islandora 8, it is best to start by looking at its contrasts to the previous version of Islandora, known as 7.x-1.x.
 
 ## Islandora 7.x-1.x (with Fedora 3)
 Islandora 7.x-1.x is "middleware", it allows Drupal 7.x to talk to a Fedora 3 server instead of Drupal's database. This is sometimes expressed as a hamburger:
 
 ![image](../assets/hamburger.png)
 
-## Islandora CLAW (with Fedora 4)
+## Islandora 8 (with Fedora X)
 
-Islandora CLAW does more than simply replace that base layer with Fedora 4. It is a total re-architecting of the interaction between the various pieces, acting as middleware for not only Drupal 8.x and Fedora 4, but also Solr, Blazegraph, and any [microservices](https://en.wikipedia.org/wiki/Microservices) added to the stack. Islandora CLAW achieves this by implementing a system of "plumbing" using Apache Camel to pass messages between all the different parts of the stack to keep them in sync with each other. Rather than a hamburger, Islandora CLAW is a [chimera](https://en.wikipedia.org/wiki/Chimera_(mythology)):
+_Note_: The Fedora project adopted [semantic versioning](https://wiki.duraspace.org/display/FF/Policy+-+Semantic+Versioning) and no longer can be 
+referred to by a single verison number like "Fedora 3" could  be with regards to Islandora 7.x-1.x. Due to this change and because with the 
+adoption of the [Fedora API specification](https://wiki.duraspace.org/display/FEDORAAPI/Fedora+Specification) we can support multiple versions
+of Fedora with minimal or no change to our implementation, we use the term "Fedora X" to refer to all current and future Fedora versions supported 
+by Islandora 8 in this document.
+
+Islandora 8 does more than simply replace that base layer with Fedora X. It is a total re-architecting of the interaction between the various pieces, acting as middleware for not only Drupal 8.x and Fedora X, but also Solr, Blazegraph, and any [microservices](https://en.wikipedia.org/wiki/Microservices) added to the stack. Islandora 8 achieves this by implementing a system of "plumbing" using Apache Camel to pass messages between all the different parts of the stack to keep them in sync with each other. Rather than a hamburger, Islandora 8 is a [chimera](https://en.wikipedia.org/wiki/Chimera_(mythology)):
 
 ![image](../assets/claw-chimera.png)
 
 This new structure has several advantages:
 
 * Parcelling out the various services and dependencies allows for more horizontal scalability
-* Changing the relationship between Drupal and Fedora allows for a more flexible approach to front-end management (i.e, it need not be Drupal) while also taking much greater advantage of features available from Drupal (i.e, Fedora objects are treated more like nodes, for the purposes of using Drupal contrib modules. Many Islandora 7.x-1.x modules are redundant in Islandora CLAW because they reproduce existing Drupal contrib modules that can be used out of the box in Islandora CLAW).
+* Changing the relationship between Drupal and Fedora allows for a more flexible approach to front-end management (i.e, it need not be Drupal) while also taking much greater advantage of features available from Drupal (i.e, Fedora objects are treated more like nodes, for the purposes of using Drupal contrib modules. Many Islandora 7.x-1.x modules are redundant in Islandora 8 because they reproduce existing Drupal contrib modules that can be used out of the box in Islandora 8).
 * Easier to keep up-to-date as not all pieces must be versioned together.
-* Installations tools (Ansible, Docker, Vagrant) can automate uniting the pieces in a simple, clean installation process. Islandora has always been a turn-key repository solution, in the sense that it needs no customization once installed. With Islandora CLAW, that installation process is much smoother, with automated solutions that can be used in production.
+* Installations tools (Ansible, Docker, Vagrant) can automate uniting the pieces in a simple, clean installation process. Islandora has always been a turn-key repository solution, in the sense that it needs no customization once installed. With Islandora 8, that installation process is much smoother, with automated solutions that can be used in production.
 
 ## Ecosystem
 
-#### [Alpaca](https://github.com/Islandora-CLAW/Alpaca)
+#### [Alpaca](https://github.com/Islandora/Alpaca)
 The plumbing for Islandora's asynchronous workflows.  It handles reading from and writing to message queues, with appropriate retry rules and error handling.
 
-#### [Chullo](https://github.com/Islandora-CLAW/chullo)
-A PHP client for Fedora 4 built using Guzzle and EasyRdf.
+#### [Chullo](https://github.com/Islandora/chullo)
+A PHP client for Fedora X built using Guzzle and EasyRdf.
 
-#### [CLAW](https://github.com/Islandora-CLAW/CLAW)
-A container with references to all of the other components that make up Islandora CLAW. Also contains documentation and project discussions.
+#### [Crayfish](https://github.com/Islandora/Crayfish)
+Top level container for the various Islandora 8 microservices.
 
-#### [Crayfish](https://github.com/Islandora-CLAW/Crayfish)
-Top level container for the various Islandora CLAW microservices.
-
-#### [Islandora](https://github.com/Islandora-CLAW/islandora)
-The Drupal modules associated with CLAW. Work is underway to have this as a project on [drupal.org](https://www.drupal.org/).
+#### [Islandora](https://github.com/Islandora/islandora/tree/8.x-1.x)
+The main Drupal module associated with Islandora 8. Work is underway to have this as a project on [drupal.org](https://www.drupal.org/).
 
 ## Why Switch?
 
-Islandora 7.x-1.x is a tried and tested product with a vibrant user and contributor community and many tools and add-ons available to customize and expand its uses. Islandora CLAW is a major departure, representing a great deal of work both in development of the software, and to migrate and upgrade existing Islandora sites. So why make the change?
+Islandora 7.x-1.x is a tried and tested product with a vibrant user and contributor community and many tools and add-ons available to customize and expand its uses. Islandora 8 is a major departure, representing a great deal of work both in development of the software, and to migrate and upgrade existing Islandora sites. So why make the change?
 
 ### Fedora
-The primary motive for moving to Islandora CLAW is to stay current with the repository layer of our ecosystem. Moving to Fedora 4 is vital for the long-term utility of the project.
+The primary motive for moving to Islandora 8 is to stay current with the repository layer of our ecosystem. Moving to Fedora X is vital for the long-term utility of the project.
 
 * Fedora 3 is End-of-Life and has not been supported since 2015. This means that there will be no improvements, bug fixes, or security patches released for the software, drastically increasing individual maintenance needs for adopters.
-* Fedora 3 experiences significant slowdown when repositories reach a large (millions) number of objects. Fedora 4 is much more scalable, and is specifically engineered to be horizontally scalable in ways that Fedora 3 cannot.
+* Fedora 3 experiences significant slowdown when repositories reach a large (millions) number of objects. Fedora X is much more scalable, and is specifically engineered to be horizontally scalable in ways that Fedora 3 cannot.
 
 ### Drupal
 [Drupal 8](https://www.drupal.org/8) has been officially released and development has begun on Drupal 9. Official Drupal policy will see Drupal 7 become unsupported when Drupal 9 is released, putting it in the same precarious territory as Fedora 3.
 
-The initial phases of Islandora CLAW development worked with Drupal 7 as a front-end, but Islandora CLAW has been architected with a pivot to Drupal 8 in mind from its very inception. As of June, 2016, Islandora CLAW development has pivoted fully to Drupal 8, ensuring that when the Islandora Community is ready to make the move, there will be a version of Islandora that functions with the latest and best-supported versions of both our front-end and repository layers by pairing Drupal 8 with Fedora 4.
+The initial phases of Islandora 8 development worked with Drupal 7 as a front-end, but Islandora 8 has been architected with a pivot to Drupal 8 in mind from its very inception. As of June, 2016, Islandora 8 development has pivoted fully to Drupal 8, ensuring that when the Islandora Community is ready to make the move, there will be a version of Islandora that functions with the latest and best-supported versions of both our front-end and repository layers by pairing Drupal 8 with Fedora X.
 
 ### Community-Driven Design
 
-The Islandora community has grown significantly since the project began, both in terms of users and contributors. For the first time, we are in a position to have a truly community-driven development process, in which any Islandora user can participate at whatever level fits their interests and abilities. Islandora CLAW has worked with the broader Islandora community to solicit use-cases, put forward prospectuses and project plans for review and editing, and has been developed with a mix of funding from Islandora Foundation members and volunteer developers working on sprints.
+The Islandora community has grown significantly since the project began, both in terms of users and contributors. For the first time, we are in a position to have a truly community-driven development process, in which any Islandora user can participate at whatever level fits their interests and abilities. Islandora 8 has worked with the broader Islandora community to solicit use-cases, put forward prospectuses and project plans for review and editing, and has been developed with a mix of funding from Islandora Foundation members and volunteer developers working on sprints.
 
-Islandora CLAW is developed _by_ the Islandora community, _for_ the Islandora community. As a member of the Islandora community, you can help to steer the direction it takes.
+Islandora 8 is developed _by_ the Islandora community, _for_ the Islandora community. As a member of the Islandora community, you can help to steer the direction it takes.
 
 ### Linked Data
 
@@ -88,7 +91,7 @@ An LDP server also lets you request the RDF graph for a resource with varying le
 * The resource plus all other resources that reference it (inbound references)
 * The resource plus children plus inbound references
 
-Fedora 4 is an LDP implementation. It stores metadata using RDF (Resource Description Framework), a standard format for data interchange on the web. RDF data is formatted as triples, like so: `<resource_uri> <predicate_uri> <object_uri>` and can be exported in many different formats:
+Fedora X is an LDP implementation. It stores metadata using RDF (Resource Description Framework), a standard format for data interchange on the web. RDF data is formatted as triples, like so: `<resource_uri> <predicate_uri> <object_uri>` and can be exported in many different formats:
 
 * JSON-LD
 * RDF/XML
@@ -125,4 +128,4 @@ vs RDF (which is actually properties of the resource)
 
 ### Interoperability
 
-Islandora CLAW works with the [Portland Common Data Model](https://github.com/duraspace/pcdm/wiki), "a flexible, extensible domain model that is intended to underlie a wide array of repository and DAMS applications." What does this mean in practice? Objects stored in Islandora CLAW will have a data model that can be recognized by Hydra and other custom Fedora 4 based repository heads, and vice versa. By working together with the Hydra and Fedora communities, we can leverage a broader community of developers, librarians, and other digital repository users to build better tools and share resources.
+Islandora 8 works with the [Portland Common Data Model](https://github.com/duraspace/pcdm/wiki), "a flexible, extensible domain model that is intended to underlie a wide array of repository and DAMS applications." What does this mean in practice? Objects stored in Islandora 8 will have a data model that can be recognized by Hydra and other custom Fedora X based repository heads, and vice versa. By working together with the Hydra and Fedora communities, we can leverage a broader community of developers, librarians, and other digital repository users to build better tools and share resources.

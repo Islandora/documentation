@@ -57,4 +57,4 @@ For more information on how to set configure derivatives, see the section on [Co
 
 ## Media revisions
 
-To be completed on resolution of https://github.com/Islandora-CLAW/CLAW/issues/1035.
+To be completed on resolution of https://github.com/Islandora/documentation/issues/1035.
