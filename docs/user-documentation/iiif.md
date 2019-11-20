@@ -28,7 +28,7 @@ You can change how the paged content thumbnails are arranged in the OpenSeadrago
   1. After the form is saved, navigate back down to the "Collection Mode" options and _uncheck_ the "Enable Collection Mode" checkbox.
   1. Click the "Save Configuration" button.
   
-  ## Looking under the hood
+  ## Looking under the hood (and beyond)
   
   If you want to see the raw output of the IIIF API implementations in Islandora 8, visit a node that is displaying the OpenSeadragon viewer (doesn't matter if its a single image or a paged content node like a book), and tack "manifest" onto the end of the URL, like `http://myrepo.org/node/23/manifest` and hit enter. You will see the raw JSON that IIIF-compliant viewers use to render the content.
   
