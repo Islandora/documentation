@@ -49,7 +49,7 @@ For example, the following are discovery attributes:
 Management attributes of the resource node help to clarify and manage a resource nodes relationship within the repository and other content. Management attributes define if a node is a resource node, which collection it belongs to, the type of resource a node is (image, book, newspaper, etc.), and similar actions. When looking at Drupal functions, the following are examples of management attributes: 
 
 - Content types 
-    -   Default content types available are an article, basic page, repository item, video
+    -   Default content types available include article, basic page, repository item, video
     -   Able to add any content types that are needed to help define the resource node 
 -   Drupal Views
     -   Manages the display of all aspects of the resource node 
