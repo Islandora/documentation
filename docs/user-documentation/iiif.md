@@ -9,5 +9,6 @@ At a practial level, because Islandora supports several of the IIIF specificatio
 - See thumbnails for all pages of a book or newspaper issue within image viewers
    - IIIF-compliant image viewers such as OpenSeadragon or Mirador can display a "collection" of images such as all the pages of a book or newspaper issue using the [IIIF Presentation API](https://iiif.io/api/presentation/2.1/). For example, here is a screenshot of OpenSeadragon rendering all the pages of a book:
    
+   ![OpenSeadragon rendering book pages](../assets/osd_collection_mode.png)
 
 
