@@ -22,6 +22,8 @@ resource node and _Page_ for the Islandora Model of the child resource node. Aft
 child resource nodes have services file Media (either generated via the built-in derivative
 creation or added manually), they will be included in the OpenSeadragon paginated 
 viewer displayed on the parent resource node's page.
+(See the [IIIF Documentation](../user-documentation/iiif.md#using-iiif-in-islandora-8)
+for more details on controlling the viewer's behavior.)
 
 ![Screenshot of a Paged Content resource node displaying the OpenSeadragon viewer with the first child resource node displayed.](../assets/paged_content_openseadragon.png)
 
