@@ -29,7 +29,7 @@ The typical elements of a resource node:
     -   Descriptive custom fields
 -   Derivative files (thumbnails, web-friendly service files, technical metadata, and more)
 
-It is possible to configure all elements of a resource node in Islandora 8. This fact allows full control over how one accesses the node and how they are displayed and discovered online. It also allows a repository to take full advantage of all third-party Drupal modules, themes, and distributions available.  
+It is possible to configure all elements of a resource node in Islandora 8. This fact allows full control over how one accesses the node and how nodes are displayed and discovered online. It also allows a repository to take full advantage of all third-party Drupal modules, themes, and distributions available.  
 
 
 ## Islandora 8: Empowering resource nodes through Drupal
