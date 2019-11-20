@@ -5,7 +5,7 @@
 At a practial level, because Islandora supports several of the IIIF specifications, we can:
 
 - Zoom, pan, and rotate images within OpenSeadragon
-   - Islandora uses an IIIF-compliant image server (by default, [Cantaloupe](https://cantaloupe-project.github.io/)) that utilizes the [IIIF Image API](https://iiif.io/api/image/2.1/). This capablity is similar to what Islandora 7.x users experience.
+   - Islandora uses an IIIF-compliant image server (by default, [Cantaloupe](https://cantaloupe-project.github.io/)) that utilizes the [IIIF Image API](https://iiif.io/api/image/2.1/). This capablity is similar to what Islandora 7.x users experience when they view a Large Image.
 - Display thumbnails for all pages of a book or newspaper issue within image viewers
    - IIIF-compliant image viewers such as OpenSeadragon or Mirador can display a "collection" of images such as all the pages of a book or newspaper issue using the [IIIF Presentation API](https://iiif.io/api/presentation/2.1/). For example, here is a screenshot of OpenSeadragon rendering all the pages of a book:
    
@@ -34,7 +34,7 @@ You can change how the paged content thumbnails are arranged in the OpenSeadrago
   
   The really neat thing is, IIIF-compliant viewers don't need to be embedded in Islandora websites. If a viewer on another website knows the URL of a IIIF manifest like the ones that Islandora can produce, that viewer can display the content described in the manifest. Some implementations of IIIF viewers tha show off the potential to combine content from multiple IIIF servers include:
   
-  * [The Biblissima Project](http://demos.biblissima-condorcet.fr/mirador/)
+  * [The Biblissima Project](http://demos.biblissima-condorcet.fr/mirador/) - brings together related content from different repositories.
   * [diva.js](https://ddmal.music.mcgill.ca/diva.js/try/iiif-external.html) - select a source from the drop-down list at the top.
   
 These two examples have nothing to do with Islandora, but illustrate the potential for IIIF to build tools that extend beyond a given repository platoform.
