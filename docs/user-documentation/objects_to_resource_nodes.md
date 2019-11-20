@@ -19,7 +19,7 @@ One way to do this is to think of objects in Islandora 8 as _resource nodes_. Wh
 
 The term resource node does not just refer to the individual files, however. The term reflects the new nature of objects in Islandora 8. A resource node encompasses multiple elements that all relate to each other, even if they are no longer directly connected like objects in Islandora 7. 
 
-The elements of a resource node are, typically:
+The typical elements of a resource node:
 
 -   Content types (one or more)
 -   Media files (the actual files of JPEGs, MP3s, .zip, etc.) that get loaded through the form
