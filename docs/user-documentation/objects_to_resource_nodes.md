@@ -50,7 +50,7 @@ Management attributes of the resource node help to clarify and manage its relati
 
 - Content types 
     -   Default content types available include article, basic page, repository item, video
-    -   Able to add any content types that are needed to help define the resource node 
+    -   Ability to add any content type needed to help define the resource node 
 -   Drupal Views
     -   Manages the display of all aspects of the resource node 
 
