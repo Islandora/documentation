@@ -5,11 +5,28 @@ and child resource nodes for each sub-component (e.g. "Page 1" and "Page 2" or "
 with their corresponding media. Each "child" resource node contains a reference to their "parent" resource node
 using the `field_member_of` property. 
 
-Similar to the collection view showing members of a collection, Islandora provides a 
-view to produce IIIF Manifest listing all the child resource nodes' service files
-to a block displaying an OpenSeadragon viewer which is displayed only on resource
-nodes with _Paged Content_ selected as their Islandora Model. However, repository
-managers can use any method they like, such as a slide-show, to display child resource nodes.
+!!! Note "Child v. Member"
+    Islandora 8 uses the "child" and "member" descriptor for resource nodes that 
+    store a reference to another resource node in the "Member Of" field interchangeably. 
+    Administrators will more often see the "member" terminology more often while 
+    front-end users will usually see "child" terminology.
+
+Similar to the collection view showing members of a collection, Islandora provides
+an Islandora Model terms, _Paged Content_ and _Page_, that can be used to trigger paged
+content behaviors. Islandora Defaults provides a Context for _Paged Content_ 
+resource nodes to trigger displaying an OpenSeadragon viewer showing the child 
+resource nodes' service files.
+
+To enable this, use the _Paged Content_ for the Islandora Model of the parent 
+resource node and _Page_ for the Islandora Model of the child resource node. After the
+child resource nodes have services file Media (either generated via the built-in derivative
+creation or added manually), they will be included in the OpenSeadragon paginated 
+viewer displayed on the parent resource node's page.
+
+![Screenshot of a Paged Content resource node displaying the OpenSeadragon viewer with the first child resource node displayed.](../assets/paged_content_openseadragon.png)
+
+However, repository managers can use any method they like, such as a view-based 
+list of teasers, a gallery, or a slide-show to display child resource nodes.
 
 By default child resource nodes are un-ordered. To order the sub-components of a
 paged content resource node, Islandora provides a _Weight_ field to store a 
