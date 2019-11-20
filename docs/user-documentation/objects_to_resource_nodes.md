@@ -26,7 +26,7 @@ The elements of a resource node are, typically:
 -   Metadata fields submitted in the data entry, for example:
     -   A field denoting the 'type' of thing you're persisting (image, book, newspaper, etc...)
     -   A field that creates the familiar collection hierarchy
-    -   Your custom fields you need to describe things the way you want to
+    -   Descriptive custom fields
 -   Derivative files (thumbnails, web-friendly service files, technical metadata, and more)
 
 It is possible to configure all elements of a resource node in Islandora 8. This fact allows full control over how one accesses the node and how they are displayed and discovered online. It also allows a repository to take full advantage of all third-party Drupal modules, themes, and distributions available.  
