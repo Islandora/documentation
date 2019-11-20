@@ -23,7 +23,7 @@ The elements of a resource node are, typically:
 
 -   Content types (one or more)
 -   Media files (the actual files of JPEGs, MP3s, .zip, etc.) that get loaded through the form
--   Metadata fields entered in the data entry for, such as:
+-   Metadata fields submitted in the data entry, for example:
     -   A field denoting the 'type' of thing you're persisting (image, book, newspaper, etc...)
     -   A field that creates the familiar collection hierarchy
     -   Your custom fields you need to describe things the way you want to
