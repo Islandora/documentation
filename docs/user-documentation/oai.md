@@ -8,9 +8,9 @@ The [Open Archives Initiative Protocol for Metadata Harvesting](https://www.open
 - ListIdentifiers - [http://localhost:8000/oai/request?verb=ListIdentifiers&metadataPrefix=oai_dc](http://localhost:8000/oai/request?verb=ListIdentifiers&metadataPrefix=oai_dc)
 - ListRecords - [http://localhost:8000/oai/request?verb=ListRecords&metadataPrefix=oai_dc](http://localhost:8000/oai/request?verb=ListRecords&metadataPrefix=oai_dc)
 
-If you have [islandora_defaults](https://github.com/Islandora/islandora_defaults) then you'll have the [islandora_oaipmh](https://github.com/Islandora/islandora_defaults/tree/8.x-1.x/modules/islandora_oaipmh) module. It depends on the [Drupal REST OAI-PMH module](https://www.drupal.org/project/rest_oai_pmh). The combination of these modules will allow your repository content (which are not modelled as 'Collection') to be harvested.
+The Drupal feature [islandora_defaults](https://github.com/Islandora/islandora_defaults) includes the [islandora_oaipmh](https://github.com/Islandora/islandora_defaults/tree/8.x-1.x/modules/islandora_oaipmh) module. It depends on the [Drupal REST OAI-PMH module](https://www.drupal.org/project/rest_oai_pmh). The combination of these modules will allow your repository content (which are not modelled as 'Collection') to be harvested.
 
-Enabling Islandora OAI-PMH will provide you with
+Enabling Islandora OAI-PMH provides:
 - an oai_dc [endpoint](http://localhost:8000/oai/request?verb=ListRecords&metadataPrefix=oai_dc) of all objects available as one set ("oai_pmh:all_repository_items") which is built using a [configurable View](http://localhost:8000/admin/structure/views/view/oai_pmh).
 - [default configuration](http://localhost:8000/admin/config/services/rest/oai-pmh) to connect this view with the REST OAI-PMH module.
 - the ability to define additional sets by building additional views. Additional sets can be created by making views with the Entity Reference view display mode and enabling them on the rest_oai_pmh configuration page: /admin/config/services/rest/oai-pmh.
