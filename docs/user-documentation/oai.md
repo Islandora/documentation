@@ -8,7 +8,7 @@ The [Open Archives Initiative Protocol for Metadata Harvesting](https://www.open
 - ListIdentifiers - [http://localhost:8000/oai/request?verb=ListIdentifiers&metadataPrefix=oai_dc](http://localhost:8000/oai/request?verb=ListIdentifiers&metadataPrefix=oai_dc)
 - ListRecords - [http://localhost:8000/oai/request?verb=ListRecords&metadataPrefix=oai_dc](http://localhost:8000/oai/request?verb=ListRecords&metadataPrefix=oai_dc)
 
-The Drupal feature [islandora_defaults](https://github.com/Islandora/islandora_defaults) includes the [islandora_oaipmh](https://github.com/Islandora/islandora_defaults/tree/8.x-1.x/modules/islandora_oaipmh) module. It depends on the [Drupal REST OAI-PMH module](https://www.drupal.org/project/rest_oai_pmh). The combination of these modules will allow your repository content (which are not modelled as 'Collection') to be harvested.
+The Drupal module [islandora_defaults](https://github.com/Islandora/islandora_defaults) includes the [islandora_oaipmh](https://github.com/Islandora/islandora_defaults/tree/8.x-1.x/modules/islandora_oaipmh) module. It depends on the [Drupal REST OAI-PMH module](https://www.drupal.org/project/rest_oai_pmh). The combination of these modules will allow your repository content (which are not modelled as 'Collection') to be harvested.
 
 Enabling Islandora OAI-PMH provides:
 - an oai_dc [endpoint](http://localhost:8000/oai/request?verb=ListRecords&metadataPrefix=oai_dc) of all objects available as one set ("oai_pmh:all_repository_items") which is built using a [configurable View](http://localhost:8000/admin/structure/views/view/oai_pmh).
