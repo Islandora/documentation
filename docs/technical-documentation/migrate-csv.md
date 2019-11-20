@@ -31,7 +31,7 @@ This tutorial uses the configurations and code available in the [migrate_islando
 
 Sample CSV and images are also included in the module as a convenience so they are easily available on the Drupal server running the migration. (This is not the recommended method for making files available to Drupal in a real migration.)
 
-The module also contains a Migrate process plugin that transforms strings into associative arrays. This is useful for populating multiple Linked Agent fields. It will be available when this module is enabled, and the node migration uses it. It was written generically and will hopefully become part of Migrate Plus, but for now it is here.
+The module also contains a Migrate process plugin that transforms strings into associative arrays. This is useful for populating multiple Linked Agent fields. (See "[Typed Relation](../user-documentation/metadata/#typed-relation)" for more information on the Linked Agent field.) It will be available when this module is enabled, and the node migration uses it. It was written generically and will hopefully become part of Migrate Plus, but for now it is here.
 
 When you are ready to create your actual migrations, the contents of this repository can function as a template for you to create the yml files defining your own migrations.
 
@@ -44,7 +44,7 @@ In this tutorial, we'll be inspecting each migration file in detail before runni
 1. An instance of Islandora 8.  Use [Islandora 8 playbook](https://github.com/Islandora-Devops/islandora-playbook) to spin up an environment pre-loaded with all the modules you need (except this one)
 1. Some basic command line skills.  You won't need to know much, but you'll have to `vagrant ssh` into the box, navigate into Drupal, and use `git` and `drush`, etc...  If you can copy/paste into a terminal, you'll survive.
 
-A big part of this tutorial relies on the [islandora_defaults](https://github.com/Islandora/islandora_defaults) and [controlled_access_terms_defaults](https://github.com/Islandora/controlled_access_terms/tree/8.x-1.x/modules/controlled_access_terms_defaults) features, which define the default metadata profile for Islandora (which we'll be migrating into). You're not required to use the `islandora_defaults` or `controlled_access_terms_defaults` for your repository, but for the purposes of demonstration, it saves you a lot of UI administrivia so you can focus just on the learning how to migrate.  By the time you are done with this exercise, you'll be able to easily apply your knowledge to migrate using any custom metadata profile you can build using Drupal.
+A big part of this tutorial relies on the [islandora_defaults](https://github.com/Islandora/islandora_defaults) and [controlled_access_terms_defaults](https://github.com/Islandora/controlled_access_terms/tree/8.x-1.x/modules/controlled_access_terms_defaults) features, which define the default metadata profile for Islandora (which we'll be migrating into). You're not required to use the `islandora_defaults` or `controlled_access_terms_defaults` for your repository, but for the purposes of demonstration, it saves you a lot of user interface administrivia so you can focus just on the learning how to migrate.  By the time you are done with this exercise, you'll be able to easily apply your knowledge to migrate using any custom metadata profile you can build using Drupal.
 
 ## Overview
 
@@ -585,7 +585,7 @@ Here we've got a small pipeline that uses the `skip_on_empty` process plugin, wh
 
 ### Complex Fields
 
-Some fields don't hold just a single type of value.  In other words, not everything is just text, numbers, or references.  Using the Typed Data API, fields can hold groups of named values with different types.  Consider a field that holds an RGB color.  You could set it with PHP like so:
+Some fields don't hold just a single type of value.  In other words, not everything is just text, numbers, or references.  Using [Drupal 8's Typed Data API](https://www.drupal.org/docs/8/api/typed-data-api/typed-data-api-overview), fields can hold groups of named values with different types.  Consider a field that holds an RGB color.  You could set it with PHP like so:
 ```php
 $node->set('field_color', ['R' => 255, 'G' => 255, 'B' => 255]);
 ```
@@ -798,7 +798,7 @@ Your nodes, media, and files would all be gone.  But your subjects and photograp
 
 ### Running the media migration
 
-Run `drush -y --uri=http://localhost:8000 migrate:import media` from anywhere within the Drupal installation directory. You should now be able to see the media files attached to the nodes you created earlier. At this point, you might want to create Service Files and Thumbnails using the appropriate Drupal actions on the main content admin window.
+Run `drush -y --uri=http://localhost:8000 migrate:import media` from anywhere within the Drupal installation directory. You should now be able to see the media files attached to the nodes you created earlier. At this point, you might want to create derivatives, such as thumbnails, using the appropriate Drupal actions on the main content admin window.
 
 ## What have we learned?
 
