@@ -234,7 +234,7 @@ In the `process` section of the migration, we're copying the images over into a 
       - file
       - '@destination'  
 ```
-To do this, we're using the `file_copy` process plugin.  But to use it, we have to know where a file is located and where we it want it copied to.  We know where the file resides, we have that in the CSV's `file` column.  But we're going to have to do some string manipulation in order to generate the new location where we want the file copied. We're trying to convert something like `/var/www/html/drupal/web/modules/contrib/migrate_islandora_csv/data/images/Free Smells.jpg` to `fedora://csv_migration/Free Smells.jpg`.
+To do this, we're using the `file_copy` process plugin.  But first, we have to know where a file is located and where it should be copied to.  We know where the file resides, we have that in the CSV's `file` column.  But we're going to have to do some string manipulation in order to generate the new location where we want the file copied. We're trying to convert something like `/var/www/html/drupal/web/modules/contrib/migrate_islandora_csv/data/images/Free Smells.jpg` to `fedora://csv_migration/Free Smells.jpg`.
 
 The URI we're constructing is a stream wrapper of the form `scheme://path/to/file`.  Islandora uses `Flysystem`, which allows for integration with many different types of filesystems, both remote and local.  With `Flysystem`, the scheme part of the URI is the name of a filesystem.  By default, Fedora is exposed using the scheme `fedora://`.  So by setting uri to `fedora://csv_migration/Free Smells.jpg`, we're saying "put Free Smells.jpg in the csv_migration directory in Fedora."
 
