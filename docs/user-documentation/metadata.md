@@ -22,14 +22,21 @@ For example, the 'islandora_defaults' module provides a _Repository Item_ conten
 !!! tip "Titles"
     Note that the "Title" field does not appear in this list, as it is built-in and included with every content type. You can edit the label if you want it called something other than "Title" under the "Edit" tab for that content type. This built-in title "field" is limited to 255 characters; if your content has longer titles it is encouraged to create a separate long_title field to store the full title and reserve the default title field for a display title. There is also a contributed module called [Node Title Length](https://www.drupal.org/project/title_length) but we do not know if anyone in the community is using it.
 
-<!-- I am here. --> 
 !!! tip "7.x Migration Note: What about my XML?"
-    In 7.x, metadata were (usually) stored within XML datastreams such as MODS or DC. In Islandora 8 we are breaking out
-    individual metadata elements into fields instead of using an attached XML document. The Metadata Interest Group is developing a default mapping which will provide a basic, yet customizable, transform between MODS metadata and Drupal fields in Islandora Demo.
+    In 7.x, metadata were usually stored using an XML schema such as MODS or DC, as datastreams attached to an object. In Islandora 8, metadata is stored as fields.
+    This means we are breaking out individual elements from a hierarchical structure to being individual independent values. Where some hierarchy or field grouping
+    is necessary, this can be done in Drupal using [Paragraphs](https://www.drupal.org/project/paragraphs), a widely-used Drupal contrib module. At the moment
+    (Nov 2019) we are working on the technical challenge of mapping data from paragraphs into RDF in Fedora.
+    The Metadata Interest Group has developed a default mapping ([spreadsheet](https://docs.google.com/spreadsheets/d/18u2qFJ014IIxlVpM3JXfDEFccwBZcoFsjbBGpvL0jJI/edit#gid=0), [guidance document](https://docs.google.com/document/d/15qSO9YcALtYSqd6CUuGx0t8FwUJ5pPwVPz0PA5rU898/edit?ts=5c5852f3#)) which provides a basic, yet customizable, transform between MODS metadata and Drupal fields in Islandora Defaults. It is suggested that individual institutions customize the mapping to meet their unique needs.
 
-    It is still possible to attach an XML file to a Islandora 8 object as a Media (see Datastreams), however there is no mechanism in Islandora 8 for editing XML in a user-friendly way.
+    That said, if keeping the "legacy" XML metadata from 7.x is important to you, it can be attached to an Islandora 8 resource node as a Media entity.
+    However, there is no mechanism in Islandora 8 for editing XML in a user-friendly way.
 
-A specific instance of a content type is called a _node_. In other words, a _node_ is the descriptive metadata for a particular digital object and the _content type_ is the node's metadata profile. Once a node is created, it cannot change its content type. To change a digital object's metadata profile (content type) a repository manager would need to create a new descriptive record (node) using the new metadata profile and then update the corresponding media records to point to the new descriptive record.
+When you create a node (i.e. an instantiation of a content type, such as by using Drupal's "Add Content" workflow), the fields available are determined by its content type. In this way, a content type provides the node's metadata profile. Once a node is created, its content type cannot be changed. To "switch" a node to a different content type, a repository manager would need to create a new node of the target content type, map the field values (programmatically or by copy-paste), and update any Media or children that refer to the old node to refer to the new one.
+
+Not all content types in your Drupal site need be Islandora "resource nodes". A "resource node" content type will likely have behaviours (such as syncing to Fedora or causing derivatives to be generated) associated with it. This configuration, and the communication to the user of which content types are and are not considered to be Islandora resource nodes is left to the discretion of the site manager. In Islandora, a "resource node" is usually considered a descriptive record for "a thing", and is conceptually similar to an "Islandora Object" in 7.x, i.e. a "Fedora Object" in Fedora 3.x and below.
+
+<!-- I am here. --> 
 
 ## Vocabularies
 
