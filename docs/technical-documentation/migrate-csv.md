@@ -33,11 +33,11 @@ Sample CSV and images are also included in the module as a convenience so they a
 
 The module also contains a Migrate process plugin that transforms strings into associative arrays. This is useful for populating multiple Linked Agent fields. (See "[Typed Relation](../user-documentation/metadata/#typed-relation)" for more information on the Linked Agent field.) It will be available when this module is enabled, and the node migration uses it. It was written generically and will hopefully become part of Migrate Plus, but for now it is here.
 
-When you are ready to create your actual migrations, the contents of this repository can function as a template for you to create the yml files defining your own migrations.
+When you are ready to create your actual migrations, the contents of this repository can function as a template for you to create the YAML files defining your own migrations.
 
 ## Introduction
 
-__Why CSV?__ CSV files (whether separated by commas, tabs, or other delimiters) are easy to understand and work with, and there's good tooling available for using them with Drupal 8's [Migrate API](https://www.drupal.org/docs/8/api/migrate-api/migrate-api-overview). The Drupal contrib module [migrate_source_csv](https://www.drupal.org/project/migrate_source_csv) provides a source plugin that reads from a CSV file, and [migrate_plus](https://www.drupal.org/project/migrate_plus/) provides more tools and flexibility for creating migrations, including the ability to create customized migrations using yml and package them up as [Features](https://www.drupal.org/project/features/).
+__Why CSV?__ CSV files (whether separated by commas, tabs, or other delimiters) are easy to understand and work with, and there's good tooling available for using them with Drupal 8's [Migrate API](https://www.drupal.org/docs/8/api/migrate-api/migrate-api-overview). The Drupal contrib module [migrate_source_csv](https://www.drupal.org/project/migrate_source_csv) provides a source plugin that reads from a CSV file, and [migrate_plus](https://www.drupal.org/project/migrate_plus/) provides more tools and flexibility for creating migrations, including the ability to create customized migrations using YAML and package them up as [Features](https://www.drupal.org/project/features/).
 
 In this tutorial, we'll be inspecting each migration file in detail before running it.  You'll start out by migrating the images themselves first, and then you'll create various Drupal entities to describe the files from the metadata in the CSV. It's not as scary as it sounds (especially since this module contains the data we'll be using in a `data` directory), but you will need a few things before beginning:
 
@@ -48,7 +48,7 @@ A big part of this tutorial relies on the [islandora_defaults](https://github.co
 
 ## Overview
 
-The Migrate API is the main way to ingest batches of data into Drupal (and because Islandora 8 is Drupal, into Islandora). The Migrate module only provides the framework, it's up to you to create the rules that take data from a _source_, through a _process_ (i.e. a mapping) to a _destination_. A set of these rules is called a "migration". It has to be set up (as a Configuration Entity, either by importing a YML file or by installing a Feature) and then it has to be run.
+The Migrate API is the main way to ingest batches of data into Drupal (and because Islandora 8 is Drupal, into Islandora). The Migrate module only provides the framework, it's up to you to create the rules that take data from a _source_, through a _process_ (i.e. a mapping) to a _destination_. A set of these rules is called a "migration". It has to be set up (as a Configuration Entity, either by importing a YAML file or by installing a Feature) and then it has to be run.
 
 Once a migration has been run, it will have created (or updated) a bunch of Drupal entities of one type - whether that's taxonomy terms, nodes, files, etc. Since an Object in Islandora 8 is made up of several different Drupal entities that refer to each other, it's going to take multiple migrations to create an Islandora object, and it's important to perform these migrations in a sensible order.
 
@@ -74,7 +74,7 @@ In this tutorial, we're working with `islandora_defaults` and `controlled_access
 
 We can do this because subjects, persons, and corporate bodies are (in this example) represented by simple 'name' strings. We create them on the fly, as if we were adding new tags to a tag vocabulary. If we wanted to model subjects, people, or corporate bodies as entities with multiple fields (first name, last name, date, subheadings, URI, etc.) then we would need up to six migrations.
 
-Migrations follow the [Extract-Transform-Load pattern](https://en.wikipedia.org/wiki/Extract,_transform,_load).  You extract the information from a source, process the data to transform it into the format you need, and load it into the destination system (i.e. Drupal).  Migrations are stored in Drupal as configuration, which means they can be represented in yml, transferred to and from different sites, and are compatible with Drupal's configuration synchronization tools. And the structure of each yml file is arranged to follow the Extract-Transform-Load pattern.
+Migrations follow the [Extract-Transform-Load pattern](https://en.wikipedia.org/wiki/Extract,_transform,_load).  You extract the information from a source, process the data to transform it into the format you need, and load it into the destination system (i.e. Drupal).  Migrations are stored in Drupal as configuration, which means they can be represented in YAML, transferred to and from different sites, and are compatible with Drupal's configuration synchronization tools. And the structure of each YAML file is arranged to follow the Extract-Transform-Load pattern.
 
 To perform the migrations, we'll be using `drush`. We will be able to run each of the file, node, and media migrations separately or all at once in a group. We will also learn how to roll back a migration in case it didn't go as planned.
 
@@ -297,7 +297,7 @@ There are a lot more process plugins available through the (core) Migrate and Mi
 
 ### Running the File Migration
 
-Migrations can be executed via `drush` using the `migrate:import` command.  You specify which migration to run by using the id defined in its yml.  You also need to set parameters to tell Drush who you are and what your site's URL is.  Failing to do so will result in derivatives not being generated and malformed/improper RDF. So don't forget them!  To run the file migration from the command line, make sure you're within `/var/www/html/drupal/web` (or any subdirectory) and enter
+Migrations can be executed via `drush` using the `migrate:import` command.  You specify which migration to run by using the id defined in its YAML.  You also need to set parameters to tell Drush who you are and what your site's URL is.  Failing to do so will result in derivatives not being generated and malformed/improper RDF. So don't forget them!  To run the file migration from the command line, make sure you're within `/var/www/html/drupal/web` (or any subdirectory) and enter
 ```bash
 drush -y --userid=1 --uri=localhost:8000 migrate:import file
 ```
@@ -504,7 +504,7 @@ If you look at the `process` section, you can see we're taking the `title`, `des
   field_description: description
   field_edtf_date: issued
 ```
-For `subtitle`, we're passing it through the `skip_on_empty` process plugin because not every row in our CSV has a subtitle entry.  It's very useful when you have spotty data, and you'll end up using it a lot.  The `method: process` bit tells the migrate framework only skip that particular field if the value is empty, and not to skip the whole row.  It's important, so don't forget it.  The full yml for setting `field_alternative_title` from subtitle looks like this:
+For `subtitle`, we're passing it through the `skip_on_empty` process plugin because not every row in our CSV has a subtitle entry.  It's very useful when you have spotty data, and you'll end up using it a lot.  The `method: process` bit tells the migrate framework only skip that particular field if the value is empty, and not to skip the whole row.  It's important, so don't forget it.  The full YAML for setting `field_alternative_title` from subtitle looks like this:
 ```yml
   field_alternative_title:
     plugin: skip_on_empty
@@ -607,7 +607,7 @@ In `controlled_access_terms`, we define a new field type of `typed_relation`, wh
 
 The `target_id` portion takes an entity id, and rel_type takes the predicate for the MARC relator we want to use to describe the relationship the entity has with the repository item.  This example would reference taxonomy_term 1 and give it the relator for "Contributor".
 
-If we have a single name to deal with, we can set those values in yml, accessing `field_linked_agent/target_id` and `field_linked_agent/rel_type` independently. 
+If we have a single name to deal with, we can set those values in YAML, accessing `field_linked_agent/target_id` and `field_linked_agent/rel_type` independently. 
 ```yml
   field_linked_agent/target_id:
     plugin: entity_generate
@@ -772,7 +772,7 @@ migration_dependencies:
 
 __The Breakdown__
 
-Compared to the other migrations, this one is very straightforward.  There's no string or array manipulation in yml, and at most there's only one process plugin per field. Title and user are set directly, with no processing required
+Compared to the other migrations, this one is very straightforward.  There's no string or array manipulation in YAML, and at most there's only one process plugin per field. Title and user are set directly, with no processing required
 ```yml
   name: title
   uid: constants/uid
@@ -802,7 +802,7 @@ Run `drush -y --uri=http://localhost:8000 migrate:import media` from anywhere wi
 
 ## What have we learned?
 
-If you've made it all the way to the end here, then you've learned that you can migrate files and CSV metadata into Islandora using only yml files.  You've seen how to transform data with pipelines of processing plugins and can handle numeric, text, and entity reference fields.  You can handle multiple values for fields, and even more complicated things like `typed_relation` fields.  And as big as this walkthrough was, we're only scratching the surface of what can be done with the Migrate API.
+If you've made it all the way to the end here, then you've learned that you can migrate files and CSV metadata into Islandora using only YAML files.  You've seen how to transform data with pipelines of processing plugins and can handle numeric, text, and entity reference fields.  You can handle multiple values for fields, and even more complicated things like `typed_relation` fields.  And as big as this walkthrough was, we're only scratching the surface of what can be done with the Migrate API.
 
 ## Where to go from here?
 
