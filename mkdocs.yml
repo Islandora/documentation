@@ -48,7 +48,7 @@ pages:
       - 'Context': 'user-documentation/context.md'
       - 'Views': 'user-documentation/create_update_views.md'
       - 'Users': 'user-documentation/users.md'
-      - 'Blocks': 'user-documentation/placing-blocks.md'
+      - 'Blocks': 'user-documentation/blocks.md'
       - 'Usage Stats': 'user-documentation/usage-stats.md'
       - 'Multilingual': 'user-documentation/multilingual.md'
   - Administrator Documentation:
