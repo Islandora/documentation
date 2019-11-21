@@ -3,7 +3,7 @@ Drupal 8 recognizes files (such as images, audio files, video files, etc.) but w
 size, width and height (for images), alt text (for images), creation date, and so on.
 
 !!! note "Compared to Islandora 7"
-    In Islandora 7, this sort of technical metadata would have been stored in a single RELS-INT datastream.
+    In Islandora 7, this sort of technical metadata would have been stored as datastream properties or as additional metadata-specific datastreams.
     In Islandora 8, each datastream holds its technical metadata using an associated media entity.
     
 Fedora will store the media's file as a binary resource and use the media's properties as the binary resource's description.
