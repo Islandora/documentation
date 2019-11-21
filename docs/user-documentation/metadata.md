@@ -1,6 +1,6 @@
 # Metadata in Islandora 8
 
-> TL;DR: In Islandora 8, metadata is stored in _fields_ attached to _entities_ (nodes or media). Metadata values can be serialized as RDF in the form of JSON-LD before being submitted to Fedora and/or indexed in a triplestore.
+> TL;DR: In Islandora 8, metadata is stored in Drupal, in _fields_ attached to _entities_ (nodes or media). This allows us to interact with metadata (add, edit, remove, display, index in a search engine...) almost entirely using standard Drupal processes. If exporting this metadata to Fedora and/or a triplestore, the values are serialized to RDF using mappings that can be set for each bundle.
 
 !!! note "Drupal 8 Terminology"
     In Drupal 8, Fields can be attached to _bundles_ (sometimes called _entity sub-types_ -- e.g. Content types, Media types, Vocabularies) or _entities_ (e.g. Users). For more on Fields, see ["2.3 Content Entities and Fields"](https://www.drupal.org/docs/user_guide/en/planning-data-types.html) and ["6.3 Adding Basic Fields to a Content Type"](https://www.drupal.org/docs/user_guide/en/structure-fields.html) in the Official Drupal Guide.
@@ -8,14 +8,14 @@
 <!-- Next revision: check status of changing 'bundles' to 'entity sub-types' (https://www.drupal.org/project/drupal/issues/1380720). -->
 
 
-As described in the [Nodes section](objects.md), Islandora 8 digital objects are comprised of _nodes_ for descriptive metadata, _media_ for technical metadata, and _files_ for the binary objects. This section describes how descriptive metadata is managed in Islandora 8.
+As described in the [Nodes section](objects.md), Islandora 8 digital objects are comprised of _Drupal nodes_ for descriptive metadata, _Drupal media_ for technical metadata, and _Drupal files_ for the binary objects. This section describes how Islandora 8 uses and extends Drupal fields to manage descriptive metadata.
 
 ## Content Types
 
-In Drupal, _Content Types_ are sub-types of _Nodes_. Content types contain fields and configurations for how those fields can be edited or displayed. Each content type is essentially a _metadata profile_ for a digital resource's descriptive record. For each field in a content type, an administrator can configure how data is entered, how it can be displayed, how many values can be stored, and how long the value can be. Some configurations, such as data entry and display, can be changed at any time. Others, such as how long a value can be or what options are available in a Select list, cannot be changed once content has been created without first deleting all content of that type.
+In Drupal, _Nodes_ come in different sub-types called _Content Types_ (e.g. Article, Basic page, Repository item). Content types contain fields, and configurations for how those fields can be edited or displayed. Each content type is essentially a _metadata profile_ that can be used for a digital resource's descriptive record. For each field in a content type, an administrator can configure how data is entered, how it can be displayed, how many values can be stored, and how long the value can be. Some configurations, such as data entry and display, can be changed at any time. Others, such as how long a value can be or what options are available in a Select list, cannot be changed once content has been created without first deleting all content of that type. However, fields can be added to existing content types with no consequence.
 
 
-For example, the 'islandora_defaults' module provides a _Repository Item_ content type that defines several fields including "Alternative Title" and "Date Issued". Under the management menu for Repository Item you can see a list of the fields it includes ("Manage fields" as well as tabs for changing the input forms ("Manage form display") and display modes ("Manage display"). (See the "[Create / Update a Content Type](content_types.md)" section for more details on creating and configuring fields.)
+For example, the 'islandora_defaults' module provides a _Repository Item_ content type that defines many fields including "Alternative Title" and "Date Issued". Under the management menu for Repository Item you can see a list of the fields it includes ("Manage fields" as well as tabs for changing the input forms ("Manage form display") and display modes ("Manage display"). (See the "[Create / Update a Content Type](content_types.md)" section for more details on creating and configuring fields.)
 
 ![Screenshot of the "Manage fields" page for the "Repository Item" content type from islandora_defaults.](../assets/metadata_content_type_screenshot.png)
 
@@ -32,22 +32,24 @@ For example, the 'islandora_defaults' module provides a _Repository Item_ conten
     That said, if keeping the "legacy" XML metadata from 7.x is important to you, it can be attached to an Islandora 8 resource node as a Media entity.
     However, there is no mechanism in Islandora 8 for editing XML in a user-friendly way.
 
-When you create a node (i.e. an instantiation of a content type, such as by using Drupal's "Add Content" workflow), the fields available are determined by its content type. In this way, a content type provides the node's metadata profile. Once a node is created, its content type cannot be changed. To "switch" a node to a different content type, a repository manager would need to create a new node of the target content type, map the field values (programmatically or by copy-paste), and update any Media or children that refer to the old node to refer to the new one.
+When you create a node (i.e. an instantiation of a content type, such as by using Drupal's "Add Content" workflow), the fields defined by its content type become available. Once a node is created, its content type cannot be changed. To "switch" a node to a different content type, a repository manager would need to create a new node of the target content type, map the field values (programmatically or by copy-paste), and update any Media or children that refer to the old node to refer to the new one.
 
 Not all content types in your Drupal site need be Islandora "resource nodes". A "resource node" content type will likely have behaviours (such as syncing to Fedora or causing derivatives to be generated) associated with it. This configuration, and the communication to the user of which content types are and are not considered to be Islandora resource nodes is left to the discretion of the site manager. In Islandora, a "resource node" is usually considered a descriptive record for "a thing", and is conceptually similar to an "Islandora Object" in 7.x, i.e. a "Fedora Object" in Fedora 3.x and below.
 
-<!-- I am here. --> 
-
 ## Vocabularies
 
-In Drupal, _Taxonomy Vocabularies_ (or simply 'Vocabularies') are also entity subtypes that group fields and their configurations. Unlike content types, they are intended to be used as descriptive attributes of content and have hierarchy built in. Whereas instances of content types are called nodes, items in a vocabulary are called _terms_.
+In Drupal, _Taxonomy Vocabularies_ (or simply 'Vocabularies') are also entity sub-types that group fields and their configurations. Whereas instances of content types are called nodes, items in a vocabulary are called _taxonomy terms_ (or simply 'terms'). Traditionally, taxonomy terms are used to classify content in Drupal. There are two ways that users can interact with taxonomies - they can be "closed" e.g. a fixed list to pick from in a dropdown, or "open" e.g. a tag field where users can enter new terms, which are created on the fly. Vocabularies can have a hierarchical structure, but do not need to.
 
-For example, Islandora includes the 'Islandora Models' vocabulary which includes the terms 'Audio', 'Binary', 'Collection', 'Image', and 'Video'. By linking to one of these terms in the 'Islandora Models' vocabulary a repository manager can tell that the node (digital object) should be considered an 'Image' or 'Audio', et cetera. The Controlled Access Terms module provides additional vocabularies representing Corporate Bodies, Persons, Families, Geographic Locations, and Subjects. Each of these vocabularies has its own set of fields allowing repositories to further describe them. Repository item nodes can then reference terms in these vocabularies. See 'Entity Reference fields' in the 'Field Types' section below.
+Islandora (through the Islandora Core Feature) creates the 'Islandora Models' vocabulary which includes the terms 'Audio', 'Binary', 'Collection', 'Image', and 'Video'. Islandora Defaults provides contexts that cause certain actions (e.g. which derivatives) to happen based on which term is used. 
 
-<!--[Geographic Location currently has hierarchy turned off. This section will apply once https://github.com/Islandora-CLAW/controlled_access_terms/pull/21 is merged.] Another example, this time illustrating hierarchy, is the 'Geographic Location' vocabulary. Although no terms are listed by default, a repository could create a 'Western Hemisphere' term and then create a 'North America' term as a child of the 'Western Hemisphere' term, et cetera.
+<!-- I am here -->
+- is it possible to add your own terms to this vocabulary?
+- this is a "special field" in terms of the RDF mapping but I'm not sure if this is where to mention this.
 
-![Screenshot of the Geographic Locations vocabulary showing example terms in a hierarchy.](../assets/metadata_geographic_location_list.png)
--->
+The Controlled Access Terms module provides additional vocabularies representing Corporate Bodies, Persons, Families, Geographic Locations, and Subjects. Each of these vocabularies has its own set of fields allowing repositories to further describe them. Repository item nodes can then reference terms in these vocabularies. See 'Entity Reference fields' in the 'Field Types' section below.
+
+- you can also make whatever vocabularies you need.
+
 
 ## Field Types
 
