@@ -51,6 +51,7 @@ pages:
       - 'Blocks': 'user-documentation/placing-blocks.md'
       - 'Usage Stats': 'user-documentation/usage-stats.md'
       - 'Multilingual': 'user-documentation/multilingual.md'
+      - 'OAI-PMH': 'user-documentation/oai.md'
   - Administrator Documentation:
       - 'RDF Generation': 'islandora/rdf-mapping.md'
   - Developer Documentation:
