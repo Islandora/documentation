@@ -14,12 +14,12 @@ back to the URLs if you want to maintain consistency.
 
 If you **don't** do this, you can end up with two copies of your objects in your Fedora repository (one with and one without `?_format=jsonld`). You will also have two sets of triples in your triplestore.
 
-### Adding ?_format=jsonld to your URIs
+## Adding ?_format=jsonld to your URIs
 
 To turn the `?_format` parameter back on:
 
 - Go to `admin/config/search/jsonld` and confirm the *"Remove jsonld parameter from @ids"* checkbox is **unchecked**.
-- Add `strip_format_jsonld: false` to your Milliner config (`/var/www/html/Crayfish/Milliner/cfg/config.yaml` in Islandora-playbook)
+- Add `strip_format_jsonld: false` to your Milliner config. If you deployed using the default Islandora-playbook this file would be located at `/var/www/html/Crayfish/Milliner/cfg/config.yaml`.
 
 If you are using [Islandora-playbook](https://github.com/Islandora-Devops/Islandora-playbook) and are provisioning new environments for your older Islandora 8, you'll want to lock down the variables in your inventory that control this config.
 
