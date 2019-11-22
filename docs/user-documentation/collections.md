@@ -10,9 +10,13 @@ For example, a context provided by Islandora Defaults will display a list of chi
 
 ## Creating a Collection
 
-From the front page, click on Add content. This is under Tools.
+When logged in as an administrator, click the _Content_ button under the _Manage_ tab.
 
-![Click on add content, under tools](../assets/collections_add_content.jpg)
+![Click the _Content_ button under the _Manage_ tab](../assets/collections_admin_content_button.png)
+
+Click on _Add content_.
+
+![Click on add content, under tools](../assets/collections_add_content.png)
 
 Then click on 'Repository Item' to give your collection the default metadata profile for Islandora 8.
 
