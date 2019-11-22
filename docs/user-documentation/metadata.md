@@ -38,32 +38,42 @@ Not all content types in your Drupal site need be Islandora "resource nodes". A 
 
 ## Vocabularies
 
-In Drupal, _Taxonomy Vocabularies_ (or simply 'Vocabularies') are also entity sub-types that group fields and their configurations. Whereas instances of content types are called nodes, items in a vocabulary are called _taxonomy terms_ (or simply 'terms'). Traditionally, taxonomy terms are used to classify content in Drupal. There are two ways that users can interact with taxonomies - they can be "closed" e.g. a fixed list to pick from in a dropdown, or "open" e.g. a tag field where users can enter new terms, which are created on the fly. Vocabularies can have a hierarchical structure, but do not need to.
+In Drupal, _Taxonomy Vocabularies_ (or simply 'Vocabularies') are also entity sub-types that group fields and their configurations. Whereas instances of content types are called nodes, items in a vocabulary are called _taxonomy terms_ (or simply 'terms'). Traditionally, taxonomy terms are used to classify content in Drupal. There are two ways that users can interact with taxonomies - they can be "closed" e.g. a fixed list to pick from in a dropdown, or "open" e.g. a tag field where users can enter new terms, which are created on the fly. This is not set on the _vocabulary_ itself, but in the configuration of the field (typically on a node) that points to that vocabulary. Terms within vocabularies have an ordering, and can have hierarchical structure, but do not need to.
 
-Islandora (through the Islandora Core Feature) creates the 'Islandora Models' vocabulary which includes the terms 'Audio', 'Binary', 'Collection', 'Image', and 'Video'. Islandora Defaults provides contexts that cause certain actions (e.g. which derivatives) to happen based on which term is used. 
+Islandora (through the Islandora Core Feature) creates the 'Islandora Models' vocabulary which includes the terms 'Audio', 'Binary', 'Collection', 'Digital Document', 'Image', 'Page', 'Paged Content', 'Publication Issue', and 'Video'. Islandora Defaults provides contexts that cause certain actions (e.g. derivatives to happen, or blocks to appear) based on which term is used. 
 
-<!-- I am here -->
-- is it possible to add your own terms to this vocabulary?
-- this is a "special field" in terms of the RDF mapping but I'm not sure if this is where to mention this.
+<!-- Is it possible to add your own terms to this vocabulary? Is it recommended? -->
 
-The Controlled Access Terms module provides additional vocabularies representing Corporate Bodies, Persons, Families, Geographic Locations, and Subjects. Each of these vocabularies has its own set of fields allowing repositories to further describe them. Repository item nodes can then reference terms in these vocabularies. See 'Entity Reference fields' in the 'Field Types' section below.
+<!-- field_model is a "special field" in terms of the RDF mapping, because the drupal URI gets replaced by the 'external URI' but I'm not sure if this is where to mention this.-->
 
-- you can also make whatever vocabularies you need.
+The Controlled Access Terms module provides additional vocabularies:
+- Corporate Body
+- Country
+- Family
+- Form
+- Genre
+- Geographic Location
+- Language
+- Person
+- Resource Types
+- Subject
+ 
+Each of these vocabularies has its own set of fields allowing repositories to further describe them. The Repository Item content type has fields that can reference terms in these vocabularies. See 'Entity Reference fields' in the 'Field Types' section below.
+
+The vocabularies provided by default are a starting point, and a repository administrator can create whatever vocabularies are desired.
 
 
 ## Field Types
 
-Each field in Drupal has a _type_ that defines its _properties_ and behavior such as text, date, number, and Boolean fields. These field types also have _widgets_ and _formatters_ that control entry forms and display, respectively. The [Drupal 8 documentation on FieldTypes, FieldWidgets, and FieldFormatters](https://www.drupal.org/docs/8/api/entity-api/fieldtypes-fieldwidgets-and-fieldformatters) includes a list of the core field types.
+Fields are where Drupal entities store their data. There are different _types_ of fields including boolean, datetime, entity reference, integer, string, text, and text_with_summary. These field types also have _widgets_ (controlling how data is entered) and _formatters_ (controlling how data is displayed). The [Drupal 8 documentation on FieldTypes, FieldWidgets, and FieldFormatters](https://www.drupal.org/docs/8/api/entity-api/fieldtypes-fieldwidgets-and-fieldformatters) includes a list of the core field types. Modules can provide their own field types, formatters, and widgets. The Controlled Access Terms module provides two additional types for use with Islandora: ETDF, and Typed Relation. These are described below.
 
-_Entity Reference_ fields are a special type of field that creates a relationship between two entities. The field's configuration options include which kind of entities can be referenced. The 'Repository Item' content type, provided by islandora_demo, includes several entity reference fields that reference vocabularies defined by the islandora and controlled_access_terms modules.
+_Entity Reference_ fields are a special type of field built into Drupal that creates a relationship between two entities. The field's configuration options include which kind of entities can be referenced. The 'Repository Item' content type, provided by islandora_defaults, includes several entity reference fields that reference vocabularies defined by the islandora and controlled_access_terms modules.
 
-The 'Member Of' field is an entity reference field that allows creating digital object hierarchies (collections and, potentially, complex digital objects) by "pointing" one or many Repository items at another common "parent".
+The 'Member Of' field is an entity reference field, defined by Islandora, which is the Islandora way of creating hierarchies of resource nodes. This can be used to show membership in a collection, pages that are members of a paged item, and members of a complex object.
 
-Modules can provide their own field types, formatters, and widgets. The controlled_access_terms module provides two custom field types: EDTF and Typed Relations.
+### EDTF 
 
-### EDTF ([Extended Date Time Format](https://www.loc.gov/standards/datetime/edtf.html))
-
-The EDTF field type is stored as a string in the database; however the corresponding widget validates the value submitted in the data entry form and will not accept an invalid value while the corresponding formatter can be configured to display the EDTF value in a variety of ways.
+The EDTF field type is for recording dates in [Extended Date Time Format](https://www.loc.gov/standards/datetime/edtf.html). The Default EDTF widget has a validator that permits dates formatted in a subset of the EDTF-defined formats. The subset is listed below. The Default EDTF formatter allows these date string to be displayed in a variety of human readable ways.
 
 Example of a valid EDTF value ('1943-05') and an invalid value ('1943 May') with the corresponding error message:
 ![Screenshot of both a valid ("1943-05") and an invalid ("1943 May") EDTF entry. Displays the error message "Could not parse the date 'May 1943' Years must be at least 4 characters long."](../assets/metadata_edtf_invalid.png)
@@ -71,9 +81,25 @@ Example of a valid EDTF value ('1943-05') and an invalid value ('1943 May') with
 Example of how the EDTF formatter settings can change the display of an EDTF value:
 ![Combined screenshots displaying the EDTF default formatter settings, default on top and modified settings below, with an example formatted EDTF value displayed for each.](../assets/metadata_edtf_formatters.png)
 
+#### Formats permitted by the EDTF Widget
+
+**Level 0**
+
+*Date*
+`
+- complete representation:            [year][“-”][month][“-”][day]
+  Example 1          ‘1985-04-12’ refers to the calendar date 1985 April 12th with day precision.
+- reduced precision for year and month:   [year][“-”][month]
+  Example 2          ‘1985-04’ refers to the calendar month 1985 April with month precision.
+- reduced precision for year:  [year]
+  Example 3          ‘1985’ refers to the calendar year 1985 with year precision.
+`
+
+
+
 ### Typed Relation
 
-The standard Entity reference fields are limited to a single type of relationship. For example, the islandora_demo module could use an entity reference field in the 'Repository item' content type for the 'creator' field, linking nodes to terms in the People, Corporate Body, and Family vocabularies. However, there are many different types of 'creators', including 'authors', 'illustrators', and 'architects'. To enable all these types of relationships using entity reference fields a repository manager would need to create a new field for each of them, which would quickly become unwieldy. The Controlled Access Terms module resolves this problem by providing a _Typed Relation_ field type.
+The standard Entity reference fields are limited to a single type of relationship. For example, the islandora_defaults module could use an entity reference field in the 'Repository item' content type for the 'creator' field, linking nodes to terms in the People, Corporate Body, and Family vocabularies. However, there are many different types of 'creators', including 'authors', 'illustrators', and 'architects'. To enable all these types of relationships using entity reference fields a repository manager would need to create a new field for each of them, which would quickly become unwieldy. The Controlled Access Terms module resolves this problem by providing a _Typed Relation_ field type.
 
 The Typed Relation field type combines an entity reference _property_ and a 'relation type' property in a single field and extends the JSON-LD serialization to override a field's RDF mapping in favor of the selected 'relation type'. For example, instead of a 'creator' field, Repository item content type defines a 'Linked Agent' field and is configured with a list of available relationships that comes from the MARC relators list. (Configurable at '/admin/structure/types/manage/islandora_object/fields/node.islandora_object.field_linked_agent'.) The available relations are configured by providing the RDF namespace, a colon, the RDF relationship value, a pipe delimiter, and a display value for the user interface. (See the RDF Mapping section of '[Create / Update a Content Type](content_types.md)' for more details.)
 
