@@ -58,7 +58,7 @@ default set of "Media Use" terms are taken from the [PCDM Use Extension](https:/
 
 ## Derivatives
 
-Islandora generates derivatives based on Media Use term selected for a Media and the Model of the node that owns it.  All of this is configurable
+Islandora generates derivatives based on the Media Use term selected for a Media and the Model of the node that owns it.  All of this is configurable
 using Context.
 
 By default, derivatives are generated from Media with the "Original Files" term selected. When an Original File is uploaded, if the node that
@@ -76,4 +76,4 @@ Original File, a lower quality "Service File" and a smaller "Thumbnail Image" fi
 
 ![Media tab](../assets/resource_nodes_media_tab.png)
 
-For more information on how to set configure derivatives, see the section on [Context](context.md).
+For more information on how to configure derivatives, see the section on [Context](context.md).
