@@ -12,7 +12,7 @@ As described in the [Nodes section](objects.md), Islandora 8 digital objects are
 
 ## Content Types
 
-In Drupal, _Nodes_ come in different sub-types called _Content Types_ (e.g. Article, Basic page, Repository item). Content types contain fields, and configurations for how those fields can be edited or displayed. Each content type is essentially a _metadata profile_ that can be used for a digital resource's descriptive record. For each field in a content type, an administrator can configure how data is entered, how it can be displayed, how many values can be stored, and how long the value can be. Some configurations, such as data entry and display, can be changed at any time. Others, such as how long a value can be or what options are available in a Select list, cannot be changed once content has been created without first deleting all content of that type. However, fields can be added to existing content types with no consequence.
+In Drupal, _Nodes_ come in different sub-types called _Content Types_ (e.g. Article, Basic page, Repository item). Content types contain fields, and configurations for how those fields can be edited or displayed. Each content type is essentially a _metadata profile_ that can be used for a piece of web content, or to describe a digital resource. For each field in a content type, an administrator can configure how data is entered, how it can be displayed, how many values can be stored, and how long the value can be. Some configurations, such as data entry and display, can be changed at any time. Others, such as how long a value can be or what options are available in a select list, cannot be changed once content has been created without first deleting all content of that type. However, fields can be added to existing content types with no consequence.
 
 
 For example, the 'islandora_defaults' module provides a _Repository Item_ content type that defines many fields including "Alternative Title" and "Date Issued". Under the management menu for Repository Item you can see a list of the fields it includes ("Manage fields" as well as tabs for changing the input forms ("Manage form display") and display modes ("Manage display"). (See the "[Create / Update a Content Type](content_types.md)" section for more details on creating and configuring fields.)
@@ -38,7 +38,9 @@ Not all content types in your Drupal site need be Islandora "resource nodes". A 
 
 ## Vocabularies
 
-In Drupal, _Taxonomy Vocabularies_ (or simply 'Vocabularies') are also entity sub-types that group fields and their configurations. Whereas instances of content types are called nodes, items in a vocabulary are called _taxonomy terms_ (or simply 'terms'). Traditionally, taxonomy terms are used to classify content in Drupal. There are two ways that users can interact with taxonomies - they can be "closed" e.g. a fixed list to pick from in a dropdown, or "open" e.g. a tag field where users can enter new terms, which are created on the fly. This is not set on the _vocabulary_ itself, but in the configuration of the field (typically on a node) that points to that vocabulary. Terms within vocabularies have an ordering, and can have hierarchical structure, but do not need to.
+In Drupal, _Taxonomy Vocabularies_ (or simply _Vocabularies_) are also entity sub-types that define a set of fields and their configurations. Whereas instances of content types are called _nodes_, items in a vocabulary are called _taxonomy terms_ (or simply _terms_). Traditionally, taxonomy terms are used to classify content in Drupal. For instance, the Article content type includes a field `field_tags` that can refer to terms in the Tags vocabulary. 
+
+There are two ways that users can interact with taxonomies: they can be "closed," e.g. a fixed list to pick from in a dropdown, or "open," e.g. `field_tags` where users can enter new terms, which are created on the fly. This is not set on the _vocabulary_ itself, but in the configuration of the field (typically on a node). Terms within vocabularies have an ordering, and can have hierarchical structure, but do not need to.
 
 Islandora (through the Islandora Core Feature) creates the 'Islandora Models' vocabulary which includes the terms 'Audio', 'Binary', 'Collection', 'Digital Document', 'Image', 'Page', 'Paged Content', 'Publication Issue', and 'Video'. Islandora Defaults provides contexts that cause certain actions (e.g. derivatives to happen, or blocks to appear) based on which term is used. 
 
@@ -73,35 +75,28 @@ The 'Member Of' field is an entity reference field, defined by Islandora, which 
 
 ### EDTF 
 
-The EDTF field type is for recording dates in [Extended Date Time Format](https://www.loc.gov/standards/datetime/edtf.html). The Default EDTF widget has a validator that permits dates formatted in a subset of the EDTF-defined formats. The subset is listed below. The Default EDTF formatter allows these date string to be displayed in a variety of human readable ways.
+The EDTF field type is for recording dates in [Extended Date Time Format](https://www.loc.gov/standards/datetime/edtf.html), which is a format based off of the hyphenated form of ISO 8601 (e.g. 1991-02-03 or 1991-02-03T10:00:00), but also allows expressions of different granularity and uncertainty. The Default EDTF widget has a validator that only allows strings that conform to the EDTF standard. The Default EDTF formatter allows these date string to be displayed in a variety of human readable ways.
 
 Example of a valid EDTF value ('1943-05') and an invalid value ('1943 May') with the corresponding error message:
 ![Screenshot of both a valid ("1943-05") and an invalid ("1943 May") EDTF entry. Displays the error message "Could not parse the date 'May 1943' Years must be at least 4 characters long."](../assets/metadata_edtf_invalid.png)
 
+The Default EDTF Widget can be set to allow date intervals, but doing this prevents the widget from accepting values that include times.
+![Screenshot of the configuration screen for the EDTF Widget](../assets/metadata_edtf_widget_settings.png)
+
 Example of how the EDTF formatter settings can change the display of an EDTF value:
 ![Combined screenshots displaying the EDTF default formatter settings, default on top and modified settings below, with an example formatted EDTF value displayed for each.](../assets/metadata_edtf_formatters.png)
-
-#### Formats permitted by the EDTF Widget
-
-**Level 0**
-
-*Date*
-`
-- complete representation:            [year][“-”][month][“-”][day]
-  Example 1          ‘1985-04-12’ refers to the calendar date 1985 April 12th with day precision.
-- reduced precision for year and month:   [year][“-”][month]
-  Example 2          ‘1985-04’ refers to the calendar month 1985 April with month precision.
-- reduced precision for year:  [year]
-  Example 3          ‘1985’ refers to the calendar year 1985 with year precision.
-`
-
 
 
 ### Typed Relation
 
-The standard Entity reference fields are limited to a single type of relationship. For example, the islandora_defaults module could use an entity reference field in the 'Repository item' content type for the 'creator' field, linking nodes to terms in the People, Corporate Body, and Family vocabularies. However, there are many different types of 'creators', including 'authors', 'illustrators', and 'architects'. To enable all these types of relationships using entity reference fields a repository manager would need to create a new field for each of them, which would quickly become unwieldy. The Controlled Access Terms module resolves this problem by providing a _Typed Relation_ field type.
+Drupal's Entity Reference fields allow a site editor to link entities to related entities, but do not allow the editor to qualify anything about that relationship. Therefore, if we wanted to be able to describe contributors and their roles (e.g. 'author', 'illustrator', 'architect') we would have to define one field per role. The Typed Relation field, provided by Controlled Access Terms, pairs two inputs into a single field: an entity reference, and a relation type.
 
-The Typed Relation field type combines an entity reference _property_ and a 'relation type' property in a single field and extends the JSON-LD serialization to override a field's RDF mapping in favor of the selected 'relation type'. For example, instead of a 'creator' field, Repository item content type defines a 'Linked Agent' field and is configured with a list of available relationships that comes from the MARC relators list. (Configurable at '/admin/structure/types/manage/islandora_object/fields/node.islandora_object.field_linked_agent'.) The available relations are configured by providing the RDF namespace, a colon, the RDF relationship value, a pipe delimiter, and a display value for the user interface. (See the RDF Mapping section of '[Create / Update a Content Type](content_types.md)' for more details.)
+![Screenshot of adding a value into a typed relation field](../assets/metadata_typed_relation_field.png)
+
+!!! tip "Nerd note:"
+    The parts of a field are called properties, so 'entity reference' and 'relation type' are properties of the Typed Relation field type.
+
+ The Typed Relation field type combines an entity reference _property_ and a 'relation type' property in a single field and extends the JSON-LD serialization to override a field's RDF mapping in favor of the selected 'relation type'. For example, instead of a 'creator' field, Repository item content type defines a 'Linked Agent' field and is configured with a list of available relationships that comes from the MARC relators list. (Configurable at '/admin/structure/types/manage/islandora_object/fields/node.islandora_object.field_linked_agent'.) The available relations are configured by providing the RDF namespace, a colon, the RDF relationship value, a pipe delimiter, and a display value for the user interface. (See the RDF Mapping section of '[Create / Update a Content Type](content_types.md)' for more details.)
 
 ![Screenshot of the 'Available Relations' configuration text box for the 'Linked Agent' field.](../assets/metadata_available_relations_config.png)
 
