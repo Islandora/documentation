@@ -72,6 +72,7 @@ pages:
     - 'Testing Notes': 'technical-documentation/testing-notes.md'
     - 'Adding back ?_format=jsonld': 'technical-documentation/adding_format_jsonld.md'
     - 'Updating a `deb` and adding it to Lyrasis PPA': 'technical-documentation/ppa-documentation.md'
+    - 'Alpaca Tips': 'technical-documentation/alpaca_tips.md'
 
   - Migration:
       - 'CSV': 'technical-documentation/migrate-csv.md'
