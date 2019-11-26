@@ -1,4 +1,4 @@
-# Updating Drupal 
+# Updating Drupal
 
 ## Always create backs ups (DB and files) before updating
 
@@ -9,22 +9,18 @@
 **Warning:** Always revert to a backup if you get a fatal error in the update process.
 
 ## What is Composer
-It is recommended by Drupal.org and the Islandora 8 community to use Composer with Drupal 8 for various tasks. 
+It is recommended by Drupal.org and the Islandora 8 community to use Composer with Drupal 8 for various tasks.
 
-"[Composer](https://getcomposer.org/) is a [dependency manager](https://en.wikipedia.org/wiki/Package_manager) for PHP. Drupal core uses Composer to manage core dependencies like Symfony components and Guzzle."
-
-Taken from: https://www.drupal.org/docs/develop/using-composer/using-composer-with-drupal
+"[Composer](https://getcomposer.org/) is a [dependency manager](https://en.wikipedia.org/wiki/Package_manager) for PHP. Drupal core uses Composer to manage core dependencies like Symfony components and Guzzle." [[Source](https://www.drupal.org/docs/develop/using-composer/using-composer-with-drupal)]
 
 ## Updating Drupal Core
-Over time new versions of Drupal “core” are released, and Islandora users are encouraged to install official Drupal core updates and security patches. On the other hand “alpha” and “beta" versions of Drupal core should only be installed if by advanced users for testing purposes. 
+Over time new versions of Drupal “core” are released, and Islandora users are encouraged to install official Drupal core updates and security patches. On the other hand “alpha” and “beta" versions of Drupal core should only be installed by advanced users for testing purposes.
 
-The Islandora community STRONGLY recommends that the "Composer" method of upgrading Drupal core be used with Islandora 8 as mentioned here:
-
-https://www.drupal.org/docs/8/update/update-core-via-composer
+The Islandora community STRONGLY recommends that the "Composer" method of upgrading Drupal core be used with Islandora 8 as mentioned [here](https://www.drupal.org/docs/8/update/update-core-via-composer).
 
 ### Here is an overview of the steps for updating Drupal core using Composer
 
-NOTE: First make sure you have made database and file back ups.
+!!! "Back Up" First make sure you have made database and file back ups.
 
 1) First, verify that an update of Drupal core actually is available:
 
@@ -32,7 +28,6 @@ NOTE: First make sure you have made database and file back ups.
 
 If there is no line starting with drupal/core, Composer isn't aware of any update. If there is an update, continue with the commands below.
 
-If there is no line starting with drupal/core, Composer isn't aware of any update. If there is an update, continue with the commands below.
 
 2) Assuming you are used to updating Drupal and know all the precautions that you should take, the update is as simple as:
 
@@ -40,16 +35,13 @@ If there is no line starting with drupal/core, Composer isn't aware of any updat
 
 If you want to know all packages that will be updated by the update command, use the --dry-run option first.
 
-NOTE: Islandora 8 is configured to use a fork of drupal-composer/drupal-project which requires a specific composer syntax used above compared to other Drupal 8 sites. In addition, if you are upgrading from 8.5 to 8.7, you need to replace "~8.5.x" with "^8.7.0" for drupal/core and webflo/drupal-core-require-dev in composer.json. 
+!!! note "Alternate syntax needed": Islandora 8 is configured to use a fork of drupal-composer/drupal-project which requires a specific composer syntax used above compared to other Drupal 8 sites. In addition, if you are upgrading from 8.5 to 8.7, you need to replace "~8.5.x" with "^8.7.0" for drupal/core and webflo/drupal-core-require-dev in composer.json. [[Source](https://www.drupal.org/docs/8/update/update-core-via-composer#s-one-step-update-instruction)]
 
-Taken from:
-https://www.drupal.org/docs/8/update/update-core-via-composer#s-one-step-update-instruction
-
-3) Apply any required database updates using drush updatedb, or use the web admin user interface.  
+3) Apply any required database updates using ``drush updatedb``, or use the web admin user interface.  
 
 `drush updatedb`
 
-4) Clear the cache using drush cache:rebuild, or use the web admin user interface.
+4) Clear the cache using drush ``cache:rebuild``, or use the web admin user interface.
 
 `drush cache:rebuild'`
 
@@ -58,10 +50,10 @@ https://www.drupal.org/docs/8/update/update-core-via-composer#s-stepwise-update-
 
 ## Updating Drupal Modules
 
-Islandora 8 uses several general Drupal modules and some specialized Islandora Drupal modules, and over time new versions of these modules are released. There are two approaches to updating Drupal modules in Islandora using Composer or updating modules individually. Islandora 8 uses Composer to determine which Drupal module versions should be installed for each release of Islandora 8. Therefore if you update the Islandora specific Drupal modules using Composer you will also update any dependent general Drupal modules as well. The second method is to individually update Drupal modules.
+Islandora 8 uses several general Drupal modules and some specialized Islandora Drupal modules, and over time new versions of these modules are released. There are two approaches to updating Drupal modules in Islandora: using Composer or updating modules individually. Islandora 8 uses Composer to determine which Drupal module versions should be installed for each release of Islandora 8. Therefore if you update the Islandora specific Drupal modules using Composer you will also update any dependent general Drupal modules as well. The second method is to individually update Drupal modules.
 
 For more information about how to update Drupal modules visit:
 
 https://www.drupal.org/docs/8/extending-drupal-8/updating-modules
 
-NOTE: First make sure you have made database and file back ups.
+!!! "Back Up" First make sure you have made database and file back ups.
