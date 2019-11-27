@@ -91,7 +91,7 @@ RDF mapping aligns Drupal fields with RDF ontology properties. For example, the 
 
 The Drupal 8 Configuration Synchronization export (e.g. `http://localhost:8000/admin/config/development/configuration/single/export`) and import (e.g. `http://localhost:8000/admin/config/development/configuration/single/import`) can be used to get a copy of the mappings for editing in a text editor before being uploaded again. Alternatively, a repository manager can update the configuration on the server and use Features to import the edits.
 
-An RDF mapping configuration file has two main areas, the mapping's metadata and the mapping itself. Most of the mapping's metadata should be left alone unless you are creating a brand new mapping for a new Content Type or Taxonomy Vocabulary. A _partial_ example from [islandora_demo's islandora_object (Repository Item)](https://github.com/Islandora/islandora_defaults/blob/8.x-1.x/config/install/rdf.mapping.node.islandora_object.yml) is included below:
+An RDF mapping configuration file has two main areas, the mapping's metadata and the mapping itself. Most of the mapping's metadata should be left alone unless you are creating a brand new mapping for a new Content Type or Taxonomy Vocabulary. A _partial_ example from [islandora_default's islandora_object (Repository Item)](https://github.com/Islandora/islandora_defaults/blob/8.x-1.x/config/install/rdf.mapping.node.islandora_object.yml) is included below:
 
 ```
 langcode: en
@@ -130,7 +130,7 @@ The required mapping metadata fields when creating a brand-new mapping include t
 
 The mapping itself consists of the `types`' and `fieldMappings` configurations.
 
-All the mappings use RDF namespaces instead of fully-qualified URIs. For example, the type for islandora_object is `pcdm:Object` instead of `http://pcdm.org/models#Object`. Unfortunately, the available namespaces are defined in module hooks (hook_rdf_namespaces) rather than in a configuration file. Repository managers wanting to add additional namespaces need to create their own module and implement hook_rdf_namespaces. See the [islandora_defaults](https://github.com//Islandora/islandora_defaults/blob/8.x-1.x/islandora_demo.module) hook implementation for an example.
+All the mappings use RDF namespaces instead of fully-qualified URIs. For example, the type for islandora_object is `pcdm:Object` instead of `http://pcdm.org/models#Object`. Unfortunately, the available namespaces are defined in module hooks (hook_rdf_namespaces) rather than in a configuration file. Repository managers wanting to add additional namespaces need to create their own module and implement hook_rdf_namespaces. See the [islandora_defaults](https://github.com//Islandora/islandora_defaults/blob/8.x-1.x/islandora_defaults.module) hook implementation for an example.
 
 Namespaces currently supported (ordered by the module that supplies them) include:
 
