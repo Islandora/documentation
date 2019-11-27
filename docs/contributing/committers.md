@@ -1,6 +1,6 @@
-# Islandora CLAW Committers
+# Islandora 8 Committers
 
-Islandora CLAW is open source and released under MIT and GPLv2 licenses. The software and associated documentation is developed collectively by a community of contributors and committers. All interested community members are encouraged to contribute to the project. Contributors who demonstrate sustained engagement with the project through quality participation in meetings, mailing lists, documentation and code updates can be nominated by existing committers to also become a committers. It should be emphasized that committers need not be limited to software developers. Community members with skills in documentation and testing, for example, can also be committers.
+Islandora 8 is open source and released under MIT and GPLv2 licenses. The software and associated documentation is developed collectively by a community of contributors and committers. All interested community members are encouraged to contribute to the project. Contributors who demonstrate sustained engagement with the project through quality participation in meetings, mailing lists, documentation and code updates can be nominated by existing committers to also become a committers. It should be emphasized that committers need not be limited to software developers. Community members with skills in documentation and testing, for example, can also be committers.
 
 ## Rights
 
@@ -25,7 +25,7 @@ Committers share the following responsibilities:
 
 ## Committers
 
-The following is an alphabetized list of the current Islandora CLAW committers:
+The following is an alphabetized list of the current Islandora 8 committers:
 
 | Name                        | Organization                      | Github username |
 |-----------------------------|-----------------------------------|-------------|
@@ -40,7 +40,7 @@ The following is an alphabetized list of the current Islandora CLAW committers:
 
 ## Emeritus Committers
 
-The following is an alphabetized list of the prior Islandora CLAW committers:
+The following is an alphabetized list of the prior Islandora 8 committers:
 
 | Name                        | Organization                      |
 |-----------------------------|-----------------------------------|
@@ -79,14 +79,14 @@ This section describes the process for handling the voting of a new committer.
 
 Summary:
 
-1. Call a vote ([templates/committerVote.txt](https://raw.githubusercontent.com/Islandora-CLAW/CLAW/master/docs/contributing/templates/committerVote.txt))
-2. Close a vote ([templates/closeCommitterVote.txt](https://raw.githubusercontent.com/Islandora-CLAW/CLAW/master/docs/contributing/templates/closeCommitterVote.txt))
-3. Invite the new committer ([templates/committerInvite.txt](https://raw.githubusercontent.com/Islandora-CLAW/CLAW/master/docs/contributing/templates/committerInvite.txt)), if no CLA is on file ([templates/committerInviteCLA.txt](https://raw.githubusercontent.com/Islandora-CLAW/CLAW/master/docs/contributing/templates/committerInviteCLA.txt))
+1. Call a vote ([templates/committerVote.txt](https://raw.githubusercontent.com/Islandora/documentation/master/docs/contributing/templates/committerVote.txt))
+2. Close a vote ([templates/closeCommitterVote.txt](https://raw.githubusercontent.com/Islandora/documentation/master/docs/contributing/templates/closeCommitterVote.txt))
+3. Invite the new committer ([templates/committerInvite.txt](https://raw.githubusercontent.com/Islandora/documentation/master/docs/contributing/templates/committerInvite.txt)), if no CLA is on file ([templates/committerInviteCLA.txt](https://raw.githubusercontent.com/Islandora/documentation/master/docs/contributing/templates/committerInviteCLA.txt))
 
 If they accept, then do:
 
-1. Add to Committer team of GitHub Islandora organization
-2. Add to Committer team of GitHub Islandora-Labs organization
-3. Add to islandora-committers google-group
-4. Add to committers wiki page: Islandora Committers 
-5. Announce the new committer ([template/committerAnnounce.txt](https://raw.githubusercontent.com/Islandora-CLAW/CLAW/master/docs/contributing/templates/committerAnnounce.txt))
+1. Add to Committer team of GitHub Islandora organization ??
+2. Add to Committer team of GitHub Islandora-Labs organization ??
+3. Add to islandora-2x-committers google-group
+4. Add to committers wiki page: Islandora 8 Committers (this page)
+5. Announce the new committer ([template/committerAnnounce.txt](https://raw.githubusercontent.com/Islandora/documentation/master/docs/contributing/templates/committerAnnounce.txt))
