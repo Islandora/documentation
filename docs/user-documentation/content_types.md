@@ -1,7 +1,7 @@
 # Create / Update a Content Type
 
 !!! note "Islandora Demo"
-    The screenshots and pre-existing data in this documentation assume that you are using the [Islandora Defaults](https://github.com/Islandora-CLAW/islandora_demo) configuration.
+    The screenshots and pre-existing data in this documentation assume that you are using the [Islandora Defaults](https://github.com/Islandora/islandora_defaults) configuration.
 
 !!! note "Graphical User Interface"
     This page will address how to create and modify ingest forms (or rather, content types) via the GUI. For help working with forms via the API, please check out the [Further Reading](#further-reading) section for links to more advanced Drupal documentation.
@@ -14,7 +14,7 @@ This page will address how to create and modify ingest forms (or rather, content
 
 If you have deployed your Islandora 8 with the Islandora Demo configuration, you will already have a Repository Item content type available, with pre-configured fields. In the Admin menu, go to Structure >> Content Types and find the Repository Item content type. Select *Manage Fields*.
 
-![a screenshot of the Add Content Type page](../assets/islandora8_managefields.png)
+![a screenshot of the Add Content Type page](../assets/content_types_managefields.png)
 
 You will see a list of the fields that are already available in the *Repository Item* content type.
 
@@ -30,15 +30,15 @@ Let’s add a new field where a user can indicate if the repository item needs t
 1. Then configure how the field is described (including its display label and the help text for when it appears on a form) and constraints on its use. In this case, the field will be required for this Content Type, and will be set to “on” by default. In the "Default Value" section, click the checkbox next to "Needs Review" to indicate all new repository items need review by default.
 1. Click "Save settings."
 
-![a screenshot of the field settings page](../assets/islandora8_fieldsettings.png)
+![a screenshot of the field settings page](../assets/content_types_fieldsettings.png)
 
 The new field has been added:
 
-![a screenshot of a "Needs Review?" field in the Drupal field UI](../assets/islandora8_newfield.png)
+![a screenshot of a "Needs Review?" field in the Drupal field UI](../assets/content_types_newfield.png)
 
 And it appears in the ingest form when we try to create a new repository object. To test this, go to Content >> Add content >> Repository item:
 
-![a screenshot of a "Needs Review?" field appearing at the bottom of a new node form](../assets/islandora8_newfieldinform.png)
+![a screenshot of a "Needs Review?" field appearing at the bottom of a new node form](../assets/content_types_newfieldinform.png)
 
 !!! note "RDF Mappings"
     New fields, with the exception of Typed Relation fields, are not automatically indexed in Fedora and the triple-store. Update the    Content Type's RDF Mapping to enable indexing the field (see below).
@@ -62,7 +62,7 @@ When creating a new Repository Item, the new field appears at the top, as a set 
 
 Finally, let’s change how the results of this field are displayed. Initially the new field shows up at the bottom of repository object pages:
 
-![a screenshot of a "Needs Review?" field in the node display](../assets/islandora8_fieldindisplay.png)
+![a screenshot of a "Needs Review?" field in the node display](../assets/content_types_fieldindisplay.png)
 
 In the Admin menu, return to Structure > Content Types and find the Repository Item content type again. Select Manage display from the dropdown menu.
 
@@ -91,7 +91,7 @@ RDF mapping aligns Drupal fields with RDF ontology properties. For example, the 
 
 The Drupal 8 Configuration Synchronization export (e.g. `http://localhost:8000/admin/config/development/configuration/single/export`) and import (e.g. `http://localhost:8000/admin/config/development/configuration/single/import`) can be used to get a copy of the mappings for editing in a text editor before being uploaded again. Alternatively, a repository manager can update the configuration on the server and use Features to import the edits.
 
-An RDF mapping configuration file has two main areas, the mapping's metadata and the mapping itself. Most of the mapping's metadata should be left alone unless you are creating a brand new mapping for a new Content Type or Taxonomy Vocabulary. A _partial_ example from [islandora_demo's islandora_object (Repository Item)](https://github.com/Islandora-CLAW/islandora_demo/blob/8.x-1.x/config/install/rdf.mapping.node.islandora_object.yml) is included below:
+An RDF mapping configuration file has two main areas, the mapping's metadata and the mapping itself. Most of the mapping's metadata should be left alone unless you are creating a brand new mapping for a new Content Type or Taxonomy Vocabulary. A _partial_ example from [islandora_demo's islandora_object (Repository Item)](https://github.com/Islandora/islandora_defaults/blob/8.x-1.x/config/install/rdf.mapping.node.islandora_object.yml) is included below:
 
 ```
 langcode: en
@@ -130,7 +130,7 @@ The required mapping metadata fields when creating a brand-new mapping include t
 
 The mapping itself consists of the `types`' and `fieldMappings` configurations.
 
-All the mappings use RDF namespaces instead of fully-qualified URIs. For example, the type for islandora_object is `pcdm:Object` instead of `http://pcdm.org/models#Object`. Unfortunately, the available namespaces are defined in module hooks (hook_rdf_namespaces) rather than in a configuration file. Repository managers wanting to add additional namespaces need to create their own module and implement hook_rdf_namespaces. See the [islandora_demo](https://github.com/Islandora-CLAW/islandora_demo/blob/8.x-1.x/islandora_demo.module) hook implementation for an example.
+All the mappings use RDF namespaces instead of fully-qualified URIs. For example, the type for islandora_object is `pcdm:Object` instead of `http://pcdm.org/models#Object`. Unfortunately, the available namespaces are defined in module hooks (hook_rdf_namespaces) rather than in a configuration file. Repository managers wanting to add additional namespaces need to create their own module and implement hook_rdf_namespaces. See the [islandora_defaults](https://github.com//Islandora/islandora_defaults/blob/8.x-1.x/islandora_demo.module) hook implementation for an example.
 
 Namespaces currently supported (ordered by the module that supplies them) include:
 
@@ -154,7 +154,7 @@ Namespaces currently supported (ordered by the module that supplies them) includ
     - owl: http://www.w3.org/2002/07/owl#
     - ore: http://www.openarchives.org/ore/terms/
     - rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
-    - islandora: http://islandora.ca/CLAW/
+    - islandora: http://islandora.ca
     - pcdm: http://pcdm.org/models#
     - use: http://pcdm.org/use#
     - iana: http://www.iana.org/assignments/relation/
