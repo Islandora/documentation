@@ -19,8 +19,8 @@ For example, the 'islandora_defaults' module provides a _Repository Item_ conten
 
 ![Screenshot of the "Manage fields" page for the "Repository Item" content type from islandora_defaults.](../assets/metadata_content_type_screenshot.png)
 
-!!! tip "Titles"
-    Note that the "Title" field does not appear in this list, as it is built-in and included with every content type. You can edit the label if you want it called something other than "Title" under the "Edit" tab for that content type. This built-in title "field" is limited to 255 characters; if your content has longer titles it is encouraged to create a separate long_title field to store the full title and reserve the default title field for a display title. There is a contributed module called [Node Title Length](https://www.drupal.org/project/title_length), which allows an administrator to configure the length of the title field in the core node table. However, this only works on nodes (not media or other entities) and involves meddling in a core Drupal database schema, which makes some people uneasy.
+!!! tip "Titles aren't fields."
+    Note that the "Title" field does not appear in this list. It is a built-in part of every content type. You can edit the label of this "field" if you want it called something other than "Title" under the "Edit" tab for that content type. This built-in title "field" is limited to 255 characters; if your content has longer titles it is encouraged to create a separate long_title field to store the full title and reserve the default title field for a display title. There is a contributed module called [Node Title Length](https://www.drupal.org/project/title_length), which allows an administrator to configure the length of the title field in the core node table. However, this only works on nodes (not media or other entities) and involves meddling in a core Drupal database schema, which makes some people uneasy.
 
 !!! tip "7.x Migration Note: What about my XML?"
     In 7.x, metadata were usually stored using an XML schema such as MODS or DC, as datastreams attached to an object. In Islandora 8, metadata is stored as fields.
@@ -38,11 +38,11 @@ Not all content types in your Drupal site need be Islandora "resource nodes". A 
 
 ## Vocabularies
 
-In Drupal, _Taxonomy Vocabularies_ (or simply _Vocabularies_) are also entity sub-types that define a set of fields and their configurations. Whereas instances of content types are called _nodes_, items in a vocabulary are called _taxonomy terms_ (or simply _terms_). Traditionally, taxonomy terms are used to classify content in Drupal. For instance, the Article content type includes a field `field_tags` that can refer to terms in the Tags vocabulary. 
+In Drupal, _Taxonomy Vocabularies_ (or simply _Vocabularies_) are also entity sub-types that define a set of fields and their configurations. Whereas instances of content types are called _nodes_, items in a vocabulary are called _taxonomy terms_ (or simply _terms_). Traditionally, taxonomy terms are used to classify content in Drupal. For instance, the Article content type includes a field `field_tags` that can refer to terms in the Tags vocabulary.
 
 There are two ways that users can interact with taxonomies: they can be "closed," e.g. a fixed list to pick from in a dropdown, or "open," e.g. `field_tags` where users can enter new terms, which are created on the fly. This is not set on the _vocabulary_ itself, but in the configuration of the field (typically on a node). Terms within vocabularies have an ordering, and can have hierarchical structure, but do not need to.
 
-Islandora (through the Islandora Core Feature) creates the 'Islandora Models' vocabulary which includes the terms 'Audio', 'Binary', 'Collection', 'Digital Document', 'Image', 'Page', 'Paged Content', 'Publication Issue', and 'Video'. Islandora Defaults provides contexts that cause certain actions (e.g. derivatives to happen, or blocks to appear) based on which term is used. 
+Islandora (through the Islandora Core Feature) creates the 'Islandora Models' vocabulary which includes the terms 'Audio', 'Binary', 'Collection', 'Digital Document', 'Image', 'Page', 'Paged Content', 'Publication Issue', and 'Video'. Islandora Defaults provides contexts that cause certain actions (e.g. derivatives to happen, or blocks to appear) based on which term is used.
 
 <!-- Is it possible to add your own terms to this vocabulary? Is it recommended? -->
 
@@ -59,7 +59,7 @@ The Controlled Access Terms module provides additional vocabularies:
 - Person
 - Resource Types
 - Subject
- 
+
 Each of these vocabularies has its own set of fields allowing repositories to further describe them. The Repository Item content type has fields that can reference terms in these vocabularies. See 'Entity Reference fields' in the 'Field Types' section below.
 
 The vocabularies provided by default are a starting point, and a repository administrator can create whatever vocabularies are desired.
@@ -71,16 +71,24 @@ Fields are where Drupal entities store their data. There are different _types_ o
 
 _Entity Reference_ fields are a special type of field built into Drupal that creates a relationship between two entities. The field's configuration options include which kind of entities can be referenced. The 'Repository Item' content type, provided by islandora_defaults, includes several entity reference fields that reference vocabularies defined by the islandora and controlled_access_terms modules.
 
-The 'Member Of' field is an entity reference field, defined by Islandora, which is the Islandora way of creating hierarchies of resource nodes. This can be used to show membership in a collection, pages that are members of a paged item, and members of a complex object.
+The 'Member Of' field is an entity reference field, defined by Islandora, which is the Islandora way of imposing a hierarchical order on resource nodes. This can be used to show membership in a collection, for pages that are members of a paged item, and for members of a complex object.
 
-### EDTF 
+### EDTF
 
-The EDTF field type is for recording dates in [Extended Date Time Format](https://www.loc.gov/standards/datetime/edtf.html), which is a format based off of the hyphenated form of ISO 8601 (e.g. 1991-02-03 or 1991-02-03T10:00:00), but also allows expressions of different granularity and uncertainty. The Default EDTF widget has a validator that only allows strings that conform to the EDTF standard. The Default EDTF formatter allows these date string to be displayed in a variety of human readable ways.
+The EDTF field type is for recording dates in [Extended Date Time Format](https://www.loc.gov/standards/datetime/edtf.html), which is a format based off of the hyphenated form of ISO 8601 (e.g. 1991-02-03 or 1991-02-03T10:00:00), but also allows expressions of different granularity and uncertainty. The Default EDTF widget has a validator that only allows strings that conform to the EDTF standard. The Default EDTF formatter allows these date string to be displayed in a variety of human readable ways, including big- or little-endian, and presenting months as numbers, abbreviations, or spelling month names out in full.
+
+When configuring the EDTF widget for a field in a content type, you can choose to allow date intervals, but doing this prevents the widget from accepting values that include times. (The EDTF standard states that date intervals cannot contain times, but the field should be able to accept either a valid EDTF range or a valid EDTF datetime, so this is a bug.)
+
+Example of valid inputs in a multi-valued EDTF Date field:
+![Screenshot of valid dates ('2019', '2019-11', '2019-22', and '2019-02-02T02:22:22Z') in an EDTF form widget.](../assets/metadata_edtf_valid.png)
+
+Example of the same EDTF dates displayed using little-endian format:
+![Screenshot of dates displayed as '2019', 'November 2019', 'Summer 2019', and '2 February 2019 02:22:22Z'.](../assets/metadata_edtf_display.png)
 
 Example of a valid EDTF value ('1943-05') and an invalid value ('1943 May') with the corresponding error message:
 ![Screenshot of both a valid ("1943-05") and an invalid ("1943 May") EDTF entry. Displays the error message "Could not parse the date 'May 1943' Years must be at least 4 characters long."](../assets/metadata_edtf_invalid.png)
 
-The Default EDTF Widget can be set to allow date intervals, but doing this prevents the widget from accepting values that include times.
+The configuration for the Default EDTF Widget (including options for extra strict date validation, and allowing date intervals and date sets).
 ![Screenshot of the configuration screen for the EDTF Widget](../assets/metadata_edtf_widget_settings.png)
 
 Example of how the EDTF formatter settings can change the display of an EDTF value:
@@ -89,30 +97,34 @@ Example of how the EDTF formatter settings can change the display of an EDTF val
 
 ### Typed Relation
 
-Drupal's Entity Reference fields allow a site editor to link entities to related entities, but do not allow the editor to qualify anything about that relationship. Therefore, if we wanted to be able to describe contributors and their roles (e.g. 'author', 'illustrator', 'architect') we would have to define one field per role. The Typed Relation field, provided by Controlled Access Terms, pairs two inputs into a single field: an entity reference, and a relation type.
-
-![Screenshot of adding a value into a typed relation field](../assets/metadata_typed_relation_field.png)
+A Typed Relation field is an extension of Drupal's Entity Reference field, which allows the user to qualify the relation. It was created for describing a resource's contributors (modelled as taxonomy terms or some other Drupal entities) as well as their roles in this resource node (such as 'author', 'illustrator', or 'architect'). With only Drupal's Entity Reference fields, we would need individual fields for 'author', 'illustrator', 'architect', and any other roles that may need to be made available. Using a Typed Relation field, we can have one field for "Contributors" and let the user pick the role from a dropdown list.
 
 !!! tip "Nerd note:"
     The parts of a field are called properties, so 'entity reference' and 'relation type' are properties of the Typed Relation field type.
 
- The Typed Relation field type combines an entity reference _property_ and a 'relation type' property in a single field and extends the JSON-LD serialization to override a field's RDF mapping in favor of the selected 'relation type'. For example, instead of a 'creator' field, Repository item content type defines a 'Linked Agent' field and is configured with a list of available relationships that comes from the MARC relators list. (Configurable at '/admin/structure/types/manage/islandora_object/fields/node.islandora_object.field_linked_agent'.) The available relations are configured by providing the RDF namespace, a colon, the RDF relationship value, a pipe delimiter, and a display value for the user interface. (See the RDF Mapping section of '[Create / Update a Content Type](content_types.md)' for more details.)
+Islandora Defaults provides a 'Linked Agent' field as part of the Repository Item content type, and populates the available relationships from the MARC relators list.
+![Screenshot of adding a value into a typed relation field](../assets/metadata_typed_relation_field.png)
+
+The list of available relations for this field is configurable at '/admin/structure/types/manage/islandora_object/fields/node.islandora_object.field_linked_agent'. If you re-use this existing field on another content type, you can define different available relations for that instance of the field. Relations are defined in the format `key|value`, and the key is used in the RDF mapping (see below).
 
 ![Screenshot of the 'Available Relations' configuration text box for the 'Linked Agent' field.](../assets/metadata_available_relations_config.png)
+
+!!! tip "Typed Relation fields and mapping to RDF:"
+    Unlike other fields, which can be assigned RDF predicates in RDF Mapping yaml files, a typed relation field uses a different predicate depending on the chosen "type". These predicates are assigned using the 'keys' in the `key|value` configuration. The key must be formated `namespace:predicate`, e.g. `relators:act`. The namespace ('relators') must be pre-defined in code, using a hook. See the RDF Mapping section of [Create / Update a Content Type](content_types.md) for more details, including a list of available pre-defined namespaces.
 
 
 # Getting Metadata into Fedora and a Triple-store
 
-The above sections described how Drupal manages and stores metadata, but the key feature of Islandora 8 is pushing that metadata into a Fedora 4+ repository and a triple-store. Islandora does this by using Drupal's serialization capabilities to provide a JSON-LD serialization that can be ingested by Fedora 4+ repository and triple-stores. In response to write operations, it sends notifications to the repository and triple-store that a node or term is available to ingest.
+The above sections described how Drupal manages and stores metadata, but Islandora 8 provides for pushing that metadata into a Fedora 4+ repository and a triple-store. Islandora does this by using Drupal's serialization capabilities to provide a JSON-LD serialization that can be ingested by Fedora 4+ repository and triple-stores. In response to write operations, it sends notifications to the repository and triple-store that a node or term is available to ingest.
 
 The JSON-LD module works by taking node or term and its corresponding RDF mapping to create a JSON-LD serialization. The RDF mapping for a content type or vocabulary lists its fields and the RDF predicates that should be used for them.
 
-For example, below is the JSON-LD serialization for an example Repository item node created in a standard claw-playbook based vagrant VM:
+For example, below is the JSON-LD serialization for an example Repository item node created in a standard claw-playbook based vagrant VM. A serialization such as this can be seen by appending `?_format=jsonld` to a node's URL.:
 ```
 {
   "@graph":[
     {
-      "@id":"http://localhost:8000/node/1?_format=jsonld",
+      "@id":"http://localhost:8000/node/1",
       "@type":[
         "http://pcdm.org/models#Object"
       ],
@@ -124,7 +136,7 @@ For example, below is the JSON-LD serialization for an example Repository item n
       ],
       "http://schema.org/author":[
         {
-          "@id":"http://localhost:8000/user/1?_format=jsonld"
+          "@id":"http://localhost:8000/user/1"
         }
       ],
       "http://schema.org/dateCreated":[
@@ -163,7 +175,7 @@ For example, below is the JSON-LD serialization for an example Repository item n
       ],
       "http://purl.org/dc/terms/type":[
         {
-          "@id":"http://localhost:8000/taxonomy/term/11?_format=jsonld"
+          "@id":"http://localhost:8000/taxonomy/term/11"
         }
       ],
       "http://purl.org/dc/terms/rights":[
@@ -174,29 +186,29 @@ For example, below is the JSON-LD serialization for an example Repository item n
       ],
       "http://purl.org/dc/terms/subject":[
         {
-          "@id":"http://localhost:8000/taxonomy/term/26?_format=jsonld"
+          "@id":"http://localhost:8000/taxonomy/term/26"
         }
       ],
       "http://schema.org/sameAs":[
         {
-          "@value":"http://localhost:8000/node/1?_format=jsonld"
+          "@value":"http://localhost:8000/node/1"
         }
       ]
     },
     {
-      "@id":"http://localhost:8000/user/1?_format=jsonld",
+      "@id":"http://localhost:8000/user/1",
       "@type":[
         "http://schema.org/Person"
       ]
     },
     {
-      "@id":"http://localhost:8000/taxonomy/term/11?_format=jsonld",
+      "@id":"http://localhost:8000/taxonomy/term/11",
       "@type":[
         "http://schema.org/Thing"
       ]
     },
     {
-      "@id":"http://localhost:8000/taxonomy/term/26?_format=jsonld",
+      "@id":"http://localhost:8000/taxonomy/term/26",
       "@type":[
         "http://schema.org/Thing"
       ]
@@ -215,6 +227,6 @@ Because the Repository item's title field is mapped to 'dc:title' in the RDF map
 ],
 ```
 
-Also note that the URI (`@id`) value is 'http://localhost:8000/node/1?_format=jsonld'. To see how any node or term in a repository will be serialized to JSON-LD add `?_format=jsonld` to the node's URI.
+Also note that the URI (`@id`) value is 'http://localhost:8000/node/1' (without the `?_format=jsonld`). Old versions of Islandora 8 included the `?_format=jsonld`, and dealing with it is described at "[Adding back ?_format=jsonld](../technical-documentation/adding_format_jsonld.md)". 
 
 When a node or term is updated a Drupal Context condition emits an indexing event to notify the repository and triple-store that it is should be ingested/updated. <!-- We should link our documentation on Contexts and events, wherever that is. -->
