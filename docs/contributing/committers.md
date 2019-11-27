@@ -85,7 +85,7 @@ Summary:
 
 If they accept, then do:
 
-1. Add to Committer team of GitHub Islandora organization 
+1. Add to the Islandora 8 Committer team of the Github Islandora organization.
 2. Add to Committer team of GitHub Islandora-Labs organization 
 3. Add to islandora-2x-committers google-group
 4. Add to committers wiki page: Islandora 8 Committers (this page)
