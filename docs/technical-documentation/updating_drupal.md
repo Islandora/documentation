@@ -1,5 +1,14 @@
 # Updating Drupal
 
+## Introduction
+
+This section describes how to update Drupal and its modules using Composer. If you installed Islandora using the Islandora Playbook, then your Drupal was installed by Composer, so it is considered best practice to continue using Composer for updates. The method on this section is not specific to Islandora, and does not (yet) include how to update Islandora Features.
+
+### What is Composer
+It is recommended by Drupal.org and the Islandora 8 community to use Composer with Drupal 8 for various tasks.
+
+"[Composer](https://getcomposer.org/) is a [dependency manager](https://en.wikipedia.org/wiki/Package_manager) for PHP. Drupal core uses Composer to manage core dependencies like Symfony components and Guzzle." [[Source](https://www.drupal.org/docs/develop/using-composer/using-composer-with-drupal)]
+
 ## Always create backs ups (DB and files) before updating
 
 **Before updating either Drupal core or Drupal modules:**
@@ -7,11 +16,6 @@
 * Optionally, if you made manual modifications to files like .htaccess, composer.json, or robots.txt, copy them somewhere easy to find. Because after you've installed the new Drupal core, you will need to re-apply the changes. For example, Acquia Dev Desktop places a .htaccess file in the top-level directory and without it, only the homepage on your site will work.
 
 **Warning:** Always revert to a backup if you get a fatal error in the update process.
-
-## What is Composer
-It is recommended by Drupal.org and the Islandora 8 community to use Composer with Drupal 8 for various tasks.
-
-"[Composer](https://getcomposer.org/) is a [dependency manager](https://en.wikipedia.org/wiki/Package_manager) for PHP. Drupal core uses Composer to manage core dependencies like Symfony components and Guzzle." [[Source](https://www.drupal.org/docs/develop/using-composer/using-composer-with-drupal)]
 
 ## Updating Drupal Core
 Over time new versions of Drupal “core” are released, and Islandora users are encouraged to install official Drupal core updates and security patches. On the other hand “alpha” and “beta" versions of Drupal core should only be installed by advanced users for testing purposes.
