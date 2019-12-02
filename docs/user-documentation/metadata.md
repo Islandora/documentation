@@ -15,7 +15,7 @@ As described in the [Nodes section](objects.md), Islandora 8 digital objects are
 In Drupal, _Nodes_ come in different sub-types called _Content Types_ (e.g. Article, Basic page, Repository item). Content types contain fields, and configurations for how those fields can be edited or displayed. Each content type is essentially a _metadata profile_ that can be used for a piece of web content, or to describe a digital resource. For each field in a content type, an administrator can configure how data is entered, how it can be displayed, how many values can be stored, and how long the value can be. Some configurations, such as data entry and display, can be changed at any time. Others, such as how long a value can be or what options are available in a select list, cannot be changed once content has been created without first deleting all content of that type. However, fields can be added to existing content types with no consequence.
 
 
-For example, the 'islandora_defaults' module provides a _Repository Item_ content type that defines many fields including "Alternative Title" and "Date Issued". Under the management menu for Repository Item you can see a list of the fields it includes ("Manage fields" as well as tabs for changing the input forms ("Manage form display") and display modes ("Manage display"). (See the "[Create / Update a Content Type](content_types.md)" section for more details on creating and configuring fields.)
+For example, the 'islandora_defaults' module provides a _Repository Item_ content type that defines many fields including "Alternative Title" and "Date Issued". Under the management menu for Repository Item you can see a list of the fields it includes ("Manage fields") as well as tabs for changing the input forms ("Manage form display") and display modes ("Manage display"). See the "[Create / Update a Content Type](content_types.md)" section for more details on creating and configuring fields.
 
 ![Screenshot of the "Manage fields" page for the "Repository Item" content type from islandora_defaults.](../assets/metadata_content_type_screenshot.png)
 
@@ -115,11 +115,11 @@ The list of available relations for this field is configurable at '/admin/struct
 
 # Getting Metadata into Fedora and a Triple-store
 
-The above sections described how Drupal manages and stores metadata, but Islandora 8 provides for pushing that metadata into a Fedora 4+ repository and a triple-store. Islandora does this by using Drupal's serialization capabilities to provide a JSON-LD serialization that can be ingested by Fedora 4+ repository and triple-stores. In response to write operations, it sends notifications to the repository and triple-store that a node or term is available to ingest.
+The above sections described how Drupal manages and stores metadata, but Islandora 8 provides for pushing that metadata into a Fedora 4+ repository and a triple-store. Islandora does this by using Drupal's serialization capabilities to provide a JSON-LD serialization that can be ingested by Fedora 4+ repository and triple-stores. In response to actions taken as a result of if-then configurations in [Contexts](context.md), Islandora sends notifications to the repository and triple-store that an entity available to ingest.
 
-The JSON-LD module works by taking node or term and its corresponding RDF mapping to create a JSON-LD serialization. The RDF mapping for a content type or vocabulary lists its fields and the RDF predicates that should be used for them.
+The JSON-LD module (written for Islandora) takes an entity and its corresponding RDF mapping (a structure defined by the contributed RDF module) to create a JSON-LD serialization. An RDF mapping for a content type, media type, or vocabulary lists its fields and the RDF predicates that should be used for them.
 
-For example, below is the JSON-LD serialization for an example Repository item node created in a standard claw-playbook based vagrant VM. A serialization such as this can be seen by appending `?_format=jsonld` to a node's URL.:
+The JSON-LD serialization for an entity is available by appending `?_format=jsonld` to the entity's URL. This particular syntax takes advantage of the REST API module. Below is an example JSONLD document representing the RDF serialization of a Repository item node created in a standard islandora-playbook based vagrant VM:
 ```
 {
   "@graph":[
@@ -227,6 +227,5 @@ Because the Repository item's title field is mapped to 'dc:title' in the RDF map
 ],
 ```
 
-Also note that the URI (`@id`) value is 'http://localhost:8000/node/1' (without the `?_format=jsonld`). Old versions of Islandora 8 included the `?_format=jsonld`, and dealing with it is described at "[Adding back ?_format=jsonld](../technical-documentation/adding_format_jsonld.md)". 
+Also note that the URI (`@id`) value is 'http://localhost:8000/node/1' (without the `?_format=jsonld`). Old versions of Islandora 8 included the `?_format=jsonld`, and dealing with discrepancies is described at "[Adding back ?_format=jsonld](../technical-documentation/adding_format_jsonld.md)".
 
-When a node or term is updated a Drupal Context condition emits an indexing event to notify the repository and triple-store that it is should be ingested/updated. <!-- We should link our documentation on Contexts and events, wherever that is. -->
