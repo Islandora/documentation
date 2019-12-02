@@ -1,4 +1,4 @@
-## Creating resources, media and files - POST/PUT Requests 
+## Creating resources, media and files - POST/PUT Requests
 
 * [Authorization](#authorization)
 * [Content](#content-nodes)
@@ -18,7 +18,7 @@ The above setup shows that you can perform a POST request against a node at the 
 
 To create a node you need to provide two elements in your message body. The node type and any _required_ field values.
 
-For the islandora_demo included Repository Item these are:
+For the islandora_defaults included Repository Item these are:
 
 1. A type - this tells Drupal what content type we are creating
 1. A title - this is a required field of all nodes.
@@ -28,7 +28,7 @@ A good way to make your first POST request is to perform a GET request against a
 
 You can find more information about [GET requests here](./rest-get.md)
 
-Again we are using the json format. 
+Again we are using the json format.
 
 &#x1F34E; For example `curl -X GET 'http://localhost:8000/node/3?_format=json`
 
@@ -102,7 +102,7 @@ So the body of the request will be:
 
 **Note**: You **must** include an **appropriate** Content-type header for the format you're requesting
 
-**Other Note**: You **must** include some authentication credentials to say who you are and so Drupal can check if you are allowed to create this object. Otherwise you will receive a `401 Unauthorized` response. 
+**Other Note**: You **must** include some authentication credentials to say who you are and so Drupal can check if you are allowed to create this object. Otherwise you will receive a `401 Unauthorized` response.
 
 If you do provide credentials but don't have permission, you will receive a `403 Forbidden` response.
 
@@ -124,7 +124,7 @@ Content-language: en
 X-Content-Type-Options: nosniff
 X-Frame-Options: SAMEORIGIN
 Expires: Sun, 19 Nov 1978 05:00:00 GMT
-Vary: 
+Vary:
 X-Generator: Drupal 8 (https://www.drupal.org)
 Content-Length: 1564
 Content-Type: application/json
@@ -134,11 +134,11 @@ Content-Type: application/json
 
 The parts of the above request are:
 
-1. `-i` - return the response headers 
+1. `-i` - return the response headers
 1. `-X POST` - send a POST request
 1. `-u admin:islandora` - use these basic authentication credentials
 1. `-H"Content-type: application/json"` - send the content-type header
-1. `--data {...}` - send the request body (seen above)
+1. `--data '{...}'` - send the request body (seen above)
 1. `'http://localhost:8000/node?_format=json'` - the endpoint of the request
 
 ## Files and Media
@@ -157,13 +157,13 @@ The tokens to this URI are as follows:
 
 1. node id : The numeric ID of the node you wish to link this media/file to.
 1. media type : The media type name you wish to create (i.e. image, file, audio)
-1. media use : The numeric ID of the media use taxonomy term to set for this media 
+1. media use : The numeric ID of the media use taxonomy term to set for this media
 
 You can find the media use taxonomy terms at `http://localhost:8000/admin/structure/taxonomy/manage/islandora_media_use/overview`
 
 So the body of the request is the actual binary file to upload.
 
-&#x1F34E; For example: 
+&#x1F34E; For example:
 
 With a local file called `my-image.png` that I wanted to link to a node with ID `3`.
 
@@ -185,7 +185,7 @@ Content-language: en
 X-Content-Type-Options: nosniff
 X-Frame-Options: SAMEORIGIN
 Expires: Sun, 19 Nov 1978 05:00:00 GMT
-Vary: 
+Vary:
 X-Generator: Drupal 8 (https://www.drupal.org)
 Content-Length: 0
 Content-Type: text/html; charset=UTF-8
@@ -193,7 +193,7 @@ Content-Type: text/html; charset=UTF-8
 
 The parts of the above request are:
 
-1. `-i` - return the response headers 
+1. `-i` - return the response headers
 1. `-X PUT` - send a PUT request
 1. `-u admin:islandora` - use these basic authentication credentials
 1. `-H"Content-type: image/png"` - send the content-type header

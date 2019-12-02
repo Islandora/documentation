@@ -64,7 +64,6 @@ Each of these vocabularies has its own set of fields allowing repositories to fu
 
 The vocabularies provided by default are a starting point, and a repository administrator can create whatever vocabularies are desired.
 
-
 ## Field Types
 
 Fields are where Drupal entities store their data. There are different _types_ of fields including boolean, datetime, entity reference, integer, string, text, and text_with_summary. These field types also have _widgets_ (controlling how data is entered) and _formatters_ (controlling how data is displayed). The [Drupal 8 documentation on FieldTypes, FieldWidgets, and FieldFormatters](https://www.drupal.org/docs/8/api/entity-api/fieldtypes-fieldwidgets-and-fieldformatters) includes a list of the core field types. Modules can provide their own field types, formatters, and widgets. The Controlled Access Terms module provides two additional types for use with Islandora: ETDF, and Typed Relation. These are described below.
@@ -120,6 +119,7 @@ The above sections described how Drupal manages and stores metadata, but Islando
 The JSON-LD module (written for Islandora) takes an entity and its corresponding RDF mapping (a structure defined by the contributed RDF module) to create a JSON-LD serialization. An RDF mapping for a content type, media type, or vocabulary lists its fields and the RDF predicates that should be used for them.
 
 The JSON-LD serialization for an entity is available by appending `?_format=jsonld` to the entity's URL. This particular syntax takes advantage of the REST API module. Below is an example JSONLD document representing the RDF serialization of a Repository item node created in a standard islandora-playbook based vagrant VM:
+
 ```
 {
   "@graph":[
