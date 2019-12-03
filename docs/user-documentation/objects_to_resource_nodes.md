@@ -60,7 +60,7 @@ The following pages expand on the concepts discussed above:
 
 - [Nodes](objects.md)
 - [Media](media.md)
-- [Make an Image](creating-an-object.md)
+- [Make an Image](creating-a-node.md)
 - [Content Types](content_types.md)
 
 ### Copyright and Usage
