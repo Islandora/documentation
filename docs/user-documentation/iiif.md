@@ -14,8 +14,8 @@ At a practial level, because Islandora supports several of the IIIF specificatio
 ## Using IIIF in Islandora 8
 
 Implementation of the IIIF Presentation API is new in Islandora 8, and using it is as simple as configuring a Context (in fact, you don't even need to configure it; the Context, Openseadragon Block, already exists by default).
-
-To use this Context, all that is required is for your book or newspaper (or other [paged content](paged-content.md)) to be given a model of "Paged Content" or "Publication Issue". Then, in the Openseadragon Block Context, make sure the term used in the "Node has term" condition (you can register more than one term there). Now, when you view a paged content Islandora object, you will see thumbnails of all of its child pages (assuming you have added some child pages to the object) in the OpenSeadragon viewer as illustrated above. 
+<!-- todo: Put a link to paged-content.md below when it exists. -->
+To use this Context, all that is required is for your book or newspaper (or other paged content) to be given a model of "Paged Content" or "Publication Issue". Then, in the Openseadragon Block Context, make sure the term used in the "Node has term" condition (you can register more than one term there). Now, when you view a paged content Islandora object, you will see thumbnails of all of its child pages (assuming you have added some child pages to the object) in the OpenSeadragon viewer as illustrated above. 
 
 You can change how the paged content thumbnails are arranged in the OpenSeadragon viewport by doing the following:
 
