@@ -33,7 +33,7 @@ extra:
     - type: 'twitter'
       link: 'https://twitter.com/islandora'
 
-pages:
+nav:
   - Summary: 'index.md'
   - Installation: 'installation.md'
   - User Documentation:
