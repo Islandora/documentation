@@ -23,7 +23,7 @@ Go back to home, you should be able to view content in the language selected in 
 ### Field Label Translations
 If you need the field labels of the repository Item displayed in a different language, additional configuration is needed. `Configuration translation` module in the core needs to be enabled. Note that this will enable User Interface translation as well. 
 
-Each field label needs to be translated. Alternatively, you can import existing translations. For instance, go to `Interface translation import` at `http://localhost:8000/admin/config/regional/translate/import`, select islandora translations from `https://github.com/Islandora-CLAW/islandora_defaults/tree/8.x-1.x/translations`, set the ` Treat imported strings as custom translations` option and import. This will provide translation for Islandora 8 repository item field labels. Cache should be cleared to see the changes. An example second language display is shown below. 
+Each field label needs to be translated. Alternatively, you can import existing translations. For instance, go to `Interface translation import` at `http://localhost:8000/admin/config/regional/translate/import`, select islandora translations from `https://github.com/Islandora/islandora_defaults/tree/8.x-1.x/translations`, set the ` Treat imported strings as custom translations` option and import. This will provide translation for Islandora 8 repository item field labels. Cache should be cleared to see the changes. An example second language display is shown below. 
 
 ![Multilingual Content Representation in Drupal](../assets/multilingual_repository_item_in_drupal.png)
 

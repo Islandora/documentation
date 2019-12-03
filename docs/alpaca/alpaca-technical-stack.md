@@ -10,9 +10,9 @@ The base unit of resources is called a bundle. Bundle is similar to a jar file, 
 Apache Karaf is a container that can be used to deploy an array of applications such servlets, Apache Camel components, jars etc. 
 
 ### Karaf - Bundle - Hello World 
-Download a bundle to the [CLAW vagrant](https://github.com/Islandora-CLAW/claw_vagrant) (ex to `/home/ubuntu` directory). An example hello world bundle is [here](https://github.com/moghaddam/developmentor/blob/master/helloworld/target/helloworld-1.0.0.jar). 
+Download a bundle to the [islandora-playbook](https://github.com/Islandora-Devops/isladora-playbook) (ex to `/home/ubuntu` directory). An example hello world bundle is [here](https://github.com/moghaddam/developmentor/blob/master/helloworld/target/helloworld-1.0.0.jar). 
 
-In Islandora CLAW vagrant, you can login to Karaf using ssh. The password is karaf. You can also use the client here: `/opt/karaf/bin/client`. Karaf client allows the use of Linux commands such as `grep` in addition to Karaf commands.  
+In the Islandora 8 playbook, you can login to Karaf using ssh. The password is karaf. You can also use the client here: `/opt/karaf/bin/client`. Karaf client allows the use of Linux commands such as `grep` in addition to Karaf commands.  
 
 ```
 ssh -p 8101 karaf@localhost
@@ -90,7 +90,7 @@ Maven has camel-archetype-blueprint which can be used to create apache-camel OSG
 mvn archetype:generate -DarchetypeGroupId=org.apache.camel.archetypes -DarchetypeArtifactId=camel-archetype-blueprint -DarchetypeVersion=2.9.0 -DarchetypeRepository=https://repository.apache.org/content/groups/snapshots-g
 ```
 
-However, it is easier to copy the structure of an existing project such as [islandora-connector-broadcast](https://github.com/Islandora-CLAW/Alpaca/tree/master/islandora-connector-broadcast).
+However, it is easier to copy the structure of an existing project such as [islandora-connector-broadcast](https://github.com/Islandora/Alpaca/tree/master/islandora-connector-broadcast).
 
 ```
 cp -R islandora-connector-broadcast/ islandora-connector-helloworld
@@ -136,7 +136,7 @@ public class HelloworldRouter extends RouteBuilder {
 ```
 apply plugin: 'osgi'
 
-description = 'Islandora CLAW HelloWorld'
+description = 'Islandora 8 HelloWorld'
 
 dependencies {
     compile group: 'org.apache.camel', name: 'camel-core', version: camelVersion
@@ -217,7 +217,7 @@ $ ./activemq start
 
 When ActiveMQ gets started, go to http://localhost:8161/admin/. You can login using admin:admin.
 
-Note that ActiveMQ in CLAW vagrant does not have a UI.  
+Note that ActiveMQ in Islandora 8 playbook does not have a UI.  
 
 ## References
 * [OSGI for Beginners](http://www.theserverside.com/news/1363825/OSGi-for-Beginners)
