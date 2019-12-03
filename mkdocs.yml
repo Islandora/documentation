@@ -38,11 +38,12 @@ nav:
   - Installation: 'installation.md'
   - User Documentation:
       - 'Introduction': 'user-documentation/user-intro.md'
-      - 'Nodes': 'user-documentation/objects.md'
+      - 'Resource Nodes': 'user-documentation/resource-nodes.md'
       - 'From Objects to Resource Nodes': 'user-documentation/objects_to_resource_nodes.md'
       - 'Media': 'user-documentation/media.md'
       - 'Create a Resource Node': 'user-documentation/creating-a-node.md'
       - 'Collections': 'user-documentation/collections.md'
+      - 'Paged Content': 'user-documentation/paged-content.md'
       - 'Metadata': 'user-documentation/metadata.md'
       - 'Content Types': 'user-documentation/content_types.md'
       - 'Searching': 'user-documentation/searching.md'

@@ -58,7 +58,7 @@ Management attributes of the resource node help to clarify and manage its relati
 
 The following pages expand on the concepts discussed above:
 
-- [Nodes](objects.md)
+- [Resource Nodes](resource-nodes.md)
 - [Media](media.md)
 - [Make an Image](creating-a-node.md)
 - [Content Types](content_types.md)

@@ -7,8 +7,7 @@
 
 <!-- Next revision: check status of changing 'bundles' to 'entity sub-types' (https://www.drupal.org/project/drupal/issues/1380720). -->
 
-
-As described in the [Nodes section](objects.md), Islandora 8 digital objects are comprised of _Drupal nodes_ for descriptive metadata, _Drupal media_ for technical metadata, and _Drupal files_ for the binary objects. This section describes how Islandora 8 uses and extends Drupal fields to manage descriptive metadata.
+As described in the [resource nodes section](resource-nodes.md), Islandora 8 digital objects are comprised of _Drupal nodes_ for descriptive metadata, _Drupal media_ for technical metadata, and _Drupal files_ for the binary objects. This section describes how Islandora 8 uses and extends Drupal fields to manage descriptive metadata.
 
 ## Content Types
 
