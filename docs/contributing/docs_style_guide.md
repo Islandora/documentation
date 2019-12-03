@@ -12,7 +12,7 @@
    -- For file name, use underscores between words and prefix all file names with the page name, e.g. context_display_hints.jpg for the image showing how to set display hints in the context menu.
 - Use `!!! note` at the start of a paragraph to have it rendered as a note like this:
 
-!!! note I am a helpful tip!
+!!! note "Helpful Tip" I am a helpful tip!
 
 ## Don'ts
 
