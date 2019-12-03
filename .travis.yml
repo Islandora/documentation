@@ -19,7 +19,7 @@ script:
   
 deploy:
   provider: pages
-  local_dir: site
+  local_dir: $HOME/islandora/site
   skip_cleanup: true
   github_token: $GITHUB_TOKEN
   keep_history: true
