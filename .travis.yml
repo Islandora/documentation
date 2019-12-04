@@ -1,0 +1,27 @@
+sudo: true
+language: python
+
+matrix:
+    fast_finish: true
+
+branches:
+  only:
+    - /master/
+
+install:
+  - git clone https://github.com/Islandora/documentation.git $HOME/islandora
+  - pip install mkdocs
+  - pip install mkdocs-material
+
+script:
+  - cd $HOME/islandora
+  - mkdocs build --clean
+  
+deploy:
+  provider: pages
+  local_dir: $HOME/islandora/site
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  keep_history: true
+  on:
+    branch: master
