@@ -33,16 +33,17 @@ extra:
     - type: 'twitter'
       link: 'https://twitter.com/islandora'
 
-pages:
+nav:
   - Summary: 'index.md'
   - Installation: 'installation.md'
   - User Documentation:
       - 'Introduction': 'user-documentation/user-intro.md'
-      - 'Nodes': 'user-documentation/objects.md'
+      - 'Resource Nodes': 'user-documentation/resource-nodes.md'
       - 'From Objects to Resource Nodes': 'user-documentation/objects_to_resource_nodes.md'
       - 'Media': 'user-documentation/media.md'
       - 'Create a Resource Node': 'user-documentation/creating-a-node.md'
       - 'Collections': 'user-documentation/collections.md'
+      - 'Paged Content': 'user-documentation/paged-content.md'
       - 'Metadata': 'user-documentation/metadata.md'
       - 'Content Types': 'user-documentation/content_types.md'
       - 'Searching': 'user-documentation/searching.md'
@@ -54,8 +55,11 @@ pages:
       - 'Multilingual': 'user-documentation/multilingual.md'
       - 'Extending Islandora': 'user-documentation/extending.md'
       - 'OAI-PMH': 'user-documentation/oai.md'
-  - Administrator Documentation:
+  - Repository Administrator Documentation:
       - 'RDF Generation': 'islandora/rdf-mapping.md'
+  - System Administrator Documentation:
+    - 'Installing Modules': 'technical-documentation/install-enable-drupal-modules.md'
+    - 'Updating Drupal': 'technical-documentation/updating_drupal.md'
   - Developer Documentation:
     - REST Documentation:
       - 'Introduction': 'technical-documentation/using-rest-endpoints.md'
@@ -64,7 +68,6 @@ pages:
       - 'PATCH': 'technical-documentation/rest-patch.md'
       - 'DELETE': 'technical-documentation/rest-delete.md'
       - 'Signposting': 'technical-documentation/rest-signposting.md'
-    - 'Installing Modules': 'technical-documentation/install-enable-drupal-modules.md'
     - 'Running Tests': 'technical-documentation/running-automated-tests.md'
     - 'Flysystem': 'technical-documentation/flysystem.md'
     - 'JWT Authentication': 'technical-documentation/jwt.md'
