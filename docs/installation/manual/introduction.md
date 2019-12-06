@@ -25,7 +25,7 @@ It is expected that the person setting up the site may want to use different use
 ### Bash Commands
 
 !!! notice
-    Command blocks are *always* assumed to start at the home folder of the user originally created during the server installation. **They are never run as `root`**; if root access is required, `sudo` will be specified, and if files are created belonging to `root` that should not belong to `root`, they will be `chmod`ded and `chown`ed immediately afterwards. If a different working directory is required, an absolute path will be specified to `cd`. If you're concerned about whether or not a code block can be run from your current working directory, run `cd ~` before executing any commands in it.
+    Command blocks are *always* assumed to start at the home folder of the user originally created during the server installation. **They are never run as `root`**; if root access is required, `sudo` will be specified, and if files are created belonging to `root` that should not belong to `root`, `chmod` and `chown` will be run against them immediately afterwards to ensure correct permissions. If commands need to be run from a different working directory, an absolute path will be specified to use with `cd`. If you're concerned about whether or not a code block can be run from your current working directory, run `cd ~` before executing any commands in it.
 
 Commands to be run on the command line will be placed in code blocks, with one command per line, and any replacement variables below, e.g.,
 

@@ -1,6 +1,6 @@
 # Component Overview
 
-A functioning Islandora 8 Stack is made up of dozens of components working in synchronization with each other to store information in your repository, manage that information, and disseminate it intelligently to users. Whether running an installation using the provided Ansible playbook or installing the stack manually, it may be helpful ro have a brief overview of all the components we're going to need, in the order we're going to install them, as well as a brief introduction to each component's installation and configuration process.
+A functioning Islandora 8 Stack is made up of dozens of components working in synchronization with each other to store information in your repository, manage that information, and disseminate it intelligently to users. Whether running an installation using the provided Ansible playbook or installing the stack manually, it may be helpful to have a brief overview of all the components we're going to need, in the order we're going to install them, as well as a brief introduction to each component's installation and configuration process.
 
 This list includes four different kinds of components:
 
