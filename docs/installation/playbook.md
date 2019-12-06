@@ -1,4 +1,5 @@
 The fastest way to get up and running with Islandora 8 is through an Ansible Playbook called [islandora-playbook](https://github.com/Islandora-Devops/islandora-playbook). It can be used to spin up a local environment using [Vagrant](https://www.vagrantup.com/), or to provision an existing machine.
+=======
 
 ## Requirements
 

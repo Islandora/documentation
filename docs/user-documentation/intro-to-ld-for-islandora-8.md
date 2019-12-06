@@ -74,4 +74,3 @@ Most ontologies are very specific to certain use cases, and digital repository s
 - [PCDM ontologies list](http://pcdm.org/)
 - [PCDM Models ontology (defines Collections, Objects & Files)](http://pcdm.org/2016/04/18/models)
 - [Fedora ontologies](http://fedora.info/)
-- [CLAWntology](https://github.com/Islandora-CLAW/CLAWntology)
