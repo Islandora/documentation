@@ -53,6 +53,7 @@ nav:
       - 'Blocks': 'user-documentation/blocks.md'
       - 'Usage Stats': 'user-documentation/usage-stats.md'
       - 'Multilingual': 'user-documentation/multilingual.md'
+      - 'Accessibility': 'user-documentation/accessibility.md'
       - 'Extending Islandora': 'user-documentation/extending.md'
       - 'IIIF': 'user-documentation/iiif.md'
       - 'OAI-PMH': 'user-documentation/oai.md'
