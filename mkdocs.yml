@@ -54,6 +54,7 @@ nav:
       - 'Usage Stats': 'user-documentation/usage-stats.md'
       - 'Multilingual': 'user-documentation/multilingual.md'
       - 'Extending Islandora': 'user-documentation/extending.md'
+      - 'IIIF': 'user-documentation/iiif.md'
       - 'OAI-PMH': 'user-documentation/oai.md'
   - Repository Administrator Documentation:
       - 'RDF Generation': 'islandora/rdf-mapping.md'
