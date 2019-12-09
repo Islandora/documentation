@@ -1,3 +1,7 @@
-Islandora 8 leans heavily on Drupal for accessibility. Drupal 8 core comes with a number of features to support greater accessibility for developers, site builders, and end users, as outlined [here](https://www.drupal.org/docs/8/accessibility/drupal-8-accessibility-features). This can be extended further with contributed modules, as outlined [here](https://www.drupal.org/docs/8/accessibility/contributed-modules-for-extending-accessibility-in-drupal-8) 
- 
-The Drupal community also provides guidance on how to perform an [accessibility review](https://www.drupal.org/docs/8/accessibility/how-to-do-an-accessibility-review), how to properly [hide content](https://www.drupal.org/docs/8/accessibility/hide-content-properly) for those using screen readers or other adaptive technologies, and this helpful [list of external accessibility resources](https://www.drupal.org/docs/8/accessibility/external-accessibility-resources).
+Islandora 8's accessibility features are currently provided by Drupal 8 and contributed Drupal 8 modules. These pages within the Accessibility section of the Drupal documentation can provide guidance:
+
+- [Drupal 8 Accessibility Features](https://www.drupal.org/docs/8/accessibility/drupal-8-accessibility-features) (included in core Drupal)
+- [Contributed Modules for Extending Accessibility in Drupal 8](https://www.drupal.org/docs/8/accessibility/contributed-modules-for-extending-accessibility-in-drupal-8)
+- [Hiding Content Properly (for all users including users with screen readers)](https://www.drupal.org/docs/8/accessibility/hide-content-properly)
+- [How to do an accessibility review?](https://www.drupal.org/docs/8/accessibility/how-to-do-an-accessibility-review)
+- List of [External Accessibility Resources](https://www.drupal.org/docs/8/accessibility/external-accessibility-resources)
