@@ -13,12 +13,10 @@ install:
   - pip install mkdocs-material
 
 script:
-  - cd $HOME/islandora
   - mkdocs build --clean
   
 deploy:
   provider: pages
-  local_dir: $HOME/islandora/site
   skip_cleanup: true
   github_token: $GITHUB_TOKEN
   keep_history: true
