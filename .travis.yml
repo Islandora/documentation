@@ -9,7 +9,6 @@ branches:
     - /master/
 
 install:
-  - git clone https://github.com/Islandora/documentation.git $HOME/islandora
   - pip install mkdocs
   - pip install mkdocs-material
 
