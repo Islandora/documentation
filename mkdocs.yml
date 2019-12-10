@@ -86,5 +86,5 @@ nav:
   - Contributing:
       - 'How to contribute': 'contributing/CONTRIBUTING.md'
       - 'Documentation Style Guide': 'contributing/docs_style_guide.md'
-      - 'Committers': 'contributing/committers.md
+      - 'Committers': 'contributing/committers.md'
   - Glossary: 'user-documentation/glossary.md'
