@@ -40,6 +40,14 @@ Now, when a user creates a Media and tags it as a "Preservation Master File", th
 
 ![Context - thank user for preservation file: dsm](../assets/context_thanks_dsm.png)
 
+### Tips on using Islandora-specific Contexts
+
+Islandora provides some Conditions and Reactions that aren't part of other Drupal sites. You may find the following tips useful:
+
+* Be as specific as possible in setting you Conditions. If your Conditions seem to apply too broadly or in unexpected ways, explicitly add a "Content Entity Type" Condition to limit the conditions to pages that render Islandora objects or media.
+* When using Islandora's "Node has term with URI" and "Media has term with URI" Conditions, you may want to enter multiple terms. To do so, add a comma (`,`) in the autocomplete field and continue typing.
+* The Islandora Conditions "Node has term with URI" and "Media has term with URI" limit taxonomy terms that show up in those Conditions' autocomplete Term field to terms that have URIs associated with them, for example from the Islandora Media Use or Islandora Models vocabualaries (although any term that has a URI will appear). If you want to create Conditions using terms that do not have a URI, install the contrib [Term Condition module](https://www.drupal.org/project/term_condition).
+
 
 ### Increased Flexibility
 
