@@ -44,14 +44,8 @@ Now, when a user creates a Media and tags it as a "Preservation Master File", th
 
 Islandora provides some Conditions and Reactions that aren't available on other Drupal sites. When using them, you may find the following tips useful:
 
-* When using the following Islandora Islandora-specific Conditions:
-
-   * "Node has term with URI"
-   * "Media has term with URI"
-   * "Parent node for media has term with URI"
-   
-you may want to enter multiple terms to take advantage of the AND/OR logic they provide. To do so, add a comma (`,`) after the first term in the autocomplete field and continue typing.
-* These three Conditions limit taxonomy terms that show up in their autocomplete Term field to terms that have URIs associated with them, for example from the Islandora Media Use or Islandora Models vocabularies (although any term that has a URI will appear). If you want to configure Conditions using terms that do not have a URI, you can use the contrib [Term Condition module](https://www.drupal.org/project/term_condition).
+* When using the "Node has term with URI", "Media has term with URI", and "Parent node for media has term with URI" Islandora-specific Conditions, you may want to enter multiple terms to take advantage of the AND/OR logic they provide. To do so, add a comma (`,`) after the first term in the autocomplete field and continue typing.
+   * These three Conditions limit taxonomy terms that show up in their autocomplete Term field to terms that have URIs associated with them, for example from the Islandora Media Use or Islandora Models vocabularies (although any term that has a URI will appear). If you want to configure Conditions using terms that do not have a URI, you can use the contrib [Term Condition module](https://www.drupal.org/project/term_condition).
 * Be as specific as possible in configuring your Conditions. If your Conditions seem to apply too broadly or in unexpected ways, try adding a "Content Entity Type" Condition to limit the Context to pages that render Islandora objects or media.
 
 ### Increased Flexibility
