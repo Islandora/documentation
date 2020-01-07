@@ -7,16 +7,22 @@ Download and install the following:
 1. [Virtual Box](https://www.virtualbox.org/)
 1. [Vagrant](https://www.vagrantup.com/) (version 2.0 or required)
 
-Use your package manager of choice to get [Git](https://git-scm.com/) and [Ansible](https://www.ansible.com/community) if
-you don't have them already.
-
-For example, if you're using Ubuntu and `apt`
+Then use your package manager of choice to get [Git](https://git-scm.com/). For example, if you're using Ubuntu and `apt`
 
 ```
-$ sudo apt-get install software-properties-common
-$ sudo apt-add-repository ppa:ansible/ansible
-$ sudo apt-get update
-$ sudo apt-get install git ansible
+$ sudo apt-get install git
+```
+Finally, install [Ansible](https://www.ansible.com/community) up to version 2.8.7.  This is done best with `pip`, the python package manager. If pip isn’t already available on your system of Python, run the following commands to install it:
+
+```
+$ curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+$ python get-pip.py --user
+```
+
+Then pin down Ansible to 2.8.7
+
+```
+$ pip install --user -Iv ansible==2.8.7
 ```
 
 If you want to provision a CENTOS 7 environment, you'll also need to install the [vbguest](https://github.com/dotless-de/vagrant-vbguest)
