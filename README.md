@@ -12,6 +12,7 @@ For more details, please check out the following resources:
   * [2017](https://github.com/Islandora/documentation/wiki/2017)
   * [2018](https://github.com/Islandora/documentation/wiki/2018)
   * [2019](https://github.com/Islandora/documentation/wiki/2019)
+  * [2020](https://github.com/Islandora/documentation/wiki/2020)
 
 * [Documentation](https://islandora.github.io/documentation/)
 * [Contributing](https://github.com/Islandora/documentation/blob/master/CONTRIBUTING.md)
