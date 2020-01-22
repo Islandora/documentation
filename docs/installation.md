@@ -73,90 +73,10 @@ islandora_syn_token: changeme
 cantaloupe_admin_password: changeme
 ```
 
-#### group_vars/crayfish.yml
-
-```yml
-crayfish_gemini_fedora_base_url: http://example.org:8080/fcrepo/rest
-crayfish_houdini_fedora_base_url: http://example.org:8080/fcrepo/rest
-crayfish_hypercube_fedora_base_url: http://example.org:8080/fcrepo/rest
-crayfish_milliner_fedora_base_url: http://example.org:8080/fcrepo/rest
-crayfish_milliner_drupal_base_url: http://example.org
-crayfish_milliner_gemini_base_url: http://example.org/gemini
-crayfish_homarus_fedora_base_url: http://example.org:8080/fcrepo/rest
-crayfish_recast_fedora_base_url: http://example.org:8080/fcrepo/rest
-crayfish_recast_drupal_base_url: http://example.org
-crayfish_recast_gemini_base_url: http://example.org/gemini
-```
-
-#### group_vars/karaf.yml
-Unfortunately, you have to copy/paste this whole chunk into the yml, even though you're only updating the URLs and
-the `token.value` entry.
-
-```yml
-alpaca_settings:
-  - pid: ca.islandora.alpaca.http.client
-    settings:
-      token.value: changeme
-  - pid: org.fcrepo.camel.indexing.triplestore
-    settings:
-      input.stream: activemq:topic:fedora
-      triplestore.reindex.stream: activemq:queue:triplestore.reindex
-      triplestore.baseUrl: http://example.org:8080/bigdata/namespace/islandora/sparql
-  - pid: ca.islandora.alpaca.indexing.triplestore
-    settings:
-      error.maxRedeliveries: 10
-      index.stream: activemq:queue:islandora-indexing-triplestore-index
-      delete.stream: activemq:queue:islandora-indexing-triplestore-delete
-      triplestore.baseUrl: http://example.org:8080/bigdata/namespace/islandora/sparql
-  - pid: ca.islandora.alpaca.indexing.fcrepo
-    settings:
-      error.maxRedeliveries: 5
-      node.stream: activemq:queue:islandora-indexing-fcrepo-content
-      node.delete.stream: activemq:queue:islandora-indexing-fcrepo-delete
-      media.stream: activemq:queue:islandora-indexing-fcrepo-media
-      file.stream: activemq:queue:islandora-indexing-fcrepo-file
-      file.delete.stream: activemq:queue:islandora-indexing-fcrepo-file-delete
-      milliner.baseUrl: http://example.org/milliner/
-      gemini.baseUrl: http://example.org/gemini/
-
-alpaca_blueprint_settings:
-  - pid: ca.islandora.alpaca.connector.houdini
-    in_stream: activemq:queue:islandora-connector-houdini
-    derivative_service_url: http://example.org/houdini/convert
-    error_max_redeliveries: 5
-    camel_context_id: IslandoraConnectorHoudini
-  - pid: ca.islandora.alpaca.connector.homarus
-    in_stream: activemq:queue:islandora-connector-homarus
-    derivative_service_url: http://example.org/homarus/convert
-    error_max_redeliveries: 5
-    camel_context_id: IslandoraConnectorHomarus
-```
-
-#### group_vars/tomcat.yml
-```yml
-fcrepo_allowed_external_content:
-  - http://example.org/
-cantaloupe_HttpResolver_BasicLookupStrategy_url_prefix: http://example.org/
-```
-
 #### group_vars/webserver/apache.yml
 Here's where you set the port to 80 instead of 8000.
 ```yml
 apache_listen_port: 80
-```
-
-#### group_vars/webserver/drupal.yml
-```yml
-drupal_trusted_hosts:
-  - ^localhost$
-  - example.org
-fedora_base_url: "http://example.org:8080/fcrepo/rest/"
-```
-
-#### group_vars/webserver/general.yml
-```yml
-openseadragon_iiiv_server: http://example.org:8080/cantaloupe/iiif/2
-matomo_site_url: http://example.org
 ```
 
 #### hosts
