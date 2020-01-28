@@ -109,19 +109,19 @@ The first way is to edit the "PDFjs" Context. By default, this Context tells Dru
 
 ![Default PDFjs Context](../assets/resource_nodes_pdfjs_context_default.png)
 
-If you add the Condition "Media has Mime type" and configure it to use `application/pdf` as the Mime type, like this:
+If you add the Condition "Node has Media with Mime type" and configure it to use `application/pdf` as the Mime type, like this:
 
 ![PDFjs Context with Mimetype Condition](../assets/resource_nodes_pdfjs_context_with_mimetype.png)
 
 Context will use whichever Condition applies (as long as you don't check "Require all conditions"). That is, if the "PDFjs" display hint option in the node edit form is checked, *or* if the node's media has a Mime type of `application/pdf`, the media content will be rendered using the PDFjs viewer.
 
-The second way to use the media's Mime type to render its content with the PDFjs viewer is to create a separate Context that will detect the media's Mime type and use the configured View mode automatically. To do this, create a new Context. Add a "Media has Mime type" condition and specify the Mime type, and then add a "Change View mode" Reaction that selects the desired view mode:
+The second way to use the media's Mime type to render its content with the PDFjs viewer is to create a separate Context that will detect the media's Mime type and use the configured View mode automatically. To do this, create a new Context. Add a "Node has Media with Mime type" condition and specify the Mime type, and then add a "Change View mode" Reaction that selects the desired view mode:
 
 ![Display hints](../assets/resource_nodes_view_mode_context.png)
 
 Finally, save your Context. From that point on, whenever the media for a node has the configured Mime type, Drupal will render the media using the corresponding view mode.
 
-The node-level and global approaches are not exclusive to one another. One Context can override another depending on the order of execution. Whichever Condition applies last between the node-level Condition (which in this case is the "Node has term" condition) the global Condition (which is "Media has Mime type"), that one will override the other. An example of having the View mode specified in the node edit form intentionally override the View mode based on Mime type is to have media with the `image/jp2` mime-type configured to use to use the OpenSeadragon viewer, but to manually select the OpenSeadragon view mode for nodes with JPEG media (for example, a very large JPEG image of a map, where the OpenSeadragon's pan and zoom features would be useful).
+The node-level and global approaches are not exclusive to one another. One Context can override another depending on the order of execution. Whichever Condition applies last between the node-level Condition (which in this case is the "Node has term" condition) the global Condition (which is "Node has Media with Mime type"), that one will override the other. An example of having the View mode specified in the node edit form intentionally override the View mode based on Mime type is to have media with the `image/jp2` mime-type configured to use to use the OpenSeadragon viewer, but to manually select the OpenSeadragon view mode for nodes with JPEG media (for example, a very large JPEG image of a map, where the OpenSeadragon's pan and zoom features would be useful).
 
 ## Members
 
