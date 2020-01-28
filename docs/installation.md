@@ -7,11 +7,32 @@ Download and install the following:
 1. [Virtual Box](https://www.virtualbox.org/)
 1. [Vagrant](https://www.vagrantup.com/) (version 2.0 or required)
 
-Then use your package manager of choice to get [Git](https://git-scm.com/). For example, if you're using Ubuntu and `apt`
+Then use your package manager of choice to get [Git](https://git-scm.com/).
 
 ```
+# Ubuntu
 $ sudo apt-get install git
+
+# Centos
+$ sudo yum install git
+
+# OSX
+$ brew install git
 ```
+
+As well as [OpenSSL](https://www.openssl.org/)
+
+```
+# Ubuntu
+$ sudo apt-get install openssl
+
+# Centos
+$ sudo yum install openssl
+
+# OSX
+$ brew install openssl
+```
+
 Finally, install [Ansible](https://www.ansible.com/community) up to version 2.8.7.  This is done best with `pip`, the python package manager. If pip isn’t already available on your system of Python, run the following commands to install it:
 
 ```
