@@ -85,6 +85,7 @@ nav:
       - 'Islandora 7': 'technical-documentation/migrate-7x.md'
   - Contributing:
       - 'How to contribute': 'contributing/CONTRIBUTING.md'
+      - 'Contributing Workflow': 'contributing/contributing-workflow.md'
       - 'Documentation Style Guide': 'contributing/docs_style_guide.md'
       - 'Committers': 'contributing/committers.md'
   - Glossary: 'user-documentation/glossary.md'
