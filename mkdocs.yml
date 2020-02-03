@@ -86,7 +86,7 @@ nav:
     - 'How to Build Documentation': 'technical-documentation/docs-build.md'
     - 'Adding back ?_format=jsonld': 'technical-documentation/adding_format_jsonld.md'
     - 'Updating a `deb` and adding it to Lyrasis PPA': 'technical-documentation/ppa-documentation.md'
-    - Aplaca:
+    - Alpaca:
       - 'Alpaca Technical Stack': 'alpaca/alpaca-technical-stack.md'
       - 'Alpaca Tips': 'technical-documentation/alpaca_tips.md'
   - Migration:
