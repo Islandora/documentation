@@ -11,7 +11,7 @@ $ vagrant halt
 # Download and run. This will default to the correct name (just press enter) then give the size.
 # Example: `350000` is equal to 350GB
 
-$ wget https://gist.githubusercontent.com/DonRichards/6dc6c81ae9fc22cba8d7a57b90ab1509/raw/98cd6daeafe86c8e830495f9b46eb04e590f4b4f/expand_disk.py
+$ wget https://gist.githubusercontent.com/DonRichards/6dc6c81ae9fc22cba8d7a57b90ab1509/raw/d658a8d898904434831000d351d7efe9ddc796b1/expand_disk.py
 $ chmod +x expand_disk.py
 $ python expand_disk.py
 $ vagrant up --no-provision
