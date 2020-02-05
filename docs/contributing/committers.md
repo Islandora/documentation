@@ -38,6 +38,7 @@ The following is an alphabetized list of the current Islandora 8 committers:
 | Seth Shaw                   | University of Nevada, Las Vegas       | seth-shaw-unlv |
 | Alan Stanley                | University of Prince Edward Islandora | ajstanley      |
 | Jared Whiklo                | University of Manitoba                | whikloj        |
+| Eli Zoller                  | Arizona State University              | elizoller      |
 
 ## Emeritus Committers
 
