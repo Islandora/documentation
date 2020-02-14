@@ -21,16 +21,36 @@ tar -xzvf SOLR_TARBALL
 - `SOLR_DOWNLOAD_LINK`: This will depend on a few different things, not least of all the current version of Solr. The link to the `.tgz` for the binary on the downloads page will take you to a list of mirrors that Solr can be downloaded from, and provide you with a preferred mirror at the top. This preferred mirror should be used as the `SOLR_DOWNLOAD_LINK`.
 - `SOLR_TARBALL`: The filename that was downloaded, e.g., `solr-8.3.0.tgz`
 
-## Running the Solr Installer
+### Running the Solr Installer
 
 Solr includes an installer that does most of the heavy lifting of ensuring we have a Solr user, a location where Solr lives, and configurations in place to ensure it’s running on boot.
 
 ```bash
-sudo UNTARRED_SOLR_FOLDER/bin/install_solr_service.sh solr.tgz
+sudo UNTARRED_SOLR_FOLDER/bin/install_solr_service.sh SOLR_TARBALL
 ```
 - `UNTARRED_SOLR_FOLDER`: This will likely simply be `solr-VERSION`, where `VERSION` is the version number that was downloaded.
 
 The port that Solr runs on can potentially be configured at ths point, but we'll expect it to be running on `8983`.
+
+### Increasing the Open File Limit (Optional)
+
+Solr's installation guide recommends that you increase the open file limit so that operations aren't disrupted while Solr is trying to access things in its index. This limit can be increased while the system is running, but doing so won't persist after a reboot. You can hard-increase this limit using your system's `sysctl` file:
+
+`/etc/sysctl.conf`
+
+**Before**:
+> 77 | #fs.protected_symlinks=0
+
+**After**:
+> 77 | #fs.protected_symlinks=0
+
+> 78 | fs.file-max = 65535
+
+Then apply your new configuration.
+
+```bash
+sudo sysctl -p
+```
 
 ### Creating a New Solr Core
 
@@ -72,6 +92,22 @@ Fill out the server addition form using the following options:
 - `SERVER_NAME`: `islandora8`
     - This is completely arbitrary, and is simply used to differentiate this search server configuration from all others. **Write down** or otherwise pay attention to the `machine_name` generated next to the server name you type in; this will be used in the next step.
 
+As a recap for this configuration:
+
+- **Server name** should be an arbitrary identifier for this server
+- **Enabled** should be checked
+- **Backend** should be set to **Solr**
+- Under **CONFIGURE SOLR BACKEND**, **Solr Connector** should be set to **Standard**
+- Under **CONFIGURE STANDARD SOLR CONNECTOR**:
+    - **HTTP protocol** is simply set to **http** since we've set this up on the same machine Drupal lives on. On a production installation, Solr should likely be installed behind an HTTPS connection.
+    - **Solr host** can be set to **localhost** since, again, this is set up on the same machine Drupal lives on. On a production installation, this may vary, especially if parts of the installation live on different severs
+    - **Solr port** should be set to the port Solr was installed on, which is **8983** by default
+    - **Solr path** should be set to the configured path to the instance of Solr; in a default installation, there is only one Solr instance, and it lives at **/**
+    - **Solr core** should be the name of the Solr core you created earlier, which is why it's listed as **SOLR_CORE** here
+- Under **ADVANCED SERVER CONFIGURATION**, **solr.install.dir** should be set to the path where we installed Solr, which this guide has established at **/opt/solr**
+
+Click **Save** to create the server configuration.
+
 !!! notice
     You can ignore the error about an incompatible Solr schema; we're going to set this up in the next step. In fact, if you refresh the page after restarting Solr in the next step, you should see the error disappear.
 
@@ -91,6 +127,9 @@ sudo systemctl restart solr
 ### Adding an Index
 
 In order for content to be indexed back into Solr, a search index needs to be added to our server. Navigate to `/admin/config/search/search-api/add-index` and check off the things you'd like to be indexed.
+
+!!! notice
+    You should come back here later and reconfigure this after completing the last step in this guide. The default indexing configuration is pretty permissive, and you may want to restrict, for example, indexed content to just Islandora-centric bundles. This guide doesn't set up the index's fields either, which are going to be almost wholly dependent on the needs of your installation. Once you complete that configuration later on, re-index Solr from the configuration page of the index we're creating here.
 
 ![Adding a Search Index](../../assets/adding_a_search_index.png)
 

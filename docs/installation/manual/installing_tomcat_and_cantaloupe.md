@@ -44,7 +44,7 @@ cd /opt
 sudo wget -O tomcat.tar.gz TOMCAT_TARBALL_LINK
 sudo tar -zxvf tomcat.tar.gz
 sudo mv /opt/TOMCAT_DIRECTORY/* /opt/tomcat
-sudo chown -R tomcat:tomcat /opt/TOMCAT_DIRECTORY
+sudo chown -R tomcat:tomcat /opt/tomcat
 ```
 - `TOMCAT_TARBALL_LINK`: No default can be provided here; you should navigate to the [Tomcat 8 downloads page](https://tomcat.apache.org/download-80.cgi) and grab the link to the latest `.tar.gz` file under the “Core” section of “Binary Distributions”. It is highly recommended to grab the latest version of Tomcat 8, as it will come with associated security patches and fixes.
 - `TOMCAT_DIRECTORY`: This will also depend entirely on the exact version of tomcat downloaded - for example, `apache-tomcat-8.5.47`. Again, `ls /opt` can be used to find this.

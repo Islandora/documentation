@@ -3,7 +3,7 @@
 ## In this section, we will install:
 
 - [Composer](https://getcomposer.org/) at its current latest version, the package manager that will allow us to install PHP applications
-- The composer installer from [drupal-composer/drupal-project](https://github.com/drupal-composer/drupal-project), which will install, among other things:
+- The Islandora fork of the composer installer from [drupal-composer/drupal-project](https://github.com/Islandora/drupal-project), which will install, among other things:
     - [Drush 9](https://www.drush.org/) at its latest version, the command-line PHP application for running tasks in Drupal
     - [Drupal 8](https://www.drupal.org/) at its latest version, the content management system Islandora uses for content modelling and front-end display
 
@@ -33,7 +33,7 @@ sudo mkdir /opt/drupal
 sudo chown www-data:www-data /opt/drupal
 sudo chmod 775 /opt/drupal
 # Clone drupal-project and build it in our newly-created folder.
-git clone https://github.com/drupal-composer/drupal-project.git
+git clone https://github.com/Islandora/drupal-project.git
 cd drupal-project
 # Expect this to take a little while, as this is grabbing the entire
 # requirements set for Drupal.

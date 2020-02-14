@@ -55,7 +55,7 @@ sudo -u www-data composer install -d crayfish/Recast
 
 ### Preparing Logging
 
-Not much needs to happen here; Crayfish logging is rather simplistic, with one `.log` file for each component. We’ll create a folder where each logfile can live.
+Not much needs to happen here; Crayfish opts for a simple logging approach, with one `.log` file for each component. We’ll create a folder where each logfile can live.
 
 ```bash
 sudo mkdir /var/log/islandora
@@ -230,7 +230,7 @@ Finally, we need appropriate Apache configurations for Crayfish; these will allo
 Each endpoint we need to be able to connect to will get its own `.conf` file, which we will then enable.
 
 !!! notice
-    these configurations would potentially have collisions with Drupal routes, if any are created in Drupal with the same name. If this is a concern, it would likely be better to reserve a subdomain or another port specifically for Crayfish. For the purposes of this installation guide, these endpoints will suffice.
+    These configurations would potentially have collisions with Drupal routes, if any are created in Drupal with the same name. If this is a concern, it would likely be better to reserve a subdomain or another port specifically for Crayfish. For the purposes of this installation guide, these endpoints will suffice.
 
 `/etc/apache2/conf-available/Gemini.conf | root:root/644`
 ```

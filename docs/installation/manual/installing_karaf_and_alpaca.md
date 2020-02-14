@@ -53,7 +53,7 @@ sudo mv KARAF_DIRECTORY/* /opt/karaf
 
 ### Configuring Karaf Logging
 
-We’r e going to apply some basic logging to our Karaf installation that should suffice for an example. In a production installation, you may want to play around with some of these values for more personally useful logging.
+We’re going to apply some basic logging to our Karaf installation that should suffice for an example. In a production installation, you may want to play around with some of these values for more personally useful logging.
 
 ```bash
 sudo mkdir /var/log/karaf
@@ -145,22 +145,26 @@ Karaf features can be installed from several different types of sources, but the
 For the Karaf features we’re going to install, we need a few different repositories to be added to the list:
 
 ```bash
-/opt/karaf/bin/client repo-add mvn:org.apache.activemq/activemq-karaf/ACTIVEMQ_KARAF_VERSION/xml/features
+/opt/karaf/bin/client repo-add mvn:org.apache.activemq/activemq-karaf/LATEST/xml/features
 /opt/karaf/bin/client repo-add mvn:org.apache.camel.karaf/apache-camel/APACHE_CAMEL_VERSION/xml/features
-/opt/karaf/bin/client repo-add mvn:ca.islandora.alpaca/islandora-karaf/1.0.1/xml/features
+/opt/karaf/bin/client repo-add mvn:ca.islandora.alpaca/islandora-karaf/LATEST/xml/features
 # XXX: This shouldn't be strictly necessary, but appears to be a missing
 # upstream dependency for some fcrepo features.
-/opt/karaf/bin/client repo-add mvn:org.apache.jena/jena-osgi-features/3.1.1/xml/features
+/opt/karaf/bin/client repo-add mvn:org.apache.jena/jena-osgi-features/3.13.1/xml/features
 ```
-- `ACTIVEMQ_KARAF_VERSION`: The most recent version of `activemq-karaf` 5.x.x you can find on the [activemq-karaf Maven repository page](https://mvnrepository.com/artifact/org.apache.activemq/activemq-karaf).
-- `APACHE_CAMEL_VERSION`: The most recent version of `apache-camel` 2.x.x you can find on the [apache-camel Maven repository page](https://mvnrepository.com/artifact/org.apache.camel.karaf/apache-camel).
+- `APACHE_CAMEL_VERSION`: The latest version of Apache Camel 2.x.x; you can find this listed at the [apache-camel repository page](https://mvnrepository.com/artifact/org.apache.camel.karaf/apache-camel) (e.g., 2.25.0 at the time of writing)
 
 ### Installing the Required Karaf Features
 
 Before we can configure the features we’re going to use, they need to be installed. Some of these installations may take some time.
 
 ```bash
+/opt/karaf/bin/client feature:install aries-blueprint
+/opt/karaf/bin/client feature:install camel-blueprint
 /opt/karaf/bin/client feature:install fcrepo-service-activemq
+# This again should not be strictly necessary, since this isn't the triplestore
+# we're using, but is being included here to resolve the aforementioned
+# missing link in the dependency chain.
 /opt/karaf/bin/client feature:install jena
 /opt/karaf/bin/client feature:install fcrepo-camel
 /opt/karaf/bin/client feature:install fcrepo-indexing-triplestore
@@ -180,14 +184,14 @@ token.value=ISLANDORA_SYN_TOKEN
 ```
 - `ISLANDORA_SYN_TOKEN`: This should be the same token that was established during the installation of Syn in your `syn-settings.xml` file
 
-`/opt/karaf/etc/org.fcrepo.camel.indexing.triplestore | karaf:karaf/644`
+`/opt/karaf/etc/org.fcrepo.camel.indexing.triplestore.cfg | karaf:karaf/644`
 ```
 input.stream=activemq:topic:fedora
 triplestore.reindex.stream=activemq:queue:triplestore.reindex
 triplestore.baseUrl=http://localhost:8080/blazegraph/namespace/islandora/sparql
 ```
 
-`/opt/karaf/etc/ca.islandora.alpaca.indexing.triplestore | karaf:karaf/644`
+`/opt/karaf/etc/ca.islandora.alpaca.indexing.triplestore.cfg | karaf:karaf/644`
 ```
 error.maxRedeliveries=10
 index.stream=activemq:queue:islandora-indexing-triplestore-index
@@ -195,7 +199,7 @@ delete.stream=activemq:queue:islandora-indexing-triplestore-delete
 triplestore.baseUrl=http://localhost:8080/blazegraph/namespace/islandora/sparql
 ```
 
-`/opt/karaf/etc/ca.islandora.alpaca.indexing.fcrepo | karaf:karaf/644`
+`/opt/karaf/etc/ca.islandora.alpaca.indexing.fcrepo.cfg | karaf:karaf/644`
 ```
 error.maxRedeliveries=5
 node.stream=activemq:queue:islandora-indexing-fcrepo-content
@@ -228,7 +232,7 @@ Our blueprints are going to look largely similar between services, with only a f
     <cm:default-properties>
       <cm:property name="error.maxRedeliveries" value="5"/>
       <cm:property name="in.stream" value="activemq:queue:islandora-connector-ocr"/>
-      <cm:property name="derivative.service.url" value="http://localhost:8000/hypercube"/>
+      <cm:property name="derivative.service.url" value="http://localhost/hypercube"/>
     </cm:default-properties>
   </cm:property-placeholder>
 
@@ -259,7 +263,7 @@ Our blueprints are going to look largely similar between services, with only a f
     <cm:default-properties>
       <cm:property name="error.maxRedeliveries" value="5"/>
       <cm:property name="in.stream" value="activemq:queue:islandora-connector-houdini"/>
-      <cm:property name="derivative.service.url" value="http://localhost:8000/houdini/convert"/>
+      <cm:property name="derivative.service.url" value="http://localhost/houdini/convert"/>
     </cm:default-properties>
   </cm:property-placeholder>
 
@@ -290,7 +294,7 @@ Our blueprints are going to look largely similar between services, with only a f
     <cm:default-properties>
       <cm:property name="error.maxRedeliveries" value="5"/>
       <cm:property name="in.stream" value="activemq:queue:islandora-connector-homarus"/>
-      <cm:property name="derivative.service.url" value="http://localhost:8000/homarus/convert"/>
+      <cm:property name="derivative.service.url" value="http://localhost/homarus/convert"/>
     </cm:default-properties>
   </cm:property-placeholder>
 
@@ -321,7 +325,7 @@ Our blueprints are going to look largely similar between services, with only a f
     <cm:default-properties>
       <cm:property name="error.maxRedeliveries" value="5"/>
       <cm:property name="in.stream" value="activemq:queue:islandora-connector-fits"/>
-      <cm:property name="derivative.service.url" value="http://localhost:8000/crayfits"/>
+      <cm:property name="derivative.service.url" value="http://localhost/crayfits"/>
     </cm:default-properties>
   </cm:property-placeholder>
 
@@ -337,10 +341,20 @@ Our blueprints are going to look largely similar between services, with only a f
 </blueprint>
 ```
 
-### Restarting Karaf
+### Verifying Karaf Components are Running (Optional But Recommended)
 
-Finally, to accept our new configurations and blueprints, restart Karaf.
+At this point, Karaf components should be up and running, but it's a good idea to double-check that this is the case. We can do this from within the Karaf client by taking a look at its component list.
 
 ```bash
-sudo systemctl restart karaf
+# Until this point, we've been running Karaf commands from outside; we can hop
+# into the client, however, and run commands from directly within.
+/opt/karaf/bin/client
+# This takes us into the Karaf client so we can run commands.
+la | grep islandora
+la | grep fcrepo
+# It may be a good idea to use this to look up to the other components we
+# installed.
+logout
 ```
+
+For the above `la | grep` commands, components that are running should be listed as `Active`.

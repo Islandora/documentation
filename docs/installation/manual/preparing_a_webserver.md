@@ -36,12 +36,13 @@ sudo systemctl restart apache2
 
 ### Add the Current User to the `www-data` Group
 
-Since the user we are currently logged in as is going to work quite a bit inside the Drupal directory, we want to give it group permissions to anything the `www-data` group has access to.
+Since the user we are currently logged in as is going to work quite a bit inside the Drupal directory, we want to give it group permissions to anything the `www-data` group has access to. When we run `composer`, `www-data` will also be caching data in our own home directory, so we want this group modification to go in both directions.
 
 **N.B.** This code block uses **backticks**, not single quotes; this is an important distinction as backticks have special meaning in `bash`.
 
 ```bash
 sudo usermod -a -G www-data `whoami`
+sudo usermod -a -G `whoami` www-data
 # Immediately log back in to apply the new group.
 sudo su `whoami`
 ```

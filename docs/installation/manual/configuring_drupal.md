@@ -106,9 +106,7 @@ drush -y en rdf responsive_image devel syslog serialization basic_auth rest rest
 # If Carapace was downloaded, now is the time to enable and set it as well.
 drush -y theme:enable carapace
 drush -y config-set system.theme default carapace
-# After all of this, run updates and rebuild the cache.
-cd /opt/drupal
-sudo -u www-data composer update
+# After all of this, rebuild the cache.
 drush -y cr
 ```
 
@@ -153,11 +151,20 @@ Navigate to `/admin/config/media/file-system` to set the **Default download meth
 
 ![Configuring Flysystem to Use Fedora](../../assets/configuring_flysystem_to_use_fedora.png)
 
+### Giving the Administrative User the `fedoraAdmin` Role
+
+In order for data to be pushed back to Fedora, the site administrative user needs the `fedoraAdmin` role.
+
+```
+cd /opt/drupal
+sudo -u www-data drush -y urol "fedoraadmin" 1
+```
+
 ### Running Feature Migrations
 
 Finally, to get everything up and running, run the Islandora Core Features and Islandora Defaults migrations.
 
 ```bash
 cd /opt/drupal
-drush -y -l localhost --userid=1 mim --group=islandora
+sudo -u www-data drush -y -l localhost --userid=1 mim --group=islandora
 ```

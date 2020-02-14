@@ -132,7 +132,7 @@ The next part of the configuration defines where the pieces of the actual reposi
 }
 ```
 
-Finally, we need an actual `fcrepo-config.xml` to pull this configuration into place.
+Finally, we need an actual `fcrepo-config.xml` to pull this configuration into place. There's nothing to edit in here by default, but pay attention to the `p:repositoryConfiguration` property of the `modeshapeRepofactory` bean, which contains the path to the `repository.json` file we made earlier. If you've placed this somewhere else, you'll need to change it here.
 
 `/opt/fcrepo/config/fcrepo-config.xml | tomcat:tomcat/644`
 ```xml
@@ -270,7 +270,9 @@ sudo wget -O fcrepo.war FCREPO_WAR_URL
 sudo mv fcrepo.war /opt/tomcat/webapps
 sudo chown tomcat:tomcat /opt/tomcat/webapps/fcrepo.war
 ```
-- `FCREPO_WAR_URL`: This can be found at the [fcrepo downloads page](https://wiki.duraspace.org/display/FF/Downloads); you should download the WAR for the most recent 5.x web application.
+- `FCREPO_WAR_URL`: This can be found at the [fcrepo downloads page](https://github.com/fcrepo4/fcrepo4/releases); the file you're looking for is:
+    - Tagged in green as the 'Latest release'
+    - The `.war` version of the file
 
 ### Restarting the Tomcat Service
 
@@ -359,7 +361,7 @@ sudo chown -R tomcat:tomcat /opt/blazegraph
 
 ### Downloading and Placing the Blazegraph WAR
 
-The Blazegraph `.war` file can be found in a few different places, but to ensure we’re able to easily `wget` it, we’re going to use the [maven.org](http://maven.org/) repository link to grab it.
+The Blazegraph `.war` file can be found in a few different places, but to ensure we’re able to easily `wget` it, we’re going to use the [maven.org](https://maven.org/) repository link to grab it.
 
 ```bash
 cd /opt
@@ -367,7 +369,7 @@ sudo wget -O blazegraph.war BLAZEGRAPH_WARFILE_LINK
 sudo mv blazegraph.war /opt/tomcat/webapps
 sudo chown tomcat:tomcat /opt/tomcat/webapps/blazegraph.war
 ```
-- BLAZEGRAPH_WAR_URL: You can find a link to this at the [Maven repository for Blazegraph](http://repo1.maven.org/maven2/com/blazegraph/bigdata-war/); you’ll want to click the link for the latest version of Blazegraph 2.1.x, then get the link to the `.war` file within that version folder.
+- BLAZEGRAPH_WAR_URL: You can find a link to this at the [Maven repository for Blazegraph](https://repo1.maven.org/maven2/com/blazegraph/bigdata-war/); you’ll want to click the link for the latest version of Blazegraph 2.1.x, then get the link to the `.war` file within that version folder.
 
 Once this is downloaded, give it a moment to expand before moving on to the next step.
 
@@ -463,7 +465,7 @@ In order to enable our configuration when Tomcat starts, we need to reference th
 > 3 | export JAVA_OPTS="-Djava.awt.headless=true -Dcantaloupe.config=/opt/cantaloupe_config/cantaloupe.properties -Dfcrepo.modeshape.configuration=file:///opt/fcrepo/config/repository.json -Dfcrepo.home=/opt/fcrepo/data -Dfcrepo.spring.configuration=file:///opt/fcrepo/config/fcrepo-config.xml -server -Xmx1500m -Xms1000m"
 
 **After**:
-> 3 | export JAVA_OPTS="-Djava.awt.headless=true -Dcantaloupe.config=/opt/cantaloupe_config/cantaloupe.properties -Dfcrepo.modeshape.configuration=file:///opt/fcrepo/config/repository.json -Dfcrepo.home=/opt/fcrepo/data -Dfcrepo.spring.configuration=file:///opt/fcrepo/config/fcrepo-config.xml -Dcom.bigdata.rdf.sail.webapp.ConfigParams.propertyFile=/opt/blazegraph/conf/RWStore.properties -server -Xmx1500m -Xms1000m"
+> 3 | export JAVA_OPTS="-Djava.awt.headless=true -Dcantaloupe.config=/opt/cantaloupe_config/cantaloupe.properties -Dfcrepo.modeshape.configuration=file:///opt/fcrepo/config/repository.json -Dfcrepo.home=/opt/fcrepo/data -Dfcrepo.spring.configuration=file:///opt/fcrepo/config/fcrepo-config.xml -Dcom.bigdata.rdf.sail.webapp.ConfigParams.propertyFile=/opt/blazegraph/conf/RWStore.properties -Dlog4j.configuration=file:/opt/blazegraph/conf/log4j.properties -server -Xmx1500m -Xms1000m"
 
 ### Restarting Tomcat
 

@@ -21,13 +21,13 @@ Combined together, Apache, PHP, and MySQL/PostgreSQL comprise a LAMP or LAPP ser
 
 ## The Front-Facing CDM - Composer, Drush, and Drupal
 
-Composer will be used to install both Drupal and Drush simultaneously using the [drupal-project](https://github.com/drupal-composer/drupal-project) repository.
+Composer will be used to install both Drupal and Drush simultaneously using Islandora's fork of the [drupal-project](https://github.com/Islandora/drupal-project) repository.
 
 **Composer** is an installer and dependency manager for PHP projects. We're going to need it to install components for any PHP code we need to make use of, including Drupal and Crayfish.
 
-**Drush** and **Drupal** are installed simultaneously using [drupal-project](https://github.com/drupal-composer/drupal-project). Drupal will serve up webpages and manage Islandora content, and Drush will help us get some things done from the command-line.
+**Drush** and **Drupal** are installed simultaneously using [drupal-project](https://github.com/Islandora/drupal-project). Drupal will serve up webpages and manage Islandora content, and Drush will help us get some things done from the command-line.
 
-## The Web Application Server - Tomcat, and Cantaloupe
+## The Web Application Server - Tomcat and Cantaloupe
 
 Several applets will be deployed via their `.war` files into Tomcat, including Fedora and Cantaloupe.
 
@@ -61,7 +61,7 @@ The installation of Solr itself is rather straightforward, but a configuration w
 
 **Karaf**’s job is similar to Tomcat, except where Tomcat is a web-accessible endpoint for Java applets, Karaf is simply meant to be a container for system-level applets to communicate via its OSGI. Alpaca is one such applet; it will broker messages between Fedora and Drupal, and between Drupal and various derivative generation applications.
 
-**Alpaca** contains Karaf services to manage moving information between Islandora, Fedora, and Blazegraphm as well as kicking off derivative services in Crayfish. These will be configured to broker between Drupal and Fedora using an ActiveMQ queue.
+**Alpaca** contains Karaf services to manage moving information between Islandora, Fedora, and Blazegraph as well as kicking off derivative services in Crayfish. These will be configured to broker between Drupal and Fedora using an ActiveMQ queue.
 
 ## Finalized Drupal Configurations
 
