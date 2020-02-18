@@ -54,7 +54,9 @@ $ brew install ansible@2.8.7
 
 Before provisioning a local environment, you should likely double check that no [required ports](#port-clashes-for-local-environments) are currently in use.
 
-#### Ubuntu 18.04
+Clone the `islandora-playbook` and use `vagrant up` to automatically provision an environment.
+
+#### Ubuntu 18.04 or MacOS
 
 ```bash
 $ git clone https://github.com/Islandora-Devops/islandora-playbook
