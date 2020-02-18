@@ -1,36 +1,53 @@
 The fastest way to get up and running with Islandora 8 is through an Ansible Playbook called [islandora-playbook](https://github.com/Islandora-Devops/islandora-playbook). It can be used to spin up a local environment using [Vagrant](https://www.vagrantup.com/), or to provision an existing machine.
-=======
 
 ## Requirements
 
 Download and install the following:
 
 1. [Virtual Box](https://www.virtualbox.org/)
-1. [Vagrant](https://www.vagrantup.com/) (version 2.0 or higher required)
-
-Use your package manager of choice to get [Git](https://git-scm.com/) and [Ansible](https://www.ansible.com/community) if
-you don't have them already.
+2. [Vagrant](https://www.vagrantup.com/) (version 2.0 or higher required)
+3. [Git](https://git-scm.com/)
+4. [OpenSSL](https://www.openssl.org/)
+5. [Ansible](https://www.ansible.com/community) (up to, and not past, 2.8.7)
 
 #### Ubuntu/Debian
 
-Most components on Ubuntu are available via `apt`:
+Git and OpenSSL are available via `apt`. [Ansible](https://www.ansible.com/community) up to version 2.8.7.  This is done best with `pip`, the python package manager:
 
 ```
-$ sudo apt-get install software-properties-common
-$ sudo apt-add-repository ppa:ansible/ansible
-$ sudo apt-get update
-$ sudo apt-get install git ansible
+# Install git and openssl
+$ sudo apt-get install git
+$ sudo apt-get install openssl
+# If pip isn’t already available, run the following commands to install it
+$ curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+$ python get-pip.py --user
+# Install ansible
+$ pip install --user -Iv ansible==2.8.7
+```
+
+#### CentOS
+
+Git and OpenSSL are available via `yum`. Most everything else can be installed in the same way.
+
+```
+$ sudo yum install git
+$ sudo yum install openssl
+# If pip isn’t already available, run the following commands to install it
+$ curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+$ python get-pip.py --user
+# Install ansible
+$ pip install --user -Iv ansible==2.8.7
 ```
 
 #### MacOS
 
-For the installation of Ansible, consider using [homebrew](https://brew.sh/):
+OpenSSL is already pre-installed on MacOS. Python and Pip should be installed via the downloaded installer direct from the site. For the installation of Ansible, consider using [homebrew](https://brew.sh/):
 
 ```
 # Use xcode-select to install command line components, including git
 $ xcode-select --install
 $ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-$ brew install ansible
+$ brew install ansible@2.8.7
 ```
 
 ## Installing a local development environment

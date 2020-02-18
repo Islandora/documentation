@@ -34,11 +34,11 @@ Using the RDF mapping configurations provided by the RDF module, the JSON-LD Mod
 - The JSON-LD module provides a hook so other modules can alter the entity before it gets mapped. The `islandora` module uses this hook to trigger any "Map URI to Predicate" and "Alter JSON-LD Type" reactions that are configured in Contexts. `islandora_defaults` provides the two Contexts - "All Media" and "Content" - that configure these to occur on Media and Repository Item nodes.
 - The JSON-LD module adds RDF datatypes to the RDF values, and includes a mapping of Drupal field types to RDF datatypes.
 - The JSON-LD module provides a hook to alter its Drupal field type to RDF datatype mapping.
-- The JSON-LD module has a configuration option that can cause the `?_format=jsonld` to be part of, or not part of, the URIs of Drupal objects. On an out-of-the-box claw-playbook, this string is stripped, but by default on a fresh install of the jsonld module, it is not.
+- The JSON-LD module has a configuration option that can cause the `?_format=jsonld` to be part of, or not part of, the URIs of Drupal objects. On an out-of-the-box islandora-playbook, this string is stripped, but by default on a fresh install of the jsonld module, it is not.
 
 
 ## RDF Mappings
-In an out-of-the-box claw-playbook, the RDF mappings that exist were loaded from config files, and correspond to the rdf.mapping.[...].yml files located in:
+In an out-of-the-box islandora-playbook, the RDF mappings that exist were loaded from config files, and correspond to the rdf.mapping.[...].yml files located in:
 
 - `[drupal modules directory]/islandora/modules/islandora_core_feature/config/install/` (media and taxonomy terms)
 - `[drupal modules directory]/islandora_defaults/config/install/` (`repository_item` and the `islandora_access` vocabulary)
@@ -52,7 +52,7 @@ Once loaded by modules, configuration .yml files are not live so **editing them 
 Once loaded, RDF mappings can be customized for the needs of a particular site through Drupal's Configuration Synchronization UI at `admin/config/development/configuration`. They can be exported, modified, and re-imported one-at-a-time by choosing the "Single Item" option on the Export/Import tabs.  You can also create new RDF mappings (e.g. for a custom content type) and load them through this interface, by copying an existing mapping and changing the appropriate values.
 
 !!! note "Contributed module for RDF Mappings"
-    A custom module `rdfui` exists, and is installed-but-not-enabled on boxes provisioned by the claw-playbook. We don't use it because it is very rudimentary and limited to the schema.org vocabulary. We have an [open ticket](https://github.com/Islandora-CLAW/CLAW/issues/647) to develop a UI to support RDF mappings to any ontology. Contributions welcome.
+    A custom module `rdfui` exists, and is installed-but-not-enabled on boxes provisioned by the islandora-playbook. We don't use it because it is very rudimentary and limited to the schema.org vocabulary. We have an [open ticket](https://github.com/Islandora/documentation/issues/647) to develop a UI to support RDF mappings to any ontology. Contributions welcome.
 
 - A number of namespaces such as `ldp`, `ebucore`, `pcdm`, are `premis` are registered in `islandora.module` using `hook_rdf_namespaces()`. To register your own namespaces, you will need to create a custom module that implements that hook.
 - If you import a configuration that uses a namespace that is not registered, bad things will happen silently.

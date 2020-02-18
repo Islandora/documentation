@@ -27,16 +27,18 @@ Committers share the following responsibilities:
 
 The following is an alphabetized list of the current Islandora 8 committers:
 
-| Name                        | Organization                      | Github username |
-|-----------------------------|-----------------------------------|-------------|
-| Jonathan Green              | LYRASIS                           | jonathangreen |
-| Jonathan Hunt               | Catalyst.Net                      | kayakr      | 
-| Mark Jordan                 | Simon Fraser University           | mjordan     |
-| Danny Lamb                  | Islandora Foundation              | dannylamb   |
-| Natkeeran Ledchumykanthan   | University of Toronto Scarborough | natkeeran   |
-| Rosie Le Faive              | University of Prince Edward Island| rosiel      |
-| Seth Shaw                   | University of Nevada, Las Vegas   | seth-shaw-unlv |
-| Jared Whiklo                | University of Manitoba            | whikloj     |
+| Name                        | Organization                          | Github username |
+|-----------------------------|---------------------------------------|----------------|
+| Jonathan Green              | LYRASIS                               | jonathangreen  |
+| Jonathan Hunt               | Catalyst.Net                          | kayakr         | 
+| Mark Jordan                 | Simon Fraser University               | mjordan        |
+| Danny Lamb                  | Islandora Foundation                  | dannylamb      |
+| Natkeeran Ledchumykanthan   | University of Toronto Scarborough     | natkeeran      |
+| Rosie Le Faive              | University of Prince Edward Island    | rosiel         |
+| Seth Shaw                   | University of Nevada, Las Vegas       | seth-shaw-unlv |
+| Alan Stanley                | University of Prince Edward Islandora | ajstanley      |
+| Jared Whiklo                | University of Manitoba                | whikloj        |
+| Eli Zoller                  | Arizona State University              | elizoller      |
 
 ## Emeritus Committers
 
