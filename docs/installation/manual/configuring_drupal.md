@@ -157,7 +157,7 @@ In order for data to be pushed back to Fedora, the site administrative user need
 
 ```
 cd /opt/drupal
-sudo -u www-data drush -y urol "fedoraadmin" 1
+sudo -u www-data drush -y urol "fedoraadmin" islandora
 ```
 
 ### Running Feature Migrations

@@ -145,34 +145,16 @@ Karaf features can be installed from several different types of sources, but the
 For the Karaf features we’re going to install, we need a few different repositories to be added to the list:
 
 ```bash
-/opt/karaf/bin/client repo-add mvn:org.apache.activemq/activemq-karaf/LATEST/xml/features
+/opt/karaf/bin/client repo-add mvn:org.apache.activemq/activemq-karaf/ACTIVEMQ_KARAF_VERSION/xml/features
 /opt/karaf/bin/client repo-add mvn:org.apache.camel.karaf/apache-camel/APACHE_CAMEL_VERSION/xml/features
 /opt/karaf/bin/client repo-add mvn:ca.islandora.alpaca/islandora-karaf/LATEST/xml/features
 # XXX: This shouldn't be strictly necessary, but appears to be a missing
 # upstream dependency for some fcrepo features.
-/opt/karaf/bin/client repo-add mvn:org.apache.jena/jena-osgi-features/3.13.1/xml/features
+/opt/karaf/bin/client repo-add mvn:org.apache.jena/jena-osgi-features/JENA_OSGI_VERSION/xml/features
 ```
+- `ACTIVEMQ_KARAF_VERSION`: The latest version of ActiveMQ Karaf 5.x.x; you can find this listed at the [activemq-karaf repository page](https://mvnrepository.com/artifact/org.apache.activemq/activemq-karaf) (e.g., 5.15.11 at the time of writing)
 - `APACHE_CAMEL_VERSION`: The latest version of Apache Camel 2.x.x; you can find this listed at the [apache-camel repository page](https://mvnrepository.com/artifact/org.apache.camel.karaf/apache-camel) (e.g., 2.25.0 at the time of writing)
-
-### Installing the Required Karaf Features
-
-Before we can configure the features we’re going to use, they need to be installed. Some of these installations may take some time.
-
-```bash
-/opt/karaf/bin/client feature:install aries-blueprint
-/opt/karaf/bin/client feature:install camel-blueprint
-/opt/karaf/bin/client feature:install fcrepo-service-activemq
-# This again should not be strictly necessary, since this isn't the triplestore
-# we're using, but is being included here to resolve the aforementioned
-# missing link in the dependency chain.
-/opt/karaf/bin/client feature:install jena
-/opt/karaf/bin/client feature:install fcrepo-camel
-/opt/karaf/bin/client feature:install fcrepo-indexing-triplestore
-/opt/karaf/bin/client feature:install islandora-http-client
-/opt/karaf/bin/client feature:install islandora-indexing-triplestore
-/opt/karaf/bin/client feature:install islandora-indexing-fcrepo
-/opt/karaf/bin/client feature:install islandora-connector-derivative
-```
+- `JENA_OSGI_VERSION`: The latest version of the Apache Jena OSGi features; you can find this listed at the [jena-osgi-features repository page](https://mvnrepository.com/artifact/org.apache.jena/jena-osgi-features) (e.g., 3.14.0 at the time of writing)
 
 ### Configuring Karaf Features
 
@@ -339,6 +321,26 @@ Our blueprints are going to look largely similar between services, with only a f
   </camelContext>
   
 </blueprint>
+```
+
+### Installing the Required Karaf Features
+
+Before we can configure the features we’re going to use, they need to be installed. Some of these installations may take some time.
+
+```bash
+/opt/karaf/bin/client feature:install camel-blueprint
+/opt/karaf/bin/client feature:install activemq-blueprint
+/opt/karaf/bin/client feature:install fcrepo-service-activemq
+# This again should not be strictly necessary, since this isn't the triplestore
+# we're using, but is being included here to resolve the aforementioned
+# missing link in the dependency chain.
+/opt/karaf/bin/client feature:install jena
+/opt/karaf/bin/client feature:install fcrepo-camel
+/opt/karaf/bin/client feature:install fcrepo-indexing-triplestore
+/opt/karaf/bin/client feature:install islandora-http-client
+/opt/karaf/bin/client feature:install islandora-indexing-triplestore
+/opt/karaf/bin/client feature:install islandora-indexing-fcrepo
+/opt/karaf/bin/client feature:install islandora-connector-derivative
 ```
 
 ### Verifying Karaf Components are Running (Optional But Recommended)
