@@ -97,7 +97,7 @@ nav:
       - Virtual Machines:
         - 'Hacking on Islandora': 'contributing/hacking-on-islandora.md'
         - 'Resizing a VM': 'technical-documentation/resizing_vm.md'
-      - 'Checking Coding Standards': 'checking-coding-standards.md'
+      - 'Checking Coding Standards': 'technical-documentation/checking-coding-standards.md'
       - 'Contributing Workflow': 'contributing/contributing-workflow.md'
       - 'Documentation Style Guide': 'contributing/docs_style_guide.md'
       - 'Committers': 'contributing/committers.md'
