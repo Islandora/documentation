@@ -69,6 +69,7 @@ nav:
     - 'Installing Modules': 'technical-documentation/install-enable-drupal-modules.md'
     - 'Updating Drupal': 'technical-documentation/updating_drupal.md'
   - Developer Documentation:
+    - 'Architecture Diagram': 'technical-documentation/diagram.md'
     - REST Documentation:
       - 'Introduction': 'technical-documentation/using-rest-endpoints.md'
       - 'GET': 'technical-documentation/rest-get.md'
