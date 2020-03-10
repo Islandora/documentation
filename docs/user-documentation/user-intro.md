@@ -53,7 +53,7 @@ For a similar conceptual approach to Islandora 8, we present it as a bento box: 
  
 ![Islandora 8 as a bento box](../assets/user-intro-bento.png)
  
-For a true diagram of how the various parts of Islandora 8 interact, please see the full [Architecture Diagram](/technical-documentation/diagram.md)
+For a true diagram of how the various parts of Islandora 8 interact, please see the full [Architecture Diagram](../technical-documentation/diagram.md)
 
 
 
