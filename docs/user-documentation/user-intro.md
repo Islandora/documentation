@@ -47,7 +47,7 @@ In Islandora repositories that use Fedora, all properties about Drupal nodes are
  
 Many users of Islandora may be familiar with the metahprocial diagram of Islandora 7 as a cheeseburger, which provides a memorable approximation of how the different parts of the software stack interact in a vertically-integrated, relatively customizable fashion (ie, Drupal, Solr, Islandora, and Fedora are stable layers, and the "toppings" stand in for Solution Packs and other utilities that can be added or removed to customize Islandora):
  
-![Islandora 7 as a cheeseburger](../assets/user-intro-cheeseburger.png)
+![Islandora 7 as a cheeseburger](../assets/user-intro-islandoraburger.png)
  
 For a similar conceptual approach to Islandora 8, we present it as a bento box: a very modular platform, in which each piece may be removed and replaced with something different, without disrupting other parts of the stack:
  
