@@ -68,6 +68,7 @@ nav:
   - System Administrator Documentation:
     - 'Installing Modules': 'technical-documentation/install-enable-drupal-modules.md'
     - 'Updating Drupal': 'technical-documentation/updating_drupal.md'
+    - 'Uploading large files': 'technical-documentation/uploading-large-files.md'
   - Developer Documentation:
     - 'Architecture Diagram': 'technical-documentation/diagram.md'
     - REST Documentation:
