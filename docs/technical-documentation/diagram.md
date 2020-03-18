@@ -10,7 +10,7 @@ Diagram prepared by [Bethany Seeger](https://github.com/bseeger) based on work d
  
 The following components are microservices developed and maintained by the Islandora community. They are bundled under [Islandora Crayfish](https://github.com/Islandora/Crayfish):
  
-* [FITS]() - WHERE IS FITS???
+* [FITS](https://github.com/roblib/CrayFits) - A Symfony 4 Microservice to retrieve FITS data and persist it as a Drupal media node. Works with [Islandora FITS](https://github.com/roblib/islandora_fits)
 * [Gemini](https://github.com/Islandora/Crayfish/tree/dev/Gemini) - A path mapping service for Islandora 8.  Gemini is what links content created in Drupal to data stored in Fedora.
 * [Homarus](https://github.com/Islandora/Crayfish/tree/dev/Homarus) - Provides [FFmpeg](https://www.ffmpeg.org/) as a microservice for generating video and audio derivatives.
 * [Houdini](https://github.com/Islandora/Crayfish/tree/dev/Houdini) - [ImageMagick](https://www.imagemagick.org/script/index.php) as a microservice for generating image-based derivatives, including thumbnails.
