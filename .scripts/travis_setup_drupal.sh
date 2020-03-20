@@ -20,7 +20,7 @@ phpcs --config-set installed_paths /opt/utils/vendor/drupal/coder/coder_sniffer
 
 echo "Composer install drupal site"
 cd /opt
-git clone --branch fix-travis https://github.com/Islandora-CLAW/drupal-project.git drupal
+git clone --branch 8.x-1.x https://github.com/Islandora-CLAW/drupal-project.git drupal
 cd drupal
 if [ -z "$COMPOSER_PATH" ]; then
   composer install
