@@ -40,6 +40,9 @@ To review/edit the permission for each role, in the *People* page click the **Pe
 1. Scroll down or search for options that have an *Islandora* prefix or contain the word *Islandora*. For example, *Islandora Access: Create terms*.
 ![Alt text](../assets/users_permissions.png "Permissions page")
 
+!!! Tip "Islandora Quick Lessons"
+    Learn more with this video on how to [Add a User](https://youtu.be/XSokAFRVBuE).
+
 ## Further Reading on Managing Users in Drupal
 
 For more information on managing users in Drupal visit the section
