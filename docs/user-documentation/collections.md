@@ -71,3 +71,6 @@ for 'Member Of' is already filled out for you with the appropriate collection.
 ![You should see the widget for 'Member Of' is already filled out for you with the appropriate collection.](../assets/collections_member_of_selected.jpg)
 
 Click 'Save' at the end of the form to create the new item and add it as a member of the collection.
+
+!!! Tip "Islandora Quick Lessons"
+    Learn more with this video on [Making a Collection](https://youtu.be/9jFVAE6l4so).
