@@ -49,5 +49,8 @@ For this example, we create a new view as a block and place the new block to onl
 8. The 'Collection list' now only displays on the frontpage. It displays below the 'Main page content'.
 ![Frontpage view collection list](../assets/frontpage_view_collection_list.png)
 
+!!! Tip "Islandora Quick Lessons"
+    Learn more with videos on [Basic Views](https://youtu.be/Ge14g8nBUBQ) and [Advanced Views](https://youtu.be/inPRZeQGnKI).
+
 
 
