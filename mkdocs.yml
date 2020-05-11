@@ -38,6 +38,7 @@ nav:
   - Installation: 'installation.md'
   - User Documentation:
       - 'Introduction': 'user-documentation/user-intro.md'
+      - 'Video Documentation': 'user-documentation/video-docs.md'
       - 'Intro to Linked Data': 'user-documentation/intro-to-ld-for-islandora-8.md'
       - Content in Islandora 8:
         - 'Resource Nodes': 'user-documentation/resource-nodes.md'
