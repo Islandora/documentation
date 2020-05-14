@@ -2,7 +2,7 @@
 
 In the most basic terms, Islandora 8 is the version of Islandora that works with [Fedora 5](https://wiki.duraspace.org/display/FF/Fedora+Repository+Home). Because Fedora 4 and 5 are vastly different than Fedora 3, so too is Islandora 8 a major departure from what came before. Switching to Islandora 8 represents not just a typical upgrade with improvements, features, and bug fixes, but rather a major shift in how objects are stored and managed.
 
-Moving from Islandora 7.x-1.x to 8.x-1.x requires a migration of objects, which you can learn about [here](../migration/migration.md). It also requires some adjustments in how you think about your objects and their relationships, and how to manage them in Islandora, which we will cover below.
+Moving from Islandora 7.x-1.x to 8.x-1.x requires a migration of objects, which you can learn about [here](../inactive/migration.md). It also requires some adjustments in how you think about your objects and their relationships, and how to manage them in Islandora, which we will cover below.
 
 You can also check out some of the documentation provided by the Fedora project:
 * [Concept Mapping - Fedora 3 to 4](https://wiki.duraspace.org/display/FEDORA4x/Concept+Mapping+-+Fedora+3+to+4)
