@@ -88,7 +88,7 @@ So hold on to your hats.  First, let's get this module onto your Islandora insta
 From your `islandora-playbook` directory, issue the following commands to enable this module:
 - `vagrant ssh` to open a shell in your Islandora instance.
 - `cd /var/www/html/drupal/web/modules/contrib` to get to your modules directory.
-- `git clone https://github.com/islandora/migrate_islandora_csv` to clone down the repository from GitHub.
+- `git clone https://github.com/Islandora/migrate_islandora_csv` to clone down the repository from GitHub.
 - `drush en -y migrate_islandora_csv` to enable the module, installing the migrations as configuration.
 
 Optionally, flush the cache (`drush cr`), so the migrations become visible in the GUI at Manage > Structure > Migrations > migrate_islandora_csv (http://localhost:8000/admin/structure/migrate/manage/migrate_islandora_csv/migrations)
@@ -102,8 +102,8 @@ Now lets go migrate some files.
 ## Ingesting Files
 
 To migrate files (i.e. just the raw binaries) from a CSV, you need:
-* a column in the CSV containing paths to the files you wish to ingest, and
-* the files need to be accessible from the server that's running Drupal so that the Migrate framework can find them.
+- a column in the CSV containing paths to the files you wish to ingest, and
+- the files need to be accessible from the server that's running Drupal so that the Migrate framework can find them.
 
 This tutorial assumes you're working with the sample images provided in the module, which will be located at `/var/www/html/drupal/web/modules/contrib/migrate_islandora_csv/data/images`. When you're migrating for real, the files will have to be uploaded or otherwise made accessible to the server before this point.
 
