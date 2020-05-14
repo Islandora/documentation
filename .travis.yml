@@ -1,5 +1,6 @@
 sudo: true
 language: python
+python: "2.7"
 
 matrix:
     fast_finish: true
@@ -10,7 +11,7 @@ branches:
 
 install:
   - pip install mkdocs
-  - pip install mkdocs-material==0.2.4
+  - pip install mkdocs-material
 
 script:
   - mkdocs build --clean
