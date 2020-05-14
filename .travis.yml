@@ -1,6 +1,6 @@
 sudo: true
 language: python
-python: "2.7"
+python: "3.0"
 
 matrix:
     fast_finish: true
