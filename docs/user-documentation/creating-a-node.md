@@ -47,3 +47,7 @@ Click **Save** when done, and the file will be uploaded (to Fedora by default). 
 you created and you should see the image along with its descriptive metadata.
 
 ![The file is now loaded, return to the main site to view](../assets/final-loaded-image.jpg)
+
+!!! Tip "Islandora Quick Lessons"
+    Learn more with this video on [Adding Content](https://youtu.be/G52is7iFkG4).
+

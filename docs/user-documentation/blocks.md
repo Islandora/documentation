@@ -97,3 +97,6 @@ If we edit the collection and change its model tag from "Collection" to anything
 
 As you can see, block placement can be very flexible, and allow you to customize your site in a very granular fashion.
 Between using core block placement and the context module, there's no block you can't get into the right place on your site.
+
+!!! Tip "Islandora Quick Lessons"
+    Learn more with this video on [Creating a Custom Block](https://youtu.be/4VUI9pOXpzE).

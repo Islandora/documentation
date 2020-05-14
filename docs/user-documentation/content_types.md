@@ -171,6 +171,10 @@ In some cases a repository may want a node or taxonomy term's `rdf:type` to be c
 
 `fieldMappings` specifies the fields to be included, their RDF property mappings, and any necessary data converters (the `datatype_callback`). One field can be mapped to more than one RDF property by adding them to the field's properties list. The `datatype_callback` is defined by the 'callable' key and the fully qualified static method used to convert it to the desired data format. For example, fields of the Drupal datetime type need to be converted to ISO 8601 values, so we use the `Drupal\rdf\CommonDataConverter::dateIso8601Value` function to perform the conversion.
 
+!!! Tip "Islandora Quick Lessons"
+    Learn more with this video on [Customizing a Form](https://youtu.be/tOW27DZY9hs).
+
+
 ## Further Reading:
 
 - [Drupal.org Introduction to Form API](https://www.drupal.org/docs/8/api/form-api/introduction-to-form-api)
