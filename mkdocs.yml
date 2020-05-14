@@ -28,9 +28,8 @@ extra:
   palette:
     primary: 'red'
     accent: 'red'
-  logo: 'assets/claw.png'
   social:
-    - type: 'twitter'
+    - icon: fontawesome/brands/twitter
       link: 'https://twitter.com/islandora'
 
 nav:

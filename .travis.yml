@@ -10,7 +10,7 @@ branches:
 
 install:
   - pip install mkdocs
-  - pip install mkdocs-material==4.6.3
+  - pip install mkdocs-material
 
 script:
   - mkdocs build --clean
