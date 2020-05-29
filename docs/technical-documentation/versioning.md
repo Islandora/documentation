@@ -48,4 +48,4 @@ The following Islandora 8 components use Drupal Contrib versioning:
 This list does *not* include sub-modules which share versions with their parents.
 
 ie. 
-[Islandora Audio](https://github.com/Islandora/islandora/tree/8.x-1.x/modules/islandora_audio), [Islandora IIIF](https://github.com/Islandora/islandora/tree/8.x-1.x/modules/islandora_iiif) and [Islandora Breadcrumbs](https://github.com/Islandora/islandora/tree/8.x-1.x/modules/islandora_breadcrumbs) are all sub-modules of Islandora and shares it's version.
+[Islandora Audio](https://github.com/Islandora/islandora/tree/8.x-1.x/modules/islandora_audio), [Islandora IIIF](https://github.com/Islandora/islandora/tree/8.x-1.x/modules/islandora_iiif) and [Islandora Breadcrumbs](https://github.com/Islandora/islandora/tree/8.x-1.x/modules/islandora_breadcrumbs) are all sub-modules of Islandora and shares its version.
