@@ -14,3 +14,5 @@ Out of the box, this includes:
 As native Drupal content, Islandora resources can also be integrated with existing Drupal tools like the [Solr Search API](https://www.drupal.org/project/search_api_solr), [Matomo Analytics](https://www.drupal.org/project/matomo), [RDF schema building](https://www.drupal.org/project/rdfui), and much more.
 
 Islandora 8 comes with a comprehensive [default site configuration](https://github.com/Islandora/islandora_defaults) for Drupal to get you started, and even an [Ansible playbook](https://github.com/Islandora-Devops/islandora-playbook) that will quickly get you up and running so you can try it out.
+
+!!! note "Islandora 6 and 7" Documenation for earlier versions of Islandora is on our [documentation wiki](https://wiki.lyrasis.org/display/ISLANDORA/Start).
