@@ -195,7 +195,7 @@ for more details about what you can put into a
 host file
 
 ```
-default ansible_ssh_host=example.org ansible_ssh_user=root ansible_ssh_private_key_file='/home/username/.ssh/id_rsa'
+default ansible_host=example.org ansible_port=22 ansible_user=root ansible_ssh_private_key_file='/home/username/.ssh/id_rsa'
 ```
 
 ### Running the remote installer
