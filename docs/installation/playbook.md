@@ -1,81 +1,93 @@
-Islandora 8 is installed through an Ansible Playbook called [islandora-playbook](https://github.com/Islandora-Devops/islandora-playbook).
+The fastest way to get up and running with Islandora 8 is through an Ansible Playbook called [islandora-playbook](https://github.com/Islandora-Devops/islandora-playbook). It can be used to spin up a local environment using [Vagrant](https://www.vagrantup.com/), or to provision an existing machine.
 
 ## Requirements
 
 Download and install the following:
 
 1. [Virtual Box](https://www.virtualbox.org/)
-1. [Vagrant](https://www.vagrantup.com/) (version 2.0 or required)
+2. [Vagrant](https://www.vagrantup.com/) (version 2.0 or higher required)
+3. [Git](https://git-scm.com/)
+4. [OpenSSL](https://www.openssl.org/)
+5. [Ansible](https://www.ansible.com/community) (up to, and not past, 2.8.7)
 
-Then use your package manager of choice to get [Git](https://git-scm.com/).
+#### Ubuntu/Debian
+
+Git and OpenSSL are available via `apt`. [Ansible](https://www.ansible.com/community) up to version 2.8.7.  This is done best with `pip`, the python package manager:
 
 ```
-# Ubuntu
+# Install git and openssl
 $ sudo apt-get install git
-
-# Centos
-$ sudo yum install git
-
-# OSX
-$ brew install git
-```
-
-As well as [OpenSSL](https://www.openssl.org/)
-
-```
-# Ubuntu
 $ sudo apt-get install openssl
-
-# Centos
-$ sudo yum install openssl
-
-# OSX
-$ brew install openssl
-```
-
-Finally, install [Ansible](https://www.ansible.com/community) up to version 2.8.7.  This is done best with `pip`, the python package manager. If pip isn’t already available on your system of Python, run the following commands to install it:
-
-```
+# If pip isn’t already available, run the following commands to install it
 $ curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 $ python get-pip.py --user
-```
-
-Then pin down Ansible to 2.8.7
-
-```
+# Install ansible
 $ pip install --user -Iv ansible==2.8.7
 ```
 
-If you want to provision a CENTOS 7 environment, you'll also need to install the [vbguest](https://github.com/dotless-de/vagrant-vbguest)
-plugin for Vagrant
+#### CentOS
 
-```bash
-$ vagrant plugin install vagrant-vbguest
+Git and OpenSSL are available via `yum`. Most everything else can be installed in the same way.
+
+```
+$ sudo yum install git
+$ sudo yum install openssl
+# If pip isn’t already available, run the following commands to install it
+$ curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+$ python get-pip.py --user
+# Install ansible
+$ pip install --user -Iv ansible==2.8.7
+```
+
+#### MacOS
+
+OpenSSL is already pre-installed on MacOS. Python and Pip should be installed via the downloaded installer direct from the site. For the installation of Ansible, consider using [homebrew](https://brew.sh/):
+
+```
+# Use xcode-select to install command line components, including git
+$ xcode-select --install
+$ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+$ brew install ansible@2.8.7
 ```
 
 ## Installing a local development environment
 
-Once you've installed all the requirements, you can spin up a local development environment with
+Before provisioning a local environment, you should likely double check that no [required ports](#port-clashes-for-local-environments) are currently in use.
+
+Clone the `islandora-playbook` and use `vagrant up` to automatically provision an environment.
+
+#### Ubuntu 18.04 or MacOS
+
 ```bash
 $ git clone https://github.com/Islandora-Devops/islandora-playbook
 $ cd islandora-playbook
 $ vagrant up
 ```
 
-By default, this provisions an Ubuntu 18.04 environment.  If you would prefer to use CENTOS 7 instead, set the `ISLANDORA_DISTRO`
-environment variable to `centos/7`. To prevent having to do this every time you open a new shell, add the following command to
-your `.bashrc` file
+#### CentOS 7
 
 ```bash
-$ export ISLANDORA_DISTRO="centos/7"
+$ git clone https://github.com/Islandora-Devops/islandora-playbook
+$ cd islandora-playbook
+$ vagrant plugin install vagrant-vbguest
+$ ISLANDORA_DISTRO="centos/7" vagrant up
+```
+
+Or, for simplicity's sake, add the following to your user profile (e.g., `.bashrc` on Ubuntu/Debian environments, or `.bash_profile` on MacOS):
+
+```bash
+export ISLANDORA_DISTRO="centos/7"
 ```
 
 ## Installing a remote environment
 
-If you want to provision a remote server using the playbook, there's a handful of configuration entries you need to update to include your
-usernames/passwords and IP addresses. You'll also want Apache to serve at port 80 as opposed to 8000, which we use for development
-purposes.  To start, take the inventory for the vagrant development environment and copy it. Be sure to
-give it an appropriate name. Here we're using `example`.
+A remote environment can be provisioned by providing SSH credentials to `claw-playbook` and using the `ansible-galaxy` installer instead of Vagrant. Some preparation of configuration entries in the `inventory` also need to be changed to be aware of the particulars of your remote environment; this includes:
+
+- Changing usernames and passwords to something more sensible than the default
+- Changing IP addresses to use the remote machine's actual IP
+- Changing Apache to serve at port 80 (as opposed to 8000, which we use for development purposes)
+
+We're going to build up this new remote environment configuration from the default provided Vagrant configuration. To start, take the inventory for the vagrant development environment and make a copy of it. Be sure to give it an appropriate name. Here we're using `example`.
 
 ```bash
 $ git clone https://github.com/Islandora-Devops/islandora-playbook
@@ -116,8 +128,8 @@ crayfish_recast_gemini_base_url: http://example.org/gemini
 ```
 
 #### group_vars/karaf.yml
-Unfortunately, you have to copy/paste this whole chunk into the yml, even though you're only updating the URLs and
-the `token.value` entry.
+
+For Alpaca, only the `token.value` and various URLs are of particular importance, but the entire configuration chunk is provided here for convenience.
 
 ```yml
 alpaca_settings:
@@ -160,6 +172,7 @@ alpaca_blueprint_settings:
 ```
 
 #### group_vars/tomcat.yml
+
 ```yml
 fcrepo_allowed_external_content:
   - http://example.org/
@@ -167,12 +180,14 @@ cantaloupe_HttpResolver_BasicLookupStrategy_url_prefix: http://example.org/
 ```
 
 #### group_vars/webserver/apache.yml
-Here's where you set the port to 80 instead of 8000.
+
+This is where we specify that the webserver is listening on the default port 80, instead of the development machine port 8000.
 ```yml
 apache_listen_port: 80
 ```
 
 #### group_vars/webserver/drupal.yml
+
 ```yml
 drupal_trusted_hosts:
   - ^localhost$
@@ -181,14 +196,16 @@ fedora_base_url: "http://example.org:8080/fcrepo/rest/"
 ```
 
 #### group_vars/webserver/general.yml
+
 ```yml
 openseadragon_iiiv_server: http://example.org:8080/cantaloupe/iiif/2
 matomo_site_url: http://example.org
 ```
 
 #### hosts
-You'll need the ssh particulars for logging into your server in the hosts file.  This example is set up to login as `root` using
-an ssh key. You'll need to get the details for logging into your remote server from your hosting provider (AWS, Digital Ocean, etc...)
+
+You'll need the SSH particulars for logging into your server in the hosts file.  This example is set up to login as `root` using
+an SSH key. You'll need to get the details for logging into your remote server from your hosting provider (AWS, Digital Ocean, etc...)
 or your systems administrator if you're running the server in-house. See
 [this page](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html#connecting-to-hosts-behavioral-inventory-parameters)
 for more details about what you can put into a
@@ -213,7 +230,7 @@ Then, depending on the operating system installed on the remote environment, you
 $ ansible-playbook -i inventory/production playbook.yml -e "islandora_distro=ubuntu/xenial64"
 ```
 
-or for CENTOS 7
+or for CentOS 7
 
 ```bash
 $ ansible-playbook -i inventory/production playbook.yml -e "islandora_distro=centos/7"
@@ -221,13 +238,37 @@ $ ansible-playbook -i inventory/production playbook.yml -e "islandora_distro=cen
 
 ## Troubleshooting
 
+### Out of date playbooks
+
 Ansible caches the code used to provision the environment, so if you've already installed once you may not be getting the latest version
 of things even if you've `git pull`'d the latest playbook.  The code is stored in `roles/external`, so if you want to clear it out you can
-run
+remove these before attempting to provision an environment
 
 ```bash
 $ rm -rf roles/external
 ```
+
+### Port clashes for local environments
+
+When provisioning using a local environment, you should be aware of any ports that are already in use by your computer that are also going to be
+used by Vagrant, as these may clash and cause problems during and after provisioning. These include:
+
+- 8000 (Apache)
+- 8080 (Tomcat)
+- 3306 (MySQL)
+- 5432 (PostgreSQL)
+- 8983 (Solr)
+- 8161 (ActiveMQ)
+- 8081 (API-X)
+
+If there are port clashes for any of these, you will need to either find and replace them in the configuration .yml files under
+`inventory/vagrant/group_vars`, or provide new values for the different playbooks that support changing the ports (for example, `postgresql_databases`
+supports adding a `port` property which is currently simply unused). You will also need to replace the port forwarding values in `Vagrantfile`.
+
+Additionally, Ansible attempts to use port 2200 for SSH. If this port is already in use, your local environment cannot be provisioned. To
+change this, set a new value for `ansible_port` in `inventory/vagrant/hosts`.
+
+### Help
 
 If you run into any issues installing the environment, do not hesitate to email the [mailing list](mailto:islandora@googlegroups.com) to
 ask for help.  If you think you've stumbled across a bug in the installer, please create an issue in the
