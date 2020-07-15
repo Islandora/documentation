@@ -34,7 +34,19 @@ extra:
 
 nav:
   - Summary: 'index.md'
-  - Installation: 'installation.md'
+  - Installation:
+      - 'Component Overview': 'installation/component_overview.md'
+      - 'Automatic Provisioning': 'installation/playbook.md'
+      - Manual Installation:
+        - 'Introduction': 'installation/manual/introduction.md'
+        - 'Preparing a LAPP Webserver': 'installation/manual/preparing_a_webserver.md'
+        - 'Installing Composer, Drush, and Drupal': 'installation/manual/installing_composer_drush_and_drupal.md'
+        - 'Installing Tomcat and Cantaloupe': 'installation/manual/installing_tomcat_and_cantaloupe.md'
+        - 'Installing Fedora, Syn, and Blazegraph': 'installation/manual/installing_fedora_syn_and_blazegraph.md'
+        - 'Installing Solr': 'installation/manual/installing_solr.md'
+        - 'Installing Crayfish': 'installation/manual/installing_crayfish.md'
+        - 'Installing Karaf and Alpaca': 'installation/manual/installing_karaf_and_alpaca.md'
+        - 'Configuring Drupal': 'installation/manual/configuring_drupal.md'
   - User Documentation:
       - 'Introduction': 'user-documentation/user-intro.md'
       - 'Video Documentation': 'user-documentation/video-docs.md'
