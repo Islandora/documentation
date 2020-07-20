@@ -20,19 +20,24 @@ The metadata associated with a file can be updated by clicking the _Edit_ tab wh
 The _Create new revision_ checkbox is selected by default which will prompt Fedora to make a new version of the media's metadata
 before updating its resource record. A message can be added to the revision which is stored in Drupal but is not currently saved in Fedora.
 
-### Do not replace a media's file
+### Using the Media form to replace an exising file does not behave as expected.
 
 The media edit form allows a user to remove a file and replace it with a new one. 
-However, because of the relationship Islandora creates between a file and its media, the effects of removing a file and uploading a new one are not obvious.
+However, because of the relationship Islandora creates between a file and its media, the effects of removing a file and uploading a new one are not intuitive.
 
-First, the _remove_ button removes the file's reference on the media but does not delete the file. This leaves the file in Fedora. 
+First, the _remove_ button removes the file's reference on the media but does not delete the file, which, if in Fedora, will remain in Fedora. 
 
-Second, because Drupal does not want users to reuse a file path uploading a file, even with the same name in the same month, Drupal will rename the file for you resulting in a new binary resource in Fedora.
+Second, because Drupal does not want users to reuse a file path uploading a file, even with the same name in the same month, Drupal will rename the file for you. This will result in a new binary resource in Fedora, rather than replacing the existing resource, so the file's URI in Fedora will change
 
-Third, because the new file is now associated with the media, the media will now be used to represent the metadata for the new file and will no longer be used for the existing one.
+Third, the metadata synced from the Media into Fedora at [old Fedora URI]/fcr:metadata will remain in Fedora, but the metadata in the Media will also be synced into Fedora at [new Fedora URI]/fcr:metadata. There will be no way for the metadata in Fedora describing the file at the old Fedora URI to be edited. 
+
+!!! note "Removing Media with Actions"
+    To completely delete a file and its metadata from Fedora and Drupal, run the "Delete media and file(s) action" after selecting the Media in the general media list (/admin/content/media). This will cause the paths to the file and its metadata in Fedora to return 404s. 
 
 !!! note "Replacing Media via REST"
-    REST can circumvent Drupal form behavior making it possible to add and replace media and files via [Islandora's REST interface](../technical-documentation/using-rest-endpoints.md).	
+    It is possible to use [Islandora's REST interface](../technical-documentation/using-rest-endpoints.md) to replace Media and Files.	
+    
+
 
 ## Media Ownership
 
