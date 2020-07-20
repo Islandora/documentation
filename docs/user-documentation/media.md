@@ -20,7 +20,7 @@ The metadata associated with a file can be updated by clicking the _Edit_ tab wh
 The _Create new revision_ checkbox is selected by default which will prompt Fedora to make a new version of the media's metadata
 before updating its resource record. A message can be added to the revision which is stored in Drupal but is not currently saved in Fedora.
 
-### Using the Media form to replace an exising file does not behave as expected.
+### Using the Media form to replace an existing file does not behave as expected.
 
 The media edit form allows a user to remove a file and replace it with a new one. 
 However, because of the relationship Islandora creates between a file and its media, the effects of removing a file and uploading a new one are not intuitive.
