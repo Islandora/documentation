@@ -23,7 +23,7 @@
 * [ ] Does the proposed documentation align with the [Islandora Documentation Style Guide](https://islandora.github.io/documentation/contributing/docs_style_guide/)?
 * [ ] If pages are renamed or removed, have all internal links to those pages been fixed?
 * [ ] If pages are added, have they been linked to or placed in the menu?
-* [ ] Does this change deploy successfully locally? (see [How To Build Documentation](https://islandora.github.io/documentation/technical-documentation/docs-build/)
+* [ ] Does this change deploy successfully locally? (see [How To Build Documentation](https://islandora.github.io/documentation/technical-documentation/docs-build/))
 * [ ] Did the PR receive at least one approval from a committer (reflecting that the changes are accurate, free of typos, etc), and all issues raised have been addressed?
 * [ ] On merging, did you complete the merge using [keywords](https://help.github.com/en/github/managing-your-work-on-github/linking-a-pull-request-to-an-issue#manually-linking-a-pull-request-to-an-issue)?
 
