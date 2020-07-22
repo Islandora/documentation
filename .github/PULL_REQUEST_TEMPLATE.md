@@ -10,6 +10,9 @@
 
 > _**Replace this text** - Document the details that help a reviewer verify the documentation._
 
+## Interested Parties
+
+> _**Replace this text** - name some folks who may be interested, or, if unsure, @Islandora/8-x-committers
 ---
 
 ## Checklist
@@ -21,6 +24,6 @@
 * [ ] If pages are renamed or removed, have all internal links to those pages been fixed?
 * [ ] If pages are added, have they been linked to or placed in the menu?
 * [ ] Does this change deploy successfully locally? (see [How To Build Documentation](https://islandora.github.io/documentation/technical-documentation/docs-build/)
-* [ ] Did the PR receive at least one approval from a committer (reflecting that the changes are accurate, free of typos, etc)?
+* [ ] Did the PR receive at least one approval from a committer (reflecting that the changes are accurate, free of typos, etc), and all issues raised have been addressed?
 * [ ] On merging, did you complete the merge using [keywords](https://help.github.com/en/github/managing-your-work-on-github/linking-a-pull-request-to-an-issue#manually-linking-a-pull-request-to-an-issue)?
 
