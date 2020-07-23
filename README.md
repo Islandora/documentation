@@ -1,10 +1,20 @@
-# ![Islandora 8](https://camo.githubusercontent.com/738dd7cbd90a3ef06b9bb55a4cf5ed385a048fd4/687474703a2f2f69736c616e646f72612e63612f73697465732f64656661756c742f66696c65732f696d616765732f6c6f6273746572434c41572e706e67) Islandora 8
+# ![Islandora 8](https://camo.githubusercontent.com/738dd7cbd90a3ef06b9bb55a4cf5ed385a048fd4/687474703a2f2f69736c616e646f72612e63612f73697465732f64656661756c742f66696c65732f696d616765732f6c6f6273746572434c41572e706e67) Islandora 8 Documentation
 
-## Introduction
+## About this repository (github.com/Islandora/documentation)
+
+This repository contains the user, developer, and administrator documentation for the [Islandora project](https://islandora.ca/), for versions 8 and above. This documentation is available to read at https://islandora.github.io/documentation/, where it is automatically deployed on commit from the source code at https://github.com/Islandora/documentation. Documentation for Islandora 7.x and previous versions is available at https://wiki.lyrasis.org/display/ISLANDORA/. 
+
+This repository's issue queue is the [Islandora-wide issue queue](https://github.com/Islandora/documentation/issues) for Islandora versions 8 and above. Issues may be applicable to repositories in all Islandora-associated github organizations, including [Islandora](https://github.com/Islandora), [Islandora DevOps](https://github.com/Islandora-Devops), [Islandora Labs](https://github.com/Islandora-Labs), and [Islandora Interest Groups](https://github.com/islandora-interest-groups). Issues for Islandora 7.x and previous versions is available at https://jira.lyrasis.org/projects/ISLANDORA/issues.
+
+
+## What is Islandora 8?
 
 Islandora 8 is the next generation of Islandora. It pairs [Drupal 8](https://www.drupal.org/8) with [Fedora 5](https://wiki.duraspace.org/display/FF/Fedora+Repository+Home)
 
 For more details, please check out the following resources:
+
+* [Documentation](https://islandora.github.io/documentation/)
+* [Contributing](https://github.com/Islandora/documentation/blob/master/CONTRIBUTING.md)
 
 * [Weekly Tech Calls](https://github.com/Islandora/documentation/wiki#islandora-8-tech-calls)
   * [2015](https://github.com/Islandora/documentation/wiki/2015)
@@ -14,10 +24,10 @@ For more details, please check out the following resources:
   * [2019](https://github.com/Islandora/documentation/wiki/2019)
   * [2020](https://github.com/Islandora/documentation/wiki/2020)
 
-* [Documentation](https://islandora.github.io/documentation/)
-* [Contributing](https://github.com/Islandora/documentation/blob/master/CONTRIBUTING.md)
 
 ## Repository Structure
+
+This repository pulls in additional documentation from the following repositories, which is reflected in the repository tree.
 
 * [Alpaca](https://github.com/islandora/Alpaca): Event driven middleware based on Apache Camel that synchronizes a Fedora with Drupal.
 * [docs](https://github.com/Islandora/documentation/tree/master/docs): Documentation!
