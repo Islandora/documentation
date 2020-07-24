@@ -15,7 +15,7 @@ Islandora is:
 
 ## Demo
 
-Visit http://future.islandora.ca/
+Visit [http://future.islandora.ca/](http://future.islandora.ca/).
 
 ## Quickstart
 
