@@ -2,6 +2,8 @@
 
 [Islandora](https://islandora.ca) is an open-source framework that provides the necessary tools turn a [Drupal](https://www.drupal.org) website into a fully-functional preservation repository for digital assets without the need for additional code, while remaining flexible enough to be extended and customized.
 
+## About
+
 Islandora is:
 
 [//]: # (We should probably replace as many of the links in this section as possible with links to within this documentation, and make it clear which are internal links and which link out.) 
