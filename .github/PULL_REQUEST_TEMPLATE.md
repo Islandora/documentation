@@ -1,32 +1,30 @@
-**GitHub Issue**: (link)
+## Purpose / why
 
-* Other Relevant Links (Google Groups discussion, related pull requests, Release pull requests, etc.)
+> _**Replace this text** - Restate the purpose/justification of this work and include links to any Issues or other discussions that are related to this work.
 
-# What does this Pull Request do?
+## What changes were made?
 
-A brief description of what the intended result of the PR will be and/or what problem it solves.
+> _**Replace this text** - State clearly the direct additions or modifications made in this pull request._
 
-# What's new?
-A in-depth description of the changes made by this PR. Technical details and possible side effects.
+## Verification
 
-* Changes x feature to such that y
-* Added x
-* Removed y
-* Does this change require documentation to be updated?
-* Does this change add any new dependencies?
-* Does this change require any other modifications to be made to the repository (i.e. Regeneration activity, etc.)?
-* Could this change impact execution of existing code?
+> _**Replace this text** - Document the details that help a reviewer verify the documentation._
 
-# How should this be tested?
+## Interested Parties
 
-A description of what steps someone could take to:
-* Reproduce the problem you are fixing (if applicable)
-* Test that the Pull Request does what is intended.
-* Please be as detailed as possible.
-* Good testing instructions help get your PR completed faster.
+> _**Replace this text** - name some folks who may be interested, or, if unsure, @Islandora/8-x-committers
+---
 
-# Additional Notes:
-Any additional information that you think would be helpful when reviewing this PR.
+## Checklist
 
-# Interested parties
-Tag (@ mention) interested parties or, if unsure, @Islandora/8-x-committers
+> __Pull-request reviewer__ should ensure the following
+
+* [ ] Does this PR link to related [issues](https://github.com/Islandora/documentation/issues/)?
+* [ ] Does the proposed documentation align with the [Islandora Documentation Style Guide](https://islandora.github.io/documentation/contributing/docs_style_guide/)?
+* [ ] Are the changes accurate, useful, free of typos, etc?
+
+> __Person merging__ should ensure the following
+* [ ] Does mkdocs still build successfully? (This is indicated by TravisCI passing. To test locally, and see warnings, see [How To Build Documentation](https://islandora.github.io/documentation/technical-documentation/docs-build/).)
+* [ ] If pages are renamed or removed, have all internal links to those pages been fixed?
+* [ ] If pages are added, have they been linked to or placed in the menu?
+* [ ] Did the PR receive at least one approval from a committer, and all issues raised have been addressed?
