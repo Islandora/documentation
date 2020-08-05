@@ -33,7 +33,7 @@ extra:
       link: 'https://twitter.com/islandora'
 
 nav:
-  - Summary: 'index.md'
+  - Overview: 'index.md'
   - Installation:
       - 'Component Overview': 'installation/component_overview.md'
       - 'Automatic Provisioning': 'installation/playbook.md'
