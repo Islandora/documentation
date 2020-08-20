@@ -63,8 +63,24 @@ Below is an example of an RDF mapping as a .yml (YAML) file. It is the current v
 
 - The top level key `types` specifies the `rdf:type` of the resource or content model. `field_model`, a required field of Islandora objects, also gets mapped to `rdf:type` through an arcane back-end process.
 - The top level key `fieldMappings` specifies fields attached to that bundle and their RDF property mappings. One field can be mapped to more than one RDF property. It is a simple flat list.
-- `datatype_callback` : [needs documentation]
-- `mapping_type: rel` : [needs documentation]
+
+#### Mapping Types
+`mapping_type:`: There are several mapping types which are provided out of the box. One of those being `rel` - standing for relationship. The default, or if one is not provided is `property` meaning a property. 
+`datatype_callback`: This is a custom function that transforms the output of the field. There are some provided to us by Drupal and some added by Islandora, such as:
+- `Drupal\controlled_access_terms\EDTFConverter::dateIso8601Value` which converts dates to Iso format
+- `Drupal\jsonld\EntityReferenceConverter::linkFieldPassthrough` which converts a referenced entity to the URI on the entity (which is configurable with the `link_field` argument
+An example usage of the `Drupal\jsonld\EntityReferenceConverter::linkFieldPassthrough` is as follows:
+```yml
+field_subject:
+    properties:
+      - 'dcterms:subject'
+    datatype_callback:
+      callable: 'Drupal\jsonld\EntityReferenceConverter::linkFieldPassthrough'
+      arguments:
+        link_field: 'field_authority_link'
+```
+Which would convert a reference to the subject's taxonomy term entity to a reference to the URI provided in `field_authority_link` of that subject's taxonomy term entity.
+
 
 ## Sample RDF Mapping
 ```yml
