@@ -65,7 +65,9 @@ Below is an example of an RDF mapping as a .yml (YAML) file. It is the current v
 - The top level key `fieldMappings` specifies fields attached to that bundle and their RDF property mappings. One field can be mapped to more than one RDF property. It is a simple flat list.
 
 #### Mapping Types
-`mapping_type:`: There are several mapping types which are provided out of the box. One of those being `rel` - standing for relationship. The default, or if one is not provided is `property` meaning a property.
+`mapping_type:`: There are several mapping types which are provided out of the box.
+- `rel` - standing for relationship, expresses a relationship between two resources
+- `property` - the default, or if a relationship is not provided, expresses the relationship between a resource and some literal text.
 
 #### Datatype Callbacks
 `datatype_callback`: This is a custom function that transforms the output of the field. There are some provided to us by Drupal and some added by Islandora, such as:
