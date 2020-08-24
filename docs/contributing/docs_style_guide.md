@@ -10,19 +10,19 @@
 - Use `-` instead of `*` for bulleted lists.
 - Upload images to the 'assets' folder and reference them from there. 
    -- For file name, use underscores between words and prefix all file names with the page name, e.g. context_display_hints.jpg for the image showing how to set display hints in the context menu.
-- Use the [Admonition syntax](https://squidfunk.github.io/mkdocs-material/reference/admonitions/) to create notes like this:
+- Use the [Admonition syntax](https://squidfunk.github.io/mkdocs-material/reference/admonitions/) to create notes like this (four-space indent required):
 
 _Example:_
 
 ```
 !!! note "Helpful Tip" 
-  I am a helpful tip!
+    I am a helpful tip!
 ```
 
 _Result:_
 
 !!! note "Helpful Tip" 
-  I am a helpful tip!
+    I am a helpful tip!
 
 
 ## Don'ts
