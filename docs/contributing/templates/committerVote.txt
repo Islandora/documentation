@@ -1,4 +1,4 @@
-To: islandora-7x-2x-committers@googlegroups.com
+To: islandora-committers@googlegroups.com
 Subject: Vote new committer: [Candidate]
 
 Body:

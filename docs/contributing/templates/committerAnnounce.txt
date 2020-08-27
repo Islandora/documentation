@@ -3,12 +3,12 @@ Subject: New committer: [New Committer]
 
 Body:
 ================================
-The Islandora CLAW committers have asked [New Committer] to become a committer and we are pleased to announce that they have accepted.
+The Islandora 8 committers have asked [New Committer] to become a committer and we are pleased to announce that they have accepted.
 
 ### add specific details here ###
 
 Further details of the rights and responsibilities of being a Islandora committer can be found here:
-http://islandora-claw.github.io/CLAW/contributing/committers/
+http://islandora.github.io/documentation/contributing/committers/
 
 Regards,
 
