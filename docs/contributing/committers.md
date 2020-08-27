@@ -89,6 +89,6 @@ If they accept, then do:
 
 1. Add to the Islandora 8 Committer team of the Github Islandora organization.
 2. Add to Committer team of GitHub Islandora-Labs organization 
-3. Add to islandora-2x-committers google-group
+3. Add to islandora-committers google-group
 4. Add to committers wiki page: Islandora 8 Committers (this page)
 5. Announce the new committer ([template/committerAnnounce.txt](https://raw.githubusercontent.com/Islandora/documentation/master/docs/contributing/templates/committerAnnounce.txt))
