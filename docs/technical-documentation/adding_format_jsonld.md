@@ -1,6 +1,6 @@
 Drupal requires the use of a `_format` query parameter to get alternate representations of a node/media.
 
-By default, Islandora deploys with the [jsonld](https://github.com/Islandora/jsonld) module and the [Milliner](https://github.com/Islandora/Crayfish/tree/master/Milliner) microservice. These two components are configured to strip this `_format` query parameter off of the end of URIs.
+By default, Islandora deploys with the [jsonld](https://github.com/Islandora/jsonld) module and the [Milliner](https://github.com/Islandora/Crayfish/tree/main/Milliner) microservice. These two components are configured to strip this `_format` query parameter off of the end of URIs.
 
 This means that when your content is indexed in Fedora, the triplestore, etc... it's URI will
 be something like `http://localhost:8000/node/1` and not `http://localhost:8000/node/1?_format=jsonld`.

@@ -2,7 +2,7 @@
 
 The map between Drupal URIs and their corresponding Fedora URIs is stored in a service called Gemini. An Islandora "pseudo-field" can be enabled that will display the corresponding Fedora URI on the page of a node, taxonomy term, or media object.  You can also query Gemini directly. Instructions for doing that are provided below.
 
-For more information about the Gemini service, see the [Gemini README](https://github.com/Islandora-CLAW/Crayfish/tree/master/Gemini).
+For more information about the Gemini service, see the [Gemini README](https://github.com/Islandora-CLAW/Crayfish/tree/main/Gemini).
 
 ## Fedora URI Pseudo-field
 
