@@ -21,14 +21,14 @@ Islandora:
 
 ### Sandbox
 
-To try Islandora without installing anything, visit [http://future.islandora.ca/](http://future.islandora.ca/). Anyone can log in to this sandbox as an administrator (credentials are below and on the front page) and explore the interface! However, this site is refreshed periodically so your changes will not be permanent. This site uses Islandora Defaults, a way of setting up Islandora for demonstration purposes - this is not the only way that Islandora can be made to work!
+To try Islandora without installing anything, visit [http://future.islandora.ca/](http://future.islandora.ca/). Anyone can log in to this sandbox as an administrator (credentials are below and on the front page) and explore the interface! However, this site is refreshed periodically so your changes will not be permanent. This site uses Islandora Defaults, a way of setting up Islandora for demonstration purposes. This is not the only way that Islandora can be made to work! This sandbox includes some sample content and also demonstrates some Drupal contrib modules that are not "standard" Islandora, such as View Bulk Edit, which powers the Batch Edit Page.
 
 - username: Test
 - password: islandora
 
 ### Virtual Machine Image
 
-To try Islandora locally, you can download and run the latest [community sandbox VM image](https://islandora.ca/try). This requires installing VirtualBox or another virtualization provider. This also uses Islandora Defaults, as it is a pre-built version of the Islandora Playbook.
+To try Islandora locally, you can download and run the latest [community sandbox VM image](https://islandora.ca/try). This requires installing VirtualBox or another virtualization provider. This also uses Islandora Defaults, and includes sample content, Views, Blocks, and Drupal contributed modules and themes, to enhance its role as a sandbox.
 
 - username: admin
 - password: islandora
