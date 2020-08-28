@@ -35,17 +35,18 @@ To try Islandora locally, you can download and run the latest [community sandbox
 
 ### Islandora Base Box via Vagrant
 
-If you have Vagrant and Git installed as well as VirtualBox, you can spin up the latest release of Islandora Defaults using the [Islandora Playbook](https://github.com/Islandora-Devops/islandora-playbook)'s Vagrantfile. Out of the box, `vagrant up` will download the latest release of Islandora as the [Islandora 8 Base Box](https://app.vagrantup.com/islandora/boxes/8). It will also set up shared folders and port forwarding, but (as of June 2020) will not do any Ansible Provisioning, because the Islandora 8 Base Box has been already provisioned. Same credentials as above, with further documented in its README file.
+If you have Vagrant and Git installed as well as VirtualBox, you can spin up the latest release of Islandora Defaults using the [Islandora Playbook](https://github.com/Islandora-Devops/islandora-playbook)'s Vagrantfile. Out of the box, `vagrant up` will download the latest release of Islandora as the [Islandora 8 Base Box](https://app.vagrantup.com/islandora/boxes/8). At the moment, this only works on the `dev` branch. It will also set up shared folders and port forwarding, but (as of May 2020) will not do any Ansible Provisioning, because the Islandora 8 Base Box has been already provisioned. Same credentials as above, with further access to services documented in its README file.
 
 ```bash
 git clone https://github.com/Islandora-Devops/islandora-playbook
 cd islandora-playbook
+git checkout dev
 vagrant up
 ```
 
 ### Islandora Playbook via Ansible
 
-To use the Islandora Playbook as an Ansible Playbook, either edit the included Vagrantfile to use `ubuntu/bionic64` or `centos/7` rather than the pre-built `islandora/8` base box, or, use Ansible to run it against an external linux server. Either way, be prepared to wait a while as Ansible installs Drupal via drupal-project and Composer. See [Installation](installation/playbook) for more details.
+To use the Islandora Playbook as an Ansible Playbook, either edit the included Vagrantfile to use `ubuntu/bionic64` or `centos/7` rather than the pre-built `islandora/8` base box, or, use Ansible to run it against an external linux server. Either way, be prepared to wait a while as Ansible installs Drupal via drupal-project and Composer. See [Installation](installation/playbook) and [Hacking on Islandora](contributing/hacking-on-islandora) for more details. 
 
 
 ## Join the Community
