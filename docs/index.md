@@ -20,23 +20,23 @@ Islandora:
 
 ## Try Islandora
 
-### Sandbox
+### Online Sandbox
 
 To try Islandora without installing anything, visit [http://future.islandora.ca/](http://future.islandora.ca/). Anyone can log in to this sandbox as an administrator (credentials are below and on the front page) and explore the interface! However, this site is refreshed periodically so your changes will not be permanent. This site uses Islandora Defaults, a way of setting up Islandora for demonstration purposes. This is not the only way that Islandora can be made to work! This sandbox includes, on top of Islandora Defaults, some sample content and configuration (such as views and blocks, and other Drupal modules like Views Bulk Edit) to increase its usefulness as a sandbox. 
 
 - username: Test
 - password: islandora
 
-### Virtual Machine Image
+### Virtual Machine Image (.ova file)
 
-To try Islandora locally, you can download and run the latest [community sandbox VM image](https://islandora.ca/try). This requires installing VirtualBox or another virtualization provider. This also uses Islandora Defaults, and similarly to the online sandbox includes sample content and other configured Views, Blocks, and Drupal modules.
+To try Islandora locally, you can download and run the latest [community sandbox Virtual Machine image](https://islandora.ca/try). This requires installing VirtualBox or another virtualization provider. This also uses Islandora Defaults, and similarly to the online sandbox includes sample content and other configured Views, Blocks, and Drupal modules.
 
 - username: admin
 - password: islandora
 
-### Islandora Base Box via Vagrant
+### Vagrant and Islandora Base Box
 
-If you have Vagrant and Git installed as well as VirtualBox, you can spin up the latest release of Islandora Defaults using the [Islandora Playbook](https://github.com/Islandora-Devops/islandora-playbook)'s Vagrantfile. Out of the box, `vagrant up` will download the latest release of Islandora as the [Islandora 8 Base Box](https://app.vagrantup.com/islandora/boxes/8). At the moment, this only works on the `dev` branch. It will also set up shared folders and port forwarding, but (as of May 2020) will not do any Ansible Provisioning, because the Islandora 8 Base Box has been already provisioned. Same credentials as above, with further access to services documented in its README file.
+The latest release of Islandora Defaults is uploaded as the [Islandora 8 Base Box](https://app.vagrantup.com/islandora/boxes/8) on Vagrant Cloud. If you have Vagrant and Git installed as well as VirtualBox, you can spin up the latest release of Islandora Defaults quickly by using the [Islandora Playbook](https://github.com/Islandora-Devops/islandora-playbook). On the `dev` branch, the Vagrantfile has the ISLANDORA_DISTRO variable default to 'islandora/8'. Like this, `vagrant up` will download the latest Islandora Base Box and will skip ansible provisioning. Same credentials as above, with further access to services documented in its README file.
 
 ```bash
 git clone https://github.com/Islandora-Devops/islandora-playbook
@@ -47,7 +47,7 @@ vagrant up
 
 ### Islandora Playbook via Ansible
 
-To use the Islandora Playbook as an Ansible Playbook, either edit the included Vagrantfile to use `ubuntu/bionic64` or `centos/7` rather than the pre-built `islandora/8` base box, or, use Ansible to run it against an external linux server. Either way, be prepared to wait a while as Ansible installs Drupal via drupal-project and Composer. See [Installation](installation/playbook) and [Hacking on Islandora](contributing/hacking-on-islandora) for more details. 
+To use the Islandora Playbook as an Ansible Playbook, either set ISLANDORA_DISTRO to `ubuntu/bionic64` or `centos/7` (by editing the Vagrantfile or setting a shell variable), or, use Ansible to run it against an external linux server. Either way, be prepared to wait a while as Ansible installs Drupal via drupal-project and Composer. See [Installation](installation/playbook) and [Hacking on Islandora](contributing/hacking-on-islandora) for more details. 
 
 
 ## Join the Community
