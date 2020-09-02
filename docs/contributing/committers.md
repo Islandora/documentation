@@ -29,6 +29,7 @@ The following is an alphabetized list of the current Islandora 8 committers:
 
 | Name                        | Organization                          | Github username |
 |-----------------------------|---------------------------------------|----------------|
+| Jordan Dukart               | discoverygarden                       | jordandukart   |
 | Jonathan Green              | LYRASIS                               | jonathangreen  |
 | Jonathan Hunt               | Catalyst.Net                          | kayakr         | 
 | Mark Jordan                 | Simon Fraser University               | mjordan        |
