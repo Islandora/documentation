@@ -11,46 +11,48 @@ Islandora:
 - **Integrates with Fedora** - Drupal resources can be stored in Duraspace's [Fedora 5.x Repository](https://wiki.duraspace.org/display/FF/Fedora+Repository+Home) as binary assets and RDF metadata.
 - **Uses microservices** - Islandora provides an architecture for messaging and integration with any number of microservices, that provide services outside of the Drupal framework. Islandora's [Crayfish](https://github.com/Islandora/crayfish) suite of microservices provides functionality for synchronizing resources into Fedora and automatically generating derivative files.
 - **Can handle messages at scale** - Islandora uses [Alpaca](https://github.com/Islandora/Alpaca), an integration middleware based on Apache Camel, to scalably handle messaging and queueing for microservices such as Crayfish.
+
 [//]: # (Allowing bulk uploads to be processed without affecting the server... would be the ideal right? but right now they're on the same server. Is just saying "scalability" ok?)
 - **Offers digital preservation features** - Using a robust storage layer for preservation (Fedora), and generating technical metadata with FITS, are digital preservation tools provided out of the box in the default implementation. Community members have created additional features for doing [digital preservation using Islandora](https://github.com/mjordan/digital_preservation_using_islandora), which have not yet been contributed to "Core Islandora". 
 - **Exposes data to harvesters** - Metadata about resources is available as linked data through the [JSON-LD serialization module](https://github.com/Islandora/jsonld), and can be made available through Drupal, Fedora, or a triplestore. Islandora also offers a [full configuration for exposing OAI-PMH](https://github.com/Islandora/islandora_defaults/tree/8.x-1.x/modules/islandora_oaipmh) to metadata harvesters, and [IIIF support](https://github.com/Islandora/islandora/tree/8.x-1.x/modules/islandora_iiif) for images.
 - **Offers flexibility** - As Islandora content is Drupal content, migrations and batch editing can be done through Drupal's built-in migrate framework and controlled vocabularies created using Drupal taxonomies. Contributed Drupal modules such as [Solr Search API](https://www.drupal.org/project/search_api_solr) enable in-site search, and [Matomo Analytics](https://www.drupal.org/project/matomo) provides usage metrics for site analytics.
 - **Is a community** - A [dedicated, active community of users and developers](https://groups.google.com/forum/#!forum/islandora) is working to push new features, collaborate on improvements, design custom solutions, and create extended functionality. Some of these for Islandora 8 take the form of [Recipes](https://github.com/Islandora-Labs/Islandora-Cookbook).
 
-## Demo
+## Try Islandora
 
-Visit [http://future.islandora.ca/](http://future.islandora.ca/).
+### Online Sandbox
 
-## Quickstart
+To try Islandora without installing anything, visit [http://future.islandora.ca/](http://future.islandora.ca/). Anyone can log in to this sandbox as an administrator (credentials are below and on the front page) and explore the interface! However, this site is refreshed periodically so your changes will not be permanent. This site uses Islandora Defaults, a way of setting up Islandora for demonstration purposes. This is not the only way that Islandora can be made to work! This sandbox includes, on top of Islandora Defaults, some sample content and configuration (such as views and blocks, and other Drupal modules like Views Bulk Edit) to increase its usefulness as a sandbox. 
 
-These instructions use Vagrant and the [Islandora Ansible playbook](https://github.com/Islandora-Devops/islandora-playbook) to spin up a local development machine, which includes the [Islandora Default site configuration](https://github.com/Islandora/islandora_defaults). See the [Automatic Provisioning](installation/playbook/) page for full instructions.
-[//]: # (Move this link to contributing/hacking-on-islandora.md once that's de-CLAWed.)
+- username: Test
+- password: islandora
 
+### Virtual Machine Image (.ova file)
 
-### Requirements
-- [Virtual Box](https://www.virtualbox.org/)
-- [Vagrant](https://www.vagrantup.com/) (version 2.0 or higher required)
-- [Git](https://git-scm.com/)
-- [OpenSSL](https://www.openssl.org/)
-- [Ansible](https://www.ansible.com/community) (up to, and not past, 2.8.7)
+To try Islandora locally, you can download and run the latest [community sandbox Virtual Machine image](https://islandora.ca/try). This requires installing VirtualBox or another virtualization provider. This also uses Islandora Defaults, and similarly to the online sandbox includes sample content and other configured Views, Blocks, and Drupal modules.
 
-### Instructions
+- username: admin
+- password: islandora
 
-Ubuntu 18.04 or Mac OS:
-```console
-$ git clone https://github.com/Islandora-Devops/islandora-playbook
-$ cd islandora-playbook
-$ vagrant up
-```
-CentOS 7:
-```console
-$ git clone https://github.com/Islandora-Devops/islandora-playbook
-$ cd islandora-playbook
-$ vagrant plugin install vagrant-vbguest
-$ ISLANDORA_DISTRO="centos/7" vagrant up
+### Vagrant and Islandora Base Box
+
+The latest release of Islandora Defaults is uploaded as the [Islandora 8 Base Box](https://app.vagrantup.com/islandora/boxes/8) on Vagrant Cloud. If you have Vagrant and Git installed as well as VirtualBox, you can spin up the latest release of Islandora Defaults quickly by using the [Islandora Playbook](https://github.com/Islandora-Devops/islandora-playbook). On the `dev` branch, the Vagrantfile has the ISLANDORA_DISTRO variable default to 'islandora/8'. Like this, `vagrant up` will download the latest Islandora Base Box and will skip ansible provisioning. Same credentials as above, with further access to services documented in its README file.
+
+```bash
+git clone https://github.com/Islandora-Devops/islandora-playbook
+cd islandora-playbook
+git checkout dev
+vagrant up
 ```
 
-Then, navigate to [http://localhost:8000](http://localhost:8000) and log in with username `admin` and password `islandora`.
+### Islandora Playbook via Ansible
+
+To use the Islandora Playbook as an Ansible Playbook, either set ISLANDORA_DISTRO to `ubuntu/bionic64` or `centos/7` (by editing the Vagrantfile or setting a shell variable), or, use Ansible to run it against an external linux server. Either way, be prepared to wait a while as Ansible installs Drupal via drupal-project and Composer. See [Installation](installation/playbook) and [Hacking on Islandora](contributing/hacking-on-islandora) for more details. 
+
+
+## Join the Community
+
+The [Islandora community](https://islandora.ca/index.php/community) is an active group of users, managers, librarians, documenters, and developers from GLAM (and beyond!) institutions worldwide. We welcome discussion and contribution through various mailing lists, channels, interest groups, and calls. The Islandora community operates under the [Islandora Code Of Conduct](https://islandora.ca/codeofconduct). See our Contributing Guidelines for more information.
 
 
 !!! note "Documentation for previous versions"

@@ -6,7 +6,7 @@ matrix:
 
 branches:
   only:
-    - /master/
+    - /main/
 
 install:
   - pip install mkdocs
@@ -22,4 +22,4 @@ deploy:
   github_token: $GITHUB_TOKEN
   keep_history: true
   on:
-    branch: master
+    branch: main
