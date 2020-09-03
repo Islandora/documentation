@@ -21,7 +21,7 @@ Why use the rest API?
 
 BONUS: It’s just Drupal’s REST API
 
-Islandora only provides two additional API endpoints:
+#### Islandora only provides two additional API endpoints
 
 - /media/{mid}/source
   - PUT a file to this endpoint to create/update a Media’s file
@@ -43,34 +43,34 @@ Why use the Migrate API?
 
 - You can (potentially) do everything with configs!
 - Leverage contrib module plugins.
-- Making plugins for more complex sources and  processes is (relatively) simple.
+- Making plugins for more complex sources and processes is (relatively) simple.
 - Updating metadata is as simple as:
 `drush mim node --update`
 
-A Migration Configuration defines an Extract, Transform, Load (ETL) process.
+#### A Migration Configuration defines an Extract, Transform, Load (ETL) process
 
 - Source plugins extract data from a source
 - Process plugins transform the data
 - Destination plugins load the data (create new entities)
 
-We’ve built two tools for you using the Migrate API:
+#### We’ve built two tools for you using the Migrate API
 
 - [migrate_islandora_csv](https://github.com/Islandora/migrate_islandora_csv)
   - Tutorial with a sample migration using some files and a CSV
 - [migrate_7x_claw](https://github.com/Islandora-Devops/migrate_7x_claw)
   - A tool to get all your Islandora 7 content migrated over
 
-Recap of migrate_islandora_csv:
+##### Recap of migrate_islandora_csv
 - CSVs
   - Everyone understands and knows how to work with CSVs
 - Documented
-  - It’s a step by step walkthrough
+  - It’s a step-by-step walkthrough
 - Process Metadata
   - Clean up / transform the metadata using processors
 - Build Relationships
   - Migrations can reference other migrated content or generate new content on the fly
 
-Recap of migrate_7x_claw:
+##### Recap of migrate_7x_claw
 
 - Designed to migrate Islandora 7 data to Islandora 8.
 - DATASTREAMS
@@ -80,7 +80,7 @@ Recap of migrate_7x_claw:
 - CUSTOMIZABLE
   - Migrate_7x_claw is a starting point, meant to be tailored to your metadata
 
-To make migrate_7x_claw work you need:
+###### To make migrate_7x_claw work you need
 
 - Access
   - You need credentials to both your Islandora 7 and 8 installs.
@@ -107,7 +107,7 @@ More tailored for end users with less technical knowledge or limited server acce
 - “CSVs and a pile of scans”
 - Cross Platform - Python
 
-Islandora Workbench highlights:
+#### Islandora Workbench highlights
 
 - Opinionated
   - MUCH less configuration. Decisions made for you.
@@ -118,7 +118,7 @@ Islandora Workbench highlights:
 - Bumpers On
   - Configuration and CSV are validated
 
-Islandora Workbench Basics:
+#### Islandora Workbench basics
 
 - Column names are field names
 - If your value contains a comma, wrap it in double quotes
