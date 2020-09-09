@@ -104,6 +104,7 @@ nav:
       - 'Alpaca Technical Stack': 'alpaca/alpaca-technical-stack.md'
       - 'Alpaca Tips': 'technical-documentation/alpaca_tips.md'
   - Migration:
+      - 'Migration Overview': 'technical-documentation/migration-overview.md'
       - 'CSV': 'technical-documentation/migrate-csv.md'
       - 'Islandora 7': 'technical-documentation/migrate-7x.md'
   - Contributing:
