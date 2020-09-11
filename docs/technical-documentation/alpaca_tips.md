@@ -15,7 +15,7 @@ This service receives requests from Drupal when it wants to create derivatives a
 This service overrides the default http client with Islandora specific configuration.
 
 ## islandora-indexing-fcrepo
-This service receives requests from Drupal in response to write operations on entities. These requests are passed along to [Milliner](https://github.com/Islandora/Crayfish/tree/dev/Milliner) microservice in [Crayfish](https://github.com/Islandora/Crayfish) to convert Drupal entities into Fedora resources and communicate with Fedora (via [Chullo](https://github.com/Islandora-CLAW/chullo)).
+This service receives requests from Drupal in response to write operations on entities. These requests are passed along to [Milliner](https://github.com/Islandora/Crayfish/tree/dev/Milliner) microservice in [Crayfish](https://github.com/Islandora/Crayfish) to convert Drupal entities into Fedora resources and communicate with Fedora (via [Chullo](https://github.com/Islandora/chullo)).
 
 ## islandora-indexing-triplestore
 This service receives requests from Drupal on indexing and deleting in order to persist/delete content in the triplestore.

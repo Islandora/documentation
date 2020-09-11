@@ -272,4 +272,4 @@ change this, set a new value for `ansible_port` in `inventory/vagrant/hosts`.
 
 If you run into any issues installing the environment, do not hesitate to email the [mailing list](mailto:islandora@googlegroups.com) to
 ask for help.  If you think you've stumbled across a bug in the installer, please create an issue in the
-[Islandora 8 issue queue](http://github.com/Islandora-CLAW/CLAW/issues) and give it an `ansible` tag.
+[Islandora 8 issue queue](http://github.com/Islandora/documentation/issues) and give it an `ansible` tag.
