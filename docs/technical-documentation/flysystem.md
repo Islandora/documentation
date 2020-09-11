@@ -47,4 +47,4 @@ For example, if I upload a Tiff to a repository item as a File Media with the te
 
 To make Islandora save future derivatives to Fedora instead of to Drupal, change the corresponding action's "File system" setting ('scheme' in the corresponding config file) to 'fedora' instead of 'public'.
 
-![Screenshot showing the setting to change for the derivative generation action.]../assets/flysystem_derivative_filesystem_setting.png)
+![Screenshot showing the setting to change for the derivative generation action.](../assets/flysystem_derivative_filesystem_setting.png)
