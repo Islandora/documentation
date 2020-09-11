@@ -15,7 +15,7 @@
 	url = https://github.com/Islandora/controlled_access_terms
 [submodule "claw-playbook"]
 	path = claw-playbook
-	url = https://github.com/Islandora/islandora-playbook
+	url = https://github.com/Islandora-Devops/islandora-playbook
 [submodule "chullo"]
 	path = chullo
 	url = https://github.com/Islandora/chullo
