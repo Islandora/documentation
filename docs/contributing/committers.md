@@ -30,6 +30,7 @@ The following is an alphabetized list of the current Islandora 8 committers:
 | Name                        | Organization                          | Github username |
 |-----------------------------|---------------------------------------|----------------|
 | Melissa Anez                | Islandora Foundation                  | manez          |
+| Bryan Brown                 | Florida State University              | byrjbrown      |
 | Jordan Dukart               | discoverygarden                       | jordandukart   |
 | Jonathan Green              | LYRASIS                               | jonathangreen  |
 | Jonathan Hunt               | Catalyst.Net                          | kayakr         | 
@@ -83,9 +84,9 @@ This section describes the process for handling the voting of a new committer.
 
 Summary:
 
-1. Call a vote ([templates/committerVote.txt](https://raw.githubusercontent.com/Islandora/documentation/master/docs/contributing/templates/committerVote.txt))
-2. Close a vote ([templates/closeCommitterVote.txt](https://raw.githubusercontent.com/Islandora/documentation/master/docs/contributing/templates/closeCommitterVote.txt))
-3. Invite the new committer ([templates/committerInvite.txt](https://raw.githubusercontent.com/Islandora/documentation/master/docs/contributing/templates/committerInvite.txt)), if no CLA is on file ([templates/committerInviteCLA.txt](https://raw.githubusercontent.com/Islandora/documentation/master/docs/contributing/templates/committerInviteCLA.txt))
+1. Call a vote ([templates/committerVote.txt](https://raw.githubusercontent.com/Islandora/documentation/main/docs/contributing/templates/committerVote.txt))
+2. Close a vote ([templates/closeCommitterVote.txt](https://raw.githubusercontent.com/Islandora/documentation/main/docs/contributing/templates/closeCommitterVote.txt))
+3. Invite the new committer ([templates/committerInvite.txt](https://raw.githubusercontent.com/Islandora/documentation/main/docs/contributing/templates/committerInvite.txt)), if no CLA is on file ([templates/committerInviteCLA.txt](https://raw.githubusercontent.com/Islandora/documentation/main/docs/contributing/templates/committerInviteCLA.txt))
 
 If they accept, then do:
 
@@ -93,4 +94,4 @@ If they accept, then do:
 2. Add to Committer team of GitHub Islandora-Labs organization 
 3. Add to islandora-committers google-group
 4. Add to committers wiki page: Islandora 8 Committers (this page)
-5. Announce the new committer ([template/committerAnnounce.txt](https://raw.githubusercontent.com/Islandora/documentation/master/docs/contributing/templates/committerAnnounce.txt))
+5. Announce the new committer ([template/committerAnnounce.txt](https://raw.githubusercontent.com/Islandora/documentation/main/docs/contributing/templates/committerAnnounce.txt))
