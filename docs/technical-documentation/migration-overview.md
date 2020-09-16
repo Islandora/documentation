@@ -12,12 +12,10 @@ The three options are:
 ### REST API
 
 Why use the rest API?
-- Works anywhere
-    - You don’t have to work on the Drupal server. Migrate from your laptop!
-- No PHP required
-    - Use any language that can make an http request. Even cURL will do just fine.
-- JSON
-    - Why use XML if you don’t have to?
+
+- **Works anywhere**: You don’t have to work on the Drupal server. Migrate from your laptop!
+- **No PHP required**: Use any language that can make an http request. Even cURL will do just fine.
+- **JSON**: Why use XML if you don’t have to?
 
 BONUS: It’s just Drupal’s REST API
 
