@@ -1,8 +1,26 @@
-The fastest way to get up and running with Islandora 8 is through an Ansible Playbook called [islandora-playbook](https://github.com/Islandora-Devops/islandora-playbook). It can be used to spin up a local environment using [Vagrant](https://www.vagrantup.com/), or to provision an existing machine.
+# Islandora Playbook
+
+The Islandora Playbook ([islandora-playbook](https://github.com/Islandora-Devops/islandora-playbook)) is a tool for installing Islandora Defaults. It can be used both as a Vagrant project to create a local development environment, or as an Ansible playbook which can provision a remote server. 
+
+!!! Note 
+    This repository has two active branches. The **main** branch's playbook will install the latest release of Islandora and its components. The **dev** branch, when configured to use Ansible, will provision with the most recent code of Islandora and its components. 
+
+
+## Quick-start mode:
+
+The fastest way to spin up a local Vagrant version of Islandora Defaults is to use the Islandora Base Box, which is a packaged VM of the **latest release** of Islandora - including Islandora Defaults and all components. This is the default behaviour of the **dev** branch of the playbook. This method requires Vagrant and VirtualBox, but does not use Ansible.
+
+```bash
+$ git clone -b dev https://github.com/Islandora-Devops/islandora-playbook
+$ cd islandora-playbook
+$ vagrant up
+```
+
+This method results in an installation that does not contain the latest code changes. 
 
 ## Requirements
 
-Download and install the following:
+Download and install the following. VirtualBox and Vagrant are needed if creating local VMs. Ansible is only necessary if provisioning (not using quick-start mode described above):
 
 1. [Virtual Box](https://www.virtualbox.org/)
 2. [Vagrant](https://www.vagrantup.com/) (version 2.0 or higher required)
@@ -10,11 +28,11 @@ Download and install the following:
 4. [OpenSSL](https://www.openssl.org/)
 5. [Ansible](https://www.ansible.com/community) (up to, and not past, 2.8.7)
 
-#### Ubuntu/Debian
+#### Installing Git, OpenSSL, and Ansible on Ubuntu/Debian
 
 Git and OpenSSL are available via `apt`. [Ansible](https://www.ansible.com/community) up to version 2.8.7.  This is done best with `pip`, the python package manager:
 
-```
+```bash
 # Install git and openssl
 $ sudo apt-get install git
 $ sudo apt-get install openssl
@@ -25,11 +43,11 @@ $ python get-pip.py --user
 $ pip install --user -Iv ansible==2.8.7
 ```
 
-#### CentOS
+#### Installing Git, OpenSSL and Ansible on CentOS
 
 Git and OpenSSL are available via `yum`. Most everything else can be installed in the same way.
 
-```
+```bash
 $ sudo yum install git
 $ sudo yum install openssl
 # If pip isn’t already available, run the following commands to install it
@@ -39,45 +57,88 @@ $ python get-pip.py --user
 $ pip install --user -Iv ansible==2.8.7
 ```
 
-#### MacOS
+#### Installing Git and Ansible on MacOS
 
-OpenSSL is already pre-installed on MacOS. Python and Pip should be installed via the downloaded installer direct from the site. For the installation of Ansible, consider using [homebrew](https://brew.sh/):
+OpenSSL is already pre-installed on MacOS. Git can be installed using XCode's command line tools (see below). Python and Pip should be installed via the downloaded installer direct from the site (not shown below). For the installation of Ansible, consider using [homebrew](https://brew.sh/) (see below).
 
-```
+```bash
 # Use xcode-select to install command line components, including git
 $ xcode-select --install
+# Install homebrew
 $ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+# Use homebrew to install ansible
 $ brew install ansible@2.8.7
 ```
 
 ## Installing a local development environment
 
-Before provisioning a local environment, you should likely double check that no [required ports](#port-clashes-for-local-environments) are currently in use.
+Clone the `islandora-playbook`, set the base box, and use `vagrant up` to automatically provision a local environment. This method uses Vagrant, VirtualBox, and Ansible. Before provisioning a local environment, you should likely double check that no [required ports](#port-clashes-for-local-environments) are currently in use.
 
-Clone the `islandora-playbook` and use `vagrant up` to automatically provision an environment.
+### Clone the playbook
 
-#### Ubuntu 18.04 or MacOS
-
+For the most recent release:
 ```bash
-$ git clone https://github.com/Islandora-Devops/islandora-playbook
+$ git clone -b main https://github.com/Islandora-Devops/islandora-playbook
 $ cd islandora-playbook
-$ vagrant up
 ```
 
-#### CentOS 7
-
+For the bleeding edge:
 ```bash
-$ git clone https://github.com/Islandora-Devops/islandora-playbook
+$ git clone -b dev https://github.com/Islandora-Devops/islandora-playbook
 $ cd islandora-playbook
-$ vagrant plugin install vagrant-vbguest
-$ ISLANDORA_DISTRO="centos/7" vagrant up
+```
+### Set the base box
+
+To tell Vagrant which base box to use, set ISLANDORA_DISTRO. This can be done by editing the Vagrantfile or by setting a shell variable.
+
+#### Editing the Vagrantfile
+
+Open `Vagrantfile` (in the islandora-playbook directory) in a text editor, and find the following section.
+
+```
+# Available boxes are 'islandora/8', ubuntu/bionic64' and 'centos/7'
+# Use 'ubuntu/bionic64' or 'centos/7' to build a dev environment from scratch.
+# Use 'islandora/8' if you just want to download a ready to run VM.
+$vagrantBox = ENV.fetch("ISLANDORA_DISTRO", "islandora/8")
 ```
 
-Or, for simplicity's sake, add the following to your user profile (e.g., `.bashrc` on Ubuntu/Debian environments, or `.bash_profile` on MacOS):
+To build a dev environment that is Ubuntu, change the last line of that section to:
+```
+$vagrantBox = ENV.fetch("ISLANDORA_DISTRO", "ubuntu/bionic64")
+```
+
+To build a dev environment that is CentOS, change the last line of that section to:
+```
+$vagrantBox = ENV.fetch("ISLANDORA_DISTRO", "centos/7")
+```
+
+Note that setting ISLANORA_DISTRO as a shell variable will override what is specified in the Vagrantfile.
+
+#### Setting ISLANDORA_DISTRO as a shell (environment) variable
+
+Or, an alternative to altering the Vagrantfile, you can set `ISLANDORA_DISTRO` by adding the following 
+to `.bashrc` (on Ubuntu/Debian environments), or `.bash_profile` (on MacOS):
 
 ```bash
-export ISLANDORA_DISTRO="centos/7"
+export ISLANDORA_DISTRO="ubuntu/bionic64"
 ```
+
+This will override what is written in the Vagrantfile.
+
+### Spin up with Vagrant
+
+Before using `vagrant up`:
+
+- If building a CentOS box, you also need to install the vbguest additions with `vagrant plugin install vagrant-vbguest`.
+- If this is not your first time spinning up Islandora from this directory, and you want to get the latest code, you may want to clear cached ansible roles in roles/external `rm -rf roles/external`
+
+Then, to spin up the machine: 
+
+```bash
+vagrant up
+```
+
+
 
 ## Installing a remote environment
 
