@@ -2,14 +2,21 @@
 
 ## Do's
 
-- Submit documentation formatted in [Markdown](https://en.wikipedia.org/wiki/Markdown) format.
-  -- Please add Markdown headings to the content sections.
 - Use a GitHub Pull Request to submit documentation.
+- Submit documentation formatted in [Markdown](https://en.wikipedia.org/wiki/Markdown) format.
+    - Include a top-level heading for the whole page (using `#`)
+    - Please add Markdown headings (`#` and `##`) to the content sections.
+
 - Use the "bold/emphasis" style in Markdown for UI elements that users will interact with. For example, a button label for a button that must be pressed should be made bold in Markdown.
 - Use the "italics" style in Markdown for UI elements that have a label or title if you need to reference them in the documentation. For example, a title of a screen or page that will visit should be made italic in Markdown.
-- Use `-` instead of `*` for bulleted lists.
+- Use `-` instead of `*` for bulleted lists. Indent four (4) spaces for nested lists (Github renders nesting in markdown with 2 spaces, but mkdocs needs 4).
+_Example:_
+```
+- I am a list item
+    - And I am a sub-item.
+```
 - Upload images to the 'assets' folder and reference them from there. 
-   -- For file name, use underscores between words and prefix all file names with the page name, e.g. context_display_hints.jpg for the image showing how to set display hints in the context menu.
+    - For file naming, use underscores between words and prefix all file names with the page name, e.g. context_display_hints.jpg for the image showing how to set display hints in the context menu.
 - Use the [Admonition syntax](https://squidfunk.github.io/mkdocs-material/reference/admonitions/) to create notes like this (four-space indent required):
 
 _Example:_
