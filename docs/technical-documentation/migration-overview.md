@@ -33,6 +33,7 @@ Just be aware, you are writing everything yourself! (In other words you are maki
 Uses the Drupal 8 [Migrate API](https://www.drupal.org/docs/8/api/migrate-api/migrate-api-overview), which "provides services for migrating data from a source system to Drupal 8.
 
 The "source system" can be almost anything:
+
 - an Islandora 7 system
 - a group of scanned images and their metadata inside a CSV file
 - a web API
@@ -59,6 +60,7 @@ Why use the Migrate API?
     - A tool to get all your Islandora 7 content migrated over
 
 ##### Recap of migrate_islandora_csv
+
 - CSVs
     - Everyone understands and knows how to work with CSVs
 - Documented
