@@ -38,6 +38,7 @@ The following is an alphabetized list of the current Islandora 8 committers:
 | Danny Lamb                  | Islandora Foundation                  | dannylamb      |
 | Natkeeran Ledchumykanthan   | University of Toronto Scarborough     | natkeeran      |
 | Rosie Le Faive              | University of Prince Edward Island    | rosiel         |
+| Alexander O'Neill           | University of Prince Edward Island    | alxp           |    
 | Seth Shaw                   | University of Nevada, Las Vegas       | seth-shaw-unlv |
 | Alan Stanley                | University of Prince Edward Islandora | ajstanley      |
 | Jared Whiklo                | University of Manitoba                | whikloj        |
