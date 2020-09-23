@@ -45,7 +45,7 @@ In Islandora repositories that use Fedora, all properties about Drupal nodes are
  
 ### Conceptual Diagram
  
-Many users of Islandora may be familiar with the metahprocial diagram of Islandora 7 as a cheeseburger, which provides a memorable approximation of how the different parts of the software stack interact in a vertically-integrated, relatively customizable fashion (ie, Drupal, Solr, Islandora, and Fedora are stable layers, and the "toppings" stand in for Solution Packs and other utilities that can be added or removed to customize Islandora):
+Many users of Islandora may be familiar with the metaphorical diagram of Islandora 7 as a cheeseburger, which provides a memorable approximation of how the different parts of the software stack interact in a vertically-integrated, relatively customizable fashion (ie, Drupal, Solr, Islandora, and Fedora are stable layers, and the "toppings" stand in for Solution Packs and other utilities that can be added or removed to customize Islandora):
  
 ![Islandora 7 as a cheeseburger](../assets/user-intro-islandoraburger.png)
  
