@@ -12,7 +12,7 @@ If you would like to submit a use case to the Islandora 8 project, please submit
 
 ### Documentation
 
-You can contribute documentation in two different ways. One way is to create an issue [here](https://github.com/Islandora/documentation/issues/new), prepending "Documentation:" to the title of the issue. Another way is by pull request, which is the same process as [Contribute Code](https://github.com/Islandora/documentation/blob/master/CONTRIBUTING.md#contribute-code). All documentation resides in [`docs`](https://github.com/Islandora/documentation/tree/master/docs).
+You can contribute documentation in two different ways. One way is to create an issue [here](https://github.com/Islandora/documentation/issues/new), prepending "Documentation:" to the title of the issue. Another way is by pull request, which is the same process as [Contribute Code](https://github.com/Islandora/documentation/blob/main/CONTRIBUTING.md#contribute-code). All documentation resides in [`docs`](https://github.com/Islandora/documentation/tree/main/docs).
 
 ### Request a new feature
 
@@ -58,9 +58,9 @@ Contributions to the Islandora codebase should be sent as GitHub pull requests. 
 
 Take a look at [Creating a pull request](https://help.github.com/articles/creating-a-pull-request). In a nutshell you need to:
 
-1. [Fork](https://help.github.com/articles/fork-a-repo) this repository to your personal or institutional GitHub account (depending on the CLA you are working under). Be cautious of which branches you work from though (you'll want to base your work off master, or for Drupal modules use the most recent version branch). See [Fork a repo](https://help.github.com/articles/fork-a-repo) for detailed instructions.
+1. [Fork](https://help.github.com/articles/fork-a-repo) this repository to your personal or institutional GitHub account (depending on the CLA you are working under). Be cautious of which branches you work from though (you'll want to base your work off main, or for Drupal modules use the most recent version branch). See [Fork a repo](https://help.github.com/articles/fork-a-repo) for detailed instructions.
 2. Commit any changes to your fork.
-3. Send a [pull request](https://help.github.com/articles/creating-a-pull-request) using the [pull request template](https://github.com/Islandora/documentation/blob/master/.github/PULL_REQUEST_TEMPLATE.md) to the Islandora GitHub repository that you forked in step 1.  If your pull request is related to an existing issue -- for instance, because you reported a [bug/issue](https://github.com/Islandora/documentation/issues) earlier -- prefix the title of your pull request with the corresponding issue number (e.g. `issue-123: ...`). Please also include a reference to the issue in the description of the pull. This can be done by using '#' plus the issue number like so '#123', also try to pick an appropriate name for the branch in which you're issuing the pull request from.
+3. Send a [pull request](https://help.github.com/articles/creating-a-pull-request) using the [pull request template](https://github.com/Islandora/documentation/blob/main/.github/PULL_REQUEST_TEMPLATE.md) to the Islandora GitHub repository that you forked in step 1.  If your pull request is related to an existing issue -- for instance, because you reported a [bug/issue](https://github.com/Islandora/documentation/issues) earlier -- prefix the title of your pull request with the corresponding issue number (e.g. `issue-123: ...`). Please also include a reference to the issue in the description of the pull. This can be done by using '#' plus the issue number like so '#123', also try to pick an appropriate name for the branch in which you're issuing the pull request from.
 
 You may want to read [Syncing a fork](https://help.github.com/articles/syncing-a-fork) for instructions on how to keep your fork up to date with the latest changes of the upstream (official) repository.
 

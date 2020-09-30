@@ -1,5 +1,5 @@
 # Set the default behavior, in case people don't have core.autocrlf set.
-# We need this due to https://github.com/Islandora-CLAW/CLAW/issues/188.
+# We need this due to https://github.com/Islandora/documentation/issues/188.
 * text=auto
 * text eol=lf
 

@@ -4,19 +4,19 @@ One of the goals of the Islandora 8 project is to lower the barrier to entry for
 
 1. Install [VirtualBox](https://www.virtualbox.org/)
 2. Install [Vagrant](https://www.vagrantup.com/)
-3. Fork [Islandora CLAW](https://github.com/Islandora-CLAW/CLAW) and clone it onto your machine using the master branch
+3. Fork [Islandora CLAW](https://github.com/Islandora-CLAW/CLAW) and clone it onto your machine using the main branch
 ```bash
-~ $ git clone -b master https://github.com/your_github_name/islandora.git
+~ $ git clone -b main https://github.com/your_github_name/islandora.git
 ```
 OR
-If you're already a developer and have previously forked and cloned Islandora CLAW, just add the master branch from Islandora-CLAW to your existing checkout:
+If you're already a developer and have previously forked and cloned Islandora CLAW, just add the main branch from Islandora-CLAW to your existing checkout:
 ```bash
 ~ $ cd /path/to/islandora
 /path/to/CLAW $ git remote add claw https://github.com/Islandora-CLAW/CLAW.git
 /path/to/CLAW $ git fetch claw
-/path/to/CLAW $ git checkout master
+/path/to/CLAW $ git checkout main
 ```
-5. Navigate into the `install` directory of your master checkout
+5. Navigate into the `install` directory of your main checkout
 ```bash
 ~ $ cd /path/to/CLAW/install
 ```

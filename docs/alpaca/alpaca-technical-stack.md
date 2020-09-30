@@ -90,7 +90,7 @@ Maven has camel-archetype-blueprint which can be used to create apache-camel OSG
 mvn archetype:generate -DarchetypeGroupId=org.apache.camel.archetypes -DarchetypeArtifactId=camel-archetype-blueprint -DarchetypeVersion=2.9.0 -DarchetypeRepository=https://repository.apache.org/content/groups/snapshots-g
 ```
 
-However, it is easier to copy the structure of an existing project such as [islandora-connector-broadcast](https://github.com/Islandora/Alpaca/tree/master/islandora-connector-broadcast).
+However, it is easier to copy the structure of an existing project such as [islandora-connector-broadcast](https://github.com/Islandora/Alpaca/tree/main/islandora-connector-broadcast).
 
 ```
 cp -R islandora-connector-broadcast/ islandora-connector-helloworld

@@ -14,7 +14,7 @@ Islandora 8 is the next generation of Islandora. It pairs [Drupal 8](https://www
 For more details, please check out the following resources:
 
 * [Documentation](https://islandora.github.io/documentation/)
-* [Contributing](https://github.com/Islandora/documentation/blob/master/CONTRIBUTING.md)
+* [Contributing](https://github.com/Islandora/documentation/blob/main/CONTRIBUTING.md)
 
 * [Weekly Tech Calls](https://github.com/Islandora/documentation/wiki#islandora-8-tech-calls)
   * [2015](https://github.com/Islandora/documentation/wiki/2015)
@@ -30,7 +30,7 @@ For more details, please check out the following resources:
 This repository pulls in additional documentation from the following repositories, which is reflected in the repository tree.
 
 * [Alpaca](https://github.com/islandora/Alpaca): Event driven middleware based on Apache Camel that synchronizes a Fedora with Drupal.
-* [docs](https://github.com/Islandora/documentation/tree/master/docs): Documentation!
+* [docs](https://github.com/Islandora/documentation/tree/main/docs): Documentation!
 * [carapace](https://github.com/islandora/carapace/): A starter theme for an Islandora 8 repository. 
 * [chullo](https://github.com/islandora/chullo/): PHP client for Fedora 4 built using Guzzle and EasyRdf.
 * [islandora-playbook](https://github.com/Islandora-Devops/islandora-playbook): Ansible installer.
