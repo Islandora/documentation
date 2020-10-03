@@ -1,6 +1,6 @@
 # Islandora Playbook
 
-The Islandora Playbook ([islandora-playbook](https://github.com/Islandora-Devops/islandora-playbook)) is a tool for installing Islandora Defaults. It can be used both as a Vagrant project to create a local development environment, or as an Ansible playbook which can provision a remote server. 
+The Islandora Playbook ([Islandora-Devops/islandora-playbook](https://github.com/Islandora-Devops/islandora-playbook)) is a tool for installing Islandora Defaults on a single virtual machine. It can be used both as a [Vagrant](https://www.vagrantup.com/) project to create a local development environment, and/or as an [Ansible](https://www.ansible.com/community) playbook which can provision a remote server.
 
 !!! Note 
     This repository has two active branches. The **main** branch's playbook will install the latest release of Islandora and its components. The **dev** branch, when configured to use Ansible, will provision with the most recent code of Islandora and its components. 
