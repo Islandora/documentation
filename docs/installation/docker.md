@@ -9,7 +9,7 @@ Docker is a way to separate out the "state" of your site (i.e. all the content, 
 ## Requirements
 
 * Docker (version 19.x+)
-
+* (Mac OS) XCode 
 To see if you have Docker installed, type `docker --version` in a shell.
 
 ## Installing Docker
@@ -30,7 +30,7 @@ In a shell, clone the isle-dc project. In that directory, enter the command `mak
     The `make` command alone will spin up a sandbox-like version of Isle on the front end, but the code files will be inaccessible. The `make dev` command will also copy the active code files locally in a way that they are live to the Isle site. This method takes longer, but is required if you will be testing pull requests or writing code.
 
 ```bash
-clone https://github.com/islandora-devops/isle-dc
+git clone https://github.com/islandora-devops/isle-dc
 cd isle-dc
 make
 ```
@@ -95,7 +95,7 @@ To log in:
 * password: **password**
 
 !!! Note Docker logs and Docker Compose logs
-    `docker logs -tf isle-dc_drupal_1` shows Docker logs for the "drupal" container, which will continue ot have new log entries as long as the drupal box is still starting up. When it gets to `confd using 'env' backend`, you're done. `docker-compose logs` is like a firehose, showing the log messages from all containers.
+    `docker logs -tf isle-dc_drupal_1` shows Docker logs for the "drupal" container, which will continue to have new log entries as long as the drupal box is still starting up. When it gets to `confd using 'env' backend`, you're done. `docker-compose logs` is like a firehose, showing the log messages from all containers.
 
 ## Spinning down your Islandora site
 
