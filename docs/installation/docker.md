@@ -9,7 +9,9 @@ Docker is a way to separate out the "state" of your site (i.e. all the content, 
 ## Requirements
 
 * Docker (version 19.x+)
-* (Mac OS) XCode 
+* (Mac OS) XCode Command-Line Tools
+* Perl (if using `make dev`)
+
 To see if you have Docker installed, type `docker --version` in a shell.
 
 ## Installing Docker
@@ -70,9 +72,8 @@ Pulling watchtower ... done
 !!! Troubleshooting
     If you get an error such as: `ERROR: Version in "./docker-compose.activemq.yml" is unsupported.`, then you need to upgrade Docker, and then enter the command `make clean`. If you forget to `make clean`, then the next time `make` runs you may see an error such as: `ERROR: Top level object in './docker-compose.yml' needs to be an object not '<class 'NoneType'>'.`
 
-!!! Troubleshooting
-    If you get an error such as: `make[1]: *** [create-codebase-from-demo] Error 143 make: *** [dev] Error 21` ... documentation to come.
-
+!!! Development version
+    If you used `make dev`, then you will have a new directory in the current (isle-dc) directory named `codebase`, containing the live Drupal root folder (containing your Drupal's composer files and the web/ subdirectory).
 
 Once `make` has successfully completed, launch the Isle containers using `docker-compose up`. The `-d` flag allows you to return to using the command line. Without it, your shell will be stuck in the `docker-compose` process as long as the containers are running.
 
