@@ -1,6 +1,24 @@
-To create a new item in your Islandora 8 digital repository, we start by creating a resource node.
+## Overview
+
 A resource node holds the descriptive metadata for content, as well as grouping together an original file and
-all of the derivatives files generated from it. To create a new resource node, go to Content >> Add content or click on **Add content** under _Tools_.
+all of the derivatives files generated from it.   
+
+The model for exactly what constitutes an object in Islandora 8 is flexible and can be adapted to the needs of specific users. For example, the islandora_defaults configuration creates an object as a resource node or "Repository Item" with metadata about the item, and one or more Media attached to it, where each Media has a single file and its own individual metadata. 
+
+Multi-file Media configurations also attach Media to a parent node, but allow for multiple files to be a part of each attached Media, without their own individual metadata attached to each file. 
+
+For an example of where these two different aproaches could apply, the islandora_defaults_ configuration might make sense for a book that has rich page-level metadata, so that each page would be its own Media with its own metadata record; the multi-file media configuration might be a better fit for a book that does not have page-level metadata, so that each page can be attached to a single Media with single metadata record for the entire book. 
+
+## Before you start
+
+- The following How-To assumes that you are using the optional [islandora_defaults](https://github.com/Islandora/islandora_defaults) configuration. This configuration is deployed automatically if you build your Islandora site using the [Ansible Playbook](https://islandora.github.io/documentation/installation/playbook/), ISLE (documentation pending), or are using the [sandbox or a Virtual Machine Image](https://islandora.ca/try)
+- This How-To assumes familiarity with Drupal terms such as [Node](https://www.drupal.org/docs/7/nodes-content-types-and-fields/about-nodes) and [Media](https://www.drupal.org/docs/8/core/modules/media).
+
+## How to add an item to your repository
+
+### Create the Node
+
+To create a new resource node, go to Content >> Add content or click on **Add content** under _Tools_.
 
 ![Click on add content](../assets/add-content-loading-media.jpg)
 
@@ -8,7 +26,7 @@ Then click on **Repository Item**. This will assign the default metadata profile
 
 ![Click on repository item](../assets/repository-item.jpg)
 
-Fill out the form. We're going to create an image, so under _System_, select **Image** from the _Model_"
+Fill out the form. We're going to create an image, so under _System_, select **Image** from the _Model_
 drop down box. Selecting different models will impact how Islandora handles content, dictating
 important behaviours such as display and derivative generation.
 
@@ -16,7 +34,7 @@ important behaviours such as display and derivative generation.
 
 When done, click **Save**.
 
-## Upload an Original File
+### Upload an Original File
 
 Congratulations, you have created a resource node! But alas, it has no files. To upload a file, click on the
 node's _Media_ tab.
