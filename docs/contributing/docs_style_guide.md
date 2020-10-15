@@ -7,8 +7,8 @@
     - Include a top-level heading for the whole page (using `#`)
     - Please add Markdown headings (`#` and `##`) to the content sections.
 
-- Use the "bold/emphasis" style in Markdown for UI elements that users will interact with. For example, a button label for a button that must be pressed should be made bold in Markdown.
-- Use the "italics" style in Markdown for UI elements that have a label or title if you need to reference them in the documentation. For example, a title of a screen or page that will visit should be made italic in Markdown.
+- Use the "bold/emphasis" style in Markdown by enclosing text in double asterisks or underscores, `**bold text**` or `__bold text__`, for UI elements that users will interact with. For example, a button label for a button that must be pressed should be made bold in Markdown.
+- Use the "italics" style in Markdown by enclosing text in single asterisks or underscores, `*italic text*` or `_italic text_`, for UI elements that have a label or title if you need to reference them in the documentation. For example, a title of a screen or page that will visit should be made italic in Markdown.
 - Use `-` instead of `*` for bulleted lists. Indent four (4) spaces for nested lists (Github renders nesting in markdown with 2 spaces, but mkdocs needs 4).
 _Example:_
 ```
