@@ -38,7 +38,7 @@ nav:
   - Installation:
       - 'Component Overview': 'installation/component_overview.md'
       - 'Ansible Playbook': 'installation/playbook.md'
-      - 'Docker (Isle)': 'installation/docker.md'
+      - 'Docker Compose (ISLE-DC)': 'installation/docker-compose.md'
       - Manual Installation:
         - 'Introduction': 'installation/manual/introduction.md'
         - 'Preparing a LAPP Webserver': 'installation/manual/preparing_a_webserver.md'
