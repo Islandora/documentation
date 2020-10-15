@@ -1,21 +1,34 @@
-# Installing Islandora Defaults with Docker Compose (ISLE-DC)
+# Install Islandora on Docker (ISLE)
 
-The ISLE Islandora Enterprise 8 Prototype via Docker Compose ([Islandora-Devops/isle-dc](https://github.com/Islandora-Devops/isle-dc)) is a project for managing Islandora 8 sandbox infrastructure under Docker. These instructions describe using ISLE-DC locally to create a development Islandora sandbox. More detailed configuration options are described in the project's [README](https://github.com/Islandora-Devops/isle-dc). 
+## What is ISLE?
+
+ISLE, or Islandora Enterprise, is the name that was given to "Islandora using Docker." It was developed as an initiative of the Islandora Collaboration Group, first using Islandora 7.x, and later with Islandora 8.x. The code for the Islandora Enterprise 8 Prototype (ISLE 8, sometimes just ISLE) is now under the purview of the Islandora Foundation.
 
 ## Why use Docker?
 
-Docker is a way to separate out the "state" of your site (i.e. all the content, files, and configurations that you've entered) from the underlying software that runs it (e.g. webserver, database engine, etc). This allows for easier upgrades, faster development, and more flexible deployment. The ISLE project, run by the Islandora Collaboration Group (ICG) was the driving force behind dockerizing Islandora. 
+Docker is a way to separate out the "state" of your site (i.e. all the content, files, and configurations that you've entered) from the underlying software that runs it (e.g. webserver, database engine, etc). This allows for easier upgrades, faster development, and more flexible deployment.
+
+## Where is ISLE 8?
+
+ISLE 8 is a suite of Docker containers that run the various components of Islandora required by Islandora Defaults: drupal, fedora, solr, alpaca, crayfish, matomo, etc.  The individual containers are created (and automatically pushed to Docker Hub) by [ISLE BuildKit](https://github.com/Islandora-Devops/isle-buildkit).
+
+## How do I install ISLE?
+
+Install ISLE locally or remotely using the Docker Compose scripts at ([Islandora-Devops/isle-dc](https://github.com/Islandora-Devops/isle-dc)). Unlike the [Islandora Playbook](playbook.md), this method does not require Ansible, or (for local installations) VirtualBox.
+
+These instructions describe using ISLE-DC locally to create a development Islandora sandbox. More detailed configuration options are described in the project's [README](https://github.com/Islandora-Devops/isle-dc).
+
 
 ## Requirements
 
 * Docker (version 19.x+)
-* (Mac OS) XCode Command-Line Tools
+* (Mac OS) Apple Developer Tools, (Windows) the `make` command-line tool
 * If using `make dev`, see the [README](https://github.com/Islandora-Devops/isle-dc) for other requirements.
 
 To see if you have Docker installed, type `docker --version` in a shell.
 
 !!! Note "What are we missing?"
-    Are you, or your computer, new to spinning up development sandboxes? We suspect these requirements may be incomplete and your experience would be appreciated at [Issue #1640](https://github.com/Islandora/documentation/issues/1640).
+    Are you, or your computer, new to spinning up development sandboxes? Do you have wisdom about installing make on Windows? We suspect these requirements may be incomplete and your experience would be appreciated at [Issue #1640](https://github.com/Islandora/documentation/issues/1640).
 
 
 ## Installing Docker
@@ -28,16 +41,16 @@ There is also a legacy project called [Docker Toolbox](https://docs.docker.com/t
 
 !!! Warning "Memory, Processors, and Swap Requirements"
     To run ISLE on Docker Desktop, you must increase the resources allocated to the software. See [setting resources on Windows](https://docs.docker.com/docker-for-windows/#resources) or [setting resources on Mac](https://docs.docker.com/docker-for-mac/#resources).
- 
+
     **CPUs (processors)**: The CPUs allowed to Docker Desktop are still shared with the host machine, so increasing this to the maximum value should allow both the Docker containers and your host machine to run simultaneously.
 
     **Memory (RAM)**: This memory is completely dedicated to Docker while Docker Desktop is running, so do not allocate more than you can spare and still run your host machine. Windows users may not require as much memory for Docker as Mac users. Current suggestions for memory allocated to Docker Desktop are below, but please edit this document if you have new information.
 
     - Sandbox (`make`): 4GB
     - Development (`make dev`): 8GB
-    - Production or production-like development: 16GB 
+    - Production or production-like development: 16GB
 
-    **Swap**: Swap space is space borrowed from your hard disk drive to serve as makeshift RAM as needed. If you cannot provide as much RAM as you would like, increase this as is reasonable given your free disk space. 
+    **Swap**: Swap space is space borrowed from your hard disk drive to serve as makeshift RAM as needed. If you cannot provide as much RAM as you would like, increase this as is reasonable given your free disk space.
 
 ## Launching Islandora with Docker
 
