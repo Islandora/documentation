@@ -2,7 +2,7 @@
 
 ## Overview
 
-This page describes using ISLE-DC to launch Islandora as a suite of Docker Containers (ISLE). This is an alternative to the [Islandora Ansible Playbook](playbook.md), which creates the Islandora stack on a single virtual machine. At the end of this tutorial, you will have a local development environment, and be able to use Docker to launch, shut down, edit, and update your environment.
+This page describes using ISLE-DC to launch Islandora as a suite of Docker Containers (ISLE). This is an alternative to the [Islandora Ansible Playbook](playbook.md), which creates the Islandora stack on a single virtual machine. At the end of this tutorial, you will have a local development environment, and be able to use Docker to launch, shut down, and edit your environment.
 
 ### What is ISLE?
 
