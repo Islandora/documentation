@@ -1,4 +1,4 @@
- # From Objects to Resource Nodes: Shifting Concepts from Islandora 7 to 8
+# From Objects to Resource Nodes: Shifting Concepts from Islandora 7 to 8
 
 This document attempts to show the shift in how objects work from Islandora version 7 to version 8, from a non-developer perspective.
 
