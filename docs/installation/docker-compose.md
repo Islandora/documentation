@@ -27,7 +27,17 @@ These instructions describe using ISLE-DC locally to create a development Island
 
 - A computer that can run Docker (version 19.x+) and has at least 8GB of RAM (ideally 16GB)
 - An administrator account
-- (Mac OS) Apple Developer Tools, (Windows) the `make` command-line tool
+- (Mac OS) Apple Developer Tools
+- Windows (recommended setup)
+    - Windows 10
+    - [Windows Subsystem for Linux v. 2 (WSL 2)](https://docs.microsoft.com/en-us/windows/wsl/install-win10)
+    - Ubuntu 20.04 running on WSL 2
+    - GNU make
+      ```
+      sudo apt update
+      sudo apt install make
+      ```
+    - Docker Desktop for Windows, using the WSL 2 based engine (Settings > General) and with the WSL integration active for Ubuntu (Settings > Resources > WSL integration) 
 - If using `make dev`, see the [README](https://github.com/Islandora-Devops/isle-dc) for other requirements.
 
 
@@ -46,7 +56,7 @@ There is also a legacy project called [Docker Toolbox](https://docs.docker.com/t
 [Download Docker](https://www.docker.com/products/docker-desktop)
 
 !!! Warning "Memory, Processors, and Swap Requirements"
-    To run ISLE on Docker Desktop, you must increase the resources allocated to the software. See Docker docs on [setting resources on Windows](https://docs.docker.com/docker-for-windows/#resources) or [setting resources on Mac](https://docs.docker.com/docker-for-mac/#resources).
+    To run ISLE on Docker Desktop, you must increase the resources allocated to the software. See Docker docs on [setting resources on Windows](https://docs.docker.com/docker-for-windows/#resources) (see note on how to allocate/restrict memory when using WSL 2) or [setting resources on Mac](https://docs.docker.com/docker-for-mac/#resources).
 
     **CPUs (processors)**: The CPUs allowed to Docker Desktop are still shared with the host machine, so increasing this to the maximum value should allow both the Docker containers and your host machine to run simultaneously.
 
