@@ -3,11 +3,11 @@
 A resource node holds the descriptive metadata for content, as well as grouping together an original file and
 all of the derivatives files generated from it.   
 
-The model for exactly what constitutes an object in Islandora 8 is flexible and can be adapted to the needs of specific users. For example, the islandora_defaults configuration creates an object as a resource node or "Repository Item" with metadata about the item, and one or more Media attached to it, where each Media has a single file and its own individual metadata. 
+The model for exactly what constitutes an object in Islandora 8 is flexible and can be adapted to the needs of specific users. For example, the Islandora Defaults configuration considers an object as a resource node of the type "Repository Item"  which contains descriptive metadata about the object. Attached to that Node are one or more Media, each representing a file that is part of this object, such as "Original File", "Thumbnail", "Preservation Master", etc. With this model, every original file uploaded into Islandora has its own resource node.
 
-Multi-file Media configurations also attach Media to a parent node, but allow for multiple files to be a part of each attached Media, without their own individual metadata attached to each file. 
+Multi-file Media configurations also attach Media to a parent node, but allow for that node to be represened by multiple "Original File"s. In this model, a Media contains the original file as well as any derivative files created from it (thumbnail, service file, etc.).
 
-For an example of where these two different aproaches could apply, the islandora_defaults_ configuration might make sense for a book that has rich page-level metadata, so that each page would be its own Media with its own metadata record; the multi-file media configuration might be a better fit for a book that does not have page-level metadata, so that each page can be attached to a single Media with single metadata record for the entire book. 
+For an example of where these two different approaches could apply, the basic configuration might make sense for a book that has rich page-level metadata, so that each page would be its own Node with its own metadata record; the multi-file media configuration might be a better fit for a book that does not have page-level metadata (except an ordering or page numbers), so that each Media would represent one page, and all pages (Media) would be attached to a single parent Node/metadata record for the entire book. 
 
 ## Before you start
 
