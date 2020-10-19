@@ -24,7 +24,8 @@ The Islandora community STRONGLY recommends that the "Composer" method of upgrad
 
 ### Here is an overview of the steps for updating Drupal core using Composer
 
-!!! "Back Up" First make sure you have made database and file back ups.
+!!! note "Back Up" 
+    First make sure you have made database and file back ups.
 
 1) First, verify that an update of Drupal core actually is available:
 
@@ -60,4 +61,6 @@ For more information about how to update Drupal modules visit:
 
 https://www.drupal.org/docs/8/extending-drupal-8/updating-modules
 
-!!! "Back Up" First make sure you have made database and file back ups.
+!!! note "Back Up" 
+    First make sure you have made database and file back ups.
+
