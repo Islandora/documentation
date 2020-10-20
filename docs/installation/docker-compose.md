@@ -135,7 +135,7 @@ docker-compose up -d
 
 ## Visiting your Islandora site
 
-Direct a browser to [https://islandora-isle-dc.traefik.me/](https://islandora-isle-dc.traefik.me/) (yes, it's awkward and there's a [ticket about it](https://github.com/Islandora-Devops/isle-dc/issues/120)). If your containers are still "spinning up", you will see a white screen with the words "Bad Gateway". This often lasts 2-5 minutes, and should be shorter for subsequent launches. When all containers are ready, you should see a basic Drupal login screen.
+Direct a browser to [https://islandora-isle-dc.traefik.me/](https://islandora-isle-dc.traefik.me/) (yes, it's awkward and there's a [ticket about it](https://github.com/Islandora-Devops/isle-dc/issues/120)). If your containers are still "spinning up", you will see a white screen with the words "Bad Gateway". This often lasts 2-5 minutes, and should be shorter for subsequent launches. If it takes more than a few minutes, check to make sure that none of your containers have failed to launch (see note above on "Troubleshooting - docker containers exit without warning"). When all containers are ready, you should see a basic Drupal login screen.
 
 !["Bad Gateway" white screen while still loading](../assets/docker_bad_gateway_still_loading.png)
 
