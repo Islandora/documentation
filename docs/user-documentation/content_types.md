@@ -27,8 +27,8 @@ There are multiple tabs with different options to configure your Content Type:
 ![a screenshot of the Add Content Type page](../assets/content_types_managefields_tabs.png)
 
 - _Manage Fields_: A list of the fields available in this form. This is where you can add new fields and make adjustments to existing fields, such as whether the field has access restrictions or is required.
-- _Manage form display_: Set the order in which fields appear in a form, including nesting; set how the user will enter data into a field (i.e., text field, drop-down list, radio butons, etc); set fields to be hidden in the display
-- _Manage display_: Set how the data stored in the fields will be displayed on the Node. Custom display settings can be set for different "view vodes." For instance, a different view mode is applied for items using the Openseadragon viewer, which includes a field that displays the Media in Openseadragon instead of the standard Drupal image viewer.
+- _Manage form display_: Set the order in which fields appear in a form, including nesting; set how the user will enter data into a field (i.e., text field, drop-down list, radio buttons, etc); set fields to be hidden in the form.
+- _Manage display_: Set how the data stored in the fields will be displayed on the Node. Custom display settings can be set for different "view modes." For instance, a different view mode is applied for items using the Openseadragon viewer, which includes a field that displays the Media in Openseadragon instead of the standard Drupal image viewer.
 
 !!! note "Changes not displaying?"
     If you make changes under _Manage display_ and don't see them reflected in your Node, double check that you have edited the right _view mode_
