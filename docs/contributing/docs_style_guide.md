@@ -3,6 +3,7 @@
 ## Do's
 
 - Use a GitHub Pull Request to submit documentation.
+- Make it clear if the documentation is based on a particular configuration (such as Islandora Defaults) or if it applies to any deployment of Islandora.
 - Submit documentation formatted in [Markdown](https://en.wikipedia.org/wiki/Markdown) format.
     - Include a top-level heading for the whole page (using `#`)
     - Please add Markdown headings (`#` and `##`) to the content sections.
