@@ -48,7 +48,7 @@ This repository pulls in additional documentation from the following repositorie
 
 
 ## Installation
-Islandora 8 provides an Ansible [islandora-playbook](https://github.com/Islandora-Devops/islandora-playbook) to fully deploy the stack to a vagrant, bare-metal server or multi server environments.
+Islandora 8 can be deployed either via Docker Compose using [ISLE](https://islandora.github.io/documentation/installation/docker-compose/) for a development or single-server environment, or via an Ansible [islandora-playbook](https://github.com/Islandora-Devops/islandora-playbook) to fully deploy the stack to a vagrant, bare-metal server or multi server environments. 
 
 ## Sponsors
 
@@ -76,4 +76,4 @@ If you would like to contribute, please get involved by attending our weekly [Te
 
 If you would like to contribute code to the project, you need to be covered by an Islandora Foundation [Contributor License Agreement](http://islandora.ca/sites/default/files/islandora_cla.pdf) or [Corporate Contributor License Agreement](http://islandora.ca/sites/default/files/islandora_ccla.pdf). Please see the [Contributors](http://islandora.ca/resources/contributors) pages on Islandora.ca for more information.
 
-We recommend using the [islandora-playbook](https://github.com/Islandora-Devops/islandora-playbook) to get started.  If you want to pull down the submodules for development, don't forget to run `git submodule update --init --recursive` after cloning.
+We recommend using the Docker-based [ISLE](https://islandora.github.io/documentation/installation/docker-compose/) or the Ansible-based [islandora-playbook](https://github.com/Islandora-Devops/islandora-playbook) to get started.  If you want to pull down the submodules for development, don't forget to run `git submodule update --init --recursive` after cloning.
