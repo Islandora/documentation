@@ -48,7 +48,7 @@ This repository pulls in additional documentation from the following repositorie
 
 
 ## Installation
-Islandora 8 provides an Ansible [islandora-playbook](https://github.com/Islandora-Devops/islandora-playbook) to fully deploy the stack to a vagrant, bare-metal server or multi server environments.
+Islandora 8 can be deployed either via Docker Compose using [ISLE](https://islandora.github.io/documentation/installation/docker-compose/) for a development or single-server environment, or via an Ansible [islandora-playbook](https://github.com/Islandora-Devops/islandora-playbook) to fully deploy the stack to a vagrant, bare-metal server or multi server environments. 
 
 ## Sponsors
 
