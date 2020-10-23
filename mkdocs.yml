@@ -109,7 +109,7 @@ nav:
       - 'Migration Overview': 'technical-documentation/migration-overview.md'
       - 'CSV': 'technical-documentation/migrate-csv.md'
       - 'Islandora 7': 'technical-documentation/migrate-7x.md'
-- Contributing:
+  - Contributing:
       - 'How to contribute': 'contributing/CONTRIBUTING.md'
       - Virtual Machines:
         - 'Hacking on Islandora': 'contributing/hacking-on-islandora.md'
