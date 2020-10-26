@@ -15,6 +15,7 @@ To edit documentation in Islandora, you must:
     - This is only needed if you want to commit changes directly to the documentation. Non-members may still make pull requests. To request an invite, email community@islandora.ca or ask on the Islandora Slack. 
 - have a basic familiarity with markdown, or a good [cheat sheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
 - follow the [Documentation Style Guide](docs_style_guide.md)
+- have either an individual [Contributor License Agreement](https://github.com/Islandora/islandora/wiki/Contributor-License-Agreements) on file with the Islandora Foundation, or work for an organization that has a corporate Contributor License Agreement on file with the Islandora Foundation. 
 
 ## How to edit this documentation
 
