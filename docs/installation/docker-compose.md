@@ -28,15 +28,11 @@ These instructions describe using ISLE-DC locally to create a development Island
 - A computer that can run Docker (version 19.x+) and has at least 8GB of RAM (ideally 16GB)
 - An administrator account
 - (Mac OS) Apple Developer Tools
-- Windows (recommended setup)
+- (Windows) The following setup has been tested:
     - Windows 10
     - [Windows Subsystem for Linux v. 2 (WSL 2)](https://docs.microsoft.com/en-us/windows/wsl/install-win10)
     - Ubuntu 20.04 running on WSL 2
-    - GNU make
-      ```
-      sudo apt update
-      sudo apt install make
-      ```
+    - GNU make, run `sudo apt update` and `sudo apt install make` to install
     - Docker Desktop for Windows, using the WSL 2 based engine (Settings > General) and with the WSL integration active for Ubuntu (Settings > Resources > WSL integration) 
 - If using `make dev`, see the [README](https://github.com/Islandora-Devops/isle-dc) for other requirements.
 
