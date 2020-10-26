@@ -12,7 +12,7 @@
 - Use the "italics" style in Markdown by enclosing text in single asterisks or underscores, `*italic text*` or `_italic text_`, for UI elements that have a label or title if you need to reference them in the documentation. For example, a title of a screen or page that will visit should be made italic in Markdown.
 - Use `>>` and `**bold text**` to indicate clicking through nested menu items, and also include the direct path. _Example:_
 ```
-**Administration** >> **Structure** >> **Views** (~/admin/structure/views)
+**Administration** >> **Structure** >> **Views** (/admin/structure/views)
 ```
 - Use `-` instead of `*` for bulleted lists. Indent four (4) spaces for nested lists (Github renders nesting in markdown with 2 spaces, but mkdocs needs 4).
 _Example:_
