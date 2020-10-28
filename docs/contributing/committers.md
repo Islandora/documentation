@@ -32,14 +32,15 @@ The following is an alphabetized list of the current Islandora 8 committers:
 | Melissa Anez                | Islandora Foundation                  | manez          |
 | Bryan Brown                 | Florida State University              | bryjbrown      |
 | Jordan Dukart               | discoverygarden                       | jordandukart   |
-| Debbie Flitner              | Arizona State University              | dflitner      |
+| Debbie Flitner              | Arizona State University              | dflitner       |
 | Jonathan Green              | LYRASIS                               | jonathangreen  |
 | Jonathan Hunt               | Catalyst.Net                          | kayakr         | 
 | Mark Jordan                 | Simon Fraser University               | mjordan        |
 | Danny Lamb                  | Islandora Foundation                  | dannylamb      |
 | Natkeeran Ledchumykanthan   | University of Toronto Scarborough     | natkeeran      |
 | Rosie Le Faive              | University of Prince Edward Island    | rosiel         |
-| Alexander O'Neill           | University of Prince Edward Island    | alxp           |    
+| Alexander O'Neill           | University of Prince Edward Island    | alxp           | 
+| Don Richards                | University of Tennessee, Knoxville    | DonRichards    |
 | Seth Shaw                   | University of Nevada, Las Vegas       | seth-shaw-unlv |
 | Alan Stanley                | University of Prince Edward Islandora | ajstanley      |
 | Jared Whiklo                | University of Manitoba                | whikloj        |
