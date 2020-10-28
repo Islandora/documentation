@@ -32,7 +32,8 @@ The following is an alphabetized list of the current Islandora 8 committers:
 | Melissa Anez                | Islandora Foundation                  | manez          |
 | Bryan Brown                 | Florida State University              | bryjbrown      |
 | Jordan Dukart               | discoverygarden                       | jordandukart   |
-| Debbie Flitner              | Arizona State University              | dflitner       |
+| Debbie Flitner              | Arizona State University              | dflitner      |
+| Willow Gillingham           | Arizona State University              | wgilling      |
 | Jonathan Green              | LYRASIS                               | jonathangreen  |
 | Jonathan Hunt               | Catalyst.Net                          | kayakr         | 
 | Mark Jordan                 | Simon Fraser University               | mjordan        |
