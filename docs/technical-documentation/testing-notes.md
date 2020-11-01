@@ -21,11 +21,11 @@ curl -H "Authorization:Bearer islandora" http://localhost:8000/gemini/[uuid_valu
 
 Alternatively, you can login to SQL, choose the gemini database, and issue a query. With the playbook's default setup:
 
-`
+```
 vagrant ssh
 mysql -uroot -pislandora gemini
 select fedora_uri from Gemini where drupal_uri = 'http://localhost:8000/node/[nid]?_format=jsonld';
-`
+```
 
 ## How to look up a Fedora URI through Gemini (files)?
 Files in Fedora have the file URI in Gemini, and can be queried based on the UUID (accessible from the Media's json) or their URI.
