@@ -1,7 +1,27 @@
 # Managing Users
 
+## Overview
+
+Anyone who visits your Drupal site is a user. There are three different default users in Drupal:
+
+- _Anonymous user_. This is anyone who is not logged in.
+- _Authenticated user_. These are all users who have an account on your site and can log in.
+- _Administrator_. This is a special class of user that can access the administrative menus in your Drupal site and make changes. 
+
+Islandora adds an additional default role:
+
+- _fedoraAdmin_. This is a specialized role needed for a user to write to Fedora from Islandora.
+
+
+Additional user roles can be created and assigned customized permissions, as described below.
+
+## Before you start
+
+- This How-To assumes a very basic familiarity with Drupal.
+- This How-To is generally appliable for any Islandora site, but the examples given are taken from an Islandora demo using the (optional) **[Islandora Defaults](https://github.com/Islandora/islandora_defaults)** configuration. This configuration is deployed automatically if you build your Islandora site using the [Ansible Playbook](/installation/playbook), [ISLE with Docker-Compose](/installation/docker-compose), or are using the [sandbox or a Virtual Machine Image](https://islandora.ca/try).
+
 ## How to Add a User
-1. Log in to Drupal. You will need the Administrator role to Manage Users.
+1. Log in to Drupal. You will need the _Administrator_ role to manage users.
 1. Click the **Manage** tab from the top toolbar.
 1. Select the **People** tab from the resulting menu to bring up the *People* page.
 ![Alt text](../assets/users_people.png "People page")
@@ -20,7 +40,7 @@
 To review/edit the permission for each role, in the *People* page click the **Permissions** tab in the set of tabs above the **Add user** button.
 
 ## How to Create a New User Role
-1. Log in to Drupal. You will need the Administrator role to edit or add roles.
+1. Log in to Drupal. You will need the _Administrator_ role to edit or add roles.
 1. Click the **Manage** tab from the top toolbar.
 1. Select the **People** tab from the resulting menu.
 1. Click the **Roles** tab in the set of tabs above the **Add user** button.
@@ -31,7 +51,7 @@ To review/edit the permission for each role, in the *People* page click the **Pe
 1. Click the blue **Save** button.
 
 ## How to Edit Role Permissions
-1. Log in to Drupal. You will need the Administrator role to edit permissions.
+1. Log in to Drupal. You will need the _Administrator_ role to edit permissions.
 1. Click the **Manage** tab from the top toolbar.
 1. Select the **People** tab from the resulting menu.
 1. Click the **Roles** tab in the set of tabs above the **Add user** button.
@@ -43,7 +63,8 @@ To review/edit the permission for each role, in the *People* page click the **Pe
 !!! Tip "Islandora Quick Lessons"
     Learn more with this video on how to [Add a User](https://youtu.be/XSokAFRVBuE).
 
-## Further Reading on Managing Users in Drupal
+## Further Reading
 
 For more information on managing users in Drupal visit the section
 [Managing User Accounts](https://www.drupal.org/docs/user_guide/en/user-chapter.html) of Drupal.org.
+
