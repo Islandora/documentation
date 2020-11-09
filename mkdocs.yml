@@ -64,7 +64,7 @@ nav:
         - 'Create a Resource Node': 'user-documentation/creating-a-node.md'
         - 'Modify or Create a Content Type': 'user-documentation/content_types.md'
         - 'Create or Update a View': 'user-documentation/create_update_views.md'
-        - 'Add a New User': 'user-documentation/users.md'
+        - 'Create and Manage User Accounts': 'user-documentation/users.md'
       - 'Searching': 'user-documentation/searching.md'
       - 'Context': 'user-documentation/context.md'
       - 'Blocks': 'user-documentation/blocks.md'
