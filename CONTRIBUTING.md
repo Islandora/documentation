@@ -12,7 +12,7 @@ If you would like to submit a use case to the Islandora 8 project, please submit
 
 ### Documentation
 
-You can contribute documentation in two different ways. One way is to create an issue [here](https://github.com/Islandora/documentation/issues/new), prepending "Documentation:" to the title of the issue. Another way is by pull request, which is the same process as [Contribute Code](https://github.com/Islandora/documentation/blob/main/CONTRIBUTING.md#contribute-code). All documentation resides in [`docs`](https://github.com/Islandora/documentation/tree/main/docs).
+You can contribute documentation in two different ways. One way is to create an issue [here](https://github.com/Islandora/documentation/issues/new), prepending "Documentation:" to the title of the issue. Another way is by pull request, which is the same process as [Contribute Code](https://github.com/Islandora/documentation/blob/main/CONTRIBUTING.md#contribute-code) and requires the same Contributor License Agreements. All documentation resides in [`docs`](https://github.com/Islandora/documentation/tree/main/docs).
 
 ### Request a new feature
 
