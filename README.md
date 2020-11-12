@@ -3,19 +3,17 @@
 
 [Read the documentation online](https://islandora.github.io/documentation/)
 
-## About the Documentation
+## About this Repository
 
-This repository contains source code for the user, developer, and administrator documentation for versions 8.x and above of the [Islandora project](https://islandora.ca/). It is written in mkdocs and can be viewed on [our Github Pages site](https://islandora.github.io/documentation/).
+This "documentation" repository has three funtions:
 
-## Issues
+- it houses the source code for the [documentation](https://islandora.github.io/documentation/) of the [Islandora project](https://islandora.ca/) (versions 8.x and above). 
+- its [Wiki](https://github.com/Islandora/documentation/wiki) contains the minutes for Islandora 8 Tech calls and User calls.
+- it hosts the central [issue queue](https://github.com/Islandora/documentation/issues) for the entire Islandora 8 project.
 
-File issues relating to this documentation in [this repository's issue queue](https://github.com/Islandora/documentation/issues), and apply the "documentation" label.
+## Documentation Structure
 
-This repository's issue queue is also the Islandora-wide issue queue for Islandora versions 8 and above. Issues may be applicable to repositories in all Islandora-associated github organizations, including [Islandora](https://github.com/Islandora), [Islandora DevOps](https://github.com/Islandora-Devops), [Islandora Labs](https://github.com/Islandora-Labs), and [Islandora Interest Groups](https://github.com/islandora-interest-groups).
-
-## Deployment
-
-This repository is deployed to Github Pages automatically when new commits are added to the main branch.
+The documentation is written in [mkdocs](https://www.mkdocs.org/) - the navigation structure is specified in `mkdocs.yml` and the `/docs/` folder contains the content. The text is written in mkdocs-flavoured markdown format and follows our [Documentation Style Guide](https://islandora.github.io/documentation/contributing/docs_style_guide/). Documentation is built and deployed to Github Pages automatically when new commits are added to the 'main' branch. 
 
 * [Islandora 8 Documentation via Github Pages](https://islandora.github.io/documentation/)
 
@@ -25,17 +23,10 @@ Documentation for Islandora 7.x and previous versions is hosted by Lyrasis on a 
 
 * [Documentation for Islandora 7.x and earlier](https://wiki.lyrasis.org/display/ISLANDORA/)
 
-
-## Repository Structure
-
-In this repository, the /docs/ folder contains the documentation in markdown format. The mkdocs.yml file in the root directory specifies the navigation menu.
-
 ## Maintainers
 
 * [Documentation Interest Group](https://github.com/islandora-interest-groups/Islandora-Documentation-Interest-Group)
 
-
 ## Contributing
 
 To contribute to the Islandora documentation, create an issue or a pull request. To have a pull request accepted, you need to be covered by an Islandora Foundation [Contributor License Agreement](http://islandora.ca/sites/default/files/islandora_cla.pdf) or [Corporate Contributor License Agreement](http://islandora.ca/sites/default/files/islandora_ccla.pdf). Please see the [Contributors](https://islandora.ca/contribute) pages on Islandora.ca for more information.
-
