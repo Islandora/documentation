@@ -38,21 +38,20 @@ _Result:_
 !!! note "Helpful Tip" 
     I am a helpful tip!
     
-- Use the [Callout syntax](https://rdmd.readme.io/docs/callouts) with a lobster emoji 🦞 to call attention to areas where Islandora configuration differs from standard Drupal configuration:
+- Use our custom `islandora` type within the Admonition syntax to call attention to areas where Islandora configuration differs from standard Drupal configuration:
 
 _Example:_
 
 ```
-> 🦞 Islandora
-> 
-> This setting is specific to Islandora and is not standard to Drupal.
+!!! islandora "Lobster trap"
+    This setting is specific to Islandora and is not standard to Drupal.
+
 ```
 
 _Result:_
 
-> 🦞 Islandora
-> 
-> This setting is specific to Islandora and is not standard to Drupal.
+!!! islandora "Lobster trap"
+    This setting is specific to Islandora and is not standard to Drupal.
 
 ## Don'ts
 

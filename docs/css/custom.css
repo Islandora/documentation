@@ -1,0 +1,20 @@
+
+.md-typeset .admonition.islandora,
+.md-typeset details.islandora {
+  border-color: rgb(194, 19, 19);
+}
+.md-typeset .islandora > .admonition-title,
+.md-typeset .islandora > summary {
+  background-color: rgba(194, 19, 19, 0.1);
+}
+.md-typeset .islandora > .admonition-title::before,
+.md-typeset .islandora > summary::before {
+  content: "🦞";
+}
+
+.markdown-body .callout[theme="islandora"] {
+  --background: #c54245;
+  --border: #ffffff6b;
+  --text: #f5fffa;
+}
+
