@@ -161,7 +161,7 @@ nav:
           - 'Flysystem': 'technical-documentation/flysystem.md'
               # moved from Developer documentation
       - Operating an Islandora Repository:
-          - 'Add a New User': 'user-documentation/users.md'
+          - 'Create and Manage User Accounts': 'user-documentation/users.md'
               # procedural, repository managers
               # add reference information on user roles that come with Islandora/Islandora Defaults out of the box
           - 'Usage Stats': 'user-documentation/usage-stats.md'
