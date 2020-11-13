@@ -13,13 +13,13 @@ This "documentation" repository has three functions:
 
 ## Documentation Structure
 
-The documentation is written in [mkdocs](https://www.mkdocs.org/) - the navigation structure is specified in `mkdocs.yml` and the `/docs/` folder contains the content. The text is written in mkdocs-flavoured markdown format and follows our [Documentation Style Guide](https://islandora.github.io/documentation/contributing/docs_style_guide/). Documentation is built and deployed to Github Pages automatically when new commits are added to the 'main' branch. 
+The documentation is written in [mkdocs](https://www.mkdocs.org/) — the navigation structure is specified in `mkdocs.yml` and the `/docs/` folder contains the content. The text is written in mkdocs-flavoured markdown format and follows our [Documentation Style Guide](https://islandora.github.io/documentation/contributing/docs_style_guide/). Documentation is built and deployed to Github Pages automatically when new commits are added to the 'main' branch. 
 
 * [Islandora 8 Documentation via Github Pages](https://islandora.github.io/documentation/)
 
 ## Older versions
 
-Documentation for Islandora 7.x and previous versions is hosted by Lyrasis on a Confluence wiki.
+Documentation for Islandora 7.x and previous versions is hosted by LYRASIS on a Confluence wiki.
 
 * [Documentation for Islandora 7.x and earlier](https://wiki.lyrasis.org/display/ISLANDORA/)
 
