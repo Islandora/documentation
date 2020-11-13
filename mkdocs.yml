@@ -19,6 +19,8 @@ theme:
   language: 'en'
 markdown_extensions:
   - admonition
+extra_css:
+  - css/custom.css
 
 extra:
   font:
