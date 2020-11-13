@@ -21,6 +21,8 @@ markdown_extensions:
   - admonition
   - toc:
         permalink: True
+extra_css:
+  - css/custom.css
 
 extra:
   font:

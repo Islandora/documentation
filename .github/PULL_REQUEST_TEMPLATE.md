@@ -22,6 +22,7 @@
 * [ ] Does this PR link to related [issues](https://github.com/Islandora/documentation/issues/)?
 * [ ] Does the proposed documentation align with the [Islandora Documentation Style Guide](https://islandora.github.io/documentation/contributing/docs_style_guide/)?
 * [ ] Are the changes accurate, useful, free of typos, etc?
+* [ ] Does this PR update the _last updated on_ date on the documentation page?
 
 > __Person merging__ should ensure the following
 * [ ] Does mkdocs still build successfully? (This is indicated by TravisCI passing. To test locally, and see warnings, see [How To Build Documentation](https://islandora.github.io/documentation/technical-documentation/docs-build/).)
