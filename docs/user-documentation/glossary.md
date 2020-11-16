@@ -12,10 +12,10 @@ Event-driven middleware based on [Apache Camel](http://camel.apache.org/) that s
 Collections are a way of grouping related objects together in Islandora. They function much like directories on a computer; a collection can “contain” any number of related resource nodes and sub-collections. 
 
 ## Crayfish
-A collection of Islandora 8 [micrsoservices](#microservice). Some of the microservices are built specifically for use with a Fedora Repository and API-X, while others are just for general use within Islandora 8.
+A collection of Islandora 8 [microservices](#microservice). Some of the microservices are built specifically for use with a Fedora Repository and API-X, while others are just for general use within Islandora 8.
 
 ## Derivative
-A version of a file which is derived from an uploaded file. For example, a thumbnail generated from an uploaded image. Islandora uses [micrsoservices](#microservice) to generate derivatives.
+A version of a file which is derived from an uploaded file. For example, a thumbnail generated from an uploaded image. Islandora uses [microservices](#microservice) to generate derivatives.
 
 ## Docker
 [Docker](https://www.docker.com/) is a platform that use OS-level virtualization to deliver software in packages called containers. Islandora uses Docker as part of ISLE, a suite of Docker containers that run the various components of Islandora required by Islandora Defaults. 
