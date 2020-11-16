@@ -1,10 +1,24 @@
+_last updated on 13-11-2020_
+
 The following glossary of terms addresses an Islandora 8 context. When comparing new Islandora and Fedora to older versions it may also be helpful to reference [the Islandora 7 Glossary](https://wiki.duraspace.org/display/ISLANDORA/APPENDIX+E+-+Glossary).
- 
+
+## Alpaca
+Event-driven middleware based on [Apache Camel](http://camel.apache.org/) that synchronizes a Fedora repository with a Drupal instance.
+
 ## CLAW
  CLAW (CLAW Linked Asset WebDataFrameWork) was the development code name for the software released in June, 2019 as _Islandora 8_.
  
 ## Collection
 Collections are a way of grouping related objects together in Islandora. They function much like directories on a computer; a collection can “contain” any number of related resource nodes and sub-collections. 
+
+## Crayfish
+A collection of Islandora 8 [microservices](#microservice). Some of the microservices are built specifically for use with a Fedora Repository and API-X, while others are just for general use within Islandora 8.
+
+## Derivative
+A version of a file which is derived from an uploaded file. For example, a thumbnail generated from an uploaded image. Islandora uses [microservices](#microservice) to generate derivatives.
+
+## Docker
+[Docker](https://www.docker.com/) is a platform that use OS-level virtualization to deliver software in packages called containers. Islandora uses Docker as part of ISLE, a suite of Docker containers that run the various components of Islandora required by Islandora Defaults. 
  
 ## Drupal 
 Drupal is an open source content management system (CMS) written in PHP. Known for being extremely flexible and extensible, Drupal is supported by a community of over 630,000 users and developers. Drupal sites can be customized and themed in a wide variety of ways.
@@ -30,11 +44,17 @@ Data of a certain type that is attached to a content entity. For instance, on a 
  
 ## Flysystem
 Flysystem is a filesystem abstraction library for PHP. Islandora uses Flysystem to swap about different backend filesystem applications. Islandora provides a custom Flysystem adapter for Fedora.
+
+## IIIF
+The [International Image Interoperability Framework](https://iiif.io/). A set of open standards that help archives, libraries, and museums make the most of their digitized collections with deep zoom, annotation capabilities, and more, and also the community of users and developers that suport the framework.
  
 ## Ingest
 To ingest an object is to add an entry for it in Islandora. This is done primarily through the Drupal interface. 
  
 The word 'ingest' is used in repository language because repository software, rather than having an object and associated components forced upon it, takes in and processes the object itself, creating derivatives automatically. Often, when referring to the process of ingesting objects, Islandora and its associated documentation use other terms such as 'import' or 'add resource node'. In such contexts, these terms generally refer to the ingest process.
+
+## ISLE
+ISLE, or ISLandora Enterprise, is a community initiative to ease the installation and maintenance of Islandora by using [Docker](#docker).
  
 ## Media
 A drop-in replacement for the Drupal core upload field with a unified User Interface where editors and administrators can upload, manage, and reuse files and multimedia assets. 
