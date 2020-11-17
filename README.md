@@ -9,7 +9,7 @@ This "documentation" repository has three functions:
 
 - it houses the source code for the [documentation](https://islandora.github.io/documentation/) of the [Islandora project](https://islandora.ca/) (versions 8.x and above). 
 - its [Wiki](https://github.com/Islandora/documentation/wiki) contains the minutes for Islandora 8 Tech calls and User calls.
-- it hosts the central [issue queue](https://github.com/Islandora/documentation/issues) for the entire Islandora 8 project.
+- it hosts the central [issue queue](https://github.com/Islandora/documentation/issues) for the entire Islandora 8 project. Add an issue there if you have a use case that isn't addressed, or find a bug.
 
 ## Documentation Structure
 
