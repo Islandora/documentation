@@ -78,24 +78,23 @@ nav:
       # distinguish for instance between 'user' who can create/consume 
       # repository content (curator) and repository manager, who has access 
       # to configuration options that a curator should not meddle with
-      - Content in Islandora 8:
-          # moved from Repository admin section
-          # largely conceptual, repository managers and to some extent curators
-        - 'Resource Nodes': 'user-documentation/resource-nodes.md'
-              # largely conceptual, repository managers; move out procedural 
-              # information (e.g. move procedure for setting display hints to 
-              # documentation about contexts)
-        - 'Media': 'user-documentation/media.md'
-              # conceptual and procedural, repository managers
-              # move out procedural description for deleting Media
-        - 'Collections': 'user-documentation/collections.md'
-              # conceptual and procedural, repository managers/ curators
-              # move out procedural description for creating and populating collections
-        - 'Paged Content': 'user-documentation/paged-content.md'
-              # conceptual and procedural, repository managers/ curators
-              # move out procedural description for ordering pages
-        - 'Metadata': 'user-documentation/metadata.md'
-              # largely conceptual, repository managers/ curators
+        # moved from Repository admin section
+        # largely conceptual, repository managers and to some extent curators
+      - 'Resource Nodes': 'user-documentation/resource-nodes.md'
+            # largely conceptual, repository managers; move out procedural 
+            # information (e.g. move procedure for setting display hints to 
+            # documentation about contexts)
+      - 'Media': 'user-documentation/media.md'
+            # conceptual and procedural, repository managers
+            # move out procedural description for deleting Media
+      - 'Collections': 'user-documentation/collections.md'
+            # conceptual and procedural, repository managers/ curators
+            # move out procedural description for creating and populating collections
+      - 'Paged Content': 'user-documentation/paged-content.md'
+            # conceptual and procedural, repository managers/ curators
+            # move out procedural description for ordering pages
+      - 'Metadata': 'user-documentation/metadata.md'
+            # largely conceptual, repository managers/ curators
       - 'Create a Resource Node': 'user-documentation/creating-a-node.md'
               # conceptual and procedural, repository managers/ curators
               # describes concepts, configuration options for Media nodes and and a procedure
