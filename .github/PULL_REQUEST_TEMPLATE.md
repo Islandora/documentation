@@ -1,6 +1,6 @@
 ## Purpose / why
 
-> _**Replace this text** - Restate the purpose/justification of this work and include links to any Issues or other discussions that are related to this work.
+> _**Replace this text** - Restate the purpose/justification of this work and include links to any Issues or other discussions that are related to this work._
 
 ## What changes were made?
 
@@ -12,7 +12,9 @@
 
 ## Interested Parties
 
+
 > _**Replace this text** - name some folks who may be interested, or, if unsure, @Islandora/8-x-committers
+
 ---
 
 ## Checklist
