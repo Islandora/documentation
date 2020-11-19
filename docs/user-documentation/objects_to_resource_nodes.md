@@ -60,7 +60,7 @@ The following pages expand on the concepts discussed above:
 
 - [Resource Nodes](resource-nodes.md)
 - [Media](media.md)
-- [Make an Image](creating-a-node.md)
+<!-- - [Make an Image](creating-a-node.md)-->
 - [Content Types](content_types.md)
 
 ### Copyright and Usage

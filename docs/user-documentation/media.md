@@ -12,6 +12,10 @@ For example, creating a media with a file named `test.jpg` (in November 2019) wi
 a Fedora binary resource of the file accessible at `/fcrepo/rest/2019-11/test.jpg` 
 with the media's fields accessible at `/fcrepo/rest/2019-11/test.jpg/fcr:metadata`.
 
+## Media types
+
+Islandora Defaults makes use of the media types provided automatically by Drupal. The file extensions allowed by each media type have been configured at the Drupal level. It is possible to create your own media types, and/or to edit the allowed field types and functionality of the existing media types. However, with Islandora Defaults, the _Image_ media type only allows .png, .gif, .jpg or .jpeg files. Tiffs (.tiff files) must be added in the _File_ media type instead of _Image_.
+<!-- the explanation of tiffs as files on this page is referenced in create-a-resource-node.md tutorial. -->
 
 ## Media revisions
 
