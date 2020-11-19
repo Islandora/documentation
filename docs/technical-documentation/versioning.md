@@ -1,6 +1,6 @@
 # Versioning Policy
 
-Islandora 8 uses semantic versioning, except for Drupal modules/themes.
+Islandora 8 uses semantic versioning, except for Drupal modules/themes, which use Drupal Contrib versioning.
 
 ## [Semantic Versioning](http://semver.org/)
 
