@@ -13,7 +13,7 @@
 ## Interested Parties
 
 
-> _**Replace this text** - name some folks who may be interested, or, if unsure, @Islandora/8-x-committers
+> _**Replace this text** - name some folks who may be interested, or, if unsure, @Islandora/8-x-committers_
 
 ---
 
