@@ -12,7 +12,7 @@ For this tutorial you will need an instance of [Islandora Defaults](https://gith
 
 [Online Sandbox](http://future.islandora.ca)
 
-* Username: admin
+* Username: Test
 * Password: islandora
 
 ## Step 1: Create an Islandora Node
