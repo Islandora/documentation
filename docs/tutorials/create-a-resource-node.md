@@ -46,6 +46,10 @@ The new node page displays, with the title, any metadata that we entered, and a 
 
 Alas, your node has no files. To upload a file, click on the node's _Media_ tab.
 
+!!! islandora "Attaching files to a resource node"
+    If you've used Drupal before, you may know that you can upload files directly into a File-type field on the node. However, the Islandora way to upload files is to create Media entities, that are linked to the node. This gives us more metadata flexibility and lets us attach different files for different purposes.
+
+
 ![Node page showing Media tab](../assets/create_node_click_media.png)
 
 Then, click on **Add Media**.
