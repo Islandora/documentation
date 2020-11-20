@@ -1,8 +1,8 @@
-# Overview
+# About
 
-[Islandora](https://islandora.ca) is an open-source framework that provides the necessary tools to turn a [Drupal](https://www.drupal.org) website into a fully-functional Digital Assets Management System.
+## This is Islandora
 
-## About
+[Islandora](https://islandora.ca) is an open-source framework that provides the necessary tools to use a [Drupal](https://www.drupal.org) website as a fully-functional Digital Assets Management System.
 
 Islandora:
 
@@ -22,10 +22,12 @@ Islandora:
 
 ### Online Sandbox
 
-To try Islandora without installing anything, visit [http://future.islandora.ca/](http://future.islandora.ca/). Anyone can log in to this sandbox as an administrator (credentials are below and on the front page) and explore the interface! However, this site is refreshed periodically so your changes will not be permanent. This site uses Islandora Defaults, a way of setting up Islandora for demonstration purposes. This is not the only way that Islandora can be made to work! This sandbox includes, on top of Islandora Defaults, some sample content and configuration (such as views and blocks, and other Drupal modules like Views Bulk Edit) to increase its usefulness as a sandbox. 
+Try Islandora without installing anything at [http://future.islandora.ca/](http://future.islandora.ca/). 
 
 - username: Test
 - password: islandora
+
+Anyone can log in to this sandbox as an administrator (credentials are below and on the front page) and explore the interface! However, this site is refreshed periodically so your changes will not be permanent. This site uses Islandora Defaults, a way of setting up Islandora for demonstration purposes. This is not the only way that Islandora can be made to work! This sandbox includes, on top of Islandora Defaults, some sample content and configuration (such as views and blocks, and other Drupal modules like Views Bulk Edit) to increase its usefulness as a sandbox. 
 
 ### Virtual Machine Image (.ova file)
 

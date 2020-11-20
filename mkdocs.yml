@@ -38,7 +38,7 @@ extra:
       link: 'https://twitter.com/islandora'
 
 nav:
-  - Overview:
+  - About:
       - 'This is Islandora': 'index.md'
       # Conceptual, all user roles: should contain high-level information about
       # what everybody needs to know to understand Islandora and interact with it
@@ -73,39 +73,24 @@ nav:
       - 'Installing Modules': 'technical-documentation/install-enable-drupal-modules.md'
           # procedural, sysadmin
           # moved from System Administrator Documentation
-  - User Documentation:
-      # Clarify terminology, 'user' can refer to very different roles, 
-      # distinguish for instance between 'user' who can create/consume 
-      # repository content (curator) and repository manager, who has access 
-      # to configuration options that a curator should not meddle with
-        # moved from Repository admin section
-        # largely conceptual, repository managers and to some extent curators
-      - 'Resource Nodes': 'user-documentation/resource-nodes.md'
-            # largely conceptual, repository managers; move out procedural 
-            # information (e.g. move procedure for setting display hints to 
-            # documentation about contexts)
-      - 'Media': 'user-documentation/media.md'
-            # conceptual and procedural, repository managers
-            # move out procedural description for deleting Media
-      - 'Collections': 'user-documentation/collections.md'
-            # conceptual and procedural, repository managers/ curators
-            # move out procedural description for creating and populating collections
-      - 'Paged Content': 'user-documentation/paged-content.md'
-            # conceptual and procedural, repository managers/ curators
-            # move out procedural description for ordering pages
-      - 'Metadata': 'user-documentation/metadata.md'
-            # largely conceptual, repository managers/ curators
-      - 'Create a Resource Node': 'user-documentation/creating-a-node.md'
-              # conceptual and procedural, repository managers/ curators
-              # describes concepts, configuration options for Media nodes and and a procedure
-              # break up into different pages
-  - Repository Administrator Documentation:
-      # Moved
+  - Tutorials:
+      # Audience for this section is someone who is extremely new to doing 
+      # the kinds of things that we are introducing. This is someone's first
+      # foray into this domain so each tutorial should accomplish something 
+      # satisfying, and work 100% of the time.
+
+      # Tutorials are not conceptual. They tell you exactly what to do without 
+      # explaining why, and let the user decide if they want to look deeper at 
+      # what these concepts are. 
+      - 'Create a Resource Node': 'tutorials/create-a-resource-node.md'
+            # procedural, for people learning what islandora is. 
+      - 'Video Documentation': 'user-documentation/video-docs.md'
+          # mostly procedural, repository managers
+ 
+  - Documentation:
       - 'Introduction': 'user-documentation/user-intro.md'
           # Conceptual, 'site admins/repository managers'
           # move out high-level conceptual information (#architecture section)
-      - 'Video Documentation': 'user-documentation/video-docs.md'
-          # mostly procedural, repository managers
       - 'Intro to Linked Data': 'user-documentation/intro-to-ld-for-islandora-8.md'
           # conceptual, repository managers
       - 'Versioning': 'user-documentation/versioning.md'
@@ -172,7 +157,7 @@ nav:
     - 'Uploading large files': 'technical-documentation/uploading-large-files.md'
     - 'JWT Authentication': 'technical-documentation/jwt.md'
           # moved from Developer documentation
-  - Developer Documentation:
+  - Documentation for Developers:
     - 'Architecture Diagram': 'technical-documentation/diagram.md'
     - REST Documentation:
       - 'Introduction': 'technical-documentation/using-rest-endpoints.md'
