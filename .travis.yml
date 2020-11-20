@@ -6,7 +6,7 @@ matrix:
 
 branches:
   only:
-    - /rosiel-tutorials/
+    - /main/
 
 install:
   - pip install mkdocs
