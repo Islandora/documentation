@@ -28,11 +28,9 @@ Next, select a content type that is configured with Islandora behaviours. In Isl
 You are presented with a form showing a large number of metadata fields. Fill out the ones that are applicable to you.
 
 !!! Error "Keep it simple"
-    For this tutorial, do not attempt to fill out any fields with an autocomplete symbol - a small circle at the right-hand-side of the text box.
-
+    For this tutorial, do not attempt to fill out any fields with an autocomplete symbol - a small circle at the right-hand-side of the text box. ![Avoid autocomplete fields](../assets/create_node_warning_autocomplete.png)
 <!-- We should really include creating/adding a name here or in another tutorial!! It's a source of immediate confusion and frustration! -->
-![Avoid autocomplete fields](../assets/create_node_warning_autocomplete.png)
-<!-- Can we get this image inside of the callout box? -->
+
 
 Near the bottom of the form, the _System_ section contains mandatory fields that configure Islandora behaviours. Select **Image** from the _Model_ drop down box. This will enable image display behaviours, and cause image derivatives to be generated once we upload a file.
 
