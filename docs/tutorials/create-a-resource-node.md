@@ -1,3 +1,5 @@
+_last updated on 24-11-2020_
+
 ## Overview
 
 This tutorial will walk you through adding a piece of digital content (an image and some metadata) into an Islandora repository.
@@ -44,24 +46,30 @@ The new node page displays, with the title, any metadata that we entered, and a 
 
 ## Step 2: Upload an Original File
 
-Alas, your node has no files. To upload a file, click on the node's _Media_ tab.
-
 ![Node page showing Media tab](../assets/create_node_click_media.png)
 
-Then, click on **Add Media**.
+Alas, your node has no files. To upload a file, click on the node's _Media_ tab.
 
 ![Click on Add Media](../assets/create_node_add_media.png)
 
-There are several types of Media to choose from. We want to add a jpg image, so click on _Image_.
+!!! islandora "Concept: Media tab"
+    The "Media" tab shows Media that we say "belong to" or are "media of" that node. The idea of media "belonging to" nodes, and the "Media" tab, are part of Islandora but not part of standard Drupal.
+
+The Media tab shows nothing listed, because this node has no files. So click on **Add Media**. You will be taken to a list of media types to choose from.
+
+![Click on image option](../assets/create_node_select_image.png)
+
+We want to add a jpg image, so click on _Image_. You are now presented with a form to create a media.
 
 !!! warning "Images vs .tiffs"
     Drupal considers any type of image that can be viewed natively in the browser as an _Image_.
     For other image types that require special viewers, such as tiffs, you would have to choose
     _File_. [Learn more about Media in Islandora](../user-documentation/media.md).
 
-![Click on image option](../assets/create_node_select_image.png)
+![Fill out the media form](../assets/create_node_adding_image.png)
 
-You are now presented with the form for the technical metadata of the file. There are three required
+
+This form contains fields for metadata about the file, including "technical metadata". There are three required
 parts of the form:
 
 1. _Name_, which identifies this media.
@@ -69,11 +77,11 @@ parts of the form:
 1. _Media Use_, describing what this file is in the context of its resource node. To trigger derivative
 generation, select the checkbox for _Original File_.
 
-![Fill out the media form](../assets/create_node_adding_image.png)
-
-With the mandatory fields filled out (do not edit the "_Media of_" field), click **Save**, and a new Media will be created attached to your resource node. You will land on the administrator's list of Media, and the new media created is at the top of the list. Select it to see the Media.
+With the mandatory fields filled out (do not edit the "_Media of_" field), click **Save**, and a new Media will be created attached to your resource node. You will land on the administrator's list of Media (i.e. all media on your site, not just those attached to the resource node), and the new media object you created is at the top of the list.
 
 ![Media list](../assets/create_node_list_media.png)
+
+Select the Media you just created, and you will see a page containing that Media's information and a rendering of the image that you uploaded.
 
 <!-- We should maybe mention that it is living in Fedora? but why doesn't the Fedora URI show up?  -->
 
@@ -83,7 +91,7 @@ Scroll down to see metadata below the uploaded image. The _MIME type_, _File siz
 
 ## Step 3: Verify derivatives were created
 
-Now return to the node you created, and you will see the image along with its (minimal) descriptive metadata. The image you are viewing is not the one you uploaded, but a lower-resolution service file that was created and stored in the Drupal public filesystem. 
+Now return to the node you created, and you will see the image along with its (minimal) descriptive metadata. The image you are viewing is not the one you uploaded, but a lower-resolution service file that was created and stored in the Drupal public filesystem.
 
 ![The file is now loaded, return to the main site to view](../assets/create_node_finished_node.png)
 <!-- should increase the amount of descriptive metadata to make this make more sense -->
@@ -92,13 +100,11 @@ If you open the node's _Media_ tab, you should see new Media have been added - t
 
 ![Derivatives were created and are listed under the Media tab.](../assets/create_node_see_derivatives.png)
 
-You now have an Islandora resource node, which is a special case of a Drupal node, and it has Media attached to it including an Original File, Thumbnail, Service File, and FITS Technical Metadata file. 
+You now have an Islandora resource node, which is a special case of a Drupal node, and it has Media attached to it including an Original File, Thumbnail, Service File, and FITS Technical Metadata file.
 
 ## Learn More
 
 - Drupal documentation on [Nodes](https://www.drupal.org/docs/7/nodes-content-types-and-fields/about-nodes)
 - Drupal documentation on [Media](https://www.drupal.org/docs/8/core/modules/media).
 <!-- include Nodes, Media, etc once they make sense to follow this tutorial. -->
-
-
 
