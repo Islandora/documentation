@@ -7,6 +7,7 @@ New videos are added to [the playlist]() regularly.
 ## General Information
 
 - [What is Islandora?](https://youtu.be/nG6aidmQVZ4): A quick overview of what Islandora is and why people use it.
+- [Create a GitHub Issue](https://youtu.be/eHBIYlRxEtk): How to submit an issue to the Islandora issue queue on GitHub, where you can report a bug, share your use case, request an improvement, or request a new feature.
 
 ## Installation & Virtual Machines
 
