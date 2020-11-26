@@ -1,5 +1,7 @@
 # Video Documentation
 
+_last updated on 26-11-2020_
+
 Islandora Quick Lessons are a series of short videos demonstrating how to do common tasks in Islandora 8. 
 
 New videos are added to [the playlist]() regularly.
