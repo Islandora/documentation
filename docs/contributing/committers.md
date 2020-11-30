@@ -40,6 +40,7 @@ The following is an alphabetized list of the current Islandora 8 committers:
 | Danny Lamb                  | Islandora Foundation                  | dannylamb      |
 | Natkeeran Ledchumykanthan   | University of Toronto Scarborough     | natkeeran      |
 | Rosie Le Faive              | University of Prince Edward Island    | rosiel         |
+| Gavin Morris                | Born-Digital                          | g7morris       |
 | Alexander O'Neill           | University of Prince Edward Island    | alxp           | 
 | Don Richards                | University of Tennessee, Knoxville    | DonRichards    |
 | Bethany Seeger              | Johns Hopkins University              | bseeger        |
