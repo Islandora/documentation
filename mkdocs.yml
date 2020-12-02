@@ -38,11 +38,11 @@ extra:
       link: 'https://twitter.com/islandora'
 
 nav:
-  - About:
-      - 'This is Islandora': 'index.md'
-      # Conceptual, all user roles: should contain high-level information about
-      # what everybody needs to know to understand Islandora and interact with it
-      # Possibly add page/section: How to use this documentation (containing user role definitions)
+  - 'About': 'index.md'
+  # Conceptual, all user roles: should contain high-level information about
+  # what everybody needs to know to understand Islandora and interact with it
+  # Possibly add page/section: How to use this documentation (containing user role definitions)
+  - Concepts:
       - 'Component Overview': 'installation/component_overview.md'
           # moved from "Installation" section; alternatively duplicate a simplified version in the overview section
           # also see Architecture Diagram in Developer documentation
