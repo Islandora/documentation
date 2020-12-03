@@ -129,6 +129,18 @@ Once `make` has successfully completed, launch the ISLE containers using `docker
 docker-compose up -d
 ```
 
+!!! Fail "Troubleshooting - connection timed out (Mac)."
+    If you are using Docker Desktop for Mac, and get timeout errors when spinning up the containers (during `docker-compose up -d` or during `make dev`) such as these:
+    
+    ```
+    ERROR: for isle-dc_alpaca_1  UnixHTTPConnectionPool(host='localhost', port=None): Read timed out. (read timeout=480)
+    ERROR: for isle-dc_mariadb_1  UnixHTTPConnectionPool(host='localhost', port=None): Read timed out. (read timeout=480)
+    ERROR: for isle-dc_recast_1  UnixHTTPConnectionPool(host='localhost', port=None): Read timed out. (read timeout=480)
+    ...
+    ```
+    
+    you can try quitting Docker completely (make sure there is no whale icon in your top toolbar - may need to select "Quit" from the whale icon itself) and then restart Docker. 
+
 ## Visiting your Islandora site
 
 Direct a browser to [https://islandora-isle-dc.traefik.me/](https://islandora-isle-dc.traefik.me/) (yes, it's awkward and there's a [ticket about it](https://github.com/Islandora-Devops/isle-dc/issues/120)). If your containers are still "spinning up", you will see a white screen with the words "Bad Gateway". This often lasts 2-5 minutes, and should be shorter for subsequent launches. If it takes more than a few minutes, check to make sure that none of your containers have failed to launch (see note above on "Troubleshooting - docker containers exit without warning"). When all containers are ready, you should see a basic Drupal login screen.
