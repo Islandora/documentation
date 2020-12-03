@@ -130,13 +130,10 @@ docker-compose up -d
 ```
 
 !!! Fail "Troubleshooting - connection timed out (Mac)."
-    If you are using Docker Desktop for Mac, and get timeout errors when spinning up the containers (during `docker-compose up -d` or during `make dev`) such as these:
+    If you are using Docker Desktop for Mac, and get timeout errors when spinning up the containers (during `docker-compose up -d` or during `make dev`) such as this:
     
     ```
-    ERROR: for isle-dc_alpaca_1  UnixHTTPConnectionPool(host='localhost', port=None): Read timed out. (read timeout=480)
     ERROR: for isle-dc_mariadb_1  UnixHTTPConnectionPool(host='localhost', port=None): Read timed out. (read timeout=480)
-    ERROR: for isle-dc_recast_1  UnixHTTPConnectionPool(host='localhost', port=None): Read timed out. (read timeout=480)
-    ...
     ```
     
     you can try quitting Docker completely (make sure there is no whale icon in your top toolbar - may need to select "Quit" from the whale icon itself) and then restart Docker. 
