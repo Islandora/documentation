@@ -109,7 +109,7 @@ See [the media section](media.md) for more details.
 
 ## Display Modes
 
-Drupal uses "display modes" (sometimes called "view modes") to provide alternative ways to present content to users. You may be familiar with the "full" and "teaser" versions of nodes, which are rendered using two corresponding display modes. Islandora makes use of display modes to control how media content is displayed. Islandora Defaults provides two view modes for Media, one which renders the OpenSeadragon viewer and the other which renders the pdf.js viewer. These two view modes can be enabled by using "Display hints" in the node edit form, or you can configure Islandora to use a specific display mode for all media based on the file's Mime type. Both methods make use of [Contexts](context.md).
+Drupal uses "display modes" (also called "view modes") as alternative ways to present content to users. You may be familiar with the "full" and "teaser" versions of nodes, which are rendered using two corresponding display modes. Islandora makes use of display modes to control how media content is displayed. Islandora Defaults provides two display modes for Media, one which renders the OpenSeadragon viewer and the other which renders the pdf.js viewer. These two display modes can be enabled by using "Display hints" in the node edit form, or you can configure Islandora to use a specific display mode for all media based on the file's Mime type. Both methods make use of [Contexts](context.md).
 
 To set the display mode on the resource node's edit form, select the display mode you want to use for that node in the _Display hints_ field:
 
