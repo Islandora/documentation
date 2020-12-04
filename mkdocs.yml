@@ -37,6 +37,8 @@ extra:
     - icon: fontawesome/brands/twitter
       link: 'https://twitter.com/islandora'
 
+copyright: <b>Some info about contributing can go here!</b><br>Change this in the <i>copyright</i> line in mkdocs.yml
+
 nav:
   - 'About': 'index.md'
   # Conceptual, all user roles: should contain high-level information about
