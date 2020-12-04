@@ -1,3 +1,6 @@
+# Resource Nodes
+
+_last updated 03-12-2020_
 
 A resource node holds the descriptive metadata for content, as well as grouping together an original file and
 all of the derivatives files generated from it.   
@@ -104,19 +107,19 @@ the "Members" tab, Actions can be performed in bulk using the checkboxes and Act
 
 See [the media section](media.md) for more details.
 
-## Display Hints
+## Display Modes
 
-Drupal uses "View Modes" to provide alternative ways to present content to users. You may be familiar with the "full" and "teaser" versions of nodes, which are rendered using two corresponding kinds of View modes. Islandora also uses view modes to control how media content is displayed. Islandora provides two view modes for Media, one which renders the OpenSeadragon viewer and the other which renders the PDFjs viewer. These two View modes can be set explicitly in the node edit form or you can configure Islandora to use a specific View mode for all media with a specific Mime type using [Contexts](context.md).
+Drupal uses "display modes" (sometimes called "view modes") to provide alternative ways to present content to users. You may be familiar with the "full" and "teaser" versions of nodes, which are rendered using two corresponding display modes. Islandora makes use of display modes to control how media content is displayed. Islandora Defaults provides two view modes for Media, one which renders the OpenSeadragon viewer and the other which renders the pdf.js viewer. These two view modes can be enabled by using "Display hints" in the node edit form, or you can configure Islandora to use a specific display mode for all media based on the file's Mime type. Both methods make use of [Contexts](context.md).
 
-To set it explicitly on the resource node's edit form, simply check the View mode you want to use for that node in the _Display hints_ field:
+To set the display mode on the resource node's edit form, select the display mode you want to use for that node in the _Display hints_ field:
 
 ![Display hints](../assets/resource_nodes_display_hints.png)
 
-The selected View mode will then be used when the resource node's page is rendered.
+Due to the associated Context configurations ("Open Seadragon" and "PDFjs Viewer") that are shipped with Islandora Defaults, the selected display mode will then be used when the resource node's page is rendered. 
 
 At a global level, there are a couple of ways to tell Drupal to use the PDFjs viewer to render the content of the media field whenever the media has a Mime type of `application/pdf`.
 
-The first way is to edit the "PDFjs" Context. By default, this Context tells Drupal to use the PDFjs viewer if the node has the term "PDFjs" (yes, that's a taxonomy term):
+The first way is to edit the "PDFjs Viewer" Context. By default, this Context tells Drupal to use the PDFjs viewer if the node has the term "PDFjs" (yes, that's a taxonomy term):
 
 ![Default PDFjs Context](../assets/resource_nodes_pdfjs_context_default.png)
 
@@ -126,13 +129,13 @@ If you add the Condition "Node has Media with Mime type" and configure it to use
 
 Context will use whichever Condition applies (as long as you don't check "Require all conditions"). That is, if the "PDFjs" display hint option in the node edit form is checked, *or* if the node's media has a Mime type of `application/pdf`, the media content will be rendered using the PDFjs viewer.
 
-The second way to use the media's Mime type to render its content with the PDFjs viewer is to create a separate Context that will detect the media's Mime type and use the configured View mode automatically. To do this, create a new Context. Add a "Node has Media with Mime type" condition and specify the Mime type, and then add a "Change View mode" Reaction that selects the desired view mode:
+The second way to use the media's Mime type to render its content with the PDFjs viewer is to create a separate Context that will detect the media's Mime type and use the configured display mode automatically. To do this, create a new Context. Add a "Node has Media with Mime type" condition and specify the Mime type, and then add a "Change View mode" Reaction that selects the desired display mode:
 
 ![Display hints](../assets/resource_nodes_view_mode_context.png)
 
-Finally, save your Context. From that point on, whenever the media for a node has the configured Mime type, Drupal will render the media using the corresponding view mode.
+Finally, save your Context. From that point on, whenever the media for a node has the configured Mime type, Drupal will render the media using the corresponding display mode.
 
-The node-level and global approaches are not exclusive to one another. One Context can override another depending on the order of execution. Whichever Condition applies last between the node-level Condition (which in this case is the "Node has term" condition) the global Condition (which is "Node has Media with Mime type"), that one will override the other. An example of having the View mode specified in the node edit form intentionally override the View mode based on Mime type is to have media with the `image/jp2` mime-type configured to use to use the OpenSeadragon viewer, but to manually select the OpenSeadragon view mode for nodes with JPEG media (for example, a very large JPEG image of a map, where the OpenSeadragon's pan and zoom features would be useful).
+The node-level and global approaches are not exclusive to one another. One Context can override another depending on the order of execution. Whichever Condition applies last between the node-level Condition (which in this case is the "Node has term" condition) the global Condition (which is "Node has Media with Mime type"), that one will override the other. An example of having the display mode specified in the node edit form intentionally override the display mode based on Mime type is to have media with the `image/jp2` mime-type configured to use to use the OpenSeadragon viewer, but to manually select the OpenSeadragon display mode for nodes with JPEG media (for example, a very large JPEG image of a map, where the OpenSeadragon's pan and zoom features would be useful).
 
 ## Members
 

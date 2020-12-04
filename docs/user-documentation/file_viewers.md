@@ -1,11 +1,13 @@
 # File Viewers
 
+_last updated on 03-12-2020_
+
 
 ## What are viewers?
 
-Viewers allow site builders to display files in interactive javascript-based widgets, that provide functionality like zooming in/out, turning pages, playing/pausing, viewing in full screen, etc. 
+[Viewers](../glossary#viewer) allow site builders to display files in interactive javascript-based widgets, that provide functionality like zooming in/out, turning pages, playing/pausing, viewing in full screen, etc. 
 
-In Drupal, a common way to implement a viewer is through a module that provides the javascript library and a field formatter that uses that library. Usually the field formatter can be used on File fields.  
+In Drupal, a common way to implement a viewer is through a [module](./glossary/#module) that provides the javascript library, and a field formatter that uses that library. Usually the field formatter can be used on File fields.  
 
 Viewers that are known to work with Islandora 8 include:
 
@@ -16,11 +18,11 @@ Both are included with Islandora Defaults.
 
 ## How are viewers configured?
 
-In the generic Islandora 8 content modelling scenario, we often want the viewer to appear on a _"resource node"_ when the file itself is in a field on a Media that references that node. These layers of indirection make displaying viewers on nodes somewhat complex.
+In the generic Islandora 8 content modelling scenario, we often want the viewer to appear on a _"resource node"_ when the file itself is in a field on a Media that references that node. These layers of indirection make displaying viewers on nodes rather complex.
 
 ## Example - Open Seadragon (in Islandora Defaults)
 
-Here is how viewers are implemented in Islandora Defaults. This example uses OpenSeadragon, but pdf.js is configured with the same method. This method was chosen because it uses pure configuration and no extra code. Decision logic relies on users tagging nodes with appropriate "display hint" terms to trigger Contexts to switch the node's view mode to one that includes an EVA field, which renders the appropriate Media's file in the viewer.
+Here is how viewers are implemented in Islandora Defaults. This example uses OpenSeadragon, but pdf.js is configured with the same method. This method was chosen because it uses pure configuration and no extra code. It relies on users tagging nodes with appropriate "display hint" terms to trigger Contexts to switch the node's view mode to one that includes an EVA field, which renders the appropriate Media's file in the viewer.
 
 ### Expected behaviour for this scenario:
 
@@ -45,14 +47,14 @@ Create a Repository Item, and tag it with "Open Seadragon" (under Display Hints)
 
 ### Logic:
 
-If the node has the right term
-then that context is triggered
-so the node gets shown in your custom view mode
-which you configured for that content type
-to include a custom "field" that is an EVA view
-which displays the node's attached media rendered in your media view mode
-which for that media type
-will display the media's file in that viewer.
+- If a node has the right term
+- then a context is triggered
+- so the node gets shown in a custom view mode
+- which you configured for that content type
+- to include a custom "field" that is an EVA view
+- which displays the node's attached media rendered in your media view mode
+- which for that media type is configured
+- to display nothing but the file in a viewer.
 
 ### Relevant files:
 
@@ -76,5 +78,7 @@ Islandora Defaults is a Feature, and the following YAML files in `islandora_defa
 | `context.context.open_seadragon.yml` | (a context) tells nodes with term "Open Seadragon" to use display mode "Open Seadragon" |
 
  
+## Improvements
 
+This is awfully complex. If you'd like to help simplify it, we have an open issue about getting rid of display hints, and instead "sniffing' the file's mime type: [Deprecate display hints in favor of Contexts? #1193](https://github.com/Islandora/documentation/issues/1193). Other suggestions and solutions are welcome in the [issue queue](https://github.com/Islandora/documentation/issues).
 
