@@ -7,7 +7,7 @@ _last updated on 03-12-2020_
 
 [Viewers](../glossary#viewer) allow site builders to display files in interactive javascript-based widgets, that provide functionality like zooming in/out, turning pages, playing/pausing, viewing in full screen, etc. 
 
-In Drupal, a common way to implement a viewer is through a [module](./glossary/#module) that provides the javascript library, and a field formatter that uses that library. Usually the field formatter can be used on File fields.  
+In Drupal, a common way to implement a viewer is through a [module](./glossary/#module) that provides the javascript library, and a field formatter that uses that library. The field formatter will work with specific types of Drupal fields (e.g. file fields or image fields, some may even provide their own fields).
 
 Viewers that are known to work with Islandora 8 include:
 
@@ -19,7 +19,7 @@ Both are included with Islandora Defaults.
 
 ## How are viewers configured?
 
-In the generic Islandora 8 content modelling scenario, we often want the viewer to appear on a _"resource node"_ when the file itself is in a field on a Media that references that node. These layers of indirection make displaying viewers on nodes rather complex.
+In the generic Islandora 8 content modelling scenario, we often want the viewer to appear on a _"resource node"_ when the file itself is in a field on a Media that references that node. These layers of indirection make displaying viewers on nodes rather complex. 
 
 ## Example - Open Seadragon (in Islandora Defaults)
 
@@ -37,10 +37,10 @@ Create a Repository Item, and tag it with "Open Seadragon" (under Display Hints)
 
 ### Components of this scenario: 
 
-1. A viewer (e.g. the module OpenSeadragon)
+1. A viewer that is a field formatter  (e.g. the module OpenSeadragon)
 1. A media display mode (e.g. the media display mode "Open Seadragon")
 1. A media type (File, though Image is configured similarly)
-1. A file field on that media type that can use that viewer as a field formatter (e.g. field_media_file)
+1. A file field on that media type that can use that field formatter (e.g. field_media_file)
 1. A field on that media type that points to a parent node (e.g. field_media_of)
 1. Display Mode Configuration  (make that display mode, on that media type, show only the file field rendered through that viewer's field formatter. e.g. see Media Types > File > Manage Display > Open Seadragon)
 1. An EVA view (which shows a node's attached media as rendered by that Media display mode. e.g. the view "OpenSeadragon Media EVAs")
