@@ -4,6 +4,8 @@ This is a list of the configuration items provided by the Islandora Defaults mod
 
 ## Entities
 
+(see Glossary: [Entity](../user-documentation/glossary.md#entity))
+
 ### Content Types (i.e. Node bundles)
 
 |Name  					|Description  		 		|Comments							|
@@ -121,6 +123,8 @@ These configuration files enable content translation on their bundles.
 | taxonomy_term | islandora_models    | Language alterable is false.         |
 
 ## Views
+
+(see Glossary: [View](../user-documentation/glossary.md#view))
 
 | Name                                                | Description                                    | Displays                                                                                     | Comments                                               |                                                                                                                                  |
 |-----------------------------------------------------|------------------------------------------------|----------------------------------------------------------------------------------------------|--------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------|
