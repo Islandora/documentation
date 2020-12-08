@@ -187,6 +187,7 @@ nav:
         - 'Resizing a VM': 'technical-documentation/resizing_vm.md'
       - 'Checking Coding Standards': 'technical-documentation/checking-coding-standards.md'
       - 'Contributing Workflow': 'contributing/contributing-workflow.md'
+      - 'Creating GitHub Issues': 'contributing/create_issues.md'
       - 'Editing Documentation': 'contributing/editing-docs.md' 
       - 'How to Build Documentation': 'technical-documentation/docs-build.md'
           # moved from Developer documentation
