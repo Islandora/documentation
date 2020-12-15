@@ -134,6 +134,8 @@ nav:
               # conceptual
           - 'Extending Islandora': 'user-documentation/extending.md'
               # conceptual, repository managers/ developers
+          - 'Viewers': 'user-documentation/file_viewers.md'
+              # conceptual, understanding a very complex network of config. For repo managers/devs.
           - 'IIIF': 'user-documentation/iiif.md'
               # conceptual/ procedural, repository managers
               # add reference documentation about IIIF presentation API implementation
