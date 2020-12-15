@@ -37,7 +37,7 @@ Create a Repository Item, and tag it with "Open Seadragon" (under Display Hints)
 
 ### Components of this scenario: 
 
-1. A viewer that is a field formatter  (e.g. the module OpenSeadragon)
+1. A viewer that includes a field formatter  (e.g. the module OpenSeadragon)
 1. A media display mode (e.g. the media display mode "Open Seadragon")
 1. A media type (File, though Image is configured similarly)
 1. A file field on that media type that can use that field formatter (e.g. field_media_file)
