@@ -1,6 +1,12 @@
 # Introduction
 
+_last updated on 15-12-2020_
+
 This documentation is built using [mkdocs](http://www.mkdocs.org/), a static site generator that is geared towards building project documentation. The documentation is created in the [Markdown](http://en.wikipedia.org/wiki/Markdown) format, and it all resides in the [`docs`](https://github.com/Islandora/documentation/tree/main/docs) directory in the repository. The organization of the documentation is controlled by the [`mkdocs.yml`](https://github.com/Islandora/documentation/blob/main/mkdocs.yml) in the root of the repository.
+
+!!! Tip "Video version available"
+    Some of the material in this tutorial is presented in our video, [How to Build Documentation](https://youtu.be/YgSXicNow5w).
+
 
 ## Prerequisites
 
