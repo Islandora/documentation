@@ -1,6 +1,6 @@
 # Metadata in Islandora 8
 
-_last updated on 12-14-2020_
+_last updated on 12-18-2020_
 
 > TL;DR: In Islandora 8, metadata is stored in Drupal, in _fields_ attached to _entities_ (nodes or media). This allows us to interact with metadata (add, edit, remove, display, index in a search engine...) almost entirely using standard Drupal processes. If exporting this metadata to Fedora and/or a triplestore, the values are serialized to RDF using mappings that can be set for each bundle.
 
