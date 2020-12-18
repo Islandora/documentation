@@ -1,5 +1,7 @@
 # Metadata in Islandora 8
 
+_last updated on 12-14-2020_
+
 > TL;DR: In Islandora 8, metadata is stored in Drupal, in _fields_ attached to _entities_ (nodes or media). This allows us to interact with metadata (add, edit, remove, display, index in a search engine...) almost entirely using standard Drupal processes. If exporting this metadata to Fedora and/or a triplestore, the values are serialized to RDF using mappings that can be set for each bundle.
 
 !!! note "Drupal 8 Terminology"
@@ -75,6 +77,9 @@ The 'Member Of' field is an entity reference field, defined by Islandora, which 
 
 The EDTF field type is for recording dates in [Extended Date Time Format](https://www.loc.gov/standards/datetime/edtf.html), which is a format based off of the hyphenated form of ISO 8601 (e.g. 1991-02-03 or 1991-02-03T10:00:00), but also allows expressions of different granularity and uncertainty. The Default EDTF widget has a validator that only allows strings that conform to the EDTF standard. The Default EDTF formatter allows these date string to be displayed in a variety of human readable ways, including big- or little-endian, and presenting months as numbers, abbreviations, or spelling month names out in full.
 
+!!! tip "Nerd note:"
+    Big-endian = year, month, day. Little-endian = day, month, year. Middle-endian = month, day, year.
+	
 When configuring the EDTF widget for a field in a content type, you can choose to allow date intervals, but doing this prevents the widget from accepting values that include times. (The EDTF standard states that date intervals cannot contain times, but the field should be able to accept either a valid EDTF range or a valid EDTF datetime, so this is a bug.)
 
 Example of valid inputs in a multi-valued EDTF Date field:
@@ -86,12 +91,22 @@ Example of the same EDTF dates displayed using little-endian format:
 Example of a valid EDTF value ('1943-05') and an invalid value ('1943 May') with the corresponding error message:
 ![Screenshot of both a valid ("1943-05") and an invalid ("1943 May") EDTF entry. Displays the error message "Could not parse the date 'May 1943' Years must be at least 4 characters long."](../assets/metadata_edtf_invalid.png)
 
-The configuration for the Default EDTF Widget (including options for extra strict date validation, and allowing date intervals and date sets).
+The configuration for the Default EDTF Widget (including options for extra strict date validation, and allowing date intervals and date sets). This configuration can be set per field by clicking the gear icon next to any Default EDTF Widget field at **Administration** >> **Structure** >> **Content types** >> **Repository Item** >> **Manage form display** (admin/structure/types/manage/islandora\_object/form-display)
 ![Screenshot of the configuration screen for the EDTF Widget](../assets/metadata_edtf_widget_settings.png)
 
 Example of how the EDTF formatter settings can change the display of an EDTF value:
 ![Combined screenshots displaying the EDTF default formatter settings, default on top and modified settings below, with an example formatted EDTF value displayed for each.](../assets/metadata_edtf_formatters.png)
 
+The EDTF formatter settings can be changed per field by clicking the gear icon next to any Default EDTF formatter field at **Administration** >> **Structure** >> **Content types** >> **Repository Item** >> **Manage display** (admin/structure/types/manage/islandora\_object/display).
+
+By default, EDTF date values are indexed in Solr as string values. The entered value (not the displayed value) is indexed.
+
+!!! note "Solr note:"
+    The Solr string data type requires the full field value to match the query in order to count as a match. This means that searching for `2014` will not retrieve a record where the recorded date value is `2014-11-02`.
+
+EDTF date fields may be configured as sort fields in your search results Views. Currently by default, this results in a simple ordering by the literal EDTF date string. 
+
+An EDTF date field with multiple or unlimited number of allowed values may be set as a sort field. In this case, the first occurrence of the field value is used as the sorting value. 
 
 ### Typed Relation
 
