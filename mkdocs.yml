@@ -37,6 +37,8 @@ extra:
     - icon: fontawesome/brands/twitter
       link: 'https://twitter.com/islandora'
 
+copyright: <b>This documentation is user-sourced!</b> Suggestions and comments are welcome in our <u><a href="https://github.com/Islandora/documentation/issues" target="_blank">issue queue</a></u>.
+
 nav:
   - 'About': 'index.md'
   # Conceptual, all user roles: should contain high-level information about
