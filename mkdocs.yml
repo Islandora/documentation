@@ -37,7 +37,7 @@ extra:
     - icon: fontawesome/brands/twitter
       link: 'https://twitter.com/islandora'
 
-copyright: <b>Some info about contributing can go here!</b><br>Change this in the <i>copyright</i> line in mkdocs.yml
+copyright: <b>This documentation is user-sourced!</b> Suggestions and comments are welcome in our <u><a href="https://github.com/Islandora/documentation/issues" target="_blank">issue queue</a></u>.
 
 nav:
   - 'About': 'index.md'
