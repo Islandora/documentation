@@ -23,6 +23,9 @@ markdown_extensions:
         permalink: True
 extra_css:
   - css/custom.css
+plugins:
+  - search
+  - git-revision-date-localized
 
 extra:
   font:
