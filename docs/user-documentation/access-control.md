@@ -45,10 +45,12 @@ The extent of the configurability of Drupal Core's access control (excluding rev
 | --- |
 | - Administer content  |
 
-Drupal Core does not include any mechanisms for the following:
 
-- individual nodes or media having their own access policies (in Drupal, access can only be configured at the content type or media type level)
-- access policies that grant privileges to _users_ (in Drupal, access can be granted only to roles, and/or to that content's author)
+These are the basic access control options built into Drupal Core. There are many contributed modules that do access control, some are described below. Before using access control modules, please see [Comparison and Overview of Access Control modules](https://www.drupal.org/node/270000) on drupal.org.
+
+Contributed modules are required for the following cases:
+- individual nodes or media having their own access policies (in Core Drupal, access can only be configured at the content type or media type level)
+- access policies that grant privileges to _users_ (in Core Drupal, access can be granted only to roles, and/or to that content's author)
 - contents of specific "management" fields being reserved so that only privileged users can view or edit. 
 
 ### Islandora Resources
