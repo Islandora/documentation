@@ -130,6 +130,7 @@ nav:
           - 'Configure Blocks': 'user-documentation/blocks.md'
               # procedural, repository managers
               # add/link to conceptual documentation about block in Drupal
+          - 'Access Control': 'user-documentation/access-control.md'
           - 'Multilingual': 'user-documentation/multilingual.md'
               # conceptual/ procedual/ reference, repository managers
           - 'Accessibility': 'user-documentation/accessibility.md'
