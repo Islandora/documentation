@@ -1,4 +1,3 @@
-_last updated on 13-11-2020_
 
 The following glossary of terms addresses an Islandora 8 context. When comparing new Islandora and Fedora to older versions it may also be helpful to reference [the Islandora 7 Glossary](https://wiki.duraspace.org/display/ISLANDORA/APPENDIX+E+-+Glossary).
 

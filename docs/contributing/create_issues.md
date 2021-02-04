@@ -1,7 +1,5 @@
 # Create a GitHub Issue
 
-_last updated on 04-12-2020_
-
 ## Overview
 The Islandora community uses GitHub issues to track bug reports, requests for improvements, requests for new features, and use cases. Issues are welcome from anyone who works with Islandora.
 

@@ -1,7 +1,5 @@
 # Access Control in Islandora
 
-_last updated on 2021-01-26_
-
 This page is about controlling **who can view or edit your Islandora content** (metadata and binaries). 
 
 Islandora recommends using Drupal's access control features. Contributed modules such as those described below, can provide additional flexibility and configurability. However, these only apply when content is accessed through Drupal, and are not applied to data in Fedora, the Triplestore, or Solr. 
