@@ -1,10 +1,8 @@
 # Documentation Style Guide
-_last updated on 09-11-2020_
 
 ## Do's
 
 - Use a GitHub Pull Request to submit documentation.
-- Add or update a line at the top of the page, just under the header, with the format `_last updated on DD-MM-YYYY_` when you add a page or make changes.
 - Make it clear if the documentation is based on a particular configuration (such as Islandora Defaults) or if it applies to any deployment of Islandora.
 - Submit documentation formatted in [Markdown](https://en.wikipedia.org/wiki/Markdown) format.
     - Include a top-level heading for the whole page (using `#`)
