@@ -10,13 +10,17 @@ This documentation is built using [mkdocs](http://www.mkdocs.org/), a static sit
 
 ## Prerequisites
 
-You will need to have `mkdocs` installed locally, as well as the mkdocs theme.
+You will need to have `mkdocs` installed locally, as well as a required plugin and the MkDocs _Material_ theme.
 
 Install `mkdocs`:
 
 `sudo -H pip install mkdocs`
 
-Install material theme:
+Install plugin to enable display of the last revision date:
+
+`sudo -H pip install mkdocs-git-revision-date-localized-plugin`
+
+Install Material theme:
 
 `sudo -H pip install mkdocs-material`
 
