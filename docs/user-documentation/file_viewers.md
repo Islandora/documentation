@@ -1,8 +1,5 @@
 # File Viewers
 
-_last updated on 03-12-2020_
-
-
 ## What are viewers?
 
 [Viewers](../glossary#viewer) allow site builders to display files in interactive javascript-based widgets, that provide functionality like zooming in/out, turning pages, playing/pausing, viewing in full screen, etc. 
