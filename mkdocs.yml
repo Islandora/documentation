@@ -57,7 +57,7 @@ nav:
       - 'Modelling content in Islandora 8 vs. 7': 'user-documentation/objects_to_resource_nodes.md'
               # conceptual, all user roles
               # moved from User documentation > Content in Islandora 8
-      - What is Islandora Defaults: 'placeholder.md'
+      - Islandora Defaults: 'reference/islandora_defaults_reference.md'
   - Installation:
       # Procedural, different user roles: clarify who the audience is for a 
       # particular recipe. The ISLE documentation page was written with a 
