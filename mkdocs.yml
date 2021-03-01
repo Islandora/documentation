@@ -48,6 +48,7 @@ nav:
   # what everybody needs to know to understand Islandora and interact with it
   # Possibly add page/section: How to use this documentation (containing user role definitions)
   - Concepts:
+      - 'Collections': 'concepts/collection.md'
       - 'Component Overview': 'installation/component_overview.md'
           # moved from "Installation" section; alternatively duplicate a simplified version in the overview section
           # also see Architecture Diagram in Developer documentation
@@ -88,7 +89,9 @@ nav:
       # explaining why, and let the user decide if they want to look deeper at 
       # what these concepts are. 
       - 'Create a Resource Node': 'tutorials/create-a-resource-node.md'
-            # procedural, for people learning what islandora is. 
+          # procedural, for people learning what islandora is. 
+      - 'Collections': 'user-documentation/collections.md'
+          # procedural, repository managers/ curators
       - 'Video Documentation': 'user-documentation/video-docs.md'
           # mostly procedural, repository managers
  
@@ -112,9 +115,6 @@ nav:
         - 'Media': 'user-documentation/media.md'
               # conceptual and procedural, repository managers
               # move out procedural description for deleting Media
-        - 'Collections': 'user-documentation/collections.md'
-              # conceptual and procedural, repository managers/ curators
-              # move out procedural description for creating and populating collections
         - 'Paged Content': 'user-documentation/paged-content.md'
               # conceptual and procedural, repository managers/ curators
               # move out procedural description for ordering pages

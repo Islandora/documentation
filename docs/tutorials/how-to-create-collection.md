@@ -1,12 +1,15 @@
-Collections are groups of repository content that can be described themselves. Repository content is aggregated in a collection by setting the `field_member_of`
-entity reference field to point to a collection. Generally speaking, anything can behave as a collection, and anything with `field_member_of` can be a member of a collection.
-However, Islandora provides a "Collection" taxonomy term in the Islandora Models vocabulary that can be used to trigger collection-specific behavior.
-For example, a context provided by Islandora Defaults will display a list of child resource node teasers on the resources' display page when this term is applied to the `field_model` field.
+# How to create and add to a Collection
 
-!!! Tip "Collections and Deleting"
-    Collections and their members are
-    independent of each other, and removing something from a collection does not delete it.  **Similarly, deleting a
-    collection does not delete its members.**
+This how-to demonstrates creating a collection and adding items to it in Islandora Defaults. For more about collections, see Feature: Collections.
+
+## Introduction
+
+In Islandora Defaults, Collections that are tagged as "Collection" under System > Model will show a view of their member objects. A member is any object that is "member_of" that object, and can be added via the "Members" tab. This is the mechanism in Islandora Defaults; individual instances may vary.
+
+!!! Warning "Collections and Deleting"
+    Collections and their members are independent of each other, 
+    and removing something from a collection does not delete it. 
+    **Similarly, deleting a collection does not delete its members.**
 
 ## Creating a Collection
 
