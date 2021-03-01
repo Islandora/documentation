@@ -30,7 +30,7 @@ The following is an alphabetized list of the current Islandora 8 committers:
 | Name                        | Organization                          | Github username |
 |-----------------------------|---------------------------------------|----------------|
 | Daniel Aitken               | discoverygarden                       | qadan          |
-| Melissa Anez                | Islandora Foundation                  | manez          |
+| Melissa Anez                | LYRASIS                               | manez          |
 | Bryan Brown                 | Florida State University              | bryjbrown      |
 | Jordan Dukart               | discoverygarden                       | jordandukart   |
 | Debbie Flitner              | Arizona State University              | dflitner       |
@@ -43,7 +43,7 @@ The following is an alphabetized list of the current Islandora 8 committers:
 | Rosie Le Faive              | University of Prince Edward Island    | rosiel         |
 | Gavin Morris                | Born-Digital                          | g7morris       |
 | Alexander O'Neill           | University of Prince Edward Island    | alxp           | 
-| Don Richards                | University of Tennessee, Knoxville    | DonRichards    |
+| Don Richards                | Born-Digital                          | DonRichards    |
 | Bethany Seeger              | Johns Hopkins University              | bseeger        |
 | Seth Shaw                   | University of Nevada, Las Vegas       | seth-shaw-unlv |
 | Alan Stanley                | University of Prince Edward Islandora | ajstanley      |
