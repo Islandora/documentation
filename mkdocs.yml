@@ -90,7 +90,7 @@ nav:
       # what these concepts are. 
       - 'Create a Resource Node': 'tutorials/create-a-resource-node.md'
           # procedural, for people learning what islandora is. 
-      - 'Collections': 'user-documentation/collections.md'
+      - 'Create a Collection': 'tutorials/how-to-create-collection.md'
           # procedural, repository managers/ curators
       - 'Video Documentation': 'user-documentation/video-docs.md'
           # mostly procedural, repository managers

@@ -1,6 +1,6 @@
 # How to create and add to a Collection
 
-This how-to demonstrates creating a collection and adding items to it in Islandora Defaults. For more about collections, see Feature: Collections.
+This how-to demonstrates creating a collection and adding items to it in Islandora Defaults. For more about collections, see [Concept: Collection](../concepts/collection.md).
 
 ## Introduction
 

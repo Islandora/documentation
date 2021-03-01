@@ -26,4 +26,4 @@ In Islandora Defaults, when content is given the Model of “Collection”, then
 
 ## Tutorials
 
-- [How to create and add a collection]("tutorials/how-to-create-collection.md")
+- [How to create and add to a collection](../tutorials/how-to-create-collection.md)
