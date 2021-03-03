@@ -11,7 +11,8 @@ Islandora can:
 - declare items as members of other objects
 - after declaring an item "a collection", display a view of its members
 
-Management of the objects of a collection is not yet readily built in, but such actions as deleting, changing visibility or permissioning on a collection should be possible through Views Bulk Edit and other contrib modules, such as Permissions By Term.
+A minimal installation of Islandora (Islandora Core) does not provide pre-configured options to perform management operations on all objects of a collection. Bulk actions such as deleting, changing visibility or adjusting permissions on all objects in a collection can be achieved with the [Views Bulk Edit Drupal module](https://www.drupal.org/project/views_bulk_edit) and other Drupal contrib modules, such as [Permissions By Term](https://www.drupal.org/project/permissions_by_term). The Islandora sandbox comes with pre-configured views for managing groups of objects. 
+
 
 ## Configuration provided by Islandora Defaults
 Islandora (Defaults) provides:
