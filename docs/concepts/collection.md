@@ -23,7 +23,7 @@ For more information see [forthcoming page] Concept: Bulk Edit
 
 Islandora (Defaults) provides:
 
-- a content type ("Repository Item") that has the "member_of" field, so can be used to add a resource to a collection (or paged content, or compound resource),
+- a content type ("Repository Item") that has the "member_of" field, so that users may add nodes of this type to a collection (or paged content, or compound resource),
 - logic (a context) such that if a resource is tagged as a "collection", a view of its members will show on the collection's page. 
 
 For more details, see the tutorial on  [How to create and add to a collection](../tutorials/how-to-create-collection.md)
