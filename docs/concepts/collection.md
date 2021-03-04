@@ -6,24 +6,30 @@ Collections are groups of related content that can be viewed or managed as a uni
 - various collections of artifacts, grouped for display
 - theses and dissertations, which are organized and managed separately from other objects.
 
-Islandora can:
+Islandora:
 
-- declare items as members of other objects
-- after declaring an item "a collection", display a view of its members
+- provides a field storage called "Member of" (field_member_of) that can be used to declare items to be members of other resources.
+- provides a "Children" tab on resources, which provides a management interface to access the members of a resources. 
 
-A minimal installation of Islandora (Islandora Core) does not provide pre-configured options to perform management operations on all objects of a collection. Bulk actions such as deleting, changing visibility or adjusting permissions on all objects in a collection can be achieved with the [Views Bulk Edit Drupal module](https://www.drupal.org/project/views_bulk_edit) and other Drupal contrib modules. The Islandora sandbox comes with pre-configured views for managing groups of objects. 
-
+Islandora on its own does not prescribe any particular content types, so this field storage can be implemented on any node bundle inteneded to represent Islanodra resources.
 
 ## Configuration provided by Islandora Defaults
 Islandora (Defaults) provides:
 
-- A membership relationship for members (“children”) to point to their parent collection
-- A View (template) to display the members of a collection on the collection’s page
-- Batch-editing tools that can be used on collections
+- A content type with the "member_of" field that can be used to add a resource to a collection (or paged content, or compound resource)
+- logic (a context) such that if a resource is tagged as a "collection", a view of its members will show on the collection's page. 
 
 Islandora uses a generic "member of" relationship field to group objects under a "parent" object. This mechanism is shared by Paged Content and by Compound Objects.
 
 In Islandora Defaults, when content is given the Model of “Collection”, then a Context kicks in (the context is called “Collection”) that causes a view block (the View’s name is Members) to appear on the page. 
+
+Islanodra defaults also provides configuration so that:
+
+ - 
+
+Islandora sandbox provides sample content and demonstration views of collection members, as well as some administrative views using the [Views Bulk Edit Drupal module](https://www.drupal.org/project/views_bulk_edit) to provide tools to manage members of a collection. 
+
+
 
 ## Tutorials
 
