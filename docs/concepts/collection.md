@@ -6,31 +6,33 @@ Collections are groups of related content that can be viewed or managed as a uni
 - various collections of artifacts, grouped for display
 - theses and dissertations, which are organized and managed separately from other objects.
 
-Islandora:
+Islandora provides:
 
-- provides a field storage called "Member of" (field_member_of) that can be used to declare items to be members of other resources.
-- provides a "Children" tab on resources, which provides a management interface to access the members of a resources. 
+- a field storage called "Member of" (field_member_of) that can be used to declare items to be members of other resources.
+- a "Children" tab on resources, which provides a management interface to access, re-order, add, or delete the members of a resource. 
 
-Islandora on its own does not prescribe any particular content types, so this field storage can be implemented on any node bundle inteneded to represent Islanodra resources.
+Islandora on its own does not prescribe any particular content types, so this field storage can be implemented on any node bundle inteneded to represent Islandora resources. Islandora provides a generic "member of" relationship field to group objects under a "parent" object. This mechanism is shared by similar use cases: Paged Content and Compound Objects.
+
+## Bulk management of members of a collection
+
+Bulk management of items can be done using the Drupal contrib module [Views Bulk Edit Drupal module](https://www.drupal.org/project/views_bulk_edit). In short, build a view using this views field, and you will be able to perform Drupal Actions on objects. Neither Islanodra nor Islandora Defaults provide out-of-the-box management tools, but the sandbox provides some sample content and views that use Views Bulk Edit. 
+
+For more information see [forthcoming page] Concept: Bulk Edit
 
 ## Configuration provided by Islandora Defaults
+
 Islandora (Defaults) provides:
 
-- A content type with the "member_of" field that can be used to add a resource to a collection (or paged content, or compound resource)
+- a content type ("Repository Item") that has the "member_of" field, so can be used to add a resource to a collection (or paged content, or compound resource),
 - logic (a context) such that if a resource is tagged as a "collection", a view of its members will show on the collection's page. 
 
-Islandora uses a generic "member of" relationship field to group objects under a "parent" object. This mechanism is shared by Paged Content and by Compound Objects.
-
-In Islandora Defaults, when content is given the Model of “Collection”, then a Context kicks in (the context is called “Collection”) that causes a view block (the View’s name is Members) to appear on the page. 
-
-Islanodra defaults also provides configuration so that:
-
- - 
-
-Islandora sandbox provides sample content and demonstration views of collection members, as well as some administrative views using the [Views Bulk Edit Drupal module](https://www.drupal.org/project/views_bulk_edit) to provide tools to manage members of a collection. 
-
-
+For more details, see the tutorial on  [How to create and add to a collection](../tutorials/how-to-create-collection.md)
 
 ## Tutorials
 
 - [How to create and add to a collection](../tutorials/how-to-create-collection.md)
+
+
+
+
+
