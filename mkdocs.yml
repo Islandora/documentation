@@ -95,6 +95,9 @@ nav:
           # procedural, for people learning what islandora is. 
       - 'Create a Collection': 'tutorials/how-to-create-collection.md'
           # procedural, repository managers/ curators
+      - 'Configure Blocks': 'user-documentation/blocks.md'
+          # procedural, repository managers
+          # add/link to conceptual documentation about block in Drupal
       - 'Video Documentation': 'user-documentation/video-docs.md'
           # mostly procedural, repository managers
  
@@ -133,9 +136,6 @@ nav:
               # procedural, repository manager
           - 'Configure Context': 'user-documentation/context.md'
               # conceptual and procedural, repository managers
-          - 'Configure Blocks': 'user-documentation/blocks.md'
-              # procedural, repository managers
-              # add/link to conceptual documentation about block in Drupal
           - 'Multilingual': 'user-documentation/multilingual.md'
               # conceptual/ procedual/ reference, repository managers
           - 'Extending Islandora': 'user-documentation/extending.md'
