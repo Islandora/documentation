@@ -49,6 +49,7 @@ nav:
   # Possibly add page/section: How to use this documentation (containing user role definitions)
   - Concepts:
       - 'Collections': 'concepts/collection.md'
+      - 'Access Control': 'concepts/access-control.md'
       - 'Component Overview': 'installation/component_overview.md'
           # moved from "Installation" section; alternatively duplicate a simplified version in the overview section
           # also see Architecture Diagram in Developer documentation
@@ -133,7 +134,6 @@ nav:
           - 'Configure Blocks': 'user-documentation/blocks.md'
               # procedural, repository managers
               # add/link to conceptual documentation about block in Drupal
-          - 'Access Control': 'user-documentation/access-control.md'
           - 'Multilingual': 'user-documentation/multilingual.md'
               # conceptual/ procedual/ reference, repository managers
           - 'Accessibility': 'user-documentation/accessibility.md'
