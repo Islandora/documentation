@@ -144,7 +144,7 @@ two resource nodes. Membership is denoted using another special field, "Member O
 The "Member Of" field _can_ hold multiple references, so it is possible for a
 single child to belong to multiple parents, but may also complicate the creation of breadcrumbs.
 Any two nodes can be related in this way, though typically, the parent node has a content
-model of [_Collection_](collections.md) or [_Paged Content_](paged-content.md) (see their respective pages for more details).
+model of [_Collection_](../concepts/collection.md) or [_Paged Content_](paged-content.md) (see their respective pages for more details).
 
 !!! Note "Compared to Islandora 7"
     In Islandora 7, there was a distinction between belonging to a collection and belonging to

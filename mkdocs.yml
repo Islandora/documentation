@@ -50,7 +50,7 @@ nav:
   - Concepts:
       - 'Collections': 'concepts/collection.md'
       - 'Access Control': 'concepts/access-control.md'
-      - 'Accessibility': 'user-documentation/accessibility.md'
+      - 'Accessibility': 'concepts/accessibility.md'
          # conceptual
       - 'Component Overview': 'installation/component_overview.md'
           # moved from "Installation" section; alternatively duplicate a simplified version in the overview section
@@ -95,9 +95,12 @@ nav:
           # procedural, for people learning what islandora is. 
       - 'Create a Collection': 'tutorials/how-to-create-collection.md'
           # procedural, repository managers/ curators
-      - 'Configure Blocks': 'user-documentation/blocks.md'
+      - 'Configure Blocks': 'tutorials/blocks.md'
           # procedural, repository managers
-          # add/link to conceptual documentation about block in Drupal
+          # add/link to conceptual documentation about blocks in Drupal?
+      - 'Create or Update a View': 'tutorials/create_update_views.md'
+          # procedural, repository managers
+          # Add/link to conceptual docs about Views?
       - 'Video Documentation': 'user-documentation/video-docs.md'
           # mostly procedural, repository managers
  
@@ -130,8 +133,6 @@ nav:
           - 'Modify or Create a Content Type': 'user-documentation/content_types.md'
                   # procedural, repository managers
                   # add resource page on learning YAML
-          - 'Create or Update a View': 'user-documentation/create_update_views.md'
-                  # procedural, repository managers
           - 'Configure Search': 'user-documentation/searching.md'
               # procedural, repository manager
           - 'Configure Context': 'user-documentation/context.md'
