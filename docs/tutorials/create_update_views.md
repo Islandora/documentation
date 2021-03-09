@@ -2,7 +2,10 @@
 
 ## Overview
 
-Drupal Views allow you to get your content in Islandora to display on your site in pages or as posts, lists, blocks, etc. Views are powerful and filter content from Islandora to enable you to present content in interesting and exciting ways. 
+Views are powerful content filters that enable you to present Islandora (and other) content in interesting and exciting ways. For more documentation on views:
+
+- [Drupal.org documentation on Views](https://www.drupal.org/docs/8/core/modules/views)
+
 
 ## Before you start
 

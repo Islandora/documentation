@@ -1,4 +1,4 @@
-## Using Block Layout
+# Using Blocks
 
 In Drupal, blocks are snippets of content that can be placed on pages within your website's layout. Some examples of blocks
 are your site's menu, breadcrumbs, search block, etc...  You have a lot of control over when and where you see blocks using
@@ -6,7 +6,11 @@ Drupal's administrative interface.   You can create and delete blocks, as well a
 on the page (called 'regions' in Drupal theme terminology).  You can also control on which pages the blocks are visible,
 allowing you to conditionally show/hide them as appropriate.  Blocks are made available to place by enabling the Drupal
 modules that provide them, and there's lots out there to choose from.  Placing blocks is an essential skill for any site
-administrator, so let's jump right in and get our hands dirty.
+administrator, so let's jump right in and get our hands dirty. There are two methods discussed here: the "Block Layout" 
+interface, and using "Contexts". There is a third option, "[Display Suite](https://www.drupal.org/project/ds)," that is 
+not discussed here. 
+
+## Using Block Layout
 
 ![Block placement page](../assets/blocks_placement_page.png)
 
