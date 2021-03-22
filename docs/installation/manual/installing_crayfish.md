@@ -371,8 +371,8 @@ Alias "/homarus" "/opt/crayfish/Homarus/src"
 
 `/etc/apache2/conf-available/Houdini.conf | root:root/644`
 ```
-Alias "/houdini" "/var/www/html/Crayfish/Houdini/public"
-<Directory "/var/www/html/Crayfish/Houdini/public">
+Alias "/houdini" "/opt/crayfish/Houdini/public"
+<Directory "/opt/crayfish/Houdini/public">
   FallbackResource /houdini/index.php
   Require all granted
   DirectoryIndex index.php
