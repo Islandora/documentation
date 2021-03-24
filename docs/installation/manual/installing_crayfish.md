@@ -169,7 +169,7 @@ syn:
 ---
 fedora_base_url: http://localhost:8080/fcrepo/rest
 drupal_base_url: http://localhost
-gemini_base_uri: http://localhost/gemini
+gemini_base_url: http://localhost/gemini
 modified_date_predicate: http://schema.org/dateModified
 strip_format_jsonld: true
 debug: false
