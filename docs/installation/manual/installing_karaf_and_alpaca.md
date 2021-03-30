@@ -48,7 +48,7 @@ sudo tar -xzvf karaf.tar.gz
 sudo chown -R karaf:karaf KARAF_DIRECTORY
 sudo mv KARAF_DIRECTORY/* /opt/karaf
 ```
-- `KARAF_TARBALL_LINK`: It’s recommended to get the most recent version of Karaf 4.x. This will depend on the current version of Karaf, which can be found on the [Karaf downloads page](https://karaf.apache.org/download.html) under “Karaf Runtime”. Like Solr, you can’t directly `wget` these links, but clicking on the `.tar.gz` link for the binary distribution will bring you to a list of mirrors, as well as provide you with a recommended mirror you can use here.
+- `KARAF_TARBALL_LINK`: It’s recommended to get the most recent version of Karaf 4.2.x. This will depend on the current version of Karaf, which can be found on the [Karaf downloads page](https://karaf.apache.org/download.html) under “Karaf Runtime”. Like Solr, you can’t directly `wget` these links, but clicking on the `.tar.gz` link for the binary distribution will bring you to a list of mirrors, as well as provide you with a recommended mirror you can use here.
 - `KARAF_DIRECTORY`: This will depend on the exact version being used, but will likely be `/opt/apache-karaf-VERSION`, where `VERSION` is the current Karaf version number.
 
 ### Configuring Karaf Logging

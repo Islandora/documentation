@@ -34,7 +34,7 @@ These instructions describe using ISLE-DC locally to create a development Island
     - Ubuntu 20.04 running on WSL 2
     - GNU make, run `sudo apt update` and `sudo apt install make` to install
     - Docker Desktop for Windows, using the WSL 2 based engine (Settings > General) and with the WSL integration active for Ubuntu (Settings > Resources > WSL integration) 
-- If using `make dev`, see the [README](https://github.com/Islandora-Devops/isle-dc) for other requirements.
+- If using `make local`, see the [README](https://github.com/Islandora-Devops/isle-dc) for other requirements.
 
 
 !!! Note "What are we missing?"
@@ -58,29 +58,29 @@ There is also a legacy project called [Docker Toolbox](https://docs.docker.com/t
 
     **Memory (RAM)**: This memory is completely dedicated to Docker while Docker Desktop is running, so do not allocate more than you can spare and still run your host machine. Windows users may not require as much memory for Docker as Mac users. Current suggestions for memory allocated to Docker Desktop are below, but please edit this document if you have new information.
 
-    - Sandbox (`make`): 4GB
-    - Development (`make dev`): 8GB
+    - Sandbox (`make demo`): 4GB
+    - Development (`make local`): 8GB
     - Production or production-like development: 16GB
 
     **Swap**: Swap space is space borrowed from your hard disk drive to serve as makeshift RAM as needed. If you cannot provide as much RAM as you would like, increase this as is reasonable given your free disk space.
 
 ## Launching Islandora with Docker
 
-**Summary:** Using git, clone the isle-dc project. In that directory, enter the command `make` (or `make dev` - see note) to build the docker infrastructure. Then use the command `docker-compose up -d` to start the containers.
+**Summary:** Using git, clone the isle-dc project. In that directory, enter the command `make demo` to build the docker infrastructure and a demo site.  Then use the command `docker-compose up -d` to start the containers.
 
-!!! hint "ISLE-DC variants: `make` vs `make dev`"
-    The `make` command alone will spin up a sandbox-like version of ISLE, but only with a front end. The code files will be inaccessible, and you will not be able to install additional modules or themes. The `make dev` command creates a full-fleged development environment. It will copy the active Drupal codebase locally in a way that is also live to the ISLE site. This method takes longer (and may require multiple retries if your internet connection is spotty) but is required if you will be testing pull requests or writing code.
+!!! hint "ISLE-DC variants: `make demo` vs `make local`"
+    The `make demo` command alone will spin up a sandbox-like version of ISLE, but only with a front end. The code files will be inaccessible, and you will not be able to install additional modules or themes. The `make local` command creates a full-fleged development environment. It will copy the active Drupal codebase locally in a way that is also live to the ISLE site. This method takes longer (and may require multiple retries if your internet connection is spotty) but is required if you will be testing pull requests or writing code. The `make` command alone will build the infrastructure but not install anything (including Drupal!).
 
 ```bash
 git clone https://github.com/islandora-devops/isle-dc
 cd isle-dc
-make
+make demo
 ```
 
 
-Results of `make`:
+Results of `make demo`:
 ```
-isle-dc$ make
+isle-dc$ make demo
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100  3562  100  3562    0     0  12779      0 --:--:-- --:--:-- --:--:-- 12812
@@ -110,19 +110,19 @@ Pulling watchtower ... done
 ```
 
 !!! Fail "Troubleshooting - Docker Versions"
-    If you get an error such as: `ERROR: Version in "./docker-compose.activemq.yml" is unsupported.`, then you need to upgrade Docker. Enter the command `make clean` before re-attempting to `make`.
+    If you get an error such as: `ERROR: Version in "./docker-compose.activemq.yml" is unsupported.`, then you need to upgrade Docker. Enter the command `make clean` before re-attempting to `make demo`.
 
-!!! Fail "Troubleshooting - re-attempting `make`"
+!!! Fail "Troubleshooting - re-attempting `make demo`"
     If `make` fails for any reason, enter `make clean` before attempting to `make` again. If not, you may see an error such as: `ERROR: Top level object in './docker-compose.yml' needs to be an object not '<class 'NoneType'>'.`
 
 !!! Fail "Troubleshooting - docker containers exit without warning"
     If you notice some Docker containers drop (exited(0)), and (in Docker Desktop) the isle-dc app icon is yellow instead of green, try increasing the resources allocated to Docker (see note above).
 
 !!! hint "Development version - access the codebase"
-    If you used `make dev`, then you will have a new directory in the current (isle-dc) directory named `codebase`, containing the live Drupal root folder (containing your Drupal's composer files and the web/ subdirectory).
+    If you used `make local`, then you will have a new directory in the current (isle-dc) directory named `codebase`, containing the live Drupal root folder (containing your Drupal's composer files and the web/ subdirectory).
 
 
-Once `make` has successfully completed, launch the ISLE containers using `docker-compose up`. The `-d` flag allows you to return to using the command line. Without it, your shell will be stuck in the `docker-compose` process as long as the containers are running.
+Once `make demo` has successfully completed, launch the ISLE containers using `docker-compose up`. The `-d` flag allows you to return to using the command line. Without it, your shell will be stuck in the `docker-compose` process as long as the containers are running.
 
 
 ```bash
@@ -130,7 +130,7 @@ docker-compose up -d
 ```
 
 !!! Fail "Troubleshooting - connection timed out (Mac)."
-    If you are using Docker Desktop for Mac, and get timeout errors when spinning up the containers (during `docker-compose up -d` or during `make dev`) such as this:
+    If you are using Docker Desktop for Mac, and get timeout errors when spinning up the containers (during `docker-compose up -d` or during `make local`) such as this:
     
     ```
     ERROR: for isle-dc_mariadb_1  UnixHTTPConnectionPool(host='localhost', port=None): Read timed out. (read timeout=480)
@@ -160,7 +160,7 @@ To shut down the containers without destroying your site, use `docker-compose do
 
 ## Editing Code in Docker
 
-If you used `make dev` then the drupal root folder is in a new directory in the isle-dc folder named `codebase`. This is live and editable in whatever development environment you would like.  If you just did `make`, you will need to spin down your containers with `-v` to destroy your state before starting a new one with `make dev`.
+If you used `make local` then the drupal root folder is in a new directory in the isle-dc folder named `codebase`. This is live and editable in whatever development environment you would like.  If you just did `make demo`, you will need to spin down your containers with `-v` to destroy your state before starting a new one with `make local`.
 
 Editing code for the back-end processes (alpaca, milliner, etc) is more complicated. Please ask on the #isle Slack channel and help us improve this documentation!
 

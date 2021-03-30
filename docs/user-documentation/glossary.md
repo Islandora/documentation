@@ -8,7 +8,7 @@ Event-driven middleware based on [Apache Camel](http://camel.apache.org/) that s
  CLAW (CLAW Linked Asset WebDataFrameWork) was the development code name for the software released in June, 2019 as _Islandora 8_.
  
 ## Collection
-Collections are a way of grouping related objects together in Islandora. They function much like directories on a computer; a collection can “contain” any number of related resource nodes and sub-collections. 
+A [collection](../concepts/collection.md) is a way of grouping related resources together, much like a directory on a computer. Collections can “contain” any number of related resource nodes and sub-collections.
 
 ## Crayfish
 A collection of Islandora 8 [microservices](#microservice). Some of the microservices are built specifically for use with a Fedora Repository and API-X, while others are just for general use within Islandora 8.
