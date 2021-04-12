@@ -47,6 +47,7 @@ The following is an alphabetized list of the current Islandora 8 committers:
 | Bethany Seeger              | Johns Hopkins University              | bseeger        |
 | Seth Shaw                   | University of Nevada, Las Vegas       | seth-shaw-unlv |
 | Alan Stanley                | University of Prince Edward Islandora | ajstanley      |
+| Adam Vessey                 | discoverygarden                       | adam-vessey    |
 | Jared Whiklo                | University of Manitoba                | whikloj        |
 | Eli Zoller                  | Arizona State University              | elizoller      |
 
