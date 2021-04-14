@@ -183,11 +183,11 @@ There's a lot of other useful utilities available to you from within the `isle-d
 
 ### Config Export
 
-`make config-export` will export your site's configuration to your site's config sync directory.
+`make config-export` will export your site's configuration to your site's config sync directory (usually `config/sync` inside your Drupal root folder).
 
 ### Config Import
 
-`make config-import` will export import site's configuration from your site's config sync directory.
+`make config-import` will import site's configuration from your site's config sync directory (usually `config/sync` inside your Drupal root folder).
 
 ### Database Dump
 
@@ -234,7 +234,7 @@ If you
 
 - Used `make demo`
 - Are using a custom Drupal image
-- Don't want to bother with setting up a development environmen right now
+- Don't want to bother with setting up a development environment right now
 
 You can use an embedded VSCode that's available at port 8443. To enable it
 
