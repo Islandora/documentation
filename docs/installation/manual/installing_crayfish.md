@@ -137,10 +137,10 @@ Currently the Houdini microservice uses a different system (Symfony) than the ot
 
 `/opt/crayfish/Houdini/config/services.yaml | www-data:www-data/644`
 ```yaml
-\# This file is the entry point to configure your own services.
-\# Files in the packages/ subdirectory configure your dependencies.
-\# Put parameters here that don't need to change on each machine where the app is deployed
-\# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     app.executable: /usr/local/bin/convert
     app.formats.valid:
