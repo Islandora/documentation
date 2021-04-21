@@ -4,7 +4,7 @@
 - [Islandora/Crayfish](https://github.com/islandora/crayfish), the suite of microservices that power the backend of Islandora 8
 - Indvidual microservices underneath Crayfish
 
-## Crayfish 1.0
+## Crayfish 1.1
 
 ### Installing Prerequisites
 
@@ -64,10 +64,13 @@ sudo chown www-data:www-data /var/log/islandora
 
 ### Configuring Crayfish Components
 
-Each Crayfish component requires a `.yaml` file to ensure everything is wired up correctly.
+Each Crayfish component requires one or more `.yaml` file(s) to ensure everything is wired up correctly.
 
 !!! notice
     The following configuration files represent somewhat sensible defaults; you should take consideration of the logging levels in use, as this can vary in desirability from installation to installation. Also note that in all cases, `http` URLs are being used, as this guide does not deal with setting up https support. In a production installation, this should not be the case. These files also assume a connection to a PostgreSQL database; use a `pdo_mysql` driver and the appropriate `3306` port if using MySQL.
+
+
+#### Gemini
 
 `/opt/crayfish/Gemini/cfg/config.yaml | www-data:www-data/644`
 ```yaml
@@ -88,6 +91,8 @@ syn:
   enable: true
   config: /opt/fcrepo/config/syn-settings.xml
 ```
+
+#### Homarus (Audio/Video derivatives)
 
 `/opt/crayfish/Homarus/cfg/config.yaml | www-data:www-data/644`
 ```yaml
@@ -126,27 +131,133 @@ syn:
   config: /opt/fcrepo/config/syn-settings.xml
 ```
 
-`/opt/crayfish/Houdini/cfg/config.yaml | www-data:www-data/644`
+#### Houdini (Image derivatives)
+
+Currently the Houdini microservice uses a different system (Symfony) than the other microservices, this requires different configuration.
+
+`/opt/crayfish/Houdini/config/services.yaml | www-data:www-data/644`
 ```yaml
----
-houdini:
-  executable: convert
-  formats:
-    valid:
-      - image/jpeg
-      - image/png
-      - image/tiff
-      - image/jp2
-    default: image/jpeg
-fedora_resource:
-  base_url: http://localhost:8080/fcrepo/rest
-log:
-  level: NOTICE
-  file: /var/log/islandora/houdini.log
-syn:
-  enable: true
-  config: /opt/fcrepo/config/syn-settings.xml
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    app.executable: /usr/local/bin/convert
+    app.formats.valid:
+        - image/jpeg
+        - image/png
+        - image/tiff
+        - image/jp2
+    app.formats.default: image/jpeg
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\Islandora\Houdini\:
+        resource: '../src/*'
+        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Islandora\Houdini\Controller\HoudiniController:
+        public: false
+        bind:
+            $formats: '%app.formats.valid%'
+            $default_format: '%app.formats.default%'
+            $executable: '%app.executable%'
+        tags: ['controller.service_arguments']
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
 ```
+
+`/opt/crayfish/Houdini/config/packages/crayfish_commons.yml | www-data:www-data/644`
+```yaml
+crayfish_commons:
+  fedora_base_uri: 'http://localhost:8080/fcrepo/rest'
+  gemini_base_uri: 'http://localhost:9000/gemini'
+  syn_config: '/opt/fcrepo/config/syn-settings.xml'
+```
+
+`/opt/crayfish/Houdini/config/packages/monolog.yml | www-data:www-data/644`
+```yaml
+monolog:
+
+  handlers:
+
+    houdini:
+      type: rotating_file
+      path: /var/log/islandora/Houdini.log
+      level: DEBUG
+      max_files: 1
+```
+
+The below files are two versions of the same file to enable or disable JWT token authentication.
+
+`/opt/crayfish/Houdini/config/packages/security.yml | www-data:www-data/644`
+
+Enabled JWT token authentication:
+```yaml
+security:
+
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        jwt_user_provider:
+            id: Islandora\Crayfish\Commons\Syn\JwtUserProvider
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            anonymous: false
+            # Need stateless or it reloads the User based on a token.
+            stateless: true
+
+            provider: jwt_user_provider
+            guard:
+                authenticators:
+                    - Islandora\Crayfish\Commons\Syn\JwtAuthenticator
+
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#firewalls-authentication
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
+
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        # - { path: ^/admin, roles: ROLE_ADMIN }
+        # - { path: ^/profile, roles: ROLE_USER }
+```
+
+Disabled JWT token authentication:
+```yaml
+security:
+
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        jwt_user_provider:
+            id: Islandora\Crayfish\Commons\Syn\JwtUserProvider
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            anonymous: true
+            # Need stateless or it reloads the User based on a token.
+            stateless: true
+```
+
+#### Hypercube (OCR)
 
 `/opt/crayfish/Hypercube/cfg/config.yaml | www-data:www-data/644`
 ```yaml
@@ -163,6 +274,8 @@ syn:
   enable: true
   config: /opt/fcrepo/config/syn-settings.xml
 ```
+
+#### Milliner (Fedora indexing)
 
 `/opt/crayfish/Milliner/cfg/config.yaml | www-data:www-data/644`
 ```yaml
@@ -187,6 +300,8 @@ syn:
   enable: true
   config: /opt/fcrepo/config/syn-settings.xml
 ```
+
+#### Recast (Drupal to Fedora URI re-writing)
 
 `/opt/crayfish/Recast/cfg/config.yaml | www-data:www-data/644`
 ```yaml
@@ -256,8 +371,8 @@ Alias "/homarus" "/opt/crayfish/Homarus/src"
 
 `/etc/apache2/conf-available/Houdini.conf | root:root/644`
 ```
-Alias "/houdini" "/opt/crayfish/Houdini/src"
-<Directory "/opt/crayfish/Houdini/src">
+Alias "/houdini" "/opt/crayfish/Houdini/public"
+<Directory "/opt/crayfish/Houdini/public">
   FallbackResource /houdini/index.php
   Require all granted
   DirectoryIndex index.php
