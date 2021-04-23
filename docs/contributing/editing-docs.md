@@ -1,7 +1,7 @@
 # Editing Documentation
 
 ## Overview
-These documentation pages are written and maintained by volunteers from the Islandora community, and new contributions are always welcomed. The documentation that you see here is built using [mkdocs](https://www.mkdocs.org/) from files hosted in the Islandora [documentation](https://github.com/Islandora/documentation) GitHub repo. This documentation is rebuilt automatically upon change being committed to GitHub, so you will see changes reflected here within a few minutes of making an edit.
+These documentation pages are written and maintained by volunteers from the Islandora community, and new contributions are always welcomed. The documentation that you see here is built using [mkdocs](https://www.mkdocs.org/) from files hosted in the Islandora [documentation](https://github.com/Islandora/documentation) GitHub repo. This documentation is rebuilt automatically upon changes being committed to GitHub, so you will see changes reflected here within a few minutes of making an edit.
 
 The [Islandora Documentation Interest Group](https://github.com/islandora-interest-groups/Islandora-Documentation-Interest-Group) holds regular meetings to discuss how to improve and expand Islandora's documentation. If you are interested in becoming involved, all are welcome to join. If you just want to make a contribution to the existing documentation, that process is outlined here. 
 
@@ -13,7 +13,7 @@ To edit documentation in Islandora, you must:
 - have a very basic familiarity with GitHub terms such as [fork](https://guides.github.com/activities/forking/), [branch](https://guides.github.com/activities/hello-world/#branch), and [pull request](https://guides.github.com/activities/hello-world/#pr)
 - be a member of the Islandora [GitHub Organization](https://github.com/orgs/Islandora/people).
     - This is only needed if you want to commit changes directly to the documentation. Non-members may still make pull requests. To request an invite, email community@islandora.ca or ask on the Islandora Slack. 
-- have a basic familiarity with markdown, or a good [cheat sheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
+- have a basic familiarity with [Markdown](http://en.wikipedia.org/wiki/Markdown), or a good [cheat sheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
 - follow the [Documentation Style Guide](docs_style_guide.md)
 - have either an individual [Contributor License Agreement](https://github.com/Islandora/islandora/wiki/Contributor-License-Agreements) on file with the Islandora Foundation, or work for an organization that has a corporate Contributor License Agreement on file with the Islandora Foundation. 
 
@@ -42,13 +42,13 @@ If you _are_ a member of the Islandora GitHub organization, you will be able to 
 
 - When you have completed the template, submit your changes for review by clicking **Create pull request**.
 
-- Once your pull request has been made, it will go into the [pull request queue](https://github.com/Islandora/documentation/pulls) and anyone tagged in the request will receive a notification. Any member of the Islandora GitHub organization can review and merge your pull request, committing your changes to the documentation, with a few of exceptions:
+- Once your pull request has been made, it will go into the [pull request queue](https://github.com/Islandora/documentation/pulls) and anyone tagged in the request will receive a notification. Any member of the Islandora GitHub organization can review and merge your pull request, committing your changes to the documentation, with a few exceptions:
 
     - Your pull request should not be mergd by you. 
-    - Your pull request should not be merged by anyone who contributed to it (i.e, if some one collaborated with you on writing the changes, that person canot merge those changes)
-    - Your pull request should not be merged by anyone who works at the same organizzation as you.
+    - Your pull request should not be merged by anyone who contributed to it (i.e, if some one collaborated with you on writing the changes, that person cannot merge those changes).
+    - Your pull request should not be merged by anyone who works at the same organization as you.
 
-Once your changes are committed, these documentation pages will be rebuild to reflect your changes within a few minutes.
+Once your changes are committed, these documentation pages will be rebuilt to reflect your changes within a few minutes.
 
 !!! note "For very minor changes" 
     For members of the Islandora GitHub organization (i.e., those with _write_ access to the documentation repo): If the change you made was very small, such as a formatting or spelling correction that does not change the semantics of the document, you may push your changes into the documentation immediately by selecting _commit directly to the `main` branch_ and clicking **Commit changes**. 
