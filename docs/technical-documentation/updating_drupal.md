@@ -49,7 +49,7 @@ If you want to know all packages that will be updated by the update command, use
 
 4) Clear the cache using drush ``cache:rebuild``, or use the web admin user interface.
 
-`drush cache:rebuild'`
+`drush cache:rebuild`
 
 For stepwise update instructions visit this page:
 https://www.drupal.org/docs/8/update/update-core-via-composer#s-stepwise-update-instructions
