@@ -20,8 +20,8 @@ The Islandora [issue queue](https://github.com/Islandora/documentation/issues) i
 ![New Issue button](../assets/create_issues_newissue.jpg)
 3. Fill in the information for your issue:
     1. Fill in a descriptive title. If you are posting a use case, you can start with "Use Case:"
-    2. Fill in the body of your issue. Describe a big you are seeing and how to reproduce it; describe how an existing feature could be improved; describe a new feature and how it should work; describe documentation that needs to be written or expanded. 
-    3. Use the built-in text editor to help format your issue in [markdown]. 
+    2. Fill in the body of your issue. Describe a bug you are seeing and how to reproduce it; describe how an existing feature could be improved; describe a new feature and how it should work; describe documentation that needs to be written or expanded. 
+    3. Use the built-in text editor to help format your issue in [Markdown](http://en.wikipedia.org/wiki/Markdown). 
     4. Preview your issue to make sure the formatting looks the way you want.
     5. Click **Submit new issue** to add your issue to the queue.
 ![Create Issue window](../assets/create_issues_commentbox.jpg)  
