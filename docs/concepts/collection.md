@@ -15,7 +15,7 @@ Islandora on its own does not prescribe any particular content types, so this fi
 
 ## Bulk management of members of a collection
 
-Bulk management of items can be done using the Drupal contrib module [Views Bulk Edit Drupal module](https://www.drupal.org/project/views_bulk_edit). In short, build a view using this views field, and you will be able to perform Drupal Actions on objects. Neither Islanodra nor Islandora Defaults provide out-of-the-box management tools, but the sandbox provides some sample content and views that use Views Bulk Edit. 
+Bulk management of items can be done using the Drupal contrib module [Views Bulk Edit Drupal module](https://www.drupal.org/project/views_bulk_edit). In short, build a view using this views field, and you will be able to perform Drupal Actions on objects. Neither Islandora nor Islandora Defaults provide out-of-the-box management tools, but the sandbox provides some sample content and views that use Views Bulk Edit. 
 
 For more information see [forthcoming page] Concept: Bulk Edit
 
