@@ -241,3 +241,8 @@ Because the Repository item's title field is mapped to 'dc:title' in the RDF map
 
 Also note that the URI (`@id`) value is 'http://localhost:8000/node/1' (without the `?_format=jsonld`). Old versions of Islandora 8 included the `?_format=jsonld`, and dealing with discrepancies is described at "[Adding back ?_format=jsonld](../technical-documentation/adding_format_jsonld.md)".
 
+# Batch editing metadata in fields
+
+If you are editing multiple resources in order for them to have the same metadata value, the Views Bulk Edit module can help. Here is a video of [creating a view using Views Bulk Operations](https://www.youtube.com/watch?v=ZMp0lPelOZw) to apply a subject term to multiple resources simultaneously. 
+
+For more complex changes, or when the values need to differ for each value, an export-modify-reimport method may be needed. Use a view to export CSV or other structured data (including an identifier such as a node id), modify the values as necessary, then use [migrate csv](../technical-documentation/migrate-csv/) or [Workbench](../technical-documentation/migration-overview/#islandora-workbench) to re-import and update the values. 
