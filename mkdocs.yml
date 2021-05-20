@@ -135,6 +135,8 @@ nav:
                   # add resource page on learning YAML
           - 'Configure Search': 'user-documentation/searching.md'
               # procedural, repository manager
+          - 'Configure Advanced Search': 'user-documentation/advanced-search.md'
+              # procedural, repository manager
           - 'Configure Context': 'user-documentation/context.md'
               # conceptual and procedural, repository managers
           - 'Multilingual': 'user-documentation/multilingual.md'
