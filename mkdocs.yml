@@ -170,6 +170,7 @@ nav:
     - 'Architecture Diagram': 'technical-documentation/diagram.md'
     - REST Documentation:
       - 'Introduction': 'technical-documentation/using-rest-endpoints.md'
+      - 'Authorization': 'technical-documentation/rest-authorization.md'
       - 'GET': 'technical-documentation/rest-get.md'
       - 'POST/PUT': 'technical-documentation/rest-create.md'
       - 'PATCH': 'technical-documentation/rest-patch.md'
