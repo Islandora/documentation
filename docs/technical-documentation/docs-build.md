@@ -10,6 +10,8 @@ This documentation is built using [MkDocs](http://www.mkdocs.org/), a static sit
 
 You will need to have `mkdocs` software installed locally, as well as a required plugin and the MkDocs _Material_ theme. Below we will show you how to install `mkdocs` using the Python language's `pip` tool. For more details on installing and using MkDocs visit the [MkDocs installation guide](https://www.mkdocs.org/#installation).
 
+- Open a terminal window.
+
 - Install `mkdocs`:
 
     Windows / Linux:
@@ -67,3 +69,5 @@ And then visiting http://localhost:8111 in your browser.
 To deploy documentation to GitHub Pages, issue the following command:
 
 `mkdocs gh-deploy --clean`
+
+To stop the `mkdocs serve` command just type the key combination "Control-c".
