@@ -14,13 +14,22 @@ Install `mkdocs`:
 
 `sudo -H pip install mkdocs`
 
+When installing on macOS use:
+`pip --user install mkdocs`
+
 Install plugin to enable display of the last revision date:
 
 `sudo -H pip install mkdocs-git-revision-date-localized-plugin`
 
+When installing on macOS use:
+`pip --user mkdocs-git-revision-date-localized-plugin`
+
 Install Material theme:
 
 `sudo -H pip install mkdocs-material`
+
+When installing on macOS use:
+`pip --user install mkdocs-material`
 
 ## Build and Deploy documentation
 
