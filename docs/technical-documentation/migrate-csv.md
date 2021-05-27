@@ -90,6 +90,7 @@ From your `islandora-playbook` directory, issue the following commands to enable
 - `cd /var/www/html/drupal/web/modules/contrib` to get to your modules directory.
 - `git clone https://github.com/Islandora/migrate_islandora_csv` to clone down the repository from GitHub.
 - `drush en -y migrate_islandora_csv` to enable the module, installing the migrations as configuration.
+- `drush fim migrate_islandora_csv` to import the feature.
 
 Optionally, flush the cache (`drush cr`), so the migrations become visible in the GUI at Manage > Structure > Migrations > migrate_islandora_csv (http://localhost:8000/admin/structure/migrate/manage/migrate_islandora_csv/migrations)
 
