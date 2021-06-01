@@ -2,7 +2,8 @@
 
 ## Do's
 
-- Use a GitHub Pull Request to submit documentation.
+- Use a GitHub Pull Request to submit documentation. 
+    - See the [Editing Documentation](https://islandora.github.io/documentation/contributing/editing-docs/) documentation page for information on creating a Pull Request.
 - Make it clear if the documentation is based on a particular configuration (such as Islandora Defaults) or if it applies to any deployment of Islandora.
 - Submit documentation formatted in [Markdown](https://en.wikipedia.org/wiki/Markdown) format.
     - Include a top-level heading for the whole page (using `#`)
