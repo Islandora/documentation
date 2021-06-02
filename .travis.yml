@@ -10,7 +10,8 @@ branches:
 
 install:
   - pip install mkdocs
-  - pip install git+https://${GITHUB_TOKEN}@github.com/squidfunk/mkdocs-material-insiders.git
+  - 'if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then pip install mkdocs-material; fi'
+  - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then pip install git+https://${GITHUB_TOKEN}@github.com/squidfunk/mkdocs-material-insiders.git; fi'
   - pip install mkdocs-git-revision-date-localized-plugin
 
 script:
