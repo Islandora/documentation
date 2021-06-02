@@ -1,8 +1,10 @@
 # Video Documentation
 
+## Overview
+
 Islandora Quick Lessons are a series of short videos demonstrating how to do common tasks in Islandora 8. 
 
-New videos are added to [the playlist]() regularly.
+New videos are added to [the playlist](https://www.youtube.com/playlist?list=PL4seFC7ELUtripxWi_2RIBKCWqI0uif93) regularly.
 
 ## General Information
 
@@ -42,3 +44,8 @@ New videos are added to [the playlist]() regularly.
 - [Advanced Views](https://youtu.be/inPRZeQGnKI): How to bring together several settings and tools to make a more advanced image view.
 - [Batch Editing](https://youtu.be/ZMp0lPelOZw): How to use Views Bulk Edit to create a batch editing view for Islandora.
 - [Export and Import a View](https://youtu.be/0NXrzSzxhLc): How to copy a custom View from one Islandora site to another.
+
+## Additional Topics
+
+- [How to Build Documentation](http://youtu.be/YgSXicNow5w): How to make a local copy of documentation to test and make changes.
+- [Changing Themes](http://youtu.be/AMQOW0D2dhM): How to change the theme for your Islandora site, including replacing Blocks and updating Contexts.
