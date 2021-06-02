@@ -10,7 +10,7 @@ branches:
 
 install:
   - pip install mkdocs
-  - pip install git+https://${GITHUB_TOKEN}@github.com/Islandora/mkdocs-material-insiders.git
+  - pip install git+https://${GITHUB_TOKEN}@github.com/squidfunk/mkdocs-material-insiders.git
   - pip install mkdocs-git-revision-date-localized-plugin
 
 script:
