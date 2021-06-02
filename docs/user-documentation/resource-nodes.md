@@ -1,9 +1,10 @@
 # Resource Nodes
 
-_last updated 03-12-2020_
+This page describes the Islandora concept of a Resource Node. For a step-by-step demonstration, see the tutorial [Create a resource node](../tutorials/create-a-resource-node.md).
 
-A resource node holds the descriptive metadata for content, as well as grouping together an original file and
-all of the derivatives files generated from it.   
+A resource node holds the descriptive metadata for an Islandora object, as well as groups together
+the various files that are part of the object for preservation or display, such as the original file
+ and various derivative files generated from it.   
 
 The model for exactly what constitutes an object in Islandora 8 is flexible and can be adapted to the needs of specific users. For example, the Islandora Defaults configuration considers an object as a resource node of the type "Repository Item"  which contains descriptive metadata about the object. Attached to that Node are one or more Media, each representing a file that is part of this object, such as "Original File", "Thumbnail", "Preservation Master", etc. With this model, every original file uploaded into Islandora has its own resource node.
 
@@ -23,8 +24,8 @@ and effort when implementing your repository with Islandora.
 
 ## Properties
 
-Resource nodes have some basic properties that are common to all nodes, regardless 
-of its content type.  These properties are not fields.  This means that they 
+Resource nodes, as Drupal nodes, have some common basic properties regardless 
+of content type. These properties are not fields.  This means that they 
 cannot be removed and have limited configurability. Their name, what type of 
 data they hold, etc... are all baked in.
 Here's an example of the basic properties on nodes:
@@ -45,6 +46,7 @@ As you can see, it's all system data used at the Drupal level to track the basic
 Property | Value
 ------------ | -------------
 nid | The local ID for the node
+uid | The ID of the Drupal user who created the node
 uuid | The global ID for any entity
 title | The title for the node
 created | Timestamp of when the node was created
@@ -53,7 +55,7 @@ type | Content type (e.g. which group of fields are present on the node)
 status | Published, unpublished, etc...
 
 !!! note "Compared to Islandora 7"
-    These node properties directly correspond to following Islandora 7.x object properties:
+    These node properties are analogous to following Islandora 7.x object properties:
 
     Islandora 7 | Islandora 8
     ----------- | -----------
@@ -83,6 +85,8 @@ For example, you might have a content type for a set of repository objects that 
 another content type for generic repository objects that share a more general set of metadata fields.
 A resource node's content type is set on its creation and is immutable.
 The section on [metadata](metadata.md) describes in more detail how fields on Islandora objects work.
+
+Configuring fields (adding, editing, removing) is usually done through the Manage > Content types interface, as is described in the tutorial, [Create/Update a Content Type](content_types.md).
 
 Islandora has a notion of a _content model_, which is used to identify what type of content is
 being represented by a node (e.g. an image, a video, a collection of other items, etc...). This is done
@@ -135,7 +139,7 @@ The second way to use the media's Mime type to render its content with the PDFjs
 
 Finally, save your Context. From that point on, whenever the media for a node has the configured Mime type, Drupal will render the media using the corresponding display mode.
 
-The node-level and global approaches are not exclusive to one another. One Context can override another depending on the order of execution. Whichever Condition applies last between the node-level Condition (which in this case is the "Node has term" condition) the global Condition (which is "Node has Media with Mime type"), that one will override the other. An example of having the display mode specified in the node edit form intentionally override the display mode based on Mime type is to have media with the `image/jp2` mime-type configured to use to use the OpenSeadragon viewer, but to manually select the OpenSeadragon display mode for nodes with JPEG media (for example, a very large JPEG image of a map, where the OpenSeadragon's pan and zoom features would be useful).
+The node-level and global approaches are not exclusive to one another. One Context can override another depending on the order of execution. Contexts are applied in the order they are displayed on the Contexts page, which is editable through a drag-and-drop interface. Whichever Condition appears last in the list of Contexts between the node-level Condition (which in this case is the "Node has term" condition) the global Condition (which is "Node has Media with Mime type"), that one will override the other. An example of having the display mode specified in the node edit form intentionally override the display mode based on Mime type is to have media with the `image/jp2` mime-type configured to use to use the OpenSeadragon viewer, but to manually select the OpenSeadragon display mode for nodes with JPEG media (for example, a very large JPEG image of a map, where the OpenSeadragon's pan and zoom features would be useful).
 
 ## Members
 
