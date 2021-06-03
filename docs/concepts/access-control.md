@@ -114,7 +114,10 @@ Both are enabled out of the box in Islandora Defaults. This will ensure that que
 
 Islandora Defaults includes an empty vocabulary called "Islandora Access", which is intended to hold such taxonomy terms. However, permissions_by_term must be installed and configured on your own.
 
-The module is very popular and seems to be supported well.
+This module is known to work, and appears to be supported well by the Drupal community.
+
+!!! warning
+    This module is known in the Islandora community to cause performance degradation when large numbers of nodes are involved. Seth Shaw describes this in a blog post, [Content Access Control Solutions Investigation](https://seth-shaw-unlv.github.io/2021-02-19/content_access_control).
 
 !!! question "Examples Wanted"
     Do you have experience setting up Permissions By Term? We'd love some illustrative examples here.
