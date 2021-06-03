@@ -1,8 +1,15 @@
 # Access Control in Islandora
 
-This page is about controlling **who can view or edit your Islandora content** (metadata and binaries). 
+This page is about controlling **who can view or edit your Islandora content** (metadata and binaries).
 
-Islandora recommends using Drupal's access control features. Contributed modules such as those described below, can provide additional flexibility and configurability. However, these only apply when content is accessed through Drupal, and are not applied to data in Fedora, the Triplestore, or Solr. 
+Islandora recommends using Drupal's access control features. Contributed modules such as those described below, can provide additional flexibility and configurability. However, these only apply when content is accessed through Drupal, and are not applied to data in Fedora, the Triplestore, or Solr.
+
+Known strategies for implementing access control in Drupal include:
+
+- Core Drupal
+- Group
+- Permissions by Term
+- Field Permissions
 
 !!! danger "Exposed Endpoints"
     If access control is a concern, you will want to lock down access to the following services that are part of the Islandora Suite:
@@ -47,6 +54,7 @@ The extent of the configurability of Drupal Core's access control (excluding rev
 These are the basic access control options built into Drupal Core. There are many contributed modules that do access control, some are described below. Before using access control modules, please see [Comparison and Overview of Access Control modules](https://www.drupal.org/node/270000) on drupal.org.
 
 Contributed modules are required for the following cases:
+
 - individual nodes or media having their own access policies (in Core Drupal, access can only be configured at the content type or media type level)
 - access policies that grant privileges to _users_ (in Core Drupal, access can be granted only to roles, and/or to that content's author)
 - contents of specific "management" fields being reserved so that only privileged users can view or edit. 
@@ -102,7 +110,7 @@ Both are enabled out of the box in Islandora Defaults. This will ensure that que
 
 ## Permissions By Term (contributed module)
 
-"The [Permissions by Term](https://www.drupal.org/project/permissions_by_term) module extends Drupal by functionality for restricting view and edit access to single nodes [and media] via taxonomy terms. [...] Taxonomy term permissions can be coupled to specific user accounts and/or user roles."
+"The [Permissions by Term](https://www.drupal.org/project/permissions_by_term) module extends Drupal by functionality for restricting view and edit access to single nodes  via taxonomy terms. [...] Taxonomy term permissions can be coupled to specific user accounts and/or user roles." By default, this module only affects nodes. To enable Permissions by Term for Media and other entities, enable the "Permissions by Entity" submodule.
 
 Islandora Defaults includes an empty vocabulary called "Islandora Access", which is intended to hold such taxonomy terms. However, permissions_by_term must be installed and configured on your own.
 
