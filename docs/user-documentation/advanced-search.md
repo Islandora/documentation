@@ -53,7 +53,7 @@ drush en islandora_advanced_search
 You can set the following configuration at **Administration** >> **Configuration** >> **Advanced Search Settings**
 (admin/config/islandora/advanced_search):
 
-![screenshot of the advanced search setting page](./assets/islandora_advanced_search_settings.png)
+![screenshot of the advanced search setting page](../../assets/islandora_advanced_search_settings.png)
 
 ## Configuring Solr
 
@@ -70,14 +70,14 @@ hierarchy of `field_member_of` for each repository item.
 Add a new `Content` solr field `field_decedent_of` to the solr index at
 `admin/config/search/search-api/index/default_solr_index/fields`.
 
-![screenshot of field_decent_of](./assets/advanced_search_field_decedent_of.png)
+![screenshot of field_decent_of](../../assets/advanced_search_field_decedent_of.png)
 
 Then under `admin/config/search/search-api/index/default_solr_index/processors`
 enable `Index hierarchy` and setup the new field to index the hierarchy.
 
-![screenshot of checked checkbox](./assets/advanced_search_enable_index_hierarchy.png)
+![screenshot of checked checkbox](../../assets/advanced_search_enable_index_hierarchy.png)
 
-![screenshot of processor setting options](./assets/advanced_search_enable_index_hierarchy_processor.png)
+![screenshot of processor setting options](../../assets/advanced_search_enable_index_hierarchy_processor.png)
 
 The field can now be used limit a search to all the decedents of a given object.
 
@@ -97,7 +97,7 @@ It will be typical that you require the following
 _Relationships_ and _Contextual Filters_ when setting up a search view to enable
 _Collection Search_ searches.
 
-![screenshot of contexts configuration](./assets/advanced_search_view_advanced_setting.png)
+![screenshot of contexts configuration](../../assets/advanced_search_view_advanced_setting.png)
 
 Here a relationship is setup with `Member Of` field and we have **two**
 contextual filters:
@@ -107,7 +107,7 @@ contextual filters:
 
 Both of these filters are configured the exact same way.
 
-![screenshot of configuration settings](./assets/advanced_search_contextual_filter_settings.png)
+![screenshot of configuration settings](../../assets/advanced_search_contextual_filter_settings.png)
 
 These filters are toggled by the Advanced Search block to allow the search to
 include all decedents or just direct decedents (*documented below*).
@@ -117,14 +117,14 @@ include all decedents or just direct decedents (*documented below*).
 The paging options specified here can have an affect on the pager block
 (*documented below*).
 
-![screenshot of paging configuration settings](./assets/advanced_search_pager_settings.png)
+![screenshot of paging configuration settings](../../assets/advanced_search_pager_settings.png)
 
 ### Sorting
 
 Additional the fields listed as _Sort Criteria_ as _Exposed_ will be made
 available in the pager block (*documented below*).
 
-![screenshot of sort criteria](./assets/advanced_search_sort_criteria.png)
+![screenshot of sort criteria](../../assets/advanced_search_sort_criteria.png)
 
 ## Configure Facets
 
@@ -138,12 +138,12 @@ displays where you want it to show up.
 To be able to display exclude facet links as well as include links in the facets
 block we have to duplicate the configuration for the facet like so.
 
-![screenshot of facet configurations](./assets/advanced_search_include_exclude_facets.png)
+![screenshot of facet configurations](../../assets/advanced_search_include_exclude_facets.png)
 
 Both the include / exclude facets must use the widget
 `List of links that allow the user to include / exclude facets`
 
-![screenshot of list of configuration options for facets](./assets/advanced_search_include_exclude_facets_settings.png)
+![screenshot of list of configuration options for facets](../../assets/advanced_search_include_exclude_facets_settings.png)
 
 The excluded facet also needs the following settings to appear and function
 correctly.
@@ -151,11 +151,11 @@ correctly.
 The _URL alias_ must match the same value as the include facet except it must be
 prefixed with `~` character that is what links to the two facets to each other.
 
-![screenshot of url alias setting](./assets/advanced_search_exclude_facet_settings_url_alias.png)
+![screenshot of url alias setting](../../assets/advanced_search_exclude_facet_settings_url_alias.png)
 
 And it must also explicitly be set to exclude:
 
-![screenshot of exclude checkbox](./assets/advanced_search_exclude_facet_settings_exclude.png)
+![screenshot of exclude checkbox](../../assets/advanced_search_exclude_facet_settings_exclude.png)
 
 You may also want to enable _Hide active items_ and _Hide non-narrowing results_
 for a cleaner presentation of facets.
@@ -176,7 +176,7 @@ This requires configuring the `visibility` of the block as appropriate. For
 collection based searches be sure to limit the display of the Facets block to
 the models you want to display the search on, e.g:
 
-![screenshot of block configuration](./assets/advanced_search_facet_block_settings.png)
+![screenshot of block configuration](../../assets/advanced_search_facet_block_settings.png)
 
 ### Advanced Search Block
 
@@ -187,4 +187,4 @@ the block was derived from has multiple contextual filters you can choose which
 one corresponds to direct children, this will enable the recursive search
 checkbox.
 
-![screenshot of advanced search block configuration](./assets/advanced_search_advanced_search_block_settings.png)
+![screenshot of advanced search block configuration](../../assets/advanced_search_advanced_search_block_settings.png)
