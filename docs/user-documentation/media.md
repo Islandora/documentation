@@ -86,3 +86,16 @@ Original File, a lower quality "Service File" and a smaller "Thumbnail Image" fi
 ![Media tab](../assets/resource_nodes_media_tab.png)
 
 For more information on how to configure derivatives, see the section on [Context](context.md).
+
+## Multi-File Media
+
+An alternate method of using Media to store files and derivatives is known as "multi-file" or multifile media. This method allows a single resource node to have multiple "Original Files" or "Preservation Masters". This method was implemented by [UPEI's Research Data Management project](https://islandora-rdm.researchspaces.ca/), to represent datasets that may include multiple important files that require equal preservation treatment and derivatives (such as a spreadsheet and accompanying data dictionary), while being described by a single set of descriptive metadata. 
+
+There are no multi-file media bundles that currently ship with Islandora. The following recipe describes how to set up multi-file media:
+
+1. On an existing or new Media bundle that already has a main storage field (e.g. field_media_image or field_media_audio_file), add additional fields to hold derivatives. They need to be "File"-type fields. The field names should indicate the "Media use". Set up as many as you need, for example, Thumbnail, Service File, Extracted text, etc. Note that the "Media Use" field is no longer relevant for multi-file media bundles, as a single media instance of this type contains all "Media Uses" (e.g. derivatives) in different fields. 
+2. Create a derivative Action that uses one of the two existing multi-file media base actions: "Generate a Derivative File For Media Attachment" or "Generate a Derivative Image For Media Attachment". This is where you configure which queue it goes to (which derivative-creating program runs), which field the resulting file ends up in, and potentially which additional arguments to pass to the microservice. 
+3. Configure Contexts to trigger the Action to create derivatives. If using a combination of standard and multi-file media in your repository, ensure the Contexts include appropriate filtering Conditions. Add a Derivative reaction and select the Action you created in the previous step.
+4. Configure your resource node to display its (potentially multiple) files as desired. This may involve creating a view of media attached to the current node, and displaying the Service File (or Thumbnail, etc) field of the media, then setting the view block to appear on the node page. 
+
+A video tutorial explaining how to configure multi-file Media is available under the following URL: [https://www.youtube.com/watch?v=3U6tBvD8oJY](https://www.youtube.com/watch?v=3U6tBvD8oJY)
