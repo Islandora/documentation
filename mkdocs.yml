@@ -67,7 +67,7 @@ nav:
       # particular recipe. The ISLE documentation page was written with a 
       # 'non-technical' user in mind who wants to test. The Manual installation 
       # guides mention that users will need additional knowledge about server administration.
-      - 'Docker':
+      - 'Docker (ISLE)':
           - 'Introduction to ISLE': 'installation/docker-introduction.md'
           - 'Prerequisites': 'installation/docker-prereq.md'
           - Install Islandora:
