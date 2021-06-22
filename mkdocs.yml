@@ -5,6 +5,7 @@ site_description: Documentation for Islandora 8
 
 dev_addr: 'localhost:8111'
 repo_url: https://github.com/Islandora/documentation
+site_url: https://islandora.github.io/documentation/
 edit_uri: 'edit/main/docs/'
 
 theme:
