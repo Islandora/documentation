@@ -40,4 +40,10 @@ And finally we deploy the updated containers by running
 docker-compose up -d
 ```
 
-That's it!
+You can check that everything is running at the version you've specified with 
+
+```
+docker ps -a
+```
+
+The version that's running can be confirmed by looking at the `IMAGE` column in the output. 
