@@ -103,10 +103,12 @@ getting it from the staging server.
 
 ## Building and Deploying Your Custom Container
 
-First, set your `ENVIRONMENT` variable to `custom` in  your .env file
+First, set your `ENVIRONMENT` variable to `custom` in  your .env file in addition to the changes outlined above
 
 ```
 ENVIRONMENT=custom
+USE_SECREST=true
+DOMAIN=your-domain.org
 ```
 
 Then rebuild your dockerfile to have your changes take effect
