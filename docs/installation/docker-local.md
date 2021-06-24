@@ -40,8 +40,5 @@ make local
 
 to install the Drupal site in your `codebase` folder and spin up all the other containers with it.
 
-## Kicking the Tires
-
-All services will be available at the [same locations as the demo environment](../docker-demo#kicking-the-tires),
-however your Drupal site is not baked into the container and instead should be available in your `codebase` folder.
-You should see what looks like an installed Drupal site, with a `settings.php` file and contrib modules, etc...  
+Enjoy your Islandora instance!  Check out the [basic usage documentation](../docker-basic-usage) to see
+all the endpoints that are available and how to do things like start and stop Islandora. 

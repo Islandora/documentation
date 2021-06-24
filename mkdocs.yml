@@ -75,6 +75,7 @@ nav:
              - 'Installing a Development Server': 'installation/docker-local.md'
              - 'Installing a Staging/Production Server': 'installation/docker-custom.md'
           - Maintaining Islandora: 
+            - 'Basic Usage': 'installation/docker-basic-usage.md'
             - 'Maintaining Drupal': 'installation/docker-maintain-drupal.md'
             - 'Maintaining ISLE': 'installation/docker-maintain-isle.md'
           - 'Available Commands': 'installation/docker-available-commands.md'
