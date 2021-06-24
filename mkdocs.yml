@@ -80,7 +80,7 @@ nav:
             - 'Maintaining ISLE': 'installation/docker-maintain-isle.md'
           - 'Available Commands': 'installation/docker-available-commands.md'
           - 'Available Configuration': 'installation/docker-available-configuration.md'
-      - 'Docker': 'installation/docker-compose.md'
+          - 'Troubleshooting' : 'installation/docker-troubleshooting.md'
       - 'Ansible Playbook': 'installation/playbook.md'
       - Manual Installation: 
         - 'Introduction': 'installation/manual/introduction.md'

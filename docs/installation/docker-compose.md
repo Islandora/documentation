@@ -114,24 +114,6 @@ If you do not provide a `codebase` folder before running `make local`, you will 
 
 ### Troubleshooting 
 
-!!! Fail "Troubleshooting - Docker Versions"
-    If you get an error such as: `ERROR: Version in "./docker-compose.activemq.yml" is unsupported.`, then you need to upgrade Docker. Enter the command `make clean` before re-attempting to `make demo`.
-
-!!! Fail "Troubleshooting - re-attempting `make demo`"
-    If `make` fails for any reason, enter `make clean` before attempting to `make` again. If not, you may see an error such as: `ERROR: Top level object in './docker-compose.yml' needs to be an object not '<class 'NoneType'>'.`
-
-!!! Fail "Troubleshooting - docker containers exit without warning"
-    If you notice some Docker containers drop (exited(0)), and (in Docker Desktop) the isle-dc app icon is yellow instead of green, try increasing the resources allocated to Docker (see note above).
-
-!!! Fail "Troubleshooting - connection timed out (Mac)."
-    If you are using Docker Desktop for Mac, and get timeout errors when spinning up the containers (during `docker-compose up -d` or during `make local`) such as this:
-    
-    ```
-    ERROR: for isle-dc_mariadb_1  UnixHTTPConnectionPool(host='localhost', port=None): Read timed out. (read timeout=480)
-    ```
-    
-    you can try quitting Docker completely (make sure there is no whale icon in your top toolbar - may need to select "Quit" from the whale icon itself) and then restart Docker. 
-
 ## Evaluating your installation
 
 ### Visit your site

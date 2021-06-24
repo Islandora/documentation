@@ -75,6 +75,14 @@ docker-compose up -d
 
 Even if the site is up and running, that commnad will only retart the containers it needs to.
 
+### Listing services
+
+You can see a list of all the containers that you have running and their statuses by running
+
+```
+docker ps -a
+```
+
 ### Tailing Logs
 
 You can tail logs using
@@ -87,4 +95,3 @@ If you don't know what you're looking for exactly, you can turn on the fire hose
 the service name and simply using
 
 `docker-compose logs`
-
