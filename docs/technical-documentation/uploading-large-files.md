@@ -9,5 +9,5 @@ However, large file transfer over HTTP still has a host of issues once you prope
 Uploads are not resumable and subject to connectivity issues.
 If you really want to upload large files, you should consider some alternatives such as
 
-- Robertson library's [TUS](https://github.com/roblib/rdm_tus) module, which will let you upload large files in forms.
+- Using the [TUS file upload protocol](https://www.drupal.org/project/tus) module, which will let you upload large files in forms.
 - Using [flysystem](https://www.drupal.org/project/flysystem)'s ftp and sftp plugins to make files available if you can run an FTP server.
