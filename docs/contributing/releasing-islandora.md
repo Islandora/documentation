@@ -98,5 +98,10 @@ completed all the above steps and are absolutely certain the release is ready fo
 | Nick Ruest   | York University        | ruestn at yorku.ca    | 159493E15691C84D615B7D1B417FAF1A0E1080CD | 0E1080CD |
 | Seth Shaw   | University of Nevada, Las Vegas        | seth.shaw at unlv.edu    | 2FF65B22AFA7B2A57F054F89D160AA658DAE385F | D160AA658DAE385F |
 
+## Release Carapace
 
+Release the `carapace` theme by creating a new release for it in Github.
 
+## Release Crayfish
+
+Release the `Crayfish` microservices by creating a new release for them in Github.
