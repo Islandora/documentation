@@ -104,4 +104,11 @@ Release the `carapace` theme by creating a new release for it in Github.
 
 ## Release Crayfish
 
-Release the `Crayfish` microservices by creating a new release for them in Github.
+Crayfish depends on the `crayfish-commons` library, and must have its dependencies updated before release.
+
+1. Bump the dependency on `islandora/crayfish-commons` in each `composer.json` file for each microservice
+2. Release the `Crayfish` microservices by creating a new release for them in Github.
+
+## JSONLD
+
+Release the `jsonld` module by creating a new release for it in Github.
