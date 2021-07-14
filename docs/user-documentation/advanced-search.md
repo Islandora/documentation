@@ -67,10 +67,10 @@ To support collection based searches you need to index the `field_member_of` for
 every repository item as well define a new field that captures the full
 hierarchy of `field_member_of` for each repository item.
 
-Add a new `Content` solr field `field_decedent_of` to the solr index at
+Add a new `Content` solr field `field_descendant_of` to the solr index at
 `admin/config/search/search-api/index/default_solr_index/fields`.
 
-![screenshot of field_decent_of](../assets/advanced_search_field_decedent_of.png)
+![screenshot of field_decent_of](../assets/advanced_search_field_descendant_of.png)
 
 Then under `admin/config/search/search-api/index/default_solr_index/processors`
 enable `Index hierarchy` and setup the new field to index the hierarchy.
@@ -79,7 +79,7 @@ enable `Index hierarchy` and setup the new field to index the hierarchy.
 
 ![screenshot of processor setting options](../assets/advanced_search_enable_index_hierarchy_processor.png)
 
-The field can now be used limit a search to all the decedents of a given object.
+The field can now be used limit a search to all the descendants of a given object.
 
 !!! note "Re-Indexing" 
     You may have to re-index to make sure the field is populated.
@@ -102,15 +102,15 @@ _Collection Search_ searches.
 Here a relationship is setup with `Member Of` field and we have **two**
 contextual filters:
 
-1. `field_member_of` (Direct decedents of the Entity)
-2. `field_decedent_of` (All decedents of the Entity)
+1. `field_member_of` (Direct descendants of the Entity)
+2. `field_descendant_of` (All descendants of the Entity)
 
 Both of these filters are configured the exact same way.
 
 ![screenshot of configuration settings](../assets/advanced_search_contextual_filter_settings.png)
 
 These filters are toggled by the Advanced Search block to allow the search to
-include all decedents or just direct decedents (*documented below*).
+include all descendants or just direct descendants (*documented below*).
 
 ### Paging
 
