@@ -12,7 +12,7 @@ We'll start with the Java stuff because it's the most complicated.
 
 ## Releasing Java Code
 
-You need Java 8 on your system to release java code.  All the rest is handled by Gradle, which is included in the Git repos. If, for whatever reason, you cannot get Java 8 on your computer, you can try the `openjdk:8` image 
+You need Java 8 on your system to release java code.  All the rest is handled by Gradle, which is included in the Git repos. If you cannot get Java 8, for whatever reason, you can still release Syn using Docker and the `openjdk:8-jdk` image.  For Alpaca, however, because we use keys and sign the code, etc... It really requires Java 8 to be on your system.
 
 ### Release Syn
 
@@ -21,7 +21,7 @@ To release Syn
 1. Drop the `-SNAPSHOT` from `projectVersion` in `build.gradle`
 2. Build Syn
     1. If you have Java 8, this can be done with `$ ./gradlew build shadowJar`
-    2. If you don't have Java 8, you can do this with Docker `$ docker run --rm -v /path/to/Syn:/opt/Syn openjdk:8-jdk-slim bash -lc 'cd /opt/Syn && ./gradlew build shadowJar'`
+    2. If you don't have Java 8, you can do this with Docker `$ docker run --rm -v /path/to/Syn:/opt/Syn openjdk:8-jdk bash -lc 'cd /opt/Syn && ./gradlew build shadowJar'`
 3. Push this to Github and slice a new version
     1. Note that this repository prepends a `v` to the release tag (i.e. use `vX.X.X` instead of just `X.X.X`)
 5. Upload both artifacts to the release in Github.  These are located in `/path/to/Syn/build/libs`.  You want both `islandora-syn-X.X.X.jar` and `islandora-syn-X.X.X-all.jar`.
@@ -102,23 +102,27 @@ completed all the above steps and are absolutely certain the release is ready fo
 | Nick Ruest   | York University        | ruestn at yorku.ca    | 159493E15691C84D615B7D1B417FAF1A0E1080CD | 0E1080CD |
 | Seth Shaw   | University of Nevada, Las Vegas        | seth.shaw at unlv.edu    | 2FF65B22AFA7B2A57F054F89D160AA658DAE385F | D160AA658DAE385F |
 
-## JSONLD
+## Releasing PHP Code
+
+This is much easier/straightforward compared to the Java code.  Most of it is done through Github, and the only thing to be mindful of is how the modules depend on each other.  But if you follow these steps, everything will get updated in the correct order.
+
+### JSONLD
 
 Release the `jsonld` module by creating a new release for it in Github.
 
-## Release Openseadragon
+### Release Openseadragon
 
 Release the `openseadragon` module by creating a new release for it in Github.
 
-## Release Carapace
+### Release Carapace
 
 Release the `carapace` theme by creating a new release for it in Github.
 
-## Release Chullo
+### Release Chullo
 
 Release chullo by creating a new release for it in Github.
 
-## Release Crayfish-Commons
+### Release Crayfish-Commons
 
 Crayfish commons depends on the `chullo` library, and it must have its dependencies updated before release.
 
@@ -128,7 +132,7 @@ Crayfish commons depends on the `chullo` library, and it must have its dependenc
 4. Put the dependency on `islandora/chullo` back to `dev-dev`
 5. Commit and push back to Github with a commit message of "Preparing for next development iteration".
 
-## Release Crayfish
+### Release Crayfish
 
 Crayfish depends on the `crayfish-commons` library, and must have its dependencies updated before release.
 
