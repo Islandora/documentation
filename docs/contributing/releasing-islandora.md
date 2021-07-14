@@ -1,12 +1,20 @@
 # Releasing Islandora
 
-Follow these steps to release all of the Islandora ecosystem. Due to dependencies, this must be done in a particular order.
+Follow these steps to release all of the Islandora ecosystem. Due to dependencies, this must be done in a particular order. While this may seem like a daunting task, remember that at any point in time you can delete/update/re-do a release in Github. If something gets botched simply
 
-## Release Chullo
+1. Delete the release in Github through their UI
+2. Delete the tag in Git both locally and remotely: `git tag -d TAG_NAME; git push --delete origin TAG_NAME`
+3. Try again.
 
-Release chullo by creating a new release for it in Github.
+The only exception is when publishing to Sonatype with Alpaca, but by the time you've gotten there, everything should be fine already.  And remember, you can always just bump the version number again and slice a second release if you have to.  No big deal!
 
-## Release Syn
+We'll start with the Java stuff because it's the most complicated.
+
+## Releasing Java Code
+
+You need Java 8 on your system to release java code.  All the rest is handled by Gradle, which is included in the Git repos. If, for whatever reason, you cannot get Java 8 on your computer, you can try the `openjdk:8` image 
+
+### Release Syn
 
 To release Syn
 
@@ -20,11 +28,7 @@ To release Syn
 6. Bump the `projectVersion` in `build.gradle` and add `-SNAPSHOT` to the end again.
 7. Push this to Github with a commit message of "Preparing for next development iteration"
 
-## Release Openseadragon
-
-Release the `openseadragon` module by creating a new release for it in Github.
-
-## Release Alpaca
+### Release Alpaca
 
 To make sure the release goes smoothly, you should ensure that:
   * You have an account with commit access for Alpaca on GitHub. As a committer, you should already have this level of access.
@@ -45,12 +49,12 @@ signing.secretKeyRingFile = /your/home/.gnupg/secring.gpg
 gpg --export-secret-keys -o secring.gpg
 ```
 
-### Steps:
+#### Steps:
 The following assumes you are using ssh (e.g. git@github.com for authentication).
 
 It will also work for https if you properly cache your github credentials. The credentials must be cached and valid because Gradle will not prompt you for them!
 
-#### Release artifacts to Sonatype and Github
+##### Release artifacts to Sonatype and Github
 * `git clone git@github.com:Islandora-CLAW/Alpaca.git`
 * `cd Alpaca`
 * `./gradlew release`
@@ -66,16 +70,16 @@ You then type in the version (ie. `0.4.0`) or nothing to use the suggested versi
 
 The gradle release task will take care of dropping -SNAPSHOT from the version, uploading artifacts to Maven central for staging, tagging and pushing a release to github, and bumping `master` of the Alpaca repository up by a point release for the next development iteration.
 
-#### Documentation.
+##### Documentation.
 The release process will also generate documentation at `./docs/<new-version>`. This will need to be added to the git repository and pushed to the master branch:
 
 * `git add docs/<new-version>`
 * `git commit -m "Add documentation for <new-version>"`
 * `git push origin`
 
-#### Release from Sonatype
+##### Release from Sonatype
 
-##### Point of no return
+###### Point of no return
 ***
 
 ⚠️  The following steps, once completed are final.  They cannot be undone, revoked or altered.  Only proceed if you've 
@@ -89,7 +93,7 @@ completed all the above steps and are absolutely certain the release is ready fo
 * Locate the artifacts you want to release and click on them
 * Click Close, then Refresh, then Release
 
-### Contributor Keys
+##### Contributor Keys
 
 | Name         | Organization           | Address               | Code Signing Key Fingerprint | Key Id |
 |--------------|------------------------|-----------------------|---|:-:|
@@ -98,9 +102,31 @@ completed all the above steps and are absolutely certain the release is ready fo
 | Nick Ruest   | York University        | ruestn at yorku.ca    | 159493E15691C84D615B7D1B417FAF1A0E1080CD | 0E1080CD |
 | Seth Shaw   | University of Nevada, Las Vegas        | seth.shaw at unlv.edu    | 2FF65B22AFA7B2A57F054F89D160AA658DAE385F | D160AA658DAE385F |
 
+## JSONLD
+
+Release the `jsonld` module by creating a new release for it in Github.
+
+## Release Openseadragon
+
+Release the `openseadragon` module by creating a new release for it in Github.
+
 ## Release Carapace
 
 Release the `carapace` theme by creating a new release for it in Github.
+
+## Release Chullo
+
+Release chullo by creating a new release for it in Github.
+
+## Release Crayfish-Commons
+
+Crayfish commons depends on the `chullo` library, and it must have its dependencies updated before release.
+
+1. Bump the dependency on `islandora/chullo` from `dev-dev` to the release you just made in the previous step.
+2. Commit and push to Github.
+3. Release `crayfish-commons` by creating a new release in Github
+4. Put the dependency on `islandora/chullo` back to `dev-dev`
+5. Commit and push back to Github with a commit message of "Preparing for next development iteration".
 
 ## Release Crayfish
 
@@ -109,6 +135,4 @@ Crayfish depends on the `crayfish-commons` library, and must have its dependenci
 1. Bump the dependency on `islandora/crayfish-commons` in each `composer.json` file for each microservice
 2. Release the `Crayfish` microservices by creating a new release for them in Github.
 
-## JSONLD
 
-Release the `jsonld` module by creating a new release for it in Github.
