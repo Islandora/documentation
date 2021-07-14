@@ -55,8 +55,13 @@ The following assumes you are using ssh (e.g. git@github.com for authentication)
 It will also work for https if you properly cache your github credentials. The credentials must be cached and valid because Gradle will not prompt you for them!
 
 ##### Release artifacts to Sonatype and Github
+
+You need to merge the latest code into the master branch and use Gradle to release. You can do this by running
+
 * `git clone git@github.com:Islandora-CLAW/Alpaca.git`
 * `cd Alpaca`
+* `git checkout master`
+* `git pull origin dev`
 * `./gradlew release`
 
 The script will start but then will ask you to confirm the version to release as.
@@ -104,7 +109,7 @@ completed all the above steps and are absolutely certain the release is ready fo
 
 ## Releasing PHP Code
 
-This is much easier/straightforward compared to the Java code.  Most of it is done through Github, and the only thing to be mindful of is how the modules depend on each other.  But if you follow these steps, everything will get updated in the correct order.
+This is much easier/straightforward compared to the Java code.  You will need `composer` 2 on your system, but most of it is done through Github. The only thing to be mindful of is how the modules depend on each other. But if you follow these steps, everything will get updated in the correct order.
 
 ### JSONLD
 
@@ -124,19 +129,26 @@ Release chullo by creating a new release for it in Github.
 
 ### Release Crayfish-Commons
 
-Crayfish commons depends on the `chullo` library, and it must have its dependencies updated before release.
+Crayfish commons depends on the `chullo` library, and must have its dependencies updated before release.
 
 1. Bump the dependency on `islandora/chullo` from `dev-dev` to the release you just made in the previous step.
-2. Commit and push to Github.
-3. Release `crayfish-commons` by creating a new release in Github
-4. Put the dependency on `islandora/chullo` back to `dev-dev`
-5. Commit and push back to Github with a commit message of "Preparing for next development iteration".
+2. `composer update -W`
+3. Commit and push the `composer.json` and `composer.lock` files to Github.
+4. Release `crayfish-commons` by creating a new release in Github
+5. Put the dependency on `islandora/chullo` back to `dev-dev`
+6. `composer update -W` again
+7. Commit and push the `composer.json` and `composer.lock` files to Github with a commit message of "Preparing for next development iteration".
 
 ### Release Crayfish
 
 Crayfish depends on the `crayfish-commons` library, and must have its dependencies updated before release.
 
-1. Bump the dependency on `islandora/crayfish-commons` in each `composer.json` file for each microservice
-2. Release the `Crayfish` microservices by creating a new release for them in Github.
+1. Bump the dependency on `islandora/crayfish-commons` in each `composer.json` for each microservice **except for Houdini**. Houdini needs the `dev-symfony-flex` branch of Crayfish Commons, so just leave that dependency alone for now.
+2. Run `composer update -W` on each microservice. I did this with a little bash-fu: `for D in */; do (cd $D; composer update -W) done`
+4. Commit and push the `composer.json` and `composer.lock` files to Github.
+5. Release the microservices by creating a new release for them in Github.
+6. Put the dependencies on `islandora/crayfish-commons` back to `dev-dev` **except for Houdini**.
+7. Run `composer update -W` on each microservice again. `for D in */; do (cd $D; composer update -W) done` makes this easy.
+8. Commit and push the `composer.json` and `composer.lock` files to Github with a commit message of "Preparing for next development iteration".
 
 
