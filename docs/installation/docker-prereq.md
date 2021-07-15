@@ -8,7 +8,7 @@
 - Git 2.0+
 - [ISLE Docker Compose](https://github.com/islandora-devops/isle-dc)
 - At least 8GB of RAM (ideally 16GB)
-- An administrator account
+- An administrator account your machine (a.k.a. the host machine)
 - (Mac OS) Apple Developer Tools
 - (Windows) The following setup has been tested:
     - Windows 10
