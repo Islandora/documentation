@@ -1,10 +1,10 @@
 # Installing Crayfish
 
 ## In this section, we will install:
-- [Islandora/Crayfish](https://github.com/islandora/crayfish), the suite of microservices that power the backend of Islandora 8
+- [Islandora/Crayfish](https://github.com/islandora/crayfish), the suite of microservices that power the backend of Islandora 2.0
 - Indvidual microservices underneath Crayfish
 
-## Crayfish 1.1
+## Crayfish 2.0
 
 ### Installing Prerequisites
 
@@ -21,21 +21,7 @@ sudo apt-get update
 sudo apt-get -y install imagemagick tesseract-ocr ffmpeg poppler-utils
 ```
 
-### Preparing a Gemini Database
-
-This database will be set up (and function) mostly the same as the other databases we’ve previously installed.
-
-```bash
-sudo -u postgres psql
-create database CRAYFISH_DB;
-create user CRAYFISH_DB_USER with encrypted password 'CRAYFISH_DB_PASSWORD';
-grant all privileges on database CRAYFISH_DB to CRAYFISH_DB_USER;
-\q
-```
-- `CRAYFISH_DB`: `gemini`
-- `CRAYFISH_DB_USER`: `gemini`
-- `CRAYFISH_DB_PASSWORD`: `gemini`
-    - As always, this should be a secure password of some kind, and not this default.
+**NOTICE:** If you get the `sudo: apt-add-repository: command not found`, run `sudo apt-get install software-properties-common` in order to make the command available.
 
 ### Cloning and Installing Crayfish
 
@@ -45,7 +31,6 @@ We’re going to clone Crayfish to `/opt`, and individually run `composer instal
 cd /opt
 sudo git clone https://github.com/Islandora/Crayfish.git crayfish
 sudo chown -R www-data:www-data crayfish
-sudo -u www-data composer install -d crayfish/Gemini
 sudo -u www-data composer install -d crayfish/Homarus
 sudo -u www-data composer install -d crayfish/Houdini
 sudo -u www-data composer install -d crayfish/Hypercube
@@ -66,31 +51,9 @@ sudo chown www-data:www-data /var/log/islandora
 
 Each Crayfish component requires one or more `.yaml` file(s) to ensure everything is wired up correctly.
 
-!!! notice
-    The following configuration files represent somewhat sensible defaults; you should take consideration of the logging levels in use, as this can vary in desirability from installation to installation. Also note that in all cases, `http` URLs are being used, as this guide does not deal with setting up https support. In a production installation, this should not be the case. These files also assume a connection to a PostgreSQL database; use a `pdo_mysql` driver and the appropriate `3306` port if using MySQL.
+**NOTICE**
 
-
-#### Gemini
-
-`/opt/crayfish/Gemini/cfg/config.yaml | www-data:www-data/644`
-```yaml
----
-debug: false
-fedora_base_url: http://localhost:8080/fcrepo/rest
-db.options:
-  driver: pdo_pgsql
-  host: 127.0.0.1
-  port: 5432
-  dbname: CRAYFISH_DB
-  user: CRAYFISH_DB_USER
-  password: CRAYFISH_DB_PASSWORD
-log:
-  level: NOTICE
-  file: /var/log/islandora/gemini.log
-syn:
-  enable: true
-  config: /opt/fcrepo/config/syn-settings.xml
-```
+The following configuration files represent somewhat sensible defaults; you should take consideration of the logging levels in use, as this can vary in desirability from installation to installation. Also note that in all cases, `http` URLs are being used, as this guide does not deal with setting up https support. In a production installation, this should not be the case. These files also assume a connection to a PostgreSQL database; use a `pdo_mysql` driver and the appropriate `3306` port if using MySQL.
 
 #### Homarus (Audio/Video derivatives)
 
@@ -180,7 +143,6 @@ services:
 ```yaml
 crayfish_commons:
   fedora_base_uri: 'http://localhost:8080/fcrepo/rest'
-  gemini_base_uri: 'http://localhost:9000/gemini'
   syn_config: '/opt/fcrepo/config/syn-settings.xml'
 ```
 
@@ -282,7 +244,6 @@ syn:
 ---
 fedora_base_url: http://localhost:8080/fcrepo/rest
 drupal_base_url: http://localhost
-gemini_base_url: http://localhost/gemini
 modified_date_predicate: http://schema.org/dateModified
 strip_format_jsonld: true
 debug: false
@@ -308,7 +269,6 @@ syn:
 ---
 fedora_resource:
   base_url: http://localhost:8080/fcrepo/rest
-gemini_base_url: http://localhost/gemini
 drupal_base_url: http://localhost
 debug: false
 log:
@@ -329,34 +289,15 @@ namespaces:
   vcard: "http://www.w3.org/2006/vcard/ns#"
 ```
 
-### Installing the Gemini Database
-
-Our Gemini database is unusable until it's installed.
-
-```bash
-cd /opt/crayfish/Gemini
-php bin/console --no-interaction migrations:migrate
-```
-
 ### Creating Apache Configurations for Crayfish Components
 
 Finally, we need appropriate Apache configurations for Crayfish; these will allow other services to connect to Crayfish components via their HTTP endpoints.
 
 Each endpoint we need to be able to connect to will get its own `.conf` file, which we will then enable.
 
-!!! notice
-    These configurations would potentially have collisions with Drupal routes, if any are created in Drupal with the same name. If this is a concern, it would likely be better to reserve a subdomain or another port specifically for Crayfish. For the purposes of this installation guide, these endpoints will suffice.
+**NOTICE**
 
-`/etc/apache2/conf-available/Gemini.conf | root:root/644`
-```
-Alias "/gemini" "/opt/crayfish/Gemini/src"
-<Directory "/opt/crayfish/Gemini/src">
-  FallbackResource /gemini/index.php
-  Require all granted
-  DirectoryIndex index.php
-  SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
-</Directory>
-```
+These configurations would potentially have collisions with Drupal routes, if any are created in Drupal with the same name. If this is a concern, it would likely be better to reserve a subdomain or another port specifically for Crayfish. For the purposes of this installation guide, these endpoints will suffice.
 
 `/etc/apache2/conf-available/Homarus.conf | root:root/644`
 ```
@@ -418,7 +359,7 @@ Alias "/recast" "/opt/crayfish/Recast/src"
 Enabling each of these configurations involves creating a symlink to them in the `conf-enabled` directory; the standardized method of doing this in Apache is with `a2enconf`.
 
 ```bash
-sudo a2enconf Gemini Homarus Houdini Hypercube Milliner Recast
+sudo a2enconf Homarus Houdini Hypercube Milliner Recast
 ```
 
 ### Restarting the Apache Service
