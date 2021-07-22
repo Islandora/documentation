@@ -155,4 +155,6 @@ Crayfish depends on the `crayfish-commons` library, and must have its dependenci
 7. Run `composer update -W` on each microservice again. `for D in */; do (cd $D; composer update -W) done` makes this easy.
 8. Commit and push the `composer.json` and `composer.lock` files to Github with a commit message of "Preparing for next development iteration".
 
+### Release Controlled Access Terms
 
+Release controlled_access_terms by slicing a new release for it in Github.
