@@ -158,3 +158,27 @@ Crayfish depends on the `crayfish-commons` library, and must have its dependenci
 ### Release Controlled Access Terms
 
 Release controlled_access_terms by slicing a new release for it in Github.
+
+### Release Islandora
+
+The `islandora` module depends on the `crayfish-commons` library, and must have its dependencies updated before release.
+
+1. Bump the dependency on `islandora/crayfish-commons` in `composer.json`.
+2. Run `composer update -W`
+4. Commit and push the `composer.json` and `composer.lock` files to Github.
+5. Release the module by creating a new release for them in Github.
+6. Put the dependencies on `islandora/crayfish-commons` back to `dev-dev`
+7. Run `composer update -W` again.
+8. Commit and push the `composer.json` and `composer.lock` files to Github with a commit message of "Preparing for next development iteration".
+
+Release Islandora Defaults
+
+The `islandora` module depends on `islandora`, `controlled_access_terms`, and `openseadragon`, and must have its dependencies updated before release.
+
+1. Bump the dependency for those modules in `composer.json`.
+2. Run `composer update -W`
+4. Commit and push the `composer.json` and `composer.lock` files to Github.
+5. Release the module by creating a new release for them in Github.
+6. Put the dependencies back to `dev-8.x-1.x`
+7. Run `composer update -W` again.
+8. Commit and push the `composer.json` and `composer.lock` files to Github with a commit message of "Preparing for next development iteration".
