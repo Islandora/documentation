@@ -57,16 +57,16 @@ nav:
           # moved from "Installation" section; alternatively duplicate a simplified version in the overview section
           # also see Architecture Diagram in Developer documentation
           # also see user-intro.md#architecture for the cheeseburger/bento box analogy
-          # Conceptual/ reference, all user roles/ sys admins/ developers: 
+          # Conceptual/ reference, all user roles/ sys admins/ developers:
           # procedural information should be moved out installation guides
       - 'Modelling content in Islandora 8 vs. 7': 'user-documentation/objects_to_resource_nodes.md'
               # conceptual, all user roles
               # moved from User documentation > Content in Islandora 8
       - Islandora Defaults: 'reference/islandora_defaults_reference.md'
   - Installation:
-      # Procedural, different user roles: clarify who the audience is for a 
-      # particular recipe. The ISLE documentation page was written with a 
-      # 'non-technical' user in mind who wants to test. The Manual installation 
+      # Procedural, different user roles: clarify who the audience is for a
+      # particular recipe. The ISLE documentation page was written with a
+      # 'non-technical' user in mind who wants to test. The Manual installation
       # guides mention that users will need additional knowledge about server administration.
       - 'Docker (ISLE)':
           - 'Introduction to ISLE': 'installation/docker-introduction.md'
@@ -75,7 +75,7 @@ nav:
              - 'Installing a Demo Server': 'installation/docker-demo.md'
              - 'Installing a Development Server': 'installation/docker-local.md'
              - 'Installing a Staging/Production Server': 'installation/docker-custom.md'
-          - Maintaining Islandora: 
+          - Maintaining Islandora:
             - 'Basic Usage': 'installation/docker-basic-usage.md'
             - 'Maintaining Drupal': 'installation/docker-maintain-drupal.md'
             - 'Maintaining ISLE': 'installation/docker-maintain-isle.md'
@@ -83,7 +83,7 @@ nav:
           - 'Available Configuration': 'installation/docker-available-configuration.md'
           - 'Troubleshooting' : 'installation/docker-troubleshooting.md'
       - 'Ansible Playbook': 'installation/playbook.md'
-      - Manual Installation: 
+      - Manual Installation:
         - 'Introduction': 'installation/manual/introduction.md'
         - 'Preparing a LAPP Webserver': 'installation/manual/preparing_a_webserver.md'
         - 'Installing Composer, Drush, and Drupal': 'installation/manual/installing_composer_drush_and_drupal.md'
@@ -97,16 +97,16 @@ nav:
           # procedural, sysadmin
           # moved from System Administrator Documentation
   - Tutorials:
-      # Audience for this section is someone who is extremely new to doing 
+      # Audience for this section is someone who is extremely new to doing
       # the kinds of things that we are introducing. This is someone's first
-      # foray into this domain so each tutorial should accomplish something 
+      # foray into this domain so each tutorial should accomplish something
       # satisfying, and work 100% of the time.
 
-      # Tutorials are not conceptual. They tell you exactly what to do without 
-      # explaining why, and let the user decide if they want to look deeper at 
-      # what these concepts are. 
+      # Tutorials are not conceptual. They tell you exactly what to do without
+      # explaining why, and let the user decide if they want to look deeper at
+      # what these concepts are.
       - 'Create a Resource Node': 'tutorials/create-a-resource-node.md'
-          # procedural, for people learning what islandora is. 
+          # procedural, for people learning what islandora is.
       - 'Create a Collection': 'tutorials/how-to-create-collection.md'
           # procedural, repository managers/ curators
       - 'Configure Blocks': 'tutorials/blocks.md'
@@ -117,7 +117,7 @@ nav:
           # Add/link to conceptual docs about Views?
       - 'Video Documentation': 'user-documentation/video-docs.md'
           # mostly procedural, repository managers
- 
+
   - Documentation:
       - 'Introduction': 'user-documentation/user-intro.md'
           # Conceptual, 'site admins/repository managers'
@@ -128,12 +128,12 @@ nav:
           # conceptual/ reference, repository managers/ developers
       - Content in Islandora 8:
           # largely conceptual, repository managers and to some extent curators
-          # currently duplicates a section also present under "User documentation", 
-          # develop into procedural documentation for repository 
+          # currently duplicates a section also present under "User documentation",
+          # develop into procedural documentation for repository
           # admins about how to manage content in I8
         - 'Resource Nodes': 'user-documentation/resource-nodes.md'
-              # largely conceptual, repository managers; move out procedural 
-              # information (e.g. move procedure for setting display hints to 
+              # largely conceptual, repository managers; move out procedural
+              # information (e.g. move procedure for setting display hints to
               # documentation about contexts)
         - 'Media': 'user-documentation/media.md'
               # conceptual and procedural, repository managers
@@ -204,6 +204,9 @@ nav:
       - 'Alpaca Tips': 'technical-documentation/alpaca_tips.md'
   - Migration:
       - 'Migration Overview': 'technical-documentation/migration-overview.md'
+      - 'REST API': 'technical-documentation/migration-rest-api.md'
+      - 'Migrate API': 'technical-documentation/migration-migrate-api.md'
+      - 'Islandora Workbench': 'technical-documentation/migration-islandora-workbench.md'
       - 'CSV': 'technical-documentation/migrate-csv.md'
       - 'Islandora 7': 'technical-documentation/migrate-7x.md'
   - Contributing:
@@ -212,7 +215,7 @@ nav:
       - 'Checking Coding Standards': 'technical-documentation/checking-coding-standards.md'
       - 'Contributing Workflow': 'contributing/contributing-workflow.md'
       - 'Creating GitHub Issues': 'contributing/create_issues.md'
-      - 'Editing Documentation': 'contributing/editing-docs.md' 
+      - 'Editing Documentation': 'contributing/editing-docs.md'
       - 'How to Build Documentation': 'technical-documentation/docs-build.md'
           # moved from Developer documentation
       - 'Documentation Style Guide': 'contributing/docs_style_guide.md'
