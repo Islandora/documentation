@@ -14,12 +14,12 @@ We offer this list for discovery, but do not officially provide support for any 
 
 # Recipes
 
-- [Amazon Alexa](linkTBD) - This recipe explains how to access Islandora with Amazon Alexa.
-- [Collection Searching](linkTBD) - 
+- [Amazon Alexa](recipes/alexa_search.md) - This recipe explains how to access Islandora with Amazon Alexa.
+- [Collection Searching] - 
 This recipe provides instructions how to configure a shallow or deep search in a specific collection.
-- [Date Range Slider Facet](linkTBD) - This recipe explains how to include a facet for date field(s) that presents itself as a range slider.
-- [Exhibitions and TimeLine JS](linkTBD) - This recipe outlines how to build exhibits in Islandora 8, including the deployment of TimeLineJS.
-- [Digital Preservation](linkTBD)(external repo) - A detailed overview of how to approach digital preservation in Islandora 8. Includes features that are currently avaiable, both within Islandora and by using compatible tools.
+- [Date Range Slider Facet] - This recipe explains how to include a facet for date field(s) that presents itself as a range slider.
+- [Exhibitions and TimeLine JS] - This recipe outlines how to build exhibits in Islandora 8, including the deployment of TimeLineJS.
+- [Digital Preservation] - A detailed overview of how to approach digital preservation in Islandora 8. Includes features that are currently avaiable, both within Islandora and by using compatible tools.
 
 # Ingredients
 
