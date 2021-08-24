@@ -30,7 +30,7 @@ The following recipe details how to connect Islandora with Alexa, using custom A
      1. Enable modules (Alexa, Alexa_Demo) 
      1. Go to Config > Alexa Configuration and put in the Application ID. 
 1. Test with one question and answer (“Clawbster, say Hello world?” “Hello World!”) Now you can add as many questions and answers as you can configure:
-![Screenshot of google form with questions and answers for chatbot](../docs/assets/recipe_alexa.png)
+![Screenshot of google form with questions and answers for chatbot](/docs/assets/recipe_alexa.png)
 
 ## Notes
 This recipe has not been extensiely tested.
