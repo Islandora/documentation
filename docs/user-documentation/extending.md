@@ -12,7 +12,7 @@ In the spirit of [Islandora Awesome](https://github.com/Islandora-Labs/islandora
 
 We offer this list for discovery, but do not officially provide support for any of these modules. 
 
-# Recipes
+## Recipes
 
 - [Amazon Alexa](recipes/alexa_search.md) - This recipe explains how to access Islandora with Amazon Alexa.
 - [Collection Searching] - 
@@ -21,11 +21,11 @@ This recipe provides instructions how to configure a shallow or deep search in a
 - [Exhibitions and TimeLine JS] - This recipe outlines how to build exhibits in Islandora 8, including the deployment of TimeLineJS.
 - [Digital Preservation] - A detailed overview of how to approach digital preservation in Islandora 8. Includes features that are currently avaiable, both within Islandora and by using compatible tools.
 
-# Ingredients
+## Ingredients
 
 Below are modules and tools that might be useful to solve common use cases, presented without specific recipes.
 
-## Islandora 8 Contributed Modules
+### Islandora 8 Contributed Modules
 
 Warning! - All modules are under development.
 
@@ -36,37 +36,37 @@ Warning! - All modules are under development.
 * [Islandora Whole Object](https://github.com/mjordan/islandora_whole_object) - Islandora 8 module that provides some Drupal blocks containing various representations of an Islandora object.
 * [Islandora RDM](https://github.com/roblib/islandora_rdm) - An entire suite of tools and documentation to turn Islandora 8 into a fully functional Research Data Management platform.
 
-## Access Control
+### Access Control
 
-### Access Control By Taxonomy Tags
+#### Access Control By Taxonomy Tags
 
 [Permissons by Term](https://www.drupal.org/project/permissions_by_term)
 
 By default, Drupal allows you only to restrict access to Drupal nodes by coupling node content types to user roles. The Permissions by Term module extends Drupal by functionality for restricting view and edit access to single nodes via taxonomy terms. Since Islandora 8 objects can have taxonomy terms, this can be used to control access at the node and collection level. The submodule Permissions by Entity extends this control to the media level.
 
-### Set a Date and Time for Publication
+#### Set a Date and Time for Publication
 
 [Moderation Scheduler](https://www.drupal.org/project/moderation_scheduler)
 
 Moderation Scheduler gives content editors the ability to schedule Islanodra nodes to be published at specified dates and times in the future. Can be combined with [Views Bulk Edit](https://www.drupal.org/project/views_bulk_edit) to set the same schedued publication date/time on multiple nodes at once.
 
-### Tombstoning
+#### Tombstoning
 
 [Tombstones](https://www.drupal.org/project/tombstones)
 
 A module that informs users who attempt to view deleted content that the resource has been removed instead of showing a generic 404 page. Fielded so that the date, reason, and altenative links can be given, along with a citation for the deleted object.
 
-## Displays
+### Displays
 
-### Image Slideshow
+#### Image Slideshow
 
 [Views Slideshow](https://www.drupal.org/project/views_slideshow)
 
 Views Slideshow can be used to create a slideshow of any content (not just images) that can appear in a View. Powered by jQuery, it is heavily customizable: you may choose slideshow settings for each View you create. It can be used to create an easy, adjustable slideshow of images from an Islandora 8 repository. Views Slideshow can be seen in action with Islandora objects on the front page [here](http://future.islandora.ca/)
 
-## Ingest
+### Ingest
 
-### Batch Upload with a CSV
+#### Batch Upload with a CSV
 
 [Migrate Islandora CSV](https://github.com/Islandora-CLAW/migrate_islandora_csv)
 
@@ -74,41 +74,41 @@ This repository is a tutorial that will introduce you to using the Drupal 8 Migr
 
 This repository is also a Drupal Feature that, when enabled as a module, will create three example migrations ready for you to use with the Migrate API. 
 
-### Another Way to Batch Upload from CSV
+#### Another Way to Batch Upload from CSV
 
 [Islandora Workbench](https://github.com/mjordan/islandora_workbench)
 
 Command-line tool for ingesting (and updating) nodes and media from anywhere - you don't need access to the Drupal server's command line. Provides robust data validation, flexible organization of your input data (can use CSV, Google Sheets, or Excel files) plus creation of taxonomy terms on the fly.
 
-## Search
+### Search
 
-### Custom Search Weighting
+#### Custom Search Weighting
 
 [Search Overrides](https://www.drupal.org/project/search_overrides)
 
 This module provides a method for users with the necessary permissions to manually override the results being returned by Search API Solr. They will be able to choose a specific search term, and pick which nodes should be at the top, and also choose to exclude nodes so they will not be shown in the results. Currently only nodes are supported.
 
-## Other
+### Other
 
-### Batch Editing
+#### Batch Editing
 
 [Views Bulk Edit](https://www.drupal.org/project/views_bulk_edit)
 
 A powerful tool that turns Views into a means of batch editing nodes, including Islandora repository objects. Once installled, create a view, add the fields that you would like to edit, add a `Views bulk operations (Edit)` field to the view, and select which actions you would like ot have available. The `Modify field values` action will allow you to batch edit the value for the same field across multiple objects. A demonstration of a simple bulk-editing view with a few fields and actions can be found [here](http://future.islandora.ca/islandora-batch-edit)
 
-### Clone a Content Type
+#### Clone a Content Type
 
 [Content Type Clone](https://www.drupal.org/project/content_type_clone)
 
 A tool that allows you to clone an exsiting content type. Can be used to copy and easily make your own version of the Repository Item Content Type with fewer or edited fields, without starting over. Has options to also copy all nodes from the old type to the new, and to delete from the old type when copying.
 
-### Gather User Feedback
+#### Gather User Feedback
 
 [Content Feedback](https://www.drupal.org/project/content_feedback)
 
 The Content Feedback module allows users and visitors to quickly send feedback messages about the currently displayed content, and can be applied to Islandora nodes. All content feedback messages are listed and grouped by status in an administrative feedback list.
 
-### Send Your Content to Archive.org
+#### Send Your Content to Archive.org
 
 [Wayback Submit to Archive.org](https://www.drupal.org/project/wayback_submit_archive)
 
