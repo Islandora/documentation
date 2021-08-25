@@ -9,6 +9,9 @@ The following recipe details how to connect Islandora with Alexa, using custom A
 - Interact with other applications or modules (got a print ordering system? Want to add event calendar items to your exhibit?)
 - Be accessed via web page, Alexa device, or phone app 
 
+!!! note "Note"
+    This recipe has not been extensively tested.
+
 ## Ingredients
 
 - Drupal 8 
@@ -31,6 +34,3 @@ The following recipe details how to connect Islandora with Alexa, using custom A
      1. Go to Config > Alexa Configuration and put in the Application ID. 
 1. Test with one question and answer (“Clawbster, say Hello world?” “Hello World!”) Now you can add as many questions and answers as you can configure:
 ![Screenshot of google form with questions and answers for chatbot](../../assets/recipe_alexa.png)
-
-## Notes
-This recipe has not been extensiely tested.
