@@ -34,12 +34,9 @@ jobs:
           remote_repo="https://${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-          git remote rm origin
-          git remote add origin "${remote_repo}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Deploy
         run: |
-          git fetch origin gh-pages --depth=1
-          mike deploy 2.0.0 latest
+          mike deploy --push main 2.0.0 latest
