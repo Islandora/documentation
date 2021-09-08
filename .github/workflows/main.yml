@@ -40,4 +40,4 @@ jobs:
       - name: Deploy
         run: |
           mike deploy -b versioning-test --push --update-aliases 2.0.0 latest
-          mike set-default --push latest
+          mike set-default -b versioning-test --push latest
