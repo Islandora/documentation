@@ -39,4 +39,5 @@ jobs:
 
       - name: Deploy
         run: |
-          mike deploy --push --update-aliases 2.0.1 latest
+          mike deploy --push --update-aliases 2.0.0 latest
+          mike set-default latest
