@@ -29,6 +29,5 @@ jobs:
 
       - name: Deploy
         run: |
-          git pull
-          # mkdocs gh-deploy
+          git fetch origin gh-pages --depth=1
           mike deploy 2.0.0 latest
