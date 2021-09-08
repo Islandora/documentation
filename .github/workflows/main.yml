@@ -39,5 +39,6 @@ jobs:
 
       - name: Deploy
         run: |
+          mike delete --all
           mike deploy --push --update-aliases 2.0.0 latest
           mike set-default latest
