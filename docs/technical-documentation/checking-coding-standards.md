@@ -1,16 +1,15 @@
 
 # Checking Code Style
 
-Before opening a pull request, you should check your code style. If you are using the [Vagrant](https://github.com/Islandora-Devops/claw-playbook), you can run `phpcs` within the Drupal installation directory (on the Vagrant, that is `/var/www/html/drupal`) or from within the `web` directory (`/var/www/html/drupal/web`) as follows:
+Before opening a pull request, you should check your code style using PHP_CodeSniffer (phpcs). We use the Drupal coding standards provided by [Drupal coder](https://www.drupal.org/project/coder). If you are using the [Ansible Playbook](https://github.com/Islandora-Devops/islandora-playbook), phpcs and Drupal Coder are installed and phpcs can be run as follows:
 
-* from within Drupal's root directory: `./vendor/bin/phpcs --standard=./vendor/drupal/coder/coder_sniffer/Drupal modules/contrib/my_module`, where `modules/contrib/my_module` is the relative or full path to the PHP file you want to check.
-* from within Drupal's `web` directory: `../vendor/bin/phpcs --standard=../vendor/drupal/coder/coder_sniffer/Drupal yourfile`, where `yourfile` is the relative or full path to the PHP file you want to check.
+* from within Drupal's root directory: `./vendor/bin/phpcs --standard=./vendor/drupal/coder/coder_sniffer/Drupal --ignore=*.md --extensions=php,module,inc,install,test,profile,theme,css,info web/modules/contrib/my_module`
+* from within Drupal's `web` directory: `../vendor/bin/phpcs --standard=../vendor/drupal/coder/coder_sniffer/Drupal --ignore=*.md --extensions=php,module,inc,install,test,profile,theme,css,info modules/contrib/my_module`
 
 In both cases:
 
+* `modules/contrib/my_module` is the relative or full path to the PHP file or directory you want to check.
 * the path to the coding standard file can be relative to where you are running it from, e.g. when in `web`: `--standard=../vendor/drupal/coder/coder_sniffer/Drupal`
-* you can specify a single file to check, or a directory path; in the latter case, all files in that directory will be checked.
+* the options `--ignore=*.md --extensions=php,module,inc,install,test,profile,theme,css,info` are what is used in our Travis CI environment (specified in the [Islandora CI](https://github.com/Islandora/islandora_ci/blob/main/travis_scripts.sh) shared module), which will cause your Pull Request to pass or fail its checks.
 
-Islandora 8 runs `phpcs` in its Travis continuous integration environment, and there, it specifies which files to ignore and which files to check. It is a good idea for developers to specify the same options when running `phpcs` locally, prior to opening a pull request. For example (running `phpcs` from the within Drupal's `web` directory), you should use the following `--ignore` and `--extensions` options:
-
-`../vendor/bin/phpcs --standard=../vendor/drupal/coder/coder_sniffer/Drupal --ignore=*.md --extensions=php,module,inc,install,test,profile,theme,css,info modules/contrib/my_module`
+If using a non-Ansible method of deployment, you may need to install phpcs and coder yourself, and the paths may vary. 
