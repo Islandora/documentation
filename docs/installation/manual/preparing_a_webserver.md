@@ -40,6 +40,8 @@ Since the user we are currently logged in as is going to work quite a bit inside
 
 **N.B.** This code block uses **backticks**, not single quotes; this is an important distinction as backticks have special meaning in `bash`.
 
+**Note** If doing this in the terminal, replace "whoami" with your username and remove the backticks
+
 ```bash
 sudo usermod -a -G www-data `whoami`
 sudo usermod -a -G `whoami` www-data
@@ -47,28 +49,38 @@ sudo usermod -a -G `whoami` www-data
 sudo su `whoami`
 ```
 
-## PHP 7.2
+## PHP 7.4
 
-### Install PHP 7.2
+### Install PHP 7.4
 
-PHP can generally be easily installed using your operating system’s package manager, though whether or not the version you’ll be given is up to date depends entirely on whether or not that package manager is kept up-to-date. We’re going to enable both PHP 7.2, as well as the myriad modules we require, simultaneously:
+Islandora defaults, a module which will install Islandora at the end, requires PHP 7.4. If you're running Debian 11 you should be able to install PHP 7.4 from the apt packages directly:
 
 ```bash
-sudo apt-get -y install php7.2 php7.2-cli php7.2-common php7.2-curl php7.2-dev php7.2-gd php7.2-imap php7.2-json php7.2-mbstring php7.2-opcache php7.2-xml php7.2-yaml php7.2-zip libapache2-mod-php7.2 php-pgsql php-redis php-xdebug unzip
+sudo apt-get -y install php7.4 php7.4-cli php7.4-common php7.4-curl php7.4-dev php7.4-gd php7.4-imap php7.4-json php7.4-mbstring php7.4-opcache php7.4-xml php7.4-yaml php7.4-zip libapache2-mod-php7.4 php-pgsql php-redis php-xdebug unzip
 ```
 
-This will install a series of PHP configurations and mods in `/etc/php/7.2`, including:
+If you're running Debian 10, the repository for the PHP 7.4 packages needs to be installed first:
+
+```bash
+sudo apt-get -y install lsb-release apt-transport-https ca-certificates
+sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
+echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/php.list
+sudo apt-get update
+sudo apt-get -y install php7.4 php7.4-cli php7.4-common php7.4-curl php7.4-dev php7.4-gd php7.4-imap php7.4-json php7.4-mbstring php7.4-opcache php7.4-xml php7.4-yaml php7.4-zip libapache2-mod-php7.4 php-pgsql php-redis php-xdebug unzip
+```
+
+This will install a series of PHP configurations and mods in `/etc/php/7.4`, including:
 
 - A `mods-available` folder (from which everything is typically enabled by default)
 - A configuration for PHP when run from Apache in the `apache2` folder
 - A configuration for PHP when run from the command line - including when run via Drush - in the `cli` folder
 - `unzip`, which is important for PHP’s zip module to function correctly despite it not being a direct dependency of the module. We will also need to unzip some things later, so this is convenient to have in place early in the installation process.
 
-## PostgreSQL 10
+## PostgreSQL 11
 
-### Install PostgreSQL 10
+### Install PostgreSQL 11
 
-PostgreSQL can generally be easily installed using your operating system’s package manager. It is typically sensible to install the version the system recognizes as up-to-date; Ubuntu 18.04 sees this as version 10. We’re simply going to install the database software:
+PostgreSQL can generally be easily installed using your operating system’s package manager. It is typically sensible to install the version the system recognizes as up-to-date. We’re simply going to install the database software:
 
 ```bash
 sudo apt-get -y install postgresql
@@ -78,17 +90,19 @@ This will install:
 
 - A user at the system level named `postgres`; this will be the only user, by default, that has permission to run the `psql` binary and have access to Postgres configurations
 - A binary executable at `/usr/bin/psql`, which anyone - even `root` - will get kicked out of the moment they run it, since only the `postgres` user has permission to run any Postgres commands
-- A series of configurations that live in `/etc/postgresql/10/main` which can be used to modify how PostgreSQL works.
+- A series of configurations that live in `/etc/postgresql/11/main` which can be used to modify how PostgreSQL works.
 
-### Configure Postgresql 10 For Use With Drupal
+### Configure Postgresql 11 For Use With Drupal
 
-A modification needs to be made to the PostgreSQL configuration in order for Drupal to properly install and function. This change can be made to the main configuration file at `/etc/postgresql/10/main/postgresql.conf`:
+A modification needs to be made to the PostgreSQL configuration in order for Drupal to properly install and function. This change can be made to the main configuration file at `/etc/postgresql/11/main/postgresql.conf`:
 
 **Before**:
 > 558 | #bytea_output = ‘hex’                      # hex, escape 
 
 **After**:
 > 558 | bytea_output = ‘escape’
+
+(Remove the "# hex, escape" comment and change the value from "hex" to "escape")
 
 The `postgresql` service should be restarted to accept the new configuration:
 

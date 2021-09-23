@@ -4,10 +4,10 @@
 
 - [Composer](https://getcomposer.org/) at its current latest version, the package manager that will allow us to install PHP applications
 - The Islandora fork of the composer installer from [drupal-composer/drupal-project](https://github.com/Islandora/drupal-project), which will install, among other things:
-    - [Drush 9](https://www.drush.org/) at its latest version, the command-line PHP application for running tasks in Drupal
-    - [Drupal 8](https://www.drupal.org/) at its latest version, the content management system Islandora uses for content modelling and front-end display
+    - [Drush 10](https://www.drush.org/) at its latest version, the command-line PHP application for running tasks in Drupal
+    - [Drupal 9](https://www.drupal.org/) at its latest version, the content management system Islandora uses for content modelling and front-end display
 
-## Composer 1.x
+## Composer 2.x
 
 ### Download and install Composer
 
@@ -20,9 +20,9 @@ php composer-install.php
 sudo mv composer.phar /usr/local/bin/composer
 ```
 
-## Drush 9 and Drupal 8
+## Drush 10 and Drupal 9
 
-### Clone `drupal-project` and run `composer install`
+### Clone `drupal-project` and install it via Composer
 
 Before we can fully install Drupal, we’re going to need to clone `drupal-project` and provision it using Composer. We’re going to install it into the `/opt` directory:
 
@@ -32,12 +32,14 @@ Before we can fully install Drupal, we’re going to need to clone `drupal-proje
 sudo mkdir /opt/drupal
 sudo chown www-data:www-data /opt/drupal
 sudo chmod 775 /opt/drupal
+# Change the ownership of default Apache directory so Composer can access it
+sudo chown -R www-data:www-data /var/www/
 # Clone drupal-project and build it in our newly-created folder.
-git clone https://github.com/Islandora/drupal-project.git
+git clone https://github.com/drupal-composer/drupal-project.git
 cd drupal-project
 # Expect this to take a little while, as this is grabbing the entire
 # requirements set for Drupal.
-sudo -u www-data composer create-project drupal-composer/drupal-project:8.x-dev /opt/drupal --no-interaction
+sudo -u www-data composer create-project drupal-composer/drupal-project:9.x-dev /opt/drupal --no-interaction
 ```
 
 ### Make Drush accessible in `$PATH`
@@ -60,6 +62,8 @@ Before we can proceed with the actual site installation, we’re going to need t
 Listen 80
 ```
 
+Remove everything but the "Listen 80" line. You can leave the comments in if you want.
+
 `/etc/apache2/sites-enabled/000-default.conf | root:root/777`
 ```xml
 <VirtualHost *:80>
@@ -76,7 +80,7 @@ Listen 80
 </VirtualHost>
 ```
 - `SERVER_NAME`: `localhost`
-    - For a development environment hosted on your own machine or a VM, `localhost` should suffice. Realistically, this should be the domain the server will be accessed at.
+    - For a development environment hosted on your own machine or a VM, `localhost` should suffice. Realistically, this should be the domain or IP address the server will be accessed at.
 
 Restart the Apache 2 service to apply these changes:
 
@@ -93,13 +97,13 @@ PostgreSQL roles are directly tied to users. We’re going to ensure a user is i
 # access.
 sudo -u postgres psql
 # Then, run these commands within psql itself:
-create database DRUPAL_DB;
+create database DRUPAL_DB encoding 'UTF8' LC_COLLATE = 'en_US.UTF-8' LC_CTYPE = 'en_US.UTF-8' TEMPLATE template0;
 create user DRUPAL_DB_USER with encrypted password 'DRUPAL_DB_PASSWORD';
 grant all privileges on database DRUPAL_DB to DRUPAL_DB_USER;
 # Then, quit psql.
 \q
 ```
-- `DRUPAL_DB`: `drupal8`
+- `DRUPAL_DB`: `drupal9`
     - This will be used as the core database that Drupal is installed into
 - `DRUPAL_DB_USER`: `drupal`
     - Specifically, this is the user that will connect to the PostgreSQL database being created, not the user that will be logging into Drupal
@@ -118,7 +122,7 @@ drush -y site-install standard --db-url="pgsql://DRUPAL_DB_USER:DRUPAL_DB_PASSWO
 ```
 This uses the same parameters from the above step, as well as:
 
-- `SITE_NAME`: Islandora 8
+- `SITE_NAME`: Islandora 2.0
     - This is arbitrary, and is simply used to title the site on the home page
 - `DRUPAL_LOGIN`: `islandora`
     - The Drupal administrative username to use

@@ -24,6 +24,14 @@ This will give us:
 - An `activemq` service that will be run on boot
 - A user, `activemq`, who will be in charge of the ActiveMQ service
 
+Take note of the version of ActiveMQ we're going to be installing. It needs to match a Karaf blueprint we'll create later. Check the version with
+
+```bash
+sudo apt-cache policy activemq
+```
+
+Write down the version listed under `Installed: `.
+
 ## Karaf 4
 
 ## Creating a Karaf User
@@ -107,11 +115,25 @@ Similar to Tomcat, our Karaf service is going to rely on a `setenv` shell script
 #!/bin/sh
 export JAVA_HOME="PATH_TO_JAVA_HOME"
 ```
-- `PATH_TO_JAVA_HOME`: This will be the same `JAVA_HOME` we used when installing Tomcat , and can be found using the same method (i.e., still `/usr/lib/jvm/java-8-openjdk-amd64` if that's what it was before).
+- `PATH_TO_JAVA_HOME`: This will be the same `JAVA_HOME` we used when installing Tomcat , and can be found using the same method (i.e., still `/usr/lib/jvm/java-11-openjdk-amd64` if that's what it was before).
 
 ### Initializing Karaf
 
 We’re going to start Karaf, then run the installer to put our configurations in place and generate a Karaf service. Once these are installed, we’re going to stop Karaf, as from there on out its start/stop management should be handled via that service.
+
+First we need to enable the default Karaf user in `/opt/karaf/etc/users.properties`:
+
+**Before**:
+> 32 | # karaf = karaf,\_g\_:admingroup
+
+> 33 | # \_g\_\\:admingroup = group,admin,manager,viewer,systembundles,ssh
+
+**After**:
+> 32 | karaf = karaf,\_g\_:admingroup
+
+> 33 | \_g\_\\:admingroup = group,admin,manager,viewer,systembundles,ssh
+
+Save the file and close it, then:
 
 ```bash
 sudo -u karaf /opt/karaf/bin/start
@@ -126,12 +148,20 @@ sudo -u karaf /opt/karaf/bin/start
 
 ### Creating and Starting the Karaf Service
 
-Installing the Karaf wrapper generates several service files that can be used on different types of systems. For this example installation on an Ubuntu 18.04 machine, we want to enable the `karaf.service` service so that Karaf is properly started on boot.
+Installing the Karaf wrapper generates several service files that can be used on different types of systems. For Debian and Ubuntu installation we want to enable the `karaf.service` service so that Karaf is properly started on boot.
 
 ```bash
 sudo systemctl enable /opt/karaf/bin/karaf.service
 sudo systemctl start karaf
 ```
+
+We can check if the service started correctly with:
+
+```bash
+sudo systemctl status karaf
+```
+
+Press Q to close the status.
 
 ## Alpaca 1.0.x
 
@@ -147,14 +177,15 @@ For the Karaf features we’re going to install, we need a few different reposit
 ```bash
 /opt/karaf/bin/client repo-add mvn:org.apache.activemq/activemq-karaf/ACTIVEMQ_KARAF_VERSION/xml/features
 /opt/karaf/bin/client repo-add mvn:org.apache.camel.karaf/apache-camel/APACHE_CAMEL_VERSION/xml/features
-/opt/karaf/bin/client repo-add mvn:ca.islandora.alpaca/islandora-karaf/LATEST/xml/features
+/opt/karaf/bin/client repo-add mvn:ca.islandora.alpaca/islandora-karaf/ISLANDORA_KARAF_VERSION/xml/features
 # XXX: This shouldn't be strictly necessary, but appears to be a missing
 # upstream dependency for some fcrepo features.
 /opt/karaf/bin/client repo-add mvn:org.apache.jena/jena-osgi-features/JENA_OSGI_VERSION/xml/features
 ```
-- `ACTIVEMQ_KARAF_VERSION`: The latest version of ActiveMQ Karaf 5.x.x; you can find this listed at the [activemq-karaf repository page](https://mvnrepository.com/artifact/org.apache.activemq/activemq-karaf) (e.g., 5.15.11 at the time of writing)
-- `APACHE_CAMEL_VERSION`: The latest version of Apache Camel 2.x.x; you can find this listed at the [apache-camel repository page](https://mvnrepository.com/artifact/org.apache.camel.karaf/apache-camel) (e.g., 2.25.0 at the time of writing)
-- `JENA_OSGI_VERSION`: The latest version of the Apache Jena OSGi features; you can find this listed at the [jena-osgi-features repository page](https://mvnrepository.com/artifact/org.apache.jena/jena-osgi-features) (e.g., 3.14.0 at the time of writing)
+- `ACTIVEMQ_KARAF_VERSION`: The version of ActiveMQ we wrote down at the beginning of this chapter when installing ActiveMQ via `apt-get`
+- `APACHE_CAMEL_VERSION`: The latest version of Apache Camel 2.x.x; you can find this listed at the [apache-camel repository page](https://mvnrepository.com/artifact/org.apache.camel.karaf/apache-camel) (e.g., 2.25.4 at the time of writing)
+- `ISLANDORA_KARAF_VERSION`: The latest version of Islandora Karaf 1.x; you can find this listed at the [islandora-karaf repository page](https://mvnrepository.com/artifact/ca.islandora.alpaca/islandora-karaf) (e.g., 1.0.5 at the time of writing)
+- `JENA_OSGI_VERSION`: The latest version of the Apache Jena 3.x OSGi features; you can find this listed at the [jena-osgi-features repository page](https://mvnrepository.com/artifact/org.apache.jena/jena-osgi-features) (e.g., 3.17.0 at the time of writing)
 
 ### Configuring Karaf Features
 
@@ -190,7 +221,6 @@ media.stream=activemq:queue:islandora-indexing-fcrepo-media
 file.stream=activemq:queue:islandora-indexing-fcrepo-file
 file.delete.stream=activemq:queue:islandora-indexing-fcrepo-file-delete
 milliner.baseUrl=http://localhost/milliner
-gemini.baseUrl=http://localhost/gemini
 ```
 
 ### Blueprinting Karaf Derivative Connectors

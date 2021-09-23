@@ -1,17 +1,17 @@
 # Installing Tomcat and Cantaloupe
 
 ## In this section, we will install:
-- [Tomcat 8](https://tomcat.apache.org/download-80.cgi), the Java servlet container that will serve up some Java applications on various endpoints, including, importantly, Fedora
-- [Cantaloupe 4](https://cantaloupe-project.github.io/), the image tileserver - running in Tomcat - that will be used to serve up large images in a web-accessible fashion
+- [Tomcat 9](https://tomcat.apache.org/download-90.cgi), the Java servlet container that will serve up some Java applications on various endpoints, including, importantly, Fedora
+- [Cantaloupe 5](https://cantaloupe-project.github.io/), the image tileserver - running in Tomcat - that will be used to serve up large images in a web-accessible fashion
 
-## Tomcat 8
+## Tomcat 9
 
-### Installing OpenJDK 8
+### Installing OpenJDK 11
 
-Tomcat runs in a Java runtime environment, so we'll need one to continue. In our case, OpenJDK 8 is open-source, free to use, and can fairly simply be installed using `apt-get`:
+Tomcat runs in a Java runtime environment, so we'll need one to continue. In our case, OpenJDK 11 is open-source, free to use, and can fairly simply be installed using `apt-get`:
 
 ```bash
-sudo apt-get -y install openjdk-8-jdk openjdk-8-jre
+sudo apt-get -y install openjdk-11-jdk openjdk-11-jre
 ```
 
 The installation of OpenJDK via `apt-get` establishes it as the de-facto Java runtime environment to be used on the system, so no further configuration is required.
@@ -21,6 +21,7 @@ The resultant location of the java JRE binary (and therefore, the correct value 
 ```bash
 update-alternatives --list java
 ```
+Take a note of this path as we will need it later.
 
 ### Creating a `tomcat` User
 
@@ -33,11 +34,11 @@ sudo adduser tomcat --ingroup tomcat --home /opt/tomcat --shell /usr/bin
 
 You will be prompted to create a password for the `tomcat` user; all the other information as part of the `adduser` command can be ignored.
 
-### Downloading and Placing Tomcat 8
+### Downloading and Placing Tomcat 9
 
-Tomcat 8 itself can be installed in several different ways; while it’s possible to install via `apt-get`, this doesn’t give us a great deal of control over exactly how we’re going to run and manage it; as a critical part of the stack, it is beneficial for our purposes to have a good frame of reference for the inner workings of Tomcat.
+Tomcat 9 itself can be installed in several different ways; while it’s possible to install via `apt-get`, this doesn’t give us a great deal of control over exactly how we’re going to run and manage it; as a critical part of the stack, it is beneficial for our purposes to have a good frame of reference for the inner workings of Tomcat.
 
-We’re going to download the latest version of Tomcat to `/opt` and set it up so that it runs automatically. Bear in mind that with the following commands, this is going to be entirely relative to the current version of Tomcat 8, which we’ll try to mitigate as we go.
+We’re going to download the latest version of Tomcat to `/opt` and set it up so that it runs automatically. Bear in mind that with the following commands, this is going to be entirely relative to the current version of Tomcat 9, which we’ll try to mitigate as we go.
 
 ```bash
 cd /opt
@@ -46,8 +47,8 @@ sudo tar -zxvf tomcat.tar.gz
 sudo mv /opt/TOMCAT_DIRECTORY/* /opt/tomcat
 sudo chown -R tomcat:tomcat /opt/tomcat
 ```
-- `TOMCAT_TARBALL_LINK`: No default can be provided here; you should navigate to the [Tomcat 8 downloads page](https://tomcat.apache.org/download-80.cgi) and grab the link to the latest `.tar.gz` file under the “Core” section of “Binary Distributions”. It is highly recommended to grab the latest version of Tomcat 8, as it will come with associated security patches and fixes.
-- `TOMCAT_DIRECTORY`: This will also depend entirely on the exact version of tomcat downloaded - for example, `apache-tomcat-8.5.47`. Again, `ls /opt` can be used to find this.
+- `TOMCAT_TARBALL_LINK`: No default can be provided here; you should navigate to the [Tomcat 9 downloads page](https://tomcat.apache.org/download-90.cgi) and grab the link to the latest `.tar.gz` file under the “Core” section of “Binary Distributions”. It is highly recommended to grab the latest version of Tomcat 9, as it will come with associated security patches and fixes.
+- `TOMCAT_DIRECTORY`: This will also depend entirely on the exact version of tomcat downloaded - for example, `apache-tomcat-9.0.50`. Again, `ls /opt` can be used to find this.
 
 ### Creating a setenv.sh Script
 
@@ -59,13 +60,16 @@ export CATALINA_HOME="/opt/tomcat"
 export JAVA_HOME="PATH_TO_JAVA_HOME"
 export JAVA_OPTS="-Djava.awt.headless=true -server -Xmx1500m -Xms1000m"
 ```
-- `PATH_TO_JAVA_HOME`: This will vary a bit depending on the environment, but will likely live in `/usr/lib/jvm` somewhere (e.g., `/usr/lib/jvm/java-8-openjdk-amd64` for an installation on a machine with an AMD processor); again, in an Ubunutu environment you can check a part of this using `update-alternatives --list java`, which will give you the path to the JRE binary within the Java home
+- `PATH_TO_JAVA_HOME`: This will vary a bit depending on the environment, but will likely live in `/usr/lib/jvm` somewhere (e.g., `/usr/lib/jvm/java-11-openjdk-amd64`); again, in an Ubunutu environment you can check a part of this using `update-alternatives --list java`, which will give you the path to the JRE binary within the Java home. Note that `update-alternatives --list java` will give you the path to the binary, so for `PATH_TO_JAVA_HOME` delete the `/bin/java` at the end to get the Java home directory, so it should look something like this:
+```
+export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64" 
+```
 
 ### Creating the Tomcat Service
 
 Tomcat includes two shell scripts we’re going to make use of - `startup.sh` and `shutdown.sh` - which are light wrappers on top of a third script, `catalina.sh`, which manages spinning up and shutting down the Tomcat server.
 
-Ubuntu 18.04 uses `systemctl` to manage services; we’re going to create a .service file that can run these shell scripts.
+Debian and Ubuntu use `systemctl` to manage services; we’re going to create a .service file that can run these shell scripts.
 
 `/etc/systemd/system/tomcat.service | root:root/755`
 ```
@@ -91,31 +95,21 @@ sudo systemctl enable tomcat
 sudo systemctl start tomcat
 ```
 
-We can check that Tomcat has started by running `systemctl status tomcat | grep Active`; we should see that Tomcat is `active (running)`, which is the correct result of startup.sh finishing its run successfully.
+We can check that Tomcat has started by running `sudo systemctl status tomcat | grep Active`; we should see that Tomcat is `active (running)`, which is the correct result of startup.sh finishing its run successfully.
 
-## Installing Cantaloupe 4
+## Installing Cantaloupe 5
 
-### Stopping the Tomcat service
+Since version 5, Cantaloupe is released as a standalone Java application and is no longer deployed in Tomcat via a .war file. Even so, we can still fine-tune how it runs and even install it as a service.
 
-Before we start working with Cantaloupe, we should `stop` Tomcat; otherwise, Cantaloupe will automatically be deployed from its .war file, and we’d like everything to be in place before the deployment.
-
-```bash
-sudo systemctl stop tomcat
-```
-
-### Downloading and Placing the Cantaloupe WAR
+### Downloading Cantaloupe
 
 Releases of Cantaloupe live on the [Cantaloupe release page](https://github.com/cantaloupe-project/cantaloupe/releases); the latest version can be found here as a `.zip` file.
 
 ```bash
 sudo wget -O /opt/cantaloupe.zip CANTALOUPE_RELEASE_URL
 sudo unzip /opt/cantaloupe.zip
-sudo cp CANTALOUPE_DIR/CANTALOUPE_WAR /opt/tomcat/webapps/cantaloupe.war
-sudo chown tomcat:tomcat /opt/tomcat/webapps/cantaloupe.war
 ```
-- `CANTALOUPE_RELEASE_URL`: It’s recommended we grab the latest version of Cantaloupe 4. This can be found on the above-linked release page, as the `.zip` version; for example, https://github.com/cantaloupe-project/cantaloupe/releases/download/v4.1.4/cantaloupe-4.1.4.zip 
-- `CANTALOUPE_DIR`: This will depend on the exact version of Cantaloupe downloaded; in the above example release, this would be `cantaloupe-4.1.4`
-- `CANTALOUPE_WAR`: This will also depend on the exact version of Cantaloupe downloaded; in the above example release, this would be `cantaloupe-4.1.4.war`
+- `CANTALOUPE_RELEASE_URL`: It’s recommended we grab the latest version of Cantaloupe 5. This can be found on the above-linked release page, as the `.zip` version; for example, https://github.com/cantaloupe-project/cantaloupe/releases/download/v5.0.3/cantaloupe-5.0.3.zip - make sure **not** to download the source code zip file as that isn't compiled for running out-of-the-box.
 
 ### Creating a Cantaloupe Configuration
 
@@ -125,28 +119,36 @@ Creating these files from scratch is *not* recommended; rather, we’re going to
 
 ```bash
 sudo mkdir /opt/cantaloupe_config
-sudo cp CANTALOUPE_DIR/cantaloupe.properties.sample /opt/cantaloupe_config/cantaloupe.properties
-sudo cp CANTALOUPE_DIR/delegates.rb.sample /opt/cantaloupe_config/delegates.rb
+sudo cp CANTALOUPE_VER/cantaloupe.properties.sample /opt/cantaloupe_config/cantaloupe.properties
+sudo cp CANTALOUPE_VER/delegates.rb.sample /opt/cantaloupe_config/delegates.rb
 ```
+- `CANTALOUPE_VER`: This will depend on the exact version of Cantaloupe downloaded; in the above example release, this would be `cantaloupe-5.0.3`
 
 The out-of-the-box configuration will work fine for our purposes, but it’s highly recommended that you take a look through the `cantaloupe.properties` and see what changes can be made; specifically, logging to actual logfiles isn’t set up by default, so you may want to take a peek at the `log.application.SyslogAppender` or `log.application.RollingFileAppender`, as well as changing the logging level.
 
-### Defining the Cantaloupe Configuration Location
+### Installing and configuring Cantaloupe as a service
 
-Now that we have a Cantaloupe configuration, we need to make a change to Tomcat’s `JAVA_OPTS` so that its location can be referenced when Tomcat spins it up. This will involve changing the `setenv.sh` created when setting up Tomcat.
+Since it is a standalone application, we can configure Cantaloupe as a systemd service like we did with Tomcat, so it can start on boot:
 
-`/opt/tomcat/bin/setenv.sh`
+`/etc/systemd/system/cantaloupe.service | root:root/755`
+```
+[Unit]
+Description=Cantaloupe
 
-**Before**:
-> 3 | export JAVA_OPTS="-Djava.awt.headless=true -server -Xmx1500m -Xms1000m"
+[Service]
+ExecStart=java -cp /opt/CANTALOUPE_VER/CANTALOUPE_VER.jar -Dcantaloupe.config=/opt/cantaloupe_config/cantaloupe.properties -Xmx1500m -Xms1000m edu.illinois.library.cantaloupe.StandaloneEntry
+SyslogIdentifier=cantaloupe
 
-**After**:
-> 3 | export JAVA_OPTS="-Djava.awt.headless=true -Dcantaloupe.config=/opt/cantaloupe_config/cantaloupe.properties -server -Xmx1500m -Xms1000m"
+[Install]
+WantedBy=multi-user.target
+```
+- `CANTALOUPE_VER`: This will depend on the exact version of Cantaloupe downloaded; in the above example release, this would be `cantaloupe-5.0.3`
 
-### Starting the Tomcat Service
-
-After Cantaloupe has been completely provisioned, we’re ready to switch Tomcat back on so that Cantaloupe automatically deploys with the established configuration.
+We can now enable the service and run it:
 
 ```bash
-sudo systemctl start tomcat
+sudo systemctl enable cantaloupe
+sudo systemctl start cantaloupe
 ```
+
+We can check the service status with `sudo systemctl status cantaloupe | grep Active` and the splash screen of Cantaloupe should be available at http://localhost:8182
