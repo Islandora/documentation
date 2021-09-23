@@ -183,9 +183,9 @@ For the Karaf features we’re going to install, we need a few different reposit
 /opt/karaf/bin/client repo-add mvn:org.apache.jena/jena-osgi-features/JENA_OSGI_VERSION/xml/features
 ```
 - `ACTIVEMQ_KARAF_VERSION`: The version of ActiveMQ we wrote down at the beginning of this chapter when installing ActiveMQ via `apt-get`
-- `APACHE_CAMEL_VERSION`: The latest version of Apache Camel 2.x.x; you can find this listed at the [apache-camel repository page](https://mvnrepository.com/artifact/org.apache.camel.karaf/apache-camel) (e.g., 3.11.0 at the time of writing)
+- `APACHE_CAMEL_VERSION`: The latest version of Apache Camel 2.x.x; you can find this listed at the [apache-camel repository page](https://mvnrepository.com/artifact/org.apache.camel.karaf/apache-camel) (e.g., 2.25.4 at the time of writing)
 - `ISLANDORA_KARAF_VERSION`: The latest version of Islandora Karaf 1.x; you can find this listed at the [islandora-karaf repository page](https://mvnrepository.com/artifact/ca.islandora.alpaca/islandora-karaf) (e.g., 1.0.5 at the time of writing)
-- `JENA_OSGI_VERSION`: The latest version of the Apache Jena OSGi features; you can find this listed at the [jena-osgi-features repository page](https://mvnrepository.com/artifact/org.apache.jena/jena-osgi-features) (e.g., 4.1.0 at the time of writing)
+- `JENA_OSGI_VERSION`: The latest version of the Apache Jena 3.x OSGi features; you can find this listed at the [jena-osgi-features repository page](https://mvnrepository.com/artifact/org.apache.jena/jena-osgi-features) (e.g., 3.17.0 at the time of writing)
 
 ### Configuring Karaf Features
 
@@ -365,6 +365,12 @@ Before we can configure the features we’re going to use, they need to be insta
 # we're using, but is being included here to resolve the aforementioned
 # missing link in the dependency chain.
 /opt/karaf/bin/client feature:install jena
+/opt/karaf/bin/client feature:install fcrepo-camel
+/opt/karaf/bin/client feature:install fcrepo-indexing-triplestore
+/opt/karaf/bin/client feature:install islandora-http-client
+/opt/karaf/bin/client feature:install islandora-indexing-triplestore
+/opt/karaf/bin/client feature:install islandora-indexing-fcrepo
+/opt/karaf/bin/client feature:install islandora-connector-derivative
 ```
 
 ### Verifying Karaf Components are Running (Optional But Recommended)
