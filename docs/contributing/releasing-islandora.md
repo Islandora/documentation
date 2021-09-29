@@ -1,18 +1,26 @@
 # Releasing Islandora
 
-Follow these steps to release all of the Islandora ecosystem. Due to dependencies, this must be done in a particular order. While this may seem like a daunting task, remember that at any point in time you can delete/update/re-do a release in Github. If something gets botched simply
+Islandora is an ecosystem of repositories and follows [Semantic Versioning](https://semver.org/). This allows the community to remain aligned with [Drupal's approach](https://www.drupal.org/node/3108648)and support more a more modular approach and more frequent releases, as well as better upgrade paths for those using components of the system. In semantic versioning, a version has three sections 'MAJOR.MINOR.PATCH'. This looks something like 2.1.1, or you may see major versions labelled as 2.x.x. To guide repository maintainers, we recommend you increment the:
+
+* MAJOR version when you make incompatible API changes,
+* MINOR version when you add functionality in a backwards compatible manner, and
+* PATCH version when you make backwards compatible bug fixes.
+ 
+## Advice for Releasing
+
+Dependencies mean that if you are going to release all of the Islandora ecosystem, **order is very important**. At any point, rleeases can be deleted, updated, and redone in Github. You can reach out to the community if you have questions. Note that if you want to 'redo' a release, you can follow these steps:
 
 1. Delete the release in Github through their UI
 2. Delete the tag in Git both locally and remotely: `git tag -d TAG_NAME; git push --delete origin TAG_NAME`
-3. Try again.
+3. Begin Releasing again.
 
-The only exception is when publishing to Sonatype with Alpaca, but by the time you've gotten there, everything should be fine already.  And remember, you can always just bump the version number again and slice a second release if you have to.  No big deal!
+You cannot follow these steps when publishing to Sonatype with Alpaca, but this should rarely be an issue. Version numbers can also be incremented and a new release authored.
 
-We'll start with the Java stuff because it's the most complicated.
 
-## Releasing Java Code
+## How to Release Java Code
 
-You need Java 8 on your system to release java code.  All the rest is handled by Gradle, which is included in the Git repos. If you cannot get Java 8, for whatever reason, you can still release Syn using Docker and the `openjdk:8-jdk` image.  For Alpaca, however, because we use keys and sign the code, etc... It really requires Java 8 to be on your system.
+You will need Java 8 on your system to release java code.  The rest of the work is handled handled by [Gradle](https://gradle.org/), which is included in the Git repositories. If you cannot get Java 8, you can still release Syn using Docker and the `openjdk:8-jdk` image.  For Alpaca, because of our use of keys, Java 8 is required.
+
 
 ### Release Syn
 
@@ -52,7 +60,7 @@ gpg --export-secret-keys -o secring.gpg
 #### Steps:
 The following assumes you are using ssh (e.g. git@github.com for authentication).
 
-It will also work for https if you properly cache your github credentials. The credentials must be cached and valid because Gradle will not prompt you for them!
+It will also work for https if you properly cache your github credentials. The credentials must be cached and valid because Gradle will not prompt you for them.
 
 ##### Release artifacts to Sonatype and Github
 
@@ -102,14 +110,14 @@ completed all the above steps and are absolutely certain the release is ready fo
 
 | Name         | Organization           | Address               | Code Signing Key Fingerprint | Key Id |
 |--------------|------------------------|-----------------------|---|:-:|
-| Danny Lamb   | Islandora Foundation   | dlamb at islandora.ca | 2D609DB0380A7637A6B72B328D7E7725D47A05FA | D47A05FA |
+| Danny Lamb   | Born Digital   | dlamb at islandora.ca | 2D609DB0380A7637A6B72B328D7E7725D47A05FA | D47A05FA |
 | Jared Whiklo | University of Manitoba | jwhiklo at gmail.com  | 9F45FC2BE09F4D70DA0C7A5CA51C36E8D4F78790 | D4F78790 |
 | Nick Ruest   | York University        | ruestn at yorku.ca    | 159493E15691C84D615B7D1B417FAF1A0E1080CD | 0E1080CD |
 | Seth Shaw   | University of Nevada, Las Vegas        | seth.shaw at unlv.edu    | 2FF65B22AFA7B2A57F054F89D160AA658DAE385F | D160AA658DAE385F |
 
-## Releasing PHP Code
+## Releasing PHP-based Repositories
 
-This is much easier/straightforward compared to the Java code.  You will need `composer` 2 on your system, but most of it is done through Github. The only thing to be mindful of is how the modules depend on each other. But if you follow these steps, everything will get updated in the correct order.
+To release the PhP code, you will need `composer` 2 on your system, but most of this process can be completed through Github. You can read more about how [releases are managed in a Github repository](https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository). Consider module dependency when authoring releases. 
 
 ### JSONLD
 
@@ -171,7 +179,7 @@ The `islandora` module depends on the `crayfish-commons` library, and must have 
 7. Run `composer update -W` again.
 8. Commit and push the `composer.json` and `composer.lock` files to Github with a commit message of "Preparing for next development iteration".
 
-Release Islandora Defaults
+### Release Islandora Defaults
 
 The `islandora` module depends on `islandora`, `controlled_access_terms`, and `openseadragon`, and must have its dependencies updated before release.
 
