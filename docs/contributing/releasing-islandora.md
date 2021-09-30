@@ -1,20 +1,12 @@
 # Releasing Islandora
 
-Islandora is an ecosystem of repositories and follows [Semantic Versioning](https://semver.org/). This allows the community to remain aligned with [Drupal's approach](https://www.drupal.org/node/3108648)and support more a more modular approach and more frequent releases, as well as better upgrade paths for those using components of the system. In semantic versioning, a version has three sections 'MAJOR.MINOR.PATCH'. This looks something like 2.1.1, or you may see major versions labelled as 2.x.x. To guide repository maintainers, we recommend you increment the:
+Islandora is an ecosystem of repositories and follows [Semantic Versioning](https://semver.org/). This allows the community to remain aligned with [Drupal's approach](https://www.drupal.org/node/3108648) and support more a more modular approach and more frequent releases, as well as better upgrade paths for those using components of the system. In semantic versioning, a version has three elements 'MAJOR.MINOR.PATCH'. This looks something like 2.1.1, or you may see major versions labelled as 2.x.x. To guide repository maintainers, we recommend you increment the:
 
 * MAJOR version when you make incompatible API changes,
 * MINOR version when you add functionality in a backwards compatible manner, and
 * PATCH version when you make backwards compatible bug fixes.
  
-## Advice for Releasing
 
-Dependencies mean that if you are going to release all of the Islandora ecosystem, **order is very important**. At any point, rleeases can be deleted, updated, and redone in Github. You can reach out to the community if you have questions. Note that if you want to 'redo' a release, you can follow these steps:
-
-1. Delete the release in Github through their UI
-2. Delete the tag in Git both locally and remotely: `git tag -d TAG_NAME; git push --delete origin TAG_NAME`
-3. Begin Releasing again.
-
-You cannot follow these steps when publishing to Sonatype with Alpaca, but this should rarely be an issue. Version numbers can also be incremented and a new release authored.
 
 
 ## How to Release Java Code
@@ -110,7 +102,7 @@ completed all the above steps and are absolutely certain the release is ready fo
 
 | Name         | Organization           | Address               | Code Signing Key Fingerprint | Key Id |
 |--------------|------------------------|-----------------------|---|:-:|
-| Danny Lamb   | Born Digital   | dlamb at islandora.ca | 2D609DB0380A7637A6B72B328D7E7725D47A05FA | D47A05FA |
+| Danny Lamb   | Born-Digital   | hello at born-digital.com  | 2D609DB0380A7637A6B72B328D7E7725D47A05FA | D47A05FA |
 | Jared Whiklo | University of Manitoba | jwhiklo at gmail.com  | 9F45FC2BE09F4D70DA0C7A5CA51C36E8D4F78790 | D4F78790 |
 | Nick Ruest   | York University        | ruestn at yorku.ca    | 159493E15691C84D615B7D1B417FAF1A0E1080CD | 0E1080CD |
 | Seth Shaw   | University of Nevada, Las Vegas        | seth.shaw at unlv.edu    | 2FF65B22AFA7B2A57F054F89D160AA658DAE385F | D160AA658DAE385F |
@@ -190,3 +182,13 @@ The `islandora` module depends on `islandora`, `controlled_access_terms`, and `o
 6. Put the dependencies back to `dev-8.x-1.x`
 7. Run `composer update -W` again.
 8. Commit and push the `composer.json` and `composer.lock` files to Github with a commit message of "Preparing for next development iteration".
+
+## Undoing a Release
+
+Dependencies mean that if you are going to release all of the Islandora ecosystem, **order is very important**. At any point, releases can be deleted, updated, and redone in Github. You can reach out to the community if you have questions. Note that if you want to 'redo' a release, you can follow these steps:
+
+1. Delete the release in Github through their UI
+2. Delete the tag in Git both locally and remotely: `git tag -d TAG_NAME; git push --delete origin TAG_NAME`
+3. Begin Releasing again.
+
+You cannot follow these steps when publishing to Sonatype with Alpaca, but this should rarely be an issue. Instead, increment the version number and tag a new release.
