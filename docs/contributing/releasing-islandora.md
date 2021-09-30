@@ -1,11 +1,12 @@
 # Releasing Islandora
 
-Islandora is an ecosystem of repositories and follows [Semantic Versioning](https://semver.org/). This allows the community to remain aligned with [Drupal's approach](https://www.drupal.org/node/3108648) and support more a more modular approach and more frequent releases, as well as better upgrade paths for those using components of the system. In semantic versioning, a version has three elements 'MAJOR.MINOR.PATCH'. This looks something like 2.1.1, or you may see major versions labelled as 2.x.x. To guide repository maintainers, we recommend you increment the:
+Islandora is an ecosystem of repositories and follows a [Semantic Versioning Approach] [Semantic Versioning](https://semver.org/). This allows the community to remain aligned with [Drupal's approach](https://www.drupal.org/node/3108648) and support more a more modular approach and more frequent releases, as well as better upgrade paths for those using components of the system. In semantic versioning, a version has three elements 'MAJOR.MINOR.PATCH'. This looks something like 2.1.1, or you may see major versions labelled as 2.x.x. To guide repository maintainers, we recommend you increment the:
 
 * MAJOR version when you make incompatible API changes,
 * MINOR version when you add functionality in a backwards compatible manner, and
 * PATCH version when you make backwards compatible bug fixes.
  
+[Learn more about Islandora's Versioning Policy](https://islandora.github.io/documentation/technical-documentation/versioning/)
 
 
 
@@ -106,10 +107,7 @@ completed all the above steps and are absolutely certain the release is ready fo
 | Jared Whiklo | University of Manitoba | jwhiklo at gmail.com  | 9F45FC2BE09F4D70DA0C7A5CA51C36E8D4F78790 | D4F78790 |
 | Nick Ruest   | York University        | ruestn at yorku.ca    | 159493E15691C84D615B7D1B417FAF1A0E1080CD | 0E1080CD |
 | Seth Shaw   | University of Nevada, Las Vegas        | seth.shaw at unlv.edu    | 2FF65B22AFA7B2A57F054F89D160AA658DAE385F | D160AA658DAE385F |
-
-## Releasing PHP-based Repositories
-
-To release the PhP code, you will need `composer` 2 on your system, but most of this process can be completed through Github. You can read more about how [releases are managed in a Github repository](https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository). Consider module dependency when authoring releases. 
+ 
 
 ### JSONLD
 
@@ -183,6 +181,8 @@ The `islandora` module depends on `islandora`, `controlled_access_terms`, and `o
 7. Run `composer update -W` again.
 8. Commit and push the `composer.json` and `composer.lock` files to Github with a commit message of "Preparing for next development iteration".
 
+**Note to module maintainers specifying composer requirements:** please familiarize yourself with the [Next Significant Release Modifiers](https://getcomposer.org/doc/articles/versions.md#next-significant-release-operators)  so that module dependencies are as permissive as possible. Most often dependency versions should be tagged using the caret (^) so that bug-fixes and minor releases can be pulled in without updating their module’s composer file.
+
 ## Undoing a Release
 
 Dependencies mean that if you are going to release all of the Islandora ecosystem, **order is very important**. At any point, releases can be deleted, updated, and redone in Github. You can reach out to the community if you have questions. Note that if you want to 'redo' a release, you can follow these steps:
@@ -192,3 +192,5 @@ Dependencies mean that if you are going to release all of the Islandora ecosyste
 3. Begin Releasing again.
 
 You cannot follow these steps when publishing to Sonatype with Alpaca, but this should rarely be an issue. Instead, increment the version number and tag a new release.
+
+[Learn more about Islandora's Versioning Policy](https://islandora.github.io/documentation/technical-documentation/versioning/)
