@@ -10,7 +10,7 @@ Islandora is an ecosystem of repositories and follows a [Semantic Versioning App
 
 
 
-## How to Release Java Code
+### How to Release Java Code
 
 You will need Java 8 on your system to release java code.  The rest of the work is handled handled by [Gradle](https://gradle.org/), which is included in the Git repositories. If you cannot get Java 8, you can still release Syn using Docker and the `openjdk:8-jdk` image.  For Alpaca, because of our use of keys, Java 8 is required.
 
