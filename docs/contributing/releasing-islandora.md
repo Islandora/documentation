@@ -31,6 +31,7 @@ To release Syn
 ### Release Alpaca
 
 To make sure the release goes smoothly, you should ensure that:
+
   * You have an account with commit access for Alpaca on GitHub. As a committer, you should already have this level of access.
   * You have an oss.sonatype.org account and have requested to be given permission to publish to the ca.islandora groupId by adding a comment to the [Islandora Sonatype Hosting Ticket](https://issues.sonatype.org/browse/OSSRH-18137)
   * Ensure you have a trusted code signing key; [create](https://wiki.duraspace.org/display/FCREPO/Creating+a+Code+Signing+Key) if you haven't before and add it to the [contributor keys](https://github.com/Islandora-CLAW/Alpaca/wiki/Alpaca-Release-Process#contributor-keys) list below
