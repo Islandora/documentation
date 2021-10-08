@@ -1,14 +1,8 @@
 # Islandora Playbook
 
-The Islandora Playbook ([Islandora-Devops/islandora-playbook](https://github.com/Islandora-Devops/islandora-playbook)) is a tool for installing Islandora Defaults on a single virtual machine. It can be used both as a [Vagrant](https://www.vagrantup.com/) project to create a local development environment, and/or as an [Ansible](https://www.ansible.com/community) playbook which can provision a remote server.
+The Islandora Playbook ([Islandora-Devops/islandora-playbook](https://github.com/Islandora-Devops/islandora-playbook)) is a tool for installing Islandora Defaults on a single virtual machine. It can be used both as a [Vagrant](https://www.vagrantup.com/) project to create a local development environment, and/or the [Ansible](https://www.ansible.com/community) playbook can be used directly to provision a local or remote server.
 
-!!! Note 
-    This repository has two active branches. The **main** branch's playbook will install the latest release of Islandora and its components. The **dev** branch, when configured to use Ansible, will provision with the most recent code of Islandora and its components. 
-
-
-## Quick-start mode:
-
-The fastest way to spin up a local Vagrant version of Islandora Defaults is to use the Islandora Base Box, which is a packaged VM of the **latest release** of Islandora - including Islandora Defaults and all components. This is the default behaviour of the **dev** branch of the playbook. This method requires Vagrant and VirtualBox, but does not use Ansible.
+## Basic Usage:
 
 ```bash
 $ git clone -b dev https://github.com/Islandora-Devops/islandora-playbook
@@ -16,11 +10,9 @@ $ cd islandora-playbook
 $ vagrant up
 ```
 
-This method results in an installation that does not contain the latest code changes. 
-
 ## Requirements
 
-Download and install the following. VirtualBox and Vagrant are needed if creating local VMs. Ansible is only necessary if provisioning (not using quick-start mode described above):
+To create a local VM, download and install the following.  
 
 1. [Virtual Box](https://www.virtualbox.org/)
 2. [Vagrant](https://www.vagrantup.com/) (version 2.0 or higher required)
@@ -72,58 +64,14 @@ $ brew install ansible@2.8.7
 
 ## Installing a local development environment
 
-Clone the `islandora-playbook`, set the base box, and use `vagrant up` to automatically provision a local environment. This method uses Vagrant, VirtualBox, and Ansible. Before provisioning a local environment, you should likely double check that no [required ports](#port-clashes-for-local-environments) are currently in use.
+Clone the `islandora-playbook` and use `vagrant up` to automatically provision a local environment. This method uses Vagrant, VirtualBox, and Ansible. Before provisioning a local environment, you should likely double check that no [required ports](#port-clashes-for-local-environments) are currently in use. 
 
 ### Clone the playbook
 
-For the most recent release:
-```bash
-$ git clone -b main https://github.com/Islandora-Devops/islandora-playbook
-$ cd islandora-playbook
-```
-
-For the bleeding edge:
 ```bash
 $ git clone -b dev https://github.com/Islandora-Devops/islandora-playbook
 $ cd islandora-playbook
 ```
-### Set the base box
-
-To tell Vagrant which base box to use, set ISLANDORA_DISTRO. This can be done by editing the Vagrantfile or by setting a shell variable.
-
-#### Editing the Vagrantfile
-
-Open `Vagrantfile` (in the islandora-playbook directory) in a text editor, and find the following section.
-
-```
-# Available boxes are 'islandora/8', ubuntu/bionic64' and 'centos/7'
-# Use 'ubuntu/bionic64' or 'centos/7' to build a dev environment from scratch.
-# Use 'islandora/8' if you just want to download a ready to run VM.
-$vagrantBox = ENV.fetch("ISLANDORA_DISTRO", "islandora/8")
-```
-
-To build a dev environment that is Ubuntu, change the last line of that section to:
-```
-$vagrantBox = ENV.fetch("ISLANDORA_DISTRO", "ubuntu/bionic64")
-```
-
-To build a dev environment that is CentOS, change the last line of that section to:
-```
-$vagrantBox = ENV.fetch("ISLANDORA_DISTRO", "centos/7")
-```
-
-Note that setting ISLANORA_DISTRO as a shell variable will override what is specified in the Vagrantfile.
-
-#### Setting ISLANDORA_DISTRO as a shell (environment) variable
-
-Or, an alternative to altering the Vagrantfile, you can set `ISLANDORA_DISTRO` by adding the following 
-to `.bashrc` (on Ubuntu/Debian environments), or `.bash_profile` (on MacOS):
-
-```bash
-export ISLANDORA_DISTRO="ubuntu/bionic64"
-```
-
-This will override what is written in the Vagrantfile.
 
 ### Spin up with Vagrant
 
@@ -137,8 +85,6 @@ Then, to spin up the machine:
 ```bash
 vagrant up
 ```
-
-
 
 ## Installing a remote environment
 
