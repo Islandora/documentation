@@ -1,5 +1,8 @@
 # Releasing Islandora
 
+!!! note
+    This page is out of date now that we use semantic version branches, come discuss on Slack or at the Tech call for more info.
+
 Follow these steps to release all of the Islandora ecosystem. Due to dependencies, this must be done in a particular order. While this may seem like a daunting task, remember that at any point in time you can delete/update/re-do a release in Github. If something gets botched simply
 
 1. Delete the release in Github through their UI
