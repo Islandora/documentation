@@ -1,6 +1,6 @@
 ## How to find things in Fedora?
 
-For any Drupal URI, the corresponding Fedora URIs is computed in a service called Milliner. In Drupal, a "pseudo-field" is available that will display the corresponding Fedora URI on the page of a node, taxonomy term, or media object. The presence of this URI does NOT guarantee the existence of the corresponding entity in Fedora. 
+For any Drupal URI, the corresponding Fedora URIs is computed by the [Crayfish Commons](https://github.com/Islandora/Crayfish-Commons/blob/2.x/src/EntityMapper/EntityMapper.php) library using the Drupal-assigned UUID. In Drupal, a "pseudo-field" is available that will display the corresponding Fedora URI on the page of a node, taxonomy term, or media object. The presence of this URI does NOT guarantee the existence of the corresponding entity in Fedora. 
 
 ### Enabling the Fedora URI Pseudo-field
 
