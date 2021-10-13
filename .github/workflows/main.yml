@@ -1,4 +1,4 @@
-name: Build Documentation using mike/MkDocs
+name: Build Documentation using MkDocs
 
 # Controls when the action will run. Triggers the workflow on push
 # events but only for the main branch
@@ -25,9 +25,10 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
+          pip install mkdocs
           pip install mkdocs-material
           pip install mkdocs-git-revision-date-localized-plugin
-          pip install mike
+        # todo: add support for material for mkdocs insider theme
 
       - name: Set up git author
         run: |
@@ -39,5 +40,4 @@ jobs:
 
       - name: Deploy
         run: |
-          mike deploy -b versioning-test --push --update-aliases 2.0.0 latest
-          mike set-default -b versioning-test --push latest
+          mkdocs gh-deploy -b github-actions-test
