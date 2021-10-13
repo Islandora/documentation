@@ -1,6 +1,6 @@
 # Versioning Policy
 
-Islandora uses semantic versioning for all non-Legacy code in the [github.com/Islandora](https://github.com/Islandora) organization. This allows us to be compatible with Composer and with [Drupal contrib module release](https://www.drupal.org/node/1015226) policy.
+Islandora uses semantic versioning for all non-Legacy code in the [github.com/Islandora](https://github.com/Islandora) organization. This allows us to be compatible with Composer and with Drupal's [release naming conventions](https://www.drupal.org/node/1015226) for contributed modules.
 
 ## Semantic Versioning
 
