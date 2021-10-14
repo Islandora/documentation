@@ -2,6 +2,7 @@
 
 Islandora is an ecosystem of repositories and follows a [Semantic Versioning Approach] [Semantic Versioning](https://semver.org/). This allows the community to remain aligned with [Drupal's approach](https://www.drupal.org/node/3108648) and support more a more modular approach and more frequent releases, as well as better upgrade paths for those using components of the system. In semantic versioning, a version has three elements 'MAJOR.MINOR.PATCH'. This looks something like 2.1.1, or you may see major versions labelled as 2.x.x. To guide repository maintainers, we recommend you increment the:
 
+
 * MAJOR version when you make incompatible API changes,
 * MINOR version when you add functionality in a backwards compatible manner, and
 * PATCH version when you make backwards compatible bug fixes.
@@ -32,10 +33,11 @@ To release Syn
 ### Release Alpaca
 
 To make sure the release goes smoothly, you should ensure that:
-  * You have an account with commit access for Alpaca on GitHub. As a committer, you should already have this level of access.
-  * You have an oss.sonatype.org account and have requested to be given permission to publish to the ca.islandora groupId by adding a comment to the [Islandora Sonatype Hosting Ticket](https://issues.sonatype.org/browse/OSSRH-18137)
-  * Ensure you have a trusted code signing key; [create](https://wiki.duraspace.org/display/FCREPO/Creating+a+Code+Signing+Key) if you haven't before and add it to the [contributor keys](https://github.com/Islandora-CLAW/Alpaca/wiki/Alpaca-Release-Process#contributor-keys) list below
-  * Your gradle settings file (`~/.gradle/gradle.properties`) exists and includes the following:
+
+- You have an account with commit access for Alpaca on GitHub. As a committer, you should already have this level of access.
+- You have an oss.sonatype.org account and have requested to be given permission to publish to the ca.islandora groupId by adding a comment to the [Islandora Sonatype Hosting Ticket](https://issues.sonatype.org/browse/OSSRH-18137)
+- Ensure you have a trusted code signing key; [create](https://wiki.duraspace.org/display/FCREPO/Creating+a+Code+Signing+Key) if you haven't before and add it to the [contributor keys](https://github.com/Islandora-CLAW/Alpaca/wiki/Alpaca-Release-Process#contributor-keys) list below
+- Your gradle settings file (`~/.gradle/gradle.properties`) exists and includes the following:
 ```properties
 ossrhUsername = jiraname
 ossrhPassword = jirapass
@@ -43,7 +45,7 @@ signing.keyId = pubkeyid
 signing.password = keypassphrase
 signing.secretKeyRingFile = /your/home/.gnupg/secring.gpg 
 ```
-  * Your `git` is configured (locally or globally) to [cache github credentials for https](https://help.github.com/articles/caching-your-github-password-in-git/) or [use ssh](https://help.github.com/articles/generating-an-ssh-key/)
+- Your `git` is configured (locally or globally) to [cache github credentials for https](https://help.github.com/articles/caching-your-github-password-in-git/) or [use ssh](https://help.github.com/articles/generating-an-ssh-key/)
 
 **Note**: As of GPG 2.1 `secring.gpg` [has been removed](https://www.gnupg.org/faq/whats-new-in-2.1.html#nosecring) so you need to export secret keys to create the secret key ring.
 ```

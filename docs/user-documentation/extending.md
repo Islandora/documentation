@@ -35,6 +35,7 @@ Warning! - All modules are under development.
 * [Islandora Bagger](https://github.com/mjordan/islandora_bagger) - Utility to generate Bags for objects using Islandora's REST interface using either a command-line tool or via a batch-oriented queue. 
 * [Islandora Whole Object](https://github.com/mjordan/islandora_whole_object) - Islandora 8 module that provides some Drupal blocks containing various representations of an Islandora object.
 * [Islandora RDM](https://github.com/roblib/islandora_rdm) - An entire suite of tools and documentation to turn Islandora 8 into a fully functional Research Data Management platform.
+* [IP Range Access](https://github.com/mjordan/ip_range_access) - A context condition to check the user's IP address against a range, and provide 403 if not accepted.
 
 ### Access Control
 
