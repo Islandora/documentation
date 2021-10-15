@@ -1,14 +1,43 @@
-# Releasing Islandora
+# Releasing Islandora Components
 
-Islandora is an ecosystem of repositories and follows a [Semantic Versioning Approach] [Semantic Versioning](https://semver.org/). This allows the community to remain aligned with [Drupal's approach](https://www.drupal.org/node/3108648) and support more a more modular approach and more frequent releases, as well as better upgrade paths for those using components of the system. In semantic versioning, a version has three elements 'MAJOR.MINOR.PATCH'. This looks something like 2.1.1, or you may see major versions labelled as 2.x.x. To guide repository maintainers, we recommend you increment the:
+Islandora is an ecosystem of repositories and follows a [Semantic Versioning Approach] [Semantic Versioning](https://semver.org/). This allows the community to remain aligned with [Drupal's approach](https://www.drupal.org/node/3108648) and support more a more modular approach and more frequent releases, as well as better upgrade paths for those using components of the system. In semantic versioning, a version has three elements 'MAJOR.MINOR.PATCH'. This looks something like 2.1.1, or you may see major versions labelled as 2.x.x. Semantic versioning requires us to increment the:
 
 
-* MAJOR version when you make incompatible API changes,
-* MINOR version when you add functionality in a backwards compatible manner, and
-* PATCH version when you make backwards compatible bug fixes.
+* MAJOR version when we make incompatible API changes,
+* MINOR version when we add functionality in a backwards compatible manner, and
+* PATCH version when we make backwards compatible bug fixes.
  
 [Learn more about Islandora's Versioning Policy](https://islandora.github.io/documentation/technical-documentation/versioning/)
 
+
+## Release summary by component
+
+### Alpaca
+
+* use Java to run Gradle causing a release in Github and Sonatype. Requires permissions on each. See below.
+
+### Carapace
+
+* make sure the branch reflects the major version [as of 2020-10-15, it doesn't]
+* Resolve security warnings in dependencies
+* Maybe test it as a standalone composer install? Making sure that its composer requirements listed are accurate
+* Audit the README and update as needed.
+* Check for documentation in the docs site, and make a ticket if it's insufficient.
+* Create a git tag and go through the Github release process. Write release notes if commit messages aren't sufficient.
+* Ensure release is reflected on Drupal.org. https://www.drupal.org/project/carapace 
+* Audit the documentation and maintainers on Drupal.org
+* If significant, send a message to the community linking to the release/release notes.
+
+### Chullo
+### Controlled Access Terms
+### Crayfish
+### Crayfish Commons
+### Islandora
+### Islandora Defaults
+### JsonLD
+### Migrate Islandora CSV
+### Openseadragon
+### Syn
 
 
 ### How to Release Java Code
@@ -44,7 +73,7 @@ ossrhPassword = jirapass
 signing.keyId = pubkeyid
 signing.password = keypassphrase
 signing.secretKeyRingFile = /your/home/.gnupg/secring.gpg 
-```
+```J
 - Your `git` is configured (locally or globally) to [cache github credentials for https](https://help.github.com/articles/caching-your-github-password-in-git/) or [use ssh](https://help.github.com/articles/generating-an-ssh-key/)
 
 **Note**: As of GPG 2.1 `secring.gpg` [has been removed](https://www.gnupg.org/faq/whats-new-in-2.1.html#nosecring) so you need to export secret keys to create the secret key ring.
