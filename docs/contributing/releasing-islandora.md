@@ -73,7 +73,7 @@ ossrhPassword = jirapass
 signing.keyId = pubkeyid
 signing.password = keypassphrase
 signing.secretKeyRingFile = /your/home/.gnupg/secring.gpg 
-```J
+```
 - Your `git` is configured (locally or globally) to [cache github credentials for https](https://help.github.com/articles/caching-your-github-password-in-git/) or [use ssh](https://help.github.com/articles/generating-an-ssh-key/)
 
 **Note**: As of GPG 2.1 `secring.gpg` [has been removed](https://www.gnupg.org/faq/whats-new-in-2.1.html#nosecring) so you need to export secret keys to create the secret key ring.
