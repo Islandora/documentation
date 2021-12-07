@@ -149,6 +149,8 @@ nav:
                   # add resource page on learning YAML
           - 'Configure Search': 'user-documentation/searching.md'
               # procedural, repository manager
+          - 'Add a Facet Block on Vocabulary Reference Field': 'user-documentation/facet_on_vocabulary_reference_fields.md'
+              # procedural, repository manager
           - 'Configure Advanced Search': 'user-documentation/advanced-search.md'
               # procedural, repository manager
           - 'Configure Context': 'user-documentation/context.md'
