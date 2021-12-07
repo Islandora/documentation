@@ -18,7 +18,7 @@ To create a local VM, download and install the following.
 2. [Vagrant](https://www.vagrantup.com/) (version 2.0 or higher required)
 3. [Git](https://git-scm.com/)
 4. [OpenSSL](https://www.openssl.org/)
-5. [Ansible](https://www.ansible.com/community) (up to, and not past, 2.8.7)
+5. [Ansible](https://www.ansible.com/community) (Tested on version 2.11+, versions back to 2.9 should work.)
 
 #### Installing Git, OpenSSL, and Ansible on Ubuntu/Debian
 
@@ -32,7 +32,7 @@ $ sudo apt-get install openssl
 $ curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 $ python get-pip.py --user
 # Install ansible
-$ pip install --user -Iv ansible==2.8.7
+$ pip install --user -Iv ansible
 ```
 
 #### Installing Git, OpenSSL and Ansible on CentOS
@@ -46,12 +46,12 @@ $ sudo yum install openssl
 $ curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 $ python get-pip.py --user
 # Install ansible
-$ pip install --user -Iv ansible==2.8.7
+$ pip install --user -Iv ansible
 ```
 
 #### Installing Git and Ansible on MacOS
 
-OpenSSL is already pre-installed on MacOS. Git can be installed using XCode's command line tools (see below). Python and Pip should be installed via the downloaded installer direct from the site (not shown below). For the installation of Ansible, consider using [homebrew](https://brew.sh/) (see below).
+OpenSSL is already pre-installed on MacOS. Git can be installed using XCode's command line tools (see below). Python and Pip can either be installed via the downloaded installer direct from the site (not shown below) or via Homebrew. For the installation of Ansible, consider using [homebrew](https://brew.sh/) (see below).
 
 ```bash
 # Use xcode-select to install command line components, including git
@@ -59,7 +59,7 @@ $ xcode-select --install
 # Install homebrew
 $ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 # Use homebrew to install ansible
-$ brew install ansible@2.8.7
+$ brew install ansible
 ```
 
 ## Installing a local development environment
@@ -88,7 +88,7 @@ vagrant up
 
 ## Installing a remote environment
 
-A remote environment can be provisioned by providing SSH credentials to `claw-playbook` and using the `ansible-galaxy` installer instead of Vagrant. Some preparation of configuration entries in the `inventory` also need to be changed to be aware of the particulars of your remote environment; this includes:
+A remote environment can be provisioned by providing SSH credentials to `islandora-playbook` and using the `ansible-galaxy` installer instead of Vagrant. Some preparation of configuration entries in the `inventory` also need to be changed to be aware of the particulars of your remote environment; this includes:
 
 - Changing usernames and passwords to something more sensible than the default
 - Changing IP addresses to use the remote machine's actual IP
