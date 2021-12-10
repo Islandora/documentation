@@ -16,7 +16,7 @@ You can contribute documentation in two different ways. One way is to create an 
 
 ### Request a new feature
 
-To request a new feature you should [open an issue in the Islandora 8 repository](https://github.com/Islandora/documentation/issues/new) or create a use case (see the _Use cases_ section above), and summarize the desired functionality. Prepend "Enhancement:" if creating an issue on the project repo, and "Use Case:" if creating a use case.
+To request a new feature you should [open an issue in the Islandora 8 repository](https://github.com/Islandora/documentation/issues/new) or create a use case (see the _Use cases_ section above), and summarize the desired functionality. Prepend "Enhancement:" if creating an issue on the project repo, and "Use Case:" if creating a use case, and use the appropriate labels.
 
 ### Report a bug
 

@@ -8,18 +8,19 @@
 
 ### Downloading and Placing Solr
 
-The Solr binaries can be found at the [Solr downloads page](https://lucene.apache.org/solr/downloads.html); the most recent stable release of Solr 8 should be used.
+The Solr binaries can be found at the [Solr downloads page](https://solr.apache.org/downloads.html); the most recent stable release of Solr 8 should be used.
 
 ```bash
 # While generally we download tarballs as .tar.gz files without version
 # information, the Solr installer is a bit particular in that it expects a .tgz
 # file with the same name as the extracted folder it contains. It's odd, and we
 # can't really get around it.
+cd
 wget SOLR_DOWNLOAD_LINK
 tar -xzvf SOLR_TARBALL
 ```
-- `SOLR_DOWNLOAD_LINK`: This will depend on a few different things, not least of all the current version of Solr. The link to the `.tgz` for the binary on the downloads page will take you to a list of mirrors that Solr can be downloaded from, and provide you with a preferred mirror at the top. This preferred mirror should be used as the `SOLR_DOWNLOAD_LINK`.
-- `SOLR_TARBALL`: The filename that was downloaded, e.g., `solr-8.3.0.tgz`
+- `SOLR_DOWNLOAD_LINK`: **NOTICE**: This will depend on a few different things, not least of all the current version of Solr. The link to the `.tgz` for the binary on the downloads page will take you to a list of mirrors that Solr can be downloaded from, and provide you with a preferred mirror at the top. This preferred mirror should be used as the `SOLR_DOWNLOAD_LINK`.
+- `SOLR_TARBALL`: The filename that was downloaded, e.g., `solr-8.9.0.tgz`
 
 ### Running the Solr Installer
 
@@ -30,7 +31,19 @@ sudo UNTARRED_SOLR_FOLDER/bin/install_solr_service.sh SOLR_TARBALL
 ```
 - `UNTARRED_SOLR_FOLDER`: This will likely simply be `solr-VERSION`, where `VERSION` is the version number that was downloaded.
 
-The port that Solr runs on can potentially be configured at ths point, but we'll expect it to be running on `8983`.
+The port that Solr runs on can potentially be configured at this point, but we'll expect it to be running on `8983`.
+
+Wait until the command output reaches:
+
+```
+Started Solr server on port 8983 (pid=****). Happy searching!
+systemd[1]: Started LSB: Controls Apache Solr as a Service.
+```
+
+After which you can press `q` to quit the output (this won't kill Solr so it's safe).
+
+You can check if Solr is running correctly by going to http://localhost:8983/solr
+
 
 ### Increasing the Open File Limit (Optional)
 
@@ -38,13 +51,11 @@ Solr's installation guide recommends that you increase the open file limit so th
 
 `/etc/sysctl.conf`
 
-**Before**:
-> 77 | #fs.protected_symlinks=0
+Add the following line to the end of the file:
 
-**After**:
-> 77 | #fs.protected_symlinks=0
-
-> 78 | fs.file-max = 65535
+```
+fs.file-max = 65535
+```
 
 Then apply your new configuration.
 
@@ -65,21 +76,39 @@ sudo -u solr bin/solr create -c SOLR_CORE -p 8983
 ```
 - `SOLR_CORE`: `islandora8`
 
+You should see an output similar to this:
+```
+WARNING: Using _default configset with data driven schema functionality. NOT RECOMMENDED for production use.
+         To turn off: bin/solr config -c islandora8 -p 8983 -action set-user-property -property update.autoCreateFields -value false
+
+Created new core 'islandora8'
+```
+
 ### Installing `search_api_solr`
 
 Rather than use an out-of-the-box configuration that won’t be suitable for our purposes, we’re going to use the Drupal `search_api_solr` module to generate one for us. This will also require us to install the module so we can create these configurations using Drush.
 
 ```bash
 cd /opt/drupal
-sudo -u www-data composer require drupal/search_api_solr:^3.0
+sudo -u www-data composer require drupal/search_api_solr:^4.2
 drush -y en search_api_solr
+```
+
+You should see an output similar to this:
+```
+The following module(s) will be enabled: search_api_solr, language, search_api
+
+ // Do you want to continue?: yes.
+
+ [success] Successfully enabled: search_api_solr, language, search_api
+
 ```
 
 ### Configuring search_api_solr
 
 Before we can create configurations to use with Solr, the core we created earlier needs to be referenced in Drupal.
 
-Log in to the Drupal site at `/user` using the sitewide administrator username and password, then navigate to `/admin/config/search/search-api/add-server`.
+Log in to the Drupal site at `/user` using the sitewide administrator username and password (if using defaults from previous chapters this should be `islandora` and `islandora`), then navigate to `/admin/config/search/search-api/add-server`.
 
 Fill out the server addition form using the following options:
 
@@ -108,7 +137,7 @@ As a recap for this configuration:
 
 Click **Save** to create the server configuration.
 
-!!! notice
+**NOTICE**
     You can ignore the error about an incompatible Solr schema; we're going to set this up in the next step. In fact, if you refresh the page after restarting Solr in the next step, you should see the error disappear.
 
 ### Generating and Applying Solr Configurations
@@ -128,7 +157,7 @@ sudo systemctl restart solr
 
 In order for content to be indexed back into Solr, a search index needs to be added to our server. Navigate to `/admin/config/search/search-api/add-index` and check off the things you'd like to be indexed.
 
-!!! notice
+**NOTICE**
     You should come back here later and reconfigure this after completing the last step in this guide. The default indexing configuration is pretty permissive, and you may want to restrict, for example, indexed content to just Islandora-centric bundles. This guide doesn't set up the index's fields either, which are going to be almost wholly dependent on the needs of your installation. Once you complete that configuration later on, re-index Solr from the configuration page of the index we're creating here.
 
 ![Adding a Search Index](../../assets/adding_a_search_index.png)
