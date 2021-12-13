@@ -2,7 +2,7 @@
 The following glossary of terms addresses an Islandora context. When comparing new Islandora and Fedora to older versions it may also be helpful to reference [the Islandora 7 Glossary](https://wiki.duraspace.org/display/ISLANDORA/APPENDIX+E+-+Glossary).
 
 ## Alpaca
-Event-driven middleware based on [Apache Camel](http://camel.apache.org/) that handles communication between various components of Islandora, for instance synchronizing [Drupal](#drupal) data with a [Fedora](#fedora) repository and the [Blazegraph](#blazegraph) triple store. 
+Event-driven middleware based on [Apache Camel](http://camel.apache.org/) that handles communication between various components of Islandora, for instance synchronizing [Drupal](#drupal) data with a [Fedora](#fedora-repository-software) repository and the [Blazegraph](#blazegraph) triple store. 
 
 ## Ansible
 Open source software for provisioning, configuration management and application deployment. In the context of Islandora, Ansible can be used to install and maintain the Islandora software stack more conteniently and efficiently on a server or group of servers. The configuration and installation instructions are captured in a human-readable list of tasks, called 'Playbook'. The [Islandora Playbook](#islandora-playbook) for Ansible is one of the installation methods currently supported by the Islandora community.
@@ -37,7 +37,7 @@ Content entities are grouped into distinct [content entity types](#content-type)
 
 Each type of Content entity has a different set of behaviors. The interactions of these behaviors creates the site’s functionality. For example, a User may log into a site with a username and password that is stored as part of the content entity. If Users have the relevant permissions, they can write a blog post (a subtype of the [Node](#node) content entity type, with a specific data structure and behavior), and assign some tags ([Taxonomy terms](#taxonomy-term)) to the blog post.
 
-[Drupal](#drupal) comes with several [content entity types](#content-type) preconfigured. [Drupal](#drupal)'s default configuration includes the Basic Page and (blog) Article content types, as well as Audio, Image and Video Media types. _Islandora Defaults_ adds the Repository Item [content type](#content-type), alters the existing [Media](#media) types to store files in [Fedora](#fedora), and introduces the Extracted Text and FITS Media types.
+[Drupal](#drupal) comes with several [content entity types](#content-type) preconfigured. [Drupal](#drupal)'s default configuration includes the Basic Page and (blog) Article content types, as well as Audio, Image and Video Media types. _Islandora Defaults_ adds the Repository Item [content type](#content-type), alters the existing [Media](#media) types to store files in [Fedora](#fedora-repository-software), and introduces the Extracted Text and FITS Media types.
 
 ## Content model
 Deprecated concept used in Islandora Legacy; see [Islandora Model](#islandora-model).
@@ -46,10 +46,10 @@ Deprecated concept used in Islandora Legacy; see [Islandora Model](#islandora-mo
 A general type of Content in [Drupal](#drupal). A content type defines a set of data [fields](#field) and how they are displayed. Content types are sub-types of [Nodes](#node), one of the [Drupal](#drupal) [Content entities](#content-entity). The default [Drupal](#drupal) Content types are 'Article' and 'Basic page'. _Islandora Defaults_ adds 'Repository Item' as a Content type, defining metadata fields typically used to describe digital resources. 
 
 ## Crayfish
-A collection of Islandora [microservices](#microservice). Some of the microservices are built specifically for use with a [Fedora](#fedora) repository, while others are just for general use within Islandora.
+A collection of Islandora [microservices](#microservice). Some of the microservices are built specifically for use with a [Fedora](#fedora-repository-software) repository, while others are just for general use within Islandora.
 
 ## Datastream
-Deprecated terminology, refers to how [Fedora 3](#fedora)/Islandora Legacy stored files as part of a resource ('object') in the [Fedora](#fedora) repository. Replaced by [Drupal Media entities](https://www.drupal.org/docs/8/core/modules/media/overview), which serve as an abstraction for [Files](https://www.drupal.org/docs/8/core/modules/file/overview) managed by [Drupal](#drupal).
+Deprecated terminology, refers to how [Fedora 3](#fedora-repository-software)/Islandora Legacy stored files as part of a resource ('object') in the [Fedora](#fedora-repository-software) repository. Replaced by [Drupal Media entities](https://www.drupal.org/docs/8/core/modules/media/overview), which serve as an abstraction for [Files](https://www.drupal.org/docs/8/core/modules/file/overview) managed by [Drupal](#drupal).
 
 ## Derivative
 A version of a file which is derived from an uploaded file. For example, a thumbnail generated from an uploaded image. Islandora uses [microservices](#microservice) to generate derivatives.
@@ -64,7 +64,7 @@ Drupal is an open source web content management system (CMS) written in PHP. Kno
 The files, themes, profiles, and modules included with the standard project software download.
  
 ## Drupal Roles
-Roles are a way of assigning specific permissions to a group of users. Any user assigned to a role will have the same permissions as all other users assigned to that role. This allows you to control which users have permission to view, edit, or delete content in [Drupal](#drupal). Islandora provides a special role called _fedoraAdmin_ that is required to have actions in [Drupal](#drupal) reflected in [Fedora](#fedora).
+Roles are a way of assigning specific permissions to a group of users. Any user assigned to a role will have the same permissions as all other users assigned to that role. This allows you to control which users have permission to view, edit, or delete content in [Drupal](#drupal). Islandora provides a special role called _fedoraAdmin_ that is required to have actions in [Drupal](#drupal) reflected in [Fedora](#fedora-repository-software).
  
 ## Entity 
 A [Drupal](#drupal) term for an item of either content or configuration data. Examples include [Nodes](#node) (content items), Blocks, [Taxonomy terms](#taxonomy-term), and definitions of [content types](#content-type); the first three are content entities, and the last is a configuration entity. In common usage, the term often refers to [Drupal](#drupal) content entities like [Nodes](#node) or [Taxonomy terms](#taxonomy-term). 
@@ -88,7 +88,7 @@ File Information Tool Set, a set of software components for identifying, validat
 Also file fixity; digital preservation term meaning that a digital file remains unchanged ('fixed') over time. Fixity checking verifies that a file has not been corrupted or manipulated during a transfer process or while being stored. Typically, a fixity checking process computes [checksums](#checksum) or cryptographic hashes for a file and compares the result to a reference value stored earlier. The contributed Islandora module 'RipRap' supports fixity checking and error reporting.
 
 ## Flysystem
-Flysystem is a filesystem abstraction library for PHP. Islandora uses Flysystem to swap about different backend filesystem applications. Islandora provides a custom Flysystem adapter for [Fedora](#fedora).
+Flysystem is a filesystem abstraction library for PHP. Islandora uses Flysystem to swap about different backend filesystem applications. Islandora provides a custom Flysystem adapter for [Fedora](#fedora-repository-software).
 
 ## GLAM
 Acronym for "galleries, libraries, archives, and museums".
