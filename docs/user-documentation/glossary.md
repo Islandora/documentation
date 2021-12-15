@@ -49,7 +49,7 @@ A general type of Content in [Drupal](#drupal). A content type defines a set of 
 A collection of Islandora [microservices](#microservice). Some of the microservices are built specifically for use with a [Fedora](#fedora-repository-software) repository, while others are just for general use within Islandora.
 
 ## Datastream
-Deprecated terminology, refers to how [Fedora 3](#fedora-repository-software)/Islandora Legacy stored files as part of a resource ('object') in the [Fedora](#fedora-repository-software) repository. Replaced by [Drupal Media entities](https://www.drupal.org/docs/8/core/modules/media/overview), which serve as an abstraction for [Files](https://www.drupal.org/docs/8/core/modules/file/overview) managed by [Drupal](#drupal).
+Deprecated terminology, refers to how [Fedora 3](#fedora-repository-software)/Islandora Legacy stored files as part of a resource ('object') in the [Fedora](#fedora-repository-software) repository. Replaced by [Drupal Media entities](https://www.drupal.org/docs/8/core/modules/media/overview), which 'wraps' [Files](https://www.drupal.org/docs/8/core/modules/file/overview) in an intermediate structure. This allows Fields to be attached to files, for instance for storing technical metadata.
 
 ## Derivative
 A version of a file which is derived from an uploaded file. For example, a thumbnail generated from an uploaded image. Islandora uses [microservices](#microservice) to generate derivatives.
@@ -82,10 +82,10 @@ Data of a certain type that is attached to a content entity. For instance, on a 
 ## Field type
 
 ## FITS
-File Information Tool Set, a set of software components for identifying, validating and extracting of technical metadata for a wide range of file formats.
+[File Information Tool Set](https://projects.iq.harvard.edu/fits), a set of software components for identifying, validating and extracting of technical metadata for a wide range of file formats.
 
 ## Fixity
-Also file fixity; digital preservation term meaning that a digital file remains unchanged ('fixed') over time. Fixity checking verifies that a file has not been corrupted or manipulated during a transfer process or while being stored. Typically, a fixity checking process computes [checksums](#checksum) or cryptographic hashes for a file and compares the result to a reference value stored earlier. The contributed Islandora module 'RipRap' supports fixity checking and error reporting.
+Also file fixity; digital preservation term meaning that a digital file remains unchanged ('fixed') over time. Fixity checking verifies that a file has not been corrupted or manipulated during a transfer process or while being stored. Typically, a fixity checking process computes [checksums](#checksum) or cryptographic hashes for a file and compares the result to a reference value stored earlier. The [Riprap](https://github.com/mjordan/riprap) [microservice](#microservice) and the contributed [Riprap Islandora module](https://github.com/mjordan/islandora_riprap) support fixity checking and error reporting in Islandora.
 
 ## Flysystem
 Flysystem is a filesystem abstraction library for PHP. Islandora uses Flysystem to swap about different backend filesystem applications. Islandora provides a custom Flysystem adapter for [Fedora](#fedora-repository-software).
@@ -97,9 +97,9 @@ Acronym for "galleries, libraries, archives, and museums".
 The [International Image Interoperability Framework](https://iiif.io/). A set of open standards that help archives, libraries, and museums make the most of their digitized collections with deep zoom, annotation capabilities, and more, and also the community of users and developers that suport the framework.
  
 ## Ingest
-To ingest an object is to add an entry for it in Islandora. This is done primarily through the [Drupal](#drupal) interface. 
+To ingest an object is to add an entry for it in Islandora. This can be done through the [Drupal](#drupal) graphical user interface or one of the Drupal [APIs](#api) ([REST](https://www.drupal.org/docs/drupal-apis/restful-web-services-api/restful-web-services-api-overview), [Migrate API](https://www.drupal.org/docs/drupal-apis/migrate-api/migrate-api-overview)). The third-party contributed software [Islandora Workbench](https://github.com/mjordan/islandora_workbench) uses the Drupal REST API for convenient bulk ingest.
  
-The word 'ingest' is used in repository language because repository software, rather than having an object and associated components forced upon it, takes in and processes the object itself, creating derivatives automatically. Often, when referring to the process of ingesting objects, Islandora and its associated documentation use other terms such as 'import' or 'add resource node'. In such contexts, these terms generally refer to the ingest process.
+In the context of digital repositories, ingest refers to the process by which the repository software imports and subsequently processes an object, creating derivatives automatically, and running any other processing that is configured to occur when an object is added. This would be distinguished by software which simply stores objects after import (with or without associated files) and performs no processing. The Islandora GUI and the documentation sometimes use other terms such as 'import' or 'add resource node'. In such contexts, these terms generally refer to the ingest process.
 
 ## Islandora model
 
@@ -107,10 +107,10 @@ The word 'ingest' is used in repository language because repository software, ra
 A set of human-readable [YAML](#yaml) files, containing instructions for automatically configuring a server environment and installing the different components of the Islandora software stack. The instructions recorded in Playbook are executed by [Ansible](#ansible). The Islandora Playbook for Ansible is one of the installation methods currently supported by the Islandora community.
 
 ## ISLE
-ISLE, or ISLandora Enterprise, is a community initiative to ease the installation and maintenance of Islandora by using [Docker](#docker).
+ISLE, or ISLandora Enterprise, is a community initiative to ease the installation and maintenance of Islandora by using [Docker](#docker). ISLE is one of the installation methods currently supported by the Islandora community.
 
 ## JSON-LD
-JSON-LD (JavaScript Object Notation for Linked Data) is a method of encoding [linked data](#linked-data) using JSON. 
+[JSON-LD (JavaScript Object Notation for Linked Data)](https://json-ld.org/) is a method of encoding [linked data](#linked-data) using JSON. 
 
 ## Linked data
 In computing, linked data is structured data which is interlinked with other data so it becomes more useful through semantic queries. Linked data typically employs the [Resource Description Framework](#resource-description-framework) for data modelling.
@@ -119,7 +119,9 @@ In computing, linked data is structured data which is interlinked with other dat
 [Matomo](https://matomo.org/), formerly called Piwik, is a software for tracking visits to websites. It is an open source alternative to Google Analytics and allows the generation of website usage reports.
 
 ## Media
-The primary method for uploading files to [Drupal](#drupal). Provides a unified User Interface where editors and administrators can upload, manage, and reuse files and multimedia assets. In the context of Islandora, Media entities 'wrap' files and provide a place to store file-specific metadata.
+Media are a [Drupal](#drupal) [Content entity](#content-entity) type, which allows to manage Media items (Files) like images, documents, slideshows, YouTube videos, tweets, Instagram photos, etc. The Media module provides a unified User Interface where editors and administrators can upload, manage, and reuse files and multimedia assets. In the context of Islandora, Media entities 'wrap' files and provide a place to store file-specific metadata. 
+
+See https://www.drupal.org/docs/8/core/modules/media/overview for more information on the Drupal foundations, and refer to https://islandora.github.io/documentation/user-documentation/media/ for how Islandora uses Media.
 
 ## Memento
 Protocol specification that allows a web client to request an earlier/historic state web resource (if available). Fedora implements the Memento protocol to store and serve versions of content in a Fedora repository.
@@ -134,7 +136,7 @@ Software (usually PHP, JavaScript, and/or CSS) that extends site features and ad
 A node is any piece of individual content, such as a page, article, forum topic, or a blog entry. All content on a [Drupal](#drupal) website is stored and treated as "Nodes". For information about Nodes specific to Islandora, see [Resource Node](#resource-node).
 
 ## OAI-PMH
-The Open Archives Initiative Protocol for Metadata Harvesting (OAI-PMH) is a protocol developed for harvesting metadata descriptions of records in an archive so that services can be built using (aggregated) metadata from many archives. Islandora allows to publish metadata in a way conformant to OAI-PMH, acting as a so-called OAI-PMH endpoint.
+The [Open Archives Initiative Protocol for Metadata Harvesting (OAI-PMH)](http://www.openarchives.org/pmh/) is a protocol developed for harvesting metadata descriptions of records in an archive so that services can be built using (aggregated) metadata from many archives. Islandora allows to publish metadata in a way conformant to OAI-PMH, acting as a so-called OAI-PMH endpoint.
 
 ## Ontology
 In computer science and information science, an ontology encompasses a representation, formal naming and definition of the categories, properties and relations between concepts, data and entities. In the narrower context of the [Resource Description Framework](#resource-description-framework) (RDF), an ontology is a formal, machine-readable description of the 'vocabulary' that can be used in a knowledge graph. An RDF ontology for instance specifies _classes_ of things or concepts (e.g. the class of all book authors) and _properties_ of classes/class instances (e.g. an author's name, birth date, shoe size; also the fact that an author has written something that is in the class of books).
@@ -158,14 +160,19 @@ See: [Resource Node](#resource-node)
 Also RDF; family of World Wide Web Consortium (W3C) specifications originally designed as a data model for metadata. It has come to be used as a general method for conceptual description or modeling of information that is implemented in web resources. The data is modelled as a set of statements, also known as triples. A collection of RDF statements intrinsically represents a directed graph. Data represented according to the RDF specifications can be serialized in different ways, for instance using [JSON-LD](#json-ld).
 
 ## Resource Node
-A resource node is a [Drupal](#drupal) [Node](#node) that represents a single conceptual item or object stored in an Islandora repository. It acts as a container for all files and metadata associated with that item, and is the place where the item 'lives' as a visitable URI. 
+A Resource node is a [Drupal](#drupal) [Node](#node) that represents a single conceptual item or object stored in an Islandora repository. It acts as a container for all files and metadata associated with that item, and is the place where the item 'lives' as a visitable URI. 
+
+The term 'Resource node' is specific to Islandora. Typically, Resource nodes in an Islandora installation will use a specific [Content type](#content-type) for the digital assets stored in the repository.
  
-For example, a video stored in Islandora will have a resource node, with metadata stored in [Fields](#field). Attached to the resource node is a [Media](#media) entity, which encapsulates the preservation-grade file. The Resource node may be linked to further [Media](#media), for instance for a thumbnail, web-friendly derivative, and technical metadata associated with the resource node. The resource node may also belong to one or more collections. 
+For example, a video stored in Islandora will have a Resource node, with metadata stored in [Fields](#field). Attached to the Resource node is a [Media](#media) entity, which encapsulates the preservation-grade file. The Resource node may be linked to further [Media](#media), for instance for a thumbnail, web-friendly derivative, and technical metadata associated with the resource node. The Resource node may also belong to one or more collections. 
 
 ## Taxonomy
+[Drupal](#drupal) core module for managing vocabularies (lists) of [taxonomy terms](#taxonomy-term). [Drupal](#drupal) generally uses [terms contained in taxonomies or vocabularies](#taxonomy-term) to classify content (tag or category). 
+
+In Islandora, taxonomies are used to establish controlled vocabularies for describing resources, for instance for standardised spellings of names or subject terms. Vocabularies and [taxonomy terms](#taxonomy-term) are used in Islandora to establish locally controlled vocabularies for describing resources, for instance for standardised spellings of names or subject terms.
  
 ## Taxonomy term
-In the context of Islandora, a taxonomy term is a [Drupal](#drupal) entity of the type 'taxonomy'. [Drupal](#drupal) generally uses taxonomy terms to classify content (tag or category). In Islandora, taxonomies are used to establish controlled vocabularies for describing resources, for instance for standardised spellings of names or subject terms.
+In the context of Islandora, a taxonomy term is a [Drupal](#drupal) [Content entity](#content-entity) of the type 'taxonomy terms'. Taxonomy terms are used in Islandora to establish locally controlled vocabularies for describing resources, for instance for standardised spellings of names or subject terms.
  
 ## Theme
 Software and asset files (images, CSS, PHP code, and/or templates) that determine the style and layout of the site. The [Drupal](#drupal) project distinguishes between core and contributed themes. 
@@ -195,7 +202,7 @@ A [Drupal](#drupal) configuration entity that holds taxonomy terms. The vocabula
 [Drupal](#drupal) field that stores an integer value on an entity, allowing to represent the relative order of the entity in relation to other entities of the same type or sub-type. Used by Islandora to store the order of components in compound objects, for instance pages in paged content items (books, serials). 
 
 ## YAML
-YAML is a human-readable data-serialization language. It is commonly used for configuration files and in applications where data is being stored or transmitted. Software applications like [Drupal](#drupal) or [Ansible](#ansible) store configuration information in YAML files for easy transportability of a configuration.
+[YAML](https://yaml.org/) is a human-readable data-serialization language. It is commonly used for configuration files and in applications where data is being stored or transmitted. Software applications like [Drupal](#drupal) or [Ansible](#ansible) store configuration information in YAML files for easy transportability of a configuration.
 
 ---
  
