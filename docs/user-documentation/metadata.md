@@ -13,7 +13,7 @@ As described in the [resource nodes section](resource-nodes.md), Islandora 8 dig
 
 In Drupal, *Nodes* come in different sub-types called *Content Types*. These let you define a type of content ("Article" and "Basic Page" are Drupal defaults and "Repository Item" is an Islandora specific example), the set of metadata fields that are attached to that content, and how those fields can be edited and displayed. Each content type is essentially a *metadata profile* that can be used for a piece of web content, or to describe a digital resource. You can create your own Content Types for your Islandora project or use a pre-defined one like *Repository Item* from the Islandora_defaults module. We will go over the metadata specific aspects of Content Types below, but for a fuller walkthrough of creating a Content Type [see here](https://islandora.github.io/documentation/user-documentation/content_types/#create-a-content-type).
 
-Not all Content Types in your Drupal site need be [*Islandora Resource Nodes*](https://islandora.github.io/documentation/user-documentation/resource-nodes/). Making a Content Type a Resource Node will associate Islandora specific behaviours (such as syncing to Fedora or causing derivatives to be generated) with it. The decision to make a content an Islandora resource node is left to the discretion of the site manager. In Islandora, a \"resource node\" is usually considered a descriptive record for \"a thing\", and is conceptually similar to an \"Islandora Object\'\' in 7.x, i.e. a \"Fedora Object\" in Fedora 3.x and below. [Read more on configuring a content type to be treated as a Resource Node](https://islandora.github.io/documentation/user-documentation/content_types/#create-a-content-type).
+Not all Content Types in your Drupal site need be [*Islandora Resource Nodes*](https://islandora.github.io/documentation/user-documentation/resource-nodes/). Making a Content Type a Resource Node will associate Islandora specific behaviours (such as syncing to Fedora or causing derivatives to be generated) with it. The decision to make a content an Islandora resource node is left to the discretion of the site manager. In Islandora, a "resource node" is usually considered a descriptive record for "a thing", and is conceptually similar to an "Islandora Object" in 7.x, i.e. a "Fedora Object" in Fedora 3.x and below. [Read more on configuring a content type to be treated as a Resource Node](https://islandora.github.io/documentation/user-documentation/content_types/#create-a-content-type).
 
 ### Fields
 
@@ -85,42 +85,87 @@ The vocabularies provided by default are a starting point, and a repository admi
 
 ## Field Types
 
-Fields are where Drupal entities store their data. There are different _types_ of fields including boolean, datetime, entity reference, integer, string, text, and text_with_summary. These field types also have _widgets_ (controlling how data is entered) and _formatters_ (controlling how data is displayed). The [Drupal 8 documentation on FieldTypes, FieldWidgets, and FieldFormatters](https://www.drupal.org/docs/8/api/entity-api/fieldtypes-fieldwidgets-and-fieldformatters) includes a list of the core field types. Modules can provide their own field types, formatters, and widgets. The Controlled Access Terms module provides two additional types for use with Islandora: ETDF, and Typed Relation. These are described below.
+Fields are where descriptive and administrative metadata about Drupal entities is stored. There are different *types* of fields including boolean, datetime, entity reference, integer, string, text, and text_with_summary. These field types also have *widgets* (controlling how data is entered) and *formatters* (controlling how data is displayed). The [Drupal 8 documentation on FieldTypes, FieldWidgets, and FieldFormatters](https://www.drupal.org/docs/8/api/entity-api/fieldtypes-fieldwidgets-and-fieldformatters) includes a list of the core field types with brief definitions, along with a list of core widgets and formatters. [Custom field types can be created](https://www.drupal.org/docs/creating-custom-modules/creating-custom-field-types-widgets-and-formatters) to represent data in ways not provided by these core options.
 
-_Entity Reference_ fields are a special type of field built into Drupal that creates a relationship between two entities. The field's configuration options include which kind of entities can be referenced. The 'Repository Item' content type, provided by islandora_defaults, includes several entity reference fields that reference vocabularies defined by the islandora and controlled_access_terms modules.
+More field types, formatters, and widgets are available in various modules.For example, the controlled_access_terms module provides two additional field types designed specifically for use with Islandora: ETDF, and Typed Relation. These and the Entity Reference field type are described in more detail below, since they are of particular interest for Islandora users.
 
-The 'Member Of' field is an entity reference field, defined by Islandora, which is the Islandora way of imposing a hierarchical order on resource nodes. This can be used to show membership in a collection, for pages that are members of a paged item, and for members of a complex object.
+### Entity Reference
+
+Entity Reference fields are a special type of field built into Drupal core that creates relationships between entities. The field's configuration options include (but are not limited to):
+
+- Which kind of entity can be referenced (*only one type of item to reference can be defined per field*)
+- The allowed number of values (limited or unlimited)
+- Whether to use Views for filtering
+- Whether to allow users to create new referenced entities while inputting data, if they don't already exist
+
+The *Repository Item* content type, provided by the *islandora_defaults* module, includes several entity reference fields that reference vocabularies defined by the *islandora* and *controlled_access_terms* modules.
+
+#### Configurations for Entity Reference field
+
+The screenshots below show how you can configure an entity reference field (in this case the Subject field on the Repository Item content type).
+
+!!! tip
+    Note that once the type of entity to reference has been defined, and data has been created, it cannot be changed.
+
+Storage settings for entity reference field where you set whether the field will reference content nodes or taxonomy terms:
+
+![Screenshot of the storage settings for an entity reference field](../assets/metadata_entity_reference_config.png)
+
+Reference type settings for entity reference field where you select which vocabularies the autocomplete utility should query when editors are entering data:
+
+![Screenshot of the reference type settings for an entity reference field, showing which vocabularies the autocomplete utility should query when editors are entering data.](../assets/metadata_entity_reference_config_vocabs.png)
+
+!!! tip "Data Consistency"
+    Selecting which vocabularies can be referenced from an entity reference field only affects which vocabularies will be searched when a user types into the autocomplete field in the Drupal form for adding a new item. These settings do not impose constraints on the underlying database, so it is still possible to load references to other vocabularies without being stopped or warned when ingesting data through [various migration methods](/technical-documentation/migration-overview).
 
 ### EDTF
 
-The EDTF field type is for recording dates in [Extended Date Time Format](https://www.loc.gov/standards/datetime/edtf.html), which is a format based off of the hyphenated form of ISO 8601 (e.g. 1991-02-03 or 1991-02-03T10:00:00), but also allows expressions of different granularity and uncertainty. The Default EDTF widget has a validator that only allows strings that conform to the EDTF standard. The Default EDTF formatter allows these date string to be displayed in a variety of human readable ways, including big- or little-endian, and presenting months as numbers, abbreviations, or spelling month names out in full.
+The EDTF field type is defined in the *controlled_access_terms* module, and designed for recording dates in [Extended Date Time Format](https://www.loc.gov/standards/datetime/edtf.html), which is a format based off of the hyphenated form of ISO 8601 (e.g. 1991-02-03 or 1991-02-03T10:00:00), but also allows expressions of different granularity and uncertainty. The Default EDTF widget has a validator that only allows strings that conform to the EDTF standard. The Default EDTF formatter allows these date strings to be displayed in a variety of human readable ways, including big- or little-endian, and presenting months as numbers, abbreviations, or spelling month names out in full. Close review of the [EDTF Specifications](https://www.loc.gov/standards/datetime/edtf.html) is recommended when configuring this field type.
 
-!!! tip "Nerd note:"
+!!! tip "Endianness"
     Big-endian = year, month, day. Little-endian = day, month, year. Middle-endian = month, day, year.
 
-When configuring the EDTF widget for a field in a content type, you can choose to allow date intervals, but doing this prevents the widget from accepting values that include times. (The EDTF standard states that date intervals cannot contain times, but the field should be able to accept either a valid EDTF range or a valid EDTF datetime, so this is a bug.)
+!!! bug "Known EDTF Bug"
+    When configuring the EDTF widget for a field in a content type, you can choose to allow date intervals (aka date ranges), but doing this prevents the widget from accepting values that include times. (The EDTF standard states that date intervals cannot contain times, but the field should be able to accept either a valid EDTF range *or* a valid EDTF datetime, so this is a bug.)
 
-Example of valid inputs in a multi-valued EDTF Date field:
+Example of valid inputs in a multi-valued EDTF Date field (including the
+seasonal value 2019-22 as defined in the EDTF specification):
 ![Screenshot of valid dates ('2019', '2019-11', '2019-22', and '2019-02-02T02:22:22Z') in an EDTF form widget.](../assets/metadata_edtf_valid.png)
 
 Example of the same EDTF dates displayed using little-endian format:
 ![Screenshot of dates displayed as '2019', 'November 2019', 'Summer 2019', and '2 February 2019 02:22:22Z'.](../assets/metadata_edtf_display.png)
 
-Example of a valid EDTF value ('1943-05') and an invalid value ('1943 May') with the corresponding error message:
+EDTF field values cannot include textual representations of dates, as shown below in this example of a valid EDTF value ('1943-05') and an invalid value ('1943 May') with the corresponding error message. Use the formatter configurations detailed further below to achieve textual display of dates.
 ![Screenshot of both a valid ("1943-05") and an invalid ("1943 May") EDTF entry. Displays the error message "Could not parse the date 'May 1943' Years must be at least 4 characters long."](../assets/metadata_edtf_invalid.png)
 
-The configuration for the Default EDTF Widget (including options for extra strict date validation, and allowing date intervals and date sets). This configuration can be set per field by clicking the gear icon next to any Default EDTF Widget field at **Administration** >> **Structure** >> **Content types** >> **Repository Item** >> **Manage form display** (admin/structure/types/manage/islandora\_object/form-display)
-![Screenshot of the configuration screen for the EDTF Widget](../assets/metadata_edtf_widget_settings.png)
+
+#### Configuration for the Default EDTF Widget
+
+This configuration can be set per field by clicking the **gear** icon next to any Default EDTF field at **Administration** \>\> **Structure** \>\> **Content types** \>\> **Repository Item** \>\> **Manage form display** (admin/structure/types/manage/islandora_object/form-display)
+
+![Screenshot of the gear icon on the EDTF Widget display settings](../assets/metadata_edtf_field_settings_gear.png)
+
+Example of the same EDTF dates displayed using little-endian format:
+![Screenshot of dates displayed as '2019', 'November 2019', 'Summer 2019', and '2 February 2019 02:22:22Z'.](../assets/metadata_edtf_display.png)
+
+Configuration options include strictness level of date validation, allowing date intervals and allowing date sets.
+![Screenshot of the gear icon on the EDTF Widget display settings](../assets/metadata_edtf_widget_settings.png)
+
+#### Configuration for the Default EDTF Formatter
+
+This configuration can be set per field by clicking the gear icon next to any Default EDTF field at **Administration** \>\> **Structure** \>\> **Content types** \>\> **Repository Item** \>\> **Manage display** (admin/structure/types/manage/islandora_object/display)
+
+![Screenshot of the gear icon on the EDTF formatter settings](../assets/metadata_edtf_field_formatter_gear.png)
 
 Example of how the EDTF formatter settings can change the display of an EDTF value:
 ![Combined screenshots displaying the EDTF default formatter settings, default on top and modified settings below, with an example formatted EDTF value displayed for each.](../assets/metadata_edtf_formatters.png)
 
-The EDTF formatter settings can be changed per field by clicking the gear icon next to any Default EDTF formatter field at **Administration** >> **Structure** >> **Content types** >> **Repository Item** >> **Manage display** (admin/structure/types/manage/islandora\_object/display).
+#### Configuration for indexing and sorting EDTF fields in search results
 
 By default, EDTF date values are indexed in Solr as string values. The entered value (not the displayed value) is indexed.
 
-!!! note "Solr note:"
-    The Solr string data type requires the full field value to match the query in order to count as a match. This means that searching for `2014` will not retrieve a record where the recorded date value is `2014-11-02`.
+!!! Solr EDTF limitations
+    The Solr string data type requires the full field value to match the query in order to count as a match. This means that searching for 2014 will not retrieve a record where the recorded date value is 2014-11-02.
 
 EDTF date fields may be configured as sort fields in your search results Views. Currently by default, this results in a simple ordering by the literal EDTF date string.
 
@@ -128,21 +173,27 @@ An EDTF date field with multiple or unlimited number of allowed values may be se
 
 ### Typed Relation
 
-A Typed Relation field is an extension of Drupal's Entity Reference field, which allows the user to qualify the relation. It was created for describing a resource's contributors (modelled as taxonomy terms or some other Drupal entities) as well as their roles in this resource node (such as 'author', 'illustrator', or 'architect'). With only Drupal's Entity Reference fields, we would need individual fields for 'author', 'illustrator', 'architect', and any other roles that may need to be made available. Using a Typed Relation field, we can have one field for "Contributors" and let the user pick the role from a dropdown list.
+The Typed Relation field is defined in the *controlled_access_terms* module, is an extension of Drupal's Entity Reference field, and allows the user to qualify the type of relation between the resource node and other entities, such as taxonomy terms. For example, it enables the inclusion of a resource's contributor's (assuming contributor names are modelled as taxonomy terms or some other Drupal entities) as well as their roles (such as "author", "illustrator", or "architect") in the resource node itself. Using only Drupal's Entity Reference fields, we would need individual fields for "author", "illustrator", "architect", and any other roles that may need to be made available. Using a Typed Relation field, we can have one Entity Reference field for "Contributors" and let the user pick the affiliated role from a predefined dropdown list.
 
-!!! tip "Nerd note:"
+!!! tip "Typed relation name"
     The parts of a field are called properties, so 'entity reference' and 'relation type' are properties of the Typed Relation field type.
 
-Islandora Defaults provides a 'Linked Agent' field as part of the Repository Item content type, and populates the available relationships from the MARC relators list.
-![Screenshot of adding a value into a typed relation field](../assets/metadata_typed_relation_field.png)
+#### Configurations for the Typed Relation field
 
-The list of available relations for this field is configurable at '/admin/structure/types/manage/islandora_object/fields/node.islandora_object.field_linked_agent'. If you re-use this existing field on another content type, you can define different available relations for that instance of the field. Relations are defined in the format `key|value`, and the key is used in the RDF mapping (see below).
+The *islandora_defaults* module demonstrates a Typed Relation field labelled 'Linked Agent' as part of the Repository Item content type, and populates the available relations from the MARC relators list. ![Screenshot of adding a value into a typed relation field](../assets/metadata_typed_relation_field.png)
+
+The list of available relations for this Linked Agent field is configurable at '/admin/structure/types/manage/islandora_object/fields/node.islandora_object.field_linked_agent'.
+
+
+!!! islandora "Typed relation tradeoffs"
+    - If you apply this field to another content type, you can define unique relations available for that instance of the field.
+    - However, multiple instances of this field means administrative overhead to maintain the separate lists of relations defined for each instance.
+
+Relations are defined in the format *key\|value*, and the key is used in the RDF mapping (see below).
 
 ![Screenshot of the 'Available Relations' configuration text box for the 'Linked Agent' field.](../assets/metadata_available_relations_config.png)
 
-!!! tip "Typed Relation fields and mapping to RDF:"
-    Unlike other fields, which can be assigned RDF predicates in RDF Mapping yaml files, a typed relation field uses a different predicate depending on the chosen "type". These predicates are assigned using the 'keys' in the `key|value` configuration. The key must be formated `namespace:predicate`, e.g. `relators:act`. The namespace ('relators') must be pre-defined in code, using a hook. See the RDF Mapping section of [Create / Update a Content Type](content_types.md) for more details, including a list of available pre-defined namespaces.
-
+By default, facets can be created for typed relation fields that will facet based on the linked entity alone, not separating references based on the relationship type.
 
 # Getting Metadata into Fedora and a Triple-store
 
