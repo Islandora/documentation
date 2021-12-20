@@ -11,29 +11,47 @@ As described in the [resource nodes section](resource-nodes.md), Islandora 8 dig
 
 ## Content Types
 
-In Drupal, _Nodes_ come in different sub-types called _Content Types_ (e.g. Article, Basic page, Repository item). Content types contain fields, and configurations for how those fields can be edited or displayed. Each content type is essentially a _metadata profile_ that can be used for a piece of web content, or to describe a digital resource. For each field in a content type, an administrator can configure how data is entered, how it can be displayed, how many values can be stored, and how long the value can be. Some configurations, such as data entry and display, can be changed at any time. Others, such as how long a value can be or what options are available in a select list, cannot be changed once content has been created without first deleting all content of that type. However, fields can be added to existing content types with no consequence.
+In Drupal, *Nodes* come in different sub-types called *Content Types*. These let you define a type of content ("Article" and "Basic Page" are Drupal defaults and "Repository Item" is an Islandora specific example), the set of metadata fields that are attached to that content, and how those fields can be edited and displayed. Each content type is essentially a *metadata profile* that can be used for a piece of web content, or to describe a digital resource. You can create your own Content Types for your Islandora project or use a pre-defined one like *Repository Item* from the Islandora_defaults module. We will go over the metadata specific aspects of Content Types below, but for a fuller walkthrough of creating a Content Type [see here](https://islandora.github.io/documentation/user-documentation/content_types/#create-a-content-type).
+
+Not all Content Types in your Drupal site need be [*Islandora Resource Nodes*](https://islandora.github.io/documentation/user-documentation/resource-nodes/). Making a Content Type a Resource Node will associate Islandora specific behaviours (such as syncing to Fedora or causing derivatives to be generated) with it. The decision to make a content an Islandora resource node is left to the discretion of the site manager. In Islandora, a \"resource node\" is usually considered a descriptive record for \"a thing\", and is conceptually similar to an \"Islandora Object\'\' in 7.x, i.e. a \"Fedora Object\" in Fedora 3.x and below. [Read more on configuring a content type to be treated as a Resource Node](https://islandora.github.io/documentation/user-documentation/content_types/#create-a-content-type).
+
+### Fields
+
+The administrator will define the fields that are associated with a specific Content Type. The same fields can be applied to different Content Types, but the field display and editing configurations are unique to each Content Type. The names and definitions of these fields are specific to Drupal and do not have to correspond to an outside metadata schema. You will give each field a Label, Machine Name, and a specific [Field Type](#fields), like Text, Integer, EDTF, or Entity Reference (see below). Specific to the Field Type you will then define the maximum length of the field, the number of values it can contain, and what taxonomies it might link to.
+
+Fields can be added under Content Type \> Manage Fields. This tab will list all Fields, their Label, Machine Name, Field Type, and give you the option to make what edits to the definition of that field that you can.
+
+Certain decisions must be made when fields are created, and before any content is added, because they can not be changed later. Field Type can not be changed, so you wouldn't be able to change a text field to a taxonomy field after creation. The field's machine name also can't be changed. The number of values allowed in a field or its maximum length or type of item to reference (in the case of Entity reference fields) can not be changed after content has been added. You can, however, always add new fields to a Content Type, even after content has been added.
+
+!!! islandora "7.x Migration Note: What About My MODS XML?"
+    Even when using *islandora_defaults* there is no "official" metadata schema in Islandora. Where Islandora 7.x used MODS, and took advantage of it's hierarchical/extensible structure, Drupal Fields are a flat structure working with distinct, individual elements. You can base your fields on those in MODS, or any other schema, but that structure is up to you. The Metadata Interest Group has developed a sample [MODS-Drupal-RDF mapping](https://docs.google.com/spreadsheets/d/18u2qFJ014IIxlVpM3JXfDEFccwBZcoFsjbBGpvL0jJI/edit?pli=1#gid=0), which provides a structure upon which you can build your Drupal fields. It is used by the Repository Item content type in *islandora_defaults*.
 
 
-For example, the 'islandora_defaults' module provides a _Repository Item_ content type that defines many fields including "Alternative Title" and "Date Issued". Under the management menu for Repository Item you can see a list of the fields it includes ("Manage fields") as well as tabs for changing the input forms ("Manage form display") and display modes ("Manage display"). See the "[Create / Update a Content Type](content_types.md)" section for more details on creating and configuring fields.
+!!! tip "You Cannot Change The Content Type Of A Node"
+    Once a node is created, its content type cannot be changed. Just as you are unable to change many aspects of a Field once it has been created, once a node has been created it is now permanently of that content type and the fields associated with it. At that point your only option would be to create a new node of the intended content type, map the field values (programmatically or by copy-paste), and update any media or children that refer to the old node to refer to the new one.
+
+
+The *islandora_defaults* module provides a **Repository Item** content type that can be used as a structure to build your collection around, or it can be used as a sample to see how fields in Content Types work. It pre-defines fields, including **Alternative Title** and **Date Issued** that could be of use in many digital repositories. The full list of fields and their field types can be seen in the screenshot below.
 
 ![Screenshot of the "Manage fields" page for the "Repository Item" content type from islandora_defaults.](../assets/metadata_content_type_screenshot.png)
 
-!!! tip "Titles aren't fields."
-    Note that the "Title" field does not appear in this list. It is a built-in part of every content type. You can edit the label of this "field" if you want it called something other than "Title" under the "Edit" tab for that content type. This built-in title "field" is limited to 255 characters; if your content has longer titles it is encouraged to create a separate long_title field to store the full title and reserve the default title field for a display title. There is a contributed module called [Node Title Length](https://www.drupal.org/project/title_length), which allows an administrator to configure the length of the title field in the core node table. However, this only works on nodes (not media or other entities) and involves meddling in a core Drupal database schema, which makes some people uneasy.
+!!! tip "Titles Aren't Conventionally-Configurable Fields"
+    The field *title* is built-in to each Content Type by default, and can be referenced in views, templates, and indexing like other fields, but it cannot be configured like other fields. The only aspect you can change about *title* is its label. It has a built-in maximum length of 255 characters which cannot be changed. If your content requires longer titles we recommend you create a separate "long_title" field to store the full title and reserve the default title field for a display title.
+    There is a contributed module called [Node Title Length](https://www.drupal.org/project/title_length), which allows an administrator to configure the length of the title field in the core node table. However, this only works on nodes (not media or other entities) and involves meddling in a core Drupal database schema, which makes some people uneasy.
 
-!!! tip "7.x Migration Note: What about my XML?"
-    In 7.x, metadata were usually stored using an XML schema such as MODS or DC, as datastreams attached to an object. In Islandora 8, metadata is stored as fields.
-    This means we are breaking out individual elements from a hierarchical structure to being individual independent values. Where some hierarchy or field grouping
-    is necessary, this can be done in Drupal using [Paragraphs](https://www.drupal.org/project/paragraphs), a widely-used Drupal contrib module. At the moment
-    (Nov 2019) we are working on the technical challenge of mapping data from paragraphs into RDF in Fedora.
-    The Metadata Interest Group has developed a default mapping ([spreadsheet](https://docs.google.com/spreadsheets/d/18u2qFJ014IIxlVpM3JXfDEFccwBZcoFsjbBGpvL0jJI/edit#gid=0), [guidance document](https://docs.google.com/document/d/15qSO9YcALtYSqd6CUuGx0t8FwUJ5pPwVPz0PA5rU898/edit?ts=5c5852f3#)) which provides a basic, yet customizable, transform between MODS metadata and Drupal fields in Islandora Defaults. It is suggested that individual institutions customize the mapping to meet their unique needs.
 
-    That said, if keeping the "legacy" XML metadata from 7.x is important to you, it can be attached to an Islandora 8 resource node as a Media entity.
-    However, there is no mechanism in Islandora 8 for editing XML in a user-friendly way.
+### Content Entry Form/Manage Form Display
 
-When you create a node (i.e. an instantiation of a content type, such as by using Drupal's "Add Content" workflow), the fields defined by its content type become available. Once a node is created, its content type cannot be changed. To "switch" a node to a different content type, a repository manager would need to create a new node of the target content type, map the field values (programmatically or by copy-paste), and update any Media or children that refer to the old node to refer to the new one.
+After creating the Fields for a Content Type you'll be able to manage the form used by content creators to create Nodes of that Content Type. On The **Manage form display** tab you'll be able to edit this form by arranging the order of the fields, choose what Widget will define the entry options for a field, and then set certain settings for that Widget. Fields are arranged by dragging the cross to the left of the **Label**. They can also be removed from the form, but not the Content Type, by dragging them to the bottom of the list under the **Disabled** heading. Widgets are defined by Field Type, so an Entity reference field could use auto complete, a select list, or even checkboxes, and are chosen from a drop-down list. The widget settings are accessed through the gear on the far right of a row and may allow you to set the size of an entry field, whether the field *Label* is displayed, or if you use placeholder text.
 
-Not all content types in your Drupal site need be Islandora "resource nodes". A "resource node" content type will likely have behaviours (such as syncing to Fedora or causing derivatives to be generated) associated with it. This configuration, and the communication to the user of which content types are and are not considered to be Islandora resource nodes is left to the discretion of the site manager. In Islandora, a "resource node" is usually considered a descriptive record for "a thing", and is conceptually similar to an "Islandora Object" in 7.x, i.e. a "Fedora Object" in Fedora 3.x and below.
+
+### Content Display/Manage Display
+
+The **Manage display** tab is where you will make decisions about how to
+display the metadata. Order is arranged as above, and can again be
+dragged to the **Disabled** section to hide the field from display. You can
+choose whether a field's label is displayed above the value, in-line, or
+hidden.
 
 ## Vocabularies
 
@@ -79,7 +97,7 @@ The EDTF field type is for recording dates in [Extended Date Time Format](https:
 
 !!! tip "Nerd note:"
     Big-endian = year, month, day. Little-endian = day, month, year. Middle-endian = month, day, year.
-	
+
 When configuring the EDTF widget for a field in a content type, you can choose to allow date intervals, but doing this prevents the widget from accepting values that include times. (The EDTF standard states that date intervals cannot contain times, but the field should be able to accept either a valid EDTF range or a valid EDTF datetime, so this is a bug.)
 
 Example of valid inputs in a multi-valued EDTF Date field:
@@ -104,9 +122,9 @@ By default, EDTF date values are indexed in Solr as string values. The entered v
 !!! note "Solr note:"
     The Solr string data type requires the full field value to match the query in order to count as a match. This means that searching for `2014` will not retrieve a record where the recorded date value is `2014-11-02`.
 
-EDTF date fields may be configured as sort fields in your search results Views. Currently by default, this results in a simple ordering by the literal EDTF date string. 
+EDTF date fields may be configured as sort fields in your search results Views. Currently by default, this results in a simple ordering by the literal EDTF date string.
 
-An EDTF date field with multiple or unlimited number of allowed values may be set as a sort field. In this case, the first occurrence of the field value is used as the sorting value. 
+An EDTF date field with multiple or unlimited number of allowed values may be set as a sort field. In this case, the first occurrence of the field value is used as the sorting value.
 
 ### Typed Relation
 
@@ -245,6 +263,6 @@ Also note that the URI (`@id`) value is 'http://localhost:8000/node/1' (without 
 
 # Batch editing metadata in fields
 
-If you are editing multiple resources in order for them to have the same metadata value, the Views Bulk Edit module can help. Here is a video of [creating a view using Views Bulk Operations](https://www.youtube.com/watch?v=ZMp0lPelOZw) to apply a subject term to multiple resources simultaneously. 
+If you are editing multiple resources in order for them to have the same metadata value, the Views Bulk Edit module can help. Here is a video of [creating a view using Views Bulk Operations](https://www.youtube.com/watch?v=ZMp0lPelOZw) to apply a subject term to multiple resources simultaneously.
 
-For more complex changes, or when the values need to differ for each value, an export-modify-reimport method may be needed. Use a view to export CSV or other structured data (including an identifier such as a node id), modify the values as necessary, then use [migrate csv](../technical-documentation/migrate-csv.md) or [Workbench](../technical-documentation/migration-overview.md) to re-import and update the values. 
+For more complex changes, or when the values need to differ for each value, an export-modify-reimport method may be needed. Use a view to export CSV or other structured data (including an identifier such as a node id), modify the values as necessary, then use [migrate csv](../technical-documentation/migrate-csv.md) or [Workbench](../technical-documentation/migration-overview.md) to re-import and update the values.
