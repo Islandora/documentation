@@ -12,12 +12,10 @@ In Islandora 8 it is therefore helpful to think of objects as resource nodes. Th
 
 The typical elements of a resource node:
 
--   Content types (one or more)
+-   A content type defining metadata fields defined for the node. A content type may include any number of custom fields defined to store descriptive metadata about the object represented by the node. To function as an Islandora resource node, a content type must define two further fields: 
+    - A field denoting the 'type' of thing represented by the node (image, book, newspaper, etc.). The value of this field is used by Islandora to control views, derivative processing, and other behavior.[^1]
+	- A field in which to record the node's [membership](resource-nodes.md#members) in another node. If populated, this field creates a hierarchical relationship between parent (the node recorded in the field) and child (the node in which the parent is recorded). This may be left empty, but is required for building hierarchies for collections, subcollections, and members of collections, as well as objects (books, "compound objects", etc.) consisting of [paged content](paged-content.md).[^2]
 -   Media files (the actual files of JPEGs, MP3s, .zip, etc.) that get loaded through the form
--   Metadata fields submitted in the data entry, for example:
-    -   A field denoting the 'type' of thing you're persisting (image, book, newspaper, etc...)
-    -   A field that creates the familiar collection hierarchy
-    -   Descriptive custom fields
 -   Derivative files (thumbnails, web-friendly service files, technical metadata, and more)
 
 These resource nodes are what the librarian, student, archivist, technician, or general non-developer creates through the data entry form. It is possible to configure all elements of a resource node in Islandora 8 through Drupal. This fact allows control over how one accesses the node and how nodes are displayed and discovered online by non-developers. It also allows a repository to take full advantage of all third-party Drupal modules, themes, and distributions available.
@@ -28,10 +26,14 @@ The following pages expand on the concepts discussed above:
 
 - [Resource Nodes](resource-nodes.md)
 - [Media](media.md)
-- [Content Types](content_types.md)
+- Content Types: [Metadata](metadata.md#content-types) -- [Create / Update a Content Type](content_types.md)
 
 ### Copyright and Usage
 
 This document was originally developed by [Alex Kent](https://github.com/alexkent0) and has been adapted for general use by the Islandora community. 
 
 [![CC BY-NC 4.0](https://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-nc.svg)](https://creativecommons.org/licenses/by-nc/4.0/)
+
+[^1]: In `islandora_defaults`, this is the `field_model` field, which is populated by taxonomy terms in the `islandora_models` taxonomy vocabulary provided by the `islandora_core_feature` submodule of `Islandora/islandora`
+
+[^2]: In `islandora_defaults`, this is the `field_member_of` field.
