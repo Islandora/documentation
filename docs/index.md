@@ -49,7 +49,7 @@ vagrant up
 
 ### Islandora Playbook via Ansible
 
-To use the Islandora Playbook as an Ansible Playbook, either set ISLANDORA_DISTRO to `ubuntu/bionic64` or `centos/7` (by editing the Vagrantfile or setting a shell variable), or, use Ansible to run it against an external linux server. Either way, be prepared to wait a while as Ansible installs Drupal via drupal-project and Composer. See [Installation](installation/playbook) and [Hacking on Islandora](contributing/hacking-on-islandora) for more details. 
+To use the Islandora Playbook as an Ansible Playbook, either set ISLANDORA_DISTRO to `ubuntu/bionic64` or `centos/7` (by editing the Vagrantfile or setting a shell variable), or, use Ansible to run it against an external linux server. Either way, be prepared to wait a while as Ansible installs Drupal via drupal-project and Composer. See [Installation](installation/playbook) for more details. 
 
 
 ## Join the Community
