@@ -116,7 +116,7 @@ Reference type settings for entity reference field where you select which vocabu
 ![Screenshot of the reference type settings for an entity reference field, showing which vocabularies the autocomplete utility should query when editors are entering data.](../assets/metadata_entity_reference_config_vocabs.png)
 
 !!! tip "Data Consistency"
-    Selecting which vocabularies can be referenced from an entity reference field only affects which vocabularies will be searched when a user types into the autocomplete field in the Drupal form for adding a new item. These settings do not impose constraints on the underlying database, so it is still possible to load references to other vocabularies without being stopped or warned when ingesting data through [various migration methods](/technical-documentation/migration-overview).
+    Selecting which vocabularies can be referenced from an entity reference field only affects which vocabularies will be searched when a user types into the autocomplete field in the Drupal form for adding a new item. These settings do not impose constraints on the underlying database, so it is still possible to load references to other vocabularies without being stopped or warned when ingesting data through [various migration methods](../technical-documentation/migration-overview).
 
 ### EDTF
 
@@ -197,11 +197,9 @@ By default, facets can be created for typed relation fields that will facet base
 
 # Getting Metadata into Fedora and a Triple-store
 
-The above sections described how Drupal manages and stores metadata, but Islandora 8 provides for pushing that metadata into a Fedora 4+ repository and a triple-store. Islandora does this by using Drupal's serialization capabilities to provide a JSON-LD serialization that can be ingested by Fedora 4+ repository and triple-stores. In response to actions taken as a result of if-then configurations in [Contexts](context.md), Islandora sends notifications to the repository and triple-store that an entity available to ingest.
+Depending on the needs at your institution, you may or may not be using Fedora with your Islandora installation. You also may or may not be hoping to publish your metadata as RDF triples that can be queried in a triplestore. Both of these functionalities are driven by the JSON-LD module (written for Islandora), which provides a JSON-LD serialization of your content nodes, media nodes, as well as your taxonomy terms. This JSON-LD is what gets ingested by Fedora, and is also what is used to add RDF triples to the [blazegraph triplestore](https://islandora.github.io/documentation/installation/manual/installing_fedora_syn_and_blazegraph/) if you choose to use that service.
 
-The JSON-LD module (written for Islandora) takes an entity and its corresponding RDF mapping (a structure defined by the contributed RDF module) to create a JSON-LD serialization. An RDF mapping for a content type, media type, or vocabulary lists its fields and the RDF predicates that should be used for them.
-
-The JSON-LD serialization for an entity is available by appending `?_format=jsonld` to the entity's URL. This particular syntax takes advantage of the REST API module. Below is an example JSONLD document representing the RDF serialization of a Repository item node created in a standard islandora-playbook based vagrant VM:
+The JSON-LD serialization for an entity is available by appending `_format=jsonld` to the entity's URL. Below is an example JSON-LD document representing the RDF serialization of a Repository item node created in a standard islandora-playbook based vagrant VM:
 
 ```
 {
@@ -300,7 +298,19 @@ The JSON-LD serialization for an entity is available by appending `?_format=json
 }
 ```
 
-Because the Repository item's title field is mapped to 'dc:title' in the RDF mapping, the node's title value appears like this in the JSON-LD output:
+The RDF mapping for a content type, media type, or vocabulary defines how fields in Drupal are mapped to properties in the JSON-LD serialization. The mapping defines the RDF predicates that should be used for each field. You reference Drupal fields via their Machine Name, and the RDF predicate by using the conventional syntax `namespace:predicate`. In this example, the `dc` prefix stands for `http://purl.org/dc/terms/`, so when concatenated the final RDF predicate is `http://purl.org/dc/terms/title`.
+
+To show a small example, the RDF mapping:
+
+```
+title:
+  properties:
+    - dc:title
+```
+
+
+will map the Repository item's *title* field to `http://purl.org/dc/terms/title`. As a result, the node's title value appears like this in the JSON-LD output:
+
 ```
 "http://purl.org/dc/terms/title":[
   {
@@ -310,10 +320,22 @@ Because the Repository item's title field is mapped to 'dc:title' in the RDF map
 ],
 ```
 
-Also note that the URI (`@id`) value is 'http://localhost:8000/node/1' (without the `?_format=jsonld`). Old versions of Islandora 8 included the `?_format=jsonld`, and dealing with discrepancies is described at "[Adding back ?_format=jsonld](../technical-documentation/adding_format_jsonld.md)".
+!!! tip Adding RDF prefixes and namespaces
+    To set up prefixes for namespaces and see a list of available predefined namespaces, see the ["RDF Generation" page](https://islandora.github.io/documentation/islandora/rdf-mapping/).
+
+### Typed Relation fields in RDF
+
+Unlike other fields, which can be assigned RDF predicates in RDF Mapping yaml files, a typed relation field uses a different predicate depending on the chosen type. These predicates are assigned using the 'keys' in the key\|value configuration. The key must be formatted `namespace:predicate`, e.g. `relators:act`.
+
+!!! bug Current RDF limitations
+    The Drupal RDF module is currently limited in the complexity of graph you can generate. All fields must be mapped directly to either a literal value, or a reference to another content type instance, media type instance, or taxonomy term instance. It is not currently possible to create [blank nodes](https://en.wikipedia.org/wiki/Blank_node) or [skolemized nodes](https://www.w3.org/2011/rdf-wg/wiki/Skolemisation) for nesting fields under more complex structures.
 
 # Batch editing metadata in fields
 
 If you are editing multiple resources in order for them to have the same metadata value, the Views Bulk Edit module can help. Here is a video of [creating a view using Views Bulk Operations](https://www.youtube.com/watch?v=ZMp0lPelOZw) to apply a subject term to multiple resources simultaneously.
 
 For more complex changes, or when the values need to differ for each value, an export-modify-reimport method may be needed. Use a view to export CSV or other structured data (including an identifier such as a node id), modify the values as necessary, then use [migrate csv](../technical-documentation/migrate-csv.md) or [Workbench](../technical-documentation/migration-overview.md) to re-import and update the values.
+
+## Exporting Data
+
+One common approach for exporting your content and/or taxonomy data out of Islandora is to use Drupal's [Views Data Export](https://www.drupal.org/project/views_data_export) module. The module has extensions that can allow you to configure exports as CSV, XML, text files, and other formats based on your local needs.
