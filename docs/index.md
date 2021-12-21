@@ -29,32 +29,17 @@ Try Islandora without installing anything at [http://future.islandora.ca/](http:
 
 Anyone can log in to this sandbox as an administrator (credentials are below and on the front page) and explore the interface! However, this site is refreshed periodically so your changes will not be permanent. This site uses Islandora Defaults, a way of setting up Islandora for demonstration purposes. This is not the only way that Islandora can be made to work! This sandbox includes, on top of Islandora Defaults, some sample content and configuration (such as views and blocks, and other Drupal modules like Views Bulk Edit) to increase its usefulness as a sandbox. 
 
-### Virtual Machine Image (.ova file)
+### Ansible Playbook
 
-To try Islandora locally, you can download and run the latest [community sandbox Virtual Machine image](https://islandora.ca/try). This requires installing VirtualBox or another virtualization provider. This also uses Islandora Defaults, and similarly to the online sandbox includes sample content and other configured Views, Blocks, and Drupal modules.
+Islandora can be installed via an an [Ansible Playbook](https://github.com/Islandora-Devops/islandora-playbook), which provisions the full Islandora stack. It can be used to create a local Islandora (requiring Vagrant and Virtualbox) or can be used to provision a remote Linux server. The provisioning process involves many steps where software is downloaded and installed, so it can take a while. There is an option to get a basic ("standard") site, or to install a suite of demo configurations known as the Demo Install Profile. See [Installation - Ansible Playbook](installation/playbook) for more details.
 
-- username: admin
-- password: islandora
+### Docker
 
-### Vagrant and Islandora Base Box
-
-The latest release of Islandora Defaults is uploaded as the [Islandora 8 Base Box](https://app.vagrantup.com/islandora/boxes/8) on Vagrant Cloud. If you have Vagrant and Git installed as well as VirtualBox, you can spin up the latest release of Islandora Defaults quickly by using the [Islandora Playbook](https://github.com/Islandora-Devops/islandora-playbook). On the `dev` branch, the Vagrantfile has the ISLANDORA_DISTRO variable default to 'islandora/8'. Like this, `vagrant up` will download the latest Islandora Base Box and will skip ansible provisioning. Same credentials as above, with further access to services documented in its README file.
-
-```bash
-git clone https://github.com/Islandora-Devops/islandora-playbook
-cd islandora-playbook
-git checkout dev
-vagrant up
-```
-
-### Islandora Playbook via Ansible
-
-To use the Islandora Playbook as an Ansible Playbook, either set ISLANDORA_DISTRO to `ubuntu/bionic64` or `centos/7` (by editing the Vagrantfile or setting a shell variable), or, use Ansible to run it against an external linux server. Either way, be prepared to wait a while as Ansible installs Drupal via drupal-project and Composer. See [Installation](installation/playbook) for more details. 
-
+Islandora sites can also be created using Docker. This can be done using the ISLE-DC project, which launches the Islandora Docker images created by [Isle Buildkit](https://github.com/Islandora-Devops/isle-buildkit). Like in the Ansible Playbook, there is an option to use a pre-built demo site, or build it completely from scratch. (There is also an option to build the demo site on command, which takes a bit more time, or to use ISLE-DC to build up the environment to support a Drupal site that you have already exported.)  See [Installation - Docker ISLE](installation/docker-introduction) for more details
 
 ## Join the Community
 
-The [Islandora community](https://islandora.ca/index.php/community) is an active group of users, managers, librarians, documenters, and developers from GLAM (and beyond!) institutions worldwide. We welcome discussion and contribution through various mailing lists, channels, interest groups, and calls. The Islandora community operates under the [Islandora Code Of Conduct](https://islandora.ca/codeofconduct). See our Contributing Guidelines for more information.
+The [Islandora community](https://islandora.ca/index.php/community) is an active group of users, managers, librarians, documenters, and developers from galleries, libraries, archives, museums, and other institutions worldwide. We welcome discussion and contribution through various mailing lists, channels, interest groups, and calls. The Islandora community operates under the [Islandora Code Of Conduct](https://islandora.ca/codeofconduct). See our Contributing Guidelines for more information.
 
 
 !!! note "Documentation for previous versions"
