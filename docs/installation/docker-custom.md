@@ -107,7 +107,7 @@ First, set your `ENVIRONMENT` variable to `custom` in  your .env file in additio
 
 ```
 ENVIRONMENT=custom
-USE_SECREST=true
+USE_SECRETS=true
 DOMAIN=your-domain.org
 ```
 
