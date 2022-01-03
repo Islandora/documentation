@@ -11,27 +11,27 @@ As described in the [resource nodes section](resource-nodes.md), Islandora 8 dig
 
 ## Content Types
 
-In Drupal, *Nodes* come in different sub-types called *Content Types*. These let you define a type of content ("Article" and "Basic Page" are Drupal defaults and "Repository Item" is an Islandora specific example), the set of metadata fields that are attached to that content, and how those fields can be edited and displayed. Each content type is essentially a *metadata profile* that can be used for a piece of web content, or to describe a digital resource. You can create your own Content Types for your Islandora project or use a pre-defined one like *Repository Item* from the Islandora_defaults module. We will go over the metadata specific aspects of Content Types below, but for a fuller walkthrough of creating a Content Type [see here](https://islandora.github.io/documentation/user-documentation/content_types/#create-a-content-type).
+In Drupal, *Nodes* come in different sub-types called *Content Types*. These let you define a type of content ("Article" and "Basic Page" are Drupal defaults and "Repository Item" is an Islandora specific example), the set of metadata fields that are attached to that content, and how those fields can be edited and displayed. Each content type is essentially a *metadata profile* that can be used for a piece of web content, or to describe a digital resource. You can create your own Content Types for your Islandora project or use a pre-defined one like *Repository Item* from the Islandora_defaults module. We will go over the metadata specific aspects of Content Types below, but for a fuller walkthrough of creating a Content Type [see here](content_types.md#create-a-content-type).
 
-Not all Content Types in your Drupal site need be [*Islandora Resource Nodes*](https://islandora.github.io/documentation/user-documentation/resource-nodes/). Making a Content Type a Resource Node will associate Islandora specific behaviours (such as syncing to Fedora or causing derivatives to be generated) with it. The decision to make a content an Islandora resource node is left to the discretion of the site manager. In Islandora, a "resource node" is usually considered a descriptive record for "a thing", and is conceptually similar to an "Islandora Object" in 7.x, i.e. a "Fedora Object" in Fedora 3.x and below. [Read more on configuring a content type to be treated as a Resource Node](https://islandora.github.io/documentation/user-documentation/content_types/#create-a-content-type).
+Not all Content Types in your Drupal site need be [*Islandora Resource Nodes*](resource-nodes.md). Making a Content Type a Resource Node will associate Islandora specific behaviours (such as syncing to Fedora or causing derivatives to be generated) with it. The decision to make a content an Islandora resource node is left to the discretion of the site manager. In Islandora, a "resource node" is usually considered a descriptive record for "a thing", and is conceptually similar to an "Islandora Object" in 7.x, i.e. a "Fedora Object" in Fedora 3.x and below. [Read more on configuring a content type to be treated as a Resource Node](content_types.md#create-a-content-type).
 
 ### Fields
 
-The administrator will define the fields that are associated with a specific Content Type. The same fields can be applied to different Content Types, but the field display and editing configurations are unique to each Content Type. The names and definitions of these fields are specific to Drupal and do not have to correspond to an outside metadata schema. You will give each field a Label, Machine Name, and a specific [Field Type](#fields), like Text, Integer, EDTF, or Entity Reference (see below). Specific to the Field Type you will then define the maximum length of the field, the number of values it can contain, and what taxonomies it might link to.
+The administrator will define the fields that are associated with a specific Content Type. The same fields can be applied to different Content Types, but the field display and editing configurations are unique to each Content Type. The names and definitions of these fields are specific to Drupal and do not have to correspond to an outside metadata schema. You will give each field a Label, Machine Name, and a specific [Field Type](#field-types), like Text, Integer, EDTF, or Entity Reference (see below). Specific to the Field Type you will then define the maximum length of the field, the number of values it can contain, and what taxonomies it might link to.
 
-Fields can be added under Content Type \> Manage Fields. This tab will list all Fields, their Label, Machine Name, Field Type, and give you the option to make what edits to the definition of that field that you can.
+Fields can be added under **Administration** >> **Structure** >> **Content types** >> _Your Content Type's Name_ >> **Manage fields** (/admin/structure/types/your_type/fields). This tab will list all Fields, their Label, Machine Name, Field Type, and give you the option to make what edits to the definition of that field that you can.
 
 Certain decisions must be made when fields are created, and before any content is added, because they can not be changed later. Field Type can not be changed, so you wouldn't be able to change a text field to a taxonomy field after creation. The field's machine name also can't be changed. The number of values allowed in a field or its maximum length or type of item to reference (in the case of Entity reference fields) can not be changed after content has been added. You can, however, always add new fields to a Content Type, even after content has been added.
 
 !!! islandora "7.x Migration Note: What About My MODS XML?"
-    Even when using *islandora_defaults* there is no "official" metadata schema in Islandora. Where Islandora 7.x used MODS, and took advantage of it's hierarchical/extensible structure, Drupal Fields are a flat structure working with distinct, individual elements. You can base your fields on those in MODS, or any other schema, but that structure is up to you. The Metadata Interest Group has developed a sample [MODS-Drupal-RDF mapping](https://docs.google.com/spreadsheets/d/18u2qFJ014IIxlVpM3JXfDEFccwBZcoFsjbBGpvL0jJI/edit?pli=1#gid=0), which provides a structure upon which you can build your Drupal fields. It is used by the Repository Item content type in *islandora_defaults*.
+    Even when using *islandora_defaults* there is no "official" metadata schema in Islandora. Where Islandora 7.x used MODS, and took advantage of its hierarchical/extensible structure, Drupal Fields are a flat structure working with distinct, individual elements. You can base your fields on those in MODS, or any other schema, but that structure is up to you. The Metadata Interest Group has developed a sample [MODS-Drupal-RDF mapping](https://docs.google.com/spreadsheets/d/18u2qFJ014IIxlVpM3JXfDEFccwBZcoFsjbBGpvL0jJI/edit?pli=1#gid=0), which provides a structure upon which you can build your Drupal fields. It is used by the Repository Item content type in *islandora_defaults*.
 
 
 !!! tip "You Cannot Change The Content Type Of A Node"
     Once a node is created, its content type cannot be changed. Just as you are unable to change many aspects of a Field once it has been created, once a node has been created it is now permanently of that content type and the fields associated with it. At that point your only option would be to create a new node of the intended content type, map the field values (programmatically or by copy-paste), and update any media or children that refer to the old node to refer to the new one.
 
 
-The *islandora_defaults* module provides a **Repository Item** content type that can be used as a structure to build your collection around, or it can be used as a sample to see how fields in Content Types work. It pre-defines fields, including **Alternative Title** and **Date Issued** that could be of use in many digital repositories. The full list of fields and their field types can be seen in the screenshot below.
+The *islandora_defaults* module provides a **Repository Item** content type that can be used as a structure to build your collection around, or it can be used as a sample to see how fields in Content Types  work. It pre-defines fields, including **Alternative Title** and **Date Issued** that could be of use in many digital repositories. The full list of fields and their field types can be seen in the screenshot below.
 
 ![Screenshot of the "Manage fields" page for the "Repository Item" content type from islandora_defaults.](../assets/metadata_content_type_screenshot.png)
 
@@ -116,7 +116,7 @@ Reference type settings for entity reference field where you select which vocabu
 ![Screenshot of the reference type settings for an entity reference field, showing which vocabularies the autocomplete utility should query when editors are entering data.](../assets/metadata_entity_reference_config_vocabs.png)
 
 !!! tip "Data Consistency"
-    Selecting which vocabularies can be referenced from an entity reference field only affects which vocabularies will be searched when a user types into the autocomplete field in the Drupal form for adding a new item. These settings do not impose constraints on the underlying database, so it is still possible to load references to other vocabularies without being stopped or warned when ingesting data through [various migration methods](../technical-documentation/migration-overview).
+    Selecting which vocabularies can be referenced from an entity reference field only affects which vocabularies will be searched when a user types into the autocomplete field in the Drupal form for adding a new item. These settings do not impose constraints on the underlying database, so it is still possible to load references to other vocabularies without being stopped or warned when ingesting data through [various migration methods](../technical-documentation/migration-overview.md).
 
 ### EDTF
 
@@ -135,25 +135,22 @@ seasonal value 2019-22 as defined in the EDTF specification):
 Example of the same EDTF dates displayed using little-endian format:
 ![Screenshot of dates displayed as '2019', 'November 2019', 'Summer 2019', and '2 February 2019 02:22:22Z'.](../assets/metadata_edtf_display.png)
 
-EDTF field values cannot include textual representations of dates, as shown below in this example of a valid EDTF value ('1943-05') and an invalid value ('1943 May') with the corresponding error message. Use the formatter configurations detailed further below to achieve textual display of dates.
-![Screenshot of both a valid ("1943-05") and an invalid ("1943 May") EDTF entry. Displays the error message "Could not parse the date 'May 1943' Years must be at least 4 characters long."](../assets/metadata_edtf_invalid.png)
+EDTF field values cannot include textual representations of dates, as shown below in this example of a valid EDTF value ('1943-05') and an invalid value ('May 1943') with the corresponding error message. Use the formatter configurations detailed further below to achieve textual display of dates.
+![Screenshot of both a valid ("1943-05") and an invalid ("May 1943") EDTF entry. Displays the error message "Could not parse the date 'May 1943' Years must be at least 4 characters long."](../assets/metadata_edtf_invalid.png)
 
 
 #### Configuration for the Default EDTF Widget
 
-This configuration can be set per field by clicking the **gear** icon next to any Default EDTF field at **Administration** \>\> **Structure** \>\> **Content types** \>\> **Repository Item** \>\> **Manage form display** (admin/structure/types/manage/islandora_object/form-display)
+This configuration can be set per field by clicking the **gear** icon next to any field defined with EDTF field type at **Administration** \>\> **Structure** \>\> **Content types** \>\> **Repository Item** \>\> **Manage form display** (admin/structure/types/manage/islandora_object/form-display)
 
 ![Screenshot of the gear icon on the EDTF Widget display settings](../assets/metadata_edtf_field_settings_gear.png)
-
-Example of the same EDTF dates displayed using little-endian format:
-![Screenshot of dates displayed as '2019', 'November 2019', 'Summer 2019', and '2 February 2019 02:22:22Z'.](../assets/metadata_edtf_display.png)
 
 Configuration options include strictness level of date validation, allowing date intervals and allowing date sets.
 ![Screenshot of the gear icon on the EDTF Widget display settings](../assets/metadata_edtf_widget_settings.png)
 
 #### Configuration for the Default EDTF Formatter
 
-This configuration can be set per field by clicking the gear icon next to any Default EDTF field at **Administration** \>\> **Structure** \>\> **Content types** \>\> **Repository Item** \>\> **Manage display** (admin/structure/types/manage/islandora_object/display)
+This configuration can be set per field by clicking the gear icon next to any field defined with EDTF field type at **Administration** \>\> **Structure** \>\> **Content types** \>\> **Repository Item** \>\> **Manage display** (admin/structure/types/manage/islandora_object/display)
 
 ![Screenshot of the gear icon on the EDTF formatter settings](../assets/metadata_edtf_field_formatter_gear.png)
 
@@ -173,7 +170,7 @@ An EDTF date field with multiple or unlimited number of allowed values may be se
 
 ### Typed Relation
 
-The Typed Relation field is defined in the *controlled_access_terms* module, is an extension of Drupal's Entity Reference field, and allows the user to qualify the type of relation between the resource node and other entities, such as taxonomy terms. For example, it enables the inclusion of a resource's contributor's (assuming contributor names are modelled as taxonomy terms or some other Drupal entities) as well as their roles (such as "author", "illustrator", or "architect") in the resource node itself. Using only Drupal's Entity Reference fields, we would need individual fields for "author", "illustrator", "architect", and any other roles that may need to be made available. Using a Typed Relation field, we can have one Entity Reference field for "Contributors" and let the user pick the affiliated role from a predefined dropdown list.
+The Typed Relation field is defined in the *controlled_access_terms* module, is an extension of Drupal's Entity Reference field type, and allows the user to qualify the type of relation between the resource node and other entities, such as taxonomy terms. For example, it enables the inclusion of a resource's contributor's (assuming contributor names are modelled as taxonomy terms or some other Drupal entities) as well as their roles (such as "author", "illustrator", or "architect") in the resource node itself. Using only Drupal's Entity Reference fields, we would need individual fields for "author", "illustrator", "architect", and any other roles that may need to be made available. Using a Typed Relation field, we can have one Entity Reference field for "Contributors" and let the user pick the affiliated role from a predefined dropdown list.
 
 !!! tip "Typed relation name"
     The parts of a field are called properties, so 'entity reference' and 'relation type' are properties of the Typed Relation field type.
