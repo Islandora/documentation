@@ -31,7 +31,7 @@ Certain decisions must be made when fields are created, and before any content i
     Once a node is created, its content type cannot be changed. Just as you are unable to change many aspects of a Field once it has been created, once a node has been created it is now permanently of that content type and the fields associated with it. At that point your only option would be to create a new node of the intended content type, map the field values (programmatically or by copy-paste), and update any media or children that refer to the old node to refer to the new one.
 
 
-The *islandora_defaults* module provides a **Repository Item** content type that can be used as a structure to build your collection around, or it can be used as a sample to see how fields in Content Types  work. It pre-defines fields, including **Alternative Title** and **Date Issued** that could be of use in many digital repositories. The full list of fields and their field types can be seen in the screenshot below.
+The *islandora_defaults* module provides a **Repository Item** content type that can be used as a structure to build your collection around, or it can be used as a sample to see how fields in Content Types work. It pre-defines fields, including **Alternative Title** and **Date Issued** that could be of use in many digital repositories. The full list of fields and their field types can be seen in the screenshot below.
 
 ![Screenshot of the "Manage fields" page for the "Repository Item" content type from islandora_defaults.](../assets/metadata_content_type_screenshot.png)
 
