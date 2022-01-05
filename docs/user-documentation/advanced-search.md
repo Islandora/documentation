@@ -51,7 +51,7 @@ drush en islandora_advanced_search
 ## Configuration
 
 You can set the following configuration at **Administration** >> **Configuration** >> **Advanced Search Settings**
-(admin/config/islandora/advanced_search):
+(admin/config/search/advanced):
 
 ![screenshot of the advanced search setting page](../assets/islandora_advanced_search_settings.png)
 
