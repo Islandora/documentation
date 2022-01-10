@@ -51,7 +51,7 @@ drush en islandora_advanced_search
 ## Configuration
 
 You can set the following configuration at **Administration** >> **Configuration** >> **Advanced Search Settings**
-(admin/config/islandora/advanced_search):
+(admin/config/search/advanced):
 
 ![screenshot of the advanced search setting page](../assets/islandora_advanced_search_settings.png)
 
@@ -70,7 +70,7 @@ hierarchy of `field_member_of` for each repository item.
 Add a new `Content` solr field `field_descendant_of` to the solr index at
 `admin/config/search/search-api/index/default_solr_index/fields`.
 
-![screenshot of field_decent_of](../assets/advanced_search_field_descendant_of.png)
+![screenshot of field_decent_of](../assets/advanced_search_field_decedent_of.png)
 
 Then under `admin/config/search/search-api/index/default_solr_index/processors`
 enable `Index hierarchy` and setup the new field to index the hierarchy.
