@@ -25,7 +25,7 @@ ENVIRONMENT=local
 ```
 
 You should also change the `COMPOSE_PROJECT_NAME` variable. This determines the name of the 
-Docker containers that are created when you run `make local`. If you leave this as the default
+Docker containers that are created when you run `make local-install-profile`. If you leave this as the default
 you will need to be careful not to overwrite the containers with another install of `isle-dc`
 later.
 ```
@@ -43,7 +43,7 @@ DRUPAL_INSTALL_PROFILE=minimal
 Once you are ready, run
 
 ```bash
-make local
+make local-install-profile
 ```
 
 to install the Drupal site in your `codebase` folder and spin up all the other containers with it.
