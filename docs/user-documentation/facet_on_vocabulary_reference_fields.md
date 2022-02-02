@@ -1,13 +1,15 @@
 ## Overview
 This tutorial contains are step-by-step instructions for adding a facet on a vocabulary reference field. After a search, a block containing the configured facets appears letting the user filter their search.
 
-For a more in-depth discussion of creating facets, see [Configure Advanced Search](./documentation/user-documentation/advanced-search)
+This is a walkthrough. For a more in-depth discussion of creating facets, see [Configure Advanced Search](advanced-search.md)
+
+This tutorial works best with the "standard" install (as opposed to the install profile, which currently handles facet blocks differently). 
 
 ## Step 1: Add Vocabulary Bundles
 
 Steps 1 and 2 add the field to the Solr index.
 
-1. Go to **Admin**  >> **Configuration >> *Search and Metadata* >> **Search API** (/admin/config/search/search-api)
+1. Go to **Admin**  >> **Configuration** >> **Search and Metadata** >> **Search API** (/admin/config/search/search-api)
 1. Edit the *Default Solr content index*
 1. Open the *Configure the Taxonomy term datasource* fieldset, choose the vocabulary bundles you want to add to be indexed
 1. Click **Save**
@@ -57,3 +59,5 @@ This step adds the facets in a single block.
 1. Choose the facets to include
 1. Choose other configuration options for the block, for example change the title that displays and restrict by content type, etc. 
 1. Click **Save**.
+
+At this point, searching for content that has facet values should cause the block to appear. For more in-depth overview of search, see [Configure Advanced Search](advanced-search.md)
