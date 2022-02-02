@@ -1,6 +1,8 @@
 ## Overview
 This tutorial contains are step-by-step instructions for adding a facet on a vocabulary reference field. After a search, a block containing the configured facets appears letting the user filter their search.
 
+For a more in-depth discussion of creating facets, see [Configure Advanced Search](./documentation/user-documentation/advanced-search)
+
 ## Step 1: Add Vocabulary Bundles
 
 Steps 1 and 2 add the field to the Solr index.
@@ -30,6 +32,7 @@ Steps 1 and 2 add the field to the Solr index.
 ## Step 3: Rebuild Solr Index
 
 Now that you've added the field, you need to rebuild your Solr index. 
+
 1. Go back to *Default Solr content index* (admin/config/search/search-api/index/default_solr_index)
 1. Click on the **Index now** button.
 
