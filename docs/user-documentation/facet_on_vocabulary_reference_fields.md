@@ -9,7 +9,7 @@ This tutorial works best with the "standard" install (as opposed to the install 
 
 Steps 1 and 2 add the field to the Solr index.
 
-1. Go to **Admin**  >> **Configuration** >> **Search and Metadata** >> **Search API** (/admin/config/search/search-api)
+1. Go to **Admin**  >> **Configuration** >> **Search and Metadata** >> **Search API** (or, /admin/config/search/search-api)
 1. Edit the *Default Solr content index*
 1. Open the *Configure the Taxonomy term datasource* fieldset, choose the vocabulary bundles you want to add to be indexed
 1. Click **Save**
