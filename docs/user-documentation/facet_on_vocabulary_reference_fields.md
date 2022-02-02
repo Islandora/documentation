@@ -3,7 +3,7 @@ This tutorial contains are step-by-step instructions for adding a facet on a voc
 
 This is a walkthrough. For a more in-depth discussion of creating facets, see [Configure Advanced Search](advanced-search.md)
 
-This tutorial works best with the "standard" install (as opposed to the install profile, which currently handles facet blocks differently). 
+This tutorial currently works best with the "standard" install of the Islandora and Islandora Default modules which can be obtained from the playbook (as opposed to the install profile, which handles facet blocks differently). 
 
 ## Step 1: Add Vocabulary Bundles
 
