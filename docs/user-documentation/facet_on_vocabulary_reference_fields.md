@@ -61,3 +61,9 @@ This step adds the facets in a single block.
 1. Click **Save**.
 
 At this point, searching for content that has facet values should cause the block to appear. For more in-depth overview of search, see [Configure Advanced Search](advanced-search.md)
+
+!!! note "Facets aren't necessarily searchable" 
+    While this will create facets, the values that appear won't work (won't necessarily bring back any content) if you type them in the search box. This is because the fulltext search box uses only fulltext fields, and facets, as mentioned above, requires string fields. 
+    
+    If you want to be able to search for taxonomy term values and bring up the related nodes, you could either include the full rendered item for your content type, or you may wish to repeat step 2 for each entity reference field, and set the new fields to fulltext so that searching for term values brings back node results. 
+
