@@ -25,7 +25,7 @@ Steps 1 and 2 add the field to the Solr index.
    1. Click on the **+** next to "Taxonomy term". A bunch of subfields will appear.     
    1. Look for the field that contains "YOUR_FIELD:entity:name" and click on the "Add" button at the end of the bulleted point.
    1. Click “Done.”
-1. Find your newly added fields In the list, change the "Type" of the new field to "string" if needed
+1. Find your newly added fields In the list, and ensure the "Type" of the new field is "string" so it can be compatible with Facets.  
 1. If the "Machine name" of the new field is generic, like "name_1", change it to be the same as the part of the "Property path" up to the first : (this will be the same as the field's machine name).
 1. Click on the **Save changes** button.
 
