@@ -192,7 +192,7 @@ Relations are defined in the format *key\|value*, and the key is used in the RDF
 
 By default, facets can be created for typed relation fields that will facet based on the linked entity alone, not separating references based on the relationship type.
 
-# Getting Metadata into Fedora and a Triple-store
+## Getting Metadata into Fedora and a Triple-store
 
 Depending on the needs at your institution, you may or may not be using Fedora with your Islandora installation. You also may or may not be hoping to publish your metadata as RDF triples that can be queried in a triplestore. Both of these functionalities are driven by the JSON-LD module (written for Islandora), which provides a JSON-LD serialization of your content nodes, media nodes, as well as your taxonomy terms. This JSON-LD is what gets ingested by Fedora, and is also what is used to add RDF triples to the [blazegraph triplestore](https://islandora.github.io/documentation/installation/manual/installing_fedora_syn_and_blazegraph/) if you choose to use that service.
 
@@ -327,12 +327,12 @@ Unlike other fields, which can be assigned RDF predicates in RDF Mapping yaml fi
 !!! bug Current RDF limitations
     The Drupal RDF module is currently limited in the complexity of graph you can generate. All fields must be mapped directly to either a literal value, or a reference to another content type instance, media type instance, or taxonomy term instance. It is not currently possible to create [blank nodes](https://en.wikipedia.org/wiki/Blank_node) or [skolemized nodes](https://www.w3.org/2011/rdf-wg/wiki/Skolemisation) for nesting fields under more complex structures.
 
-# Batch editing metadata in fields
+## Batch editing metadata in fields
 
 If you are editing multiple resources in order for them to have the same metadata value, the Views Bulk Edit module can help. Here is a video of [creating a view using Views Bulk Operations](https://www.youtube.com/watch?v=ZMp0lPelOZw) to apply a subject term to multiple resources simultaneously.
 
 For more complex changes, or when the values need to differ for each value, an export-modify-reimport method may be needed. Use a view to export CSV or other structured data (including an identifier such as a node id), modify the values as necessary, then use [migrate csv](../technical-documentation/migrate-csv.md) or [Workbench](../technical-documentation/migration-overview.md) to re-import and update the values.
 
-## Exporting Data
+### Exporting Data
 
 One common approach for exporting your content and/or taxonomy data out of Islandora is to use Drupal's [Views Data Export](https://www.drupal.org/project/views_data_export) module. The module has extensions that can allow you to configure exports as CSV, XML, text files, and other formats based on your local needs.
