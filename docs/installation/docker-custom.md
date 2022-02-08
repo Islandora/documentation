@@ -31,9 +31,8 @@ To use secrets, set the following in your .env file
 USE_SECRETS=true
 ```
 
-The secrets themselves are stored in the `secrets` folder of `isle-dc`.  If you navigate to that directory, you'll see several small
-files, where each file represents a different password.  By default, they are all set to `password` and you can change them to set your
-passwords for the system.
+The secrets themselves are stored in the `secrets/live` folder of `isle-dc`.  If you navigate to that directory, you'll see several small
+files, where each file represents a different password. They are each randomly generated when you run `make local`.
 
 ## TLS
 
