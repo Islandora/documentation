@@ -49,4 +49,5 @@ make local
 to install the Drupal site in your `codebase` folder and spin up all the other containers with it.
 
 Enjoy your Islandora instance!  Check out the [basic usage documentation](../docker-basic-usage) to see
-all the endpoints that are available and how to do things like start and stop Islandora. 
+all the endpoints that are available and how to do things like start and stop Islandora. Your passwords, 
+including the Drupal admin password, can be found in the `secrets/live` directory after you run `make local`.
