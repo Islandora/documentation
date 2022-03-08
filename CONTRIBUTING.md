@@ -4,7 +4,7 @@ If you are reading this document then you are interested in contributing to Isla
 
 ## Workflows
 
-The Islandora Tech Call meets each Wednesday at 1:00 PM Eastern, and the Islandora User Call meets every second Thursday at 1:00 PM Eastern. Meeting notes and announcements are posted to the [Islandora community list](https://groups.google.com/forum/#!forum/islandora) and the [Islandora developers list](https://groups.google.com/forum/#!forum/islandora-dev). You can view meeting agendas, notes, and call-in information [here](https://github.com/Islandora/documentation/wiki#islandora-8-tech-calls). Anybody is welcome to join the calls, and add items to the agenda.
+The Islandora Tech Call meets each Wednesday at 1:00 PM Eastern. Meeting notes and announcements are posted to the [Islandora community list](https://groups.google.com/forum/#!forum/islandora). You can view meeting agendas, notes, and call-in information [here](https://github.com/Islandora/islandora-community/wiki/Weekly-Open-Tech-Call). Anybody is welcome to join the call, and add items to the agenda.
 
 ### Use cases
 
