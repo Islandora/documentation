@@ -8,7 +8,7 @@
 Choosing how we work together is an important privilege the Islandora community offers to its contributors.  Our workflow is built around engagement and consensus to encourage high quality code that is expected to meet defined standards.  All contributors are expected to follow the defined workflow.  Any contributor can propose changes to the workflow at any time by initiating a conversation on the mailing list.  Any proposed changes must be confirmed by the committers by way of an Apache rules vote in order to take effect.
 
 ## Social Dynamics
-We operate under the [Islandora Community Code of Conduct](https://islandora.ca/codeofconduct). Some additional general observations to keep in mind when interacting with others in this workflow:
+We operate under the [Islandora Community Code of Conduct](https://www.islandora.ca/code-of-conduct). Some additional general observations to keep in mind when interacting with others in this workflow:
 
 - We are all volunteers
   - Time/attention of others is a limited resource.
