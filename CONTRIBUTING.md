@@ -8,7 +8,7 @@ The Islandora Tech Call meets each Wednesday at 1:00 PM Eastern. Meeting notes a
 
 ### Use cases
 
-If you would like to submit a use case to the Islandora project, please submit an issue [here](https://github.com/Islandora/documentation/issues/new) using the [Use Case template](https://github.com/Islandora/documentation/wiki/Use-Case-template), prepending "Use Case:" to the title of the issue.
+If you would like to submit a use case to the Islandora project, please submit an issue [here](https://github.com/Islandora/documentation/issues/new) using the [Use Case template](https://github.com/Islandora/islandora-community/wiki/Use-Case-Template), prepending "Use Case:" to the title of the issue.
 
 ### Documentation
 
@@ -20,7 +20,7 @@ To request a new feature you should [open an issue in the Islandora repository](
 
 ### Report a bug
 
-To report a bug you should [open an issue in the Islandora repository](https://github.com/Islandora/documentation/issues/new) that summarizes the bug. Prepend the label "Bug:" to the title of the issue.
+To report a bug you should [open an issue in the Islandora repository](https://github.com/Islandora/documentation/issues/new) that [summarizes the bug along best practice guidelines](https://github.com/Islandora/islandora-community/wiki/Bug-Report-Template). Prepend the label "Bug:" to the title of the issue.
 
 In order to help us understand and fix the bug it would be great if you could provide us with:
 
