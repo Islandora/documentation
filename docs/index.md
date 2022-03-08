@@ -22,12 +22,11 @@ Islandora:
 
 ### Online Sandbox
 
-Try Islandora without installing anything at [http://future.islandora.ca/](http://future.islandora.ca/). 
+Try Islandora without installing anything [at sandbox.islandora.ca](https://sandbox.islandora.ca/).
 
-- username: Test
-- password: islandora
+Login credentials for the sandbox can be found [here](https://github.com/Islandora/documentation/wiki/Sandbox.Islandora.ca-online-credentials).
 
-Anyone can log in to this sandbox as an administrator (credentials are below and on the front page) and explore the interface! However, this site is refreshed periodically so your changes will not be permanent. This site uses Islandora Defaults, a way of setting up Islandora for demonstration purposes. This is not the only way that Islandora can be made to work! This sandbox includes, on top of Islandora Defaults, some sample content and configuration (such as views and blocks, and other Drupal modules like Views Bulk Edit) to increase its usefulness as a sandbox. 
+Anyone can log in to this sandbox as an administrator and explore the interface! However, this site is refreshed periodically so your changes will not be permanent. This site uses Islandora Defaults, a way of setting up Islandora for demonstration purposes. This is not the only way that Islandora can be made to work! This sandbox includes, on top of Islandora Defaults, some sample content and configuration (such as views and blocks, and other Drupal modules like Views Bulk Edit) to increase its usefulness as a sandbox. 
 
 ### Ansible Playbook
 
@@ -39,7 +38,7 @@ Islandora sites can also be created using Docker. This can be done using the ISL
 
 ## Join the Community
 
-The [Islandora community](https://islandora.ca/index.php/community) is an active group of users, managers, librarians, documenters, and developers from galleries, libraries, archives, museums, and other institutions worldwide. We welcome discussion and contribution through various mailing lists, channels, interest groups, and calls. The Islandora community operates under the [Islandora Code Of Conduct](https://islandora.ca/codeofconduct). See our Contributing Guidelines for more information.
+The [Islandora community](https://www.islandora.ca/community) is an active group of users, managers, librarians, documenters, and developers from galleries, libraries, archives, museums, and other institutions worldwide. We welcome discussion and contribution through various mailing lists, channels, interest groups, and calls. The Islandora community operates under the [Islandora Code Of Conduct](https://www.islandora.ca/code-of-conduct). See our Contributing Guidelines for more information.
 
 
 !!! note "Documentation for previous versions"
