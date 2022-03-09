@@ -7,7 +7,7 @@
 This "documentation" repository has three functions:
 
 - it houses the source code for the [documentation](https://islandora.github.io/documentation/) of the [Islandora project](https://islandora.ca/) (versions 2.x and above). 
-- its [Wiki](https://github.com/Islandora/documentation/wiki) contains the minutes for archived Islandora Tech calls and User calls. Current meeting minutes can be found on the [community-wiki](https://github.com/Islandora/islandora-community/wiki).
+- its [Wiki](https://github.com/Islandora/documentation/wiki) contains the archived minutes for Islandora Tech calls and User calls of previous years. To find current meeting minutes, please navigate to our [community-wiki](https://github.com/Islandora/islandora-community/wiki). Current Tech call notes can be found [here](https://github.com/Islandora/islandora-community/wiki/Weekly-Open-Tech-Call).
 - it hosts the central [issue queue](https://github.com/Islandora/documentation/issues) for the entire Islandora project. Add an issue there if you have a use case that isn't addressed, or find a bug.
 
 ## Documentation Structure
@@ -28,4 +28,4 @@ Documentation for Islandora Legacy (7.x) and previous versions is hosted by LYRA
 
 ## Contributing
 
-To contribute to the Islandora documentation, create an issue or a pull request. To have a pull request accepted, you need to be covered by an Islandora Foundation [Contributor License Agreement](http://islandora.ca/sites/default/files/islandora_cla.pdf) or [Corporate Contributor License Agreement](http://islandora.ca/sites/default/files/islandora_ccla.pdf). Please see the [Contributors](https://islandora.ca/contribute) pages on Islandora.ca for more information.
+To contribute to the Islandora documentation, create an issue or a pull request. To have a pull request accepted, you need to be covered by an Islandora Foundation [Contributor License Agreement](https://github.com/Islandora/islandora-community/wiki/Onboarding-Checklist#contributor-license-agreements) or [Corporate Contributor License Agreement](https://github.com/Islandora/islandora-community/wiki/Onboarding-Checklist#contributor-license-agreements). Please see the [Community](https://www.islandora.ca/community) pages on Islandora.ca for more information.
