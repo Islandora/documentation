@@ -9,12 +9,11 @@ At the end, you will have metadata in a Drupal node, a file stored in Fedora, an
 
 ## Tools
 
-For this tutorial you will need an instance of [Islandora Defaults](https://github.com/Islandora/islandora_defaults). You can use the online sandbox or one of the [sandbox VMs](https://islandora.ca/try).
+For this tutorial you will need an instance of [Islandora Defaults](https://github.com/Islandora/islandora_defaults). You can use the online sandbox or one of the [sandbox VMs](https://drive.google.com/drive/folders/1rmaIX-Rw5VmCQrkE8_nQTKLX82rVSL0z?usp=sharing).
 
-[Online Sandbox](http://future.islandora.ca)
+[Online Sandbox](http://sandbox.islandora.ca)
 
-* Username: Test
-* Password: islandora
+[login credentials for online sandbox](https://github.com/Islandora/documentation/wiki/Sandbox.Islandora.ca-online-credentials)
 
 ## Step 1: Create an Islandora Node
 
