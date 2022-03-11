@@ -22,7 +22,7 @@ Islandora:
 
 ### Online Sandbox
 
-Try Islandora without installing anything [at sandbox.islandora.ca](https://sandbox.islandora.ca/).
+Try Islandora without installing anything at [sandbox.islandora.ca](https://sandbox.islandora.ca/).
 
 Login credentials for the sandbox can be found [here](https://github.com/Islandora/documentation/wiki/Sandbox.Islandora.ca-online-credentials).
 
