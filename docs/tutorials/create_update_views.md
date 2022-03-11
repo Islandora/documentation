@@ -9,7 +9,7 @@ Views are powerful content filters that enable you to present Islandora (and oth
 
 ## Before you start
 
-- The following How-To assumes that you are using the (optional) **[Islandora Defaults](https://github.com/Islandora/islandora_defaults)** configuration. This configuration is deployed automatically if you build your Islandora site using the [Ansible Playbook](/installation/playbook), [ISLE with Docker-Compose](/installation/docker-compose), or are using the [sandbox or a Virtual Machine Image](https://islandora.ca/try)
+- The following How-To assumes that you are using the (optional) **[Islandora Defaults](https://github.com/Islandora/islandora_defaults)** configuration. This configuration is deployed automatically if you build your Islandora site using the [Ansible Playbook](/documentation/installation/playbook), [ISLE with Docker-Compose](/documentation/installation/docker-compose), or are using the [sandbox or a Virtual Machine Image](https://sandbox.islandora.ca/)
 - This How-To assumes familiarity with Drupal terms such as [Node](https://www.drupal.org/docs/7/nodes-content-types-and-fields/about-nodes), [Content Type](https://www.drupal.org/docs/7/nodes-content-types-and-fields/working-with-content-types-and-fields-drupal-7-and-later), and [Media](https://www.drupal.org/docs/8/core/modules/media).
 
 ## How to modify an existing view
