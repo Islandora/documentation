@@ -378,7 +378,7 @@ sudo chown -R tomcat:tomcat /opt/blazegraph
 
 ### Downloading and Placing the Blazegraph WAR
 
-The Blazegraph `.war` file can be found in a few different places, but to ensure we’re able to easily `wget` it, we’re going to use the [maven.org](https://maven.org/) repository link to grab it.
+The Blazegraph `.war` file can be found in a few different places, but to ensure we’re able to easily `wget` it, we’re going to use the [maven.org](https://search.maven.org/) repository link to grab it.
 
 ```bash
 cd /opt
