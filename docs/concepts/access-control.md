@@ -27,7 +27,7 @@ Known strategies for implementing access control in Drupal include:
 Drupal's concepts of "published" and "unpublished" for nodes and media apply to Islandora just as they do in Drupal. _Usually_, published content is visible to the entire world (without any authentication), while unpublished content can only be accessed by selected users - usually administrators, other privileged roles, and the user who created the content. This is configurable through the Drupal Permissions interface. 
 
 
-All Drupal permissions are granted to _roles_, not individual users. Read more [documentation on Users](/user-documentation/users). 
+All Drupal permissions are granted to _roles_, not individual users. Read more [documentation on Users, roles, and permissions](/https://www.drupal.org/node/120614). 
 
 The extent of the configurability of Drupal Core's access control (excluding revisions) is provided by the following permissions:
 
