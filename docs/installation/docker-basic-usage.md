@@ -73,7 +73,7 @@ You can do this easily with
 docker-compose up -d
 ```
 
-Even if the site is up and running, that commnad will only retart the containers it needs to.
+Even if the site is up and running, that command will only retart the containers it needs to.
 
 ### Listing services
 
