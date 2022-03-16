@@ -6,9 +6,9 @@
 
 This "documentation" repository has three functions:
 
-- it houses the source code for the [documentation](https://islandora.github.io/documentation/) of the [Islandora project](https://islandora.ca/) (versions 2.x and above). 
-- it hosts the central [issue queue](https://github.com/Islandora/documentation/issues) for the entire Islandora project. Add an issue there if you have a use case that isn't addressed, or find a bug.
-- its [Wiki](https://github.com/Islandora/documentation/wiki) contains the archived minutes for Islandora Tech calls and User calls of previous years. To find current meeting minutes, please navigate to our [community-wiki](https://github.com/Islandora/islandora-community/wiki).
+- it **houses the source code for the** [**documentation**](https://islandora.github.io/documentation/) of the [**Islandora project**](https://islandora.ca/) (versions 2.x and above). 
+- it **hosts the central** [**issue queue**](https://github.com/Islandora/documentation/issues) **for the entire Islandora project**. Add an issue there if you have a use case that isn't addressed, or find a bug.
+- its [Wiki](https://github.com/Islandora/documentation/wiki) **contains the archived minutes** for Islandora Tech calls and User calls of previous years. **To find current meeting minutes, please navigate to our** [**community-wiki**](https://github.com/Islandora/islandora-community/wiki).
 
 ## Documentation Structure
 
