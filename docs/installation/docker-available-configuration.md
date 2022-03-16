@@ -58,10 +58,11 @@ file that contains the changes you've made.
 Whether or not you want to use secrets.  For demo and development environments, secrets are
 not required.  They are essential if you are running a production environment, though.
 
-Secrets are contained in the `secrets` folder withiin your `isle-dc` installation.  Each file represents
+Secrets are contained in the `secrets` folder within your `isle-dc` installation.  Each file represents
 an individual secret, and its contents are the value you're trying to protect.
 
-Available values for this setting are
+Available values for this setting are:
+
 - `true`
 - `false`
 
