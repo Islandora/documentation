@@ -7,10 +7,10 @@ Using ISLE, you can spin up a repository that is exactly like future.islandora.c
 
 ## Getting Started
 
-To get started with a **demo** environment, run the following command from your `isle-dc` directory:
+To get started with a **demo** environment using the demo install profile, run the following command from your `isle-dc` directory:
 
 ```bash
-make demo
+make demo-install-profile
 ```
 
 ## Kicking the Tires
