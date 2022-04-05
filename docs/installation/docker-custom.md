@@ -48,53 +48,23 @@ certificate authority.  As long as the certificates match the `DOMAIN` variable 
 
 ### Using Let's Encrypt instead of Certificate Files
 
-Full support for Let's Encrypt is not available yet with ISLE, but will be soon.  It can be done by hand though.  Just understand that it takes editing your `docker-compose.yml` file, and those changes will be destroyed if you regenerate your `docker-compose.yml` file for any reason.  Be sure to back up your `docker-compose.yml` file once you have things in place.
-
-#### The acme.json file
-Create an empty `acme` folder in `isle-dc` and bind mount it into Traefik.  When Traefik start up, it will write `acme.json` to this folder. Your `volumes` section for
-`traefik` in your `docker-compose.yml` file should look like
+To use Let's Encrypt to acquire your SSL Certificate, set the following in your .env file
 
 ```
-    volumes:
-    - ./certs:/etc/ssl/traefik:rw
-    - ./tls.yml:/etc/traefik/tls.yml:rw
-    - ./acme:/acme:rw
-```
-
-#### Creating the certificate resolver
-
-Add the following to the `commands` section for `traefik` to tell it to use Let's Encrypt.
-
-```
-      --certificatesresolvers.myresolver.acme.httpchallenge=true
-      --certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=http
-      --certificatesresolvers.myresolver.acme.email=your-mail@example.org
-      --certificatesresolvers.myresolver.acme.storage=/acme/acme.json
-      --certificatesResolvers.myresolver.acme.caServer=https://acme-v02.api.letsencrypt.org/directory
+USE_ACME=true
+ACME_EMAIL=your-email@example.org
 ```
 
 Be sure to replace `your-mail@example.org` with the email address you've associated with Let's Encrypt.
 
-#### Adding the certificate resolver to routes
-
-For the Drupal, Matomo, and Cantaloupe services, you'll need to add labels to instruct Traefik to use the `myresolver` certificate resolver you just created.
-
-For example, for Drupal
-
-```
-traefik.http.routers.isle-dc-drupal_https.tls.certresolver: myresolver
-```
-
 #### Troubleshooting
 
-If you are still getting security exceptions, check what certificate is being used through your browser.  Setting `--log.level=DEBUG` in the `commands` section
-for `traefik` will help out greatly when debugging.  You can tail the logs with `docker-compose logs -tf traefik`
+If you are still getting security exceptions, check what certificate is being used through your browser.  Setting `TRAEFIK_LOG_LEVEL=DEBUG` in your `.env` file will help out greatly when debugging Traefik.  You can tail the logs with `docker-compose logs -tf traefik`
 
-If you aren't careful, you can hit Let's Encrypt's rate limit, and you'll be locked out for up to a week!  If you want to use their staging server instead
-while testing things out, use 
+If you aren't careful, you can hit Let's Encrypt's rate limit, and you'll be locked out for up to a week!  If you want to use their staging server instead while testing things out, add the following to your .env file
 
 ```
-      --certificatesResolvers.myresolver.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory
+ACME_SERVER=https://acme-staging-v02.api.letsencrypt.org/directory
 ```
 
 You'll still get security exceptions when it's working, but you should be able to check the certificate from the browser and confirm you are
