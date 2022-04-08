@@ -14,9 +14,9 @@ These are defined under [Authorization](./using-rest-endpoints.md#authorization)
 
 ![REST configuration](../assets/rest-node-configuration.png)
 
-The above setup shows that you can perform a POST request against a node at the `/node` endpoint with a body in the JSON format.
+The above setup shows a configuration where the JSON format is enabled for GETE, PATCH, DELETE, and POST, with auththentication types "basic_auth" and "jwt_auth" enabled for each method. Thus, with this configuration, you can perform a POST request against a node at the `/node` endpoint with a body in the JSON format.
 
-To create a node you need to provide two elements in your message body. The node type and any _required_ field values.
+To create a node, you need to provide two elements in your message body: the node type and any required field values.
 
 For the islandora_defaults included Repository Item these are:
 
@@ -26,7 +26,7 @@ For the islandora_defaults included Repository Item these are:
 
 A good way to make your first POST request is to perform a GET request against an existing node and erase all the extra content.
 
-You can find more information about [GET requests here](./rest-get.md)
+You can find more information about [GET requests here](./rest-get.md).
 
 Again we are using the json format.
 
@@ -44,7 +44,7 @@ Look for the **type** element
 ]
 ```
 
-In our example "islandora_object" is the type of the default "Repository Item", if you have created a new type you will have a different target_id.
+In our example "islandora_object" is the machine name of the content type "Repository Item". If you have created a new type you will have a different target_id.
 
 You will not need the `target_uuid`.
 
@@ -73,7 +73,7 @@ Lastly look for the **field_model** element
 
 You can find the models by browsing the taxonomy terms available at `http://localhost:8000/admin/structure/taxonomy/manage/islandora_models/overview`
 
-In my example installation 24 is an "Image", but let's create a collection which is 23.
+In my example installation, term 24 is an "Image", but let's create a collection which is term 23.
 
 **Note**: Taxonomy terms may vary between instances and you should verify the correct number for your installation.
 
@@ -143,15 +143,15 @@ The parts of the above request are:
 
 ## Files and Media
 
-Drupal is supposed to have a way to upload files, but this seems to require the use of an X-CSRF-Token, which can only be retrieved using Cookie authentication and even then does not allow you to upload.
+The Drupal REST UI is supposed to have a way to upload files, but this seems to require the use of an X-CSRF-Token, which can only be retrieved using Cookie authentication and even then does not allow you to upload.
 
-Consequently there is a REST endpoint not listed in the REST UI, because it is not configurable and is part of the Islandora 8 system.
+However there is a special REST endpoint created by Islandora, which is less configurable and is not part of the above-mentioned REST UI.
 
 This endpoint is available at `http://localhost:8000/node/{node id}/media/{media type}/{media use}`
 
 It only accepts PUT requests. If the media and file don't exist they are created, if they exist the file is updated with the new body.
 
-The node and taxonomy term are used to search (via an [entity query](https://api.drupal.org/api/drupal/core!lib!Drupal.php/function/Drupal%3A%3AentityQuery/8.6.x)) for a media. If this media exists the body of the file is replaced with the new content, otherwise a new file is created to hold the contents.
+The node id and taxonomy term id are used to search (via an [entity query](https://api.drupal.org/api/drupal/core!lib!Drupal.php/function/Drupal%3A%3AentityQuery/8.6.x)) for a matching media. If this media exists the body of the file is replaced with the new content, otherwise a new file and media are created to hold the content.
 
 The tokens to this URI are as follows:
 
@@ -161,7 +161,7 @@ The tokens to this URI are as follows:
 
 You can find the media use taxonomy terms at `http://localhost:8000/admin/structure/taxonomy/manage/islandora_media_use/overview`
 
-So the body of the request is the actual binary file to upload.
+The body of the request is the actual binary file to upload.
 
 &#x1F34E; For example:
 
