@@ -33,7 +33,7 @@ We operate under the [Islandora Community Code of Conduct](https://www.islandora
   - If there is an urgent need for the pull request to be addressed quickly, indicate the need in the pull request template or a comment.
   - Complexity should also be taken into account when evaluating how quickly to merge a pull request. Changes that affect core modules or make extensive changes should receive more review and testing.
 - All interested parties should be satisfied before something is merged; no hard numbers. If you know who is likely to be interested, tag them. Tag the creator of the issue if possible. Make a reasonable effort.
-- If a pull request languishes without response when one is needed, tag @Islandora/8-x-committers (or @Islandora-Devops/committers if you’re working on install code) with a reminder and/or put the issue on the agenda for the next Islandora 8 Tech Call
+- If a pull request languishes without response when one is needed, tag @Islandora/8-x-committers (or @Islandora-Devops/committers if you’re working on install code) with a reminder and/or put the issue on the agenda for the next Islandora Tech Call
 - All contributions to GitHub must be accompanied by either an Individual Contributor License or a Corporate Contributor License covering the contributor.
 
 #### Development Workflow:
