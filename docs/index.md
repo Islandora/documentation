@@ -8,7 +8,7 @@ Islandora:
 
 [//]: # (We should probably replace as many of the links in this section as possible with links to within this documentation, and make it clear which are internal links and which link out.) 
 - **Is native Drupal** - With Islandora, you can create preservation-ready digital resources using Drupal nodes, media, files, and taxonomy terms. A suite of customized Drupal resource types and configurations that illustrate Islandora's capabilities are packaged as the [Islandora Defaults module](https://github.com/Islandora/islandora_defaults).
-- **Integrates with Fedora** - Drupal resources can be stored in Duraspace's [Fedora 5.x Repository](https://wiki.duraspace.org/display/FF/Fedora+Repository+Home) as binaries (files) and RDF metadata.
+- **Integrates with Fedora** - Drupal resources can be stored in Lyrasis's [Fedora Repository](https://wiki.duraspace.org/display/FF/Fedora+Repository+Home) (version 5.0 or greater) as binaries (files) and RDF metadata.
 - **Uses microservices** - Islandora provides an architecture for messaging and integration with any number of microservices, that provide services outside of the Drupal framework. Islandora's [Crayfish](https://github.com/Islandora/crayfish) suite of microservices provides functionality for synchronizing resources into Fedora and for automatically generating helper files, called derivatives.
 - **Can handle messages at scale** - Islandora created [Alpaca](https://github.com/Islandora/Alpaca), an integration middleware based on Apache Camel, to handle messaging and queueing at an enterprise scale. To the user, this means large batch uploads can be processed gracefully.
 
