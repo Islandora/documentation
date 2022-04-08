@@ -30,7 +30,7 @@ Anyone can log in to this sandbox as an administrator and explore the interface!
 
 ### Ansible Playbook
 
-Islandora can be installed via an an [Ansible Playbook](https://github.com/Islandora-Devops/islandora-playbook), a set of instructions which provisions the full Islandora stack. It can be used to create a locally installed Islandora (requiring your computer to have Vagrant and Virtualbox) or can be used to provision a remote Linux server. The provisioning process involves many steps where software is downloaded and installed, so it can take a while. There is an option to get a basic ("standard") site, or to install a suite of demo configurations known as the Demo Install Profile. See [Installation - Ansible Playbook](installation/playbook) for more details.
+Islandora can be installed via an an [Ansible Playbook](https://github.com/Islandora-Devops/islandora-playbook), a machine-operable set of instructions which provisions the full Islandora stack. It can be used to create a locally installed Islandora (requiring your computer to have Vagrant and Virtualbox) or can be used to provision a remote Linux server. The provisioning process involves many steps where software is downloaded and installed, so it can take a while. There is an option to get a basic ("standard") site, or to install a suite of demo configurations known as the Demo Install Profile. See [Installation - Ansible Playbook](installation/playbook) for more details.
 
 ### Docker
 
