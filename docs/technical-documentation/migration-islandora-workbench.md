@@ -77,6 +77,6 @@ This [video](https://www.youtube.com/watch?v=hNS5ouqdcfk) (Dec 17, 2020) is a de
 
 #### Islandora Online: Islandora Migration Tools
 
-This [video](https://www.youtube.com/watch?v=95Bnix-z1zY) (Aug 10, 2020) provides an overview of the **Islandora Workbench** and the two other options available to migrate data into an Islandora 8 installation.
+This [video](https://www.youtube.com/watch?v=95Bnix-z1zY) (Aug 10, 2020) provides an overview of the **Islandora Workbench** and the two other options available to migrate data into an Islandora installation.
 
 [![Islandora Online: Islandora Migration Tools](https://img.youtube.com/vi/95Bnix-z1zY/0.jpg)](https://www.youtube.com/watch?v=95Bnix-z1zY)

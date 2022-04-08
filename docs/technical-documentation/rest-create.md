@@ -14,7 +14,7 @@ These are defined under [Authorization](./using-rest-endpoints.md#authorization)
 
 ![REST configuration](../assets/rest-node-configuration.png)
 
-The above setup shows a configuration where the JSON format is enabled for GETE, PATCH, DELETE, and POST, with auththentication types "basic_auth" and "jwt_auth" enabled for each method. Thus, with this configuration, you can perform a POST request against a node at the `/node` endpoint with a body in the JSON format.
+The above setup shows a configuration where the JSON format is enabled for GET, PATCH, DELETE, and POST, with auththentication types "basic_auth" and "jwt_auth" enabled for each method. Thus, with this configuration, you can perform a POST request against a node at the `/node` endpoint with a body in the JSON format.
 
 To create a node, you need to provide two elements in your message body: the node type and any required field values.
 

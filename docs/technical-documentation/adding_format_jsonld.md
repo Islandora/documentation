@@ -7,7 +7,7 @@ be something like `http://localhost:8000/node/1` and not `http://localhost:8000/
 
 ## Pre-1.0 installations.
 
-If you are using a __very__ early version of Islandora 8 (pre-release), then you may have URIs with `_format=jsonld` at the end of them.
+If you are using a __very__ early version of Islandora "8" (pre-release), then you may have URIs with `_format=jsonld` at the end of them.
 
 If you update to newer code, you will need to ensure that your site is configured to add `?_format=jsonld`
 back to the URLs if you want to maintain consistency.
@@ -21,7 +21,7 @@ To turn the `?_format` parameter back on:
 - Go to `admin/config/search/jsonld` and confirm the *"Remove jsonld parameter from @ids"* checkbox is **unchecked**.
 - Add `strip_format_jsonld: false` to your Milliner config. If you deployed using the default Islandora-playbook this file would be located at `/var/www/html/Crayfish/Milliner/cfg/config.yaml`.
 
-If you are using [Islandora-playbook](https://github.com/Islandora-Devops/Islandora-playbook) and are provisioning new environments for your older Islandora 8, you'll want to lock down the variables in your inventory that control this config.
+If you are using [Islandora-playbook](https://github.com/Islandora-Devops/Islandora-playbook) and are provisioning new environments for your older Islandora, you'll want to lock down the variables in your inventory that control this config.
 
 - `crayfish_milliner_strip_format_jsonld: true`
 - `webserver_app_jsonld_remove_format: 1`

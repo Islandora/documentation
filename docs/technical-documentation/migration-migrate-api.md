@@ -1,10 +1,10 @@
 ## Migrate API
 
-Uses the Drupal 8 [Migrate API](https://www.drupal.org/docs/8/api/migrate-api/migrate-api-overview), which "provides services for migrating data from a source system to Drupal 8.
+Uses the Drupal [Migrate API](https://www.drupal.org/docs/drupal-apis/migrate-api/migrate-api-overview), which "provides services for migrating data from a source system" to Drupal 8, 9, or 10.
 
 The "source system" can be almost anything:
 
-- an Islandora 7 system
+- an Islandora Legacy system
 - a group of scanned images and their metadata inside a CSV file
 - a web API
 
@@ -30,7 +30,7 @@ Why use the Migrate API?
     - Documentation section on [migrate_islandora_csv](migrate-csv.md)
 - **migrate_7x_claw**
     - <https://github.com/Islandora-Devops/migrate_7x_claw>
-      - A tool to get all your Islandora 7 content migrated over
+      - A tool to get all your Islandora Legacy content migrated over
     - Documentation section on [migrate_7x_claw](migrate-7x)
 
 #### Recap of migrate_islandora_csv
@@ -46,7 +46,7 @@ Why use the Migrate API?
 
 #### Recap of migrate_7x_claw
 
-- Designed to migrate Islandora 7 data to Islandora 8.
+- Designed to migrate Islandora Legacy data to Islandora.
 - DATASTREAMS
     - All of your datasteams, including the audit trail, are migrated
 - METADATA
@@ -57,7 +57,7 @@ Why use the Migrate API?
 ##### To make migrate_7x_claw work you need
 
 - Access
-    - You need credentials to both your Islandora 7 and 8 installs.
+    - You need credentials to both your Islandora Legacy and Islandora installs.
 - Migrate API Knowledge
     - The tutorial for migrate_islandora_csv
 Is still relevant
