@@ -54,10 +54,10 @@ The following new display modes are defined:
 | Type    | View Mode      | Comment                                                              |
 |---------|----------------|----------------------------------------------------------------------|
 | Content | Binary         |                                                                      |
-| Content | Open Seadragon |                                                                      |
+| Content | OpenSeadragon |                                                                      |
 | Content | PDFjs          |                                                                      |
 | Content | Teaser         | This seems to be a re-definition of the built-in "Teaser" view mode. |
-| Media   | Open Seadragon |                                                                      |
+| Media   | OpenSeadragon |                                                                      |
 | Media   | PDFjs          |                                                                      |
 
 
@@ -165,9 +165,9 @@ The contexts provided by Islandora Defaults are organized into groups: **Indexin
 |---|---|---|---|---|
 | Binary (binary) | Binary Object Display |**Node has term with URI**: Binary (23)|**Change view mode**: Binary|See node.islandora_object.binary under Display Modes||
 | Collection (collection) | Display block of children |**Node has term with URI**: Collection (24)|**Blocks**: "Members" placed in Content Suffix in Carapace||
-| Open Seadragon (open_seadragon) | Open Seadragon viewer for Images |**Node has term with URI**:Open Seadragon (2)|**Change view mode**: Open Seadragon |See node.islandora_object.open_seadragon under Display Modes||
+| OpenSeadragon (open_seadragon) | OpenSeadragon viewer for Images |**Node has term with URI**:OpenSeadragon (2)|**Change view mode**: OpenSeadragon |See node.islandora_object.open_seadragon under Display Modes||
 | PDFjs Viewer (pdfjs) | Displays file using the PDFjs viewer |**Node has term with URI**: PDFjs (3)|**Change view mode:** PDFjs|See node.islandora_object.pdfjs under Display Modes|
-| Paged Content - Openseadragon (openseadragon_block) | Display a block for Paged Content |**Node has term with URI:** Open Seadragon (2) AND Paged Content (28)|**Blocks** Openseadragon block placed in Main Content in Carapace||
+| Paged Content - OpenSeadragon (openseadragon_block) | Display a block for Paged Content |**Node has term with URI:** OpenSeadragon (2) AND Paged Content (28)|**Blocks** OpenSeadragon block placed in Main Content in Carapace||
 
 
 ## Actions
@@ -192,7 +192,7 @@ Contents of the islandora_defaults_tags migration:
 
 |Vocabulary|Term name|Description|External Uri|
 |---|---|---|---|
-|islandora_display|"Open Seadragon"|"Display using the Open Seadragon viewer"|http://openseadragon.github.io|
+|islandora_display|"OpenSeadragon"|"Display using the OpenSeadragon viewer"|http://openseadragon.github.io|
 |islandora_display|"PDFjs"|"Display using the PDF.js viewer"|http://mozilla.github.io/pdf.js|
 |resource_types|"Collection"|"An aggregation of resources"|http://purl.org/dc/dcmitype/Collection|
 |resource_types|"Dataset"|"Data encoded in a defined structure"|http://purl.org/dc/dcmitype/Dataset|

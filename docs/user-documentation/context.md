@@ -12,9 +12,9 @@ Let's look at the example of how Context can determine how an object is displaye
 
 ![Display Hints field in node edit form](../assets/resource_nodes_display_hints.png)
 
- This  functionality is accomplished via the "Open Seadragon" Context, which, as its configuration suggests, checks as its condition whether the node as the "Open Seadragon" tag and if so, reacts by using the view mode "Open Seadragon":
+ This  functionality is accomplished via the "OpenSeadragon" Context, which, as its configuration suggests, checks as its condition whether the node as the "OpenSeadragon" tag and if so, reacts by using the view mode "OpenSeadragon":
 
-![Open Seadragon Context configuration](../assets/context_openseadragon_configuration.png)
+![OpenSeadragon Context configuration](../assets/context_openseadragon_configuration.png)
 
 ### Context and Actions
 

@@ -115,7 +115,7 @@ completed all the above steps and are absolutely certain the release is ready fo
 
 Release the `jsonld` module by creating a new release for it in Github.
 
-### Release Openseadragon
+### Release OpenSeadragon
 
 Release the `openseadragon` module by creating a new release for it in Github.
 
