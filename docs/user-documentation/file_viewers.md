@@ -26,11 +26,11 @@ Here is how viewers are implemented in Islandora Defaults. This example uses Ope
 
 ### Expected behaviour for this scenario:
 
-Create a Repository Item, and tag it with "OpenSeadragon" (under Display Hints). Add a Media of type "File" to that node, upload a file such as a tiff or jpeg-2000, and tag it with "Original File" (under Media Use). Save and publish the Media. Go to the Repository Item's page, and you should see your file displayed in the viewer.
+Create a Repository Item, and tag it with "OpenSeadragon" (under Display Hints). Add a Media of type "File" to that node, upload a file such as a TIFF or jpeg-2000, and tag it with "Original File" (under Media Use). Save and publish the Media. Go to the Repository Item's page, and you should see your file displayed in the viewer.
 
 <!-- There should be a link here, on the word "File", that points to a page explaining why large images need to be Files and not Images. That is out of scope here. -->
 
-<!-- "a file such as tiff or jpeg-2000" = "a file that works with Cantaloupe". OpenSeadragon relies on an IIIF image server, in our case, Cantaloupe, and that is what determines the kinds of files that this works with. This is also out of scope for this page. -->
+<!-- "a file such as TIFF or jpeg-2000" = "a file that works with Cantaloupe". OpenSeadragon relies on an IIIF image server, in our case, Cantaloupe, and that is what determines the kinds of files that this works with. This is also out of scope for this page. -->
 
 ### Components of this scenario:
 
