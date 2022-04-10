@@ -2,9 +2,9 @@ Drupal 8 recognizes files (such as images, audio files, video files, etc.) but w
 "media" to allow us to attach fields to files. Drupal uses a media's fields to store information about the media's file, such as file
 size, width and height (for images), alt text (for images), creation date, and so on.
 
-!!! note "Compared to Islandora 7"
-    In Islandora 7, this sort of technical metadata would have been stored as datastream properties or as additional metadata-specific datastreams.
-    In Islandora 8, each datastream holds its technical metadata using an associated media entity.
+!!! note "Compared to Islandora Legacy"
+    In Islandora Legacy, this sort of technical metadata would have been stored as datastream properties or as additional metadata-specific datastreams.
+    In Islandora, each datastream holds its technical metadata using an associated media entity.
     
 Fedora will store the media's file as a binary resource and use the media's properties as the binary resource's description.
 
@@ -48,7 +48,7 @@ Third, the metadata synced from the Media into Fedora at [old Fedora URI]/fcr:me
 Islandora objects can have any number of media associated with them. Media store a reference to the resource node they belong to using a special field,
 "Media Of". By changing this field's value, you can change which resource node owns the media, and therefore, where it gets displayed or managed.
 
-!!! note "Compared to Islandora 7"
+!!! note "Compared to Islandora Legacy"
     The direction of the relationship between objects and datastreams is reversed when compared to Islandora 7.  Generally speaking,
     objects are unaware of their datastreams, and it's a Drupal view that lists datastreams for an object.
 
@@ -61,8 +61,8 @@ default set of "Media Use" terms are taken from the [PCDM Use Extension](https:/
 
 ![Media tab](../assets/media_use_vocabulary_media_form.png)
 
-!!! note "Compared to Islandora 7"
-    Terms from the Media Usage vocabulary are very similar to DSIDs in Islandora 7.  The only difference is that a DSID is immutable,
+!!! note "Compared to Islandora Legacy"
+    Terms from the Media Usage vocabulary are very similar to DSIDs in Islandora Legacy.  The only difference is that a DSID is immutable,
     but a media's usage can be changed at any time through the media's edit form.
 
 ## Derivatives
