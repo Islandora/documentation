@@ -27,7 +27,7 @@ This tutorial introduces you to the Drupal Migrate tools available to create Isl
 This tutorial uses the configurations and code available in the [migrate_islandora_csv](https://github.com/Islandora/migrate_islandora_csv) module which, when enabled, will create three example migrations ready for you to use with the Migrate API. Each migration comes from one of the files in the `config/install` folder. We'll walk through them in detail below. The module is also uses [Features](https://www.drupal.org/project/feature) which allows you to make changes to the configuration files and sync those changes into your Drupal site.
 
 !!! note "A note on using Features"
-    This tutorial (and Islandora in general) makes heavy use of Features, which is an easy way to ship and install Drupal configuration. However, after enabling a Feature module, the code in that module's directory is no longer "live", as the configuration now resides in the Drupal database. If you change code in the YAML files, it will not take effect until you re-import the Feature. There is a walkthrough in the "Configuration" section of the [Migrate 7.x to Islandora](https://github.com/Islandora-Devops/migrate_7x_claw) tutorial. 
+    This tutorial (and Islandora in general) makes heavy use of Features, which is an easy way to ship and install Drupal configuration. However, after enabling a Feature module, the code in that module's directory is no longer "live", as the configuration now resides in the Drupal database. If you change code in the YAML files, it will not take effect until you re-import the Feature. There is a walkthrough in the "Configuration" section of the [Migrate 7.x to Islandora](https://github.com/Islandora-Devops/migrate_7x_claw) tutorial.
 
 Sample CSV and images are also included in the module as a convenience so they are easily available on the Drupal server running the migration. (This is not the recommended method for making files available to Drupal in a real migration.)
 
@@ -131,18 +131,18 @@ source:
   delimiter: ','
 
   # 1 means you have a header row, 0 means you don't
-  header_row_count: 1 
+  header_row_count: 1
 
   # Each migration needs a unique key per row in the CSV.  Here we're using the file path.
-  keys: 
-    - file 
+  keys:
+    - file
 
   # You can't enter string literals into a process plugin, but you can give it a constant as a 'source'.
   constants:
     # Islandora uses Flysystem and stream wrappers to work with files.  What we're really saying here is
     # to put these files in Fedora in a 'csv_migration' folder.  It doesn't matter if the directory
     # doesn't exist yet, it will get created for you automatically.
-    destination_dir: 'fedora://csv_migration' 
+    destination_dir: 'fedora://csv_migration'
 
 process:
 
@@ -176,7 +176,7 @@ process:
     plugin: file_copy
     source:
       - file # The source column in the CSV
-      - '@destination' # The destination entry from above  
+      - '@destination' # The destination entry from above
 
 destination:
   # These are Drupal 'image' entities we're making, not just plain 'file' entities.
@@ -201,10 +201,10 @@ source:
   path: '/var/www/html/drupal/web/modules/contrib/migrate_islandora_csv/data/migration.csv'
   delimiter: ','
   header_row_count: 1
-  keys: 
-    - file 
+  keys:
+    - file
   constants:
-    destination_dir: 'fedora://csv_migration' 
+    destination_dir: 'fedora://csv_migration'
 ```
 You can see we provide a path to its location, what delimiter to use, if it uses a header row, and which column contains a unique key for each entry.  Constants can also be defined here (more on those later).
 
@@ -232,7 +232,7 @@ In the `process` section of the migration, we're copying the images over into a 
     plugin: file_copy
     source:
       - file
-      - '@destination'  
+      - '@destination'
 ```
 To do this, we're using the `file_copy` process plugin.  But first, we have to know where a file is located and where it should be copied to.  We know where the file resides, we have that in the CSV's `file` column.  But we're going to have to do some string manipulation in order to generate the new location where we want the file copied. We're trying to convert something like `/var/www/html/drupal/web/modules/contrib/migrate_islandora_csv/data/images/Free Smells.jpg` to `fedora://csv_migration/Free Smells.jpg`.
 
@@ -331,8 +331,8 @@ dependencies:
     module:
       - migrate_islandora_csv
 
-id: node 
-label: Import Nodes from CSV 
+id: node
+label: Import Nodes from CSV
 migration_group: migrate_islandora_csv
 
 source:
@@ -344,12 +344,12 @@ source:
 
   # Each migration needs a unique key per row in the csv.  Here we're using the file path.
   keys:
-    - file 
+    - file
 
   # You can't enter string literals into a process plugin, but you can give it a constant as a 'source'.
   constants:
     # We're tagging our nodes as Images
-    model: Image 
+    model: Image
 
     # Everything gets created as admin
     uid: 1
@@ -364,7 +364,7 @@ process:
   # in.
   field_alternative_title:
     plugin: skip_on_empty
-    source: subtitle 
+    source: subtitle
     method: process
 
   field_description: description
@@ -377,16 +377,16 @@ process:
     plugin: entity_lookup
     source: constants/model
     entity_type: taxonomy_term
-    value_key: name 
+    value_key: name
     bundle_key: vid
-    bundle: islandora_models 
+    bundle: islandora_models
 
   # Split up our pipe-delimited string of
   # subjects, and generate terms for each.
   field_subject:
     -
       plugin: skip_on_empty
-      source: subject 
+      source: subject
       method: process
     -
       plugin: explode
@@ -478,9 +478,9 @@ process:
 
   # Write to the linked agent field. In this case
   # we first want to merge the info from the
-  # photographer and provider columns. Since we 
+  # photographer and provider columns. Since we
   # already prepared our structured array using
-  # the components of the typed_relation field as 
+  # the components of the typed_relation field as
   # keys ('target_id' and 'rel_type'), we can just
   # pass this array into field_linked_agent.
   field_linked_agent:
@@ -508,7 +508,7 @@ For `subtitle`, we're passing it through the `skip_on_empty` process plugin beca
 ```yml
   field_alternative_title:
     plugin: skip_on_empty
-    source: subtitle 
+    source: subtitle
     method: process
 ```
 
@@ -519,7 +519,7 @@ Now here's where things get interesting.  We can look up other entities to popul
     source: constants/model
     entity_type: taxonomy_term
     # 'name' is the string value of the term, e.g. 'Original file', 'Thumbnail'.
-    value_key: name 
+    value_key: name
     bundle_key: vid
     bundle: islandora_models
 ```
@@ -534,7 +534,7 @@ This approach applies the same taxonomy term to all objects. If you want to assi
     # 'model' is the header of a field in our input CSV that contains the string value of the taxonomy term.
     source: model
     entity_type: taxonomy_term
-    value_key: name 
+    value_key: name
     bundle_key: vid
     bundle: islandora_models
 ```
@@ -569,7 +569,7 @@ With process plugins, that logic looks like
 field_subject:
     -
       plugin: skip_on_empty
-      source: subject 
+      source: subject
       method: process
     -
       plugin: explode
@@ -607,15 +607,15 @@ In `controlled_access_terms`, we define a new field type of `typed_relation`, wh
 
 The `target_id` portion takes an entity id, and rel_type takes the predicate for the MARC relator we want to use to describe the relationship the entity has with the repository item.  This example would reference taxonomy_term 1 and give it the relator for "Contributor".
 
-If we have a single name to deal with, we can set those values in YAML, accessing `field_linked_agent/target_id` and `field_linked_agent/rel_type` independently. 
+If we have a single name to deal with, we can set those values in YAML, accessing `field_linked_agent/target_id` and `field_linked_agent/rel_type` independently.
 ```yml
   field_linked_agent/target_id:
     plugin: entity_generate
-    source: photographer 
+    source: photographer
     entity_type: taxonomy_term
     value_key: name
     bundle_key: vid
-    bundle: person 
+    bundle: person
 
   field_linked_agent/rel_type: constants/relator
 ```
@@ -646,7 +646,7 @@ So, if we started with a column containing
 ```
 at the end of this pipeline, the `photographers` temporary variable would contain
 ```php
-[ 
+[
   ['name' => 'Alice'],
   ['name' => 'Bob'],
   ['name' => 'Charlie]
@@ -673,7 +673,7 @@ Next, we use the `sub_process` plugin. It takes an array of associative arrays (
 ```
 Within `sub_process`, we cannot access the temporary variables or constants that we've created in the outer migration. This is why we use the `default_value` plugin when for the `rel_type`. It would have been simpler to define a constant as we did with 'Image', but we wouldn't be able to access it. The output of this pipeline is now formatted as the structured data expected by a `typed_relation` field:
 ```php
-[ 
+[
   ['target_id' => 42, 'rel_type' => 'relators:pht' ],
   ['target_id' => 43, 'rel_type' => 'relators:pht' ],
   ['target_id' => 44, 'rel_type' => 'relators:pht' ],
@@ -705,10 +705,10 @@ Media entities are Drupal's solution for fieldable files.  Since you can't put f
 dependencies:
   enforced:
     module:
-      - migrate_islandora_csv 
+      - migrate_islandora_csv
 
-id: media 
-label: Import Media from CSV 
+id: media
+label: Import Media from CSV
 migration_group: migrate_islandora_csv
 
 source:
@@ -720,12 +720,12 @@ source:
 
   # Each migration needs a unique key per row in the csv.  Here we're using the file path.
   keys:
-    - file 
+    - file
 
   # You can't enter string literals into a process plugin, but you can give it a constant as a 'source'.
   constants:
-    # We're tagging our media as Original Files 
-    use: Original File 
+    # We're tagging our media as Original Files
+    use: Original File
 
     # Everything gets created as admin
     uid: 1
@@ -740,28 +740,28 @@ process:
     plugin: entity_lookup
     source: constants/use
     entity_type: taxonomy_term
-    value_key: name 
+    value_key: name
     bundle_key: vid
-    bundle: islandora_media_use 
+    bundle: islandora_media_use
 
   # Lookup the migrated file in the file migration.
   field_media_image:
     plugin: migration_lookup
-    source: file 
-    migration: file 
+    source: file
+    migration: file
     no_stub: true
 
   # Lookup the migrated node in the node migration
   field_media_of:
     plugin: migration_lookup
-    source: file 
-    migration: node 
+    source: file
+    migration: node
     no_stub: true
-    
+
 destination:
   # These are 'image' media we're making.
   plugin: 'entity:media'
-  default_bundle: image 
+  default_bundle: image
 
 migration_dependencies:
   required:
@@ -784,9 +784,9 @@ The `field_media_use` field is a tag that's used to denote the purpose of a file
     plugin: entity_lookup
     source: constants/use
     entity_type: taxonomy_term
-    value_key: name 
+    value_key: name
     bundle_key: vid
-    bundle: islandora_media_use 
+    bundle: islandora_media_use
 ```
 The `field_media_image` and `field_media_of` fields are how the media binds a file to a node.  You could use `entity_lookup` or `entity_generate`, but we've already migrated them and can very easily look them up by the id assigned to them during migration.  But what's the benefit of doing so?  The `entity_lookup` and `entity_generate` process plugins do the job fine, right?
 

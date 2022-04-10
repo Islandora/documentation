@@ -1,4 +1,3 @@
-
 # Checking Code Style
 
 Before opening a pull request, you should check your code style. If you are using the [Vagrant](https://github.com/Islandora-Devops/claw-playbook), you can run `phpcs` within the Drupal installation directory (on the Vagrant, that is `/var/www/html/drupal`) or from within the `web` directory (`/var/www/html/drupal/web`) as follows:

@@ -6,7 +6,7 @@ Anyone who visits your Drupal site is a user. There are three different default 
 
 - _Anonymous user_. This is anyone who is not logged in.
 - _Authenticated user_. These are all users who have an account on your site and can log in.
-- _Administrator_. This is a special class of user that can access the administrative menus in your Drupal site and make changes. 
+- _Administrator_. This is a special class of user that can access the administrative menus in your Drupal site and make changes.
 
 Islandora adds an additional default role:
 
@@ -67,4 +67,3 @@ To review/edit the permission for each role, in the *People* page click the **Pe
 
 For more information on managing users in Drupal visit the section
 [Managing User Accounts](https://www.drupal.org/docs/user_guide/en/user-chapter.html) of Drupal.org.
-

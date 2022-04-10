@@ -2,7 +2,7 @@
 
 ## What are viewers?
 
-[Viewers](../glossary#viewer) allow site builders to display files in interactive javascript-based widgets, that provide functionality like zooming in/out, turning pages, playing/pausing, viewing in full screen, etc. 
+[Viewers](../glossary#viewer) allow site builders to display files in interactive javascript-based widgets, that provide functionality like zooming in/out, turning pages, playing/pausing, viewing in full screen, etc.
 
 In Drupal, a common way to implement a viewer is through a [module](./glossary/#module) that provides the javascript library, and a field formatter that uses that library. The field formatter will work with specific types of Drupal fields (e.g. file fields or image fields, some may even provide their own fields).
 
@@ -22,7 +22,7 @@ In the generic Islandora content modelling scenario, we often want the viewer to
 
 Here is how viewers are implemented in Islandora Defaults. This example uses OpenSeadragon, but pdf.js is configured with the same method. This method was chosen because it uses pure configuration and no extra code. It relies on users tagging nodes with appropriate "display hint" terms to trigger Contexts to switch the node's display mode to one that includes an EVA field, which renders the appropriate Media in a way that shows the desired file in the viewer.
 
-<!-- Display modes vs view modes - Here we prefer the term 'display mode' to refer to the modes listed under Structure > Display Modes > View modes. The reasoning is that for the audience of this page, this concept is likely most frequently encountered under "Manage Display" of an entity, and to distinguish it from concepts relating to Views, such as Views displays. --> 
+<!-- Display modes vs view modes - Here we prefer the term 'display mode' to refer to the modes listed under Structure > Display Modes > View modes. The reasoning is that for the audience of this page, this concept is likely most frequently encountered under "Manage Display" of an entity, and to distinguish it from concepts relating to Views, such as Views displays. -->
 
 ### Expected behaviour for this scenario:
 
@@ -32,7 +32,7 @@ Create a Repository Item, and tag it with "Open Seadragon" (under Display Hints)
 
 <!-- "a file such as tiff or jpeg-2000" = "a file that works with Cantaloupe". OpenSeadragon relies on an IIIF image server, in our case, Cantaloupe, and that is what determines the kinds of files that this works with. This is also out of scope for this page. -->
 
-### Components of this scenario: 
+### Components of this scenario:
 
 1. A viewer that includes a field formatter  (e.g. the module OpenSeadragon)
 1. A media display mode (e.g. the media display mode "Open Seadragon")
@@ -61,7 +61,7 @@ Create a Repository Item, and tag it with "Open Seadragon" (under Display Hints)
 
 ### Relevant files:
 
-Islandora Defaults is a Feature, and the following YAML files in `islandora_defaults/config/install` contain configuration items that are loaded when the feature is enabled. Changes to these files will not affect the live site configuration, and changes to the live site configuration will not be reflected in these files. 
+Islandora Defaults is a Feature, and the following YAML files in `islandora_defaults/config/install` contain configuration items that are loaded when the feature is enabled. Changes to these files will not affect the live site configuration, and changes to the live site configuration will not be reflected in these files.
 
 | Filename | Comments|
 |---|---|
@@ -80,8 +80,6 @@ Islandora Defaults is a Feature, and the following YAML files in `islandora_defa
 | `field.field.node.islandora_object.field_display_hints.yml` | (field for display hints) configures the display hints field on Repository Item |
 | `context.context.open_seadragon.yml` | (a context) tells nodes with term "Open Seadragon" to use display mode "Open Seadragon" |
 
- 
 ## Improvements
 
 This is awfully complex. If you'd like to help simplify it, we have an open issue about getting rid of display hints, and instead "sniffing' the file's mime type: [Deprecate display hints in favor of Contexts? #1193](https://github.com/Islandora/documentation/issues/1193). Other suggestions and solutions are welcome in the [issue queue](https://github.com/Islandora/documentation/issues).
-

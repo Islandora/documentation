@@ -25,4 +25,3 @@ This screenshot shows the setup for resources, you can see the various HTTP meth
 ## Further Reading
 
 - [RESTful Web Services API overview](https://www.drupal.org/docs/drupal-apis/restful-web-services-api/restful-web-services-api-overview)
-

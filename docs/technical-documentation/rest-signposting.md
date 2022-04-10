@@ -5,7 +5,7 @@ Signposting is a technique used in RESTful APIs where other relevant resources a
 https://tools.ietf.org/html/rfc8288).  Drupal already makes use of this technique for content entities, and Islandora takes it
 even further by providing additional `Link` headers that enable the client to navigate the repository and discover
 additional information about various resources.  Because the links are returned in response headers, they can be relied upon
-without having to parse the message body.  This makes them consistent across all serialization formats that can be returned in a message body 
+without having to parse the message body.  This makes them consistent across all serialization formats that can be returned in a message body
 (XML, JSON, JSONLD, etc...).
 
 As a general precaution, link headers for Drupal entities are not exposed to users that do not have the permissions to view
@@ -25,24 +25,24 @@ if an entity in Drupal has a JSONLD representation, then the link header returne
 ### Referenced Entities
 
 Entity reference fields are exposed as link headers with `rel="related"` and a title equal to the entity reference field's display label.
-For example, if `http://example.org/node/1` has an entity reference field name "Associated Content" that references 
+For example, if `http://example.org/node/1` has an entity reference field name "Associated Content" that references
 `http://example.org/node/2`, then the link header returned in a GET or HEAD response would look like
 
 `Link: <http://example.org/node/2>; rel="related"; title="Associated Content"`
 
 ### Referenced Taxonomy Terms
 
-Entity reference fields for taxonomy terms get special handling.  The taxonomy terms used to tag content are exposed as link headers 
-with `rel="tag"` and a title equal to the taxonomy term's display label.  If the term has an external URI in a controlled vocabulary, 
-then that URI is provided.  Otherwise, the local Drupal URI is provided.  For example, if a piece of content is tagged with 
-`taxonomy/term/1`, which has a display label of "Example Term", then the link header returned in a GET or HEAD response would look like 
+Entity reference fields for taxonomy terms get special handling.  The taxonomy terms used to tag content are exposed as link headers
+with `rel="tag"` and a title equal to the taxonomy term's display label.  If the term has an external URI in a controlled vocabulary,
+then that URI is provided.  Otherwise, the local Drupal URI is provided.  For example, if a piece of content is tagged with
+`taxonomy/term/1`, which has a display label of "Example Term", then the link header returned in a GET or HEAD response would look like
 
 `Link: <http://example.org/taxonomy/term/1>; rel="tag"; title="Example Term"`
 
 If instead the term were to have the `field_external_uri` field with a value of `http://exampletwo.org/vocab#term` then the link
-header would look like 
+header would look like
 
-`Link: <http://exampletwo.org/vocab#term>; rel="tag"; title="Example Term"`.   
+`Link: <http://exampletwo.org/vocab#term>; rel="tag"; title="Example Term"`.
 
 ### Associated Media
 
@@ -55,7 +55,7 @@ that it is the initial file uploaded, the link header returned in a GET or HEAD 
 ### Source Files
 
 Files that are the source for media entities are exposed as Link headers in the GET and HEAD responses with `rel="describes"`.
-The endpoint to edit the contents of the source file is also exposed using `rel="edit-media"`. For example, if 
+The endpoint to edit the contents of the source file is also exposed using `rel="edit-media"`. For example, if
 `http://example.org/media/1` has the source file `http://example.org/file.txt`, then a GET or HEAD response would contain
 both
 
@@ -66,7 +66,7 @@ both
 
 ### Requesting a Node
 
-After creating a node, adding it to a Collection, uploading a file and kicking off derivatives, the link headers returned 
+After creating a node, adding it to a Collection, uploading a file and kicking off derivatives, the link headers returned
 for said node would look like the following.  Note that non-Link headers have been removed for brevity:
 
 ```bash
@@ -96,7 +96,7 @@ If we were to inspect one of the Media associated with this node (which we would
 results would look like:
 
 ```bash
-vagrant@claw:~$ curl -I http://localhost:8000/media/1?_format=json 
+vagrant@claw:~$ curl -I http://localhost:8000/media/1?_format=json
 HTTP/1.1 200 OK
 ...
 
@@ -110,7 +110,7 @@ Link: <http://localhost:8000/media/delete?media=1>; rel="https://drupal.org/link
 Link: <http://localhost:8000/media/1/edit>; rel="edit-form"
 Link: <http://localhost:8000/media/1>; rel="https://drupal.org/link-relations/revision"
 
-# These are provided by Islandora 
+# These are provided by Islandora
 Link: <http://localhost:8000/node/1>; rel="related"; title="Media of"
 Link: <http://pcdm.org/use#OriginalFile>; rel="tag"; title="Original File"
 Link: <http://localhost:8000/media/1?_format=jsonld>; rel="alternate"; type="application/ld+json"

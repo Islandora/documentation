@@ -36,13 +36,13 @@ The following is an alphabetized list of the current Islandora committers:
 | Debbie Flitner              | Arizona State University              | dflitner       |
 | Willow Gillingham           | Born-Digital              | wgilling       |
 | Jonathan Green              | LYRASIS                               | jonathangreen  |
-| Jonathan Hunt               | Catalyst.Net                          | kayakr         | 
+| Jonathan Hunt               | Catalyst.Net                          | kayakr         |
 | Mark Jordan                 | Simon Fraser University               | mjordan        |
 | Danny Lamb                  | Islandora Foundation                  | dannylamb      |
 | Natkeeran Ledchumykanthan   | University of Toronto Scarborough     | natkeeran      |
 | Rosie Le Faive              | University of Prince Edward Island    | rosiel         |
 | Gavin Morris                | Born-Digital                          | g7morris       |
-| Alexander O'Neill           | University of Prince Edward Island    | alxp           | 
+| Alexander O'Neill           | University of Prince Edward Island    | alxp           |
 | Don Richards                | Born-Digital                          | DonRichards    |
 | Bethany Seeger              | Johns Hopkins University              | bseeger        |
 | Seth Shaw                   | University of Nevada, Las Vegas       | seth-shaw-unlv |
@@ -99,7 +99,7 @@ Summary:
 If they accept, then do:
 
 1. Add to the Islandora Committer team of the Github Islandora organization.
-2. Add to Committer team of GitHub Islandora-Labs organization 
+2. Add to Committer team of GitHub Islandora-Labs organization
 3. Add to islandora-committers google-group
 4. Add to committers wiki page: Islandora Committers (this page)
 5. Announce the new committer ([template/committerAnnounce.txt](https://raw.githubusercontent.com/Islandora/documentation/main/docs/contributing/templates/committerAnnounce.txt))

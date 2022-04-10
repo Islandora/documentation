@@ -1,21 +1,21 @@
 # Extending Islandora: The Islandora Cookbook
- 
-Because newer Islandora is very tightly integrated with Drupal, many use cases that required custom Islandora modules in Islandora Legacy and earlier can now be solved with a combination of configuration and modules from the Drupal community. Other use cases may still require custom code, but are not common enough, or complete enough, for that custom code to be a part of the core software. 
- 
-Both scenarios are covered by the Islandora Cookbook below, which contains an annotated list of custom Islandora tools and modules developed by our community, a list of Drupal contributed modules that may be useful in an Islandora context, and a set of _recipes_ which each provide a detailed outline for solving a particular use case. 
- 
+
+Because newer Islandora is very tightly integrated with Drupal, many use cases that required custom Islandora modules in Islandora Legacy and earlier can now be solved with a combination of configuration and modules from the Drupal community. Other use cases may still require custom code, but are not common enough, or complete enough, for that custom code to be a part of the core software.
+
+Both scenarios are covered by the Islandora Cookbook below, which contains an annotated list of custom Islandora tools and modules developed by our community, a list of Drupal contributed modules that may be useful in an Islandora context, and a set of _recipes_ which each provide a detailed outline for solving a particular use case.
+
 Islandora is also compatible with most Drupal themes.
 
 ## Introduction
 
 In the spirit of [Islandora Awesome](https://github.com/Islandora-Labs/islandora_awesome), Islandora Cookbook is a curated list of great modules and other tools for Islandora. Because Islandora is more tightly integrated with Drupal, most of these 'recipes' require only Drupal modules as ingredients.
 
-We offer this list for discovery, but do not officially provide support for any of these modules. 
+We offer this list for discovery, but do not officially provide support for any of these modules.
 
 ## Recipes
 
 - [Amazon Alexa](recipes/alexa_search.md) - This recipe explains how to access Islandora with Amazon Alexa.
-- [Collection Searching] - 
+- [Collection Searching] -
 This recipe provides instructions how to configure a shallow or deep search in a specific collection.
 - [Date Range Slider Facet] - This recipe explains how to include a facet for date field(s) that presents itself as a range slider.
 - [Exhibitions and TimeLine JS] - This recipe outlines how to build exhibits in Islandora, including the deployment of TimeLineJS.
@@ -30,9 +30,9 @@ Below are modules and tools that might be useful to solve common use cases, pres
 Warning! - All modules are under development.
 
 * [Basic Ingest](https://github.com/discoverygarden/basic_ingest) - Basic repository item ingest improvements.
-* [Islandora RipRap](https://github.com/mjordan/islandora_riprap) - Fixity auditing 
+* [Islandora RipRap](https://github.com/mjordan/islandora_riprap) - Fixity auditing
 * [Islandora Repository Reports](https://github.com/mjordan/islandora_repository_reports) - Graphical reports on various aspects of an Islandora repository.
-* [Islandora Bagger](https://github.com/mjordan/islandora_bagger) - Utility to generate Bags for objects using Islandora's REST interface using either a command-line tool or via a batch-oriented queue. 
+* [Islandora Bagger](https://github.com/mjordan/islandora_bagger) - Utility to generate Bags for objects using Islandora's REST interface using either a command-line tool or via a batch-oriented queue.
 * [Islandora Whole Object](https://github.com/mjordan/islandora_whole_object) - Islandora module that provides some Drupal blocks containing various representations of an Islandora object.
 * [Islandora RDM](https://github.com/roblib/islandora_rdm) - An entire suite of tools and documentation to turn Islandora into a fully functional Research Data Management platform.
 * [IP Range Access](https://github.com/mjordan/ip_range_access) - A context condition to check the user's IP address against a range, and provide 403 if not accepted.
@@ -73,7 +73,7 @@ Views Slideshow can be used to create a slideshow of any content (not just image
 
 This repository is a tutorial that will introduce you to using the Drupal 8 Migrate tools to create Islandora content. Whether you will eventually use CSVs or other sources (such as XML or directly from a 7.x Islandora) this tutorial should be useful as it covers the basics and mechanics of migration.
 
-This repository is also a Drupal Feature that, when enabled as a module, will create three example migrations ready for you to use with the Migrate API. 
+This repository is also a Drupal Feature that, when enabled as a module, will create three example migrations ready for you to use with the Migrate API.
 
 #### Another Way to Batch Upload from CSV
 
@@ -115,8 +115,7 @@ The Content Feedback module allows users and visitors to quickly send feedback m
 
 A tool for automatically submitting the contents of your site to Archive.org. The Wayback Submit module will submit all node types on schedule, according to criteria set by the site admin (only certain node types, only certain views, etc).
 
- 
 ## Other Resources
- 
+
 - [Drupal Contributed Modules](https://www.drupal.org/docs/8/modules)
 - [Drupal Contributed Themes](https://www.drupal.org/docs/8/themes)

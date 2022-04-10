@@ -39,7 +39,7 @@ If you want to stop Islandora, you can bring down all the containers with
 
 ```
 docker-compose down
-``` 
+```
 
 ### Restarting Islandora
 

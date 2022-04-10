@@ -1,5 +1,5 @@
 ```
-# ![Alt text](Mascot Image) Repository Name 
+# ![Alt text](Mascot Image) Repository Name
 
 [![Minimum PHP Version](link)](link)
 [![Build Status](link)](link)
@@ -26,7 +26,7 @@ Installations instructions.
 
 ## Configuration
 
-Describe path to configuration. 
+Describe path to configuration.
 
 Include a screenshot of configuration page. When using your choice of screenshot software, resize your browser
 first to avoid wide screenshots. Here are a few browser extension examples to take screenshots.
@@ -34,7 +34,7 @@ first to avoid wide screenshots. Here are a few browser extension examples to ta
   - [Fireshots](https://chrome.google.com/webstore/detail/take-webpage-screenshots/mcbpblocgmgfnpjjppndjkmgjaogfceg)
   - [Nimbus](https://chrome.google.com/webstore/detail/nimbus-screenshot-screen/bpconcjcammlapcogcnnelfmaeghhagj)
 
-To upload the image drag the image into the comment section of an existing Pull Request. 
+To upload the image drag the image into the comment section of an existing Pull Request.
 
 This will generate the image URL link for you
   ![Configuration Screenshot](https://user-images.githubusercontent.com/2857697/39014759-e2ef9c1e-43e0-11e8-921c-c2a3234d65d2.jpg)
@@ -82,9 +82,9 @@ If you would like to contribute code to the project, you need to be covered by a
 
 We recommend using the [islandora-playbook](https://github.com/Islandora-Devops/islandora-playbook) to get started.  If you want to pull down the submodules for development, don't forget to run git submodule update --init --recursive after cloning.
 
-Also include any Travis gotcha's here. 
+Also include any Travis gotcha's here.
 
 ## License
 
-[Name](link). GPLv2 for Drupal modules. MIT for other modules. 
+[Name](link). GPLv2 for Drupal modules. MIT for other modules.
 ```

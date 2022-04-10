@@ -11,12 +11,12 @@ The [Official Drupal User Guide](https://www.drupal.org/docs) and the
 
 ## Object Modeling
 
-In Islandora, we often want to store (and manage, and preserve) sets of metadata with binaries (digital files). 
-We used to call this an "_object_" but in Islandora 2.0, are represented as multiple interconnected entities. 
+In Islandora, we often want to store (and manage, and preserve) sets of metadata with binaries (digital files).
+We used to call this an "_object_" but in Islandora 2.0, are represented as multiple interconnected entities.
 
 - Metadata is stored in _nodes_ (a.k.a. _content_).
 - Specifically, metadata values are stored in _fields_ which are configurable properties attached to _nodes_.
-- Different types of nodes can have different configurations of fields; these are called _content types_. 
+- Different types of nodes can have different configurations of fields; these are called _content types_.
 - Binary files are stored in are _media_, which are wrapper entities to help manage files.
 - Media can have fields too, and come in different _media types_.
 - Metadata values can be stored as _taxonomy terms_, which let you reuse the same value in multiple places.
@@ -43,18 +43,15 @@ In Islandora repositories that use Fedora, all properties about Drupal nodes are
 
 
 ## Architecture
- 
+
 ### Conceptual Diagram
- 
+
 Many users of Islandora may be familiar with the metaphorical diagram of Islandora 7 as a cheeseburger, which provides a memorable approximation of how the different parts of the software stack interact in a vertically-integrated, relatively customizable fashion (ie, Drupal, Solr, Islandora, and Fedora are stable layers, and the "toppings" stand in for Solution Packs and other utilities that can be added or removed to customize Islandora):
- 
+
 ![Islandora Leagcy as a cheeseburger](../assets/user-intro-islandoraburger.png)
- 
+
 For a similar conceptual approach to Islandora, we present it as a bento box: a very modular platform, in which each piece may be removed and replaced with something different, without disrupting other parts of the stack:
- 
+
 ![Islandora as a bento box](../assets/user-intro-bento.png)
- 
-For a true diagram of how the various parts of Islandora 2.0 interact, please see the full [Architecture Diagram](../technical-documentation/diagram.md)
 
-
-
+For a true diagram of how the various parts of Islandora interact, please see the full [Architecture Diagram](../technical-documentation/diagram.md)

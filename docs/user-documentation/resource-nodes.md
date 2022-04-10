@@ -4,16 +4,16 @@ This page describes the Islandora concept of a Resource Node. For a step-by-step
 
 A resource node holds the descriptive metadata for an Islandora object, as well as groups together
 the various files that are part of the object for preservation or display, such as the original file
- and various derivative files generated from it.   
+ and various derivative files generated from it.
 
 The model for exactly what constitutes an object in Islandora is flexible and can be adapted to the needs of specific users. For example, the Islandora Defaults configuration considers an object as a resource node of the type "Repository Item"  which contains descriptive metadata about the object. Attached to that Node are one or more Media, each representing a file that is part of this object, such as "Original File", "Thumbnail", "Preservation Master", etc. With this model, every original file uploaded into Islandora has its own resource node.
 
 Multi-file Media configurations also attach Media to a parent node, but allow for that node to be represened by multiple "Original File"s. In this model, a Media contains the original file as well as any derivative files created from it (thumbnail, service file, etc.).
 
-For an example of where these two different approaches could apply, the basic configuration might make sense for a book that has rich page-level metadata, so that each page would be its own Node with its own metadata record; the multi-file media configuration might be a better fit for a book that does not have page-level metadata (except an ordering or page numbers), so that each Media would represent one page, and all pages (Media) would be attached to a single parent Node/metadata record for the entire book. 
+For an example of where these two different approaches could apply, the basic configuration might make sense for a book that has rich page-level metadata, so that each page would be its own Node with its own metadata record; the multi-file media configuration might be a better fit for a book that does not have page-level metadata (except an ordering or page numbers), so that each Media would represent one page, and all pages (Media) would be attached to a single parent Node/metadata record for the entire book.
 
 
-As we learned in the [introduction](user-intro.md), objects in an Islandora repository are 
+As we learned in the [introduction](user-intro.md), objects in an Islandora repository are
 represented as a combination of resource nodes, media, and files in Drupal.
 Because of this, their metadata profile, display, form (and much more) are configurable through
 the Drupal UI.  This gives repository administrators a huge degree of control over their repository
@@ -24,9 +24,9 @@ and effort when implementing your repository with Islandora.
 
 ## Properties
 
-Resource nodes, as Drupal nodes, have some common basic properties regardless 
-of content type. These properties are not fields.  This means that they 
-cannot be removed and have limited configurability. Their name, what type of 
+Resource nodes, as Drupal nodes, have some common basic properties regardless
+of content type. These properties are not fields.  This means that they
+cannot be removed and have limited configurability. Their name, what type of
 data they hold, etc... are all baked in.
 Here's an example of the basic properties on nodes:
 
@@ -64,7 +64,7 @@ status | Published, unpublished, etc...
     PID | uuid
     status | status
 
-The small amount of configurability available for these properties is found on the 
+The small amount of configurability available for these properties is found on the
 content type editing form where a user can choose to change the label of the
 title field, whether or not to display author information on the node's page,
 etcetera. These settings will only apply to nodes of that particular content type.
@@ -144,7 +144,7 @@ The node-level and global approaches are not exclusive to one another. One Conte
 ## Members
 
 Islandora has a notion of _membership_, which is used to create a parent/child relationship between
-two resource nodes. Membership is denoted using another special field, "Member Of".  
+two resource nodes. Membership is denoted using another special field, "Member Of".
 The "Member Of" field _can_ hold multiple references, so it is possible for a
 single child to belong to multiple parents, but may also complicate the creation of breadcrumbs.
 Any two nodes can be related in this way, though typically, the parent node has a content
@@ -157,8 +157,8 @@ model of [_Collection_](../concepts/collection.md) or [_Paged Content_](paged-co
 
 !!! Note "Child v. Member"
     Islandora uses the "child" and "member" descriptor for resource nodes that
-    store a reference to another resource node in the "Member Of" field interchangeably. 
-    Administrators will more often see the "member" terminology more often while 
+    store a reference to another resource node in the "Member Of" field interchangeably.
+    Administrators will more often see the "member" terminology more often while
     front-end users will usually see "child" terminology.
 
 For any node, its **Children** tab can be used to see all its members.  You can also perform Actions in

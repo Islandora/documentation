@@ -22,10 +22,10 @@ file that contains the changes you've made.
 
 ### DOMAIN
 
-What domain your Islandora site will be available at. If you are deploying anywhere other than 
+What domain your Islandora site will be available at. If you are deploying anywhere other than
 your personal machine, you'll probably want to change this.
 
-By default, this is set to `islandora.traefik.me`. 
+By default, this is set to `islandora.traefik.me`.
 
 If you change this setting, you need to `make -B docker-compose.yml` to generate a new `docker-compose.yml`
 file that contains the changes you've made.
@@ -78,8 +78,8 @@ By default, this is set to `standard`.
 
 ### INSTALL_EXISTING_CONFIG
 
-Set this to `true` if you want to install an existing Drupal site whose configuration was exported with 
-`drush config:export` 
+Set this to `true` if you want to install an existing Drupal site whose configuration was exported with
+`drush config:export`
 
 Available values for this setting are
 - `true`
@@ -119,7 +119,7 @@ file that contains the changes you've made.
 ### INCLUDE_CODE_SERVER_SERVICE
 
 Whether or not to include the `coder` IDE as a service. If you're developing on Islandora, this can
-be pretty useful when developing. You should _not_ deploy this service on production environments. 
+be pretty useful when developing. You should _not_ deploy this service on production environments.
 
 Available values for this setting are
 - `true`
@@ -226,4 +226,3 @@ By default, this is set to `true`.
 
 If you change this setting, you need to `make -B docker-compose.yml` to generate a new `docker-compose.yml`
 file that contains the changes you've made.
-

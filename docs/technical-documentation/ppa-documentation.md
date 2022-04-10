@@ -137,4 +137,3 @@ imagemagick (8:6.9.7.4+dfsg-16ubuntu6.8) bionic; urgency=medium
 And you will see it in the interface for the Lyrasis PPA:
 
 ![ppa-example](../assets/ppa-example.png)
-

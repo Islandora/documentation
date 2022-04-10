@@ -1,4 +1,4 @@
-# Introduction to ISLE 
+# Introduction to ISLE
 
 ## What is ISLE?
 

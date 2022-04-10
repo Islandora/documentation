@@ -21,7 +21,7 @@ curl -u admin:islandora http://localhost:8000/node/3
 
 ### JWT authentication (jwt_auth)
 
-By default JWTs are passed internally from Drupal to various microservices and Fedora. 
+By default JWTs are passed internally from Drupal to various microservices and Fedora.
 
 To use a JWT yourself you need to enable the `JWT Authentication Issuer` module.
 
@@ -41,7 +41,7 @@ Content-language: en
 X-Content-Type-Options: nosniff
 X-Frame-Options: SAMEORIGIN
 Expires: Sun, 19 Nov 1978 05:00:00 GMT
-Vary: 
+Vary:
 X-Generator: Drupal 8 (https://www.drupal.org)
 Content-Length: 620
 Content-Type: application/json
@@ -79,7 +79,7 @@ Content-language: en
 X-Content-Type-Options: nosniff
 X-Frame-Options: SAMEORIGIN
 Expires: Sun, 19 Nov 1978 05:00:00 GMT
-Vary: 
+Vary:
 X-Generator: Drupal 8 (https://www.drupal.org)
 Content-Length: 858
 Content-Type: application/ld+json
@@ -140,5 +140,3 @@ Content-Type: application/ld+json
 This allows you to use a cookie stored in your web browser when you log in to Drupal to access these REST endpoint pages.
 
 This is what allows you to access the URIs like `http://localhost:8000/node/1?_format=json` with your web browser.
-
-

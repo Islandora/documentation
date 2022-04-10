@@ -43,7 +43,7 @@ If you want to know all packages that will be updated by the update command, use
 !!! note "Alternate syntax needed"
     Islandora is configured to use a fork of drupal-composer/drupal-project which requires a specific composer syntax used above compared to other Drupal 8 sites. In addition, if you are upgrading from 8.5 to 8.7, you need to replace "~8.5.x" with "^8.7.0" for drupal/core and webflo/drupal-core-require-dev in composer.json. [[Source](https://www.drupal.org/docs/8/update/update-core-via-composer#s-one-step-update-instruction)]
 
-3) Apply any required database updates using ``drush updatedb``, or use the web admin user interface.  
+3) Apply any required database updates using ``drush updatedb``, or use the web admin user interface.
 
 `drush updatedb`
 
@@ -62,6 +62,5 @@ For more information about how to update Drupal modules visit:
 
 https://www.drupal.org/docs/8/extending-drupal-8/updating-modules
 
-!!! note "Back Up" 
+!!! note "Back Up"
     First make sure you have made database and file back ups.
-

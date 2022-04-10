@@ -1,7 +1,7 @@
 
 ## Overview
 
-This tutorial will walk you through adding a piece of digital content (an image and some metadata) into an Islandora repository, creating an Islandora [Resource Node](../user-documentation/resource-nodes.md). 
+This tutorial will walk you through adding a piece of digital content (an image and some metadata) into an Islandora repository, creating an Islandora [Resource Node](../user-documentation/resource-nodes.md).
 At the end, you will have metadata in a Drupal node, a file stored in Fedora, and derivatives automatically created.
 
 !!! Tip "Video version available"
@@ -105,4 +105,3 @@ You now have an Islandora resource node, which is a special case of a Drupal nod
 - Drupal documentation on [Nodes](https://www.drupal.org/docs/7/nodes-content-types-and-fields/about-nodes)
 - Drupal documentation on [Media](https://www.drupal.org/docs/8/core/modules/media).
 <!-- include Nodes, Media, etc once they make sense to follow this tutorial. -->
-

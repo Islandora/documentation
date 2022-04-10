@@ -2,7 +2,7 @@
 
 ## Do's
 
-- Use a GitHub Pull Request to submit documentation. 
+- Use a GitHub Pull Request to submit documentation.
     - See the [Editing Documentation](https://islandora.github.io/documentation/contributing/editing-docs/) documentation page for information on creating a Pull Request.
 - Make it clear if the documentation is based on a particular configuration (such as Islandora Defaults) or if it applies to any deployment of Islandora.
 - Submit documentation formatted in [Markdown](https://en.wikipedia.org/wiki/Markdown) format.
@@ -21,22 +21,22 @@ _Example:_
 - I am a list item
     - And I am a sub-item.
 ```
-- Upload images to the 'assets' folder and reference them from there. 
+- Upload images to the 'assets' folder and reference them from there.
     - For file naming, use underscores between words and prefix all file names with the page name, e.g. context_display_hints.jpg for the image showing how to set display hints in the context menu.
 - Use the [Admonition syntax](https://squidfunk.github.io/mkdocs-material/reference/admonitions/) to create notes like this (four-space indent required):
 
 _Example:_
 
 ```
-!!! note "Helpful Tip" 
+!!! note "Helpful Tip"
     I am a helpful tip!
 ```
 
 _Result:_
 
-!!! note "Helpful Tip" 
+!!! note "Helpful Tip"
     I am a helpful tip!
-    
+
 - Use our custom `islandora` type within the Admonition syntax to call attention to areas where Islandora configuration differs from standard Drupal configuration:
 
 _Example:_

@@ -25,7 +25,7 @@ bit.
 
 ```
 docker-compose exec -T drupal with-contenv bash
-``` 
+```
 
 ## Updating your Drupal Site
 
@@ -58,4 +58,3 @@ If for any reason, something goes wrong, you can Restore the Drupal database at 
 ```
 make drupal-database-import SRC=/path/to/dump.sql
 ```
-

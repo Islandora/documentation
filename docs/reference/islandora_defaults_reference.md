@@ -1,6 +1,6 @@
 # Drupal Configuration Provided By Islandora Defaults
 
-This is a list of the configuration items provided by the Islandora Defaults module. 
+This is a list of the configuration items provided by the Islandora Defaults module.
 
 ## Entities
 
@@ -109,7 +109,7 @@ The following RDF mappings for the RDF module are included:
 
 ### Language
 
-These configuration files enable content translation on their bundles. 
+These configuration files enable content translation on their bundles.
 
 | Type          | Bundle              | Comments |
 |---------------|---------------------|----------|
@@ -184,11 +184,11 @@ The contexts provided by Islandora Defaults are organized into groups: **Indexin
 ## Migrations
 
 
-| Name | 
+| Name |
 |---|
-|Tags migration for islandora_defaults feature (islandora_defaults_tags)| 
+|Tags migration for islandora_defaults feature (islandora_defaults_tags)|
 
-Contents of the islandora_defaults_tags migration: 
+Contents of the islandora_defaults_tags migration:
 
 |Vocabulary|Term name|Description|External Uri|
 |---|---|---|---|
@@ -310,7 +310,7 @@ This is at the end of this document because it's not particularly useful yet - t
 
 ### New fields
 
-The following are new fields we define: 
+The following are new fields we define:
 
 - field.storage.node.field_access_terms.yml
 - field.storage.node.field_alternative_title.yml
@@ -358,7 +358,7 @@ The following are new fields we define:
 - core.base_field_override.node.islandora_object.sticky.yml
 - core.base_field_override.node.islandora_object.title.yml
 - core.base_field_override.node.islandora_object.uid.yml
-- 
+-
 - [audio]
 - core.base_field_override.media.audio.changed.yml
 - core.base_field_override.media.audio.created.yml
@@ -391,5 +391,3 @@ The following are new fields we define:
 - core.base_field_override.media.video.status.yml
 - core.base_field_override.media.video.thumbnail.yml
 - core.base_field_override.media.video.uid.yml
-
-

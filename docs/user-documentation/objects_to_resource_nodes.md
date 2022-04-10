@@ -12,7 +12,7 @@ In Islandora it is therefore helpful to think of objects as resource nodes. The 
 
 The typical elements of a resource node:
 
--   A content type defining metadata fields defined for the node. A content type may include any number of custom fields defined to store descriptive metadata about the object represented by the node. To function as an Islandora resource node, a content type must define two further fields: 
+-   A content type defining metadata fields defined for the node. A content type may include any number of custom fields defined to store descriptive metadata about the object represented by the node. To function as an Islandora resource node, a content type must define two further fields:
     - A field denoting the 'type' of thing represented by the node (image, book, newspaper, etc.). The value of this field is used by Islandora to control views, derivative processing, and other behavior.[^1]
 	- A field in which to record the node's [membership](resource-nodes.md#members) in another node. If populated, this field creates a hierarchical relationship between parent (the node recorded in the field) and child (the node in which the parent is recorded). This may be left empty, but is required for building hierarchies for collections, subcollections, and members of collections, as well as objects (books, "compound objects", etc.) consisting of [paged content](paged-content.md).[^2]
 -   Media files (the actual files of JPEGs, MP3s, .zip, etc.) that get loaded through the form
@@ -30,7 +30,7 @@ The following pages expand on the concepts discussed above:
 
 ### Copyright and Usage
 
-This document was originally developed by [Alex Kent](https://github.com/alexkent0) and has been adapted for general use by the Islandora community. 
+This document was originally developed by [Alex Kent](https://github.com/alexkent0) and has been adapted for general use by the Islandora community.
 
 [![CC BY-NC 4.0](https://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-nc.svg)](https://creativecommons.org/licenses/by-nc/4.0/)
 

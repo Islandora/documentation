@@ -256,7 +256,7 @@ Our blueprints are going to look largely similar between services, with only a f
   <camelContext id="IslandoraConnectorOCR" xmlns="http://camel.apache.org/schema/blueprint">
     <package>ca.islandora.alpaca.connector.derivative</package>
   </camelContext>
-  
+
 </blueprint>
 ```
 
@@ -287,7 +287,7 @@ Our blueprints are going to look largely similar between services, with only a f
   <camelContext id="IslandoraConnectorHoudini" xmlns="http://camel.apache.org/schema/blueprint">
     <package>ca.islandora.alpaca.connector.derivative</package>
   </camelContext>
-  
+
 </blueprint>
 ```
 
@@ -318,7 +318,7 @@ Our blueprints are going to look largely similar between services, with only a f
   <camelContext id="IslandoraConnectorHomarus" xmlns="http://camel.apache.org/schema/blueprint">
     <package>ca.islandora.alpaca.connector.derivative</package>
   </camelContext>
-  
+
 </blueprint>
 ```
 
@@ -349,7 +349,7 @@ Our blueprints are going to look largely similar between services, with only a f
   <camelContext id="IslandoraConnectorfits" xmlns="http://camel.apache.org/schema/blueprint">
     <package>ca.islandora.alpaca.connector.derivative</package>
   </camelContext>
-  
+
 </blueprint>
 ```
 

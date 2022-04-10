@@ -2,15 +2,15 @@
 Alpaca contains several OSGI modules or bundles. They are grouped together as features and deployed to Karaf container.
 
 ## [OSGi](https://www.osgi.org/developer/architecture/)
-OSGi is a specification to develop and deploy modular Java applications. It allows for dynamic deployment (hot deployment) and dependency management. 
+OSGi is a specification to develop and deploy modular Java applications. It allows for dynamic deployment (hot deployment) and dependency management.
 
-The base unit of resources is called a bundle. Bundle is similar to a jar file, with additional information to be processed as an OSGi component. Several bundles can be grouped together into a Feature and installed together. OSGi bundles can be run on containers implementing the OSGi specification. Apache Karaf is one such container
+The base unit of resources is called a bundle. Bundle is similar to a jar file, with additional information to be processed as an OSGi component. Several bundles can be grouped together into a Feature and installed together. OSGi bundles can be run on containers implementing the OSGi specification. Apache Karaf is one such container.
 
 ## [Karaf](https://karaf.apache.org/manual/latest/overview.html)
-Apache Karaf is a container that can be used to deploy an array of applications such servlets, Apache Camel components, jars etc. 
+Apache Karaf is a container that can be used to deploy an array of applications such servlets, Apache Camel components, jars etc.
 
-### Karaf - Bundle - Hello World 
-Download a bundle to the [islandora-playbook](https://github.com/Islandora-Devops/isladora-playbook) (ex to `/home/ubuntu` directory). An example hello world bundle is [here](https://github.com/moghaddam/developmentor/blob/master/helloworld/target/helloworld-1.0.0.jar). 
+### Karaf - Bundle - Hello World
+Download a bundle to the [islandora-playbook](https://github.com/Islandora-Devops/isladora-playbook) (ex to `/home/ubuntu` directory). An example hello world bundle is [here](https://github.com/moghaddam/developmentor/blob/master/helloworld/target/helloworld-1.0.0.jar).
 
 In the Islandora playbook, you can login to Karaf using ssh. The password is karaf. You can also use the client here: `/opt/karaf/bin/client`. Karaf client allows the use of Linux commands such as `grep` in addition to Karaf commands.
 
@@ -27,7 +27,7 @@ Bundle ID: 242
 
 The installation will return a bundle id. You can issue the list command to verify that bundle is on the list. Initially it will have *Installed* status.
 
-As per OSGi specification, before a bundle can be started, it has to be Resolved. To resolve, issue the following command.  
+As per OSGi specification, before a bundle can be started, it has to be Resolved. To resolve, issue the following command.
 ```
 karaf@root(bundle)> resolve 242
 ```
@@ -38,13 +38,13 @@ karaf@root(bundle)> start 242
 Hello World!
 karaf@root(bundle)> stop 242
 Goodbye World!
-karaf@root(bundle)> 
+karaf@root(bundle)>
 ```
 
-### Karaf - Features - Hello World 
-Karaf Features allows for bundles to be grouped, managed and deployed together. Features can be nested as well. Feature files of frameworks such as Apache Camel or Apache ActiveMQ can be used to deploy those services.  
+### Karaf - Features - Hello World
+Karaf Features allows for bundles to be grouped, managed and deployed together. Features can be nested as well. Feature files of frameworks such as Apache Camel or Apache ActiveMQ can be used to deploy those services.
 
-A simple Features file is as below.  
+A simple Features file is as below.
 
 ```
 <features>
@@ -59,7 +59,7 @@ You can add the features to Karaf as below:
 ```
 karaf@root()> feature:repo-add file:///home/ubuntu/features.xml
 ```
-You can install the feature's bundles as below.  
+You can install the feature's bundles as below.
 
 ```
 karaf@root(feature)> install greeter_server
@@ -76,14 +76,14 @@ Goodbye World!
 ```
 
 ## [Gradle](https://docs.gradle.org/current/userguide/tutorial_using_tasks.html)
-Gradle is used by Alpaca as a build and package management tool. It is similar to [Maven](https://maven.apache.org/).  
+Gradle is used by Alpaca as a build and package management tool. It is similar to [Maven](https://maven.apache.org/).
 
 
 ## [Apache Camel](http://camel.apache.org/book-getting-started.html)
-Apache Camel is an integration framework that aids in implementing integration patterns.  
+Apache Camel is an integration framework that aids in implementing integration patterns.
 
 ### Alpaca - Apache Camel HelloWorld
-Maven has camel-archetype-blueprint which can be used to create apache-camel OSGi bundle project structure.  
+Maven has camel-archetype-blueprint which can be used to create apache-camel OSGi bundle project structure.
 
 #### Creating a project/bundle under Alpaca
 ```
@@ -96,9 +96,9 @@ However, it is easier to copy the structure of an existing project such as [isla
 cp -R islandora-connector-broadcast/ islandora-connector-helloworld
 
 ```
-Open the project in your IDE. In Eclipse, you can go to File | Open Projects from File System and navigate the new folder.  
+Open the project in your IDE. In Eclipse, you can go to File | Open Projects from File System and navigate the new folder.
 
-We need to rename the configuration, java and build files to reflect the helloworld project.  
+We need to rename the configuration, java and build files to reflect the helloworld project.
 
 * `src/main/cfg/ca.islandora.alpaca.connector.helloworld.cfg`
 * `src/main/java/ca/islandora/alpaca/connector/helloworld`
@@ -131,7 +131,7 @@ public class HelloworldRouter extends RouteBuilder {
 
 ```
 
-* `src/main/resource/OSGI-INF/blueprint/blueprint.xml` - Change the content of this file to reflect Helloworld package.  
+* `src/main/resource/OSGI-INF/blueprint/blueprint.xml` - Change the content of this file to reflect Helloworld package.
 * `src/build.gradle`
 ```
 apply plugin: 'osgi'
