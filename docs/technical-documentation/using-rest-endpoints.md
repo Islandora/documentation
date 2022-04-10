@@ -1,4 +1,4 @@
-# Islandora 8 via REST
+# Islandora via REST
 
 Each node, media and file in Drupal 8 has its own URI and we can GET the resources, some in a variety of formats.
 

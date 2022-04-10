@@ -15,7 +15,7 @@ The following recipe details how to connect Islandora with Alexa, using custom A
 ## Ingredients
 
 - Drupal 8 
-- Islandora 8
+- Islandora
 - Drupal Alexa Module
 - Islandora Oral Histories Module
 - Custom Alexa Skill

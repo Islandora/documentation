@@ -1,14 +1,14 @@
-# From Objects to Resource Nodes: Shifting Concepts from Islandora 7 to 8
+# From Objects to Resource Nodes: Shifting Concepts from Islandora Leagcy to Islandora
 
-This document attempts to show the shift in how objects work from Islandora version 7 to version 8, from a non-developer perspective.
+This document attempts to show the shift in how objects work from Islandora Legacy to Islandora, from a non-developer perspective.
 
 ## Traditional objects become resource nodes
 
-The conventional Islandora 7 definition of an object is a file loaded in the repository with associated derivatives. In Islandora 7, objects (video files, audio files, PDFs, etc.) are loaded through the user interface, and Datastreams are generated automatically. These consist of access and display copies, the metadata, OCH/HOCR, technical metadata, and more. All of these Datastreams are directly connected to the object and accessed through the admin interface.
+The conventional Islandora Legacy definition of an object is a file loaded in the repository with associated derivatives. In Islandora 7, objects (video files, audio files, PDFs, etc.) are loaded through the user interface, and Datastreams are generated automatically. These consist of access and display copies, the metadata, OCH/HOCR, technical metadata, and more. All of these Datastreams are directly connected to the object and accessed through the admin interface.
 
-In Islandora 8, the traditional Islandora 7 objects (video files, audio files, etc. that were represented in different content models) are now Drupal nodes. Islandora object nodes are a special kind of Drupal node, distinct from nodes that exist for other content types such as a blog post, an article, a page (like the About page on a site), and others. These Islandora objects are still loaded through the interface and described with the data entry form, and derivatives are still generated. However, the Datastreams are no longer connected to the original object in the same immutable way. Each of these Datastreams can be manipulated through Drupal by non-developers. You can create a variety of ways to view this metadata and information related to the objects. Doing so requires knowledge of Drupal 8, but this essentially means that there are many ways to view the metadata and access the related objects in Islandora 8.
- 
-In Islandora 8 it is therefore helpful to think of objects as resource nodes. The term reflects the new nature of objects in Islandora 8. A resource node does not just refer to the individual object file, but encompasses multiple elements that all relate to each other, even if they are no longer directly connected like objects in Islandora 7.
+In Islandora, the traditional Islandora Legacy objects (video files, audio files, etc. that were represented in different content models) are now Drupal nodes. Islandora object nodes are a special kind of Drupal node, distinct from nodes that exist for other content types such as a blog post, an article, a page (like the About page on a site), and others. These Islandora objects are still loaded through the interface and described with the data entry form, and derivatives are still generated. However, the Datastreams are no longer connected to the original object in the same immutable way. Each of these Datastreams can be manipulated through Drupal by non-developers. You can create a variety of ways to view this metadata and information related to the objects. Doing so requires knowledge of Drupal 8, but this essentially means that there are many ways to view the metadata and access the related objects in Islandora.
+
+In Islandora it is therefore helpful to think of objects as resource nodes. The term reflects the new nature of objects in Islandora. A resource node does not just refer to the individual object file, but encompasses multiple elements that all relate to each other, even if they are no longer directly connected like objects in Islandora Legacy.
 
 The typical elements of a resource node:
 
@@ -18,7 +18,7 @@ The typical elements of a resource node:
 -   Media files (the actual files of JPEGs, MP3s, .zip, etc.) that get loaded through the form
 -   Derivative files (thumbnails, web-friendly service files, technical metadata, and more)
 
-These resource nodes are what the librarian, student, archivist, technician, or general non-developer creates through the data entry form. It is possible to configure all elements of a resource node in Islandora 8 through Drupal. This fact allows control over how one accesses the node and how nodes are displayed and discovered online by non-developers. It also allows a repository to take full advantage of all third-party Drupal modules, themes, and distributions available.
+These resource nodes are what the librarian, student, archivist, technician, or general non-developer creates through the data entry form. It is possible to configure all elements of a resource node in Islandora through Drupal. This fact allows control over how one accesses the node and how nodes are displayed and discovered online by non-developers. It also allows a repository to take full advantage of all third-party Drupal modules, themes, and distributions available.
 
 ## More Information
 

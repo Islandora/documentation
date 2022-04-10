@@ -1,6 +1,6 @@
-# Islandora 8 Committers
+# Islandora Committers
 
-Islandora 8 is open source and released under MIT and GPLv2 licenses. The software and associated documentation is developed collectively by a community of contributors and committers. All interested community members are encouraged to contribute to the project. Contributors who demonstrate sustained engagement with the project through quality participation in meetings, mailing lists, documentation and code updates can be nominated by existing committers to also become a committers. It should be emphasized that committers need not be limited to software developers. Community members with skills in documentation and testing, for example, can also be committers.
+Islandora is open source and released under MIT and GPLv2 licenses. The software and associated documentation is developed collectively by a community of contributors and committers. All interested community members are encouraged to contribute to the project. Contributors who demonstrate sustained engagement with the project through quality participation in meetings, mailing lists, documentation and code updates can be nominated by existing committers to also become a committers. It should be emphasized that committers need not be limited to software developers. Community members with skills in documentation and testing, for example, can also be committers.
 
 ## Rights
 
@@ -25,7 +25,7 @@ Committers share the following responsibilities:
 
 ## Committers
 
-The following is an alphabetized list of the current Islandora 8 committers:
+The following is an alphabetized list of the current Islandora committers:
 
 | Name                        | Organization                          | Github username |
 |-----------------------------|---------------------------------------|----------------|
@@ -53,7 +53,7 @@ The following is an alphabetized list of the current Islandora 8 committers:
 
 ## Emeritus Committers
 
-The following is an alphabetized list of the prior Islandora 8 committers:
+The following is an alphabetized list of the prior Islandora committers:
 
 | Name                        | Organization                      |
 |-----------------------------|-----------------------------------|
@@ -98,8 +98,8 @@ Summary:
 
 If they accept, then do:
 
-1. Add to the Islandora 8 Committer team of the Github Islandora organization.
+1. Add to the Islandora Committer team of the Github Islandora organization.
 2. Add to Committer team of GitHub Islandora-Labs organization 
 3. Add to islandora-committers google-group
-4. Add to committers wiki page: Islandora 8 Committers (this page)
+4. Add to committers wiki page: Islandora Committers (this page)
 5. Announce the new committer ([template/committerAnnounce.txt](https://raw.githubusercontent.com/Islandora/documentation/main/docs/contributing/templates/committerAnnounce.txt))

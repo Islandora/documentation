@@ -6,7 +6,7 @@
 
 In Drupal, a common way to implement a viewer is through a [module](./glossary/#module) that provides the javascript library, and a field formatter that uses that library. The field formatter will work with specific types of Drupal fields (e.g. file fields or image fields, some may even provide their own fields).
 
-Viewers that are known to work with Islandora 8 include:
+Viewers that are known to work with Islandora include:
 
 * [OpenSeadragon](https://openseadragon.github.io/), via the Drupal module [OpenSeadragon](https://github.com/Islandora/openseadragon) (maintained by the Islandora Foundation).
 * [pdf.js](https://github.com/mozilla/pdf.js), via the Drupal contrib module [PDF](https://www.drupal.org/project/pdf)
@@ -16,7 +16,7 @@ Both are included with Islandora Defaults.
 
 ## How are viewers configured?
 
-In the generic Islandora 8 content modelling scenario, we often want the viewer to appear on a _"resource node"_ when the file itself is in a field on a Media that references that node. These layers of indirection make displaying viewers on nodes rather complex. 
+In the generic Islandora content modelling scenario, we often want the viewer to appear on a _"resource node"_ when the file itself is in a field on a Media that references that node. These layers of indirection make displaying viewers on nodes rather complex.
 
 ## Example - Open Seadragon (in Islandora Defaults)
 

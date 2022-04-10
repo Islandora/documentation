@@ -812,4 +812,4 @@ But really the best thing to do is try and get your data into Islandora!  We int
 
 In some repositories, these CSVs can be used to make bulk updates to metadata. Just make your changes to maintain the CSVs, then run the migration(s) again with the --update flag. This will not always be efficient, as you'll update every entity, even if it didn't change. But, by breaking down your CSVs per collection or object type, you could keep them small enough to use this process for a small repository.
 
-There is also a tool for migrating directly from a Legacy Islandora to Islandora ([migrate_7x_claw](https://github.com/Islandora-Devops/migrate_7x_claw)), using Solr, XPaths, and Fedora calls to pull files and objects directly into Islandora 8. It may be worth checking out, and/or using in conjunction with a CSV migration.
+There is also a tool for migrating directly from a Legacy Islandora to Islandora ([migrate_7x_claw](https://github.com/Islandora-Devops/migrate_7x_claw)), using Solr, XPaths, and Fedora calls to pull files and objects directly into Islandora. It may be worth checking out, and/or using in conjunction with a CSV migration.

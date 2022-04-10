@@ -4,7 +4,7 @@
 
 - [Apache ActiveMQ](https://activemq.apache.org/), a messaging server that will be used to handle communication between Alpaca and other components
 - [Apache Karaf](https://karaf.apache.org/), the Java application runtime that Alpaca will be deployed in
-- [Islandora/Alpaca](https://github.com/Islandora/Alpaca), a suite of Java middleware applications that will handle communication between various components of Islandora 8
+- [Islandora/Alpaca](https://github.com/Islandora/Alpaca), a suite of Java middleware applications that will handle communication between various components of Islandora.
 
 ## ActiveMQ 5
 

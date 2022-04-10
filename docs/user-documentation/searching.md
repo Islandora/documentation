@@ -1,8 +1,8 @@
 # Setup and Configure Search
 
-Islandora 8 comes with the Drupal 8 [Search API](https://www.drupal.org/project/search_api) and [SOLR](https://www.drupal.org/project/search_api_solr) modules enabled with a corresponding SOLR instance. This guide gives an overview to the setup provided by the islandora-playbook. Much more detail is available in the [Search API documentation](https://www.drupal.org/docs/8/modules/search-api). Another helpful resource is [Adam Fuch's "Drupal 8 Custom Site Search with Search API"](https://www.electriccitizen.com/blog/drupal-8-custom-site-search-search-api) (https://www.electriccitizen.com, 2018-01-10; last accessed 2019-03-08).
+Islandora comes with the Drupal 8 [Search API](https://www.drupal.org/project/search_api) and [SOLR](https://www.drupal.org/project/search_api_solr) modules enabled with a corresponding SOLR instance. This guide gives an overview to the setup provided by the islandora-playbook. Much more detail is available in the [Search API documentation](https://www.drupal.org/docs/8/modules/search-api). Another helpful resource is [Adam Fuch's "Drupal 8 Custom Site Search with Search API"](https://www.electriccitizen.com/blog/drupal-8-custom-site-search-search-api) (https://www.electriccitizen.com, 2018-01-10; last accessed 2019-03-08).
 
-## Indexing Islandora 8 with SOLR
+## Indexing Islandora with SOLR
 
 To access the search indexing settings, log in as an administrator and navigate to  '/admin/config/search/search-api' or click **Configuration** and then **Search API**.
 
@@ -54,7 +54,7 @@ Once the fields are added they can be configured further on the _Fields_ tab, al
 
 The _Processors_ tab allows repository managers to adjust how data and search queries are processed to adjust results. The defaults are acceptable in most cases.
 
-## Searching Islandora 8
+## Searching Islandora
 
 The Search API SOLR module comes with a search page pre-configured (accessible at '/solr-search/content'). To edit the search page, navigate to '/admin/structure/views/view/solr_search_content'.
 

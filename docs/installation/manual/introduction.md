@@ -1,7 +1,7 @@
 # Introduction
 
 !!! notice
-    The manual installation guide is not intended to describe *the* Islandora 8 installation but rather *an* Islandora 8 installation. The server created using this guide is not hardened, will not be easily scalable, and the components may not be configured in a way you consider easy to work with. A production instance of Islandora 8 should be installed and maintained by a professional with an understanding of Linux and server administration.
+    The manual installation guide is not intended to describe *the* Islandora installation but rather *an* Islandora installation. The server created using this guide is not hardened, will not be easily scalable, and the components may not be configured in a way you consider easy to work with. A production instance of Islandora should be installed and maintained by a professional with an understanding of Linux and server administration.
 
 This guide will contain generalized steps on installation and configuration of the various components, but will contain specific example commands for executing these steps on an Ubuntu 18.04 Server.
 

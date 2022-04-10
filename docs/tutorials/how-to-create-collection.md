@@ -21,7 +21,7 @@ Click on _Add content_.
 
 ![Click on add content, under tools](../assets/collections_add_content.png)
 
-Then click on 'Repository Item' to give your collection the default metadata profile for Islandora 8.
+Then click on 'Repository Item' to give your collection the default metadata profile for Islandora.
 
 ![Click on Repository Item](../assets/collections_repository_item.jpg)
 

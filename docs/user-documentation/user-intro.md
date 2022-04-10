@@ -39,7 +39,7 @@ Even though Fedora is optional in Islandora 2.0, most repositories will use it s
 * Integration with Microservices via API-X
 * WebAC Policies for access control (not currently leveraged by default)
 
-In Islandora repositories that use Fedora, all properties about Drupal nodes are mirrored in Fedora as RDF properties. But, even if an Islandora instance does not use Fedora, Drupal can provide an object's properties as RDF (again, Drupal is the primary source of data in Islandora 8). In addition, the Drupal media associated with Islandora 8 objects are persisted to Fedora, although exactly which media is configurable within the Islandora 8 admin interface. Just as Drupal out of the box has a public and private filesystem, Islandora adds a third filesystem to Drupal called, not surprisingly, "fedora", and it is to this filesystem that media are persisted. We will provide more information about Fedora's role in an Islandora 2.0 repository in the [metadata](metadata.md) and [media](media.md) sections.
+In Islandora repositories that use Fedora, all properties about Drupal nodes are mirrored in Fedora as RDF properties. But, even if an Islandora instance does not use Fedora, Drupal can provide an object's properties as RDF (again, Drupal is the primary source of data in Islandora). In addition, the Drupal media associated with Islandora objects are persisted to Fedora, although exactly which media is configurable within the Islandora admin interface. Just as Drupal out of the box has a public and private filesystem, Islandora adds a third filesystem to Drupal called, not surprisingly, "fedora", and it is to this filesystem that media are persisted. We will provide more information about Fedora's role in an Islandora 2.0 repository in the [metadata](metadata.md) and [media](media.md) sections.
 
 
 ## Architecture
@@ -50,9 +50,9 @@ Many users of Islandora may be familiar with the metaphorical diagram of Islando
  
 ![Islandora 7 as a cheeseburger](../assets/user-intro-islandoraburger.png)
  
-For a similar conceptual approach to Islandora 2.0, we present it as a bento box: a very modular platform, in which each piece may be removed and replaced with something different, without disrupting other parts of the stack:
+For a similar conceptual approach to Islandora, we present it as a bento box: a very modular platform, in which each piece may be removed and replaced with something different, without disrupting other parts of the stack:
  
-![Islandora 8 as a bento box](../assets/user-intro-bento.png)
+![Islandora as a bento box](../assets/user-intro-bento.png)
  
 For a true diagram of how the various parts of Islandora 2.0 interact, please see the full [Architecture Diagram](../technical-documentation/diagram.md)
 

@@ -45,7 +45,7 @@ Third, the metadata synced from the Media into Fedora at [old Fedora URI]/fcr:me
 
 ## Media Ownership
 
-Islandora 8 objects can have any number of media associated with them. Media store a reference to the resource node they belong to using a special field,
+Islandora objects can have any number of media associated with them. Media store a reference to the resource node they belong to using a special field,
 "Media Of". By changing this field's value, you can change which resource node owns the media, and therefore, where it gets displayed or managed.
 
 !!! note "Compared to Islandora 7"
@@ -54,8 +54,8 @@ Islandora 8 objects can have any number of media associated with them. Media sto
 
 ## Media Use
 
-Islandora 8 media express their intended use with a special "Media Use" field, which accepts taxonomy terms from the "Media Usage"
-vocabulary. Because the Media Usage vocabulary is an ordinary Drupal vocabulary, Islandora 8 site administrators can create additional
+Islandora media express their intended use with a special "Media Use" field, which accepts taxonomy terms from the "Media Usage"
+vocabulary. Because the Media Usage vocabulary is an ordinary Drupal vocabulary, Islandora site administrators can create additional
 terms, and in turn, these local terms can be used to identify media that have some custom local purpose. However, most of the 
 default set of "Media Use" terms are taken from the [PCDM Use Extension](https://pcdm.org/2015/05/12/use) vocabulary:
 

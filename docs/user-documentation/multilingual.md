@@ -1,10 +1,10 @@
-Islandora 8 enables you to build full fledged multilingual repositories leveraging the multilingual support provided by Drupal core modules. The multilingual content gets indexed into Fedora repository as well as the Triplestore (Blazegraph), and can be queried using the SPARQL endpoint. In this guide, we will describe the steps needed to setup a basic multilingual Islandora 8 site.  
+Islandora enables you to build full fledged multilingual repositories leveraging the multilingual support provided by Drupal core modules. The multilingual content gets indexed into Fedora repository as well as the Triplestore (Blazegraph), and can be queried using the SPARQL endpoint. In this guide, we will describe the steps needed to setup a basic multilingual Islandora site.
 
 ## Drupal Concepts
 Drupal allows you to translate user interface text, configuration text, and content. See [section 2.7 of the Drupal documentation for details](https://www.drupal.org/docs/user_guide/en/language-concept.html).
 
 ## Islandora Configuration
-Islandora 8 enables Drupal's _Language_ and _Content Translation_ modules by default. Drupal provides additional modules for [multilingual support](https://www.drupal.org/docs/8/multilingual/choosing-and-installing-multilingual-modules), for instance for translating the built-in user interface or editable interface text. 
+Islandora enables Drupal's _Language_ and _Content Translation_ modules by default. Drupal provides additional modules for [multilingual support](https://www.drupal.org/docs/8/multilingual/choosing-and-installing-multilingual-modules), for instance for translating the built-in user interface or editable interface text.
 
 ### Adding Languages
 From the top menu, go to Configuration >> Regional and language >> Languages. Add a language.
@@ -40,12 +40,12 @@ Each field label needs to be translated through the Drupal GUI (Configuration >>
 ![Multilingual Content Representation in Drupal](../assets/multilingual_repository_item_in_drupal.png)
 
 ## Fedora Representation
-Islandora 8 indexes the multilingual metadata values in Fedora as RDF literals using language tags. An example representation is shown below.
+Islandora indexes the multilingual metadata values in Fedora as RDF literals using language tags. An example representation is shown below.
 
 ![Multilingual Content Representation in Fedora](../assets/multilingual_repository_item_in_fedora.png)
 
 ## Triplestore Representation
-Islandora 8 indexes the multilingual metadata values in Blazegraph as RDF literals using language tags. An example representation is shown below. 
+Islandora indexes the multilingual metadata values in Blazegraph as RDF literals using language tags. An example representation is shown below.
 
 ![Multilingual Content Representation in Triplestore](../assets/multilingual_repository_item_in_triplestore.png)
 

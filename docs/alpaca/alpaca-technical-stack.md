@@ -12,7 +12,7 @@ Apache Karaf is a container that can be used to deploy an array of applications 
 ### Karaf - Bundle - Hello World 
 Download a bundle to the [islandora-playbook](https://github.com/Islandora-Devops/isladora-playbook) (ex to `/home/ubuntu` directory). An example hello world bundle is [here](https://github.com/moghaddam/developmentor/blob/master/helloworld/target/helloworld-1.0.0.jar). 
 
-In the Islandora 8 playbook, you can login to Karaf using ssh. The password is karaf. You can also use the client here: `/opt/karaf/bin/client`. Karaf client allows the use of Linux commands such as `grep` in addition to Karaf commands.  
+In the Islandora playbook, you can login to Karaf using ssh. The password is karaf. You can also use the client here: `/opt/karaf/bin/client`. Karaf client allows the use of Linux commands such as `grep` in addition to Karaf commands.
 
 ```
 ssh -p 8101 karaf@localhost
@@ -136,7 +136,7 @@ public class HelloworldRouter extends RouteBuilder {
 ```
 apply plugin: 'osgi'
 
-description = 'Islandora 8 HelloWorld'
+description = 'Islandora HelloWorld'
 
 dependencies {
     compile group: 'org.apache.camel', name: 'camel-core', version: camelVersion
@@ -217,7 +217,7 @@ $ ./activemq start
 
 When ActiveMQ gets started, go to http://localhost:8161/admin/. You can login using admin:admin.
 
-Note that ActiveMQ in Islandora 8 playbook does not have a UI.  
+Note that ActiveMQ in Islandora playbook does not have a UI.
 
 ## References
 * [OSGI for Beginners](http://www.theserverside.com/news/1363825/OSGi-for-Beginners)

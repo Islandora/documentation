@@ -14,7 +14,7 @@ Views are powerful content filters that enable you to present Islandora (and oth
 
 ## How to modify an existing view
 
-Islandora Defaults ships with some views already created and turned on. The Islandora 8 home page displays content items that have been added to Islandora. This view is named _Frontpage_ and it lists items that meet the following _filter criteria_: 
+Islandora Defaults ships with some views already created and turned on. The Islandora home page displays content items that have been added to Islandora. This view is named _Frontpage_ and it lists items that meet the following _filter criteria_:
 
 - The item is in the _published_ state.
 - The checkbox Promoted to front page is selected. 
@@ -50,7 +50,7 @@ For this example, we added six collection items to Islandora. In total there are
     
 For this example, we create a new view that only shows collections. It will be created as a [Block](https://www.drupal.org/docs/core-modules-and-themes/core-modules/block-module/managing-blocks) (also see the tutorial on [Configuring Blocks](../tutorials/blocks.md)) that will only display on the front page. We will add the new collection list block below the existing frontpage view that lists items.
 
-1.	Using your Web browser, open the Islandora 8 front page 
+1.	Using your Web browser, open the Islandora front page
 2.	Navigate to **Administration** >> **Structure** >> **Views**
 3.	Create a new view by selecting **Add view**
 4.	Name the view and select **Create a block**. Give the block a title and decide how you want it to display (Grid, Table, List, Paging). To progress, select **Save and edit**.

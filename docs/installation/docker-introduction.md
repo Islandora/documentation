@@ -2,7 +2,7 @@
 
 ## What is ISLE?
 
-ISLE, short for ISLandora Enterprise, is a community initiative to ease the installation and maintenance of Islandora by using Docker. It was originally started by the Islandora Collaboration Group for Islandora 7.x.  When transitioning to Islandora 8, the project came under the purview of the Islandora Foundation.  All documentation on this site assumes you're trying to install Islandora 8. [See here](https://islandora-collaboration-group.github.io/ISLE/) if you are looking for ISLE for Islandora 7.
+ISLE, short for ISLandora Enterprise, is a community initiative to ease the installation and maintenance of Islandora by using Docker. It was originally started by the Islandora Collaboration Group for Islandora Legacy.  When transitioning to Islandora, the project came under the purview of the Islandora Foundation.  All documentation on this site assumes you're trying to install Islandora. [See here](https://islandora-collaboration-group.github.io/ISLE/) if you are looking for ISLE for Islandora Legacy.
 
 ## Why use ISLE?
 

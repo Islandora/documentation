@@ -11,9 +11,9 @@ At a practial level, because Islandora supports several of the IIIF specificatio
    
    ![OpenSeadragon rendering book pages](../assets/osd_collection_mode.png)
 
-## Using IIIF in Islandora 8
+## Using IIIF in Islandora
 
-Implementation of the IIIF Presentation API is new in Islandora 8, and using it is as simple as configuring a Context (in fact, you don't even need to configure it; the Context, Openseadragon Block, already exists by default).
+Implementation of the IIIF Presentation API is new in Islandora, and using it is as simple as configuring a Context (in fact, you don't even need to configure it; the Context, Openseadragon Block, already exists by default).
 <!-- todo: Put a link to paged-content.md below when it exists. -->
 To use this Context, all that is required is for your book or newspaper (or other paged content) to be given a model of "Paged Content" or "Publication Issue". Then, in the Openseadragon Block Context, make sure the term used in the "Node has term" condition (you can register more than one term there). Now, when you view a paged content Islandora object, you will see thumbnails of all of its child pages (assuming you have added some child pages to the object) in the OpenSeadragon viewer as illustrated above. 
 
@@ -30,7 +30,7 @@ You can change how the paged content thumbnails are arranged in the OpenSeadrago
   
 ## Looking under the hood (and beyond)
   
-  If you want to see the raw output of the IIIF API implementations in Islandora 8, visit a node that is displaying the OpenSeadragon viewer (doesn't matter if its a single image or a paged content node like a book), and tack "manifest" onto the end of the URL, like `http://myrepo.org/node/23/manifest` and hit enter. You will see the raw JSON that IIIF-compliant viewers use to render the content.
+  If you want to see the raw output of the IIIF API implementations in Islandora, visit a node that is displaying the OpenSeadragon viewer (doesn't matter if its a single image or a paged content node like a book), and tack "manifest" onto the end of the URL, like `http://myrepo.org/node/23/manifest` and hit enter. You will see the raw JSON that IIIF-compliant viewers use to render the content.
   
   The really neat thing is, IIIF-compliant viewers don't need to be embedded in Islandora websites. If a viewer on another website knows the URL of a IIIF manifest like the ones that Islandora can produce, that viewer can display the content described in the manifest. Some implementations of IIIF viewers that show off the potential to combine content from multiple IIIF servers include:
   

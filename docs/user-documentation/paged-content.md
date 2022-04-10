@@ -6,7 +6,7 @@ with their corresponding media. Each "child" resource node contains a reference 
 using the `field_member_of` property. 
 
 !!! Note "Child v. Member"
-    Islandora 8 uses the "child" and "member" descriptor for resource nodes that 
+    Islandora uses the "child" and "member" descriptor for resource nodes that
     store a reference to another resource node in the "Member Of" field interchangeably. 
     Administrators will more often see the "member" terminology more often while 
     front-end users will usually see "child" terminology.

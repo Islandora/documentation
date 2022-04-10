@@ -6,7 +6,7 @@ A resource node holds the descriptive metadata for an Islandora object, as well 
 the various files that are part of the object for preservation or display, such as the original file
  and various derivative files generated from it.   
 
-The model for exactly what constitutes an object in Islandora 8 is flexible and can be adapted to the needs of specific users. For example, the Islandora Defaults configuration considers an object as a resource node of the type "Repository Item"  which contains descriptive metadata about the object. Attached to that Node are one or more Media, each representing a file that is part of this object, such as "Original File", "Thumbnail", "Preservation Master", etc. With this model, every original file uploaded into Islandora has its own resource node.
+The model for exactly what constitutes an object in Islandora is flexible and can be adapted to the needs of specific users. For example, the Islandora Defaults configuration considers an object as a resource node of the type "Repository Item"  which contains descriptive metadata about the object. Attached to that Node are one or more Media, each representing a file that is part of this object, such as "Original File", "Thumbnail", "Preservation Master", etc. With this model, every original file uploaded into Islandora has its own resource node.
 
 Multi-file Media configurations also attach Media to a parent node, but allow for that node to be represened by multiple "Original File"s. In this model, a Media contains the original file as well as any derivative files created from it (thumbnail, service file, etc.).
 
@@ -33,7 +33,7 @@ Here's an example of the basic properties on nodes:
 ```
 nid: 1
 uid: 1
-title: "I am an Islandora 8 object"
+title: "I am an Islandora object"
 created: 1550703004
 changed: 1550703512
 uuid: 02932f2c-e4c2-4b7e-95e1-4aceab78c638
@@ -57,7 +57,7 @@ status | Published, unpublished, etc...
 !!! note "Compared to Islandora 7"
     These node properties are analogous to following Islandora 7.x object properties:
 
-    Islandora 7 | Islandora 8
+    Islandora Legacy | Islandora
     ----------- | -----------
     owner | uid
     dc.title | title
@@ -98,7 +98,7 @@ of how to handle the node in response to certain events, like choosing a viewer 
 
 !!! note "Compared to Islandora 7"
     Content models in Islandora 7 were immutable and contained restrictions as to what
-    types of datastreams could be associated with an object.  Islandora 8 imposes no such
+    types of datastreams could be associated with an object.  Islandora imposes no such
     restrictions. Content models can be changed at any time, and they in no way dictate what
     types of media can be associated with a node.
 
@@ -150,13 +150,13 @@ single child to belong to multiple parents, but may also complicate the creation
 Any two nodes can be related in this way, though typically, the parent node has a content
 model of [_Collection_](../concepts/collection.md) or [_Paged Content_](paged-content.md) (see their respective pages for more details).
 
-!!! Note "Compared to Islandora 7"
-    In Islandora 7, there was a distinction between belonging to a collection and belonging to
-    a compound object.  In Islandora 8, this distinction is not present, essentially allowing every 
+!!! Note "Compared to Islandora Legacy"
+    In Islandora Legacy, there was a distinction between belonging to a collection and belonging to
+    a compound object.  In Islandora, this distinction is not present, essentially allowing every
     resource node to be part of a compound object.
 
 !!! Note "Child v. Member"
-    Islandora 8 uses the "child" and "member" descriptor for resource nodes that 
+    Islandora uses the "child" and "member" descriptor for resource nodes that
     store a reference to another resource node in the "Member Of" field interchangeably. 
     Administrators will more often see the "member" terminology more often while 
     front-end users will usually see "child" terminology.
