@@ -1,6 +1,6 @@
 ## Downloading and Enabling Drupal Modules and Themes
 
-Islandora can make use of majority of the Drupal 8 [modules](https://www.drupal.org/project/project_module) and [themes](https://www.drupal.org/project/project_theme). Common use cases have been documented in the [Islandora Cookbook](https://github.com/Islandora-Labs/Islandora-Cookbook). There are several ways to download and install Drupal modules. Please refer to [this guide](https://www.drupal.org/docs/8/extending-drupal-8) on Drupal.org.
+Islandora can make use of majority of Drupal [modules](https://www.drupal.org/project/project_module) and [themes](https://www.drupal.org/project/project_theme). Common use cases have been documented in the [Islandora Cookbook](/documentation/user-documentation/extending/). There are several ways to download and install Drupal modules. Please refer to [this guide](https://www.drupal.org/docs/extending-drupal) on Drupal.org.
 
 [Composer](https://www.drupal.org/docs/develop/using-composer/using-composer-to-install-drupal-and-manage-dependencies) is the recommended method to install and update drupal modules and themes in Islandora.
 ```shell

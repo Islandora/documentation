@@ -133,8 +133,8 @@ source:
   # 1 means you have a header row, 0 means you don't
   header_row_count: 1
 
-  # Each migration needs a unique key per row in the CSV.  Here we're using the file path.
-  keys:
+  # Each migration needs a unique key ("id") per row in the CSV.  Here we're using the file path.
+  ids:
     - file
 
   # You can't enter string literals into a process plugin, but you can give it a constant as a 'source'.
@@ -201,12 +201,12 @@ source:
   path: '/var/www/html/drupal/web/modules/contrib/migrate_islandora_csv/data/migration.csv'
   delimiter: ','
   header_row_count: 1
-  keys:
+  ids:
     - file
   constants:
     destination_dir: 'fedora://csv_migration'
 ```
-You can see we provide a path to its location, what delimiter to use, if it uses a header row, and which column contains a unique key for each entry.  Constants can also be defined here (more on those later).
+You can see we provide a path to its location, what delimiter to use, if it uses a header row, and which column contains a unique id for each entry.  Constants can also be defined here (more on those later).
 
 #### Process
 
@@ -342,8 +342,8 @@ source:
   # 1 means you have a header row, 0 means you don't
   header_row_count: 1
 
-  # Each migration needs a unique key per row in the csv.  Here we're using the file path.
-  keys:
+  # Each migration needs a unique id per row in the csv.  Here we're using the file path.
+  ids:
     - file
 
   # You can't enter string literals into a process plugin, but you can give it a constant as a 'source'.
@@ -719,7 +719,7 @@ source:
   header_row_count: 1
 
   # Each migration needs a unique key per row in the csv.  Here we're using the file path.
-  keys:
+  ids:
     - file
 
   # You can't enter string literals into a process plugin, but you can give it a constant as a 'source'.

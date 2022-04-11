@@ -15,13 +15,13 @@ At a practial level, because Islandora supports several of the IIIF specificatio
 
 Implementation of the IIIF Presentation API is new in Islandora, and using it is as simple as configuring a Context (in fact, you don't even need to configure it; the Context, OpenSeadragon Block, already exists by default).
 <!-- todo: Put a link to paged-content.md below when it exists. -->
-To use this Context, all that is required is for your book or newspaper (or other paged content) to be given a model of "Paged Content" or "Publication Issue". Then, in the OpenSeadragon Block Context, make sure the term used in the "Node has term" condition (you can register more than one term there). Now, when you view a paged content Islandora object, you will see thumbnails of all of its child pages (assuming you have added some child pages to the object) in the OpenSeadragon viewer as illustrated above.
+To use this Context, all that is required is for your book or newspaper (or other paged content) to be given a model of "Paged Content" or "Publication Issue". Then, in the Open Seadragon Block Context, make sure the term used in the "Node has term" condition (you can register more than one term there). Now, when you view a paged content Islandora object, you will see thumbnails of all of its child pages (assuming you have added some child pages to the object) in the OpenSeadragon viewer as illustrated above.
 
 You can change how the paged content thumbnails are arranged in the OpenSeadragon viewport by doing the following:
 
 1. Visit `admin/config/media/openseadragon`
 1. Scroll to the bottom, where you will see the "Collection Mode" options.
-1. The "Enable Collection Mode" checkbox will be unchecked. This is normal (unless you have already checked it). The OpenSeadragon Context automatically, and temporarily, puts OpenSeadragon in Collection mode when rendering a Paged Content object and then puts it back to Sequence mode (which is what mode it's in when the "Enable Collection Mode" checkbox is unchecked). _This means that in order for you to change options that apply to Collection Mode, you will need to check the "Enable Collection Mode" checkbox, change its options, save the form, then uncheck the "Enable Collection Mode" checkbox again._ Just follow these steps, and it will work!
+1. The "Enable Collection Mode" checkbox will be unchecked. This is normal (unless you have already checked it). The Open Seadragon Context automatically, and temporarily, puts OpenSeadragon in Collection mode when rendering a Paged Content object and then puts it back to Sequence mode (which is what mode it's in when the "Enable Collection Mode" checkbox is unchecked). _This means that in order for you to change options that apply to Collection Mode, you will need to check the "Enable Collection Mode" checkbox, change its options, save the form, then uncheck the "Enable Collection Mode" checkbox again._ Just follow these steps, and it will work!
   1. Check the "Enable Collection Mode" checkbox. The Collection Mode options will appear.
   1. Adjust the options to what you want.
   1. Click the "Save Configuration" button.

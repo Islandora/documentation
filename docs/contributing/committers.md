@@ -1,6 +1,6 @@
 # Islandora Committers
 
-Islandora is open source and released under MIT and GPLv2 licenses. The software and associated documentation is developed collectively by a community of contributors and committers. All interested community members are encouraged to contribute to the project. Contributors who demonstrate sustained engagement with the project through quality participation in meetings, mailing lists, documentation and code updates can be nominated by existing committers to also become a committers. It should be emphasized that committers need not be limited to software developers. Community members with skills in documentation and testing, for example, can also be committers.
+Islandora is open source and released under MIT and GPLv2 licenses. The software and associated documentation is developed collectively by a community of contributors and committers. All interested community members are encouraged to contribute to the project. Contributors who demonstrate sustained engagement with the project through quality participation in meetings, mailing lists, documentation and code updates can be nominated by existing committers to also become a committers. It should be emphasized that committers need not be limited to software developers. Community members with skills in documentation and testing, for example, can also be committers. We maintain a separate list of [Islandora Legacy Committers](https://github.com/Islandora/islandora/wiki/Islandora-Committers)
 
 ## Rights
 

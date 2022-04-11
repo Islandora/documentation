@@ -54,8 +54,8 @@ changed | Timestamp of when the node was last updated
 type | Content type (e.g. which group of fields are present on the node)
 status | Published, unpublished, etc...
 
-!!! note "Compared to Islandora 7"
-    These node properties are analogous to following Islandora 7.x object properties:
+!!! note "Compared to Islandora Legacy"
+    These node properties are analogous to following Islandora Legacy object properties:
 
     Islandora Legacy | Islandora
     ----------- | -----------
@@ -96,8 +96,8 @@ of how to handle the node in response to certain events, like choosing a viewer 
 
 ![Model tags](../assets/resource_nodes_model_tags.png)
 
-!!! note "Compared to Islandora 7"
-    Content models in Islandora 7 were immutable and contained restrictions as to what
+!!! note "Compared to Islandora Legacy"
+    Content models in Islandora Legacy were immutable and contained restrictions as to what
     types of datastreams could be associated with an object.  Islandora imposes no such
     restrictions. Content models can be changed at any time, and they in no way dictate what
     types of media can be associated with a node.

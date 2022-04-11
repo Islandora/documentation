@@ -1,6 +1,6 @@
 # Islandora via REST
 
-Each node, media and file in Drupal 8 has its own URI and we can GET the resources, some in a variety of formats.
+Each node, media and file in Drupal has its own URI and we can GET the resources, some in a variety of formats.
 
 We can also create nodes, media and files in Drupal by using PUT and/or POST requests.
 

@@ -2,7 +2,7 @@
 
 ## Overview
 
-Since metadata in Islandora is stored as fields in Nodes, the standard Drupal Content Types system provides our 'ingest forms'. For more information about Content Types in general, please see [Content Types in Drupal 8](https://www.drupal.org/docs/8/administering-drupal-8-site/managing-content-0/working-with-content-types-and-fields). If you are already familiar with Drupal Field UI, you’re already well equipped to create and modify your own ingest forms in Islandora.
+Since metadata in Islandora is stored as fields in Nodes, the standard Drupal Content Types system provides our 'ingest forms'. For more information about Content Types in general, please see [Content Types in Drupal](https://www.drupal.org/docs/administering-a-drupal-site/managing-content-0/working-with-content-types-and-fields). If you are already familiar with Drupal Field UI, you’re already well equipped to create and modify your own ingest forms in Islandora.
 
 This page will address how to create and modify ingest forms by editing fields and form display settings on Content Types via the graphical user interface (GUI). This page will also cover editing the RDF mapping to accommodate changes to fields.
 
