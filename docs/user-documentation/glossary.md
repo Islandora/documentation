@@ -100,6 +100,9 @@ To ingest an object is to add an entry for it in Islandora. This can be done thr
 
 In the context of digital repositories, ingest refers to the process by which the repository software imports and subsequently processes an object, creating derivatives automatically, and running any other processing that is configured to occur when an object is added. This would be distinguished by software which simply stores objects after import (with or without associated files) and performs no processing. The Islandora GUI and the documentation sometimes use other terms such as 'import' or 'add resource node'. In such contexts, these terms generally refer to the ingest process.
 
+## Islandora 8 (8.x, 2.0)
+Islandora 8, 8.x, 2.0, and CLAW are all deprecated names for the current version of Islandora. They referred to Islandora's use of Drupal 8, and being a major shift away from Islandora Legacy (formerly known as Islandora 7 or 7.x as it runs on Drupal 7).
+
 ## Islandora model
 
 ## Islandora playbook
