@@ -54,10 +54,10 @@ The following new display modes are defined:
 | Type    | View Mode      | Comment                                                              |
 |---------|----------------|----------------------------------------------------------------------|
 | Content | Binary         |                                                                      |
-| Content | OpenSeadragon |                                                                      |
+| Content | Open Seadragon |                                                                      |
 | Content | PDFjs          |                                                                      |
 | Content | Teaser         | This seems to be a re-definition of the built-in "Teaser" view mode. |
-| Media   | OpenSeadragon |                                                                      |
+| Media   | Open Seadragon |                                                                      |
 | Media   | PDFjs          |                                                                      |
 
 
@@ -130,7 +130,7 @@ These configuration files enable content translation on their bundles.
 |-----------------------------------------------------|------------------------------------------------|----------------------------------------------------------------------------------------------|--------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------|
 | IIIF Manifest (iiif_manifest)                       | Generates IIIF manifests for paged content     | REST Export (/node/%node/book-manifest);<br/>REST Export - Single node (/node/%node/manifest) |                                                        |                                                                                                                                  |
 | Members (members)                                   | Displays members for content.                  | Members (block)                                                                              | Show an unformatted list of published nodes that are "Member of" the current node (from URL), formatted as "Teaser"s, paged to 10 items.                                                      |                                                                                                                                  |
-| OpenSeadragon Media EVAs (openseadragon_media_evas) | Displays media for content as EVA's per model. | Original File;<br/>Preservation Master;<br/>Service File | Show 1 Media that is "Media of" the node (from URL) and having Media Use corresponding to each Display (Original file, etc.). The Media is rendered with display mode OpenSeadragon. See media.\*.open_seadragon under "Display Modes." The description's "per model" should read "per media use". Provides the EVA used in the islandora_object.open_seadragon display mode. The Preservation Master and Service File displays are not used. |
+| OpenSeadragon Media EVAs (openseadragon_media_evas) | Displays media for content as EVA's per model. | Original File;<br/>Preservation Master;<br/>Service File | Show 1 Media that is "Media of" the node (from URL) and having Media Use corresponding to each Display (Original file, etc.). The Media is rendered with display mode Open Seadragon. See media.\*.open_seadragon under "Display Modes." The description's "per model" should read "per media use". Provides the EVA used in the islandora_object.open_seadragon display mode. The Preservation Master and Service File displays are not used. |
 | PDFjs Media EVAs (pdfjs_media_evas)                 | Displays media for content as EVA's per model. |  Original File;<br/>Preservation Master;<br/>Service File | Show 1 Media that is "Media of" the node (from URL) and having Media Use corresponding to each Display (Original file, etc.). The Media is rendered with display mode PDFjs. The description's "per model" should read "per media use". Provides the EVA used in the islandora_object.pdfjs display mode. The Preservation Master and Service File displays are not used. |
 
 
@@ -165,7 +165,7 @@ The contexts provided by Islandora Defaults are organized into groups: **Indexin
 |---|---|---|---|---|
 | Binary (binary) | Binary Object Display |**Node has term with URI**: Binary (23)|**Change view mode**: Binary|See node.islandora_object.binary under Display Modes||
 | Collection (collection) | Display block of children |**Node has term with URI**: Collection (24)|**Blocks**: "Members" placed in Content Suffix in Carapace||
-| OpenSeadragon (open_seadragon) | OpenSeadragon viewer for Images |**Node has term with URI**:OpenSeadragon (2)|**Change view mode**: OpenSeadragon |See node.islandora_object.open_seadragon under Display Modes||
+| Open Seadragon (open_seadragon) | OpenSeadragon viewer for Images |**Node has term with URI**:Open Seadragon (2)|**Change view mode**: Open Seadragon |See node.islandora_object.open_seadragon under Display Modes||
 | PDFjs Viewer (pdfjs) | Displays file using the PDFjs viewer |**Node has term with URI**: PDFjs (3)|**Change view mode:** PDFjs|See node.islandora_object.pdfjs under Display Modes|
 | Paged Content - OpenSeadragon (openseadragon_block) | Display a block for Paged Content |**Node has term with URI:** OpenSeadragon (2) AND Paged Content (28)|**Blocks** OpenSeadragon block placed in Main Content in Carapace||
 
@@ -192,7 +192,7 @@ Contents of the islandora_defaults_tags migration:
 
 |Vocabulary|Term name|Description|External Uri|
 |---|---|---|---|
-|islandora_display|"OpenSeadragon"|"Display using the OpenSeadragon viewer"|http://openseadragon.github.io|
+|islandora_display|"Open Seadragon"|"Display using the OpenSeadragon viewer"|http://openseadragon.github.io|
 |islandora_display|"PDFjs"|"Display using the PDF.js viewer"|http://mozilla.github.io/pdf.js|
 |resource_types|"Collection"|"An aggregation of resources"|http://purl.org/dc/dcmitype/Collection|
 |resource_types|"Dataset"|"Data encoded in a defined structure"|http://purl.org/dc/dcmitype/Dataset|
