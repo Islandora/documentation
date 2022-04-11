@@ -2,7 +2,7 @@
 
 ## Background
 
-Ubuntu removed JPEG2000 support from ImageMagick since Vivid Vervet's 8:6.8.9.9-5 version. The PPA that we have created adds JPEG2000 support back into ImageMagick for Ubuntu 16.04 and 18.04. More information on why JPEG2000 support was removed can be found [here](https://bugs.launchpad.net/ubuntu/+source/imagemagick/+bug/1447968), and more information on `openjpeg` in Ubuntu can be found [here](https://bugs.launchpad.net/ubuntu/+source/openjpeg2/+bug/711061).
+Ubuntu removed JPEG 2000 support from ImageMagick since Vivid Vervet's 8:6.8.9.9-5 version. The PPA that we have created adds JPEG 2000 support back into ImageMagick for Ubuntu 16.04 and 18.04. More information on why JPEG 2000 support was removed can be found [here](https://bugs.launchpad.net/ubuntu/+source/imagemagick/+bug/1447968), and more information on `openjpeg` in Ubuntu can be found [here](https://bugs.launchpad.net/ubuntu/+source/openjpeg2/+bug/711061).
 
 ## Prerequisites
 
@@ -46,7 +46,7 @@ Index: imagemagick-6.9.7.4+dfsg/debian/control
  # for plugins
   ghostscript, libdjvulibre-dev, libexif-dev,
 - libjpeg-dev,
--# libopenjp2-7-dev, Needed for JPEG2000 but not in main see MIR #711061
+-# libopenjp2-7-dev, Needed for JPEG 2000 but not in main see MIR #711061
 + libjpeg-dev, libopenjp2-7-dev,
   libopenexr-dev, libperl-dev, libpng-dev, libtiff-dev,
   libwmf-dev,
@@ -56,7 +56,7 @@ Index: imagemagick-6.9.7.4+dfsg/debian/control
   libmagickcore-6.q16-3-extra (= ${binary:Version}),
   libbz2-dev, libdjvulibre-dev,
 - libexif-dev, libfreetype6-dev, libjpeg-dev,
--# libopenjp2-7-dev, Needed for JPEG2000 but not in main see MIR #711061
+-# libopenjp2-7-dev, Needed for JPEG 2000 but not in main see MIR #711061
 + libexif-dev, libfreetype6-dev, libjpeg-dev, libopenjp2-7-dev,
   liblcms2-dev, liblqr-1-0-dev, libltdl-dev, libopenexr-dev, libpng-dev,
   librsvg2-dev, libtiff-dev, libwmf-dev, libx11-dev, libxext-dev, libxml2-dev,
@@ -66,7 +66,7 @@ Index: imagemagick-6.9.7.4+dfsg/debian/control
   libmagickcore-6.q16hdri-3-extra (= ${binary:Version}),
   libbz2-dev, libdjvulibre-dev,
 - libexif-dev, libfreetype6-dev, libjpeg-dev,
--# libopenjp2-7-dev, Needed for JPEG2000 but not in main see MIR #711061
+-# libopenjp2-7-dev, Needed for JPEG 2000 but not in main see MIR #711061
 + libexif-dev, libfreetype6-dev, libjpeg-dev, libopenjp2-7-dev,
   liblcms2-dev, liblqr-1-0-dev, libltdl-dev, libopenexr-dev, libpng-dev,
   librsvg2-dev, libtiff-dev, libwmf-dev, libx11-dev, libxext-dev, libxml2-dev,
@@ -80,7 +80,7 @@ Index: imagemagick-6.9.7.4+dfsg/debian/control.d/noquantum.in
  # for plugins
   ghostscript, libdjvulibre-dev, libexif-dev,
 - libjpeg-dev,
--# libopenjp2-7-dev, Needed for JPEG2000 but not in main see MIR #711061
+-# libopenjp2-7-dev, Needed for JPEG 2000 but not in main see MIR #711061
 + libjpeg-dev, libopenjp2-7-dev,
   libopenexr-dev, libperl-dev, libpng-dev, libtiff-dev,
   libwmf-dev,
@@ -94,7 +94,7 @@ Index: imagemagick-6.9.7.4+dfsg/debian/control.d/quantum.in
   libmagickcore-${IMVERSION}.${QUANTUMDEPTH}-${CORESOVERSION}-extra (= ${binary:Version}),
   libbz2-dev, libdjvulibre-dev,
 - libexif-dev, libfreetype6-dev, libjpeg-dev,
--# libopenjp2-7-dev, Needed for JPEG2000 but not in main see MIR #711061
+-# libopenjp2-7-dev, Needed for JPEG 2000 but not in main see MIR #711061
 + libexif-dev, libfreetype6-dev, libjpeg-dev, libopenjp2-7-dev,
   liblcms2-dev, liblqr-1-0-dev, libltdl-dev, libopenexr-dev, libpng-dev,
   librsvg2-dev, libtiff-dev, libwmf-dev, libx11-dev, libxext-dev, libxml2-dev,
