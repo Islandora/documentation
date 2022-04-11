@@ -43,5 +43,3 @@ Committers should now create (i.e. "tag") new versions of components when new bu
 ## Module Interdependencies
 
 When Islandora components require other Islandora components in their `composer.json` files, we prefer the version specification syntax `^2` to point to the latest-released compatible version within the specified major version.
-
-

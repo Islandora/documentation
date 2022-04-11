@@ -1,4 +1,4 @@
-Islandora 8's accessibility features are currently provided by Drupal 8 and contributed Drupal 8 modules. These pages within the Accessibility section of the Drupal documentation can provide guidance:
+Islandoras accessibility features are currently provided by Drupal 8 and contributed Drupal 8 modules. These pages within the Accessibility section of the Drupal documentation can provide guidance:
 
 - [Drupal 8 Accessibility Features](https://www.drupal.org/docs/8/accessibility/drupal-8-accessibility-features) (included in core Drupal)
 - [Contributed Modules for Extending Accessibility in Drupal 8](https://www.drupal.org/docs/8/accessibility/contributed-modules-for-extending-accessibility-in-drupal-8)

@@ -1,7 +1,7 @@
 
 ## Overview
 
-This tutorial will walk you through adding a piece of digital content (an image and some metadata) into an Islandora repository, creating an Islandora [Resource Node](../user-documentation/resource-nodes.md). 
+This tutorial will walk you through adding a piece of digital content (an image and some metadata) into an Islandora repository, creating an Islandora [Resource Node](../user-documentation/resource-nodes.md).
 At the end, you will have metadata in a Drupal node, a file stored in Fedora, and derivatives automatically created.
 
 !!! Tip "Video version available"
@@ -59,9 +59,9 @@ The Media tab shows nothing listed, because this node has no files. So click on 
 
 We want to add a jpg image, so click on _Image_. You are now presented with a form to create a media.
 
-!!! warning "Images vs .tiffs"
+!!! warning "Images vs TIFFs"
     Drupal considers any type of image that can be viewed natively in the browser as an _Image_.
-    For other image types that require special viewers, such as tiffs, you would have to choose
+    For other image types that require special viewers, such as TIFFs, you would have to choose
     _File_. [Learn more about Media in Islandora](../user-documentation/media.md).
 
 ![Fill out the media form](../assets/create_node_adding_image.png)
@@ -105,4 +105,3 @@ You now have an Islandora resource node, which is a special case of a Drupal nod
 - Drupal documentation on [Nodes](https://www.drupal.org/docs/7/nodes-content-types-and-fields/about-nodes)
 - Drupal documentation on [Media](https://www.drupal.org/docs/8/core/modules/media).
 <!-- include Nodes, Media, etc once they make sense to follow this tutorial. -->
-

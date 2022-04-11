@@ -1,13 +1,13 @@
 # Component Overview
 
-A functioning Islandora 8 Stack is made up of dozens of components working in synchronization with each other to store information in your repository, manage that information, and disseminate it intelligently to users. Whether running an installation using the provided Ansible playbook or installing the stack manually, it may be helpful to have a brief overview of all the components we're going to need, in the order we're going to install them, as well as a brief introduction to each component's installation and configuration process.
+A functioning Islandora Stack is made up of dozens of components working in synchronization with each other to store information in your repository, manage that information, and disseminate it intelligently to users. Whether running an installation using the provided Ansible playbook or installing the stack manually, it may be helpful to have a brief overview of all the components we're going to need, in the order we're going to install them, as well as a brief introduction to each component's installation and configuration process.
 
 This list includes four different kinds of components:
 
 - Components which are hard-required (such as Drupal and the Islandora module)
 - Components for which defaults are provided but which can be swapped out (such as the software managing databases, or the repository's storage system)
 - Components that can't easily be swapped out but are not necessarily required (such as using Solr as the site's internal search engine)
-- Components which do not have official alternatives and are not necessarily required, but will likely exist on the vast majority of Islandora 8 installations (such as Alpaca and Crayfish)
+- Components which do not have official alternatives and are not necessarily required, but will likely exist on the vast majority of Islandora installations (such as Alpaca and Crayfish)
 
 ## The Webserver Stack - Apache, PHP, and MySQL/PostgreSQL
 

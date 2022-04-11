@@ -12,7 +12,7 @@ $ vagrant up
 
 ## Requirements
 
-To create a local VM, download and install the following.  
+To create a local VM, download and install the following.
 
 1. [Virtual Box](https://www.virtualbox.org/)
 2. [Vagrant](https://www.vagrantup.com/) (version 2.0 or higher required)
@@ -64,7 +64,7 @@ $ brew install ansible
 
 ## Installing a local development environment
 
-Clone the `islandora-playbook` and use `vagrant up` to automatically provision a local environment. This method uses Vagrant, VirtualBox, and Ansible. Before provisioning a local environment, you should likely double check that no [required ports](#port-clashes-for-local-environments) are currently in use. 
+Clone the `islandora-playbook` and use `vagrant up` to automatically provision a local environment. This method uses Vagrant, VirtualBox, and Ansible. Before provisioning a local environment, you should likely double check that no [required ports](#port-clashes-for-local-environments) are currently in use.
 
 ### Clone the playbook
 
@@ -80,7 +80,7 @@ Before using `vagrant up`:
 - If building a CentOS box, you also need to install the vbguest additions with `vagrant plugin install vagrant-vbguest`.
 - If this is not your first time spinning up Islandora from this directory, and you want to get the latest code, you may want to clear cached ansible roles in roles/external `rm -rf roles/external`
 
-Then, to spin up the machine: 
+Then, to spin up the machine:
 
 ```bash
 vagrant up
@@ -279,4 +279,4 @@ change this, set a new value for `ansible_port` in `inventory/vagrant/hosts`.
 
 If you run into any issues installing the environment, do not hesitate to email the [mailing list](mailto:islandora@googlegroups.com) to
 ask for help.  If you think you've stumbled across a bug in the installer, please create an issue in the
-[Islandora 8 issue queue](http://github.com/Islandora/documentation/issues) and give it an `ansible` tag.
+[Islandora issue queue](http://github.com/Islandora/documentation/issues) and give it an `ansible` tag.

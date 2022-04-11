@@ -68,4 +68,4 @@ Is still relevant
 
 ### Migrate API demo video
 
-Check out this video that demonstrates the Drupal Migrate API migration process: [Islandora Webinar: Migrating from Islandora 7 to Islandora 8](migrate-7x.md) (Nov 21, 2019)
+Check out this video that demonstrates the Drupal Migrate API migration process: [Islandora Webinar: Migrating from Islandora Legacy to Islandora](migrate-7x.md) (Nov 21, 2019)

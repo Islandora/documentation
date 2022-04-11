@@ -6,7 +6,7 @@ Islandora is an ecosystem of repositories and follows a [Semantic Versioning App
 * MAJOR version when you make incompatible API changes,
 * MINOR version when you add functionality in a backwards compatible manner, and
 * PATCH version when you make backwards compatible bug fixes.
- 
+
 [Learn more about Islandora's Versioning Policy](https://islandora.github.io/documentation/technical-documentation/versioning/)
 
 
@@ -43,7 +43,7 @@ ossrhUsername = jiraname
 ossrhPassword = jirapass
 signing.keyId = pubkeyid
 signing.password = keypassphrase
-signing.secretKeyRingFile = /your/home/.gnupg/secring.gpg 
+signing.secretKeyRingFile = /your/home/.gnupg/secring.gpg
 ```
 - Your `git` is configured (locally or globally) to [cache github credentials for https](https://help.github.com/articles/caching-your-github-password-in-git/) or [use ssh](https://help.github.com/articles/generating-an-ssh-key/)
 
@@ -90,7 +90,7 @@ The release process will also generate documentation at `./docs/<new-version>`. 
 ###### Point of no return
 ***
 
-⚠️  The following steps, once completed are final.  They cannot be undone, revoked or altered.  Only proceed if you've 
+⚠️  The following steps, once completed are final.  They cannot be undone, revoked or altered.  Only proceed if you've
 completed all the above steps and are absolutely certain the release is ready for publication.
 
 ***
@@ -109,13 +109,13 @@ completed all the above steps and are absolutely certain the release is ready fo
 | Jared Whiklo | University of Manitoba | jwhiklo at gmail.com  | 9F45FC2BE09F4D70DA0C7A5CA51C36E8D4F78790 | D4F78790 |
 | Nick Ruest   | York University        | ruestn at yorku.ca    | 159493E15691C84D615B7D1B417FAF1A0E1080CD | 0E1080CD |
 | Seth Shaw   | University of Nevada, Las Vegas        | seth.shaw at unlv.edu    | 2FF65B22AFA7B2A57F054F89D160AA658DAE385F | D160AA658DAE385F |
- 
+
 
 ### JSONLD
 
 Release the `jsonld` module by creating a new release for it in Github.
 
-### Release Openseadragon
+### Release OpenSeadragon
 
 Release the `openseadragon` module by creating a new release for it in Github.
 

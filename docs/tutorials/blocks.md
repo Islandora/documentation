@@ -2,13 +2,13 @@
 
 In Drupal, blocks are snippets of content that can be placed on pages within your website's layout. Some examples of blocks
 are your site's menu, breadcrumbs, search block, etc...  You have a lot of control over when and where you see blocks using
-Drupal's administrative interface.   You can create and delete blocks, as well as move them around in different locations 
+Drupal's administrative interface.   You can create and delete blocks, as well as move them around in different locations
 on the page (called 'regions' in Drupal theme terminology).  You can also control on which pages the blocks are visible,
 allowing you to conditionally show/hide them as appropriate.  Blocks are made available to place by enabling the Drupal
 modules that provide them, and there's lots out there to choose from.  Placing blocks is an essential skill for any site
-administrator, so let's jump right in and get our hands dirty. There are two methods discussed here: the "Block Layout" 
-interface, and using "Contexts". There is a third option, "[Display Suite](https://www.drupal.org/project/ds)," that is 
-not discussed here. 
+administrator, so let's jump right in and get our hands dirty. There are two methods discussed here: the "Block Layout"
+interface, and using "Contexts". There is a third option, "[Display Suite](https://www.drupal.org/project/ds)," that is
+not discussed here.
 
 ## Using Block Layout
 
@@ -16,7 +16,7 @@ not discussed here.
 
 Using the admin toolbar, navigate to Admin > Structure > Block layout (admin/structure/block).  You will see a table listing
 all of the available regions provided by the current theme for block placement.  You can switch between available themes
-using the tabs above the table.  For each region, enabled blocks are listed and can be re-arranged.  Take a look at the 
+using the tabs above the table.  For each region, enabled blocks are listed and can be re-arranged.  Take a look at the
 "Main Content" region for example.
 
 ![Main content region](../assets/blocks_main_content_region.png)
@@ -65,7 +65,7 @@ But go to the frontpage and...
 ## Using Context
 
 The visibility conditions in the block placement user interface are simple and effective.  They cover the majority of use cases,
-however, there are times when you need even more control.  This is where the Context module really shines. 
+however, there are times when you need even more control.  This is where the Context module really shines.
 Any condition available to the Context module can be used to control block visibility.  And you can even combine conditions
 using Boolean (AND/OR) logic.
 
@@ -83,7 +83,7 @@ Click the "Configure" button on the "Collection" context.
 You can see in its "Condition" section, we have the "Node has term" condition, which checks for content tagged with the
 term provided by the user.  In this case, it's set to look for the "Collection" tag.  Underneath, in the "Reaction" section,
 you can see that the "Block" reaction has been selected, and its configuration looks a lot like the core block placement
-UI.  
+UI.
 The only difference here is that when the "Include blocks from block layout" box is checked, you are only placing the blocks
 you want to add in addition to an already existing block layout.  If you uncheck the box, you are creating an entirely new
 block layout from scratch, and will have to replace basic things like breadcrumbs and menus.

@@ -21,8 +21,6 @@ with open('mkdocs.yml','r') as mkdocs:
     tree = Tree()
     tree = expand_yaml_to_tree(top_level_item, tree)
     forest.append(tree)
-      
-for tree in forest:    
+
+for tree in forest:
   tree.show()
-
-

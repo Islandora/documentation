@@ -15,7 +15,7 @@
     - [Windows Subsystem for Linux v. 2 (WSL 2)](https://docs.microsoft.com/en-us/windows/wsl/install-win10)
     - Ubuntu 20.04 running on WSL 2
     - GNU make, run `sudo apt update` and `sudo apt install make` to install
-    - Docker Desktop for Windows, using the WSL 2 based engine (Settings > General) and with the WSL integration active for Ubuntu (Settings > Resources > WSL integration) 
+    - Docker Desktop for Windows, using the WSL 2 based engine (Settings > General) and with the WSL integration active for Ubuntu (Settings > Resources > WSL integration)
 
 !!! Note "What are we missing?"
     Are you, or your computer, new to spinning up development sandboxes? Do you have wisdom about installing make on Windows? We suspect these requirements may be incomplete and your experience would be appreciated at [Issue #1640](https://github.com/Islandora/documentation/issues/1640).
@@ -42,6 +42,6 @@ If you need to install Docker, we recommend using the application [Docker Deskto
 
 Use Git to install the ISLE Docker Compose tool:
 
-`git clone https://github.com/islandora-devops/isle-dc` 
+`git clone https://github.com/islandora-devops/isle-dc`
 
 Tagged versions are available [here](https://github.com/Islandora-Devops/isle-dc/tags).

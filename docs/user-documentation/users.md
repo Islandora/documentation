@@ -6,7 +6,7 @@ Anyone who visits your Drupal site is a user. There are three different default 
 
 - _Anonymous user_. This is anyone who is not logged in.
 - _Authenticated user_. These are all users who have an account on your site and can log in.
-- _Administrator_. This is a special class of user that can access the administrative menus in your Drupal site and make changes. 
+- _Administrator_. This is a special class of user that can access the administrative menus in your Drupal site and make changes.
 
 Islandora adds an additional default role:
 
@@ -28,8 +28,8 @@ Additional user roles can be created and assigned customized permissions, as des
 1. Click the blue **Add user** button to bring up the *Add user* page.
 1. Enter all required fields, as indicated by red asterisks, in the *Add user* page.
 1. In the *Roles* section, click on the roles that the new user will need.
-  - Click on "Administrator" if the new user will need to be able to run administrative tasks in Drupal or Islandora 8.
-  - Click on "fedoraAdmin" if the new user will need to be able to write to Fedora. This is required by the WebAC authentication so Islandora 8 and Fedora can communicate.
+  - Click on "Administrator" if the new user will need to be able to run administrative tasks in Drupal or Islandora.
+  - Click on "fedoraAdmin" if the new user will need to be able to write to Fedora. This is required by the WebAC authentication so Islandora and Fedora can communicate.
 1. Review other settings available for a new user such as:
   - Site language
     - *English* selected by default.
@@ -67,4 +67,3 @@ To review/edit the permission for each role, in the *People* page click the **Pe
 
 For more information on managing users in Drupal visit the section
 [Managing User Accounts](https://www.drupal.org/docs/user_guide/en/user-chapter.html) of Drupal.org.
-

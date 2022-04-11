@@ -2,11 +2,11 @@
 
 ## Overview
 
-Since metadata in Islandora 8 is stored as fields in Nodes, the standard Drupal Content Types system provides our 'ingest forms'. For more information about Content Types in general, please see [Content Types in Drupal 8](https://www.drupal.org/docs/8/administering-drupal-8-site/managing-content-0/working-with-content-types-and-fields). If you are already familiar with Drupal Field UI, you’re already well equipped to create and modify your own ingest forms in Islandora 8.
+Since metadata in Islandora is stored as fields in Nodes, the standard Drupal Content Types system provides our 'ingest forms'. For more information about Content Types in general, please see [Content Types in Drupal 8](https://www.drupal.org/docs/8/administering-drupal-8-site/managing-content-0/working-with-content-types-and-fields). If you are already familiar with Drupal Field UI, you’re already well equipped to create and modify your own ingest forms in Islandora.
 
 This page will address how to create and modify ingest forms by editing fields and form display settings on Content Types via the graphical user interface (GUI). This page will also cover editing the RDF mapping to accommodate changes to fields.
 
-Islandora 8 forms are Drupal forms, and for help working with forms via the API, please check out the _Further Reading_ section for links to more advanced Drupal documentation.
+Islandora forms are Drupal forms, and for help working with forms via the API, please check out the _Further Reading_ section for links to more advanced Drupal documentation.
 
 ## Before you start
 
@@ -15,7 +15,7 @@ Islandora 8 forms are Drupal forms, and for help working with forms via the API,
 
 ## How to Modify a Content Type
 
-If you have deployed your Islandora 8 with the Islandora Defaults configuration, you will already have a Repository Item content type available, with pre-configured fields and repository behaviours.
+If you have deployed your Islandora with the Islandora Defaults configuration, you will already have a Repository Item content type available, with pre-configured fields and repository behaviours.
 
 1. In the Admin menu, go to **Structure** >> **Content Types** and find the _Repository Item_ content type.
 1. Select *Manage Fields*.
@@ -28,7 +28,7 @@ There are multiple tabs with different options to configure your Content Type:
 
 - _Manage Fields_: A list of the fields available in this form. This is where you can add new fields and make adjustments to existing fields, such as whether the field has access restrictions or is required.
 - _Manage form display_: Set the order in which fields appear in a form, including nesting; set how the user will enter data into a field (i.e., text field, drop-down list, radio buttons, etc); set fields to be hidden in the form.
-- _Manage display_: Set how the data stored in the fields will be displayed on the Node. Custom display settings can be set for different "view modes." For instance, a different view mode is applied for items using the Openseadragon viewer, which includes a field that displays the Media in Openseadragon instead of the standard Drupal image viewer.
+- _Manage display_: Set how the data stored in the fields will be displayed on the Node. Custom display settings can be set for different "view modes." For instance, a different view mode is applied for items using the OpenSeadragon viewer, which includes a field that displays the Media in OpenSeadragon instead of the standard Drupal image viewer.
 
 !!! note "Changes not displaying?"
     If you make changes under _Manage display_ and don't see them reflected in your Node, double check that you have edited the right _view mode_
@@ -105,7 +105,7 @@ Updating contexts does not retroactively fire any actions. Any of the custom con
 
 ## Update / Create an RDF Mapping
 
-RDF mapping aligns Drupal fields with RDF ontology properties. For example, the title field of a content model can be mapped to `dcterms:title` and/or `schema:title`. In Islandora 8, triples expressed by these mappings get synced to Fedora and indexed in the Blazegraph triplestore. RDF mappings are defined/stored in Drupal as a [YAML](https://yaml.org/) file (to learn more about YAML, there are [several tutorials on the web](https://duckduckgo.com/?q=yaml+tutorial). Currently, Drupal 8 does not have a UI to create/update RDF mappings to ontologies other than Schema.org. This requires repository managers to update the configuration files themselves. Consider using the RDF mappings included in [islandora_defaults](https://github.com/Islandora/islandora_defaults) as templates by copying and modifying one to meet your needs.
+RDF mapping aligns Drupal fields with RDF ontology properties. For example, the title field of a content model can be mapped to `dcterms:title` and/or `schema:title`. In Islandora, triples expressed by these mappings get synced to Fedora and indexed in the Blazegraph triplestore. RDF mappings are defined/stored in Drupal as a [YAML](https://yaml.org/) file (to learn more about YAML, there are [several tutorials on the web](https://duckduckgo.com/?q=yaml+tutorial). Currently, Drupal 8 does not have a UI to create/update RDF mappings to ontologies other than Schema.org. This requires repository managers to update the configuration files themselves. Consider using the RDF mappings included in [islandora_defaults](https://github.com/Islandora/islandora_defaults) as templates by copying and modifying one to meet your needs.
 
 The Drupal 8 Configuration Synchronization export (e.g. `http://localhost:8000/admin/config/development/configuration/single/export`) and import (e.g. `http://localhost:8000/admin/config/development/configuration/single/import`) can be used to get a copy of the mappings for editing in a text editor before being uploaded again. Alternatively, a repository manager can update the configuration on the server and use [Features](https://www.drupal.org/project/features) to import the edits.
 

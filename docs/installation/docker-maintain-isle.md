@@ -1,4 +1,4 @@
-# Maintaining Your ISLE Infrastructure 
+# Maintaining Your ISLE Infrastructure
 
 You will regularly be updating your Drupal site as security patches and module updates are released.
 Less often, you will also need to update the rest of your Islandora installation.  ISLE makes this easy.
@@ -40,10 +40,10 @@ And finally we deploy the updated containers by running
 docker-compose up -d
 ```
 
-You can check that everything is running at the version you've specified with 
+You can check that everything is running at the version you've specified with
 
 ```
 docker ps -a
 ```
 
-The version that's running can be confirmed by looking at the `IMAGE` column in the output. 
+The version that's running can be confirmed by looking at the `IMAGE` column in the output.

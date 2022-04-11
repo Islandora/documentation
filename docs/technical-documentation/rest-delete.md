@@ -1,4 +1,4 @@
-# Removing resources, media and files - DELETE Requests 
+# Removing resources, media and files - DELETE Requests
 
 Deleting is as easy as [getting](./rest-get.md) resources and more difficult than [creating](./rest-create.md) resources.
 
@@ -48,7 +48,7 @@ Content-language: en
 X-Content-Type-Options: nosniff
 X-Frame-Options: SAMEORIGIN
 Expires: Sun, 19 Nov 1978 05:00:00 GMT
-Vary: 
+Vary:
 X-Generator: Drupal 8 (https://www.drupal.org)
 Content-Length: 1564
 Content-Type: application/json
@@ -71,7 +71,7 @@ Content-language: en
 X-Content-Type-Options: nosniff
 X-Frame-Options: SAMEORIGIN
 Expires: Sun, 19 Nov 1978 05:00:00 GMT
-Vary: 
+Vary:
 X-Generator: Drupal 8 (https://www.drupal.org)
 Content-Type: text/html; charset=UTF-8
 ```
@@ -91,7 +91,7 @@ Content-language: en
 X-Content-Type-Options: nosniff
 X-Frame-Options: SAMEORIGIN
 Expires: Sun, 19 Nov 1978 05:00:00 GMT
-Vary: 
+Vary:
 X-Generator: Drupal 8 (https://www.drupal.org)
 Content-Length: 149
 Content-Type: application/json
@@ -108,7 +108,7 @@ A delete is simply the same request as a `GET` but sending a `DELETE` http verb.
 With a media id of 1 for our example, I'll perform a `GET`
 
 ```
-> curl -i -u admin:islandora -X GET 'http://localhost:8000/media/1?_format=json' 
+> curl -i -u admin:islandora -X GET 'http://localhost:8000/media/1?_format=json'
 
 HTTP/1.1 200 OK
 Date: Fri, 15 Mar 2019 14:53:54 GMT
@@ -134,7 +134,7 @@ Content-language: en
 X-Content-Type-Options: nosniff
 X-Frame-Options: SAMEORIGIN
 Expires: Sun, 19 Nov 1978 05:00:00 GMT
-Vary: 
+Vary:
 X-Generator: Drupal 8 (https://www.drupal.org)
 Content-Length: 1937
 Content-Type: application/json
@@ -157,7 +157,7 @@ Content-language: en
 X-Content-Type-Options: nosniff
 X-Frame-Options: SAMEORIGIN
 Expires: Sun, 19 Nov 1978 05:00:00 GMT
-Vary: 
+Vary:
 X-Generator: Drupal 8 (https://www.drupal.org)
 Content-Type: text/html; charset=UTF-8
 ```
@@ -177,7 +177,7 @@ Content-language: en
 X-Content-Type-Options: nosniff
 X-Frame-Options: SAMEORIGIN
 Expires: Sun, 19 Nov 1978 05:00:00 GMT
-Vary: 
+Vary:
 X-Generator: Drupal 8 (https://www.drupal.org)
 Content-Length: 153
 Content-Type: application/json
@@ -207,7 +207,7 @@ Content-language: en
 X-Content-Type-Options: nosniff
 X-Frame-Options: SAMEORIGIN
 Expires: Sun, 19 Nov 1978 05:00:00 GMT
-Vary: 
+Vary:
 X-Generator: Drupal 8 (https://www.drupal.org)
 Content-Length: 617
 Content-Type: application/json
@@ -230,7 +230,7 @@ Content-language: en
 X-Content-Type-Options: nosniff
 X-Frame-Options: SAMEORIGIN
 Expires: Sun, 19 Nov 1978 05:00:00 GMT
-Vary: 
+Vary:
 X-Generator: Drupal 8 (https://www.drupal.org)
 Content-Type: text/html; charset=UTF-8
 ```
@@ -250,7 +250,7 @@ Content-language: en
 X-Content-Type-Options: nosniff
 X-Frame-Options: SAMEORIGIN
 Expires: Sun, 19 Nov 1978 05:00:00 GMT
-Vary: 
+Vary:
 X-Generator: Drupal 8 (https://www.drupal.org)
 Content-Length: 157
 Content-Type: application/json

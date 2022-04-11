@@ -14,13 +14,13 @@ To edit documentation in Islandora, you must:
 - have a very basic familiarity with Git terms such as [fork](https://guides.github.com/activities/forking/), [branch](https://guides.github.com/activities/hello-world/#branch), and [pull request](https://guides.github.com/activities/hello-world/#pr).
 - optionally, be a member of the Islandora [GitHub Organization](https://github.com/orgs/Islandora/people).
     - To request an invite, email community@islandora.ca or ask on the Islandora Slack.
-    - This is only needed if you want to commit changes directly to the documentation. Non-members may still make pull requests. 
-- be willing to learn with [Markdown](http://en.wikipedia.org/wiki/Markdown) - a good [Markdown cheat sheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) can help.
+    - This is only needed if you want to commit changes directly to the documentation. Non-members may still make pull requests.
+- be willing to learn [Markdown](http://en.wikipedia.org/wiki/Markdown) - a good [Markdown cheat sheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) can help.
     - for example, you may use Markdown syntax to create links and section headings.
 - follow the [Islandora Documentation Style Guide](docs_style_guide.md).
 - have either an individual [Contributor License Agreement](https://github.com/Islandora/islandora/wiki/Contributor-License-Agreements) (CLA) on file with the Islandora Foundation, or work for an organization that has a corporate Contributor License Agreement on file with the Islandora Foundation.
     - for information on how to fill out and submit a Contributor License Agreement (CLA) for yourself and/or your organization visit the [License Agreements](https://islandora.github.io/documentation/contributing/CONTRIBUTING/#license-agreements) section of the "How to contribute" documentation page.
-- by participating in the Islandora Community, you are agreeing to act according to the [Islandora Code of Conduct](https://www.islandora.ca/code-of-conduct). 
+- by participating in the Islandora Community, you are agreeing to act according to the [Islandora Code of Conduct](https://www.islandora.ca/code-of-conduct).
 
 ## How to edit documentation using a web browser
 
@@ -28,7 +28,7 @@ To edit documentation in Islandora, you must:
 
 ![Edit page button](../assets/editing-docs-button.png)
 
-- You will be taken to GitHub. If you are not logged in, you will be prompted to log in or register for an account. If you are logged in, you will be taken to an in-browser editor where you will view the page in markdown.
+- You will be taken to GitHub. If you are not logged in, you will be prompted to log in or register for an account. If you are logged in, you will be taken to an in-browser editor where you will view the page in Markdown.
 
 ![GitHub documentation GUI editor](../assets/editing-docs-gui.png)
 

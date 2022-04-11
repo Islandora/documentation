@@ -62,7 +62,7 @@ export JAVA_OPTS="-Djava.awt.headless=true -server -Xmx1500m -Xms1000m"
 ```
 - `PATH_TO_JAVA_HOME`: This will vary a bit depending on the environment, but will likely live in `/usr/lib/jvm` somewhere (e.g., `/usr/lib/jvm/java-11-openjdk-amd64`); again, in an Ubunutu environment you can check a part of this using `update-alternatives --list java`, which will give you the path to the JRE binary within the Java home. Note that `update-alternatives --list java` will give you the path to the binary, so for `PATH_TO_JAVA_HOME` delete the `/bin/java` at the end to get the Java home directory, so it should look something like this:
 ```
-export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64" 
+export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
 ```
 
 ### Creating the Tomcat Service

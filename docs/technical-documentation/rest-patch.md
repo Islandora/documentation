@@ -39,7 +39,7 @@ Content-language: en
 X-Content-Type-Options: nosniff
 X-Frame-Options: SAMEORIGIN
 Expires: Sun, 19 Nov 1978 05:00:00 GMT
-Vary: 
+Vary:
 X-Generator: Drupal 8 (https://www.drupal.org)
 Content-Length: 1562
 Content-Type: application/json
@@ -66,7 +66,7 @@ Content-language: en
 X-Content-Type-Options: nosniff
 X-Frame-Options: SAMEORIGIN
 Expires: Sun, 19 Nov 1978 05:00:00 GMT
-Vary: 
+Vary:
 X-Generator: Drupal 8 (https://www.drupal.org)
 Content-Length: 1562
 Content-Type: application/json
@@ -91,7 +91,7 @@ Content-language: en
 X-Content-Type-Options: nosniff
 X-Frame-Options: SAMEORIGIN
 Expires: Sun, 19 Nov 1978 05:00:00 GMT
-Vary: 
+Vary:
 X-Generator: Drupal 8 (https://www.drupal.org)
 Content-Length: 1669
 Content-Type: application/json

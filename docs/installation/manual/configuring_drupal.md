@@ -133,9 +133,9 @@ Navigate to `/admin/config/islandora/iiif` to ensure that Islandora IIIF is poin
 
 ![Configuring Islandora IIIF](../../assets/configuring_iiif.png)
 
-Next, configure Openseadragon by navigating to `/admin/config/media/openseadragon` and ensuring everything is set up properly.
+Next, configure OpenSeadragon by navigating to `/admin/config/media/openseadragon` and ensuring everything is set up properly.
 
-![Configuring Openseadragon](../../assets/configuring_openseadragon.png)
+![Configuring OpenSeadragon](../../assets/configuring_openseadragon.png)
 
 ### Establishing Flysystem as the Default Download Method
 

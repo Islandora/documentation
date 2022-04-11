@@ -1,5 +1,5 @@
-# Introduction to Linked Data for Islandora 8
-The purpose of this page is to provide a guided reading list to anyone who wants to get up to speed on the basics of linked data within the Islandora community. Those who make their way through the readings will be able to talk competently about linked data and better understand the design decisions made in Islandora 8. The list starts with the fundamentals of linked data (RDF, SPARQL, serializations and ontologies) and moves toward more advanced topics specific to the use cases of a Fedora 4 based digital repository system.
+# Introduction to Linked Data for Islandora
+The purpose of this page is to provide a guided reading list to anyone who wants to get up to speed on the basics of linked data within the Islandora community. Those who make their way through the readings will be able to talk competently about linked data and better understand the design decisions made in Islandora. The list starts with the fundamentals of linked data (RDF, SPARQL, serializations and ontologies) and moves toward more advanced topics specific to the use cases of a Fedora 4 based digital repository system.
 
 # Basics of Linked Data
 This section seeks to give the reader a foundational understanding of what linked data is, why it is useful, and a very superficial understanding of how it works.
@@ -31,7 +31,7 @@ This section takes a look at SPARQL, the query language that allows you to ask l
 - [DBpedia's SPARQL Endpoint](https://dbpedia.org/sparql)
 
 # RDF Serialization Formats
-RDF data can be translated into many different formats. RDF/XML is the original way that RDF data was shared, but there are much more human-friendly serialization formats like Turtle which is great for beginners. JSON-LD is the easiest format for applications to use, and is the serialization format that Islandora 8 uses internally. Make sure to check out the [JSON-LD Playground](http://json-ld.org/playground/) for an interactive learning experience.
+RDF data can be translated into many different formats. RDF/XML is the original way that RDF data was shared, but there are much more human-friendly serialization formats like Turtle which is great for beginners. JSON-LD is the easiest format for applications to use, and is the serialization format that Islandora uses internally. Make sure to check out the [JSON-LD Playground](http://json-ld.org/playground/) for an interactive learning experience.
 
 - [Wikipedia article on Serialization](https://en.wikipedia.org/wiki/Serialization)
 - [W3C’s RDF/XML Syntax Specification](https://www.w3.org/TR/REC-rdf-syntax/)
@@ -62,7 +62,7 @@ One isn't limited to the ontologies & vocabularies that already exist in the wor
 - [W3C’s OWL 2 Quick Reference](https://www.w3.org/TR/owl2-quick-reference/)
 
 # Repository-Specific Ontologies
-Most ontologies are very specific to certain use cases, and digital repository systems are no different. This section covers ontologies that are of specific interest to users of Islandora 8, or any Fedora 4 based digital repository system.
+Most ontologies are very specific to certain use cases, and digital repository systems are no different. This section covers ontologies that are of specific interest to users of Islandora, or any Fedora 4 based digital repository system.
 
 - [MODS RDF Namespace Document](http://www.loc.gov/standards/mods/modsrdf/v1/)
 - [MODS RDF Ontology Primer](https://www.loc.gov/standards/mods/modsrdf/primer.html)
