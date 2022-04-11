@@ -53,6 +53,3 @@ We operate under the [Islandora Community Code of Conduct](https://www.islandora
   - If you add the keyword “fixes” or “resolves” on the same line when referencing the Github Issue in the PR description, it will auto-close the issue when the PR is merged.
   - Otherwise, make a comment referencing the new commit and close the issue manually.
 
-#### Release Workflow
-
-During release, the same workflow holds, it is just performed against the ‘release’ branch of a repository instead of ‘dev’ or ‘8.x-1.x’.  After pull requests are merged into the release branch, the changes can be merged back into dev from release.
