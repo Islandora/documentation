@@ -1,6 +1,6 @@
 # Installing a Demo Server
 
-Using ISLE, you can spin up a repository that is exactly like future.islandora.ca, including the sample content. If you want to kick the tires and see what Islandora can do with the minimal amount of setup, this is for you.
+Using ISLE, you can spin up a repository that is exactly like sandbox.islandora.ca, including the sample content. If you want to kick the tires and see what Islandora can do with the minimal amount of setup, this is for you.
 
 !!! Warning "Demonstration Purposes Only!"
     Please be advised, the environment you are about to create is meant to be temporary. The drupal codebase is baked into a container and is ephemeral.  If you [install new modules](../docker-maintain-drupal/), they will be gone if your drupal container goes down for any reason.
