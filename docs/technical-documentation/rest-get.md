@@ -1,4 +1,4 @@
-# Getting resources, media and files - GET Requests 
+# Getting resources, media and files - GET Requests
 
 * [Authorization](#authorization)
 * [Content](#content-nodes)
@@ -17,7 +17,7 @@ These are defined under [Authorization](./using-rest-endpoints.md#authorization)
 
 The above setup shows that you can perform a GET request against a node at the `/node/{id}` endpoint. This is the same as the URL when viewed through a web browser. For example `http://localhost:8000/node/2`
 
-It also defines the _formats_ you can access. In this example _json_ and _jsonld_ are available. 
+It also defines the _formats_ you can access. In this example _json_ and _jsonld_ are available.
 
 To access a resource in a specific format use the `_format=` argument which is appended to the end of the URI after a `?`.
 
@@ -53,7 +53,7 @@ Content-language: en
 X-Content-Type-Options: nosniff
 X-Frame-Options: SAMEORIGIN
 Expires: Sun, 19 Nov 1978 05:00:00 GMT
-Vary: 
+Vary:
 X-Generator: Drupal 8 (https://www.drupal.org)
 X-Drupal-Cache: MISS
 Content-Length: 1521
@@ -199,7 +199,7 @@ The above steps are the same for media, it is just the URI that has changed.
 
 For media you use `/media/{id}`
 
-&#x1F34E; For example: 
+&#x1F34E; For example:
 
 ```
 curl -u admin:islandora http://localhost:8000/media/2?_format=json
@@ -368,7 +368,7 @@ The file ID refers to the integer counter and _not_ the UUID of a file.
 
 Through the UI you can go to the File listing at `http://localhost:8000/admin/content/files`.
 
-For the file you want to access, choose the **USED IN** link. 
+For the file you want to access, choose the **USED IN** link.
 
 That URI has the format `http://localhost:8000/admin/content/files/usage/{file id}`
 
@@ -414,7 +414,7 @@ Content-language: en
 X-Content-Type-Options: nosniff
 X-Frame-Options: SAMEORIGIN
 Expires: Sun, 19 Nov 1978 05:00:00 GMT
-Vary: 
+Vary:
 X-Generator: Drupal 8 (https://www.drupal.org)
 X-Drupal-Cache: HIT
 Content-Length: 634

@@ -6,13 +6,13 @@
 
 This "documentation" repository has three functions:
 
-- it **houses the source code for the** [**documentation**](https://islandora.github.io/documentation/) of the [**Islandora project**](https://islandora.ca/) (versions 2.x and above). 
+- it **houses the source code for the** [**documentation**](https://islandora.github.io/documentation/) of the [**Islandora project**](https://islandora.ca/) (versions 2.x and above).
 - it **hosts the central** [**issue queue**](https://github.com/Islandora/documentation/issues) **for the entire Islandora project**. Add an issue there if you have a use case that isn't addressed, or find a bug.
 - its [Wiki](https://github.com/Islandora/documentation/wiki) **contains the archived minutes** for Islandora Tech calls and User calls of previous years. **To find current meeting minutes, please navigate to our** [**community-wiki**](https://github.com/Islandora/islandora-community/wiki).
 
 ## Documentation Structure
 
-The documentation is written in [mkdocs](https://www.mkdocs.org/) — the navigation structure is specified in `mkdocs.yml` and the `/docs/` folder contains the content. The text is written in mkdocs-flavoured markdown format and follows our [Documentation Style Guide](https://islandora.github.io/documentation/contributing/docs_style_guide/). Documentation is built and deployed to Github Pages automatically when new commits are added to the 'main' branch. 
+The documentation is written in [mkdocs](https://www.mkdocs.org/) — the navigation structure is specified in `mkdocs.yml` and the `/docs/` folder contains the content. The text is written in mkdocs-flavoured markdown format and follows our [Documentation Style Guide](https://islandora.github.io/documentation/contributing/docs_style_guide/). Documentation is built and deployed to Github Pages automatically when new commits are added to the 'main' branch.
 
 * [Islandora Documentation via Github Pages](https://islandora.github.io/documentation/)
 

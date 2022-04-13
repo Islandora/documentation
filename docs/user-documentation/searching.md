@@ -1,8 +1,8 @@
 # Setup and Configure Search
 
-Islandora 8 comes with the Drupal 8 [Search API](https://www.drupal.org/project/search_api) and [SOLR](https://www.drupal.org/project/search_api_solr) modules enabled with a corresponding SOLR instance. This guide gives an overview to the setup provided by the islandora-playbook. Much more detail is available in the [Search API documentation](https://www.drupal.org/docs/8/modules/search-api). Another helpful resource is [Adam Fuch's "Drupal 8 Custom Site Search with Search API"](https://www.electriccitizen.com/blog/drupal-8-custom-site-search-search-api) (https://www.electriccitizen.com, 2018-01-10; last accessed 2019-03-08).
+Islandora comes with the Drupal 8 [Search API](https://www.drupal.org/project/search_api) and [SOLR](https://www.drupal.org/project/search_api_solr) modules enabled with a corresponding SOLR instance. This guide gives an overview to the setup provided by the islandora-playbook. Much more detail is available in the [Search API documentation](https://www.drupal.org/docs/8/modules/search-api). Another helpful resource is [Adam Fuch's "Drupal 8 Custom Site Search with Search API"](https://www.electriccitizen.com/blog/drupal-8-custom-site-search-search-api) (https://www.electriccitizen.com, 2018-01-10; last accessed 2019-03-08).
 
-## Indexing Islandora 8 with SOLR
+## Indexing Islandora with SOLR
 
 To access the search indexing settings, log in as an administrator and navigate to  '/admin/config/search/search-api' or click **Configuration** and then **Search API**.
 
@@ -37,7 +37,7 @@ The _Edit_ tab allows repository managers to configure how the index works as a 
 _Content_ (types) is the only data source enabled by default. Selecting _Taxonomy term_ will enable searching taxonomies which is recommended if the repository uses taxonomies for subjects or other discovery points. Once the data sources are enabled a configuration box for each of them will appear in a section just below the list of data sources. This allows repository managers to select which content types (or taxonomy vocabularies) will be included in the index. By default all the content types, and vocabularies if the taxonomy data source is enabled, are indexed.
 
 
-!!! note "Defaults" 
+!!! note "Defaults"
     The defaults assume a repository is adding content using the web interface. If a repository manager plans on bulk-loading content they should disable the **Index items immediately** option in the expandable _Index Options_ box and increase the 'Cron batch size' option.
 
 #### Fields Tab
@@ -54,16 +54,15 @@ Once the fields are added they can be configured further on the _Fields_ tab, al
 
 The _Processors_ tab allows repository managers to adjust how data and search queries are processed to adjust results. The defaults are acceptable in most cases.
 
-## Searching Islandora 8
+## Searching Islandora
 
 The Search API SOLR module comes with a search page pre-configured (accessible at '/solr-search/content'). To edit the search page, navigate to '/admin/structure/views/view/solr_search_content'.
 
 Repository managers may want to change the URL used to access the page, add it to the site navigation, or add a search box. In the 'Page Settings' box in the middle of the page, click on the existing path to open a shadow-box with an edit field. Change the URL as desired, for example, to 'search' and click **Apply**. Then, click the **No menu** link just below it to open the menu settings shadow-box. Selecting 'Normal menu entry' will allow a repository manager to add a menu link text, description, and place it within the site menu tree (the default, `<Main navigation>` works for most sites). A search box can be added by expanding the _Advanced_ options and changing the _Exposed form in block_ setting and then use the _Block Layout_ interface (found at '/admin/structure/block') to place the block where desired. After making changes to the View's settings, click the **Save** button to ensure the changes are not lost.
 
-Islandora's Repository Items are displayed in the search results as a fully rendered entity by default. Repository managers can choose which view mode should be used for each search datasource by clicking the **Settings** link next to the _Show:_ setting under the _Format_ section of the search view configuration page (shown in a red box in the screenshot below). The _Teaser_ and _Search result highlighting input_ are the two most likely options. Alternatively, repository managers can select specific fields to display instead by clicking the **Rendered Entity** link and changing it to _Fields_ and then choosing which fields will be displayed in the _Fields_ section underneath. 
+Islandora's Repository Items are displayed in the search results as a fully rendered entity by default. Repository managers can choose which view mode should be used for each search datasource by clicking the **Settings** link next to the _Show:_ setting under the _Format_ section of the search view configuration page (shown in a red box in the screenshot below). The _Teaser_ and _Search result highlighting input_ are the two most likely options. Alternatively, repository managers can select specific fields to display instead by clicking the **Rendered Entity** link and changing it to _Fields_ and then choosing which fields will be displayed in the _Fields_ section underneath.
 
-!!! note "Thumbnails" 
+!!! note "Thumbnails"
     thumbnails will not immediately be available using the _Fields_ display option without more advanced configurations.
 
 ![Screenshot of the default SOLR search view settings page with the format's type settings links highlighted. ](../assets/search-view-format-settings-highlighted.png)
-

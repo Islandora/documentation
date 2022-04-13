@@ -2,7 +2,7 @@
 
 ## Overview
 
-Islandora Quick Lessons are a series of short videos demonstrating how to do common tasks in Islandora 8. 
+Islandora Quick Lessons are a series of short videos demonstrating how to do common tasks in Islandora.
 
 New videos are added to [the playlist](https://www.youtube.com/playlist?list=PL4seFC7ELUtripxWi_2RIBKCWqI0uif93) regularly.
 

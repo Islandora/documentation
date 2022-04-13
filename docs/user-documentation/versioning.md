@@ -2,7 +2,7 @@
 As a user of an Islandora repository, you may be wondering - Is this content being versioned? Could I restore from a previous version if I needed to? Can I see a list of versions for an object?
 The answer to these questions is two-fold, and largely yes. The architecture of Islandora provides users with a Drupal implementation and a Fedora implementation which are connected in Islandora.
 
-!!! note "Islandora Software Versioning" 
+!!! note "Islandora Software Versioning"
     Looking for information about versions of Islandora itself? The latest Islandora follows [semantic versioning](https://semver.org/). Previously, Islandora's versions were tied to the version of Drupal and numbered in order of release, such as [Islandora 6.x-13.1](https://wiki.lyrasis.org/display/ISLANDORA6131/Islandora) or [Islandora 7.x-1.13](https://wiki.lyrasis.org/display/ISLANDORA/Start). [More information](../technical-documentation/versioning).
 
 ## Drupal Revisioning

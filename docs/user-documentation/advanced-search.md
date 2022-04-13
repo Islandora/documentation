@@ -1,4 +1,4 @@
-# Islandora Advanced Search 
+# Islandora Advanced Search
 
 - [Introduction](#introduction)
 - [Requirements](#requirements)
@@ -81,7 +81,7 @@ enable `Index hierarchy` and setup the new field to index the hierarchy.
 
 The field can now be used limit a search to all the descendants of a given object.
 
-!!! note "Re-Indexing" 
+!!! note "Re-Indexing"
     You may have to re-index to make sure the field is populated.
 
 ## Configure Views

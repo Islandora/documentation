@@ -1,7 +1,7 @@
-site_name: Islandora 8
+site_name: Islandora
 site_dir: site
 docs_dir: docs
-site_description: Documentation for Islandora 8
+site_description: Documentation for Islandora
 
 dev_addr: 'localhost:8111'
 repo_url: https://github.com/Islandora/documentation
@@ -60,9 +60,9 @@ nav:
           # also see user-intro.md#architecture for the cheeseburger/bento box analogy
           # Conceptual/ reference, all user roles/ sys admins/ developers:
           # procedural information should be moved out installation guides
-      - 'Modelling content in Islandora 8 vs. 7': 'user-documentation/objects_to_resource_nodes.md'
+      - 'Modelling content in Islandora  vs. Legacy': 'user-documentation/objects_to_resource_nodes.md'
               # conceptual, all user roles
-              # moved from User documentation > Content in Islandora 8
+              # moved from User documentation > Content in Islandora
       - Islandora Defaults: 'reference/islandora_defaults_reference.md'
   - Installation:
       # Procedural, different user roles: clarify who the audience is for a
@@ -130,7 +130,7 @@ nav:
           # conceptual, repository managers
       - 'Versioning': 'user-documentation/versioning.md'
           # conceptual/ reference, repository managers/ developers
-      - Content in Islandora 8:
+      - Content in Islandora:
           # largely conceptual, repository managers and to some extent curators
           # currently duplicates a section also present under "User documentation",
           # develop into procedural documentation for repository

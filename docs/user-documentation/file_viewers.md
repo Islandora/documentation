@@ -2,11 +2,11 @@
 
 ## What are viewers?
 
-[Viewers](../glossary#viewer) allow site builders to display files in interactive javascript-based widgets, that provide functionality like zooming in/out, turning pages, playing/pausing, viewing in full screen, etc. 
+[Viewers](../glossary#viewer) allow site builders to display files in interactive javascript-based widgets, that provide functionality like zooming in/out, turning pages, playing/pausing, viewing in full screen, etc.
 
 In Drupal, a common way to implement a viewer is through a [module](./glossary/#module) that provides the javascript library, and a field formatter that uses that library. The field formatter will work with specific types of Drupal fields (e.g. file fields or image fields, some may even provide their own fields).
 
-Viewers that are known to work with Islandora 8 include:
+Viewers that are known to work with Islandora include:
 
 * [OpenSeadragon](https://openseadragon.github.io/), via the Drupal module [OpenSeadragon](https://github.com/Islandora/openseadragon) (maintained by the Islandora Foundation).
 * [pdf.js](https://github.com/mozilla/pdf.js), via the Drupal contrib module [PDF](https://www.drupal.org/project/pdf)
@@ -16,23 +16,23 @@ Both are included with Islandora Defaults.
 
 ## How are viewers configured?
 
-In the generic Islandora 8 content modelling scenario, we often want the viewer to appear on a _"resource node"_ when the file itself is in a field on a Media that references that node. These layers of indirection make displaying viewers on nodes rather complex. 
+In the generic Islandora content modelling scenario, we often want the viewer to appear on a _"resource node"_ when the file itself is in a field on a Media that references that node. These layers of indirection make displaying viewers on nodes rather complex.
 
-## Example - Open Seadragon (in Islandora Defaults)
+## Example - OpenSeadragon (in Islandora Defaults)
 
 Here is how viewers are implemented in Islandora Defaults. This example uses OpenSeadragon, but pdf.js is configured with the same method. This method was chosen because it uses pure configuration and no extra code. It relies on users tagging nodes with appropriate "display hint" terms to trigger Contexts to switch the node's display mode to one that includes an EVA field, which renders the appropriate Media in a way that shows the desired file in the viewer.
 
-<!-- Display modes vs view modes - Here we prefer the term 'display mode' to refer to the modes listed under Structure > Display Modes > View modes. The reasoning is that for the audience of this page, this concept is likely most frequently encountered under "Manage Display" of an entity, and to distinguish it from concepts relating to Views, such as Views displays. --> 
+<!-- Display modes vs view modes - Here we prefer the term 'display mode' to refer to the modes listed under Structure > Display Modes > View modes. The reasoning is that for the audience of this page, this concept is likely most frequently encountered under "Manage Display" of an entity, and to distinguish it from concepts relating to Views, such as Views displays. -->
 
 ### Expected behaviour for this scenario:
 
-Create a Repository Item, and tag it with "Open Seadragon" (under Display Hints). Add a Media of type "File" to that node, upload a file such as a tiff or jpeg-2000, and tag it with "Original File" (under Media Use). Save and publish the Media. Go to the Repository Item's page, and you should see your file displayed in the viewer.
+Create a Repository Item, and tag it with "Open Seadragon" (under Display Hints). Add a Media of type "File" to that node, upload a file such as a TIFF or JPEG 2000, and tag it with "Original File" (under Media Use). Save and publish the Media. Go to the Repository Item's page, and you should see your file displayed in the viewer.
 
 <!-- There should be a link here, on the word "File", that points to a page explaining why large images need to be Files and not Images. That is out of scope here. -->
 
-<!-- "a file such as tiff or jpeg-2000" = "a file that works with Cantaloupe". OpenSeadragon relies on an IIIF image server, in our case, Cantaloupe, and that is what determines the kinds of files that this works with. This is also out of scope for this page. -->
+<!-- "a file such as TIFF or JPEG 2000" = "a file that works with Cantaloupe". OpenSeadragon relies on an IIIF image server, in our case, Cantaloupe, and that is what determines the kinds of files that this works with. This is also out of scope for this page. -->
 
-### Components of this scenario: 
+### Components of this scenario:
 
 1. A viewer that includes a field formatter  (e.g. the module OpenSeadragon)
 1. A media display mode (e.g. the media display mode "Open Seadragon")
@@ -61,7 +61,7 @@ Create a Repository Item, and tag it with "Open Seadragon" (under Display Hints)
 
 ### Relevant files:
 
-Islandora Defaults is a Feature, and the following YAML files in `islandora_defaults/config/install` contain configuration items that are loaded when the feature is enabled. Changes to these files will not affect the live site configuration, and changes to the live site configuration will not be reflected in these files. 
+Islandora Defaults is a Feature, and the following YAML files in `islandora_defaults/config/install` contain configuration items that are loaded when the feature is enabled. Changes to these files will not affect the live site configuration, and changes to the live site configuration will not be reflected in these files.
 
 | Filename | Comments|
 |---|---|
@@ -69,7 +69,7 @@ Islandora Defaults is a Feature, and the following YAML files in `islandora_defa
 | `media.type.file.yml` | (a media type) define File media, or in this case, re-define an existing type provided by Core. This feature will override the core settings. |
 | `field.field.media.file.field_media_file.yml` | (a field that can use the viewer) Defines a file field on File media called field_media_file, or in this case, re-defines it because it was already part of core. Usually you need a field.storage too but it was already defined in core and is not overridden here. |
 | `field.field.media.file.field_media_of.yml` | (a field that points to a parent node) attach the the "Media Of" field to File media. In this case again, the field storage is not present because it was defined in Islandora Core Feature. |
-| `core.entity_view_display.media.file.open_seadragon.yml` | (view mode configuration) configures the Open Seadragon display mode for File media, so it shows only the field_media_file using the Open Seadragon field formatter. |
+| `core.entity_view_display.media.file.open_seadragon.yml` | (view mode configuration) configures the Open Seadragon display mode for File media, so it shows only the field_media_file using the OpenSeadragon field formatter. |
 | `views.view.openseadragon_media_evas.yml` | (an EVA View) defines a view that shows a Media that is "Media Of" the current node (from URL) and is published and has "Media Use" = Original File. (there are two other EVAs defined by this view that use Preservation Master and Service File respectively.) |
 | `core.entity_view_mode.node.open_seadragon.yml` | (a content display mode) defines the Open Seadragon display mode as an option for any Node |
 | `node.type.islandora_object.yml` | (a content type) defines the Repository Item content type |
@@ -80,8 +80,6 @@ Islandora Defaults is a Feature, and the following YAML files in `islandora_defa
 | `field.field.node.islandora_object.field_display_hints.yml` | (field for display hints) configures the display hints field on Repository Item |
 | `context.context.open_seadragon.yml` | (a context) tells nodes with term "Open Seadragon" to use display mode "Open Seadragon" |
 
- 
 ## Improvements
 
 This is awfully complex. If you'd like to help simplify it, we have an open issue about getting rid of display hints, and instead "sniffing' the file's mime type: [Deprecate display hints in favor of Contexts? #1193](https://github.com/Islandora/documentation/issues/1193). Other suggestions and solutions are welcome in the [issue queue](https://github.com/Islandora/documentation/issues).
-

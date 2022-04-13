@@ -44,7 +44,7 @@ We operate under the [Islandora Community Code of Conduct](https://www.islandora
 - Continuous integration checks need to be satisfied before the code can be merged
   - Coding standards checks and copy/paste mess detection must be passing before code can be merged.
   - Automated tests are also expected to pass before code can be merged, however at times there can be extenuating circumstances preventing this. For example, sometimes there is a disconnect between running tests locally versus on the continuous integration server. If tests run locally and everyone involved in the pull request is in agreement, the check for automated tests can be ignored. But this isn’t a common occurrence.
-  - Code coverage checks are more of a guideline than a strict requirement. A reasonable effort to provide tests for contributed code is expected.  However, demanding 100% code coverage for all contributed code is unreasonable.  If tests have been provided or updated and everyone involved in the pull request is in agreement, code coverage checks can be ignored.  
+  - Code coverage checks are more of a guideline than a strict requirement. A reasonable effort to provide tests for contributed code is expected.  However, demanding 100% code coverage for all contributed code is unreasonable.  If tests have been provided or updated and everyone involved in the pull request is in agreement, code coverage checks can be ignored.
 - The code is reviewed and tested by the community, with all feedback and further development performed within the pull request.
 - Once all feedback has been addressed, all applicable status checks have passed, and all interested parties are satisfied, the code can be merged by a committer
   - Pull requests should not be merged by committers who have provided code in the pull request.  Pull requests should also not be merged by committers who are peers in the same organization as those who provided code.
@@ -52,9 +52,4 @@ We operate under the [Islandora Community Code of Conduct](https://www.islandora
 - Close the Github issue
   - If you add the keyword “fixes” or “resolves” on the same line when referencing the Github Issue in the PR description, it will auto-close the issue when the PR is merged.
   - Otherwise, make a comment referencing the new commit and close the issue manually.
-
-#### Release Workflow
-
-During release, the same workflow holds, it is just performed against the ‘release’ branch of a repository instead of ‘dev’ or ‘8.x-1.x’.  After pull requests are merged into the release branch, the changes can be merged back into dev from release.
-
 

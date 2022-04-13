@@ -1,6 +1,6 @@
-# Islandora 8 via REST
+# Islandora via REST
 
-Each node, media and file in Drupal 8 has its own URI and we can GET the resources, some in a variety of formats.
+Each node, media and file in Drupal has its own URI and we can GET the resources, some in a variety of formats.
 
 We can also create nodes, media and files in Drupal by using PUT and/or POST requests.
 
@@ -25,4 +25,3 @@ This screenshot shows the setup for resources, you can see the various HTTP meth
 ## Further Reading
 
 - [RESTful Web Services API overview](https://www.drupal.org/docs/drupal-apis/restful-web-services-api/restful-web-services-api-overview)
-

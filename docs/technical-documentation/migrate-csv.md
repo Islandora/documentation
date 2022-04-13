@@ -22,12 +22,12 @@
 
 ## Summary
 
-This tutorial introduces you to the Drupal 8 Migrate tools available to create Islandora content. Whether you will eventually use CSVs or other sources (such as XML or directly from a 7.x Islandora) this tutorial should be useful as it covers the basics and mechanics of migration.
+This tutorial introduces you to the Drupal Migrate tools available to create Islandora content. Whether you will eventually use CSVs or other sources (such as XML or directly from a Legacy Islandora) this tutorial should be useful as it covers the basics and mechanics of migration.
 
 This tutorial uses the configurations and code available in the [migrate_islandora_csv](https://github.com/Islandora/migrate_islandora_csv) module which, when enabled, will create three example migrations ready for you to use with the Migrate API. Each migration comes from one of the files in the `config/install` folder. We'll walk through them in detail below. The module is also uses [Features](https://www.drupal.org/project/feature) which allows you to make changes to the configuration files and sync those changes into your Drupal site.
 
 !!! note "A note on using Features"
-    This tutorial (and Islandora in general) makes heavy use of Features, which is an easy way to ship and install Drupal configuration. However, after enabling a Feature module, the code in that module's directory is no longer "live", as the configuration now resides in the Drupal database. If you change code in the YAML files, it will not take effect until you re-import the Feature. There is a walkthrough in the "Configuration" section of the [Migrate 7.x to 8](https://github.com/Islandora-Devops/migrate_7x_claw) tutorial. 
+    This tutorial (and Islandora in general) makes heavy use of Features, which is an easy way to ship and install Drupal configuration. However, after enabling a Feature module, the code in that module's directory is no longer "live", as the configuration now resides in the Drupal database. If you change code in the YAML files, it will not take effect until you re-import the Feature. There is a walkthrough in the "Configuration" section of the [Migrate 7.x to Islandora](https://github.com/Islandora-Devops/migrate_7x_claw) tutorial.
 
 Sample CSV and images are also included in the module as a convenience so they are easily available on the Drupal server running the migration. (This is not the recommended method for making files available to Drupal in a real migration.)
 
@@ -37,20 +37,20 @@ When you are ready to create your actual migrations, the contents of this reposi
 
 ## Introduction
 
-__Why CSV?__ CSV files (whether separated by commas, tabs, or other delimiters) are easy to understand and work with, and there's good tooling available for using them with Drupal 8's [Migrate API](https://www.drupal.org/docs/8/api/migrate-api/migrate-api-overview). The Drupal contrib module [migrate_source_csv](https://www.drupal.org/project/migrate_source_csv) provides a source plugin that reads from a CSV file, and [migrate_plus](https://www.drupal.org/project/migrate_plus/) provides more tools and flexibility for creating migrations, including the ability to create customized migrations using YAML and package them up as [Features](https://www.drupal.org/project/features/).
+__Why CSV?__ CSV files (whether separated by commas, tabs, or other delimiters) are easy to understand and work with, and there's good tooling available for using them with Drupal's [Migrate API](https://www.drupal.org/docs/drupal-apis/migrate-api/migrate-api-overview). The Drupal contrib module [migrate_source_csv](https://www.drupal.org/project/migrate_source_csv) provides a source plugin that reads from a CSV file, and [migrate_plus](https://www.drupal.org/project/migrate_plus/) provides more tools and flexibility for creating migrations, including the ability to create customized migrations using YAML and package them up as [Features](https://www.drupal.org/project/features/).
 
 In this tutorial, we'll be inspecting each migration file in detail before running it.  You'll start out by migrating the images themselves first, and then you'll create various Drupal entities to describe the files from the metadata in the CSV. It's not as scary as it sounds (especially since this module contains the data we'll be using in a `data` directory), but you will need a few things before beginning:
 
-1. An instance of Islandora 8.  Use [Islandora 8 playbook](https://github.com/Islandora-Devops/islandora-playbook) to spin up an environment pre-loaded with all the modules you need (except this one)
+1. An instance of Islandora. Use [Islandora Playbook](https://github.com/Islandora-Devops/islandora-playbook) to spin up an environment pre-loaded with all the modules you need (except this one)
 1. Some basic command line skills.  You won't need to know much, but you'll have to `vagrant ssh` into the box, navigate into Drupal, and use `git` and `drush`, etc...  If you can copy/paste into a terminal, you'll survive.
 
-A big part of this tutorial relies on the [islandora_defaults](https://github.com/Islandora/islandora_defaults) and [controlled_access_terms_defaults](https://github.com/Islandora/controlled_access_terms/tree/8.x-1.x/modules/controlled_access_terms_defaults) features, which define the default metadata profile for Islandora (which we'll be migrating into). You're not required to use the `islandora_defaults` or `controlled_access_terms_defaults` for your repository, but for the purposes of demonstration, it saves you a lot of user interface administrivia so you can focus just on the learning how to migrate.  By the time you are done with this exercise, you'll be able to easily apply your knowledge to migrate using any custom metadata profile you can build using Drupal.
+A big part of this tutorial relies on the [islandora_defaults](https://github.com/Islandora/islandora_defaults) and [controlled_access_terms_defaults](https://github.com/Islandora/controlled_access_terms/tree/2.x/modules/controlled_access_terms_defaults) features, which define the default metadata profile for Islandora (which we'll be migrating into). You're not required to use the `islandora_defaults` or `controlled_access_terms_defaults` for your repository, but for the purposes of demonstration, it saves you a lot of user interface administrivia so you can focus just on the learning how to migrate.  By the time you are done with this exercise, you'll be able to easily apply your knowledge to migrate using any custom metadata profile you can build using Drupal.
 
 ## Overview
 
-The Migrate API is the main way to ingest batches of data into Drupal (and because Islandora 8 is Drupal, into Islandora). The Migrate module only provides the framework, it's up to you to create the rules that take data from a _source_, through a _process_ (i.e. a mapping) to a _destination_. A set of these rules is called a "migration". It has to be set up (as a Configuration Entity, either by importing a YAML file or by installing a Feature) and then it has to be run.
+The Migrate API is the main way to ingest batches of data into Drupal (and because Islandora is Drupal, into Islandora). The Migrate module only provides the framework, it's up to you to create the rules that take data from a _source_, through a _process_ (i.e. a mapping) to a _destination_. A set of these rules is called a "migration". It has to be set up (as a Configuration Entity, either by importing a YAML file or by installing a Feature) and then it has to be run.
 
-Once a migration has been run, it will have created (or updated) a bunch of Drupal entities of one type - whether that's taxonomy terms, nodes, files, etc. Since an Object in Islandora 8 is made up of several different Drupal entities that refer to each other, it's going to take multiple migrations to create an Islandora object, and it's important to perform these migrations in a sensible order.
+Once a migration has been run, it will have created (or updated) a bunch of Drupal entities of one type - whether that's taxonomy terms, nodes, files, etc. Since an Object in Islandora is made up of several different Drupal entities that refer to each other, it's going to take multiple migrations to create an Islandora object, and it's important to perform these migrations in a sensible order.
 
 A basic Islandora object is at minimum:
 - a file, which holds the actual binary contents of an item
@@ -131,18 +131,18 @@ source:
   delimiter: ','
 
   # 1 means you have a header row, 0 means you don't
-  header_row_count: 1 
+  header_row_count: 1
 
-  # Each migration needs a unique key per row in the CSV.  Here we're using the file path.
-  keys: 
-    - file 
+  # Each migration needs a unique key ("id") per row in the CSV.  Here we're using the file path.
+  ids:
+    - file
 
   # You can't enter string literals into a process plugin, but you can give it a constant as a 'source'.
   constants:
     # Islandora uses Flysystem and stream wrappers to work with files.  What we're really saying here is
     # to put these files in Fedora in a 'csv_migration' folder.  It doesn't matter if the directory
     # doesn't exist yet, it will get created for you automatically.
-    destination_dir: 'fedora://csv_migration' 
+    destination_dir: 'fedora://csv_migration'
 
 process:
 
@@ -176,7 +176,7 @@ process:
     plugin: file_copy
     source:
       - file # The source column in the CSV
-      - '@destination' # The destination entry from above  
+      - '@destination' # The destination entry from above
 
 destination:
   # These are Drupal 'image' entities we're making, not just plain 'file' entities.
@@ -201,12 +201,12 @@ source:
   path: '/var/www/html/drupal/web/modules/contrib/migrate_islandora_csv/data/migration.csv'
   delimiter: ','
   header_row_count: 1
-  keys: 
-    - file 
+  ids:
+    - file
   constants:
-    destination_dir: 'fedora://csv_migration' 
+    destination_dir: 'fedora://csv_migration'
 ```
-You can see we provide a path to its location, what delimiter to use, if it uses a header row, and which column contains a unique key for each entry.  Constants can also be defined here (more on those later).
+You can see we provide a path to its location, what delimiter to use, if it uses a header row, and which column contains a unique id for each entry.  Constants can also be defined here (more on those later).
 
 #### Process
 
@@ -232,7 +232,7 @@ In the `process` section of the migration, we're copying the images over into a 
     plugin: file_copy
     source:
       - file
-      - '@destination'  
+      - '@destination'
 ```
 To do this, we're using the `file_copy` process plugin.  But first, we have to know where a file is located and where it should be copied to.  We know where the file resides, we have that in the CSV's `file` column.  But we're going to have to do some string manipulation in order to generate the new location where we want the file copied. We're trying to convert something like `/var/www/html/drupal/web/modules/contrib/migrate_islandora_csv/data/images/Free Smells.jpg` to `fedora://csv_migration/Free Smells.jpg`.
 
@@ -331,8 +331,8 @@ dependencies:
     module:
       - migrate_islandora_csv
 
-id: node 
-label: Import Nodes from CSV 
+id: node
+label: Import Nodes from CSV
 migration_group: migrate_islandora_csv
 
 source:
@@ -342,14 +342,14 @@ source:
   # 1 means you have a header row, 0 means you don't
   header_row_count: 1
 
-  # Each migration needs a unique key per row in the csv.  Here we're using the file path.
-  keys:
-    - file 
+  # Each migration needs a unique id per row in the csv.  Here we're using the file path.
+  ids:
+    - file
 
   # You can't enter string literals into a process plugin, but you can give it a constant as a 'source'.
   constants:
     # We're tagging our nodes as Images
-    model: Image 
+    model: Image
 
     # Everything gets created as admin
     uid: 1
@@ -364,7 +364,7 @@ process:
   # in.
   field_alternative_title:
     plugin: skip_on_empty
-    source: subtitle 
+    source: subtitle
     method: process
 
   field_description: description
@@ -377,16 +377,16 @@ process:
     plugin: entity_lookup
     source: constants/model
     entity_type: taxonomy_term
-    value_key: name 
+    value_key: name
     bundle_key: vid
-    bundle: islandora_models 
+    bundle: islandora_models
 
   # Split up our pipe-delimited string of
   # subjects, and generate terms for each.
   field_subject:
     -
       plugin: skip_on_empty
-      source: subject 
+      source: subject
       method: process
     -
       plugin: explode
@@ -478,9 +478,9 @@ process:
 
   # Write to the linked agent field. In this case
   # we first want to merge the info from the
-  # photographer and provider columns. Since we 
+  # photographer and provider columns. Since we
   # already prepared our structured array using
-  # the components of the typed_relation field as 
+  # the components of the typed_relation field as
   # keys ('target_id' and 'rel_type'), we can just
   # pass this array into field_linked_agent.
   field_linked_agent:
@@ -508,7 +508,7 @@ For `subtitle`, we're passing it through the `skip_on_empty` process plugin beca
 ```yml
   field_alternative_title:
     plugin: skip_on_empty
-    source: subtitle 
+    source: subtitle
     method: process
 ```
 
@@ -519,7 +519,7 @@ Now here's where things get interesting.  We can look up other entities to popul
     source: constants/model
     entity_type: taxonomy_term
     # 'name' is the string value of the term, e.g. 'Original file', 'Thumbnail'.
-    value_key: name 
+    value_key: name
     bundle_key: vid
     bundle: islandora_models
 ```
@@ -534,7 +534,7 @@ This approach applies the same taxonomy term to all objects. If you want to assi
     # 'model' is the header of a field in our input CSV that contains the string value of the taxonomy term.
     source: model
     entity_type: taxonomy_term
-    value_key: name 
+    value_key: name
     bundle_key: vid
     bundle: islandora_models
 ```
@@ -569,7 +569,7 @@ With process plugins, that logic looks like
 field_subject:
     -
       plugin: skip_on_empty
-      source: subject 
+      source: subject
       method: process
     -
       plugin: explode
@@ -607,15 +607,15 @@ In `controlled_access_terms`, we define a new field type of `typed_relation`, wh
 
 The `target_id` portion takes an entity id, and rel_type takes the predicate for the MARC relator we want to use to describe the relationship the entity has with the repository item.  This example would reference taxonomy_term 1 and give it the relator for "Contributor".
 
-If we have a single name to deal with, we can set those values in YAML, accessing `field_linked_agent/target_id` and `field_linked_agent/rel_type` independently. 
+If we have a single name to deal with, we can set those values in YAML, accessing `field_linked_agent/target_id` and `field_linked_agent/rel_type` independently.
 ```yml
   field_linked_agent/target_id:
     plugin: entity_generate
-    source: photographer 
+    source: photographer
     entity_type: taxonomy_term
     value_key: name
     bundle_key: vid
-    bundle: person 
+    bundle: person
 
   field_linked_agent/rel_type: constants/relator
 ```
@@ -646,7 +646,7 @@ So, if we started with a column containing
 ```
 at the end of this pipeline, the `photographers` temporary variable would contain
 ```php
-[ 
+[
   ['name' => 'Alice'],
   ['name' => 'Bob'],
   ['name' => 'Charlie]
@@ -673,7 +673,7 @@ Next, we use the `sub_process` plugin. It takes an array of associative arrays (
 ```
 Within `sub_process`, we cannot access the temporary variables or constants that we've created in the outer migration. This is why we use the `default_value` plugin when for the `rel_type`. It would have been simpler to define a constant as we did with 'Image', but we wouldn't be able to access it. The output of this pipeline is now formatted as the structured data expected by a `typed_relation` field:
 ```php
-[ 
+[
   ['target_id' => 42, 'rel_type' => 'relators:pht' ],
   ['target_id' => 43, 'rel_type' => 'relators:pht' ],
   ['target_id' => 44, 'rel_type' => 'relators:pht' ],
@@ -705,10 +705,10 @@ Media entities are Drupal's solution for fieldable files.  Since you can't put f
 dependencies:
   enforced:
     module:
-      - migrate_islandora_csv 
+      - migrate_islandora_csv
 
-id: media 
-label: Import Media from CSV 
+id: media
+label: Import Media from CSV
 migration_group: migrate_islandora_csv
 
 source:
@@ -719,13 +719,13 @@ source:
   header_row_count: 1
 
   # Each migration needs a unique key per row in the csv.  Here we're using the file path.
-  keys:
-    - file 
+  ids:
+    - file
 
   # You can't enter string literals into a process plugin, but you can give it a constant as a 'source'.
   constants:
-    # We're tagging our media as Original Files 
-    use: Original File 
+    # We're tagging our media as Original Files
+    use: Original File
 
     # Everything gets created as admin
     uid: 1
@@ -740,28 +740,28 @@ process:
     plugin: entity_lookup
     source: constants/use
     entity_type: taxonomy_term
-    value_key: name 
+    value_key: name
     bundle_key: vid
-    bundle: islandora_media_use 
+    bundle: islandora_media_use
 
   # Lookup the migrated file in the file migration.
   field_media_image:
     plugin: migration_lookup
-    source: file 
-    migration: file 
+    source: file
+    migration: file
     no_stub: true
 
   # Lookup the migrated node in the node migration
   field_media_of:
     plugin: migration_lookup
-    source: file 
-    migration: node 
+    source: file
+    migration: node
     no_stub: true
-    
+
 destination:
   # These are 'image' media we're making.
   plugin: 'entity:media'
-  default_bundle: image 
+  default_bundle: image
 
 migration_dependencies:
   required:
@@ -784,9 +784,9 @@ The `field_media_use` field is a tag that's used to denote the purpose of a file
     plugin: entity_lookup
     source: constants/use
     entity_type: taxonomy_term
-    value_key: name 
+    value_key: name
     bundle_key: vid
-    bundle: islandora_media_use 
+    bundle: islandora_media_use
 ```
 The `field_media_image` and `field_media_of` fields are how the media binds a file to a node.  You could use `entity_lookup` or `entity_generate`, but we've already migrated them and can very easily look them up by the id assigned to them during migration.  But what's the benefit of doing so?  The `entity_lookup` and `entity_generate` process plugins do the job fine, right?
 
@@ -812,4 +812,4 @@ But really the best thing to do is try and get your data into Islandora!  We int
 
 In some repositories, these CSVs can be used to make bulk updates to metadata. Just make your changes to maintain the CSVs, then run the migration(s) again with the --update flag. This will not always be efficient, as you'll update every entity, even if it didn't change. But, by breaking down your CSVs per collection or object type, you could keep them small enough to use this process for a small repository.
 
-There is also a tool for migrating directly from an Islandora 7.x to Islandora 8 ([migrate_7x_claw](https://github.com/Islandora-Devops/migrate_7x_claw)), using Solr, XPaths, and Fedora calls to pull files and objects directly into Islandora 8. It may be worth checking out, and/or using in conjunction with a CSV migration.
+There is also a tool for migrating directly from a Legacy Islandora to Islandora ([migrate_7x_claw](https://github.com/Islandora-Devops/migrate_7x_claw)), using Solr, XPaths, and Fedora calls to pull files and objects directly into Islandora. It may be worth checking out, and/or using in conjunction with a CSV migration.

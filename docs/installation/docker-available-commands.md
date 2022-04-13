@@ -24,11 +24,11 @@ There's a lot of useful commands available to you from within the `isle-dc` fold
 
 ## Export Public Files
 
-`make drupal-public-files-dump DEST=/your/path/public_files.tgz` will export your public filesystem and place it as a single zipped tarball at `DEST`. 
+`make drupal-public-files-dump DEST=/your/path/public_files.tgz` will export your public filesystem and place it as a single zipped tarball at `DEST`.
 
 ## Import Public Files
 
-`make drupal-public-files-import SRC=/your/path/public_files.tgz` will import your public filesystem from a single zipped tarball at `SRC`. 
+`make drupal-public-files-import SRC=/your/path/public_files.tgz` will import your public filesystem from a single zipped tarball at `SRC`.
 
 ## Fcrepo Export
 
@@ -39,13 +39,12 @@ There's a lot of useful commands available to you from within the `isle-dc` fold
 `make fcrepo-import SRC=/your/path/fcrepo-export.tgz` will import your Fedora repository from a single zipped tarball at `SRC`
 
 ## Reindex Fedora Metadata
-  
+
 `make reindex-fcrepo-metadata` will reindex RDF metadata from Drupal into Fedora.
 
 ## Reindex Solr
-`make reindex-solr` will rebuild rebuild Solr search index for your repository. 
+`make reindex-solr` will rebuild rebuild Solr search index for your repository.
 
 ## Reindex the Triplestore
 
-`make reindex-triplestore` will reindex RDF metadata from Drupal into Blazegraph. 
-
+`make reindex-triplestore` will reindex RDF metadata from Drupal into Blazegraph.

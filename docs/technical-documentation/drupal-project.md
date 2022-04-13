@@ -1,6 +1,6 @@
 # Introduction
 
-Islandora 8 makes use of [drupal-project](https://github.com/drupal-composer/drupal-project), a composer template for Drupal projects. We augment it with Islandora specific changes, and need to occasionally pull in upstream changes. The process below outlines how we will do it in a consistent manner.
+Islandora makes use of [drupal-project](https://github.com/drupal-composer/drupal-project), a composer template for Drupal projects. We augment it with Islandora specific changes, and need to occasionally pull in upstream changes. The process below outlines how we will do it in a consistent manner.
 
 # Pull in upstream changes
 

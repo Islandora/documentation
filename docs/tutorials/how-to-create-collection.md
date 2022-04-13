@@ -7,8 +7,8 @@ This how-to demonstrates creating a collection and adding items to it in Islando
 In Islandora Defaults, Collections that are tagged as "Collection" under System > Model will show a view of their member objects. A member is any object that is "member_of" that object, and can be added via the "Members" tab. This is the mechanism in Islandora Defaults; individual instances may vary.
 
 !!! Warning "Collections and Deleting"
-    Collections and their members are independent of each other, 
-    and removing something from a collection does not delete it. 
+    Collections and their members are independent of each other,
+    and removing something from a collection does not delete it.
     **Similarly, deleting a collection does not delete its members.**
 
 ## Creating a Collection
@@ -21,7 +21,7 @@ Click on _Add content_.
 
 ![Click on add content, under tools](../assets/collections_add_content.png)
 
-Then click on 'Repository Item' to give your collection the default metadata profile for Islandora 8.
+Then click on 'Repository Item' to give your collection the default metadata profile for Islandora.
 
 ![Click on Repository Item](../assets/collections_repository_item.jpg)
 
@@ -29,7 +29,7 @@ Fill out the form.
 
 Near the end of the form, under System, select Collection from the Model dropdown list.
 
-![Near end of form, under System, select collection](../assets/collections_system.jpg) 
+![Near end of form, under System, select collection](../assets/collections_system.jpg)
 
 Click Save when done.
 
@@ -43,7 +43,7 @@ To populate a collection with existing items, return to any existing content and
 
 ![To populate a collection with existing items, return to any existing content and click on its Edit tab.](../assets/collections_edit_photo_collection.jpg)
 
-Scroll down to the bottom and the System section. In the Member of section, start typing in the name of the collection this item should belong to. Select the name of the collection 
+Scroll down to the bottom and the System section. In the Member of section, start typing in the name of the collection this item should belong to. Select the name of the collection
 you want from the autocomplete.
 
 ![Scroll down to the bottom and the System section. In the Member of section, start typing in the name of the collection this item should belong to.](../assets/collections_member_of.jpg)

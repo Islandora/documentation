@@ -1,10 +1,10 @@
-# Installing a Production/Staging Server 
+# Installing a Production/Staging Server
 
 If you are deploying Islandora on a server that is publicly accessible, there's extra precautions you should take for
 performance and security reasons. If you follow these steps, you'll see how we can use our `codebase` folder to build
 a custom Drupal container, and bake code into the container instead of bind-mounting it in. We'll also cover how to
 store passwords as secrets and set up TLS.
- 
+
 ## Getting Started
 
 If you haven't already [made a local environment](../docker-local), you'll want to do that first.  These instructions build off of having

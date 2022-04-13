@@ -1,6 +1,6 @@
 # Drupal Configuration Provided By Islandora Defaults
 
-This is a list of the configuration items provided by the Islandora Defaults module. 
+This is a list of the configuration items provided by the Islandora Defaults module.
 
 ## Entities
 
@@ -109,7 +109,7 @@ The following RDF mappings for the RDF module are included:
 
 ### Language
 
-These configuration files enable content translation on their bundles. 
+These configuration files enable content translation on their bundles.
 
 | Type          | Bundle              | Comments |
 |---------------|---------------------|----------|
@@ -130,7 +130,7 @@ These configuration files enable content translation on their bundles.
 |-----------------------------------------------------|------------------------------------------------|----------------------------------------------------------------------------------------------|--------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------|
 | IIIF Manifest (iiif_manifest)                       | Generates IIIF manifests for paged content     | REST Export (/node/%node/book-manifest);<br/>REST Export - Single node (/node/%node/manifest) |                                                        |                                                                                                                                  |
 | Members (members)                                   | Displays members for content.                  | Members (block)                                                                              | Show an unformatted list of published nodes that are "Member of" the current node (from URL), formatted as "Teaser"s, paged to 10 items.                                                      |                                                                                                                                  |
-| OpenSeadragon Media EVAs (openseadragon_media_evas) | Displays media for content as EVA's per model. | Original File;<br/>Preservation Master;<br/>Service File | Show 1 Media that is "Media of" the node (from URL) and having Media Use corresponding to each Display (Original file, etc.). The Media is rendered with display mode OpenSeadragon. See media.\*.open_seadragon under "Display Modes." The description's "per model" should read "per media use". Provides the EVA used in the islandora_object.open_seadragon display mode. The Preservation Master and Service File displays are not used. |
+| OpenSeadragon Media EVAs (openseadragon_media_evas) | Displays media for content as EVA's per model. | Original File;<br/>Preservation Master;<br/>Service File | Show 1 Media that is "Media of" the node (from URL) and having Media Use corresponding to each Display (Original file, etc.). The Media is rendered with display mode Open Seadragon. See media.\*.open_seadragon under "Display Modes." The description's "per model" should read "per media use". Provides the EVA used in the islandora_object.open_seadragon display mode. The Preservation Master and Service File displays are not used. |
 | PDFjs Media EVAs (pdfjs_media_evas)                 | Displays media for content as EVA's per model. |  Original File;<br/>Preservation Master;<br/>Service File | Show 1 Media that is "Media of" the node (from URL) and having Media Use corresponding to each Display (Original file, etc.). The Media is rendered with display mode PDFjs. The description's "per model" should read "per media use". Provides the EVA used in the islandora_object.pdfjs display mode. The Preservation Master and Service File displays are not used. |
 
 
@@ -165,9 +165,9 @@ The contexts provided by Islandora Defaults are organized into groups: **Indexin
 |---|---|---|---|---|
 | Binary (binary) | Binary Object Display |**Node has term with URI**: Binary (23)|**Change view mode**: Binary|See node.islandora_object.binary under Display Modes||
 | Collection (collection) | Display block of children |**Node has term with URI**: Collection (24)|**Blocks**: "Members" placed in Content Suffix in Carapace||
-| Open Seadragon (open_seadragon) | Open Seadragon viewer for Images |**Node has term with URI**:Open Seadragon (2)|**Change view mode**: Open Seadragon |See node.islandora_object.open_seadragon under Display Modes||
+| Open Seadragon (open_seadragon) | OpenSeadragon viewer for Images |**Node has term with URI**:Open Seadragon (2)|**Change view mode**: Open Seadragon |See node.islandora_object.open_seadragon under Display Modes||
 | PDFjs Viewer (pdfjs) | Displays file using the PDFjs viewer |**Node has term with URI**: PDFjs (3)|**Change view mode:** PDFjs|See node.islandora_object.pdfjs under Display Modes|
-| Paged Content - Openseadragon (openseadragon_block) | Display a block for Paged Content |**Node has term with URI:** Open Seadragon (2) AND Paged Content (28)|**Blocks** Openseadragon block placed in Main Content in Carapace||
+| Paged Content - OpenSeadragon (openseadragon_block) | Display a block for Paged Content |**Node has term with URI:** OpenSeadragon (2) AND Paged Content (28)|**Blocks** OpenSeadragon block placed in Main Content in Carapace||
 
 
 ## Actions
@@ -184,15 +184,15 @@ The contexts provided by Islandora Defaults are organized into groups: **Indexin
 ## Migrations
 
 
-| Name | 
+| Name |
 |---|
-|Tags migration for islandora_defaults feature (islandora_defaults_tags)| 
+|Tags migration for islandora_defaults feature (islandora_defaults_tags)|
 
-Contents of the islandora_defaults_tags migration: 
+Contents of the islandora_defaults_tags migration:
 
 |Vocabulary|Term name|Description|External Uri|
 |---|---|---|---|
-|islandora_display|"Open Seadragon"|"Display using the Open Seadragon viewer"|http://openseadragon.github.io|
+|islandora_display|"Open Seadragon"|"Display using the OpenSeadragon viewer"|http://openseadragon.github.io|
 |islandora_display|"PDFjs"|"Display using the PDF.js viewer"|http://mozilla.github.io/pdf.js|
 |resource_types|"Collection"|"An aggregation of resources"|http://purl.org/dc/dcmitype/Collection|
 |resource_types|"Dataset"|"Data encoded in a defined structure"|http://purl.org/dc/dcmitype/Dataset|
@@ -310,7 +310,7 @@ This is at the end of this document because it's not particularly useful yet - t
 
 ### New fields
 
-The following are new fields we define: 
+The following are new fields we define:
 
 - field.storage.node.field_access_terms.yml
 - field.storage.node.field_alternative_title.yml
@@ -358,7 +358,7 @@ The following are new fields we define:
 - core.base_field_override.node.islandora_object.sticky.yml
 - core.base_field_override.node.islandora_object.title.yml
 - core.base_field_override.node.islandora_object.uid.yml
-- 
+-
 - [audio]
 - core.base_field_override.media.audio.changed.yml
 - core.base_field_override.media.audio.created.yml
@@ -391,5 +391,3 @@ The following are new fields we define:
 - core.base_field_override.media.video.status.yml
 - core.base_field_override.media.video.thumbnail.yml
 - core.base_field_override.media.video.uid.yml
-
-
