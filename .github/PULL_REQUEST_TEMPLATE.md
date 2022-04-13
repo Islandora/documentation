@@ -13,7 +13,7 @@
 ## Interested Parties
 
 
-> _**Replace this text** - Name some folks who may be interested, if documentation related mention @Islandora/documentation, or, if unsure, @Islandora/8-x-committers_
+> _**Replace this text** - Name some folks who may be interested, if documentation related mention @Islandora/documentation, or, if unsure, @Islandora/committers_
 
 ---
 
