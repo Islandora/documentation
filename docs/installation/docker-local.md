@@ -9,7 +9,7 @@ changes are automatically reflected on the Drupal container.
 If you don't already have a Drupal site, you'll be given a basic setup using Drupal 9 and the
 [Islandora install profile](https://github.com/islandora-devops/islandora_profile).
 
-If you do already have a Drupal site, use git to clone it into place as the `codebase` folder.
+If you do already have a Drupal 9 site, use git to clone it into place as the `codebase` folder.
 
 ```
 cd /path/to/isle-dc
