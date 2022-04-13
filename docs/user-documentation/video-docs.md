@@ -44,6 +44,7 @@ New videos are added to [the playlist](https://www.youtube.com/playlist?list=PL4
 - [Advanced Views](https://youtu.be/inPRZeQGnKI): How to bring together several settings and tools to make a more advanced image view.
 - [Batch Editing](https://youtu.be/ZMp0lPelOZw): How to use Views Bulk Edit to create a batch editing view for Islandora.
 - [Export and Import a View](https://youtu.be/0NXrzSzxhLc): How to copy a custom View from one Islandora site to another.
+- [Islandora Webinar: Islandora and Drupal Views](https://www.youtube.com/watch?v=VfuRHXFD89c): a 1-hour session on working with Views.
 
 ## Additional Topics
 
