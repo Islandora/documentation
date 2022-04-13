@@ -41,7 +41,8 @@ If you _are_ a member of the Islandora GitHub organization, you will be able to 
 ![start a new branch and PR](../assets/editing-docs-branch.png)
 
 - You will be taken to the [pull request template](https://github.com/Islandora/documentation/blob/main/.github/PULL_REQUEST_TEMPLATE.md) which will prompt you to fill out some basic information about what you have changed, and why. Replace all relevant instances of _Replace this text_ with your own text.
-    - You will have the option to tag _Interested Parties_, or people you would like to review your work, by writing in their GitHub account name after the `@` symbol. If you don't have anyone specific in mind, you may tag `@Islandora/8-x-committers` to alert all Islandora Committers that there is a new pull request for their review.
+- You will have the option to tag _Interested Parties_, or people you would like to review your work, by writing in their GitHub account name after the `@` symbol. If you don't have anyone specific in mind, you may tag `@Islandora/committers` to alert all Islandora 8 Committers that there is a new pull request for their review.
+
 
 ![start a new branch and PR](../assets/editing-docs-PR.png)
 

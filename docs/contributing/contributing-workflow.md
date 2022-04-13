@@ -33,13 +33,13 @@ We operate under the [Islandora Community Code of Conduct](https://www.islandora
   - If there is an urgent need for the pull request to be addressed quickly, indicate the need in the pull request template or a comment.
   - Complexity should also be taken into account when evaluating how quickly to merge a pull request. Changes that affect core modules or make extensive changes should receive more review and testing.
 - All interested parties should be satisfied before something is merged; no hard numbers. If you know who is likely to be interested, tag them. Tag the creator of the issue if possible. Make a reasonable effort.
-- If a pull request languishes without response when one is needed, tag @Islandora/8-x-committers (or @Islandora-Devops/committers if you’re working on install code) with a reminder and/or put the issue on the agenda for the next Islandora Tech Call
+- If a pull request languishes without response when one is needed, tag @Islandora/committers (or @Islandora-Devops/committers if you’re working on install code) with a reminder and/or put the issue on the agenda for the next Islandora 8 Tech Call
 - All contributions to GitHub must be accompanied by either an Individual Contributor License or a Corporate Contributor License covering the contributor.
 
 #### Development Workflow:
 - Create a Github Issue if none exists
-  - Assign the issue to yourself or request it to be assigned in a comment on the issue.  Be sure to tag @Islandora/8-x-committers to bring attention to it.
-- Perform development on a ‘feature’ branch.  Give your branch a name that describes the issue or feature.  Using something like ‘issue-xxx‘ and including the issue number is always a safe bet if you don’t know what to name it.
+  - Assign the issue to yourself or request it to be assigned in a comment on the issue.  Be sure to tag @Islandora/committers to bring attention to it.
+- Perform development on a ‘feature’ branch.  Give your branch a name that describes the issue or feature.  Using something like ‘issue-xxx‘ and including the issue number is always a safe bet if you don’t know what to name it. 
 - When the code is ready for review, issue a pull request on Github from your feature branch into the development branch (‘8.x-1.x’ for Drupal modules and ‘dev’ for everything else)
 - Continuous integration checks need to be satisfied before the code can be merged
   - Coding standards checks and copy/paste mess detection must be passing before code can be merged.
