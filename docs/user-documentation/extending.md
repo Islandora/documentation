@@ -19,7 +19,7 @@ We offer this list for discovery, but do not officially provide support for any 
 This recipe provides instructions how to configure a shallow or deep search in a specific collection.
 - [Date Range Slider Facet] - This recipe explains how to include a facet for date field(s) that presents itself as a range slider.
 - [Exhibitions and TimeLine JS] - This recipe outlines how to build exhibits in Islandora, including the deployment of TimeLineJS.
-- [Digital Preservation] - A detailed overview of how to approach digital preservation in Islandora. Includes features that are currently avaiable, both within Islandora and by using compatible tools.
+- [Digital Preservation] - A detailed overview of how to approach digital preservation in Islandora. Includes features that are currently available, both within Islandora and by using compatible tools.
 
 ## Ingredients
 
@@ -41,7 +41,7 @@ Warning! - All modules are under development.
 
 #### Access Control By Taxonomy Tags
 
-[Permissons by Term](https://www.drupal.org/project/permissions_by_term)
+[Permissions by Term](https://www.drupal.org/project/permissions_by_term)
 
 By default, Drupal allows you only to restrict access to Drupal nodes by coupling node content types to user roles. The Permissions by Term module extends Drupal by functionality for restricting view and edit access to single nodes via taxonomy terms. Since Islandora objects can have taxonomy terms, this can be used to control access at the node and collection level. The submodule Permissions by Entity extends this control to the media level.
 
@@ -49,13 +49,13 @@ By default, Drupal allows you only to restrict access to Drupal nodes by couplin
 
 [Moderation Scheduler](https://www.drupal.org/project/moderation_scheduler)
 
-Moderation Scheduler gives content editors the ability to schedule Islanodra nodes to be published at specified dates and times in the future. Can be combined with [Views Bulk Edit](https://www.drupal.org/project/views_bulk_edit) to set the same schedued publication date/time on multiple nodes at once.
+Moderation Scheduler gives content editors the ability to schedule Islandora nodes to be published at specified dates and times in the future. Can be combined with [Views Bulk Edit](https://www.drupal.org/project/views_bulk_edit) to set the same scheduled publication date/time on multiple nodes at once.
 
 #### Tombstoning
 
 [Tombstones](https://www.drupal.org/project/tombstones)
 
-A module that informs users who attempt to view deleted content that the resource has been removed instead of showing a generic 404 page. Fielded so that the date, reason, and altenative links can be given, along with a citation for the deleted object.
+A module that informs users who attempt to view deleted content that the resource has been removed instead of showing a generic 404 page. Fielded so that the date, reason, and alternative links can be given, along with a citation for the deleted object.
 
 ### Displays
 
@@ -95,13 +95,13 @@ This module provides a method for users with the necessary permissions to manual
 
 [Views Bulk Edit](https://www.drupal.org/project/views_bulk_edit)
 
-A powerful tool that turns Views into a means of batch editing nodes, including Islandora repository objects. Once installled, create a view, add the fields that you would like to edit, add a `Views bulk operations (Edit)` field to the view, and select which actions you would like ot have available. The `Modify field values` action will allow you to batch edit the value for the same field across multiple objects. A demonstration of a simple bulk-editing view with a few fields and actions can be found [here](http://future.islandora.ca/islandora-batch-edit)
+A powerful tool that turns Views into a means of batch editing nodes, including Islandora repository objects. Once installed, create a view, add the fields that you would like to edit, add a `Views bulk operations (Edit)` field to the view, and select which actions you would like to have available. The `Modify field values` action will allow you to batch edit the value for the same field across multiple objects. A demonstration of a simple bulk-editing view with a few fields and actions can be found [here](http://future.islandora.ca/islandora-batch-edit)
 
 #### Clone a Content Type
 
 [Content Type Clone](https://www.drupal.org/project/content_type_clone)
 
-A tool that allows you to clone an exsiting content type. Can be used to copy and easily make your own version of the Repository Item Content Type with fewer or edited fields, without starting over. Has options to also copy all nodes from the old type to the new, and to delete from the old type when copying.
+A tool that allows you to clone an existing content type. Can be used to copy and easily make your own version of the Repository Item Content Type with fewer or edited fields, without starting over. Has options to also copy all nodes from the old type to the new, and to delete from the old type when copying.
 
 #### Gather User Feedback
 

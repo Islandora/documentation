@@ -13,7 +13,7 @@ This list includes four different kinds of components:
 
 Combined together, Apache, PHP, and MySQL/PostgreSQL comprise a LAMP or LAPP server used to provide end-user-facing components - namely, the website.
 
-**Apache** is the webserver that will serve up webpages to the public. It will also manage some internal funcionality provided by Crayfish, and will expose Cantaloupe to the public. We’ll be making changes to the VirtualHost entry, enabling some modules, and modifying the ports configuration. The VirtualHost entry will eventually be modified when we need to expose other services like Cantaloupe to the public.
+**Apache** is the webserver that will serve up webpages to the public. It will also manage some internal functionality provided by Crayfish, and will expose Cantaloupe to the public. We’ll be making changes to the VirtualHost entry, enabling some modules, and modifying the ports configuration. The VirtualHost entry will eventually be modified when we need to expose other services like Cantaloupe to the public.
 
 **PHP** is the runtime interpreter for all the code Drupal and Crayfish need to be processed. By default, installing PHP 7.2 will give us a command-line interpreter, as well as an interpreter for Apache. We’re going to install several PHP modules required and/or useful for the components that make use of PHP.
 

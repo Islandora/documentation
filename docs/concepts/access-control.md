@@ -85,7 +85,7 @@ The filesystem used by a field is usually configured through "Manage Fields" on 
 To determine the actual location of a file, right-click the existing file in the Media Edit page and select "copy location". A file that is saved in flysystem will include `/_flysystem/` in the URL. These links (you can test it!) only work if you have permission to view the media. A file with `/sites/default/files/` is probably publically accessible (this is the public filesystem on most Drupal instances).
 
 !!! note "In Defaults, All Derivatives Are Public"
-    Out of the box using Islandora Defaults, derivatives are created for all Islandora media (as long as the conditions of the contexts aree met), and they are stored in the public Drupal filesystem. This happens even if the media and/or node are not published.
+    Out of the box using Islandora Defaults, derivatives are created for all Islandora media (as long as the conditions of the contexts are met), and they are stored in the public Drupal filesystem. This happens even if the media and/or node are not published.
 
 
 ## Access control in Solr

@@ -59,7 +59,7 @@ docker-compose down -v
 
 ### Regenerating docker-compose.yml
 
-If you make changes to configuration in the .env file, you may need to regnerate your `docker-compose.yml` file so that
+If you make changes to configuration in the .env file, you may need to regenerate your `docker-compose.yml` file so that
 those changes take effect.
 
 ```
@@ -73,7 +73,7 @@ You can do this easily with
 docker-compose up -d
 ```
 
-Even if the site is up and running, that command will only retart the containers it needs to.
+Even if the site is up and running, that command will only restart the containers it needs to.
 
 ### Listing services
 

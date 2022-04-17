@@ -1,4 +1,4 @@
-# From Objects to Resource Nodes: Shifting Concepts from Islandora Leagcy to Islandora
+# From Objects to Resource Nodes: Shifting Concepts from Islandora Legacy to Islandora
 
 This document attempts to show the shift in how objects work from Islandora Legacy to Islandora, from a non-developer perspective.
 

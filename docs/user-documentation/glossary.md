@@ -4,7 +4,7 @@ The following glossary of terms addresses an Islandora context. When comparing n
 Event-driven middleware based on [Apache Camel](http://camel.apache.org/) that handles communication between various components of Islandora, for instance synchronizing [Drupal](#drupal) data with a [Fedora](#fedora-repository-software) repository and the [Blazegraph](#blazegraph) triple store.
 
 ## Ansible
-Open source software for provisioning, configuration management and application deployment. In the context of Islandora, Ansible can be used to install and maintain the Islandora software stack more conteniently and efficiently on a server or group of servers. The configuration and installation instructions are captured in a human-readable list of tasks, called 'Playbook'. The [Islandora Playbook](#islandora-playbook) for Ansible is one of the installation methods currently supported by the Islandora community.
+Open source software for provisioning, configuration management and application deployment. In the context of Islandora, Ansible can be used to install and maintain the Islandora software stack more conveniently and efficiently on a server or group of servers. The configuration and installation instructions are captured in a human-readable list of tasks, called 'Playbook'. The [Islandora Playbook](#islandora-playbook) for Ansible is one of the installation methods currently supported by the Islandora community.
 
 ## Apache
 Refers to the [Apache Software Foundation](https://www.apache.org/), a not-for-profit organization supporting various open source software development projects. The Islandora software stack is comprised of different components that are developed under the umbrella of the Apache Software Foundation, for instance [Apache ActiveMQ](https://activemq.apache.org/), [Apache Camel](http://camel.apache.org/), the [Apache HTTP server (webserver)](https://httpd.apache.org/), [Apache Karaf](https://karaf.apache.org/), [Apache Solr](https://solr.apache.org/), and [Apache Tomcat](https://tomcat.apache.org/).
@@ -93,7 +93,7 @@ Flysystem is a filesystem abstraction library for PHP. Islandora uses Flysystem 
 Acronym for "galleries, libraries, archives, and museums".
 
 ## IIIF
-The [International Image Interoperability Framework](https://iiif.io/). A set of open standards that help archives, libraries, and museums make the most of their digitized collections with deep zoom, annotation capabilities, and more, and also the community of users and developers that suport the framework.
+The [International Image Interoperability Framework](https://iiif.io/). A set of open standards that help archives, libraries, and museums make the most of their digitized collections with deep zoom, annotation capabilities, and more, and also the community of users and developers that support the framework.
 
 ## Ingest
 To ingest an object is to add an entry for it in Islandora. This can be done through the [Drupal](#drupal) graphical user interface or one of the Drupal [APIs](#api) ([REST](https://www.drupal.org/docs/drupal-apis/restful-web-services-api/restful-web-services-api-overview), [Migrate API](https://www.drupal.org/docs/drupal-apis/migrate-api/migrate-api-overview)). The third-party contributed software [Islandora Workbench](https://github.com/mjordan/islandora_workbench) uses the Drupal REST API for convenient bulk ingest.
