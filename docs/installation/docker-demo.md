@@ -16,7 +16,7 @@ make demo-install-profile
 ## Kicking the Tires
 
 Your new Islandora instance will be available at [https://islandora.traefik.me](https://islandora.traefik.me). Don't let the
-funny url fool you, it's a dummy domain that resolves to `127.0.0.1`.
+funny URL fool you, it's a dummy domain that resolves to `127.0.0.1`.
 
 You can log into Drupal as `admin` using the default password, `password`.
 

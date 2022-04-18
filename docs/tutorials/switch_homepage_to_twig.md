@@ -39,7 +39,7 @@ $ cp web/themes/contrib/bootstrap/templates/node/node.html.twig web/themes/contr
 # Clear cache
 $ drush cr
 ```
-And now if you view the home page's source code you should now see the the `X` next to the loaded TWIG file. Please note that the file name cooresponds to the node number. To use the URL alias instead of the node ID requires additional work. [Here](https://www.lehelmatyus.com/1064/drupal-8-page-template-suggestion-by-path-alias)'s a tutorial on this topic.
+And now if you view the home page's source code you should now see the the `X` next to the loaded TWIG file. Please note that the file name corresponds to the node number. To use the URL alias instead of the node ID requires additional work. [Here](https://www.lehelmatyus.com/1064/drupal-8-page-template-suggestion-by-path-alias)'s a tutorial on this topic.
 ```html
 <!-- FILE NAME SUGGESTIONS:
    x node--6--full.html.twig

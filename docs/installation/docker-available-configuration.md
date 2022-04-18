@@ -31,7 +31,7 @@ If you change this setting, you need to `make -B docker-compose.yml` to generate
 file that contains the changes you've made.
 
 !!! Warning "Changing this after installation has consequences"
-    If you are indexing RDF metadata in Fedora and/or a triplestore, please be aware of the implications of changing this once you have installed.  By changing your domain, all of the subjects of your triples will be incorrect and you will have to reindex.  There are `make` commands to streamline this proccess, but if you have lots of data it can potentially be costly in terms of time and effort.
+    If you are indexing RDF metadata in Fedora and/or a triplestore, please be aware of the implications of changing this once you have installed.  By changing your domain, all of the subjects of your triples will be incorrect and you will have to reindex.  There are `make` commands to streamline this process, but if you have lots of data it can potentially be costly in terms of time and effort.
 
 ### REPOSITORY
 
@@ -92,7 +92,7 @@ If you set this to `true`, be sure to set `DRUPAL_INSTALL_PROFILE` to `minimal`.
 ### INCLUDE_WATCHTOWER_SERVICE
 
 Whether or not to include Watchtower as a service.  When developing `isle-buildkit`, this is extremely useful and
-will auto-deploy new containers as you make changes.  You should _not_ use watchtower on prodution environments, though.
+will auto-deploy new containers as you make changes.  You should _not_ use watchtower on production environments, though.
 
 Available values for this setting are
 - `true`
@@ -144,7 +144,7 @@ If you change this setting, you need to `make -B docker-compose.yml` to generate
 file that contains the changes you've made.
 
 !!! Warning "Changing this after installation has consequences"
-    If you are changing from mariadb to potsrgres or vice versa, you _MUST_ migrate your data yourself.  ISLE will not convert your database from one to the other, and it's generally not advised to change this once you've installed.
+    If you are changing from mariadb to postgres or vice versa, you _MUST_ migrate your data yourself.  ISLE will not convert your database from one to the other, and it's generally not advised to change this once you've installed.
 
 ### FCREPO_DATABASE_SERVICE
 
@@ -160,7 +160,7 @@ If you change this setting, you need to `make -B docker-compose.yml` to generate
 file that contains the changes you've made.
 
 !!! Warning "Changing this after installation has consequences"
-    If you are changing from mariadb to potsrgres or vice versa, you _MUST_ migrate your data yourself.  ISLE will not convert your database from one to the other, and it's generally not advised to change this once you've installed.
+    If you are changing from mariadb to postgres or vice versa, you _MUST_ migrate your data yourself.  ISLE will not convert your database from one to the other, and it's generally not advised to change this once you've installed.
 
 ### COMPOSE_HTTP_TIMEOUT
 
@@ -176,7 +176,7 @@ By default, this value is set to 480, but if you have slow network conditions an
 ### COMPOSE_PROJECT_NAME
 
 Used for naming services in traefik as well as defining network alias and urls. For example the `drupal` service will be found at
-`${COMPOSE_PROJECT_NAME}_drupal_1`. This is useful to change if you are running mulitple ISLE instances on one machine.
+`${COMPOSE_PROJECT_NAME}_drupal_1`. This is useful to change if you are running multiple ISLE instances on one machine.
 
 By default, this value is set to `isle-dc`.
 
@@ -212,7 +212,7 @@ file that contains the changes you've made.
 
 ### DISABLE_SYN
 
-Set this to `true` to disable JWT authentication for Fedora.  This is neccessary
+Set this to `true` to disable JWT authentication for Fedora.  This is necessary
 when performing a Fedora import using their import/export tools.
 
 By default, this is set to `false`.

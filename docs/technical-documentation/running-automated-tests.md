@@ -3,7 +3,7 @@
 ## User Interface
 
 !!! warning
-    Some of islandora's dependencies include deprecated code. This will cause the tests to
+    Some of Islandora's dependencies include deprecated code. This will cause the tests to
     fail when run through the GUI. To avoid this, use the command-line method with the
     `--suppress-deprecations` tag.
 

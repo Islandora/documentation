@@ -48,7 +48,7 @@ Why use the Migrate API?
 
 - Designed to migrate Islandora Legacy data to Islandora.
 - DATASTREAMS
-    - All of your datasteams, including the audit trail, are migrated
+    - All of your datastreams, including the audit trail, are migrated
 - METADATA
     - Migrate metadata from Solr or any XML datastream
 - CUSTOMIZABLE

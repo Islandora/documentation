@@ -322,7 +322,7 @@ will map the Repository item's *title* field to `http://purl.org/dc/terms/title`
 
 ### Typed Relation fields in RDF
 
-Unlike other fields, which can be assigned RDF predicates in RDF Mapping yaml files, a typed relation field uses a different predicate depending on the chosen type. These predicates are assigned using the 'keys' in the key\|value configuration. The key must be formatted `namespace:predicate`, e.g. `relators:act`.
+Unlike other fields, which can be assigned RDF predicates in RDF Mapping YAML files, a typed relation field uses a different predicate depending on the chosen type. These predicates are assigned using the 'keys' in the key\|value configuration. The key must be formatted `namespace:predicate`, e.g. `relators:act`.
 
 !!! bug Current RDF limitations
     The Drupal RDF module is currently limited in the complexity of graph you can generate. All fields must be mapped directly to either a literal value, or a reference to another content type instance, media type instance, or taxonomy term instance. It is not currently possible to create [blank nodes](https://en.wikipedia.org/wiki/Blank_node) or [skolemized nodes](https://www.w3.org/2011/rdf-wg/wiki/Skolemisation) for nesting fields under more complex structures.

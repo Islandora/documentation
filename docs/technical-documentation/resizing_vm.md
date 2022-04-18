@@ -1,5 +1,5 @@
 ## Resize vagrant machine
-To expand virtual machine's harddrive for testing of larger files. Once the VM has started, you'll need to `halt` the VM, download and run the script, tell it what size (in MB) and then start the VM.
+To expand virtual machine's hard drive for testing of larger files. Once the VM has started, you'll need to `halt` the VM, download and run the script, tell it what size (in MB) and then start the VM.
 The last step `vagrant ssh --command "sudo resize2fs /dev/sda1"` is a check. It should return there was nothing to do. If you already provisioned you VM you can skip the 2 steps with provisioning in them.
 
 ```shell

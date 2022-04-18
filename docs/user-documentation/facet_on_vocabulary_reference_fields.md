@@ -53,7 +53,7 @@ Step 4 adds and configures the facet itself.
 ## Step 5: Add Facet as a Block
 This step adds the facets in a single block.
 
-1. To place a Facets block for the facets you have created, go to **Admin** >> **Strucure** >> **Blocks layout** (admin/structure/block).
+1. To place a Facets block for the facets you have created, go to **Admin** >> **Structure** >> **Blocks layout** (admin/structure/block).
 1. Click **Place block** in the desired block region, for example, *Sidebar second*.
 1. Start typing the facets block in the Filter and click **Place block**
 1. Choose the facets to include
