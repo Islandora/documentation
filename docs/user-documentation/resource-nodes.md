@@ -166,6 +166,6 @@ single child to belong to multiple parents, but may also complicate the creation
 
 For any node, its **Children** tab can be used to see all its members.  You can also perform Actions in
 bulk on members using the checkboxes and the Actions dropdown as well as clicking
-on the **Re-order Children** tab to adjust the order in which they display.
+on the **Reorder Children** tab to adjust the order in which they display.
 
 ![Members tab](../assets/paged_content_reorder_children_button.png)
