@@ -144,16 +144,19 @@ The node-level and global approaches are not exclusive to one another. One Conte
 ## Members
 
 Islandora has a notion of _membership_, which is used to create a parent/child relationship between
-two resource nodes. Membership is denoted using another special field, "Member Of".
-The "Member Of" field _can_ hold multiple references, so it is possible for a
-single child to belong to multiple parents, but may also complicate the creation of breadcrumbs.
+nodes. Membership is denoted using another special field, "Member Of". This is used to create the link
+between members and their parent collection, pages and their book ("paged content"), or members of a
+compound object and the compound object itself.
+
 Any two nodes can be related in this way, though typically, the parent node has a content
 model of [_Collection_](../concepts/collection.md) or [_Paged Content_](paged-content.md) (see their respective pages for more details).
+The "Member Of" field _can_ hold multiple references, so it is possible for a
+single child to belong to multiple parents, but may also complicate the creation of breadcrumbs.
 
 !!! Note "Compared to Islandora Legacy"
     In Islandora Legacy, there was a distinction between belonging to a collection and belonging to
-    a compound object.  In Islandora, this distinction is not present, essentially allowing every
-    resource node to be part of a compound object.
+    a compound object.  In Islandora, this distinction is not present. Since all nodes can have members
+    , essentially every node has the potential to be a compound object or collection.
 
 !!! Note "Child v. Member"
     Islandora uses the "child" and "member" descriptor for resource nodes that
@@ -163,6 +166,6 @@ model of [_Collection_](../concepts/collection.md) or [_Paged Content_](paged-co
 
 For any node, its **Children** tab can be used to see all its members.  You can also perform Actions in
 bulk on members using the checkboxes and the Actions dropdown as well as clicking
-on the **Re-order Children** tab to adjust the order in which they display.
+on the **Reorder Children** tab to adjust the order in which they display.
 
-![Members tab](../assets/resource_nodes_children_tab.png)
+![Members tab](../assets/paged_content_reorder_children_button.png)
