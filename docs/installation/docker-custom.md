@@ -37,38 +37,61 @@ files, where each file represents a different password. They are each randomly g
 ## TLS
 
 All public facing sites need to use HTTPS, and it's definitely a stumbling block for the uninitiated.  Fortunately, `isle-dc` is
-set up to  use HTTPS by default.  Even when running `make demo`, your site runs over HTTPS at `https://islandora.traefik.me`. The
-default certificates are stored in the `certs` folder of `isle-dc`, and you can simply overwrite them with certificates from your
+set up to  use HTTPS by default.  Even when running `make demo`, your site runs over HTTPS at `https://islandora.traefik.me`.
+
+### Using your own certificates
+
+The default certificates are stored in the `certs` folder of `isle-dc`, and you can simply overwrite them with certificates from your
 certificate authority.  As long as the certificates match the `DOMAIN` variable in your `.env` file, that is.
 
-| File                 | Purpose                                                                                                                                                                                                                                                                     |
-| :------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `privkey.pem`               | A PEM encoded private key used to sign your certificate |
-| `cert.pem` | A PEM encoded certificate that also contains the issuer's certificate as well. Most certificate authorities offer "Full Chain" or "With Issuer" certificates that contain everything you need.  Occassionally, you may find yourself needing to manually concatenate your certificate with the issuer certificate by hand. In that case, the certificate for your site goes first, and the issuer's certificate is appended afterwards. |
+| File | Purpose |
+| :---- | :------- |
+| __cert.pem__     | A PEM encoded certificate that also contains the issuer's certificate as well. Most certificate authorities offer "Full Chain" or "With Issuer" certificates that contain everything you need.  Occassionally, you may find yourself needing to manually concatenate your certificate with the issuer certificate by hand. In that case, the certificate for your site goes first, and the issuer's certificate is appended afterwards. |
+| __privkey.pem__  | A PEM encoded private key used to sign your certificate |
 
-### Using Let's Encrypt instead of Certificate Files
 
-To use Let's Encrypt to acquire your SSL Certificate, set the following in your .env file
+### Requesting Certificates through Let's Encrypt
+
+To use Let's Encrypt to acquire your SSL Certificate, set the following in your .env file and run `make -B docker-compose.yml && make up`.
 
 ```
 USE_ACME=true
 ACME_EMAIL=your-email@example.org
 ```
 
-Be sure to replace `your-mail@example.org` with the email address you've associated with Let's Encrypt.
+Be sure to replace `your-email@example.org` with the email address you've associated with Let's Encrypt.
 
-#### Troubleshooting
+The way this is setup, is it performs an HTTP Challenge to verify you are in control of the domain. So your system will need to be accessible at `http://DOMAIN/`.
 
-If you are still getting security exceptions, check what certificate is being used through your browser.  Setting `TRAEFIK_LOG_LEVEL=DEBUG` in your `.env` file will help out greatly when debugging Traefik.  You can tail the logs with `docker-compose logs -tf traefik`
+??? warning  "Let's Encrypt Rate Limit"
+    If you aren't careful, you can hit Let's Encrypt's rate limit, and you'll be locked out for up to a week!  If you want to use their staging server instead while testing things out, add the following to your .env file
 
-If you aren't careful, you can hit Let's Encrypt's rate limit, and you'll be locked out for up to a week!  If you want to use their staging server instead while testing things out, add the following to your .env file
+    ```
+    ACME_SERVER=https://acme-staging-v02.api.letsencrypt.org/directory
+    ```
+
+You'll still get security exceptions when it's working, but you should be able to check the certificate from the browser and confirm you are getting it from the staging server.
 
 ```
-ACME_SERVER=https://acme-staging-v02.api.letsencrypt.org/directory
 ```
 
-You'll still get security exceptions when it's working, but you should be able to check the certificate from the browser and confirm you are
-getting it from the staging server.
+### Troubleshooting Certificate Issues
+
+If you are still getting security exceptions, check what certificate is being used through your browser.  Setting `TRAEFIK_LOG_LEVEL=DEBUG` in your `.env` file will help out greatly when debugging Traefik.  You can tail the logs with `docker-compose logs -tf traefik`.
+
+#### traefik.me SSL certificate expired or revoked
+The _*.traefik.me_ certificate that covers `islandora.traefik.me` will need to be redownloaded ocassionally, due to the certificate expiring or possibly being revoked. You can download the updated certificates by performing the following commands:
+
+```
+rm certs/cert.pem
+rm certs/privkey.pem
+make download-default-certs
+docker-compose restart traefik
+```
+
+!!! note "traefik.me Certificate Note"
+
+    Please note that sometimes the upstream provider of the traefik.me certificate takes a couple of days to update the certificiate after it expires or is accidently revoked.
 
 ## Building and Deploying Your Custom Container
 
