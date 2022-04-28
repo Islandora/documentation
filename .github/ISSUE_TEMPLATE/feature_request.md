@@ -3,6 +3,7 @@ name: Feature request
 about: Suggest an idea for this project
 title: ''
 labels: 'Type: feature request'
+projects: 'Islandora Issues Queue'
 assignees: ''
 
 ---
