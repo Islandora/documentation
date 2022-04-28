@@ -1,8 +1,9 @@
 ---
 name: Use case
-about: Outline a use case
+about: Start here if you would like to outline a need with a defined scope to be addressed by Islandora software.
 title: "[USE CASE] "
 labels: 'Type: use case'
+projects: 'Islandora Issues Queue'
 assignees: ''
 
 ---
@@ -18,15 +19,18 @@ Start below this comment section.
 -->
 
 **Overview of Use Case**
+Description of use case goes here.
 
-**Title (Goal):** The title or goal of your use case
+**Title (Goal):** 
 
-**Primary Actor:** ex. Collections Manager, Developer, Systems Administrator, or User
+**Primary Actor:** 
+(example actors: Collections Manager, Developer, Systems Administrator, or User)
 
-**Scope** The scope of the project, ex. architecture, access
+**Scope** 
+(ex. architecture, access)
 
-**Story:** "As a [xxxx] I want to [yyyy] because/so that [zzzz]." 
+**Story:** 
+"As a [xxxx] I want to [yyyy] because/so that [zzzz]." 
 (Read more about user stories from Wikipedia: http://en.wikipedia.org/wiki/User_story)
 
 ## Examples:
-Provide examples should you want to provide them.

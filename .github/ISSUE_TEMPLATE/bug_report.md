@@ -1,8 +1,9 @@
 ---
 name: Bug report
-about: Create a report to help us improve
+about: Start here to report something not working in Islandora software
 title: "[BUG] "
 labels: 'Type: bug'
+projects: 'Islandora Issues Queue'
 assignees: ''
 
 ---
@@ -42,9 +43,13 @@ https://islandora.github.io/documentation/contributing/CONTRIBUTING/#report-a-bu
 
 **Screenshots:**
 
+<!--
+
 No matter the issue, screenshots are always welcome.
 
 To add a screenshot, please use one of the following formats and/or methods described here:
 
 * https://help.github.com/en/articles/file-attachments-on-issues-and-pull-requests
     * Or you can drag and drop your file to this comment directly.
+
+-->

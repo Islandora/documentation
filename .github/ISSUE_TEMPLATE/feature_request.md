@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: Suggest an idea for this project
+about: Start here if you would like to request a specific feature. Note that these should usually be supported by Use Cases.
 title: ''
 labels: 'Type: feature request'
 projects: 'Islandora Issues Queue'
