@@ -11,7 +11,14 @@ assignees: ''
 <!--
 
 Thank you for reporting your bug to islandora! 
+
+Please check our bug reporting guidelines here:
 https://islandora.github.io/documentation/contributing/CONTRIBUTING/#report-a-bug
+
+We recommend that you search the Islandora issue queue for existing issues (aka tickets) that already describe the problem you have encountered; if there is such a ticket please add your information as a comment instead of creating a new issue.
+
+Islandora issue queue: 
+https://github.com/Islandora/documentation/issues
 
 -->
 
