@@ -45,6 +45,7 @@ New videos are added to [the playlist](https://www.youtube.com/playlist?list=PL4
 - [Batch Editing](https://youtu.be/ZMp0lPelOZw): How to use Views Bulk Edit to create a batch editing view for Islandora.
 - [Export and Import a View](https://youtu.be/0NXrzSzxhLc): How to copy a custom View from one Islandora site to another.
 - [Islandora Webinar: Islandora and Drupal Views](https://www.youtube.com/watch?v=VfuRHXFD89c): a 1-hour session on working with Views.
+- [Summer of Islandora: Drupal Views for Islandora Users](https://www.youtube.com/watch?v=sJfojxRRsgQ): a 30-minute session on manipulating Views.
 
 ## Additional Topics
 
