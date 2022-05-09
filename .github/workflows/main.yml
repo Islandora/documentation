@@ -1,0 +1,12 @@
+# This is a basic workflow to help you get started with Actions
+on:
+  issues:
+    types: [opened]
+jobs:
+  createCard:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create or Update Project Card
+        uses: peter-evans/create-or-update-project-card@v2
+        with:
+          project-name: Islandora Issues Queue
