@@ -147,6 +147,8 @@ nav:
               # move out procedural description for ordering pages
         - 'Metadata': 'user-documentation/metadata.md'
               # largely conceptual, repository managers/ curators
+        - 'Transcripts': 'user-documentation/transcripts.md'
+              # Conceptual and pragmatic, for repository managers.
       - Configuring Islandora:
           - 'Modify or Create a Content Type': 'user-documentation/content_types.md'
                   # procedural, repository managers
