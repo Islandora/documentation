@@ -1,19 +1,20 @@
 # Transcripts
 
 Transcripts, captions, or subtitles may be added to audio and video media.
- Islandora provides a field type called "Media track" and Islandora Defaults puts 
-a field of this type on the Audio and Video media types. Islandora Audio and Islandora Video
-provide respective field formatters (viewers) that allow for the transcript track to be played
-with the audio or video content. Islandora Defaults makes this field formatter the
-selected formatter for the Default and Source display modes. 
+This functionality is available because of a field type, "Media track", 
+provided by the Islandora module, and the "Audio with Captions" and "Video 
+with Captions" field formatters from the Islandora Audio and Video modules, 
+respectively. 
 
 To add transcripts (or subtitles, or captions) to a Repository Item 
 using Islandora Defaults, navigate to the Service File media (or whichever one
-will be playing), open the edit form, and add a WebVTT file containing the text
-you'd like displayed. Select "captions" or "subtitles" as a type, and set a label.
-The label will be displayed when selecting the caption/subtitle track.
-Save the media and refresh it, and you should see the text
-display in the viewer (or above, in the case of audio.)
+will be playing), open the edit form, and in the "Track" field, add a WebVTT file 
+containing the text you'd like displayed. Select "captions" or "subtitles" 
+as a type, and set a label. The label will be displayed when selecting the 
+caption/subtitle track. Save the media and refresh it, and you should see the text
+display in the viewer (or above the viewer, in the case of audio.) The track text 
+appears during the time specified in the WebVTT file. We have not yet implemented
+a scrolling, clickable, or otherwise interactive transcript. 
 
 Note that if you add the transcript file to the Original File, but you have configured
 the site to play the Service File, then you will not see the transcript.
@@ -32,4 +33,14 @@ This feature was added to the 2.0 release of Islandora. Read the [captions chang
     will not be displayed as they are intended for programmatic use.
 
 
+## Tracing the components of this feature
+
+| Feature Component | Source |
+|---|---|
+| Define Field type "Media track" | Islandora module |
+| Add "Media track" fields to audio and video media types | Islandora Defaults |
+| Define IslandoraFileMediaFormatterBase, which finds Media Track fields on media, and adds them as playable tracks | Islandora module | 
+| Define "Audio with Captions" field formatter, extending IslandoraFileMediaFormatterBase | Islandora Audio |
+| Define "Video with Captions" field formatter, extending IslandoraFileMediaFormatterBase | Islandora Video |
+| Select these field formatters for the Default and Source display modes for audio and video media | Islandora Defaults |
 
