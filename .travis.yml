@@ -1,5 +1,7 @@
 sudo: true
 language: python
+python: 
+  - "3.9"
 
 matrix:
     fast_finish: true

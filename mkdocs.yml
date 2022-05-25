@@ -206,7 +206,6 @@ nav:
     - 'Resizing a VM': 'technical-documentation/resizing_vm.md'
     - 'Updating Drupal': 'technical-documentation/updating_drupal.md'
     - 'Updating a `deb` and adding it to Lyrasis PPA': 'technical-documentation/ppa-documentation.md'
-    - 'Updating drupal-project': 'technical-documentation/drupal-project.md'
     - 'Adding back ?_format=jsonld': 'technical-documentation/adding_format_jsonld.md'
   - Migration:
       - 'Migration Overview': 'technical-documentation/migration-overview.md'
