@@ -1,17 +1,18 @@
 # Node Concepts
 
 This page describes the core fields and features that Islandora uses to 
-manage nodes in an Islandora repository.
+manage content as nodes in an Islandora repository.
 
 ## Nodes hold metadata
 
-In Islandora, Drupal nodes are created to hold descriptive [metadata] about content in the respository.
+In Islandora, Drupal nodes are created to hold descriptive 
+[metadata](../user-documentation/metadata.md) about content in the respository.
 This metadata is held in the usual way for nodes, which is by populating Drupal fields. Fields are 
 configured on a Drupal content types, which serve as metadata profiles.
 
 ## Nodes can have members/children
 
-To build the capacity for creating hierarchical structures like collections, pages and books, and
+To build the capacity for creating hierarchical structures like collections, books and their pages, and
 complex objects, Islandora introduces a special field, "Member of" (`field_member_of`) which must
 be present on all Islandora content types. It enables a "Children" tab to display on Islandora nodes which 
 lists the children of that node, and allows a repository manager to perform bulk operations on them.
@@ -20,8 +21,9 @@ It also enables a repository manager to create children of nodes directly, indiv
 ## Nodes have models
 
 Within a single content type (i.e. metadata profile), Islandora provides the ability to designate 
-some objects as different "types" than others. Key behaviours, such as what [derivatives] are created
-or what viewer is used, can be configured (see [Contexts]) based on this value. The available values
+some objects as different "types" than others. Key behaviours, such as what [derivatives](derivatives.md) are created
+or what [viewer](../user-documentation/file_viewers.md) is used, can be configured 
+(see [Contexts](../user-documentation/context.md)) based on this value. The available values
 are taxonomy terms in the Islandora Models vocabulary, and they are attached to nodes via the special 
 mandatory field, "Model" (`field_model`), which must be present on all Islandora content types.
 These values are installed through a Drupal Migration after the 
@@ -44,7 +46,7 @@ Islandora module is installed. All installation methods perform this migration, 
 | Newspaper         	| https://schema.org/Newspaper               	| 
 
 With Islandora alone, choosing a value from this list will have zero effects. The contingent behaviour
-must be configured during repository implementation. Islandora Defaults provides and example of what
+must be configured during repository implementation. Islandora Defaults provides an example of what
 behaviours are possible for these types. 
 
 

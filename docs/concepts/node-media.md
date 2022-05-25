@@ -59,7 +59,11 @@ The Islandora module provides, through a migration, the following values:
 | Transcript               	| http://pcdm.org/use#Transcript             	|
 
 This migration is performed by all installation methods, so these values should
-be available "out of the box". 
+be available "out of the box". These values were provided by the PCDM data model
+(see [RDF in Islandora](rdf.md)),
+and not all values are associated with behaviours you might expect - for instance, 
+we do not make transcripts show up by tagging a file with "Transcript". See 
+[transcripts](../user-documentation/transcripts.md) instead.
 
 !!! note "Standard vs Multi-file media model"
     This describes the stadard file-media relationship in Islandora. 

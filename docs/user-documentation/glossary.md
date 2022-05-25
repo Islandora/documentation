@@ -42,7 +42,7 @@ Each type of Content entity has a different set of behaviors. The interactions o
 Deprecated concept used in Islandora Legacy; see [Islandora Model](#islandora-model).
 
 ## Content type
-A general type of Content in [Drupal](#drupal). A content type defines a set of data [fields](#field) and how they are displayed. Content types are sub-types of [Nodes](#node), one of the [Drupal](#drupal) [Content entities](#content-entity). The default [Drupal](#drupal) Content types are 'Article' and 'Basic page'. _Islandora Defaults_ adds 'Repository Item' as a Content type, defining metadata fields typically used to describe digital resources.
+A general type of Node in [Drupal](#drupal). A content type defines a set of data [fields](#field) and how they are displayed. Content types are sub-types of [Nodes](#node), one of the [Drupal](#drupal) [Content entities](#content-entity). The default [Drupal](#drupal) Content types are 'Article' and 'Basic page'. _Islandora Defaults_ adds 'Repository Item' as a Content type, defining metadata fields typically used to describe digital resources.
 
 ## Crayfish
 A collection of Islandora [microservices](#microservice). Some of the microservices are built specifically for use with a [Fedora](#fedora-repository-software) repository, while others are just for general use within Islandora.
@@ -51,7 +51,7 @@ A collection of Islandora [microservices](#microservice). Some of the microservi
 Deprecated terminology, refers to how [Fedora 3](#fedora-repository-software)/Islandora Legacy stored files as part of a resource ('object') in the [Fedora](#fedora-repository-software) repository. Replaced by [Drupal Media entities](https://www.drupal.org/docs/8/core/modules/media/overview), which 'wraps' [Files](https://www.drupal.org/docs/8/core/modules/file/overview) in an intermediate structure. This allows Fields to be attached to files, for instance for storing technical metadata.
 
 ## Derivative
-A version of a file which is derived from an uploaded file. For example, a thumbnail generated from an uploaded image. Islandora uses [microservices](#microservice) to generate derivatives.
+A version of a file which is derived from an uploaded file. For example, a thumbnail generated from an uploaded image. Islandora uses [microservices](#microservice) to generate derivatives. See the concept page for [Derivatives](../concepts/derivatives.md).
 
 ## Docker
 [Docker](https://www.docker.com/) is a platform that use OS-level virtualization to deliver software in packages called containers. Islandora uses Docker as part of [ISLE](#isle), a suite of Docker containers that run the various components of Islandora required by Islandora Defaults.
