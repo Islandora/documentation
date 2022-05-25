@@ -201,7 +201,6 @@ nav:
     - Tests:
       - 'Running Tests': 'technical-documentation/running-automated-tests.md'
       - 'Testing Notes': 'technical-documentation/testing-notes.md'
-    - 'Updating drupal-project': 'technical-documentation/drupal-project.md'
     - 'Versioning Policy': 'technical-documentation/versioning.md'
     - 'Adding back ?_format=jsonld': 'technical-documentation/adding_format_jsonld.md'
     - 'Updating a `deb` and adding it to Lyrasis PPA': 'technical-documentation/ppa-documentation.md'
