@@ -6,7 +6,7 @@ manage content as nodes in an Islandora repository.
 ## Nodes hold metadata
 
 In Islandora, Drupal nodes are created to hold descriptive 
-[metadata](../user-documentation/metadata.md) about content in the respository.
+[metadata](../user-documentation/metadata.md) about content in the repository.
 This metadata is held in the usual way for nodes, which is by populating Drupal fields. Fields are 
 configured on a Drupal content types, which serve as metadata profiles.
 
