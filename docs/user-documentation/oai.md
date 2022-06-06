@@ -18,7 +18,7 @@ Enabling Islandora OAI-PMH provides:
 - a View ("OAI-PMH") that defines sets of objects for exposure at the oai_dc [endpoint](http://localhost:8000/oai/request?verb=ListRecords&metadataPrefix=oai_dc). By default:
   - there is one set per "Collection" object containing that object's children
   - there is one set of all Repository Item objects that are not members of any Collection, and are not themselves Collections.	
-  - disabled by default, there a set of all Repository Item objects that are not Collections.
+  - disabled by default, there is a set of all Repository Item objects that are not Collections.
 - Default configuration (at `/admin/config/services/rest/oai-pmh`) to connect this view with the REST OAI-PMH module.
 - the ability to define additional sets by building additional views. Additional sets can be created by making views with the Entity Reference view display mode and enabling them on the REST OAI-PMH configuration page: /admin/config/services/rest/oai-pmh.
 
