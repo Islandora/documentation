@@ -29,6 +29,7 @@ The REST OAI-PMH module indexes (caches) set membership, so new Items may not ap
 The OAI-PMH module makes use of one of two modules to provide metadata mappings: the RDF module or the Metatag module. By configuring OAI-PMH to use the RDF module (appears as "OAI Dublin Core (RDF Mapping)" and is enabled by default with Islandora OAI-PMH), the OAI-PMH module will use the RDF mapping as configured for your content type (the same mapping that is used for Fedora and Blazegraph, e.g. rdf.mapping.node.islandora_object.yml). 
 
 However,
+
 - any field mappings that are not part of the Dublin Core namespace will be filtered out.
 - any field mappings using Dublin Core Terms (e.g. http://purl.org/dc/terms/extent) will be mapped to their Dublin Core Elements equivalents (e.g. http://purl.org/dc/elements/1.1/format)
 - the ability to vary the mappings in Linked Agent fields by relationship, used in JSON-LD mappings to Blazegraph and Fedora, is not available. If you want to expose data in a Linked Agent field to OAI-PMH, you must provide a DC mapping for that field in the RDF mapping. By default, the Repository Item RDF mapping does not include a mapping for the Linked Agent field.  
