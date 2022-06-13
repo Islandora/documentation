@@ -2,27 +2,24 @@
 
 If you are reading this document then you are interested in contributing to Islandora. All contributions are welcome: use-cases, documentation, code, patches, bug reports, feature requests, etc. You do not need to be a programmer to speak up!
 
-## Workflows
+## Weekly Open Tech Call
 
-The Islandora Tech Call meets each Wednesday at 1:00 PM Eastern.. You can view meeting agendas, notes, and call-in information [here](https://github.com/Islandora/islandora-community/wiki/Weekly-Open-Tech-Call). Anybody is welcome to join the call, and add items to the agenda.
+The Islandora Tech Call meets each Wednesday at 1:00 PM Eastern. You can view meeting agendas, notes, and call-in information [here](https://github.com/Islandora/islandora-community/wiki/Weekly-Open-Tech-Call). Anybody is welcome to join the call, and add items to the agenda.
 
-### Use cases
+## Github
 
-If you would like to submit a use case to the Islandora project, please submit an issue [here](https://github.com/Islandora/documentation/issues/new) using the [Use Case template](https://github.com/Islandora/islandora-community/wiki/Use-Case-Template), prepending "Use Case:" to the title of the issue.
+You can use Github to 
+* report bugs
+* request documentation or report unclear documentation
+* request features
+* submit use cases
 
-### Documentation
-
-You can contribute documentation in two different ways. One way is to create an issue [here](https://github.com/Islandora/documentation/issues/new), prepending "Documentation:" to the title of the issue. Another way is by pull request, which is the same process as [Contribute Code](https://github.com/Islandora/documentation/blob/main/CONTRIBUTING.md#contribute-code) and requires the same Contributor License Agreements. All documentation resides in [`docs`](https://github.com/Islandora/documentation/tree/main/docs).
-
-### Request a new feature
-
-To request a new feature you should [open an issue in the Islandora repository](https://github.com/Islandora/documentation/issues/new) or create a use case (see the _Use cases_ section above), and summarize the desired functionality. Prepend "Enhancement:" if creating an issue on the project repo, and "Use Case:" if creating a use case, and use the appropriate labels.
+See more about onboarding to the Islandora community, including Islandora on Github, on the islandora-community Onboarding page [here](https://github.com/Islandora/islandora-community/wiki/Onboarding-Checklist#general-onboarding).
 
 ### Report a bug
+To report a bug you should [open an issue in the Islandora repository](https://github.com/Islandora/documentation/issues/new/choose), selecting the **Bug report** template. 
 
-To report a bug you should [open an issue in the Islandora repository](https://github.com/Islandora/documentation/issues/new) that [summarizes the bug along best practice guidelines](https://github.com/Islandora/islandora-community/wiki/Bug-Report-Template). Prepend the label "Bug:" to the title of the issue.
-
-In order to help us understand and fix the bug it would be great if you could provide us with:
+Please summarize the bug along best practice guidelines outlined in the template. In order to help us understand and fix the bug it would be great if you could provide us with:
 
 1. The steps to reproduce the bug. This includes information about e.g. the Islandora version you were using along with the versions of stack components.
 2. The expected behavior.
@@ -34,9 +31,22 @@ Feel free to search the issue queue for existing issues (aka tickets) that alrea
 
 That is great! In this case please send us a pull request as described in the section _Create a pull request_  below.
 
+### Documentation
+
+You can contribute documentation in two different ways. One way is to open an issue [here](https://github.com/Islandora/documentation/issues/new/choose), using the **Documentation** template. This template will ask for further information about where your documentation request belongs and what it should contain.
+Another way is by pull request, which is the same process as [Contribute Code](https://github.com/Islandora/documentation/blob/main/CONTRIBUTING.md#contribute-code) and requires the same Contributor License Agreements. All documentation resides in [`docs`](https://github.com/Islandora/documentation/tree/main/docs).
+
+### Request a new feature
+
+To request a new feature, [open an issue in the Islandora repository](https://github.com/Islandora/documentation/issues/new/choose) using the **Feature request** template. Summarize the desired functionality, making sure to note whether the feature request is a change to existing behaviour of islandora or if it is introducing a new addition or behaviour. Feature requests may be supported by specific use cases. To create supporting Use case issues and link them to your feature request, see the _Use cases_ section below. 
+
+
+### Use cases
+If you would like to submit a use case to the Islandora project, please submit an issue [here](https://github.com/Islandora/documentation/issues/new/choose) using the **Use Case template**. You may want to create a user story to support your use case. Read more about user stories [here](https://en.wikipedia.org/wiki/User_story#Principle).
+
 ### Contribute code
 
-Before you set out to contribute code or documentation you will need to have completed a [Contributor License Agreement](https://github.com/Islandora/islandora-community/wiki/Onboarding-Checklist#contributor-license-agreements) or be covered by a [Corporate Contributor License Agreement](https://github.com/Islandora/islandora-community/wiki/Onboarding-Checklist#contributor-license-agreements). The signed copy of the license agreement should be sent to <mailto:community@islandora.ca>
+Before you set out to contribute code or documentation you will need to have completed a [Contributor License Agreement](https://github.com/Islandora/islandora-community/wiki/Onboarding-Checklist#contributor-license-agreements) or be covered by a [Corporate Contributor License Agreement](https://github.com/Islandora/islandora-community/wiki/Onboarding-Checklist#contributor-license-agreements). 
 
 _If you are interested in contributing code to Islandora but do not know where to begin:_
 
