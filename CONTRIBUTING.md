@@ -9,10 +9,10 @@ The Islandora Tech Call meets each Wednesday at 1:00 PM Eastern. You can view me
 ## Github
 
 You can use Github to 
-* report bugs
-* request documentation or report unclear documentation
-* request features
-* submit use cases
+- report bugs
+- request documentation or report unclear documentation
+- request features
+- submit use cases
 
 See more about onboarding to the Islandora community, including Islandora on Github, on the islandora-community Onboarding page [here](https://github.com/Islandora/islandora-community/wiki/Onboarding-Checklist#general-onboarding).
 
