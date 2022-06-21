@@ -11,12 +11,12 @@ edit_uri: 'edit/main/docs/'
 theme:
   name: 'material'
   palette:
-    primary: 'red'
-    accent: 'red'
+    primary: 'green'
+    accent: 'blue'
   font:
     text: 'Roboto'
     code: 'Roboto Mono'
-  logo: 'assets/claw.png'
+  logo: 'assets/Islandora_logo.png'
   language: 'en'
 markdown_extensions:
   - admonition
