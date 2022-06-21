@@ -18,9 +18,10 @@ The Islandora [issue queue](https://github.com/Islandora/documentation/issues) i
 1. Go to [https://github.com/Islandora/documentation/issues](https://github.com/Islandora/documentation/issues)
 2. Click on **New issue**:
 ![New Issue button](../assets/create_issues_newissue.jpg)
-3. Select the type of issue you are creating. This will give you a template to work with to submit your issue.
+3. Select the type of issue you are creating, as this will provide you with a template to describe your issue. 
+![Bug report, Documentation, Feature Request, and Use case are presented as possible issue templates when opening a new issue.](../assets/create_issues_Issue_Templates.png)
 5. Fill in the information for your issue:
-    1. Give your issue a descriptive title following the text that is already provided in the template title ex. [BUG].
+    1. Give your issue a descriptive title following the text that is already provided in the template title, ex. _[BUG]._
     2. Fill in the body of your issue under the **Write** tab. A template of questions will be provided based on the type of issue selected. Depending on your issue, you may need to: describe a bug you are seeing and how to reproduce it, describe how an existing feature could be improved, describe a new feature and how it should work, or describe documentation that needs to be written or expanded.
     3. Use the built-in text editor to help format your issue in [Markdown](http://en.wikipedia.org/wiki/Markdown).
     4. Use the **Preview** button to see how your issue will be published and ensure the formatting looks the way you want.
