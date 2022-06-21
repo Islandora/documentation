@@ -1,4 +1,5 @@
 # About
+![Islandora logo](https://assets.website-files.com/618eb1b213a102afa83e260d/61b376b9f04ddd1f0da90edf_logo-islandora.svg)
 
 ## This is Islandora
 
