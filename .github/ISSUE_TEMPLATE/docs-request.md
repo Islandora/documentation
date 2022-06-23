@@ -6,22 +6,22 @@ labels: documentation
 assignees: ''
 
 ---
+<!-- Exploring the navigation tree to the left, describe if a page for this content already exists, or if a new page needs to be made. -->
+
+* **If applicable, link to the [documentation page]((https://islandora.github.io/documentation/)) relevant to your issue below.**
+
+* **If this is a request for __new__ documentation, where in the [existing documentation](https://islandora.github.io/documentation/) does this documentation belong?**
+
+* **Describe your documentation request.**
 
 * **Which version of islandora are you using?**
 
 * **What user roles is this documentation intended for?**
 <!-- ex. Collections Manager, Developer, Systems Administrator, User, All -->
 
-* **Describe your documentation request.**
-
 * **What implementations of islandora does this documentation request apply to?**
 
-* **In what category in the [existing documentation](https://islandora.github.io/documentation/) does this documentation belong?**
-<!-- Exploring the navigation tree to the left, describe if a page for this content already exists, or if a new page needs to be made. -->
-
-
 **Any related open or closed issues to this bug report?**
-
 
 
 **Screenshots:**
