@@ -26,7 +26,6 @@ The Islandora [issue queue](https://github.com/Islandora/documentation/issues) i
     3. Use the built-in text editor to help format your issue in [Markdown](http://en.wikipedia.org/wiki/Markdown).
     4. Use the **Preview** button to see how your issue will be published and ensure the formatting looks the way you want.
     5. Click **Submit new issue** to add your issue to the queue.
-       <p align="center"><img src="../assets/create_issues_Describing_Issue.gif" alt="Gif walkthrough of templates" /></p>
     6. Optionally, Add labels to your issue to assign it to available categories, such as "documentation" or "question." Click on as may labels as you like. When you click outside of the drop-down list, the selected labels will be applied to your issue.
     
-<p align="center"><img src="../assets/create_issues_labels.jpg" alt="Labels on the right sidebar of Github issue creation" /></p>
+    ![Gif walkthrough of templates](../assets/create_issues_Describing_Issue.gif) <img src="https://raw.githubusercontent.com/Islandora/documentation/3635b2d77681ce7da2fdbfd8f951921e97cc6acb/docs/assets/create_issues_Add_Labels.png" alt="Labels on the right sidebar of Github issue creation" width= 250 /></p>
