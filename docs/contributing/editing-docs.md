@@ -34,9 +34,9 @@ To edit documentation in Islandora, you must:
 
 - Make your changes directly in the browser editor, then scroll to the bottom to "commit" your changes. This is the equivalent of saving.
 
-If you are _not_ a member of the Islandora GitHub organization, GitHub will create a new _fork_ of the documentation repository in your GitHub account. From there you can make a pull request to have your changes sent back to the main Islandora documentation repo to be reviewed and accepted.
+→ **If you are _not_ a member of the Islandora GitHub organization,** GitHub will create a new _fork_ of the documentation repository in your GitHub account. From there you can make a pull request to have your changes sent back to the main Islandora documentation repo to be reviewed and accepted.
 
-If you _are_ a member of the Islandora GitHub organization, you will be able to create a new temporary branch within the main Islandora documentation repo, and then create a pull request by selecting _Create a new branch for this commit and start a pull request_. Give your branch a brief name starting with your username, with no spaces, indicating what it is for. Then click **Commit changes**.
+→ **If you _are_ a member of the Islandora GitHub organization,** you will be able to create a new temporary branch within the main Islandora documentation repo, and then create a pull request by selecting _Create a new branch for this commit and start a pull request_. Give your branch a brief name starting with your username, with no spaces, indicating what it is for. Then click **Commit changes**.
 
 ![start a new branch and PR](../assets/editing-docs-branch.png)
 
