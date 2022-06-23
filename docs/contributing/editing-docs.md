@@ -26,7 +26,7 @@ To edit documentation in Islandora, you must:
 
 - Starting from the page you want to edit on a web browser, look for the pencil icon in the top righthand corner of the page and click on it
 
-![Edit page button](../assets/editing-docs-button.png)
+![Edit page button](../assets/editing_docs_Edit_Button.png)
 
 - You will be taken to GitHub. If you are not logged in, you will be prompted to log in or register for an account. If you are logged in, you will be taken to an in-browser editor where you will view the page in Markdown.
 
