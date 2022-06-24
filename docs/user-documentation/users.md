@@ -63,6 +63,12 @@ To review/edit the permission for each role, in the *People* page click the **Pe
 !!! Tip "Islandora Quick Lessons"
     Learn more with this video on how to [Add a User](https://youtu.be/XSokAFRVBuE).
 
+### Video Walkthrough: Users, Roles, and Permissions
+
+[![Drupal 101: Users, Roles, and Permissions](https://img.youtube.com/vi/meRNdBxaiTE/0.jpg)](https://www.youtube.com/watch?v=meRNdBxaiTE)
+
+See more videos from the Drupal 101 series [here.](https://www.youtube.com/watch?v=meRNdBxaiTE&list=PL4seFC7ELUtogpsYoN8WZLLOjJVRZFGTZ)
+
 ## Further Reading
 
 For more information on managing users in Drupal visit the section
