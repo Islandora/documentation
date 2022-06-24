@@ -16,3 +16,9 @@ To enable the Drupal module or theme, add the module machine name to the `drupal
 ![alt text](../assets/install-enable-drupal-modules_drupal_composer_dependencies.png?raw=true "drupal_composer_dependencies Screenshot")
 
 For modules that require additional steps, additional tasks may need to be added to the Ansible playbook. Re-provisioning your instance via Ansible will install the module.
+
+### Video Walkthrough: Installing modules with Composer
+
+[![Drupal 101: Installing modules with Composer](https://img.youtube.com/vi/otl-pPPGdR8/0.jpg)](https://www.youtube.com/watch?v=otl-pPPGdR8)
+
+See more videos from the Drupal 101 series [here.](https://www.youtube.com/watch?v=meRNdBxaiTE&list=PL4seFC7ELUtogpsYoN8WZLLOjJVRZFGTZ)
