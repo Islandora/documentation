@@ -8,7 +8,8 @@ The Islandora Tech Call meets each Wednesday at 1:00 PM Eastern. You can view me
 
 ## Github
 
-You can use Github to 
+You can use Github to:
+
 - report bugs
 - request documentation or report unclear documentation
 - request features
