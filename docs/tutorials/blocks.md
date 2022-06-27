@@ -102,5 +102,13 @@ If we edit the collection and change its model tag from "Collection" to anything
 As you can see, block placement can be very flexible, and allow you to customize your site in a very granular fashion.
 Between using core block placement and the context module, there's no block you can't get into the right place on your site.
 
-!!! Tip "Islandora Quick Lessons"
+## Video Walkthrough: Blocks
+
+Click the image below to open the Blocks video tutorial on the Islandora Youtube channel.
+
+[![Drupal 101: Blocks](https://img.youtube.com/vi/ZbDV04EWyyI/0.jpg)](https://www.youtube.com/watch?v=ZbDV04EWyyI)
+
+See more videos from the Drupal 101 series [here.](https://www.youtube.com/watch?v=meRNdBxaiTE&list=PL4seFC7ELUtogpsYoN8WZLLOjJVRZFGTZ)
+
+!!! Tip "Islandora Quick Lessons (2020)"
     Learn more with this video on [Creating a Custom Block](https://youtu.be/4VUI9pOXpzE).
