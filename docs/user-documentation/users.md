@@ -65,7 +65,9 @@ To review/edit the permission for each role, in the *People* page click the **Pe
 
 ### Video Walkthrough: Users, Roles, and Permissions
 
-[![Drupal 101: Users, Roles, and Permissions](https://img.youtube.com/vi/meRNdBxaiTE/0.jpg)](https://www.youtube.com/watch?v=meRNdBxaiTE)
+Click the image below to open the **Users, Roles, and Permissions** video tutorial on the Islandora Youtube channel.
+
+[![Drupal 101: Users, Roles, and Permissions](https://img.youtube.com/vi/UXJa0mfS_0U/0.jpg)](https://www.youtube.com/watch?v=UXJa0mfS_0U)
 
 See more videos from the Drupal 101 series [here.](https://www.youtube.com/watch?v=meRNdBxaiTE&list=PL4seFC7ELUtogpsYoN8WZLLOjJVRZFGTZ)
 
