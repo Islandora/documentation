@@ -17,7 +17,13 @@ To enable the Drupal module or theme, add the module machine name to the `drupal
 
 For modules that require additional steps, additional tasks may need to be added to the Ansible playbook. Re-provisioning your instance via Ansible will install the module.
 
-### Video Walkthrough: Installing modules with Composer
+## Video Walkthroughs: Modules & Installing modules with Composer
+
+Click the image below to open the **introduction to Modules** video tutorial on the Islandora Youtube channel. 
+
+[![Drupal 101: Modules](https://img.youtube.com/vi/mvX3cnNeOns/0.jpg)](https://www.youtube.com/watch?v=mvX3cnNeOns)
+
+Click the image below to open the **Installing modules with Composer** video tutorial on the Islandora Youtube channel. 
 
 [![Drupal 101: Installing modules with Composer](https://img.youtube.com/vi/otl-pPPGdR8/0.jpg)](https://www.youtube.com/watch?v=otl-pPPGdR8)
 
