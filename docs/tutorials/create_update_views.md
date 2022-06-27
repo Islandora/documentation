@@ -29,6 +29,7 @@ For this example, we added six collection items to Islandora. In total there are
 2. To edit the front page view, hover over the view (_Frontpage_ view) and select **Edit view** when displayed.
 
     ![Frontpage view](../assets/frontpage_view_all_eight.png)
+    
 3. Select **Add** under the _filter criteria_ section.
 
     ![Frontpage view add filter](../assets/frontpage_view_add_filter.png)
