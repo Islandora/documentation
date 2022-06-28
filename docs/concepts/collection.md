@@ -6,17 +6,24 @@ Collections are groups of related content that can be viewed or managed as a uni
 - various collections of artifacts, grouped for display
 - theses and dissertations, which are organized and managed separately from other objects.
 
+## Islandora features
+
 Islandora provides:
 
-- a generic "member of" relationship field (field_member_of) to group objects under a "parent" object. This mechanism is shared by _Collections_ with similar use cases: [Paged Content](../user-documentation/paged-content.md) and _Compound Objects_. Islandora on its own does not prescribe any particular [Content Type](../user-documentation/content_types.md), so this field can be configured for any [node bundle](https://www.drupal.org/docs/drupal-apis/entity-api/bundles) intended to represent Islandora resources.
+- a generic "member of" relationship field (`field_member_of`) to group objects under a "parent" object. This mechanism is shared by _Collections_ with similar use cases: [Paged Content](../user-documentation/paged-content.md) and _Compound Objects_. Islandora on its own does not prescribe any particular [Content Type](../user-documentation/content_types.md), so this field can be configured for any [node bundle](https://www.drupal.org/docs/drupal-apis/entity-api/bundles) intended to represent Islandora resources.
 - a "Children" tab on resources, which provides a management interface to access, re-order, add, or delete the members of a resource.
+- a "Model" field (`field_model`) which can take various values including "Collection"
 
-## Collection configuration provided by Islandora Defaults
+## Islandora Defaults features
 
-[Islandora Defaults](../reference/islandora_defaults_reference.md) is an optional collection of presets for Islandora, intended to provide a more user-friendly out-of-the-box experience and starting point for more specific customization. Islandora Defaults provides:
+[Islandora Defaults](../reference/islandora_defaults_reference.md) is an optional collection of presets for Islandora, intended to provide a more user-friendly out-of-the-box experience and starting point for more specific customization. 
 
-- a [Content Types](../user-documentation/content_types.md) "Repository Item" that uses the "member_of" field, so that users may add nodes of this type to a collection (or paged content, or compound resource),
+Islandora Defaults provides:
+
+- a [Content Types](../user-documentation/content_types.md) "Repository Item" that uses the `field_member_of` field, so that users may add nodes of this type to a collection (or paged content, or compound resource),
 - logic (a [Context](../user-documentation/context.md)) such that if a resource is tagged as a "collection", a view of its members will show on the collection's page.
+
+
 
 For more details, see the tutorial on [How to create and add to a collection](../tutorials/how-to-create-collection.md)
 
