@@ -1,9 +1,9 @@
 # Docker Demo
 
-This demo is loaded with sample content and configurations to demonstrate
+This demo, available to download [here](https://drive.google.com/file/d/1mA3sLIoqYlSlUgvJ0N05NpCQJ0nW6N1m/view?usp=sharing), is loaded with sample content and configurations to demonstrate
 features of Islandora and provide a starting point for exploration. 
 
-Thanks, and happy building!
+Download [this file](https://drive.google.com/file/d/1mA3sLIoqYlSlUgvJ0N05NpCQJ0nW6N1m/view?usp=sharing) and follow the instructions in the README (also shown below). Thanks, and happy building!
 
 
 Requirements
