@@ -3,7 +3,7 @@
 ## Overview
 These documentation pages are written and maintained by volunteers from the Islandora community, and new contributions are always welcomed. The documentation that you see here is formatted in the easy-to-use [Markdown](http://en.wikipedia.org/wiki/Markdown) markup language, which can add formatting such as links, headings, and bolded text. Then the documentation HTML site is built using [mkdocs](https://www.mkdocs.org/) from the Markdown files hosted in the Islandora [documentation](https://github.com/Islandora/documentation) GitHub repo. This documentation is rebuilt automatically upon changes being committed to GitHub, so you will see changes reflected here within a few minutes of making an edit.
 
-The [Islandora Documentation Interest Group](https://github.com/islandora-interest-groups/Islandora-Documentation-Interest-Group) holds regular meetings to discuss how to improve and expand Islandora's documentation. If you are interested in becoming involved, all are welcome to join. If you just want to make a contribution to the existing documentation, that process is outlined here.
+The [Islandora Documentation Interest Group](https://github.com/islandora-interest-groups/Islandora-Documentation-Interest-Group) holds regular meetings on the second Wednesday of each month between 2:00 p.m. - 3:00 p.m. EST to discuss how to improve and expand Islandora's documentation. If you are interested in becoming involved, all are welcome to join! You can view DIG meetings on the [Islandora community calendar](https://calendar.google.com/calendar/embed?src=96s6v709n719hapqtt9m8vj588%40group.calendar.google.com&ctz=America%2FToronto) and add them to your own calendar by clicking the event and selecting "copy to my calendar". If you just want to make a contribution to the existing documentation, that process is outlined here.
 
 ## Before you start
 
@@ -24,7 +24,7 @@ To edit documentation in Islandora, you must:
 
 ## How to edit documentation using a web browser
 
-- Starting from the page you want to edit on a web browser, look for the pencil icon in the top righthand corner of the page and click on it
+- Starting from the page you want to edit on a web browser, look for the pencil icon in the top righthand corner of the page and click on it.
 
 ![Edit page button](../assets/editing_docs_Edit_Button.png)
 
