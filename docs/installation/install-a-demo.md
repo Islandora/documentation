@@ -3,7 +3,7 @@
 This demo, available to download [here](https://drive.google.com/file/d/1mA3sLIoqYlSlUgvJ0N05NpCQJ0nW6N1m/view?usp=sharing), is loaded with sample content and configurations to demonstrate
 features of Islandora and provide a starting point for exploration. 
 
-Download [this file](https://drive.google.com/file/d/1mA3sLIoqYlSlUgvJ0N05NpCQJ0nW6N1m/view?usp=sharing) and follow the instructions in the README (also shown below). Thanks, and happy building!
+Download [this file](https://drive.google.com/file/d/1mA3sLIoqYlSlUgvJ0N05NpCQJ0nW6N1m/view?usp=sharing), and open and follow the instructions in the README.md.html file (also shown below). Thanks, and happy building!
 
 
 Requirements
@@ -80,7 +80,7 @@ Desktop Dashboard.
 
 1. Open Docker Desktop.
 2. Click on Portainer.
-3. Select your local environment under "Environments".
+3. If you see the Quick Setup Environment Wizard, click “Get Started". Otherwise, select your local environment under "Environments".
 4. Open the sidebar.
 5. Click on **Stacks**.
 6. Click **Add Stack**.
