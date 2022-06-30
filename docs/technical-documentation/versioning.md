@@ -4,11 +4,11 @@ Islandora uses semantic versioning for all non-Legacy code in the [github.com/Is
 
 ## Semantic Versioning
 
-[Semantic Versioning](https://semver.org/) is a common versioning standard. Versions have the form **Major version** . **Minor version** . **Patch**
+[Semantic Versioning](https://semver.org/) is a common versioning standard. Versions have the form: **Major version**, **Minor version**, or **Patch**.
 
-- **Major version**; Major changes, and breaks the API
-- **Minor version**; New features, and does not break the API
-- **Patch**; Bug fixes, and never breaks backward compatibility
+- **Major version**: Major changes, and breaks the API.
+- **Minor version**: New features, and does not break the API.
+- **Patch**: Bug fixes, and never breaks backward compatibility.
 
 ### Examples
 
