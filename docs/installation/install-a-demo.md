@@ -3,7 +3,7 @@
 This demo, available to download [here](https://drive.google.com/file/d/1mA3sLIoqYlSlUgvJ0N05NpCQJ0nW6N1m/view?usp=sharing), is loaded with sample content and configurations to demonstrate
 features of Islandora and provide a starting point for exploration. 
 
-Download [this file](https://drive.google.com/file/d/1mA3sLIoqYlSlUgvJ0N05NpCQJ0nW6N1m/view?usp=sharing), and open and follow the instructions in the README.md.html file (also shown below). Thanks, and happy building!
+Download [this file](https://drive.google.com/file/d/1mA3sLIoqYlSlUgvJ0N05NpCQJ0nW6N1m/view?usp=sharing), and open and follow the instructions in the README.md.html file (also shown below). It is recommended that you have a minimum of 4GB of space available on your machine before getting started. Thanks, and happy building!
 
 
 Requirements
@@ -70,7 +70,8 @@ in order to install the local certificate.
 
 _**Note for Mac users:**_ If when executing the script, you are shown a pop-up warning
 that "setup.command cannot be opened", please navigate to _System Preferences >
-Security and Privacy_. Here, you can click "Allow anyway" to allow the script to run.
+Security and Privacy_. Here, you can click "Allow anyway" and then re-try running
+the script. This may need to be done more than once.
 
 Create Stack
 --------------------------------------------------------------
@@ -84,8 +85,8 @@ Desktop Dashboard.
 4. Open the sidebar.
 5. Click on **Stacks**.
 6. Click **Add Stack**.
-7. Select **Upload from your Computer**.
-8. Type in the name **sandbox** (_lowercase_).
+7. Type in the name **sandbox** (_lowercase_).
+8. Select **Upload from your Computer**.
 9. Upload the **docker-compose.yml** file you generated via the setup script.
 10. Click on **Deploy the Stack**. The button will then display _Deployment in progress_  - do not click away while this message is shown.
 
@@ -130,8 +131,8 @@ The login credentials can be found
 Reinstall
 ==============================================================
 
-If you want to re-install **Islandora Sandbox**, and restore it to a known good
-state. Please perform the following steps:
+If you want to re-install **Islandora Sandbox**, and restore it to its original
+state., please perform the following steps:
 
 1. Open Docker Desktop.
 2. Click on Portainer.
