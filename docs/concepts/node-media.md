@@ -20,7 +20,7 @@ a tool called [Flysystem] to another data store such as Fedora. Islandora
 does not dictate where you put your files. Islandora Defaults, as a
 full-featured example, sets all media types to store their files in Fedora. 
 This can be overridden when creating media programmatically, such as for 
-[derivatives]. 
+[derivatives](derivatives.md). 
 
 ## Media belong to nodes
 
@@ -68,6 +68,6 @@ we do not make transcripts show up by tagging a file with "Transcript". See
 !!! note "Standard vs Multi-file media model"
     This describes the stadard file-media relationship in Islandora. 
     There is an alternative method of arranging files and their derivatives
-    which we call the ["Multi-file media"] method.
+    which we call the ["Multi-file media"](../user-documentation/media/#multi-file-media) method.
 
 
