@@ -20,7 +20,7 @@ The Fedora Flysystem adapter does not use Gemini to map the relationship between
 
 ### Configuration
 
-The fedora file system is configured in the site's `settings.php` file. An example configuration can be seen in the claw-playbook web server role's [drupal tasks](https://github.com/Islandora-Devops/claw-playbook/blob/main/roles/internal/webserver-app/tasks/drupal.yml#L12-L19):
+The fedora file system is configured in the site's `settings.php` file. An example configuration can be seen in the islandora-playbook web server role's [drupal tasks](https://github.com/Islandora-Devops/islandora-playbook/blob/dev/roles/internal/webserver-app/tasks/drupal.yml#L12-L19):
 ```
 $settings['flysystem'] = [
   'fedora' => [
@@ -31,11 +31,11 @@ $settings['flysystem'] = [
   ],
 ];
 ```
-The configuration array's top-level key is the name of the Drupal stream wrapper, which also serves as the filesystem prefix. Any Drupal file path using "fedora://" will use this Flysystem adapter. Drupal will translate this prefix to the site's domain plus "\_flystem/fedora/". For example, using the default configuration provided by the claw-playbook, a file stored at "fedora://test.tif" will persist to Fedora with the URI "http://localhost:8080/fcrepo/rest/test.tif" and will be accessible from the Drupal URL "http://localhost:8000/_flysystem/fedora/test.tif". The 'driver' value 'fedora' corresponds to [the plugin's machine name](https://github.com/Islandora/islandora/blob/8.x-1.x/src/Flysystem/Fedora.php#L21). The 'config' section contains all the adapter-specific configurations. In this case, the only thing configured for the site is the Fedora REST end-point. (Change this value to match your own Fedora's location, if needed.) The JWT is configured separately.
+The configuration array's top-level key is the name of the Drupal stream wrapper, which also serves as the filesystem prefix. Any Drupal file path using "fedora://" will use this Flysystem adapter. Drupal will translate this prefix to the site's domain plus "\_flystem/fedora/". For example, using the default configuration provided by the islandora-playbook, a file stored at "fedora://test.tif" will persist to Fedora with the URI "http://localhost:8080/fcrepo/rest/test.tif" and will be accessible from the Drupal URL "http://localhost:8000/_flysystem/fedora/test.tif". The 'driver' value 'fedora' corresponds to [the plugin's machine name](https://github.com/Islandora/islandora/blob/8.x-1.x/src/Flysystem/Fedora.php#L21). The 'config' section contains all the adapter-specific configurations. In this case, the only thing configured for the site is the Fedora REST end-point. (Change this value to match your own Fedora's location, if needed.) The JWT is configured separately.
 
 Other examples of Drupal Flysystem configurations can be seen in [the module's README](http://cgit.drupalcode.org/flysystem/plain/README.md?h=8.x-1.x).
 
-Islandora is configured to have all Media use the Fedora file system by default in the islandora_core_feature. For example, the [field storage uri_scheme setting for field_media_image](https://github.com/Islandora/islandora/blob/8.x-1.x/modules/islandora_core_feature/config/install/field.storage.media.field_media_image.yml#L17) (and the other media types) is "fedora". This can also be viewed in the UI on the field's "Field settings" page; e.g. `http://localhost:8000/admin/structure/media/manage/image/fields/media.image.field_media_image/storage`, look for "Upload destination" and see that "Flysystem: fedora" is selected.
+Islandora is configured to have all Media use the Fedora file system by default in the islandora_core_feature. For example, the [field storage uri_scheme setting for field_media_image](https://github.com/Islandora/islandora/blob/2.x/modules/islandora_core_feature/config/install/field.storage.media.field_media_image.yml#L17) (and the other media types) is "fedora". This can also be viewed in the UI on the field's "Field settings" page; e.g. `http://localhost:8000/admin/structure/media/manage/image/fields/media.image.field_media_image/storage`, look for "Upload destination" and see that "Flysystem: fedora" is selected.
 
 However, there are methods for saving files that can explicitly set a different filesystem than the default. Migrations can explicitly set which file system a file is saved to and Islandora can emit events that also specify which file system a derivative should be saved to.
 
