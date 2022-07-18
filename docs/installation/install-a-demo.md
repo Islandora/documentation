@@ -1,9 +1,9 @@
 # Docker Demo
 
-This demo, available to download [here](https://drive.google.com/file/d/1mA3sLIoqYlSlUgvJ0N05NpCQJ0nW6N1m/view?usp=sharing), is loaded with sample content and configurations to demonstrate
+This demo, available to download [here](https://drive.google.com/file/d/1YS9itn7Hgvc74YTD7iFKDgmRg8gaCY1_/view?usp=sharing), is loaded with sample content and configurations to demonstrate
 features of Islandora and provide a starting point for exploration. 
 
-Download [this file](https://drive.google.com/file/d/1mA3sLIoqYlSlUgvJ0N05NpCQJ0nW6N1m/view?usp=sharing), and open and follow the instructions in the README.md.html file (also shown below). It is recommended that you have a minimum of 4GB of space available on your machine before getting started. Thanks, and happy building!
+Download [this file](https://drive.google.com/file/d/1YS9itn7Hgvc74YTD7iFKDgmRg8gaCY1_/view?usp=sharing), and open and follow the instructions in the README.md.html file (also shown below). It is recommended that you have a minimum of 4GB of space available on your machine before getting started. Thanks, and happy building!
 
 
 Requirements
