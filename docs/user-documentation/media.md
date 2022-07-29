@@ -24,6 +24,8 @@ The metadata associated with a file can be updated by clicking the _Edit_ tab wh
 The _Create new revision_ checkbox is selected by default which will prompt Fedora to make a new version of the media's metadata
 before updating its resource record. A message can be added to the revision which is stored in Drupal but is not currently saved in Fedora.
 
+There is currently no interface in Drupal to examine or revert revisions.
+
 ### Using the Media form to replace an existing file does not behave as expected.
 
 The media edit form allows a user to remove a file and replace it with a new one.
@@ -39,12 +41,14 @@ Third, the metadata synced from the Media into Fedora at [old Fedora URI]/fcr:me
     To completely delete a file and its metadata from Fedora and Drupal, run the "Delete media and file(s) action" after selecting the Media in the general media list (/admin/content/media). This will cause the paths to the file and its metadata in Fedora to return 404s.
 
 !!! note "Replacing Media via REST"
-    It is possible to use [Islandora's REST interface](../technical-documentation/using-rest-endpoints.md) to replace Media and Files.	
+    It is possible to use [Islandora's REST interface](../technical-documentation/rest-create.md#files-and-media) to replace the file content directly, without changing the name or location of the file. Derivatives, if configured, will be triggered.
 
 ## Media Ownership
 
 Islandora objects can have any number of media associated with them. Media store a reference to the resource node they belong to using a special field,
 "Media Of". By changing this field's value, you can change which resource node owns the media, and therefore, where it gets displayed or managed.
+
+Despite us saying that the Media is "owned" by the node, if you delete, change the Drupal author, restrict permissions, etc on the node, it will not take effect on the "owned" media.
 
 !!! note "Compared to Islandora Legacy"
     The direction of the relationship between objects and datastreams is reversed when compared to Islandora 7.  Generally speaking,
