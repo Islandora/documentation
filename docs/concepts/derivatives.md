@@ -29,6 +29,9 @@ As Actions, they can be executed on nodes manually using Views Bulk Operations.
 They can also be configured to run automatically on media save thanks to Islandora's additions to the 
 Drupal [Contexts] module.
 
+!!! warning "Derivative actions will replace existing files"
+    If a derivative action runs but the target derivative (as identified by its taxonomy term) already exists, the new file will replace the old file (leaving the rest of the Media intact).
+
 ## Derivatives can run automatically with Contexts
 
 With the Contexts module, you can configure derivatives to run under specific conditions. 
