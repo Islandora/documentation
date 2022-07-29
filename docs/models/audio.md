@@ -10,6 +10,8 @@ Islandora uses Homarus (ffmpeg as a microservice) to create audio derivatives. I
 
 * "Service file" from the original file, with parameters `-codec:a libmp3lame -q:a 5`, stored in the public filesystem
 
+These parameters can be changed in the configuration for the Drupal Action that Islandora uses to generate an Audio derivative.
+
 Islandora Defaults sets up a context to automatically create this derivative when:
 
 * The Audio media is tagged with the "Original File" term (a term with External URI `http://pcdm.org/use#OriginalFile`)

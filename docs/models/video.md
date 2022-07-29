@@ -11,7 +11,9 @@ The Install Profile also makes available the "Remote video" media type, but its 
 Islandora uses Homarus (ffmpeg as a microservice) to create video derivatives. Islandora Defaults sets you up to create:
 
 * Service file with mimetype video/mp4 [yes, this is the same as the input, i'm not sure if it downsamples]
-* Thumbnail with mimetype image/jpeg, derived from one second into the video and scaled down to ~100 px using the command `-ss 00:00:01.000 -frames 1 -vf scale=100:-2`. (you can change these parameters under Configuration > System > Actions.)
+* Thumbnail with mimetype image/jpeg, derived from one second into the video and scaled down to ~100 px using the command `-ss 00:00:01.000 -frames 1 -vf scale=100:-2`. 
+
+These parameters can be changed in the configuration for the Drupal Actions that Islandora uses to create video derivatives.
 
 Islandora Defaults sets up a context to automatically create this derivative when:
 
