@@ -62,8 +62,9 @@ This migration is performed by all installation methods, so these values should
 be available "out of the box". These values were provided by the PCDM data model
 (see [RDF in Islandora](rdf.md)),
 and not all values are associated with behaviours you might expect - for instance, 
-we do not make transcripts show up by tagging a file with "Transcript". See 
-[transcripts](../user-documentation/transcripts.md) instead.
+Islandora is not configured out-of-the box to display a transcript if you add a 
+Media (file) and tag it as "Transcript". See [Audio](../models/audio.md) and
+[Video](../models/video.md) for setting up transcripts.
 
 !!! note "Standard vs Multi-file media model"
     This describes the stadard file-media relationship in Islandora. 

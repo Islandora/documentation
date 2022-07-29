@@ -31,7 +31,7 @@ This tutorial uses the configurations and code available in the [migrate_islando
 
 Sample CSV and images are also included in the module as a convenience so they are easily available on the Drupal server running the migration. (This is not the recommended method for making files available to Drupal in a real migration.)
 
-The module also contains a Migrate process plugin that transforms strings into associative arrays. This is useful for populating multiple Linked Agent fields. (See "[Typed Relation](../user-documentation/metadata/#typed-relation)" for more information on the Linked Agent field.) It will be available when this module is enabled, and the node migration uses it. It was written generically and will hopefully become part of Migrate Plus, but for now it is here.
+The module also contains a Migrate process plugin that transforms strings into associative arrays. This is useful for populating multiple Linked Agent fields. (See "[Typed Relation](../../user-documentation/metadata#typed-relation)" for more information on the Linked Agent field.) It will be available when this module is enabled, and the node migration uses it. It was written generically and will hopefully become part of Migrate Plus, but for now it is here.
 
 When you are ready to create your actual migrations, the contents of this repository can function as a template for you to create the YAML files defining your own migrations.
 

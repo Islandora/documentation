@@ -97,4 +97,4 @@ The queue system used by Islandora is ActiveMQ, and the listeners are part of ["
 ## Derivative Swimlane Diagram
 
 The following diagram shows the flow of derivative generation from start to finish. A user saves a Media in Drupal, which may trigger Drupal to emit a derivative event to a queue, which is read by Alpaca and sent to a microservice. The microservice gets the original file and makes a transformation, returning the derivative file to Alpaca, which sends it back to Drupal to become a Drupal Media.
-[ ![Derivative process swimlane diagram](../../assets/derivatives-swimlane.png)](../../assets/derivatives-swimlane.png)
+[ ![Derivative process swimlane diagram](../assets/derivatives-swimlane.png)](../assets/derivatives-swimlane.png)
