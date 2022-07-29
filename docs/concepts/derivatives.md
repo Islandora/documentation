@@ -8,6 +8,14 @@ Examples of derivatives include:
 - __preservation files__ in open file formats
 - files containing __technical metadata__ about a file.
 
+## Derivative Models
+
+There are two schemes you can use for derivatives: 
+
+- In the __standard model__, each derivative is a new Media entity linked to the original's parent node. The "Media Use" field is used to distinguish the roles that the various files and media have (Thumbnail, Service File, etc.).
+- In the __multi-file media model__, derivatives are added to additional file fields
+on the original file's Media entity (see [Multi-File Media](../user-documentation/media.md#multi-file-media)).
+
 ## Derivatives are Actions in Drupal
 
 Derivative configuration is stored using Drupal's Actions.  
@@ -22,6 +30,27 @@ Drupal [Contexts] module.
 
 !!! warning "Derivative actions will replace existing files"
     If a derivative action runs but the target derivative (as identified by its taxonomy term) already exists, the new file will replace the old file (leaving the rest of the Media intact).
+
+## Derivatives can run automatically with Contexts
+
+With the Contexts module, you can configure derivatives to run under specific conditions. 
+These are set in the "Conditions" section. Islandora provides a number of context conditions including:
+
+- entity bundle
+- media mimetype
+- term (attached to a media or node, or a node's parent node)
+- whether a node or media "is islandora"
+
+You can set up as many of these as you like, with "and" or "or" logic between them.
+
+In the "Reactions" section is where you can set up derivatives. For standard model derivatives,
+choose the "Derivatives" reaction. This lists all actions, including derivative actions. Note that 
+multifile derivatives won't work here.
+
+!!! note "Multi-file media"
+    The multi-file media derivatives can NOT be selected from within the "Derivatives" reactions.
+    From the "Reactions" pop-up window, you must choose "Derive file for Existing Media". This panel
+    lists only Multi-file media-type derivatives.
 
 ## Derivatives have Types
 
@@ -38,8 +67,7 @@ these types.
 | Get OCR from image	|`generate_ocr_derivative`| Islandora Text Extraction | Hypercube (tesseract/pdftotext)
 
 !!! note "Multi-file media"
-    The Multi-file media architecture stores derivatives as extra files on a media, rather
-    than as entire media attached to a node. The derivatives types available for multi-file media are the 
+    The derivatives types available for multi-file media are the 
     ones marked as "for Media Attachment" e.g. "Generate an Image Derivative for Media Attachment". 
 
 
