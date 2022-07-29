@@ -160,3 +160,12 @@ Finally, to get everything up and running, run the Islandora Core Features and I
 cd /opt/drupal
 sudo -u www-data drush -y -l localhost --userid=1 mim --group=islandora
 ```
+
+### Enabling EVA Views
+
+Some views provided by Islandora are not enabled by default.
+
+```bash
+cd /opt/drupal
+drush -y views:enable display_media
+```
