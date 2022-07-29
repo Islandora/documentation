@@ -10,12 +10,11 @@ Examples of derivatives include:
 
 ## Derivative Models
 
-There are two schemes you can use for derivatives. In the standard model,
-each derivative is a new Media entity linked to the original's parent node.
-The "Media Use" field is used to distinguish the roles that the various files 
-and media have (Thumbnail, Service File, etc.).
-In the multi-file media model, derivatives are added to additional file fields
-on the original file's Media entity. 
+There are two schemes you can use for derivatives: 
+
+- In the __standard model__, each derivative is a new Media entity linked to the original's parent node. The "Media Use" field is used to distinguish the roles that the various files and media have (Thumbnail, Service File, etc.).
+- In the __multi-file media model__, derivatives are added to additional file fields
+on the original file's Media entity (see [Multi-File Media](../user-documentation/media.md#multi-file-media)).
 
 ## Derivatives are Actions in Drupal
 
