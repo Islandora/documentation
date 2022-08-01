@@ -83,11 +83,35 @@ Each of these vocabularies has its own set of fields allowing repositories to fu
 
 The vocabularies provided by default are a starting point, and a repository administrator can create whatever vocabularies are desired.
 
-## Field Types
+## Field Data Types
 
 Fields are where descriptive and administrative metadata about Drupal entities is stored. There are different *types* of fields including boolean, datetime, entity reference, integer, string, text, and text_with_summary. These field types also have *widgets* (controlling how data is entered) and *formatters* (controlling how data is displayed). The [Drupal 8 documentation on FieldTypes, FieldWidgets, and FieldFormatters](https://www.drupal.org/docs/8/api/entity-api/fieldtypes-fieldwidgets-and-fieldformatters) includes a list of the core field types with brief definitions, along with a list of core widgets and formatters. [Custom field types can be created](https://www.drupal.org/docs/creating-custom-modules/creating-custom-field-types-widgets-and-formatters) to represent data in ways not provided by these core options.
 
-More field types, formatters, and widgets are available in various modules.For example, the controlled_access_terms module provides two additional field types designed specifically for use with Islandora: ETDF, and Typed Relation. These and the Entity Reference field type are described in more detail below, since they are of particular interest for Islandora users.
+More field types, formatters, and widgets are available in various modules. For example, the controlled_access_terms module provides two additional field types designed specifically for use with Islandora: ETDF, and Typed Relation. These and the Entity Reference field type are described in more detail below, since they are of particular interest for Islandora users.
+
+### Authority Link
+
+The Authority Link data type configures fields to hold two associated values: 
+- An external source authority (selected from a pre-configured list of external authority options).
+- A link for a specific term from the selected external source authority.
+
+Within Islandora, this data type is used by a metadata field in Taxonomy Vocabularies called Authority Sources to capture equivalent representations of terms from external authority sources.
+
+!!! tip
+    The term external authority source refers to both controlled vocabularies like Art & Architecture Thesaurus or FAST as well as Name Authority Files like Library of Congress Name Authority File or VIAF.
+
+For instance, if you are creating a term called Red squirrels within the default Taxonomy Vocabulary Subject, you may want to include the URI for Tamiasciurus from the FAST (Faceted Application of Subject Terminology) vocabulary. If you configured the field Authority Sources to list FAST (Faceted Application of Subject Terminology) as an external source authority option, you can select this source and add the associated URI (http://id.worldcat.org/fast/1142424).
+
+![Screenshot of filling out an Authority Sources field.](https://user-images.githubusercontent.com/32551917/182199562-46b6cc29-1a49-425c-8332-fbfff5eb44c6.png)
+
+#### Configurations for Authority Sources field
+
+Each Taxonomy Vocabulary can have different external source authority options for its Authority Sources field. To configure the Authority Sources field to change these options, navigate to Home-->Administration-->Structure-->Taxonomy-->Edit *Taxonomy Vocabulary Name*-->*Taxonomy Vocabulary Name* and select "Edit" for the Authority Sources field. Then enter your options in the Authority Sources text box, entering one value per line in the format key|label.
+The key is the stored value (typically an abbreviation representing the authority source). The label will be used in displayed values and editing forms.
+
+![Screenshot of the Authority Sources text box shown when editing the Authority Sources field.](https://user-images.githubusercontent.com/32551917/182200917-9d29fa07-3e4f-4850-a9c5-9bc270cc0c85.png)
+
+By default, this field is repeatable. To change this, edit the "Field settings" and change Allowed numbers of values from "Unlimited" to "Limited" and enter the number of allowable values. This will apply to every instance of the Authority Sources field across your Taxonomy Vocabularies. You cannot change the repeatability of Authority Sources after data has been entered in the field.
 
 ### Entity Reference
 
