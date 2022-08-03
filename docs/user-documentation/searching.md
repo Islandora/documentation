@@ -54,9 +54,13 @@ Once the fields are added they can be configured further on the _Fields_ tab, al
 
 The _Processors_ tab allows repository managers to adjust how data and search queries are processed to adjust results. The defaults are acceptable in most cases.
 
+## Indexing EDTF Dates
+
+EDTF date fields can only be successfully indexed directly as strings. However, there is a way to include a custom "edtf year" field containing the facets-friendly year (or year ranges) from one or more EDTF fields. This must first be enabled by checking "EDTF Year" under the Processors tab, then can be added on the Field tab (it'll be called "EDTF Creation Date Year (edtf_year)"), and finally can be configured as a facet. See "How should this be tested" on [this pull request](https://github.com/Islandora/controlled_access_terms/pull/68) for instructions on setting it up.
+
 ## Searching Islandora
 
-The Search API SOLR module comes with a search page pre-configured (accessible at '/solr-search/content'). To edit the search page, navigate to '/admin/structure/views/view/solr_search_content'.
+Searching using Search API in Drupal is done using Drupal Views. The Islandora Defaults module comes with a search page pre-configured (accessible at '/solr-search/content'). To edit the search page, navigate to '/admin/structure/views/view/solr_search_content'.
 
 Repository managers may want to change the URL used to access the page, add it to the site navigation, or add a search box. In the 'Page Settings' box in the middle of the page, click on the existing path to open a shadow-box with an edit field. Change the URL as desired, for example, to 'search' and click **Apply**. Then, click the **No menu** link just below it to open the menu settings shadow-box. Selecting 'Normal menu entry' will allow a repository manager to add a menu link text, description, and place it within the site menu tree (the default, `<Main navigation>` works for most sites). A search box can be added by expanding the _Advanced_ options and changing the _Exposed form in block_ setting and then use the _Block Layout_ interface (found at '/admin/structure/block') to place the block where desired. After making changes to the View's settings, click the **Save** button to ensure the changes are not lost.
 
