@@ -1,5 +1,10 @@
 # Islandora Playbook
 
+!!! warning ""
+    The playbook is in maintenance mode as new development is focused on [ISLE](https://islandora.github.io/documentation/installation/docker-compose/) for development and production.
+
+
+
 The Islandora Playbook ([Islandora-Devops/islandora-playbook](https://github.com/Islandora-Devops/islandora-playbook)) is a tool for installing either Islandora Defaults or the Islandora Install Profile Demo on a single virtual machine. It can be used both as a [Vagrant](https://www.vagrantup.com/) project to create a local development environment, and/or the [Ansible](https://www.ansible.com/community) playbook can be used directly to provision a local or remote server.
 
 ## Basic Usage (standard):
