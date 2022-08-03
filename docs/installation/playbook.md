@@ -1,6 +1,6 @@
 # Islandora Playbook
 
-!!! note ""
+!!! warning ""
     The playbook is in maintenance mode as new development is focused on [ISLE](https://islandora.github.io/documentation/installation/docker-compose/) for development and production.
 
 
