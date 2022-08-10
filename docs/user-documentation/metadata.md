@@ -94,9 +94,9 @@ More field types, formatters, and widgets are available in various modules. For 
 
 ### Authority Link
 
-The Authority Link data type configures fields to hold two associated values: 
-- An external source authority (selected from a pre-configured list of external authority options).
-- A link for a specific term from the selected external source authority.
+The Authority Link data type configures fields to hold two associated values:
+    - An external source authority (selected from a pre-configured list of external authority options).
+    - A link for a specific term from the selected external source authority.
 
 Within Islandora, this data type is used by a metadata field in Taxonomy Vocabularies called Authority Sources to capture equivalent representations of terms from external authority sources.
 
