@@ -44,6 +44,10 @@ Deprecated concept used in Islandora Legacy; see [Islandora Model](#islandora-mo
 ## Content type
 A general type of Node in [Drupal](#drupal). A content type defines a set of data [fields](#field) and how they are displayed. Content types are sub-types of [Nodes](#node), one of the [Drupal](#drupal) [Content entities](#content-entity). The default [Drupal](#drupal) Content types are 'Article' and 'Basic page'. _Islandora Defaults_ adds 'Repository Item' as a Content type, defining metadata fields typically used to describe digital resources.
 
+## Context
+A "if-this-then-that" configuration created using the Drupal [Context](https://www.drupal.org/project/context) contrib module. Islandora extends the capabilities of Context by adding custom Conditions, custom Reactions, and by evaluating context at specific times to allow Contexts to be used for derivatives, indexing, and display.
+
+
 ## Crayfish
 A collection of Islandora [microservices](#microservice). Some of the microservices are built specifically for use with a [Fedora](#fedora-repository-software) repository, while others are just for general use within Islandora.
 
