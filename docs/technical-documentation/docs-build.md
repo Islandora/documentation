@@ -32,7 +32,7 @@ You will need to have `mkdocs` software installed locally, as well as a required
 
     macOS:
 
-    `pip3 mkdocs-git-revision-date-localized-plugin`
+    `pip3 install mkdocs-git-revision-date-localized-plugin`
 
 
 
