@@ -1,3 +1,7 @@
+# Large Files
+
+## Large Files and Drupal
+
 If you want to upload large (> 1GB) files, you'll need to tune the following settings in your `php.ini`:
 
 - `upload_max_filesize` – The maximum allowed upload file size.
@@ -11,3 +15,10 @@ If you really want to upload large files, you should consider some alternatives 
 
 - Using the [TUS file upload protocol](https://www.drupal.org/project/tus) module, which will let you upload large files in forms.
 - Using [flysystem](https://www.drupal.org/project/flysystem)'s ftp and sftp plugins to make files available if you can run an FTP server.
+
+## Large Files and Fedora
+
+If loading large (e.g. range 30-45 GB) files into Fedora, you may need to change the 
+`fcrepo.session.timeout` property, which defaults to 3 minutes (180,000 ms). Documentation is on the
+the [Properties page on the Fedora wiki](https://wiki.lyrasis.org/display/FEDORAM6M1P0/Properties).
+
