@@ -13,7 +13,7 @@ If you are reading this document then you are interested in contributing to Isla
 
 ## Weekly Open Tech Call
 
-Attend our weekly Zoom meetings at 1:00 PM EST! You can access these meetings through our [Agendas](https://github.com/Islandora/islandora-community/wiki/Tech-Call-Meetings-2022) or our [Community Calendar](https://calendar.google.com/calendar/embed?src=96s6v709n719hapqtt9m8vj588%40group.calendar.google.com&ctz=America%2FToronto). We discuss the past week's Github activity in Issues and Pull Requests, and any other topics that are raised. Anybody is welcome to join the call, and add items to the agenda.
+Attend our weekly Zoom meetings on Wednesdays at 1:00 PM EST! You can access these meetings through our [Agendas](https://github.com/Islandora/islandora-community/wiki/Tech-Call-Meetings-2022) or our [Community Calendar](https://calendar.google.com/calendar/embed?src=96s6v709n719hapqtt9m8vj588%40group.calendar.google.com&ctz=America%2FToronto). We discuss the past week's Github activity in Issues and Pull Requests, and any other topics that are raised. Anybody is welcome to join the call, and add items to the agenda.
 
 ## Github Issues
 
