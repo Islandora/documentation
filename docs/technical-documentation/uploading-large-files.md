@@ -8,6 +8,7 @@ If you want to upload large (> 1GB) files, you'll need to tune the following set
 - `post_max_size` – The maximum allowed POST data size.
 - `max_input_time` – Maximum allowed input time.
 - `max_execution_time` – The maximum allowed time the scripts are allowed to run.
+- `default_socket_timeout` - Default timeout (in seconds) for socket based streams.
 
 However, large file transfer over HTTP still has a host of issues once you properly configure your server.
 Uploads are not resumable and subject to connectivity issues.
