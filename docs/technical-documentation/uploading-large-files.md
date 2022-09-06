@@ -32,7 +32,7 @@ If using FITS, you may need to change the following in `/var/lib/tomcat9/webapps
 max.upload.file.size.MB=2000
 # Maximum size of HTTP Request object. Must be equal to or larger than the value for max.upload.file.size.MB
 max.request.size.MB=2000
-# Maximum size of an uploaded size kept in memory. Otherwise temporarily persisted to disk.
+# Maximum size of an uploaded file kept in memory. Otherwise temporarily persisted to disk.
 max.in.memory.file.size.MB=4
 ```
 
