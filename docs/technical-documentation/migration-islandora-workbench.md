@@ -7,7 +7,7 @@ Islandora Workbench provides a command-line solution to create, update, and dele
 
 Islandora Workbench is tailored towards end users with less technical knowledge or limited server access. 
 
-Workbench provides an alternative to Drupal's Migrate framework, as it does not need to be run on the Drupal server. Islandora Workbench uses Islandora's REST API and offers cross-platform support (Windows, Mac, Linux) to run on your computer, using your provided CSVs and content.
+Workbench provides an alternative to Drupal's Migrate framework, as it does not need to be run on the Drupal server. Islandora Workbench uses Islandora's REST API and offers cross-platform support (Windows, Mac, Linux) to run on your computer, using your provided CSVs and files.
 
 ### Islandora Workbench highlights
 
