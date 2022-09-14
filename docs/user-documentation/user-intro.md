@@ -35,7 +35,7 @@ Even though Fedora is optional in Islandora, most repositories will use it since
 * flexible, and configurable, disk storage architecture
 * fixity digest generation
 * Memento versioning
-* integration with RDF/Linked Data triplestores
+* integration with RDF/Linked Data triple-stores
 * Integration with Microservices via API-X
 * WebAC Policies for access control (not currently leveraged by default)
 

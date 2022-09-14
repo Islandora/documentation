@@ -31,7 +31,7 @@ New videos are added to [the playlist](https://www.youtube.com/playlist?list=PL4
 - [Add Content](https://youtu.be/G52is7iFkG4): How to add items to your Islandora repository.
 - [Making a Collection](https://youtu.be/9jFVAE6l4so): How to create a new Islandora collection.
 - [Adding a Taxonomy Term](https://youtu.be/FEb2yOWg140): How to add a new term to an existing Taxonomy in Islandora.
-- [Regerating a Derivative](https://youtu.be/g3xg1zDlBe0): How to force Islandora to re-create a derivative for a node.
+- [Regenerating a Derivative](https://youtu.be/g3xg1zDlBe0): How to force Islandora to re-create a derivative for a node.
 - [Customizing a Form](https://youtu.be/tOW27DZY9hs): How to modify fields, modify the ingest form, and modify the metadata display for Islandora content.
 - [Adding a New Context](https://youtu.be/T4yIfn_Se_s): How to add a new Context, causing a site Action to be performed based on conditions.
 - [Changing an Action](https://youtu.be/pkG6IRkh4wU): How to change how an existing Action behaves, to be performed based on a Context.

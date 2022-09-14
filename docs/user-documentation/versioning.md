@@ -14,6 +14,6 @@ Fedora implements the [Memento](http://mementoweb.org/about/) specification for 
 
 ## Basic Data Flow
 1. A node or media object is created or updated in Drupal.
-2. When an entity is revisionable and it isn't the initial creation, it [adds a flag](https://github.com/Islandora/islandora/blob/8.x-1.x/src/EventGenerator/EventGenerator.php#L109) to the event object that gets passed to Alpaca.
+2. When an entity is revisionable, and it isn't the initial creation, it [adds a flag](https://github.com/Islandora/islandora/blob/8.x-1.x/src/EventGenerator/EventGenerator.php#L109) to the event object that gets passed to Alpaca.
 3. The [islandora-indexing-fcrepo module](https://github.com/Islandora/Alpaca/tree/dev/islandora-indexing-fcrepo) of Alpaca looks for that flag and fires a call to the [versioning endpoint](https://github.com/Islandora/Crayfish/blob/dev/Milliner/src/app.php#L52) of [Milliner](https://github.com/Islandora/Crayfish/tree/dev/Milliner).
 4. Milliner uses the [Chullo library](https://github.com/Islandora/chullo/blob/dev/src/FedoraApi.php#L320) to [create a version](https://github.com/Islandora/Crayfish/blob/dev/Milliner/src/Service/MillinerService.php#L551) in Fedora.

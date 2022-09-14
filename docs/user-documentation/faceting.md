@@ -1,22 +1,24 @@
+# Faceting in Islandora
+
 ## Overview
 This tutorial contains are step-by-step instructions for adding a facet on a vocabulary reference field. After a search, a block containing the configured facets appears letting the user filter their search.
 
-This is a walkthrough. For a more in-depth discussion of creating facets, see [Configure Advanced Search](advanced-search.md)
+This is a walk-through. For a more in-depth discussion of creating facets, see [Configure Advanced Search](advanced-search.md)
 
 This tutorial currently works best with the "standard" install of the Islandora and Islandora Default modules which can be obtained from the playbook (as opposed to the install profile, which handles facet blocks differently).
 
-## Step 1: Add Vocabulary Bundles
+## Step 1: Add vocabulary bundles
 
 Steps 1 and 2 add the field to the Solr index.
 
 1. Go to **Admin**  >> **Configuration** >> **Search and Metadata** >> **Search API** (or, /admin/config/search/search-api)
 1. Edit the *Default Solr content index*
-1. Open the *Configure the Taxonomy term datasource* fieldset, choose the vocabulary bundles you want to add to be indexed
+1. Open the *Configure the Taxonomy term datasource* field-set, choose the vocabulary bundles you want to add to be indexed
 1. Click **Save**
 
 ![Screenshot of the Search API page with pointer to the Edit button](../assets/facet_on_vocabulary_reference_fields_EDIT_Click.png)
 
-## Step 2: Add Fields
+## Step 2: Add fields
 
 1. Back at the edit *Default Solr content index*, choose **Fields** from the tabs across the top
 1. Click on the **Add fields** button
@@ -31,14 +33,14 @@ Steps 1 and 2 add the field to the Solr index.
 
 ![Screenshot of the Add fields menu with terms expanded](../assets/facet_on_vocabulary_reference_fields_add_fields.png)
 
-## Step 3: Rebuild Solr Index
+## Step 3: Rebuild Solr index
 
 Now that you've added the field, you need to rebuild your Solr index.
 
 1. Go back to *Default Solr content index* (admin/config/search/search-api/index/default_solr_index)
 1. Click on the **Index now** button.
 
-## Step 4: Add & Configure Facet
+## Step 4: Add and configure facet
 Step 4 adds and configures the facet itself.
 
 1. Go to **Admin**  >> **Configuration >> *Search and Metadata* >> **Facets** (admin/config/search/facets)
@@ -50,7 +52,7 @@ Step 4 adds and configures the facet itself.
 1. Choose your configuration options (for example, "List item label")
 1. Click **Save**.
 
-## Step 5: Add Facet as a Block
+## Step 5: Add facet as a block
 This step adds the facets in a single block.
 
 1. To place a Facets block for the facets you have created, go to **Admin** >> **Structure** >> **Blocks layout** (admin/structure/block).

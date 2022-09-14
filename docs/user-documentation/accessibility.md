@@ -1,8 +1,8 @@
 # Accessibility
 
-Accessibility is the ablity of a site to be used fully by all users, including those using screen reader technologies or keyboard navigation. 
+Accessibility is the ability of a site to be used fully by all users, including those using screen reader technologies or keyboard navigation. 
 
-## Drupal Documentation
+## Drupal documentation
 
 Islandora's accessibility features are currently provided by Drupal and contributed Drupal modules. These pages within the Accessibility section of the Drupal documentation can provide guidance:
 
@@ -12,7 +12,7 @@ Islandora's accessibility features are currently provided by Drupal and contribu
 - [How to do an accessibility review?](https://www.drupal.org/docs/accessibility/how-to-do-an-accessibility-review)
 - List of [External Accessibility Resources](https://www.drupal.org/docs/accessibility/external-accessibility-resources)
 
-## Accessible Themes
+## Accessible themes
 
 Much of the accessibility of a website is dependent on how specific HTML tags and 
 attributes are used, thus falls largely into the realm of Drupal Themes. The 
@@ -30,4 +30,3 @@ with the respective node's title.
 This is not considered good accessibility as the node's title will likely be already
 on the page, and it doesn't add anything to describing the image itself. Please fill 
 out the alt text with something meaningful when adding image content to Islandora.
-

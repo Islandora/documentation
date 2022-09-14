@@ -9,19 +9,19 @@ Views are powerful content filters that enable you to present Islandora (and oth
 
 ## Before you start
 
-- The following How-To assumes that you are using the (optional) **[Islandora Defaults](https://github.com/Islandora/islandora_defaults)** configuration. This configuration is deployed automatically if you build your Islandora site using the [Ansible Playbook](/documentation/installation/playbook), [ISLE with Docker-Compose](/documentation/installation/docker-compose), or are using the [sandbox or a Virtual Machine Image](https://sandbox.islandora.ca/)
+- The following How-To assumes that you are using the (optional) **[Islandora Defaults](https://github.com/Islandora/islandora_defaults)** configuration. This configuration is deployed automatically if you build your Islandora site using the [Ansible Playbook](../installation/playbook), [ISLE with Docker-Compose](../installation/docker-compose), or are using the [sandbox or a Virtual Machine Image](https://sandbox.islandora.ca/)
 - This How-To assumes familiarity with Drupal terms such as [Node](https://www.drupal.org/docs/7/nodes-content-types-and-fields/about-nodes), [Content Type](https://www.drupal.org/docs/7/nodes-content-types-and-fields/working-with-content-types-and-fields-drupal-7-and-later), and [Media](https://www.drupal.org/docs/8/core/modules/media).
 
 ## How to modify an existing view
 
-Islandora Defaults ships with some views already created and turned on. The Islandora home page displays content items that have been added to Islandora. This view is named _Frontpage_ and it lists items that meet the following _filter criteria_:
+Islandora Defaults ships with some views already created and turned on. The Islandora home page displays content items that have been added to Islandora. This view is named _Frontpage,_ and it lists items that meet the following _filter criteria_:
 
 - The item is in the _published_ state.
 - The checkbox Promoted to front page is selected.
 
 This view will display all content items added to Islandora, as the checkbox _Promoted to front page_ is on by default.
 
-As you develop your Islandora Web site it is likely that you will need to change the default behaviour of the _Frontpage_ View. As an example, the following describes how to edit the _Frontpage_ page view to only show content items and not collections.
+As you develop your Islandora Website it is likely that you will need to change the default behaviour of the _Frontpage_ View. As an example, the following describes how to edit the _Frontpage_ page view to only show content items and not collections.
 
 For this example, we added six collection items to Islandora. In total there are eight items in the repository. In addition to the six collection items, there is one audio item and one image item.
 

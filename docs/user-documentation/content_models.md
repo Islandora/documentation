@@ -1,6 +1,8 @@
-# Resource Nodes
+# Content models in Islandora
 
-This page describes the Islandora concept of a Resource Node. For a step-by-step demonstration, see the tutorial [Create a resource node](../tutorials/create-a-resource-node.md).
+## Resource Nodes
+
+This section describes the Islandora concept of a Resource Node. For a step-by-step demonstration, see the tutorial [Create a resource node](../tutorials/create-a-resource-node.md).
 
 A resource node holds the descriptive metadata for an Islandora object, as well as groups together
 the various files that are part of the object for preservation or display, such as the original file
@@ -22,7 +24,7 @@ solution for modeling our resource nodes and media, compatibility with third-par
 This opens up a plethora of solutions from the Drupal community that will save you untold time
 and effort when implementing your repository with Islandora.
 
-## Properties
+### Properties
 
 Resource nodes, as Drupal nodes, have some common basic properties regardless
 of content type. These properties are not fields.  This means that they
@@ -66,7 +68,7 @@ status | Published, unpublished, etc...
 
 The small amount of configurability available for these properties is found on the
 content type editing form where a user can choose to change the label of the
-title field, whether or not to display author information on the node's page,
+title field, whether to display author information on the node's page,
 etcetera. These settings will only apply to nodes of that particular content type.
 
 ![The Repository Item content type edit form.](../assets/resource_nodes_repo_item_edit_form.png)
@@ -76,7 +78,7 @@ tab's 'Load' section:
 
 ![Screenshot of a Repository Item node's properties as seen on its 'Devel' tab.](../assets/resource_nodes_properties_devel.png)
 
-## Fields
+### Fields
 
 In addition to the basic node properties identified above, resource nodes (like all Drupal nodes) can have fields.
 Most of what we would think of as descriptive metadata is stored as fields. Resource nodes use 'content types' to define a specific set of required and optional
@@ -102,7 +104,7 @@ of how to handle the node in response to certain events, like choosing a viewer 
     restrictions. Content models can be changed at any time, and they in no way dictate what
     types of media can be associated with a node.
 
-## Media
+### Media
 
 All resource nodes can be linked to any number of media.  The media associated with a resource node can be managed using the "Media" tab when viewing a node.  Much like
 the "Members" tab, Actions can be performed in bulk using the checkboxes and Actions dropdown.
@@ -111,7 +113,7 @@ the "Members" tab, Actions can be performed in bulk using the checkboxes and Act
 
 See [the media section](media.md) for more details.
 
-## Display Modes
+### Display modes
 
 Drupal uses "display modes" (also called "view modes") as alternative ways to present content to users. You may be familiar with the "full" and "teaser" versions of nodes, which are rendered using two corresponding display modes. Islandora makes use of display modes to control how media content is displayed. Islandora Defaults provides two display modes for Media, one which renders the OpenSeadragon viewer and the other which renders the pdf.js viewer. These two display modes can be enabled by using "Display hints" in the node edit form, or you can configure Islandora to use a specific display mode for all media based on the file's Mime type. Both methods make use of [Contexts](context.md).
 
@@ -139,9 +141,9 @@ The second way to use the media's Mime type to render its content with the PDFjs
 
 Finally, save your Context. From that point on, whenever the media for a node has the configured Mime type, Drupal will render the media using the corresponding display mode.
 
-The node-level and global approaches are not exclusive to one another. One Context can override another depending on the order of execution. Contexts are applied in the order they are displayed on the Contexts page, which is editable through a drag-and-drop interface. Whichever Condition appears last in the list of Contexts between the node-level Condition (which in this case is the "Node has term" condition) the global Condition (which is "Node has Media with Mime type"), that one will override the other. An example of having the display mode specified in the node edit form intentionally override the display mode based on Mime type is to have media with the `image/jp2` mime-type configured to use to use the OpenSeadragon viewer, but to manually select the OpenSeadragon display mode for nodes with JPEG media (for example, a very large JPEG image of a map, where the OpenSeadragon's pan and zoom features would be useful).
+The node-level and global approaches are not exclusive to one another. One Context can override another depending on the order of execution. Contexts are applied in the order they are displayed on the Contexts page, which is editable through a drag-and-drop interface. Whichever Condition appears last in the list of Contexts between the node-level Condition (which in this case is the "Node has term" condition) the global Condition (which is "Node has Media with Mime type"), that one will override the other. An example of having the display mode specified in the node edit form intentionally override the display mode based on Mime type is to have media with the `image/jp2` mime-type configured to use the OpenSeadragon viewer, but to manually select the OpenSeadragon display mode for nodes with JPEG media (for example, a very large JPEG image of a map, where the OpenSeadragon's pan and zoom features would be useful).
 
-## Members
+### Members
 
 Islandora has a notion of _membership_, which is used to create a parent/child relationship between
 nodes. Membership is denoted using another special field, "Member Of". This is used to create the link
@@ -169,3 +171,38 @@ bulk on members using the checkboxes and the Actions dropdown as well as clickin
 on the **Reorder Children** tab to adjust the order in which they display.
 
 ![Members tab](../assets/paged_content_reorder_children_button.png)
+
+### More information
+
+The following pages expand on the concepts discussed above:
+
+- [Media](media.md)
+- Content Types: [Metadata](metadata.md#content-types) -- [Create / Update a Content Type](content_types.md)
+
+### Copyright and Usage
+
+This document was originally developed by [Alex Kent](https://github.com/alexkent0) and has been adapted for general use by the Islandora community.
+
+[![CC BY-NC 4.0](https://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-nc.svg)](https://creativecommons.org/licenses/by-nc/4.0/)
+
+[^1] In `islandora_defaults`, this is the `field_model` field, which is populated by taxonomy terms in the `islandora_models` taxonomy vocabulary provided by the `islandora_core_feature` submodule of `Islandora/islandora`
+
+[^2] In `islandora_defaults`, this is the `field_member_of` field.
+
+## Islandora Legacy Objects versus Islandora Resource Nodes
+
+The conventional Islandora Legacy definition of an object is a file loaded in the repository with associated derivatives. In Islandora Legacy, objects (video files, audio files, PDFs, etc.) are loaded through the user interface, and Datastreams are generated automatically. These consist of access and display copies, the metadata, OCH/HOCR, technical metadata, and more. All of these Datastreams are directly connected to the object and accessed through the admin interface.
+
+In Islandora, the traditional Islandora Legacy objects (video files, audio files, etc. that were represented in different content models) are now Drupal nodes. Islandora object nodes are a special kind of Drupal node, distinct from nodes that exist for other content types such as a blog post, an article, a page (like the About page on a site), and others. These Islandora objects are still loaded through the interface and described with the data entry form, and derivatives are still generated. However, the Datastreams are no longer connected to the original object in the same immutable way. Each of these Datastreams can be manipulated through Drupal by non-developers. You can create a variety of ways to view this metadata and information related to the objects. Doing so requires knowledge of Drupal 8, but this essentially means that there are many ways to view the metadata and access the related objects in Islandora.
+
+In Islandora it is therefore helpful to think of objects as resource nodes. The term reflects the new nature of objects in Islandora. A resource node does not just refer to the individual object file, but encompasses multiple elements that all relate to each other, even if they are no longer directly connected like objects in Islandora Legacy.
+
+The typical elements of a resource node:
+
+-   A content type defining metadata fields defined for the node. A content type may include any number of custom fields defined to store descriptive metadata about the object represented by the node. To function as an Islandora resource node, a content type must define two further fields:
+    - A field denoting the 'type' of thing represented by the node (image, book, newspaper, etc.). The value of this field is used by Islandora to control views, derivative processing, and other behavior.[^1]
+	- A field in which to record the node's [membership](content_models.md#members) in another node. If populated, this field creates a hierarchical relationship between parent (the node recorded in the field) and child (the node in which the parent is recorded). This may be left empty, but is required for building hierarchies for collections, subcollections, and members of collections, as well as objects (books, "compound objects", etc.) consisting of [paged content](paged-content.md).[^2]
+-   Media files (the actual files of JPEGs, MP3s, .zip, etc.) that get loaded through the form
+-   Derivative files (thumbnails, web-friendly service files, technical metadata, and more)
+
+These resource nodes are what the librarian, student, archivist, technician, or general non-developer creates through the data entry form. It is possible to configure all elements of a resource node in Islandora through Drupal. This fact allows control over how one accesses the node and how nodes are displayed and discovered online by non-developers. It also allows a repository to take full advantage of all third-party Drupal modules, themes, and distributions available.

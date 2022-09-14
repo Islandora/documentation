@@ -127,62 +127,58 @@ nav:
       - 'Create and Manage User Accounts': 'user-documentation/users.md'
           # procedural, repository managers
           # add reference information on user roles that come with Islandora/Islandora Defaults out of the box
-
   - Using Islandora:
       - 'Introduction': 'user-documentation/user-intro.md'
           # Conceptual, 'site admins/repository managers'
           # move out high-level conceptual information (#architecture section)
-      - 'Intro to Linked Data': 'user-documentation/intro-to-ld-for-islandora-8.md'
+      - Describing content:
+          - 'Content models': 'user-documentation/content_models.md'
+          # conceptual, all user roles
+          # moved from User documentation > Content in Islandora
+          - 'Metadata': 'user-documentation/metadata.md'
+          # largely conceptual, repository managers/ curators
+          # information (e.g. move procedure for setting display hints to
+          - 'Linked data': 'user-documentation/linked_data.md'
           # conceptual, repository managers
-      - 'Metadata': 'user-documentation/metadata.md'
-              # largely conceptual, repository managers/ curators
-      - 'Modelling content in Islandora  vs. Legacy': 'user-documentation/objects_to_resource_nodes.md'
-              # conceptual, all user roles
-              # moved from User documentation > Content in Islandora
-      - 'Resource Nodes': 'user-documentation/resource-nodes.md'
-            # largely conceptual, repository managers; move out procedural
-            # information (e.g. move procedure for setting display hints to
-            # documentation about contexts)
-      - 'Access Control': 'concepts/access-control.md'
-      - 'Accessibility': 'concepts/accessibility.md'
-     # conceptual
-      - 'Media': 'user-documentation/media.md'
-            # conceptual and procedural, repository managers
-            # move out procedural description for deleting Media
-      - 'Configure Search': 'user-documentation/searching.md'
-          # procedural, repository manager
-      - 'Add a Facet Block on Vocabulary Reference Field': 'user-documentation/facet_on_vocabulary_reference_fields.md'
-          # procedural, repository manager
-      - 'Configure Advanced Search': 'user-documentation/advanced-search.md'
-          # procedural, repository manager
-      - 'Configure Context': 'user-documentation/context.md'
+          - 'Metadata harvesting': 'user-documentation/metadata_harvesting.md'
+          # conceptual, repository managers
+          # add reference documentation for developers
+      - Searching content:
+          - 'Searching': 'user-documentation/searching.md'
+              # procedural, repository manager
+          - 'Advanced search': 'user-documentation/advanced-search.md'
+              # procedural, repository manager
+          - 'Faceting': 'user-documentation/faceting.md'
+              # procedural, repository manager
+      - Viewing content:
+          - 'Context': 'user-documentation/context.md'
           # conceptual and procedural, repository managers
-      - 'Multilingual': 'user-documentation/multilingual.md'
-          # conceptual/ procedual/ reference, repository managers
-      - 'Extending Islandora': 'user-documentation/extending.md'
-          # conceptual, repository managers/ developers
-      - 'Viewers': 'user-documentation/file_viewers.md'
+          - 'File viewers': 'user-documentation/file_viewers.md'
           # conceptual, understanding a very complex network of config. For repo managers/devs.
-      - 'IIIF': 'user-documentation/iiif.md'
+          - 'IIIF': 'user-documentation/iiif.md'
           # conceptual/ procedural, repository managers
           # add reference documentation about IIIF presentation API implementation
-      - 'OAI-PMH': 'user-documentation/oai.md'
-          # conceptual, repository managers
-          # add reference documentation for developers?
-      - 'RDF Generation': 'islandora/rdf-mapping.md'
-          # conceptual/reference/procedure, repository managers/ developers
-      - 'Drupal Bundle Configurations': 'islandora/drupal-bundle-configurations.md'
-          # conceptual/procedure, repository managers
-      - 'Flysystem': 'technical-documentation/flysystem.md'
+      - Handling content files:
+          - 'Media': 'user-documentation/media.md'
+          # conceptual and procedural, repository managers
+          # move out procedural description for deleting Media
+          - 'Flysystem': 'user-documentation/flysystem.md'
           # moved from Developer documentation
-      - 'Usage Stats': 'user-documentation/usage-stats.md'
+          - 'Large files': 'user-documentation/uploading-large-files.md'
+      - Administering Islandora:
+          - 'Access control': 'user-documentation/access-control.md'
+          - 'Islandora defaults': 'user-documentation/islandora_defaults_reference.md'
+          - 'JWT authentication': 'user-documentation/jwt-authentication.md'
+          # moved from Developer documentation
+          - 'Usage statistics': 'user-documentation/usage-stats.md'
           # largely conceptual, repository managers
-      - 'Versioning': 'user-documentation/versioning.md'
+          - 'Versioning': 'user-documentation/versioning.md'
           # conceptual/ reference, repository managers/ developers
-      - 'JWT Authentication': 'technical-documentation/jwt.md'
-          # moved from Developer documentation
-      - 'Large files': 'technical-documentation/uploading-large-files.md'
-      - Islandora Defaults: 'reference/islandora_defaults_reference.md'
+      - 'Accessibility': 'user-documentation/accessibility.md'
+      - 'Multilingual': 'user-documentation/multilingual.md'
+          # conceptual/ procedural/ reference, repository managers
+      - 'Extending Islandora': 'user-documentation/extending.md'
+          # conceptual, repository managers/ developers
   - Documentation for Developers:
     - 'Stack Overview': 'installation/component_overview.md'
           # moved from "Installation" section; alternatively duplicate a simplified version in the overview section

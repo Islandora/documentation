@@ -1,7 +1,7 @@
 
 ## Overview
 
-This tutorial will walk you through adding a piece of digital content (an image and some metadata) into an Islandora repository, creating an Islandora [Resource Node](../user-documentation/resource-nodes.md).
+This tutorial will walk you through adding a piece of digital content (an image and some metadata) into an Islandora repository, creating an Islandora [Resource Node](../user-documentation/content_models.md).
 At the end, you will have metadata in a Drupal node, a file stored in Fedora, and derivatives automatically created.
 
 !!! Tip "Video version available"
@@ -32,7 +32,7 @@ You are presented with a form showing a large number of metadata fields. Fill ou
 <!-- We should really include creating/adding a name here or in another tutorial!! It's a source of immediate confusion and frustration! -->
 
 
-Near the bottom of the form, the _System_ section contains mandatory fields that configure Islandora behaviours. Select **Image** from the _Model_ drop down box. This will enable image display behaviours, and cause image derivatives to be generated once we upload a file.
+Near the bottom of the form, the _System_ section contains mandatory fields that configure Islandora behaviours. Select **Image** from the _Model_ drop box. This will enable image display behaviours, and cause image derivatives to be generated once we upload a file.
 
 ![Under system select appropriate model, or format](../assets/create_node_select_model.png)
 
@@ -104,4 +104,4 @@ You now have an Islandora resource node, which is a special case of a Drupal nod
 
 - Drupal documentation on [Nodes](https://www.drupal.org/docs/7/nodes-content-types-and-fields/about-nodes)
 - Drupal documentation on [Media](https://www.drupal.org/docs/8/core/modules/media).
-<!-- include Nodes, Media, etc once they make sense to follow this tutorial. -->
+<!-- include Nodes, Media, etc. once they make sense to follow this tutorial. -->
