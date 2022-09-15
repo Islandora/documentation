@@ -15,11 +15,11 @@ We offer this list for discovery, but do not officially provide support for any 
 ## Recipes
 
 - [Amazon Alexa](recipes/alexa_search.md) - This recipe explains how to access Islandora with Amazon Alexa.
-- [Collection Searching] -
+- [Collection Searching](https://github.com/Islandora-Labs/Islandora-Cookbook/blob/main/recipes/collection_search.md) -
 This recipe provides instructions how to configure a shallow or deep search in a specific collection.
-- [Date Range Slider Facet] - This recipe explains how to include a facet for date field(s) that presents itself as a range slider.
-- [Exhibitions and TimeLine JS] - This recipe outlines how to build exhibits in Islandora, including the deployment of TimeLineJS.
-- [Digital Preservation] - A detailed overview of how to approach digital preservation in Islandora. Includes features that are currently available, both within Islandora and by using compatible tools.
+- [Date Range Slider Facet](https://github.com/Islandora-Labs/Islandora-Cookbook/blob/main/recipes/date_range_slider_facet.md) - This recipe explains how to include a facet for date field(s) that presents itself as a range slider.
+- [Exhibitions and TimeLine JS](https://github.com/Islandora-Labs/Islandora-Cookbook/blob/main/recipes/exhibitions.md) - This recipe outlines how to build exhibits in Islandora, including the deployment of TimeLineJS.
+- [Digital Preservation](https://github.com/mjordan/digital_preservation_using_islandora) - A detailed overview of how to approach digital preservation in Islandora. Includes features that are currently available, both within Islandora and by using compatible tools.
 
 ## Ingredients
 

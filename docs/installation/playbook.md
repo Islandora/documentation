@@ -1,21 +1,21 @@
 # Islandora Playbook
 
-!!! warning ""
-    The playbook is in maintenance mode as new development is focused on [ISLE](https://islandora.github.io/documentation/installation/docker-compose/) for development and production.
+!!! note "Still Alive"
+    Reports of the playbook's demise have been exaggerated. It is still in use and being maintained. Local VMs (VirtualBox) cannot be run on M1 series Apple silicon at this time, but you can use the remote deployment option to deploy Islandora on low-cost virtual hosting.  
 
+The Islandora Playbook ([Islandora-Devops/islandora-playbook](https://github.com/Islandora-Devops/islandora-playbook)) is a tool for installing the Islandora stack on a single virtual machine. It can be used both as a [Vagrant](https://www.vagrantup.com/) project to create a local development environment, or as an [Ansible](https://www.ansible.com/community) playbook to provision a local or remote server. It can set up a Drupal based either on Islandora Defaults, or on the Install Profile Demo. 
 
+## Basic Usage (local, Islandora Defaults):
 
-The Islandora Playbook ([Islandora-Devops/islandora-playbook](https://github.com/Islandora-Devops/islandora-playbook)) is a tool for installing either Islandora Defaults or the Islandora Install Profile Demo on a single virtual machine. It can be used both as a [Vagrant](https://www.vagrantup.com/) project to create a local development environment, and/or the [Ansible](https://www.ansible.com/community) playbook can be used directly to provision a local or remote server.
-
-## Basic Usage (standard):
-
+Install requirements, then:
 ```bash
 $ git clone -b dev https://github.com/Islandora-Devops/islandora-playbook
 $ cd islandora-playbook
 $ vagrant up
 ```
-## Basic Usage (install profile "demo"):
+## Basic Usage (local, Install Profile Demo):
 
+Install requirements, then:
 ```bash
 $ git clone -b dev https://github.com/Islandora-Devops/islandora-playbook
 $ cd islandora-playbook
@@ -33,38 +33,10 @@ To create a local VM, download and install the following.
 4. [OpenSSL](https://www.openssl.org/)
 5. [Ansible](https://www.ansible.com/community) (Tested on version 2.11+, versions back to 2.9 should work.)
 
-#### Installing Git, OpenSSL, and Ansible on Ubuntu/Debian
-
-Git and OpenSSL are available via `apt`. [Ansible](https://www.ansible.com/community) up to version 2.8.7.  This is done best with `pip`, the python package manager:
-
-```bash
-# Install git and openssl
-$ sudo apt-get install git
-$ sudo apt-get install openssl
-# If pip isn’t already available, run the following commands to install it
-$ curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-$ python get-pip.py --user
-# Install ansible
-$ pip install --user -Iv ansible
-```
-
-#### Installing Git, OpenSSL and Ansible on CentOS
-
-Git and OpenSSL are available via `yum`. Most everything else can be installed in the same way.
-
-```bash
-$ sudo yum install git
-$ sudo yum install openssl
-# If pip isn’t already available, run the following commands to install it
-$ curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-$ python get-pip.py --user
-# Install ansible
-$ pip install --user -Iv ansible
-```
 
 #### Installing Git and Ansible on MacOS
 
-OpenSSL is already pre-installed on MacOS. Git can be installed using XCode's command line tools (see below). Python and Pip can either be installed via the downloaded installer direct from the site (not shown below) or via Homebrew. For the installation of Ansible, consider using [homebrew](https://brew.sh/) (see below).
+OpenSSL is already pre-installed on MacOS. Git can be installed using XCode's command line tools (see below). Python and Pip can either be installed via the downloaded installer direct from the site or via Homebrew (not shown below). Ansible is best installed using [Homebrew](https://brew.sh/) (see below).
 
 ```bash
 # Use xcode-select to install command line components, including git
@@ -99,7 +71,7 @@ Then, to spin up the machine:
 vagrant up
 ```
 
-## Installing a remote environment
+## Deploying to a remote environment
 
 A remote environment can be provisioned by providing SSH credentials to `islandora-playbook` and using the `ansible-galaxy` installer instead of Vagrant. Some preparation of configuration entries in the `inventory` also need to be changed to be aware of the particulars of your remote environment; this includes:
 
@@ -224,7 +196,7 @@ matomo_site_url: http://example.org
 
 #### hosts
 
-You'll need the SSH particulars for logging into your server in the hosts file.  This example is set up to login as `root` using
+You'll need the SSH particulars for logging into your server in the `inventory/vagrant/hosts` file .  This example is set up to login as `root` using
 an SSH key. You'll need to get the details for logging into your remote server from your hosting provider (AWS, Digital Ocean, etc...)
 or your systems administrator if you're running the server in-house. See
 [this page](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html#connecting-to-hosts-behavioral-inventory-parameters)

@@ -95,7 +95,8 @@ More field types, formatters, and widgets are available in various modules. For 
 
 ### Authority Link
 
-The Authority Link data type configures fields to hold two associated values: 
+The Authority Link data type configures fields to hold two associated values:
+
 - An external source authority (selected from a pre-configured list of external authority options).
 - A link for a specific term from the selected external source authority.
 
