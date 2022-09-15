@@ -1,64 +1,67 @@
 ## Islandora Workbench
 
+Islandora Workbench provides a command-line solution to create, update, and delete Islandora content from CSV data. The Islandora Workbench repository can be found on [Github](https://github.com/mjordan/islandora_workbench). Full details and documentation for Islandora Workbench are available [here](https://mjordan.github.io/islandora_workbench_docs/).
 
-### Repository
-
-<https://github.com/mjordan/islandora_workbench>
 
 ### Overview
 
-More tailored for end users with less technical knowledge or limited server access.
+Islandora Workbench is tailored towards end users with less technical knowledge or limited server access. 
 
-- Uses Islandora’s REST API
-- Runs on your computer
-- “CSVs and a pile of scans”
-- Cross Platform - Python
+Workbench provides an alternative to Drupal's Migrate framework, as it does not need to be run on the Drupal server. Islandora Workbench uses Islandora's REST API and offers cross-platform support (Windows, Mac, Linux) to run on your computer, using your provided CSVs and files.
 
 ### Islandora Workbench highlights
 
-- Opinionated
-    - MUCH less configuration. Decisions made for you.
-- No Processing
-    - CSV has to be in the right format
-- Write Operations
-    - Create, Update, and Delete content
-- Bumpers On
-    - Configuration and CSV are validated
+Islandora Workbench:
 
-### Islandora Workbench basics
+- **Enables you to perform write operations:** Create, update, and delete content.
+- **Is opinionated:** Workbench provides MUCH less configuration than Drupal's Migrate framework. Decisions are made for you.
+- **Does not provide pre-processing:** Your CSVs have to be in the right format. More information on preparing your data can be found in [the Islandora Workbench documentation](https://mjordan.github.io/islandora_workbench_docs/preparing_data/).
+- **Provides data validation:**: The YAML configuration file and CSVs you provide are validated with the [--check option](https://mjordan.github.io/islandora_workbench_docs/check/). 
 
-- Column names are field names
-- If your value contains a comma, wrap it in double quotes
-- Multiple values are pipe delimited
-- Entity references are done via numeric id (nid, mid, tid)
+### Islandora Workbench Basics
 
-Islandora Workbench - Taxonomy Terms:
+- Column names are field names.
+- If a cell value contains a comma, make sure the value is wrapped in double quotes. Spreadsheet applications will do this for you
+- Multiple values are pipe delimited.
+- Entity references are done via numeric id (nid, mid, tid).
 
-- Can use term id, term name, or both
+#### [Taxonomy Terms](https://mjordan.github.io/islandora_workbench_docs/fields/#taxonomy-reference-fields)
+
+Using Islandora Workbench, **you can assign both existing and new taxonomy terms to nodes.** Within the CSVs you provide, the values of the taxonomy field/columns can:
+
+- Use term IDs (integers), term names, or both. For example:
     - 26
     - Cats
     - 26|Cats
-- If using multiple vocabularies, prefix with vocabulary id:
+-  Use multiple vocabularies, by prefixing the value with the vocabulary id:
     - cats:Calico|dogs:Dachshund
-- Terms that don’t exist can be created
+- Create new terms that don't exist yet in your taxonomy.
 
-Islandora Workbench - More Field Types:
+#### Other Field Types
 
-- Typed Relations - Prefix term ids with namespace:rel:
+- Typed Relations - Prefix term ids with namespace:rel:. More available on typed relation fields [here](https://mjordan.github.io/islandora_workbench_docs/fields/#typed-relation-fields). For example:
     - relators:pht:30
     - Relators:pht:30|relators:pub:45
--  Geolocation fields - “Lat,Long”
+-  Geolocation fields - Workbench allows geocoordinates to be provides in “Lat,Long” format. For example:
     - "49.16667,-123.93333"
 
-Paged Content - Two Ways:
+#### [Paged Content](https://mjordan.github.io/islandora_workbench_docs/paged_and_compound/)
 
-- Metadata on Parent
-    - Simple directory structure and filename convention
-- Page Level Metadata
-    - Parent and page metadata in same CSV
+There are multiple ways to create paged content with Islandora Workbench. More information on each option is available [here](https://mjordan.github.io/islandora_workbench_docs/paged_and_compound/). You may:
 
+- Use [a specific subdirectory structure](https://mjordan.github.io/islandora_workbench_docs/paged_and_compound/#using-subdirectories) to define the relationship between the parent item and its children.
+- Use [page-level metadata in the CSV](https://mjordan.github.io/islandora_workbench_docs/paged_and_compound/#with-pagechild-level-metadata) to create the relationship.
+- Create [a secondary task](https://mjordan.github.io/islandora_workbench_docs/paged_and_compound/#using-a-secondary-task) in Workbench.
 
-### Videos
+### Workbench Instructional Videos
+
+Click the video previews shown below to open the corresponding video in Youtube.
+
+### IslandoraCon 2022: Migration Strategies
+
+This [video](https://www.youtube.com/watch?v=FzISzvc9xbE) (August 2022) is an overview of how to harvest data from an existing Islandora 7 site using Workbench, how to sanitize and prep that data with custom Python tools, and how to pull that data into a new Islandora 2 site.
+
+[![IslandoraCon 2022: Migration Strategies](https://img.youtube.com/vi/FzISzvc9xbE/0.jpg)](https://www.youtube.com/watch?v=FzISzvc9xbE)
 
 
 #### Summer of Islandora Workbench: Introduction to Islandora Workbench
