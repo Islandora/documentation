@@ -1,6 +1,6 @@
 ## Islandora Workbench
 
-Islandora Workbench provides a command-line solution to create, update, and delete Islandora content from CSV data. The Islandora Workbench repository can be found on [Github](https://github.com/mjordan/islandora_workbench). Full details and documentation for Islandora Workbench are available [here](https://mjordan.github.io/islandora_workbench_docs/).
+Islandora Workbench provides a command-line solution to create, update, and delete Islandora content from CSV data. The Islandora Workbench repository can be found on [Github](https://github.com/mjordan/islandora_workbench). Full details and documentation for Islandora Workbench are maintained separately ([Islandora Workbench Documentation](https://mjordan.github.io/islandora_workbench_docs/)).
 
 
 ### Overview
@@ -36,6 +36,8 @@ Using Islandora Workbench, **you can assign both existing and new taxonomy terms
 -  Use multiple vocabularies, by prefixing the value with the vocabulary id:
     - cats:Calico|dogs:Dachshund
 - Create new terms that don't exist yet in your taxonomy.
+
+If you need to create terms with multiple fields (such as an External URI) or which use term hierarchy, you can [create terms](https://mjordan.github.io/islandora_workbench_docs/creating_taxonomy_terms/) in a separate task.
 
 #### Other Field Types
 
