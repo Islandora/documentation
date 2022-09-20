@@ -16,7 +16,7 @@ Islandora provides:
 
 ## Islandora Defaults features
 
-[Islandora Defaults](../reference/islandora_defaults_reference.md) is an optional collection of presets for Islandora, intended to provide a more user-friendly out-of-the-box experience and starting point for more specific customization. 
+[Islandora Defaults](../user-documentation/islandora_defaults_reference.md) is an optional collection of presets for Islandora, intended to provide a more user-friendly out-of-the-box experience and starting point for more specific customization. 
 
 Islandora Defaults provides:
 
@@ -36,7 +36,7 @@ For instance, if you want to move a number of nodes from one collection into ano
 - select "Edit content" from the Action dropdown, and click "Apply to selected Items"
 - under "SELECT FIELDS TO CHANGE", select "Member of"
 - in the Member Of autocomplete that appears, type the name of the target collection
-- Careful! Under "Change method", choosee between "Replace the current value" and "Add a new value to the multivalue field". The first one will wipe out ALL existing collections including the one you're working on - which may be what you're after.
+- Careful! Under "Change method", choose between "Replace the current value" and "Add a new value to the multi-value field". The first one will wipe out ALL existing collections including the one you're working on - which may be what you're after.
 - Select "Confirm" at the bottom of the form to save your changes.
 
 For more information see the video tutorial on [Batch Editing](https://youtu.be/ZMp0lPelOZw).

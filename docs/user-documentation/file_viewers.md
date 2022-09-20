@@ -2,9 +2,9 @@
 
 ## What are viewers?
 
-[Viewers](../glossary#viewer) allow site builders to display files in interactive JavaScript-based widgets, that provide functionality like zooming in/out, turning pages, playing/pausing, viewing in full screen, etc.
+[Viewers](../user-documentation/glossary#viewer) allow site builders to display files in interactive JavaScript-based widgets, that provide functionality like zooming in/out, turning pages, playing/pausing, viewing in full screen, etc.
 
-In Drupal, a common way to implement a viewer is through a [module](./glossary/#module) that provides the JavaScript library, and a field formatter that uses that library. The field formatter will work with specific types of Drupal fields (e.g. file fields or image fields, some may even provide their own fields).
+In Drupal, a common way to implement a viewer is through a [module](glossary.md#module) that provides the JavaScript library, and a field formatter that uses that library. The field formatter will work with specific types of Drupal fields (e.g. file fields or image fields, some may even provide their own fields).
 
 Viewers that are known to work with Islandora include:
 
@@ -63,22 +63,22 @@ Create a Repository Item, and tag it with "Open Seadragon" (under Display Hints)
 
 Islandora Defaults is a Feature, and the following YAML files in `islandora_defaults/config/install` contain configuration items that are loaded when the feature is enabled. Changes to these files will not affect the live site configuration, and changes to the live site configuration will not be reflected in these files.
 
-| Filename | Comments|
-|---|---|
-| `core.entity_view_mode.node.open_seadragon.yml` | (a media display mode) defines the Open Seadragon display mode as an option for any Media |
-| `media.type.file.yml` | (a media type) define File media, or in this case, re-define an existing type provided by Core. This feature will override the core settings. |
-| `field.field.media.file.field_media_file.yml` | (a field that can use the viewer) Defines a file field on File media called field_media_file, or in this case, re-defines it because it was already part of core. Usually you need a field.storage too but it was already defined in core and is not overridden here. |
-| `field.field.media.file.field_media_of.yml` | (a field that points to a parent node) attach the the "Media Of" field to File media. In this case again, the field storage is not present because it was defined in Islandora Core Feature. |
-| `core.entity_view_display.media.file.open_seadragon.yml` | (view mode configuration) configures the Open Seadragon display mode for File media, so it shows only the field_media_file using the OpenSeadragon field formatter. |
-| `views.view.openseadragon_media_evas.yml` | (an EVA View) defines a view that shows a Media that is "Media Of" the current node (from URL) and is published and has "Media Use" = Original File. (there are two other EVAs defined by this view that use Preservation Master and Service File respectively.) |
-| `core.entity_view_mode.node.open_seadragon.yml` | (a content display mode) defines the Open Seadragon display mode as an option for any Node |
-| `node.type.islandora_object.yml` | (a content type) defines the Repository Item content type |
-| `core.entity_view_display.node.islandora_object.open_seadragon.yml` | (view mode configuration) configures the Open Seadragon display mode for Repository Item, so it shows the Open Seadragon EVA for Original File as well as normal metadata |
-| `taxonomy.vocabulary.islandora_display.yml` | (taxonomy vocabulary) define a vocabulary to hold display hints  |
-| `migrate_plus.migration.islandora_defaults_tags.yml` | (migration) create a term in that vocabulary for "Open Seadragon." Taxonomy terms are "content" so must be entered through a migration. |
-| `field.storage.node.field_display_hints.yml` | (field storage for display hints) defines the display hints field as an option for any node |
-| `field.field.node.islandora_object.field_display_hints.yml` | (field for display hints) configures the display hints field on Repository Item |
-| `context.context.open_seadragon.yml` | (a context) tells nodes with term "Open Seadragon" to use display mode "Open Seadragon" |
+| Filename                                                            | Comments                                                                                                                                                                                                                                                              |
+|---------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `core.entity_view_mode.node.open_seadragon.yml`                     | (a media display mode) defines the Open Seadragon display mode as an option for any Media                                                                                                                                                                             |
+| `media.type.file.yml`                                               | (a media type) define File media, or in this case, re-define an existing type provided by Core. This feature will override the core settings.                                                                                                                         |
+| `field.field.media.file.field_media_file.yml`                       | (a field that can use the viewer) Defines a file field on File media called field_media_file, or in this case, re-defines it because it was already part of core. Usually you need a field.storage too but it was already defined in core and is not overridden here. |
+| `field.field.media.file.field_media_of.yml`                         | (a field that points to a parent node) attach the the "Media Of" field to File media. In this case again, the field storage is not present because it was defined in Islandora Core Feature.                                                                          |
+| `core.entity_view_display.media.file.open_seadragon.yml`            | (view mode configuration) configures the Open Seadragon display mode for File media, so it shows only the field_media_file using the OpenSeadragon field formatter.                                                                                                   |
+| `views.view.openseadragon_media_evas.yml`                           | (an EVA View) defines a view that shows a Media that is "Media Of" the current node (from URL) and is published and has "Media Use" = Original File. (there are two other EVAs defined by this view that use Preservation Master and Service File respectively.)      |
+| `core.entity_view_mode.node.open_seadragon.yml`                     | (a content display mode) defines the Open Seadragon display mode as an option for any Node                                                                                                                                                                            |
+| `node.type.islandora_object.yml`                                    | (a content type) defines the Repository Item content type                                                                                                                                                                                                             |
+| `core.entity_view_display.node.islandora_object.open_seadragon.yml` | (view mode configuration) configures the Open Seadragon display mode for Repository Item, so it shows the Open Seadragon EVA for Original File as well as normal metadata                                                                                             |
+| `taxonomy.vocabulary.islandora_display.yml`                         | (taxonomy vocabulary) define a vocabulary to hold display hints                                                                                                                                                                                                       |
+| `migrate_plus.migration.islandora_defaults_tags.yml`                | (migration) create a term in that vocabulary for "Open Seadragon." Taxonomy terms are "content" so must be entered through a migration.                                                                                                                               |
+| `field.storage.node.field_display_hints.yml`                        | (field storage for display hints) defines the display hints field as an option for any node                                                                                                                                                                           |
+| `field.field.node.islandora_object.field_display_hints.yml`         | (field for display hints) configures the display hints field on Repository Item                                                                                                                                                                                       |
+| `context.context.open_seadragon.yml`                                | (a context) tells nodes with term "Open Seadragon" to use display mode "Open Seadragon"                                                                                                                                                                               |
 
 ## Improvements
 

@@ -29,7 +29,7 @@ media, and taxonomy terms to RDF predicates.
 
 Namepspaces in RDF must be registered before they can be used. The 
 Islandora module registers a number of namespaces and more can be 
-added using `hook_rdf_namespaces()`. See [RDF Mappings](../islandora/rdf-mapping.md#rdf-mappings) 
+added using `hook_rdf_namespaces()`. See [RDF Mappings](../user-documentation/linked_data.md) 
 for more details.
 
 ## Exposure as JSON-LD

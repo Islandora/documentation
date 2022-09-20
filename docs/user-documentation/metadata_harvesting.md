@@ -1,21 +1,22 @@
-# OAI-PMH
+# Metadata harvesting
+## OAI-PMH
 
 The [Open Archives Initiative Protocol for Metadata Harvesting](https://www.openarchives.org/pmh/), commonly referred to as OAI-PMH, is a specification for exposing repository metadata for harvesting. OAI-PMH specifies six services which can be invoked over HTTP(s). The [full specification](http://www.openarchives.org/OAI/openarchivesprotocol.html) details the services:
 
-| Service | URL on localhost:8000 |
-|---|---|
-| Identify |  [http://localhost:8000/oai/request?verb=Identify](http://localhost:8000/oai/request?verb=Identify)|
-| ListMetadataFormats | [http://localhost:8000/oai/request?verb=ListMetadataFormats](http://localhost:8000/oai/request?verb=ListMetadataFormats)|
-| ListSets | [http://localhost:8000/oai/request?verb=ListSets](http://localhost:8000/oai/request?verb=ListSets)|
-| GetRecord | [http://localhost:8000/oai/request?verb=GetRecord&metadataPrefix=oai_dc&identifier=oai:localhost:node-1](http://localhost:8000/oai/request?verb=GetRecord&metadataPrefix=oai_dc&identifier=oai:localhost:node-1) |
-| ListIdentifiers | [http://localhost:8000/oai/request?verb=ListIdentifiers&metadataPrefix=oai_dc](http://localhost:8000/oai/request?verb=ListIdentifiers&metadataPrefix=oai_dc)|
-| ListRecords | [http://localhost:8000/oai/request?verb=ListRecords&metadataPrefix=oai_dc](http://localhost:8000/oai/request?verb=ListRecords&metadataPrefix=oai_dc)|
+| Service             | URL on localhost:8000                                                                                                                                                                                            |
+|---------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Identify            | [http://localhost:8000/oai/request?verb=Identify](http://localhost:8000/oai/request?verb=Identify)                                                                                                               |
+| ListMetadataFormats | [http://localhost:8000/oai/request?verb=ListMetadataFormats](http://localhost:8000/oai/request?verb=ListMetadataFormats)                                                                                         |
+| ListSets            | [http://localhost:8000/oai/request?verb=ListSets](http://localhost:8000/oai/request?verb=ListSets)                                                                                                               |
+| GetRecord           | [http://localhost:8000/oai/request?verb=GetRecord&metadataPrefix=oai_dc&identifier=oai:localhost:node-1](http://localhost:8000/oai/request?verb=GetRecord&metadataPrefix=oai_dc&identifier=oai:localhost:node-1) |
+| ListIdentifiers     | [http://localhost:8000/oai/request?verb=ListIdentifiers&metadataPrefix=oai_dc](http://localhost:8000/oai/request?verb=ListIdentifiers&metadataPrefix=oai_dc)                                                     |
+| ListRecords         | [http://localhost:8000/oai/request?verb=ListRecords&metadataPrefix=oai_dc](http://localhost:8000/oai/request?verb=ListRecords&metadataPrefix=oai_dc)                                                             |
 
 The module [Islandora OAI-PMH (`islandora_oaipmh`)](https://github.com/Islandora/islandora_defaults/tree/2.x/modules/islandora_oaipmh) is a submodule of Islandora Defaults. It provides default configuration for the [Drupal REST OAI-PMH module](https://www.drupal.org/project/rest_oai_pmh) so that repository content can be harvested.
 
 Enabling Islandora OAI-PMH provides:
 
-- a View ("OAI-PMH") that defines sets of objects for exposure at the oai_dc [endpoint](http://localhost:8000/oai/request?verb=ListRecords&metadataPrefix=oai_dc). By default:
+- a View ("OAI-PMH") that defines sets of objects for exposure at the oai_dc [endpoint](http://localhost:8000/oai/request?verb=ListRecords&metadataPrefix=oai_dc). By default,:
     - there is one set per "Collection" object containing that object's children
     - there is one set of all Repository Item objects that are not members of any Collection, and are not themselves Collections.	
     - disabled by default, there is a set of all Repository Item objects that are not Collections.

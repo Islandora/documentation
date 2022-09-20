@@ -28,13 +28,13 @@ The 'View' tab gives an overview of the index and its status:
 - _Server index status_ is a count of the total number of items returned from an unfiltered empty search. Generally speaking, this should match the total number of items indexed. See the [Drupal 8 Search API FAQ](https://www.drupal.org/docs/8/modules/search-api/getting-started/frequently-asked-questions#server-index-status) for more details.
 - _Cron batch size_ displays how many items will be indexed when Drupal's cron runs.
 
-The _View_ tab also provides links to some common actions. **Start Indexing Now** allows you to start a indexing job for a specified number of items (default is 'all'). You can also specify how many items should be indexed in each batch (default is '50'). The other links allow a repository manager to queue all objects for reindexing, clear the index, or rebuild tracking information.
+The _View_ tab also provides links to some common actions. **Start Indexing Now** allows you to start an indexing job for a specified number of items (default is 'all'). You can also specify how many items should be indexed in each batch (default is '50'). The other links allow a repository manager to queue all objects for reindexing, clear the index, or rebuild tracking information.
 
 #### Edit Tab
 
 The _Edit_ tab allows repository managers to configure how the index works as a whole, including the Index name, the data sources — entity types — it can index (including which specific content types or taxonomies will be indexed), which server it is connected to, and other SOLR-specific options.
 
-_Content_ (types) is the only data source enabled by default. Selecting _Taxonomy term_ will enable searching taxonomies which is recommended if the repository uses taxonomies for subjects or other discovery points. Once the data sources are enabled a configuration box for each of them will appear in a section just below the list of data sources. This allows repository managers to select which content types (or taxonomy vocabularies) will be included in the index. By default all the content types, and vocabularies if the taxonomy data source is enabled, are indexed.
+_Content_ (types) is the only data source enabled by default. Selecting _Taxonomy term_ will enable searching taxonomies which is recommended if the repository uses taxonomies for subjects or other discovery points. Once the data sources are enabled a configuration box for each of them will appear in a section just below the list of data sources. This allows repository managers to select which content types (or taxonomy vocabularies) will be included in the index. By default, all the content types, and vocabularies if the taxonomy data source is enabled, are indexed.
 
 
 !!! note "Defaults"
@@ -48,7 +48,7 @@ To add a field, click the **+ Add fields** button. A shadow-box will appear with
 
 Some fields, such as the _Body_ ('body') field provided by Drupal, have multiple properties which can be completely different values or variations on the same value. Click on the plus-sign next to the field to show the properties available to index. In most cases repository managers can ignore the properties list and click the **Add** button by the field to index the default property ('value'). Only select a different field property if you understand how it will impact user searching. Entity reference fields, such as Tags ('field_tags'), allow you to select fields or their properties from the referenced entity for indexing, such as a referenced taxonomy term's name field.
 
-Once the fields are added they can be configured further on the _Fields_ tab, although the label, machine name, and type usually don't need to be changed. The 'Type' dropdown has several different Full-text processing options available, which may be of interest. Each is described in the expandable _Data Types_ box at the bottom of the page. The _Boost_ setting allows repository managers to increase the weight of particular fields when calculating search relevancy.
+Once the fields are added they can be configured further on the _Fields_ tab, although the label, machine name, and type usually don't need to be changed. The 'Type' dropdown has several Full-text processing options available, which may be of interest. Each is described in the expandable _Data Types_ box at the bottom of the page. The _Boost_ setting allows repository managers to increase the weight of particular fields when calculating search relevancy.
 
 #### Processors Tab
 

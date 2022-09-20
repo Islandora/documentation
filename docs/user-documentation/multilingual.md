@@ -1,4 +1,4 @@
-Islandora enables you to build full fledged multilingual repositories leveraging the multilingual support provided by Drupal core modules. The multilingual content gets indexed into Fedora repository as well as the Triplestore (Blazegraph), and can be queried using the SPARQL endpoint. In this guide, we will describe the steps needed to setup a basic multilingual Islandora site.
+Islandora enables you to build full-fledged multilingual repositories leveraging the multilingual support provided by Drupal core modules. The multilingual content gets indexed into Fedora repository as well as the Triplestore (Blazegraph), and can be queried using the SPARQL endpoint. In this guide, we will describe the steps needed to set up a basic multilingual Islandora site.
 
 ## Drupal Concepts
 Drupal allows you to translate user interface text, configuration text, and content. See [section 2.7 of the Drupal documentation for details](https://www.drupal.org/docs/user_guide/en/language-concept.html).
@@ -23,7 +23,7 @@ You can place the language switcher block in different regions of the user inter
 ### Adding Multilingual Menus
 From the top menu, go to Configuration >> Regional and language >> Content language and translation. Check `Custom menu link` under `Custom language settings`. Scroll down to `Custom menu link` section and check all the relevant fields and Save the configurations. Clear the cache (Configuration >> Development >> Performance).
 
-From the top menu, go to Structure >> Menu. Edit "Main navigation" menu. Default home menu item cannot be translated due to [this issue](https://www.drupal.org/project/drupal/issues/2838106). Disable that menu item. Click `Add link` to create a new menu item. Provide a menu title (i.e Home) and input `<front>` for the link field. Save. Right click on the Operations beside the new menu link and click the Translate button. Translate the menu link title for the language added above and save.
+From the top menu, go to Structure >> Menu. Edit "Main navigation" menu. Default home menu item cannot be translated due to [this issue](https://www.drupal.org/project/drupal/issues/2838106). Disable that menu item. Click `Add link` to create a new menu item. Provide a menu title (i.e. Home) and input `<front>` for the link field. Save. Right-click on the Operations beside the new menu link and click the Translate button. Translate the menu link title for the language added above and save.
 
 Go back to home. The language switcher will enable you to switch the language/content of the menu and content.
 
