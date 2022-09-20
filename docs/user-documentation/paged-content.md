@@ -25,7 +25,7 @@ resource node and _Page_ for the Islandora Model of the child resource node. Aft
 child resource nodes have "service file" media (either generated via the built-in derivative
 creation or added manually), they will be included in the OpenSeadragon paginated
 viewer displayed on the parent resource node's page.
-(See the [IIIF Documentation](../user-documentation/iiif.md/## Using IIIF in Islandora)
+(See the [IIIF Documentation](../iiif#using-iiif-in-islandora)
 for more details on controlling the viewer's behavior.)
 
 ![Screenshot of a Paged Content resource node displaying the OpenSeadragon viewer with the first child resource node displayed.](../assets/paged_content_openseadragon.png)
@@ -94,4 +94,4 @@ per file with that file attached as a Media. It is possible to select the node t
 This method does not create full metadata for the child nodes. It uses the filename as the node title.
  It also does not accept zip files; individual files must be uploaded. For more methods of bulk uploading content,
 see [Islandora Workbench](../technical-documentation/migration-islandora-workbench.md)
- and [Migrate Islandora CSV](extending.md#Batch uploading via CSV)
+ and [Migrate Islandora CSV](extending.md#batch-uploading-via-csv)
