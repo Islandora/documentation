@@ -108,7 +108,7 @@ For more information on interacting with Drupal entities via REST requests, see 
 Using the RDF mapping configurations provided by the RDF module, the JSON-LD Module exposes the RDF-mapped entity in JSON-LD, through the REST API, at `node/[nid]?_format=jsonld` (for nodes; for media and terms, at `media/[mid]?_format=jsonld` and `taxonomy/term/[tid]?_format=jsonld`).
 
 - The JSON-LD module will only work with mappings that include a value under `types` (which maps to `rdf:type` - see below, under Structure of an RDF Mapping).
-- The JSON-LD module provides a hook so other modules can alter the entity before it gets mapped. The `islandora` module uses this hook to trigger any "Map URI to Predicate" and "Alter JSON-LD Type" reactions that are configured in Contexts. `islandora_defaults` provides the two Contexts - "All Media" and "Content" - that configure these to occur on Media and Repository Item nodes.
+- The JSON-LD module provides a hook so other modules can alter the entity before it gets mapped. The `islandora` module uses this hook to trigger any "Map URI to Predicate" and "Alter JSON-LD Type" reactions that are configured in Contexts. The Islandora Starter Site provides two Contexts - "All Media" and "Content" - that configure these to occur on Media and Repository Item nodes.
 - The JSON-LD module adds RDF datatypes to the RDF values, and includes a mapping of Drupal field types to RDF datatypes.
 - The JSON-LD module provides a hook to alter its Drupal field type to RDF datatype mapping.
 - The JSON-LD module has a configuration option that can cause the `?_format=jsonld` to be part of, or not part of, the URIs of Drupal objects. On an out-of-the-box islandora-playbook, this string is stripped, but by default on a fresh install of the jsonld module, it is not.
@@ -213,10 +213,9 @@ Using the RDF mapping configurations provided by the RDF module, the JSON-LD Mod
 ```
 
 ### RDF mappings
-In an out-of-the-box islandora-playbook, the RDF mappings that exist were loaded from config files, and correspond to the rdf.mapping.[...].yml files located in:
+If using the Islandora Starter Site, the RDF mappings are set in the config files with names like rdf.mapping.[...].yml. The starter site config files will override configs set by modules. If you are building a site from scratch (not using the Islandora Starter Site, there are relevant configs in the following folders:
 
 - `[drupal modules directory]/islandora/modules/islandora_core_feature/config/install/` (media and taxonomy terms)
-- `[drupal modules directory]/islandora_defaults/config/install/` (`repository_item` and the `islandora_access` vocabulary)
 - `[drupal modules directory]/controlled_access_terms/modules/controlled_access_terms_defaults/config/install/` (the default `corporate_body`, `family`, `geo_location`, `person`, `resource_type` and `subject` vocabularies)
 - `[drupal web root]/core/profiles/standard/config/install/` (articles, pages, comments, and tags).
 
@@ -234,7 +233,7 @@ Once loaded, RDF mappings can be customized for the needs of a particular site t
 
 
 #### Structure of an RDF mapping
-Below is an example of an RDF mapping as a .yml (YAML) file. It is the current version of the RDF mapping of the Repository Item (`islandora_object`) bundle, provided by `islandora_defaults` and exportable as `rdf.mapping.node.islandora_object.yml`).
+Below is an example of an RDF mapping as a .yml (YAML) file. It is the RDF mapping (current at time of writing) of the Repository Item (`islandora_object`) bundle, provided by the Islandora Starter Site and exportable as `rdf.mapping.node.islandora_object.yml`).
 
 - The top level key `types` specifies the `rdf:type` of the resource or content model. `field_model`, a required field of Islandora objects, also gets mapped to `rdf:type` through an arcane back-end process.
 - The top level key `fieldMappings` specifies fields attached to that bundle and their RDF property mappings. One field can be mapped to more than one RDF property. It is a simple flat list.
@@ -268,9 +267,6 @@ status: true
 dependencies:
   config:
     - node.type.islandora_object
-  enforced:
-    module:
-      - islandora_defaults
   module:
     - node
 id: node.islandora_object

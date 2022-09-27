@@ -171,18 +171,6 @@ The `islandora` module depends on the `crayfish-commons` library, and must have 
 7. Run `composer update -W` again.
 8. Commit and push the `composer.json` and `composer.lock` files to Github with a commit message of "Preparing for next development iteration".
 
-### Release Islandora Defaults
-
-The `islandora` module depends on `islandora`, `controlled_access_terms`, and `openseadragon`, and must have its dependencies updated before release.
-
-1. Bump the dependency for those modules in `composer.json`.
-2. Run `composer update -W`
-4. Commit and push the `composer.json` and `composer.lock` files to Github.
-5. Release the module by creating a new release for them in Github.
-6. Put the dependencies back to `dev-8.x-1.x`
-7. Run `composer update -W` again.
-8. Commit and push the `composer.json` and `composer.lock` files to Github with a commit message of "Preparing for next development iteration".
-
 **Note to module maintainers specifying composer requirements:** please familiarize yourself with the [Next Significant Release Modifiers](https://getcomposer.org/doc/articles/versions.md#next-significant-release-operators)  so that module dependencies are as permissive as possible. Most often dependency versions should be tagged using the caret (^) so that bug-fixes and minor releases can be pulled in without updating their module’s composer file.
 
 ## Undoing a Release

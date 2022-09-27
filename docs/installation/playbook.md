@@ -3,9 +3,9 @@
 !!! note "Still Alive"
     Reports of the playbook's demise have been exaggerated. It is still in use and being maintained. Local VMs (VirtualBox) cannot be run on M1 series Apple silicon at this time, but you can use the remote deployment option to deploy Islandora on low-cost virtual hosting.  
 
-The Islandora Playbook ([Islandora-Devops/islandora-playbook](https://github.com/Islandora-Devops/islandora-playbook)) is a tool for installing the Islandora stack on a single virtual machine. It can be used both as a [Vagrant](https://www.vagrantup.com/) project to create a local development environment, or as an [Ansible](https://www.ansible.com/community) playbook to provision a local or remote server. It can set up a Drupal based either on Islandora Defaults, or on the Install Profile Demo. 
+The Islandora Playbook ([Islandora-Devops/islandora-playbook](https://github.com/Islandora-Devops/islandora-playbook)) is a tool for installing the Islandora stack on a single virtual machine. It can be used both as a [Vagrant](https://www.vagrantup.com/) project to create a local development environment, or as an [Ansible](https://www.ansible.com/community) playbook to provision a local or remote server. It can set up a Drupal based either on Islandora Starter Site, or on the Install Profile Demo. 
 
-## Basic Usage (local, Islandora Defaults):
+## Basic Usage (local, Islandora Starter Site):
 
 Install requirements, then:
 ```bash

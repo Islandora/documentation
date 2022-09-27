@@ -11,7 +11,7 @@ As described in the [resource nodes section](content_models.md#resource-nodes), 
 
 ## Content Types
 
-In Drupal, Nodes come in different subtypes called [Content Type](../user-documentation/glossary#content-type). These let you define a type of content ("Article" and "Basic Page" are Drupal defaults and "Repository Item" is an Islandora specific example), the set of metadata fields that are attached to that content, and how those fields can be edited and displayed. Each [Content Type](../user-documentation/glossary#content-type) is essentially a metadata profile that can be used for a piece of web content, or to describe a digital resource. You can create your own [Content Types](../user-documentation/glossary#content-type) for your Islandora project or use a pre-defined one like Repository Item from the Islandora_defaults module. We will go over the metadata specific aspects of Content Types below, but for a fuller walk-through of creating a [Content Type](../user-documentation/glossary#content-type) [see here](content_types.md#create-a-content-type).
+In Drupal, Nodes come in different subtypes called [Content Type](../user-documentation/glossary#content-type). These let you define a type of content ("Article" and "Basic Page" are Drupal defaults and "Repository Item" is an Islandora specific example), the set of metadata fields that are attached to that content, and how those fields can be edited and displayed. Each [Content Type](../user-documentation/glossary#content-type) is essentially a metadata profile that can be used for a piece of web content, or to describe a digital resource. You can create your own [Content Types](../user-documentation/glossary#content-type) for your Islandora project or use a pre-defined one like Repository Item from the Islandora Starter Site. We will go over the metadata specific aspects of Content Types below, but for a fuller walk-through of creating a [Content Type](../user-documentation/glossary#content-type) [see here](content_types.md#create-a-content-type).
 
 Not all [Content Types](../user-documentation/glossary#content-type) in your Drupal site need be [Islandora Resource Nodes](content_models.md#resource-nodes). Making a [Content Type](../user-documentation/glossary#content-type) a Resource Node will associate Islandora specific behaviours (such as syncing to Fedora or causing derivatives to be generated) with it. The decision to make a content an Islandora resource node is left to the discretion of the site manager. In Islandora, a "resource node" is usually considered a descriptive record for "a thing", and is conceptually similar to an "Islandora Object" in 7.x, i.e. a "Fedora Object" in Fedora 3.x and below. Read more on configuring a [Content Type](../user-documentation/glossary#content-type) to be treated as a [Resource Node](content_types.md#create-a-content-type).
 
@@ -24,16 +24,16 @@ Fields can be added under **Administration** >> **Structure** >> **Content types
 Certain decisions must be made when fields are created, and before any content is added, because they can not be changed later. Field Type can not be changed, so you wouldn't be able to change a text field to a taxonomy field after creation. The field's machine name also can't be changed. The number of values allowed in a field or its maximum length or type of item to reference (in the case of Entity reference fields) can not be changed after content has been added. You can, however, always add new fields to a [Content Type](../user-documentation/glossary#content-type), even after content has been added.
 
 !!! islandora "7.x Migration Note: What About My MODS XML?"
-    Even when using *islandora_defaults* there is no "official" metadata schema in Islandora. Where Islandora 7.x used MODS, and took advantage of its hierarchical/extensible structure, Drupal Fields are a flat structure working with distinct, individual elements. You can base your fields on those in MODS, or any other schema, but that structure is up to you. The Metadata Interest Group has developed a sample [MODS-Drupal-RDF mapping](https://docs.google.com/spreadsheets/d/18u2qFJ014IIxlVpM3JXfDEFccwBZcoFsjbBGpvL0jJI/edit?pli=1#gid=0), which provides a structure upon which you can build your Drupal fields. It is used by the Repository Item [Content Type](../user-documentation/glossary#content-type) in *islandora_defaults*.
+    Even when using the Islandora Starter Site, there is no "official" metadata schema in Islandora. Where Islandora 7.x used MODS, and took advantage of its hierarchical/extensible structure, Drupal Fields are a flat structure working with distinct, individual elements. You can base your fields on those in MODS, or any other schema, but that structure is up to you. The Metadata Interest Group has developed a sample [MODS-Drupal-RDF mapping](https://docs.google.com/spreadsheets/d/18u2qFJ014IIxlVpM3JXfDEFccwBZcoFsjbBGpvL0jJI/edit?pli=1#gid=0), which provides a structure upon which you can build your Drupal fields. It is used by the Repository Item [Content Type](../user-documentation/glossary#content-type) in the Islandora Starter Site.
 
 
 !!! tip "You Cannot Change The [Content Type](../user-documentation/glossary#content-type) Of A Node"
     Once a node is created, its [Content Type](../user-documentation/glossary#content-type) cannot be changed. Just as you are unable to change many aspects of a Field once it has been created, once a node has been created it is now permanently of that [Content Type](../user-documentation/glossary#content-type) and the fields associated with it. At that point your only option would be to create a new node of the intended content type, map the field values (programmatically or by copy-paste), and update any media or children that refer to the old node to refer to the new one.
 
 
-The *islandora_defaults* module provides a **Repository Item** [Content Type](../user-documentation/glossary#content-type) that can be used as a structure to build your collection around, or it can be used as a sample to see how fields in [Content Type](../user-documentation/glossary#content-type) work. It pre-defines fields, including **Alternative Title** and **Date Issued** that could be of use in many digital repositories. The full list of fields and their field types can be seen in the screenshot below.
+The Islandora Starter Site provides a **Repository Item** [Content Type](../user-documentation/glossary#content-type) that can be used as a structure to build your collection around, or it can be used as a sample to see how fields in [Content Type](../user-documentation/glossary#content-type) work. It pre-defines fields, including **Alternative Title** and **Date Issued** that could be of use in many digital repositories. The full list of fields and their field types can be seen in the screenshot below.
 
-![Screenshot of the "Manage fields" page for the "Repository Item" [Content Type](../user-documentation/glossary#content-type) from islandora_defaults.](../assets/metadata_content_type_screenshot.png)
+![Screenshot of the "Manage fields" page for the "Repository Item" [Content Type](../user-documentation/glossary#content-type) from Islandora Starter Site.](../assets/metadata_content_type_screenshot.png)
 
 !!! tip "Titles Aren't Conventionally-Configurable Fields"
     The field *title* is built-in to each [Content Type](../user-documentation/glossary#content-type) by default, and can be referenced in views, templates, and indexing like other fields, but it cannot be configured like other fields. The only aspect you can change about *title* is its label. It has a built-in maximum length of 255 characters which cannot be changed. If your content requires longer titles we recommend you create a separate "long_title" field to store the full title and reserve the default title field for a display title.
@@ -61,7 +61,7 @@ In Drupal, _Taxonomy Vocabularies_ (or simply _Vocabularies_) are also entity su
 
 There are two ways that users can interact with taxonomies: they can be "closed," e.g. a fixed list to pick from in a dropdown, or "open," e.g. `field_tags` where users can enter new terms, which are created on the fly. This is not set on the _vocabulary_ itself, but in the configuration of the field (typically on a node). Terms within vocabularies have an ordering, and can have hierarchical structure, but do not need to.
 
-Islandora (through the Islandora Core Feature) creates the 'Islandora Models' vocabulary which includes the terms 'Audio', 'Binary', 'Collection', 'Compound Object', 'Digital Document', 'Image', 'Newspaper', 'Page', 'Paged Content', 'Publication Issue', and 'Video'. Islandora Defaults provides contexts that cause certain actions (e.g. derivatives to happen, or blocks to appear) based on which term is used.
+Islandora (through the Islandora Core Feature) creates the 'Islandora Models' vocabulary which includes the terms 'Audio', 'Binary', 'Collection', 'Compound Object', 'Digital Document', 'Image', 'Newspaper', 'Page', 'Paged Content', 'Publication Issue', and 'Video'. Islandora Starter Site provides contexts that cause certain actions (e.g. derivatives to happen, or blocks to appear) based on which term is used.
 
 <!-- Is it possible to add your own terms to this vocabulary? Is it recommended? -->
 
@@ -127,7 +127,7 @@ Entity Reference fields are a special type of field built into Drupal core that 
 - Whether to use Views for filtering
 - Whether to allow users to create new referenced entities while inputting data, if they don't already exist
 
-The *Repository Item* content type, provided by the *islandora_defaults* module, includes several entity reference fields that reference vocabularies defined by the *islandora* and *controlled_access_terms* modules.
+The *Repository Item* content type, provided by the Islandora Starter Site, includes several entity reference fields that reference vocabularies defined by the *islandora* and *controlled_access_terms* modules.
 
 #### Configurations for Entity Reference field
 
@@ -206,7 +206,7 @@ The Typed Relation field is defined in the *controlled_access_terms* module, is 
 
 #### Configurations for the Typed Relation field
 
-The *islandora_defaults* module demonstrates a Typed Relation field labelled 'Linked Agent' as part of the Repository Item content type, and populates the available relations from the MARC relators list. ![Screenshot of adding a value into a typed relation field](../assets/metadata_typed_relation_field.png)
+The Islandora Starter Site includes a Typed Relation field labelled 'Linked Agent' as part of the Repository Item content type, and populates the available relations from the MARC relators list. ![Screenshot of adding a value into a typed relation field](../assets/metadata_typed_relation_field.png)
 
 The list of available relations for this Linked Agent field is configurable at '/admin/structure/types/manage/islandora_object/fields/node.islandora_object.field_linked_agent'.
 

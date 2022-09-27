@@ -167,7 +167,6 @@ nav:
           - 'Large files': 'user-documentation/uploading-large-files.md'
       - Administering Islandora:
           - 'Access control': 'user-documentation/access-control.md'
-          - 'Islandora defaults': 'user-documentation/islandora_defaults_reference.md'
           - 'JWT authentication': 'user-documentation/jwt-authentication.md'
           # moved from Developer documentation
           - 'Usage statistics': 'user-documentation/usage-stats.md'

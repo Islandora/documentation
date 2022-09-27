@@ -9,7 +9,7 @@ At the end, you will have metadata in a Drupal node, a file stored in Fedora, an
 
 ## Tools
 
-For this tutorial you will need an instance of [Islandora Defaults](https://github.com/Islandora/islandora_defaults). You can use the online sandbox or one of the [sandbox VMs](https://drive.google.com/drive/folders/1rmaIX-Rw5VmCQrkE8_nQTKLX82rVSL0z?usp=sharing).
+For this tutorial you will need an instance of [Islandora Starter Site](https://github.com/Islandora/islandora-starter-site). You can also use the online sandbox or one of the [sandbox VMs](https://drive.google.com/drive/folders/1rmaIX-Rw5VmCQrkE8_nQTKLX82rVSL0z?usp=sharing).
 
 [Online Sandbox](http://sandbox.islandora.ca)
 
@@ -21,7 +21,7 @@ To add content to Islandora, start by creating a node. When logged in to Drupal 
 
 ![Click on Add Content](../assets/create_node_add_content.png)
 
-Next, select a content type that is configured with Islandora behaviours. In Islandora Defaults, there is Islandora content type. It is called **Repository Item**.
+Next, select a content type that is configured with Islandora behaviours. In the Islandora Starter Site, there is an Islandora content type. It is called **Repository Item**.
 
 ![Click on Repository Item](../assets/create_node_select_repo_item.png)
 

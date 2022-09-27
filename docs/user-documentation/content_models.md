@@ -8,7 +8,7 @@ A resource node holds the descriptive metadata for an Islandora object, as well 
 the various files that are part of the object for preservation or display, such as the original file
  and various derivative files generated from it.
 
-The model for exactly what constitutes an object in Islandora is flexible and can be adapted to the needs of specific users. For example, the Islandora Defaults configuration considers an object as a resource node of the type "Repository Item"  which contains descriptive metadata about the object. Attached to that Node are one or more Media, each representing a file that is part of this object, such as "Original File", "Thumbnail", "Preservation Master", etc. With this model, every original file uploaded into Islandora has its own resource node.
+The model for exactly what constitutes an object in Islandora is flexible and can be adapted to the needs of specific users. For example, the Islandora Starter Site configuration considers an object as a resource node of the type "Repository Item"  which contains descriptive metadata about the object. Attached to that Node are one or more Media, each representing a file that is part of this object, such as "Original File", "Thumbnail", "Preservation Master", etc. With this model, every original file uploaded into Islandora has its own resource node.
 
 Multi-file Media configurations also attach Media to a parent node, but allow for that node to be represented by multiple "Original File"s. In this model, a Media contains the original file as well as any derivative files created from it (thumbnail, service file, etc.).
 
@@ -115,13 +115,13 @@ See [the media section](media.md) for more details.
 
 ### Display modes
 
-Drupal uses "display modes" (also called "view modes") as alternative ways to present content to users. You may be familiar with the "full" and "teaser" versions of nodes, which are rendered using two corresponding display modes. Islandora makes use of display modes to control how media content is displayed. Islandora Defaults provides two display modes for Media, one which renders the OpenSeadragon viewer and the other which renders the pdf.js viewer. These two display modes can be enabled by using "Display hints" in the node edit form, or you can configure Islandora to use a specific display mode for all media based on the file's Mime type. Both methods make use of [Contexts](context.md).
+Drupal uses "display modes" (also called "view modes") as alternative ways to present content to users. You may be familiar with the "full" and "teaser" versions of nodes, which are rendered using two corresponding display modes. Islandora makes use of display modes to control how media content is displayed. Islandora Starter Site provides two display modes for Media, one which renders the OpenSeadragon viewer and the other which renders the pdf.js viewer. These two display modes can be enabled by using "Display hints" in the node edit form, or you can configure Islandora to use a specific display mode for all media based on the file's Mime type. Both methods make use of [Contexts](context.md).
 
 To set the display mode on the resource node's edit form, select the display mode you want to use for that node in the _Display hints_ field:
 
 ![Display hints](../assets/resource_nodes_display_hints.png)
 
-Due to the associated Context configurations ("OpenSeadragon" and "PDFjs Viewer") that are shipped with Islandora Defaults, the selected display mode will then be used when the resource node's page is rendered.
+Due to the associated Context configurations ("OpenSeadragon" and "PDFjs Viewer") that are shipped with the Islandora Starter Sitee, the selected display mode will then be used when the resource node's page is rendered.
 
 At a global level, there are a couple of ways to tell Drupal to use the PDFjs viewer to render the content of the media field whenever the media has a Mime type of `application/pdf`.
 
@@ -185,9 +185,9 @@ This document was originally developed by [Alex Kent](https://github.com/alexken
 
 [![CC BY-NC 4.0](https://mirrors.creativecommons.org/presskit/buttons/88x31/svg/by-nc.svg)](https://creativecommons.org/licenses/by-nc/4.0/)
 
-[^1] In `islandora_defaults`, this is the `field_model` field, which is populated by taxonomy terms in the `islandora_models` taxonomy vocabulary provided by the `islandora_core_feature` submodule of `Islandora/islandora`
+[^1] In the Islandora Starter Site, this is the `field_model` field, which is populated by taxonomy terms in the `islandora_models` taxonomy vocabulary provided by the `islandora_core_feature` submodule of `Islandora/islandora`
 
-[^2] In `islandora_defaults`, this is the `field_member_of` field.
+[^2] In the Islandora Starter Sitee, this is the `field_member_of` field.
 
 ## Islandora Legacy Objects versus Islandora Resource Nodes
 

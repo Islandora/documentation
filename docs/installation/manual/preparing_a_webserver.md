@@ -53,7 +53,7 @@ sudo su `whoami`
 
 ### Install PHP 7.4
 
-Islandora defaults, a module which will install Islandora at the end, requires PHP 7.4. If you're running Debian 11 you should be able to install PHP 7.4 from the apt packages directly:
+If you're running Debian 11 you should be able to install PHP 7.4 from the apt packages directly:
 
 ```bash
 sudo apt-get -y install php7.4 php7.4-cli php7.4-common php7.4-curl php7.4-dev php7.4-gd php7.4-imap php7.4-json php7.4-mbstring php7.4-opcache php7.4-xml php7.4-yaml php7.4-zip libapache2-mod-php7.4 php-pgsql php-redis php-xdebug unzip

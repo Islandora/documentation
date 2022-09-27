@@ -12,9 +12,9 @@ The [Open Archives Initiative Protocol for Metadata Harvesting](https://www.open
 | ListIdentifiers     | [http://localhost:8000/oai/request?verb=ListIdentifiers&metadataPrefix=oai_dc](http://localhost:8000/oai/request?verb=ListIdentifiers&metadataPrefix=oai_dc)                                                     |
 | ListRecords         | [http://localhost:8000/oai/request?verb=ListRecords&metadataPrefix=oai_dc](http://localhost:8000/oai/request?verb=ListRecords&metadataPrefix=oai_dc)                                                             |
 
-The module [Islandora OAI-PMH (`islandora_oaipmh`)](https://github.com/Islandora/islandora_defaults/tree/2.x/modules/islandora_oaipmh) is a submodule of Islandora Defaults. It provides default configuration for the [Drupal REST OAI-PMH module](https://www.drupal.org/project/rest_oai_pmh) so that repository content can be harvested.
+These services are provided by the OAI-PMH [Drupal REST OAI-PMH module](https://www.drupal.org/project/rest_oai_pmh) Drupal module. The Islandora Starter Site provides some default configuration so that repository content can be harvested. This configuration used to be part of Islandora OAI-PMH, a submodule of Islandora Defaults.
 
-Enabling Islandora OAI-PMH provides:
+For OAI-PMH functionality, the Islandora Starter Site provides:
 
 - a View ("OAI-PMH") that defines sets of objects for exposure at the oai_dc [endpoint](http://localhost:8000/oai/request?verb=ListRecords&metadataPrefix=oai_dc). By default,:
     - there is one set per "Collection" object containing that object's children
@@ -27,7 +27,7 @@ The REST OAI-PMH module indexes (caches) set membership, so new Items may not ap
 
 ## OAI-DC Metadata Format/Metadata Mappings
 
-The OAI-PMH module makes use of one of two modules to provide metadata mappings: the RDF module or the Metatag module. By configuring OAI-PMH to use the RDF module (appears as "OAI Dublin Core (RDF Mapping)" and is enabled by default with Islandora OAI-PMH), the OAI-PMH module will use the RDF mapping as configured for your content type (the same mapping that is used for Fedora and Blazegraph, e.g. rdf.mapping.node.islandora_object.yml). 
+The OAI-PMH module makes use of one of two modules to provide metadata mappings: the RDF module or the Metatag module. By configuring OAI-PMH to use the RDF module (appears as "OAI Dublin Core (RDF Mapping)" and is enabled by default in the Islandora Starter Site), the OAI-PMH module will use the RDF mapping as configured for your content type (the same mapping that is used for Fedora and Blazegraph, e.g. rdf.mapping.node.islandora_object.yml). 
 
 However,
 

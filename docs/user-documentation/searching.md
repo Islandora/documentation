@@ -60,7 +60,7 @@ EDTF date fields can only be successfully indexed directly as strings. However, 
 
 ## Searching Islandora
 
-Searching using Search API in Drupal is done using Drupal Views. The Islandora Defaults module comes with a search page pre-configured (accessible at '/solr-search/content'). To edit the search page, navigate to '/admin/structure/views/view/solr_search_content'.
+Searching using Search API in Drupal is done using Drupal Views. The Islandora Starter Site comes with a search page pre-configured (accessible at '/solr-search/content'). To edit the search page, navigate to '/admin/structure/views/view/solr_search_content'.
 
 Repository managers may want to change the URL used to access the page, add it to the site navigation, or add a search box. In the 'Page Settings' box in the middle of the page, click on the existing path to open a shadow-box with an edit field. Change the URL as desired, for example, to 'search' and click **Apply**. Then, click the **No menu** link just below it to open the menu settings shadow-box. Selecting 'Normal menu entry' will allow a repository manager to add a menu link text, description, and place it within the site menu tree (the default, `<Main navigation>` works for most sites). A search box can be added by expanding the _Advanced_ options and changing the _Exposed form in block_ setting and then use the _Block Layout_ interface (found at '/admin/structure/block') to place the block where desired. After making changes to the View's settings, click the **Save** button to ensure the changes are not lost.
 

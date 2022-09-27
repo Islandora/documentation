@@ -69,7 +69,7 @@ however, there are times when you need even more control.  This is where the Con
 Any condition available to the Context module can be used to control block visibility.  And you can even combine conditions
 using Boolean (AND/OR) logic.
 
-For example, in the `islandora_defaults` feature, we provide a context specifically for showing a list of members of a collection.
+For example, in the Islandora Starter Site, we provide a context specifically for showing a list of members of a collection.
 All of our content is the same content type (Repository Item), and Collections are distinguished by being tagged with the
 "Collection" taxonomy term.  Using the admin toolbar, if you navigate to Admin > Structure > Context (admin/structure/context),
 you should see a list of all contexts available to the site.

@@ -14,11 +14,11 @@ Islandora provides:
 - a "Children" tab on resources, which provides a management interface to access, re-order, add, or delete the members of a resource based on the Member Of field.
 - a "Model" field (`field_model`) which can take various values including "Collection".
 
-## Islandora Defaults features
+## Islandora Starter Site features
 
-[Islandora Defaults](../user-documentation/islandora_defaults_reference.md) is an optional collection of presets for Islandora, intended to provide a more user-friendly out-of-the-box experience and starting point for more specific customization. 
+[Islandora Starter Site](https://github.com/Islandora/islandora-starter-site) is an optional set of presets for Islandora, intended to provide a more user-friendly out-of-the-box experience and starting point for more specific customization. 
 
-Islandora Defaults provides:
+Islandora Starter Site provides:
 
 - a [Content Type](../user-documentation/content_types.md) "Repository Item" that uses the `field_member_of` field, so that users may add nodes of this type to a collection (or paged content, or compound resource),
 - A [View](../tutorials/create_update_views.md) showing the members of the collection.

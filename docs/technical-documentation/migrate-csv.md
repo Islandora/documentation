@@ -44,7 +44,7 @@ In this tutorial, we'll be inspecting each migration file in detail before runni
 1. An instance of Islandora. Use [Islandora Playbook](https://github.com/Islandora-Devops/islandora-playbook) to spin up an environment pre-loaded with all the modules you need (except this one)
 1. Some basic command line skills.  You won't need to know much, but you'll have to `vagrant ssh` into the box, navigate into Drupal, and use `git` and `drush`, etc...  If you can copy/paste into a terminal, you'll survive.
 
-A big part of this tutorial relies on the [islandora_defaults](https://github.com/Islandora/islandora_defaults) and [controlled_access_terms_defaults](https://github.com/Islandora/controlled_access_terms/tree/2.x/modules/controlled_access_terms_defaults) features, which define the default metadata profile for Islandora (which we'll be migrating into). You're not required to use the `islandora_defaults` or `controlled_access_terms_defaults` for your repository, but for the purposes of demonstration, it saves you a lot of user interface administrivia so you can focus just on the learning how to migrate.  By the time you are done with this exercise, you'll be able to easily apply your knowledge to migrate using any custom metadata profile you can build using Drupal.
+The configuration referred to in this tutorial comes from the [Islandora Starter Site](https://github.com/Islandora/islandora-starter-site/), which defines the content model and metadata fields that we'll be migrating into. You're not required to use the Islandora Starter Site for your repository, but for the purposes of demonstration, it saves you a lot of user interface administrivia so you can focus just on the learning how to migrate.  By the time you are done with this exercise, you'll be able to easily apply your knowledge to migrate using any custom metadata profile you can build using Drupal.
 
 ## Overview
 
@@ -64,7 +64,8 @@ Therefore, each row in your CSV must contain enough information to create these.
 
 Buried in your descriptive metadata are often references to other things which aren't repository items themselves, but records still need to be kept for them.  Authors, publishers, universities, places, etc... can be modeled as Drupal Entities, so that they can be referenced by other Entities.  So there's the potential to have a lot of different entity types described in a single row in a CSV.
 
-In this tutorial, we're working with `islandora_defaults` and `controlled_access_terms` entities, and will be migrating six entity types using the three migrations included in this module.
+In this tutorial, we will use the three migrations defined in this module to migrate into Drupal entities. The entities we are migrating content into have already been defined by the Islandora Starter Site:
+
 - file
 - node
 - media
