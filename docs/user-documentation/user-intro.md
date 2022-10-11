@@ -1,41 +1,49 @@
-This _User Documentation_ section is aimed at site admins and repository managers who need to understand and configure their Islandora.
-It will go in depth on how Islandora allows you to use the various features of Drupal to construct and display repository items.
+This _Using Islandora_ section is aimed at site administrators and repository managers who need to understand and configure their Islandora repositories.
+It will go in-depth on how Islandora allows you to use the various features of Drupal to construct and display repository items. For easy readability, we have divided this documentation into five major sections, organized by functionality.
+
+- **Describing content**: This section covers Islandora's functionality for describing your content. In other words, visit here to learn everything about descriptive metadata in Islandora.
+- **Searching content**: This section covers Islandora's functionality for searching your content. In other words, visit here to learn everything about finding and browsing content in Islandora.
+- **Viewing content**: This section covers Islandora's functionality for viewing your content. In other words, visit here to learn about how your content files can be viewed or displayed to your end-users.
+- **Handling content files**: This section covers Islandora's functionality for managing content files. In other words, visit here to learn the organization and storage of your digital files.
+- **Administering Islandora**: This section covers Islandora's functionality for administering your site. In other words, this is where you find information about setting permissions, site statistics, and other nitty-gritty (but non-developer) administrative configurations.
 
 Islandora, like Drupal, provides tools to create a site, but does not force you to conform to any specific site structure,
 organization, or navigation. There is a hope that we can provide something useful out of the box, while also allowing the
 full suite of Drupal configuration options. This out-of-the-box configuration is the Islandora Demo module.
 
-It is recommended to be familiar with the basics of Drupal, including content types, fields, users, and views.
+As you read this documentation, it is recommended to be familiar with the basics of Drupal, including content types, fields, users, and views.
 The [Official Drupal User Guide](https://www.drupal.org/docs) and the
 [Community Guide to Drupal](https://www.drupal.org/docs/user_guide/en/index.html) are a good place to start.
 
-## Object Modeling
+## Modeling content
 
 In Islandora, we often want to store (and manage, and preserve) sets of metadata with binaries (digital files).
-We used to call this an "_object_" but in Islandora, are represented as multiple interconnected entities.
+Previously in Islandora Legacy, these components were referenced together as a single "_object_." In Islandora, metadata and their binaries are now represented as multiple interconnected entities.
 
 - Metadata is stored in _nodes_ (a.k.a. _content_).
-- Specifically, metadata values are stored in _fields_ which are configurable properties attached to _nodes_.
-- Different types of nodes can have different configurations of fields; these are called _content types_.
-- Binary files are stored in are _media_, which are wrapper entities to help manage files.
-- Media can have fields too, and come in different _media types_.
-- Metadata values can be stored as _taxonomy terms_, which let you reuse the same value in multiple places.
-- Taxonomy terms can also have fields, and their version of "types" are called _vocabularies_.
-They can represent everything from simple labels to more complex concepts such as people, places, and subjects.
+    - Specifically, metadata values are stored in _fields_ which are configurable properties attached to _nodes_.
+    - Different types of nodes can have different configurations of fields; these are called _content types_.
 
+- Binary files are stored in are _media_, which are wrapper entities to help manage files.
+    - Media can have fields too, and come in different _media types_.
+
+- Metadata values can be stored as _taxonomy terms_, which let you reuse the same value in multiple places.
+    - Taxonomy terms can also have fields, and their version of "types" are called _vocabularies_. They can represent everything from simple labels to more complex concepts such as people, places, and subjects.
 
 ## Fedora
 
-Islandora 7.x basically inherits its object model from Fedora 3.x. In 7.x, Fedora stores all properties and content associated with an object - not only its owner, dc.title, status, PID, and status, but also any content files such as OBJ, DC, MODS, and RELS-EXT. In Islandora 7.x, Fedora is the authoritative, primary source for all aspects of an object. Fedora 3.x is not an optional component of an Islandora 7.x repository, it is the primary datastore.
+For users familiar with Islandora Legacy, the relationship between [Fedora](glossary.md/#fedora-repository-software) and Islandora has greatly changed in the current version of Islandora.
+
+Islandora Legacy inherited its object model from Fedora 3.x. In Legacy, Fedora stored all properties and content associated with an object - not only its owner, dc.title, status, PID, and status - but also any content files such as OBJ, DC, MODS, and RELS-EXT. In Islandora Legacy, Fedora acted as the authoritative, primary source for all aspects of an object. Fedora 3.x was not an optional component of an Islandora Legacy repository, instead it served as the primary datastore.
 
 In Islandora, using Fedora is optional. That's right, optional. Drupal, and not Fedora, is the primary source of all aspects of an Islandora object, and, with some variations, Drupal, not Fedora, is the primary datastore in an Islandora repository. If Fedora is present in an Islandora repository, content in it is a tightly synchronized copy of object properties and files managed by Drupal.
 
 Even though Fedora is optional in Islandora, most repositories will use it since it provides its own set of services that are worth taking advantage of, such as:
 
-* flexible, and configurable, disk storage architecture
-* fixity digest generation
+* Flexible and configurable disk storage architecture
+* Fixity digest generation
 * Memento versioning
-* integration with RDF/Linked Data triple-stores
+* Integration with RDF/Linked Data triple-stores
 * Integration with Microservices via API-X
 * WebAC Policies for access control (not currently leveraged by default)
 
@@ -44,7 +52,7 @@ In Islandora repositories that use Fedora, all properties about Drupal nodes are
 
 ## Architecture
 
-### Conceptual Diagram
+### Conceptual diagram
 
 Many users of Islandora may be familiar with the metaphorical diagram of Islandora Legacy as a cheeseburger, which provides a memorable approximation of how the different parts of the software stack interact in a vertically-integrated, relatively customizable fashion (ie, Drupal, Solr, Islandora, and Fedora are stable layers, and the "toppings" stand in for Solution Packs and other utilities that can be added or removed to customize Islandora):
 
@@ -54,4 +62,4 @@ For a similar conceptual approach to Islandora, we present it as a bento box: a 
 
 ![Islandora as a bento box](../assets/user-intro-bento.png)
 
-For a true diagram of how the various parts of Islandora interact, please see the full [Architecture Diagram](../technical-documentation/diagram.md)
+For a true diagram of how the various parts of Islandora interact, please see the full [Architecture Diagram](../technical-documentation/diagram.md).
