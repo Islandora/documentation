@@ -10,7 +10,7 @@ Using ISLE, you can spin up a repository that is exactly like sandbox.islandora.
 To get started with a **demo** environment using the demo install profile, run the following command from your `isle-dc` directory:
 
 ```bash
-make demo-install-profile
+make demo
 ```
 
 ## Kicking the Tires
