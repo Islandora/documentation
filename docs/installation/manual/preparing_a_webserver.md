@@ -1,5 +1,8 @@
 # Preparing a LAPP Server
 
+!!! warning "Needs Maintenance"
+    The manual installation documentation is in need of attention. We are aware that some components no longer work as documented here. If you are interested in helping us improve the documentation, please see [Contributing](../../../contributing/CONTRIBUTING).
+
 ## In this section, we will install:
 
 - [Apache 2](https://httpd.apache.org/), the webserver that will deliver webpages to end users

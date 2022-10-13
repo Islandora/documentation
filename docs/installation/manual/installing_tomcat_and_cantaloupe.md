@@ -1,5 +1,8 @@
 # Installing Tomcat and Cantaloupe
 
+!!! warning "Needs Maintenance"
+    The manual installation documentation is in need of attention. We are aware that some components no longer work as documented here. If you are interested in helping us improve the documentation, please see [Contributing](../../../contributing/CONTRIBUTING).
+
 ## In this section, we will install:
 - [Tomcat 9](https://tomcat.apache.org/download-90.cgi), the Java servlet container that will serve up some Java applications on various endpoints, including, importantly, Fedora
 - [Cantaloupe 5](https://cantaloupe-project.github.io/), the image tileserver - running in Tomcat - that will be used to serve up large images in a web-accessible fashion

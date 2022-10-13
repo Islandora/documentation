@@ -54,6 +54,7 @@ nav:
       - 'Media in Islandora': 'concepts/node-media.md'
       - 'Derivatives': 'concepts/derivatives.md'
       - 'RDF Repository': 'concepts/rdf.md'
+      - 'Islandora Starter Site': 'concepts/starter-site.md'
   - Behaviours (Models):
       - 'Collections': 'concepts/collection.md'
       - 'Paged Content': 'user-documentation/paged-content.md'
