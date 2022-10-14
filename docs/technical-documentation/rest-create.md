@@ -18,7 +18,7 @@ The above setup shows a configuration where the JSON format is enabled for GET, 
 
 To create a node, you need to provide two elements in your message body: the node type and any required field values.
 
-For the islandora_defaults included Repository Item these are:
+For the Repository Item content type included in the Islandora Starter Site, these are:
 
 1. A type - this tells Drupal what content type we are creating
 1. A title - this is a required field of all nodes.

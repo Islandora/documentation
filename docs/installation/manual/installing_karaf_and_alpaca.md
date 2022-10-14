@@ -1,5 +1,8 @@
 # Installing Karaf and Alpaca
 
+!!! warning "Needs Maintenance"
+    The manual installation documentation is in need of attention. We are aware that some components no longer work as documented here. If you are interested in helping us improve the documentation, please see [Contributing](../../../contributing/CONTRIBUTING).
+
 ## In this section, we will install:
 
 - [Apache ActiveMQ](https://activemq.apache.org/), a messaging server that will be used to handle communication between Alpaca and other components

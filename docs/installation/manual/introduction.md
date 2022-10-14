@@ -1,5 +1,8 @@
 # Introduction
 
+!!! warning "Needs Maintenance"
+    The manual installation documentation is in need of attention. We are aware that some components no longer work as documented here. If you are interested in helping us improve the documentation, please see [Contributing](../../../contributing/CONTRIBUTING).
+
 !!! notice
     The manual installation guide is not intended to describe *the* Islandora installation but rather *an* Islandora installation. The server created using this guide is not hardened, will not be easily scalable, and the components may not be configured in a way you consider easy to work with. A production instance of Islandora should be installed and maintained by a professional with an understanding of Linux and server administration.
 

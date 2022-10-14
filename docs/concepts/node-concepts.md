@@ -46,7 +46,7 @@ Islandora module is installed. All installation methods perform this migration, 
 | Newspaper         	| https://schema.org/Newspaper               	| 
 
 With Islandora alone, choosing a value from this list will have zero effects. The contingent behaviour
-must be configured during repository implementation. Islandora Defaults provides an example of what
+must be configured during repository implementation. Islandora Starter Site provides an example of what
 behaviours are possible for these types. 
 
 

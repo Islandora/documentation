@@ -1,15 +1,18 @@
 # Installing Composer, Drush, and Drupal
 
+!!! warning "Needs Maintenance"
+    The manual installation documentation is in need of attention. We are aware that some components no longer work as documented here. If you are interested in helping us improve the documentation, please see [Contributing](../../../contributing/CONTRIBUTING).
+
 ## In this section, we will install:
 
 - [Composer](https://getcomposer.org/) at its current latest version, the package manager that will allow us to install PHP applications
-- The Islandora fork of the composer installer from [drupal-composer/drupal-project](https://github.com/Islandora/drupal-project), which will install, among other things:
+- Either the [Islandora Starter Site](https://github.com/Islandora/islandora-starter-site/), or the [Drupal recommended-project](https://www.drupal.org/docs/develop/using-composer/starting-a-site-using-drupal-composer-project-templates#s-drupalrecommended-project), which will install, among other things:
     - [Drush 10](https://www.drush.org/) at its latest version, the command-line PHP application for running tasks in Drupal
     - [Drupal 9](https://www.drupal.org/) at its latest version, the content management system Islandora uses for content modelling and front-end display
 
-## Composer 2.x
+## Install Composer
 
-### Download and install Composer
+### Download and install Composer 2.x
 
 Composer provides PHP code that we can use to install it. After downloading and running the installer, we’re going to move the generated executable to a place in `$PATH`, removing its extension:
 
@@ -20,37 +23,39 @@ php composer-install.php
 sudo mv composer.phar /usr/local/bin/composer
 ```
 
-## Drush 10 and Drupal 9
 
-### Clone `drupal-project` and install it via Composer
+## Download and Scaffold Drupal
 
-Before we can fully install Drupal, we’re going to need to clone `drupal-project` and provision it using Composer. We’re going to install it into the `/opt` directory:
+At this point, you have the option of using the [Islandora Starter Site](https://github.com/Islandora/islandora-starter-site/), with its pre-selected modules
+and configurations which function "out of the box," or build a clean stock Drupal via the Drupal Recommended Project and install
+Islandora modules as you desire.
 
-```bash
-# Start by giving Drupal somewhere to live. The Drupal project is installed to
-# an existing, empty folder.
-sudo mkdir /opt/drupal
-sudo chown www-data:www-data /opt/drupal
-sudo chmod 775 /opt/drupal
-# Change the ownership of default Apache directory so Composer can access it
-sudo chown -R www-data:www-data /var/www/
-# Clone drupal-project and build it in our newly-created folder.
-git clone https://github.com/drupal-composer/drupal-project.git
-cd drupal-project
-# Expect this to take a little while, as this is grabbing the entire
-# requirements set for Drupal.
-sudo -u www-data composer create-project drupal-composer/drupal-project:9.x-dev /opt/drupal --no-interaction
-```
+### Option 1: Create a project using the Islandora Starter Site
 
-### Make Drush accessible in `$PATH`
-
-While it’s not required for Drush to be accessible in `$PATH`, not needing to type out the full path to it every time we need to use it is going to be incredibly convenient for our purposes. The rest of this guide will assume that we can simply run Drush from the command line when necessary without having to reference the full path.
+Navigate to the folder where you want to put your Islandora project (in our case `/var/www`), and
+create the Islandora Starter Site:
 
 ```bash
-sudo ln -s /opt/drupal/vendor/drush/drush/drush /usr/local/bin/drush
+cd /var/www
+composer create-project islandora/islandora-starter-site
 ```
 
-### Make the new webroot accessible in Apache
+This will install all PHP dependencies, including Drush, and scaffold the site.
+
+Drush is not accessible via `$PATH`, but is available using the command `composer exec -- drush` 
+
+### Option 2: Create a basic Drupal Recommended Project
+
+Navigate to the folder where you want to put your Drupal project (in our case `/var/www`), and
+create the Drupal Recommended Project:
+
+```bash
+cd /var/www
+composer create-project drupal/recommended-project my-project
+```
+
+
+## Make the new webroot accessible in Apache
 
 Before we can proceed with the actual site installation, we’re going to need to make our new Drupal installation the default web-accessible location Apache serves up. This will include an appropriate `ports.conf` file, and replacing the default enabled site.
 
@@ -87,8 +92,7 @@ Restart the Apache 2 service to apply these changes:
 ```bash
 sudo systemctl restart apache2
 ```
-
-### Prepare the PostgreSQL database
+## Prepare the PostgreSQL database
 
 PostgreSQL roles are directly tied to users. We’re going to ensure a user is in place, create a role for them in PostgreSQL, and create a database for them that we can use to install Drupal.
 
@@ -110,14 +114,20 @@ grant all privileges on database DRUPAL_DB to DRUPAL_DB_USER;
 - `DRUPAL_DB_PASSWORD`: `drupal`
     - This should be a secure password; it’s recommended to use a password generator to create this such as the one provided by [random.org](https://www.random.org/passwords/)
 
-### Run the Drupal installer with Drush
 
-The standard Drupal installation method involves navigating to your site’s front page and navigating through a series of form steps, but we can fast-track this using Drush’s `site-install` command.
+## Install Drupal using Drush
+
+The Drupal installation process can be done through the GUI in a series of form steps, or can be done quickly using Drush's `site-install` command. It can be invoked with the full list of parameters (such as `--db-url` and `--site-name`), but if parameters are missing, they will be asked of you interactiveley.
+
+### Option 1: Site install the Starter Site with existing configs
+
+Follow the instructions in the [README of the Islandora Starter Site](https://github.com/Islandora/islandora-starter-site/#usage).
+The steps are not reproduced here to remove redundancy. When this installation is done, you'll have a starter site ready-to-go. Once you set up the external services in the next sections, you'll need to configure Drupal to know where they are.
+
+### Option 2: Site install the basic Drupal Recommended Project
 
 ```bash
-# Rather than defining the root directory in our Drush command, we're going to
-# do this from the site root context.
-cd /opt/drupal/web
+cd /var/www/drupal
 drush -y site-install standard --db-url="pgsql://DRUPAL_DB_USER:DRUPAL_DB_PASSWORD@127.0.0.1:5432/DRUPAL_DB" --site-name="SITE_NAME" --account-name=DRUPAL_LOGIN --account-pass=DRUPAL_PASS
 ```
 This uses the same parameters from the above step, as well as:

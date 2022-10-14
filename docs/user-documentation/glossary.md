@@ -1,3 +1,5 @@
+# Glossary
+
 The following glossary of terms addresses an Islandora context. When comparing new Islandora and Fedora to older versions it may also be helpful to reference [the Islandora 7 Glossary](https://wiki.duraspace.org/display/ISLANDORA/APPENDIX+E+-+Glossary).
 
 ## Alpaca
@@ -36,13 +38,13 @@ Content entities are grouped into distinct [content entity types](#content-type)
 
 Each type of Content entity has a different set of behaviors. The interactions of these behaviors creates the site’s functionality. For example, a User may log into a site with a username and password that is stored as part of the content entity. If Users have the relevant permissions, they can write a blog post (a subtype of the [Node](#node) content entity type, with a specific data structure and behavior), and assign some tags ([Taxonomy terms](#taxonomy-term)) to the blog post.
 
-[Drupal](#drupal) comes with several [content entity types](#content-type) preconfigured. [Drupal](#drupal)'s default configuration includes the Basic Page and (blog) Article content types, as well as Audio, Image and Video Media types. _Islandora Defaults_ adds the Repository Item [content type](#content-type), alters the existing [Media](#media) types to store files in [Fedora](#fedora-repository-software), and introduces the Extracted Text and FITS Media types.
+[Drupal](#drupal) comes with several [content entity types](#content-type) preconfigured. [Drupal](#drupal)'s default configuration includes the Basic Page and (blog) Article content types, as well as Audio, Image and Video Media types. _Islandora Starter Site_ adds the Repository Item [content type](#content-type), alters the existing [Media](#media) types to store files in [Fedora](#fedora-repository-software), and introduces the Extracted Text and FITS Media types.
 
 ## Content model
 Deprecated concept used in Islandora Legacy; see [Islandora Model](#islandora-model).
 
 ## Content type
-A general type of Node in [Drupal](#drupal). A content type defines a set of data [fields](#field) and how they are displayed. Content types are subtypes of [Nodes](#node), one of the [Drupal](#drupal) [Content entities](#content-entity). The default [Drupal](#drupal) Content types are 'Article' and 'Basic page'. _Islandora Defaults_ adds 'Repository Item' as a Content type, defining metadata fields typically used to describe digital resources.
+A general type of Node in [Drupal](#drupal). A content type defines a set of data [fields](#field) and how they are displayed. Content types are subtypes of [Nodes](#node), one of the [Drupal](#drupal) [Content entities](#content-entity). The default [Drupal](#drupal) Content types are 'Article' and 'Basic page'. _Islandora Starter Site_ adds 'Repository Item' as a Content type, defining metadata fields typically used to describe digital resources.
 
 ## Context
 An "if-this-then-that" configuration created using the Drupal [Context](https://www.drupal.org/project/context) contrib module. Islandora extends the capabilities of Context by adding custom Conditions, custom Reactions, and by evaluating context at specific times to allow Contexts to be used for derivatives, indexing, and display.
@@ -58,7 +60,7 @@ Deprecated terminology, refers to how [Fedora 3](#fedora-repository-software)/Is
 A version of a file which is derived from an uploaded file. For example, a thumbnail generated from an uploaded image. Islandora uses [microservices](#microservice) to generate derivatives. See the concept page for [Derivatives](../concepts/derivatives.md).
 
 ## Docker
-[Docker](https://www.docker.com/) is a platform that use OS-level virtualization to deliver software in packages called containers. Islandora uses Docker as part of [ISLE](#isle), a suite of Docker containers that run the various components of Islandora required by Islandora Defaults.
+[Docker](https://www.docker.com/) is a platform that use OS-level virtualization to deliver software in packages called containers. Islandora uses Docker as part of [ISLE](#isle), a suite of Docker containers that run the various components of Islandora required by the Islandora Install Profile.
 
 ## Drupal
 Drupal is an open source web content management system (CMS) written in PHP. Known for being extremely flexible and extensible, Drupal is supported by a community of over 630,000 users and developers. Drupal sites can be customized and themed in a wide variety of ways.
@@ -106,6 +108,13 @@ In the context of digital repositories, ingest refers to the process by which th
 
 ## Islandora 8 (8.x, 2.0)
 Islandora 8, 8.x, 2.0, and CLAW are all deprecated names for the current version of Islandora. They referred to Islandora's use of Drupal 8, and being a major shift away from Islandora Legacy (formerly known as Islandora 7 or 7.x as it runs on Drupal 7).
+
+## Islandora Install Profile
+The Islandora Install Profile (in GitHub as [Islandora Install Profile Demo](https://github.com/Islandora-Devops/islandora_install_profile_demo), is a Drupal install profile that was developed by Born Digital, an Islandora vendor. It defines an Islandora with additional modules, themes, and configurations that were not defined in the Islandora Starter Site (formerly Islandora Defaults). The Install Profile and the Starter Site share the same function (though they approach it differently) and it is not possible to use both.
+
+## Islandora Starter Site
+The Islandora Starter Site is a way to install Drupal that provides a functional Islandora "out of the box." It was created from Islandora Defaults [now defunct] by discoverygarden inc, an Islandora vendor. The [Islandora Install Profile](#islandora-install-profile) and the Starter Site share the same function (though they approach it differently) and it is not possible to use both.
+
 
 ## Islandora model
 

@@ -1,10 +1,10 @@
 # How to create and add to a Collection
 
-This how-to demonstrates creating a collection and adding items to it in Islandora Defaults. For more about collections, see [Concept: Collection](../concepts/collection.md).
+This how-to demonstrates creating a collection and adding items to it in the Islandora Starter Site. For more about collections, see [Concept: Collection](../concepts/collection.md).
 
 ## Introduction
 
-In Islandora Defaults, Collections that are tagged as "Collection" under System > Model will show a view of their member objects. A member is any object that is "member_of" that object, and can be added via the "Members" tab. This is the mechanism in Islandora Defaults; individual instances may vary.
+In the Islandora Starter Site, nodes that are tagged as "Collection" under System > Model will show a view of their member objects. A member is any object that is "member_of" that object, and can be added via the "Members" tab. This is the mechanism in the Islandora Starter Site, and your individual instances may vary.
 
 !!! Warning "Collections and Deleting"
     Collections and their members are independent of each other,

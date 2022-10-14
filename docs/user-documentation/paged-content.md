@@ -16,7 +16,7 @@ using the `field_member_of` property.
 Similar to the collection view showing members of a collection, Islandora provides
  taxonomy terms _Paged Content_ and _Page_ in the _Islandora Model_ vocabulary,
 that can be used to trigger paged
-content behaviors. Islandora Defaults provides a Context for _Paged Content_
+content behaviors. Islandora Starter Site provides a Context for _Paged Content_
 resource nodes to trigger displaying an OpenSeadragon viewer showing the child
 resource nodes' service files.
 

@@ -14,7 +14,7 @@ with the media's fields accessible at `/fcrepo/rest/2019-11/test.jpg/fcr:metadat
 
 ## Media types
 
-Islandora Defaults makes use of the media types provided automatically by Drupal. The file extensions allowed by each media type have been configured at the Drupal level. It is possible to create your own media types, and/or to edit the allowed field types and functionality of the existing media types. However, with Islandora Defaults, the _Image_ media type only allows .png, .gif, .jpg or .jpeg files. TIFFs (.tiff files) must be added in the _File_ media type instead of _Image_.
+Islandora Core Feature and the Islandora Starter Site make use of the media types provided by the Standard Drupal installation (Video, Audio, etc). The file extensions allowed by each media type have been configured at the Drupal level. It is possible to create your own media types, and/or to edit the allowed field types and functionality of the existing media types. However, with Islandora Starter Site, the _Image_ media type only allows .png, .gif, .jpg or .jpeg files. Many large images such as TIFFs (.tiff files) and JP2s (.jp2) must be added in the _File_ media type instead of _Image_.
 <!-- the explanation of TIFFs as files on this page is referenced in create-a-resource-node.md tutorial. -->
 
 ## Media revisions
