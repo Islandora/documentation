@@ -121,7 +121,7 @@ To set the display mode on the resource node's edit form, select the display mod
 
 ![Display hints](../assets/resource_nodes_display_hints.png)
 
-Due to the associated Context configurations ("OpenSeadragon" and "PDFjs Viewer") that are shipped with the Islandora Starter Sitee, the selected display mode will then be used when the resource node's page is rendered.
+Due to the associated Context configurations ("OpenSeadragon" and "PDFjs Viewer") that are shipped with the Islandora Starter Site, the selected display mode will then be used when the resource node's page is rendered.
 
 At a global level, there are a couple of ways to tell Drupal to use the PDFjs viewer to render the content of the media field whenever the media has a Mime type of `application/pdf`.
 

@@ -148,7 +148,7 @@ The required mapping metadata fields when creating a brand-new mapping include t
 
 The mapping itself consists of the `types`' and `fieldMappings` configurations.
 
-All the mappings use RDF namespaces instead of fully-qualified URIs. For example, the type for islandora_object is entered in the RDF config as `pcdm:Object` instead of `http://pcdm.org/models#Object`. The available namespaces are defined in module hooks (hook_rdf_namespaces) but can also be entered manually in a configuratino interface. Repository managers wanting to add additional namespaces need to go to Configuration > Search and Metadata > JSONLD and enter their desired namespaces in the "Additional RDF Namespaces" box.
+All the mappings use RDF namespaces instead of fully-qualified URIs. For example, the type for islandora_object is entered in the RDF config as `pcdm:Object` instead of `http://pcdm.org/models#Object`. The available namespaces are defined in module hooks (hook_rdf_namespaces) but can also be entered manually in a configuration interface. Repository managers wanting to add additional namespaces need to go to Configuration > Search and Metadata > JSONLD and enter their desired namespaces in the "Additional RDF Namespaces" box.
 
 Namespaces currently supported (ordered by the module that supplies them) include:
 
