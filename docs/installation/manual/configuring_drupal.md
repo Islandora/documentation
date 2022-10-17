@@ -102,10 +102,7 @@ Components we've now downloaded using `composer require` can be enabled simultan
 
 ```bash
 cd /opt/drupal
-drush -y en rdf responsive_image devel syslog serialization basic_auth rest restui search_api_solr facets content_browser pdf admin_toolbar islandora_defaults controlled_access_terms_defaults islandora_breadcrumbs islandora_iiif islandora_oaipmh
-# If Carapace was downloaded, now is the time to enable and set it as well.
-drush -y theme:enable carapace
-drush -y config-set system.theme default carapace
+drush -y en rdf responsive_image devel syslog serialization basic_auth rest restui search_api_solr facets content_browser pdf admin_toolbar controlled_access_terms_defaults islandora_breadcrumbs islandora_iiif islandora_oaipmh
 # After all of this, rebuild the cache.
 drush -y cr
 ```
