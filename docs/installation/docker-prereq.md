@@ -3,7 +3,7 @@
 ## Requirements for using ISLE with Docker Compose
 
 - Docker 19.x+
-- Docker Compose version 1.25.x+
+- Docker Compose version 2.x+
 - GNU Make 4.0+
 - Git 2.0+
 - [ISLE Docker Compose](https://github.com/islandora-devops/isle-dc)
