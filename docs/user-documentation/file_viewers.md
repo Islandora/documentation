@@ -8,10 +8,11 @@ In Drupal, a common way to implement a viewer is through a [module](glossary.md#
 
 Viewers that are known to work with Islandora include:
 
-* [OpenSeadragon](https://openseadragon.github.io/), via the Drupal module [OpenSeadragon](https://github.com/Islandora/openseadragon) (maintained by the Islandora Foundation).
+* [OpenSeadragon](https://openseadragon.github.io/), via the Drupal module [OpenSeadragon](https://github.com/Islandora/openseadragon) (maintained by the Islandora community).
+* [Mirador](https://projectmirador.org/), via the Drupal module [Islandora Mirador](https://github.com/Islandora/islandora_mirador/) (maintained by the Islandora community).
 * [pdf.js](https://github.com/mozilla/pdf.js), via the Drupal contrib module [PDF](https://www.drupal.org/project/pdf)
 
-Both are included with the Islandora Starter Site.
+OpenSeadragon and pdf.js are included with the Islandora Starter Site.
 
 
 ## How are viewers configured?
