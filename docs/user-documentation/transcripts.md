@@ -6,8 +6,15 @@ provided by the Islandora module, and the "Audio with Captions" and "Video
 with Captions" field formatters from the Islandora Audio and Video modules, 
 respectively. 
 
-To add transcripts (or subtitles, or captions) to a Repository Item 
-using Islandora Defaults, navigate to the Service File media (or whichever one
+## Using Transcripts with the Islandora Starter Site
+
+!!! note "Sandbox"
+    On the public sandbox, or other sites using the Islandora Install Profile Demo,
+    you will first need to make the "Track" field visible in the media form, at
+    Structure > Media > Audio|Video > Manage Display.
+
+To add transcripts (or subtitles, or captions) to a Repository Item,
+navigate to the Service File media (or whichever one
 will be playing), open the edit form, and in the "Track" field, add a WebVTT file 
 containing the text you'd like displayed. Select "captions" or "subtitles" 
 as a type, and set a label. The label will be displayed when selecting the 
