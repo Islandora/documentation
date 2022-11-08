@@ -29,6 +29,7 @@ The following Islandora components use semantic versioning:
 * [islandora](https://github.com/Islandora/islandora/tree/8.x-1.x) (Drupal module)
 * [jsonld](https://github.com/Islandora/jsonld) (Drupal module)
 * [openseadragon](https://github.com/Islandora/openseadragon) (Drupal module)
+* [islandora\_mirador](https://github.com/Islandora/islandora_mirador) (Drupal module)
 
 Drupal submodules, which are included in several of the above modules, share versions with their parents. 
 

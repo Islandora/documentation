@@ -119,13 +119,17 @@ Release the `jsonld` module by creating a new release for it in Github.
 
 Release the `openseadragon` module by creating a new release for it in Github.
 
+### Release Islandora Mirador
+
+Release the `islandora_mirador` module by creating a new release for it in Github.
+
 ### Release migrate_islandora_csv
 
 Release the `migrate_islandora_csv` module by creating a new release for it in Github.
 
 ### Release Chullo
 
-Release chullo by creating a new release for it in Github.
+Release `chullo` by creating a new release for it in Github.
 
 ### Release Crayfish-Commons
 
