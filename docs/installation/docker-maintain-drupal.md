@@ -20,11 +20,11 @@ docker-compose exec -T drupal with-contenv bash -lc 'YOUR COMMAND'
 
 You can also just shell into the drupal container and run commands as well,
 just be aware that if you cycle your container for any reason, you'll lose your
-bash history.  If you want to shell in to run commands, drop the `-lc 'YOUR COMMAND'`
-bit.
+bash history.  If you want to shell in to run commands, drop the `-T` and `-lc 'YOUR COMMAND'`
+bits.
 
 ```
-docker-compose exec -T drupal with-contenv bash
+docker-compose exec drupal with-contenv bash
 ```
 
 ## Updating your Drupal Site

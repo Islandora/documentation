@@ -1,4 +1,4 @@
-# Islandora Advanced Search
+# Islandora advanced search
 
 - [Introduction](#introduction)
 - [Requirements](#requirements)
@@ -18,7 +18,7 @@
 
 ## Introduction
 
-Advanced Search adds additional functionality beyond the [basic Solr search](./documentation/user-documentation/searching/). It enables the use
+Advanced Search adds additional functionality beyond the [basic Solr search](../user-documentation/searching.md). It enables the use
 of Ajax with search blocks, facets, and search results.
 
 ![animated gif demonstrating advanced search in action](../assets/advanced_search_demo.gif)
@@ -58,10 +58,10 @@ You can set the following configuration at **Administration** >> **Configuration
 ## Configuring Solr
 
 Please review
-[Configure Search](../searching) before continuing. The following assumes you already have a working Solr and the
+[Configure Search](../user-documentation/searching.md) before continuing. The following assumes you already have a working Solr and the
 Drupal Search API setup.
 
-## Configure Collection Search
+## Configure collection search
 
 To support collection based searches you need to index the `field_member_of` for
 every repository item as well define a new field that captures the full
@@ -73,7 +73,7 @@ Add a new `Content` solr field `field_descendant_of` to the solr index at
 ![screenshot of field_decent_of](../assets/advanced_search_field_decedent_of.png)
 
 Then under `admin/config/search/search-api/index/default_solr_index/processors`
-enable `Index hierarchy` and setup the new field to index the hierarchy.
+enable `Index hierarchy` and set up the new field to index the hierarchy.
 
 ![screenshot of checked checkbox](../assets/advanced_search_enable_index_hierarchy.png)
 
@@ -84,14 +84,14 @@ The field can now be used limit a search to all the descendants of a given objec
 !!! note "Re-Indexing"
     You may have to re-index to make sure the field is populated.
 
-## Configure Views
+## Configure views
 
-The configuration of views is outside of the scope of this document, please read
+The configuration of views is outside the scope of this document, please read
 the [Drupal Documentation](https://www.drupal.org/docs/8/core/modules/views), as
 well as the
 [Search API Documentation](https://www.drupal.org/docs/contributed-modules/search-api).
 
-### Collection Search
+### Collection search
 
 It will be typical that you require the following
 _Relationships_ and _Contextual Filters_ when setting up a search view to enable
@@ -99,7 +99,7 @@ _Collection Search_ searches.
 
 ![screenshot of contexts configuration](../assets/advanced_search_view_advanced_setting.png)
 
-Here a relationship is setup with `Member Of` field and we have **two**
+Here a relationship is set up with `Member Of` field and we have **two**
 contextual filters:
 
 1. `field_member_of` (Direct descendants of the Entity)
@@ -114,26 +114,26 @@ include all descendants or just direct descendants (*documented below*).
 
 ### Paging
 
-The paging options specified here can have an affect on the pager block
+The paging options specified here can have an effect on the pager block
 (*documented below*).
 
 ![screenshot of paging configuration settings](../assets/advanced_search_pager_settings.png)
 
 ### Sorting
 
-Additional the fields listed as _Sort Criteria_ as _Exposed_ will be made
+Additionally, the fields listed as _Sort Criteria_ as _Exposed_ will be made
 available in the pager block (*documented below*).
 
 ![screenshot of sort criteria](../assets/advanced_search_sort_criteria.png)
 
-## Configure Facets
+## Configure facets
 
 The facets can be configured at `admin/config/search/facets`. Facets are linked
 to a *Source* which is a *Search API View Display* so it will be typically
 to have to duplicate your configuration for a given facet across each of the
 displays where you want it to show up.
 
-### Include / Exclude Facets
+### Include / exclude facets
 
 To be able to display exclude facet links as well as include links in the facets
 block we have to duplicate the configuration for the facet like so.
@@ -148,7 +148,7 @@ Both the include / exclude facets must use the widget
 The excluded facet also needs the following settings to appear and function
 correctly.
 
-The _URL alias_ must match the same value as the include facet except it must be
+The _URL alias_ must match the same value as the included facet except it must be
 prefixed with `~` character that is what links to the two facets to each other.
 
 ![screenshot of url alias setting](../assets/advanced_search_exclude_facet_settings_url_alias.png)
@@ -160,7 +160,7 @@ And it must also explicitly be set to exclude:
 You may also want to enable _Hide active items_ and _Hide non-narrowing results_
 for a cleaner presentation of facets.
 
-## Configure Blocks
+## Configure blocks
 
 For each block type:
 
@@ -178,11 +178,11 @@ the models you want to display the search on, e.g:
 
 ![screenshot of block configuration](../assets/advanced_search_facet_block_settings.png)
 
-### Advanced Search Block
+### Advanced search block
 
 For any valid search field, you can drag / drop and reorder the fields to
 display in the advanced search form on. The configuration resides on the block
-so this can differ across views / displays if need be. Additionally if the View
+so this can differ across views / displays if need be. Additionally, if the View
 the block was derived from has multiple contextual filters you can choose which
 one corresponds to direct children, this will enable the recursive search
 checkbox.

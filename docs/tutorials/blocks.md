@@ -69,7 +69,7 @@ however, there are times when you need even more control.  This is where the Con
 Any condition available to the Context module can be used to control block visibility.  And you can even combine conditions
 using Boolean (AND/OR) logic.
 
-For example, in the `islandora_defaults` feature, we provide a context specifically for showing a list of members of a collection.
+For example, in the Islandora Starter Site, we provide a context specifically for showing a list of members of a collection.
 All of our content is the same content type (Repository Item), and Collections are distinguished by being tagged with the
 "Collection" taxonomy term.  Using the admin toolbar, if you navigate to Admin > Structure > Context (admin/structure/context),
 you should see a list of all contexts available to the site.
@@ -102,5 +102,13 @@ If we edit the collection and change its model tag from "Collection" to anything
 As you can see, block placement can be very flexible, and allow you to customize your site in a very granular fashion.
 Between using core block placement and the context module, there's no block you can't get into the right place on your site.
 
-!!! Tip "Islandora Quick Lessons"
+## Video Walkthrough: Blocks
+
+Click the image below to open the Blocks video tutorial on the Islandora Youtube channel.
+
+[![Drupal 101: Blocks](https://img.youtube.com/vi/ZbDV04EWyyI/0.jpg)](https://www.youtube.com/watch?v=ZbDV04EWyyI)
+
+See more videos from the Drupal 101 series [here.](https://www.youtube.com/watch?v=meRNdBxaiTE&list=PL4seFC7ELUtogpsYoN8WZLLOjJVRZFGTZ)
+
+!!! Tip "Islandora Quick Lessons (2020)"
     Learn more with this video on [Creating a Custom Block](https://youtu.be/4VUI9pOXpzE).

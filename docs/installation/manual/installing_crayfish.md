@@ -1,5 +1,8 @@
 # Installing Crayfish
 
+!!! warning "Needs Maintenance"
+    The manual installation documentation is in need of attention. We are aware that some components no longer work as documented here. If you are interested in helping us improve the documentation, please see [Contributing](../../../contributing/CONTRIBUTING).
+
 ## In this section, we will install:
 - [Islandora/Crayfish](https://github.com/islandora/crayfish), the suite of microservices that power the backend of Islandora 2.0
 - Indvidual microservices underneath Crayfish

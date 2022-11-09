@@ -1,5 +1,8 @@
 # Configuring Drupal
 
+!!! warning "Needs Maintenance"
+    The manual installation documentation is in need of attention. We are aware that some components no longer work as documented here. If you are interested in helping us improve the documentation, please see [Contributing](../../../contributing/CONTRIBUTING).
+
 After all of the above pieces are in place, installed, configured, started, and otherwise prepared, the last thing we need to do is to finally configure the front-end Drupal instance to wire all the installed components together.
 
 ## Drupal Pre-Configuration
@@ -15,10 +18,11 @@ The below configuration will establish `localhost` as a trusted host pattern, bu
 
 `/opt/drupal/web/sites/default/settings.php`
 
-**Before**:
-> 789 |   'driver' => 'pgsql',
-
-> 790 | );
+**Before** (at around line 789):
+```
+'driver' => 'pgsql',
+);
+```
 
 **After**:
 ```
@@ -30,12 +34,12 @@ $settings['trusted_host_patterns'] = [
 ];
 
 $settings['flysystem'] = [
- 'fedora' => [
- 'driver' => 'fedora',
- 'config' => [
-  'root' => 'http://localhost:8080/fcrepo/rest/',
- ],
-],
+  'fedora' => [
+    'driver' => 'fedora',
+    'config' => [
+      'root' => 'http://localhost:8080/fcrepo/rest/',
+    ],
+  ],
 ];
 ```
 
@@ -48,41 +52,45 @@ drush -y cr
 
 ## Islandora
 
+!!! note "Skip this by using the Islandora Starter Site"
+    The Islandora Starter Site, which was presented as an option in the ["Installing Composer, Drush, and Drupal"](installing_composer_drush_and_drupal) step,
+    installs Islandora and other modules and configures them, allowing you to skip this section. You may want to use this manual method in the case where you want
+    to pick and choose which Islandora modules you use.
+
 ### Downloading Islandora
 
-The Islandora Drupal module contains the core code to create a repository ecosystem in a Drupal environment. It also includes several submodules; of importance to us is `islandora_core_feature`, which contains the key configurations that turn a Drupal site into an Islandora site.
-
-Islandora also provides an [`islandora_defaults`](https://github.com/Islandora/islandora_defaults) module that contains additional configurations considered an appropriate launching point for configuring a site. We're going to first enable the `islandora_defaults` module before doing any wiring on the front-end.
+The Islandora Drupal module contains the core code to create a repository ecosystem in a Drupal environment. It also includes several submodules; of importance to us is `islandora_core_feature`, which contains the key configurations that allow you to use Islandora features.
 
 Take note of some of the other comments in the below bash script for an idea of what the other components are expected, and which may be considered optional.
 
 ```bash
 cd /opt/drupal
-# This is a convenience piece that will help speed up most of the rest of our
-# process working with Composer and Drupal.
-sudo -u www-data composer require zaporylie/composer-drupal-optimizations:^1.0
 # Since islandora_defaults is near the bottom of the dependency chain, requiring
 # it will get most of the modules and libraries we need to deploy a standard
 # Islandora site.
-sudo -u www-data composer require islandora/islandora_defaults:dev-8.x-1.x
+sudo -u www-data composer require "drupal/flysystem:^2.0@alpha"
+sudo -u www-data composer require "islandora/islandora:^2.4"
+sudo -u www-data composer require "islandora/controlled_access_terms:^2"
+sudo -u www-data composer require "islandora/openseadragon:^2"
+
 # These can be considered important or required depending on your site's
 # requirements; some of them represent dependencies of Islandora submodules.
-sudo -u www-data composer require drupal/pdf:1.x-dev
-sudo -u www-data composer require drupal/rest_oai_pmh:^1.0
-sudo -u www-data composer require drupal/facets:^1.3
-sudo -u www-data composer require drupal/restui:^1.16
-sudo -u www-data composer require drupal/rdfui:^1.0-beta1
-sudo -u www-data composer require drupal/content_browser:^1.0@alpha
+sudo -u www-data composer require "drupal/pdf:1.1"
+sudo -u www-data composer require "drupal/rest_oai_pmh:^2.0@beta"
+sudo -u www-data composer require "drupal/search_api_solr:^4.2"
+sudo -u www-data composer require "drupal/facets:^2"
+sudo -u www-data composer require "drupal/content_browser:^1.0@alpha" ## TODO do we need this?
+sudo -u www-data composer require "drupal/field_permissions:^1"
+sudo -u www-data composer require "drupal/transliterate_filenames:^2.0"
+
 # These tend to be good to enable for a development environment, or just for a
 # higher quality of life when managing Islandora. That being said, devel should
 # NEVER be enabled on a production environment, as it intentionally gives the
 # user tools that compromise the security of a site.
+sudo -u www-data composer require drupal/restui:^1.21
 sudo -u www-data composer require drupal/console:~1.0
 sudo -u www-data composer require drupal/devel:^2.0
 sudo -u www-data composer require drupal/admin_toolbar:^2.0
-# Islandora also provides a theme called Carapace designed to work well out of
-# the box with an Islandora site.
-sudo -u www-data composer require islandora/carapace:dev-8.x-3.x
 ```
 
 ### Enabling Downloaded Components
@@ -94,10 +102,7 @@ Components we've now downloaded using `composer require` can be enabled simultan
 
 ```bash
 cd /opt/drupal
-drush -y en rdf responsive_image devel syslog serialization basic_auth rest restui search_api_solr search_api_solr_defaults facets content_browser pdf admin_toolbar islandora_defaults controlled_access_terms_defaults islandora_breadcrumbs islandora_iiif islandora_oaipmh
-# If Carapace was downloaded, now is the time to enable and set it as well.
-drush -y theme:enable carapace
-drush -y config-set system.theme default carapace
+drush -y en rdf responsive_image devel syslog serialization basic_auth rest restui search_api_solr facets content_browser pdf admin_toolbar controlled_access_terms_defaults islandora_breadcrumbs islandora_iiif islandora_oaipmh
 # After all of this, rebuild the cache.
 drush -y cr
 ```
@@ -159,4 +164,13 @@ Finally, to get everything up and running, run the Islandora Core Features and I
 ```bash
 cd /opt/drupal
 sudo -u www-data drush -y -l localhost --userid=1 mim --group=islandora
+```
+
+### Enabling EVA Views
+
+Some views provided by Islandora are not enabled by default.
+
+```bash
+cd /opt/drupal
+drush -y views:enable display_media
 ```

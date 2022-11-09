@@ -14,7 +14,7 @@ with the media's fields accessible at `/fcrepo/rest/2019-11/test.jpg/fcr:metadat
 
 ## Media types
 
-Islandora Defaults makes use of the media types provided automatically by Drupal. The file extensions allowed by each media type have been configured at the Drupal level. It is possible to create your own media types, and/or to edit the allowed field types and functionality of the existing media types. However, with Islandora Defaults, the _Image_ media type only allows .png, .gif, .jpg or .jpeg files. TIFFs (.tiff files) must be added in the _File_ media type instead of _Image_.
+Islandora Core Feature and the Islandora Starter Site make use of the media types provided by the Standard Drupal installation (Video, Audio, etc). The file extensions allowed by each media type have been configured at the Drupal level. It is possible to create your own media types, and/or to edit the allowed field types and functionality of the existing media types. However, with Islandora Starter Site, the _Image_ media type only allows .png, .gif, .jpg or .jpeg files. Many large images such as TIFFs (.tiff files) and JP2s (.jp2) must be added in the _File_ media type instead of _Image_.
 <!-- the explanation of TIFFs as files on this page is referenced in create-a-resource-node.md tutorial. -->
 
 ## Media revisions
@@ -41,7 +41,7 @@ Third, the metadata synced from the Media into Fedora at [old Fedora URI]/fcr:me
 !!! note "Replacing Media via REST"
     It is possible to use [Islandora's REST interface](../technical-documentation/using-rest-endpoints.md) to replace Media and Files.	
 
-## Media Ownership
+## Media ownership
 
 Islandora objects can have any number of media associated with them. Media store a reference to the resource node they belong to using a special field,
 "Media Of". By changing this field's value, you can change which resource node owns the media, and therefore, where it gets displayed or managed.
@@ -50,7 +50,7 @@ Islandora objects can have any number of media associated with them. Media store
     The direction of the relationship between objects and datastreams is reversed when compared to Islandora 7.  Generally speaking,
     objects are unaware of their datastreams, and it's a Drupal view that lists datastreams for an object.
 
-## Media Use
+## Media use
 
 Islandora media express their intended use with a special "Media Use" field, which accepts taxonomy terms from the "Media Usage"
 vocabulary. Because the Media Usage vocabulary is an ordinary Drupal vocabulary, Islandora site administrators can create additional
@@ -94,6 +94,6 @@ There are no multi-file media bundles that currently ship with Islandora. The fo
 1. On an existing or new Media bundle that already has a main storage field (e.g. field_media_image or field_media_audio_file), add additional fields to hold derivatives. They need to be "File"-type fields. The field names should indicate the "Media use". Set up as many as you need, for example, Thumbnail, Service File, Extracted text, etc. Note that the "Media Use" field is no longer relevant for multi-file media bundles, as a single media instance of this type contains all "Media Uses" (e.g. derivatives) in different fields.
 2. Create a derivative Action that uses one of the two existing multi-file media base actions: "Generate a Derivative File For Media Attachment" or "Generate a Derivative Image For Media Attachment". This is where you configure which queue it goes to (which derivative-creating program runs), which field the resulting file ends up in, and potentially which additional arguments to pass to the microservice.
 3. Configure Contexts to trigger the Action to create derivatives. If using a combination of standard and multi-file media in your repository, ensure the Contexts include appropriate filtering Conditions. Add a Derivative reaction and select the Action you created in the previous step.
-4. Configure your resource node to display its (potentially multiple) files as desired. This may involve creating a view of media attached to the current node, and displaying the Service File (or Thumbnail, etc) field of the media, then setting the view block to appear on the node page.
+4. Configure your resource node to display its (potentially multiple) files as desired. This may involve creating a view of media attached to the current node, and displaying the Service File (or Thumbnail, etc.) field of the media, then setting the view block to appear on the node page.
 
 A video tutorial explaining how to configure multi-file Media is available under the following URL: [https://www.youtube.com/watch?v=3U6tBvD8oJY](https://www.youtube.com/watch?v=3U6tBvD8oJY)

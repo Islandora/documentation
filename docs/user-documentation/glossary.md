@@ -1,3 +1,5 @@
+# Glossary
+
 The following glossary of terms addresses an Islandora context. When comparing new Islandora and Fedora to older versions it may also be helpful to reference [the Islandora 7 Glossary](https://wiki.duraspace.org/display/ISLANDORA/APPENDIX+E+-+Glossary).
 
 ## Alpaca
@@ -7,7 +9,7 @@ Event-driven middleware based on [Apache Camel](http://camel.apache.org/) that h
 Open source software for provisioning, configuration management and application deployment. In the context of Islandora, Ansible can be used to install and maintain the Islandora software stack more conveniently and efficiently on a server or group of servers. The configuration and installation instructions are captured in a human-readable list of tasks, called 'Playbook'. The [Islandora Playbook](#islandora-playbook) for Ansible is one of the installation methods currently supported by the Islandora community.
 
 ## Apache
-Refers to the [Apache Software Foundation](https://www.apache.org/), a not-for-profit organization supporting various open source software development projects. The Islandora software stack is comprised of different components that are developed under the umbrella of the Apache Software Foundation, for instance [Apache ActiveMQ](https://activemq.apache.org/), [Apache Camel](http://camel.apache.org/), the [Apache HTTP server (webserver)](https://httpd.apache.org/), [Apache Karaf](https://karaf.apache.org/), [Apache Solr](https://solr.apache.org/), and [Apache Tomcat](https://tomcat.apache.org/).
+Refers to the [Apache Software Foundation](https://www.apache.org/), a not-for-profit organization supporting various open source software development projects. The Islandora software stack consists of different components that are developed under the umbrella of the Apache Software Foundation, for instance [Apache ActiveMQ](https://activemq.apache.org/), [Apache Camel](http://camel.apache.org/), the [Apache HTTP server (webserver)](https://httpd.apache.org/), [Apache Karaf](https://karaf.apache.org/), [Apache Solr](https://solr.apache.org/), and [Apache Tomcat](https://tomcat.apache.org/).
 
 Can in a narrower sense refer to the Apache HTTP server.
 
@@ -24,43 +26,47 @@ Blazegraph is an open source triplestore and graph database. Islandora ships Bla
 Checksums are a sequence of numbers and letters to check data for errors. If you know the checksum of an original file, you can use a checksum utility to confirm your copy is identical. Checksums can be used to check the [Fixity](#fixity) of a file.
 
 ## CLAW
- CLAW (CLAW Linked Asset WebDataFrameWork) was the development code name for the software released in June, 2019 as _Islandora 8_, now called _Islandora_.
+ CLAW (CLAW Linked Asset WebDataFrameWork) was the development code name for the software released in June 2019 as _Islandora 8_, now called _Islandora_.
 
 ## Collection
 A [collection](../concepts/collection.md) is a way of grouping related resources together, much like a directory on a computer. Collections can contain any number of related resource [Nodes](#node) and sub-collections.
 
 ## Content entity
-[Drupal](#drupal) websites are made up of two types of entities: content entities and configuration (config) entities. Content entities include [Nodes](#node), [Media](#media), [Taxonomy terms](#taxonomy-term), users, comments, and files. Configuration entities include all stored settings, for instance [Views](#view), custom blocks, menus, or roles.
+[Drupal's](#drupal) websites are made up of two types of entities: content entities and configuration (config) entities. Content entities include [Nodes](#node), [Media](#media), [Taxonomy terms](#taxonomy-term), users, comments, and files. Configuration entities include all stored settings, for instance [Views](#view), custom blocks, menus, or roles.
 
 Content entities are grouped into distinct [content entity types](#content-type), which play a specific functional role in a website application built with [Drupal](#drupal). Most 'things' in a [Drupal](#drupal) website are content entities. These include web content ([Nodes](#node), which can have subtypes like article, basic page, repository item, etc.), as well as users, comments, files, and [Taxonomy terms](#taxonomy-term).
 
 Each type of Content entity has a different set of behaviors. The interactions of these behaviors creates the site’s functionality. For example, a User may log into a site with a username and password that is stored as part of the content entity. If Users have the relevant permissions, they can write a blog post (a subtype of the [Node](#node) content entity type, with a specific data structure and behavior), and assign some tags ([Taxonomy terms](#taxonomy-term)) to the blog post.
 
-[Drupal](#drupal) comes with several [content entity types](#content-type) preconfigured. [Drupal](#drupal)'s default configuration includes the Basic Page and (blog) Article content types, as well as Audio, Image and Video Media types. _Islandora Defaults_ adds the Repository Item [content type](#content-type), alters the existing [Media](#media) types to store files in [Fedora](#fedora-repository-software), and introduces the Extracted Text and FITS Media types.
+[Drupal](#drupal) comes with several [content entity types](#content-type) preconfigured. [Drupal](#drupal)'s default configuration includes the Basic Page and (blog) Article content types, as well as Audio, Image and Video Media types. _Islandora Starter Site_ adds the Repository Item [content type](#content-type), alters the existing [Media](#media) types to store files in [Fedora](#fedora-repository-software), and introduces the Extracted Text and FITS Media types.
 
 ## Content model
 Deprecated concept used in Islandora Legacy; see [Islandora Model](#islandora-model).
 
 ## Content type
-A general type of Content in [Drupal](#drupal). A content type defines a set of data [fields](#field) and how they are displayed. Content types are sub-types of [Nodes](#node), one of the [Drupal](#drupal) [Content entities](#content-entity). The default [Drupal](#drupal) Content types are 'Article' and 'Basic page'. _Islandora Defaults_ adds 'Repository Item' as a Content type, defining metadata fields typically used to describe digital resources.
+A general type of Node in [Drupal](#drupal). A content type defines a set of data [fields](#field) and how they are displayed. Content types are subtypes of [Nodes](#node), one of the [Drupal](#drupal) [Content entities](#content-entity). The default [Drupal](#drupal) Content types are 'Article' and 'Basic page'. _Islandora Starter Site_ adds 'Repository Item' as a Content type, defining metadata fields typically used to describe digital resources.
+
+## Context
+An "if-this-then-that" configuration created using the Drupal [Context](https://www.drupal.org/project/context) contrib module. Islandora extends the capabilities of Context by adding custom Conditions, custom Reactions, and by evaluating context at specific times to allow Contexts to be used for derivatives, indexing, and display.
+
 
 ## Crayfish
-A collection of Islandora [microservices](#microservice). Some of the microservices are built specifically for use with a [Fedora](#fedora-repository-software) repository, while others are just for general use within Islandora.
+A collection of Islandora [microservices](#microservice). Some microservices are built specifically for use with a [Fedora](#fedora-repository-software) repository, while others are just for general use within Islandora.
 
 ## Datastream
 Deprecated terminology, refers to how [Fedora 3](#fedora-repository-software)/Islandora Legacy stored files as part of a resource ('object') in the [Fedora](#fedora-repository-software) repository. Replaced by [Drupal Media entities](https://www.drupal.org/docs/8/core/modules/media/overview), which 'wraps' [Files](https://www.drupal.org/docs/8/core/modules/file/overview) in an intermediate structure. This allows Fields to be attached to files, for instance for storing technical metadata.
 
 ## Derivative
-A version of a file which is derived from an uploaded file. For example, a thumbnail generated from an uploaded image. Islandora uses [microservices](#microservice) to generate derivatives.
+A version of a file which is derived from an uploaded file. For example, a thumbnail generated from an uploaded image. Islandora uses [microservices](#microservice) to generate derivatives. See the concept page for [Derivatives](../concepts/derivatives.md).
 
 ## Docker
-[Docker](https://www.docker.com/) is a platform that use OS-level virtualization to deliver software in packages called containers. Islandora uses Docker as part of [ISLE](#isle), a suite of Docker containers that run the various components of Islandora required by Islandora Defaults.
+[Docker](https://www.docker.com/) is a platform that use OS-level virtualization to deliver software in packages called containers. Islandora uses Docker as part of [ISLE](#isle), a suite of Docker containers that run the various components of Islandora required by the Islandora Install Profile.
 
 ## Drupal
 Drupal is an open source web content management system (CMS) written in PHP. Known for being extremely flexible and extensible, Drupal is supported by a community of over 630,000 users and developers. Drupal sites can be customized and themed in a wide variety of ways.
 
 ## Drupal Core
-The files, themes, profiles, and modules included with the standard project software download.
+The files, themes, profile, and modules included with the standard project software download.
 
 ## Drupal Roles
 Roles are a way of assigning specific permissions to a group of users. Any user assigned to a role will have the same permissions as all other users assigned to that role. This allows you to control which users have permission to view, edit, or delete content in [Drupal](#drupal). Islandora provides a special role called _fedoraAdmin_ that is required to have actions in [Drupal](#drupal) reflected in [Fedora](#fedora-repository-software).
@@ -103,6 +109,13 @@ In the context of digital repositories, ingest refers to the process by which th
 ## Islandora 8 (8.x, 2.0)
 Islandora 8, 8.x, 2.0, and CLAW are all deprecated names for the current version of Islandora. They referred to Islandora's use of Drupal 8, and being a major shift away from Islandora Legacy (formerly known as Islandora 7 or 7.x as it runs on Drupal 7).
 
+## Islandora Install Profile
+The Islandora Install Profile (in GitHub as [Islandora Install Profile Demo](https://github.com/Islandora-Devops/islandora_install_profile_demo), is a Drupal install profile that was developed by Born Digital, an Islandora vendor. It defines an Islandora with additional modules, themes, and configurations that were not defined in the Islandora Starter Site (formerly Islandora Defaults). The Install Profile and the Starter Site share the same function (though they approach it differently) and it is not possible to use both.
+
+## Islandora Starter Site
+The Islandora Starter Site is a way to install Drupal that provides a functional Islandora "out of the box." It was created from Islandora Defaults [now defunct] by discoverygarden inc, an Islandora vendor. The [Islandora Install Profile](#islandora-install-profile) and the Starter Site share the same function (though they approach it differently) and it is not possible to use both.
+
+
 ## Islandora model
 
 ## Islandora playbook
@@ -129,7 +142,7 @@ See https://www.drupal.org/docs/8/core/modules/media/overview for more informati
 Protocol specification that allows a web client to request an earlier/historic state web resource (if available). Fedora implements the Memento protocol to store and serve versions of content in a Fedora repository.
 
 ## Microservice
-A software development technique — a variant of the service-oriented architecture (SOA) structural style — that arranges an application as a collection of loosely coupled services. In a microservices architecture, services are fine-grained and the protocols are lightweight.
+A software development technique — a variant of the service-oriented architecture (SOA) structural style — that arranges an application as a collection of loosely coupled services. In a microservices' architecture, services are fine-grained and the protocols are lightweight.
 
 ## Module
 Software (usually PHP, JavaScript, and/or CSS) that extends site features and adds functionality. [Drupal](#drupal) modules conform to a specific structure allowing them to integrate with the [Drupal](#drupal) architecture.
@@ -141,7 +154,7 @@ A node is any piece of individual content, such as a page, article, forum topic,
 The [Open Archives Initiative Protocol for Metadata Harvesting (OAI-PMH)](http://www.openarchives.org/pmh/) is a protocol developed for harvesting metadata descriptions of records in an archive so that services can be built using (aggregated) metadata from many archives. Islandora allows to publish metadata in a way conformant to OAI-PMH, acting as a so-called OAI-PMH endpoint.
 
 ## Ontology
-In computer science and information science, an ontology encompasses a representation, formal naming and definition of the categories, properties and relations between concepts, data and entities. In the narrower context of the [Resource Description Framework](#resource-description-framework) (RDF), an ontology is a formal, machine-readable description of the 'vocabulary' that can be used in a knowledge graph. An RDF ontology for instance specifies _classes_ of things or concepts (e.g. the class of all book authors) and _properties_ of classes/class instances (e.g. an author's name, birth date, shoe size; also the fact that an author has written something that is in the class of books).
+In computer science and information science, an ontology encompasses a representation, formal naming and definition of the categories, properties and relations between concepts, data and entities. In the narrower context of the [Resource Description Framework](#resource-description-framework) (RDF), an ontology is a formal, machine-readable description of the 'vocabulary' that can be used in a knowledge graph. An RDF ontology for instance specifies _classes_ of things or concepts (e.g. the class of all book authors) and _properties_ of classes/class instances (e.g. an author's name, birthdate, shoe size; also the fact that an author has written something that is in the class of books).
 
 ## Open Source
 Open source describes a method of software development that promotes access to the end product's source code. Islandora is an open source product with an active development community, operating under the [GPL license (2.0)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html) for [Drupal](#drupal) components and the [MIT license](https://opensource.org/licenses/MIT) for non-[Drupal](#drupal) components.
@@ -201,7 +214,7 @@ The Virtual Machine Image allows you to mount a fully working version of Islando
 A [Drupal](#drupal) configuration entity that holds taxonomy terms. The vocabulary defines what fields are available on each term.
 
 ## Weight
-[Drupal](#drupal) field that stores an integer value on an entity, allowing to represent the relative order of the entity in relation to other entities of the same type or sub-type. Used by Islandora to store the order of components in compound objects, for instance pages in paged content items (books, serials).
+[Drupal](#drupal) field that stores an integer value on an entity, allowing to represent the relative order of the entity in relation to other entities of the same type or subtype. Used by Islandora to store the order of components in compound objects, for instance pages in paged content items (books, serials).
 
 ## YAML
 [YAML](https://yaml.org/) is a human-readable data-serialization language. It is commonly used for configuration files and in applications where data is being stored or transmitted. Software applications like [Drupal](#drupal) or [Ansible](#ansible) store configuration information in YAML files for easy transportability of a configuration.

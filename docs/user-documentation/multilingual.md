@@ -1,4 +1,4 @@
-Islandora enables you to build full fledged multilingual repositories leveraging the multilingual support provided by Drupal core modules. The multilingual content gets indexed into Fedora repository as well as the Triplestore (Blazegraph), and can be queried using the SPARQL endpoint. In this guide, we will describe the steps needed to setup a basic multilingual Islandora site.
+Islandora enables you to build full-fledged multilingual repositories leveraging the multilingual support provided by Drupal core modules. The multilingual content gets indexed into Fedora repository as well as the Triplestore (Blazegraph), and can be queried using the SPARQL endpoint. In this guide, we will describe the steps needed to set up a basic multilingual Islandora site.
 
 ## Drupal Concepts
 Drupal allows you to translate user interface text, configuration text, and content. See [section 2.7 of the Drupal documentation for details](https://www.drupal.org/docs/user_guide/en/language-concept.html).
@@ -23,7 +23,7 @@ You can place the language switcher block in different regions of the user inter
 ### Adding Multilingual Menus
 From the top menu, go to Configuration >> Regional and language >> Content language and translation. Check `Custom menu link` under `Custom language settings`. Scroll down to `Custom menu link` section and check all the relevant fields and Save the configurations. Clear the cache (Configuration >> Development >> Performance).
 
-From the top menu, go to Structure >> Menu. Edit "Main navigation" menu. Default home menu item cannot be translated due to [this issue](https://www.drupal.org/project/drupal/issues/2838106). Disable that menu item. Click `Add link` to create a new menu item. Provide a menu title (i.e Home) and input `<front>` for the link field. Save. Right click on the Operations beside the new menu link and click the Translate button. Translate the menu link title for the language added above and save.
+From the top menu, go to Structure >> Menu. Edit "Main navigation" menu. Default home menu item cannot be translated due to [this issue](https://www.drupal.org/project/drupal/issues/2838106). Disable that menu item. Click `Add link` to create a new menu item. Provide a menu title (i.e. Home) and input `<front>` for the link field. Save. Right-click on the Operations beside the new menu link and click the Translate button. Translate the menu link title for the language added above and save.
 
 Go back to home. The language switcher will enable you to switch the language/content of the menu and content.
 
@@ -35,7 +35,7 @@ Go back to home, you should be able to view content in the language selected in 
 ### Field Label Translations
 If you need the field labels of the repository Item displayed in a different language, additional configuration is needed. The Drupal module `Configuration translation` module in the core needs to be enabled. Note that this will enable the module `User Interface translation` as well.
 
-Each field label needs to be translated through the Drupal GUI (Configuration >> Regional and Language: User interface translation). Alternatively, you can import existing translations, for instance from those provided at `https://github.com/Islandora/islandora_defaults/tree/8.x-1.x/translations`, or translations generated with an external translation editor (for example [Gtranslator](https://en.wikipedia.org/wiki/Gtranslator)). Go to `Interface translation import` (Configuration >> Regional and Language: User interface translation >> Import tab). Set the ` Treat imported strings as custom translations` option, select the import file, the target language, and click import. Clear the cache to see the changes. An example second language display is shown below.
+Each field label needs to be translated through the Drupal GUI (Configuration >> Regional and Language: User interface translation). Alternatively, you can import existing translations, or translations generated with an external translation editor (for example [Gtranslator](https://en.wikipedia.org/wiki/Gtranslator)). Go to `Interface translation import` (Configuration >> Regional and Language: User interface translation >> Import tab). Set the ` Treat imported strings as custom translations` option, select the import file, the target language, and click import. Clear the cache to see the changes. An example second language display is shown below.
 
 ![Multilingual Content Representation in Drupal](../assets/multilingual_repository_item_in_drupal.png)
 

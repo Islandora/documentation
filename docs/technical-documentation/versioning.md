@@ -4,11 +4,11 @@ Islandora uses semantic versioning for all non-Legacy code in the [github.com/Is
 
 ## Semantic Versioning
 
-[Semantic Versioning](https://semver.org/) is a common versioning standard. Versions have the form **Major version** . **Minor version** . **Patch**
+[Semantic Versioning](https://semver.org/) is a common versioning standard. Versions have the form: **Major version**, **Minor version**, or **Patch**.
 
-- **Major version**; Major changes, and breaks the API
-- **Minor version**; New features, and does not break the API
-- **Patch**; Bug fixes, and never breaks backward compatibility
+- **Major version**: Major changes, and breaks the API.
+- **Minor version**: New features, and does not break the API.
+- **Patch**: Bug fixes, and never breaks backward compatibility.
 
 ### Examples
 
@@ -27,9 +27,9 @@ The following Islandora components use semantic versioning:
 * [Syn](https://github.com/Islandora/Syn)
 * [controlled\_access\_terms](https://github.com/Islandora/controlled_access_terms) (Drupal module)
 * [islandora](https://github.com/Islandora/islandora/tree/8.x-1.x) (Drupal module)
-* [islandora_defaults](https://github.com/Islandora/islandora_defaults) (Drupal module)
 * [jsonld](https://github.com/Islandora/jsonld) (Drupal module)
 * [openseadragon](https://github.com/Islandora/openseadragon) (Drupal module)
+* [islandora\_mirador](https://github.com/Islandora/islandora_mirador) (Drupal module)
 
 Drupal submodules, which are included in several of the above modules, share versions with their parents. 
 

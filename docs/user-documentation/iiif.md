@@ -4,7 +4,7 @@
 
 At a practical level, because Islandora supports several of the IIIF specifications, we can:
 
-- Zoom, pan, and rotate images within OpenSeadragon
+- Zoom, pan, and rotate images within a IIIF-compliant [viewer](../file_viewers) like OpenSeadragon or Mirador
    - Islandora uses an IIIF-compliant image server (by default, [Cantaloupe](https://cantaloupe-project.github.io/)) that utilizes the [IIIF Image API](https://iiif.io/api/image/2.1/). This capability is similar to what Islandora 7.x users experience when they view a Large Image.
 - Display thumbnails for all pages of a book or newspaper issue within image viewers
    - IIIF-compliant image viewers such as OpenSeadragon or Mirador can display a "collection" of images such as all the pages of a book or newspaper issue using the [IIIF Presentation API](https://iiif.io/api/presentation/2.1/). For example, here is a screenshot of OpenSeadragon rendering all the pages of a book:
@@ -13,11 +13,21 @@ At a practical level, because Islandora supports several of the IIIF specificati
 
 ## Using IIIF in Islandora
 
-Implementation of the IIIF Presentation API is new in Islandora, and using it is as simple as configuring a Context (in fact, you don't even need to configure it; the Context, OpenSeadragon Block, already exists by default).
-<!-- todo: Put a link to paged-content.md below when it exists. -->
-To use this Context, all that is required is for your book or newspaper (or other paged content) to be given a model of "Paged Content" or "Publication Issue". Then, in the Open Seadragon Block Context, make sure the term used in the "Node has term" condition (you can register more than one term there). Now, when you view a paged content Islandora object, you will see thumbnails of all of its child pages (assuming you have added some child pages to the object) in the OpenSeadragon viewer as illustrated above.
+If you're not using one of our provisioning tools, you will need to:
+* install and configure the Cantaloupe (or another IIIF-compliant) image server
+* install a [viewer](../file-viewers) module and configure it to point to the IIIF Image server location
+* if using the viewer to show single images, configure it as a file formatter in one of the display modes for your media.
+* if using the viewer to show multi-paged content, install the [Islandora IIIF](https://github.com/Islandora/islandora/tree/2.x/modules/islandora_iiif) module and create a IIIF view (see the one in the Starter Site as an example), then configure the viewer's _block_ to show up where desired (see below for details on how it could be configured)
 
-You can change how the paged content thumbnails are arranged in the OpenSeadragon viewport by doing the following:
+
+## Using IIIF in the Islandora Starter Site
+
+The Islandora Starter Site uses a Context to automatically use the IIIF Presentation API for showing [paged content](../paged-content).
+
+
+To use this Context, give your book or newspaper (or other paged content) a model of "Paged Content" or "Publication Issue". Then, in the _Paged Content - Openseadragon_ Context, make sure the term used is in the "Node has term" condition (you can register more than one term there). Now, when you view a paged content Islandora node, you will see service files of all of its child pages (assuming you have added some child pages to the object) in the OpenSeadragon viewer as illustrated above.
+
+You can change how the paged content images are arranged in the OpenSeadragon viewport by doing the following:
 
 1. Visit `admin/config/media/openseadragon`
 1. Scroll to the bottom, where you will see the "Collection Mode" options.
@@ -30,7 +40,7 @@ You can change how the paged content thumbnails are arranged in the OpenSeadrago
 
 ## Looking under the hood (and beyond)
 
-  If you want to see the raw output of the IIIF API implementations in Islandora, visit a node that is displaying the OpenSeadragon viewer (doesn't matter if its a single image or a paged content node like a book), and tack "manifest" onto the end of the URL, like `http://myrepo.org/node/23/manifest` and hit enter. You will see the raw JSON that IIIF-compliant viewers use to render the content.
+  If you want to see the raw output of the IIIF API implementations in Islandora, visit a node that is displaying the OpenSeadragon viewer (doesn't matter if it's a single image or a paged content node like a book), and tack "manifest" onto the end of the URL, like `http://myrepo.org/node/23/manifest` and hit enter. You will see the raw JSON that IIIF-compliant viewers use to render the content.
 
   The really neat thing is, IIIF-compliant viewers don't need to be embedded in Islandora websites. If a viewer on another website knows the URL of a IIIF manifest like the ones that Islandora can produce, that viewer can display the content described in the manifest. Some implementations of IIIF viewers that show off the potential to combine content from multiple IIIF servers include:
 

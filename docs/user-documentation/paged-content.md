@@ -1,7 +1,7 @@
 # Paged Content
 
 Paged content, such as books, periodicals, photographs with the front and back, etcetera,
- can use the [membership](resource-nodes.md#members) structure provided by Islandora, namely, `field_member_of`.
+ can use the [membership](content_models.md#members) structure provided by Islandora, namely, `field_member_of`.
 This involves creating a resource node for the root record (i.e. the entire book or the photograph)
 and child resource nodes for each sub-component (e.g. "Page 1", "Page 2", etc., or "recto" and "verso")
 with their corresponding media. Each "child" resource node contains a reference to their "parent" resource node
@@ -16,7 +16,7 @@ using the `field_member_of` property.
 Similar to the collection view showing members of a collection, Islandora provides
  taxonomy terms _Paged Content_ and _Page_ in the _Islandora Model_ vocabulary,
 that can be used to trigger paged
-content behaviors. Islandora Defaults provides a Context for _Paged Content_
+content behaviors. Islandora Starter Site provides a Context for _Paged Content_
 resource nodes to trigger displaying an OpenSeadragon viewer showing the child
 resource nodes' service files.
 
@@ -25,7 +25,7 @@ resource node and _Page_ for the Islandora Model of the child resource node. Aft
 child resource nodes have "service file" media (either generated via the built-in derivative
 creation or added manually), they will be included in the OpenSeadragon paginated
 viewer displayed on the parent resource node's page.
-(See the [IIIF Documentation](../user-documentation/iiif.md#using-iiif-in-islandora-8)
+(See the [IIIF Documentation](../iiif#using-iiif-in-islandora)
 for more details on controlling the viewer's behavior.)
 
 ![Screenshot of a Paged Content resource node displaying the OpenSeadragon viewer with the first child resource node displayed.](../assets/paged_content_openseadragon.png)
@@ -35,8 +35,8 @@ list of teasers, a gallery, or a slide-show to display child resource nodes.
 
 ## Ordering (weight)
 
-By default child resource nodes are un-ordered. To order the sub-components of a
-paged content resource node, Islandora provides a _Weight_ field to store a
+By default, child resource nodes are un-ordered. To order the subcomponents of a
+paged content resource node, Islandora provides a _Weight_ field to store an
 integer value on  child resource nodes.
 Children resource nodes with smaller weight values will float to the top and come
 before child resource nodes with heavier weight values.
@@ -76,13 +76,13 @@ each child resource node's weight value to be updated using sequential values.
     predicate which assumes positive integer values which cannot be guaranteed
     using the weight module.
 
-## Adding Children
+## Adding children
 
 Islandora provides an interface on the **Children** tab to either **Batch upload children** or **Add Child**.
 Both methods will result in new resource nodes that are _member of_ the current node. It is also possible
 to create child nodes separately, then edit their _Member Of_ field to point to the desired parent.
 
-### Batch Upload Children
+### Batch upload children
 
 If you want to add a number of pages to this node, for example, the **Batch Upload Children** button may
 suit your needs. It allows you to select a number of individual files, and from them, will create one resource node
@@ -94,5 +94,4 @@ per file with that file attached as a Media. It is possible to select the node t
 This method does not create full metadata for the child nodes. It uses the filename as the node title.
  It also does not accept zip files; individual files must be uploaded. For more methods of bulk uploading content,
 see [Islandora Workbench](../technical-documentation/migration-islandora-workbench.md)
- and [Migrate Islandora CSV](../extending/#batch-upload-with-a-csv)
-
+ and [Migrate Islandora CSV](extending.md#batch-uploading-via-csv)

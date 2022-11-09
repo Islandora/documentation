@@ -11,12 +11,12 @@ edit_uri: 'edit/main/docs/'
 theme:
   name: 'material'
   palette:
-    primary: 'red'
-    accent: 'red'
+    primary: 'green'
+    accent: 'blue'
   font:
     text: 'Roboto'
     code: 'Roboto Mono'
-  logo: 'assets/claw.png'
+  logo: 'assets/Islandora_logo.png'
   language: 'en'
 markdown_extensions:
   - admonition
@@ -50,20 +50,20 @@ nav:
   # what everybody needs to know to understand Islandora and interact with it
   # Possibly add page/section: How to use this documentation (containing user role definitions)
   - Concepts:
+      - 'Nodes in Islandora': 'concepts/node-concepts.md'
+      - 'Media in Islandora': 'concepts/node-media.md'
+      - 'Derivatives': 'concepts/derivatives.md'
+      - 'RDF Repository': 'concepts/rdf.md'
+      - 'Islandora Starter Site': 'concepts/starter-site.md'
+  - Behaviours (Models):
       - 'Collections': 'concepts/collection.md'
-      - 'Access Control': 'concepts/access-control.md'
-      - 'Accessibility': 'concepts/accessibility.md'
-         # conceptual
-      - 'Component Overview': 'installation/component_overview.md'
-          # moved from "Installation" section; alternatively duplicate a simplified version in the overview section
-          # also see Architecture Diagram in Developer documentation
-          # also see user-intro.md#architecture for the cheeseburger/bento box analogy
-          # Conceptual/ reference, all user roles/ sys admins/ developers:
-          # procedural information should be moved out installation guides
-      - 'Modelling content in Islandora  vs. Legacy': 'user-documentation/objects_to_resource_nodes.md'
-              # conceptual, all user roles
-              # moved from User documentation > Content in Islandora
-      - Islandora Defaults: 'reference/islandora_defaults_reference.md'
+      - 'Paged Content': 'user-documentation/paged-content.md'
+              # conceptual and procedural, repository managers/ curators
+              # move out procedural description for ordering pages
+      - 'Audio': 'models/audio.md'
+      - 'Video': 'models/video.md'
+  
+
   - Installation:
       # Procedural, different user roles: clarify who the audience is for a
       # particular recipe. The ISLE documentation page was written with a
@@ -72,6 +72,7 @@ nav:
       - 'Release Notes':
           - '8.x-2.0 Release Notes': 'release_notes/8.x-2.0.md'
           - 'Older Release Notes': 'https://github.com/Islandora/documentation/tree/main/docs/release_notes'
+      - 'Install a Demo': 'installation/install-a-demo.md'
       - 'Docker (ISLE)':
           - 'Introduction to ISLE': 'installation/docker-introduction.md'
           - 'Prerequisites': 'installation/docker-prereq.md'
@@ -100,7 +101,7 @@ nav:
       - 'Installing Modules': 'technical-documentation/install-enable-drupal-modules.md'
           # procedural, sysadmin
           # moved from System Administrator Documentation
-  - Tutorials:
+  - Walkthroughs:
       # Audience for this section is someone who is extremely new to doing
       # the kinds of things that we are introducing. This is someone's first
       # foray into this domain so each tutorial should accomplish something
@@ -113,6 +114,9 @@ nav:
           # procedural, for people learning what islandora is.
       - 'Create a Collection': 'tutorials/how-to-create-collection.md'
           # procedural, repository managers/ curators
+      - 'Modify or Create a Content Type': 'user-documentation/content_types.md'
+          # procedural, repository managers
+          # add resource page on learning YAML
       - 'Configure Blocks': 'tutorials/blocks.md'
           # procedural, repository managers
           # add/link to conceptual documentation about blocks in Drupal?
@@ -121,76 +125,69 @@ nav:
           # Add/link to conceptual docs about Views?
       - 'Video Documentation': 'user-documentation/video-docs.md'
           # mostly procedural, repository managers
-
-  - Documentation:
+      - 'Create and Manage User Accounts': 'user-documentation/users.md'
+          # procedural, repository managers
+          # add reference information on user roles that come with Islandora/Islandora Defaults out of the box
+  - Using Islandora:
       - 'Introduction': 'user-documentation/user-intro.md'
           # Conceptual, 'site admins/repository managers'
           # move out high-level conceptual information (#architecture section)
-      - 'Intro to Linked Data': 'user-documentation/intro-to-ld-for-islandora-8.md'
+      - Describing content:
+          - 'Content models': 'user-documentation/content_models.md'
+          # conceptual, all user roles
+          # moved from User documentation > Content in Islandora
+          - 'Metadata': 'user-documentation/metadata.md'
+          # largely conceptual, repository managers/ curators
+          # information (e.g. move procedure for setting display hints to
+          - 'Linked data': 'user-documentation/linked_data.md'
           # conceptual, repository managers
-      - 'Versioning': 'user-documentation/versioning.md'
-          # conceptual/ reference, repository managers/ developers
-      - Content in Islandora:
-          # largely conceptual, repository managers and to some extent curators
-          # currently duplicates a section also present under "User documentation",
-          # develop into procedural documentation for repository
-          # admins about how to manage content in I8
-        - 'Resource Nodes': 'user-documentation/resource-nodes.md'
-              # largely conceptual, repository managers; move out procedural
-              # information (e.g. move procedure for setting display hints to
-              # documentation about contexts)
-        - 'Media': 'user-documentation/media.md'
-              # conceptual and procedural, repository managers
-              # move out procedural description for deleting Media
-        - 'Paged Content': 'user-documentation/paged-content.md'
-              # conceptual and procedural, repository managers/ curators
-              # move out procedural description for ordering pages
-        - 'Metadata': 'user-documentation/metadata.md'
-              # largely conceptual, repository managers/ curators
-        - 'Transcripts': 'user-documentation/transcripts.md'
-              # Conceptual and pragmatic, for repository managers.
-      - Configuring Islandora:
-          - 'Modify or Create a Content Type': 'user-documentation/content_types.md'
-                  # procedural, repository managers
-                  # add resource page on learning YAML
-          - 'Configure Search': 'user-documentation/searching.md'
+          - 'Metadata harvesting': 'user-documentation/metadata_harvesting.md'
+          # conceptual, repository managers
+          # add reference documentation for developers
+      - Searching content:
+          - 'Searching': 'user-documentation/searching.md'
               # procedural, repository manager
-          - 'Add a Facet Block on Vocabulary Reference Field': 'user-documentation/facet_on_vocabulary_reference_fields.md'
+          - 'Advanced search': 'user-documentation/advanced-search.md'
               # procedural, repository manager
-          - 'Configure Advanced Search': 'user-documentation/advanced-search.md'
+          - 'Faceting': 'user-documentation/faceting.md'
               # procedural, repository manager
-          - 'Configure Context': 'user-documentation/context.md'
-              # conceptual and procedural, repository managers
-          - 'Multilingual': 'user-documentation/multilingual.md'
-              # conceptual/ procedual/ reference, repository managers
-          - 'Extending Islandora': 'user-documentation/extending.md'
-              # conceptual, repository managers/ developers
-          - 'Viewers': 'user-documentation/file_viewers.md'
-              # conceptual, understanding a very complex network of config. For repo managers/devs.
+      - Viewing content:
+          - 'Context': 'user-documentation/context.md'
+          # conceptual and procedural, repository managers
+          - 'File viewers': 'user-documentation/file_viewers.md'
+          # conceptual, understanding a very complex network of config. For repo managers/devs.
           - 'IIIF': 'user-documentation/iiif.md'
-              # conceptual/ procedural, repository managers
-              # add reference documentation about IIIF presentation API implementation
-          - 'OAI-PMH': 'user-documentation/oai.md'
-              # conceptual, repository managers
-              # add reference documentation for developers?
-          - 'RDF Generation': 'islandora/rdf-mapping.md'
-              # conceptual/reference/procedure, repository managers/ developers
-          - 'Drupal Bundle Configurations': 'islandora/drupal-bundle-configurations.md'
-              # conceptual/procedure, repository managers
-          - 'Flysystem': 'technical-documentation/flysystem.md'
-              # moved from Developer documentation
-      - Operating an Islandora Repository:
-          - 'Create and Manage User Accounts': 'user-documentation/users.md'
-              # procedural, repository managers
-              # add reference information on user roles that come with Islandora/Islandora Defaults out of the box
-          - 'Usage Stats': 'user-documentation/usage-stats.md'
-              # largely conceptual, repository managers
-  - System Administrator Documentation:
-    - 'Updating Drupal': 'technical-documentation/updating_drupal.md'
-    - 'Uploading large files': 'technical-documentation/uploading-large-files.md'
-    - 'JWT Authentication': 'technical-documentation/jwt.md'
+          # conceptual/ procedural, repository managers
+          # add reference documentation about IIIF presentation API implementation
+      - Handling content files:
+          - 'Media': 'user-documentation/media.md'
+          # conceptual and procedural, repository managers
+          # move out procedural description for deleting Media
+          - 'Flysystem': 'user-documentation/flysystem.md'
           # moved from Developer documentation
+          - 'Large files': 'user-documentation/uploading-large-files.md'
+          - 'Transcripts': 'user-documentation/transcripts.md'
+              # Conceptual and pragmatic, for repository managers.
+      - Administering Islandora:
+          - 'Access control': 'user-documentation/access-control.md'
+          - 'JWT authentication': 'user-documentation/jwt-authentication.md'
+          # moved from Developer documentation
+          - 'Usage statistics': 'user-documentation/usage-stats.md'
+          # largely conceptual, repository managers
+          - 'Versioning': 'user-documentation/versioning.md'
+          # conceptual/ reference, repository managers/ developers
+      - 'Accessibility': 'user-documentation/accessibility.md'
+      - 'Multilingual': 'user-documentation/multilingual.md'
+          # conceptual/ procedural/ reference, repository managers
+      - 'Extending Islandora': 'user-documentation/extending.md'
+          # conceptual, repository managers/ developers
   - Documentation for Developers:
+    - 'Stack Overview': 'installation/component_overview.md'
+          # moved from "Installation" section; alternatively duplicate a simplified version in the overview section
+          # also see Architecture Diagram in Developer documentation
+          # also see user-intro.md#architecture for the cheeseburger/bento box analogy
+          # Conceptual/ reference, all user roles/ sys admins/ developers:
+          # procedural information should be moved out installation guides
     - 'Architecture Diagram': 'technical-documentation/diagram.md'
     - REST Documentation:
       - 'Introduction': 'technical-documentation/using-rest-endpoints.md'
@@ -200,16 +197,15 @@ nav:
       - 'PATCH': 'technical-documentation/rest-patch.md'
       - 'DELETE': 'technical-documentation/rest-delete.md'
       - 'Signposting': 'technical-documentation/rest-signposting.md'
-    - Tests:
-      - 'Running Tests': 'technical-documentation/running-automated-tests.md'
-      - 'Testing Notes': 'technical-documentation/testing-notes.md'
-    - 'Updating drupal-project': 'technical-documentation/drupal-project.md'
-    - 'Versioning Policy': 'technical-documentation/versioning.md'
-    - 'Adding back ?_format=jsonld': 'technical-documentation/adding_format_jsonld.md'
-    - 'Updating a `deb` and adding it to Lyrasis PPA': 'technical-documentation/ppa-documentation.md'
     - Alpaca:
       - 'Alpaca Technical Stack': 'alpaca/alpaca-technical-stack.md'
       - 'Alpaca Tips': 'technical-documentation/alpaca_tips.md'
+    - Tests:
+      - 'Testing Notes': 'technical-documentation/testing-notes.md'
+    - 'Resizing a VM': 'technical-documentation/resizing_vm.md'
+    - 'Updating Drupal': 'technical-documentation/updating_drupal.md'
+    - 'Updating a `deb` and adding it to Lyrasis PPA': 'technical-documentation/ppa-documentation.md'
+    - 'Adding back ?_format=jsonld': 'technical-documentation/adding_format_jsonld.md'
   - Migration:
       - 'Migration Overview': 'technical-documentation/migration-overview.md'
       - 'REST API': 'technical-documentation/migration-rest-api.md'
@@ -219,12 +215,13 @@ nav:
       - 'Islandora 7': 'technical-documentation/migrate-7x.md'
   - Contributing:
       - 'How to contribute': 'contributing/CONTRIBUTING.md'
-      - 'Resizing a VM': 'technical-documentation/resizing_vm.md'
+      - 'Running Tests': 'technical-documentation/running-automated-tests.md'
       - 'Checking Coding Standards': 'technical-documentation/checking-coding-standards.md'
       - 'Contributing Workflow': 'contributing/contributing-workflow.md'
       - 'Creating GitHub Issues': 'contributing/create_issues.md'
+      - 'Versioning Policy': 'technical-documentation/versioning.md'
       - 'How to release': 'contributing/releasing-islandora.md'
-      - 'Editing Documentation': 'contributing/editing-docs.md'
+      - 'How to Edit Documentation': 'contributing/editing-docs.md'
       - 'How to Build Documentation': 'technical-documentation/docs-build.md'
           # moved from Developer documentation
       - 'Documentation Style Guide': 'contributing/docs_style_guide.md'

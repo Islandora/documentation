@@ -1,6 +1,6 @@
 # Releasing Islandora
 
-Islandora is an ecosystem of repositories and follows a [Semantic Versioning Approach] [Semantic Versioning](https://semver.org/). This allows the community to remain aligned with [Drupal's approach](https://www.drupal.org/node/3108648) and support more a more modular approach and more frequent releases, as well as better upgrade paths for those using components of the system. In semantic versioning, a version has three elements 'MAJOR.MINOR.PATCH'. This looks something like 2.1.1, or you may see major versions labelled as 2.x.x. To guide repository maintainers, we recommend you increment the:
+Islandora is an ecosystem of repositories and follows a [Semantic Versioning Approach](https://semver.org/). This allows the community to remain aligned with [Drupal's approach](https://www.drupal.org/node/3108648) and support more a more modular approach and more frequent releases, as well as better upgrade paths for those using components of the system. In semantic versioning, a version has three elements 'MAJOR.MINOR.PATCH'. This looks something like 2.1.1, or you may see major versions labelled as 2.x.x. To guide repository maintainers, we recommend you increment the:
 
 
 * MAJOR version when you make incompatible API changes,
@@ -119,9 +119,9 @@ Release the `jsonld` module by creating a new release for it in Github.
 
 Release the `openseadragon` module by creating a new release for it in Github.
 
-### Release Carapace
+### Release Islandora Mirador
 
-Release the `carapace` theme by creating a new release for it in Github.
+Release the `islandora_mirador` module by creating a new release for it in Github.
 
 ### Release migrate_islandora_csv
 
@@ -129,7 +129,7 @@ Release the `migrate_islandora_csv` module by creating a new release for it in G
 
 ### Release Chullo
 
-Release chullo by creating a new release for it in Github.
+Release `chullo` by creating a new release for it in Github.
 
 ### Release Crayfish-Commons
 
@@ -168,18 +168,6 @@ The `islandora` module depends on the `crayfish-commons` library, and must have 
 4. Commit and push the `composer.json` and `composer.lock` files to Github.
 5. Release the module by creating a new release for them in Github.
 6. Put the dependencies on `islandora/crayfish-commons` back to `dev-dev`
-7. Run `composer update -W` again.
-8. Commit and push the `composer.json` and `composer.lock` files to Github with a commit message of "Preparing for next development iteration".
-
-### Release Islandora Defaults
-
-The `islandora` module depends on `islandora`, `controlled_access_terms`, and `openseadragon`, and must have its dependencies updated before release.
-
-1. Bump the dependency for those modules in `composer.json`.
-2. Run `composer update -W`
-4. Commit and push the `composer.json` and `composer.lock` files to Github.
-5. Release the module by creating a new release for them in Github.
-6. Put the dependencies back to `dev-8.x-1.x`
 7. Run `composer update -W` again.
 8. Commit and push the `composer.json` and `composer.lock` files to Github with a commit message of "Preparing for next development iteration".
 

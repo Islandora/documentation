@@ -39,7 +39,7 @@ $ cp web/themes/contrib/bootstrap/templates/node/node.html.twig web/themes/contr
 # Clear cache
 $ drush cr
 ```
-And now if you view the home page's source code you should now see the the `X` next to the loaded TWIG file. Please note that the file name corresponds to the node number. To use the URL alias instead of the node ID requires additional work. [Here](https://www.lehelmatyus.com/1064/drupal-8-page-template-suggestion-by-path-alias)'s a tutorial on this topic.
+And now if you view the home page's source code you should now see the `X` next to the loaded TWIG file. Please note that the file name corresponds to the node number. To use the URL alias instead of the node ID requires additional work. [Here](https://www.lehelmatyus.com/1064/drupal-8-page-template-suggestion-by-path-alias)'s a tutorial on this topic.
 ```html
 <!-- FILE NAME SUGGESTIONS:
    x node--6--full.html.twig
@@ -51,7 +51,7 @@ And now if you view the home page's source code you should now see the the `X` n
 -->
 ```
 
-Now edit the TWIG file (web/themes/contrib/solid/templates/node--6--full.html.twig) to say whatever you want and it should show up immediately without needing to clear cache.
+Now edit the TWIG file (web/themes/contrib/solid/templates/node--6--full.html.twig) to say whatever you want, and it should show up immediately without needing to clear cache.
 
 ## Clean up
 Don't forget to turn off TWIG debugging in config file (web/sites/default/services.yml). This will likely have unexpected consequences on production system performance.

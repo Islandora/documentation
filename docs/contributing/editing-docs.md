@@ -3,7 +3,7 @@
 ## Overview
 These documentation pages are written and maintained by volunteers from the Islandora community, and new contributions are always welcomed. The documentation that you see here is formatted in the easy-to-use [Markdown](http://en.wikipedia.org/wiki/Markdown) markup language, which can add formatting such as links, headings, and bolded text. Then the documentation HTML site is built using [mkdocs](https://www.mkdocs.org/) from the Markdown files hosted in the Islandora [documentation](https://github.com/Islandora/documentation) GitHub repo. This documentation is rebuilt automatically upon changes being committed to GitHub, so you will see changes reflected here within a few minutes of making an edit.
 
-The [Islandora Documentation Interest Group](https://github.com/islandora-interest-groups/Islandora-Documentation-Interest-Group) holds regular meetings to discuss how to improve and expand Islandora's documentation. If you are interested in becoming involved, all are welcome to join. If you just want to make a contribution to the existing documentation, that process is outlined here.
+The [Islandora Documentation Interest Group](https://github.com/islandora-interest-groups/Islandora-Documentation-Interest-Group) holds regular meetings on the second Wednesday of each month between 2:00 p.m. - 3:00 p.m. EST to discuss how to improve and expand Islandora's documentation. If you are interested in becoming involved, all are welcome to join! You can view DIG meetings on the [Islandora community calendar](https://calendar.google.com/calendar/embed?src=96s6v709n719hapqtt9m8vj588%40group.calendar.google.com&ctz=America%2FToronto) and add them to your own calendar by clicking the event and selecting "copy to my calendar". If you just want to make a contribution to the existing documentation, that process is outlined here.
 
 ## Before you start
 
@@ -24,9 +24,9 @@ To edit documentation in Islandora, you must:
 
 ## How to edit documentation using a web browser
 
-- Starting from the page you want to edit on a web browser, look for the pencil icon in the top righthand corner of the page and click on it
+- Starting from the page you want to edit on a web browser, look for the pencil icon in the top righthand corner of the page and click on it.
 
-![Edit page button](../assets/editing-docs-button.png)
+![Edit page button](../assets/editing_docs_Edit_Button.png)
 
 - You will be taken to GitHub. If you are not logged in, you will be prompted to log in or register for an account. If you are logged in, you will be taken to an in-browser editor where you will view the page in Markdown.
 
@@ -34,9 +34,9 @@ To edit documentation in Islandora, you must:
 
 - Make your changes directly in the browser editor, then scroll to the bottom to "commit" your changes. This is the equivalent of saving.
 
-If you are _not_ a member of the Islandora GitHub organization, GitHub will create a new _fork_ of the documentation repository in your GitHub account. From there you can make a pull request to have your changes sent back to the main Islandora documentation repo to be reviewed and accepted.
+→ **If you are _not_ a member of the Islandora GitHub organization,** GitHub will create a new _fork_ of the documentation repository in your GitHub account. From there you can make a pull request to have your changes sent back to the main Islandora documentation repo to be reviewed and accepted.
 
-If you _are_ a member of the Islandora GitHub organization, you will be able to create a new temporary branch within the main Islandora documentation repo, and then create a pull request by selecting _Create a new branch for this commit and start a pull request_. Give your branch a brief name starting with your username, with no spaces, indicating what it is for. Then click **Commit changes**.
+→ **If you _are_ a member of the Islandora GitHub organization,** you will be able to create a new temporary branch within the main Islandora documentation repo, and then create a pull request by selecting _Create a new branch for this commit and start a pull request_. Give your branch a brief name starting with your username, with no spaces, indicating what it is for. Then click **Commit changes**.
 
 ![start a new branch and PR](../assets/editing-docs-branch.png)
 
