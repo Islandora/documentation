@@ -85,11 +85,10 @@ to create child nodes separately, then edit their _Member Of_ field to point to 
 ### Batch upload children
 
 If you want to add a number of pages to this node, for example, the **Batch Upload Children** button may
-suit your needs. It allows you to select a number of individual files, and from them, will create one resource node
-per file with that file attached as a Media. It is possible to select the node type and media type
-(and if selecting "Repository Item" as node type, you can select the required Model field as well.)
+suit your needs. It allows you to upload multiple files, after selecting a content type for the child nodes and the media type and media use for the media that will hold the uploaded files. If selecting a node with the _Model_ (`field_model`) field, it will also let you select a model from the Islandora Models vocabulary. These settings will apply to all nodes and media created for this batch.
 
-![Batch Upload Children form](../assets/paged_content_batch_upload.png)
+![Batch Upload Children form page 1](../assets/paged_content_batch_upload.png)
+![Batch Upload Children form page 2](../assets/paged_content_batch_upload-2.png)
 
 This method does not create full metadata for the child nodes. It uses the filename as the node title.
  It also does not accept zip files; individual files must be uploaded. For more methods of bulk uploading content,
