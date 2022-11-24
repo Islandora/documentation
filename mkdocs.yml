@@ -166,6 +166,8 @@ nav:
           - 'Flysystem': 'user-documentation/flysystem.md'
           # moved from Developer documentation
           - 'Large files': 'user-documentation/uploading-large-files.md'
+          - 'Transcripts': 'user-documentation/transcripts.md'
+              # Conceptual and pragmatic, for repository managers.
       - Administering Islandora:
           - 'Access control': 'user-documentation/access-control.md'
           - 'JWT authentication': 'user-documentation/jwt-authentication.md'
