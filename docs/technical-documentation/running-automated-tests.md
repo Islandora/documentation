@@ -19,11 +19,13 @@ follow the `Configure PHPUnit` and `Create a directory for HTML output` sections
 
 you can find your db password in `codebase/web/sites/default/settings.php`.
 
-user_name and db_name is `drupal_default`
+user_name and db_name is `drupal_default`.
+
+phpunit tag's 'bootstrap' attribute default value should be changed if it is placed in any directory other than `codebase/web/core`.
 
 if your current directory is the same as the phpunit.xml use the following command to run phpunit:
 
-`vendor/bin/phpunit codebase/web/modules/contrib/islandora/tests/src/Functional/DeleteNodeWithMediaAndFile.php`
+`vendor/bin/phpunit web/modules/contrib/islandora/tests/src/Functional/DeleteNodeWithMediaAndFile.php`
 
 or if your phpunit.xml is in a different directory, then use the command below:
 
