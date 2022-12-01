@@ -43,6 +43,8 @@ https://github.com/Islandora/documentation/issues
 **Which version of Islandora are you using?**
 
 
+**Which method did you use to install your Islandora instance? (manually, ISLE, playbook, etc.)**
+
 
 **Any related open or closed issues to this bug report?**
 
