@@ -73,18 +73,18 @@ vagrant up
 
 ## Deploying to a remote environment
 
-A remote environment can be provisioned by providing SSH credentials to `islandora-playbook` and using the `ansible-galaxy` installer instead of Vagrant. Some preparation of configuration entries in the `inventory` also need to be changed to be aware of the particulars of your remote environment; this includes:
+A remote environment can be provisioned by providing SSH credentials to `islandora-playbook` and using the `ansible-playbook` installer instead of Vagrant. Some preparation of configuration entries in the `inventory` need to be changed to be aware of the particulars of your remote environment; this will include:
 
 - Changing usernames and passwords to something more sensible than the default
-- Changing IP addresses to use the remote machine's actual IP
+- Changing IP addresses to use the remote machine's IP
 - Changing Apache to serve at port 80 (as opposed to 8000, which we use for development purposes)
 
-We're going to build up this new remote environment configuration from the default provided Vagrant configuration. To start, take the inventory for the vagrant development environment and make a copy of it. Be sure to give it an appropriate name. Here we're using `example`.
+We're going to build up this new remote environment configuration from the default provided Vagrant configuration. To start, take the inventory for the `vagrant` development environment and make a copy of it. Be sure to give it an appropriate name. Here we're using `production`.
 
 ```bash
 $ git clone https://github.com/Islandora-Devops/islandora-playbook
 $ cd islandora-playbook
-$ cp -r inventory/vagrant inventory/example
+$ cp -r inventory/vagrant inventory/production
 ```
 
 Then you can update the following entries in the following files using your own information. If an entry does not exist in a file,
@@ -96,78 +96,29 @@ your own values.
 #### group_vars/all/passwords.yml
 
 ```yml
+# Drupal
 drupal_db_password: changeme
 drupal_account_pass: changeme
+
+# MySQL/Postgres
 islandora_db_root_password: changeme
+
+# Tomcat
 islandora_tomcat_password: changeme
-islandora_syn_token: changeme
+
+# Syn
+islandora_syn_token: islandora
+
+# Cantaloupe
 cantaloupe_admin_password: changeme
-```
 
-#### group_vars/crayfish.yml
-
-```yml
-crayfish_gemini_fedora_base_url: http://example.org:8080/fcrepo/rest
-crayfish_houdini_fedora_base_url: http://example.org:8080/fcrepo/rest
-crayfish_hypercube_fedora_base_url: http://example.org:8080/fcrepo/rest
-crayfish_milliner_fedora_base_url: http://example.org:8080/fcrepo/rest
-crayfish_milliner_drupal_base_url: http://example.org
-crayfish_milliner_gemini_base_url: http://example.org/gemini
-crayfish_homarus_fedora_base_url: http://example.org:8080/fcrepo/rest
-crayfish_recast_fedora_base_url: http://example.org:8080/fcrepo/rest
-crayfish_recast_drupal_base_url: http://example.org
-crayfish_recast_gemini_base_url: http://example.org/gemini
-```
-
-#### group_vars/karaf.yml
-
-For Alpaca, only the `token.value` and various URLs are of particular importance, but the entire configuration chunk is provided here for convenience.
-
-```yml
-alpaca_settings:
-  - pid: ca.islandora.alpaca.http.client
-    settings:
-      token.value: changeme
-  - pid: org.fcrepo.camel.indexing.triplestore
-    settings:
-      input.stream: activemq:topic:fedora
-      triplestore.reindex.stream: activemq:queue:triplestore.reindex
-      triplestore.baseUrl: http://example.org:8080/bigdata/namespace/islandora/sparql
-  - pid: ca.islandora.alpaca.indexing.triplestore
-    settings:
-      error.maxRedeliveries: 10
-      index.stream: activemq:queue:islandora-indexing-triplestore-index
-      delete.stream: activemq:queue:islandora-indexing-triplestore-delete
-      triplestore.baseUrl: http://example.org:8080/bigdata/namespace/islandora/sparql
-  - pid: ca.islandora.alpaca.indexing.fcrepo
-    settings:
-      error.maxRedeliveries: 5
-      node.stream: activemq:queue:islandora-indexing-fcrepo-content
-      node.delete.stream: activemq:queue:islandora-indexing-fcrepo-delete
-      media.stream: activemq:queue:islandora-indexing-fcrepo-media
-      file.stream: activemq:queue:islandora-indexing-fcrepo-file
-      file.delete.stream: activemq:queue:islandora-indexing-fcrepo-file-delete
-      milliner.baseUrl: http://example.org/milliner/
-      gemini.baseUrl: http://example.org/gemini/
-
-alpaca_blueprint_settings:
-  - pid: ca.islandora.alpaca.connector.houdini
-    in_stream: activemq:queue:islandora-connector-houdini
-    derivative_service_url: http://example.org/houdini/convert
-    error_max_redeliveries: 5
-    camel_context_id: IslandoraConnectorHoudini
-  - pid: ca.islandora.alpaca.connector.homarus
-    in_stream: activemq:queue:islandora-connector-homarus
-    derivative_service_url: http://example.org/homarus/convert
-    error_max_redeliveries: 5
-    camel_context_id: IslandoraConnectorHomarus
+# Fedora
+fcrepo_db_password: changeme
 ```
 
 #### group_vars/tomcat.yml
 
 ```yml
-fcrepo_allowed_external_content:
-  - http://example.org/
 cantaloupe_HttpResolver_BasicLookupStrategy_url_prefix: http://example.org/
 ```
 
@@ -178,16 +129,9 @@ This is where we specify that the webserver is listening on the default port 80,
 apache_listen_port: 80
 ```
 
-#### group_vars/webserver/drupal.yml
-
-```yml
-drupal_trusted_hosts:
-  - ^localhost$
-  - example.org
-fedora_base_url: "http://example.org:8080/fcrepo/rest/"
-```
-
 #### group_vars/webserver/general.yml
+
+You will have to add the matomo line.
 
 ```yml
 openseadragon_iiiv_server: http://example.org:8080/cantaloupe/iiif/2
@@ -196,30 +140,31 @@ matomo_site_url: http://example.org
 
 #### hosts
 
-You'll need the SSH particulars for logging into your server in the `inventory/vagrant/hosts` file .  This example is set up to login as `root` using
-an SSH key. You'll need to get the details for logging into your remote server from your hosting provider (AWS, Digital Ocean, etc...)
+You'll need to put particulars for logging into your server in the `inventory/production/hosts` file . This example is set up to login as the `ansible` user (to avoid trying to run Composer as `root`) and uses 
+an SSH key. You'll need to get the details for logging into your remote server from your hosting provider (AWS, Digital Ocean, etc...) 
 or your systems administrator if you're running the server in-house. See
 [this page](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html#connecting-to-hosts-behavioral-inventory-parameters)
 for more details about what you can put into a
 host file
+[//]: # (How to avoid getting asked for a sudo password? Use -K in the command below? Configuring passwordless sudo seemed to not work. no idea how vagrant does it.)
 
 ```
-default ansible_host=example.org ansible_port=22 ansible_user=root ansible_ssh_private_key_file='/home/username/.ssh/id_rsa'
+default ansible_host=example.org ansible_port=22 ansible_user=ansible ansible_ssh_private_key_file='/home/username/.ssh/id_rsa'
 ```
 
 ### Running the remote installer
 
-First, you'll want to get the ansible roles that are needed for the version of Islandora you are trying to install.  This can be done
+First, you'll want to install the ansible roles that are needed for the version of Islandora you are trying to install.  This can be done
 with
 
 ```bash
 $ ansible-galaxy install -r requirements.yml
 ```
 
-Then, depending on the operating system installed on the remote environment, you can use the following command for Ubuntu 16.04
+Then, depending on the operating system installed on the remote environment, you can use the following command for Ubuntu 20.04
 
 ```bash
-$ ansible-playbook -i inventory/production playbook.yml -e "islandora_distro=ubuntu/xenial64"
+$ ansible-playbook -i inventory/production playbook.yml -e "islandora_distro=ubuntu/focal64"
 ```
 
 or for CentOS 7
