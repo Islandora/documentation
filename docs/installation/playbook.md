@@ -164,13 +164,13 @@ $ ansible-galaxy install -r requirements.yml
 Then, depending on the operating system installed on the remote environment, you can use the following command for Ubuntu 20.04
 
 ```bash
-$ ansible-playbook -i inventory/production playbook.yml -e "islandora_distro=ubuntu/focal64"
+$ ansible-playbook -i inventory/production playbook.yml -e "islandora_distro=ubuntu/focal64" -e "islandora_profile=starter_dev"
 ```
 
 or for CentOS 7
 
 ```bash
-$ ansible-playbook -i inventory/production playbook.yml -e "islandora_distro=centos/7"
+$ ansible-playbook -i inventory/production playbook.yml -e "islandora_distro=centos/7" -e "islandora_profile=starter_dev"
 ```
 
 ## Troubleshooting
