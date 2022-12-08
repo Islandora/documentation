@@ -116,12 +116,6 @@ cantaloupe_admin_password: changeme
 fcrepo_db_password: changeme
 ```
 
-#### group_vars/tomcat.yml
-
-```yml
-cantaloupe_HttpResolver_BasicLookupStrategy_url_prefix: http://example.org/
-```
-
 #### group_vars/webserver/apache.yml
 
 This is where we specify that the webserver is listening on the default port 80, instead of the development machine port 8000.
