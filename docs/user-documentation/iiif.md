@@ -48,3 +48,9 @@ You can change how the paged content images are arranged in the OpenSeadragon vi
   * [diva.js](https://ddmal.music.mcgill.ca/diva.js/try/iiif-external.html) - select a source from the drop-down list at the top.
 
 These two examples have nothing to do with Islandora, but illustrate the potential for IIIF to build tools that extend beyond a given repository platform.
+
+## Resources
+  To find resources on how to customize the IIIF interface check out IIIF's "[Guides to finding and working with IIIF materials](https://guides.iiif.io)" 
+  
+  For a list of [lists of awesome IIIF resources](https://github.com/IIIF/awesome-iiif) to see examples, tutorials, Digital Asset Management (DAMs), Image servers, Exhibits, Annotations, discovery, community involvement, and more.
+  [nline training course](https://iiif.io/get-started/training)
