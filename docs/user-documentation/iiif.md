@@ -52,5 +52,5 @@ These two examples have nothing to do with Islandora, but illustrate the potenti
 ## Resources
   To find resources on how to customize the IIIF interface check out IIIF's "[Guides to finding and working with IIIF materials](https://guides.iiif.io)" 
   
-  For a list of [lists of awesome IIIF resources](https://github.com/IIIF/awesome-iiif) to see examples, tutorials, Digital Asset Management (DAMs), Image servers, Exhibits, Annotations, discovery, community involvement, and more.
-  [nline training course](https://iiif.io/get-started/training)
+  For a list of [lists of awesome IIIF resources](https://github.com/IIIF/awesome-iiif) to see examples, tutorials, Digital Asset Management (DAMs), Image servers, Exhibits, Annotations, discovery, community involvement, [Online training courses](https://iiif.io/get-started/training), and more.
+ 
