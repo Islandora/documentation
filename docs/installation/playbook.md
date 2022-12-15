@@ -1,29 +1,26 @@
 # Islandora Playbook
 
-!!! note "Still Alive"
-    Reports of the playbook's demise have been exaggerated. It is still in use and being maintained. Local VMs (VirtualBox) cannot be run on M1 series Apple silicon at this time, but you can use the remote deployment option to deploy Islandora on low-cost virtual hosting.  
+The Islandora Playbook ([Islandora-Devops/islandora-playbook](https://github.com/Islandora-Devops/islandora-playbook)) is a tool for installing the Islandora stack on a single virtual machine. It can be used both as a [Vagrant](https://www.vagrantup.com/) project to create a local development environment, or as an [Ansible](https://www.ansible.com/community) playbook to provision a local or remote server. It can set up a Drupal based either on Islandora Starter Site, or on the Install Profile Demo.
 
-The Islandora Playbook ([Islandora-Devops/islandora-playbook](https://github.com/Islandora-Devops/islandora-playbook)) is a tool for installing the Islandora stack on a single virtual machine. It can be used both as a [Vagrant](https://www.vagrantup.com/) project to create a local development environment, or as an [Ansible](https://www.ansible.com/community) playbook to provision a local or remote server. It can set up a Drupal based either on Islandora Starter Site, or on the Install Profile Demo. 
+## Basic Usage (Vagrant):
 
-## Basic Usage (local, Islandora Starter Site):
-
-Install requirements, then:
+Install requirements (below), then:
 ```bash
 $ git clone -b dev https://github.com/Islandora-Devops/islandora-playbook
 $ cd islandora-playbook
-$ vagrant up
 ```
-## Basic Usage (local, Install Profile Demo):
-
-Install requirements, then:
+First, create the islandora base box:
 ```bash
-$ git clone -b dev https://github.com/Islandora-Devops/islandora-playbook
-$ cd islandora-playbook
-$ export ISLANDORA_INSTALL_PROFILE=demo
+$ ISLANDORA_BUILD_BASE=true vagrant up
+$ vagrant package --output islandora_base
+$ vagrant destroy
+```
+Second, build a VM using the islandora base box:
+```bash
 $ vagrant up
 ```
 
-## Requirements
+## Requirements (Vagrant)
 
 To create a local VM, download and install the following.
 
@@ -34,7 +31,7 @@ To create a local VM, download and install the following.
 5. [Ansible](https://www.ansible.com/community) (Tested on version 2.11+, versions back to 2.9 should work.)
 
 
-#### Installing Git and Ansible on MacOS
+### Installing Git and Ansible on MacOS
 
 OpenSSL is already pre-installed on MacOS. Git can be installed using XCode's command line tools (see below). Python and Pip can either be installed via the downloaded installer direct from the site or via Homebrew (not shown below). Ansible is best installed using [Homebrew](https://brew.sh/) (see below).
 
@@ -49,7 +46,9 @@ $ brew install ansible
 
 ## Installing a local development environment
 
-Clone the `islandora-playbook` and use `vagrant up` to automatically provision a local environment. This method uses Vagrant, VirtualBox, and Ansible. Before provisioning a local environment, you should likely double check that no [required ports](#port-clashes-for-local-environments) are currently in use.
+You will use `vagrant up` twice, first to create an Islandora base box, and then again to provision that base box into a full Islanodra. This method uses Vagrant, VirtualBox, and Ansible.
+
+!!! warn Make sure that no [required ports](#port-clashes-for-local-environments) are currently in use.
 
 ### Clone the playbook
 
@@ -58,26 +57,53 @@ $ git clone -b dev https://github.com/Islandora-Devops/islandora-playbook
 $ cd islandora-playbook
 ```
 
-### Spin up with Vagrant
+### Create the Base Box
 
-Before using `vagrant up`:
+The Playbook will create a "base box" that includes core software (PHP, Apache, etc). Since these do not need to be updated too often, this can be packaged as a Vagrant base box that will be used to quickly provision the Islandora part.
 
+Notes:
 - If building a CentOS box, you also need to install the vbguest additions with `vagrant plugin install vagrant-vbguest`.
-- If this is not your first time spinning up Islandora from this directory, and you want to get the latest code, you may want to clear cached ansible roles in roles/external `rm -rf roles/external`
+- If this is not your first time spinning up the Islandora Playbook from this directory, you may want to clear cached ansible roles in roles/external" `rm -rf roles/external`
 
-Then, to spin up the machine:
+First, create the islandora base box by overriding the Vagrant variable `ISLANDORA_BUILD_BASE` (which defaults to `false` in the `Vagrantfile`):
+```bash
+$ ISLANDORA_BUILD_BASE=true vagrant up
+```
 
+Once it is complete (without errors), store it as a Vagrant base box. It will appear as `islandora_base` in the current directory.
+```bash
+$ vagrant package --output islandora_base
+```
+
+Then, get rid of the existing VM since we've saved what we need:
+```bash
+$ vagrant destroy
+     default: Are you sure you want to destroy the 'default' VM? [y/N] y
+==> default: Forcing shutdown of VM...
+==> default: Destroying VM and associated drives...
+
+```
+
+Then, to provision Islandora on top of the new base box:
 ```bash
 vagrant up
 ```
 
+Access your site at `http://localhost:8000`.
+
 ## Deploying to a remote environment
 
-A remote environment can be provisioned by providing SSH credentials to `islandora-playbook` and using the `ansible-playbook` installer instead of Vagrant. Some preparation of configuration entries in the `inventory` need to be changed to be aware of the particulars of your remote environment; this will include:
+The `ansible-playbook` command using `playbook.yml` can provision a remote environment. First, you will need to create a new folder in `inventory/` with the details of your remote deployment. This includes:
 
+- Configuring the SSH parameters so Ansible can log in
 - Changing usernames and passwords to something more sensible than the default
 - Changing IP addresses to use the remote machine's IP
 - Changing Apache to serve at port 80 (as opposed to 8000, which we use for development purposes)
+
+Before beginning, you may want to:
+
+- Create a non-root user on the remote machine. Ansible will need to "escalate" (i.e. `sudo`) as this user. See Ansible Docs on [Understanding privilege escalation: become](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_privilege_escalation.html)
+- Ensure all ports except the Drupal port and ports used by Ansible are behind a firewall.
 
 We're going to build up this new remote environment configuration from the default provided Vagrant configuration. To start, take the inventory for the `vagrant` development environment and make a copy of it. Be sure to give it an appropriate name. Here we're using `production`.
 
@@ -134,8 +160,8 @@ matomo_site_url: http://example.org
 
 #### hosts
 
-You'll need to put particulars for logging into your server in the `inventory/production/hosts` file . This example is set up to login as the `ansible` user (to avoid trying to run Composer as `root`) and uses 
-an SSH key. You'll need to get the details for logging into your remote server from your hosting provider (AWS, Digital Ocean, etc...) 
+You'll need to put particulars for logging into your server in the `inventory/production/hosts` file . This example is set up to login as the `ansible` user (to avoid trying to run Composer as `root`) and uses
+an SSH key. You'll need to get the details for logging into your remote server from your hosting provider (AWS, Digital Ocean, etc...)
 or your systems administrator if you're running the server in-house. See
 [this page](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html#connecting-to-hosts-behavioral-inventory-parameters)
 for more details about what you can put into a
@@ -155,16 +181,11 @@ with
 $ ansible-galaxy install -r requirements.yml
 ```
 
-Then, depending on the operating system installed on the remote environment, you can use the following command for Ubuntu 20.04
+Then, if you are on Ubuntu 20.04, run the following commands:
 
 ```bash
-$ ansible-playbook -i inventory/production playbook.yml -e "islandora_distro=ubuntu/focal64" -e "islandora_profile=starter_dev"
-```
-
-or for CentOS 7
-
-```bash
-$ ansible-playbook -i inventory/production playbook.yml -e "islandora_distro=centos/7" -e "islandora_profile=starter_dev"
+$ ansible-playbook -i inventory/production playbook.yml -e "islandora_distro=ubuntu/focal64" -e "islandora_profile=starter" -e "islandora_build_base_box=true"
+$ ansible-playbook -i inventory/production playbook.yml -e "islandora_distro=ubuntu/focal64" -e "islandora_profile=starter" -e "islandora_build_base_box=false"
 ```
 
 ## Troubleshooting
@@ -204,3 +225,4 @@ change this, set a new value for `ansible_port` in `inventory/vagrant/hosts`.
 If you run into any issues installing the environment, do not hesitate to email the [mailing list](mailto:islandora@googlegroups.com) to
 ask for help.  If you think you've stumbled across a bug in the installer, please create an issue in the
 [Islandora issue queue](http://github.com/Islandora/documentation/issues) and give it an `ansible` tag.
+
