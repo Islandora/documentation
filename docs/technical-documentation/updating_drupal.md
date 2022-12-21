@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This section describes how to update Drupal and its modules using Composer. If you installed Islandora using the Islandora Playbook, then your Drupal was installed by Composer, so it is considered best practice to continue using Composer for updates. The method on this section is not specific to Islandora, and does not (yet) include how to update Islandora Features.
+This section describes how to update Drupal and its modules using Composer. If you installed Islandora using the Islandora Playbook or ISLE, then your Drupal was installed by Composer, so it is best practice to continue using Composer for updates. The method on this section is not specific to Islandora, and does not (yet) include how to update Islandora Features.
 
 ### What is Composer
 It is recommended by Drupal.org and the Islandora community to use Composer with Drupal for various tasks.
