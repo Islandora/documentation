@@ -42,7 +42,7 @@ set up to  use HTTPS by default.  Even when running `make demo`, your site runs 
 ### Using your own certificates
 
 The default certificates are stored in the `certs` folder of `isle-dc`, and you can simply overwrite them with certificates from your
-certificate authority.  As long as the certificates match the `DOMAIN` variable in your `.env` file, that is.
+certificate authority.  As long as the certificates match the `DOMAIN` variable in your `.env` file, that is. Changing the files in the `certs` folder requires restarting the Traefik container, which you can do by running `docker-compose restart traefik`.
 
 | File | Purpose |
 | :---- | :------- |
