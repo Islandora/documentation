@@ -93,6 +93,27 @@ docker-compose restart traefik
 
     Please note that sometimes the upstream provider of the traefik.me certificate takes a couple of days to update the certificiate after it expires or is accidently revoked.
 
+### Requesting Certifcates through ACME and External Account Binding
+
+To request certificates through another Certificate Authority (CA) that supports External Accounting Binding through ACME such as InCommon or ZeroSSL you will need to add the following to your `.env` file:
+
+```
+USE_ACME=true
+ACME_EMAIL=your-email@example.org
+ACME_SERVER=
+ACME_EAB_KID=
+ACME_EAB_HMAC=
+```
+
+Where `ACME_SERVER` is the CA server to use, `ACME_EAB_KID` is the key identifer from the External CA, and `ACME_EAB_HMAC` is the HMAC key from the External CA.
+
+Once you have added these commands you will need to run the following commands:
+
+```
+make -B docker-compose.yml
+make up
+```
+
 ## Building and Deploying Your Custom Container
 
 First, set your `ENVIRONMENT` variable to `custom` in  your .env file in addition to the changes outlined above
