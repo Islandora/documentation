@@ -1,22 +1,20 @@
 # Running Automated Tests
 
-The simpletest module (formerly the subject of this page) has been deprecated.
-
-To run tests, see [Drupal Documentation on PHPUnit in Drupal](https://www.drupal.org/docs/automated-testing/phpunit-in-drupal).
+See the [Drupal Documentation on PHPUnit in Drupal](https://www.drupal.org/docs/automated-testing/phpunit-in-drupal).
 
 # Setting up PhpUnit in ISLE
 
-Before you can use phpunit, you must first install the following modules.
+Before you can use phpunit, you must first install the following: 
 
 `composer require --dev -W phpspec/prophecy-phpunit drupal/core-dev`
 
-after that you need to make the database port available to PHPUnit, to do that find the section `image: islandora/mariadb` in the `docker-composer` and set the value of the label `traefik.enable` to true.
+After that, you need to make the database port available to PHPUnit. To do that, edit `docker-compose.yml` and find the section including `image: islandora/mariadb[version number]`. Shortly below is a `labels:` heading; set the value of the `traefik.enable: ` to `"true"`.
 
-apply the changes made to the `docker_compose` using `docker compose up -d`.
+Apply the changes made to the `docker_compose.yml` using `docker compose up -d`.
 
 ## Running PHPUnit in Isle
 
-follow the `Configure PHPUnit` and `Create a directory for HTML output` sections in [Drupal Documentation on running phpunit tests](https://www.drupal.org/docs/automated-testing/phpunit-in-drupal/running-phpunit-tests) to make a phpunit.xml.
+Follow the `Configure PHPUnit` and `Create a directory for HTML output` sections in [Drupal Documentation on running phpunit tests](https://www.drupal.org/docs/automated-testing/phpunit-in-drupal/running-phpunit-tests) to make a phpunit.xml.
 
 phpunit tag's 'bootstrap' attribute default value should be changed if it is placed in any directory other than `codebase/web/core`.
 
@@ -36,10 +34,8 @@ or if your phpunit.xml is in a different directory, then use the -c flag to spec
 
 `vendor/bin/phpunit -c web/core web/modules/contrib/islandora/tests/src/Functional/DeleteNodeWithMediaAndFile.php`
 
-## Setting up phpunit in PHPStorm
+## Setting up PHPUnit in PHPStorm
 
-to setup phpunit with phpstorm, use the following article
-
-[Drupal Documentation on running phpunit tests](https://www.drupal.org/docs/automated-testing/phpunit-in-drupal/running-phpunit-tests-within-phpstorm)
+* [Drupal Documentation on running phpunit tests](https://www.drupal.org/docs/automated-testing/phpunit-in-drupal/running-phpunit-tests-within-phpstorm)
 
 
