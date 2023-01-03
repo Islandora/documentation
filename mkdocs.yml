@@ -18,6 +18,10 @@ theme:
     code: 'Roboto Mono'
   logo: 'assets/Islandora_logo.png'
   language: 'en'
+  features:
+    - content.action.edit
+  icon:
+    edit: material/pencil
 markdown_extensions:
   - admonition
   - footnotes
