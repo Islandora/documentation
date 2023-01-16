@@ -181,11 +181,11 @@ with
 $ ansible-galaxy install -r requirements.yml
 ```
 
-Then, if you are on Ubuntu 20.04, run the following commands:
+Then, if you are on Ubuntu 22.04, run the following commands:
 
 ```bash
-$ ansible-playbook -i inventory/production playbook.yml -e "islandora_distro=ubuntu/focal64" -e "islandora_profile=starter" -e "islandora_build_base_box=true"
-$ ansible-playbook -i inventory/production playbook.yml -e "islandora_distro=ubuntu/focal64" -e "islandora_profile=starter" -e "islandora_build_base_box=false"
+$ ansible-playbook -i inventory/production playbook.yml -e "islandora_distro=ubuntu/jammy64" -e "islandora_profile=starter" -e "islandora_build_base_box=true"
+$ ansible-playbook -i inventory/production playbook.yml -e "islandora_distro=ubuntu/jammy64" -e "islandora_profile=starter" -e "islandora_build_base_box=false"
 ```
 
 ## Troubleshooting
