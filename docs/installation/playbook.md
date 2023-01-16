@@ -133,7 +133,7 @@ islandora_db_root_password: changeme
 islandora_tomcat_password: changeme
 
 # Syn
-islandora_syn_token: islandora
+islandora_syn_token: changeme
 
 # Cantaloupe
 cantaloupe_admin_password: changeme
@@ -154,7 +154,6 @@ apache_listen_port: 80
 You will have to add the matomo line.
 
 ```yml
-openseadragon_iiiv_server: http://example.org:8080/cantaloupe/iiif/2
 matomo_site_url: http://example.org
 ```
 
