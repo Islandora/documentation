@@ -34,14 +34,15 @@ The following is an alphabetized list of the current Islandora committers:
 | Bryan Brown                 | Florida State University              | bryjbrown      |
 | Jordan Dukart               | discoverygarden                       | jordandukart   |
 | Debbie Flitner              | Arizona State University              | dflitner       |
-| Willow Gillingham           | Born-Digital              | wgilling       |
+| Willow Gillingham           | Born-Digital                          | wgilling       |
 | Jonathan Green              | LYRASIS                               | jonathangreen  |
 | Jonathan Hunt               | Catalyst.Net                          | kayakr         |
 | Mark Jordan                 | Simon Fraser University               | mjordan        |
 | Danny Lamb                  | Islandora Foundation                  | dannylamb      |
 | Natkeeran Ledchumykanthan   | University of Toronto Scarborough     | natkeeran      |
 | Rosie Le Faive              | University of Prince Edward Island    | rosiel         |
-| Gavin Morris                | Born-Digital                          | g7morris       |
+| Gavin Morris                | Born-Digital                          | g7morris       | 
+| Annie Oelschlager           | Northern Illinois University          | aOelschlager   |
 | Alexander O'Neill           | University of Prince Edward Island    | alxp           |
 | Don Richards                | Born-Digital                          | DonRichards    |
 | Bethany Seeger              | Johns Hopkins University              | bseeger        |
