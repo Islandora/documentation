@@ -67,7 +67,7 @@ The following is an alphabetized list of the prior Islandora committers:
 
 ## How are you evaluated as a potential committer? 
 
-When you are nominated, the other committers review these categories before recommending you as a committer. Note that appointment to committers/TAG is governed by the [TAG Terms of reference](, and appointment to TAG comes with additional rights and responsibilities. If you become a committer and a member of committers/code, you are eligible to serve in TAG. 
+When you are nominated, the other committers review these categories before recommending you as a committer. Note that appointment to committers/TAG is governed by the [TAG Terms of reference](https://github.com/Islandora/islandora-community/wiki/Technical-Advisory-Group-Terms-of-Reference), and appointment to TAG comes with additional rights and responsibilities. If you become a committer and a member of committers/code, you are eligible to serve in TAG. 
 
 ### You are committed to the Islandora Community
 You’ve been making strong and consistent community contributions, you can stick it out through tough issues and have demonstrated a willingness to lend a hand.
