@@ -103,9 +103,9 @@ Contributors can be self-nominated or be nominated by others. These nominations 
 
 Upon receiving a nomination: 
 
-1. An email is sent by sponsor or designate describing the nomination and calling for a vote. ([templates/committerVote.txt](https://raw.githubusercontent.com/Islandora/documentation/main/docs/contributing/templates/committerVote.txt))
-1. The sponsor or designate closes the vote ([templates/closeCommitterVote.txt](https://raw.githubusercontent.com/Islandora/documentation/main/docs/contributing/templates/closeCommitterVote.txt))
-1. The sponsor or designate invites the new committer ([templates/committerInvite.txt](https://raw.githubusercontent.com/Islandora/documentation/main/docs/contributing/templates/committerInvite.txt)), if no CLA is on file ([templates/committerInviteCLA.txt](https://raw.githubusercontent.com/Islandora/documentation/main/docs/contributing/templates/committerInviteCLA.txt))
+1. An email is sent by sponsor or designate describing the nomination and calling for a vote. ([templates/committerVote.txt](https://raw.githubusercontent.com/Islandora/documentation/main/docs/contributing/templates/committerVote.txt)).
+1. The sponsor or designate closes the vote ([templates/closeCommitterVote.txt](https://raw.githubusercontent.com/Islandora/documentation/main/docs/contributing/templates/closeCommitterVote.txt)).
+1. The sponsor or designate invites the new committer ([templates/committerInvite.txt](https://raw.githubusercontent.com/Islandora/documentation/main/docs/contributing/templates/committerInvite.txt)), if no CLA is on file ([templates/committerInviteCLA.txt](https://raw.githubusercontent.com/Islandora/documentation/main/docs/contributing/templates/committerInviteCLA.txt)).
 
 Checklist for a new committer (can be completed by sponsor or designate):
 
