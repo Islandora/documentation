@@ -2,7 +2,7 @@
 
 Islandora is open source and released under open-source (usually MIT and GPLv2) licenses. The software, associated documentation, and community is developed collectively by a community of contributors and committers. All interested community members are encouraged to contribute to the project. Contributors who demonstrate sustained engagement with the project through quality participation in meetings, mailing lists, documentation and code updates can be self-nominated, or nominated by existing committers, to become a committer. Committers need not be limited to software developers! Contributors with skills in documentation and testing, or who are very active in the community for events and support, can also be committers. 
 
-Committers are supported in their specific work by having permissions to do things like merge code as well as manage Github, Slack, and the Website. The current list of committers is managed as a group in Github, and can be viewed in the Github repository. If a committer does not make a contribution in a year (without known mitigating circumstances) they are usually moved out of the committers GitHub group and listed as an Emeritus committer. There are subgroups with specific enhanced access depending on their skills and levels of commitment to the codebase. These are more fully explained in this [spreadsheet of keys and permissions](https://docs.google.com/spreadsheets/d/1a7bmUkrXQ4iYyhsFbcuK0feI3f5-IjBHq9Z8wUSHmFw/edit?usp=sharing). If you have questions about committers, you can send them to the Chair of the TAG committee, or to community@islandora.ca
+Committers are supported in their specific work by having permissions to do things like merge code as well as manage Github, Slack, and the Website. The current list of committers is managed as a group in Github, and can be viewed in the Github repository by existing members. A separate list of committers is publicly available at the bottom of this page. If a committer does not make a contribution in a year (without known mitigating circumstances) they are usually moved out of the committers GitHub group and listed as an Emeritus committer. There are subgroups with specific enhanced access depending on their skills and levels of commitment to the codebase. These are more fully explained in this [spreadsheet of keys and permissions](https://docs.google.com/spreadsheets/d/1a7bmUkrXQ4iYyhsFbcuK0feI3f5-IjBHq9Z8wUSHmFw/edit?usp=sharing). If you have questions about committers, you can send them to the Chair of the TAG committee, or to community@islandora.ca
 
 
 ## Rights
@@ -109,7 +109,7 @@ Upon receiving a nomination:
 
 Checklist for a new committer (can be completed by sponsor or designate):
 
-* Complete the CLA form. Ensure the entry shows up on our public sheet linked on our Contributer License Agreements wiki page.
+* Complete the CLA form. Ensure the entry shows up on our public sheet linked on our [Contributer License Agreements wiki page.](https://github.com/Islandora/islandora-community/wiki/Contributor-License-Agreements)
 * Add to the Islandora Committer team of the Github Islandora organization.
 * Assign to the appropriate GitHub teams, ensuring updates are reflected in the community wiki documentation. 
 * Add to the Committer team of GitHub Islandora-Labs organization.
