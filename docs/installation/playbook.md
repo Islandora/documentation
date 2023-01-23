@@ -20,7 +20,7 @@ Second, build a VM using the islandora base box:
 $ vagrant up
 ```
 
-When used this way, you can trash your working site and get a fresh Islandora relatively quickly, with `vagrant destroy` (you will be asked to confirm, as this will delete all your changes and your content), and then `vagrant up`.
+When used this way, you can trash your working site and get a fresh Islandora relatively quickly, with `vagrant destroy` (you will be asked to confirm, as this will delete all your changes and your content), and then `vagrant up`. 
 
 ## Requirements (Vagrant)
 
@@ -46,7 +46,7 @@ $ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/inst
 $ brew install ansible
 ```
 
-## Installing a local development environment
+## Installing a local development environment (Vagrant)
 
 You will use `vagrant up` twice, first to create an Islandora base box, and then again to provision that base box into a full Islanodra. This method uses Vagrant, VirtualBox, and Ansible.
 
@@ -86,12 +86,39 @@ $ vagrant destroy
 
 ```
 
-Then, to provision Islandora on top of the new base box:
+### Provision the Islandora code
+
+Then, to install Islandora (including Drupal and its configuration, Crayfish, Alpaca, etc) on top of the new base box:
 ```bash
 vagrant up
 ```
 
 Access your site at `http://localhost:8000`.
+
+### Rebuilding your Islandora development box
+
+You can quickly create a new "out of the box" Islandora VM by just re-doing the last step (provisioning Islandora) while using your existing base box. In doing this, you will destroy your existing VM, and all of its configuration and data.  This will not upgrade PHP, apache, or other back-end services (see below, "Refreshing your base box.")
+
+```bash
+vagrant destroy
+```
+You will be asked to confirm, and Vagrant will inform you it is destroying the VM and associated drives. 
+```bash
+vagrant up
+```
+This will create a new development environment on the existing islandora_base box.
+
+### Refreshing your base box. 
+
+If you want to use the Playbook to rebuild the base box (e.g. if this playbook now includes updated versions of PHP or Apache), then you will need to take some extra steps to ensure that Vagrant sees your new base box. 
+
+```bash
+vagrant destroy  # Delete your existing VM
+vagrant box remove islandora_base  # clear Vagrant's cached version of islandora_base
+ISLANDORA_BUILD_BASE=true vagrant up # and proceed to package the box, as above.
+```
+
+This is because once you use the base box once, it is stored in the vagrant box list under your home directory. While subsequent builds of `ISLANDORA_BUILD_BASE=true vagrant up` will build a new box and you can package it, but that file does not update the cached box and consequently you still get the old base box when you try build a VM. See [`vagrant box` documentation](https://developer.hashicorp.com/vagrant/docs/cli/box) for more useful commands for managing base boxes.
 
 ## Deploying to a remote environment
 
