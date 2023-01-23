@@ -23,6 +23,11 @@ graphical user interface for all major platforms.
 Follow the link above and select the appropriate system and follow the
 installation instructions.
 
+For Windows 10, you may receive the "Docker Failed to Start" Error message. To resolve this:
+* Download WSL 2 from Step 4 in [these instructions](https://learn.microsoft.com/en-ca/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package)--do not do any other steps in these instructions
+* Under Windows ‘Firewall & Network Protection’, ‘Allow an app through the firewall’, and ‘Change settings’ to select the ‘Private’ box for ‘Virtual Machine Monitoring’
+* Restart computer for all changes to take effect
+
 **If you already have Docker Desktop installed,** make sure that the **Extensions** 
 feature is listed in the left sidebar. If it is not, you need to update to the newest 
 version of Docker Desktop. This is required to add the Portainer extension.
