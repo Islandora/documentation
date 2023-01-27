@@ -4,84 +4,56 @@
 
 [Viewers](../user-documentation/glossary#viewer) allow site builders to display files in interactive JavaScript-based widgets, that provide functionality like zooming in/out, turning pages, playing/pausing, viewing in full screen, etc.
 
-In Drupal, a common way to implement a viewer is through a [module](glossary.md#module) that provides the JavaScript library, and a field formatter that uses that library. The field formatter will work with specific types of Drupal fields (e.g. file fields or image fields, some may even provide their own fields).
+In Drupal, a common way to implement a viewer is through a [module](glossary.md#module) that provides the JavaScript library, and a field formatter that uses that library. The field formatter will work with specific types of Drupal fields (e.g. file fields or image fields, some may even provide their own fields). Some modules also provide a block, that can display appropriate files based on the context.
 
 Viewers that are known to work with Islandora include:
 
 * [OpenSeadragon](https://openseadragon.github.io/), via the Drupal module [OpenSeadragon](https://github.com/Islandora/openseadragon) (maintained by the Islandora community).
 * [Mirador](https://projectmirador.org/), via the Drupal module [Islandora Mirador](https://github.com/Islandora/islandora_mirador/) (maintained by the Islandora community).
 * [pdf.js](https://github.com/mozilla/pdf.js), via the Drupal contrib module [PDF](https://www.drupal.org/project/pdf)
-
-OpenSeadragon and pdf.js are included with the Islandora Starter Site.
-
-
-## How are viewers configured?
-
-In the generic Islandora content modelling scenario, we often want the viewer to appear on a _"resource node"_ when the file itself is in a field on a Media that references that node. These layers of indirection make displaying viewers on nodes rather complex.
-
-## Example - OpenSeadragon
-
-Here is how viewers are implemented in the Islandora Starter Site. This example uses OpenSeadragon, but pdf.js is configured with the same method. This method was chosen because it uses pure configuration and no extra code. It relies on users tagging nodes with appropriate "display hint" terms to trigger Contexts to switch the node's display mode to one that includes an EVA field, which renders the appropriate Media in a way that shows the desired file in the viewer.
-
-<!-- Display modes vs view modes - Here we prefer the term 'display mode' to refer to the modes listed under Structure > Display Modes > View modes. The reasoning is that for the audience of this page, this concept is likely most frequently encountered under "Manage Display" of an entity, and to distinguish it from concepts relating to Views, such as Views displays. -->
-
-### Expected behaviour for this scenario:
-
-Create a Repository Item, and tag it with "Open Seadragon" (under Display Hints). Add a Media of type "File" to that node, upload a file such as a TIFF or JPEG 2000, and tag it with "Original File" (under Media Use). Save and publish the Media. Go to the Repository Item's page, and you should see your file displayed in the viewer.
-
-<!-- There should be a link here, on the word "File", that points to a page explaining why large images need to be Files and not Images. That is out of scope here. -->
-
-<!-- "a file such as TIFF or JPEG 2000" = "a file that works with Cantaloupe". OpenSeadragon relies on an IIIF image server, in our case, Cantaloupe, and that is what determines the kinds of files that this works with. This is also out of scope for this page. -->
-
-### Components of this scenario:
-
-1. A viewer that includes a field formatter  (e.g. the module OpenSeadragon)
-1. A media display mode (e.g. the media display mode "Open Seadragon")
-1. A media type (File, though Image is configured similarly)
-1. A file field on that media type that can use that field formatter (e.g. field_media_file)
-1. A field on that media type that points to a parent node (e.g. field_media_of)
-1. Display Mode Configuration  (make that display mode, on that media type, show only the file field rendered through that viewer's field formatter. e.g. see Media Types > File > Manage Display > Open Seadragon)
-1. An EVA view (which shows a node's attached media as rendered by that Media display mode. e.g. the view "OpenSeadragon Media EVAs")
-1. A content display mode (e.g. the node display mode called "Open Seadragon")
-1. A content type (e.g. Repository Item)
-1. Display Mode Configuration (make that display mode, on that content type, display that EVA as well as whatever metadata is relevant - see Content Types > Repository Item > Manage Display > Open Seadragon )
-1. A taxonomy term with a URI (e.g. "Open Seadragon" (http://openseadragon.github.io) imported by a migration in Islandora Starter Site)
-1. A field on that content type that can have that taxonomy term (e.g. the "Display Hints" field on Repository Item)
-1. A context (which says if a node has that term, then change to the display mode. See the context "Open Seadragon")
-
-### Logic:
-
-- If a node has the right term
-- then a context is triggered
-- so the node gets shown in a custom display mode
-- which you configured for that content type
-- to include a custom EVA View "field"
-- which displays the node's attached media rendered in a custom media display mode
-- which for that media type is configured
-- to display nothing but the file in a viewer.
-
-### Relevant files:
-
-Islandora Starter Site contains the following YAML files in `islandora-starter-site/config/sync` that control the viewer logic. These are loaded when the site is initially installed. Once you start configuring your site, you may have more (or fewer) files. But these listed below work together to create the Viewer functionality.
+* Audio with captions, via the Islandora module
+* Video with captions, via the Islandora module
 
 
-| Filename                                                            | Comments                                                                                                                                                                                                                                                              |
-|---------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `core.entity_view_mode.node.open_seadragon.yml`                     | (a media display mode) defines the Open Seadragon display mode as an option for any Media                                                                                                                                                                             |
-| `media.type.file.yml`                                               | (a media type) define File media, or in this case, re-define an existing type provided by Core. This feature will override the core settings.                                                                                                                         |
-| `field.field.media.file.field_media_file.yml`                       | (a field that can use the viewer) Defines a file field on File media called field_media_file, or in this case, re-defines it because it was already part of core. Usually you need a field.storage too but it was already defined in core and is not overridden here. |
-| `field.field.media.file.field_media_of.yml`                         | (a field that points to a parent node) attach the the "Media Of" field to File media. In this case again, the field storage is not present because it was defined in Islandora Core Feature.                                                                          |
-| `core.entity_view_display.media.file.open_seadragon.yml`            | (view mode configuration) configures the Open Seadragon display mode for File media, so it shows only the field_media_file using the OpenSeadragon field formatter.                                                                                                   |
-| `views.view.openseadragon_media_evas.yml`                           | (an EVA View) defines a view that shows a Media that is "Media Of" the current node (from URL) and is published and has "Media Use" = Original File. (there are two other EVAs defined by this view that use Preservation Master and Service File respectively.)      |
-| `core.entity_view_mode.node.open_seadragon.yml`                     | (a content display mode) defines the Open Seadragon display mode as an option for any Node                                                                                                                                                                            |
-| `node.type.islandora_object.yml`                                    | (a content type) defines the Repository Item content type                                                                                                                                                                                                             |
-| `core.entity_view_display.node.islandora_object.open_seadragon.yml` | (view mode configuration) configures the Open Seadragon display mode for Repository Item, so it shows the Open Seadragon EVA for Original File as well as normal metadata                                                                                             |
-| `taxonomy.vocabulary.islandora_display.yml`                         | (taxonomy vocabulary) define a vocabulary to hold display hints                                                                                                                                                                                                       |
-| `migrate_plus.migration.islandora_defaults_tags.yml`                | (migration) create a term in that vocabulary for "Open Seadragon." Taxonomy terms are "content" so must be entered through a migration. The file has not been renamed since moving to the Islandora Starter Site.                                                                                                                               |
-| `field.storage.node.field_display_hints.yml`                        | (field storage for display hints) defines the display hints field as an option for any node                                                                                                                                                                           |
-| `field.field.node.islandora_object.field_display_hints.yml`         | (field for display hints) configures the display hints field on Repository Item                                                                                                                                                                                       |
-| `context.context.open_seadragon.yml`                                | (a context) tells nodes with term "Open Seadragon" to use display mode "Open Seadragon"                                                                                                                                                                               |
+## Configuring Field Formatters as Viewers
 
-## Improvements
+The Drupal way of showing a viewer is to render a Media, using a View Mode that shows only the desired file, and which displays that file using the desired field formatter.
 
-This is awfully complex. If you'd like to help simplify it, we have an open issue about getting rid of display hints, and instead "sniffing' the file's mime type: [Deprecate display hints in favor of Contexts? #1193](https://github.com/Islandora/documentation/issues/1193). Other suggestions and solutions are welcome in the [issue queue](https://github.com/Islandora/documentation/issues).
+In the Starter Site:
+* Repository Item nodes are set up to display a special view called "Media EVAs - Service File" (see Structure > Content Types > Repository Item > Manage Display)
+* The "Media EVAs - Service File" view is set up to display one (1) attached media tagged "Service File" rendered using the "Source" view mode. (see Structure > Views > Media EVAs)
+* In most media types, the "Source" view mode is specially configured to show just the "main" file of that media, using an appropriate viewer.
+* Individual media can override the default viewer by setting the "Display mode for viewer" field. This field allows you to select a different view mode that will be displayed instead of "Source". For example, Images can render in the default image viewer, or in OpenSeadragon.
+
+
+### Changing a Viewer for all media of a media type
+
+With the above configuration:
+* Navigate to the "Manage Display" page for that media type
+* Select the "Source" view mode (the secondary tabs along the top)
+* Make sure that only the appropriate fields are being rendered
+* For the "main" file field (it's named different things in different media types: File, Image, as appropriate), select a different field formatter and configure it how you like it. 
+
+### Configuring an "optional" viewer
+
+Suppose you have a new viewer available, for example, for zip files. You could either:
+
+* create a new media type specially for zip files, and configure this viewer in the "Source" view mode, or,
+* configure an alternative viewer for the File media type.
+
+Either would work! The choice is yours to make. They're honestly both good.
+
+Should you choose the latter:
+* create a new Display mode for media at Structure > Display Modes > View modes. Make sure you select a "Media" view mode.
+* in the File media type, configure the "Display mode for viewer" field. If it doesn't exist yet, add a view mode switch field type. Configure it so that "View modes to switch" has "Source" selected, and "View modes allowed to switch to" includes your new view mode. 
+* in the File media type, go to Manage Display, and on the Default tab, scroll all the way to the bottom. Open the collapsed "Custom display settings" section. Select your new view mode and click save.
+* A tab for new display mode should have appeared. Go there and set up your fields so that the file field displays in your viewer.
+
+
+## Configuring Viewers that use Blocks
+
+Both OpenSeadragon and Mirador provide blocks that act as multi-page viewers. To configure one of these viewers:
+
+* Place the block on relevant pages. Usually this is a node page. In the Starter Site this is done by a Context ("Openseadragon Block - Multipaged items"). Other methods of placing blocks include the standard Block interface, and Layout Builder.
+* While placing the block, it will ask you to configure the "IIIF manifest URL". In the Starter Site, we have a IIIF Manifest view configured to create a manifest based on the "original file" media attached to the pages (children) of a given node. In the view, it is configured with path `node/%node/book-manifest-original`; in the block, we enter this as node/[node:nid]/book-manifest-original. When the block is rendered on a node page, such as `node/18`, then the nid (18) will be passed into the view.
+* If placing a block using Contexts, make sure that "Include blocks from block layout" is selected. (If you find yourself missing normal page elements, this may be why). 
