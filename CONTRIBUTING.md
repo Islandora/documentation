@@ -38,7 +38,7 @@ Code PRs must conform to [Drupal Coding Standards](https://islandora.github.io/d
 See more in our [Contributing Workflow](https://islandora.github.io/documentation/contributing/contributing-workflow/).
 
 ## New Modules
-If you have code that doesn't fit within the scope of Islandora's existing repositories, but that the Islandora community is in a better position to maintain than you are, please consider using the [LSAP Process](https://docs.google.com/document/d/16_-Yk3O-gmo93ppiRmoLltkkr4fSUp1IC72hzJz6lm8/edit?usp=sharing) to contribute your code to the ownership of the Islandora Foundation.
+If you have code that doesn't fit within the scope of Islandora's existing repositories, but that the Islandora community is in a better position to maintain than you are, please consider using the [LSAP Process](https://docs.google.com/document/d/1PlQxWWHjzGDcXAltBW3FApNOuEZfbEvPwlXEK8v3jD0/edit?usp=sharing) to contribute your code to the ownership of the Islandora Foundation.
 
 ## Contributor License Agreements
 
