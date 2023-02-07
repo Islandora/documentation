@@ -50,7 +50,8 @@ $ brew install ansible
 
 You will use `vagrant up` twice, first to create an Islandora base box, and then again to provision that base box into a full Islanodra. This method uses Vagrant, VirtualBox, and Ansible.
 
-!!! warn Make sure that no [required ports](#port-clashes-for-local-environments) are currently in use.
+!!! warn 
+    Make sure that no [required ports](#port-clashes-for-local-environments) are currently in use.
 
 ### Clone the playbook
 
