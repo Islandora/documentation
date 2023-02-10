@@ -26,6 +26,11 @@ To see if you have Docker installed, type `docker --version` in a terminal.
 
 If you need to install Docker, we recommend using the application [Docker Desktop](https://www.docker.com/products/docker-desktop). It provides a GUI for managing Docker container in Windows and MacOS, along with the Docker engine and suite of command-line tools. Linux users don't get a desktop client, but can install the Engine and command-line tools the instructions [here](https://docs.docker.com/engine/install/).
 
+!!! Warning
+    There is an open issue with macOS M1 chip users upgrading to Docker Desktop version v4.16.2. Currently it is suggested that you don’t upgrade to version v4.16.2 until the Islandora community finds a fix.
+    For more details see the relevant issue: [https://github.com/Islandora-Devops/isle-dc/issues/323](https://github.com/Islandora-Devops/isle-dc/issues/323)
+
+
 !!! Warning "Memory, Processors, and Swap Requirements"
     To run ISLE on Docker Desktop, you must increase the resources allocated to the software. See Docker docs on [setting resources on Windows](https://docs.docker.com/docker-for-windows/#resources) (see note on how to allocate/restrict memory when using WSL 2) or [setting resources on Mac](https://docs.docker.com/docker-for-mac/#resources).
 
