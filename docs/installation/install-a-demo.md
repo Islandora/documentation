@@ -29,6 +29,7 @@ For Windows 10, you may receive the "Docker Failed to Start" Error message. To r
 * Under Windows ‘Firewall & Network Protection’, ‘Allow an app through the firewall’, and ‘Change settings’ to select the ‘Private’ box for ‘Virtual Machine Monitoring’
 * Restart computer for all changes to take effect
 
+
 !!! Note
     There is an open issue with macOS M1 chip users upgrading to Docker Desktop version v4.16.2. Currently it is suggested that you don’t upgrade to version v4.16.2 until the Islandora community finds a fix.
     For more details see the relevant issue: [https://github.com/Islandora-Devops/isle-dc/issues/323](https://github.com/Islandora-Devops/isle-dc/issues/323)
