@@ -12,6 +12,7 @@ It is recommended by Drupal.org and the Islandora community to use Composer with
 ## Always create backs ups (DB and files) before updating
 
 **Before updating either Drupal core or Drupal modules:**
+
 * Back up both your files and database. Having a complete backup makes it easy to revert to the prior version if the update fails.
 * Optionally, if you made manual modifications to files like .htaccess, composer.json, or robots.txt, copy them somewhere easy to find. Because after you've installed the new Drupal core, you will need to re-apply the changes. For example, Acquia Dev Desktop places a .htaccess file in the top-level directory and without it, only the homepage on your site will work.
 
