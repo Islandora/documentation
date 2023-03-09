@@ -16,7 +16,7 @@ uses Media (though our approach to [technical metadata] differs).
 
 Configuration on Media types determines where uploaded files will be 
 stored - for example, the Drupal public or private filesystem, or through
-a tool called [Flysystem] to another data store such as Fedora. Islandora
+a tool called [Flysystem](../user-documentation/glossary.md#flysystem) to another data store such as Fedora. Islandora
 does not dictate where you put your files. Islandora Starter Site
 sets all media types to store their files in Fedora. 
 This can be overridden when creating media programmatically, such as for 
