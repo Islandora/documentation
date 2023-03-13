@@ -20,6 +20,7 @@ Viewers that are known to work with Islandora include:
 The Drupal way of showing a viewer is to render a Media, using a View Mode that shows only the desired file, and which displays that file using the desired field formatter.
 
 In the Starter Site:
+
 * Repository Item nodes are set up to display a special view called "Media EVAs - Service File" (see Structure > Content Types > Repository Item > Manage Display)
 * The "Media EVAs - Service File" view is set up to display one (1) attached media tagged "Service File" rendered using the "Source" view mode. (see Structure > Views > Media EVAs)
 * In most media types, the "Source" view mode is specially configured to show just the "main" file of that media, using an appropriate viewer.
@@ -29,6 +30,7 @@ In the Starter Site:
 ### Changing a Viewer for all media of a media type
 
 With the above configuration:
+
 * Navigate to the "Manage Display" page for that media type
 * Select the "Source" view mode (the secondary tabs along the top)
 * Make sure that only the appropriate fields are being rendered
@@ -44,6 +46,7 @@ Suppose you have a new viewer available, for example, for zip files. You could e
 Either would work! The choice is yours to make. They're honestly both good.
 
 Should you choose the latter:
+
 * create a new Display mode for media at Structure > Display Modes > View modes. Make sure you select a "Media" view mode.
 * in the File media type, configure the "Display mode for viewer" field. If it doesn't exist yet, add a view mode switch field type. Configure it so that "View modes to switch" has "Source" selected, and "View modes allowed to switch to" includes your new view mode. 
 * in the File media type, go to Manage Display, and on the Default tab, scroll all the way to the bottom. Open the collapsed "Custom display settings" section. Select your new view mode and click save.
