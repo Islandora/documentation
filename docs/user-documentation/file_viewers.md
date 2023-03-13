@@ -17,14 +17,17 @@ Viewers that are known to work with Islandora include:
 
 ## Configuring Field Formatters as Viewers
 
-The Drupal way of showing a viewer is to render a Media, using a View Mode that shows only the desired file, and which displays that file using the desired field formatter.
+The Drupal way of showing a "viewer" is to render a Media using a View Mode that shows only the desired file, displayed in a field formatter that invokes the desired viewer.
 
 In the Starter Site:
 
-* Repository Item nodes are set up to display a special view called "Media EVAs - Service File" (see Structure > Content Types > Repository Item > Manage Display)
-* The "Media EVAs - Service File" view is set up to display one (1) attached media tagged "Service File" rendered using the "Source" view mode. (see Structure > Views > Media EVAs)
-* In most media types, the "Source" view mode is specially configured to show just the "main" file of that media, using an appropriate viewer.
-* Individual media can override the default viewer by setting the "Display mode for viewer" field. This field allows you to select a different view mode that will be displayed instead of "Source". For example, Images can render in the default image viewer, or in OpenSeadragon.
+* On all Media Types, there is a "Source" view mode which is configured to show only the main ("source") file of that Media in a reasonable desired viewer.
+* In the case of OpenSeadragon and PDFjs, additional view modes are configured on the Media Types where it is possible to have files that need those viewers (Image, Document, File).
+* By default, on a node's page, a Block will display an attached Media - Service File, if it's available, with a fallback to Original File - in the "Source" view mode, i.e. in its default viewer. This is done using a Context that places a Block.
+* On a node-by-node-basis, you can override the viewer used by setting the "Viewer Override" field to a different viewer (such as PDF.js). This will cause a different Context to be activated instead, which will show the file in the selected view mode.
+
+!!! note
+    Formerly, this field was called "Display Hints". That field name has been retired in order to reduce confusion, since this uses a different mechanism. This mechanism no longer relies on Node View Modes, or EVA views. However, the basic EVA view still persists in the starter site as it is part of the Islandora Core Feature. Again, it will first look for a Service File, then fall back to the Original File.
 
 
 ### Changing a Viewer for all media of a media type
@@ -34,7 +37,7 @@ With the above configuration:
 * Navigate to the "Manage Display" page for that media type
 * Select the "Source" view mode (the secondary tabs along the top)
 * Make sure that only the appropriate fields are being rendered
-* For the "main" file field (it's named different things in different media types: File, Image, as appropriate), select a different field formatter and configure it how you like it. 
+* For the "main" file field (it's named different things in different media types: `field_media_file`, `field_media_image`... as appropriate), select a different field formatter and configure it how you like it. 
 
 ### Configuring an "optional" viewer
 
@@ -48,9 +51,11 @@ Either would work! The choice is yours to make. They're honestly both good.
 Should you choose the latter:
 
 * create a new Display mode for media at Structure > Display Modes > View modes. Make sure you select a "Media" view mode.
-* in the File media type, configure the "Display mode for viewer" field. If it doesn't exist yet, add a view mode switch field type. Configure it so that "View modes to switch" has "Source" selected, and "View modes allowed to switch to" includes your new view mode. 
-* in the File media type, go to Manage Display, and on the Default tab, scroll all the way to the bottom. Open the collapsed "Custom display settings" section. Select your new view mode and click save.
-* A tab for new display mode should have appeared. Go there and set up your fields so that the file field displays in your viewer.
+* Configure the relevant (File) Media Type to display your file in your viewer.  In the File media type, go to Manage Display, and on the Default tab, enable this view mode for "Custom Display Settings" (it's all the way at the bottom). A tab for new display mode should have appeared. Go there and set up your field so that only the file field displays, and it displays using your viewer.
+* in the "Media Display" view, create a new Block (or pair of Blocks) that (just for this Block) render the Media in your new view mode. If desired, create a pair with one selecting a Service File and one selecting a Original File, and use "No results behaviour" to place a fallback.
+* in the Islandora Display taxonomy, add a new term, with an external URI.
+* create a Context that finds Islandora Nodes that have a term with that URI.  In that context, place the block you created in the Media Display view. 
+* Finally, edit the Default Media display Context to not be in effect if the node has a term with the URI that you set.
 
 
 ## Configuring Viewers that use Blocks
