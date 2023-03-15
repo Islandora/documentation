@@ -49,35 +49,31 @@ See also: [Configuration](#configuration)
 
 Contrast: [Content entity](#content-entity)
 
-A [Drupal](#drupal) configuration entity (or "config entity") is an individual piece that makes up your site's [configuration](#configuration). It is usually represented as a single [YAML](#yaml) (.yml) file. A config entity usually represents the results of saving a single form in the administration interface, and may contain multiple (usually related) individual settings. Each configuration entity can be exported or imported as a "single item" through the Configuration Synchronization GUI, or with the Devel module's "config editor" can be edited individually. However, config entities are often interrelated and manual editing is usually not recommended.
+A [Drupal](#drupal) configuration entity (or "config entity") is an individual piece that makes up your site's [configuration](#configuration). It is usually represented as a single [YAML](#yaml) (.yml) file, though the actual ("live") configuration lives in the database. A config entity usually represents the results of saving a single form in the administration interface, and may contain multiple (usually related) individual settings. Each configuration entity can be exported or imported as a "single item" through the Configuration Synchronization GUI, or with the Devel module's "config editor" can be edited individually. However, config entities are often interrelated and manual editing is usually not recommended.
 
 ## Content
 See also: [Content Entity](#content-entity)
 
 Contrast: [Configuration](#configuration)
 
-In [Drupal](#drupal), your content is the total set of things that have been created or uploaded "as content" in your website. This includes all [content entities](#content-entities) - the actual nodes, media, files, taxonomy terms, etc. Content can be exported and imported, but only between sites with exactly the same configuration.
+In [Drupal](#drupal), your content is the total set of things that have been created or uploaded "as content" in your website. This includes all [content entities](#content-entities) - the actual nodes, media, files, taxonomy terms, etc, but does not include anything that is [configuration](#configuration). Content can be exported and imported, but only between sites with exactly the same configuration.
 
 Sometimes, "Content" is used to refer to [Nodes](#nodes) but not other content entities. This is the case when creating a new [View](#view) and one of the options is to make a view of "Content".
 
 ## Content entity
 Contrast: [Configuration entity](#configuration-entity)
 
-In [Drupal](#drupal), content entities include the actual [nodes](#node), [media](#media), [taxonomy terms](#taxonomy-term), users, comments, and files that you've created on your site. For example, you may have 223 nodes, 534 media, 1000 taxonomy terms, 14 users, and 535 files in your site - those counts represent the content entities present in your site. 
+In [Drupal](#drupal), content entities are the actual [nodes](#node), [media](#media), [taxonomy terms](#taxonomy-term), users, comments, and files that you've created on your site. For example, you may have 223 nodes, 534 media, 1000 taxonomy terms, 14 users, and 535 files in your site - those counts represent the numbers of content entities present in your site. "Node", "Media", "Taxonomy term" etc. are the high-level "types" of content entities. Some of these types have sub-types which are called [bundles](#bundles).
 
 Content entities should not be confused with [content types](#content-types), which are [bundles](#bundles) of [nodes](#nodes), and are part of a site's [configuration](#configuration). 
-
-
-Drupal comes with several [content entity types](#content-type) preconfigured. Drupal's default configuration includes the Basic Page and (blog) Article content types, as well as Audio, Image and Video Media types. _Islandora Starter Site_ adds the Repository Item [content type](#content-type), alters the existing [Media](#media) types to store files in [Fedora](#fedora-repository-software), and introduces the Extracted Text and FITS Media types.
 
 ## Content model
 Deprecated concept used in Islandora Legacy; see [Islandora Model](#islandora-model).
 
 ## Content type
-A type of [Node]
-:if expand("%") == ""|browse confirm w|else|confirm w|endif
+A type of [Node](#node). Content types are the "[bundles](#bundle)" of Nodes, which are a type of [Content Entity](#content-entity in [Drupal](#drupal). A content type importantly defines a set of [fields](#field) and how they are displayed. While a content type describes a type of content entity, the information that makes up the content type itself is all part of your site's [configuration](#configuration).
 
-( - technically, content types are the "[bundles](#bundle)" of Nodes in [Drupal](#drupal).[A content type defines a set of [fields](#field) and how they are  displayed. Content types are subtypes of [Nodes](#node), one of the Drupal [Content entities](#content-entity). The default Drupal Content types are 'Article' and 'Basic page'. _Islandora Starter Site_ adds 'Repository Item' as a Content type, defining metadata fields typically used to describe digital resources.
+The standard Drupal Content types are 'Article' and 'Basic page'. _Islandora Starter Site_ adds 'Repository Item' as a Content type, defining metadata fields typically used to describe digital resources. You can easily create your own content types.
 
 ## Context
 An "if-this-then-that" configuration created using the Drupal [Context](https://www.drupal.org/project/context) contrib module. Islandora extends the capabilities of Context by adding custom Conditions, custom Reactions, and by evaluating context at specific times to allow Contexts to be used for derivatives, indexing, and display.
@@ -105,7 +101,7 @@ The files, themes, profile, and modules included with the standard project softw
 Roles are a way of assigning specific permissions to a group of users. Any user assigned to a role will have the same permissions as all other users assigned to that role. This allows you to control which users have permission to view, edit, or delete content in [Drupal](#drupal). Islandora provides a special role called _fedoraAdmin_ that is required to have actions in Drupal reflected in [Fedora](#fedora-repository-software).
 
 ## Entity
-A [Drupal](#drupal) term for an item of either content or configuration data. Examples include [Nodes](#node) (content items), Blocks, [Taxonomy terms](#taxonomy-term), and definitions of [content types](#content-type); the first three are content entities, and the last is a configuration entity. In common usage, the term often refers to Drupal content entities like [Nodes](#node) or [Taxonomy terms](#taxonomy-term).
+A [Drupal](#drupal) term for an item of either content or configuration data. Examples include [Nodes](#node) (content items), Blocks, [Taxonomy terms](#taxonomy-term), and definitions of [content types](#content-type); the first three are [content entities](#content-entity), and the last is a [configuration entity](#configuration-entity). In common usage, the term often refers to Drupal content entities like [Nodes](#node) or [Taxonomy terms](#taxonomy-term).
 
 ## Fedora (Repository Software)
 Fedora is a digital asset management architecture upon which institutional repositories, digital archives, and digital library systems might be built. Fedora is the underlying architecture for a digital repository, and is not a complete management, indexing, discovery, and delivery application.
