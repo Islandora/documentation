@@ -23,7 +23,7 @@ Also API; a connection between computers or between computer programs. It is a t
 Blazegraph is an open source triplestore and graph database. Islandora ships Blazegraph as part of the software stack. Metadata about [Resource nodes](#resource-node) is synchronized between the [Drupal](#drupal) database and Blazegraph. Data in the Blazegraph triple store can be queried using SPARQL.
 
 ## Bundle
-A bundle is the generic name for a sub-type of a [Content Entity] type in [Drupal]. To illustrate: Node and Taxonomy Term are both names of Entity types in Drupal that have bundles. The bundles of Node are called ["Content Types"](#content-types) and the bundles of [Taxonomy Term] are called ["Vocabularies"]. Each bundle includes its own configurations of what fields are present on the bundle and how they are entered and displayed. A bundle is thus part of the configuration of your site. Some Content Entity Types, such as User, do not have bundles.
+A bundle is the generic name for a sub-type of a [Content Entity](#content-entity) type in [Drupal](#drupal). To illustrate: Node and Taxonomy Term are both names of Content Entity types, and both have sub-types ("bundles"). The bundles of Node are called ["Content Types"](#content-types) and the bundles of [Taxonomy Term](#taxonomy-term) are called ["Vocabularies"](#vocabulary). Each bundle includes its own configurations of what [fields](#field) are present on the bundle and how they are entered and displayed. A bundle is thus part of the [configuration](#configuration) of your site. Some Content Entity Types, such as User, do not have bundles.
 
 ## Cantaloupe
 [Cantaloupe](https://cantaloupe-project.github.io) is an image server written in Java. It implements the [IIIF](#iiif) Image API, which means it handles deep zooming of large images and other image manipulations. It is required to serve images to some [viewers](#viewers) such as [Mirador](#mirador) and [OpenSeadragon](#openseadragon).
@@ -42,22 +42,23 @@ See also: [Configuration entity](#configuration-entity)
 
 Contrast: [Content](#content)
 
-In [Drupal](#drupal), your configuration is the total set of [configuration entities](#configuration-entity) that are live in your site. Configuration is usually managed through the Drupal GUI, and it can also be exported and imported. When it is active in your site, configuration lives in the Drupal database. When it is exported or serialized, configuration appears as a set of YAML (.yml) files, one file per configuration entity. Configuration can be [overridden in the settings.php file](https://www.drupal.org/docs/drupal-apis/configuration-api/configuration-override-system).
+In [Drupal](#drupal), your configuration is the total set of [configuration entities](#configuration-entity) that are live in your site. Configuration is usually managed through the Drupal GUI, and it can also be exported and imported. When it is active in your site, configuration lives in the Drupal database. When it is exported or serialized, configuration appears as a set of [YAML](#yaml) (.yml) files, one file per configuration entity. Configuration can be [overridden in the settings.php file](https://www.drupal.org/docs/drupal-apis/configuration-api/configuration-override-system).
 
 ## Configuration entity
 See also: [Configuration](#configuration)
 
 Contrast: [Content entity](#content-entity)
 
-A [Drupal](#drupal) configuration entity or config entity is an individual piece that makes up your site's [configuration](#configuration). It is usually represented as a single YAML (.yml) file. A config entity usually represents the results of saving a single form in the administration interface, and may contain multiple (usually related) individual settings. Each configuration entity can be exported or imported as a "single item" through the Configuration Synchronization GUI, or with the Devel module's "config editor" can be edited individually. However, config entities are often interrelated and manual editing is usually not recommended.
+A [Drupal](#drupal) configuration entity (or "config entity") is an individual piece that makes up your site's [configuration](#configuration). It is usually represented as a single [YAML](#yaml) (.yml) file. A config entity usually represents the results of saving a single form in the administration interface, and may contain multiple (usually related) individual settings. Each configuration entity can be exported or imported as a "single item" through the Configuration Synchronization GUI, or with the Devel module's "config editor" can be edited individually. However, config entities are often interrelated and manual editing is usually not recommended.
 
 ## Content
 See also: [Content Entity](#content-entity)
 
 Contrast: [Configuration](#configuration)
 
-In [Drupal](#drupal), your content is the total set of things that have been created or uploaded "as content" in your website.
+In [Drupal](#drupal), your content is the total set of things that have been created or uploaded "as content" in your website. This includes all [content entities](#content-entities) - the actual nodes, media, files, taxonomy terms, etc. Content can be exported and imported, but only between sites with exactly the same configuration.
 
+Sometimes, "Content" is used to refer to [Nodes](#nodes) but not other content entities. This is the case when creating a new [View](#view) and one of the options is to make a view of "Content".
 
 ## Content entity
 Contrast: [Configuration entity](#configuration-entity)
