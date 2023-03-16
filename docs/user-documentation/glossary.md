@@ -3,7 +3,7 @@
 The following glossary of terms addresses an Islandora context. When comparing new Islandora and Fedora to older versions it may also be helpful to reference [the Islandora 7 Glossary](https://wiki.duraspace.org/display/ISLANDORA/APPENDIX+E+-+Glossary).
 
 ## Alpaca
-Event-driven middleware based on [Apache Camel](http://camel.apache.org/) that handles communication between various components of Islandora, for instance synchronizing [Drupal](#drupal) data with a [Fedora](#fedora-repository-software) repository and the [Blazegraph](#blazegraph) triple store.
+Islandora's event-driven middleware based on [Apache Camel](http://camel.apache.org/) that handles communication between various components of Islandora, for instance synchronizing [Drupal](#drupal) data with a [Fedora](#fedora-repository-software) repository and the [Blazegraph](#blazegraph) triple store.
 
 ## Ansible
 Open source software for provisioning, configuration management and application deployment. In the context of Islandora, Ansible can be used to install and maintain the Islandora software stack more conveniently and efficiently on a server or group of servers. The configuration and installation instructions are captured in a human-readable list of tasks, called 'Playbook'. The [Islandora Playbook](#islandora-playbook) for Ansible is one of the installation methods currently supported by the Islandora community.
@@ -61,11 +61,13 @@ In [Drupal](#drupal), your content is the total set of things that have been cre
 Sometimes, "Content" is used to refer to [Nodes](#nodes) but not other content entities. This is the case when creating a new [View](#view) and one of the options is to make a view of "Content".
 
 ## Content entity
+See also: [Content](#content)
+
 Contrast: [Configuration entity](#configuration-entity)
 
 In [Drupal](#drupal), content entities are the actual [nodes](#node), [media](#media), [taxonomy terms](#taxonomy-term), users, comments, and files that you've created on your site. For example, you may have 223 nodes, 534 media, 1000 taxonomy terms, 14 users, and 535 files in your site - those counts represent the numbers of content entities present in your site. "Node", "Media", "Taxonomy term" etc. are the high-level "types" of content entities. Some of these types have sub-types which are called [bundles](#bundles).
 
-Content entities should not be confused with [content types](#content-types), which are [bundles](#bundles) of [nodes](#nodes), and are part of a site's [configuration](#configuration). 
+Content entities should not be confused with [content types](#content-types), which are [bundles](#bundles) of [nodes](#nodes), and are part of a site's [configuration](#configuration).
 
 ## Content model
 Deprecated concept used in Islandora Legacy; see [Islandora Model](#islandora-model).
@@ -89,7 +91,7 @@ Deprecated terminology, refers to how [Fedora 3](#fedora-repository-software)/Is
 A version of a file which is derived from an uploaded file. For example, a thumbnail generated from an uploaded image. Islandora uses [microservices](#microservice) to generate derivatives. See the concept page for [Derivatives](../concepts/derivatives.md).
 
 ## Docker
-[Docker](https://www.docker.com/) is a platform that use OS-level virtualization to deliver software in packages called containers. Islandora uses Docker as part of [ISLE](#isle), a suite of Docker containers that run the various components of Islandora required by the Islandora Install Profile.
+[Docker](https://www.docker.com/) is a platform that use OS-level virtualization to deliver software in packages called containers. Islandora uses Docker as part of [ISLE](#isle), a suite of Docker containers that run the various components of Islandora.
 
 ## Drupal
 Drupal is an open source web content management system (CMS) written in PHP. Known for being extremely flexible and extensible, Drupal is supported by a community of over 630,000 users and developers. Drupal sites can be customized and themed in a wide variety of ways. Drupal sites must include [Drupal Core](#drupal-core) and usually involve additional, Contributed code.
@@ -200,7 +202,7 @@ See https://www.drupal.org/docs/8/core/modules/media/overview for more informati
 Protocol specification that allows a web client to request an earlier/historic state web resource (if available). Fedora implements the Memento protocol to store and serve versions of content in a Fedora repository.
 
 ## Mirador
-[Mirador](https://projectmirador.org) is a javascript-based zoomable image [Viewer](#viewer). It is related to (and more fully-featured than) [OpenSeadragon](#openseadragon). It has the ability to do zooming, display multiple pages, and display positioned text (e.g. [hOCR](#hocr) or attributions). To render an image through Mirador, it must be provied in a [IIIF Manifest](#iiif-manifest) and the images must be served through a [IIIF](#iiif)-friendly image server such as [Cantaloupe](#cantaloupe). 
+[Mirador](https://projectmirador.org) is a javascript-based zoomable image [Viewer](#viewer). It is related to (and more fully-featured than) [OpenSeadragon](#openseadragon). It has the ability to do zooming, display multiple pages, and display positioned text (e.g. [hOCR](#hocr) or attributions). To render an image through Mirador, it must be provied in a [IIIF Manifest](#iiif-manifest) and the images must be served through a [IIIF](#iiif)-friendly image server such as [Cantaloupe](#cantaloupe).
 
 ## Microservice
 A software development technique — a variant of the service-oriented architecture (SOA) structural style — that arranges an application as a collection of loosely coupled services. In a microservices' architecture, services are fine-grained and the protocols are lightweight.
@@ -263,13 +265,20 @@ Software and asset files (images, CSS, PHP code, and/or templates) that determin
 See [Views Bulk Operations](#views-bulk-operations).
 
 ## View
-Also: [Drupal](#drupal) View; a database query used to generate lists or tables of content. Drupal provides a powerful administrator interface for creating and editing views without any coding.
+Drupal Views let you query the database to generate lists of [content](#content-entity), and format them as lists, tables, slideshows, maps, [blocks](#blocks), and many more. The Views UI module, part of Drupal Core, provides a powerful administrator interface for creating and editing views without any code. There is a large ecosystem of extension modules for Views.
+
+Views power many of the Islandora features, including [viewers](#viewer), [IIIF Manifests](#iiif-manifest), and search.
+
+## View Mode
+A View Mode is a way that a piece of Drupal [content](#content-entity) can be rendered. View modes let you create alternate configurations for what [fields](#field) get displayed, in what order, and rendered in what field formatters. View modes are created under Manage > Display Modes > View Modes, but are configured at the [bundle](#bundle) level (after first enabling that view mode to have its own configuration). If the requested view mode does not have a custom configuration, then the "Default" view mode will be used.
+
+In [Views](#view), you can choose to show "Rendered entities" (usually as opposed to "Fields"). Here, you can select which view mode to use to render the results.
 
 ## Viewer
-A Viewer is any tool that allows [Drupal](#drupal) to embed, display, or play back a particular object in a web accessible format. Viewers are typically projects unto themselves. To use a viewer within Drupal usually involves a Library containing the viewer's code, as well as a Drupal [Module](#module) that makes the viewer code appear within Drupal. Usually a viewer displays a single binary file, but some viewers (e.g. Mirador and OpenSeadragon) can display an entire [manifest](#iiif-manifest) (ordered list of files). 
+A Viewer is any tool that allows [Drupal](#drupal) to embed, display, or play back a particular object in a web-accessible format. Viewers are typically projects unto themselves. To use a viewer within Drupal usually involves a Library containing the viewer's code, as well as a Drupal [Module](#module) that makes the viewer code appear within Drupal. Usually a viewer displays a single binary file, but some viewers (e.g. Mirador and OpenSeadragon) can display an entire [manifest](#iiif-manifest) (ordered list of files).
 
 ## Views Bulk Operations
-Also VBO; a [Drupal](#drupal) [Module](#module) for performing bulk/batch operations on [Nodes](#node) selected by a [View](#view) definition.
+Also called VBO; a [Drupal](#drupal) [Module](#module) for performing bulk/batch operations on [Nodes](#node) selected by a [View](#view) definition.
 
 ## Virtual Machine Image
 The Virtual Machine Image allows you to mount a fully working version of Islandora on your local machine as a separate virtual machine.
