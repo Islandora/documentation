@@ -1,7 +1,7 @@
 # Docker Demo
 
-There are two demos of Islandora available to download and install. There is [an install profile demo available in Dropbox](https://www.dropbox.com/s/px0gxg3ik4hhypc/Islandora-Sandbox-Docker-Demo-2022.zip?dl=0) and [a starter-site based demo available in Google Drive, prepared for the March camp](https://drive.google.com/file/d/1ebhxFLCbH1ZCKwQ5nNgwhf_IR4hVtUYi/view?usp=sharing). Both are loaded with the same sample content to demonstrate
-features of Islandora and provide a starting point for exploration. The Islandora Foundation recommends using the starter-site based demo as the Foundation is intending to deprecate the install profile based demo, and use starter site at sandbox.islandora.ca. 
+There are two demos of Islandora available to download and install. There is [an install profile demo available in Dropbox](https://www.dropbox.com/s/px0gxg3ik4hhypc/Islandora-Sandbox-Docker-Demo-2022.zip?dl=0) and [a starter-site based demo available in Google Drive, prepared for the March 2023 Islandora camp](https://drive.google.com/file/d/1LrIe12eYAZjD4A8_cqf61RXv7mtMJRHH/view?usp=share_link). Both are loaded with the same sample content to demonstrate
+features of Islandora and provide a starting point for exploration. The Islandora Foundation recommends using the starter-site based demo as the Foundation is intending to deprecate the install profile based demo, and use starter site at sandbox.islandora.ca in the future. 
 
 Download your preferred demo and use the instructions below to install.It is recommended that you have a minimum of 4GB of space available on your machine before getting started. It will take some time to build the image. Thanks, and happy building!
 
@@ -62,10 +62,9 @@ and running. You can now setup your demo.
 
 Get a Yaml file
 --------------------------------------------------------------
+For the older, install-profile based demo, you must Generate docker-compose.yml. For the newer, starter-site based demo, you only need to [download .zip file](https://drive.google.com/file/d/1LrIe12eYAZjD4A8_cqf61RXv7mtMJRHH/view?usp=share_link) and use the yaml file provided inside.
 
-For the older, install-profile based demo, you must Generate docker-compose.yml. For the newer, starter-site based demo, you only need to download the yaml file at the link above. 
-
-Generate docker-compose.yml 
+Generate docker-compose.yml (Install profile demo only!)
 --------------------------------------------------------------
 
 In this package there are some platform specific scripts. Please **double
