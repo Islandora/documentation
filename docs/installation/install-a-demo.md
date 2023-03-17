@@ -1,15 +1,14 @@
 # Docker Demo
 
-This demo, available to download [here](https://www.dropbox.com/s/px0gxg3ik4hhypc/Islandora-Sandbox-Docker-Demo-2022.zip?dl=0), is loaded with sample content and configurations to demonstrate
-features of Islandora and provide a starting point for exploration. 
+There are two demos of Islandora available to download and install. There is [an install profile demo available in Dropbox](https://www.dropbox.com/s/px0gxg3ik4hhypc/Islandora-Sandbox-Docker-Demo-2022.zip?dl=0) and [a starter-site based demo available in Google Drive, prepared for the March camp](https://drive.google.com/file/d/1ebhxFLCbH1ZCKwQ5nNgwhf_IR4hVtUYi/view?usp=sharing). Both are loaded with the same sample content to demonstrate
+features of Islandora and provide a starting point for exploration. The Islandora Foundation recommends using the starter-site based demo as the Foundation is intending to deprecate the install profile based demo, and use starter site at sandbox.islandora.ca. 
 
-Download [this file](https://www.dropbox.com/s/px0gxg3ik4hhypc/Islandora-Sandbox-Docker-Demo-2022.zip?dl=0), and open and follow the instructions in the README.md.html file (also shown below). It is recommended that you have a minimum of 4GB of space available on your machine before getting started. Thanks, and happy building!
-
+Download your preferred demo and use the instructions below to install.It is recommended that you have a minimum of 4GB of space available on your machine before getting started. It will take some time to build the image. Thanks, and happy building!
 
 Requirements
 ==============================================================
 
-Before you can set up **Islandora Sandbox** locally you must first install a few
+Before you can set up your demonstration locally you must first install a few
 software packages.
 
 Docker Desktop
@@ -35,7 +34,6 @@ For Windows 10, you may receive the "Docker Failed to Start" Error message. To r
     For more details see the relevant issue: [https://github.com/Islandora-Devops/isle-dc/issues/323](https://github.com/Islandora-Devops/isle-dc/issues/323)
 
 
-
 **If you already have Docker Desktop installed,** make sure that the **Extensions** 
 feature is listed in the left sidebar. If it is not, you need to update to the newest 
 version of Docker Desktop. This is required to add the Portainer extension.
@@ -53,8 +51,6 @@ the [Portainer](https://portainer.io/) extension:
 5. Select **Portainer**
 6. Click Install.
 
-![install-portainer](../assets/docker_demo_Install_Portainer.gif)
-
 For more information on Portainer refer to its
 [documentation](https://docs.portainer.io/).
 
@@ -62,9 +58,14 @@ Setup
 ==============================================================
 
 Assuming you have all the [Requirements](#requirements) installed
-and running. You can now setup **Islandora Sandbox**.
+and running. You can now setup your demo. 
 
-Generate docker-compose.yml
+Get a Yaml file
+--------------------------------------------------------------
+
+For the older, install-profile based demo, you must Generate docker-compose.yml. For the newer, starter-site based demo, you only need to download the yaml file at the link above. 
+
+Generate docker-compose.yml 
 --------------------------------------------------------------
 
 In this package there are some platform specific scripts. Please **double
@@ -89,7 +90,7 @@ the script. This may need to be done more than once.
 Create Stack
 --------------------------------------------------------------
 
-Once that has completed successfully, you can open **Portainer** via the Docker
+Once you have generated your yaml successfully or downloaded the pre-made yaml file, you can open **Portainer** via the Docker
 Desktop Dashboard. 
 
 1. Open Docker Desktop.
@@ -104,15 +105,14 @@ Desktop Dashboard.
 10. Click on **Deploy the Stack**. The button will then display _Deployment in progress_  - do not click away while this message is shown.
 
 This may take a **very long** time if this is the first time setting up
-**Islandora Sandbox** as it must download all the Docker Images from the
+the demo as it must download all the Docker Images from the
 internet. 
 
-![install-sandbox](../assets/docker_demo_Install_Sandbox.gif)
 
 Wait for Install
 --------------------------------------------------------------
 
-**Islandora Sandbox** still needs to install and configure `Drupal`, which may
+Demo still needs to install and configure `Drupal`, which may
 take upwards of _10-15 minutes_. You can check on the install process by doing
 the following.
 
@@ -132,19 +132,21 @@ When completed you should see the following output at the end of the log.
 #####################
 ```
 
-You can now visit your local **Islandora Sandbox** in your browser of choice at:
+You can now visit your local demo in your browser of choice at:
 
-<https://sandbox.islandora.dev>
+older demo: <https://sandbox.islandora.dev>
+newer demo: <http://islandora.io/>
 
-![sandbox](../assets/docker_demo_Sandbox.png)
 
-The login credentials can be found
-[here](https://github.com/Islandora/documentation/wiki/Sandbox.Islandora.ca-online-credentials)
+The login credentials 
+older demo: https://github.com/Islandora/documentation/wiki/Sandbox.Islandora.ca-online-credentials
+newer demo: un:admin/pw:password
+
 
 Reinstall
 ==============================================================
 
-If you want to re-install **Islandora Sandbox**, and restore it to its original
+If you want to re-install your demo and restore it to its original
 state., please perform the following steps:
 
 1. Open Docker Desktop.
@@ -163,12 +165,11 @@ state., please perform the following steps:
 14. Click on **Start this Stack**.
 15. Wait for the installation to complete like in the [Wait for Install Section](#waitforinstall)
 
-![reinstall-sandbox](../assets/docker_demo_Reinstall_Sandbox.gif)
 
 Uninstall
 ==============================================================
 
-If you want to completely uninstall **Islandora Sandbox**, please perform the
+If you want to completely uninstall your demo, please perform the
 following steps:
 
 1. Open Docker Desktop.
@@ -183,4 +184,3 @@ following steps:
 10. Select all items.
 11. Click on **Remove**.
 
-![uninstall-sandbox](../assets/docker_demo_Uninstall_Sandbox.gif)
