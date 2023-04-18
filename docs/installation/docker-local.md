@@ -7,9 +7,9 @@ changes are automatically reflected on the Drupal container.
 ## Getting Started
 
 If you don't already have a Drupal site, you'll be given a basic setup using Drupal 9 and the
-[Islandora install profile](https://github.com/islandora-devops/islandora_profile).
+[Islandora Starter Site](https://github.com/Islandora-Devops/islandora-starter-site).
 
-If you do already have a Drupal 9 site, use git to clone it into place as the `codebase` folder.
+If you do already have a Drupal site, use git to clone it into place as the `codebase` folder.
 
 ```
 cd /path/to/isle-dc
@@ -21,11 +21,11 @@ your `.env` file. If you don't have one, copy over `sample.env` and name it `.en
 set
 
 ```
-ENVIRONMENT=local
+ENVIRONMENT=starter
 ```
 
 You should also change the `COMPOSE_PROJECT_NAME` variable. This determines the name of the
-Docker containers that are created when you run `make local`. If you leave this as the default
+Docker containers and volumes that are created when you run `make starter`. If you leave this as the default
 you will need to be careful not to overwrite the containers with another install of `isle-dc`
 later.
 ```
@@ -43,11 +43,11 @@ DRUPAL_INSTALL_PROFILE=minimal
 Once you are ready, run
 
 ```bash
-make local
+make starter
 ```
 
 to install the Drupal site in your `codebase` folder and spin up all the other containers with it.
 
 Enjoy your Islandora instance!  Check out the [basic usage documentation](../docker-basic-usage) to see
 all the endpoints that are available and how to do things like start and stop Islandora. Your passwords,
-including the Drupal admin password, can be found in the `secrets/live` directory after you run `make local`.
+including the Drupal admin password, can be found in the `secrets/live` directory after you run `make starter`.
