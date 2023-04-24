@@ -1,9 +1,9 @@
 # Docker Demo
 
-There are two demos of Islandora available to download and install. There is [an install profile demo available in Dropbox](https://www.dropbox.com/s/px0gxg3ik4hhypc/Islandora-Sandbox-Docker-Demo-2022.zip?dl=0) and [a starter-site based demo available in Google Drive, prepared for the March 2023 Islandora camp](https://drive.google.com/file/d/1LrIe12eYAZjD4A8_cqf61RXv7mtMJRHH/view?usp=share_link). Both are loaded with the same sample content to demonstrate
-features of Islandora and provide a starting point for exploration. The Islandora Foundation recommends using the starter-site based demo as the Foundation is intending to deprecate the install profile based demo, and use starter site at sandbox.islandora.ca in the future. 
+There are two demos of Islandora available to download and install. There is [a starter-site based demo available in Google Drive](https://drive.google.com/file/d/1LrIe12eYAZjD4A8_cqf61RXv7mtMJRHH/view?usp=share_link). Both are loaded with the same sample content to demonstrate
+features of Islandora and provide a starting point for exploration. 
 
-Download your preferred demo and use the instructions below to install.It is recommended that you have a minimum of 4GB of space available on your machine before getting started. It will take some time to build the image. Thanks, and happy building!
+Download your emo and use the instructions below to install.It is recommended that you have a minimum of 4GB of space available on your machine before getting started. It will take some time to build the image. Thanks, and happy building!
 
 Requirements
 ==============================================================
@@ -57,34 +57,12 @@ and running. You can now setup your demo.
 
 Get a Yaml file
 --------------------------------------------------------------
-For the older, install-profile based demo, you must Generate docker-compose.yml. For the newer, starter-site based demo, you only need to [download .zip file](https://drive.google.com/file/d/1LrIe12eYAZjD4A8_cqf61RXv7mtMJRHH/view?usp=share_link) and use the yaml file provided inside.
+ [Download this .zip file](https://drive.google.com/file/d/1LrIe12eYAZjD4A8_cqf61RXv7mtMJRHH/view?usp=share_link) and use the yaml file provided inside.
 
-Generate docker-compose.yml (Install profile demo only!)
---------------------------------------------------------------
-
-In this package there are some platform specific scripts. Please **double
-click** on the appropriate script for your platform:
-
-| Platform  | Script        |
-| :-------- | :------------ |
-| Linux     | setup.command |
-| Macintosh | setup.command |
-| Windows   | setup.bat     |
-[Table [states]: Platform specific setup script.]
-
-This will install a local certificate and generate a `docker-compose.yml` file.
-During execution of the script, you will be **prompted for your admin password**, 
-in order to install the local certificate.
-
-_**Note for Mac users:**_ If when executing the script, you are shown a pop-up warning
-that "setup.command cannot be opened", please navigate to _System Preferences >
-Security and Privacy_. Here, you can click "Allow anyway" and then re-try running
-the script. This may need to be done more than once.
 
 Create Stack
 --------------------------------------------------------------
-
-Once you have generated your yaml successfully or downloaded the pre-made yaml file, you can open **Portainer** via the Docker
+Once you have downloaded the pre-made yaml file, you can open **Portainer** via the Docker
 Desktop Dashboard. 
 
 1. Open Docker Desktop.
