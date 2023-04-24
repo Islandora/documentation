@@ -1,6 +1,6 @@
 # Docker Demo
 
-There are two demos of Islandora available to download and install. There is [a starter-site based demo available in Google Drive](https://drive.google.com/file/d/1LrIe12eYAZjD4A8_cqf61RXv7mtMJRHH/view?usp=share_link). Both are loaded with the same sample content to demonstrate
+To test Islandora, there is [a starter-site based demo available in Google Drive](https://drive.google.com/file/d/1LrIe12eYAZjD4A8_cqf61RXv7mtMJRHH/view?usp=share_link). Both are loaded with the same sample content to demonstrate
 features of Islandora and provide a starting point for exploration. 
 
 Download your emo and use the instructions below to install.It is recommended that you have a minimum of 4GB of space available on your machine before getting started. It will take some time to build the image. Thanks, and happy building!
