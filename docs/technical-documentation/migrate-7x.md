@@ -4,8 +4,7 @@
 Nov 21, 2019
 
 !! note "Migration from Islandora Legacy"
-   For tools to migrate into Islandora from an existing Islandora Legacy instance, please see [migrate_7x_claw](https://github.com/Islandora-
-   devops/migrate_7x_claw).
+   For tools to migrate into Islandora from an existing Islandora Legacy instance, please see [migrate_7x_claw](https://github.com/Islandora-devops/migrate_7x_claw).
 
 ## Project Planning for Migration
 
