@@ -42,7 +42,7 @@ The following is an alphabetized list of the current Islandora committers:
 | Rosie Le Faive              | University of Prince Edward Island    | rosiel         |
 | Gavin Morris                | Born-Digital                          | g7morris       | 
 | Annie Oelschlager           | Northern Illinois University          | aOelschlager   |
-| Alexander O'Neill           | University of Prince Edward Island    | alxp           |
+| Alexander O'Neill           | Born-Digital                          | alxp           |
 | Don Richards                | Born-Digital                          | DonRichards    |
 | Bethany Seeger              | Johns Hopkins University              | bseeger        |
 | Seth Shaw                   | University of Nevada, Las Vegas       | seth-shaw-unlv |
@@ -103,7 +103,7 @@ Contributors can be self-nominated or be nominated by others. These nominations 
 
 Upon receiving a nomination: 
 
-1. An email is sent by sponsor or designate describing the nomination and calling for a vote. ([templates/committerVote.txt](https://raw.githubusercontent.com/Islandora/documentation/main/docs/contributing/templates/committerVote.txt)).
+1. An email is sent by sponsor or designate describing the nomination and calling for a vote to islandora-committers@googlegroups.com. ([templates/committerVote.txt](https://raw.githubusercontent.com/Islandora/documentation/main/docs/contributing/templates/committerVote.txt)).
 1. The sponsor or designate closes the vote ([templates/closeCommitterVote.txt](https://raw.githubusercontent.com/Islandora/documentation/main/docs/contributing/templates/closeCommitterVote.txt)).
 1. The sponsor or designate invites the new committer ([templates/committerInvite.txt](https://raw.githubusercontent.com/Islandora/documentation/main/docs/contributing/templates/committerInvite.txt)), if no CLA is on file ([templates/committerInviteCLA.txt](https://raw.githubusercontent.com/Islandora/documentation/main/docs/contributing/templates/committerInviteCLA.txt)).
 
