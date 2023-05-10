@@ -43,7 +43,7 @@ The following is an alphabetized list of the current Islandora committers:
 | Gavin Morris                | Born-Digital                          | g7morris       | 
 | Annie Oelschlager           | Northern Illinois University          | aOelschlager   |
 | Alexander O'Neill           | Born-Digital                          | alxp           |
-| Don Richards                | Born-Digital                          | DonRichards    |
+| Don Richards                | Johns Hopkins University              | DonRichards    |
 | Bethany Seeger              | Johns Hopkins University              | bseeger        |
 | Seth Shaw                   | University of Nevada, Las Vegas       | seth-shaw-unlv |
 | Alan Stanley                | Agile Humanities                      | ajstanley      |
