@@ -34,7 +34,6 @@ The following is an alphabetized list of the current Islandora committers:
 | Jordan Dukart               | discoverygarden                       | jordandukart   |
 | Debbie Flitner              | Arizona State University              | dflitner       |
 | Willow Gillingham           | Born-Digital                          | wgilling       |
-| Jonathan Green              | LYRASIS                               | jonathangreen  |
 | Jonathan Hunt               | Catalyst.Net                          | kayakr         |
 | Mark Jordan                 | Simon Fraser University               | mjordan        |
 | Danny Lamb                  | Born-Digital                          | dannylamb      |
@@ -49,6 +48,7 @@ The following is an alphabetized list of the current Islandora committers:
 | Alan Stanley                | Agile Humanities                      | ajstanley      |
 | Adam Vessey                 | discoverygarden                       | adam-vessey    |
 | Jared Whiklo                | University of Manitoba                | whikloj        |
+| Yamil Suarez                | Berklee College of Music              | ysuarez        |
 
 
 ## Emeritus Committers
@@ -62,7 +62,7 @@ The following is an alphabetized list of the prior Islandora committers:
 | Nick Ruest                  | York University                   |
 | Eli Zoller                  | Arizona State University          |
 | Daniel Aitken               | discoverygarden                   |
-
+| Jonathan Green              | LYRASIS                           |
 
 ## How are you evaluated as a potential committer? 
 
