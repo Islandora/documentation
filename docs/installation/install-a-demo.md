@@ -3,7 +3,14 @@
 To test Islandora, there is [a starter-site based demo available in Google Drive](https://drive.google.com/file/d/1LrIe12eYAZjD4A8_cqf61RXv7mtMJRHH/view?usp=share_link). It is loaded with sample content to demonstrate
 features of Islandora and provide a starting point for exploration. 
 
-Download your demo and use the instructions below to install. It is recommended that you have a minimum of 4GB of hard drive space available on your machine before getting started. It will take some time to build the image, do not be surprised if it takes at least 15 minutes. Thanks, and happy building!
+Download your demo and use the instructions below to install. It is recommended that you have a minimum of 4GB of hard drive space available on your machine before getting started. It will take some time to build the image, do not be surprised if it takes at least 25 minutes. Thanks, and happy building!
+
+
+Installation video tutorial
+==============================================================
+
+Click here to view a video tutorial: [How to Install Docker Desktop and Set up Starter Site](https://www.youtube.com/watch?v=xhJft9K-YMU)
+
 
 Requirements
 ==============================================================
@@ -112,6 +119,7 @@ You can now visit your local starter-site demo in your browser of choice at:
 The starter-site demo login credentials 
 
 username: admin
+
 password: password
 
 
@@ -119,7 +127,7 @@ Reinstall
 ==============================================================
 
 If you want to re-install your demo and restore it to its original
-state., please perform the following steps:
+state, please perform the following steps:
 
 1. Open Docker Desktop.
 2. Click on Portainer.
