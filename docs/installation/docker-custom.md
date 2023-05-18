@@ -31,12 +31,17 @@ container registry by running `make push-image`.
 ## Set up a Git Repository
 
 Now that you have a development site set up with your own codebase folder, you should create a new git repository for your site. 
-This way you can easily spin up a new site based on your modules and configuration, instead of the Islandora Starter Site. It will 
+This way you can easily spin up a new site based on your modules and configuration, instead of the Islandora Starter Site. This will 
 also allow you to sync changes between your production, staging, and development sites.
 
-You will likely want to include the Isle-dc directory as well as your codebase folder. This will allow you to make modifications to 
-your Makefile, Dockerfile, docker-compose.yml, etc. Note that Isle-dc has the codebase folder in its `.gitignore`, so you will want to
-remove that and change the git remote repository URL to your private code repository.
+You will likely want to include the Isle-dc directory as well as your codebase folder in your git repository. This will allow you to make modifications to 
+your Makefile, Dockerfile, docker-compose.yml, etc. and keep those modifications alongside your Drupal files in the codebase folder. 
+To store these files in your own private repository you should change the git remote repository URL from the Isle-DC URL to the URL for your private repository.
+
+Note that Isle-DC has the codebase folder in its `.gitignore`, so you will want to remove `codebase*` from your .gitignore. You don't need
+the web or vendor directories to be stored in your repo, since they will be added when you do a composer install during the site setup,
+so you can add those into your `.gitignore` as `codebase/vendor/*` and `codebase/web/*`.
+
 
 ## Set up your Production / Staging Site
 
