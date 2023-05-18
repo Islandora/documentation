@@ -28,7 +28,7 @@ Try Islandora without installing anything at [sandbox.islandora.ca](https://sand
 
 Login credentials for the sandbox can be found [here](https://github.com/Islandora/documentation/wiki/Sandbox.Islandora.ca-online-credentials).
 
-Anyone can log in to this sandbox as an administrator and explore the interface! However, this site is refreshed periodically so your changes will not be permanent. This site uses Islandora Install Profile, a way of setting up Islandora for demonstration purposes. This is not the only way that Islandora can be made to work! This sandbox includes some sample content and configuration (such as views and blocks) to increase its usefulness as a sandbox.
+Anyone can log in to this sandbox as an administrator and explore the interface! However, this site is refreshed every night so your changes will not be permanent. This site uses the Islandora Starter Site. This is not the only way that Islandora can be made to work! This sandbox includes some sample content and configuration (such as views and blocks) to increase its usefulness as a sandbox. [Learn more about the Islandora Starter Site](https://github.com/Islandora-Devops/islandora-starter-site).
 
 ### Ansible Playbook
 
