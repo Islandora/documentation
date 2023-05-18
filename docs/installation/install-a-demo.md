@@ -104,15 +104,15 @@ When completed you should see the following output at the end of the log.
 #####################
 ```
 
-You can now visit your local demo in your browser of choice at:
+You can now visit your local starter-site demo in your browser of choice at:
 
-older demo: <https://sandbox.islandora.dev>
-newer demo: <http://islandora.io/>
+<http://islandora.io/>
 
 
-The login credentials 
-older demo: https://github.com/Islandora/documentation/wiki/Sandbox.Islandora.ca-online-credentials
-newer demo: un:admin/pw:password
+The starter-site demo login credentials 
+
+username: admin
+password: password
 
 
 Reinstall
