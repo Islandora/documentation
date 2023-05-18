@@ -24,7 +24,7 @@ installation instructions.
 
 For Windows 10, you may receive the "Docker Failed to Start" Error message. To resolve this:
     
-* Download WSL 2 from Step 4 in [these instructions](https://learn.microsoft.com/en-ca/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package)--do not do any other steps in these instructions
+* Download WSL 2 from Step 4 in [these instructions](https://learn.microsoft.com/en-ca/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package), but do not do any other steps in these instructions
 * Under Windows ‘Firewall & Network Protection’, ‘Allow an app through the firewall’, and ‘Change settings’ to select the ‘Private’ box for ‘Virtual Machine Monitoring’
 * Restart computer for all changes to take effect
 
@@ -36,7 +36,7 @@ version of Docker Desktop. This is required to add the Portainer extension.
 Portainer Extension
 --------------------------------------------------------------
 
-Once you have worker [Docker Desktop](#dockerdesktop) installation, you can add
+Once you have a working [Docker Desktop](#dockerdesktop) installation, you can add
 the [Portainer](https://portainer.io/) extension:
 
 1. Open Docker Desktop.
@@ -77,7 +77,7 @@ Desktop Dashboard.
 10. Click on **Deploy the Stack**. The button will then display _Deployment in progress_  - do not click away while this message is shown.
 
 This may take a **very long** time if this is the first time setting up
-the demo as it must download all the Docker Images from the
+the demo, as it must download all the Docker Images from the
 internet. 
 
 
