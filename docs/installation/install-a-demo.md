@@ -4,12 +4,12 @@ To test Islandora, there is [a starter-site based demo available in Google Drive
 features of Islandora and provide a starting point for exploration. 
 
 Download your demo and use the instructions below to install. It is recommended that you have a minimum of 4GB of hard drive space available on your machine before getting started. It will take some time to build the image, do not be surprised if it takes at least 25 minutes. Thanks, and happy building!
-
+<br>
 
 Installation Video Tutorial
 ==============================================================
 Click here to view a video tutorial: [How to Install Docker Desktop and Set up Starter Site](https://www.youtube.com/watch?v=xhJft9K-YMU).
-
+<br>
 
 Requirements
 ==============================================================
@@ -103,7 +103,7 @@ The starter-site demo login credentials
 username: admin
 
 password: password
-
+<br>
 
 Reinstall
 ==============================================================
@@ -125,6 +125,7 @@ state, please perform the following steps:
 13. Click on **sandbox**.
 14. Click on **Start this Stack**.
 15. Wait for the installation to complete like in the [Wait for Install Section](#waitforinstall)
+<br>
 
 Uninstall
 ==============================================================
@@ -142,6 +143,7 @@ following steps:
 9. Ensure that all items are listed.
 10. Select all items.
 11. Click on **Remove**.
+<br>
 
 Troubleshooting
 ==============================================================
