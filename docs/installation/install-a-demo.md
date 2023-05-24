@@ -69,6 +69,8 @@ This may take a **very long** time if this is the first time setting up
 the demo, as it must download all the Docker Images from the
 internet. 
 
+Once it is completed, you will see the list of stacks, now listing 'sandbox' among them.
+
 
 Wait for Install
 --------------------------------------------------------------
@@ -81,7 +83,7 @@ the following.
 3. Open the sidebar.
 4. Click on **Stacks**.
 5. Click on **sandbox**.
-6. Click on the Logs icon for **Drupal**.
+6. Click on the Logs button ('page' icon) for the **Drupal** container - the one named something like `sandbox-drupal-1`
 7. Examine the log output waiting for the message below.
 
 When completed you should see the following output at the end of the log.
