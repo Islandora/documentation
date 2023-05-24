@@ -9,7 +9,10 @@ on:
       - closed
 concurrency: preview-${{ github.ref }}
 permissions:
+  # Needed to update the preview branch.
   contents: write
+  # Needed to write/maintain the comment
+  pull-requests: write
 jobs:
   preview:
     runs-on: ubuntu-latest
