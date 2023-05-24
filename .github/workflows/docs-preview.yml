@@ -16,15 +16,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: Setup build environment
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.x'
-          cache: 'pip'
-      - name: Install build requirements
-        run: pip install -r requirements.txt
       - name: Build docs
-        run: mkdocs build
+        uses: ./.github/actions/build.yml
       - name: Deploy docs preview
         uses: rossjrw/pr-preview-action@v1
         with:
