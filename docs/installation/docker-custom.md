@@ -1,23 +1,74 @@
 # Installing a Production/Staging Server
 
-If you are deploying Islandora on a server that is publicly accessible, there's extra precautions you should take for
-performance and security reasons. If you follow these steps, you'll see how we can use our `codebase` folder to build
-a custom Drupal container, and bake code into the container instead of bind-mounting it in. We'll also cover how to
-store passwords as secrets and set up TLS.
+If you are deploying Islandora on a server that is publicly accessible, there are extra precautions you should take for
+performance and security reasons.
 
-## Getting Started
+For local development we bind mount our codebase (Drupal) folder so that we can do development work locally, outside of 
+our Docker container. For a production site we don’t want to do this. Instead, we make changes to our development site, 
+then build a Drupal image with our changes that we can use on our production site instead of the default Islandora Drupal 
+image.
 
-If you haven't already [made a local environment](../docker-local), you'll want to do that first.  These instructions build off of having
-a codebase folder.
+## Creating your Image
 
-## Using your Domain
+In order to generate that custom Drupal image we need to [set up a development environment](../docker-local). You will do this 
+on your development computer, rather than your production server.
 
-At this point, we're assuming that you've purchased a domain to use for your repository.  By default, `islandora.traefik.me` is used, which
-is fine for `make demo` and `make local`.  But for your production site, you'll need to set the domain you own in your .env file.
+Once your development site is set up you will need somewhere to store your custom Drupal image. You should create a private 
+repository in your container registry of choice (Dockerhub, GitHub, GitLab, etc.)
 
+Once you have a place to store it, you can create your custom Drupal image by editing your `.env` to set `CUSTOM_IMAGE_NAMESPACE` 
+to your dockerhub username or the URL and username for your container repository, and `CUSTOM_IMAGE_NAME` to the name of the 
+repository you just created.
+
+Once this is done you can run `make build` to create the image from a Dockerfile. If you don't have a custom Dockerfile, it will 
+create one from sample.Dockerfile. This will create a new image from the Islandora Drupal image, with your codebase folder copied 
+into the image during the build process. 
+
+You should now have a custom Drupal image on your local machine. You will need to `docker login` to your container registry to push 
+your image, so make sure to do that if you haven't yet (you should only need to do this once). You can then push this image to your 
+container registry by running `make push-image`. 
+
+## Set up a Git Repository
+
+Now that you have a development site set up with your own codebase folder, you should create a new git repository for your site. 
+This way you can easily spin up a new site based on your modules and configuration, instead of the Islandora Starter Site. This will 
+also allow you to sync changes between your production, staging, and development sites.
+
+You will likely want to include the Isle-dc directory as well as your codebase folder in your git repository. This will allow you to make modifications to 
+your Makefile, Dockerfile, docker-compose.yml, etc. and keep those modifications alongside your Drupal files in the codebase folder. 
+To store these files in your own private repository you should change the git remote repository URL from the Isle-DC URL to the URL for your private repository.
+
+Note that Isle-DC has the codebase folder in its `.gitignore`, so you will want to remove `codebase*` from your .gitignore. You don't need
+the web or vendor directories to be stored in your repo, since they will be added when you do a composer install during the site setup,
+so you can add those into your `.gitignore` as `codebase/vendor/*` and `codebase/web/*`.
+
+
+## Set up your Production / Staging Site
+
+At this point you should have a custom git repository and a custom Drupal image, and both should be accessible by your production server.
+On your production server you will need to clone your custom copy of Isle-dc, copy the `sample.env` file, and name it `.env`. 
+
+In that `.env` you should set the following variables:
 ```
-DOMAIN=example.org
+ENVIRONMENT=custom
+COMPOSE_PROJECT_NAME=(same as dev site)
+CUSTOM_IMAGE_NAMESPACE=(same as dev site)
+CUSTOM_IMAGE_NAME=(same as dev site)
+DOMAIN=your-domain.com
 ```
+
+Once this is set up, run `make production` to install your drupal site. You can generate new secrets for your production passwords, or 
+copy them from your dev server if you would like them to be the same.
+
+At this point, your site is ready, but you won't be able to access it at your URL until you update the SSL certificates (see TLS section below).
+
+!!! note "Codebase Folder"
+
+    Because your codebase folder is in your git repository it will be cloned to your development server, but unlike in your development
+    environment, it is not bound to the Drupal container. This means that any change you make to those files will not be represented in 
+    your Drupal site.
+    
+    You can also use this folder to build your Drupal image on the production server instead of on your development server if you like.
 
 ## Secrets
 
@@ -25,14 +76,15 @@ Sensitive information, such as passwords, should never be built into a container
 do with our codebase folder.  If you use secrets, it's like bind-mounting in a file, except that file is provided from the host machine
 to the container using an encrypted channel.
 
-To use secrets, set the following in your .env file
+Secrets are on by default. They can be toggled in your `.env` file, but you should never turn them off for production sites.
 
 ```
 USE_SECRETS=true
 ```
 
 The secrets themselves are stored in the `secrets/live` folder of `isle-dc`.  If you navigate to that directory, you'll see several small
-files, where each file represents a different password. They are each randomly generated when you run `make local`.
+files, where each file represents a different password. When you run `make production` you can choose whether to generate new random 
+secrets or create them yourself.
 
 ## TLS
 
@@ -112,32 +164,4 @@ Once you have added these commands you will need to run the following commands:
 ```
 make -B docker-compose.yml
 make up
-```
-
-## Building and Deploying Your Custom Container
-
-First, set your `ENVIRONMENT` variable to `custom` in  your .env file in addition to the changes outlined above
-
-```
-ENVIRONMENT=custom
-USE_SECRETS=true
-DOMAIN=your-domain.org
-```
-
-Then rebuild your dockerfile to have your changes take effect
-
-```
-make -B docker-compose.yml
-```
-
-After this, you can build your custom container with
-
-```
-make build
-```
-
-You then deploy the container with
-
-```
-docker-compose up -d
 ```
