@@ -1,6 +1,6 @@
 # Docker Demo
 
-To test Islandora, there is [a starter-site based demo available in Google Drive](https://drive.google.com/file/d/1LrIe12eYAZjD4A8_cqf61RXv7mtMJRHH/view?usp=share_link). It is loaded with sample content to demonstrate
+To test out Islandora, there is [a Starter-Site based demo available in Google Drive](https://drive.google.com/file/d/1LrIe12eYAZjD4A8_cqf61RXv7mtMJRHH/view?usp=share_link). It is loaded with sample content to demonstrate
 features of Islandora and provide a starting point for exploration. 
 
 Download your demo and use the instructions below to install. It is recommended that you have a minimum of 4GB of hard drive space available on your machine before getting started. It will take some time to build the image, do not be surprised if it takes at least 25 minutes. Thanks, and happy building!
@@ -8,12 +8,12 @@ Download your demo and use the instructions below to install. It is recommended 
 
 Installation Video Tutorial
 ==============================================================
-Click here to view a video tutorial: [How to Install Docker Desktop and Set up Starter Site](https://www.youtube.com/watch?v=xhJft9K-YMU).
+This material is also covered in: [How to Install Docker Desktop and Set up Starter Site (video tutorial)](https://www.youtube.com/watch?v=xhJft9K-YMU).
 <br>
 
 Requirements
 ==============================================================
-Before you can set up your demonstration locally you must first install a few software packages.
+Before you can set up your demo locally you must first install a few software packages.
 
 
 Docker Desktop
@@ -47,23 +47,22 @@ and running. You can now setup your demo.
 
 Get a Yaml file
 --------------------------------------------------------------
- [Download this .zip file](https://drive.google.com/file/d/1LrIe12eYAZjD4A8_cqf61RXv7mtMJRHH/view?usp=share_link) and use the yaml file provided inside.
+Download the [Starter-Site-based demo from Google Drive](https://drive.google.com/file/d/1LrIe12eYAZjD4A8_cqf61RXv7mtMJRHH/view?usp=share_link) and find the `docker-compose.yml` file provided inside. This will be used in the next step.
 
 
 Create Stack
 --------------------------------------------------------------
-Once you have downloaded the pre-made yaml file, you can open **Portainer** via the Docker
-Desktop Dashboard. 
+Open **Portainer** via the Docker Desktop Dashboard. 
 
 1. Open Docker Desktop.
 2. Click on Portainer.
-3. If you see the Quick Setup Environment Wizard, click “Get Started". Otherwise, select your local environment under "Environments".
+3. If you see the Quick Setup Environment Wizard, click “Get Started" and then select the "local" environment. Otherwise, select your local environment under "Environments".
 4. Open the sidebar.
 5. Click on **Stacks**.
 6. Click **Add Stack**.
 7. Type in the name **sandbox** (_lowercase_).
 8. Select **Upload from your Computer**.
-9. Upload the **docker-compose.yml** file you generated via the setup script.
+9. Upload the **docker-compose.yml** file you downloaded.
 10. Click on **Deploy the Stack**. The button will then display _Deployment in progress_  - do not click away while this message is shown.
 
 This may take a **very long** time if this is the first time setting up
@@ -73,7 +72,7 @@ internet.
 
 Wait for Install
 --------------------------------------------------------------
-Demo still needs to install and configure `Drupal`, which may
+After deploying the stack has completed, the demo still needs to install and configure `Drupal`, which may
 take upwards of _10-15 minutes_. You can check on the install process by doing
 the following.
 
