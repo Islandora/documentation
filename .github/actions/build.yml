@@ -1,6 +1,6 @@
 ---
 name: Build
-description: Checkout code, setup mkdocs, and build
+description: Setup to run and run mkdocs
 runs:
   using: "composite"
   steps:
