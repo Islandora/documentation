@@ -10,6 +10,8 @@ runs:
         python-version: '3.x'
         cache: 'pip'
     - name: Install build requirements
+      shell: bash
       run: pip install -r requirements.txt
     - name: Build docs
+      shell: bash
       run: mkdocs build
