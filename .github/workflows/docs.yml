@@ -13,7 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Build docs
-        uses: ./.github/actions/build.yml
+        uses: ./.github/actions/build
       - name: Deploy docs
         uses: JamesIves/github-pages-deploy-action@v4
         with:
