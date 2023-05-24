@@ -1,13 +1,17 @@
 ---
-name: "Build docs"
+name: "Build docs preview"
 on:
-  push:
-    branches:
-      - main
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - closed
+concurrency: preview-${{ github.ref }}
 permissions:
   contents: write
 jobs:
-  build:
+  preview:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -21,10 +25,7 @@ jobs:
         run: pip install -r requirements.txt
       - name: Build docs
         run: mkdocs build
-      - name: Deploy docs
-        uses: JamesIves/github-pages-deploy-action@v4
+      - name: Deploy docs preview
+        uses: rossjrw/pr-preview-action@v1
         with:
-          folder: site
-          force: false
-          clean-exclude: |
-            pr-preview
+          source-dir: site
