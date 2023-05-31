@@ -47,7 +47,7 @@ and running. You can now setup your demo.
 
 Get a Yaml file
 --------------------------------------------------------------
-Download the [Starter-Site-based demo from Google Drive](https://drive.google.com/file/d/1LrIe12eYAZjD4A8_cqf61RXv7mtMJRHH/view?usp=share_link) and find the `docker-compose.yml` file provided inside. This will be used in the next step.
+Download the [Starter-Site-based demo from Google Drive](https://drive.google.com/file/d/1LrIe12eYAZjD4A8_cqf61RXv7mtMJRHH/view?usp=share_link) (Google Drive places the download icon in the top-right), unzip it, and find the `docker-compose.yml` file provided inside. This will be used in the next step.
 
 
 Create Stack
