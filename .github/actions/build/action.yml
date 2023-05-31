@@ -1,0 +1,17 @@
+---
+name: Build
+description: Setup to run and run mkdocs
+runs:
+  using: "composite"
+  steps:
+    - name: Setup build environment
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+        cache: 'pip'
+    - name: Install build requirements
+      shell: bash
+      run: pip install -r requirements.txt
+    - name: Build docs
+      shell: bash
+      run: mkdocs build

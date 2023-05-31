@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:
 permissions:
   contents: write
 jobs:
@@ -13,12 +12,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: Setup build environment
-        uses: actions/setup-python@v4
+      - name: Build docs
+        uses: ./.github/actions/build
+      - name: Deploy docs
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          python-version: '3.x'
-          cache: 'pip'
-      - name: Install build requirements
-        run: pip install -r requirements.txt
-      - name: Build and deploy docs
-        run: mkdocs gh-deploy --force
+          folder: site
+          force: false
+          clean-exclude: |
+            pr-preview

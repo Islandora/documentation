@@ -1,0 +1,27 @@
+---
+name: "Build docs preview"
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - closed
+concurrency: preview-${{ github.ref }}
+permissions:
+  # Needed to update the preview branch.
+  contents: write
+  # Needed to write/maintain the comment
+  pull-requests: write
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Build docs
+        uses: ./.github/actions/build
+      - name: Deploy docs preview
+        uses: rossjrw/pr-preview-action@v1
+        with:
+          source-dir: site
