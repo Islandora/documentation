@@ -57,7 +57,7 @@ Open **Portainer** via the Docker Desktop Dashboard.
 1. Open Docker Desktop.
 2. Click on Portainer.
 3. If you see the Quick Setup Environment Wizard, click “Get Started" and then select the "local" environment. Otherwise, select your local environment under "Environments".
-4. Open the sidebar.
+4. Widen/open the blue vertical sidebar by clicking the >> button near the top of the sidebar.
 5. Click on **Stacks**.
 6. Click **Add Stack**.
 7. Type in the name **sandbox** (_lowercase_).
