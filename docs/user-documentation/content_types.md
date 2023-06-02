@@ -93,15 +93,11 @@ In the Admin menu, return to **Structure** >> **Content Types** and find the _Re
 
 To create your own custom content type from scratch, please refer to [this guide](https://www.drupal.org/docs/8/administering-drupal-8-site/managing-content-0/create-a-custom-content-type) on Drupal.org.
 
-Custom content types are not synced to Fedora or indexed by the triple-store by default. Repository managers must add them to a context that instructs Drupal to perform these synchronizations. In the Islandora Starter Site, the "Content" ('repository_content') context does this. To add a new content type to that context:
+Your custom content types can contain whatever fields you like, but there are two mandatory fields that all Islandora content types should contain:
 
-1. Navigate to the _Contexts_ configuration page ('/admin/structure/context').
-1. Find the _Content_ context and click the corresponding **Edit** button ('/admin/structure/context/repository_content').
-1. Find the _Node Bundle_ condition in the _Conditions_ section.
-1. Click the checkbox for the new Content Type.
-1. Scroll down to the bottom of the page and click **Save and continue**.
+1. In order for a custom content type to be considered an Islandora Object, it needs to have the field "Member of" ('field_member_of'). This allows it to be included in contexts that have the "Node is an Islandora node" condition. Nodes that have this field will automatically be synced to Fedora and indexed by the triple store if you are using the context provided by the Islandora Starter Site. This field is also what allows a node to have media associated with it and to have children nodes.
 
-Updating contexts does not retroactively fire any actions. Any of the custom content type's nodes that were created before updating the context will need to have the indexing action manually triggered.
+2. The other mandatory field is "Model" ('field_model'). This is used in several of the contexts that the Islandora Starter Site provides. This field determines how Islandora objects are diplayed, and how media derivatives are created.
 
 ## Updating and creating an RDF Mapping
 
