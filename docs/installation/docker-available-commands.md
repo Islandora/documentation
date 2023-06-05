@@ -40,11 +40,11 @@ There's a lot of useful commands available to you from within the `isle-dc` fold
 
 ## Reindex Fedora Metadata
 
-`make reindex-fcrepo-metadata` will reindex RDF metadata from Drupal into Fedora.
+`make reindex-fcrepo-metadata` will reindex RDF metadata from Drupal into Fedora. Requires the [Views Bulk Operations Module](https://www.drupal.org/project/views_bulk_operations).
 
 ## Reindex Solr
 `make reindex-solr` will rebuild rebuild Solr search index for your repository.
 
 ## Reindex the Triplestore
 
-`make reindex-triplestore` will reindex RDF metadata from Drupal into Blazegraph.
+`make reindex-triplestore` will reindex RDF metadata from Drupal into Blazegraph. Requires the [Views Bulk Operations Module](https://www.drupal.org/project/views_bulk_operations).
