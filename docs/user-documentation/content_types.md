@@ -95,7 +95,7 @@ To create your own custom content type from scratch, please refer to [this guide
 
 Your custom content types can contain whatever fields you like, but there are two mandatory fields that all Islandora content types should contain:
 
-1. In order for a custom content type to be considered an Islandora Object, it needs to have the field "Member of" ('field_member_of'). This allows it to be included in contexts that have the "Node is an Islandora node" condition. Nodes that have this field will automatically be synced to Fedora and indexed by the triple store if you are using the context provided by the Islandora Starter Site. This field is also what allows a node to have media associated with it and to have children nodes.
+1. In order for a custom content type to be considered an Islandora Object, it needs to have the field "Member of" ('field_member_of'). This allows it to be included in contexts that have the "Node is an Islandora node" condition. Nodes that have this field will automatically be synced to Fedora and indexed by the triple store if you are using the context provided by the Islandora Starter Site. Having this field present in your content type also gives you tabs for adding children and media when viewing an item of that content type.
 
 2. The other mandatory field is "Model" ('field_model'). This is used in several of the contexts that the Islandora Starter Site provides. This field determines how Islandora objects are diplayed, and how media derivatives are created.
 
