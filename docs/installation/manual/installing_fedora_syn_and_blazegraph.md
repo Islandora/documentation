@@ -1,11 +1,8 @@
 # Installing Fedora, Syn, and Blazegraph
 
-!!! warning "Needs Maintenance"
-    The manual installation documentation is in need of attention. We are aware that some components no longer work as documented here. If you are interested in helping us improve the documentation, please see [Contributing](../../../contributing/CONTRIBUTING).
-
 ## In this section, we will install:
 
-- [Fedora 6](https://duraspace.org/fedora/), the back-end repository that Islandora will use
+- [Fedora 6](https://fedora.lyrasis.org/), the back-end repository that Islandora will use
 - [Syn](https://github.com/Islandora/Syn), the authentication broker that will manage communication with Fedora
 - [Blazegraph](https://blazegraph.com/), the resource index layer on top of Fedora for managing discoverability via RDF
 
@@ -50,193 +47,96 @@ grant all privileges on database FEDORA_DB to FEDORA_DB_USER;
 
 The Fedora configuration is going to come in a few different chunks that need to be in place before Fedora will be functional. We’re going to place several files outright, with mildly modified parameters according to our configuration.
 
-The basics of these configuration files have been pulled largely from the templates in [Islandora-Devops/ansible-role-fcrepo](https://github.com/islandora-devops/ansible-role-fcrepo); you may consider referencing the playbook’s templates directory for more details.
+The basics of these configuration files have been pulled largely from the templates in Islandora-Devops/islandora-playbook [internal Fedora role](https://github.com/Islandora-Devops/islandora-playbook/tree/dev/roles/internal/Islandora-Devops.fcrepo); you may consider referencing the playbook’s templates directory for more details.
 
-`i8_namespaces.cnd` is a list of namespaces used by Islandora that may not necessarily be present in Fedora; we add them here to ensure we can use them in queries.
+#### Namespace prefixes
 
-`/opt/fcrepo/config/i8_namespaces.cnd | tomcat:tomcat/644`
-```
-<acl = 'http://www.w3.org/ns/auth/acl#'>
-<bf = 'http://id.loc.gov/ontologies/bibframe/'>
-<cc = 'http://creativecommons.org/ns#'>
-<dcterms = 'http://purl.org/dc/terms/'>
-<dwc = 'http://rs.tdwg.org/dwc/terms/'>
-<exif = 'http://www.w3.org/2003/12/exif/ns#'>
-<fedoramodel = 'info:fedora/fedora-system:def/model#'>
-<geo = 'http://www.w3.org/2003/01/geo/wgs84_pos#'>
-<gn = 'http://www.geonames.org/ontology#'>
-<iana = 'http://www.iana.org/assignments/relation/'>
-<islandorarelsext = 'http://islandora.ca/ontology/relsext#'>
-<islandorarelsint = 'http://islandora.ca/ontology/relsint#'>
-<ldp = 'http://www.w3.org/ns/ldp#'>
-<nfo = 'http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#'>
-<ore = 'http://www.openarchives.org/ore/terms/'>
-<owl = 'http://www.w3.org/2002/07/owl#'>
-<pcdm = 'http://pcdm.org/models#'>
-<pcdmfmt = 'http://pcdm.org/file-format-types#'>
-<pcdmrts = 'http://pcdm.org/rights#'>
-<pcdmuse = 'http://pcdm.org/use#'>
-<pcdmwrks = 'http://pcdm.org/works#'>
-<prov = 'http://www.w3.org/ns/prov#'>
-<rdf = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'>
-<rdfs = 'http://www.w3.org/2000/01/rdf-schema#'>
-<rel = 'http://id.loc.gov/vocabulary/relators/'>
-<schema = 'http://schema.org/'>
-<skos = 'http://www.w3.org/2004/02/skos/core#'>
-<xml = 'http://www.w3.org/XML/1998/namespace'>
-<xmlns = 'http://www.w3.org/2000/xmlns/'>
-<xs = 'http://www.w3.org/2001/XMLSchema'>
-<xsi = 'http://www.w3.org/2001/XMLSchema-instance'>
-```
+`i8_namespaces.yml` is a list of namespaces used by Islandora that may not necessarily be present in Fedora; we add them here to ensure we can use them in queries.
 
-We intend to have Crayfish installed later. Since Fedora needs to be able to read data from Crayfish, we need to tell Fedora that the Crayfish endpoint is a valid data source.
-
-`/opt/fcrepo/config/allowed_hosts.txt | tomcat:tomcat/644`
-```
-http://CRAYFISH_HOST:CRAYFISH_PORT/
-```
-- `CRAYFISH_HOST`: localhost
-- `CRAYFISH_PORT`: 80
-    - This guide will install Crayfish on the same host and port that Drupal is installed on. This may not be desirable, and if Crayfish is installed on a different host or port later, that change should be reflected here.
-
-The next part of the configuration defines where the pieces of the actual repository will live. Note that this file contains some of the defined `FEDORA_DB` variables from earlier.
-
-`/opt/fcrepo/config/repository.json | tomcat:tomcat/644`
-```json
-{
-    "name" : "repo",
-    "jndiName" : "",
-    "workspaces" : {
-        "predefined" : ["default"],
-        "default" : "default",
-        "allowCreation" : true,
-        "cacheSize" : 10000
-    },
-    "storage" : {
-        "persistence": {
-            "type" : "db",
-            "connectionUrl": "jdbc:postgresql://localhost:5432/FEDORA_DB",
-            "driver" : "org.postgresql.Driver",
-            "username" : "FEDORA_DB_USER",
-            "password" : "FEDORA_DB_PASSWORD"
-        },
-        "binaryStorage" : {
-            "type" : "file",
-            "directory" : "/opt/fcrepo/data/binaries",
-            "minimumBinarySizeInBytes" : 4096
-        }
-    },
-    "security" : {
-        "anonymous" : {
-            "roles" : ["readonly","readwrite","admin"],
-            "useOnFailedLogin" : false
-        },
-        "providers" : [
-            { "classname" : "org.fcrepo.auth.common.BypassSecurityServletAuthenticationProvider" }
-        ]
-    },
-    "garbageCollection" : {
-        "threadPool" : "modeshape-gc",
-        "initialTime" : "00:00",
-        "intervalInHours" : 24
-    },
-    "node-types" : ["fedora-node-types.cnd", "file:/opt/fcrepo/config/i8_namespaces.cnd"]
-}
+`/opt/fcrepo/config/i8_namespaces.yml | tomcat:tomcat/644`
+```{ .yaml .copy }
+# Islandora 8/Fedora namespaces
+#
+# This file contains ALL the prefix mappings, if a URI
+# does not appear in this file it will be displayed as 
+# the full URI in Fedora. 
+acl: http://www.w3.org/ns/auth/acl#
+bf: http://id.loc.gov/ontologies/bibframe/
+cc: http://creativecommons.org/ns#
+dc: http://purl.org/dc/elements/1.1/
+dcterms: http://purl.org/dc/terms/
+dwc: http://rs.tdwg.org/dwc/terms/
+ebucore: http://www.ebu.ch/metadata/ontologies/ebucore/ebucore#
+exif: http://www.w3.org/2003/12/exif/ns#
+fedoraconfig: http://fedora.info/definitions/v4/config#
+fedoramodel: info:fedora/fedora-system:def/model#
+foaf: http://xmlns.com/foaf/0.1/
+geo: http://www.w3.org/2003/01/geo/wgs84_pos#
+gn: http://www.geonames.org/ontology#
+iana: http://www.iana.org/assignments/relation/
+islandorarelsext: http://islandora.ca/ontology/relsext#
+islandorarelsint: http://islandora.ca/ontology/relsint#
+ldp: http://www.w3.org/ns/ldp#
+memento: http://mementoweb.org/ns#
+nfo: http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#
+ore: http://www.openarchives.org/ore/terms/
+owl: http://www.w3.org/2002/07/owl#
+premis: http://www.loc.gov/premis/rdf/v1#
+prov: http://www.w3.org/ns/prov#
+rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+rdfs: http://www.w3.org/2000/01/rdf-schema#
+rel: http://id.loc.gov/vocabulary/relators/
+schema: http://schema.org/
+skos: http://www.w3.org/2004/02/skos/core#
+test: info:fedora/test/
+vcard: http://www.w3.org/2006/vcard/ns#
+webac: http://fedora.info/definitions/v4/webac#
+xml: http://www.w3.org/XML/1998/namespace
+xmlns: http://www.w3.org/2000/xmlns/
+xs: http://www.w3.org/2001/XMLSchema
+xsi: http://www.w3.org/2001/XMLSchema-instance
 ```
 
-Finally, we need an actual `fcrepo-config.xml` to pull this configuration into place. There's nothing to edit in here by default, but pay attention to the `p:repositoryConfiguration` property of the `modeshapeRepofactory` bean, which contains the path to the `repository.json` file we made earlier. If you've placed this somewhere else, you'll need to change it here.
+#### Allowed External Content Hosts
 
-`/opt/fcrepo/config/fcrepo-config.xml | tomcat:tomcat/644`
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:context="http://www.springframework.org/schema/context"
-    xmlns:task="http://www.springframework.org/schema/task"
-    xmlns:p="http://www.springframework.org/schema/p"
-    xmlns:util="http://www.springframework.org/schema/util"
-    xsi:schemaLocation="
-    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-    http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
-    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+We have Fedora provide metadata for some resources that are contained in Drupal. Fedora needs to know to allow access to these External Content hosts.
 
-    <context:property-placeholder/>
-    <context:annotation-config/>
-    <context:component-scan base-package="org.fcrepo"/>
-
-    <bean name="modeshapeRepofactory"
-        class="org.fcrepo.kernel.modeshape.spring.ModeShapeRepositoryFactoryBean"
-        p:repositoryConfiguration="file:///opt/fcrepo/config/repository.json"
-        depends-on="authenticationProvider"/>
-    <bean name="authenticationProvider" class="org.fcrepo.auth.common.ShiroAuthenticationProvider"/>
-    <bean name="headerProvider" class="org.fcrepo.auth.common.HttpHeaderPrincipalProvider">
-        <property name="headerName" value="X-Islandora"/>
-        <property name="separator" value=","/>
-    </bean>
-    <bean name="delegatedPrincipalProvider" class="org.fcrepo.auth.common.DelegateHeaderPrincipalProvider"/>
-    <bean name="accessRolesProvider" class="org.fcrepo.auth.webac.WebACRolesProvider"/>
-    <bean id="webACAuthorizingRealm" class="org.fcrepo.auth.webac.WebACAuthorizingRealm" />
-    <bean id="servletContainerAuthenticatingRealm" class="org.fcrepo.auth.common.ServletContainerAuthenticatingRealm" />
-    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-      <property name="realms">
-        <util:set set-class="java.util.HashSet">
-          <ref bean="webACAuthorizingRealm"/>
-          <ref bean="servletContainerAuthenticatingRealm"/>
-        </util:set>
-      </property>
-    </bean>
-    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
-    <bean id="servletContainerAuthFilter" class="org.fcrepo.auth.common.ServletContainerAuthFilter"/>
-    <bean id="webACFilter" class="org.fcrepo.auth.webac.WebACFilter"/>
-    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
-      <property name="securityManager" ref="securityManager"/>
-      <property name="filterChainDefinitions">
-        <value>
-          /** = servletContainerAuthFilter,headerProvider,delegatedPrincipalProvider,webACFilter
-        </value>
-      </property>
-    </bean>
-
-    <util:list id="translationChain" value-type="org.fcrepo.kernel.api.identifiers.InternalIdentifierConverter">
-        <bean class="org.fcrepo.kernel.modeshape.identifiers.HashConverter"/>
-        <bean class="org.fcrepo.kernel.modeshape.identifiers.NamespaceConverter"/>
-    </util:list>
-
-    <bean class="org.fcrepo.jms.JMSTopicPublisher">
-      <constructor-arg value="fedora"/>
-    </bean>
-    <bean id="connectionFactory"
-        class="org.apache.activemq.ActiveMQConnectionFactory" depends-on="jmsBroker"
-        p:brokerURL="vm://${fcrepo.jms.host:localhost}:${fcrepo.dynamic.jms.port:61616}?create=false"/>
-    <bean name="jmsBroker" class="org.apache.activemq.xbean.BrokerFactoryBean"
-      p:config="${fcrepo.activemq.configuration:classpath:/config/activemq.xml}" p:start="true"/>
-    <bean class="org.fcrepo.jms.DefaultMessageFactory"/>
-    <bean class="org.fcrepo.kernel.modeshape.observer.SimpleObserver"/>
-    <bean name="fedoraEventFilter" class="org.fcrepo.kernel.modeshape.observer.DefaultFilter"/>
-    <bean name="fedoraEventMapper" class="org.fcrepo.kernel.modeshape.observer.eventmappings.AllNodeEventsOneEvent"/>
-    <bean name="fedoraInternalEventBus" class="com.google.common.eventbus.EventBus"/>
-    <bean name="rdfNamespaceRegistry" class="org.fcrepo.kernel.api.rdf.RdfNamespaceRegistry"
-        init-method="init" destroy-method="shutdown">
-      <property name="configPath" value="${fcrepo.namespace.registry:classpath:/namespaces.yml}" />
-      <property name="monitorForChanges" value="true" />
-    </bean>
-    <bean name="externalContentPathValidator" class="org.fcrepo.http.api.ExternalContentPathValidator"
-        init-method="init" destroy-method="shutdown">
-        <property name="configPath" value="${fcrepo.external.content.allowed:#{null}}" />
-        <property name="monitorForChanges" value="true" />
-    </bean>
-    <bean name="externalContentHandlerFactory" class="org.fcrepo.http.api.ExternalContentHandlerFactory">
-        <property name="validator" ref="externalContentPathValidator" />
-    </bean>
-    <task:scheduler id="taskScheduler" />
-    <task:executor id="taskExecutor" pool-size="1" />
-    <task:annotation-driven executor="taskExecutor" scheduler="taskScheduler" />
-    <bean class="org.modeshape.jcr.ModeShapeEngine" init-method="start"/>
-    <bean id="connectionManager" class="org.apache.http.impl.conn.PoolingHttpClientConnectionManager" />
-    <bean class="org.fcrepo.http.commons.session.SessionFactory"/>
-</beans>
+We create a file `/opt/fcrepo/config/allowed_external_hosts.txt | tomcat:tomcat/644`
 ```
+http://localhost:8000/
+```
+
+**Note**: the trailing backslash is important here. For more information on Fedora's External Content and configuring it, see the [Fedora Wiki pages](https://wiki.lyrasis.org/display/FEDORA6x/External+Content)
+
+#### Fedora configuration properties file
+
+Fedora 6 now allows you to put all your configuration properties into a single file. We use `0640` permissions as you will want to put your database credentials in here.
+
+We've left `{{ fcrepo X property }}` to define configurable properties
+
+`/opt/fcrepo/config/fcrepo.properties | tomcat:tomcat/640`
+```{ .text .copy }
+fcrepo.home=/opt/fcrepo/data
+fcrepo.external.content.allowed=/opt/fcrepo/config/allowed_external_hosts.txt  # Default using path defined above.
+fcrepo.namespace.registry=/opt/fcrepo/config/i8_namespaces.yml  # Default using path defined above.
+fcrepo.auth.principal.header.enabled=true
+fcrepo.auth.principal.header.name=X-Islandora  # The same as the "config" element's "header" attribute [here](#placing-the-syn-settings)
+fcrepo.autoversioning.enabled={{ fcrepo_autoversioning }}  # false to use manual versioning, true to create a version on each change
+fcrepo.db.url=jdbc:{{ fcrepo_db_type }}://{{ fcrepo_db_host }}:{{ fcrepo_db_port }}/{{ fcrepo_db_name }}
+fcrepo.db.user={{ fcrepo_db_user }}
+fcrepo.db.password={{ fcrepo_db_password }}
+fcrepo.ocfl.root={{ fcrepo_data_dir }}/ocfl-root  # Default is {{ fcrepo.home }}/ocfl-root, but can be where you want your data
+fcrepo.ocfl.temp={{ fcrepo_data_dir }}/temp  # Same as above, temp OCFL space.
+fcrepo.ocfl.staging={{ fcrepo_data_dir }}/staging  # Same as above, staging OCFL space for transactions. 
+fcrepo.namespace.registry=/opt/fcrepo/config/namespaces.yml  # Default based on above path.
+fcrepo.persistence.defaultDigestAlgorithm=sha512  # Can be sha512 or sha256
+fcrepo.dynamic.jms.port=61626  # Moved from 61616 to allow external ActiveMQ to use that port
+fcrepo.dynamic.stomp.port=61623  # Same as above
+fcrepo.velocity.runtime.log=/opt/tomcat/logs/velocity.log
+fcrepo.jms.baseUrl=http://localhost:8080/fcrepo/rest  # Base URL set on emitted JMS messages
+```
+
+Check the Lyrasis Wiki to find all of [Fedora's properties](https://wiki.lyrasis.org/display/FEDORA6x/Properties)
 
 ### Adding the Fedora Variables to `JAVA_OPTS`
 
@@ -248,14 +148,14 @@ We need our Tomcat `JAVA_OPTS` to include references to our repository configura
 > 3 | export JAVA_OPTS="-Djava.awt.headless=true -server -Xmx1500m -Xms1000m"
 
 **After**:
-> 3 | export JAVA_OPTS="-Djava.awt.headless=true -Dfcrepo.home=/otp/fcrepo/data -Dfcrepo.velocity.runtime.log=/opt/tomcat/logs/velocity.log -Dfcrepo.jms.baseUrl=http://localhost:8080/fcrepo/rest -Dfcrepo.autoversioning.enabled=false -DconnectionTimeout=-1 -Dfcrepo.db.url=jdbc:postgresql://localhost:5432/fcrepo -Dfcrepo.db.user=fedora -Dfcrepo.db.password=fedora -server -Xmx1500m -Xms1000m"
+> 3 | export JAVA_OPTS="-Djava.awt.headless=true -Dfcrepo.config.file=/opt/fcrepo/config/fcrepo.properties -DconnectionTimeout=-1 -server -Xmx1500m -Xms1000m"
 
 ### Ensuring Tomcat Users Are In Place
 
 While not strictly necessary, we can use the `tomcat-users.xml` file to give us direct access to the Fedora endpoint. Fedora defines, out of the box, a `fedoraAdmin` and `fedoraUser` role that can be reflected in the users list for access. The following file will also include the base `tomcat` user. As always, these default passwords should likely not stay as the defaults.
 
 `/opt/tomcat/conf/tomcat-users.xml | tomcat:tomcat/600`
-```xml
+```{ .xml .copy }
 <?xml version="1.0" encoding="UTF-8"?>
 <tomcat-users xmlns="http://tomcat.apache.org/xml"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -328,7 +228,7 @@ sudo chown www-data:www-data /opt/keys/syn*
 Syn sites and tokens belong in a settings file that we’re going to reference in Tomcat.
 
 `/opt/fcrepo/config/syn-settings.xml | tomcat:tomcat/600`
-```xml
+```{ .xml .copy }
 <config version='1' header='X-Islandora'>
   <site algorithm='RS256' encoding='PEM' anonymous='true' default='true' path='/opt/keys/syn_public.key'/>
   <token user='islandora' roles='fedoraAdmin'>ISLANDORA_SYN_TOKEN</token>
@@ -340,6 +240,10 @@ Syn sites and tokens belong in a settings file that we’re going to reference i
 ### Adding the Syn Valve to Tomcat
 
 Referencing the valve we’ve created in our `syn-settings.xml` involves creating a `<Valve>` entry in Tomcat’s `context.xml`:
+
+There are two options here: 
+
+#### 1. Enable the Syn Valve for all of Tomcat.
 
 `/opt/tomcat/conf/context.xml`
 
@@ -355,6 +259,20 @@ Referencing the valve we’ve created in our `syn-settings.xml` involves creatin
 
 > 31 | `</Context>`
 
+#### 2. Enable the Syn Valve for only Fedora.
+
+Create a new file at
+
+`/opt/tomcat/conf/Catalina/localhost/fcrepo.xml`
+
+```{ .xml .copy }
+<Context>
+	<Valve className="ca.islandora.syn.valve.SynValve" pathname="/opt/fcrepo/config/syn-settings.xml"/>
+</Context>
+```
+
+Your Fedora web application needs to be deployed in Tomcat with the name `fcrepo.war`. Otherwise, change the name of the above XML file to match the deployed web application's name.
+
 ### Restarting Tomcat
 
 Finally, restart tomcat to apply the new configurations.
@@ -365,7 +283,95 @@ sudo systemctl restart tomcat
 
 **Note:** sometimes it takes a while for Fedora and Tomcat to start up, usually it shouldn't take longer than 5 minutes.
 
-**Note:** after installing the Syn valve, you'll no longer be able to manually manage objects via Fedora Web UI or access the Fedora home page (http://localhost:8080/fcrepo). All communication with Fedora will now be handled from the Islandora module in Drupal.
+**Note:** after installing the Syn valve, you'll no longer be able to manually create/edit or delete objects via Fedora Web UI. All communication with Fedora will now be handled from the Islandora module in Drupal.
+
+### Redhat logging
+
+Redhat systems have stopped generating an all inclusive `catalina.out`, the `catalina.<date>.log` does not include web application's log statements. To get Fedora log statements flowing, you can create your own [LogBack](https://logback.qos.ch/) configuration file and point to it.
+	
+`/opt/fcrepo/config/fcrepo-logback.xml | tomcat:tomcat/644`
+```{ .xml .copy }
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+<configuration>
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%p %d{HH:mm:ss.SSS} [%thread] \(%c{0}\) %m%n</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${catalina.base}/logs/fcrepo.log</file>
+    <append>true</append>
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      <fileNamePattern>${catalina.base}/logs/fcrepo.%d{yyyy-MM-dd}.log.%i</fileNamePattern>
+      <maxFileSize>10MB</maxFileSize>
+      <maxHistory>30</maxHistory>
+      <totalSizeCap>2GB</totalSizeCap>
+    </rollingPolicy>
+    <encoder>
+      <pattern>%p %d{HH:mm:ss.SSS} [%thread] \(%c{0}\) %m%n</pattern>
+    </encoder>
+  </appender>
+
+  <logger name="org.fcrepo.auth" additivity="false" level="${fcrepo.log.auth:-null}">
+    <appender-ref ref="STDOUT"/>
+    <appender-ref ref="FILE"/>
+  </logger>
+  <logger name="org.fcrepo.config" additivity="false" level="${fcrepo.log.config:-null}">
+    <appender-ref ref="STDOUT"/>
+    <appender-ref ref="FILE"/>
+  </logger>
+  <logger name="org.fcrepo.event" additivity="false" level="${fcrepo.log.event:-null}">
+    <appender-ref ref="STDOUT"/>
+    <appender-ref ref="FILE"/>
+  </logger>
+  <logger name="org.fcrepo.http.api" additivity="false" level="${fcrepo.log.http.api:-null}">
+    <appender-ref ref="STDOUT"/>
+    <appender-ref ref="FILE"/>
+  </logger>
+  <logger name="org.fcrepo.http.commons" additivity="false" level="${fcrepo.log.http.commons:-null}">
+    <appender-ref ref="STDOUT"/>
+    <appender-ref ref="FILE"/>
+  </logger>
+  <logger name="org.fcrepo.jms" additivity="false" level="${fcrepo.log.jms:-null}">
+    <appender-ref ref="STDOUT"/>
+    <appender-ref ref="FILE"/>
+  </logger>
+  <logger name="org.fcrepo.kernel" additivity="false" level="${fcrepo.log.kernel:-null}">
+    <appender-ref ref="STDOUT"/>
+    <appender-ref ref="FILE"/>
+  </logger>
+  <logger name="org.fcrepo.persistence" additivity="false" level="${fcrepo.log.persistence:-null}">
+    <appender-ref ref="STDOUT"/>
+    <appender-ref ref="FILE"/>
+  </logger>
+  <logger name="org.fcrepo.search" additivity="false" level="${fcrepo.log.search:-null}">
+    <appender-ref ref="STDOUT"/>
+    <appender-ref ref="FILE"/>
+  </logger>
+  <logger name="org.fcrepo.storage" additivity="false" level="${fcrepo.log.storage:-null}">
+    <appender-ref ref="STDOUT"/>
+    <appender-ref ref="FILE"/>
+  </logger>
+  <logger name="org.fcrepo" additivity="false" level="${fcrepo.log:-INFO}">
+    <appender-ref ref="STDOUT"/>
+    <appender-ref ref="FILE"/>
+  </logger>
+
+  <root level="${fcrepo.log.root:-WARN}">
+    <appender-ref ref="STDOUT"/>
+    <appender-ref ref="FILE"/>
+  </root>
+</configuration>
+```
+
+Then alter your `$JAVA_OPTS` like [above](#adding-the-fedora-variables-to-java_opts) to include 
+```
+-Dlogback.configurationFile=/opt/fcrepo/config/fcrepo-logback.xml
+```
+
+This will generate a log file at `${catalina.base}/logs/fcrepo.log` and will rotate each day or if the logs reaches 10MB. It will maintain 30 days of old logs, or 2GB whichever comes first.
 
 ## Blazegraph 2
 
@@ -398,7 +404,7 @@ Once this is downloaded, give it a moment to expand before moving on to the next
 We would like to have an appropriate logging configuration for Blazegraph, which can be useful for looking at incoming traffic and determining if anything has gone wrong with Blazegraph. Our logger isn’t going to be much different than the default logger; it can be made more or less verbose by changing the default `WARN` levels. There are several other loggers that can be enabled, like a SPARQL query trace or summary query evaluation log; if these are desired they should be added in. Consult the Blazegraph documentation for more details.
 
 `/opt/blazegraph/conf/log4j.properties | tomcat:tomcat/644`
-```
+```{ .text .copy }
 log4j.rootCategory=WARN, dest1
 
 # Loggers.
@@ -434,7 +440,7 @@ log4j.appender.ruleLog.layout.ConversionPattern=%m
 Our configuration will be built from a few different files that we will eventually reference in `JAVA_OPTS` and directly apply to Blazegraph; these include most of the functional pieces Blazegraph requires, as well as a generalized configuration for the `islandora` namespace it will use. As with most large configurations like this, these should likely be tuned to your preferences, and the following files only represent sensible defaults.
 
 `/opt/blazegraph/conf/RWStore.properties | tomcat:tomcat/644`
-```
+``` { .text .copy }
 com.bigdata.journal.AbstractJournal.file=/opt/blazegraph/data/blazegraph.jnl
 com.bigdata.journal.AbstractJournal.bufferMode=DiskRW
 com.bigdata.service.AbstractTransactionService.minReleaseAge=1
@@ -454,7 +460,7 @@ com.bigdata.journal.Journal.collectPlatformStatistics=false
 ```
 
 `/opt/blazegraph/conf/blazegraph.properties | tomcat:tomcat/644`
-```
+```{ .text .copy }
 com.bigdata.rdf.store.AbstractTripleStore.textIndex=false
 com.bigdata.rdf.store.AbstractTripleStore.axiomsClass=com.bigdata.rdf.axioms.OwlAxioms
 com.bigdata.rdf.sail.isolatableIndices=false
@@ -470,7 +476,7 @@ com.bigdata.rdf.store.AbstractTripleStore.statementIdentifiers=false
 ```
 
 `/opt/blazegraph/conf/inference.nt | tomcat:tomcat/644`
-```
+```{ .text .copy }
 <http://pcdm.org/models#memberOf> <http://www.w3.org/2002/07/owl#inverseOf> <http://pcdm.org/models#hasMember> .
 <http://pcdm.org/models#fileOf> <http://www.w3.org/2002/07/owl#inverseOf> <http://pcdm.org/models#hasFile> .
 ```
@@ -482,11 +488,10 @@ In order to enable our configuration when Tomcat starts, we need to reference th
 `/opt/tomcat/bin/setenv.sh`
 
 **Before**:
-> 3 | export JAVA_OPTS="-Djava.awt.headless=true -Dfcrepo.home=/otp/fcrepo/data -Dfcrepo.velocity.runtime.log=/opt/tomcat/logs/velocity.log -Dfcrepo.jms.baseUrl=http://localhost:8080/fcrepo/rest -Dfcrepo.autoversioning.enabled=false -DconnectionTimeout=-1 -Dfcrepo.db.url=jdbc:postgresql://localhost:5432/fcrepo -Dfcrepo.db.user=fedora -Dfcrepo.db.password=fedora -server -Xmx1500m -Xms1000m"
-
+> 3 | export JAVA_OPTS="-Djava.awt.headless=true -Dfcrepo.config.file=/opt/fcrepo/config/fcrepo.properties -DconnectionTimeout=-1 -server -Xmx1500m -Xms1000m"
 
 **After**:
-> 3 | export JAVA_OPTS="-Djava.awt.headless=true -Dfcrepo.home=/otp/fcrepo/data -Dfcrepo.velocity.runtime.log=/opt/tomcat/logs/velocity.log -Dfcrepo.jms.baseUrl=http://localhost:8080/fcrepo/rest -Dfcrepo.autoversioning.enabled=false -DconnectionTimeout=-1 -Dfcrepo.db.url=jdbc:postgresql://localhost:5432/fcrepo -Dfcrepo.db.user=fedora -Dfcrepo.db.password=fedora -Dcom.bigdata.rdf.sail.webapp.ConfigParams.propertyFile=/opt/blazegraph/conf/RWStore.properties -Dlog4j.configuration=file:/opt/blazegraph/conf/log4j.properties -server -Xmx1500m -Xms1000m"
+> 3 | export JAVA_OPTS="-Djava.awt.headless=true -Dfcrepo.config.file=/opt/fcrepo/config/fcrepo.properties -DconnectionTimeout=-1 -Dcom.bigdata.rdf.sail.webapp.ConfigParams.propertyFile=/opt/blazegraph/conf/RWStore.properties -Dlog4j.configuration=file:/opt/blazegraph/conf/log4j.properties -server -Xmx1500m -Xms1000m"
 
 
 ### Restarting Tomcat
@@ -501,11 +506,11 @@ sudo systemctl restart tomcat
 
 The two other files we created, `blazegraph.properties` and `inference.nt`, contain information that Blazegraph requires in order to establish and correctly use the datasets Islandora will send to it. First, we need to create a dataset - contained in `blazegraph.properties` - and then we need to inform that dataset of the inference set we have contained in `inference.nt`.
 
-```bash
+``` { .bash .copy }
 curl -X POST -H "Content-Type: text/plain" --data-binary @/opt/blazegraph/conf/blazegraph.properties http://localhost:8080/blazegraph/namespace
-# If this worked correctly, Blazegraph should respond with "CREATED: islandora"
-# to let us know it created the islandora namespace.
-curl -X POST -H "Content-Type: text/plain" --data-binary @/opt/blazegraph/conf/inference.nt http://localhost:8080/blazegraph/namespace/islandora/sparql
-# If this worked correctly, Blazegraph should respond with some XML letting us
-# know it added the 2 entries from inference.nt to the namespace.
 ```
+If this worked correctly, Blazegraph should respond with "CREATED: islandora" to let us know it created the islandora namespace.
+``` { .bash .copy }
+curl -X POST -H "Content-Type: text/plain" --data-binary @/opt/blazegraph/conf/inference.nt http://localhost:8080/blazegraph/namespace/islandora/sparql
+```
+If this worked correctly, Blazegraph should respond with some XML letting us know it added the 2 entries from inference.nt to the namespace.
