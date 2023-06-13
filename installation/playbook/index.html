@@ -2718,6 +2718,7 @@ $ vagrant destroy
 <pre><code class="language-bash">$ vagrant up
 </code></pre>
 <p>When used this way, you can trash your working site and get a fresh Islandora relatively quickly, with <code>vagrant destroy</code> (you will be asked to confirm, as this will delete all your changes and your content), and then <code>vagrant up</code>. </p>
+<p>Full instructions below.</p>
 <h2 id="requirements-vagrant">Requirements (Vagrant)<a class="headerlink" href="#requirements-vagrant" title="Permanent link">&para;</a></h2>
 <p>To create a local VM, download and install the following.</p>
 <ol>
@@ -2737,7 +2738,7 @@ $ /usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew
 $ brew install ansible
 </code></pre>
 <h2 id="installing-a-local-development-environment-vagrant">Installing a local development environment (Vagrant)<a class="headerlink" href="#installing-a-local-development-environment-vagrant" title="Permanent link">&para;</a></h2>
-<p>You will use <code>vagrant up</code> twice, first to create an Islandora base box, and then again to provision that base box into a full Islanodra. This method uses Vagrant, VirtualBox, and Ansible.</p>
+<p>You will use <code>vagrant up</code> twice, first to create an Islandora base box, and then again to provision that base box into a full Islandora. This method uses Vagrant, VirtualBox, and Ansible.</p>
 <div class="admonition warn">
 <p class="admonition-title">Warn</p>
 <p>Make sure that no <a href="#port-clashes-for-local-environments">required ports</a> are currently in use.</p>
@@ -2886,7 +2887,7 @@ ask for help.  If you think you've stumbled across a bug in the installer, pleas
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">June 7, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">June 13, 2023</span>
       
     
   </small>
