@@ -22,6 +22,8 @@ $ vagrant up
 
 When used this way, you can trash your working site and get a fresh Islandora relatively quickly, with `vagrant destroy` (you will be asked to confirm, as this will delete all your changes and your content), and then `vagrant up`. 
 
+Full instructions below.
+
 ## Requirements (Vagrant)
 
 To create a local VM, download and install the following.
@@ -48,7 +50,7 @@ $ brew install ansible
 
 ## Installing a local development environment (Vagrant)
 
-You will use `vagrant up` twice, first to create an Islandora base box, and then again to provision that base box into a full Islanodra. This method uses Vagrant, VirtualBox, and Ansible.
+You will use `vagrant up` twice, first to create an Islandora base box, and then again to provision that base box into a full Islandora. This method uses Vagrant, VirtualBox, and Ansible.
 
 !!! warn 
     Make sure that no [required ports](#port-clashes-for-local-environments) are currently in use.
