@@ -4,6 +4,9 @@
 
 This section describes how to update Drupal and its modules using Composer. If you installed Islandora using the Islandora Playbook or ISLE, then your Drupal was installed by Composer, so it is best practice to continue using Composer for updates. The method on this section is not specific to Islandora, and does not (yet) include how to update Islandora Features.
 
+!!! tip "How to upgrade Drupal in ISLE" 
+    For specific instructions on how to upgrade Drupal core and the Drupal modules installed within ISLE, please refer to the documentation page: [Maintaining Your Drupal Site](https://islandora.github.io/documentation/installation/docker-maintain-drupal/)
+
 ### What is Composer
 It is recommended by Drupal.org and the Islandora community to use Composer with Drupal for various tasks.
 
@@ -37,12 +40,16 @@ If there is no line starting with drupal/core, Composer isn't aware of any updat
 
 2) Assuming you are used to updating Drupal and know all the precautions that you should take, the update is as simple as:
 
-`composer update drupal/core webflo/drupal-core-require-dev "symfony/*" --with-dependencies`
+`composer update drupal/core --with-dependencies`
 
 If you want to know all packages that will be updated by the update command, use the --dry-run option first.
 
-!!! note "Alternate syntax needed"
-    Islandora is configured to use a fork of drupal-composer/drupal-project which requires a specific composer syntax used above compared to other Drupal 8 sites. In addition, if you are upgrading from 8.5 to 8.7, you need to replace "~8.5.x" with "^8.7.0" for drupal/core and webflo/drupal-core-require-dev in composer.json. [[Source](https://www.drupal.org/docs/8/update/update-core-via-composer#s-one-step-update-instruction)]
+!!! note "Alternate syntax for Islandora 8 needed"
+    If you are running the older Islandora 8 codebase that predates the Islandora 2 release, note that Islandora 8 is configured to use a fork of drupal-composer/drupal-project which requires this specific composer syntax compared to other Drupal 8+ sites: 
+    
+    `composer update drupal/core webflo/drupal-core-require-dev "symfony/*" --with-dependencies` 
+    
+    In addition, if you are upgrading from 8.5 to 8.7, you need to replace "~8.5.x" with "^8.7.0" for drupal/core and webflo/drupal-core-require-dev in composer.json. [[Source](https://www.drupal.org/docs/8/update/update-core-via-composer#s-one-step-update-instruction)]
 
 3) Apply any required database updates using ``drush updatedb``, or use the web admin user interface.
 
