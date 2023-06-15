@@ -2594,15 +2594,15 @@
 </ol>
 <h2 id="create-a-content-type">Create a Content Type<a class="headerlink" href="#create-a-content-type" title="Permanent link">&para;</a></h2>
 <p>To create your own custom content type from scratch, please refer to <a href="https://www.drupal.org/docs/8/administering-drupal-8-site/managing-content-0/create-a-custom-content-type">this guide</a> on Drupal.org.</p>
-<p>Custom content types are not synced to Fedora or indexed by the triple-store by default. Repository managers must add them to a context that instructs Drupal to perform these synchronizations. In the Islandora Starter Site, the "Content" ('repository_content') context does this. To add a new content type to that context:</p>
+<p>Your custom content types can contain whatever fields you like, but there are two mandatory fields that all Islandora content types should contain:</p>
 <ol>
-<li>Navigate to the <em>Contexts</em> configuration page ('/admin/structure/context').</li>
-<li>Find the <em>Content</em> context and click the corresponding <strong>Edit</strong> button ('/admin/structure/context/repository_content').</li>
-<li>Find the <em>Node Bundle</em> condition in the <em>Conditions</em> section.</li>
-<li>Click the checkbox for the new Content Type.</li>
-<li>Scroll down to the bottom of the page and click <strong>Save and continue</strong>.</li>
+<li>
+<p>In order for a custom content type to be considered an Islandora Object, it needs to have the field "Member of" ('field_member_of'). This allows it to be included in contexts that have the "Node is an Islandora node" condition. Nodes that have this field will automatically be synced to Fedora and indexed by the triple store if you are using the context provided by the Islandora Starter Site. Having this field present in your content type also gives you tabs for adding children and media when viewing an item of that content type.</p>
+</li>
+<li>
+<p>The other mandatory field is "Model" ('field_model'). This is used in several of the contexts that the Islandora Starter Site provides. This field determines how Islandora objects are diplayed, and how media derivatives are created.</p>
+</li>
 </ol>
-<p>Updating contexts does not retroactively fire any actions. Any of the custom content type's nodes that were created before updating the context will need to have the indexing action manually triggered.</p>
 <h2 id="updating-and-creating-an-rdf-mapping">Updating and creating an RDF Mapping<a class="headerlink" href="#updating-and-creating-an-rdf-mapping" title="Permanent link">&para;</a></h2>
 <p>RDF mapping aligns Drupal fields with RDF ontology properties. For example, the title field of a content model can be mapped to <code>dcterms:title</code> and/or <code>schema:title</code>. In Islandora, triples expressed by these mappings get synced to Fedora and indexed in the Blazegraph triplestore. RDF mappings are defined/stored in Drupal as a <a href="https://yaml.org/">YAML</a> file (to learn more about YAML, there are <a href="https://duckduckgo.com/?q=yaml+tutorial">several tutorials on the web</a>. Currently, Drupal 8 does not have a UI to create/update RDF mappings to ontologies other than Schema.org. This requires repository managers to update the configuration files themselves. Consider using the RDF mappings included in the <a href="https://github.com/Islandora/islandora-starter-site">Islandora Starter Site</a> as templates by copying and modifying one to meet your needs.</p>
 <p>The Drupal 8 Configuration Synchronization export (e.g. <code>http://localhost:8000/admin/config/development/configuration/single/export</code>) and import (e.g. <code>http://localhost:8000/admin/config/development/configuration/single/import</code>) can be used to get a copy of the mappings for editing in a text editor before being uploaded again. Alternatively, a repository manager can update the configuration on the server and use <a href="https://www.drupal.org/project/features">Features</a> to import the edits.</p>
@@ -2695,7 +2695,7 @@ fieldMappings:
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">June 13, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">June 15, 2023</span>
       
     
   </small>
