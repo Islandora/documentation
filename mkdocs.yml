@@ -230,4 +230,5 @@ nav:
           # moved from Developer documentation
       - 'Documentation Style Guide': 'contributing/docs_style_guide.md'
       - 'Committers': 'contributing/committers.md'
+      - 'Maintaining the Sandbox': 'contributing/sandbox.md'
   - Glossary: 'user-documentation/glossary.md'
