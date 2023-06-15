@@ -58,7 +58,7 @@ Contrast: [Configuration](#configuration)
 
 In [Drupal](#drupal), your content is the total set of things that have been created or uploaded "as content" in your website. This includes all [content entities](#content-entities) - the actual nodes, media, files, taxonomy terms, etc, but does not include anything that is [configuration](#configuration). Content can be exported and imported, but only between sites with exactly the same configuration.
 
-Sometimes, "Content" is used to refer to [Nodes](#nodes) but not other content entities. This is the case when creating a new [View](#view) and one of the options is to make a view of "Content".
+Sometimes, "Content" is used to refer to [Nodes](#nodes) but not other content entities. This is the case when creating a new [View](#view) and one of the options is to make a view of "Content".å
 
 ## Content entity
 See also: [Content](#content)
@@ -294,4 +294,4 @@ A [Drupal](#drupal) configuration entity that holds [taxonomy terms](#taxonomy-t
 
 ---
 
-Some definitions adapted from [Wikipedia](https://en.wikipedia.org/) and [[Drupal](#drupal).org](https://www.[Drupal](#drupal).org/docs/user_guide/en/glossary.html)
+Some definitions adapted from [Wikipedia](https://en.wikipedia.org/) and [Drupal.org](https://www.drupal.org/docs/user_guide/en/glossary.html)
