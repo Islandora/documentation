@@ -1,9 +1,9 @@
 # Updating the Sandbox
 
 !!! Note 
-    This page is about the online sandbox, https://sandbox.islandora.ca. If you are looking to set up your own site, see the Installation section.
+    This page is about the online sandbox, [https://sandbox.islandora.ca](https://sandbox.islandora.ca). If you are looking to set up your own site, see the Installation section.
 
-The sandbox at https://sandbox.islandora.ca is built, configured, and deployed, by the [https://github.com/Islandora-Devops/sandbox](https://github.com/Islandora-Devops/sandbox) repository. This build process happens nightly from the Sandbox's latest release.
+The sandbox at [https://sandbox.islandora.ca](https://sandbox.islandora.ca) is built, configured, and deployed, by the [https://github.com/Islandora-Devops/sandbox](https://github.com/Islandora-Devops/sandbox) repository. This build process happens nightly from the Sandbox's latest release.
 
 ## Maintaining the front-end site
 
