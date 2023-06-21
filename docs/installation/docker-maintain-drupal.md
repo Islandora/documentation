@@ -22,7 +22,7 @@ up, we use Docker to execute Drush and Composer from the Drupal container.  The 
 running a command in your Drupal container looks like this:
 
 ```
-docker-compose exec -T drupal with-contenv bash -lc 'YOUR COMMAND'
+docker compose exec -T drupal with-contenv bash -lc 'YOUR COMMAND'
 ```
 
 You can also just shell into the Drupal container and run commands as well,
@@ -31,7 +31,7 @@ bash history.  If you want to shell in to run commands, drop the `-T` and `-lc '
 bits.
 
 ```
-docker-compose exec drupal with-contenv bash
+docker compose exec drupal with-contenv bash
 ```
 
 ## Updating your Drupal Site
@@ -42,7 +42,7 @@ into any other directory before running the command.  The following command will
 all modules and their dependencies that are not pinned to specific versions.
 
 ```
-docker-compose exec -T drupal with-contenv bash -lc "su nginx -s /bin/bash -c 'composer update -W'"
+docker compose exec -T drupal with-contenv bash -lc "su nginx -s /bin/bash -c 'composer update -W'"
 
 ```
 Note that we run this command as the nginx user. By default, commands are run as root, which 
@@ -73,7 +73,7 @@ make drupal-database-dump DEST=/path/to/dump.sql
 Now you can safely update the Drupal database with Drush via
 
 ```
-docker-compose exec -T drupal with-contenv bash -lc 'drush updb'
+docker compose exec -T drupal with-contenv bash -lc 'drush updb'
 ```
 
 If for any reason, something goes wrong, you can Restore the Drupal database at any time by running
