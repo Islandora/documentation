@@ -4,27 +4,27 @@
 
 [Viewers](../user-documentation/glossary#viewer) allow site builders to display files in interactive JavaScript-based widgets, that provide functionality like zooming in/out, turning pages, playing/pausing, viewing in full screen, etc.
 
-In Drupal, a common way to implement a viewer is through a [module](glossary.md#module) that provides the JavaScript library, and a field formatter that uses that library. The field formatter will work with specific types of Drupal fields (e.g. file fields or image fields, some may even provide their own fields). Some modules also provide a block, that can display appropriate files based on the context.
+In Drupal, a common way to implement a viewer is through a [module](glossary.md#module) that provides a Drupal field formatter that interfaces with the appropriate JavaScript library. The field formatter will work with specific types of Drupal fields (e.g. file fields or image fields, some may even provide their own fields). Some viewer modules in Islandora also provide a block, that can display appropriate files based on the context.
 
 Viewers that are known to work with Islandora include:
 
 * [OpenSeadragon](https://openseadragon.github.io/), via the Drupal module [OpenSeadragon](https://github.com/Islandora/openseadragon) (maintained by the Islandora community).
 * [Mirador](https://projectmirador.org/), via the Drupal module [Islandora Mirador](https://github.com/Islandora/islandora_mirador/) (maintained by the Islandora community).
 * [pdf.js](https://github.com/mozilla/pdf.js), via the Drupal contrib module [PDF](https://www.drupal.org/project/pdf)
+* Islandora Image, via the Islandora module
 * Audio with captions, via the Islandora module
 * Video with captions, via the Islandora module
 
 
 ## Configuring Field Formatters as Viewers
 
-The Drupal way of showing a "viewer" is to render a Media using a View Mode that shows only the desired file, displayed in a field formatter that invokes the desired viewer.
+The simplest Drupal-y way of making a viewer appear is to configure a Media to render. You can do this by configuring a View Mode that shows the desired file field, displayed in a field formatter that invokes the desired viewer.
 
 In the Starter Site:
 
-* On all Media Types, there is a "Source" view mode which is configured to show only the main ("source") file of that Media in a reasonable desired viewer.
-* In the case of OpenSeadragon and PDFjs, additional view modes are configured on the Media Types where it is possible to have files that need those viewers (Image, Document, File).
-* By default, on a node's page, a Block will display an attached Media - Service File, if it's available, with a fallback to Original File - in the "Source" view mode, i.e. in its default viewer. This is done using a Context that places a Block.
-* On a node-by-node-basis, you can override the viewer used by setting the "Viewer Override" field to a different viewer (such as PDF.js). This will cause a different Context to be activated instead, which will show the file in the selected view mode.
+1. On all Media Types, there is a "Source" view mode which is configured to show only the main ("source") file of that Media in a reasonable default viewer.
+1. By default, on a node's page, a Block is configured to appear that shows an attached "Service File" Media, or an "Original File" if no Service File is present. This block displays the media in the "Source" view mode, with its default viewer. This block placement is done using a Context. The block itself is a rendering of a View.
+1. On a node-by-node-basis, you can override the viewer used by setting the "Viewer Override" field to a different viewer (such as PDF.js). This will cause a different Context to be activated instead, which will show the file in the selected view mode.
 
 !!! note
     Formerly, this field was called "Display Hints". That field name has been retired in order to reduce confusion, since this uses a different mechanism. This mechanism no longer relies on Node View Modes, or EVA views. However, the basic EVA view still persists in the starter site as it is part of the Islandora Core Feature. Again, it will first look for a Service File, then fall back to the Original File.
