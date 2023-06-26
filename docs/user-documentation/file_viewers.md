@@ -23,8 +23,8 @@ The simplest Drupal-y way of making a viewer appear is to configure a Media to r
 In the Starter Site:
 
 1. On all Media Types, there is a "Source" view mode which is configured to show only the main ("source") file of that Media in a reasonable default viewer.
-1. By default, on a node's page, a Block is configured to appear that shows an attached "Service File" Media, or an "Original File" if no Service File is present. This block displays the media in the "Source" view mode, with its default viewer. This block placement is done using a Context. The block itself is a rendering of a View.
-1. On a node-by-node-basis, you can override the viewer used by setting the "Viewer Override" field to a different viewer (such as PDF.js). This will cause a different Context to be activated instead, which will show the file in the selected view mode.
+1. By default, on a node's page, a Block is configured to appear that shows an attached "Service File" Media, or an "Original File" if no Service File is present. This block displays the media in the "Source" view mode, i.e. in its default viewer. This block placement is done using a Context. The block itself is a rendering of a View.
+1. On a node-by-node-basis, you can override the viewer used by setting the "Viewer Override" field to a different viewer (such as PDF.js). This will cause a different Context to be activated instead, which will render the Service File or Original File media in a different view mode, where a different viewer is used.
 
 !!! note
     Formerly, this field was called "Display Hints". That field name has been retired in order to reduce confusion, since this uses a different mechanism. This mechanism no longer relies on Node View Modes, or EVA views. However, the basic EVA view still persists in the starter site as it is part of the Islandora Core Feature. Again, it will first look for a Service File, then fall back to the Original File.
