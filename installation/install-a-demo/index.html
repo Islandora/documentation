@@ -2371,166 +2371,19 @@
 
 
 <h1 id="docker-demo">Docker Demo<a class="headerlink" href="#docker-demo" title="Permanent link">&para;</a></h1>
-<p>To test out Islandora, there is <a href="https://drive.google.com/file/d/1LrIe12eYAZjD4A8_cqf61RXv7mtMJRHH/view?usp=share_link">a Starter-Site based demo available in Google Drive</a>. It is loaded with sample content to demonstrate
-features of Islandora and provide a starting point for exploration. </p>
-<p>Download your demo and use the instructions below to install. It is recommended that you have a minimum of 4GB of hard drive space available on your machine before getting started. It will take some time to build the image, do not be surprised if it takes at least 25 minutes. Thanks, and happy building!
+<p>To test out Islandora, there is [a Starter-Site based demo available](<a href="https://islandora.github.io/documentation/installation/install-a-demo/">https://drive.google.com/file/d/1LrIe12eYAZjD4A8_cqf61RXv7mtMJRHH/view?usp=share_lin</a> (Download the .zip file). It is loaded with sample content to demonstrate
+features of Islandora and provide a starting point for exploration. Follow the instructions in the README.md.html file provided in the download.</p>
+<p>It is recommended that you have a minimum of 4GB of hard drive space available on your machine before getting started. It will take some time to build the image, do not be surprised if it takes a long time. Thanks, and happy building!
 <br></p>
 <h1 id="installation-video-tutorial">Installation Video Tutorial<a class="headerlink" href="#installation-video-tutorial" title="Permanent link">&para;</a></h1>
-<p>This material is also covered in: <a href="https://www.youtube.com/watch?v=xhJft9K-YMU">How to Install Docker Desktop and Set up Starter Site (video tutorial)</a>.
-<br></p>
-<h1 id="requirements">Requirements<a class="headerlink" href="#requirements" title="Permanent link">&para;</a></h1>
-<p>Before you can set up your demo locally you must first install a few software packages.</p>
-<h2 id="docker-desktop">Docker Desktop<a class="headerlink" href="#docker-desktop" title="Permanent link">&para;</a></h2>
-<p><a href="https://www.docker.com/products/docker-desktop">Docker Desktop</a> provides a graphical user interface for all major platforms.</p>
-<p><a href="https://www.docker.com/products/docker-desktop">https://www.docker.com/products/docker-desktop</a></p>
-<p>Follow the link above and select the appropriate system and follow the installation instructions.</p>
-<h2 id="portainer-extension">Portainer Extension<a class="headerlink" href="#portainer-extension" title="Permanent link">&para;</a></h2>
-<p>Once you have a working <a href="#dockerdesktop">Docker Desktop</a> installation, you can add
-the <a href="https://portainer.io/">Portainer</a> extension:</p>
-<ol>
-<li>Open Docker Desktop.</li>
-<li>From the Dashboard, select Add Extensions in the menu bar.</li>
-<li>The Extensions Marketplace opens.</li>
-<li>Browse the available extensions.</li>
-<li>Select <strong>Portainer</strong></li>
-<li>Click Install.</li>
-</ol>
-<p>For more information on Portainer refer to its
-<a href="https://docs.portainer.io/">documentation</a>.</p>
-<h1 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h1>
-<p>Assuming you have all the <a href="#requirements">Requirements</a> installed
-and running. You can now setup your demo. </p>
-<h2 id="get-a-yaml-file">Get a Yaml file<a class="headerlink" href="#get-a-yaml-file" title="Permanent link">&para;</a></h2>
-<p>Download the <a href="https://drive.google.com/file/d/1LrIe12eYAZjD4A8_cqf61RXv7mtMJRHH/view?usp=share_link">Starter-Site-based demo from Google Drive</a> (Google Drive places the download icon in the top-right), unzip it, and find the <code>docker-compose.yml</code> file provided inside. This will be used in the next step.</p>
-<h2 id="create-stack">Create Stack<a class="headerlink" href="#create-stack" title="Permanent link">&para;</a></h2>
-<p>Open <strong>Portainer</strong> via the Docker Desktop Dashboard. </p>
-<ol>
-<li>Open Docker Desktop.</li>
-<li>Click on Portainer.</li>
-<li>If you see the Quick Setup Environment Wizard, click “Get Started" and then select the "local" environment. Otherwise, select your local environment under "Environments".</li>
-<li>Widen/open the blue vertical sidebar by clicking the &gt;&gt; button near the top of the sidebar.</li>
-<li>Click on <strong>Stacks</strong>.</li>
-<li>Click <strong>Add Stack</strong>.</li>
-<li>Type in the name <strong>sandbox</strong> (<em>lowercase</em>).</li>
-<li>Select <strong>Upload from your Computer</strong>.</li>
-<li>Upload the <strong>docker-compose.yml</strong> file you downloaded.</li>
-<li>Click on <strong>Deploy the Stack</strong>. The button will then display <em>Deployment in progress</em>  - do not click away while this message is shown.</li>
-</ol>
-<p>This may take a <strong>very long</strong> time if this is the first time setting up
-the demo, as it must download all the Docker Images from the
-internet. </p>
-<p>Once it is completed, you will see the list of stacks, now listing 'sandbox' among them.</p>
-<h2 id="wait-for-install">Wait for Install<a class="headerlink" href="#wait-for-install" title="Permanent link">&para;</a></h2>
-<p>After deploying the stack has completed, the demo still needs to install and configure <code>Drupal</code>, which may
-take upwards of <em>10-15 minutes</em>. You can check on the install process by doing
-the following.</p>
-<ol>
-<li>Open Docker Desktop.</li>
-<li>Click on Portainer.</li>
-<li>Open the sidebar.</li>
-<li>Click on <strong>Stacks</strong>.</li>
-<li>Click on <strong>sandbox</strong>.</li>
-<li>Click on the Logs button ('page' icon) for the <strong>Drupal</strong> container - the one named something like <code>sandbox-drupal-1</code></li>
-<li>Examine the log output waiting for the message below.</li>
-</ol>
-<p>When completed you should see the following output at the end of the log.</p>
-<pre><code>#####################
-# Install Completed #
-#####################
-</code></pre>
-<p>You can now visit your local starter-site demo in your browser of choice at:</p>
-<p><a href="http://islandora.io/">http://islandora.io/</a></p>
-<p>The starter-site demo login credentials </p>
-<p>username: admin</p>
-<p>password: password
-<br></p>
-<h1 id="reinstall">Reinstall<a class="headerlink" href="#reinstall" title="Permanent link">&para;</a></h1>
-<p>If you want to re-install your demo and restore it to its original
-state, please perform the following steps:</p>
-<ol>
-<li>Open Docker Desktop.</li>
-<li>Click on Portainer.</li>
-<li>Open the sidebar.</li>
-<li>Click on <strong>Stacks</strong>.</li>
-<li>Click on <strong>sandbox</strong>.</li>
-<li>Click on <strong>Stop this Stack</strong>.</li>
-<li>Click on <strong>Volumes</strong> in the sidebar.</li>
-<li>Search for <strong>sandbox</strong>.</li>
-<li>Ensure that all items are listed.</li>
-<li>Select all items.</li>
-<li>Click on <strong>Remove</strong>.</li>
-<li>Click on <strong>Stacks</strong> in the sidebar.</li>
-<li>Click on <strong>sandbox</strong>.</li>
-<li>Click on <strong>Start this Stack</strong>.</li>
-<li>Wait for the installation to complete like in the <a href="#waitforinstall">Wait for Install Section</a>
-<br></li>
-</ol>
-<h1 id="uninstall">Uninstall<a class="headerlink" href="#uninstall" title="Permanent link">&para;</a></h1>
-<p>If you want to completely uninstall your demo, please perform the
-following steps:</p>
-<ol>
-<li>Open Docker Desktop.</li>
-<li>Click on Portainer.</li>
-<li>Open the sidebar.</li>
-<li>Click on <strong>Stacks</strong>.</li>
-<li>Click on <strong>sandbox</strong>.</li>
-<li>Click on <strong>Delete this Stack</strong>.</li>
-<li>Click on <strong>Volumes</strong> in the sidebar.</li>
-<li>Search for <strong>sandbox</strong>.</li>
-<li>Ensure that all items are listed.</li>
-<li>Select all items.</li>
-<li>Click on <strong>Remove</strong>.
-<br></li>
-</ol>
-<h1 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h1>
-<p>These troubleshooting issues and solutions for Docker Desktop have arised from and been used with Windows 10.</p>
-<h2 id="docker-failed-to-start-error-message">"Docker Failed to Start" Error Message<a class="headerlink" href="#docker-failed-to-start-error-message" title="Permanent link">&para;</a></h2>
-<p>For Windows 10, you may receive the "Docker Failed to Start" Error message. To resolve this:</p>
-<ul>
-<li>Download WSL 2 from Step 4 in <a href="https://learn.microsoft.com/en-ca/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package">these instructions</a>--do not do any other steps in these instructions.</li>
-<li>Under Windows ‘Firewall &amp; Network Protection’, ‘Allow an app through the firewall’, and ‘Change settings’ to select the ‘Private’ box for ‘Virtual Machine Monitoring’.</li>
-<li>Restart computer for all changes to take effect.</li>
-</ul>
-<h2 id="no-content-showing-on-islandoraio">No Content Showing on islandora.io<a class="headerlink" href="#no-content-showing-on-islandoraio" title="Permanent link">&para;</a></h2>
-<p>If no content is showing up in your local installation when on islandora.io in a browser, you may need to wait longer for the deployment process to complete.
-1. Go to ‘containers’, click the ‘logs’ for ‘sandbox-drupal-1’ to see the deployment process. When completed you will see: </p>
-<pre><code>#####################
-# Install Completed #
-#####################
-</code></pre>
-<ul>
-<li>This can take anywhere from 5 minutes to over an hour.</li>
-</ul>
-<h2 id="docker-desktop-and-virtual-machine-vmmem-in-task-manager-taking-up-too-much-cpu-and-ram">Docker Desktop and Virtual Machine (Vmmem in Task Manager) Taking up too much CPU and RAM<a class="headerlink" href="#docker-desktop-and-virtual-machine-vmmem-in-task-manager-taking-up-too-much-cpu-and-ram" title="Permanent link">&para;</a></h2>
-<p>If Docker Desktop and Virtual Machine (Vmmem in Task Manager) are taking up too much CPU and RAM, you can create a .wslconfig file to limit how much of your computers resources are allocated to these processes:
-1. Open Notepad++ and type the following:</p>
-<pre><code>[wsl2]
-memory=4GB
-processors=2
-</code></pre>
-<ol>
-<li>Modify the numbers to reflect how much you want to allocate to Docker Desktop (i.e. if you only have 4GB of RAM then allocate 2GB).<ul>
-<li>Save As and select ‘All File Types’ from the dropdown.</li>
-<li>Name the file x.wslconfig and save it.</li>
-<li>Go to the location of the saved file and rename it, removing the ‘x’.</li>
-<li>The file should look like this:
-<img alt="wslconfigimage" src="https://github.com/Islandora/documentation/assets/122306010/6833bc2b-0151-4053-b902-b764c1e44cc4" /></li>
-</ul>
-</li>
-<li>Put the .wslconfig file in the appropriate location.<ul>
-<li>In your File Explorer address bar type ‘%UserProfile% and hit enter.</li>
-<li>Move the .wslconfig file to this folder.</li>
-</ul>
-</li>
-<li>Restart your computer and start up Docker Desktop. It will now be using only the specified memory and processors.</li>
-</ol>
+<p>The README.md.html is the most up to date version of the installation documentation, but you can also view this video: <a href="https://www.youtube.com/watch?v=xhJft9K-YMU">How to Install Docker Desktop and Set up Starter Site (video tutorial)</a>.</p>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">June 26, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">June 28, 2023</span>
       
     
   </small>
