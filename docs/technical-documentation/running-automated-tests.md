@@ -2,35 +2,36 @@
 
 See the [Drupal Documentation on PHPUnit in Drupal](https://www.drupal.org/docs/automated-testing/phpunit-in-drupal).
 
-# Setting up PhpUnit in ISLE
+## Setting up PhpUnit
 
 Before you can use phpunit, you must first install the following: 
 
 `composer require --dev -W phpspec/prophecy-phpunit drupal/core-dev`
 
-After that, you need to make the database port available to PHPUnit. To do that, edit `docker-compose.yml` and find the section including `image: islandora/mariadb[version number]`. Shortly below is a `labels:` heading; set the value of the `traefik.enable: ` to `"true"`.
+In ISLE, you need to make the database port available to PHPUnit. To do that, edit `docker-compose.yml` and find the section including `image: islandora/mariadb[version number]`. Shortly below is a `labels:` heading; set the value of the `traefik.enable: ` to `"true"`. Apply the changes made to the `docker_compose.yml` using `docker compose up -d`.
 
-Apply the changes made to the `docker_compose.yml` using `docker compose up -d`.
+Follow the `Configure PHPUnit` and `Create a directory for HTML output` sections in [Drupal Documentation on running phpunit tests](https://www.drupal.org/docs/automated-testing/phpunit-in-drupal/running-phpunit-tests) to make a `phpunit.xml` file.
 
-## Running PHPUnit in Isle
+If you place the `phpunit.xml` file in any directory other than `[drupal root]/web/core`, you need to change the 'bootstrap' in the `<phpunit>` tag near the top of the file to point to the relative or absolute location of the `[drupal root]/web/core` folder.
 
-Follow the `Configure PHPUnit` and `Create a directory for HTML output` sections in [Drupal Documentation on running phpunit tests](https://www.drupal.org/docs/automated-testing/phpunit-in-drupal/running-phpunit-tests) to make a phpunit.xml.
+When setting the `SIMPLETEST_DB` database credentials in ISLE, 
+* the default username and db_name are `drupal_default`
+* your db_password can be found in `codebase/web/sites/default/settings.php`
 
-phpunit tag's 'bootstrap' attribute default value should be changed if it is placed in any directory other than `codebase/web/core`.
+Unless you changed the default values, just swap out [password] for your actual db password in the following:
 
-In ISLE, the value of `SIMPLETEST_DB` variable should look like `mysql://username:db_password@islandora.traefik.me:3306/db_name`.
+```
+mysql://drupal_default:[password]@islandora.traefik.me:3306/drupal_default`.
 
-you can find your db_password in `codebase/web/sites/default/settings.php`.
+```
 
-the default username and db_name is `drupal_default`.
+## Running PHPUnit
 
-if your current directory is the same as the phpunit.xml use the following command to run phpunit:
+If you are in the Drupal root directory (`codebase` on ISLE; the one containing `web`) and your `phpunit.xml` file is also in the Drupal root directory, use the following command to run phpunit for a single test file (here, Islandora's DeleteNodeWithMediaAndFile.php):
 
 `vendor/bin/phpunit web/modules/contrib/islandora/tests/src/Functional/DeleteNodeWithMediaAndFile.php`
 
-_Directories are relative, this assumes you're in the `codebase` directory._
-
-or if your phpunit.xml is in a different directory, then use the -c flag to specify the path to the directory containing phpunit.xml:
+If your phpunit.xml is in a different directory, such as web/core, then use the -c flag to specify the path to the directory containing phpunit.xml:
 
 `vendor/bin/phpunit -c web/core web/modules/contrib/islandora/tests/src/Functional/DeleteNodeWithMediaAndFile.php`
 
