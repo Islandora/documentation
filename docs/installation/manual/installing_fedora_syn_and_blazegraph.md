@@ -37,6 +37,7 @@ create user FEDORA_DB_USER with encrypted password 'FEDORA_DB_PASSWORD';
 grant all privileges on database FEDORA_DB to FEDORA_DB_USER;
 \q
 ```
+
 - `FEDORA_DB`: `fcrepo`
     - This will be used as the database Fedora will store the repository in.
 - `FEDORA_DB_USER`: `fedora`
@@ -136,20 +137,23 @@ fcrepo.jms.baseUrl=FCREPO_JMS_BASE
 
 * `FCREPO_HOME` - The home directory for all Fedora generated output and state.  Unless otherwise specified, all logs, metadata, binaries, and internally generated indexes, etc. It would default to the Tomcat starting directory. A good default would be `/opt/fcrepo`
 * `FCREPO_DB_URL` - This parameter allows you to set the database connection url. In general the format is as follows:
-     `jdbc:<database_type>://<database_host>:<database_port>/<database_name>` 
+
+	 `jdbc:<database_type>://<database_host>:<database_port>/<database_name>` 
 
      Fedora currently supports H2, PostgresQL 12.3, MariaDB 10.5.3, and MySQL 8.0
 
      So using the default ports for the supported databases here are the values we typically use:
-	 * PostgresQL: jdbc:postgresql://localhost:5432/fcrepo
-	 * MariaDB:  jdbc:mariadb://localhost:3306/fcrepo
-	 * MySQL:  jdbc:mysql://localhost:3306/fcrepo
+
+	 * PostgresQL: `jdbc:postgresql://localhost:5432/fcrepo`
+	 * MariaDB:  `jdbc:mariadb://localhost:3306/fcrepo`
+	 * MySQL:  `jdbc:mysql://localhost:3306/fcrepo`
+
 * `FCREPO_DB_USERNAME` - The database username
 * `FCREPO_DB_PASSWORD` - The database password
-* `FCREPO_OCFL_ROOT` - Sets the root directory of the OCFL. Defaults to FCREPO_HOME/data/ocfl-root if not set.
-* `FCREPO_TEMP_ROOT` - Sets the temp directory used by OCFL. Defaults to FCREPO_HOME/data/temp if not set.
-* `FCREPO_STAGING_ROOT` - Sets the staging directory used by OCFL. Defaults to FCREPO_HOME/data/staging if not set.
-* `FCREPO_VELOCITY_LOG` - The Fedora HTML template code uses Apache Velocity, which generates a runtime log called velocity.log. Defaults to FCREPO_HOME/logs/velocity. A good choice might be /opt/tomcat/logs/velocity.log
+* `FCREPO_OCFL_ROOT` - Sets the root directory of the OCFL. Defaults to `FCREPO_HOME/data/ocfl-root` if not set.
+* `FCREPO_TEMP_ROOT` - Sets the temp directory used by OCFL. Defaults to `FCREPO_HOME/data/temp` if not set.
+* `FCREPO_STAGING_ROOT` - Sets the staging directory used by OCFL. Defaults to `FCREPO_HOME/data/staging` if not set.
+* `FCREPO_VELOCITY_LOG` - The Fedora HTML template code uses Apache Velocity, which generates a runtime log called velocity.log. Defaults to `FCREPO_HOME/logs/velocity`. A good choice might be /opt/tomcat/logs/velocity.log
 * `FCREPO_JMS_BASE` - This specifies the baseUrl to use when generating JMS messages. You can specify the hostname with or without port and with or without path. If your system is behind a NAT firewall you may need this to avoid your message consumers trying to access the system on an invalid port. If this system property is not set, the host, port and context from the user's request will be used in the emitted JMS messages. If your Alpaca is on the same machine as your Fedora and you use the `islandora-indexing-fcrepo`, you could use http://localhost:8080/fcrepo/rest. 
 
 
@@ -186,6 +190,7 @@ While not strictly necessary, we can use the `tomcat-users.xml` file to give us 
   <user username="fedoraUser" password="FEDORA_USER_PASSWORD" roles="fedoraUser"/>
 </tomcat-users>
 ```
+
 - `TOMCAT_PASSWORD`: `tomcat`
 - `FEDORA_ADMIN_PASSWORD`: `islandora`
 - `FEDORA_USER_PASSWORD`: `islandora`
@@ -199,6 +204,7 @@ sudo wget -O fcrepo.war FCREPO_WAR_URL
 sudo mv fcrepo.war /opt/tomcat/webapps
 sudo chown tomcat:tomcat /opt/tomcat/webapps/fcrepo.war
 ```
+
 - `FCREPO_WAR_URL`: This can be found at the [fcrepo downloads page](https://github.com/fcrepo/fcrepo/releases); the file you're looking for is:
     - Tagged in green as the 'Latest release'
     - Named "fcrepo-webapp-VERSION.war"
@@ -227,6 +233,7 @@ sudo wget -P /opt/tomcat/lib SYN_JAR_URL
 sudo chown -R tomcat:tomcat /opt/tomcat/lib
 sudo chmod -R 640 /opt/tomcat/lib
 ```
+
 - `SYN_JAR_URL`: The latest stable release of the Syn JAR from the [releases page](https://github.com/Islandora/Syn/releases). Specifically, the JAR compiled as `-all.jar` is required.
 
 ### Generating an SSL Key for Syn
@@ -251,6 +258,7 @@ Syn sites and tokens belong in a settings file that we’re going to reference i
   <token user='islandora' roles='fedoraAdmin'>ISLANDORA_SYN_TOKEN</token>
 </config>
 ```
+
 - `ISLANDORA_SYN_TOKEN`: `islandora`
     - This should be a secure generated token rather than this default; it will be configured on the Drupal side later.
 
@@ -412,6 +420,7 @@ sudo wget -O blazegraph.war BLAZEGRAPH_WARFILE_LINK
 sudo mv blazegraph.war /opt/tomcat/webapps
 sudo chown tomcat:tomcat /opt/tomcat/webapps/blazegraph.war
 ```
+
 - BLAZEGRAPH_WAR_URL: You can find a link to this at the [Maven repository for Blazegraph](https://repo1.maven.org/maven2/com/blazegraph/bigdata-war/); you’ll want to click the link for the latest version of Blazegraph 2.1.x, then get the link to the `.war` file within that version folder.
 
 Once this is downloaded, give it a moment to expand before moving on to the next step.
