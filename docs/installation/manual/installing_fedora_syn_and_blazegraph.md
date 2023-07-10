@@ -112,29 +112,46 @@ http://localhost:8000/
 
 Fedora 6 now allows you to put all your configuration properties into a single file. We use `0640` permissions as you will want to put your database credentials in here.
 
-We've left `{{ fcrepo X property }}` to define configurable properties
-
 `/opt/fcrepo/config/fcrepo.properties | tomcat:tomcat/640`
 ```{ .text .copy }
-fcrepo.home=/opt/fcrepo/data
+fcrepo.home=FCREPO_HOME
 fcrepo.external.content.allowed=/opt/fcrepo/config/allowed_external_hosts.txt  # Default using path defined above.
 fcrepo.namespace.registry=/opt/fcrepo/config/i8_namespaces.yml  # Default using path defined above.
 fcrepo.auth.principal.header.enabled=true
 fcrepo.auth.principal.header.name=X-Islandora  # The same as the syn-setting.xml "config" element's "header" attribute
-fcrepo.autoversioning.enabled={{ fcrepo_autoversioning }}  # false to use manual versioning, true to create a version on each change
-fcrepo.db.url=jdbc:{{ fcrepo_db_type }}://{{ fcrepo_db_host }}:{{ fcrepo_db_port }}/{{ fcrepo_db_name }}
-fcrepo.db.user={{ fcrepo_db_user }}
-fcrepo.db.password={{ fcrepo_db_password }}
-fcrepo.ocfl.root={{ fcrepo_data_dir }}/ocfl-root  # Default is {{ fcrepo.home }}/ocfl-root, but can be where you want your data
-fcrepo.ocfl.temp={{ fcrepo_data_dir }}/temp  # Same as above, temp OCFL space.
-fcrepo.ocfl.staging={{ fcrepo_data_dir }}/staging  # Same as above, staging OCFL space for transactions. 
+fcrepo.autoversioning.enabled=true  # false to use manual versioning, true to create a version on each change
+fcrepo.db.url=FCREPO_DB_URL
+fcrepo.db.user=FCREPO_DB_USERNAME
+fcrepo.db.password=FCREPO_DB_PASSWORD
+fcrepo.ocfl.root=FCREPO_OCFL_ROOT
+fcrepo.ocfl.temp=FCREPO_TEMP_ROOT
+fcrepo.ocfl.staging=FCREPO_STAGING_ROOT
 fcrepo.namespace.registry=/opt/fcrepo/config/namespaces.yml  # Default based on above path.
 fcrepo.persistence.defaultDigestAlgorithm=sha512  # Can be sha512 or sha256
 fcrepo.dynamic.jms.port=61626  # Moved from 61616 to allow external ActiveMQ to use that port
 fcrepo.dynamic.stomp.port=61623  # Same as above
-fcrepo.velocity.runtime.log=/opt/tomcat/logs/velocity.log
-fcrepo.jms.baseUrl=http://localhost:8080/fcrepo/rest  # Base URL set on emitted JMS messages
+fcrepo.velocity.runtime.log=FCREPO_VELOCITY_LOG
+fcrepo.jms.baseUrl=FCREPO_JMS_BASE
 ```
+
+* `FCREPO_HOME` - The home directory for all Fedora generated output and state.  Unless otherwise specified, all logs, metadata, binaries, and internally generated indexes, etc. It would default to the Tomcat starting directory. A good default would be `/opt/fcrepo`
+* `FCREPO_DB_URL` - This parameter allows you to set the database connection url. In general the format is as follows:
+     `jdbc:<database_type>://<database_host>:<database_port>/<database_name>` 
+
+     Fedora currently supports H2, PostgresQL 12.3, MariaDB 10.5.3, and MySQL 8.0
+
+     So using the default ports for the supported databases here are the values we typically use:
+	 * PostgresQL: jdbc:postgresql://localhost:5432/fcrepo
+	 * MariaDB:  jdbc:mariadb://localhost:3306/fcrepo
+	 * MySQL:  jdbc:mysql://localhost:3306/fcrepo
+* `FCREPO_DB_USERNAME` - The database username
+* `FCREPO_DB_PASSWORD` - The database password
+* `FCREPO_OCFL_ROOT` - Sets the root directory of the OCFL. Defaults to FCREPO_HOME/data/ocfl-root if not set.
+* `FCREPO_TEMP_ROOT` - Sets the temp directory used by OCFL. Defaults to FCREPO_HOME/data/temp if not set.
+* `FCREPO_STAGING_ROOT` - Sets the staging directory used by OCFL. Defaults to FCREPO_HOME/data/staging if not set.
+* `FCREPO_VELOCITY_LOG` - The Fedora HTML template code uses Apache Velocity, which generates a runtime log called velocity.log. Defaults to FCREPO_HOME/logs/velocity. A good choice might be /opt/tomcat/logs/velocity.log
+* `FCREPO_JMS_BASE` - This specifies the baseUrl to use when generating JMS messages. You can specify the hostname with or without port and with or without path. If your system is behind a NAT firewall you may need this to avoid your message consumers trying to access the system on an invalid port. If this system property is not set, the host, port and context from the user's request will be used in the emitted JMS messages. If your Alpaca is on the same machine as your Fedora and you use the `islandora-indexing-fcrepo`, you could use http://localhost:8080/fcrepo/rest. 
+
 
 Check the Lyrasis Wiki to find all of [Fedora's properties](https://wiki.lyrasis.org/display/FEDORA6x/Properties)
 
