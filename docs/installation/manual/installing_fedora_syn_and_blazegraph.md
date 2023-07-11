@@ -116,21 +116,27 @@ Fedora 6 now allows you to put all your configuration properties into a single f
 `/opt/fcrepo/config/fcrepo.properties | tomcat:tomcat/640`
 ```{ .text .copy }
 fcrepo.home=FCREPO_HOME
-fcrepo.external.content.allowed=/opt/fcrepo/config/allowed_external_hosts.txt  # Default using path defined above.
-fcrepo.namespace.registry=/opt/fcrepo/config/i8_namespaces.yml  # Default using path defined above.
+# External content using path defined above.
+fcrepo.external.content.allowed=/opt/fcrepo/config/allowed_external_hosts.txt
+# Namespace registry using path defined above.
+fcrepo.namespace.registry=/opt/fcrepo/config/i8_namespaces.yml
 fcrepo.auth.principal.header.enabled=true
-fcrepo.auth.principal.header.name=X-Islandora  # The same as the syn-setting.xml "config" element's "header" attribute
-fcrepo.autoversioning.enabled=true  # false to use manual versioning, true to create a version on each change
+# The principal header is the syn-setting.xml "config" element's "header" attribute
+fcrepo.auth.principal.header.name=X-Islandora
+# false to use manual versioning, true to create a version on each change
+fcrepo.autoversioning.enabled=true
 fcrepo.db.url=FCREPO_DB_URL
 fcrepo.db.user=FCREPO_DB_USERNAME
 fcrepo.db.password=FCREPO_DB_PASSWORD
 fcrepo.ocfl.root=FCREPO_OCFL_ROOT
 fcrepo.ocfl.temp=FCREPO_TEMP_ROOT
 fcrepo.ocfl.staging=FCREPO_STAGING_ROOT
-fcrepo.namespace.registry=/opt/fcrepo/config/namespaces.yml  # Default based on above path.
-fcrepo.persistence.defaultDigestAlgorithm=sha512  # Can be sha512 or sha256
-fcrepo.dynamic.jms.port=61626  # Moved from 61616 to allow external ActiveMQ to use that port
-fcrepo.dynamic.stomp.port=61623  # Same as above
+# Can be sha512 or sha256
+fcrepo.persistence.defaultDigestAlgorithm=sha512
+# Jms moved from 61616 to allow external ActiveMQ to use that port
+fcrepo.dynamic.jms.port=61626
+# Same as above
+fcrepo.dynamic.stomp.port=61623
 fcrepo.velocity.runtime.log=FCREPO_VELOCITY_LOG
 fcrepo.jms.baseUrl=FCREPO_JMS_BASE
 ```
