@@ -2497,17 +2497,17 @@
 <p>Islandora implements a <a href="https://github.com/Islandora/islandora/blob/8.x-1.x/src/Flysystem/Adapter/FedoraAdapter.php">Flysystem adapter</a> and a <a href="https://github.com/Islandora/islandora/blob/8.x-1.x/src/Flysystem/Fedora.php">Drupal Flysystem plugin</a>. The Flysystem adapter acts as an intermediary between the Flysystem filesystem API and Fedora, translating requests and responses between them. The adapter interacts with Fedora using an instance of the <a href="https://github.com/Islandora/chullo/blob/main/src/IFedoraApi.php">Chullo Fedora API</a> it receives from the Drupal Flysystem plugin. The Drupal Flysystem plugin's main responsibility is to instantiate the Chullo Fedora API object with the proper authentication and pass it to the Flysystem adapter. To authenticate with Fedora the plugin adds a <a href="http://docs.guzzlephp.org/en/stable/handlers-and-middleware.html">handler</a> to the Chullo's <a href="http://docs.guzzlephp.org">Guzzle</a> client which adds a <a href="https://jwt.io/">JWT</a> authentication header to each request. <!-- After https://github.com/Islandora/islandora/pull/119 is merged:  To authenticate with Fedora the plugin adds a handler to the Chullo's Guzzle client with a copy of the site's JWT authentication object so that each Fedora request can generate its own Bearer token. --></p>
 <p>The Fedora Flysystem adapter does not use Gemini to map the relationship between Drupal URIs and Fedora URIs, so they are indexed separately using the "files_in_fedora" Context which triggers the "Index Fedora File in Gemini" and "Delete Fedora File in Gemini" actions as appropriate.</p>
 <h3 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h3>
-<p>The fedora file system is configured in the site's <code>settings.php</code> file. An example configuration can be seen in the islandora-playbook web server role's <a href="https://github.com/Islandora-Devops/islandora-playbook/blob/dev/roles/internal/webserver-app/tasks/drupal.yml#L12-L19">drupal tasks</a>:</p>
-<pre><code>$settings['flysystem'] = [
-  'fedora' =&gt; [
-    'driver' =&gt; 'fedora',
-    'config' =&gt; [
-      'root' =&gt; 'http://localhost:8080/fcrepo/rest/',
-    ],
-  ],
-];
-</code></pre>
-<p>The configuration array's top-level key is the name of the Drupal stream wrapper, which also serves as the filesystem prefix. Any Drupal file path using "fedora://" will use this Flysystem adapter. Drupal will translate this prefix to the site's domain plus "_flystem/fedora/". For example, using the default configuration provided by the islandora-playbook, a file stored at "fedora://test.tif" will persist to Fedora with the URI <code>http://localhost:8080/fcrepo/rest/test.tif</code> and will be accessible from the Drupal URL <code>http://localhost:8000/_flysystem/fedora/test.tif</code>. The <code>driver</code> value <code>fedora</code> corresponds to <a href="https://github.com/Islandora/islandora/blob/2.x/src/Flysystem/Fedora.php#L25">the plugin's machine name</a>. The <code>config</code> section contains all the adapter-specific configurations. In this case, the only thing configured for the site is the Fedora REST end-point. (Change this value to match your own Fedora's location, if needed.) The JWT is configured separately.</p>
+<p>The fedora file system is configured in the site's <code>settings.php</code> file. An example configuration can be seen in the islandora-playbook web server role's <a href="https://github.com/Islandora-Devops/islandora-playbook/blob/dev/roles/internal/webserver-app/tasks/drupal.yml#L12-L19">drupal tasks</a>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$settings[&#39;flysystem&#39;] = [
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  &#39;fedora&#39; =&gt; [
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    &#39;driver&#39; =&gt; &#39;fedora&#39;,
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    &#39;config&#39; =&gt; [
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>      &#39;root&#39; =&gt; &#39;http://localhost:8080/fcrepo/rest/&#39;,
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    ],
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>  ],
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>];
+</span></code></pre></div>
+The configuration array's top-level key is the name of the Drupal stream wrapper, which also serves as the filesystem prefix. Any Drupal file path using "fedora://" will use this Flysystem adapter. Drupal will translate this prefix to the site's domain plus "_flystem/fedora/". For example, using the default configuration provided by the islandora-playbook, a file stored at "fedora://test.tif" will persist to Fedora with the URI <code>http://localhost:8080/fcrepo/rest/test.tif</code> and will be accessible from the Drupal URL <code>http://localhost:8000/_flysystem/fedora/test.tif</code>. The <code>driver</code> value <code>fedora</code> corresponds to <a href="https://github.com/Islandora/islandora/blob/2.x/src/Flysystem/Fedora.php#L25">the plugin's machine name</a>. The <code>config</code> section contains all the adapter-specific configurations. In this case, the only thing configured for the site is the Fedora REST end-point. (Change this value to match your own Fedora's location, if needed.) The JWT is configured separately.</p>
 <p>Other examples of Drupal Flysystem configurations can be seen in <a href="https://git.drupalcode.org/project/flysystem/">the module's README</a>.</p>
 <p>Islandora is configured to have all Media use the Fedora file system by default in the islandora_core_feature. For example, the <a href="https://github.com/Islandora/islandora/blob/2.x/modules/islandora_core_feature/config/install/field.storage.media.field_media_image.yml#L17">field storage uri_scheme setting for field_media_image</a> (and the other media types) is "fedora". This can also be viewed in the UI on the field's "Field settings" page; e.g. <code>http://localhost:8000/admin/structure/media/manage/image/fields/media.image.field_media_image/storage</code>, look for "Upload destination" and see that "Flysystem: fedora" is selected.</p>
 <p>However, there are methods for saving files that can explicitly set a different filesystem than the default. Migrations can explicitly set which file system a file is saved to and Islandora can emit events that also specify which file system a derivative should be saved to.</p>
@@ -2522,7 +2522,7 @@
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 8, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 11, 2023</span>
       
     
   </small>

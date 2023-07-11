@@ -2387,60 +2387,59 @@
 <h2 id="twig-debugging">TWIG Debugging<a class="headerlink" href="#twig-debugging" title="Permanent link">&para;</a></h2>
 <p>It's helpful to identify which TWIGs are available to use and where they're stored but not required use TWIGs to format the homepage.</p>
 <p><img alt="Screenshot from 2021-12-10 11-22-31" src="https://user-images.githubusercontent.com/2738244/145607034-967cc164-9d24-4f6d-aac7-9b3b93c87c4e.png" /></p>
-<pre><code class="language-shell"># Copy the default service.
-$ cp web/sites/default/default.services.yml web/sites/default/services.yml
-
-# fix permissions (just in case)
-$ chown nginx:nginx web/sites/default/services.yml
-
-# I use nano to edit but you can pick whichever editor you want.
-# For this example we'll install the editor
-$ apk add nano
-
-# Now open the newly created service file and set these 3 values under the TWIG config section.
-$ nano web/sites/default/services.yml
-
-...yml
-twig.config:
-  debug: true
-  auto_reload: true
-  cache: true
-
- # Now save and exit (in NANO it's CTRL + x)
-
-</code></pre>
-<p>For a video tutorial on this, see <a href="https://youtu.be/6WMr5V_LQ1w">Enabling Twig Debugging in Drupal 8/9</a></p>
+<p><div class="language-shell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Copy the default service.</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>$<span class="w"> </span>cp<span class="w"> </span>web/sites/default/default.services.yml<span class="w"> </span>web/sites/default/services.yml
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># fix permissions (just in case)</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>$<span class="w"> </span>chown<span class="w"> </span>nginx:nginx<span class="w"> </span>web/sites/default/services.yml
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1"># I use nano to edit but you can pick whichever editor you want.</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="c1"># For this example we&#39;ll install the editor</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>$<span class="w"> </span>apk<span class="w"> </span>add<span class="w"> </span>nano
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="c1"># Now open the newly created service file and set these 3 values under the TWIG config section.</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>$<span class="w"> </span>nano<span class="w"> </span>web/sites/default/services.yml
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>...yml
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>twig.config:
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">  </span>debug:<span class="w"> </span><span class="nb">true</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">  </span>auto_reload:<span class="w"> </span><span class="nb">true</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">  </span>cache:<span class="w"> </span><span class="nb">true</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w"> </span><span class="c1"># Now save and exit (in NANO it&#39;s CTRL + x)</span>
+</span></code></pre></div>
+For a video tutorial on this, see <a href="https://youtu.be/6WMr5V_LQ1w">Enabling Twig Debugging in Drupal 8/9</a></p>
 <h2 id="copying-templates">Copying Templates<a class="headerlink" href="#copying-templates" title="Permanent link">&para;</a></h2>
 <p>Copy the default TWIG into your theme's template directory.</p>
-<pre><code class="language-shell">$ cp web/themes/contrib/bootstrap/templates/node/node.html.twig web/themes/contrib/solid/templates/node--6--full.html.twig
-
-# Clear cache
-$ drush cr
-</code></pre>
-<p>And now if you view the home page's source code you should now see the <code>X</code> next to the loaded TWIG file. Please note that the file name corresponds to the node number. To use the URL alias instead of the node ID requires additional work. <a href="https://www.lehelmatyus.com/1064/drupal-8-page-template-suggestion-by-path-alias">Here</a>'s a tutorial on this topic.</p>
-<pre><code class="language-html">&lt;!-- FILE NAME SUGGESTIONS:
-   x node--6--full.html.twig
-   * node--6.html.twig
-   * node--page--full.html.twig
-   * node--page.html.twig
-   * node--full.html.twig
-   * node.html.twig
---&gt;
-</code></pre>
+<p><div class="language-shell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>$<span class="w"> </span>cp<span class="w"> </span>web/themes/contrib/bootstrap/templates/node/node.html.twig<span class="w"> </span>web/themes/contrib/solid/templates/node--6--full.html.twig
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1"># Clear cache</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>$<span class="w"> </span>drush<span class="w"> </span>cr
+</span></code></pre></div>
+And now if you view the home page's source code you should now see the <code>X</code> next to the loaded TWIG file. Please note that the file name corresponds to the node number. To use the URL alias instead of the node ID requires additional work. <a href="https://www.lehelmatyus.com/1064/drupal-8-page-template-suggestion-by-path-alias">Here</a>'s a tutorial on this topic.
+<div class="language-html highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="cm">&lt;!-- FILE NAME SUGGESTIONS:</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="cm">   x node--6--full.html.twig</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="cm">   * node--6.html.twig</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="cm">   * node--page--full.html.twig</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="cm">   * node--page.html.twig</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="cm">   * node--full.html.twig</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="cm">   * node.html.twig</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="cm">--&gt;</span>
+</span></code></pre></div></p>
 <p>Now edit the TWIG file (web/themes/contrib/solid/templates/node--6--full.html.twig) to say whatever you want, and it should show up immediately without needing to clear cache.</p>
 <h2 id="clean-up">Clean up<a class="headerlink" href="#clean-up" title="Permanent link">&para;</a></h2>
 <p>Don't forget to turn off TWIG debugging in config file (web/sites/default/services.yml). This will likely have unexpected consequences on production system performance.</p>
-<pre><code class="language-yml">twig.config:
-  debug: false
-  auto_reload: false
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>twig.config:
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>  debug: false
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>  auto_reload: false
+</span></code></pre></div>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 8, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 11, 2023</span>
       
     
   </small>

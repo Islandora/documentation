@@ -2505,52 +2505,51 @@ likely do not have PHP or Composer on your machine, and even if you do, you want
 using the exact same version that your Docker container is using.  So to ensure all the versions of things line
 up, we use Docker to execute Drush and Composer from the Drupal container.  The general template for
 running a command in your Drupal container looks like this:</p>
-<pre><code>docker compose exec -T drupal with-contenv bash -lc 'YOUR COMMAND'
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>docker compose exec -T drupal with-contenv bash -lc &#39;YOUR COMMAND&#39;
+</span></code></pre></div>
 <p>You can also just shell into the Drupal container and run commands as well,
 just be aware that if you shut down your container for any reason, you'll lose your
 bash history.  If you want to shell in to run commands, drop the <code>-T</code> and <code>-lc 'YOUR COMMAND'</code>
 bits.</p>
-<pre><code>docker compose exec drupal with-contenv bash
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>docker compose exec drupal with-contenv bash
+</span></code></pre></div>
 <h2 id="updating-your-drupal-site">Updating your Drupal Site<a class="headerlink" href="#updating-your-drupal-site" title="Permanent link">&para;</a></h2>
 <p>Use Composer to update your site's modules and their dependencies. The working directory
 of the Drupal container is the Drupal root (a.k.a. <code>codebase</code>), so you don't need to <code>cd</code>
 into any other directory before running the command.  The following command will update
 all modules and their dependencies that are not pinned to specific versions.</p>
-<pre><code>docker compose exec -T drupal with-contenv bash -lc &quot;su nginx -s /bin/bash -c 'composer update -W'&quot;
-
-</code></pre>
-<p>Note that we run this command as the nginx user. By default, commands are run as root, which 
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>docker compose exec -T drupal with-contenv bash -lc &quot;su nginx -s /bin/bash -c &#39;composer update -W&#39;&quot;
+</span></code></pre></div>
+Note that we run this command as the nginx user. By default, commands are run as root, which 
 can cause some ownership issues when running Composer. By running this as nginx, we ensure
 that new files are owned by the nginx user.</p>
 <h3 id="permission-issue">Permission Issue<a class="headerlink" href="#permission-issue" title="Permanent link">&para;</a></h3>
-<p>When running Composer commands you may come across the following error</p>
-<pre><code>[ErrorException]
-file_put_contents(/var/www/drupal/web/sites/default/settings.php): failed to open stream: Operation not permitted
-</code></pre>
-<p>This means that Composer is not able to write to your settings.php file. If you run into this
+<p>When running Composer commands you may come across the following error
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>[ErrorException]
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>file_put_contents(/var/www/drupal/web/sites/default/settings.php): failed to open stream: Operation not permitted
+</span></code></pre></div>
+This means that Composer is not able to write to your settings.php file. If you run into this
 error, giving write permission to the nginx user should fix it.</p>
 <h2 id="drupal-database-updates">Drupal Database Updates<a class="headerlink" href="#drupal-database-updates" title="Permanent link">&para;</a></h2>
 <p>After getting the newest code, you'll want to use Drush to update the Drupal database
 and run any other update hooks that have been introduced.  However, <em>YOU SHOULD BACK UP
 YOUR DATABASE BEFORE GOING ANY FURTHER</em>. You never know when something will go wrong and
 you don't want to be stuck with an unusable database and no plan B.</p>
-<pre><code>make drupal-database-dump DEST=/path/to/dump.sql
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>make drupal-database-dump DEST=/path/to/dump.sql
+</span></code></pre></div>
 <p>Now you can safely update the Drupal database with Drush via</p>
-<pre><code>docker compose exec -T drupal with-contenv bash -lc 'drush updb'
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>docker compose exec -T drupal with-contenv bash -lc &#39;drush updb&#39;
+</span></code></pre></div>
 <p>If for any reason, something goes wrong, you can Restore the Drupal database at any time by running</p>
-<pre><code>make drupal-database-import SRC=/path/to/dump.sql
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>make drupal-database-import SRC=/path/to/dump.sql
+</span></code></pre></div>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 8, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 11, 2023</span>
       
     
   </small>

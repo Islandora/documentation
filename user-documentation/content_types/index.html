@@ -2621,37 +2621,37 @@
 <p>RDF mapping aligns Drupal fields with RDF ontology properties. For example, the title field of a content model can be mapped to <code>dcterms:title</code> and/or <code>schema:title</code>. In Islandora, triples expressed by these mappings get synced to Fedora and indexed in the Blazegraph triplestore. RDF mappings are defined/stored in Drupal as a <a href="https://yaml.org/">YAML</a> file (to learn more about YAML, there are <a href="https://duckduckgo.com/?q=yaml+tutorial">several tutorials on the web</a>. Currently, Drupal 8 does not have a UI to create/update RDF mappings to ontologies other than Schema.org. This requires repository managers to update the configuration files themselves. Consider using the RDF mappings included in the <a href="https://github.com/Islandora/islandora-starter-site">Islandora Starter Site</a> as templates by copying and modifying one to meet your needs.</p>
 <p>The Drupal 8 Configuration Synchronization export (e.g. <code>http://localhost:8000/admin/config/development/configuration/single/export</code>) and import (e.g. <code>http://localhost:8000/admin/config/development/configuration/single/import</code>) can be used to get a copy of the mappings for editing in a text editor before being uploaded again. Alternatively, a repository manager can update the configuration on the server and use <a href="https://www.drupal.org/project/features">Features</a> to import the edits.</p>
 <p>An RDF mapping configuration file has two main areas: the mapping's metadata and the mapping itself. Most of the mapping's metadata should be left alone unless you are creating a brand-new mapping for a new Content Type or Taxonomy Vocabulary. A <em>partial</em> example from <a href="https://github.com/Islandora/islandora-starter-site/blob/main/config/sync/rdf.mapping.node.islandora_object.yml">islandora_default's islandora_object (Repository Item)</a> is included below:</p>
-<pre><code>langcode: en
-status: true
-dependencies:
-  config:
-    - node.type.islandora_object
-  enforced:
-    module:
-      - islandora_demo
-  module:
-    - node
-id: node.islandora_object
-targetEntityType: node
-bundle: islandora_object
-types:
-  - 'pcdm:Object'
-fieldMappings:
-  title:
-    properties:
-      - 'dc:title'
-  field_alternative_title:
-    properties:
-      - 'dc:alternative'
-  field_edtf_date:
-    properties:
-      - 'dc:date'
-    datatype_callback:
-      callable: 'Drupal\controlled_access_terms\EDTFConverter::dateIso8601Value'
-  field_description:
-    properties:
-      - 'dc:description'
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>langcode: en
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>status: true
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>dependencies:
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>  config:
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    - node.type.islandora_object
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>  enforced:
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    module:
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>      - islandora_demo
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>  module:
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    - node
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>id: node.islandora_object
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>targetEntityType: node
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>bundle: islandora_object
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>types:
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>  - &#39;pcdm:Object&#39;
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>fieldMappings:
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>  title:
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>    properties:
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>      - &#39;dc:title&#39;
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>  field_alternative_title:
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>    properties:
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>      - &#39;dc:alternative&#39;
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>  field_edtf_date:
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>    properties:
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>      - &#39;dc:date&#39;
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>    datatype_callback:
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>      callable: &#39;Drupal\controlled_access_terms\EDTFConverter::dateIso8601Value&#39;
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>  field_description:
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>    properties:
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>      - &#39;dc:description&#39;
+</span></code></pre></div>
 <p>The required mapping metadata fields when creating a brand-new mapping include the <code>id</code>, <code>status</code>, <code>targetEntityType</code>, and <code>bundle</code>. (<code>uuid</code> and <code>_core</code>, not seen in the example above but may be present in exported copies,  will be added by Drupal automatically.) <code>bundle</code> is the machine name for the Content Type or Taxonomy Vocabulary you are creating the mapping for. <code>targetEntityType</code> is <code>node</code> for Content Types or <code>taxonomy_term</code> for Taxonomy Vocabularies. The <code>id</code> configuration is a concatenation of target entity type and bundle ('node' and 'islandora_object' in the example above). The <code>id</code> is also used to name the configuration file: e.g. <code>rdf.mapping.node.islandora_object.yml</code> is <code>rdf.mapping.</code> plus the id (<code>node.islandora_object</code>) and then <code>.yml</code>.</p>
 <p>The mapping itself consists of the <code>types</code>' and <code>fieldMappings</code> configurations.</p>
 <p>All the mappings use RDF namespaces instead of fully-qualified URIs. For example, the type for islandora_object is entered in the RDF config as <code>pcdm:Object</code> instead of <code>http://pcdm.org/models#Object</code>. The available namespaces are defined in module hooks (hook_rdf_namespaces) but can also be entered manually in a configuration interface. Repository managers wanting to add additional namespaces need to go to Configuration &gt; Search and Metadata &gt; JSONLD and enter their desired namespaces in the "Additional RDF Namespaces" box.</p>
@@ -2709,7 +2709,7 @@ fieldMappings:
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 8, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 11, 2023</span>
       
     
   </small>

@@ -2719,18 +2719,18 @@
 <h1 id="islandora-playbook">Islandora Playbook<a class="headerlink" href="#islandora-playbook" title="Permanent link">&para;</a></h1>
 <p>The Islandora Playbook (<a href="https://github.com/Islandora-Devops/islandora-playbook">Islandora-Devops/islandora-playbook</a>) is a tool for installing the Islandora stack on a single virtual machine. It can be used both as a <a href="https://www.vagrantup.com/">Vagrant</a> project to create a local development environment, or as an <a href="https://www.ansible.com/community">Ansible</a> playbook to provision a local or remote server. It can set up a Drupal based either on Islandora Starter Site, or on the Install Profile Demo.</p>
 <h2 id="basic-usage-vagrant">Basic Usage (Vagrant):<a class="headerlink" href="#basic-usage-vagrant" title="Permanent link">&para;</a></h2>
-<p>Install requirements (below), then:</p>
-<pre><code class="language-bash">$ git clone -b dev https://github.com/Islandora-Devops/islandora-playbook
-$ cd islandora-playbook
-</code></pre>
-<p>First, create the islandora base box:</p>
-<pre><code class="language-bash">$ ISLANDORA_BUILD_BASE=true vagrant up
-$ vagrant package --output islandora_base
-$ vagrant destroy
-</code></pre>
-<p>Second, build a VM using the islandora base box:</p>
-<pre><code class="language-bash">$ vagrant up
-</code></pre>
+<p>Install requirements (below), then:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>-b<span class="w"> </span>dev<span class="w"> </span>https://github.com/Islandora-Devops/islandora-playbook
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>islandora-playbook
+</span></code></pre></div>
+First, create the islandora base box:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>$<span class="w"> </span><span class="nv">ISLANDORA_BUILD_BASE</span><span class="o">=</span><span class="nb">true</span><span class="w"> </span>vagrant<span class="w"> </span>up
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>$<span class="w"> </span>vagrant<span class="w"> </span>package<span class="w"> </span>--output<span class="w"> </span>islandora_base
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>$<span class="w"> </span>vagrant<span class="w"> </span>destroy
+</span></code></pre></div>
+Second, build a VM using the islandora base box:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>$<span class="w"> </span>vagrant<span class="w"> </span>up
+</span></code></pre></div></p>
 <p>When used this way, you can trash your working site and get a fresh Islandora relatively quickly, with <code>vagrant destroy</code> (you will be asked to confirm, as this will delete all your changes and your content), and then <code>vagrant up</code>. </p>
 <p>Full instructions below.</p>
 <h2 id="requirements-vagrant">Requirements (Vagrant)<a class="headerlink" href="#requirements-vagrant" title="Permanent link">&para;</a></h2>
@@ -2744,13 +2744,13 @@ $ vagrant destroy
 </ol>
 <h3 id="installing-git-and-ansible-on-macos">Installing Git and Ansible on MacOS<a class="headerlink" href="#installing-git-and-ansible-on-macos" title="Permanent link">&para;</a></h3>
 <p>OpenSSL is already pre-installed on MacOS. Git can be installed using XCode's command line tools (see below). Python and Pip can either be installed via the downloaded installer direct from the site or via Homebrew (not shown below). Ansible is best installed using <a href="https://brew.sh/">Homebrew</a> (see below).</p>
-<pre><code class="language-bash"># Use xcode-select to install command line components, including git
-$ xcode-select --install
-# Install homebrew
-$ /usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;
-# Use homebrew to install ansible
-$ brew install ansible
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Use xcode-select to install command line components, including git</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>$<span class="w"> </span>xcode-select<span class="w"> </span>--install
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="c1"># Install homebrew</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>$<span class="w"> </span>/usr/bin/ruby<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://raw.githubusercontent.com/Homebrew/install/master/install<span class="k">)</span><span class="s2">&quot;</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c1"># Use homebrew to install ansible</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>$<span class="w"> </span>brew<span class="w"> </span>install<span class="w"> </span>ansible
+</span></code></pre></div>
 <h2 id="installing-a-local-development-environment-vagrant">Installing a local development environment (Vagrant)<a class="headerlink" href="#installing-a-local-development-environment-vagrant" title="Permanent link">&para;</a></h2>
 <p>You will use <code>vagrant up</code> twice, first to create an Islandora base box, and then again to provision that base box into a full Islandora. This method uses Vagrant, VirtualBox, and Ansible.</p>
 <div class="admonition warn">
@@ -2758,46 +2758,45 @@ $ brew install ansible
 <p>Make sure that no <a href="#port-clashes-for-local-environments">required ports</a> are currently in use.</p>
 </div>
 <h3 id="clone-the-playbook">Clone the playbook<a class="headerlink" href="#clone-the-playbook" title="Permanent link">&para;</a></h3>
-<pre><code class="language-bash">$ git clone -b dev https://github.com/Islandora-Devops/islandora-playbook
-$ cd islandora-playbook
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>-b<span class="w"> </span>dev<span class="w"> </span>https://github.com/Islandora-Devops/islandora-playbook
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>islandora-playbook
+</span></code></pre></div>
 <h3 id="create-the-base-box">Create the Base Box<a class="headerlink" href="#create-the-base-box" title="Permanent link">&para;</a></h3>
 <p>The Playbook will create a "base box" that includes core software (PHP, Apache, etc). Since these do not need to be updated too often, this can be packaged as a Vagrant base box that will be used to quickly provision the Islandora part.</p>
 <p>Notes:
 - If building a CentOS box, you also need to install the vbguest additions with <code>vagrant plugin install vagrant-vbguest</code>.
 - If this is not your first time spinning up the Islandora Playbook from this directory, you may want to clear cached ansible roles in roles/external" <code>rm -rf roles/external</code></p>
-<p>First, create the islandora base box by overriding the Vagrant variable <code>ISLANDORA_BUILD_BASE</code> (which defaults to <code>false</code> in the <code>Vagrantfile</code>):</p>
-<pre><code class="language-bash">$ ISLANDORA_BUILD_BASE=true vagrant up
-</code></pre>
-<p>Once it is complete (without errors), store it as a Vagrant base box. It will appear as <code>islandora_base</code> in the current directory.</p>
-<pre><code class="language-bash">$ vagrant package --output islandora_base
-</code></pre>
-<p>Then, get rid of the existing VM since we've saved what we need:</p>
-<pre><code class="language-bash">$ vagrant destroy
-     default: Are you sure you want to destroy the 'default' VM? [y/N] y
-==&gt; default: Forcing shutdown of VM...
-==&gt; default: Destroying VM and associated drives...
-
-</code></pre>
+<p>First, create the islandora base box by overriding the Vagrant variable <code>ISLANDORA_BUILD_BASE</code> (which defaults to <code>false</code> in the <code>Vagrantfile</code>):
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>$<span class="w"> </span><span class="nv">ISLANDORA_BUILD_BASE</span><span class="o">=</span><span class="nb">true</span><span class="w"> </span>vagrant<span class="w"> </span>up
+</span></code></pre></div></p>
+<p>Once it is complete (without errors), store it as a Vagrant base box. It will appear as <code>islandora_base</code> in the current directory.
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>$<span class="w"> </span>vagrant<span class="w"> </span>package<span class="w"> </span>--output<span class="w"> </span>islandora_base
+</span></code></pre></div></p>
+<p>Then, get rid of the existing VM since we've saved what we need:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>$<span class="w"> </span>vagrant<span class="w"> </span>destroy
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">     </span>default:<span class="w"> </span>Are<span class="w"> </span>you<span class="w"> </span>sure<span class="w"> </span>you<span class="w"> </span>want<span class="w"> </span>to<span class="w"> </span>destroy<span class="w"> </span>the<span class="w"> </span><span class="s1">&#39;default&#39;</span><span class="w"> </span>VM?<span class="w"> </span><span class="o">[</span>y/N<span class="o">]</span><span class="w"> </span><span class="nv">y</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="o">==</span>&gt;<span class="w"> </span>default:<span class="w"> </span>Forcing<span class="w"> </span>shutdown<span class="w"> </span>of<span class="w"> </span>VM...
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="o">==</span>&gt;<span class="w"> </span>default:<span class="w"> </span>Destroying<span class="w"> </span>VM<span class="w"> </span>and<span class="w"> </span>associated<span class="w"> </span>drives...
+</span></code></pre></div></p>
 <h3 id="provision-the-islandora-code">Provision the Islandora code<a class="headerlink" href="#provision-the-islandora-code" title="Permanent link">&para;</a></h3>
-<p>Then, to install Islandora (including Drupal and its configuration, Crayfish, Alpaca, etc) on top of the new base box:</p>
-<pre><code class="language-bash">vagrant up
-</code></pre>
+<p>Then, to install Islandora (including Drupal and its configuration, Crayfish, Alpaca, etc) on top of the new base box:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>vagrant<span class="w"> </span>up
+</span></code></pre></div></p>
 <p>Access your site at <code>http://localhost:8000</code>.</p>
 <h3 id="rebuilding-your-islandora-development-box">Rebuilding your Islandora development box<a class="headerlink" href="#rebuilding-your-islandora-development-box" title="Permanent link">&para;</a></h3>
 <p>You can quickly create a new "out of the box" Islandora VM by just re-doing the last step (provisioning Islandora) while using your existing base box. In doing this, you will destroy your existing VM, and all of its configuration and data.  This will not upgrade PHP, apache, or other back-end services (see below, "Refreshing your base box.")</p>
-<pre><code class="language-bash">vagrant destroy
-</code></pre>
-<p>You will be asked to confirm, and Vagrant will inform you it is destroying the VM and associated drives. </p>
-<pre><code class="language-bash">vagrant up
-</code></pre>
-<p>This will create a new development environment on the existing islandora_base box.</p>
+<p><div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>vagrant<span class="w"> </span>destroy
+</span></code></pre></div>
+You will be asked to confirm, and Vagrant will inform you it is destroying the VM and associated drives. 
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>vagrant<span class="w"> </span>up
+</span></code></pre></div>
+This will create a new development environment on the existing islandora_base box.</p>
 <h3 id="refreshing-your-base-box">Refreshing your base box.<a class="headerlink" href="#refreshing-your-base-box" title="Permanent link">&para;</a></h3>
 <p>If you want to use the Playbook to rebuild the base box (e.g. if this playbook now includes updated versions of PHP or Apache), then you will need to take some extra steps to ensure that Vagrant sees your new base box. </p>
-<pre><code class="language-bash">vagrant destroy  # Delete your existing VM
-vagrant box remove islandora_base  # clear Vagrant's cached version of islandora_base
-ISLANDORA_BUILD_BASE=true vagrant up # and proceed to package the box, as above.
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>vagrant<span class="w"> </span>destroy<span class="w">  </span><span class="c1"># Delete your existing VM</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>vagrant<span class="w"> </span>box<span class="w"> </span>remove<span class="w"> </span>islandora_base<span class="w">  </span><span class="c1"># clear Vagrant&#39;s cached version of islandora_base</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="nv">ISLANDORA_BUILD_BASE</span><span class="o">=</span><span class="nb">true</span><span class="w"> </span>vagrant<span class="w"> </span>up<span class="w"> </span><span class="c1"># and proceed to package the box, as above.</span>
+</span></code></pre></div>
 <p>This is because once you use the base box once, it is stored in the vagrant box list under your home directory. While subsequent builds of <code>ISLANDORA_BUILD_BASE=true vagrant up</code> will build a new box and you can package it, but that file does not update the cached box and consequently you still get the old base box when you try build a VM. See <a href="https://developer.hashicorp.com/vagrant/docs/cli/box"><code>vagrant box</code> documentation</a> for more useful commands for managing base boxes.</p>
 <h2 id="deploying-to-a-remote-environment">Deploying to a remote environment<a class="headerlink" href="#deploying-to-a-remote-environment" title="Permanent link">&para;</a></h2>
 <p>The <code>ansible-playbook</code> command using <code>playbook.yml</code> can provision a remote environment. First, you will need to create a new folder in <code>inventory/</code> with the details of your remote deployment. This includes:</p>
@@ -2813,42 +2812,42 @@ ISLANDORA_BUILD_BASE=true vagrant up # and proceed to package the box, as above.
 <li>Ensure all ports except the Drupal port and ports used by Ansible are behind a firewall.</li>
 </ul>
 <p>We're going to build up this new remote environment configuration from the default provided Vagrant configuration. To start, take the inventory for the <code>vagrant</code> development environment and make a copy of it. Be sure to give it an appropriate name. Here we're using <code>production</code>.</p>
-<pre><code class="language-bash">$ git clone https://github.com/Islandora-Devops/islandora-playbook
-$ cd islandora-playbook
-$ cp -r inventory/vagrant inventory/production
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/Islandora-Devops/islandora-playbook
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>islandora-playbook
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>$<span class="w"> </span>cp<span class="w"> </span>-r<span class="w"> </span>inventory/vagrant<span class="w"> </span>inventory/production
+</span></code></pre></div>
 <p>Then you can update the following entries in the following files using your own information. If an entry does not exist in a file,
 just add it.  Ansible will then use the value you provide instead of relying on its defaults.</p>
 <p>We're using <code>changeme</code> to represent passwords and assume the server will be available at <code>example.org</code>, but you'll want to provide
 your own values.</p>
 <h4 id="group_varsallpasswordsyml">group_vars/all/passwords.yml<a class="headerlink" href="#group_varsallpasswordsyml" title="Permanent link">&para;</a></h4>
-<pre><code class="language-yml"># Drupal
-drupal_db_password: changeme
-drupal_account_pass: changeme
-
-# MySQL/Postgres
-islandora_db_root_password: changeme
-
-# Tomcat
-islandora_tomcat_password: changeme
-
-# Syn
-islandora_syn_token: changeme
-
-# Cantaloupe
-cantaloupe_admin_password: changeme
-
-# Fedora
-fcrepo_db_password: changeme
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a># Drupal
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>drupal_db_password: changeme
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>drupal_account_pass: changeme
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a># MySQL/Postgres
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>islandora_db_root_password: changeme
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a># Tomcat
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>islandora_tomcat_password: changeme
+</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>
+</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a># Syn
+</span><span id="__span-13-12"><a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a>islandora_syn_token: changeme
+</span><span id="__span-13-13"><a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a>
+</span><span id="__span-13-14"><a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a># Cantaloupe
+</span><span id="__span-13-15"><a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a>cantaloupe_admin_password: changeme
+</span><span id="__span-13-16"><a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a>
+</span><span id="__span-13-17"><a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a># Fedora
+</span><span id="__span-13-18"><a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a>fcrepo_db_password: changeme
+</span></code></pre></div>
 <h4 id="group_varswebserverapacheyml">group_vars/webserver/apache.yml<a class="headerlink" href="#group_varswebserverapacheyml" title="Permanent link">&para;</a></h4>
-<p>This is where we specify that the webserver is listening on the default port 80, instead of the development machine port 8000.</p>
-<pre><code class="language-yml">apache_listen_port: 80
-</code></pre>
+<p>This is where we specify that the webserver is listening on the default port 80, instead of the development machine port 8000.
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>apache_listen_port: 80
+</span></code></pre></div></p>
 <h4 id="group_varswebservergeneralyml">group_vars/webserver/general.yml<a class="headerlink" href="#group_varswebservergeneralyml" title="Permanent link">&para;</a></h4>
 <p>You will have to add the matomo line.</p>
-<pre><code class="language-yml">matomo_site_url: http://example.org
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>matomo_site_url: http://example.org
+</span></code></pre></div>
 <h4 id="hosts">hosts<a class="headerlink" href="#hosts" title="Permanent link">&para;</a></h4>
 <p>You'll need to put particulars for logging into your server in the <code>inventory/production/hosts</code> file . This example is set up to login as the <code>ansible</code> user (to avoid trying to run Composer as <code>root</code>) and uses
 an SSH key. You'll need to get the details for logging into your remote server from your hosting provider (AWS, Digital Ocean, etc...)
@@ -2856,24 +2855,24 @@ or your systems administrator if you're running the server in-house. See
 <a href="https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html#connecting-to-hosts-behavioral-inventory-parameters">this page</a>
 for more details about what you can put into a
 host file</p>
-<pre><code>default ansible_host=example.org ansible_port=22 ansible_user=ansible ansible_ssh_private_key_file='/home/username/.ssh/id_rsa'
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>default ansible_host=example.org ansible_port=22 ansible_user=ansible ansible_ssh_private_key_file=&#39;/home/username/.ssh/id_rsa&#39;
+</span></code></pre></div>
 <h3 id="running-the-remote-installer">Running the remote installer<a class="headerlink" href="#running-the-remote-installer" title="Permanent link">&para;</a></h3>
 <p>First, you'll want to install the ansible roles that are needed for the version of Islandora you are trying to install.  This can be done
 with</p>
-<pre><code class="language-bash">$ ansible-galaxy install -r requirements.yml
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>$<span class="w"> </span>ansible-galaxy<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.yml
+</span></code></pre></div>
 <p>Then, if you are on Ubuntu 22.04, run the following commands:</p>
-<pre><code class="language-bash">$ ansible-playbook -i inventory/production playbook.yml -e &quot;islandora_distro=ubuntu/jammy64&quot; -e &quot;islandora_profile=starter&quot; -e &quot;islandora_build_base_box=true&quot;
-$ ansible-playbook -i inventory/production playbook.yml -e &quot;islandora_distro=ubuntu/jammy64&quot; -e &quot;islandora_profile=starter&quot; -e &quot;islandora_build_base_box=false&quot;
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>$<span class="w"> </span>ansible-playbook<span class="w"> </span>-i<span class="w"> </span>inventory/production<span class="w"> </span>playbook.yml<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;islandora_distro=ubuntu/jammy64&quot;</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;islandora_profile=starter&quot;</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;islandora_build_base_box=true&quot;</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>$<span class="w"> </span>ansible-playbook<span class="w"> </span>-i<span class="w"> </span>inventory/production<span class="w"> </span>playbook.yml<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;islandora_distro=ubuntu/jammy64&quot;</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;islandora_profile=starter&quot;</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;islandora_build_base_box=false&quot;</span>
+</span></code></pre></div>
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
 <h3 id="out-of-date-playbooks">Out of date playbooks<a class="headerlink" href="#out-of-date-playbooks" title="Permanent link">&para;</a></h3>
 <p>Ansible caches the code used to provision the environment, so if you've already installed once you may not be getting the latest version
 of things even if you've <code>git pull</code>'d the latest playbook.  The code is stored in <code>roles/external</code>, so if you want to clear it out you can
 remove these before attempting to provision an environment</p>
-<pre><code class="language-bash">$ rm -rf roles/external
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>$<span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>roles/external
+</span></code></pre></div>
 <h3 id="port-clashes-for-local-environments">Port clashes for local environments<a class="headerlink" href="#port-clashes-for-local-environments" title="Permanent link">&para;</a></h3>
 <p>When provisioning using a local environment, you should be aware of any ports that are already in use by your computer that are also going to be
 used by Vagrant, as these may clash and cause problems during and after provisioning. These include:</p>
@@ -2901,7 +2900,7 @@ ask for help.  If you think you've stumbled across a bug in the installer, pleas
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 8, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 11, 2023</span>
       
     
   </small>

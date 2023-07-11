@@ -2621,30 +2621,30 @@ you trust.</p>
 <h2 id="basic-commands">Basic Commands<a class="headerlink" href="#basic-commands" title="Permanent link">&para;</a></h2>
 <h3 id="stopping-islandora">Stopping Islandora<a class="headerlink" href="#stopping-islandora" title="Permanent link">&para;</a></h3>
 <p>If you want to stop Islandora, you can bring down all the containers with</p>
-<pre><code>docker-compose down
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>docker-compose down
+</span></code></pre></div>
 <h3 id="restarting-islandora">Restarting Islandora<a class="headerlink" href="#restarting-islandora" title="Permanent link">&para;</a></h3>
 <p>If you want to start Islandora back up after stopping it, use</p>
-<pre><code>docker-compose up -d
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>docker-compose up -d
+</span></code></pre></div>
 <h3 id="deleting-islandora">Deleting Islandora<a class="headerlink" href="#deleting-islandora" title="Permanent link">&para;</a></h3>
 <p>If you want to stop Islandora and delete all of its content, use</p>
-<pre><code>docker-compose down -v
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>docker-compose down -v
+</span></code></pre></div>
 <h3 id="regenerating-docker-composeyml">Regenerating docker-compose.yml<a class="headerlink" href="#regenerating-docker-composeyml" title="Permanent link">&para;</a></h3>
 <p>If you make changes to configuration in the .env file, you may need to regenerate your <code>docker-compose.yml</code> file so that
 those changes take effect.</p>
-<pre><code>make -B docker-compose.yml
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>make -B docker-compose.yml
+</span></code></pre></div>
 <p>Once you have a new <code>docker-compose.yml</code> file, you'll need to restart your containers that have had configuration change.
 You can do this easily with</p>
-<pre><code>docker-compose up -d
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>docker-compose up -d
+</span></code></pre></div>
 <p>Even if the site is up and running, that command will only restart the containers it needs to.</p>
 <h3 id="listing-services">Listing services<a class="headerlink" href="#listing-services" title="Permanent link">&para;</a></h3>
 <p>You can see a list of all the containers that you have running and their statuses by running</p>
-<pre><code>docker ps -a
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>docker ps -a
+</span></code></pre></div>
 <h3 id="tailing-logs">Tailing Logs<a class="headerlink" href="#tailing-logs" title="Permanent link">&para;</a></h3>
 <p>You can tail logs using</p>
 <p><code>docker-compose logs service_name</code></p>
@@ -2658,7 +2658,7 @@ the service name and simply using</p>
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 8, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 11, 2023</span>
       
     
   </small>

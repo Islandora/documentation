@@ -2441,36 +2441,36 @@
 <h2 id="resize-vagrant-machine">Resize vagrant machine<a class="headerlink" href="#resize-vagrant-machine" title="Permanent link">&para;</a></h2>
 <p>To expand virtual machine's hard drive for testing of larger files. Once the VM has started, you'll need to <code>halt</code> the VM, download and run the script, tell it what size (in MB) and then start the VM.
 The last step <code>vagrant ssh --command "sudo resize2fs /dev/sda1"</code> is a check. It should return there was nothing to do. If you already provisioned you VM you can skip the 2 steps with provisioning in them.</p>
-<pre><code class="language-shell"># Skip this if you VM is already provisioned.
-$ vagrant up --no-provision  &lt;-- Exclude if already running and provisioned.
-
-$ vagrant halt
-
-# Download and run. This will default to the correct name (just press enter) then give the size.
-# Example: `350000` is equal to 350GB
-
-$ wget https://gist.githubusercontent.com/DonRichards/6dc6c81ae9fc22cba8d7a57b90ab1509/raw/45017e07a3b93657f8822dfbbe4fc690169cdabc/expand_disk.py
-$ chmod +x expand_disk.py
-$ python expand_disk.py
-$ vagrant up --no-provision
-
-# This step isn't needed but acts as a check to verify it worked.
-$ vagrant ssh --command &quot;sudo resize2fs /dev/sda1&quot;
-
-# Skip this if you VM is already provisioned.
-$ vagrant provision           &lt;-- Exclude if already provisioned.
-</code></pre>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Skip this if you VM is already provisioned.</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>$<span class="w"> </span>vagrant<span class="w"> </span>up<span class="w"> </span>--no-provision<span class="w">  </span>&lt;--<span class="w"> </span>Exclude<span class="w"> </span><span class="k">if</span><span class="w"> </span>already<span class="w"> </span>running<span class="w"> </span>and<span class="w"> </span>provisioned.
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>$<span class="w"> </span>vagrant<span class="w"> </span>halt
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="c1"># Download and run. This will default to the correct name (just press enter) then give the size.</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1"># Example: `350000` is equal to 350GB</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>$<span class="w"> </span>wget<span class="w"> </span>https://gist.githubusercontent.com/DonRichards/6dc6c81ae9fc22cba8d7a57b90ab1509/raw/45017e07a3b93657f8822dfbbe4fc690169cdabc/expand_disk.py
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>$<span class="w"> </span>chmod<span class="w"> </span>+x<span class="w"> </span>expand_disk.py
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>$<span class="w"> </span>python<span class="w"> </span>expand_disk.py
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>$<span class="w"> </span>vagrant<span class="w"> </span>up<span class="w"> </span>--no-provision
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="c1"># This step isn&#39;t needed but acts as a check to verify it worked.</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>$<span class="w"> </span>vagrant<span class="w"> </span>ssh<span class="w"> </span>--command<span class="w"> </span><span class="s2">&quot;sudo resize2fs /dev/sda1&quot;</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="c1"># Skip this if you VM is already provisioned.</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>$<span class="w"> </span>vagrant<span class="w"> </span>provision<span class="w">           </span>&lt;--<span class="w"> </span>Exclude<span class="w"> </span><span class="k">if</span><span class="w"> </span>already<span class="w"> </span>provisioned.
+</span></code></pre></div>
 <h3 id="troubleshooting-expand_diskpy">Troubleshooting expand_disk.py<a class="headerlink" href="#troubleshooting-expand_diskpy" title="Permanent link">&para;</a></h3>
-<p>You may need to remove the "resized" version. Assuming your VM location is <code>~/VirtualBox\ VMs</code></p>
-<pre><code class="language-shell">$ rm -rf ~/VirtualBox\ VMs/Islandora\ CLAW\ Ansible_resized
-</code></pre>
+<p>You may need to remove the "resized" version. Assuming your VM location is <code>~/VirtualBox\ VMs</code>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>$<span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>~/VirtualBox<span class="se">\ </span>VMs/Islandora<span class="se">\ </span>CLAW<span class="se">\ </span>Ansible_resized
+</span></code></pre></div></p>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 8, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 11, 2023</span>
       
     
   </small>

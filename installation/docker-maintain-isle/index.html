@@ -2434,20 +2434,20 @@ be boiled down to a handful of simple commands.  That's exactly what ISLE does!<
 <p>Updating ISLE is easy.  When a new release is made available, you update the <code>TAG</code> variable in your
 <code>.env</code> file to the latest version. Suppose you are on ISLE 1.0.0, and ISLE 1.1.0 has been released.
 Then we would set</p>
-<pre><code>TAG=1.1.0
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>TAG=1.1.0
+</span></code></pre></div>
 <p>We'll then generate a new <code>docker-compose.yml</code> file that includes the new tag with</p>
-<pre><code>make -B docker-compose.yml
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>make -B docker-compose.yml
+</span></code></pre></div>
 <p>After that, we pull the new containers with</p>
-<pre><code>make pull
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>make pull
+</span></code></pre></div>
 <p>And finally we deploy the updated containers by running</p>
-<pre><code>docker-compose up -d
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>docker-compose up -d
+</span></code></pre></div>
 <p>You can check that everything is running at the version you've specified with</p>
-<pre><code>docker ps -a
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>docker ps -a
+</span></code></pre></div>
 <p>The version that's running can be confirmed by looking at the <code>IMAGE</code> column in the output.</p>
 
   <hr>
@@ -2455,7 +2455,7 @@ Then we would set</p>
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 8, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 11, 2023</span>
       
     
   </small>

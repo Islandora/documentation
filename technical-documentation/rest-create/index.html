@@ -2480,82 +2480,82 @@
 <p>Again we are using the json format.</p>
 <p>&#x1F34E; For example <code>curl -X GET 'http://localhost:8000/node/3?_format=json</code></p>
 <p>Look for the <strong>type</strong> element</p>
-<pre><code>&quot;type&quot; : [
-  {
-    &quot;target_id&quot; : &quot;islandora_object&quot;,
-    &quot;target_type&quot; : &quot;node_type&quot;,
-    &quot;target_uuid&quot; : &quot;62189bec-3ef3-4196-b847-b17e5ce61fd5&quot;
-  }
-]
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>&quot;type&quot; : [
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  {
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    &quot;target_id&quot; : &quot;islandora_object&quot;,
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    &quot;target_type&quot; : &quot;node_type&quot;,
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    &quot;target_uuid&quot; : &quot;62189bec-3ef3-4196-b847-b17e5ce61fd5&quot;
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>  }
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>]
+</span></code></pre></div>
 <p>In our example "islandora_object" is the machine name of the content type "Repository Item". If you have created a new type you will have a different target_id.</p>
 <p>You will not need the <code>target_uuid</code>.</p>
 <p>Next look for the <strong>title</strong> element</p>
-<pre><code>&quot;title&quot; : [
-  {
-    &quot;value&quot; : &quot;An example Islandora object&quot;
-  }
-]
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>&quot;title&quot; : [
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>  {
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    &quot;value&quot; : &quot;An example Islandora object&quot;
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>  }
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>]
+</span></code></pre></div>
 <p>Lastly look for the <strong>field_model</strong> element</p>
-<pre><code>&quot;field_model&quot;: [
-  {
-    &quot;target_id&quot;: 24,
-    &quot;target_type&quot;: &quot;taxonomy_term&quot;,
-    &quot;target_uuid&quot;: &quot;e7560b68-e95a-4e76-9671-2a3041cd9800&quot;,
-    &quot;url&quot;: &quot;\\/taxonomy\\/term\\/24&quot;
-  }
-]
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>&quot;field_model&quot;: [
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>  {
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    &quot;target_id&quot;: 24,
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    &quot;target_type&quot;: &quot;taxonomy_term&quot;,
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    &quot;target_uuid&quot;: &quot;e7560b68-e95a-4e76-9671-2a3041cd9800&quot;,
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    &quot;url&quot;: &quot;\\/taxonomy\\/term\\/24&quot;
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>  }
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>]
+</span></code></pre></div>
 <p>You can find the models by browsing the taxonomy terms available at <code>http://localhost:8000/admin/structure/taxonomy/manage/islandora_models/overview</code></p>
 <p>In my example installation, term 24 is an "Image", but let's create a collection which is term 23.</p>
 <p><strong>Note</strong>: Taxonomy terms may vary between instances and you should verify the correct number for your installation.</p>
-<p>So the body of the request will be:</p>
-<pre><code>{
-  &quot;type&quot;: [
-    {
-      &quot;target_id&quot;: &quot;islandora_object&quot;,
-      &quot;target_type&quot;: &quot;node_type&quot;
-    }
-  ],
-  &quot;title&quot;: [
-    {
-      &quot;value&quot;: &quot;Created a collection with POST&quot;
-    }
-  ],
-  &quot;field_model&quot;: [
-    {
-      &quot;target_id&quot;: 23,
-      &quot;target_type&quot;: &quot;taxonomy_term&quot;
-    }
-  ]
-}
-</code></pre>
+<p>So the body of the request will be:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>{
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>  &quot;type&quot;: [
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    {
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>      &quot;target_id&quot;: &quot;islandora_object&quot;,
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>      &quot;target_type&quot;: &quot;node_type&quot;
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    }
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>  ],
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>  &quot;title&quot;: [
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>    {
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>      &quot;value&quot;: &quot;Created a collection with POST&quot;
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>    }
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>  ],
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>  &quot;field_model&quot;: [
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>    {
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>      &quot;target_id&quot;: 23,
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>      &quot;target_type&quot;: &quot;taxonomy_term&quot;
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>    }
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>  ]
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>}
+</span></code></pre></div></p>
 <p><strong>Note</strong>: You <strong>must</strong> include an <strong>appropriate</strong> Content-type header for the format you're requesting</p>
 <p><strong>Other Note</strong>: You <strong>must</strong> include some authentication credentials to say who you are and so Drupal can check if you are allowed to create this object. Otherwise you will receive a <code>401 Unauthorized</code> response.</p>
 <p>If you do provide credentials but don't have permission, you will receive a <code>403 Forbidden</code> response.</p>
 <p>You can find more information about <a href="../using-rest-endpoints/#authorization">Authorization here</a></p>
 <p>&#x1F34E; For example:</p>
-<pre><code>curl -i -X POST -u admin:islandora -H&quot;Content-type: application/json&quot; --data '{&quot;type&quot;:[{&quot;target_id&quot;:&quot;islandora_object&quot;,&quot;target_type&quot;:&quot;node_type&quot;}],&quot;title&quot;:[{&quot;value&quot;:&quot;Created a collection with POST&quot;}],&quot;field_model&quot;:[{&quot;target_id&quot;:23,&quot;target_type&quot;:&quot;taxonomy_term&quot;}]}' 'http://localhost:8000/node?_format=json'
-
-HTTP/1.1 201 Created
-Date: Tue, 05 Mar 2019 18:07:00 GMT
-Server: Apache/2.4.18 (Ubuntu)
-X-Powered-By: PHP/7.1.26-1+ubuntu16.04.1+deb.sury.org+1
-Location: http://localhost:8000/node/3
-Cache-Control: must-revalidate, no-cache, private
-X-UA-Compatible: IE=edge
-Content-language: en
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-Expires: Sun, 19 Nov 1978 05:00:00 GMT
-Vary:
-X-Generator: Drupal 8 (https://www.drupal.org)
-Content-Length: 1564
-Content-Type: application/json
-
-{&quot;nid&quot;:[{&quot;value&quot;:3}],&quot;uuid&quot;:[{&quot;value&quot;:&quot;3f618cdc-3f2a-4e77-b932-9ff1d461a57a&quot;}],&quot;vid&quot;:[{&quot;value&quot;:3}],&quot;langcode&quot;:[{&quot;value&quot;:&quot;en&quot;}],&quot;type&quot;:[{&quot;target_id&quot;:&quot;islandora_object&quot;,&quot;target_type&quot;:&quot;node_type&quot;,&quot;target_uuid&quot;:&quot;62189bec-3ef3-4196-b847-b17e5ce61fd5&quot;}],&quot;revision_timestamp&quot;:[{&quot;value&quot;:&quot;2019-03-05T18:07:00+00:00&quot;,&quot;format&quot;:&quot;Y-m-d\\TH:i:sP&quot;}],&quot;revision_uid&quot;:[{&quot;target_id&quot;:1,&quot;target_type&quot;:&quot;user&quot;,&quot;target_uuid&quot;:&quot;46a47057-de2d-4ce2-87ae-dbe4551209b8&quot;,&quot;url&quot;:&quot;\/user\/1&quot;}],&quot;revision_log&quot;:[],&quot;status&quot;:[{&quot;value&quot;:true}],&quot;title&quot;:[{&quot;value&quot;:&quot;Created a collection with POST&quot;}],&quot;uid&quot;:[{&quot;target_id&quot;:1,&quot;target_type&quot;:&quot;user&quot;,&quot;target_uuid&quot;:&quot;46a47057-de2d-4ce2-87ae-dbe4551209b8&quot;,&quot;url&quot;:&quot;\/user\/1&quot;}],&quot;created&quot;:[{&quot;value&quot;:&quot;2019-03-05T18:07:00+00:00&quot;,&quot;format&quot;:&quot;Y-m-d\\TH:i:sP&quot;}],&quot;changed&quot;:[{&quot;value&quot;:&quot;2019-03-05T18:07:00+00:00&quot;,&quot;format&quot;:&quot;Y-m-d\\TH:i:sP&quot;}],&quot;promote&quot;:[{&quot;value&quot;:true}],&quot;sticky&quot;:[{&quot;value&quot;:false}],&quot;default_langcode&quot;:[{&quot;value&quot;:true}],&quot;revision_translation_affected&quot;:[{&quot;value&quot;:true}],&quot;content_translation_source&quot;:[{&quot;value&quot;:&quot;und&quot;}],&quot;content_translation_outdated&quot;:[{&quot;value&quot;:false}],&quot;field_access_terms&quot;:[],&quot;field_alternative_title&quot;:[],&quot;field_description&quot;:[],&quot;field_display_hints&quot;:[],&quot;field_edtf_date&quot;:[],&quot;field_edtf_date_created&quot;:[],&quot;field_edtf_date_issued&quot;:[],&quot;field_extent&quot;:[{&quot;value&quot;:&quot;1 item&quot;}],&quot;field_identifier&quot;:[],&quot;field_linked_agent&quot;:[],&quot;field_member_of&quot;:[],&quot;field_model&quot;:[{&quot;target_id&quot;:23,&quot;target_type&quot;:&quot;taxonomy_term&quot;,&quot;target_uuid&quot;:&quot;6a3b293d-4617-417b-99d2-23d75b57f7c2&quot;,&quot;url&quot;:&quot;\/taxonomy\/term\/23&quot;}],&quot;field_pid&quot;:[],&quot;field_resource_type&quot;:[],&quot;field_rights&quot;:[],&quot;field_subject&quot;:[]}
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>curl -i -X POST -u admin:islandora -H&quot;Content-type: application/json&quot; --data &#39;{&quot;type&quot;:[{&quot;target_id&quot;:&quot;islandora_object&quot;,&quot;target_type&quot;:&quot;node_type&quot;}],&quot;title&quot;:[{&quot;value&quot;:&quot;Created a collection with POST&quot;}],&quot;field_model&quot;:[{&quot;target_id&quot;:23,&quot;target_type&quot;:&quot;taxonomy_term&quot;}]}&#39; &#39;http://localhost:8000/node?_format=json&#39;
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>HTTP/1.1 201 Created
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>Date: Tue, 05 Mar 2019 18:07:00 GMT
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>Server: Apache/2.4.18 (Ubuntu)
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>X-Powered-By: PHP/7.1.26-1+ubuntu16.04.1+deb.sury.org+1
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>Location: http://localhost:8000/node/3
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>Cache-Control: must-revalidate, no-cache, private
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>X-UA-Compatible: IE=edge
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>Content-language: en
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>X-Content-Type-Options: nosniff
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>X-Frame-Options: SAMEORIGIN
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>Expires: Sun, 19 Nov 1978 05:00:00 GMT
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>Vary:
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>X-Generator: Drupal 8 (https://www.drupal.org)
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>Content-Length: 1564
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>Content-Type: application/json
+</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>
+</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>{&quot;nid&quot;:[{&quot;value&quot;:3}],&quot;uuid&quot;:[{&quot;value&quot;:&quot;3f618cdc-3f2a-4e77-b932-9ff1d461a57a&quot;}],&quot;vid&quot;:[{&quot;value&quot;:3}],&quot;langcode&quot;:[{&quot;value&quot;:&quot;en&quot;}],&quot;type&quot;:[{&quot;target_id&quot;:&quot;islandora_object&quot;,&quot;target_type&quot;:&quot;node_type&quot;,&quot;target_uuid&quot;:&quot;62189bec-3ef3-4196-b847-b17e5ce61fd5&quot;}],&quot;revision_timestamp&quot;:[{&quot;value&quot;:&quot;2019-03-05T18:07:00+00:00&quot;,&quot;format&quot;:&quot;Y-m-d\\TH:i:sP&quot;}],&quot;revision_uid&quot;:[{&quot;target_id&quot;:1,&quot;target_type&quot;:&quot;user&quot;,&quot;target_uuid&quot;:&quot;46a47057-de2d-4ce2-87ae-dbe4551209b8&quot;,&quot;url&quot;:&quot;\/user\/1&quot;}],&quot;revision_log&quot;:[],&quot;status&quot;:[{&quot;value&quot;:true}],&quot;title&quot;:[{&quot;value&quot;:&quot;Created a collection with POST&quot;}],&quot;uid&quot;:[{&quot;target_id&quot;:1,&quot;target_type&quot;:&quot;user&quot;,&quot;target_uuid&quot;:&quot;46a47057-de2d-4ce2-87ae-dbe4551209b8&quot;,&quot;url&quot;:&quot;\/user\/1&quot;}],&quot;created&quot;:[{&quot;value&quot;:&quot;2019-03-05T18:07:00+00:00&quot;,&quot;format&quot;:&quot;Y-m-d\\TH:i:sP&quot;}],&quot;changed&quot;:[{&quot;value&quot;:&quot;2019-03-05T18:07:00+00:00&quot;,&quot;format&quot;:&quot;Y-m-d\\TH:i:sP&quot;}],&quot;promote&quot;:[{&quot;value&quot;:true}],&quot;sticky&quot;:[{&quot;value&quot;:false}],&quot;default_langcode&quot;:[{&quot;value&quot;:true}],&quot;revision_translation_affected&quot;:[{&quot;value&quot;:true}],&quot;content_translation_source&quot;:[{&quot;value&quot;:&quot;und&quot;}],&quot;content_translation_outdated&quot;:[{&quot;value&quot;:false}],&quot;field_access_terms&quot;:[],&quot;field_alternative_title&quot;:[],&quot;field_description&quot;:[],&quot;field_display_hints&quot;:[],&quot;field_edtf_date&quot;:[],&quot;field_edtf_date_created&quot;:[],&quot;field_edtf_date_issued&quot;:[],&quot;field_extent&quot;:[{&quot;value&quot;:&quot;1 item&quot;}],&quot;field_identifier&quot;:[],&quot;field_linked_agent&quot;:[],&quot;field_member_of&quot;:[],&quot;field_model&quot;:[{&quot;target_id&quot;:23,&quot;target_type&quot;:&quot;taxonomy_term&quot;,&quot;target_uuid&quot;:&quot;6a3b293d-4617-417b-99d2-23d75b57f7c2&quot;,&quot;url&quot;:&quot;\/taxonomy\/term\/23&quot;}],&quot;field_pid&quot;:[],&quot;field_resource_type&quot;:[],&quot;field_rights&quot;:[],&quot;field_subject&quot;:[]}
+</span></code></pre></div>
 <p>The parts of the above request are:</p>
 <ol>
 <li><code>-i</code> - return the response headers</li>
@@ -2582,26 +2582,26 @@ Content-Type: application/json
 <p>&#x1F34E; For example:</p>
 <p>With a local file called <code>my-image.png</code> that I wanted to link to a node with ID <code>3</code>.</p>
 <p>I am using the taxonomy term "Original file", which on my machine is <code>16</code></p>
-<pre><code>&gt; curl -i -X PUT -u admin:islandora -H&quot;Content-type: image/png&quot; --data-binary &quot;@my-image.png&quot; -H&quot;Content-Location: public://images/my-image.png&quot; 'http://localhost:8000/node/3/media/image/16'
-
-HTTP/1.1 100 Continue
-
-HTTP/1.1 201 Created
-Date: Tue, 05 Mar 2019 22:01:39 GMT
-Server: Apache/2.4.18 (Ubuntu)
-X-Powered-By: PHP/7.1.26-1+ubuntu16.04.1+deb.sury.org+1
-Cache-Control: must-revalidate, no-cache, private
-Location: http://localhost:8000/media/4
-X-UA-Compatible: IE=edge
-Content-language: en
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-Expires: Sun, 19 Nov 1978 05:00:00 GMT
-Vary:
-X-Generator: Drupal 8 (https://www.drupal.org)
-Content-Length: 0
-Content-Type: text/html; charset=UTF-8
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>&gt; curl -i -X PUT -u admin:islandora -H&quot;Content-type: image/png&quot; --data-binary &quot;@my-image.png&quot; -H&quot;Content-Location: public://images/my-image.png&quot; &#39;http://localhost:8000/node/3/media/image/16&#39;
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>HTTP/1.1 100 Continue
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>HTTP/1.1 201 Created
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>Date: Tue, 05 Mar 2019 22:01:39 GMT
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>Server: Apache/2.4.18 (Ubuntu)
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>X-Powered-By: PHP/7.1.26-1+ubuntu16.04.1+deb.sury.org+1
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>Cache-Control: must-revalidate, no-cache, private
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>Location: http://localhost:8000/media/4
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>X-UA-Compatible: IE=edge
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>Content-language: en
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>X-Content-Type-Options: nosniff
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>X-Frame-Options: SAMEORIGIN
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>Expires: Sun, 19 Nov 1978 05:00:00 GMT
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>Vary:
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>X-Generator: Drupal 8 (https://www.drupal.org)
+</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>Content-Length: 0
+</span><span id="__span-5-19"><a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a>Content-Type: text/html; charset=UTF-8
+</span></code></pre></div>
 <p>The parts of the above request are:</p>
 <ol>
 <li><code>-i</code> - return the response headers</li>
@@ -2618,7 +2618,7 @@ Content-Type: text/html; charset=UTF-8
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 8, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 11, 2023</span>
       
     
   </small>

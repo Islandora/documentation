@@ -2478,117 +2478,117 @@
 1. cookie</p>
 <h3 id="basic-authentication-basic_auth">Basic authentication (basic_auth)<a class="headerlink" href="#basic-authentication-basic_auth" title="Permanent link">&para;</a></h3>
 <p>To use basic authentication with a client like cURL use the <code>-u username:password</code> argument.</p>
-<p>For example:</p>
-<pre><code>curl -u admin:islandora http://localhost:8000/node/3
-</code></pre>
+<p>For example:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>curl -u admin:islandora http://localhost:8000/node/3
+</span></code></pre></div></p>
 <h3 id="jwt-authentication-jwt_auth">JWT authentication (jwt_auth)<a class="headerlink" href="#jwt-authentication-jwt_auth" title="Permanent link">&para;</a></h3>
 <p>By default JWTs are passed internally from Drupal to various microservices and Fedora.</p>
 <p>To use a JWT yourself you need to enable the <code>JWT Authentication Issuer</code> module.</p>
 <p>Once enabled this module makes a <code>/jwt/token</code> endpoint. You can perform a <code>GET</code> against this endpoint as an authenticated user to receive a JWT.</p>
-<p>For example:</p>
-<pre><code>curl -i -u admin:islandora http://localhost:8000/jwt/token
-
-HTTP/1.1 200 OK
-Date: Mon, 04 Mar 2019 22:08:37 GMT
-Server: Apache/2.4.18 (Ubuntu)
-X-Powered-By: PHP/7.1.26-1+ubuntu16.04.1+deb.sury.org+1
-Cache-Control: must-revalidate, no-cache, private
-X-UA-Compatible: IE=edge
-Content-language: en
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-Expires: Sun, 19 Nov 1978 05:00:00 GMT
-Vary:
-X-Generator: Drupal 8 (https://www.drupal.org)
-Content-Length: 620
-Content-Type: application/json
-
-{
-  &quot;token&quot; : &quot;eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE1NTE3MzczMTcsImV4cCI6MTU1MTc0NDUxNywiZHJ1cGFsIjp7InVpZCI6IjEifSwid2ViaWQiOiIxIiwiaXNzIjoiaHR0cHM6XC9cL2xvY2FsaG9zdDo4MDAwIiwic3ViIjoiYWRtaW4iLCJyb2xlcyI6WyJhdXRoZW50aWNhdGVkIiwiYWRtaW5pc3RyYXRvciIsImZlZG9yYWFkbWluIl19.QUTrMiK_DyBxqQY4LnibLYtieEW3-MyjjQO9NSFI7bPylNm1S5ZY0uvzjDob3ckYgRN4uCyMFZO4BPytpQVA_jyeSuZyUA_10v33ItpoKyjrJ_S057iykNd_rWmxe8tT8T1fPypq_-Z7Th_PkyZWrYBqoBBVO1iVQt5txxfGWMqhxd2FgsXw6N-aR9sYOSc4UrLmFRmPP5Zk_CNIZP6NtBaM9JNr8CnWyPEFSAR75xfyH3ge5qjBqLlDS389k07pyJFB5rOT59txzLE9WLvpp9JK3oQv821Q1Bp-PMiASghXc0dBCHxM8o41BzLE88UstRA7agBAkUqG3hMpoNZqfA&quot;
-}
-</code></pre>
+<p>For example:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>curl -i -u admin:islandora http://localhost:8000/jwt/token
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>HTTP/1.1 200 OK
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>Date: Mon, 04 Mar 2019 22:08:37 GMT
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>Server: Apache/2.4.18 (Ubuntu)
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>X-Powered-By: PHP/7.1.26-1+ubuntu16.04.1+deb.sury.org+1
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>Cache-Control: must-revalidate, no-cache, private
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>X-UA-Compatible: IE=edge
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>Content-language: en
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>X-Content-Type-Options: nosniff
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>X-Frame-Options: SAMEORIGIN
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>Expires: Sun, 19 Nov 1978 05:00:00 GMT
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>Vary:
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>X-Generator: Drupal 8 (https://www.drupal.org)
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>Content-Length: 620
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>Content-Type: application/json
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>{
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>  &quot;token&quot; : &quot;eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE1NTE3MzczMTcsImV4cCI6MTU1MTc0NDUxNywiZHJ1cGFsIjp7InVpZCI6IjEifSwid2ViaWQiOiIxIiwiaXNzIjoiaHR0cHM6XC9cL2xvY2FsaG9zdDo4MDAwIiwic3ViIjoiYWRtaW4iLCJyb2xlcyI6WyJhdXRoZW50aWNhdGVkIiwiYWRtaW5pc3RyYXRvciIsImZlZG9yYWFkbWluIl19.QUTrMiK_DyBxqQY4LnibLYtieEW3-MyjjQO9NSFI7bPylNm1S5ZY0uvzjDob3ckYgRN4uCyMFZO4BPytpQVA_jyeSuZyUA_10v33ItpoKyjrJ_S057iykNd_rWmxe8tT8T1fPypq_-Z7Th_PkyZWrYBqoBBVO1iVQt5txxfGWMqhxd2FgsXw6N-aR9sYOSc4UrLmFRmPP5Zk_CNIZP6NtBaM9JNr8CnWyPEFSAR75xfyH3ge5qjBqLlDS389k07pyJFB5rOT59txzLE9WLvpp9JK3oQv821Q1Bp-PMiASghXc0dBCHxM8o41BzLE88UstRA7agBAkUqG3hMpoNZqfA&quot;
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>}
+</span></code></pre></div></p>
 <p>You can then take the same token and re-use it.</p>
-<pre><code>curl -H&quot;Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE1NTE3MzczMTcsImV4cCI6MTU1MTc0NDUxNywiZHJ1cGFsIjp7InVpZCI6IjEifSwid2ViaWQiOiIxIiwiaXNzIjoiaHR0cHM6XC9cL2xvY2FsaG9zdDo4MDAwIiwic3ViIjoiYWRtaW4iLCJyb2xlcyI6WyJhdXRoZW50aWNhdGVkIiwiYWRtaW5pc3RyYXRvciIsImZlZG9yYWFkbWluIl19.QUTrMiK_DyBxqQY4LnibLYtieEW3-MyjjQO9NSFI7bPylNm1S5ZY0uvzjDob3ckYgRN4uCyMFZO4BPytpQVA_jyeSuZyUA_10v33ItpoKyjrJ_S057iykNd_rWmxe8tT8T1fPypq_-Z7Th_PkyZWrYBqoBBVO1iVQt5txxfGWMqhxd2FgsXw6N-aR9sYOSc4UrLmFRmPP5Zk_CNIZP6NtBaM9JNr8CnWyPEFSAR75xfyH3ge5qjBqLlDS389k07pyJFB5rOT59txzLE9WLvpp9JK3oQv821Q1Bp-PMiASghXc0dBCHxM8o41BzLE88UstRA7agBAkUqG3hMpoNZqfA&quot; http://localhost:8000/node/3?_format=jsonld
-
-HTTP/1.1 200 OK
-Date: Mon, 04 Mar 2019 22:10:02 GMT
-Server: Apache/2.4.18 (Ubuntu)
-X-Powered-By: PHP/7.1.26-1+ubuntu16.04.1+deb.sury.org+1
-Cache-Control: must-revalidate, no-cache, private
-Link: &lt;http://localhost:8000/node/3&gt;; rel=&quot;canonical&quot;
-Link: &lt;http://localhost:8000/node/3/delete&gt;; rel=&quot;https://drupal.org/link-relations/delete-form&quot;
-Link: &lt;http://localhost:8000/admin/content/node/delete?node=3&gt;; rel=&quot;https://drupal.org/link-relations/delete-multiple-form&quot;
-Link: &lt;http://localhost:8000/node/3/edit&gt;; rel=&quot;edit-form&quot;
-Link: &lt;http://localhost:8000/node/3/revisions&gt;; rel=&quot;version-history&quot;
-Link: &lt;http://localhost:8000/node/3&gt;; rel=&quot;https://drupal.org/link-relations/revision&quot;
-Link: &lt;http://localhost:8000/node?node=3&gt;; rel=&quot;https://drupal.org/link-relations/create&quot;
-Link: &lt;http://purl.org/coar/resource_type/c_c513&gt;; rel=&quot;tag&quot;; title=&quot;Image&quot;
-Link: &lt;http://localhost:8000/media/1&gt;; rel=&quot;related&quot;; title=&quot;Original File&quot;
-Link: &lt;http://localhost:8000/media/2&gt;; rel=&quot;related&quot;; title=&quot;Service File&quot;
-Link: &lt;http://localhost:8000/media/3&gt;; rel=&quot;related&quot;; title=&quot;Thumbnail Image&quot;
-Link: &lt;http://localhost:8000/node/3?_format=json&gt;; rel=&quot;alternate&quot;; type=&quot;application/json&quot;
-X-Drupal-Dynamic-Cache: HIT
-X-UA-Compatible: IE=edge
-Content-language: en
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-Expires: Sun, 19 Nov 1978 05:00:00 GMT
-Vary:
-X-Generator: Drupal 8 (https://www.drupal.org)
-Content-Length: 858
-Content-Type: application/ld+json
-
-{
-  &quot;@graph&quot;: [
-    {
-      &quot;@id&quot;: &quot;http:\\/\\/localhost:8000\\/node\\/3?_format=jsonld&quot;,
-      &quot;@type&quot;: [
-        &quot;http:\\/\\/pcdm.org\\/models#Object&quot;
-      ],
-      &quot;http:\\/\\/purl.org\\/dc\\/terms\\/title&quot;: [
-        {
-          &quot;@value&quot;: &quot;Custom item&quot;,
-          &quot;@language&quot;: &quot;en&quot;
-        }
-      ],
-      &quot;http:\\/\\/schema.org\\/author&quot;: [
-        {
-          &quot;@id&quot;: &quot;http:\\/\\/localhost:8000\\/user\\/1?_format=jsonld&quot;
-        }
-      ],
-      &quot;http:\\/\\/schema.org\\/dateCreated&quot;: [
-        {
-          &quot;@value&quot;: &quot;2019-03-01T19:42:54+00:00&quot;,
-          &quot;@type&quot;: &quot;http:\\/\\/www.w3.org\\/2001\\/XMLSchema#dateTime&quot;
-        }
-      ],
-      &quot;http:\\/\\/schema.org\\/dateModified&quot;: [
-        {
-          &quot;@value&quot;: &quot;2019-03-01T19:43:12+00:00&quot;,
-          &quot;@type&quot;: &quot;http:\\/\\/www.w3.org\\/2001\\/XMLSchema#dateTime&quot;
-        }
-      ],
-      &quot;http:\\/\\/purl.org\\/dc\\/terms\\/extent&quot;: [
-        {
-          &quot;@value&quot;: &quot;1 item&quot;,
-          &quot;@type&quot;: &quot;http:\\/\\/www.w3.org\\/2001\\/XMLSchema#string&quot;
-        }
-      ],
-      &quot;http:\\/\\/schema.org\\/sameAs&quot;: [
-        {
-          &quot;@value&quot;: &quot;http:\\/\\/localhost:8000\\/node\\/1?_format=jsonld&quot;
-        }
-      ]
-    },
-    {
-      &quot;@id&quot;: &quot;http:\\/\\/localhost:8000\\/user\\/1?_format=jsonld&quot;,
-      &quot;@type&quot;: [
-        &quot;http:\\/\\/schema.org\\/Person&quot;
-      ]
-    }
-  ]
-}
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>curl -H&quot;Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE1NTE3MzczMTcsImV4cCI6MTU1MTc0NDUxNywiZHJ1cGFsIjp7InVpZCI6IjEifSwid2ViaWQiOiIxIiwiaXNzIjoiaHR0cHM6XC9cL2xvY2FsaG9zdDo4MDAwIiwic3ViIjoiYWRtaW4iLCJyb2xlcyI6WyJhdXRoZW50aWNhdGVkIiwiYWRtaW5pc3RyYXRvciIsImZlZG9yYWFkbWluIl19.QUTrMiK_DyBxqQY4LnibLYtieEW3-MyjjQO9NSFI7bPylNm1S5ZY0uvzjDob3ckYgRN4uCyMFZO4BPytpQVA_jyeSuZyUA_10v33ItpoKyjrJ_S057iykNd_rWmxe8tT8T1fPypq_-Z7Th_PkyZWrYBqoBBVO1iVQt5txxfGWMqhxd2FgsXw6N-aR9sYOSc4UrLmFRmPP5Zk_CNIZP6NtBaM9JNr8CnWyPEFSAR75xfyH3ge5qjBqLlDS389k07pyJFB5rOT59txzLE9WLvpp9JK3oQv821Q1Bp-PMiASghXc0dBCHxM8o41BzLE88UstRA7agBAkUqG3hMpoNZqfA&quot; http://localhost:8000/node/3?_format=jsonld
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>HTTP/1.1 200 OK
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>Date: Mon, 04 Mar 2019 22:10:02 GMT
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>Server: Apache/2.4.18 (Ubuntu)
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>X-Powered-By: PHP/7.1.26-1+ubuntu16.04.1+deb.sury.org+1
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>Cache-Control: must-revalidate, no-cache, private
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>Link: &lt;http://localhost:8000/node/3&gt;; rel=&quot;canonical&quot;
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>Link: &lt;http://localhost:8000/node/3/delete&gt;; rel=&quot;https://drupal.org/link-relations/delete-form&quot;
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>Link: &lt;http://localhost:8000/admin/content/node/delete?node=3&gt;; rel=&quot;https://drupal.org/link-relations/delete-multiple-form&quot;
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>Link: &lt;http://localhost:8000/node/3/edit&gt;; rel=&quot;edit-form&quot;
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>Link: &lt;http://localhost:8000/node/3/revisions&gt;; rel=&quot;version-history&quot;
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>Link: &lt;http://localhost:8000/node/3&gt;; rel=&quot;https://drupal.org/link-relations/revision&quot;
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>Link: &lt;http://localhost:8000/node?node=3&gt;; rel=&quot;https://drupal.org/link-relations/create&quot;
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>Link: &lt;http://purl.org/coar/resource_type/c_c513&gt;; rel=&quot;tag&quot;; title=&quot;Image&quot;
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>Link: &lt;http://localhost:8000/media/1&gt;; rel=&quot;related&quot;; title=&quot;Original File&quot;
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>Link: &lt;http://localhost:8000/media/2&gt;; rel=&quot;related&quot;; title=&quot;Service File&quot;
+</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>Link: &lt;http://localhost:8000/media/3&gt;; rel=&quot;related&quot;; title=&quot;Thumbnail Image&quot;
+</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>Link: &lt;http://localhost:8000/node/3?_format=json&gt;; rel=&quot;alternate&quot;; type=&quot;application/json&quot;
+</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>X-Drupal-Dynamic-Cache: HIT
+</span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>X-UA-Compatible: IE=edge
+</span><span id="__span-2-22"><a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>Content-language: en
+</span><span id="__span-2-23"><a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>X-Content-Type-Options: nosniff
+</span><span id="__span-2-24"><a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>X-Frame-Options: SAMEORIGIN
+</span><span id="__span-2-25"><a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a>Expires: Sun, 19 Nov 1978 05:00:00 GMT
+</span><span id="__span-2-26"><a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a>Vary:
+</span><span id="__span-2-27"><a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a>X-Generator: Drupal 8 (https://www.drupal.org)
+</span><span id="__span-2-28"><a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a>Content-Length: 858
+</span><span id="__span-2-29"><a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a>Content-Type: application/ld+json
+</span><span id="__span-2-30"><a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a>
+</span><span id="__span-2-31"><a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a>{
+</span><span id="__span-2-32"><a id="__codelineno-2-32" name="__codelineno-2-32" href="#__codelineno-2-32"></a>  &quot;@graph&quot;: [
+</span><span id="__span-2-33"><a id="__codelineno-2-33" name="__codelineno-2-33" href="#__codelineno-2-33"></a>    {
+</span><span id="__span-2-34"><a id="__codelineno-2-34" name="__codelineno-2-34" href="#__codelineno-2-34"></a>      &quot;@id&quot;: &quot;http:\\/\\/localhost:8000\\/node\\/3?_format=jsonld&quot;,
+</span><span id="__span-2-35"><a id="__codelineno-2-35" name="__codelineno-2-35" href="#__codelineno-2-35"></a>      &quot;@type&quot;: [
+</span><span id="__span-2-36"><a id="__codelineno-2-36" name="__codelineno-2-36" href="#__codelineno-2-36"></a>        &quot;http:\\/\\/pcdm.org\\/models#Object&quot;
+</span><span id="__span-2-37"><a id="__codelineno-2-37" name="__codelineno-2-37" href="#__codelineno-2-37"></a>      ],
+</span><span id="__span-2-38"><a id="__codelineno-2-38" name="__codelineno-2-38" href="#__codelineno-2-38"></a>      &quot;http:\\/\\/purl.org\\/dc\\/terms\\/title&quot;: [
+</span><span id="__span-2-39"><a id="__codelineno-2-39" name="__codelineno-2-39" href="#__codelineno-2-39"></a>        {
+</span><span id="__span-2-40"><a id="__codelineno-2-40" name="__codelineno-2-40" href="#__codelineno-2-40"></a>          &quot;@value&quot;: &quot;Custom item&quot;,
+</span><span id="__span-2-41"><a id="__codelineno-2-41" name="__codelineno-2-41" href="#__codelineno-2-41"></a>          &quot;@language&quot;: &quot;en&quot;
+</span><span id="__span-2-42"><a id="__codelineno-2-42" name="__codelineno-2-42" href="#__codelineno-2-42"></a>        }
+</span><span id="__span-2-43"><a id="__codelineno-2-43" name="__codelineno-2-43" href="#__codelineno-2-43"></a>      ],
+</span><span id="__span-2-44"><a id="__codelineno-2-44" name="__codelineno-2-44" href="#__codelineno-2-44"></a>      &quot;http:\\/\\/schema.org\\/author&quot;: [
+</span><span id="__span-2-45"><a id="__codelineno-2-45" name="__codelineno-2-45" href="#__codelineno-2-45"></a>        {
+</span><span id="__span-2-46"><a id="__codelineno-2-46" name="__codelineno-2-46" href="#__codelineno-2-46"></a>          &quot;@id&quot;: &quot;http:\\/\\/localhost:8000\\/user\\/1?_format=jsonld&quot;
+</span><span id="__span-2-47"><a id="__codelineno-2-47" name="__codelineno-2-47" href="#__codelineno-2-47"></a>        }
+</span><span id="__span-2-48"><a id="__codelineno-2-48" name="__codelineno-2-48" href="#__codelineno-2-48"></a>      ],
+</span><span id="__span-2-49"><a id="__codelineno-2-49" name="__codelineno-2-49" href="#__codelineno-2-49"></a>      &quot;http:\\/\\/schema.org\\/dateCreated&quot;: [
+</span><span id="__span-2-50"><a id="__codelineno-2-50" name="__codelineno-2-50" href="#__codelineno-2-50"></a>        {
+</span><span id="__span-2-51"><a id="__codelineno-2-51" name="__codelineno-2-51" href="#__codelineno-2-51"></a>          &quot;@value&quot;: &quot;2019-03-01T19:42:54+00:00&quot;,
+</span><span id="__span-2-52"><a id="__codelineno-2-52" name="__codelineno-2-52" href="#__codelineno-2-52"></a>          &quot;@type&quot;: &quot;http:\\/\\/www.w3.org\\/2001\\/XMLSchema#dateTime&quot;
+</span><span id="__span-2-53"><a id="__codelineno-2-53" name="__codelineno-2-53" href="#__codelineno-2-53"></a>        }
+</span><span id="__span-2-54"><a id="__codelineno-2-54" name="__codelineno-2-54" href="#__codelineno-2-54"></a>      ],
+</span><span id="__span-2-55"><a id="__codelineno-2-55" name="__codelineno-2-55" href="#__codelineno-2-55"></a>      &quot;http:\\/\\/schema.org\\/dateModified&quot;: [
+</span><span id="__span-2-56"><a id="__codelineno-2-56" name="__codelineno-2-56" href="#__codelineno-2-56"></a>        {
+</span><span id="__span-2-57"><a id="__codelineno-2-57" name="__codelineno-2-57" href="#__codelineno-2-57"></a>          &quot;@value&quot;: &quot;2019-03-01T19:43:12+00:00&quot;,
+</span><span id="__span-2-58"><a id="__codelineno-2-58" name="__codelineno-2-58" href="#__codelineno-2-58"></a>          &quot;@type&quot;: &quot;http:\\/\\/www.w3.org\\/2001\\/XMLSchema#dateTime&quot;
+</span><span id="__span-2-59"><a id="__codelineno-2-59" name="__codelineno-2-59" href="#__codelineno-2-59"></a>        }
+</span><span id="__span-2-60"><a id="__codelineno-2-60" name="__codelineno-2-60" href="#__codelineno-2-60"></a>      ],
+</span><span id="__span-2-61"><a id="__codelineno-2-61" name="__codelineno-2-61" href="#__codelineno-2-61"></a>      &quot;http:\\/\\/purl.org\\/dc\\/terms\\/extent&quot;: [
+</span><span id="__span-2-62"><a id="__codelineno-2-62" name="__codelineno-2-62" href="#__codelineno-2-62"></a>        {
+</span><span id="__span-2-63"><a id="__codelineno-2-63" name="__codelineno-2-63" href="#__codelineno-2-63"></a>          &quot;@value&quot;: &quot;1 item&quot;,
+</span><span id="__span-2-64"><a id="__codelineno-2-64" name="__codelineno-2-64" href="#__codelineno-2-64"></a>          &quot;@type&quot;: &quot;http:\\/\\/www.w3.org\\/2001\\/XMLSchema#string&quot;
+</span><span id="__span-2-65"><a id="__codelineno-2-65" name="__codelineno-2-65" href="#__codelineno-2-65"></a>        }
+</span><span id="__span-2-66"><a id="__codelineno-2-66" name="__codelineno-2-66" href="#__codelineno-2-66"></a>      ],
+</span><span id="__span-2-67"><a id="__codelineno-2-67" name="__codelineno-2-67" href="#__codelineno-2-67"></a>      &quot;http:\\/\\/schema.org\\/sameAs&quot;: [
+</span><span id="__span-2-68"><a id="__codelineno-2-68" name="__codelineno-2-68" href="#__codelineno-2-68"></a>        {
+</span><span id="__span-2-69"><a id="__codelineno-2-69" name="__codelineno-2-69" href="#__codelineno-2-69"></a>          &quot;@value&quot;: &quot;http:\\/\\/localhost:8000\\/node\\/1?_format=jsonld&quot;
+</span><span id="__span-2-70"><a id="__codelineno-2-70" name="__codelineno-2-70" href="#__codelineno-2-70"></a>        }
+</span><span id="__span-2-71"><a id="__codelineno-2-71" name="__codelineno-2-71" href="#__codelineno-2-71"></a>      ]
+</span><span id="__span-2-72"><a id="__codelineno-2-72" name="__codelineno-2-72" href="#__codelineno-2-72"></a>    },
+</span><span id="__span-2-73"><a id="__codelineno-2-73" name="__codelineno-2-73" href="#__codelineno-2-73"></a>    {
+</span><span id="__span-2-74"><a id="__codelineno-2-74" name="__codelineno-2-74" href="#__codelineno-2-74"></a>      &quot;@id&quot;: &quot;http:\\/\\/localhost:8000\\/user\\/1?_format=jsonld&quot;,
+</span><span id="__span-2-75"><a id="__codelineno-2-75" name="__codelineno-2-75" href="#__codelineno-2-75"></a>      &quot;@type&quot;: [
+</span><span id="__span-2-76"><a id="__codelineno-2-76" name="__codelineno-2-76" href="#__codelineno-2-76"></a>        &quot;http:\\/\\/schema.org\\/Person&quot;
+</span><span id="__span-2-77"><a id="__codelineno-2-77" name="__codelineno-2-77" href="#__codelineno-2-77"></a>      ]
+</span><span id="__span-2-78"><a id="__codelineno-2-78" name="__codelineno-2-78" href="#__codelineno-2-78"></a>    }
+</span><span id="__span-2-79"><a id="__codelineno-2-79" name="__codelineno-2-79" href="#__codelineno-2-79"></a>  ]
+</span><span id="__span-2-80"><a id="__codelineno-2-80" name="__codelineno-2-80" href="#__codelineno-2-80"></a>}
+</span></code></pre></div>
 <h3 id="cookie-authentication-cookie">Cookie authentication (cookie)<a class="headerlink" href="#cookie-authentication-cookie" title="Permanent link">&para;</a></h3>
 <p>This allows you to use a cookie stored in your web browser when you log in to Drupal to access these REST endpoint pages.</p>
 <p>This is what allows you to access the URIs like <code>http://localhost:8000/node/1?_format=json</code> with your web browser.</p>
@@ -2598,7 +2598,7 @@ Content-Type: application/ld+json
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 8, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 11, 2023</span>
       
     
   </small>

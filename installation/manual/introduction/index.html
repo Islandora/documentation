@@ -2555,12 +2555,10 @@
 <p>Command blocks are <em>always</em> assumed to start at the home folder of the user originally created during the server installation. <strong>They are never run as <code>root</code></strong>; if root access is required, <code>sudo</code> will be specified, and if files are created belonging to <code>root</code> that should not belong to <code>root</code>, <code>chmod</code> and <code>chown</code> will be run against them immediately afterwards to ensure correct permissions. If commands need to be run from a different working directory, an absolute path will be specified to use with <code>cd</code>. If you're concerned about whether or not a code block can be run from your current working directory, run <code>cd ~</code> before executing any commands in it.</p>
 </div>
 <p>Commands to be run on the command line will be placed in code blocks, with one command per line, and any replacement variables below, e.g.,</p>
-<pre><code class="language-shell">sudo run --this-command
-python3 run.py /this/other/command --with-param PARAMETER
-</code></pre>
-<ul>
-<li><code>PARAMETER</code>: <code>some_sensible_default</code>, perhaps with an explanation of why, or how to determine alternatives</li>
-</ul>
+<p><div class="language-shell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>run<span class="w"> </span>--this-command
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>python3<span class="w"> </span>run.py<span class="w"> </span>/this/other/command<span class="w"> </span>--with-param<span class="w"> </span>PARAMETER
+</span></code></pre></div>
+- <code>PARAMETER</code>: <code>some_sensible_default</code>, perhaps with an explanation of why, or how to determine alternatives</p>
 <h3 id="editing-files-in-place">Editing Files In Place<a class="headerlink" href="#editing-files-in-place" title="Permanent link">&para;</a></h3>
 <p>When an individual file needs to be modified in place (as opposed to replacing it outright), a Before and After quote will be provided that identifies one or more lines in the file, what the default installed version of that file looks like on that line, and what the line should look like after it has been modified, like so:</p>
 <p><code>/path/to/file_being_modified</code></p>
@@ -2585,21 +2583,19 @@ python3 run.py /this/other/command --with-param PARAMETER
 <li>The entire contents of the file in a code block, including any portions that need to be replaced with specific values</li>
 <li>Those replacement values</li>
 </ul>
-<p><code>/the/path/to/some/file.php | owner:group/umask</code></p>
-<pre><code class="language-php">&lt;?php
-
-/**
- * Here is the entire contents of a PHP file
- */
-function do_something($to_this) {
-  $to_this += THE_NUMBER_TO_ADD_TO_THIS;
-}
-
-?&gt;
-</code></pre>
-<ul>
-<li><code>THE_NUMBER_TO_ADD_TO_THIS</code>: 12, perhaps with an explanation of why, or other numbers that may be appropriate</li>
-</ul>
+<p><code>/the/path/to/some/file.php | owner:group/umask</code>
+<div class="language-php highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="cp">&lt;?php</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="sd">/**</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="sd"> * Here is the entire contents of a PHP file</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="sd"> */</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="k">function</span> <span class="nf">do_something</span><span class="p">(</span><span class="nv">$to_this</span><span class="p">)</span> <span class="p">{</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>  <span class="nv">$to_this</span> <span class="o">+=</span> <span class="nx">THE_NUMBER_TO_ADD_TO_THIS</span><span class="p">;</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="p">}</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="cp">?&gt;</span>
+</span></code></pre></div>
+- <code>THE_NUMBER_TO_ADD_TO_THIS</code>: 12, perhaps with an explanation of why, or other numbers that may be appropriate</p>
 <h3 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h3>
 <p>The most common issues you will likely run into when manually provisioning a server are:</p>
 <ul>
@@ -2613,7 +2609,7 @@ function do_something($to_this) {
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 8, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 11, 2023</span>
       
     
   </small>

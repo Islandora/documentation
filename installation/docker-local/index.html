@@ -2428,28 +2428,28 @@ changes are automatically reflected on the Drupal container.</p>
 <p>If you don't already have a Drupal site, you'll be given a basic setup using Drupal 9 and the
 <a href="https://github.com/Islandora-Devops/islandora-starter-site">Islandora Starter Site</a>.</p>
 <p>If you do already have a Drupal site, use git to clone it into place as the <code>codebase</code> folder.</p>
-<pre><code>cd /path/to/isle-dc
-git clone https://github.com/your_org/your_repo codebase
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>cd /path/to/isle-dc
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>git clone https://github.com/your_org/your_repo codebase
+</span></code></pre></div>
 <p>Now you'll need to tell <code>isle-dc</code> to look for it by setting the <code>ENVIRONMENT</code> variable in
 your <code>.env</code> file. If you don't have one, copy over <code>sample.env</code> and name it <code>.env</code>. Then
 set</p>
-<pre><code>ENVIRONMENT=starter
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>ENVIRONMENT=starter
+</span></code></pre></div>
 <p>You should also change the <code>COMPOSE_PROJECT_NAME</code> variable. This determines the name of the
 Docker containers and volumes that are created when you run <code>make starter</code>. If you leave this as the default
 you will need to be careful not to overwrite the containers with another install of <code>isle-dc</code>
-later.</p>
-<pre><code>COMPOSE_PROJECT_NAME=isle-dc
-</code></pre>
+later.
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>COMPOSE_PROJECT_NAME=isle-dc
+</span></code></pre></div></p>
 <p>If your site includes exported configuration from <code>drush config:export</code>, then you'll also
 need to set</p>
-<pre><code>INSTALL_EXISTING_CONFIG=true
-DRUPAL_INSTALL_PROFILE=minimal
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>INSTALL_EXISTING_CONFIG=true
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>DRUPAL_INSTALL_PROFILE=minimal
+</span></code></pre></div>
 <p>Once you are ready, run</p>
-<pre><code class="language-bash">make starter
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>make<span class="w"> </span>starter
+</span></code></pre></div>
 <p>to install the Drupal site in your <code>codebase</code> folder and spin up all the other containers with it.</p>
 <p>Enjoy your Islandora instance!  Check out the <a href="../docker-basic-usage">basic usage documentation</a> to see
 all the endpoints that are available and how to do things like start and stop Islandora. Your passwords,
@@ -2460,7 +2460,7 @@ including the Drupal admin password, can be found in the <code>secrets/live</cod
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 8, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 11, 2023</span>
       
     
   </small>

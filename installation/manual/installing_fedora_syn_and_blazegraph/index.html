@@ -959,6 +959,33 @@
     Adding a Fedora Configuration
   </a>
   
+    <nav class="md-nav" aria-label="Adding a Fedora Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#namespace-prefixes" class="md-nav__link">
+    Namespace prefixes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#allowed-external-content-hosts" class="md-nav__link">
+    Allowed External Content Hosts
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fedora-configuration-properties-file" class="md-nav__link">
+    Fedora configuration properties file
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -1028,11 +1055,38 @@
     Adding the Syn Valve to Tomcat
   </a>
   
+    <nav class="md-nav" aria-label="Adding the Syn Valve to Tomcat">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-enable-the-syn-valve-for-all-of-tomcat" class="md-nav__link">
+    1. Enable the Syn Valve for all of Tomcat.
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-enable-the-syn-valve-for-only-fedora" class="md-nav__link">
+    2. Enable the Syn Valve for only Fedora.
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
   <a href="#restarting-tomcat" class="md-nav__link">
     Restarting Tomcat
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#redhat-logging" class="md-nav__link">
+    Redhat logging
   </a>
   
 </li>
@@ -2607,6 +2661,33 @@
     Adding a Fedora Configuration
   </a>
   
+    <nav class="md-nav" aria-label="Adding a Fedora Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#namespace-prefixes" class="md-nav__link">
+    Namespace prefixes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#allowed-external-content-hosts" class="md-nav__link">
+    Allowed External Content Hosts
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fedora-configuration-properties-file" class="md-nav__link">
+    Fedora configuration properties file
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -2676,11 +2757,38 @@
     Adding the Syn Valve to Tomcat
   </a>
   
+    <nav class="md-nav" aria-label="Adding the Syn Valve to Tomcat">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-enable-the-syn-valve-for-all-of-tomcat" class="md-nav__link">
+    1. Enable the Syn Valve for all of Tomcat.
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-enable-the-syn-valve-for-only-fedora" class="md-nav__link">
+    2. Enable the Syn Valve for only Fedora.
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
   <a href="#restarting-tomcat" class="md-nav__link">
     Restarting Tomcat
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#redhat-logging" class="md-nav__link">
+    Redhat logging
   </a>
   
 </li>
@@ -2777,35 +2885,31 @@
 
 
 <h1 id="installing-fedora-syn-and-blazegraph">Installing Fedora, Syn, and Blazegraph<a class="headerlink" href="#installing-fedora-syn-and-blazegraph" title="Permanent link">&para;</a></h1>
-<div class="admonition warning">
-<p class="admonition-title">Needs Maintenance</p>
-<p>The manual installation documentation is in need of attention. We are aware that some components no longer work as documented here. If you are interested in helping us improve the documentation, please see <a href="../../../contributing/CONTRIBUTING">Contributing</a>.</p>
-</div>
 <h2 id="in-this-section-we-will-install">In this section, we will install:<a class="headerlink" href="#in-this-section-we-will-install" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://duraspace.org/fedora/">Fedora 6</a>, the back-end repository that Islandora will use</li>
+<li><a href="https://fedora.lyrasis.org/">Fedora 6</a>, the back-end repository that Islandora will use</li>
 <li><a href="https://github.com/Islandora/Syn">Syn</a>, the authentication broker that will manage communication with Fedora</li>
 <li><a href="https://blazegraph.com/">Blazegraph</a>, the resource index layer on top of Fedora for managing discoverability via RDF</li>
 </ul>
 <h2 id="fedora-6">Fedora 6<a class="headerlink" href="#fedora-6" title="Permanent link">&para;</a></h2>
 <h3 id="stop-the-tomcat-service">Stop the Tomcat Service<a class="headerlink" href="#stop-the-tomcat-service" title="Permanent link">&para;</a></h3>
 <p>We're going to stop the Tomcat service while working on setting up Fedora to prevent any autodeploy misconfigurations.</p>
-<pre><code class="language-bash">sudo systemctl stop tomcat
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>stop<span class="w"> </span>tomcat
+</span></code></pre></div>
 <h3 id="creating-a-working-space-for-fedora">Creating a Working Space for Fedora<a class="headerlink" href="#creating-a-working-space-for-fedora" title="Permanent link">&para;</a></h3>
 <p>Fedora’s configuration and data won’t live with Tomcat itself; rather, we’re going to prepare a space for them to make them easier to manage.</p>
-<pre><code class="language-bash">sudo mkdir -p /opt/fcrepo/data/objects
-sudo mkdir /opt/fcrepo/config
-sudo chown -R tomcat:tomcat /opt/fcrepo
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>/opt/fcrepo/data/objects
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>sudo<span class="w"> </span>mkdir<span class="w"> </span>/opt/fcrepo/config
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>sudo<span class="w"> </span>chown<span class="w"> </span>-R<span class="w"> </span>tomcat:tomcat<span class="w"> </span>/opt/fcrepo
+</span></code></pre></div>
 <h3 id="creating-a-database-for-fedora">Creating a Database for Fedora<a class="headerlink" href="#creating-a-database-for-fedora" title="Permanent link">&para;</a></h3>
 <p>The method for creating the database here will closely mimic the method we used to create our database for Drupal.</p>
-<pre><code class="language-bash">sudo -u postgres psql
-create database FEDORA_DB encoding 'UTF8' LC_COLLATE = 'en_US.UTF-8' LC_CTYPE = 'en_US.UTF-8' TEMPLATE template0;
-create user FEDORA_DB_USER with encrypted password 'FEDORA_DB_PASSWORD';
-grant all privileges on database FEDORA_DB to FEDORA_DB_USER;
-\q
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>-u<span class="w"> </span>postgres<span class="w"> </span>psql
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>create<span class="w"> </span>database<span class="w"> </span>FEDORA_DB<span class="w"> </span>encoding<span class="w"> </span><span class="s1">&#39;UTF8&#39;</span><span class="w"> </span><span class="nv">LC_COLLATE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;en_US.UTF-8&#39;</span><span class="w"> </span><span class="nv">LC_CTYPE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;en_US.UTF-8&#39;</span><span class="w"> </span>TEMPLATE<span class="w"> </span>template0<span class="p">;</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>create<span class="w"> </span>user<span class="w"> </span>FEDORA_DB_USER<span class="w"> </span>with<span class="w"> </span>encrypted<span class="w"> </span>password<span class="w"> </span><span class="s1">&#39;FEDORA_DB_PASSWORD&#39;</span><span class="p">;</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>grant<span class="w"> </span>all<span class="w"> </span>privileges<span class="w"> </span>on<span class="w"> </span>database<span class="w"> </span>FEDORA_DB<span class="w"> </span>to<span class="w"> </span>FEDORA_DB_USER<span class="p">;</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="se">\q</span>
+</span></code></pre></div>
 <ul>
 <li><code>FEDORA_DB</code>: <code>fcrepo</code><ul>
 <li>This will be used as the database Fedora will store the repository in.</li>
@@ -2819,185 +2923,109 @@ grant all privileges on database FEDORA_DB to FEDORA_DB_USER;
 </ul>
 <h3 id="adding-a-fedora-configuration">Adding a Fedora Configuration<a class="headerlink" href="#adding-a-fedora-configuration" title="Permanent link">&para;</a></h3>
 <p>The Fedora configuration is going to come in a few different chunks that need to be in place before Fedora will be functional. We’re going to place several files outright, with mildly modified parameters according to our configuration.</p>
-<p>The basics of these configuration files have been pulled largely from the templates in <a href="https://github.com/islandora-devops/ansible-role-fcrepo">Islandora-Devops/ansible-role-fcrepo</a>; you may consider referencing the playbook’s templates directory for more details.</p>
-<p><code>i8_namespaces.cnd</code> is a list of namespaces used by Islandora that may not necessarily be present in Fedora; we add them here to ensure we can use them in queries.</p>
-<p><code>/opt/fcrepo/config/i8_namespaces.cnd | tomcat:tomcat/644</code></p>
-<pre><code>&lt;acl = 'http://www.w3.org/ns/auth/acl#'&gt;
-&lt;bf = 'http://id.loc.gov/ontologies/bibframe/'&gt;
-&lt;cc = 'http://creativecommons.org/ns#'&gt;
-&lt;dcterms = 'http://purl.org/dc/terms/'&gt;
-&lt;dwc = 'http://rs.tdwg.org/dwc/terms/'&gt;
-&lt;exif = 'http://www.w3.org/2003/12/exif/ns#'&gt;
-&lt;fedoramodel = 'info:fedora/fedora-system:def/model#'&gt;
-&lt;geo = 'http://www.w3.org/2003/01/geo/wgs84_pos#'&gt;
-&lt;gn = 'http://www.geonames.org/ontology#'&gt;
-&lt;iana = 'http://www.iana.org/assignments/relation/'&gt;
-&lt;islandorarelsext = 'http://islandora.ca/ontology/relsext#'&gt;
-&lt;islandorarelsint = 'http://islandora.ca/ontology/relsint#'&gt;
-&lt;ldp = 'http://www.w3.org/ns/ldp#'&gt;
-&lt;nfo = 'http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#'&gt;
-&lt;ore = 'http://www.openarchives.org/ore/terms/'&gt;
-&lt;owl = 'http://www.w3.org/2002/07/owl#'&gt;
-&lt;pcdm = 'http://pcdm.org/models#'&gt;
-&lt;pcdmfmt = 'http://pcdm.org/file-format-types#'&gt;
-&lt;pcdmrts = 'http://pcdm.org/rights#'&gt;
-&lt;pcdmuse = 'http://pcdm.org/use#'&gt;
-&lt;pcdmwrks = 'http://pcdm.org/works#'&gt;
-&lt;prov = 'http://www.w3.org/ns/prov#'&gt;
-&lt;rdf = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'&gt;
-&lt;rdfs = 'http://www.w3.org/2000/01/rdf-schema#'&gt;
-&lt;rel = 'http://id.loc.gov/vocabulary/relators/'&gt;
-&lt;schema = 'http://schema.org/'&gt;
-&lt;skos = 'http://www.w3.org/2004/02/skos/core#'&gt;
-&lt;xml = 'http://www.w3.org/XML/1998/namespace'&gt;
-&lt;xmlns = 'http://www.w3.org/2000/xmlns/'&gt;
-&lt;xs = 'http://www.w3.org/2001/XMLSchema'&gt;
-&lt;xsi = 'http://www.w3.org/2001/XMLSchema-instance'&gt;
-</code></pre>
-<p>We intend to have Crayfish installed later. Since Fedora needs to be able to read data from Crayfish, we need to tell Fedora that the Crayfish endpoint is a valid data source.</p>
-<p><code>/opt/fcrepo/config/allowed_hosts.txt | tomcat:tomcat/644</code></p>
-<pre><code>http://CRAYFISH_HOST:CRAYFISH_PORT/
-</code></pre>
+<p>The basics of these configuration files have been pulled largely from the templates in Islandora-Devops/islandora-playbook <a href="https://github.com/Islandora-Devops/islandora-playbook/tree/dev/roles/internal/Islandora-Devops.fcrepo">internal Fedora role</a>; you may consider referencing the playbook’s templates directory for more details.</p>
+<h4 id="namespace-prefixes">Namespace prefixes<a class="headerlink" href="#namespace-prefixes" title="Permanent link">&para;</a></h4>
+<p><code>i8_namespaces.yml</code> is a list of namespaces used by Islandora that may not necessarily be present in Fedora; we add them here to ensure we can use them in queries.</p>
+<p><code>/opt/fcrepo/config/i8_namespaces.yml | tomcat:tomcat/644</code>
+<div class="language-yaml copy highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Islandora 8/Fedora namespaces</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="c1">#</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="c1"># This file contains ALL the prefix mappings, if a URI</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># does not appear in this file it will be displayed as </span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c1"># the full URI in Fedora. </span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="nt">acl</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://www.w3.org/ns/auth/acl#</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="nt">bf</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://id.loc.gov/ontologies/bibframe/</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="nt">cc</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://creativecommons.org/ns#</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="nt">dc</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://purl.org/dc/elements/1.1/</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="nt">dcterms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://purl.org/dc/terms/</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="nt">dwc</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://rs.tdwg.org/dwc/terms/</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="nt">ebucore</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://www.ebu.ch/metadata/ontologies/ebucore/ebucore#</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="nt">exif</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://www.w3.org/2003/12/exif/ns#</span>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="nt">fedoraconfig</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://fedora.info/definitions/v4/config#</span>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="nt">fedoramodel</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">info:fedora/fedora-system:def/model#</span>
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="nt">foaf</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://xmlns.com/foaf/0.1/</span>
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="nt">geo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://www.w3.org/2003/01/geo/wgs84_pos#</span>
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="nt">gn</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://www.geonames.org/ontology#</span>
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="nt">iana</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://www.iana.org/assignments/relation/</span>
+</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="nt">islandorarelsext</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://islandora.ca/ontology/relsext#</span>
+</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="nt">islandorarelsint</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://islandora.ca/ontology/relsint#</span>
+</span><span id="__span-3-22"><a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a><span class="nt">ldp</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://www.w3.org/ns/ldp#</span>
+</span><span id="__span-3-23"><a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a><span class="nt">memento</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://mementoweb.org/ns#</span>
+</span><span id="__span-3-24"><a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a><span class="nt">nfo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#</span>
+</span><span id="__span-3-25"><a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a><span class="nt">ore</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://www.openarchives.org/ore/terms/</span>
+</span><span id="__span-3-26"><a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a><span class="nt">owl</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://www.w3.org/2002/07/owl#</span>
+</span><span id="__span-3-27"><a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a><span class="nt">premis</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://www.loc.gov/premis/rdf/v1#</span>
+</span><span id="__span-3-28"><a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a><span class="nt">prov</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://www.w3.org/ns/prov#</span>
+</span><span id="__span-3-29"><a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a><span class="nt">rdf</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://www.w3.org/1999/02/22-rdf-syntax-ns#</span>
+</span><span id="__span-3-30"><a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a><span class="nt">rdfs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://www.w3.org/2000/01/rdf-schema#</span>
+</span><span id="__span-3-31"><a id="__codelineno-3-31" name="__codelineno-3-31" href="#__codelineno-3-31"></a><span class="nt">rel</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://id.loc.gov/vocabulary/relators/</span>
+</span><span id="__span-3-32"><a id="__codelineno-3-32" name="__codelineno-3-32" href="#__codelineno-3-32"></a><span class="nt">schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://schema.org/</span>
+</span><span id="__span-3-33"><a id="__codelineno-3-33" name="__codelineno-3-33" href="#__codelineno-3-33"></a><span class="nt">skos</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://www.w3.org/2004/02/skos/core#</span>
+</span><span id="__span-3-34"><a id="__codelineno-3-34" name="__codelineno-3-34" href="#__codelineno-3-34"></a><span class="nt">test</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">info:fedora/test/</span>
+</span><span id="__span-3-35"><a id="__codelineno-3-35" name="__codelineno-3-35" href="#__codelineno-3-35"></a><span class="nt">vcard</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://www.w3.org/2006/vcard/ns#</span>
+</span><span id="__span-3-36"><a id="__codelineno-3-36" name="__codelineno-3-36" href="#__codelineno-3-36"></a><span class="nt">webac</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://fedora.info/definitions/v4/webac#</span>
+</span><span id="__span-3-37"><a id="__codelineno-3-37" name="__codelineno-3-37" href="#__codelineno-3-37"></a><span class="nt">xml</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://www.w3.org/XML/1998/namespace</span>
+</span><span id="__span-3-38"><a id="__codelineno-3-38" name="__codelineno-3-38" href="#__codelineno-3-38"></a><span class="nt">xmlns</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://www.w3.org/2000/xmlns/</span>
+</span><span id="__span-3-39"><a id="__codelineno-3-39" name="__codelineno-3-39" href="#__codelineno-3-39"></a><span class="nt">xs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://www.w3.org/2001/XMLSchema</span>
+</span><span id="__span-3-40"><a id="__codelineno-3-40" name="__codelineno-3-40" href="#__codelineno-3-40"></a><span class="nt">xsi</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://www.w3.org/2001/XMLSchema-instance</span>
+</span></code></pre></div></p>
+<h4 id="allowed-external-content-hosts">Allowed External Content Hosts<a class="headerlink" href="#allowed-external-content-hosts" title="Permanent link">&para;</a></h4>
+<p>We have Fedora provide metadata for some resources that are contained in Drupal. Fedora needs to know to allow access to these External Content hosts.</p>
+<p>We create a file <code>/opt/fcrepo/config/allowed_external_hosts.txt | tomcat:tomcat/644</code>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>http://localhost:8000/
+</span></code></pre></div></p>
+<p><strong>Note</strong>: the trailing backslash is important here. For more information on Fedora's External Content and configuring it, see the <a href="https://wiki.lyrasis.org/display/FEDORA6x/External+Content">Fedora Wiki pages</a></p>
+<h4 id="fedora-configuration-properties-file">Fedora configuration properties file<a class="headerlink" href="#fedora-configuration-properties-file" title="Permanent link">&para;</a></h4>
+<p>Fedora 6 now allows you to put all your configuration properties into a single file. We use <code>0640</code> permissions as you will want to put your database credentials in here.</p>
+<p><code>/opt/fcrepo/config/fcrepo.properties | tomcat:tomcat/640</code>
+<div class="language-text copy highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>fcrepo.home=FCREPO_HOME
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a># External content using path defined above.
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>fcrepo.external.content.allowed=/opt/fcrepo/config/allowed_external_hosts.txt
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a># Namespace registry using path defined above.
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>fcrepo.namespace.registry=/opt/fcrepo/config/i8_namespaces.yml
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>fcrepo.auth.principal.header.enabled=true
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a># The principal header is the syn-setting.xml &quot;config&quot; element&#39;s &quot;header&quot; attribute
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>fcrepo.auth.principal.header.name=X-Islandora
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a># false to use manual versioning, true to create a version on each change
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>fcrepo.autoversioning.enabled=true
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>fcrepo.db.url=FCREPO_DB_URL
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>fcrepo.db.user=FCREPO_DB_USERNAME
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>fcrepo.db.password=FCREPO_DB_PASSWORD
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>fcrepo.ocfl.root=FCREPO_OCFL_ROOT
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>fcrepo.ocfl.temp=FCREPO_TEMP_ROOT
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>fcrepo.ocfl.staging=FCREPO_STAGING_ROOT
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a># Can be sha512 or sha256
+</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>fcrepo.persistence.defaultDigestAlgorithm=sha512
+</span><span id="__span-5-19"><a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a># Jms moved from 61616 to allow external ActiveMQ to use that port
+</span><span id="__span-5-20"><a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a>fcrepo.dynamic.jms.port=61626
+</span><span id="__span-5-21"><a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a># Same as above
+</span><span id="__span-5-22"><a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a>fcrepo.dynamic.stomp.port=61623
+</span><span id="__span-5-23"><a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a>fcrepo.velocity.runtime.log=FCREPO_VELOCITY_LOG
+</span><span id="__span-5-24"><a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a>fcrepo.jms.baseUrl=FCREPO_JMS_BASE
+</span></code></pre></div></p>
 <ul>
-<li><code>CRAYFISH_HOST</code>: localhost</li>
-<li><code>CRAYFISH_PORT</code>: 80<ul>
-<li>This guide will install Crayfish on the same host and port that Drupal is installed on. This may not be desirable, and if Crayfish is installed on a different host or port later, that change should be reflected here.</li>
+<li><code>FCREPO_HOME</code> - The home directory for all Fedora generated output and state.  Unless otherwise specified, all logs, metadata, binaries, and internally generated indexes, etc. It would default to the Tomcat starting directory. A good default would be <code>/opt/fcrepo</code></li>
+<li>
+<p><code>FCREPO_DB_URL</code> - This parameter allows you to set the database connection url. In general the format is as follows:</p>
+<p><code>jdbc:&lt;database_type&gt;://&lt;database_host&gt;:&lt;database_port&gt;/&lt;database_name&gt;</code> </p>
+<p>Fedora currently supports H2, PostgresQL 12.3, MariaDB 10.5.3, and MySQL 8.0</p>
+<p>So using the default ports for the supported databases here are the values we typically use:</p>
+<ul>
+<li>PostgresQL: <code>jdbc:postgresql://localhost:5432/fcrepo</code></li>
+<li>MariaDB:  <code>jdbc:mariadb://localhost:3306/fcrepo</code></li>
+<li>MySQL:  <code>jdbc:mysql://localhost:3306/fcrepo</code></li>
 </ul>
 </li>
+<li>
+<p><code>FCREPO_DB_USERNAME</code> - The database username</p>
+</li>
+<li><code>FCREPO_DB_PASSWORD</code> - The database password</li>
+<li><code>FCREPO_OCFL_ROOT</code> - Sets the root directory of the OCFL. Defaults to <code>FCREPO_HOME/data/ocfl-root</code> if not set.</li>
+<li><code>FCREPO_TEMP_ROOT</code> - Sets the temp directory used by OCFL. Defaults to <code>FCREPO_HOME/data/temp</code> if not set.</li>
+<li><code>FCREPO_STAGING_ROOT</code> - Sets the staging directory used by OCFL. Defaults to <code>FCREPO_HOME/data/staging</code> if not set.</li>
+<li><code>FCREPO_VELOCITY_LOG</code> - The Fedora HTML template code uses Apache Velocity, which generates a runtime log called velocity.log. Defaults to <code>FCREPO_HOME/logs/velocity</code>. A good choice might be /opt/tomcat/logs/velocity.log</li>
+<li><code>FCREPO_JMS_BASE</code> - This specifies the baseUrl to use when generating JMS messages. You can specify the hostname with or without port and with or without path. If your system is behind a NAT firewall you may need this to avoid your message consumers trying to access the system on an invalid port. If this system property is not set, the host, port and context from the user's request will be used in the emitted JMS messages. If your Alpaca is on the same machine as your Fedora and you use the <code>islandora-indexing-fcrepo</code>, you could use http://localhost:8080/fcrepo/rest. </li>
 </ul>
-<p>The next part of the configuration defines where the pieces of the actual repository will live. Note that this file contains some of the defined <code>FEDORA_DB</code> variables from earlier.</p>
-<p><code>/opt/fcrepo/config/repository.json | tomcat:tomcat/644</code></p>
-<pre><code class="language-json">{
-    &quot;name&quot; : &quot;repo&quot;,
-    &quot;jndiName&quot; : &quot;&quot;,
-    &quot;workspaces&quot; : {
-        &quot;predefined&quot; : [&quot;default&quot;],
-        &quot;default&quot; : &quot;default&quot;,
-        &quot;allowCreation&quot; : true,
-        &quot;cacheSize&quot; : 10000
-    },
-    &quot;storage&quot; : {
-        &quot;persistence&quot;: {
-            &quot;type&quot; : &quot;db&quot;,
-            &quot;connectionUrl&quot;: &quot;jdbc:postgresql://localhost:5432/FEDORA_DB&quot;,
-            &quot;driver&quot; : &quot;org.postgresql.Driver&quot;,
-            &quot;username&quot; : &quot;FEDORA_DB_USER&quot;,
-            &quot;password&quot; : &quot;FEDORA_DB_PASSWORD&quot;
-        },
-        &quot;binaryStorage&quot; : {
-            &quot;type&quot; : &quot;file&quot;,
-            &quot;directory&quot; : &quot;/opt/fcrepo/data/binaries&quot;,
-            &quot;minimumBinarySizeInBytes&quot; : 4096
-        }
-    },
-    &quot;security&quot; : {
-        &quot;anonymous&quot; : {
-            &quot;roles&quot; : [&quot;readonly&quot;,&quot;readwrite&quot;,&quot;admin&quot;],
-            &quot;useOnFailedLogin&quot; : false
-        },
-        &quot;providers&quot; : [
-            { &quot;classname&quot; : &quot;org.fcrepo.auth.common.BypassSecurityServletAuthenticationProvider&quot; }
-        ]
-    },
-    &quot;garbageCollection&quot; : {
-        &quot;threadPool&quot; : &quot;modeshape-gc&quot;,
-        &quot;initialTime&quot; : &quot;00:00&quot;,
-        &quot;intervalInHours&quot; : 24
-    },
-    &quot;node-types&quot; : [&quot;fedora-node-types.cnd&quot;, &quot;file:/opt/fcrepo/config/i8_namespaces.cnd&quot;]
-}
-</code></pre>
-<p>Finally, we need an actual <code>fcrepo-config.xml</code> to pull this configuration into place. There's nothing to edit in here by default, but pay attention to the <code>p:repositoryConfiguration</code> property of the <code>modeshapeRepofactory</code> bean, which contains the path to the <code>repository.json</code> file we made earlier. If you've placed this somewhere else, you'll need to change it here.</p>
-<p><code>/opt/fcrepo/config/fcrepo-config.xml | tomcat:tomcat/644</code></p>
-<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
-    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
-    xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
-    xmlns:task=&quot;http://www.springframework.org/schema/task&quot;
-    xmlns:p=&quot;http://www.springframework.org/schema/p&quot;
-    xmlns:util=&quot;http://www.springframework.org/schema/util&quot;
-    xsi:schemaLocation=&quot;
-    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-    http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
-    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd&quot;&gt;
-
-    &lt;context:property-placeholder/&gt;
-    &lt;context:annotation-config/&gt;
-    &lt;context:component-scan base-package=&quot;org.fcrepo&quot;/&gt;
-
-    &lt;bean name=&quot;modeshapeRepofactory&quot;
-        class=&quot;org.fcrepo.kernel.modeshape.spring.ModeShapeRepositoryFactoryBean&quot;
-        p:repositoryConfiguration=&quot;file:///opt/fcrepo/config/repository.json&quot;
-        depends-on=&quot;authenticationProvider&quot;/&gt;
-    &lt;bean name=&quot;authenticationProvider&quot; class=&quot;org.fcrepo.auth.common.ShiroAuthenticationProvider&quot;/&gt;
-    &lt;bean name=&quot;headerProvider&quot; class=&quot;org.fcrepo.auth.common.HttpHeaderPrincipalProvider&quot;&gt;
-        &lt;property name=&quot;headerName&quot; value=&quot;X-Islandora&quot;/&gt;
-        &lt;property name=&quot;separator&quot; value=&quot;,&quot;/&gt;
-    &lt;/bean&gt;
-    &lt;bean name=&quot;delegatedPrincipalProvider&quot; class=&quot;org.fcrepo.auth.common.DelegateHeaderPrincipalProvider&quot;/&gt;
-    &lt;bean name=&quot;accessRolesProvider&quot; class=&quot;org.fcrepo.auth.webac.WebACRolesProvider&quot;/&gt;
-    &lt;bean id=&quot;webACAuthorizingRealm&quot; class=&quot;org.fcrepo.auth.webac.WebACAuthorizingRealm&quot; /&gt;
-    &lt;bean id=&quot;servletContainerAuthenticatingRealm&quot; class=&quot;org.fcrepo.auth.common.ServletContainerAuthenticatingRealm&quot; /&gt;
-    &lt;bean id=&quot;securityManager&quot; class=&quot;org.apache.shiro.web.mgt.DefaultWebSecurityManager&quot;&gt;
-      &lt;property name=&quot;realms&quot;&gt;
-        &lt;util:set set-class=&quot;java.util.HashSet&quot;&gt;
-          &lt;ref bean=&quot;webACAuthorizingRealm&quot;/&gt;
-          &lt;ref bean=&quot;servletContainerAuthenticatingRealm&quot;/&gt;
-        &lt;/util:set&gt;
-      &lt;/property&gt;
-    &lt;/bean&gt;
-    &lt;bean id=&quot;lifecycleBeanPostProcessor&quot; class=&quot;org.apache.shiro.spring.LifecycleBeanPostProcessor&quot;/&gt;
-    &lt;bean id=&quot;servletContainerAuthFilter&quot; class=&quot;org.fcrepo.auth.common.ServletContainerAuthFilter&quot;/&gt;
-    &lt;bean id=&quot;webACFilter&quot; class=&quot;org.fcrepo.auth.webac.WebACFilter&quot;/&gt;
-    &lt;bean id=&quot;shiroFilter&quot; class=&quot;org.apache.shiro.spring.web.ShiroFilterFactoryBean&quot;&gt;
-      &lt;property name=&quot;securityManager&quot; ref=&quot;securityManager&quot;/&gt;
-      &lt;property name=&quot;filterChainDefinitions&quot;&gt;
-        &lt;value&gt;
-          /** = servletContainerAuthFilter,headerProvider,delegatedPrincipalProvider,webACFilter
-        &lt;/value&gt;
-      &lt;/property&gt;
-    &lt;/bean&gt;
-
-    &lt;util:list id=&quot;translationChain&quot; value-type=&quot;org.fcrepo.kernel.api.identifiers.InternalIdentifierConverter&quot;&gt;
-        &lt;bean class=&quot;org.fcrepo.kernel.modeshape.identifiers.HashConverter&quot;/&gt;
-        &lt;bean class=&quot;org.fcrepo.kernel.modeshape.identifiers.NamespaceConverter&quot;/&gt;
-    &lt;/util:list&gt;
-
-    &lt;bean class=&quot;org.fcrepo.jms.JMSTopicPublisher&quot;&gt;
-      &lt;constructor-arg value=&quot;fedora&quot;/&gt;
-    &lt;/bean&gt;
-    &lt;bean id=&quot;connectionFactory&quot;
-        class=&quot;org.apache.activemq.ActiveMQConnectionFactory&quot; depends-on=&quot;jmsBroker&quot;
-        p:brokerURL=&quot;vm://${fcrepo.jms.host:localhost}:${fcrepo.dynamic.jms.port:61616}?create=false&quot;/&gt;
-    &lt;bean name=&quot;jmsBroker&quot; class=&quot;org.apache.activemq.xbean.BrokerFactoryBean&quot;
-      p:config=&quot;${fcrepo.activemq.configuration:classpath:/config/activemq.xml}&quot; p:start=&quot;true&quot;/&gt;
-    &lt;bean class=&quot;org.fcrepo.jms.DefaultMessageFactory&quot;/&gt;
-    &lt;bean class=&quot;org.fcrepo.kernel.modeshape.observer.SimpleObserver&quot;/&gt;
-    &lt;bean name=&quot;fedoraEventFilter&quot; class=&quot;org.fcrepo.kernel.modeshape.observer.DefaultFilter&quot;/&gt;
-    &lt;bean name=&quot;fedoraEventMapper&quot; class=&quot;org.fcrepo.kernel.modeshape.observer.eventmappings.AllNodeEventsOneEvent&quot;/&gt;
-    &lt;bean name=&quot;fedoraInternalEventBus&quot; class=&quot;com.google.common.eventbus.EventBus&quot;/&gt;
-    &lt;bean name=&quot;rdfNamespaceRegistry&quot; class=&quot;org.fcrepo.kernel.api.rdf.RdfNamespaceRegistry&quot;
-        init-method=&quot;init&quot; destroy-method=&quot;shutdown&quot;&gt;
-      &lt;property name=&quot;configPath&quot; value=&quot;${fcrepo.namespace.registry:classpath:/namespaces.yml}&quot; /&gt;
-      &lt;property name=&quot;monitorForChanges&quot; value=&quot;true&quot; /&gt;
-    &lt;/bean&gt;
-    &lt;bean name=&quot;externalContentPathValidator&quot; class=&quot;org.fcrepo.http.api.ExternalContentPathValidator&quot;
-        init-method=&quot;init&quot; destroy-method=&quot;shutdown&quot;&gt;
-        &lt;property name=&quot;configPath&quot; value=&quot;${fcrepo.external.content.allowed:#{null}}&quot; /&gt;
-        &lt;property name=&quot;monitorForChanges&quot; value=&quot;true&quot; /&gt;
-    &lt;/bean&gt;
-    &lt;bean name=&quot;externalContentHandlerFactory&quot; class=&quot;org.fcrepo.http.api.ExternalContentHandlerFactory&quot;&gt;
-        &lt;property name=&quot;validator&quot; ref=&quot;externalContentPathValidator&quot; /&gt;
-    &lt;/bean&gt;
-    &lt;task:scheduler id=&quot;taskScheduler&quot; /&gt;
-    &lt;task:executor id=&quot;taskExecutor&quot; pool-size=&quot;1&quot; /&gt;
-    &lt;task:annotation-driven executor=&quot;taskExecutor&quot; scheduler=&quot;taskScheduler&quot; /&gt;
-    &lt;bean class=&quot;org.modeshape.jcr.ModeShapeEngine&quot; init-method=&quot;start&quot;/&gt;
-    &lt;bean id=&quot;connectionManager&quot; class=&quot;org.apache.http.impl.conn.PoolingHttpClientConnectionManager&quot; /&gt;
-    &lt;bean class=&quot;org.fcrepo.http.commons.session.SessionFactory&quot;/&gt;
-&lt;/beans&gt;
-</code></pre>
+<p>Check the Lyrasis Wiki to find all of <a href="https://wiki.lyrasis.org/display/FEDORA6x/Properties">Fedora's properties</a></p>
 <h3 id="adding-the-fedora-variables-to-java_opts">Adding the Fedora Variables to <code>JAVA_OPTS</code><a class="headerlink" href="#adding-the-fedora-variables-to-java_opts" title="Permanent link">&para;</a></h3>
 <p>We need our Tomcat <code>JAVA_OPTS</code> to include references to our repository configuration.</p>
 <p><code>/opt/tomcat/bin/setenv.sh</code></p>
@@ -3007,24 +3035,24 @@ grant all privileges on database FEDORA_DB to FEDORA_DB_USER;
 </blockquote>
 <p><strong>After</strong>:</p>
 <blockquote>
-<p>3 | export JAVA_OPTS="-Djava.awt.headless=true -Dfcrepo.home=/otp/fcrepo/data -Dfcrepo.velocity.runtime.log=/opt/tomcat/logs/velocity.log -Dfcrepo.jms.baseUrl=http://localhost:8080/fcrepo/rest -Dfcrepo.autoversioning.enabled=false -DconnectionTimeout=-1 -Dfcrepo.db.url=jdbc:postgresql://localhost:5432/fcrepo -Dfcrepo.db.user=fedora -Dfcrepo.db.password=fedora -server -Xmx1500m -Xms1000m"</p>
+<p>3 | export JAVA_OPTS="-Djava.awt.headless=true -Dfcrepo.config.file=/opt/fcrepo/config/fcrepo.properties -DconnectionTimeout=-1 -server -Xmx1500m -Xms1000m"</p>
 </blockquote>
 <h3 id="ensuring-tomcat-users-are-in-place">Ensuring Tomcat Users Are In Place<a class="headerlink" href="#ensuring-tomcat-users-are-in-place" title="Permanent link">&para;</a></h3>
 <p>While not strictly necessary, we can use the <code>tomcat-users.xml</code> file to give us direct access to the Fedora endpoint. Fedora defines, out of the box, a <code>fedoraAdmin</code> and <code>fedoraUser</code> role that can be reflected in the users list for access. The following file will also include the base <code>tomcat</code> user. As always, these default passwords should likely not stay as the defaults.</p>
-<p><code>/opt/tomcat/conf/tomcat-users.xml | tomcat:tomcat/600</code></p>
-<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;tomcat-users xmlns=&quot;http://tomcat.apache.org/xml&quot;
-              xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
-              xsi:schemaLocation=&quot;http://tomcat.apache.org/xml tomcat-users.xsd&quot;
-              version=&quot;1.0&quot;&gt;
-  &lt;role rolename=&quot;tomcat&quot;/&gt;
-  &lt;role rolename=&quot;fedoraAdmin&quot;/&gt;
-  &lt;role rolename=&quot;fedoraUser&quot;/&gt;
-  &lt;user username=&quot;tomcat&quot; password=&quot;TOMCAT_PASSWORD&quot; roles=&quot;tomcat&quot;/&gt;
-  &lt;user username=&quot;fedoraAdmin&quot; password=&quot;FEDORA_ADMIN_PASSWORD&quot; roles=&quot;fedoraAdmin&quot;/&gt;
-  &lt;user username=&quot;fedoraUser&quot; password=&quot;FEDORA_USER_PASSWORD&quot; roles=&quot;fedoraUser&quot;/&gt;
-&lt;/tomcat-users&gt;
-</code></pre>
+<p><code>/opt/tomcat/conf/tomcat-users.xml | tomcat:tomcat/600</code>
+<div class="language-xml copy highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nt">&lt;tomcat-users</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">&quot;http://tomcat.apache.org/xml&quot;</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">              </span><span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">              </span><span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://tomcat.apache.org/xml tomcat-users.xsd&quot;</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">              </span><span class="na">version=</span><span class="s">&quot;1.0&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">  </span><span class="nt">&lt;role</span><span class="w"> </span><span class="na">rolename=</span><span class="s">&quot;tomcat&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">  </span><span class="nt">&lt;role</span><span class="w"> </span><span class="na">rolename=</span><span class="s">&quot;fedoraAdmin&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">  </span><span class="nt">&lt;role</span><span class="w"> </span><span class="na">rolename=</span><span class="s">&quot;fedoraUser&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">  </span><span class="nt">&lt;user</span><span class="w"> </span><span class="na">username=</span><span class="s">&quot;tomcat&quot;</span><span class="w"> </span><span class="na">password=</span><span class="s">&quot;TOMCAT_PASSWORD&quot;</span><span class="w"> </span><span class="na">roles=</span><span class="s">&quot;tomcat&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="w">  </span><span class="nt">&lt;user</span><span class="w"> </span><span class="na">username=</span><span class="s">&quot;fedoraAdmin&quot;</span><span class="w"> </span><span class="na">password=</span><span class="s">&quot;FEDORA_ADMIN_PASSWORD&quot;</span><span class="w"> </span><span class="na">roles=</span><span class="s">&quot;fedoraAdmin&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="w">  </span><span class="nt">&lt;user</span><span class="w"> </span><span class="na">username=</span><span class="s">&quot;fedoraUser&quot;</span><span class="w"> </span><span class="na">password=</span><span class="s">&quot;FEDORA_USER_PASSWORD&quot;</span><span class="w"> </span><span class="na">roles=</span><span class="s">&quot;fedoraUser&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="nt">&lt;/tomcat-users&gt;</span>
+</span></code></pre></div></p>
 <ul>
 <li><code>TOMCAT_PASSWORD</code>: <code>tomcat</code></li>
 <li><code>FEDORA_ADMIN_PASSWORD</code>: <code>islandora</code></li>
@@ -3032,10 +3060,10 @@ grant all privileges on database FEDORA_DB to FEDORA_DB_USER;
 </ul>
 <h3 id="downloading-and-placing-the-latest-release">Downloading and Placing the Latest Release<a class="headerlink" href="#downloading-and-placing-the-latest-release" title="Permanent link">&para;</a></h3>
 <p>Fedora <code>.war</code> files are packaged up as releases on the official GitHub repository. You should download the most recent stable release.</p>
-<pre><code class="language-bash">sudo wget -O fcrepo.war FCREPO_WAR_URL
-sudo mv fcrepo.war /opt/tomcat/webapps
-sudo chown tomcat:tomcat /opt/tomcat/webapps/fcrepo.war
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>sudo<span class="w"> </span>wget<span class="w"> </span>-O<span class="w"> </span>fcrepo.war<span class="w"> </span>FCREPO_WAR_URL
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>sudo<span class="w"> </span>mv<span class="w"> </span>fcrepo.war<span class="w"> </span>/opt/tomcat/webapps
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>sudo<span class="w"> </span>chown<span class="w"> </span>tomcat:tomcat<span class="w"> </span>/opt/tomcat/webapps/fcrepo.war
+</span></code></pre></div>
 <ul>
 <li><code>FCREPO_WAR_URL</code>: This can be found at the <a href="https://github.com/fcrepo/fcrepo/releases">fcrepo downloads page</a>; the file you're looking for is:<ul>
 <li>Tagged in green as the 'Latest release'</li>
@@ -3045,36 +3073,36 @@ sudo chown tomcat:tomcat /opt/tomcat/webapps/fcrepo.war
 </ul>
 <h3 id="start-the-tomcat-service">Start the Tomcat Service<a class="headerlink" href="#start-the-tomcat-service" title="Permanent link">&para;</a></h3>
 <p>As before, start the Tomcat service to get Fedora up and running.</p>
-<pre><code class="language-bash">sudo systemctl start tomcat
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>tomcat
+</span></code></pre></div>
 <p><strong>Note:</strong> sometimes it takes a while for Fedora and Tomcat to start up, usually it shouldn't take longer than 5 minutes.</p>
 <p>Once it starts up, Fedora REST API should be available at http://localhost:8080/fcrepo/rest. The username is fedoraAdmin and we defined the password before as <code>FEDORA_ADMIN_PASSWORD</code> (default: "islandora").</p>
 <h2 id="syn">Syn<a class="headerlink" href="#syn" title="Permanent link">&para;</a></h2>
 <h3 id="downloading-the-syn-jar-file">Downloading the Syn JAR File<a class="headerlink" href="#downloading-the-syn-jar-file" title="Permanent link">&para;</a></h3>
 <p>A compiled JAR of Syn can be found on the <a href="https://github.com/Islandora/Syn/releases">Syn releases page</a>. We’re going to add this to the list libraries accessible to Tomcat.</p>
-<pre><code>sudo wget -P /opt/tomcat/lib SYN_JAR_URL
-# Ensure the library has the correct permissions.
-sudo chown -R tomcat:tomcat /opt/tomcat/lib
-sudo chmod -R 640 /opt/tomcat/lib
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>sudo wget -P /opt/tomcat/lib SYN_JAR_URL
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a># Ensure the library has the correct permissions.
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>sudo chown -R tomcat:tomcat /opt/tomcat/lib
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>sudo chmod -R 640 /opt/tomcat/lib
+</span></code></pre></div>
 <ul>
 <li><code>SYN_JAR_URL</code>: The latest stable release of the Syn JAR from the <a href="https://github.com/Islandora/Syn/releases">releases page</a>. Specifically, the JAR compiled as <code>-all.jar</code> is required.</li>
 </ul>
 <h3 id="generating-an-ssl-key-for-syn">Generating an SSL Key for Syn<a class="headerlink" href="#generating-an-ssl-key-for-syn" title="Permanent link">&para;</a></h3>
 <p>For Islandora and Fedora to talk to each other, an SSL key needs to be generated for use with Syn. We’re going to make a spot where such keys can live, and generate one.</p>
-<pre><code class="language-bash">sudo mkdir /opt/keys
-sudo openssl genrsa -out &quot;/opt/keys/syn_private.key&quot; 2048
-sudo openssl rsa -pubout -in &quot;/opt/keys/syn_private.key&quot; -out &quot;/opt/keys/syn_public.key&quot;
-sudo chown www-data:www-data /opt/keys/syn*
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>sudo<span class="w"> </span>mkdir<span class="w"> </span>/opt/keys
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>sudo<span class="w"> </span>openssl<span class="w"> </span>genrsa<span class="w"> </span>-out<span class="w"> </span><span class="s2">&quot;/opt/keys/syn_private.key&quot;</span><span class="w"> </span><span class="m">2048</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>sudo<span class="w"> </span>openssl<span class="w"> </span>rsa<span class="w"> </span>-pubout<span class="w"> </span>-in<span class="w"> </span><span class="s2">&quot;/opt/keys/syn_private.key&quot;</span><span class="w"> </span>-out<span class="w"> </span><span class="s2">&quot;/opt/keys/syn_public.key&quot;</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>sudo<span class="w"> </span>chown<span class="w"> </span>www-data:www-data<span class="w"> </span>/opt/keys/syn*
+</span></code></pre></div>
 <h3 id="placing-the-syn-settings">Placing the Syn Settings<a class="headerlink" href="#placing-the-syn-settings" title="Permanent link">&para;</a></h3>
 <p>Syn sites and tokens belong in a settings file that we’re going to reference in Tomcat.</p>
-<p><code>/opt/fcrepo/config/syn-settings.xml | tomcat:tomcat/600</code></p>
-<pre><code class="language-xml">&lt;config version='1' header='X-Islandora'&gt;
-  &lt;site algorithm='RS256' encoding='PEM' anonymous='true' default='true' path='/opt/keys/syn_public.key'/&gt;
-  &lt;token user='islandora' roles='fedoraAdmin'&gt;ISLANDORA_SYN_TOKEN&lt;/token&gt;
-&lt;/config&gt;
-</code></pre>
+<p><code>/opt/fcrepo/config/syn-settings.xml | tomcat:tomcat/600</code>
+<div class="language-xml copy highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nt">&lt;config</span><span class="w"> </span><span class="na">version=</span><span class="s">&#39;1&#39;</span><span class="w"> </span><span class="na">header=</span><span class="s">&#39;X-Islandora&#39;</span><span class="nt">&gt;</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span><span class="nt">&lt;site</span><span class="w"> </span><span class="na">algorithm=</span><span class="s">&#39;RS256&#39;</span><span class="w"> </span><span class="na">encoding=</span><span class="s">&#39;PEM&#39;</span><span class="w"> </span><span class="na">anonymous=</span><span class="s">&#39;true&#39;</span><span class="w"> </span><span class="na">default=</span><span class="s">&#39;true&#39;</span><span class="w"> </span><span class="na">path=</span><span class="s">&#39;/opt/keys/syn_public.key&#39;</span><span class="nt">/&gt;</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">  </span><span class="nt">&lt;token</span><span class="w"> </span><span class="na">user=</span><span class="s">&#39;islandora&#39;</span><span class="w"> </span><span class="na">roles=</span><span class="s">&#39;fedoraAdmin&#39;</span><span class="nt">&gt;</span>ISLANDORA_SYN_TOKEN<span class="nt">&lt;/token&gt;</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="nt">&lt;/config&gt;</span>
+</span></code></pre></div></p>
 <ul>
 <li><code>ISLANDORA_SYN_TOKEN</code>: <code>islandora</code><ul>
 <li>This should be a secure generated token rather than this default; it will be configured on the Drupal side later.</li>
@@ -3083,6 +3111,8 @@ sudo chown www-data:www-data /opt/keys/syn*
 </ul>
 <h3 id="adding-the-syn-valve-to-tomcat">Adding the Syn Valve to Tomcat<a class="headerlink" href="#adding-the-syn-valve-to-tomcat" title="Permanent link">&para;</a></h3>
 <p>Referencing the valve we’ve created in our <code>syn-settings.xml</code> involves creating a <code>&lt;Valve&gt;</code> entry in Tomcat’s <code>context.xml</code>:</p>
+<p>There are two options here: </p>
+<h4 id="1-enable-the-syn-valve-for-all-of-tomcat">1. Enable the Syn Valve for all of Tomcat.<a class="headerlink" href="#1-enable-the-syn-valve-for-all-of-tomcat" title="Permanent link">&para;</a></h4>
 <p><code>/opt/tomcat/conf/context.xml</code></p>
 <p><strong>Before</strong>:</p>
 <blockquote>
@@ -3095,131 +3125,219 @@ sudo chown www-data:www-data /opt/keys/syn*
 <p>30 |    <code>&lt;Valve className="ca.islandora.syn.valve.SynValve" pathname="/opt/fcrepo/config/syn-settings.xml"/&gt;</code></p>
 <p>31 | <code>&lt;/Context&gt;</code></p>
 </blockquote>
+<h4 id="2-enable-the-syn-valve-for-only-fedora">2. Enable the Syn Valve for only Fedora.<a class="headerlink" href="#2-enable-the-syn-valve-for-only-fedora" title="Permanent link">&para;</a></h4>
+<p>Create a new file at</p>
+<p><code>/opt/tomcat/conf/Catalina/localhost/fcrepo.xml</code></p>
+<div class="language-xml copy highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nt">&lt;Context&gt;</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">    </span><span class="nt">&lt;Valve</span><span class="w"> </span><span class="na">className=</span><span class="s">&quot;ca.islandora.syn.valve.SynValve&quot;</span><span class="w"> </span><span class="na">pathname=</span><span class="s">&quot;/opt/fcrepo/config/syn-settings.xml&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="nt">&lt;/Context&gt;</span>
+</span></code></pre></div>
+<p>Your Fedora web application needs to be deployed in Tomcat with the name <code>fcrepo.war</code>. Otherwise, change the name of the above XML file to match the deployed web application's name.</p>
 <h3 id="restarting-tomcat">Restarting Tomcat<a class="headerlink" href="#restarting-tomcat" title="Permanent link">&para;</a></h3>
 <p>Finally, restart tomcat to apply the new configurations.</p>
-<pre><code class="language-bash">sudo systemctl restart tomcat
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>tomcat
+</span></code></pre></div>
 <p><strong>Note:</strong> sometimes it takes a while for Fedora and Tomcat to start up, usually it shouldn't take longer than 5 minutes.</p>
-<p><strong>Note:</strong> after installing the Syn valve, you'll no longer be able to manually manage objects via Fedora Web UI or access the Fedora home page (http://localhost:8080/fcrepo). All communication with Fedora will now be handled from the Islandora module in Drupal.</p>
+<p><strong>Note:</strong> after installing the Syn valve, you'll no longer be able to manually create/edit or delete objects via Fedora Web UI. All communication with Fedora will now be handled from the Islandora module in Drupal.</p>
+<h3 id="redhat-logging">Redhat logging<a class="headerlink" href="#redhat-logging" title="Permanent link">&para;</a></h3>
+<p>Redhat systems have stopped generating an all inclusive <code>catalina.out</code>, the <code>catalina.&lt;date&gt;.log</code> does not include web application's log statements. To get Fedora log statements flowing, you can create your own <a href="https://logback.qos.ch/">LogBack</a> configuration file and point to it.</p>
+<p><code>/opt/fcrepo/config/fcrepo-logback.xml | tomcat:tomcat/644</code>
+<div class="language-xml copy highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="cp">&lt;!DOCTYPE configuration&gt;</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="nt">&lt;configuration&gt;</span>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">  </span><span class="nt">&lt;appender</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;STDOUT&quot;</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;ch.qos.logback.core.ConsoleAppender&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="w">    </span><span class="nt">&lt;encoder&gt;</span>
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w">      </span><span class="nt">&lt;pattern&gt;</span>%p<span class="w"> </span>%d{HH:mm:ss.SSS}<span class="w"> </span>[%thread]<span class="w"> </span>\(%c{0}\)<span class="w"> </span>%m%n<span class="nt">&lt;/pattern&gt;</span>
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="w">    </span><span class="nt">&lt;/encoder&gt;</span>
+</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="w">  </span><span class="nt">&lt;/appender&gt;</span>
+</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>
+</span><span id="__span-14-10"><a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="w">  </span><span class="nt">&lt;appender</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;FILE&quot;</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;ch.qos.logback.core.rolling.RollingFileAppender&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-14-11"><a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a><span class="w">    </span><span class="nt">&lt;file&gt;</span>${catalina.base}/logs/fcrepo.log<span class="nt">&lt;/file&gt;</span>
+</span><span id="__span-14-12"><a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a><span class="w">    </span><span class="nt">&lt;append&gt;</span>true<span class="nt">&lt;/append&gt;</span>
+</span><span id="__span-14-13"><a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a><span class="w">    </span><span class="nt">&lt;rollingPolicy</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-14-14"><a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a><span class="w">      </span><span class="nt">&lt;fileNamePattern&gt;</span>${catalina.base}/logs/fcrepo.%d{yyyy-MM-dd}.log.%i<span class="nt">&lt;/fileNamePattern&gt;</span>
+</span><span id="__span-14-15"><a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a><span class="w">      </span><span class="nt">&lt;maxFileSize&gt;</span>10MB<span class="nt">&lt;/maxFileSize&gt;</span>
+</span><span id="__span-14-16"><a id="__codelineno-14-16" name="__codelineno-14-16" href="#__codelineno-14-16"></a><span class="w">      </span><span class="nt">&lt;maxHistory&gt;</span>30<span class="nt">&lt;/maxHistory&gt;</span>
+</span><span id="__span-14-17"><a id="__codelineno-14-17" name="__codelineno-14-17" href="#__codelineno-14-17"></a><span class="w">      </span><span class="nt">&lt;totalSizeCap&gt;</span>2GB<span class="nt">&lt;/totalSizeCap&gt;</span>
+</span><span id="__span-14-18"><a id="__codelineno-14-18" name="__codelineno-14-18" href="#__codelineno-14-18"></a><span class="w">    </span><span class="nt">&lt;/rollingPolicy&gt;</span>
+</span><span id="__span-14-19"><a id="__codelineno-14-19" name="__codelineno-14-19" href="#__codelineno-14-19"></a><span class="w">    </span><span class="nt">&lt;encoder&gt;</span>
+</span><span id="__span-14-20"><a id="__codelineno-14-20" name="__codelineno-14-20" href="#__codelineno-14-20"></a><span class="w">      </span><span class="nt">&lt;pattern&gt;</span>%p<span class="w"> </span>%d{HH:mm:ss.SSS}<span class="w"> </span>[%thread]<span class="w"> </span>\(%c{0}\)<span class="w"> </span>%m%n<span class="nt">&lt;/pattern&gt;</span>
+</span><span id="__span-14-21"><a id="__codelineno-14-21" name="__codelineno-14-21" href="#__codelineno-14-21"></a><span class="w">    </span><span class="nt">&lt;/encoder&gt;</span>
+</span><span id="__span-14-22"><a id="__codelineno-14-22" name="__codelineno-14-22" href="#__codelineno-14-22"></a><span class="w">  </span><span class="nt">&lt;/appender&gt;</span>
+</span><span id="__span-14-23"><a id="__codelineno-14-23" name="__codelineno-14-23" href="#__codelineno-14-23"></a>
+</span><span id="__span-14-24"><a id="__codelineno-14-24" name="__codelineno-14-24" href="#__codelineno-14-24"></a><span class="w">  </span><span class="nt">&lt;logger</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;org.fcrepo.auth&quot;</span><span class="w"> </span><span class="na">additivity=</span><span class="s">&quot;false&quot;</span><span class="w"> </span><span class="na">level=</span><span class="s">&quot;${fcrepo.log.auth:-null}&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-14-25"><a id="__codelineno-14-25" name="__codelineno-14-25" href="#__codelineno-14-25"></a><span class="w">    </span><span class="nt">&lt;appender-ref</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;STDOUT&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-14-26"><a id="__codelineno-14-26" name="__codelineno-14-26" href="#__codelineno-14-26"></a><span class="w">    </span><span class="nt">&lt;appender-ref</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;FILE&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-14-27"><a id="__codelineno-14-27" name="__codelineno-14-27" href="#__codelineno-14-27"></a><span class="w">  </span><span class="nt">&lt;/logger&gt;</span>
+</span><span id="__span-14-28"><a id="__codelineno-14-28" name="__codelineno-14-28" href="#__codelineno-14-28"></a><span class="w">  </span><span class="nt">&lt;logger</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;org.fcrepo.config&quot;</span><span class="w"> </span><span class="na">additivity=</span><span class="s">&quot;false&quot;</span><span class="w"> </span><span class="na">level=</span><span class="s">&quot;${fcrepo.log.config:-null}&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-14-29"><a id="__codelineno-14-29" name="__codelineno-14-29" href="#__codelineno-14-29"></a><span class="w">    </span><span class="nt">&lt;appender-ref</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;STDOUT&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-14-30"><a id="__codelineno-14-30" name="__codelineno-14-30" href="#__codelineno-14-30"></a><span class="w">    </span><span class="nt">&lt;appender-ref</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;FILE&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-14-31"><a id="__codelineno-14-31" name="__codelineno-14-31" href="#__codelineno-14-31"></a><span class="w">  </span><span class="nt">&lt;/logger&gt;</span>
+</span><span id="__span-14-32"><a id="__codelineno-14-32" name="__codelineno-14-32" href="#__codelineno-14-32"></a><span class="w">  </span><span class="nt">&lt;logger</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;org.fcrepo.event&quot;</span><span class="w"> </span><span class="na">additivity=</span><span class="s">&quot;false&quot;</span><span class="w"> </span><span class="na">level=</span><span class="s">&quot;${fcrepo.log.event:-null}&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-14-33"><a id="__codelineno-14-33" name="__codelineno-14-33" href="#__codelineno-14-33"></a><span class="w">    </span><span class="nt">&lt;appender-ref</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;STDOUT&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-14-34"><a id="__codelineno-14-34" name="__codelineno-14-34" href="#__codelineno-14-34"></a><span class="w">    </span><span class="nt">&lt;appender-ref</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;FILE&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-14-35"><a id="__codelineno-14-35" name="__codelineno-14-35" href="#__codelineno-14-35"></a><span class="w">  </span><span class="nt">&lt;/logger&gt;</span>
+</span><span id="__span-14-36"><a id="__codelineno-14-36" name="__codelineno-14-36" href="#__codelineno-14-36"></a><span class="w">  </span><span class="nt">&lt;logger</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;org.fcrepo.http.api&quot;</span><span class="w"> </span><span class="na">additivity=</span><span class="s">&quot;false&quot;</span><span class="w"> </span><span class="na">level=</span><span class="s">&quot;${fcrepo.log.http.api:-null}&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-14-37"><a id="__codelineno-14-37" name="__codelineno-14-37" href="#__codelineno-14-37"></a><span class="w">    </span><span class="nt">&lt;appender-ref</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;STDOUT&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-14-38"><a id="__codelineno-14-38" name="__codelineno-14-38" href="#__codelineno-14-38"></a><span class="w">    </span><span class="nt">&lt;appender-ref</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;FILE&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-14-39"><a id="__codelineno-14-39" name="__codelineno-14-39" href="#__codelineno-14-39"></a><span class="w">  </span><span class="nt">&lt;/logger&gt;</span>
+</span><span id="__span-14-40"><a id="__codelineno-14-40" name="__codelineno-14-40" href="#__codelineno-14-40"></a><span class="w">  </span><span class="nt">&lt;logger</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;org.fcrepo.http.commons&quot;</span><span class="w"> </span><span class="na">additivity=</span><span class="s">&quot;false&quot;</span><span class="w"> </span><span class="na">level=</span><span class="s">&quot;${fcrepo.log.http.commons:-null}&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-14-41"><a id="__codelineno-14-41" name="__codelineno-14-41" href="#__codelineno-14-41"></a><span class="w">    </span><span class="nt">&lt;appender-ref</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;STDOUT&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-14-42"><a id="__codelineno-14-42" name="__codelineno-14-42" href="#__codelineno-14-42"></a><span class="w">    </span><span class="nt">&lt;appender-ref</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;FILE&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-14-43"><a id="__codelineno-14-43" name="__codelineno-14-43" href="#__codelineno-14-43"></a><span class="w">  </span><span class="nt">&lt;/logger&gt;</span>
+</span><span id="__span-14-44"><a id="__codelineno-14-44" name="__codelineno-14-44" href="#__codelineno-14-44"></a><span class="w">  </span><span class="nt">&lt;logger</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;org.fcrepo.jms&quot;</span><span class="w"> </span><span class="na">additivity=</span><span class="s">&quot;false&quot;</span><span class="w"> </span><span class="na">level=</span><span class="s">&quot;${fcrepo.log.jms:-null}&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-14-45"><a id="__codelineno-14-45" name="__codelineno-14-45" href="#__codelineno-14-45"></a><span class="w">    </span><span class="nt">&lt;appender-ref</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;STDOUT&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-14-46"><a id="__codelineno-14-46" name="__codelineno-14-46" href="#__codelineno-14-46"></a><span class="w">    </span><span class="nt">&lt;appender-ref</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;FILE&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-14-47"><a id="__codelineno-14-47" name="__codelineno-14-47" href="#__codelineno-14-47"></a><span class="w">  </span><span class="nt">&lt;/logger&gt;</span>
+</span><span id="__span-14-48"><a id="__codelineno-14-48" name="__codelineno-14-48" href="#__codelineno-14-48"></a><span class="w">  </span><span class="nt">&lt;logger</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;org.fcrepo.kernel&quot;</span><span class="w"> </span><span class="na">additivity=</span><span class="s">&quot;false&quot;</span><span class="w"> </span><span class="na">level=</span><span class="s">&quot;${fcrepo.log.kernel:-null}&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-14-49"><a id="__codelineno-14-49" name="__codelineno-14-49" href="#__codelineno-14-49"></a><span class="w">    </span><span class="nt">&lt;appender-ref</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;STDOUT&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-14-50"><a id="__codelineno-14-50" name="__codelineno-14-50" href="#__codelineno-14-50"></a><span class="w">    </span><span class="nt">&lt;appender-ref</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;FILE&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-14-51"><a id="__codelineno-14-51" name="__codelineno-14-51" href="#__codelineno-14-51"></a><span class="w">  </span><span class="nt">&lt;/logger&gt;</span>
+</span><span id="__span-14-52"><a id="__codelineno-14-52" name="__codelineno-14-52" href="#__codelineno-14-52"></a><span class="w">  </span><span class="nt">&lt;logger</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;org.fcrepo.persistence&quot;</span><span class="w"> </span><span class="na">additivity=</span><span class="s">&quot;false&quot;</span><span class="w"> </span><span class="na">level=</span><span class="s">&quot;${fcrepo.log.persistence:-null}&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-14-53"><a id="__codelineno-14-53" name="__codelineno-14-53" href="#__codelineno-14-53"></a><span class="w">    </span><span class="nt">&lt;appender-ref</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;STDOUT&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-14-54"><a id="__codelineno-14-54" name="__codelineno-14-54" href="#__codelineno-14-54"></a><span class="w">    </span><span class="nt">&lt;appender-ref</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;FILE&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-14-55"><a id="__codelineno-14-55" name="__codelineno-14-55" href="#__codelineno-14-55"></a><span class="w">  </span><span class="nt">&lt;/logger&gt;</span>
+</span><span id="__span-14-56"><a id="__codelineno-14-56" name="__codelineno-14-56" href="#__codelineno-14-56"></a><span class="w">  </span><span class="nt">&lt;logger</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;org.fcrepo.search&quot;</span><span class="w"> </span><span class="na">additivity=</span><span class="s">&quot;false&quot;</span><span class="w"> </span><span class="na">level=</span><span class="s">&quot;${fcrepo.log.search:-null}&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-14-57"><a id="__codelineno-14-57" name="__codelineno-14-57" href="#__codelineno-14-57"></a><span class="w">    </span><span class="nt">&lt;appender-ref</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;STDOUT&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-14-58"><a id="__codelineno-14-58" name="__codelineno-14-58" href="#__codelineno-14-58"></a><span class="w">    </span><span class="nt">&lt;appender-ref</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;FILE&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-14-59"><a id="__codelineno-14-59" name="__codelineno-14-59" href="#__codelineno-14-59"></a><span class="w">  </span><span class="nt">&lt;/logger&gt;</span>
+</span><span id="__span-14-60"><a id="__codelineno-14-60" name="__codelineno-14-60" href="#__codelineno-14-60"></a><span class="w">  </span><span class="nt">&lt;logger</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;org.fcrepo.storage&quot;</span><span class="w"> </span><span class="na">additivity=</span><span class="s">&quot;false&quot;</span><span class="w"> </span><span class="na">level=</span><span class="s">&quot;${fcrepo.log.storage:-null}&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-14-61"><a id="__codelineno-14-61" name="__codelineno-14-61" href="#__codelineno-14-61"></a><span class="w">    </span><span class="nt">&lt;appender-ref</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;STDOUT&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-14-62"><a id="__codelineno-14-62" name="__codelineno-14-62" href="#__codelineno-14-62"></a><span class="w">    </span><span class="nt">&lt;appender-ref</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;FILE&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-14-63"><a id="__codelineno-14-63" name="__codelineno-14-63" href="#__codelineno-14-63"></a><span class="w">  </span><span class="nt">&lt;/logger&gt;</span>
+</span><span id="__span-14-64"><a id="__codelineno-14-64" name="__codelineno-14-64" href="#__codelineno-14-64"></a><span class="w">  </span><span class="nt">&lt;logger</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;org.fcrepo&quot;</span><span class="w"> </span><span class="na">additivity=</span><span class="s">&quot;false&quot;</span><span class="w"> </span><span class="na">level=</span><span class="s">&quot;${fcrepo.log:-INFO}&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-14-65"><a id="__codelineno-14-65" name="__codelineno-14-65" href="#__codelineno-14-65"></a><span class="w">    </span><span class="nt">&lt;appender-ref</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;STDOUT&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-14-66"><a id="__codelineno-14-66" name="__codelineno-14-66" href="#__codelineno-14-66"></a><span class="w">    </span><span class="nt">&lt;appender-ref</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;FILE&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-14-67"><a id="__codelineno-14-67" name="__codelineno-14-67" href="#__codelineno-14-67"></a><span class="w">  </span><span class="nt">&lt;/logger&gt;</span>
+</span><span id="__span-14-68"><a id="__codelineno-14-68" name="__codelineno-14-68" href="#__codelineno-14-68"></a>
+</span><span id="__span-14-69"><a id="__codelineno-14-69" name="__codelineno-14-69" href="#__codelineno-14-69"></a><span class="w">  </span><span class="nt">&lt;root</span><span class="w"> </span><span class="na">level=</span><span class="s">&quot;${fcrepo.log.root:-WARN}&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-14-70"><a id="__codelineno-14-70" name="__codelineno-14-70" href="#__codelineno-14-70"></a><span class="w">    </span><span class="nt">&lt;appender-ref</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;STDOUT&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-14-71"><a id="__codelineno-14-71" name="__codelineno-14-71" href="#__codelineno-14-71"></a><span class="w">    </span><span class="nt">&lt;appender-ref</span><span class="w"> </span><span class="na">ref=</span><span class="s">&quot;FILE&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-14-72"><a id="__codelineno-14-72" name="__codelineno-14-72" href="#__codelineno-14-72"></a><span class="w">  </span><span class="nt">&lt;/root&gt;</span>
+</span><span id="__span-14-73"><a id="__codelineno-14-73" name="__codelineno-14-73" href="#__codelineno-14-73"></a><span class="nt">&lt;/configuration&gt;</span>
+</span></code></pre></div></p>
+<p>Then alter your <code>$JAVA_OPTS</code> like <a href="#adding-the-fedora-variables-to-java_opts">above</a> to include 
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>-Dlogback.configurationFile=/opt/fcrepo/config/fcrepo-logback.xml
+</span></code></pre></div></p>
+<p>This will generate a log file at <code>${catalina.base}/logs/fcrepo.log</code> and will rotate each day or if the logs reaches 10MB. It will maintain 30 days of old logs, or 2GB whichever comes first.</p>
 <h2 id="blazegraph-2">Blazegraph 2<a class="headerlink" href="#blazegraph-2" title="Permanent link">&para;</a></h2>
 <h3 id="creating-a-working-space-for-blazegraph">Creating a Working Space for Blazegraph<a class="headerlink" href="#creating-a-working-space-for-blazegraph" title="Permanent link">&para;</a></h3>
 <p>Blazegraph needs a space for configurations and data; we’re going to create this space in <code>/opt</code>.</p>
-<pre><code class="language-bash">sudo mkdir -p /opt/blazegraph/data
-sudo mkdir /opt/blazegraph/conf
-sudo chown -R tomcat:tomcat /opt/blazegraph
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>sudo<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>/opt/blazegraph/data
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>sudo<span class="w"> </span>mkdir<span class="w"> </span>/opt/blazegraph/conf
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>sudo<span class="w"> </span>chown<span class="w"> </span>-R<span class="w"> </span>tomcat:tomcat<span class="w"> </span>/opt/blazegraph
+</span></code></pre></div>
 <h3 id="downloading-and-placing-the-blazegraph-war">Downloading and Placing the Blazegraph WAR<a class="headerlink" href="#downloading-and-placing-the-blazegraph-war" title="Permanent link">&para;</a></h3>
 <p>The Blazegraph <code>.war</code> file can be found in a few different places, but to ensure we’re able to easily <code>wget</code> it, we’re going to use the <a href="https://search.maven.org/">maven.org</a> repository link to grab it.</p>
-<pre><code class="language-bash">cd /opt
-sudo wget -O blazegraph.war BLAZEGRAPH_WARFILE_LINK
-sudo mv blazegraph.war /opt/tomcat/webapps
-sudo chown tomcat:tomcat /opt/tomcat/webapps/blazegraph.war
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="nb">cd</span><span class="w"> </span>/opt
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>sudo<span class="w"> </span>wget<span class="w"> </span>-O<span class="w"> </span>blazegraph.war<span class="w"> </span>BLAZEGRAPH_WARFILE_LINK
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>sudo<span class="w"> </span>mv<span class="w"> </span>blazegraph.war<span class="w"> </span>/opt/tomcat/webapps
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>sudo<span class="w"> </span>chown<span class="w"> </span>tomcat:tomcat<span class="w"> </span>/opt/tomcat/webapps/blazegraph.war
+</span></code></pre></div>
 <ul>
 <li>BLAZEGRAPH_WAR_URL: You can find a link to this at the <a href="https://repo1.maven.org/maven2/com/blazegraph/bigdata-war/">Maven repository for Blazegraph</a>; you’ll want to click the link for the latest version of Blazegraph 2.1.x, then get the link to the <code>.war</code> file within that version folder.</li>
 </ul>
 <p>Once this is downloaded, give it a moment to expand before moving on to the next step.</p>
 <h3 id="configuring-logging">Configuring Logging<a class="headerlink" href="#configuring-logging" title="Permanent link">&para;</a></h3>
 <p>We would like to have an appropriate logging configuration for Blazegraph, which can be useful for looking at incoming traffic and determining if anything has gone wrong with Blazegraph. Our logger isn’t going to be much different than the default logger; it can be made more or less verbose by changing the default <code>WARN</code> levels. There are several other loggers that can be enabled, like a SPARQL query trace or summary query evaluation log; if these are desired they should be added in. Consult the Blazegraph documentation for more details.</p>
-<p><code>/opt/blazegraph/conf/log4j.properties | tomcat:tomcat/644</code></p>
-<pre><code>log4j.rootCategory=WARN, dest1
-
-# Loggers.
-log4j.logger.com.bigdata=WARN
-log4j.logger.com.bigdata.btree=WARN
-
-# Normal data loader (single threaded).
-#log4j.logger.com.bigdata.rdf.store.DataLoader=INFO
-
-# dest1
-log4j.appender.dest1=org.apache.log4j.ConsoleAppender
-log4j.appender.dest1.layout=org.apache.log4j.PatternLayout
-log4j.appender.dest1.layout.ConversionPattern=%-5p: %F:%L: %m%n
-#log4j.appender.dest1.layout.ConversionPattern=%-5p: %r %l: %m%n
-#log4j.appender.dest1.layout.ConversionPattern=%-5p: %m%n
-#log4j.appender.dest1.layout.ConversionPattern=%-4r [%t] %-5p %c %x - %m%n
-#log4j.appender.dest1.layout.ConversionPattern=%-4r(%d) [%t] %-5p %c(%l:%M) %x - %m%n
-
-# Rule execution log. This is a formatted log file (comma delimited).
-log4j.logger.com.bigdata.relation.rule.eval.RuleLog=INFO,ruleLog
-log4j.additivity.com.bigdata.relation.rule.eval.RuleLog=false
-log4j.appender.ruleLog=org.apache.log4j.FileAppender
-log4j.appender.ruleLog.Threshold=ALL
-log4j.appender.ruleLog.File=/var/log/blazegraph/rules.log
-log4j.appender.ruleLog.Append=true
-log4j.appender.ruleLog.BufferedIO=false
-log4j.appender.ruleLog.layout=org.apache.log4j.PatternLayout
-log4j.appender.ruleLog.layout.ConversionPattern=%m
-</code></pre>
+<p><code>/opt/blazegraph/conf/log4j.properties | tomcat:tomcat/644</code>
+<div class="language-text copy highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>log4j.rootCategory=WARN, dest1
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a># Loggers.
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>log4j.logger.com.bigdata=WARN
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>log4j.logger.com.bigdata.btree=WARN
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>
+</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a># Normal data loader (single threaded).
+</span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>#log4j.logger.com.bigdata.rdf.store.DataLoader=INFO
+</span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>
+</span><span id="__span-18-10"><a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a># dest1
+</span><span id="__span-18-11"><a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>log4j.appender.dest1=org.apache.log4j.ConsoleAppender
+</span><span id="__span-18-12"><a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a>log4j.appender.dest1.layout=org.apache.log4j.PatternLayout
+</span><span id="__span-18-13"><a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a>log4j.appender.dest1.layout.ConversionPattern=%-5p: %F:%L: %m%n
+</span><span id="__span-18-14"><a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a>#log4j.appender.dest1.layout.ConversionPattern=%-5p: %r %l: %m%n
+</span><span id="__span-18-15"><a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a>#log4j.appender.dest1.layout.ConversionPattern=%-5p: %m%n
+</span><span id="__span-18-16"><a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a>#log4j.appender.dest1.layout.ConversionPattern=%-4r [%t] %-5p %c %x - %m%n
+</span><span id="__span-18-17"><a id="__codelineno-18-17" name="__codelineno-18-17" href="#__codelineno-18-17"></a>#log4j.appender.dest1.layout.ConversionPattern=%-4r(%d) [%t] %-5p %c(%l:%M) %x - %m%n
+</span><span id="__span-18-18"><a id="__codelineno-18-18" name="__codelineno-18-18" href="#__codelineno-18-18"></a>
+</span><span id="__span-18-19"><a id="__codelineno-18-19" name="__codelineno-18-19" href="#__codelineno-18-19"></a># Rule execution log. This is a formatted log file (comma delimited).
+</span><span id="__span-18-20"><a id="__codelineno-18-20" name="__codelineno-18-20" href="#__codelineno-18-20"></a>log4j.logger.com.bigdata.relation.rule.eval.RuleLog=INFO,ruleLog
+</span><span id="__span-18-21"><a id="__codelineno-18-21" name="__codelineno-18-21" href="#__codelineno-18-21"></a>log4j.additivity.com.bigdata.relation.rule.eval.RuleLog=false
+</span><span id="__span-18-22"><a id="__codelineno-18-22" name="__codelineno-18-22" href="#__codelineno-18-22"></a>log4j.appender.ruleLog=org.apache.log4j.FileAppender
+</span><span id="__span-18-23"><a id="__codelineno-18-23" name="__codelineno-18-23" href="#__codelineno-18-23"></a>log4j.appender.ruleLog.Threshold=ALL
+</span><span id="__span-18-24"><a id="__codelineno-18-24" name="__codelineno-18-24" href="#__codelineno-18-24"></a>log4j.appender.ruleLog.File=/var/log/blazegraph/rules.log
+</span><span id="__span-18-25"><a id="__codelineno-18-25" name="__codelineno-18-25" href="#__codelineno-18-25"></a>log4j.appender.ruleLog.Append=true
+</span><span id="__span-18-26"><a id="__codelineno-18-26" name="__codelineno-18-26" href="#__codelineno-18-26"></a>log4j.appender.ruleLog.BufferedIO=false
+</span><span id="__span-18-27"><a id="__codelineno-18-27" name="__codelineno-18-27" href="#__codelineno-18-27"></a>log4j.appender.ruleLog.layout=org.apache.log4j.PatternLayout
+</span><span id="__span-18-28"><a id="__codelineno-18-28" name="__codelineno-18-28" href="#__codelineno-18-28"></a>log4j.appender.ruleLog.layout.ConversionPattern=%m
+</span></code></pre></div></p>
 <h3 id="adding-a-blazegraph-configuration">Adding a Blazegraph Configuration<a class="headerlink" href="#adding-a-blazegraph-configuration" title="Permanent link">&para;</a></h3>
 <p>Our configuration will be built from a few different files that we will eventually reference in <code>JAVA_OPTS</code> and directly apply to Blazegraph; these include most of the functional pieces Blazegraph requires, as well as a generalized configuration for the <code>islandora</code> namespace it will use. As with most large configurations like this, these should likely be tuned to your preferences, and the following files only represent sensible defaults.</p>
-<p><code>/opt/blazegraph/conf/RWStore.properties | tomcat:tomcat/644</code></p>
-<pre><code>com.bigdata.journal.AbstractJournal.file=/opt/blazegraph/data/blazegraph.jnl
-com.bigdata.journal.AbstractJournal.bufferMode=DiskRW
-com.bigdata.service.AbstractTransactionService.minReleaseAge=1
-com.bigdata.journal.Journal.groupCommit=false
-com.bigdata.btree.writeRetentionQueue.capacity=4000
-com.bigdata.btree.BTree.branchingFactor=128
-com.bigdata.journal.AbstractJournal.initialExtent=209715200
-com.bigdata.journal.AbstractJournal.maximumExtent=209715200
-com.bigdata.rdf.sail.truthMaintenance=false
-com.bigdata.rdf.store.AbstractTripleStore.quads=true
-com.bigdata.rdf.store.AbstractTripleStore.statementIdentifiers=false
-com.bigdata.rdf.store.AbstractTripleStore.textIndex=false
-com.bigdata.rdf.store.AbstractTripleStore.axiomsClass=com.bigdata.rdf.axioms.NoAxioms
-com.bigdata.namespace.kb.lex.com.bigdata.btree.BTree.branchingFactor=400
-com.bigdata.namespace.kb.spo.com.bigdata.btree.BTree.branchingFactor=1024
-com.bigdata.journal.Journal.collectPlatformStatistics=false
-</code></pre>
-<p><code>/opt/blazegraph/conf/blazegraph.properties | tomcat:tomcat/644</code></p>
-<pre><code>com.bigdata.rdf.store.AbstractTripleStore.textIndex=false
-com.bigdata.rdf.store.AbstractTripleStore.axiomsClass=com.bigdata.rdf.axioms.OwlAxioms
-com.bigdata.rdf.sail.isolatableIndices=false
-com.bigdata.rdf.store.AbstractTripleStore.justify=true
-com.bigdata.rdf.sail.truthMaintenance=true
-com.bigdata.rdf.sail.namespace=islandora
-com.bigdata.rdf.store.AbstractTripleStore.quads=false
-com.bigdata.namespace.islandora.lex.com.bigdata.btree.BTree.branchingFactor=400
-com.bigdata.journal.Journal.groupCommit=false
-com.bigdata.namespace.islandora.spo.com.bigdata.btree.BTree.branchingFactor=1024
-com.bigdata.rdf.store.AbstractTripleStore.geoSpatial=false
-com.bigdata.rdf.store.AbstractTripleStore.statementIdentifiers=false
-</code></pre>
-<p><code>/opt/blazegraph/conf/inference.nt | tomcat:tomcat/644</code></p>
-<pre><code>&lt;http://pcdm.org/models#memberOf&gt; &lt;http://www.w3.org/2002/07/owl#inverseOf&gt; &lt;http://pcdm.org/models#hasMember&gt; .
-&lt;http://pcdm.org/models#fileOf&gt; &lt;http://www.w3.org/2002/07/owl#inverseOf&gt; &lt;http://pcdm.org/models#hasFile&gt; .
-</code></pre>
+<p><code>/opt/blazegraph/conf/RWStore.properties | tomcat:tomcat/644</code>
+<div class="language-text copy highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>com.bigdata.journal.AbstractJournal.file=/opt/blazegraph/data/blazegraph.jnl
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>com.bigdata.journal.AbstractJournal.bufferMode=DiskRW
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>com.bigdata.service.AbstractTransactionService.minReleaseAge=1
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>com.bigdata.journal.Journal.groupCommit=false
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>com.bigdata.btree.writeRetentionQueue.capacity=4000
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>com.bigdata.btree.BTree.branchingFactor=128
+</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>com.bigdata.journal.AbstractJournal.initialExtent=209715200
+</span><span id="__span-19-8"><a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>com.bigdata.journal.AbstractJournal.maximumExtent=209715200
+</span><span id="__span-19-9"><a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a>com.bigdata.rdf.sail.truthMaintenance=false
+</span><span id="__span-19-10"><a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a>com.bigdata.rdf.store.AbstractTripleStore.quads=true
+</span><span id="__span-19-11"><a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a>com.bigdata.rdf.store.AbstractTripleStore.statementIdentifiers=false
+</span><span id="__span-19-12"><a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a>com.bigdata.rdf.store.AbstractTripleStore.textIndex=false
+</span><span id="__span-19-13"><a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a>com.bigdata.rdf.store.AbstractTripleStore.axiomsClass=com.bigdata.rdf.axioms.NoAxioms
+</span><span id="__span-19-14"><a id="__codelineno-19-14" name="__codelineno-19-14" href="#__codelineno-19-14"></a>com.bigdata.namespace.kb.lex.com.bigdata.btree.BTree.branchingFactor=400
+</span><span id="__span-19-15"><a id="__codelineno-19-15" name="__codelineno-19-15" href="#__codelineno-19-15"></a>com.bigdata.namespace.kb.spo.com.bigdata.btree.BTree.branchingFactor=1024
+</span><span id="__span-19-16"><a id="__codelineno-19-16" name="__codelineno-19-16" href="#__codelineno-19-16"></a>com.bigdata.journal.Journal.collectPlatformStatistics=false
+</span></code></pre></div></p>
+<p><code>/opt/blazegraph/conf/blazegraph.properties | tomcat:tomcat/644</code>
+<div class="language-text copy highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>com.bigdata.rdf.store.AbstractTripleStore.textIndex=false
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>com.bigdata.rdf.store.AbstractTripleStore.axiomsClass=com.bigdata.rdf.axioms.OwlAxioms
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>com.bigdata.rdf.sail.isolatableIndices=false
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>com.bigdata.rdf.store.AbstractTripleStore.justify=true
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>com.bigdata.rdf.sail.truthMaintenance=true
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>com.bigdata.rdf.sail.namespace=islandora
+</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a>com.bigdata.rdf.store.AbstractTripleStore.quads=false
+</span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a>com.bigdata.namespace.islandora.lex.com.bigdata.btree.BTree.branchingFactor=400
+</span><span id="__span-20-9"><a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a>com.bigdata.journal.Journal.groupCommit=false
+</span><span id="__span-20-10"><a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a>com.bigdata.namespace.islandora.spo.com.bigdata.btree.BTree.branchingFactor=1024
+</span><span id="__span-20-11"><a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a>com.bigdata.rdf.store.AbstractTripleStore.geoSpatial=false
+</span><span id="__span-20-12"><a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a>com.bigdata.rdf.store.AbstractTripleStore.statementIdentifiers=false
+</span></code></pre></div></p>
+<p><code>/opt/blazegraph/conf/inference.nt | tomcat:tomcat/644</code>
+<div class="language-text copy highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>&lt;http://pcdm.org/models#memberOf&gt; &lt;http://www.w3.org/2002/07/owl#inverseOf&gt; &lt;http://pcdm.org/models#hasMember&gt; .
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>&lt;http://pcdm.org/models#fileOf&gt; &lt;http://www.w3.org/2002/07/owl#inverseOf&gt; &lt;http://pcdm.org/models#hasFile&gt; .
+</span></code></pre></div></p>
 <h3 id="specifying-the-rwstoreproperties-in-java_opts">Specifying the <code>RWStore.properties</code> in <code>JAVA_OPTS</code><a class="headerlink" href="#specifying-the-rwstoreproperties-in-java_opts" title="Permanent link">&para;</a></h3>
 <p>In order to enable our configuration when Tomcat starts, we need to reference the location of <code>RWStore.properties</code> in the <code>JAVA_OPTS</code> environment variable that Tomcat uses.</p>
 <p><code>/opt/tomcat/bin/setenv.sh</code></p>
 <p><strong>Before</strong>:</p>
 <blockquote>
-<p>3 | export JAVA_OPTS="-Djava.awt.headless=true -Dfcrepo.home=/otp/fcrepo/data -Dfcrepo.velocity.runtime.log=/opt/tomcat/logs/velocity.log -Dfcrepo.jms.baseUrl=http://localhost:8080/fcrepo/rest -Dfcrepo.autoversioning.enabled=false -DconnectionTimeout=-1 -Dfcrepo.db.url=jdbc:postgresql://localhost:5432/fcrepo -Dfcrepo.db.user=fedora -Dfcrepo.db.password=fedora -server -Xmx1500m -Xms1000m"</p>
+<p>3 | export JAVA_OPTS="-Djava.awt.headless=true -Dfcrepo.config.file=/opt/fcrepo/config/fcrepo.properties -DconnectionTimeout=-1 -server -Xmx1500m -Xms1000m"</p>
 </blockquote>
 <p><strong>After</strong>:</p>
 <blockquote>
-<p>3 | export JAVA_OPTS="-Djava.awt.headless=true -Dfcrepo.home=/otp/fcrepo/data -Dfcrepo.velocity.runtime.log=/opt/tomcat/logs/velocity.log -Dfcrepo.jms.baseUrl=http://localhost:8080/fcrepo/rest -Dfcrepo.autoversioning.enabled=false -DconnectionTimeout=-1 -Dfcrepo.db.url=jdbc:postgresql://localhost:5432/fcrepo -Dfcrepo.db.user=fedora -Dfcrepo.db.password=fedora -Dcom.bigdata.rdf.sail.webapp.ConfigParams.propertyFile=/opt/blazegraph/conf/RWStore.properties -Dlog4j.configuration=file:/opt/blazegraph/conf/log4j.properties -server -Xmx1500m -Xms1000m"</p>
+<p>3 | export JAVA_OPTS="-Djava.awt.headless=true -Dfcrepo.config.file=/opt/fcrepo/config/fcrepo.properties -DconnectionTimeout=-1 -Dcom.bigdata.rdf.sail.webapp.ConfigParams.propertyFile=/opt/blazegraph/conf/RWStore.properties -Dlog4j.configuration=file:/opt/blazegraph/conf/log4j.properties -server -Xmx1500m -Xms1000m"</p>
 </blockquote>
 <h3 id="restarting-tomcat_1">Restarting Tomcat<a class="headerlink" href="#restarting-tomcat_1" title="Permanent link">&para;</a></h3>
 <p>Finally, restart Tomcat to pick up the changes we’ve made.</p>
-<pre><code class="language-bash">sudo systemctl restart tomcat
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>tomcat
+</span></code></pre></div>
 <h3 id="installing-blazegraph-namespaces-and-inference">Installing Blazegraph Namespaces and Inference<a class="headerlink" href="#installing-blazegraph-namespaces-and-inference" title="Permanent link">&para;</a></h3>
 <p>The two other files we created, <code>blazegraph.properties</code> and <code>inference.nt</code>, contain information that Blazegraph requires in order to establish and correctly use the datasets Islandora will send to it. First, we need to create a dataset - contained in <code>blazegraph.properties</code> - and then we need to inform that dataset of the inference set we have contained in <code>inference.nt</code>.</p>
-<pre><code class="language-bash">curl -X POST -H &quot;Content-Type: text/plain&quot; --data-binary @/opt/blazegraph/conf/blazegraph.properties http://localhost:8080/blazegraph/namespace
-# If this worked correctly, Blazegraph should respond with &quot;CREATED: islandora&quot;
-# to let us know it created the islandora namespace.
-curl -X POST -H &quot;Content-Type: text/plain&quot; --data-binary @/opt/blazegraph/conf/inference.nt http://localhost:8080/blazegraph/namespace/islandora/sparql
-# If this worked correctly, Blazegraph should respond with some XML letting us
-# know it added the 2 entries from inference.nt to the namespace.
-</code></pre>
+<p><div class="language-bash copy highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: text/plain&quot;</span><span class="w"> </span>--data-binary<span class="w"> </span>@/opt/blazegraph/conf/blazegraph.properties<span class="w"> </span>http://localhost:8080/blazegraph/namespace
+</span></code></pre></div>
+If this worked correctly, Blazegraph should respond with "CREATED: islandora" to let us know it created the islandora namespace.
+<div class="language-bash copy highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: text/plain&quot;</span><span class="w"> </span>--data-binary<span class="w"> </span>@/opt/blazegraph/conf/inference.nt<span class="w"> </span>http://localhost:8080/blazegraph/namespace/islandora/sparql
+</span></code></pre></div>
+If this worked correctly, Blazegraph should respond with some XML letting us know it added the 2 entries from inference.nt to the namespace.</p>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 8, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 11, 2023</span>
       
     
   </small>

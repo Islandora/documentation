@@ -2478,324 +2478,324 @@
 <p>To get the resource located at <code>http://localhost:8000/node/3</code> in JSON, you can go to <code>http://localhost:8000/node/3?_format=json</code>.</p>
 <p>&#x1F34E; For example:</p>
 <p>You can do this in your web browser or with a command line client like cURL. (Note: response body here has been formatted, yours will look different)</p>
-<pre><code>vagrant@claw:~$ curl -i http://localhost:8000/node/3?_format=json
-
-HTTP/1.1 200 OK
-Date: Mon, 04 Mar 2019 21:53:50 GMT
-Server: Apache/2.4.18 (Ubuntu)
-X-Powered-By: PHP/7.1.26-1+ubuntu16.04.1+deb.sury.org+1
-Cache-Control: must-revalidate, no-cache, private
-Link: &lt;http://localhost:8000/node/3&gt;; rel=&quot;canonical&quot;
-Link: &lt;http://localhost:8000/node/3/delete&gt;; rel=&quot;https://drupal.org/link-relations/delete-form&quot;
-Link: &lt;http://localhost:8000/admin/content/node/delete?node=3&gt;; rel=&quot;https://drupal.org/link-relations/delete-multiple-form&quot;
-Link: &lt;http://localhost:8000/node/3/edit&gt;; rel=&quot;edit-form&quot;
-Link: &lt;http://localhost:8000/node/3/revisions&gt;; rel=&quot;version-history&quot;
-Link: &lt;http://localhost:8000/node/3&gt;; rel=&quot;https://drupal.org/link-relations/revision&quot;
-Link: &lt;http://localhost:8000/node?node=3&gt;; rel=&quot;https://drupal.org/link-relations/create&quot;
-Link: &lt;http://purl.org/coar/resource_type/c_c513&gt;; rel=&quot;tag&quot;; title=&quot;Image&quot;
-Link: &lt;http://localhost:8000/media/1&gt;; rel=&quot;related&quot;; title=&quot;Original File&quot;
-Link: &lt;http://localhost:8000/media/2&gt;; rel=&quot;related&quot;; title=&quot;Service File&quot;
-Link: &lt;http://localhost:8000/media/3&gt;; rel=&quot;related&quot;; title=&quot;Thumbnail Image&quot;
-Link: &lt;http://localhost:8000/node/3?_format=jsonld&gt;; rel=&quot;alternate&quot;; type=&quot;application/ld+json&quot;
-X-Drupal-Dynamic-Cache: MISS
-X-UA-Compatible: IE=edge
-Content-language: en
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-Expires: Sun, 19 Nov 1978 05:00:00 GMT
-Vary:
-X-Generator: Drupal 8 (https://www.drupal.org)
-X-Drupal-Cache: MISS
-Content-Length: 1521
-Content-Type: application/json
-
-{
-  &quot;nid&quot;: [
-    {
-      &quot;value&quot;: 1
-    }
-  ],
-  &quot;uuid&quot;: [
-    {
-      &quot;value&quot;: &quot;8322e36e-f8ec-4fd9-919d-52aed7b17a52&quot;
-    }
-  ],
-  &quot;vid&quot;: [
-    {
-      &quot;value&quot;: 1
-    }
-  ],
-  &quot;langcode&quot;: [
-    {
-      &quot;value&quot;: &quot;en&quot;
-    }
-  ],
-  &quot;type&quot;: [
-    {
-      &quot;target_id&quot;: &quot;islandora_object&quot;,
-      &quot;target_type&quot;: &quot;node_type&quot;,
-      &quot;target_uuid&quot;: &quot;62189bec-3ef3-4196-b847-b17e5ce61fd5&quot;
-    }
-  ],
-  &quot;revision_timestamp&quot;: [
-    {
-      &quot;value&quot;: &quot;2019-03-01T19:43:12+00:00&quot;,
-      &quot;format&quot;: &quot;Y-m-d\\TH:i:sP&quot;
-    }
-  ],
-  &quot;revision_uid&quot;: [
-    {
-      &quot;target_id&quot;: 1,
-      &quot;target_type&quot;: &quot;user&quot;,
-      &quot;target_uuid&quot;: &quot;46a47057-de2d-4ce2-87ae-dbe4551209b8&quot;,
-      &quot;url&quot;: &quot;\\/user\\/1&quot;
-    }
-  ],
-  &quot;revision_log&quot;: [],
-  &quot;status&quot;: [
-    {
-      &quot;value&quot;: true
-    }
-  ],
-  &quot;title&quot;: [
-    {
-      &quot;value&quot;: &quot;Custom item&quot;
-    }
-  ],
-  &quot;uid&quot;: [
-    {
-      &quot;target_id&quot;: 1,
-      &quot;target_type&quot;: &quot;user&quot;,
-      &quot;target_uuid&quot;: &quot;46a47057-de2d-4ce2-87ae-dbe4551209b8&quot;,
-      &quot;url&quot;: &quot;\\/user\\/1&quot;
-    }
-  ],
-  &quot;created&quot;: [
-    {
-      &quot;value&quot;: &quot;2019-03-01T19:42:54+00:00&quot;,
-      &quot;format&quot;: &quot;Y-m-d\\TH:i:sP&quot;
-    }
-  ],
-  &quot;changed&quot;: [
-    {
-      &quot;value&quot;: &quot;2019-03-01T19:43:12+00:00&quot;,
-      &quot;format&quot;: &quot;Y-m-d\\TH:i:sP&quot;
-    }
-  ],
-  &quot;promote&quot;: [
-    {
-      &quot;value&quot;: true
-    }
-  ],
-  &quot;sticky&quot;: [
-    {
-      &quot;value&quot;: false
-    }
-  ],
-  &quot;default_langcode&quot;: [
-    {
-      &quot;value&quot;: true
-    }
-  ],
-  &quot;revision_translation_affected&quot;: [
-    {
-      &quot;value&quot;: true
-    }
-  ],
-  &quot;content_translation_source&quot;: [
-    {
-      &quot;value&quot;: &quot;und&quot;
-    }
-  ],
-  &quot;content_translation_outdated&quot;: [
-    {
-      &quot;value&quot;: false
-    }
-  ],
-  &quot;field_alternative_title&quot;: [],
-  &quot;field_description&quot;: [],
-  &quot;field_display_hints&quot;: [],
-  &quot;field_edtf_date&quot;: [],
-  &quot;field_edtf_date_created&quot;: [],
-  &quot;field_edtf_date_issued&quot;: [],
-  &quot;field_extent&quot;: [
-    {
-      &quot;value&quot;: &quot;1 item&quot;
-    }
-  ],
-  &quot;field_identifier&quot;: [],
-  &quot;field_linked_agent&quot;: [],
-  &quot;field_member_of&quot;: [],
-  &quot;field_model&quot;: [
-    {
-      &quot;target_id&quot;: 24,
-      &quot;target_type&quot;: &quot;taxonomy_term&quot;,
-      &quot;target_uuid&quot;: &quot;e7560b68-e95a-4e76-9671-2a3041cd9800&quot;,
-      &quot;url&quot;: &quot;\\/taxonomy\\/term\\/24&quot;
-    }
-  ],
-  &quot;field_pid&quot;: [],
-  &quot;field_resource_type&quot;: [],
-  &quot;field_rights&quot;: [],
-  &quot;field_subject&quot;: []
-}
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>vagrant@claw:~$ curl -i http://localhost:8000/node/3?_format=json
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>HTTP/1.1 200 OK
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>Date: Mon, 04 Mar 2019 21:53:50 GMT
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>Server: Apache/2.4.18 (Ubuntu)
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>X-Powered-By: PHP/7.1.26-1+ubuntu16.04.1+deb.sury.org+1
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>Cache-Control: must-revalidate, no-cache, private
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>Link: &lt;http://localhost:8000/node/3&gt;; rel=&quot;canonical&quot;
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>Link: &lt;http://localhost:8000/node/3/delete&gt;; rel=&quot;https://drupal.org/link-relations/delete-form&quot;
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>Link: &lt;http://localhost:8000/admin/content/node/delete?node=3&gt;; rel=&quot;https://drupal.org/link-relations/delete-multiple-form&quot;
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>Link: &lt;http://localhost:8000/node/3/edit&gt;; rel=&quot;edit-form&quot;
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>Link: &lt;http://localhost:8000/node/3/revisions&gt;; rel=&quot;version-history&quot;
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>Link: &lt;http://localhost:8000/node/3&gt;; rel=&quot;https://drupal.org/link-relations/revision&quot;
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>Link: &lt;http://localhost:8000/node?node=3&gt;; rel=&quot;https://drupal.org/link-relations/create&quot;
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>Link: &lt;http://purl.org/coar/resource_type/c_c513&gt;; rel=&quot;tag&quot;; title=&quot;Image&quot;
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>Link: &lt;http://localhost:8000/media/1&gt;; rel=&quot;related&quot;; title=&quot;Original File&quot;
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>Link: &lt;http://localhost:8000/media/2&gt;; rel=&quot;related&quot;; title=&quot;Service File&quot;
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>Link: &lt;http://localhost:8000/media/3&gt;; rel=&quot;related&quot;; title=&quot;Thumbnail Image&quot;
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>Link: &lt;http://localhost:8000/node/3?_format=jsonld&gt;; rel=&quot;alternate&quot;; type=&quot;application/ld+json&quot;
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>X-Drupal-Dynamic-Cache: MISS
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>X-UA-Compatible: IE=edge
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>Content-language: en
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>X-Content-Type-Options: nosniff
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>X-Frame-Options: SAMEORIGIN
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>Expires: Sun, 19 Nov 1978 05:00:00 GMT
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>Vary:
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>X-Generator: Drupal 8 (https://www.drupal.org)
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>X-Drupal-Cache: MISS
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>Content-Length: 1521
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>Content-Type: application/json
+</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>
+</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>{
+</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>  &quot;nid&quot;: [
+</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>    {
+</span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>      &quot;value&quot;: 1
+</span><span id="__span-0-36"><a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>    }
+</span><span id="__span-0-37"><a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>  ],
+</span><span id="__span-0-38"><a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>  &quot;uuid&quot;: [
+</span><span id="__span-0-39"><a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>    {
+</span><span id="__span-0-40"><a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a>      &quot;value&quot;: &quot;8322e36e-f8ec-4fd9-919d-52aed7b17a52&quot;
+</span><span id="__span-0-41"><a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a>    }
+</span><span id="__span-0-42"><a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a>  ],
+</span><span id="__span-0-43"><a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a>  &quot;vid&quot;: [
+</span><span id="__span-0-44"><a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a>    {
+</span><span id="__span-0-45"><a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a>      &quot;value&quot;: 1
+</span><span id="__span-0-46"><a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a>    }
+</span><span id="__span-0-47"><a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a>  ],
+</span><span id="__span-0-48"><a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a>  &quot;langcode&quot;: [
+</span><span id="__span-0-49"><a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a>    {
+</span><span id="__span-0-50"><a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a>      &quot;value&quot;: &quot;en&quot;
+</span><span id="__span-0-51"><a id="__codelineno-0-51" name="__codelineno-0-51" href="#__codelineno-0-51"></a>    }
+</span><span id="__span-0-52"><a id="__codelineno-0-52" name="__codelineno-0-52" href="#__codelineno-0-52"></a>  ],
+</span><span id="__span-0-53"><a id="__codelineno-0-53" name="__codelineno-0-53" href="#__codelineno-0-53"></a>  &quot;type&quot;: [
+</span><span id="__span-0-54"><a id="__codelineno-0-54" name="__codelineno-0-54" href="#__codelineno-0-54"></a>    {
+</span><span id="__span-0-55"><a id="__codelineno-0-55" name="__codelineno-0-55" href="#__codelineno-0-55"></a>      &quot;target_id&quot;: &quot;islandora_object&quot;,
+</span><span id="__span-0-56"><a id="__codelineno-0-56" name="__codelineno-0-56" href="#__codelineno-0-56"></a>      &quot;target_type&quot;: &quot;node_type&quot;,
+</span><span id="__span-0-57"><a id="__codelineno-0-57" name="__codelineno-0-57" href="#__codelineno-0-57"></a>      &quot;target_uuid&quot;: &quot;62189bec-3ef3-4196-b847-b17e5ce61fd5&quot;
+</span><span id="__span-0-58"><a id="__codelineno-0-58" name="__codelineno-0-58" href="#__codelineno-0-58"></a>    }
+</span><span id="__span-0-59"><a id="__codelineno-0-59" name="__codelineno-0-59" href="#__codelineno-0-59"></a>  ],
+</span><span id="__span-0-60"><a id="__codelineno-0-60" name="__codelineno-0-60" href="#__codelineno-0-60"></a>  &quot;revision_timestamp&quot;: [
+</span><span id="__span-0-61"><a id="__codelineno-0-61" name="__codelineno-0-61" href="#__codelineno-0-61"></a>    {
+</span><span id="__span-0-62"><a id="__codelineno-0-62" name="__codelineno-0-62" href="#__codelineno-0-62"></a>      &quot;value&quot;: &quot;2019-03-01T19:43:12+00:00&quot;,
+</span><span id="__span-0-63"><a id="__codelineno-0-63" name="__codelineno-0-63" href="#__codelineno-0-63"></a>      &quot;format&quot;: &quot;Y-m-d\\TH:i:sP&quot;
+</span><span id="__span-0-64"><a id="__codelineno-0-64" name="__codelineno-0-64" href="#__codelineno-0-64"></a>    }
+</span><span id="__span-0-65"><a id="__codelineno-0-65" name="__codelineno-0-65" href="#__codelineno-0-65"></a>  ],
+</span><span id="__span-0-66"><a id="__codelineno-0-66" name="__codelineno-0-66" href="#__codelineno-0-66"></a>  &quot;revision_uid&quot;: [
+</span><span id="__span-0-67"><a id="__codelineno-0-67" name="__codelineno-0-67" href="#__codelineno-0-67"></a>    {
+</span><span id="__span-0-68"><a id="__codelineno-0-68" name="__codelineno-0-68" href="#__codelineno-0-68"></a>      &quot;target_id&quot;: 1,
+</span><span id="__span-0-69"><a id="__codelineno-0-69" name="__codelineno-0-69" href="#__codelineno-0-69"></a>      &quot;target_type&quot;: &quot;user&quot;,
+</span><span id="__span-0-70"><a id="__codelineno-0-70" name="__codelineno-0-70" href="#__codelineno-0-70"></a>      &quot;target_uuid&quot;: &quot;46a47057-de2d-4ce2-87ae-dbe4551209b8&quot;,
+</span><span id="__span-0-71"><a id="__codelineno-0-71" name="__codelineno-0-71" href="#__codelineno-0-71"></a>      &quot;url&quot;: &quot;\\/user\\/1&quot;
+</span><span id="__span-0-72"><a id="__codelineno-0-72" name="__codelineno-0-72" href="#__codelineno-0-72"></a>    }
+</span><span id="__span-0-73"><a id="__codelineno-0-73" name="__codelineno-0-73" href="#__codelineno-0-73"></a>  ],
+</span><span id="__span-0-74"><a id="__codelineno-0-74" name="__codelineno-0-74" href="#__codelineno-0-74"></a>  &quot;revision_log&quot;: [],
+</span><span id="__span-0-75"><a id="__codelineno-0-75" name="__codelineno-0-75" href="#__codelineno-0-75"></a>  &quot;status&quot;: [
+</span><span id="__span-0-76"><a id="__codelineno-0-76" name="__codelineno-0-76" href="#__codelineno-0-76"></a>    {
+</span><span id="__span-0-77"><a id="__codelineno-0-77" name="__codelineno-0-77" href="#__codelineno-0-77"></a>      &quot;value&quot;: true
+</span><span id="__span-0-78"><a id="__codelineno-0-78" name="__codelineno-0-78" href="#__codelineno-0-78"></a>    }
+</span><span id="__span-0-79"><a id="__codelineno-0-79" name="__codelineno-0-79" href="#__codelineno-0-79"></a>  ],
+</span><span id="__span-0-80"><a id="__codelineno-0-80" name="__codelineno-0-80" href="#__codelineno-0-80"></a>  &quot;title&quot;: [
+</span><span id="__span-0-81"><a id="__codelineno-0-81" name="__codelineno-0-81" href="#__codelineno-0-81"></a>    {
+</span><span id="__span-0-82"><a id="__codelineno-0-82" name="__codelineno-0-82" href="#__codelineno-0-82"></a>      &quot;value&quot;: &quot;Custom item&quot;
+</span><span id="__span-0-83"><a id="__codelineno-0-83" name="__codelineno-0-83" href="#__codelineno-0-83"></a>    }
+</span><span id="__span-0-84"><a id="__codelineno-0-84" name="__codelineno-0-84" href="#__codelineno-0-84"></a>  ],
+</span><span id="__span-0-85"><a id="__codelineno-0-85" name="__codelineno-0-85" href="#__codelineno-0-85"></a>  &quot;uid&quot;: [
+</span><span id="__span-0-86"><a id="__codelineno-0-86" name="__codelineno-0-86" href="#__codelineno-0-86"></a>    {
+</span><span id="__span-0-87"><a id="__codelineno-0-87" name="__codelineno-0-87" href="#__codelineno-0-87"></a>      &quot;target_id&quot;: 1,
+</span><span id="__span-0-88"><a id="__codelineno-0-88" name="__codelineno-0-88" href="#__codelineno-0-88"></a>      &quot;target_type&quot;: &quot;user&quot;,
+</span><span id="__span-0-89"><a id="__codelineno-0-89" name="__codelineno-0-89" href="#__codelineno-0-89"></a>      &quot;target_uuid&quot;: &quot;46a47057-de2d-4ce2-87ae-dbe4551209b8&quot;,
+</span><span id="__span-0-90"><a id="__codelineno-0-90" name="__codelineno-0-90" href="#__codelineno-0-90"></a>      &quot;url&quot;: &quot;\\/user\\/1&quot;
+</span><span id="__span-0-91"><a id="__codelineno-0-91" name="__codelineno-0-91" href="#__codelineno-0-91"></a>    }
+</span><span id="__span-0-92"><a id="__codelineno-0-92" name="__codelineno-0-92" href="#__codelineno-0-92"></a>  ],
+</span><span id="__span-0-93"><a id="__codelineno-0-93" name="__codelineno-0-93" href="#__codelineno-0-93"></a>  &quot;created&quot;: [
+</span><span id="__span-0-94"><a id="__codelineno-0-94" name="__codelineno-0-94" href="#__codelineno-0-94"></a>    {
+</span><span id="__span-0-95"><a id="__codelineno-0-95" name="__codelineno-0-95" href="#__codelineno-0-95"></a>      &quot;value&quot;: &quot;2019-03-01T19:42:54+00:00&quot;,
+</span><span id="__span-0-96"><a id="__codelineno-0-96" name="__codelineno-0-96" href="#__codelineno-0-96"></a>      &quot;format&quot;: &quot;Y-m-d\\TH:i:sP&quot;
+</span><span id="__span-0-97"><a id="__codelineno-0-97" name="__codelineno-0-97" href="#__codelineno-0-97"></a>    }
+</span><span id="__span-0-98"><a id="__codelineno-0-98" name="__codelineno-0-98" href="#__codelineno-0-98"></a>  ],
+</span><span id="__span-0-99"><a id="__codelineno-0-99" name="__codelineno-0-99" href="#__codelineno-0-99"></a>  &quot;changed&quot;: [
+</span><span id="__span-0-100"><a id="__codelineno-0-100" name="__codelineno-0-100" href="#__codelineno-0-100"></a>    {
+</span><span id="__span-0-101"><a id="__codelineno-0-101" name="__codelineno-0-101" href="#__codelineno-0-101"></a>      &quot;value&quot;: &quot;2019-03-01T19:43:12+00:00&quot;,
+</span><span id="__span-0-102"><a id="__codelineno-0-102" name="__codelineno-0-102" href="#__codelineno-0-102"></a>      &quot;format&quot;: &quot;Y-m-d\\TH:i:sP&quot;
+</span><span id="__span-0-103"><a id="__codelineno-0-103" name="__codelineno-0-103" href="#__codelineno-0-103"></a>    }
+</span><span id="__span-0-104"><a id="__codelineno-0-104" name="__codelineno-0-104" href="#__codelineno-0-104"></a>  ],
+</span><span id="__span-0-105"><a id="__codelineno-0-105" name="__codelineno-0-105" href="#__codelineno-0-105"></a>  &quot;promote&quot;: [
+</span><span id="__span-0-106"><a id="__codelineno-0-106" name="__codelineno-0-106" href="#__codelineno-0-106"></a>    {
+</span><span id="__span-0-107"><a id="__codelineno-0-107" name="__codelineno-0-107" href="#__codelineno-0-107"></a>      &quot;value&quot;: true
+</span><span id="__span-0-108"><a id="__codelineno-0-108" name="__codelineno-0-108" href="#__codelineno-0-108"></a>    }
+</span><span id="__span-0-109"><a id="__codelineno-0-109" name="__codelineno-0-109" href="#__codelineno-0-109"></a>  ],
+</span><span id="__span-0-110"><a id="__codelineno-0-110" name="__codelineno-0-110" href="#__codelineno-0-110"></a>  &quot;sticky&quot;: [
+</span><span id="__span-0-111"><a id="__codelineno-0-111" name="__codelineno-0-111" href="#__codelineno-0-111"></a>    {
+</span><span id="__span-0-112"><a id="__codelineno-0-112" name="__codelineno-0-112" href="#__codelineno-0-112"></a>      &quot;value&quot;: false
+</span><span id="__span-0-113"><a id="__codelineno-0-113" name="__codelineno-0-113" href="#__codelineno-0-113"></a>    }
+</span><span id="__span-0-114"><a id="__codelineno-0-114" name="__codelineno-0-114" href="#__codelineno-0-114"></a>  ],
+</span><span id="__span-0-115"><a id="__codelineno-0-115" name="__codelineno-0-115" href="#__codelineno-0-115"></a>  &quot;default_langcode&quot;: [
+</span><span id="__span-0-116"><a id="__codelineno-0-116" name="__codelineno-0-116" href="#__codelineno-0-116"></a>    {
+</span><span id="__span-0-117"><a id="__codelineno-0-117" name="__codelineno-0-117" href="#__codelineno-0-117"></a>      &quot;value&quot;: true
+</span><span id="__span-0-118"><a id="__codelineno-0-118" name="__codelineno-0-118" href="#__codelineno-0-118"></a>    }
+</span><span id="__span-0-119"><a id="__codelineno-0-119" name="__codelineno-0-119" href="#__codelineno-0-119"></a>  ],
+</span><span id="__span-0-120"><a id="__codelineno-0-120" name="__codelineno-0-120" href="#__codelineno-0-120"></a>  &quot;revision_translation_affected&quot;: [
+</span><span id="__span-0-121"><a id="__codelineno-0-121" name="__codelineno-0-121" href="#__codelineno-0-121"></a>    {
+</span><span id="__span-0-122"><a id="__codelineno-0-122" name="__codelineno-0-122" href="#__codelineno-0-122"></a>      &quot;value&quot;: true
+</span><span id="__span-0-123"><a id="__codelineno-0-123" name="__codelineno-0-123" href="#__codelineno-0-123"></a>    }
+</span><span id="__span-0-124"><a id="__codelineno-0-124" name="__codelineno-0-124" href="#__codelineno-0-124"></a>  ],
+</span><span id="__span-0-125"><a id="__codelineno-0-125" name="__codelineno-0-125" href="#__codelineno-0-125"></a>  &quot;content_translation_source&quot;: [
+</span><span id="__span-0-126"><a id="__codelineno-0-126" name="__codelineno-0-126" href="#__codelineno-0-126"></a>    {
+</span><span id="__span-0-127"><a id="__codelineno-0-127" name="__codelineno-0-127" href="#__codelineno-0-127"></a>      &quot;value&quot;: &quot;und&quot;
+</span><span id="__span-0-128"><a id="__codelineno-0-128" name="__codelineno-0-128" href="#__codelineno-0-128"></a>    }
+</span><span id="__span-0-129"><a id="__codelineno-0-129" name="__codelineno-0-129" href="#__codelineno-0-129"></a>  ],
+</span><span id="__span-0-130"><a id="__codelineno-0-130" name="__codelineno-0-130" href="#__codelineno-0-130"></a>  &quot;content_translation_outdated&quot;: [
+</span><span id="__span-0-131"><a id="__codelineno-0-131" name="__codelineno-0-131" href="#__codelineno-0-131"></a>    {
+</span><span id="__span-0-132"><a id="__codelineno-0-132" name="__codelineno-0-132" href="#__codelineno-0-132"></a>      &quot;value&quot;: false
+</span><span id="__span-0-133"><a id="__codelineno-0-133" name="__codelineno-0-133" href="#__codelineno-0-133"></a>    }
+</span><span id="__span-0-134"><a id="__codelineno-0-134" name="__codelineno-0-134" href="#__codelineno-0-134"></a>  ],
+</span><span id="__span-0-135"><a id="__codelineno-0-135" name="__codelineno-0-135" href="#__codelineno-0-135"></a>  &quot;field_alternative_title&quot;: [],
+</span><span id="__span-0-136"><a id="__codelineno-0-136" name="__codelineno-0-136" href="#__codelineno-0-136"></a>  &quot;field_description&quot;: [],
+</span><span id="__span-0-137"><a id="__codelineno-0-137" name="__codelineno-0-137" href="#__codelineno-0-137"></a>  &quot;field_display_hints&quot;: [],
+</span><span id="__span-0-138"><a id="__codelineno-0-138" name="__codelineno-0-138" href="#__codelineno-0-138"></a>  &quot;field_edtf_date&quot;: [],
+</span><span id="__span-0-139"><a id="__codelineno-0-139" name="__codelineno-0-139" href="#__codelineno-0-139"></a>  &quot;field_edtf_date_created&quot;: [],
+</span><span id="__span-0-140"><a id="__codelineno-0-140" name="__codelineno-0-140" href="#__codelineno-0-140"></a>  &quot;field_edtf_date_issued&quot;: [],
+</span><span id="__span-0-141"><a id="__codelineno-0-141" name="__codelineno-0-141" href="#__codelineno-0-141"></a>  &quot;field_extent&quot;: [
+</span><span id="__span-0-142"><a id="__codelineno-0-142" name="__codelineno-0-142" href="#__codelineno-0-142"></a>    {
+</span><span id="__span-0-143"><a id="__codelineno-0-143" name="__codelineno-0-143" href="#__codelineno-0-143"></a>      &quot;value&quot;: &quot;1 item&quot;
+</span><span id="__span-0-144"><a id="__codelineno-0-144" name="__codelineno-0-144" href="#__codelineno-0-144"></a>    }
+</span><span id="__span-0-145"><a id="__codelineno-0-145" name="__codelineno-0-145" href="#__codelineno-0-145"></a>  ],
+</span><span id="__span-0-146"><a id="__codelineno-0-146" name="__codelineno-0-146" href="#__codelineno-0-146"></a>  &quot;field_identifier&quot;: [],
+</span><span id="__span-0-147"><a id="__codelineno-0-147" name="__codelineno-0-147" href="#__codelineno-0-147"></a>  &quot;field_linked_agent&quot;: [],
+</span><span id="__span-0-148"><a id="__codelineno-0-148" name="__codelineno-0-148" href="#__codelineno-0-148"></a>  &quot;field_member_of&quot;: [],
+</span><span id="__span-0-149"><a id="__codelineno-0-149" name="__codelineno-0-149" href="#__codelineno-0-149"></a>  &quot;field_model&quot;: [
+</span><span id="__span-0-150"><a id="__codelineno-0-150" name="__codelineno-0-150" href="#__codelineno-0-150"></a>    {
+</span><span id="__span-0-151"><a id="__codelineno-0-151" name="__codelineno-0-151" href="#__codelineno-0-151"></a>      &quot;target_id&quot;: 24,
+</span><span id="__span-0-152"><a id="__codelineno-0-152" name="__codelineno-0-152" href="#__codelineno-0-152"></a>      &quot;target_type&quot;: &quot;taxonomy_term&quot;,
+</span><span id="__span-0-153"><a id="__codelineno-0-153" name="__codelineno-0-153" href="#__codelineno-0-153"></a>      &quot;target_uuid&quot;: &quot;e7560b68-e95a-4e76-9671-2a3041cd9800&quot;,
+</span><span id="__span-0-154"><a id="__codelineno-0-154" name="__codelineno-0-154" href="#__codelineno-0-154"></a>      &quot;url&quot;: &quot;\\/taxonomy\\/term\\/24&quot;
+</span><span id="__span-0-155"><a id="__codelineno-0-155" name="__codelineno-0-155" href="#__codelineno-0-155"></a>    }
+</span><span id="__span-0-156"><a id="__codelineno-0-156" name="__codelineno-0-156" href="#__codelineno-0-156"></a>  ],
+</span><span id="__span-0-157"><a id="__codelineno-0-157" name="__codelineno-0-157" href="#__codelineno-0-157"></a>  &quot;field_pid&quot;: [],
+</span><span id="__span-0-158"><a id="__codelineno-0-158" name="__codelineno-0-158" href="#__codelineno-0-158"></a>  &quot;field_resource_type&quot;: [],
+</span><span id="__span-0-159"><a id="__codelineno-0-159" name="__codelineno-0-159" href="#__codelineno-0-159"></a>  &quot;field_rights&quot;: [],
+</span><span id="__span-0-160"><a id="__codelineno-0-160" name="__codelineno-0-160" href="#__codelineno-0-160"></a>  &quot;field_subject&quot;: []
+</span><span id="__span-0-161"><a id="__codelineno-0-161" name="__codelineno-0-161" href="#__codelineno-0-161"></a>}
+</span></code></pre></div>
 <h2 id="media">Media<a class="headerlink" href="#media" title="Permanent link">&para;</a></h2>
 <p>The above steps are the same for media, it is just the URI that has changed.</p>
 <p><img alt="REST configuration" src="../../assets/rest-media-configuration.png" /></p>
 <p>For media you use <code>/media/{id}</code></p>
 <p>&#x1F34E; For example:</p>
-<pre><code>curl -u admin:islandora http://localhost:8000/media/2?_format=json
-
-{
-  &quot;mid&quot;: [
-    {
-      &quot;value&quot;: 2
-    }
-  ],
-  &quot;uuid&quot;: [
-    {
-      &quot;value&quot;: &quot;e75e609d-510c-4764-9280-665bb7026161&quot;
-    }
-  ],
-  &quot;vid&quot;: [
-    {
-      &quot;value&quot;: 2
-    }
-  ],
-  &quot;langcode&quot;: [
-    {
-      &quot;value&quot;: &quot;en&quot;
-    }
-  ],
-  &quot;bundle&quot;: [
-    {
-      &quot;target_id&quot;: &quot;image&quot;,
-      &quot;target_type&quot;: &quot;media_type&quot;,
-      &quot;target_uuid&quot;: &quot;3860e653-201b-4509-89dd-628c446d81cb&quot;
-    }
-  ],
-  &quot;revision_created&quot;: [
-    {
-      &quot;value&quot;: &quot;2019-03-01T19:43:48+00:00&quot;,
-      &quot;format&quot;: &quot;Y-m-d\\TH:i:sP&quot;
-    }
-  ],
-  &quot;revision_user&quot;: [],
-  &quot;revision_log_message&quot;: [],
-  &quot;status&quot;: [
-    {
-      &quot;value&quot;: true
-    }
-  ],
-  &quot;name&quot;: [
-    {
-      &quot;value&quot;: &quot;1-Service File.jpg&quot;
-    }
-  ],
-  &quot;thumbnail&quot;: [
-    {
-      &quot;target_id&quot;: 3,
-      &quot;alt&quot;: null,
-      &quot;title&quot;: null,
-      &quot;width&quot;: 800,
-      &quot;height&quot;: 1333,
-      &quot;target_type&quot;: &quot;file&quot;,
-      &quot;target_uuid&quot;: &quot;e97ad038-dcb3-4d81-aa91-c945b2fe092c&quot;,
-      &quot;url&quot;: &quot;http:\\/\\/localhost:8000\\/sites\\/default\\/files\\/2019-03\\/1-Service%20File.jpg&quot;
-    }
-  ],
-  &quot;uid&quot;: [
-    {
-      &quot;target_id&quot;: 1,
-      &quot;target_type&quot;: &quot;user&quot;,
-      &quot;target_uuid&quot;: &quot;46a47057-de2d-4ce2-87ae-dbe4551209b8&quot;,
-      &quot;url&quot;: &quot;\\/user\\/1&quot;
-    }
-  ],
-  &quot;created&quot;: [
-    {
-      &quot;value&quot;: &quot;2019-03-01T19:43:48+00:00&quot;,
-      &quot;format&quot;: &quot;Y-m-d\\TH:i:sP&quot;
-    }
-  ],
-  &quot;changed&quot;: [
-    {
-      &quot;value&quot;: &quot;2019-03-01T19:43:48+00:00&quot;,
-      &quot;format&quot;: &quot;Y-m-d\\TH:i:sP&quot;
-    }
-  ],
-  &quot;default_langcode&quot;: [
-    {
-      &quot;value&quot;: true
-    }
-  ],
-  &quot;revision_translation_affected&quot;: [
-    {
-      &quot;value&quot;: true
-    }
-  ],
-  &quot;content_translation_source&quot;: [
-    {
-      &quot;value&quot;: &quot;und&quot;
-    }
-  ],
-  &quot;content_translation_outdated&quot;: [
-    {
-      &quot;value&quot;: false
-    }
-  ],
-  &quot;field_access_terms&quot;: [],
-  &quot;field_file_size&quot;: [
-    {
-      &quot;value&quot;: 166608
-    }
-  ],
-  &quot;field_height&quot;: [
-    {
-      &quot;value&quot;: 1333
-    }
-  ],
-  &quot;field_media_image&quot;: [
-    {
-      &quot;target_id&quot;: 3,
-      &quot;alt&quot;: null,
-      &quot;title&quot;: null,
-      &quot;width&quot;: 800,
-      &quot;height&quot;: 1333,
-      &quot;target_type&quot;: &quot;file&quot;,
-      &quot;target_uuid&quot;: &quot;e97ad038-dcb3-4d81-aa91-c945b2fe092c&quot;,
-      &quot;url&quot;: &quot;http:\\/\\/localhost:8000\\/sites\\/default\\/files\\/2019-03\\/1-Service%20File.jpg&quot;
-    }
-  ],
-  &quot;field_media_of&quot;: [
-    {
-      &quot;target_id&quot;: 1,
-      &quot;target_type&quot;: &quot;node&quot;,
-      &quot;target_uuid&quot;: &quot;8322e36e-f8ec-4fd9-919d-52aed7b17a52&quot;,
-      &quot;url&quot;: &quot;\\/node\\/1&quot;
-    }
-  ],
-  &quot;field_media_use&quot;: [
-    {
-      &quot;target_id&quot;: 18,
-      &quot;target_type&quot;: &quot;taxonomy_term&quot;,
-      &quot;target_uuid&quot;: &quot;e8c698a7-8c15-47c4-8567-1c27f8f0c19e&quot;,
-      &quot;url&quot;: &quot;\\/taxonomy\\/term\\/18&quot;
-    }
-  ],
-  &quot;field_mime_type&quot;: [
-    {
-      &quot;value&quot;: &quot;image\\/jpeg&quot;
-    }
-  ],
-  &quot;field_width&quot;: [
-    {
-      &quot;value&quot;: 800
-    }
-  ]
-}
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>curl -u admin:islandora http://localhost:8000/media/2?_format=json
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>{
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>  &quot;mid&quot;: [
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    {
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>      &quot;value&quot;: 2
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>    }
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>  ],
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>  &quot;uuid&quot;: [
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    {
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>      &quot;value&quot;: &quot;e75e609d-510c-4764-9280-665bb7026161&quot;
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>    }
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>  ],
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>  &quot;vid&quot;: [
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>    {
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>      &quot;value&quot;: 2
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>    }
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>  ],
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>  &quot;langcode&quot;: [
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>    {
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>      &quot;value&quot;: &quot;en&quot;
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>    }
+</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>  ],
+</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>  &quot;bundle&quot;: [
+</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>    {
+</span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>      &quot;target_id&quot;: &quot;image&quot;,
+</span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>      &quot;target_type&quot;: &quot;media_type&quot;,
+</span><span id="__span-1-28"><a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a>      &quot;target_uuid&quot;: &quot;3860e653-201b-4509-89dd-628c446d81cb&quot;
+</span><span id="__span-1-29"><a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a>    }
+</span><span id="__span-1-30"><a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a>  ],
+</span><span id="__span-1-31"><a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a>  &quot;revision_created&quot;: [
+</span><span id="__span-1-32"><a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a>    {
+</span><span id="__span-1-33"><a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a>      &quot;value&quot;: &quot;2019-03-01T19:43:48+00:00&quot;,
+</span><span id="__span-1-34"><a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a>      &quot;format&quot;: &quot;Y-m-d\\TH:i:sP&quot;
+</span><span id="__span-1-35"><a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a>    }
+</span><span id="__span-1-36"><a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a>  ],
+</span><span id="__span-1-37"><a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a>  &quot;revision_user&quot;: [],
+</span><span id="__span-1-38"><a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a>  &quot;revision_log_message&quot;: [],
+</span><span id="__span-1-39"><a id="__codelineno-1-39" name="__codelineno-1-39" href="#__codelineno-1-39"></a>  &quot;status&quot;: [
+</span><span id="__span-1-40"><a id="__codelineno-1-40" name="__codelineno-1-40" href="#__codelineno-1-40"></a>    {
+</span><span id="__span-1-41"><a id="__codelineno-1-41" name="__codelineno-1-41" href="#__codelineno-1-41"></a>      &quot;value&quot;: true
+</span><span id="__span-1-42"><a id="__codelineno-1-42" name="__codelineno-1-42" href="#__codelineno-1-42"></a>    }
+</span><span id="__span-1-43"><a id="__codelineno-1-43" name="__codelineno-1-43" href="#__codelineno-1-43"></a>  ],
+</span><span id="__span-1-44"><a id="__codelineno-1-44" name="__codelineno-1-44" href="#__codelineno-1-44"></a>  &quot;name&quot;: [
+</span><span id="__span-1-45"><a id="__codelineno-1-45" name="__codelineno-1-45" href="#__codelineno-1-45"></a>    {
+</span><span id="__span-1-46"><a id="__codelineno-1-46" name="__codelineno-1-46" href="#__codelineno-1-46"></a>      &quot;value&quot;: &quot;1-Service File.jpg&quot;
+</span><span id="__span-1-47"><a id="__codelineno-1-47" name="__codelineno-1-47" href="#__codelineno-1-47"></a>    }
+</span><span id="__span-1-48"><a id="__codelineno-1-48" name="__codelineno-1-48" href="#__codelineno-1-48"></a>  ],
+</span><span id="__span-1-49"><a id="__codelineno-1-49" name="__codelineno-1-49" href="#__codelineno-1-49"></a>  &quot;thumbnail&quot;: [
+</span><span id="__span-1-50"><a id="__codelineno-1-50" name="__codelineno-1-50" href="#__codelineno-1-50"></a>    {
+</span><span id="__span-1-51"><a id="__codelineno-1-51" name="__codelineno-1-51" href="#__codelineno-1-51"></a>      &quot;target_id&quot;: 3,
+</span><span id="__span-1-52"><a id="__codelineno-1-52" name="__codelineno-1-52" href="#__codelineno-1-52"></a>      &quot;alt&quot;: null,
+</span><span id="__span-1-53"><a id="__codelineno-1-53" name="__codelineno-1-53" href="#__codelineno-1-53"></a>      &quot;title&quot;: null,
+</span><span id="__span-1-54"><a id="__codelineno-1-54" name="__codelineno-1-54" href="#__codelineno-1-54"></a>      &quot;width&quot;: 800,
+</span><span id="__span-1-55"><a id="__codelineno-1-55" name="__codelineno-1-55" href="#__codelineno-1-55"></a>      &quot;height&quot;: 1333,
+</span><span id="__span-1-56"><a id="__codelineno-1-56" name="__codelineno-1-56" href="#__codelineno-1-56"></a>      &quot;target_type&quot;: &quot;file&quot;,
+</span><span id="__span-1-57"><a id="__codelineno-1-57" name="__codelineno-1-57" href="#__codelineno-1-57"></a>      &quot;target_uuid&quot;: &quot;e97ad038-dcb3-4d81-aa91-c945b2fe092c&quot;,
+</span><span id="__span-1-58"><a id="__codelineno-1-58" name="__codelineno-1-58" href="#__codelineno-1-58"></a>      &quot;url&quot;: &quot;http:\\/\\/localhost:8000\\/sites\\/default\\/files\\/2019-03\\/1-Service%20File.jpg&quot;
+</span><span id="__span-1-59"><a id="__codelineno-1-59" name="__codelineno-1-59" href="#__codelineno-1-59"></a>    }
+</span><span id="__span-1-60"><a id="__codelineno-1-60" name="__codelineno-1-60" href="#__codelineno-1-60"></a>  ],
+</span><span id="__span-1-61"><a id="__codelineno-1-61" name="__codelineno-1-61" href="#__codelineno-1-61"></a>  &quot;uid&quot;: [
+</span><span id="__span-1-62"><a id="__codelineno-1-62" name="__codelineno-1-62" href="#__codelineno-1-62"></a>    {
+</span><span id="__span-1-63"><a id="__codelineno-1-63" name="__codelineno-1-63" href="#__codelineno-1-63"></a>      &quot;target_id&quot;: 1,
+</span><span id="__span-1-64"><a id="__codelineno-1-64" name="__codelineno-1-64" href="#__codelineno-1-64"></a>      &quot;target_type&quot;: &quot;user&quot;,
+</span><span id="__span-1-65"><a id="__codelineno-1-65" name="__codelineno-1-65" href="#__codelineno-1-65"></a>      &quot;target_uuid&quot;: &quot;46a47057-de2d-4ce2-87ae-dbe4551209b8&quot;,
+</span><span id="__span-1-66"><a id="__codelineno-1-66" name="__codelineno-1-66" href="#__codelineno-1-66"></a>      &quot;url&quot;: &quot;\\/user\\/1&quot;
+</span><span id="__span-1-67"><a id="__codelineno-1-67" name="__codelineno-1-67" href="#__codelineno-1-67"></a>    }
+</span><span id="__span-1-68"><a id="__codelineno-1-68" name="__codelineno-1-68" href="#__codelineno-1-68"></a>  ],
+</span><span id="__span-1-69"><a id="__codelineno-1-69" name="__codelineno-1-69" href="#__codelineno-1-69"></a>  &quot;created&quot;: [
+</span><span id="__span-1-70"><a id="__codelineno-1-70" name="__codelineno-1-70" href="#__codelineno-1-70"></a>    {
+</span><span id="__span-1-71"><a id="__codelineno-1-71" name="__codelineno-1-71" href="#__codelineno-1-71"></a>      &quot;value&quot;: &quot;2019-03-01T19:43:48+00:00&quot;,
+</span><span id="__span-1-72"><a id="__codelineno-1-72" name="__codelineno-1-72" href="#__codelineno-1-72"></a>      &quot;format&quot;: &quot;Y-m-d\\TH:i:sP&quot;
+</span><span id="__span-1-73"><a id="__codelineno-1-73" name="__codelineno-1-73" href="#__codelineno-1-73"></a>    }
+</span><span id="__span-1-74"><a id="__codelineno-1-74" name="__codelineno-1-74" href="#__codelineno-1-74"></a>  ],
+</span><span id="__span-1-75"><a id="__codelineno-1-75" name="__codelineno-1-75" href="#__codelineno-1-75"></a>  &quot;changed&quot;: [
+</span><span id="__span-1-76"><a id="__codelineno-1-76" name="__codelineno-1-76" href="#__codelineno-1-76"></a>    {
+</span><span id="__span-1-77"><a id="__codelineno-1-77" name="__codelineno-1-77" href="#__codelineno-1-77"></a>      &quot;value&quot;: &quot;2019-03-01T19:43:48+00:00&quot;,
+</span><span id="__span-1-78"><a id="__codelineno-1-78" name="__codelineno-1-78" href="#__codelineno-1-78"></a>      &quot;format&quot;: &quot;Y-m-d\\TH:i:sP&quot;
+</span><span id="__span-1-79"><a id="__codelineno-1-79" name="__codelineno-1-79" href="#__codelineno-1-79"></a>    }
+</span><span id="__span-1-80"><a id="__codelineno-1-80" name="__codelineno-1-80" href="#__codelineno-1-80"></a>  ],
+</span><span id="__span-1-81"><a id="__codelineno-1-81" name="__codelineno-1-81" href="#__codelineno-1-81"></a>  &quot;default_langcode&quot;: [
+</span><span id="__span-1-82"><a id="__codelineno-1-82" name="__codelineno-1-82" href="#__codelineno-1-82"></a>    {
+</span><span id="__span-1-83"><a id="__codelineno-1-83" name="__codelineno-1-83" href="#__codelineno-1-83"></a>      &quot;value&quot;: true
+</span><span id="__span-1-84"><a id="__codelineno-1-84" name="__codelineno-1-84" href="#__codelineno-1-84"></a>    }
+</span><span id="__span-1-85"><a id="__codelineno-1-85" name="__codelineno-1-85" href="#__codelineno-1-85"></a>  ],
+</span><span id="__span-1-86"><a id="__codelineno-1-86" name="__codelineno-1-86" href="#__codelineno-1-86"></a>  &quot;revision_translation_affected&quot;: [
+</span><span id="__span-1-87"><a id="__codelineno-1-87" name="__codelineno-1-87" href="#__codelineno-1-87"></a>    {
+</span><span id="__span-1-88"><a id="__codelineno-1-88" name="__codelineno-1-88" href="#__codelineno-1-88"></a>      &quot;value&quot;: true
+</span><span id="__span-1-89"><a id="__codelineno-1-89" name="__codelineno-1-89" href="#__codelineno-1-89"></a>    }
+</span><span id="__span-1-90"><a id="__codelineno-1-90" name="__codelineno-1-90" href="#__codelineno-1-90"></a>  ],
+</span><span id="__span-1-91"><a id="__codelineno-1-91" name="__codelineno-1-91" href="#__codelineno-1-91"></a>  &quot;content_translation_source&quot;: [
+</span><span id="__span-1-92"><a id="__codelineno-1-92" name="__codelineno-1-92" href="#__codelineno-1-92"></a>    {
+</span><span id="__span-1-93"><a id="__codelineno-1-93" name="__codelineno-1-93" href="#__codelineno-1-93"></a>      &quot;value&quot;: &quot;und&quot;
+</span><span id="__span-1-94"><a id="__codelineno-1-94" name="__codelineno-1-94" href="#__codelineno-1-94"></a>    }
+</span><span id="__span-1-95"><a id="__codelineno-1-95" name="__codelineno-1-95" href="#__codelineno-1-95"></a>  ],
+</span><span id="__span-1-96"><a id="__codelineno-1-96" name="__codelineno-1-96" href="#__codelineno-1-96"></a>  &quot;content_translation_outdated&quot;: [
+</span><span id="__span-1-97"><a id="__codelineno-1-97" name="__codelineno-1-97" href="#__codelineno-1-97"></a>    {
+</span><span id="__span-1-98"><a id="__codelineno-1-98" name="__codelineno-1-98" href="#__codelineno-1-98"></a>      &quot;value&quot;: false
+</span><span id="__span-1-99"><a id="__codelineno-1-99" name="__codelineno-1-99" href="#__codelineno-1-99"></a>    }
+</span><span id="__span-1-100"><a id="__codelineno-1-100" name="__codelineno-1-100" href="#__codelineno-1-100"></a>  ],
+</span><span id="__span-1-101"><a id="__codelineno-1-101" name="__codelineno-1-101" href="#__codelineno-1-101"></a>  &quot;field_access_terms&quot;: [],
+</span><span id="__span-1-102"><a id="__codelineno-1-102" name="__codelineno-1-102" href="#__codelineno-1-102"></a>  &quot;field_file_size&quot;: [
+</span><span id="__span-1-103"><a id="__codelineno-1-103" name="__codelineno-1-103" href="#__codelineno-1-103"></a>    {
+</span><span id="__span-1-104"><a id="__codelineno-1-104" name="__codelineno-1-104" href="#__codelineno-1-104"></a>      &quot;value&quot;: 166608
+</span><span id="__span-1-105"><a id="__codelineno-1-105" name="__codelineno-1-105" href="#__codelineno-1-105"></a>    }
+</span><span id="__span-1-106"><a id="__codelineno-1-106" name="__codelineno-1-106" href="#__codelineno-1-106"></a>  ],
+</span><span id="__span-1-107"><a id="__codelineno-1-107" name="__codelineno-1-107" href="#__codelineno-1-107"></a>  &quot;field_height&quot;: [
+</span><span id="__span-1-108"><a id="__codelineno-1-108" name="__codelineno-1-108" href="#__codelineno-1-108"></a>    {
+</span><span id="__span-1-109"><a id="__codelineno-1-109" name="__codelineno-1-109" href="#__codelineno-1-109"></a>      &quot;value&quot;: 1333
+</span><span id="__span-1-110"><a id="__codelineno-1-110" name="__codelineno-1-110" href="#__codelineno-1-110"></a>    }
+</span><span id="__span-1-111"><a id="__codelineno-1-111" name="__codelineno-1-111" href="#__codelineno-1-111"></a>  ],
+</span><span id="__span-1-112"><a id="__codelineno-1-112" name="__codelineno-1-112" href="#__codelineno-1-112"></a>  &quot;field_media_image&quot;: [
+</span><span id="__span-1-113"><a id="__codelineno-1-113" name="__codelineno-1-113" href="#__codelineno-1-113"></a>    {
+</span><span id="__span-1-114"><a id="__codelineno-1-114" name="__codelineno-1-114" href="#__codelineno-1-114"></a>      &quot;target_id&quot;: 3,
+</span><span id="__span-1-115"><a id="__codelineno-1-115" name="__codelineno-1-115" href="#__codelineno-1-115"></a>      &quot;alt&quot;: null,
+</span><span id="__span-1-116"><a id="__codelineno-1-116" name="__codelineno-1-116" href="#__codelineno-1-116"></a>      &quot;title&quot;: null,
+</span><span id="__span-1-117"><a id="__codelineno-1-117" name="__codelineno-1-117" href="#__codelineno-1-117"></a>      &quot;width&quot;: 800,
+</span><span id="__span-1-118"><a id="__codelineno-1-118" name="__codelineno-1-118" href="#__codelineno-1-118"></a>      &quot;height&quot;: 1333,
+</span><span id="__span-1-119"><a id="__codelineno-1-119" name="__codelineno-1-119" href="#__codelineno-1-119"></a>      &quot;target_type&quot;: &quot;file&quot;,
+</span><span id="__span-1-120"><a id="__codelineno-1-120" name="__codelineno-1-120" href="#__codelineno-1-120"></a>      &quot;target_uuid&quot;: &quot;e97ad038-dcb3-4d81-aa91-c945b2fe092c&quot;,
+</span><span id="__span-1-121"><a id="__codelineno-1-121" name="__codelineno-1-121" href="#__codelineno-1-121"></a>      &quot;url&quot;: &quot;http:\\/\\/localhost:8000\\/sites\\/default\\/files\\/2019-03\\/1-Service%20File.jpg&quot;
+</span><span id="__span-1-122"><a id="__codelineno-1-122" name="__codelineno-1-122" href="#__codelineno-1-122"></a>    }
+</span><span id="__span-1-123"><a id="__codelineno-1-123" name="__codelineno-1-123" href="#__codelineno-1-123"></a>  ],
+</span><span id="__span-1-124"><a id="__codelineno-1-124" name="__codelineno-1-124" href="#__codelineno-1-124"></a>  &quot;field_media_of&quot;: [
+</span><span id="__span-1-125"><a id="__codelineno-1-125" name="__codelineno-1-125" href="#__codelineno-1-125"></a>    {
+</span><span id="__span-1-126"><a id="__codelineno-1-126" name="__codelineno-1-126" href="#__codelineno-1-126"></a>      &quot;target_id&quot;: 1,
+</span><span id="__span-1-127"><a id="__codelineno-1-127" name="__codelineno-1-127" href="#__codelineno-1-127"></a>      &quot;target_type&quot;: &quot;node&quot;,
+</span><span id="__span-1-128"><a id="__codelineno-1-128" name="__codelineno-1-128" href="#__codelineno-1-128"></a>      &quot;target_uuid&quot;: &quot;8322e36e-f8ec-4fd9-919d-52aed7b17a52&quot;,
+</span><span id="__span-1-129"><a id="__codelineno-1-129" name="__codelineno-1-129" href="#__codelineno-1-129"></a>      &quot;url&quot;: &quot;\\/node\\/1&quot;
+</span><span id="__span-1-130"><a id="__codelineno-1-130" name="__codelineno-1-130" href="#__codelineno-1-130"></a>    }
+</span><span id="__span-1-131"><a id="__codelineno-1-131" name="__codelineno-1-131" href="#__codelineno-1-131"></a>  ],
+</span><span id="__span-1-132"><a id="__codelineno-1-132" name="__codelineno-1-132" href="#__codelineno-1-132"></a>  &quot;field_media_use&quot;: [
+</span><span id="__span-1-133"><a id="__codelineno-1-133" name="__codelineno-1-133" href="#__codelineno-1-133"></a>    {
+</span><span id="__span-1-134"><a id="__codelineno-1-134" name="__codelineno-1-134" href="#__codelineno-1-134"></a>      &quot;target_id&quot;: 18,
+</span><span id="__span-1-135"><a id="__codelineno-1-135" name="__codelineno-1-135" href="#__codelineno-1-135"></a>      &quot;target_type&quot;: &quot;taxonomy_term&quot;,
+</span><span id="__span-1-136"><a id="__codelineno-1-136" name="__codelineno-1-136" href="#__codelineno-1-136"></a>      &quot;target_uuid&quot;: &quot;e8c698a7-8c15-47c4-8567-1c27f8f0c19e&quot;,
+</span><span id="__span-1-137"><a id="__codelineno-1-137" name="__codelineno-1-137" href="#__codelineno-1-137"></a>      &quot;url&quot;: &quot;\\/taxonomy\\/term\\/18&quot;
+</span><span id="__span-1-138"><a id="__codelineno-1-138" name="__codelineno-1-138" href="#__codelineno-1-138"></a>    }
+</span><span id="__span-1-139"><a id="__codelineno-1-139" name="__codelineno-1-139" href="#__codelineno-1-139"></a>  ],
+</span><span id="__span-1-140"><a id="__codelineno-1-140" name="__codelineno-1-140" href="#__codelineno-1-140"></a>  &quot;field_mime_type&quot;: [
+</span><span id="__span-1-141"><a id="__codelineno-1-141" name="__codelineno-1-141" href="#__codelineno-1-141"></a>    {
+</span><span id="__span-1-142"><a id="__codelineno-1-142" name="__codelineno-1-142" href="#__codelineno-1-142"></a>      &quot;value&quot;: &quot;image\\/jpeg&quot;
+</span><span id="__span-1-143"><a id="__codelineno-1-143" name="__codelineno-1-143" href="#__codelineno-1-143"></a>    }
+</span><span id="__span-1-144"><a id="__codelineno-1-144" name="__codelineno-1-144" href="#__codelineno-1-144"></a>  ],
+</span><span id="__span-1-145"><a id="__codelineno-1-145" name="__codelineno-1-145" href="#__codelineno-1-145"></a>  &quot;field_width&quot;: [
+</span><span id="__span-1-146"><a id="__codelineno-1-146" name="__codelineno-1-146" href="#__codelineno-1-146"></a>    {
+</span><span id="__span-1-147"><a id="__codelineno-1-147" name="__codelineno-1-147" href="#__codelineno-1-147"></a>      &quot;value&quot;: 800
+</span><span id="__span-1-148"><a id="__codelineno-1-148" name="__codelineno-1-148" href="#__codelineno-1-148"></a>    }
+</span><span id="__span-1-149"><a id="__codelineno-1-149" name="__codelineno-1-149" href="#__codelineno-1-149"></a>  ]
+</span><span id="__span-1-150"><a id="__codelineno-1-150" name="__codelineno-1-150" href="#__codelineno-1-150"></a>}
+</span></code></pre></div>
 <p><code>field_media_of</code> indicates which node(s) the media is associated with. The node can be referenced using the value of the <code>target_id</code> key (in this example, 1) or the <code>target_uuid</code> key (8322e36e-f8ec-4fd9-919d-52aed7b17a52).</p>
 <h2 id="files">Files<a class="headerlink" href="#files" title="Permanent link">&para;</a></h2>
 <p>Through the REST API you are accessing metadata about files, but not the actual binary object.</p>
@@ -2806,107 +2806,107 @@ Content-Type: application/json
 <p>For the file you want to access, choose the <strong>USED IN</strong> link.</p>
 <p>That URI has the format <code>http://localhost:8000/admin/content/files/usage/{file id}</code></p>
 <p>Alternatively the file ID can be found by viewing the media metadata (above section). In the above example if you look through the response from a GET request to the <code>/media/{id}</code> you will find a section like:</p>
-<pre><code>  &quot;field_media_image&quot;: [
-    {
-      &quot;target_id&quot;: 3,
-      &quot;alt&quot;: null,
-      &quot;title&quot;: null,
-      &quot;width&quot;: 800,
-      &quot;height&quot;: 1333,
-      &quot;target_type&quot;: &quot;file&quot;,
-      &quot;target_uuid&quot;: &quot;e97ad038-dcb3-4d81-aa91-c945b2fe092c&quot;,
-      &quot;url&quot;: &quot;http:\\/\\/localhost:8000\\/sites\\/default\\/files\\/2019-03\\/1-Service%20File.jpg&quot;
-    }
-  ],
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>  &quot;field_media_image&quot;: [
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    {
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>      &quot;target_id&quot;: 3,
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>      &quot;alt&quot;: null,
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>      &quot;title&quot;: null,
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>      &quot;width&quot;: 800,
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>      &quot;height&quot;: 1333,
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>      &quot;target_type&quot;: &quot;file&quot;,
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>      &quot;target_uuid&quot;: &quot;e97ad038-dcb3-4d81-aa91-c945b2fe092c&quot;,
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>      &quot;url&quot;: &quot;http:\\/\\/localhost:8000\\/sites\\/default\\/files\\/2019-03\\/1-Service%20File.jpg&quot;
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>    }
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>  ],
+</span></code></pre></div>
 <p><strong>Note</strong>: Depending on the "type" of file (image, video, audio, file) this field will have a different name.</p>
 <p>This has both the <code>url</code> which is the URI to retrieve the binary content of the file as well as the <code>target_id</code> which is the file ID.</p>
 <p>So we can retrieve the file with a GET request to the URI <code>http://localhost:8000/sites/default/files/2019-03/1-Service%20File.jpg</code>.</p>
 <p>But more importantly we can retrieve the file <strong>metadata</strong> by making a request to <code>http://localhost:8000/entity/file/3</code> with one of the allowed <em>formats</em></p>
 <p>&#x1F34E; For example:</p>
-<pre><code>&gt; curl -i -X GET &quot;http://localhost:8000/entity/file/3?_format=json&quot;
-
-HTTP/1.1 200 OK
-Date: Tue, 05 Mar 2019 16:52:06 GMT
-Server: Apache/2.4.18 (Ubuntu)
-X-Powered-By: PHP/7.1.26-1+ubuntu16.04.1+deb.sury.org+1
-Cache-Control: must-revalidate, no-cache, private
-X-Drupal-Dynamic-Cache: MISS
-X-UA-Compatible: IE=edge
-Content-language: en
-X-Content-Type-Options: nosniff
-X-Frame-Options: SAMEORIGIN
-Expires: Sun, 19 Nov 1978 05:00:00 GMT
-Vary:
-X-Generator: Drupal 8 (https://www.drupal.org)
-X-Drupal-Cache: HIT
-Content-Length: 634
-Content-Type: application/json
-
-{
-  &quot;fid&quot;: [
-    {
-      &quot;value&quot;: 3
-    }
-  ],
-  &quot;uuid&quot;: [
-    {
-      &quot;value&quot;: &quot;e97ad038-dcb3-4d81-aa91-c945b2fe092c&quot;
-    }
-  ],
-  &quot;langcode&quot;: [
-    {
-      &quot;value&quot;: &quot;en&quot;
-    }
-  ],
-  &quot;uid&quot;: [
-    {
-      &quot;target_id&quot;: 1,
-      &quot;target_type&quot;: &quot;user&quot;,
-      &quot;target_uuid&quot;: &quot;46a47057-de2d-4ce2-87ae-dbe4551209b8&quot;,
-      &quot;url&quot;: &quot;\\/user\\/1&quot;
-    }
-  ],
-  &quot;filename&quot;: [
-    {
-      &quot;value&quot;: &quot;1-Service File.jpg&quot;
-    }
-  ],
-  &quot;uri&quot;: [
-    {
-      &quot;value&quot;: &quot;public:\\/\\/2019-03\\/1-Service File.jpg&quot;,
-      &quot;url&quot;: &quot;\\/sites\\/default\\/files\\/2019-03\\/1-Service%20File.jpg&quot;
-    }
-  ],
-  &quot;filemime&quot;: [
-    {
-      &quot;value&quot;: &quot;image\\/jpeg&quot;
-    }
-  ],
-  &quot;filesize&quot;: [
-    {
-      &quot;value&quot;: 166608
-    }
-  ],
-  &quot;status&quot;: [
-    {
-      &quot;value&quot;: true
-    }
-  ],
-  &quot;created&quot;: [
-    {
-      &quot;value&quot;: &quot;2019-03-01T19:43:48+00:00&quot;,
-      &quot;format&quot;: &quot;Y-m-d\\TH:i:sP&quot;
-    }
-  ],
-  &quot;changed&quot;: [
-    {
-      &quot;value&quot;: &quot;2019-03-01T19:43:48+00:00&quot;,
-      &quot;format&quot;: &quot;Y-m-d\\TH:i:sP&quot;
-    }
-  ]
-}
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>&gt; curl -i -X GET &quot;http://localhost:8000/entity/file/3?_format=json&quot;
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>HTTP/1.1 200 OK
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>Date: Tue, 05 Mar 2019 16:52:06 GMT
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>Server: Apache/2.4.18 (Ubuntu)
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>X-Powered-By: PHP/7.1.26-1+ubuntu16.04.1+deb.sury.org+1
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>Cache-Control: must-revalidate, no-cache, private
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>X-Drupal-Dynamic-Cache: MISS
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>X-UA-Compatible: IE=edge
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>Content-language: en
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>X-Content-Type-Options: nosniff
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>X-Frame-Options: SAMEORIGIN
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>Expires: Sun, 19 Nov 1978 05:00:00 GMT
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>Vary:
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>X-Generator: Drupal 8 (https://www.drupal.org)
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>X-Drupal-Cache: HIT
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>Content-Length: 634
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>Content-Type: application/json
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>
+</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a>{
+</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a>  &quot;fid&quot;: [
+</span><span id="__span-3-22"><a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a>    {
+</span><span id="__span-3-23"><a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a>      &quot;value&quot;: 3
+</span><span id="__span-3-24"><a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a>    }
+</span><span id="__span-3-25"><a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a>  ],
+</span><span id="__span-3-26"><a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a>  &quot;uuid&quot;: [
+</span><span id="__span-3-27"><a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a>    {
+</span><span id="__span-3-28"><a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a>      &quot;value&quot;: &quot;e97ad038-dcb3-4d81-aa91-c945b2fe092c&quot;
+</span><span id="__span-3-29"><a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a>    }
+</span><span id="__span-3-30"><a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a>  ],
+</span><span id="__span-3-31"><a id="__codelineno-3-31" name="__codelineno-3-31" href="#__codelineno-3-31"></a>  &quot;langcode&quot;: [
+</span><span id="__span-3-32"><a id="__codelineno-3-32" name="__codelineno-3-32" href="#__codelineno-3-32"></a>    {
+</span><span id="__span-3-33"><a id="__codelineno-3-33" name="__codelineno-3-33" href="#__codelineno-3-33"></a>      &quot;value&quot;: &quot;en&quot;
+</span><span id="__span-3-34"><a id="__codelineno-3-34" name="__codelineno-3-34" href="#__codelineno-3-34"></a>    }
+</span><span id="__span-3-35"><a id="__codelineno-3-35" name="__codelineno-3-35" href="#__codelineno-3-35"></a>  ],
+</span><span id="__span-3-36"><a id="__codelineno-3-36" name="__codelineno-3-36" href="#__codelineno-3-36"></a>  &quot;uid&quot;: [
+</span><span id="__span-3-37"><a id="__codelineno-3-37" name="__codelineno-3-37" href="#__codelineno-3-37"></a>    {
+</span><span id="__span-3-38"><a id="__codelineno-3-38" name="__codelineno-3-38" href="#__codelineno-3-38"></a>      &quot;target_id&quot;: 1,
+</span><span id="__span-3-39"><a id="__codelineno-3-39" name="__codelineno-3-39" href="#__codelineno-3-39"></a>      &quot;target_type&quot;: &quot;user&quot;,
+</span><span id="__span-3-40"><a id="__codelineno-3-40" name="__codelineno-3-40" href="#__codelineno-3-40"></a>      &quot;target_uuid&quot;: &quot;46a47057-de2d-4ce2-87ae-dbe4551209b8&quot;,
+</span><span id="__span-3-41"><a id="__codelineno-3-41" name="__codelineno-3-41" href="#__codelineno-3-41"></a>      &quot;url&quot;: &quot;\\/user\\/1&quot;
+</span><span id="__span-3-42"><a id="__codelineno-3-42" name="__codelineno-3-42" href="#__codelineno-3-42"></a>    }
+</span><span id="__span-3-43"><a id="__codelineno-3-43" name="__codelineno-3-43" href="#__codelineno-3-43"></a>  ],
+</span><span id="__span-3-44"><a id="__codelineno-3-44" name="__codelineno-3-44" href="#__codelineno-3-44"></a>  &quot;filename&quot;: [
+</span><span id="__span-3-45"><a id="__codelineno-3-45" name="__codelineno-3-45" href="#__codelineno-3-45"></a>    {
+</span><span id="__span-3-46"><a id="__codelineno-3-46" name="__codelineno-3-46" href="#__codelineno-3-46"></a>      &quot;value&quot;: &quot;1-Service File.jpg&quot;
+</span><span id="__span-3-47"><a id="__codelineno-3-47" name="__codelineno-3-47" href="#__codelineno-3-47"></a>    }
+</span><span id="__span-3-48"><a id="__codelineno-3-48" name="__codelineno-3-48" href="#__codelineno-3-48"></a>  ],
+</span><span id="__span-3-49"><a id="__codelineno-3-49" name="__codelineno-3-49" href="#__codelineno-3-49"></a>  &quot;uri&quot;: [
+</span><span id="__span-3-50"><a id="__codelineno-3-50" name="__codelineno-3-50" href="#__codelineno-3-50"></a>    {
+</span><span id="__span-3-51"><a id="__codelineno-3-51" name="__codelineno-3-51" href="#__codelineno-3-51"></a>      &quot;value&quot;: &quot;public:\\/\\/2019-03\\/1-Service File.jpg&quot;,
+</span><span id="__span-3-52"><a id="__codelineno-3-52" name="__codelineno-3-52" href="#__codelineno-3-52"></a>      &quot;url&quot;: &quot;\\/sites\\/default\\/files\\/2019-03\\/1-Service%20File.jpg&quot;
+</span><span id="__span-3-53"><a id="__codelineno-3-53" name="__codelineno-3-53" href="#__codelineno-3-53"></a>    }
+</span><span id="__span-3-54"><a id="__codelineno-3-54" name="__codelineno-3-54" href="#__codelineno-3-54"></a>  ],
+</span><span id="__span-3-55"><a id="__codelineno-3-55" name="__codelineno-3-55" href="#__codelineno-3-55"></a>  &quot;filemime&quot;: [
+</span><span id="__span-3-56"><a id="__codelineno-3-56" name="__codelineno-3-56" href="#__codelineno-3-56"></a>    {
+</span><span id="__span-3-57"><a id="__codelineno-3-57" name="__codelineno-3-57" href="#__codelineno-3-57"></a>      &quot;value&quot;: &quot;image\\/jpeg&quot;
+</span><span id="__span-3-58"><a id="__codelineno-3-58" name="__codelineno-3-58" href="#__codelineno-3-58"></a>    }
+</span><span id="__span-3-59"><a id="__codelineno-3-59" name="__codelineno-3-59" href="#__codelineno-3-59"></a>  ],
+</span><span id="__span-3-60"><a id="__codelineno-3-60" name="__codelineno-3-60" href="#__codelineno-3-60"></a>  &quot;filesize&quot;: [
+</span><span id="__span-3-61"><a id="__codelineno-3-61" name="__codelineno-3-61" href="#__codelineno-3-61"></a>    {
+</span><span id="__span-3-62"><a id="__codelineno-3-62" name="__codelineno-3-62" href="#__codelineno-3-62"></a>      &quot;value&quot;: 166608
+</span><span id="__span-3-63"><a id="__codelineno-3-63" name="__codelineno-3-63" href="#__codelineno-3-63"></a>    }
+</span><span id="__span-3-64"><a id="__codelineno-3-64" name="__codelineno-3-64" href="#__codelineno-3-64"></a>  ],
+</span><span id="__span-3-65"><a id="__codelineno-3-65" name="__codelineno-3-65" href="#__codelineno-3-65"></a>  &quot;status&quot;: [
+</span><span id="__span-3-66"><a id="__codelineno-3-66" name="__codelineno-3-66" href="#__codelineno-3-66"></a>    {
+</span><span id="__span-3-67"><a id="__codelineno-3-67" name="__codelineno-3-67" href="#__codelineno-3-67"></a>      &quot;value&quot;: true
+</span><span id="__span-3-68"><a id="__codelineno-3-68" name="__codelineno-3-68" href="#__codelineno-3-68"></a>    }
+</span><span id="__span-3-69"><a id="__codelineno-3-69" name="__codelineno-3-69" href="#__codelineno-3-69"></a>  ],
+</span><span id="__span-3-70"><a id="__codelineno-3-70" name="__codelineno-3-70" href="#__codelineno-3-70"></a>  &quot;created&quot;: [
+</span><span id="__span-3-71"><a id="__codelineno-3-71" name="__codelineno-3-71" href="#__codelineno-3-71"></a>    {
+</span><span id="__span-3-72"><a id="__codelineno-3-72" name="__codelineno-3-72" href="#__codelineno-3-72"></a>      &quot;value&quot;: &quot;2019-03-01T19:43:48+00:00&quot;,
+</span><span id="__span-3-73"><a id="__codelineno-3-73" name="__codelineno-3-73" href="#__codelineno-3-73"></a>      &quot;format&quot;: &quot;Y-m-d\\TH:i:sP&quot;
+</span><span id="__span-3-74"><a id="__codelineno-3-74" name="__codelineno-3-74" href="#__codelineno-3-74"></a>    }
+</span><span id="__span-3-75"><a id="__codelineno-3-75" name="__codelineno-3-75" href="#__codelineno-3-75"></a>  ],
+</span><span id="__span-3-76"><a id="__codelineno-3-76" name="__codelineno-3-76" href="#__codelineno-3-76"></a>  &quot;changed&quot;: [
+</span><span id="__span-3-77"><a id="__codelineno-3-77" name="__codelineno-3-77" href="#__codelineno-3-77"></a>    {
+</span><span id="__span-3-78"><a id="__codelineno-3-78" name="__codelineno-3-78" href="#__codelineno-3-78"></a>      &quot;value&quot;: &quot;2019-03-01T19:43:48+00:00&quot;,
+</span><span id="__span-3-79"><a id="__codelineno-3-79" name="__codelineno-3-79" href="#__codelineno-3-79"></a>      &quot;format&quot;: &quot;Y-m-d\\TH:i:sP&quot;
+</span><span id="__span-3-80"><a id="__codelineno-3-80" name="__codelineno-3-80" href="#__codelineno-3-80"></a>    }
+</span><span id="__span-3-81"><a id="__codelineno-3-81" name="__codelineno-3-81" href="#__codelineno-3-81"></a>  ]
+</span><span id="__span-3-82"><a id="__codelineno-3-82" name="__codelineno-3-82" href="#__codelineno-3-82"></a>}
+</span></code></pre></div>
 <p>The <code>uri: url:</code> is the path to your file, so for the above example of <code>"url": "\\/sites\\/default\\/files\\/2019-03\\/1-Service%20File.jpg"</code>.</p>
 <p>I can perform a <code>GET</code> against <code>&lt;my hostname&gt;/sites/default/files/2019-03/1-Service%20File.jpg</code> and get the contents of this file.</p>
 
@@ -2915,7 +2915,7 @@ Content-Type: application/json
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 8, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 11, 2023</span>
       
     
   </small>

@@ -2469,20 +2469,20 @@ If you really want to upload large files, you should consider some alternatives 
 <a href="https://wiki.lyrasis.org/display/FEDORAM6M1P0/Properties">Properties page on the Fedora wiki</a>.</p>
 <h2 id="large-files-and-fits">Large Files and FITS<a class="headerlink" href="#large-files-and-fits" title="Permanent link">&para;</a></h2>
 <p>If using FITS, you may need to change the following in <code>/var/lib/tomcat9/webapps/fits/WEB-INF/classes/fits-service.properties</code>:</p>
-<pre><code># Maximum allowable size of uploaded file
-max.upload.file.size.MB=2000
-# Maximum size of HTTP Request object. Must be equal to or larger than the value for max.upload.file.size.MB
-max.request.size.MB=2000
-# Maximum size of an uploaded file kept in memory. Otherwise temporarily persisted to disk.
-max.in.memory.file.size.MB=4
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a># Maximum allowable size of uploaded file
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>max.upload.file.size.MB=2000
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a># Maximum size of HTTP Request object. Must be equal to or larger than the value for max.upload.file.size.MB
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>max.request.size.MB=2000
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a># Maximum size of an uploaded file kept in memory. Otherwise temporarily persisted to disk.
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>max.in.memory.file.size.MB=4
+</span></code></pre></div>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 8, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 11, 2023</span>
       
     
   </small>

@@ -2504,98 +2504,98 @@
 <li><code>debuild -S</code></li>
 </ul>
 <h2 id="example-patch">Example Patch<a class="headerlink" href="#example-patch" title="Permanent link">&para;</a></h2>
-<pre><code class="language-diff">Index: imagemagick-6.9.7.4+dfsg/debian/control
-===================================================================
---- imagemagick-6.9.7.4+dfsg.orig/debian/control
-+++ imagemagick-6.9.7.4+dfsg/debian/control
-@@ -26,8 +26,7 @@ Build-Depends: debhelper (&gt;= 10),
-  libx11-dev, libxext-dev, libxt-dev,
- # for plugins
-  ghostscript, libdjvulibre-dev, libexif-dev,
-- libjpeg-dev,
--# libopenjp2-7-dev, Needed for JPEG 2000 but not in main see MIR #711061
-+ libjpeg-dev, libopenjp2-7-dev,
-  libopenexr-dev, libperl-dev, libpng-dev, libtiff-dev,
-  libwmf-dev,
- # libgraphviz-dev, incompatible license against fftw
-@@ -273,8 +272,7 @@ Depends: libmagickcore-6-headers (= ${so
-  libmagickcore-6.q16-3 (= ${binary:Version}),
-  libmagickcore-6.q16-3-extra (= ${binary:Version}),
-  libbz2-dev, libdjvulibre-dev,
-- libexif-dev, libfreetype6-dev, libjpeg-dev,
--# libopenjp2-7-dev, Needed for JPEG 2000 but not in main see MIR #711061
-+ libexif-dev, libfreetype6-dev, libjpeg-dev, libopenjp2-7-dev,
-  liblcms2-dev, liblqr-1-0-dev, libltdl-dev, libopenexr-dev, libpng-dev,
-  librsvg2-dev, libtiff-dev, libwmf-dev, libx11-dev, libxext-dev, libxml2-dev,
-  libxt-dev, zlib1g-dev,
-@@ -483,8 +481,7 @@ Depends: libmagickcore-6-headers (= ${so
-  libmagickcore-6.q16hdri-3 (= ${binary:Version}),
-  libmagickcore-6.q16hdri-3-extra (= ${binary:Version}),
-  libbz2-dev, libdjvulibre-dev,
-- libexif-dev, libfreetype6-dev, libjpeg-dev,
--# libopenjp2-7-dev, Needed for JPEG 2000 but not in main see MIR #711061
-+ libexif-dev, libfreetype6-dev, libjpeg-dev, libopenjp2-7-dev,
-  liblcms2-dev, liblqr-1-0-dev, libltdl-dev, libopenexr-dev, libpng-dev,
-  librsvg2-dev, libtiff-dev, libwmf-dev, libx11-dev, libxext-dev, libxml2-dev,
-  libxt-dev, zlib1g-dev,
-Index: imagemagick-6.9.7.4+dfsg/debian/control.d/noquantum.in
-===================================================================
---- imagemagick-6.9.7.4+dfsg.orig/debian/control.d/noquantum.in
-+++ imagemagick-6.9.7.4+dfsg/debian/control.d/noquantum.in
-@@ -26,8 +26,7 @@ Build-Depends: debhelper (&gt;= 10),
-  libx11-dev, libxext-dev, libxt-dev,
- # for plugins
-  ghostscript, libdjvulibre-dev, libexif-dev,
-- libjpeg-dev,
--# libopenjp2-7-dev, Needed for JPEG 2000 but not in main see MIR #711061
-+ libjpeg-dev, libopenjp2-7-dev,
-  libopenexr-dev, libperl-dev, libpng-dev, libtiff-dev,
-  libwmf-dev,
- # libgraphviz-dev, incompatible license against fftw
-Index: imagemagick-6.9.7.4+dfsg/debian/control.d/quantum.in
-===================================================================
---- imagemagick-6.9.7.4+dfsg.orig/debian/control.d/quantum.in
-+++ imagemagick-6.9.7.4+dfsg/debian/control.d/quantum.in
-@@ -78,8 +78,7 @@ Depends: libmagickcore-${IMVERSION}-head
-  libmagickcore-${IMVERSION}.${QUANTUMDEPTH}-${CORESOVERSION} (= ${binary:Version}),
-  libmagickcore-${IMVERSION}.${QUANTUMDEPTH}-${CORESOVERSION}-extra (= ${binary:Version}),
-  libbz2-dev, libdjvulibre-dev,
-- libexif-dev, libfreetype6-dev, libjpeg-dev,
--# libopenjp2-7-dev, Needed for JPEG 2000 but not in main see MIR #711061
-+ libexif-dev, libfreetype6-dev, libjpeg-dev, libopenjp2-7-dev,
-  liblcms2-dev, liblqr-1-0-dev, libltdl-dev, libopenexr-dev, libpng-dev,
-  librsvg2-dev, libtiff-dev, libwmf-dev, libx11-dev, libxext-dev, libxml2-dev,
-  libxt-dev, zlib1g-dev,
-Index: imagemagick-6.9.7.4+dfsg/debian/rules
-===================================================================
---- imagemagick-6.9.7.4+dfsg.orig/debian/rules
-+++ imagemagick-6.9.7.4+dfsg/debian/rules
-@@ -98,7 +98,7 @@ STATIC_CONFIGURE_OPTIONS := \
-    --with-gs-font-dir=/usr/share/fonts/type1/gsfonts \
-    --with-magick-plus-plus \
-    --with-djvu \
--        --with-openjp2 \
-+  --with-openjp2 \
-    --with-wmf \
-    --without-gvc \
-    --enable-shared \
-</code></pre>
+<div class="language-diff highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="gh">Index: imagemagick-6.9.7.4+dfsg/debian/control</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="gh">===================================================================</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="gd">--- imagemagick-6.9.7.4+dfsg.orig/debian/control</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="gi">+++ imagemagick-6.9.7.4+dfsg/debian/control</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="gu">@@ -26,8 +26,7 @@ Build-Depends: debhelper (&gt;= 10),</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w"> </span> libx11-dev, libxext-dev, libxt-dev,
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w"> </span># for plugins
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w"> </span> ghostscript, libdjvulibre-dev, libexif-dev,
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="gd">- libjpeg-dev,</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="gd">-# libopenjp2-7-dev, Needed for JPEG 2000 but not in main see MIR #711061</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="gi">+ libjpeg-dev, libopenjp2-7-dev,</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w"> </span> libopenexr-dev, libperl-dev, libpng-dev, libtiff-dev,
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w"> </span> libwmf-dev,
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w"> </span># libgraphviz-dev, incompatible license against fftw
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="gu">@@ -273,8 +272,7 @@ Depends: libmagickcore-6-headers (= ${so</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w"> </span> libmagickcore-6.q16-3 (= ${binary:Version}),
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w"> </span> libmagickcore-6.q16-3-extra (= ${binary:Version}),
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w"> </span> libbz2-dev, libdjvulibre-dev,
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="gd">- libexif-dev, libfreetype6-dev, libjpeg-dev,</span>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="gd">-# libopenjp2-7-dev, Needed for JPEG 2000 but not in main see MIR #711061</span>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="gi">+ libexif-dev, libfreetype6-dev, libjpeg-dev, libopenjp2-7-dev,</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w"> </span> liblcms2-dev, liblqr-1-0-dev, libltdl-dev, libopenexr-dev, libpng-dev,
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="w"> </span> librsvg2-dev, libtiff-dev, libwmf-dev, libx11-dev, libxext-dev, libxml2-dev,
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="w"> </span> libxt-dev, zlib1g-dev,
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="gu">@@ -483,8 +481,7 @@ Depends: libmagickcore-6-headers (= ${so</span>
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="w"> </span> libmagickcore-6.q16hdri-3 (= ${binary:Version}),
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="w"> </span> libmagickcore-6.q16hdri-3-extra (= ${binary:Version}),
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="w"> </span> libbz2-dev, libdjvulibre-dev,
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="gd">- libexif-dev, libfreetype6-dev, libjpeg-dev,</span>
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="gd">-# libopenjp2-7-dev, Needed for JPEG 2000 but not in main see MIR #711061</span>
+</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a><span class="gi">+ libexif-dev, libfreetype6-dev, libjpeg-dev, libopenjp2-7-dev,</span>
+</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a><span class="w"> </span> liblcms2-dev, liblqr-1-0-dev, libltdl-dev, libopenexr-dev, libpng-dev,
+</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a><span class="w"> </span> librsvg2-dev, libtiff-dev, libwmf-dev, libx11-dev, libxext-dev, libxml2-dev,
+</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a><span class="w"> </span> libxt-dev, zlib1g-dev,
+</span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a><span class="gh">Index: imagemagick-6.9.7.4+dfsg/debian/control.d/noquantum.in</span>
+</span><span id="__span-0-36"><a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a><span class="gh">===================================================================</span>
+</span><span id="__span-0-37"><a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a><span class="gd">--- imagemagick-6.9.7.4+dfsg.orig/debian/control.d/noquantum.in</span>
+</span><span id="__span-0-38"><a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a><span class="gi">+++ imagemagick-6.9.7.4+dfsg/debian/control.d/noquantum.in</span>
+</span><span id="__span-0-39"><a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a><span class="gu">@@ -26,8 +26,7 @@ Build-Depends: debhelper (&gt;= 10),</span>
+</span><span id="__span-0-40"><a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a><span class="w"> </span> libx11-dev, libxext-dev, libxt-dev,
+</span><span id="__span-0-41"><a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a><span class="w"> </span># for plugins
+</span><span id="__span-0-42"><a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a><span class="w"> </span> ghostscript, libdjvulibre-dev, libexif-dev,
+</span><span id="__span-0-43"><a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a><span class="gd">- libjpeg-dev,</span>
+</span><span id="__span-0-44"><a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a><span class="gd">-# libopenjp2-7-dev, Needed for JPEG 2000 but not in main see MIR #711061</span>
+</span><span id="__span-0-45"><a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a><span class="gi">+ libjpeg-dev, libopenjp2-7-dev,</span>
+</span><span id="__span-0-46"><a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a><span class="w"> </span> libopenexr-dev, libperl-dev, libpng-dev, libtiff-dev,
+</span><span id="__span-0-47"><a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a><span class="w"> </span> libwmf-dev,
+</span><span id="__span-0-48"><a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a><span class="w"> </span># libgraphviz-dev, incompatible license against fftw
+</span><span id="__span-0-49"><a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a><span class="gh">Index: imagemagick-6.9.7.4+dfsg/debian/control.d/quantum.in</span>
+</span><span id="__span-0-50"><a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a><span class="gh">===================================================================</span>
+</span><span id="__span-0-51"><a id="__codelineno-0-51" name="__codelineno-0-51" href="#__codelineno-0-51"></a><span class="gd">--- imagemagick-6.9.7.4+dfsg.orig/debian/control.d/quantum.in</span>
+</span><span id="__span-0-52"><a id="__codelineno-0-52" name="__codelineno-0-52" href="#__codelineno-0-52"></a><span class="gi">+++ imagemagick-6.9.7.4+dfsg/debian/control.d/quantum.in</span>
+</span><span id="__span-0-53"><a id="__codelineno-0-53" name="__codelineno-0-53" href="#__codelineno-0-53"></a><span class="gu">@@ -78,8 +78,7 @@ Depends: libmagickcore-${IMVERSION}-head</span>
+</span><span id="__span-0-54"><a id="__codelineno-0-54" name="__codelineno-0-54" href="#__codelineno-0-54"></a><span class="w"> </span> libmagickcore-${IMVERSION}.${QUANTUMDEPTH}-${CORESOVERSION} (= ${binary:Version}),
+</span><span id="__span-0-55"><a id="__codelineno-0-55" name="__codelineno-0-55" href="#__codelineno-0-55"></a><span class="w"> </span> libmagickcore-${IMVERSION}.${QUANTUMDEPTH}-${CORESOVERSION}-extra (= ${binary:Version}),
+</span><span id="__span-0-56"><a id="__codelineno-0-56" name="__codelineno-0-56" href="#__codelineno-0-56"></a><span class="w"> </span> libbz2-dev, libdjvulibre-dev,
+</span><span id="__span-0-57"><a id="__codelineno-0-57" name="__codelineno-0-57" href="#__codelineno-0-57"></a><span class="gd">- libexif-dev, libfreetype6-dev, libjpeg-dev,</span>
+</span><span id="__span-0-58"><a id="__codelineno-0-58" name="__codelineno-0-58" href="#__codelineno-0-58"></a><span class="gd">-# libopenjp2-7-dev, Needed for JPEG 2000 but not in main see MIR #711061</span>
+</span><span id="__span-0-59"><a id="__codelineno-0-59" name="__codelineno-0-59" href="#__codelineno-0-59"></a><span class="gi">+ libexif-dev, libfreetype6-dev, libjpeg-dev, libopenjp2-7-dev,</span>
+</span><span id="__span-0-60"><a id="__codelineno-0-60" name="__codelineno-0-60" href="#__codelineno-0-60"></a><span class="w"> </span> liblcms2-dev, liblqr-1-0-dev, libltdl-dev, libopenexr-dev, libpng-dev,
+</span><span id="__span-0-61"><a id="__codelineno-0-61" name="__codelineno-0-61" href="#__codelineno-0-61"></a><span class="w"> </span> librsvg2-dev, libtiff-dev, libwmf-dev, libx11-dev, libxext-dev, libxml2-dev,
+</span><span id="__span-0-62"><a id="__codelineno-0-62" name="__codelineno-0-62" href="#__codelineno-0-62"></a><span class="w"> </span> libxt-dev, zlib1g-dev,
+</span><span id="__span-0-63"><a id="__codelineno-0-63" name="__codelineno-0-63" href="#__codelineno-0-63"></a><span class="gh">Index: imagemagick-6.9.7.4+dfsg/debian/rules</span>
+</span><span id="__span-0-64"><a id="__codelineno-0-64" name="__codelineno-0-64" href="#__codelineno-0-64"></a><span class="gh">===================================================================</span>
+</span><span id="__span-0-65"><a id="__codelineno-0-65" name="__codelineno-0-65" href="#__codelineno-0-65"></a><span class="gd">--- imagemagick-6.9.7.4+dfsg.orig/debian/rules</span>
+</span><span id="__span-0-66"><a id="__codelineno-0-66" name="__codelineno-0-66" href="#__codelineno-0-66"></a><span class="gi">+++ imagemagick-6.9.7.4+dfsg/debian/rules</span>
+</span><span id="__span-0-67"><a id="__codelineno-0-67" name="__codelineno-0-67" href="#__codelineno-0-67"></a><span class="gu">@@ -98,7 +98,7 @@ STATIC_CONFIGURE_OPTIONS := \</span>
+</span><span id="__span-0-68"><a id="__codelineno-0-68" name="__codelineno-0-68" href="#__codelineno-0-68"></a><span class="w"> </span>   --with-gs-font-dir=/usr/share/fonts/type1/gsfonts \
+</span><span id="__span-0-69"><a id="__codelineno-0-69" name="__codelineno-0-69" href="#__codelineno-0-69"></a><span class="w"> </span>   --with-magick-plus-plus \
+</span><span id="__span-0-70"><a id="__codelineno-0-70" name="__codelineno-0-70" href="#__codelineno-0-70"></a><span class="w"> </span>   --with-djvu \
+</span><span id="__span-0-71"><a id="__codelineno-0-71" name="__codelineno-0-71" href="#__codelineno-0-71"></a><span class="gd">-        --with-openjp2 \</span>
+</span><span id="__span-0-72"><a id="__codelineno-0-72" name="__codelineno-0-72" href="#__codelineno-0-72"></a><span class="gi">+  --with-openjp2 \</span>
+</span><span id="__span-0-73"><a id="__codelineno-0-73" name="__codelineno-0-73" href="#__codelineno-0-73"></a><span class="w"> </span>   --with-wmf \
+</span><span id="__span-0-74"><a id="__codelineno-0-74" name="__codelineno-0-74" href="#__codelineno-0-74"></a><span class="w"> </span>   --without-gvc \
+</span><span id="__span-0-75"><a id="__codelineno-0-75" name="__codelineno-0-75" href="#__codelineno-0-75"></a><span class="w"> </span>   --enable-shared \
+</span></code></pre></div>
 <h2 id="uploading-to-lyrasis-ppa">Uploading to LYRASIS PPA<a class="headerlink" href="#uploading-to-lyrasis-ppa" title="Permanent link">&para;</a></h2>
 <p>Once the package is built successfully, you'll upload the <code>changes</code> file to Launchpad. For example:</p>
 <ul>
 <li><code>dput ppa:lyrasis/imagemagick-jp2 imagemagick_6.9.7.4+dfsg-16ubuntu6.8_source.changes</code></li>
 </ul>
 <p>After the package is successfully uploaded to the PPA, you'll receive an email from Launchpad. Something like this:</p>
-<pre><code>Accepted:
- OK: imagemagick_6.9.7.4+dfsg.orig.tar.xz
- OK: imagemagick_6.9.7.4+dfsg-16ubuntu6.8.debian.tar.xz
- OK: imagemagick_6.9.7.4+dfsg-16ubuntu6.8.dsc
-     -&gt; Component: main Section: graphics
-
-imagemagick (8:6.9.7.4+dfsg-16ubuntu6.8) bionic; urgency=medium
-
-  * Add jp2 support.
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Accepted:
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a> OK: imagemagick_6.9.7.4+dfsg.orig.tar.xz
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a> OK: imagemagick_6.9.7.4+dfsg-16ubuntu6.8.debian.tar.xz
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a> OK: imagemagick_6.9.7.4+dfsg-16ubuntu6.8.dsc
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>     -&gt; Component: main Section: graphics
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>imagemagick (8:6.9.7.4+dfsg-16ubuntu6.8) bionic; urgency=medium
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>  * Add jp2 support.
+</span></code></pre></div>
 <p>And you will see it in the interface for the Lyrasis PPA:</p>
 <p><img alt="ppa-example" src="../../assets/ppa-example.png" /></p>
 
@@ -2604,7 +2604,7 @@ imagemagick (8:6.9.7.4+dfsg-16ubuntu6.8) bionic; urgency=medium
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 8, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 11, 2023</span>
       
     
   </small>

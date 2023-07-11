@@ -2964,115 +2964,115 @@ seasonal value 2019-22 as defined in the EDTF specification):
 <h2 id="getting-metadata-into-fedora-and-a-triple-store">Getting Metadata into Fedora and a Triple-store<a class="headerlink" href="#getting-metadata-into-fedora-and-a-triple-store" title="Permanent link">&para;</a></h2>
 <p>Depending on the needs at your institution, you may or may not be using Fedora with your Islandora installation. You also may or may not be hoping to publish your metadata as RDF triples that can be queried in a triplestore. Both of these functionalities are driven by the JSON-LD module (written for Islandora), which provides a JSON-LD serialization of your content nodes, media nodes, as well as your taxonomy terms. This JSON-LD is what gets ingested by Fedora, and is also what is used to add RDF triples to the <a href="https://islandora.github.io/documentation/installation/manual/installing_fedora_syn_and_blazegraph/">blazegraph triplestore</a> if you choose to use that service.</p>
 <p>The JSON-LD serialization for an entity is available by appending <code>_format=jsonld</code> to the entity's URL. Below is an example JSON-LD document representing the RDF serialization of a Repository item node created in a standard islandora-playbook based vagrant VM:</p>
-<pre><code>{
-  &quot;@graph&quot;:[
-    {
-      &quot;@id&quot;:&quot;http://localhost:8000/node/1&quot;,
-      &quot;@type&quot;:[
-        &quot;http://pcdm.org/models#Object&quot;
-      ],
-      &quot;http://purl.org/dc/terms/title&quot;:[
-        {
-          &quot;@value&quot;:&quot;New York, New York. A large lobster brought in by the New England fishing boat [Fulton Fish Market]&quot;,
-          &quot;@language&quot;:&quot;en&quot;
-        }
-      ],
-      &quot;http://schema.org/author&quot;:[
-        {
-          &quot;@id&quot;:&quot;http://localhost:8000/user/1&quot;
-        }
-      ],
-      &quot;http://schema.org/dateCreated&quot;:[
-        {
-          &quot;@value&quot;:&quot;2019-03-14T19:05:24+00:00&quot;,
-          &quot;@type&quot;:&quot;http://www.w3.org/2001/XMLSchema#dateTime&quot;
-        }
-      ],
-      &quot;http://schema.org/dateModified&quot;:[
-        {
-          &quot;@value&quot;:&quot;2019-03-14T19:20:51+00:00&quot;,
-          &quot;@type&quot;:&quot;http://www.w3.org/2001/XMLSchema#dateTime&quot;
-        }
-      ],
-      &quot;http://purl.org/dc/terms/date&quot;:[
-        {
-          &quot;@value&quot;:&quot;1943-05&quot;,
-          &quot;@type&quot;:&quot;http://www.w3.org/2001/XMLSchema#string&quot;
-        },
-        {
-          &quot;@value&quot;:&quot;1943-05&quot;,
-          &quot;@type&quot;:&quot;http://www.w3.org/2001/XMLSchema#gYearMonth&quot;
-        }
-      ],
-      &quot;http://purl.org/dc/terms/extent&quot;:[
-        {
-          &quot;@value&quot;:&quot;1 negative&quot;,
-          &quot;@type&quot;:&quot;http://www.w3.org/2001/XMLSchema#string&quot;
-        }
-      ],
-      &quot;http://purl.org/dc/terms/identifier&quot;:[
-        {
-          &quot;@value&quot;:&quot;D 630714&quot;,
-          &quot;@type&quot;:&quot;http://www.w3.org/2001/XMLSchema#string&quot;
-        }
-      ],
-      &quot;http://purl.org/dc/terms/type&quot;:[
-        {
-          &quot;@id&quot;:&quot;http://localhost:8000/taxonomy/term/11&quot;
-        }
-      ],
-      &quot;http://purl.org/dc/terms/rights&quot;:[
-        {
-          &quot;@value&quot;:&quot;No known restrictions. For information, see U.S. Farm Security Administration/Office of War Information Black &amp; White Photographs(http://www.loc.gov/rr/print/res/071_fsab.html)&quot;,
-          &quot;@type&quot;:&quot;http://www.w3.org/2001/XMLSchema#string&quot;
-        }
-      ],
-      &quot;http://purl.org/dc/terms/subject&quot;:[
-        {
-          &quot;@id&quot;:&quot;http://localhost:8000/taxonomy/term/26&quot;
-        }
-      ],
-      &quot;http://schema.org/sameAs&quot;:[
-        {
-          &quot;@value&quot;:&quot;http://localhost:8000/node/1&quot;
-        }
-      ]
-    },
-    {
-      &quot;@id&quot;:&quot;http://localhost:8000/user/1&quot;,
-      &quot;@type&quot;:[
-        &quot;http://schema.org/Person&quot;
-      ]
-    },
-    {
-      &quot;@id&quot;:&quot;http://localhost:8000/taxonomy/term/11&quot;,
-      &quot;@type&quot;:[
-        &quot;http://schema.org/Thing&quot;
-      ]
-    },
-    {
-      &quot;@id&quot;:&quot;http://localhost:8000/taxonomy/term/26&quot;,
-      &quot;@type&quot;:[
-        &quot;http://schema.org/Thing&quot;
-      ]
-    }
-  ]
-}
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>{
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  &quot;@graph&quot;:[
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    {
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>      &quot;@id&quot;:&quot;http://localhost:8000/node/1&quot;,
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>      &quot;@type&quot;:[
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>        &quot;http://pcdm.org/models#Object&quot;
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>      ],
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>      &quot;http://purl.org/dc/terms/title&quot;:[
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>        {
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>          &quot;@value&quot;:&quot;New York, New York. A large lobster brought in by the New England fishing boat [Fulton Fish Market]&quot;,
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>          &quot;@language&quot;:&quot;en&quot;
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>        }
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>      ],
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>      &quot;http://schema.org/author&quot;:[
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>        {
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>          &quot;@id&quot;:&quot;http://localhost:8000/user/1&quot;
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>        }
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>      ],
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>      &quot;http://schema.org/dateCreated&quot;:[
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>        {
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>          &quot;@value&quot;:&quot;2019-03-14T19:05:24+00:00&quot;,
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>          &quot;@type&quot;:&quot;http://www.w3.org/2001/XMLSchema#dateTime&quot;
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>        }
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>      ],
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>      &quot;http://schema.org/dateModified&quot;:[
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>        {
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>          &quot;@value&quot;:&quot;2019-03-14T19:20:51+00:00&quot;,
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>          &quot;@type&quot;:&quot;http://www.w3.org/2001/XMLSchema#dateTime&quot;
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>        }
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>      ],
+</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>      &quot;http://purl.org/dc/terms/date&quot;:[
+</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>        {
+</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>          &quot;@value&quot;:&quot;1943-05&quot;,
+</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>          &quot;@type&quot;:&quot;http://www.w3.org/2001/XMLSchema#string&quot;
+</span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>        },
+</span><span id="__span-0-36"><a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>        {
+</span><span id="__span-0-37"><a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>          &quot;@value&quot;:&quot;1943-05&quot;,
+</span><span id="__span-0-38"><a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>          &quot;@type&quot;:&quot;http://www.w3.org/2001/XMLSchema#gYearMonth&quot;
+</span><span id="__span-0-39"><a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>        }
+</span><span id="__span-0-40"><a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a>      ],
+</span><span id="__span-0-41"><a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a>      &quot;http://purl.org/dc/terms/extent&quot;:[
+</span><span id="__span-0-42"><a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a>        {
+</span><span id="__span-0-43"><a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a>          &quot;@value&quot;:&quot;1 negative&quot;,
+</span><span id="__span-0-44"><a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a>          &quot;@type&quot;:&quot;http://www.w3.org/2001/XMLSchema#string&quot;
+</span><span id="__span-0-45"><a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a>        }
+</span><span id="__span-0-46"><a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a>      ],
+</span><span id="__span-0-47"><a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a>      &quot;http://purl.org/dc/terms/identifier&quot;:[
+</span><span id="__span-0-48"><a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a>        {
+</span><span id="__span-0-49"><a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a>          &quot;@value&quot;:&quot;D 630714&quot;,
+</span><span id="__span-0-50"><a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a>          &quot;@type&quot;:&quot;http://www.w3.org/2001/XMLSchema#string&quot;
+</span><span id="__span-0-51"><a id="__codelineno-0-51" name="__codelineno-0-51" href="#__codelineno-0-51"></a>        }
+</span><span id="__span-0-52"><a id="__codelineno-0-52" name="__codelineno-0-52" href="#__codelineno-0-52"></a>      ],
+</span><span id="__span-0-53"><a id="__codelineno-0-53" name="__codelineno-0-53" href="#__codelineno-0-53"></a>      &quot;http://purl.org/dc/terms/type&quot;:[
+</span><span id="__span-0-54"><a id="__codelineno-0-54" name="__codelineno-0-54" href="#__codelineno-0-54"></a>        {
+</span><span id="__span-0-55"><a id="__codelineno-0-55" name="__codelineno-0-55" href="#__codelineno-0-55"></a>          &quot;@id&quot;:&quot;http://localhost:8000/taxonomy/term/11&quot;
+</span><span id="__span-0-56"><a id="__codelineno-0-56" name="__codelineno-0-56" href="#__codelineno-0-56"></a>        }
+</span><span id="__span-0-57"><a id="__codelineno-0-57" name="__codelineno-0-57" href="#__codelineno-0-57"></a>      ],
+</span><span id="__span-0-58"><a id="__codelineno-0-58" name="__codelineno-0-58" href="#__codelineno-0-58"></a>      &quot;http://purl.org/dc/terms/rights&quot;:[
+</span><span id="__span-0-59"><a id="__codelineno-0-59" name="__codelineno-0-59" href="#__codelineno-0-59"></a>        {
+</span><span id="__span-0-60"><a id="__codelineno-0-60" name="__codelineno-0-60" href="#__codelineno-0-60"></a>          &quot;@value&quot;:&quot;No known restrictions. For information, see U.S. Farm Security Administration/Office of War Information Black &amp; White Photographs(http://www.loc.gov/rr/print/res/071_fsab.html)&quot;,
+</span><span id="__span-0-61"><a id="__codelineno-0-61" name="__codelineno-0-61" href="#__codelineno-0-61"></a>          &quot;@type&quot;:&quot;http://www.w3.org/2001/XMLSchema#string&quot;
+</span><span id="__span-0-62"><a id="__codelineno-0-62" name="__codelineno-0-62" href="#__codelineno-0-62"></a>        }
+</span><span id="__span-0-63"><a id="__codelineno-0-63" name="__codelineno-0-63" href="#__codelineno-0-63"></a>      ],
+</span><span id="__span-0-64"><a id="__codelineno-0-64" name="__codelineno-0-64" href="#__codelineno-0-64"></a>      &quot;http://purl.org/dc/terms/subject&quot;:[
+</span><span id="__span-0-65"><a id="__codelineno-0-65" name="__codelineno-0-65" href="#__codelineno-0-65"></a>        {
+</span><span id="__span-0-66"><a id="__codelineno-0-66" name="__codelineno-0-66" href="#__codelineno-0-66"></a>          &quot;@id&quot;:&quot;http://localhost:8000/taxonomy/term/26&quot;
+</span><span id="__span-0-67"><a id="__codelineno-0-67" name="__codelineno-0-67" href="#__codelineno-0-67"></a>        }
+</span><span id="__span-0-68"><a id="__codelineno-0-68" name="__codelineno-0-68" href="#__codelineno-0-68"></a>      ],
+</span><span id="__span-0-69"><a id="__codelineno-0-69" name="__codelineno-0-69" href="#__codelineno-0-69"></a>      &quot;http://schema.org/sameAs&quot;:[
+</span><span id="__span-0-70"><a id="__codelineno-0-70" name="__codelineno-0-70" href="#__codelineno-0-70"></a>        {
+</span><span id="__span-0-71"><a id="__codelineno-0-71" name="__codelineno-0-71" href="#__codelineno-0-71"></a>          &quot;@value&quot;:&quot;http://localhost:8000/node/1&quot;
+</span><span id="__span-0-72"><a id="__codelineno-0-72" name="__codelineno-0-72" href="#__codelineno-0-72"></a>        }
+</span><span id="__span-0-73"><a id="__codelineno-0-73" name="__codelineno-0-73" href="#__codelineno-0-73"></a>      ]
+</span><span id="__span-0-74"><a id="__codelineno-0-74" name="__codelineno-0-74" href="#__codelineno-0-74"></a>    },
+</span><span id="__span-0-75"><a id="__codelineno-0-75" name="__codelineno-0-75" href="#__codelineno-0-75"></a>    {
+</span><span id="__span-0-76"><a id="__codelineno-0-76" name="__codelineno-0-76" href="#__codelineno-0-76"></a>      &quot;@id&quot;:&quot;http://localhost:8000/user/1&quot;,
+</span><span id="__span-0-77"><a id="__codelineno-0-77" name="__codelineno-0-77" href="#__codelineno-0-77"></a>      &quot;@type&quot;:[
+</span><span id="__span-0-78"><a id="__codelineno-0-78" name="__codelineno-0-78" href="#__codelineno-0-78"></a>        &quot;http://schema.org/Person&quot;
+</span><span id="__span-0-79"><a id="__codelineno-0-79" name="__codelineno-0-79" href="#__codelineno-0-79"></a>      ]
+</span><span id="__span-0-80"><a id="__codelineno-0-80" name="__codelineno-0-80" href="#__codelineno-0-80"></a>    },
+</span><span id="__span-0-81"><a id="__codelineno-0-81" name="__codelineno-0-81" href="#__codelineno-0-81"></a>    {
+</span><span id="__span-0-82"><a id="__codelineno-0-82" name="__codelineno-0-82" href="#__codelineno-0-82"></a>      &quot;@id&quot;:&quot;http://localhost:8000/taxonomy/term/11&quot;,
+</span><span id="__span-0-83"><a id="__codelineno-0-83" name="__codelineno-0-83" href="#__codelineno-0-83"></a>      &quot;@type&quot;:[
+</span><span id="__span-0-84"><a id="__codelineno-0-84" name="__codelineno-0-84" href="#__codelineno-0-84"></a>        &quot;http://schema.org/Thing&quot;
+</span><span id="__span-0-85"><a id="__codelineno-0-85" name="__codelineno-0-85" href="#__codelineno-0-85"></a>      ]
+</span><span id="__span-0-86"><a id="__codelineno-0-86" name="__codelineno-0-86" href="#__codelineno-0-86"></a>    },
+</span><span id="__span-0-87"><a id="__codelineno-0-87" name="__codelineno-0-87" href="#__codelineno-0-87"></a>    {
+</span><span id="__span-0-88"><a id="__codelineno-0-88" name="__codelineno-0-88" href="#__codelineno-0-88"></a>      &quot;@id&quot;:&quot;http://localhost:8000/taxonomy/term/26&quot;,
+</span><span id="__span-0-89"><a id="__codelineno-0-89" name="__codelineno-0-89" href="#__codelineno-0-89"></a>      &quot;@type&quot;:[
+</span><span id="__span-0-90"><a id="__codelineno-0-90" name="__codelineno-0-90" href="#__codelineno-0-90"></a>        &quot;http://schema.org/Thing&quot;
+</span><span id="__span-0-91"><a id="__codelineno-0-91" name="__codelineno-0-91" href="#__codelineno-0-91"></a>      ]
+</span><span id="__span-0-92"><a id="__codelineno-0-92" name="__codelineno-0-92" href="#__codelineno-0-92"></a>    }
+</span><span id="__span-0-93"><a id="__codelineno-0-93" name="__codelineno-0-93" href="#__codelineno-0-93"></a>  ]
+</span><span id="__span-0-94"><a id="__codelineno-0-94" name="__codelineno-0-94" href="#__codelineno-0-94"></a>}
+</span></code></pre></div>
 <p>The RDF mapping for a content type, media type, or vocabulary defines how fields in Drupal are mapped to properties in the JSON-LD serialization. The mapping defines the RDF predicates that should be used for each field. You reference Drupal fields via their Machine Name, and the RDF predicate by using the conventional syntax <code>namespace:predicate</code>. In this example, the <code>dc</code> prefix stands for <code>http://purl.org/dc/terms/</code>, so when concatenated the final RDF predicate is <code>http://purl.org/dc/terms/title</code>.</p>
 <p>To show a small example, the RDF mapping:</p>
-<pre><code>title:
-  properties:
-    - dc:title
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>title:
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>  properties:
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    - dc:title
+</span></code></pre></div>
 <p>will map the Repository item's <em>title</em> field to <code>http://purl.org/dc/terms/title</code>. As a result, the node's title value appears like this in the JSON-LD output:</p>
-<pre><code>&quot;http://purl.org/dc/terms/title&quot;:[
-  {
-    &quot;@value&quot;:&quot;New York, New York. A large lobster brought in by the New England fishing boat [Fulton Fish Market]&quot;,
-    &quot;@language&quot;:&quot;en&quot;
-  }
-],
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>&quot;http://purl.org/dc/terms/title&quot;:[
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>  {
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    &quot;@value&quot;:&quot;New York, New York. A large lobster brought in by the New England fishing boat [Fulton Fish Market]&quot;,
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    &quot;@language&quot;:&quot;en&quot;
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>  }
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>],
+</span></code></pre></div>
 <div class="admonition tip adding rdf prefixes and namespaces">
 <p class="admonition-title">Tip</p>
 <p>To set up prefixes for namespaces and see a list of available predefined namespaces, see the <a href="https://islandora.github.io/documentation/islandora/rdf-mapping/">"RDF Generation" page</a>.</p>
@@ -3092,46 +3092,46 @@ seasonal value 2019-22 as defined in the EDTF specification):
 <p>In Islandora, <a href="https://github.com/Islandora/islandora/wiki/Content-Models">content models</a> are primarily created using content types (also known as node bundles) and media bundles. <a href="https://www.drupal.org/docs/8/api/entity-api/bundles">Bundles</a> are defined by <a href="http://befused.com/drupal/yaml">YAML</a> configuration files. <a href="https://www.drupal.org/docs/8/api/entity-api/creating-a-custom-content-type-in-drupal-8">To create new content models</a>, one would create the needed content types and media bundles via UI, then export the yml files related for those bundles using Configuration Synchronization (<code>http://localhost:8000/admin/config/development/configuration</code>) or <a href="https://www.drupal.org/project/features">Features</a>. An understanding about the structure of a bundle and various configuration files used to define it helps in creating and updating it.</p>
 <p>Content types and media bundles can be thought of as web <a href="https://www.drupal.org/docs/user_guide/en/structure-widgets.html">forms</a> consisting of fields. Drupal provides <a href="https://www.drupal.org/docs/8/creating-custom-modules/create-a-custom-field-widget">widgets</a> to define the behavior of a field and field storage to define how the data is stored in the database. Drupal provides various <a href="https://www.drupal.org/docs/8/api/entity-api/display-modes-view-modes-and-form-modes">display modes</a> to show the forms to user when they are editing (Manage form display) or viewing (Manage display).</p>
 <p>A content model is packaged as a module for installation. All yml files are put in <code>config/install</code> folder of the module. Note that not all content models would contain media bundles.</p>
-<p>The following files define the bundles themselves. It contains some metadata about the bundle and lists its dependencies.</p>
-<pre><code>node.type.your_content_type.yml
-media_entity.bundle.your_media_bundle.yml
-</code></pre>
-<p>The following files define the fields attached to the bundle forms. There must be one config file for each field in your bundle, except for the default drupal fields.</p>
-<pre><code>field.field.node.your_content_type.field_name1.yml
-field.field.node.your_content_type.field_name2.yml
-...
-field.field.media.your_media_bundle.field_name1.yml
-field.field.media.your_media_bundle.field_name2.yml
-</code></pre>
-<p>If the new bundle contains new fields, then field storage configurations for the newly created fields would be needed as well. Note that if you reused existing fields, storage definitions should not be defined again. Storage config contains information about the number of values allowed for that field (cardinality).</p>
-<pre><code>field.storage.node.field_new_name3.yml
-field.storage.media.field__new_name3.yml
-</code></pre>
-<p>There is a configuration file for each combination of bundle / display mode when managing form displays. Usually, form displays will have <code>default</code> and <code>inline</code> modes.</p>
-<pre><code>core.entity_form_display.media.your_media_bundle.default.yml
-core.entity_form_display.media.your_media_bundle.inline.yml
----
-core.entity_form_display.node.your_content_type.default.yml
-core.entity_form_display.node.your_content_type.inline.yml
-</code></pre>
-<p>There is a configuration file for each combination of bundle / display mode when managing displays. Usually, displays will have <code>default</code> and <code>teaser</code> modes for content types and <code>default</code> and <code>content</code> modes for media bundles.</p>
-<pre><code>core.entity_view_display.media.your_media_bundle.default.yml
-core.entity_view_display.media.your_media_bundle.content.yml
----
-core.entity_view_display.node.your_content_type.default.yml
-core.entity_view_display.node.your_content_type.teaser.yml
-</code></pre>
-<p>In addition, Islandora needs an RDF mapping to express the content in RDF and to sync to fedora. There will be one RDF mapping per bundle.</p>
-<pre><code>rdf.mapping.media.your_media_bundle.yml
-rdf.mapping.node.your_content_type.yml
-</code></pre>
+<p>The following files define the bundles themselves. It contains some metadata about the bundle and lists its dependencies.
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>node.type.your_content_type.yml
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>media_entity.bundle.your_media_bundle.yml
+</span></code></pre></div></p>
+<p>The following files define the fields attached to the bundle forms. There must be one config file for each field in your bundle, except for the default drupal fields.
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>field.field.node.your_content_type.field_name1.yml
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>field.field.node.your_content_type.field_name2.yml
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>...
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>field.field.media.your_media_bundle.field_name1.yml
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>field.field.media.your_media_bundle.field_name2.yml
+</span></code></pre></div></p>
+<p>If the new bundle contains new fields, then field storage configurations for the newly created fields would be needed as well. Note that if you reused existing fields, storage definitions should not be defined again. Storage config contains information about the number of values allowed for that field (cardinality).
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>field.storage.node.field_new_name3.yml
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>field.storage.media.field__new_name3.yml
+</span></code></pre></div></p>
+<p>There is a configuration file for each combination of bundle / display mode when managing form displays. Usually, form displays will have <code>default</code> and <code>inline</code> modes.
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>core.entity_form_display.media.your_media_bundle.default.yml
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>core.entity_form_display.media.your_media_bundle.inline.yml
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>---
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>core.entity_form_display.node.your_content_type.default.yml
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>core.entity_form_display.node.your_content_type.inline.yml
+</span></code></pre></div></p>
+<p>There is a configuration file for each combination of bundle / display mode when managing displays. Usually, displays will have <code>default</code> and <code>teaser</code> modes for content types and <code>default</code> and <code>content</code> modes for media bundles.
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>core.entity_view_display.media.your_media_bundle.default.yml
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>core.entity_view_display.media.your_media_bundle.content.yml
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>---
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>core.entity_view_display.node.your_content_type.default.yml
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>core.entity_view_display.node.your_content_type.teaser.yml
+</span></code></pre></div></p>
+<p>In addition, Islandora needs an RDF mapping to express the content in RDF and to sync to fedora. There will be one RDF mapping per bundle.
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>rdf.mapping.media.your_media_bundle.yml
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>rdf.mapping.node.your_content_type.yml
+</span></code></pre></div></p>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 8, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 11, 2023</span>
       
     
   </small>

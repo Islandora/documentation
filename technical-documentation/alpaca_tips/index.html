@@ -2495,23 +2495,23 @@
 <p>Alpaca now runs as a single executable jar which can enable none, some or all of the available services.</p>
 <p>To develop your own module, start by cloning the Alpaca code base. </p>
 <p>Then create a new directory (for example <code>my-new-module</code>) along side the <code>islandora-indexing-fcrepo</code>, <code>islandora-indexing-triplestore</code> directories</p>
-<p>Add your new directory to the <code>settings.gradle</code> file, following the pattern of the others.</p>
-<pre><code class="language-shell">  include ':islandora-support'
-  include ':islandora-indexing-triplestore'
-  include ':islandora-indexing-fcrepo'
-  include ':islandora-connector-derivative'
-  include ':islandora-http-client'
-  include ':islandora-alpaca-app'
-+ include ':my-new-module'
-
-  project(':islandora-alpaca-app').setProjectDir(&quot;$rootDir/islandora-alpaca-app&quot; as File)
-  project(':islandora-support').setProjectDir(&quot;$rootDir/islandora-support&quot; as File)
-  project(':islandora-indexing-triplestore').setProjectDir(&quot;$rootDir/islandora-indexing-triplestore&quot; as File)
-  project(':islandora-indexing-fcrepo').setProjectDir(&quot;$rootDir/islandora-indexing-fcrepo&quot; as File)
-  project(':islandora-connector-derivative').setProjectDir(&quot;$rootDir/islandora-connector-derivative&quot; as File)
-  project(':islandora-http-client').setProjectDir(&quot;$rootDir/islandora-http-client&quot; as File)
-+ project(':my-new-module').setProjectDir(&quot;$rootDir/my-new-module&quot; as File)
-</code></pre>
+<p>Add your new directory to the <code>settings.gradle</code> file, following the pattern of the others.
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="w">  </span>include<span class="w"> </span><span class="s1">&#39;:islandora-support&#39;</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span>include<span class="w"> </span><span class="s1">&#39;:islandora-indexing-triplestore&#39;</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span>include<span class="w"> </span><span class="s1">&#39;:islandora-indexing-fcrepo&#39;</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span>include<span class="w"> </span><span class="s1">&#39;:islandora-connector-derivative&#39;</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span>include<span class="w"> </span><span class="s1">&#39;:islandora-http-client&#39;</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">  </span>include<span class="w"> </span><span class="s1">&#39;:islandora-alpaca-app&#39;</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>+<span class="w"> </span>include<span class="w"> </span><span class="s1">&#39;:my-new-module&#39;</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">  </span>project<span class="o">(</span><span class="s1">&#39;:islandora-alpaca-app&#39;</span><span class="o">)</span>.setProjectDir<span class="o">(</span><span class="s2">&quot;</span><span class="nv">$rootDir</span><span class="s2">/islandora-alpaca-app&quot;</span><span class="w"> </span>as<span class="w"> </span>File<span class="o">)</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">  </span>project<span class="o">(</span><span class="s1">&#39;:islandora-support&#39;</span><span class="o">)</span>.setProjectDir<span class="o">(</span><span class="s2">&quot;</span><span class="nv">$rootDir</span><span class="s2">/islandora-support&quot;</span><span class="w"> </span>as<span class="w"> </span>File<span class="o">)</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">  </span>project<span class="o">(</span><span class="s1">&#39;:islandora-indexing-triplestore&#39;</span><span class="o">)</span>.setProjectDir<span class="o">(</span><span class="s2">&quot;</span><span class="nv">$rootDir</span><span class="s2">/islandora-indexing-triplestore&quot;</span><span class="w"> </span>as<span class="w"> </span>File<span class="o">)</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">  </span>project<span class="o">(</span><span class="s1">&#39;:islandora-indexing-fcrepo&#39;</span><span class="o">)</span>.setProjectDir<span class="o">(</span><span class="s2">&quot;</span><span class="nv">$rootDir</span><span class="s2">/islandora-indexing-fcrepo&quot;</span><span class="w"> </span>as<span class="w"> </span>File<span class="o">)</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">  </span>project<span class="o">(</span><span class="s1">&#39;:islandora-connector-derivative&#39;</span><span class="o">)</span>.setProjectDir<span class="o">(</span><span class="s2">&quot;</span><span class="nv">$rootDir</span><span class="s2">/islandora-connector-derivative&quot;</span><span class="w"> </span>as<span class="w"> </span>File<span class="o">)</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">  </span>project<span class="o">(</span><span class="s1">&#39;:islandora-http-client&#39;</span><span class="o">)</span>.setProjectDir<span class="o">(</span><span class="s2">&quot;</span><span class="nv">$rootDir</span><span class="s2">/islandora-http-client&quot;</span><span class="w"> </span>as<span class="w"> </span>File<span class="o">)</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>+<span class="w"> </span>project<span class="o">(</span><span class="s1">&#39;:my-new-module&#39;</span><span class="o">)</span>.setProjectDir<span class="o">(</span><span class="s2">&quot;</span><span class="nv">$rootDir</span><span class="s2">/my-new-module&quot;</span><span class="w"> </span>as<span class="w"> </span>File<span class="o">)</span>
+</span></code></pre></div></p>
 <p>You can explore the <code>islandora-indexing-fcrepo</code> module to see the pattern to develop your own module.</p>
 <p>This module contains three classes. </p>
 <p>You can ignore the <code>CommonProcessor</code> class, that is just some processing that is split out for reusability.</p>
@@ -2519,14 +2519,14 @@
 <p>The second class is the <code>FcrepoIndexerOptions</code>, this class extends the Alpaca <code>PropertyConfig</code> base class which gets common configuration parameters into your module. It also contains any custom configuration parameters needed for your route. </p>
 <p>Lastly it uses the <code>@Conditional(FcrepoIndexerOptions.FcrepoIndexerEnabled.class)</code> to define when this module is enabled. </p>
 <p><code>FcrepoIndexerOptions.FcrepoIndexerEnabled.class</code> refers to the static inner class.</p>
-<p>This class is inside of <code>FcrepoIndexerOptions</code> and works like this:</p>
-<pre><code>[1]  static class FcrepoIndexerEnabled extends ConditionOnPropertyTrue { 
-[2]    FcrepoIndexerEnabled() {
-[3]      super(FcrepoIndexerOptions.FCREPO_INDEXER_ENABLED, false);
-[4]    }
-[5]  }
-</code></pre>
-<p>Line 1 extends the class that will register (enable) this module when a defined property is "TRUE"</p>
+<p>This class is inside of <code>FcrepoIndexerOptions</code> and works like this:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>[1]  static class FcrepoIndexerEnabled extends ConditionOnPropertyTrue { 
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>[2]    FcrepoIndexerEnabled() {
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>[3]      super(FcrepoIndexerOptions.FCREPO_INDEXER_ENABLED, false);
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>[4]    }
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>[5]  }
+</span></code></pre></div>
+Line 1 extends the class that will register (enable) this module when a defined property is "TRUE"</p>
 <p>Line 2 is the constructor for this static class</p>
 <p>Line 3 passes to the parent constructor two things.</p>
 <ol>
@@ -2535,36 +2535,36 @@
 </ol>
 <p>So in this case we check for the property <code>fcrepo.indexer.enabled</code> and if we don't find it, we pass <code>false</code>. So this module is assumed to be "off" unless the property <code>fcrepo.indexer.enabled=true</code> is located.</p>
 <p>The last thing is to add your new module to the <code>islandora-alpaca-app</code> <code>build.gradle</code> file as a dependencies, like the existing modules.
-i.e.</p>
-<pre><code>dependencies {
-    implementation &quot;info.picocli:picocli:${versions.picocli}&quot;
-    implementation &quot;org.apache.camel:camel-spring-javaconfig:${versions.camel}&quot;
-    implementation &quot;org.slf4j:slf4j-api:${versions.slf4j}&quot;
-    implementation &quot;org.springframework:spring-context:${versions.spring}&quot;
-    implementation project(':islandora-support')
-    implementation project(':islandora-connector-derivative')
-    implementation project(':islandora-indexing-fcrepo')
-    implementation project(':islandora-indexing-triplestore')
-+   implementation project(':my-new-module')
-
-    runtimeOnly &quot;ch.qos.logback:logback-classic:${versions.logback}&quot;
-
-}
-</code></pre>
-<p>Finally from the top-level directory of Alpaca execute</p>
-<pre><code>./gradlew clean build shadowJar
-</code></pre>
+i.e.
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>dependencies {
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    implementation &quot;info.picocli:picocli:${versions.picocli}&quot;
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    implementation &quot;org.apache.camel:camel-spring-javaconfig:${versions.camel}&quot;
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    implementation &quot;org.slf4j:slf4j-api:${versions.slf4j}&quot;
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    implementation &quot;org.springframework:spring-context:${versions.spring}&quot;
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    implementation project(&#39;:islandora-support&#39;)
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>    implementation project(&#39;:islandora-connector-derivative&#39;)
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    implementation project(&#39;:islandora-indexing-fcrepo&#39;)
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>    implementation project(&#39;:islandora-indexing-triplestore&#39;)
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>+   implementation project(&#39;:my-new-module&#39;)
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>    runtimeOnly &quot;ch.qos.logback:logback-classic:${versions.logback}&quot;
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>}
+</span></code></pre></div></p>
+<p>Finally from the top-level directory of Alpaca execute
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>./gradlew clean build shadowJar
+</span></code></pre></div></p>
 <p>This tells Gradle to clean the modules, then build the modules and finally create a single jar with all needed code (the shadow jar).</p>
-<p>The final executable jar is:</p>
-<pre><code>&lt;alpaca directory&gt;/islandora-alpaca-app/build/libs/islandora-alpaca-&lt;version&gt;-all.jar
-</code></pre>
+<p>The final executable jar is:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>&lt;alpaca directory&gt;/islandora-alpaca-app/build/libs/islandora-alpaca-&lt;version&gt;-all.jar
+</span></code></pre></div></p>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 8, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 11, 2023</span>
       
     
   </small>

@@ -2611,11 +2611,11 @@
 <h2 id="install-composer">Install Composer<a class="headerlink" href="#install-composer" title="Permanent link">&para;</a></h2>
 <h3 id="download-and-install-composer-2x">Download and install Composer 2.x<a class="headerlink" href="#download-and-install-composer-2x" title="Permanent link">&para;</a></h3>
 <p>Composer provides PHP code that we can use to install it. After downloading and running the installer, we’re going to move the generated executable to a place in <code>$PATH</code>, removing its extension:</p>
-<pre><code class="language-bash">curl &quot;https://getcomposer.org/installer&quot; &gt; composer-install.php
-chmod +x composer-install.php
-php composer-install.php
-sudo mv composer.phar /usr/local/bin/composer
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>curl<span class="w"> </span><span class="s2">&quot;https://getcomposer.org/installer&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>composer-install.php
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>chmod<span class="w"> </span>+x<span class="w"> </span>composer-install.php
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>php<span class="w"> </span>composer-install.php
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>sudo<span class="w"> </span>mv<span class="w"> </span>composer.phar<span class="w"> </span>/usr/local/bin/composer
+</span></code></pre></div>
 <h2 id="download-and-scaffold-drupal">Download and Scaffold Drupal<a class="headerlink" href="#download-and-scaffold-drupal" title="Permanent link">&para;</a></h2>
 <p>At this point, you have the option of using the <a href="https://github.com/Islandora/islandora-starter-site/">Islandora Starter Site</a>, with its pre-selected modules
 and configurations which function "out of the box," or build a clean stock Drupal via the Drupal Recommended Project and install
@@ -2623,86 +2623,74 @@ Islandora modules as you desire.</p>
 <h3 id="option-1-create-a-project-using-the-islandora-starter-site">Option 1: Create a project using the Islandora Starter Site<a class="headerlink" href="#option-1-create-a-project-using-the-islandora-starter-site" title="Permanent link">&para;</a></h3>
 <p>Navigate to the folder where you want to put your Islandora project (in our case <code>/var/www</code>), and
 create the Islandora Starter Site:</p>
-<pre><code class="language-bash">cd /var/www
-composer create-project islandora/islandora-starter-site
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">cd</span><span class="w"> </span>/var/www
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>composer<span class="w"> </span>create-project<span class="w"> </span>islandora/islandora-starter-site
+</span></code></pre></div>
 <p>This will install all PHP dependencies, including Drush, and scaffold the site.</p>
 <p>Drush is not accessible via <code>$PATH</code>, but is available using the command <code>composer exec -- drush</code> </p>
 <h3 id="option-2-create-a-basic-drupal-recommended-project">Option 2: Create a basic Drupal Recommended Project<a class="headerlink" href="#option-2-create-a-basic-drupal-recommended-project" title="Permanent link">&para;</a></h3>
 <p>Navigate to the folder where you want to put your Drupal project (in our case <code>/var/www</code>), and
 create the Drupal Recommended Project:</p>
-<pre><code class="language-bash">cd /var/www
-composer create-project drupal/recommended-project my-project
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nb">cd</span><span class="w"> </span>/var/www
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>composer<span class="w"> </span>create-project<span class="w"> </span>drupal/recommended-project<span class="w"> </span>my-project
+</span></code></pre></div>
 <h2 id="make-the-new-webroot-accessible-in-apache">Make the new webroot accessible in Apache<a class="headerlink" href="#make-the-new-webroot-accessible-in-apache" title="Permanent link">&para;</a></h2>
 <p>Before we can proceed with the actual site installation, we’re going to need to make our new Drupal installation the default web-accessible location Apache serves up. This will include an appropriate <code>ports.conf</code> file, and replacing the default enabled site.</p>
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
 <p>Out of the box, these files will contain support for SSL, which we will not be setting up in this guide (and therefore removing with these overwritten configurations), but which are <strong>absolutely indispensible</strong> to a production site. This guide does not recommend any particular SSL certificate authority or installation method, but you may find <a href="https://www.digitalocean.com/community/tutorials/how-to-install-an-ssl-certificate-from-a-commercial-certificate-authority">DigitalOcean's tutorial</a> helpful.</p>
 </div>
-<p><code>/etc/apache2/ports.conf | root:root/644</code></p>
-<pre><code>Listen 80
-</code></pre>
+<p><code>/etc/apache2/ports.conf | root:root/644</code>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Listen 80
+</span></code></pre></div></p>
 <p>Remove everything but the "Listen 80" line. You can leave the comments in if you want.</p>
-<p><code>/etc/apache2/sites-enabled/000-default.conf | root:root/777</code></p>
-<pre><code class="language-xml">&lt;VirtualHost *:80&gt;
-  ServerName SERVER_NAME
-  DocumentRoot &quot;/opt/drupal/web&quot;
-  &lt;Directory &quot;/opt/drupal/web&quot;&gt;
-    Options Indexes FollowSymLinks MultiViews
-    AllowOverride all
-    Require all granted
-  &lt;/Directory&gt;
-  # Ensure some logging is in place.
-  ErrorLog &quot;/var/log/apache2/localhost_error.log&quot;
-  CustomLog &quot;/var/log/apache2/localhost_access.log&quot; combined
-&lt;/VirtualHost&gt;
-</code></pre>
-<ul>
-<li><code>SERVER_NAME</code>: <code>localhost</code><ul>
-<li>For a development environment hosted on your own machine or a VM, <code>localhost</code> should suffice. Realistically, this should be the domain or IP address the server will be accessed at.</li>
-</ul>
-</li>
-</ul>
+<p><code>/etc/apache2/sites-enabled/000-default.conf | root:root/777</code>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nt">&lt;VirtualHost</span><span class="w"> </span><span class="err">*:80</span><span class="nt">&gt;</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span>ServerName<span class="w"> </span>SERVER_NAME
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span>DocumentRoot<span class="w"> </span>&quot;/opt/drupal/web&quot;
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">  </span><span class="nt">&lt;Directory</span><span class="w"> </span><span class="err">&quot;/opt/drupal/web&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span>Options<span class="w"> </span>Indexes<span class="w"> </span>FollowSymLinks<span class="w"> </span>MultiViews
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span>AllowOverride<span class="w"> </span>all
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">    </span>Require<span class="w"> </span>all<span class="w"> </span>granted
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">  </span><span class="nt">&lt;/Directory&gt;</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">  </span>#<span class="w"> </span>Ensure<span class="w"> </span>some<span class="w"> </span>logging<span class="w"> </span>is<span class="w"> </span>in<span class="w"> </span>place.
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">  </span>ErrorLog<span class="w"> </span>&quot;/var/log/apache2/localhost_error.log&quot;
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">  </span>CustomLog<span class="w"> </span>&quot;/var/log/apache2/localhost_access.log&quot;<span class="w"> </span>combined
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="nt">&lt;/VirtualHost&gt;</span>
+</span></code></pre></div>
+- <code>SERVER_NAME</code>: <code>localhost</code>
+    - For a development environment hosted on your own machine or a VM, <code>localhost</code> should suffice. Realistically, this should be the domain or IP address the server will be accessed at.</p>
 <p>Restart the Apache 2 service to apply these changes:</p>
-<pre><code class="language-bash">sudo systemctl restart apache2
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>apache2
+</span></code></pre></div>
 <h2 id="prepare-the-postgresql-database">Prepare the PostgreSQL database<a class="headerlink" href="#prepare-the-postgresql-database" title="Permanent link">&para;</a></h2>
 <p>PostgreSQL roles are directly tied to users. We’re going to ensure a user is in place, create a role for them in PostgreSQL, and create a database for them that we can use to install Drupal.</p>
-<pre><code class="language-bash"># Run psql as the postgres user, the only user currently with any PostgreSQL
-# access.
-sudo -u postgres psql
-# Then, run these commands within psql itself:
-create database DRUPAL_DB encoding 'UTF8' LC_COLLATE = 'en_US.UTF-8' LC_CTYPE = 'en_US.UTF-8' TEMPLATE template0;
-create user DRUPAL_DB_USER with encrypted password 'DRUPAL_DB_PASSWORD';
-grant all privileges on database DRUPAL_DB to DRUPAL_DB_USER;
-# Then, quit psql.
-\q
-</code></pre>
-<ul>
-<li><code>DRUPAL_DB</code>: <code>drupal9</code><ul>
-<li>This will be used as the core database that Drupal is installed into</li>
-</ul>
-</li>
-<li><code>DRUPAL_DB_USER</code>: <code>drupal</code><ul>
-<li>Specifically, this is the user that will connect to the PostgreSQL database being created, not the user that will be logging into Drupal</li>
-</ul>
-</li>
-<li><code>DRUPAL_DB_PASSWORD</code>: <code>drupal</code><ul>
-<li>This should be a secure password; it’s recommended to use a password generator to create this such as the one provided by <a href="https://www.random.org/passwords/">random.org</a></li>
-</ul>
-</li>
-</ul>
+<p><div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Run psql as the postgres user, the only user currently with any PostgreSQL</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="c1"># access.</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>sudo<span class="w"> </span>-u<span class="w"> </span>postgres<span class="w"> </span>psql
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="c1"># Then, run these commands within psql itself:</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>create<span class="w"> </span>database<span class="w"> </span>DRUPAL_DB<span class="w"> </span>encoding<span class="w"> </span><span class="s1">&#39;UTF8&#39;</span><span class="w"> </span><span class="nv">LC_COLLATE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;en_US.UTF-8&#39;</span><span class="w"> </span><span class="nv">LC_CTYPE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;en_US.UTF-8&#39;</span><span class="w"> </span>TEMPLATE<span class="w"> </span>template0<span class="p">;</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>create<span class="w"> </span>user<span class="w"> </span>DRUPAL_DB_USER<span class="w"> </span>with<span class="w"> </span>encrypted<span class="w"> </span>password<span class="w"> </span><span class="s1">&#39;DRUPAL_DB_PASSWORD&#39;</span><span class="p">;</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>grant<span class="w"> </span>all<span class="w"> </span>privileges<span class="w"> </span>on<span class="w"> </span>database<span class="w"> </span>DRUPAL_DB<span class="w"> </span>to<span class="w"> </span>DRUPAL_DB_USER<span class="p">;</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="c1"># Then, quit psql.</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="se">\q</span>
+</span></code></pre></div>
+- <code>DRUPAL_DB</code>: <code>drupal9</code>
+    - This will be used as the core database that Drupal is installed into
+- <code>DRUPAL_DB_USER</code>: <code>drupal</code>
+    - Specifically, this is the user that will connect to the PostgreSQL database being created, not the user that will be logging into Drupal
+- <code>DRUPAL_DB_PASSWORD</code>: <code>drupal</code>
+    - This should be a secure password; it’s recommended to use a password generator to create this such as the one provided by <a href="https://www.random.org/passwords/">random.org</a></p>
 <h2 id="install-drupal-using-drush">Install Drupal using Drush<a class="headerlink" href="#install-drupal-using-drush" title="Permanent link">&para;</a></h2>
 <p>The Drupal installation process can be done through the GUI in a series of form steps, or can be done quickly using Drush's <code>site-install</code> command. It can be invoked with the full list of parameters (such as <code>--db-url</code> and <code>--site-name</code>), but if parameters are missing, they will be asked of you interactiveley.</p>
 <h3 id="option-1-site-install-the-starter-site-with-existing-configs">Option 1: Site install the Starter Site with existing configs<a class="headerlink" href="#option-1-site-install-the-starter-site-with-existing-configs" title="Permanent link">&para;</a></h3>
 <p>Follow the instructions in the <a href="https://github.com/Islandora/islandora-starter-site/#usage">README of the Islandora Starter Site</a>.
 The steps are not reproduced here to remove redundancy. When this installation is done, you'll have a starter site ready-to-go. Once you set up the external services in the next sections, you'll need to configure Drupal to know where they are.</p>
 <h3 id="option-2-site-install-the-basic-drupal-recommended-project">Option 2: Site install the basic Drupal Recommended Project<a class="headerlink" href="#option-2-site-install-the-basic-drupal-recommended-project" title="Permanent link">&para;</a></h3>
-<pre><code class="language-bash">cd /var/www/drupal
-drush -y site-install standard --db-url=&quot;pgsql://DRUPAL_DB_USER:DRUPAL_DB_PASSWORD@127.0.0.1:5432/DRUPAL_DB&quot; --site-name=&quot;SITE_NAME&quot; --account-name=DRUPAL_LOGIN --account-pass=DRUPAL_PASS
-</code></pre>
-<p>This uses the same parameters from the above step, as well as:</p>
+<p><div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nb">cd</span><span class="w"> </span>/var/www/drupal
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>drush<span class="w"> </span>-y<span class="w"> </span>site-install<span class="w"> </span>standard<span class="w"> </span>--db-url<span class="o">=</span><span class="s2">&quot;pgsql://DRUPAL_DB_USER:DRUPAL_DB_PASSWORD@127.0.0.1:5432/DRUPAL_DB&quot;</span><span class="w"> </span>--site-name<span class="o">=</span><span class="s2">&quot;SITE_NAME&quot;</span><span class="w"> </span>--account-name<span class="o">=</span>DRUPAL_LOGIN<span class="w"> </span>--account-pass<span class="o">=</span>DRUPAL_PASS
+</span></code></pre></div>
+This uses the same parameters from the above step, as well as:</p>
 <ul>
 <li><code>SITE_NAME</code>: Islandora 2.0<ul>
 <li>This is arbitrary, and is simply used to title the site on the home page</li>
@@ -2724,7 +2712,7 @@ drush -y site-install standard --db-url=&quot;pgsql://DRUPAL_DB_USER:DRUPAL_DB_P
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 8, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 11, 2023</span>
       
     
   </small>

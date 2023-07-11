@@ -2643,304 +2643,304 @@
 <li>FFMPEG, which will be used for video processing</li>
 <li>Poppler, which will be used for generating PDFs</li>
 </ul>
-<pre><code class="language-bash">sudo add-apt-repository -y ppa:lyrasis/imagemagick-jp2
-sudo apt-get update
-sudo apt-get -y install imagemagick tesseract-ocr ffmpeg poppler-utils
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>add-apt-repository<span class="w"> </span>-y<span class="w"> </span>ppa:lyrasis/imagemagick-jp2
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>imagemagick<span class="w"> </span>tesseract-ocr<span class="w"> </span>ffmpeg<span class="w"> </span>poppler-utils
+</span></code></pre></div>
 <p><strong>NOTICE:</strong> If you get the <code>sudo: apt-add-repository: command not found</code>, run <code>sudo apt-get install software-properties-common</code> in order to make the command available.</p>
 <h3 id="cloning-and-installing-crayfish">Cloning and Installing Crayfish<a class="headerlink" href="#cloning-and-installing-crayfish" title="Permanent link">&para;</a></h3>
 <p>We’re going to clone Crayfish to <code>/opt</code>, and individually run <code>composer install</code> against each of the microservice subdirectories.</p>
-<pre><code class="language-bash">cd /opt
-sudo git clone https://github.com/Islandora/Crayfish.git crayfish
-sudo chown -R www-data:www-data crayfish
-sudo -u www-data composer install -d crayfish/Homarus
-sudo -u www-data composer install -d crayfish/Houdini
-sudo -u www-data composer install -d crayfish/Hypercube
-sudo -u www-data composer install -d crayfish/Milliner
-sudo -u www-data composer install -d crayfish/Recast
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">cd</span><span class="w"> </span>/opt
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>sudo<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/Islandora/Crayfish.git<span class="w"> </span>crayfish
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>sudo<span class="w"> </span>chown<span class="w"> </span>-R<span class="w"> </span>www-data:www-data<span class="w"> </span>crayfish
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>sudo<span class="w"> </span>-u<span class="w"> </span>www-data<span class="w"> </span>composer<span class="w"> </span>install<span class="w"> </span>-d<span class="w"> </span>crayfish/Homarus
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>sudo<span class="w"> </span>-u<span class="w"> </span>www-data<span class="w"> </span>composer<span class="w"> </span>install<span class="w"> </span>-d<span class="w"> </span>crayfish/Houdini
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>sudo<span class="w"> </span>-u<span class="w"> </span>www-data<span class="w"> </span>composer<span class="w"> </span>install<span class="w"> </span>-d<span class="w"> </span>crayfish/Hypercube
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>sudo<span class="w"> </span>-u<span class="w"> </span>www-data<span class="w"> </span>composer<span class="w"> </span>install<span class="w"> </span>-d<span class="w"> </span>crayfish/Milliner
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>sudo<span class="w"> </span>-u<span class="w"> </span>www-data<span class="w"> </span>composer<span class="w"> </span>install<span class="w"> </span>-d<span class="w"> </span>crayfish/Recast
+</span></code></pre></div>
 <h3 id="preparing-logging">Preparing Logging<a class="headerlink" href="#preparing-logging" title="Permanent link">&para;</a></h3>
 <p>Not much needs to happen here; Crayfish opts for a simple logging approach, with one <code>.log</code> file for each component. We’ll create a folder where each logfile can live.</p>
-<pre><code class="language-bash">sudo mkdir /var/log/islandora
-sudo chown www-data:www-data /var/log/islandora
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>mkdir<span class="w"> </span>/var/log/islandora
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>sudo<span class="w"> </span>chown<span class="w"> </span>www-data:www-data<span class="w"> </span>/var/log/islandora
+</span></code></pre></div>
 <h3 id="configuring-crayfish-components">Configuring Crayfish Components<a class="headerlink" href="#configuring-crayfish-components" title="Permanent link">&para;</a></h3>
 <p>Each Crayfish component requires one or more <code>.yaml</code> file(s) to ensure everything is wired up correctly.</p>
 <p><strong>NOTICE</strong></p>
 <p>The following configuration files represent somewhat sensible defaults; you should take consideration of the logging levels in use, as this can vary in desirability from installation to installation. Also note that in all cases, <code>http</code> URLs are being used, as this guide does not deal with setting up https support. In a production installation, this should not be the case. These files also assume a connection to a PostgreSQL database; use a <code>pdo_mysql</code> driver and the appropriate <code>3306</code> port if using MySQL.</p>
 <h4 id="homarus-audiovideo-derivatives">Homarus (Audio/Video derivatives)<a class="headerlink" href="#homarus-audiovideo-derivatives" title="Permanent link">&para;</a></h4>
-<p><code>/opt/crayfish/Homarus/cfg/config.yaml | www-data:www-data/644</code></p>
-<pre><code class="language-yaml">---
-homarus:
-  executable: ffmpeg
-  mime_types:
-    valid:
-      - video/mp4
-      - video/x-msvideo
-      - video/ogg
-      - audio/x-wav
-      - audio/mpeg
-      - audio/aac
-      - image/jpeg
-      - image/png
-    default: video/mp4
-  mime_to_format:
-    valid:
-      - video/mp4_mp4
-      - video/x-msvideo_avi
-      - video/ogg_ogg
-      - audio/x-wav_wav
-      - audio/mpeg_mp3
-      - audio/aac_m4a
-      - image/jpeg_image2pipe
-      - image/png_image2pipe
-    default: mp4
-fedora_resource:
-  base_url: http://localhost:8080/fcrepo/rest
-log:
-  level: NOTICE
-  file: /var/log/islandora/homarus.log
-syn:
-  enable: true
-  config: /opt/fcrepo/config/syn-settings.xml
-</code></pre>
+<p><code>/opt/crayfish/Homarus/cfg/config.yaml | www-data:www-data/644</code>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nn">---</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nt">homarus</span><span class="p">:</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nt">executable</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ffmpeg</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span><span class="nt">mime_types</span><span class="p">:</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="nt">valid</span><span class="p">:</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">video/mp4</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">video/x-msvideo</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">video/ogg</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">audio/x-wav</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">audio/mpeg</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">audio/aac</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">image/jpeg</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">image/png</span>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="w">    </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">video/mp4</span>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="w">  </span><span class="nt">mime_to_format</span><span class="p">:</span>
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="w">    </span><span class="nt">valid</span><span class="p">:</span>
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">video/mp4_mp4</span>
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">video/x-msvideo_avi</span>
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">video/ogg_ogg</span>
+</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">audio/x-wav_wav</span>
+</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">audio/mpeg_mp3</span>
+</span><span id="__span-3-22"><a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">audio/aac_m4a</span>
+</span><span id="__span-3-23"><a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">image/jpeg_image2pipe</span>
+</span><span id="__span-3-24"><a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">image/png_image2pipe</span>
+</span><span id="__span-3-25"><a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a><span class="w">    </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mp4</span>
+</span><span id="__span-3-26"><a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a><span class="nt">fedora_resource</span><span class="p">:</span>
+</span><span id="__span-3-27"><a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a><span class="w">  </span><span class="nt">base_url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://localhost:8080/fcrepo/rest</span>
+</span><span id="__span-3-28"><a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a><span class="nt">log</span><span class="p">:</span>
+</span><span id="__span-3-29"><a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a><span class="w">  </span><span class="nt">level</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NOTICE</span>
+</span><span id="__span-3-30"><a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a><span class="w">  </span><span class="nt">file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/log/islandora/homarus.log</span>
+</span><span id="__span-3-31"><a id="__codelineno-3-31" name="__codelineno-3-31" href="#__codelineno-3-31"></a><span class="nt">syn</span><span class="p">:</span>
+</span><span id="__span-3-32"><a id="__codelineno-3-32" name="__codelineno-3-32" href="#__codelineno-3-32"></a><span class="w">  </span><span class="nt">enable</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span><span id="__span-3-33"><a id="__codelineno-3-33" name="__codelineno-3-33" href="#__codelineno-3-33"></a><span class="w">  </span><span class="nt">config</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/opt/fcrepo/config/syn-settings.xml</span>
+</span></code></pre></div></p>
 <h4 id="houdini-image-derivatives">Houdini (Image derivatives)<a class="headerlink" href="#houdini-image-derivatives" title="Permanent link">&para;</a></h4>
 <p>Currently the Houdini microservice uses a different system (Symfony) than the other microservices, this requires different configuration.</p>
-<p><code>/opt/crayfish/Houdini/config/services.yaml | www-data:www-data/644</code></p>
-<pre><code class="language-yaml"># This file is the entry point to configure your own services.
-# Files in the packages/ subdirectory configure your dependencies.
-# Put parameters here that don't need to change on each machine where the app is deployed
-# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
-parameters:
-    app.executable: /usr/local/bin/convert
-    app.formats.valid:
-        - image/jpeg
-        - image/png
-        - image/tiff
-        - image/jp2
-    app.formats.default: image/jpeg
-
-services:
-    # default configuration for services in *this* file
-    _defaults:
-        autowire: true      # Automatically injects dependencies in your services.
-        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
-
-    # makes classes in src/ available to be used as services
-    # this creates a service per class whose id is the fully-qualified class name
-    App\Islandora\Houdini\:
-        resource: '../src/*'
-        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
-
-    # controllers are imported separately to make sure services can be injected
-    # as action arguments even if you don't extend any base controller class
-    App\Islandora\Houdini\Controller\HoudiniController:
-        public: false
-        bind:
-            $formats: '%app.formats.valid%'
-            $default_format: '%app.formats.default%'
-            $executable: '%app.executable%'
-        tags: ['controller.service_arguments']
-
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
-</code></pre>
-<p><code>/opt/crayfish/Houdini/config/packages/crayfish_commons.yml | www-data:www-data/644</code></p>
-<pre><code class="language-yaml">crayfish_commons:
-  fedora_base_uri: 'http://localhost:8080/fcrepo/rest'
-  syn_config: '/opt/fcrepo/config/syn-settings.xml'
-</code></pre>
-<p><code>/opt/crayfish/Houdini/config/packages/monolog.yml | www-data:www-data/644</code></p>
-<pre><code class="language-yaml">monolog:
-
-  handlers:
-
-    houdini:
-      type: rotating_file
-      path: /var/log/islandora/Houdini.log
-      level: DEBUG
-      max_files: 1
-</code></pre>
+<p><code>/opt/crayfish/Houdini/config/services.yaml | www-data:www-data/644</code>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># This file is the entry point to configure your own services.</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c1"># Files in the packages/ subdirectory configure your dependencies.</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="c1"># Put parameters here that don&#39;t need to change on each machine where the app is deployed</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1"># https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="nt">parameters</span><span class="p">:</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span><span class="nt">app.executable</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/usr/local/bin/convert</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">    </span><span class="nt">app.formats.valid</span><span class="p">:</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">image/jpeg</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">image/png</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">image/tiff</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">image/jp2</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">    </span><span class="nt">app.formats.default</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">image/jpeg</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="nt">services</span><span class="p">:</span>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="w">    </span><span class="c1"># default configuration for services in *this* file</span>
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="w">    </span><span class="nt">_defaults</span><span class="p">:</span>
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="w">        </span><span class="nt">autowire</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w">      </span><span class="c1"># Automatically injects dependencies in your services.</span>
+</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="w">        </span><span class="nt">autoconfigure</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"> </span><span class="c1"># Automatically registers your services as commands, event subscribers, etc.</span>
+</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>
+</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="w">    </span><span class="c1"># makes classes in src/ available to be used as services</span>
+</span><span id="__span-4-21"><a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="w">    </span><span class="c1"># this creates a service per class whose id is the fully-qualified class name</span>
+</span><span id="__span-4-22"><a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a><span class="w">    </span><span class="nt">App\Islandora\Houdini\</span><span class="p">:</span>
+</span><span id="__span-4-23"><a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a><span class="w">        </span><span class="nt">resource</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;../src/*&#39;</span>
+</span><span id="__span-4-24"><a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a><span class="w">        </span><span class="nt">exclude</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}&#39;</span>
+</span><span id="__span-4-25"><a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a>
+</span><span id="__span-4-26"><a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a><span class="w">    </span><span class="c1"># controllers are imported separately to make sure services can be injected</span>
+</span><span id="__span-4-27"><a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a><span class="w">    </span><span class="c1"># as action arguments even if you don&#39;t extend any base controller class</span>
+</span><span id="__span-4-28"><a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a><span class="w">    </span><span class="nt">App\Islandora\Houdini\Controller\HoudiniController</span><span class="p">:</span>
+</span><span id="__span-4-29"><a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a><span class="w">        </span><span class="nt">public</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</span><span id="__span-4-30"><a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a><span class="w">        </span><span class="nt">bind</span><span class="p">:</span>
+</span><span id="__span-4-31"><a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a><span class="w">            </span><span class="nt">$formats</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;%app.formats.valid%&#39;</span>
+</span><span id="__span-4-32"><a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a><span class="w">            </span><span class="nt">$default_format</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;%app.formats.default%&#39;</span>
+</span><span id="__span-4-33"><a id="__codelineno-4-33" name="__codelineno-4-33" href="#__codelineno-4-33"></a><span class="w">            </span><span class="nt">$executable</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;%app.executable%&#39;</span>
+</span><span id="__span-4-34"><a id="__codelineno-4-34" name="__codelineno-4-34" href="#__codelineno-4-34"></a><span class="w">        </span><span class="nt">tags</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;controller.service_arguments&#39;</span><span class="p p-Indicator">]</span>
+</span><span id="__span-4-35"><a id="__codelineno-4-35" name="__codelineno-4-35" href="#__codelineno-4-35"></a>
+</span><span id="__span-4-36"><a id="__codelineno-4-36" name="__codelineno-4-36" href="#__codelineno-4-36"></a><span class="w">    </span><span class="c1"># add more service definitions when explicit configuration is needed</span>
+</span><span id="__span-4-37"><a id="__codelineno-4-37" name="__codelineno-4-37" href="#__codelineno-4-37"></a><span class="w">    </span><span class="c1"># please note that last definitions always *replace* previous ones</span>
+</span></code></pre></div></p>
+<p><code>/opt/crayfish/Houdini/config/packages/crayfish_commons.yml | www-data:www-data/644</code>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nt">crayfish_commons</span><span class="p">:</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">fedora_base_uri</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;http://localhost:8080/fcrepo/rest&#39;</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="nt">syn_config</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;/opt/fcrepo/config/syn-settings.xml&#39;</span>
+</span></code></pre></div></p>
+<p><code>/opt/crayfish/Houdini/config/packages/monolog.yml | www-data:www-data/644</code>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nt">monolog</span><span class="p">:</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="nt">handlers</span><span class="p">:</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">    </span><span class="nt">houdini</span><span class="p">:</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rotating_file</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">      </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/log/islandora/Houdini.log</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">      </span><span class="nt">level</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DEBUG</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">      </span><span class="nt">max_files</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+</span></code></pre></div></p>
 <p>The below files are two versions of the same file to enable or disable JWT token authentication.</p>
 <p><code>/opt/crayfish/Houdini/config/packages/security.yml | www-data:www-data/644</code></p>
-<p>Enabled JWT token authentication:</p>
-<pre><code class="language-yaml">security:
-
-    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
-    providers:
-        jwt_user_provider:
-            id: Islandora\Crayfish\Commons\Syn\JwtUserProvider
-
-    firewalls:
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
-        main:
-            anonymous: false
-            # Need stateless or it reloads the User based on a token.
-            stateless: true
-
-            provider: jwt_user_provider
-            guard:
-                authenticators:
-                    - Islandora\Crayfish\Commons\Syn\JwtAuthenticator
-
-            # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#firewalls-authentication
-
-            # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
-
-
-    # Easy way to control access for large sections of your site
-    # Note: Only the *first* access control that matches will be used
-    access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
-</code></pre>
-<p>Disabled JWT token authentication:</p>
-<pre><code class="language-yaml">security:
-
-    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
-    providers:
-        jwt_user_provider:
-            id: Islandora\Crayfish\Commons\Syn\JwtUserProvider
-
-    firewalls:
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
-        main:
-            anonymous: true
-            # Need stateless or it reloads the User based on a token.
-            stateless: true
-</code></pre>
+<p>Enabled JWT token authentication:
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nt">security</span><span class="p">:</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="c1"># https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span><span class="nt">providers</span><span class="p">:</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">        </span><span class="nt">jwt_user_provider</span><span class="p">:</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">            </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Islandora\Crayfish\Commons\Syn\JwtUserProvider</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">    </span><span class="nt">firewalls</span><span class="p">:</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">        </span><span class="nt">dev</span><span class="p">:</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">            </span><span class="nt">pattern</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">^/(_(profiler|wdt)|css|images|js)/</span>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w">            </span><span class="nt">security</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="w">        </span><span class="nt">main</span><span class="p">:</span>
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="w">            </span><span class="nt">anonymous</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="w">            </span><span class="c1"># Need stateless or it reloads the User based on a token.</span>
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="w">            </span><span class="nt">stateless</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>
+</span><span id="__span-7-17"><a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="w">            </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">jwt_user_provider</span>
+</span><span id="__span-7-18"><a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a><span class="w">            </span><span class="nt">guard</span><span class="p">:</span>
+</span><span id="__span-7-19"><a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a><span class="w">                </span><span class="nt">authenticators</span><span class="p">:</span>
+</span><span id="__span-7-20"><a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a><span class="w">                    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Islandora\Crayfish\Commons\Syn\JwtAuthenticator</span>
+</span><span id="__span-7-21"><a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a>
+</span><span id="__span-7-22"><a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a><span class="w">            </span><span class="c1"># activate different ways to authenticate</span>
+</span><span id="__span-7-23"><a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a><span class="w">            </span><span class="c1"># https://symfony.com/doc/current/security.html#firewalls-authentication</span>
+</span><span id="__span-7-24"><a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a>
+</span><span id="__span-7-25"><a id="__codelineno-7-25" name="__codelineno-7-25" href="#__codelineno-7-25"></a><span class="w">            </span><span class="c1"># https://symfony.com/doc/current/security/impersonating_user.html</span>
+</span><span id="__span-7-26"><a id="__codelineno-7-26" name="__codelineno-7-26" href="#__codelineno-7-26"></a><span class="w">            </span><span class="c1"># switch_user: true</span>
+</span><span id="__span-7-27"><a id="__codelineno-7-27" name="__codelineno-7-27" href="#__codelineno-7-27"></a>
+</span><span id="__span-7-28"><a id="__codelineno-7-28" name="__codelineno-7-28" href="#__codelineno-7-28"></a>
+</span><span id="__span-7-29"><a id="__codelineno-7-29" name="__codelineno-7-29" href="#__codelineno-7-29"></a><span class="w">    </span><span class="c1"># Easy way to control access for large sections of your site</span>
+</span><span id="__span-7-30"><a id="__codelineno-7-30" name="__codelineno-7-30" href="#__codelineno-7-30"></a><span class="w">    </span><span class="c1"># Note: Only the *first* access control that matches will be used</span>
+</span><span id="__span-7-31"><a id="__codelineno-7-31" name="__codelineno-7-31" href="#__codelineno-7-31"></a><span class="w">    </span><span class="nt">access_control</span><span class="p">:</span>
+</span><span id="__span-7-32"><a id="__codelineno-7-32" name="__codelineno-7-32" href="#__codelineno-7-32"></a><span class="w">        </span><span class="c1"># - { path: ^/admin, roles: ROLE_ADMIN }</span>
+</span><span id="__span-7-33"><a id="__codelineno-7-33" name="__codelineno-7-33" href="#__codelineno-7-33"></a><span class="w">        </span><span class="c1"># - { path: ^/profile, roles: ROLE_USER }</span>
+</span></code></pre></div></p>
+<p>Disabled JWT token authentication:
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nt">security</span><span class="p">:</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">    </span><span class="c1"># https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">    </span><span class="nt">providers</span><span class="p">:</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">        </span><span class="nt">jwt_user_provider</span><span class="p">:</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">            </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Islandora\Crayfish\Commons\Syn\JwtUserProvider</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">    </span><span class="nt">firewalls</span><span class="p">:</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">        </span><span class="nt">dev</span><span class="p">:</span>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">            </span><span class="nt">pattern</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">^/(_(profiler|wdt)|css|images|js)/</span>
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="w">            </span><span class="nt">security</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="w">        </span><span class="nt">main</span><span class="p">:</span>
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="w">            </span><span class="nt">anonymous</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="w">            </span><span class="c1"># Need stateless or it reloads the User based on a token.</span>
+</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="w">            </span><span class="nt">stateless</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span></code></pre></div></p>
 <h4 id="hypercube-ocr">Hypercube (OCR)<a class="headerlink" href="#hypercube-ocr" title="Permanent link">&para;</a></h4>
-<p><code>/opt/crayfish/Hypercube/cfg/config.yaml | www-data:www-data/644</code></p>
-<pre><code class="language-yaml">---
-hypercube:
-  tesseract_executable: tesseract
-  pdftotext_executable: pdftotext
-fedora_resource:
-  base_url: http://localhost:8080/fcrepo/rest
-log:
-  level: NOTICE
-  file: /var/log/islandora/hypercube.log
-syn:
-  enable: true
-  config: /opt/fcrepo/config/syn-settings.xml
-</code></pre>
+<p><code>/opt/crayfish/Hypercube/cfg/config.yaml | www-data:www-data/644</code>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nn">---</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="nt">hypercube</span><span class="p">:</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span><span class="nt">tesseract_executable</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tesseract</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">  </span><span class="nt">pdftotext_executable</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pdftotext</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="nt">fedora_resource</span><span class="p">:</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">  </span><span class="nt">base_url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://localhost:8080/fcrepo/rest</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="nt">log</span><span class="p">:</span>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">  </span><span class="nt">level</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NOTICE</span>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">  </span><span class="nt">file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/log/islandora/hypercube.log</span>
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="nt">syn</span><span class="p">:</span>
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">  </span><span class="nt">enable</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="w">  </span><span class="nt">config</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/opt/fcrepo/config/syn-settings.xml</span>
+</span></code></pre></div></p>
 <h4 id="milliner-fedora-indexing">Milliner (Fedora indexing)<a class="headerlink" href="#milliner-fedora-indexing" title="Permanent link">&para;</a></h4>
-<p><code>/opt/crayfish/Milliner/cfg/config.yaml | www-data:www-data/644</code></p>
-<pre><code class="language-yaml">---
-fedora_base_url: http://localhost:8080/fcrepo/rest
-drupal_base_url: http://localhost
-modified_date_predicate: http://schema.org/dateModified
-strip_format_jsonld: true
-debug: false
-db.options:
-  driver: pdo_pgsql
-  host: 127.0.0.1
-  port: 5432
-  dbname: CRAYFISH_DB
-  user: CRAYFISH_DB_USER
-  password: CRAYFISH_DB_PASSWORD
-log:
-  level: NOTICE
-  file: /var/log/islandora/milliner.log
-syn:
-  enable: true
-  config: /opt/fcrepo/config/syn-settings.xml
-</code></pre>
+<p><code>/opt/crayfish/Milliner/cfg/config.yaml | www-data:www-data/644</code>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nn">---</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="nt">fedora_base_url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://localhost:8080/fcrepo/rest</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="nt">drupal_base_url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://localhost</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="nt">modified_date_predicate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://schema.org/dateModified</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="nt">strip_format_jsonld</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="nt">debug</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="nt">db.options</span><span class="p">:</span>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="w">  </span><span class="nt">driver</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pdo_pgsql</span>
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="w">  </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">127.0.0.1</span>
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="w">  </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5432</span>
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="w">  </span><span class="nt">dbname</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CRAYFISH_DB</span>
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="w">  </span><span class="nt">user</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CRAYFISH_DB_USER</span>
+</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="w">  </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CRAYFISH_DB_PASSWORD</span>
+</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="nt">log</span><span class="p">:</span>
+</span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="w">  </span><span class="nt">level</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NOTICE</span>
+</span><span id="__span-10-16"><a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a><span class="w">  </span><span class="nt">file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/log/islandora/milliner.log</span>
+</span><span id="__span-10-17"><a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a><span class="nt">syn</span><span class="p">:</span>
+</span><span id="__span-10-18"><a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a><span class="w">  </span><span class="nt">enable</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span><span id="__span-10-19"><a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a><span class="w">  </span><span class="nt">config</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/opt/fcrepo/config/syn-settings.xml</span>
+</span></code></pre></div></p>
 <h4 id="recast-drupal-to-fedora-uri-re-writing">Recast (Drupal to Fedora URI re-writing)<a class="headerlink" href="#recast-drupal-to-fedora-uri-re-writing" title="Permanent link">&para;</a></h4>
-<p><code>/opt/crayfish/Recast/cfg/config.yaml | www-data:www-data/644</code></p>
-<pre><code class="language-yaml">---
-fedora_resource:
-  base_url: http://localhost:8080/fcrepo/rest
-drupal_base_url: http://localhost
-debug: false
-log:
-  level: NOTICE
-  file: /var/log/islandora/recast.log
-syn:
-  enable: true
-  config: /opt/fcrepo/config/syn-settings.xml
-namespaces:
--
-  acl: &quot;http://www.w3.org/ns/auth/acl#&quot;
-  fedora: &quot;http://fedora.info/definitions/v4/repository#&quot;
-  ldp: &quot;http://www.w3.org/ns/ldp#&quot;
-  memento: &quot;http://mementoweb.org/ns#&quot;
-  pcdm: &quot;http://pcdm.org/models#&quot;
-  pcdmuse: &quot;http://pcdm.org/use#&quot;
-  webac: &quot;http://fedora.info/definitions/v4/webac#&quot;
-  vcard: &quot;http://www.w3.org/2006/vcard/ns#&quot;
-</code></pre>
+<p><code>/opt/crayfish/Recast/cfg/config.yaml | www-data:www-data/644</code>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nn">---</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="nt">fedora_resource</span><span class="p">:</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">  </span><span class="nt">base_url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://localhost:8080/fcrepo/rest</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="nt">drupal_base_url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://localhost</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="nt">debug</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="nt">log</span><span class="p">:</span>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="w">  </span><span class="nt">level</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NOTICE</span>
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="w">  </span><span class="nt">file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/log/islandora/recast.log</span>
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="nt">syn</span><span class="p">:</span>
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="w">  </span><span class="nt">enable</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="w">  </span><span class="nt">config</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/opt/fcrepo/config/syn-settings.xml</span>
+</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="nt">namespaces</span><span class="p">:</span>
+</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="p p-Indicator">-</span>
+</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="w">  </span><span class="nt">acl</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;http://www.w3.org/ns/auth/acl#&quot;</span>
+</span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="w">  </span><span class="nt">fedora</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;http://fedora.info/definitions/v4/repository#&quot;</span>
+</span><span id="__span-11-16"><a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="w">  </span><span class="nt">ldp</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;http://www.w3.org/ns/ldp#&quot;</span>
+</span><span id="__span-11-17"><a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a><span class="w">  </span><span class="nt">memento</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;http://mementoweb.org/ns#&quot;</span>
+</span><span id="__span-11-18"><a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="w">  </span><span class="nt">pcdm</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;http://pcdm.org/models#&quot;</span>
+</span><span id="__span-11-19"><a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a><span class="w">  </span><span class="nt">pcdmuse</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;http://pcdm.org/use#&quot;</span>
+</span><span id="__span-11-20"><a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a><span class="w">  </span><span class="nt">webac</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;http://fedora.info/definitions/v4/webac#&quot;</span>
+</span><span id="__span-11-21"><a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a><span class="w">  </span><span class="nt">vcard</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;http://www.w3.org/2006/vcard/ns#&quot;</span>
+</span></code></pre></div></p>
 <h3 id="creating-apache-configurations-for-crayfish-components">Creating Apache Configurations for Crayfish Components<a class="headerlink" href="#creating-apache-configurations-for-crayfish-components" title="Permanent link">&para;</a></h3>
 <p>Finally, we need appropriate Apache configurations for Crayfish; these will allow other services to connect to Crayfish components via their HTTP endpoints.</p>
 <p>Each endpoint we need to be able to connect to will get its own <code>.conf</code> file, which we will then enable.</p>
 <p><strong>NOTICE</strong></p>
 <p>These configurations would potentially have collisions with Drupal routes, if any are created in Drupal with the same name. If this is a concern, it would likely be better to reserve a subdomain or another port specifically for Crayfish. For the purposes of this installation guide, these endpoints will suffice.</p>
-<p><code>/etc/apache2/conf-available/Homarus.conf | root:root/644</code></p>
-<pre><code>Alias &quot;/homarus&quot; &quot;/opt/crayfish/Homarus/src&quot;
-&lt;Directory &quot;/opt/crayfish/Homarus/src&quot;&gt;
-  FallbackResource /homarus/index.php
-  Require all granted
-  DirectoryIndex index.php
-  SetEnvIf Authorization &quot;(.*)&quot; HTTP_AUTHORIZATION=$1
-&lt;/Directory&gt;
-</code></pre>
-<p><code>/etc/apache2/conf-available/Houdini.conf | root:root/644</code></p>
-<pre><code>Alias &quot;/houdini&quot; &quot;/opt/crayfish/Houdini/public&quot;
-&lt;Directory &quot;/opt/crayfish/Houdini/public&quot;&gt;
-  FallbackResource /houdini/index.php
-  Require all granted
-  DirectoryIndex index.php
-  SetEnvIf Authorization &quot;(.*)&quot; HTTP_AUTHORIZATION=$1
-&lt;/Directory&gt;
-</code></pre>
-<p><code>/etc/apache2/conf-available/Hypercube.conf | root:root/644</code></p>
-<pre><code>Alias &quot;/hypercube&quot; &quot;/opt/crayfish/Hypercube/src&quot;
-&lt;Directory &quot;/opt/crayfish/Hypercube/src&quot;&gt;
-  FallbackResource /hypercube/index.php
-  Require all granted
-  DirectoryIndex index.php
-  SetEnvIf Authorization &quot;(.*)&quot; HTTP_AUTHORIZATION=$1
-&lt;/Directory&gt;
-</code></pre>
-<p><code>/etc/apache2/conf-available/Milliner.conf | root:root/644</code></p>
-<pre><code>Alias &quot;/milliner&quot; &quot;/opt/crayfish/Milliner/src&quot;
-&lt;Directory &quot;/opt/crayfish/Milliner/src&quot;&gt;
-  FallbackResource /milliner/index.php
-  Require all granted
-  DirectoryIndex index.php
-  SetEnvIf Authorization &quot;(.*)&quot; HTTP_AUTHORIZATION=$1
-&lt;/Directory&gt;
-</code></pre>
-<p><code>/etc/apache2/conf-available/Recast.conf | root:root/644</code></p>
-<pre><code>Alias &quot;/recast&quot; &quot;/opt/crayfish/Recast/src&quot;
-&lt;Directory &quot;/opt/crayfish/Recast/src&quot;&gt;
-  FallbackResource /recast/index.php
-  Require all granted
-  DirectoryIndex index.php
-  SetEnvIf Authorization &quot;(.*)&quot; HTTP_AUTHORIZATION=$1
-&lt;/Directory&gt;
-</code></pre>
+<p><code>/etc/apache2/conf-available/Homarus.conf | root:root/644</code>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>Alias &quot;/homarus&quot; &quot;/opt/crayfish/Homarus/src&quot;
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>&lt;Directory &quot;/opt/crayfish/Homarus/src&quot;&gt;
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>  FallbackResource /homarus/index.php
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>  Require all granted
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>  DirectoryIndex index.php
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>  SetEnvIf Authorization &quot;(.*)&quot; HTTP_AUTHORIZATION=$1
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>&lt;/Directory&gt;
+</span></code></pre></div></p>
+<p><code>/etc/apache2/conf-available/Houdini.conf | root:root/644</code>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>Alias &quot;/houdini&quot; &quot;/opt/crayfish/Houdini/public&quot;
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>&lt;Directory &quot;/opt/crayfish/Houdini/public&quot;&gt;
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>  FallbackResource /houdini/index.php
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>  Require all granted
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>  DirectoryIndex index.php
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>  SetEnvIf Authorization &quot;(.*)&quot; HTTP_AUTHORIZATION=$1
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>&lt;/Directory&gt;
+</span></code></pre></div></p>
+<p><code>/etc/apache2/conf-available/Hypercube.conf | root:root/644</code>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>Alias &quot;/hypercube&quot; &quot;/opt/crayfish/Hypercube/src&quot;
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>&lt;Directory &quot;/opt/crayfish/Hypercube/src&quot;&gt;
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>  FallbackResource /hypercube/index.php
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>  Require all granted
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>  DirectoryIndex index.php
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>  SetEnvIf Authorization &quot;(.*)&quot; HTTP_AUTHORIZATION=$1
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>&lt;/Directory&gt;
+</span></code></pre></div></p>
+<p><code>/etc/apache2/conf-available/Milliner.conf | root:root/644</code>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>Alias &quot;/milliner&quot; &quot;/opt/crayfish/Milliner/src&quot;
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>&lt;Directory &quot;/opt/crayfish/Milliner/src&quot;&gt;
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>  FallbackResource /milliner/index.php
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>  Require all granted
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>  DirectoryIndex index.php
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>  SetEnvIf Authorization &quot;(.*)&quot; HTTP_AUTHORIZATION=$1
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>&lt;/Directory&gt;
+</span></code></pre></div></p>
+<p><code>/etc/apache2/conf-available/Recast.conf | root:root/644</code>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>Alias &quot;/recast&quot; &quot;/opt/crayfish/Recast/src&quot;
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>&lt;Directory &quot;/opt/crayfish/Recast/src&quot;&gt;
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>  FallbackResource /recast/index.php
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>  Require all granted
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>  DirectoryIndex index.php
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>  SetEnvIf Authorization &quot;(.*)&quot; HTTP_AUTHORIZATION=$1
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>&lt;/Directory&gt;
+</span></code></pre></div></p>
 <h3 id="enabling-each-crayfish-component-apache-configuration">Enabling Each Crayfish Component Apache Configuration<a class="headerlink" href="#enabling-each-crayfish-component-apache-configuration" title="Permanent link">&para;</a></h3>
 <p>Enabling each of these configurations involves creating a symlink to them in the <code>conf-enabled</code> directory; the standardized method of doing this in Apache is with <code>a2enconf</code>.</p>
-<pre><code class="language-bash">sudo a2enconf Homarus Houdini Hypercube Milliner Recast
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>sudo<span class="w"> </span>a2enconf<span class="w"> </span>Homarus<span class="w"> </span>Houdini<span class="w"> </span>Hypercube<span class="w"> </span>Milliner<span class="w"> </span>Recast
+</span></code></pre></div>
 <h3 id="restarting-the-apache-service">Restarting the Apache Service<a class="headerlink" href="#restarting-the-apache-service" title="Permanent link">&para;</a></h3>
 <p>Finally, to get these new endpoints up and running, we need to restart the Apache service.</p>
-<pre><code>sudo systemctl restart apache2
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>sudo systemctl restart apache2
+</span></code></pre></div>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 8, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 11, 2023</span>
       
     
   </small>

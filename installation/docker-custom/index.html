@@ -2604,13 +2604,13 @@ so you can add those into your <code>.gitignore</code> as <code>codebase/vendor/
 <h2 id="set-up-your-production-staging-site">Set up your Production / Staging Site<a class="headerlink" href="#set-up-your-production-staging-site" title="Permanent link">&para;</a></h2>
 <p>At this point you should have a custom git repository and a custom Drupal image, and both should be accessible by your production server.
 On your production server you will need to clone your custom copy of Isle-dc, copy the <code>sample.env</code> file, and name it <code>.env</code>. </p>
-<p>In that <code>.env</code> you should set the following variables:</p>
-<pre><code>ENVIRONMENT=custom
-COMPOSE_PROJECT_NAME=(same as dev site)
-CUSTOM_IMAGE_NAMESPACE=(same as dev site)
-CUSTOM_IMAGE_NAME=(same as dev site)
-DOMAIN=your-domain.com
-</code></pre>
+<p>In that <code>.env</code> you should set the following variables:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>ENVIRONMENT=custom
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>COMPOSE_PROJECT_NAME=(same as dev site)
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>CUSTOM_IMAGE_NAMESPACE=(same as dev site)
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>CUSTOM_IMAGE_NAME=(same as dev site)
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>DOMAIN=your-domain.com
+</span></code></pre></div></p>
 <p>Once this is set up, run <code>make production</code> to install your drupal site. You can generate new secrets for your production passwords, or 
 copy them from your dev server if you would like them to be the same.</p>
 <p>At this point, your site is ready, but you won't be able to access it at your URL until you update the SSL certificates (see TLS section below).</p>
@@ -2626,8 +2626,8 @@ your Drupal site.</p>
 do with our codebase folder.  If you use secrets, it's like bind-mounting in a file, except that file is provided from the host machine
 to the container using an encrypted channel.</p>
 <p>Secrets are on by default. They can be toggled in your <code>.env</code> file, but you should never turn them off for production sites.</p>
-<pre><code>USE_SECRETS=true
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>USE_SECRETS=true
+</span></code></pre></div>
 <p>The secrets themselves are stored in the <code>secrets/live</code> folder of <code>isle-dc</code>.  If you navigate to that directory, you'll see several small
 files, where each file represents a different password. When you run <code>make production</code> you can choose whether to generate new random 
 secrets or create them yourself.</p>
@@ -2657,52 +2657,53 @@ certificate authority.  As long as the certificates match the <code>DOMAIN</code
 </table>
 <h3 id="requesting-certificates-through-lets-encrypt">Requesting Certificates through Let's Encrypt<a class="headerlink" href="#requesting-certificates-through-lets-encrypt" title="Permanent link">&para;</a></h3>
 <p>To use Let's Encrypt to acquire your SSL Certificate, set the following in your .env file and run <code>make -B docker-compose.yml &amp;&amp; make up</code>.</p>
-<pre><code>USE_ACME=true
-ACME_EMAIL=your-email@example.org
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>USE_ACME=true
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>ACME_EMAIL=your-email@example.org
+</span></code></pre></div>
 <p>Be sure to replace <code>your-email@example.org</code> with the email address you've associated with Let's Encrypt.</p>
 <p>The way this is setup, is it performs an HTTP Challenge to verify you are in control of the domain. So your system will need to be accessible at <code>http://DOMAIN/</code>.</p>
 <p>??? warning  "Let's Encrypt Rate Limit"
     If you aren't careful, you can hit Let's Encrypt's rate limit, and you'll be locked out for up to a week!  If you want to use their staging server instead while testing things out, add the following to your .env file</p>
-<pre><code>```
+<div class="language-text highlight"><pre><span></span><code>```
 ACME_SERVER=https://acme-staging-v02.api.letsencrypt.org/directory
 ```
-</code></pre>
+</code></pre></div>
 <p>You'll still get security exceptions when it's working, but you should be able to check the certificate from the browser and confirm you are getting it from the staging server.</p>
-<pre><code></code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>
+</span></code></pre></div>
 <h3 id="troubleshooting-certificate-issues">Troubleshooting Certificate Issues<a class="headerlink" href="#troubleshooting-certificate-issues" title="Permanent link">&para;</a></h3>
 <p>If you are still getting security exceptions, check what certificate is being used through your browser.  Setting <code>TRAEFIK_LOG_LEVEL=DEBUG</code> in your <code>.env</code> file will help out greatly when debugging Traefik.  You can tail the logs with <code>docker-compose logs -tf traefik</code>.</p>
 <h4 id="traefikme-ssl-certificate-expired-or-revoked">traefik.me SSL certificate expired or revoked<a class="headerlink" href="#traefikme-ssl-certificate-expired-or-revoked" title="Permanent link">&para;</a></h4>
 <p>The <em>*.traefik.me</em> certificate that covers <code>islandora.traefik.me</code> will need to be redownloaded ocassionally, due to the certificate expiring or possibly being revoked. You can download the updated certificates by performing the following commands:</p>
-<pre><code>rm certs/cert.pem
-rm certs/privkey.pem
-make download-default-certs
-docker-compose restart traefik
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>rm certs/cert.pem
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>rm certs/privkey.pem
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>make download-default-certs
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>docker-compose restart traefik
+</span></code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">traefik.me Certificate Note</p>
 <p>Please note that sometimes the upstream provider of the traefik.me certificate takes a couple of days to update the certificiate after it expires or is accidently revoked.</p>
 </div>
 <h3 id="requesting-certifcates-through-acme-and-external-account-binding">Requesting Certifcates through ACME and External Account Binding<a class="headerlink" href="#requesting-certifcates-through-acme-and-external-account-binding" title="Permanent link">&para;</a></h3>
 <p>To request certificates through another Certificate Authority (CA) that supports External Accounting Binding through ACME such as InCommon or ZeroSSL you will need to add the following to your <code>.env</code> file:</p>
-<pre><code>USE_ACME=true
-ACME_EMAIL=your-email@example.org
-ACME_SERVER=
-ACME_EAB_KID=
-ACME_EAB_HMAC=
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>USE_ACME=true
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>ACME_EMAIL=your-email@example.org
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>ACME_SERVER=
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>ACME_EAB_KID=
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>ACME_EAB_HMAC=
+</span></code></pre></div>
 <p>Where <code>ACME_SERVER</code> is the CA server to use, <code>ACME_EAB_KID</code> is the key identifer from the External CA, and <code>ACME_EAB_HMAC</code> is the HMAC key from the External CA.</p>
 <p>Once you have added these commands you will need to run the following commands:</p>
-<pre><code>make -B docker-compose.yml
-make up
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>make -B docker-compose.yml
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>make up
+</span></code></pre></div>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 8, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 11, 2023</span>
       
     
   </small>

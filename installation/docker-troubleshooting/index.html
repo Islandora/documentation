@@ -2499,8 +2499,8 @@
 <p>If you notice some Docker containers drop (exited(0)), and (in Docker Desktop) the isle-dc app icon is yellow instead of green, try increasing the resources allocated to Docker (see note above).</p>
 <h3 id="connection-timed-out-mac">Connection timed out (Mac).<a class="headerlink" href="#connection-timed-out-mac" title="Permanent link">&para;</a></h3>
 <p>If you are using Docker Desktop for Mac, and get timeout errors when spinning up the containers (during <code>docker-compose up -d</code> or during <code>make local</code>) such as this:</p>
-<pre><code>ERROR: for isle-dc_mariadb_1  UnixHTTPConnectionPool(host='localhost', port=None): Read timed out. (read timeout=480)
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>ERROR: for isle-dc_mariadb_1  UnixHTTPConnectionPool(host=&#39;localhost&#39;, port=None): Read timed out. (read timeout=480)
+</span></code></pre></div>
 <p>you can try quitting Docker completely (make sure there is no whale icon in your top toolbar - may need to select "Quit" from the whale icon itself) and then restart Docker.</p>
 <h3 id="504-bad-gateway">504 Bad Gateway<a class="headerlink" href="#504-bad-gateway" title="Permanent link">&para;</a></h3>
 <p>If you get a white screen with a 504 Bad Gateway error, this means your containers haven't finished initializing themselves yet.  If you've waiting an appropriate amount of time (2-5 minutes), then there is most likely an error in a container's startup script.  Use <code>docker ps -a</code> to see which services have <code>Exited</code> status, and then tail their logs with <code>docker-compose logs service_name</code>.</p>
@@ -2510,7 +2510,7 @@
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 8, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 11, 2023</span>
       
     
   </small>

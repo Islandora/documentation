@@ -2540,29 +2540,29 @@
 <p>If all the bundles have a state of <code>Active</code>, then you're all good!</p>
 <h3 id="configuring-alpaca-timeouts">Configuring Alpaca Timeouts<a class="headerlink" href="#configuring-alpaca-timeouts" title="Permanent link">&para;</a></h3>
 <p>Some users have experienced timeouts when generating derivatives.  We've added the ability to set the timeout length to your routes.  In order to do so, edit each <code>ca.islandora.*</code> file in the <code>deploy</code> directory and replace</p>
-<pre><code>&lt;bean id=&quot;http&quot; class=&quot;org.apache.camel.component.http4.HttpComponent&quot;/&gt;
-&lt;bean id=&quot;https&quot; class=&quot;org.apache.camel.component.http4.HttpComponent&quot;/&gt;
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>&lt;bean id=&quot;http&quot; class=&quot;org.apache.camel.component.http4.HttpComponent&quot;/&gt;
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>&lt;bean id=&quot;https&quot; class=&quot;org.apache.camel.component.http4.HttpComponent&quot;/&gt;
+</span></code></pre></div>
 <p>with</p>
-<pre><code>&lt;bean id=&quot;requestConfigConfigurer&quot; class=&quot;ca.islandora.alpaca.connector.derivative.RequestConfigConfigurer&quot;&gt;
-  &lt;property name=&quot;connectionRequestTimeoutMs&quot; value=&quot;10000&quot;/&gt;
-  &lt;property name=&quot;connectTimeoutMs&quot; value=&quot;10000&quot;/&gt;
-  &lt;property name=&quot;socketTimeoutMs&quot; value=&quot;10000&quot;/&gt;
-&lt;/bean&gt;
-
-&lt;bean id=&quot;http&quot; class=&quot;org.apache.camel.component.http4.HttpComponent&quot;&gt;
-  &lt;property name=&quot;httpClientConfigurer&quot; ref=&quot;requestConfigConfigurer&quot;/&gt;
-&lt;/bean&gt;
-
-&lt;bean id=&quot;https&quot; class=&quot;org.apache.camel.component.http4.HttpComponent&quot;&gt;
-  &lt;property name=&quot;httpClientConfigurer&quot; ref=&quot;requestConfigConfigurer&quot;/&gt;
-&lt;/bean&gt;
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>&lt;bean id=&quot;requestConfigConfigurer&quot; class=&quot;ca.islandora.alpaca.connector.derivative.RequestConfigConfigurer&quot;&gt;
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>  &lt;property name=&quot;connectionRequestTimeoutMs&quot; value=&quot;10000&quot;/&gt;
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>  &lt;property name=&quot;connectTimeoutMs&quot; value=&quot;10000&quot;/&gt;
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>  &lt;property name=&quot;socketTimeoutMs&quot; value=&quot;10000&quot;/&gt;
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>&lt;/bean&gt;
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>&lt;bean id=&quot;http&quot; class=&quot;org.apache.camel.component.http4.HttpComponent&quot;&gt;
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>  &lt;property name=&quot;httpClientConfigurer&quot; ref=&quot;requestConfigConfigurer&quot;/&gt;
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>&lt;/bean&gt;
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>&lt;bean id=&quot;https&quot; class=&quot;org.apache.camel.component.http4.HttpComponent&quot;&gt;
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>  &lt;property name=&quot;httpClientConfigurer&quot; ref=&quot;requestConfigConfigurer&quot;/&gt;
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>&lt;/bean&gt;
+</span></code></pre></div>
 <p>You can set the timeout values to whatever you like, we're using 10000 in this example.</p>
 <h2 id="update-drupal-core-and-modules">Update Drupal core and modules<a class="headerlink" href="#update-drupal-core-and-modules" title="Permanent link">&para;</a></h2>
 <p>To get the latest Drupal code, edit your <code>composer.json</code> file and change the <code>islandora/*</code> packages versions' to the latest (<code>2.0.0</code> for most).  Then run the following command to update them, your dependencies, and Drupal core:</p>
-<pre><code>sudo php -d memory_limit=-1 `which composer` update --with-all-dependencies
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo php -d memory_limit=-1 `which composer` update --with-all-dependencies
+</span></code></pre></div>
 <p>Afterwards, you need to run <code>drush updb</code> or visit <code>/update.php</code> in your browser to trigger the database updates. This includes important changes, like stripping out configuration we no longer use as well as a fix to support large media (&gt;2.2 GB). The database updates may take a while depending on how many media you have.</p>
 <h2 id="update-crayfish-and-remove-gemini">Update Crayfish and Remove Gemini<a class="headerlink" href="#update-crayfish-and-remove-gemini" title="Permanent link">&para;</a></h2>
 <p>We removed the Gemini microservice and pushed its code into Crayfish-Commons so that it can be used by the other microservices and Drupal modules.  Once you've updated your Drupal installation, Gemini will no longer be utilized.  It will still, however, need to be removed. It is recommended to test this method in a staging/development environment before running in your production environment.</p>
@@ -2571,10 +2571,11 @@
 <li>
 <p>Import two new Islandora views</p>
 <p>i. This can be done by coping the views into a new directory and using drush such as
-<code>mkdir /var/www/html/drupal/config/1time
-cp /var/www/html/drupal/web/modules/contrib/islandora/modules/islandora_core_feature/config/install/views.view.all_taxonomy_terms.yml /var/www/html/drupal/config/1time/
-cp /var/www/html/drupal/web/modules/contrib/islandora/modules/islandora_core_feature/config/install/views.view.non_fedora_files.yml /var/www/html/drupal/config/1time/
-drush config:import --partial --source /var/www/html/drupal/config/1time</code>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>mkdir /var/www/html/drupal/config/1time
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>cp /var/www/html/drupal/web/modules/contrib/islandora/modules/islandora_core_feature/config/install/views.view.all_taxonomy_terms.yml /var/www/html/drupal/config/1time/
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>cp /var/www/html/drupal/web/modules/contrib/islandora/modules/islandora_core_feature/config/install/views.view.non_fedora_files.yml /var/www/html/drupal/config/1time/
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>drush config:import --partial --source /var/www/html/drupal/config/1time
+</span></code></pre></div>
 ii. It can also be done through the UI at <code>/admin/config/development/configuration/single/import</code>
 4. Update Crayfish to <code>2.0.0</code>
 1. <code>cd /var/www/html/Crayfish</code>
@@ -2623,7 +2624,7 @@ ii. It can also be done through the UI at <code>/admin/config/development/config
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 8, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 11, 2023</span>
       
     
   </small>

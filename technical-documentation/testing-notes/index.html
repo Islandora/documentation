@@ -2532,39 +2532,39 @@
 <li>Go to <code>http://localhost:8983/solr/#/islandora/query</code></li>
 <li>Issue a Solr query.</li>
 </ul>
-<p>Example</p>
-<pre><code>ss_search_api_id:&quot;entity:node/4:en&quot;
-</code></pre>
+<p>Example
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>ss_search_api_id:&quot;entity:node/4:en&quot;
+</span></code></pre></div></p>
 <h2 id="sample-triplestore-queries">Sample Triplestore queries<a class="headerlink" href="#sample-triplestore-queries" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Go to <code>http://localhost:8080/bigdata/#query</code></li>
 <li>Under namespaces (<code>http://localhost:8080/bigdata/#namespaces</code>), make sure <code>islandora</code> is selected.</li>
 </ul>
 <h3 id="find-all-triples-with-given-object-as-the-subject">Find all triples with given object as the subject<a class="headerlink" href="#find-all-triples-with-given-object-as-the-subject" title="Permanent link">&para;</a></h3>
-<pre><code>select ?p ?o  where { &lt;drupal_url&gt; ?p ?o }
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>select ?p ?o  where { &lt;drupal_url&gt; ?p ?o }
+</span></code></pre></div>
 <p>Example:</p>
-<pre><code>select ?p ?o  where { &lt;http://localhost:8000/media/8?_format=jsonld&gt; ?p ?o }
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>select ?p ?o  where { &lt;http://localhost:8000/media/8?_format=jsonld&gt; ?p ?o }
+</span></code></pre></div>
 <h3 id="getting-objects-in-a-collection">Getting objects in a collection<a class="headerlink" href="#getting-objects-in-a-collection" title="Permanent link">&para;</a></h3>
-<pre><code>select ?s where { ?s &lt;http://pcdm.org/models#memberOf&gt; &lt;drual_url_of_the_collection?_format=jsonld&gt; }
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>select ?s where { ?s &lt;http://pcdm.org/models#memberOf&gt; &lt;drual_url_of_the_collection?_format=jsonld&gt; }
+</span></code></pre></div>
 <p>Example:</p>
-<pre><code>select ?s where { ?s &lt;http://pcdm.org/models#memberOf&gt; &lt;http://localhost:8000/node/7?_format=jsonld&gt; }
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>select ?s where { ?s &lt;http://pcdm.org/models#memberOf&gt; &lt;http://localhost:8000/node/7?_format=jsonld&gt; }
+</span></code></pre></div>
 <h3 id="find-all-mediafiles-belonging-to-a-node">Find all media/files belonging to a node<a class="headerlink" href="#find-all-mediafiles-belonging-to-a-node" title="Permanent link">&para;</a></h3>
-<pre><code>select ?s where { ?s &lt;http://pcdm.org/models#fileOf&gt; &lt;drupal_url_of_the_object?_format=jsonld&gt; }
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>select ?s where { ?s &lt;http://pcdm.org/models#fileOf&gt; &lt;drupal_url_of_the_object?_format=jsonld&gt; }
+</span></code></pre></div>
 <p>Example:</p>
-<pre><code>select ?s where { ?s &lt;http://pcdm.org/models#fileOf&gt; &lt;http://localhost:8000/node/4?_format=jsonld&gt; }
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>select ?s where { ?s &lt;http://pcdm.org/models#fileOf&gt; &lt;http://localhost:8000/node/4?_format=jsonld&gt; }
+</span></code></pre></div>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 8, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 11, 2023</span>
       
     
   </small>

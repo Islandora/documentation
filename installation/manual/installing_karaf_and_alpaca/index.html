@@ -2678,8 +2678,8 @@
 <h2 id="activemq-5">ActiveMQ 5<a class="headerlink" href="#activemq-5" title="Permanent link">&para;</a></h2>
 <h3 id="installing-activemq">Installing ActiveMQ<a class="headerlink" href="#installing-activemq" title="Permanent link">&para;</a></h3>
 <p>In our case, the default installation method for ActiveMQ via <code>apt-get</code> will suffice.</p>
-<pre><code class="language-bash">sudo apt-get -y install activemq
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>activemq
+</span></code></pre></div>
 <p>This will give us:</p>
 <ul>
 <li>A base configuration at <code>/var/lib/activemq/conf</code></li>
@@ -2689,78 +2689,74 @@
 <li>A user, <code>activemq</code>, who will be in charge of the ActiveMQ service</li>
 </ul>
 <p>Take note of the version of ActiveMQ we're going to be installing. It needs to match a Karaf blueprint we'll create later. Check the version with</p>
-<pre><code class="language-bash">sudo apt-cache policy activemq
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>apt-cache<span class="w"> </span>policy<span class="w"> </span>activemq
+</span></code></pre></div>
 <p>Write down the version listed under <code>Installed:</code>.</p>
 <h2 id="karaf-4">Karaf 4<a class="headerlink" href="#karaf-4" title="Permanent link">&para;</a></h2>
 <h2 id="creating-a-karaf-user">Creating a Karaf User<a class="headerlink" href="#creating-a-karaf-user" title="Permanent link">&para;</a></h2>
 <p>Karaf, as well as its processes and service, will be owned by a user in charge of ensuring this portion of the stack is segregated and that the service is running.</p>
-<pre><code class="language-bash">sudo addgroup karaf
-sudo adduser karaf --ingroup karaf --home /opt/karaf --shell /usr/bin
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>addgroup<span class="w"> </span>karaf
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>sudo<span class="w"> </span>adduser<span class="w"> </span>karaf<span class="w"> </span>--ingroup<span class="w"> </span>karaf<span class="w"> </span>--home<span class="w"> </span>/opt/karaf<span class="w"> </span>--shell<span class="w"> </span>/usr/bin
+</span></code></pre></div>
 <p>As always, you will be prompted for a password, which you should create at this time. All other options can be left blank.</p>
 <h3 id="downloading-and-placing-karaf">Downloading and Placing Karaf<a class="headerlink" href="#downloading-and-placing-karaf" title="Permanent link">&para;</a></h3>
 <p>Since there’s no <code>apt-get</code> installer for Karaf, we’re going to manually download and install it directly from its binary installer.</p>
-<pre><code class="language-bash">cd /opt
-sudo wget -O karaf.tar.gz KARAF_TARBALL_LINK
-sudo tar -xzvf karaf.tar.gz
-sudo chown -R karaf:karaf KARAF_DIRECTORY
-sudo mv KARAF_DIRECTORY/* /opt/karaf
-</code></pre>
-<ul>
-<li><code>KARAF_TARBALL_LINK</code>: It’s recommended to get the most recent version of Karaf 4.2.x. This will depend on the current version of Karaf, which can be found on the <a href="https://karaf.apache.org/download.html">Karaf downloads page</a> under “Karaf Runtime”. Like Solr, you can’t directly <code>wget</code> these links, but clicking on the <code>.tar.gz</code> link for the binary distribution will bring you to a list of mirrors, as well as provide you with a recommended mirror you can use here.</li>
-<li><code>KARAF_DIRECTORY</code>: This will depend on the exact version being used, but will likely be <code>/opt/apache-karaf-VERSION</code>, where <code>VERSION</code> is the current Karaf version number.</li>
-</ul>
+<p><div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">cd</span><span class="w"> </span>/opt
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>sudo<span class="w"> </span>wget<span class="w"> </span>-O<span class="w"> </span>karaf.tar.gz<span class="w"> </span>KARAF_TARBALL_LINK
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>sudo<span class="w"> </span>tar<span class="w"> </span>-xzvf<span class="w"> </span>karaf.tar.gz
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>sudo<span class="w"> </span>chown<span class="w"> </span>-R<span class="w"> </span>karaf:karaf<span class="w"> </span>KARAF_DIRECTORY
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>sudo<span class="w"> </span>mv<span class="w"> </span>KARAF_DIRECTORY/*<span class="w"> </span>/opt/karaf
+</span></code></pre></div>
+- <code>KARAF_TARBALL_LINK</code>: It’s recommended to get the most recent version of Karaf 4.2.x. This will depend on the current version of Karaf, which can be found on the <a href="https://karaf.apache.org/download.html">Karaf downloads page</a> under “Karaf Runtime”. Like Solr, you can’t directly <code>wget</code> these links, but clicking on the <code>.tar.gz</code> link for the binary distribution will bring you to a list of mirrors, as well as provide you with a recommended mirror you can use here.
+- <code>KARAF_DIRECTORY</code>: This will depend on the exact version being used, but will likely be <code>/opt/apache-karaf-VERSION</code>, where <code>VERSION</code> is the current Karaf version number.</p>
 <h3 id="configuring-karaf-logging">Configuring Karaf Logging<a class="headerlink" href="#configuring-karaf-logging" title="Permanent link">&para;</a></h3>
 <p>We’re going to apply some basic logging to our Karaf installation that should suffice for an example. In a production installation, you may want to play around with some of these values for more personally useful logging.</p>
-<pre><code class="language-bash">sudo mkdir /var/log/karaf
-sudo chown karaf:karaf /var/log/karaf
-</code></pre>
-<p><code>/opt/karaf/etc/org.pos4j.pax.logging.cfg | karaf:karaf/644</code></p>
-<pre><code># Root logger
-log4j.rootLogger=INFO, out, osgi:*
-log4j.throwableRenderer=org.apache.log4j.OsgiThrowableRenderer
-
-# File appender
-log4j.appender.out=org.apache.log4j.RollingFileAppender
-log4j.appender.out.layout=org.apache.log4j.PatternLayout
-log4j.appender.out.layout.ConversionPattern=%d{ISO8601} | %-5.5p | %-16.16t | %-32.32c{1} | %X{bundle.id} - %X{bundle.name    } - %X{bundle.version} | %m%n
-log4j.appender.out.file=/var/log/karaf/karaf.log
-log4j.appender.out.append=true
-log4j.appender.out.maxFileSize=1MB
-log4j.appender.out.maxBackupIndex=10
-
-# Camel Logger
-log4j.appender.camel=org.apache.log4j.RollingFileAppender
-log4j.appender.camel.layout=org.apache.log4j.PatternLayout
-log4j.appender.camel.layout.ConversionPattern=%d{ISO8601} | %-5.5p | %-16.16t | %-32.32c{1} | %X{bundle.id} - %X{bundle.na    me} - %X{bundle.version} | %m%n
-log4j.appender.camel.file=/var/log/karaf/camel.log
-log4j.appender.camel.append=false
-log4j.appender.camel.maxFileSize=1MB
-log4j.appender.camel.maxBackupIndex=10
-
-log4j.logger.org.apache.camel=INFO, camel
-
-# Islandora Logger
-log4j.appender.islandora=org.apache.log4j.RollingFileAppender
-log4j.appender.islandora.layout=org.apache.log4j.PatternLayout
-log4j.appender.islandora.layout.ConversionPattern=%d{ISO8601} | %-5.5p | %-16.16t | %-32.32c{1} | %X{bundle.id} - %X{bundl    e.name} - %X{bundle.version} | %m%n
-log4j.appender.islandora.file=/var/log/karaf/islandora.log
-log4j.appender.islandora.append=false
-log4j.appender.islandora.maxFileSize=1MB
-log4j.appender.islandora.maxBackupIndex=10
-
-log4j.logger.ca.islandora.camel=INFO, islandora
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sudo<span class="w"> </span>mkdir<span class="w"> </span>/var/log/karaf
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>sudo<span class="w"> </span>chown<span class="w"> </span>karaf:karaf<span class="w"> </span>/var/log/karaf
+</span></code></pre></div>
+<p><code>/opt/karaf/etc/org.pos4j.pax.logging.cfg | karaf:karaf/644</code>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a># Root logger
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>log4j.rootLogger=INFO, out, osgi:*
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>log4j.throwableRenderer=org.apache.log4j.OsgiThrowableRenderer
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a># File appender
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>log4j.appender.out=org.apache.log4j.RollingFileAppender
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>log4j.appender.out.layout=org.apache.log4j.PatternLayout
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>log4j.appender.out.layout.ConversionPattern=%d{ISO8601} | %-5.5p | %-16.16t | %-32.32c{1} | %X{bundle.id} - %X{bundle.name    } - %X{bundle.version} | %m%n
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>log4j.appender.out.file=/var/log/karaf/karaf.log
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>log4j.appender.out.append=true
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>log4j.appender.out.maxFileSize=1MB
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>log4j.appender.out.maxBackupIndex=10
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a># Camel Logger
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>log4j.appender.camel=org.apache.log4j.RollingFileAppender
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>log4j.appender.camel.layout=org.apache.log4j.PatternLayout
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>log4j.appender.camel.layout.ConversionPattern=%d{ISO8601} | %-5.5p | %-16.16t | %-32.32c{1} | %X{bundle.id} - %X{bundle.na    me} - %X{bundle.version} | %m%n
+</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>log4j.appender.camel.file=/var/log/karaf/camel.log
+</span><span id="__span-5-19"><a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a>log4j.appender.camel.append=false
+</span><span id="__span-5-20"><a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a>log4j.appender.camel.maxFileSize=1MB
+</span><span id="__span-5-21"><a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a>log4j.appender.camel.maxBackupIndex=10
+</span><span id="__span-5-22"><a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a>
+</span><span id="__span-5-23"><a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a>log4j.logger.org.apache.camel=INFO, camel
+</span><span id="__span-5-24"><a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a>
+</span><span id="__span-5-25"><a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a># Islandora Logger
+</span><span id="__span-5-26"><a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a>log4j.appender.islandora=org.apache.log4j.RollingFileAppender
+</span><span id="__span-5-27"><a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a>log4j.appender.islandora.layout=org.apache.log4j.PatternLayout
+</span><span id="__span-5-28"><a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a>log4j.appender.islandora.layout.ConversionPattern=%d{ISO8601} | %-5.5p | %-16.16t | %-32.32c{1} | %X{bundle.id} - %X{bundl    e.name} - %X{bundle.version} | %m%n
+</span><span id="__span-5-29"><a id="__codelineno-5-29" name="__codelineno-5-29" href="#__codelineno-5-29"></a>log4j.appender.islandora.file=/var/log/karaf/islandora.log
+</span><span id="__span-5-30"><a id="__codelineno-5-30" name="__codelineno-5-30" href="#__codelineno-5-30"></a>log4j.appender.islandora.append=false
+</span><span id="__span-5-31"><a id="__codelineno-5-31" name="__codelineno-5-31" href="#__codelineno-5-31"></a>log4j.appender.islandora.maxFileSize=1MB
+</span><span id="__span-5-32"><a id="__codelineno-5-32" name="__codelineno-5-32" href="#__codelineno-5-32"></a>log4j.appender.islandora.maxBackupIndex=10
+</span><span id="__span-5-33"><a id="__codelineno-5-33" name="__codelineno-5-33" href="#__codelineno-5-33"></a>
+</span><span id="__span-5-34"><a id="__codelineno-5-34" name="__codelineno-5-34" href="#__codelineno-5-34"></a>log4j.logger.ca.islandora.camel=INFO, islandora
+</span></code></pre></div></p>
 <h3 id="creating-a-setenvsh-script-for-karaf">Creating a <code>setenv.sh</code> Script for Karaf<a class="headerlink" href="#creating-a-setenvsh-script-for-karaf" title="Permanent link">&para;</a></h3>
 <p>Similar to Tomcat, our Karaf service is going to rely on a <code>setenv</code> shell script to determine environment variables Karaf needs in place when running. For now, this will simply be the path to <code>JAVA_HOME</code>, but this also accepts many other parameters you can find in the default <code>setenv</code> script.</p>
-<p><code>/opt/karaf/bin/setenv | karaf:karaf/755</code></p>
-<pre><code>#!/bin/sh
-export JAVA_HOME=&quot;PATH_TO_JAVA_HOME&quot;
-</code></pre>
-<ul>
-<li><code>PATH_TO_JAVA_HOME</code>: This will be the same <code>JAVA_HOME</code> we used when installing Tomcat , and can be found using the same method (i.e., still <code>/usr/lib/jvm/java-11-openjdk-amd64</code> if that's what it was before).</li>
-</ul>
+<p><code>/opt/karaf/bin/setenv | karaf:karaf/755</code>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>#!/bin/sh
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>export JAVA_HOME=&quot;PATH_TO_JAVA_HOME&quot;
+</span></code></pre></div>
+- <code>PATH_TO_JAVA_HOME</code>: This will be the same <code>JAVA_HOME</code> we used when installing Tomcat , and can be found using the same method (i.e., still <code>/usr/lib/jvm/java-11-openjdk-amd64</code> if that's what it was before).</p>
 <h3 id="initializing-karaf">Initializing Karaf<a class="headerlink" href="#initializing-karaf" title="Permanent link">&para;</a></h3>
 <p>We’re going to start Karaf, then run the installer to put our configurations in place and generate a Karaf service. Once these are installed, we’re going to stop Karaf, as from there on out its start/stop management should be handled via that service.</p>
 <p>First we need to enable the default Karaf user in <code>/opt/karaf/etc/users.properties</code>:</p>
@@ -2775,23 +2771,23 @@ export JAVA_HOME=&quot;PATH_TO_JAVA_HOME&quot;
 <p>33 | _g_\:admingroup = group,admin,manager,viewer,systembundles,ssh</p>
 </blockquote>
 <p>Save the file and close it, then:</p>
-<pre><code class="language-bash">sudo -u karaf /opt/karaf/bin/start
-# You may want to wait a bit for Karaf to start.
-# If you're not sure whether or not it's running, you can always run:
-# ps aux | grep karaf
-# to see if the server is up and running.
-/opt/karaf/bin/client feature:install wrapper
-/opt/karaf/bin/client wrapper:install
-/opt/karaf/bin/stop
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>sudo<span class="w"> </span>-u<span class="w"> </span>karaf<span class="w"> </span>/opt/karaf/bin/start
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="c1"># You may want to wait a bit for Karaf to start.</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="c1"># If you&#39;re not sure whether or not it&#39;s running, you can always run:</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="c1"># ps aux | grep karaf</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="c1"># to see if the server is up and running.</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>/opt/karaf/bin/client<span class="w"> </span>feature:install<span class="w"> </span>wrapper
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>/opt/karaf/bin/client<span class="w"> </span>wrapper:install
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>/opt/karaf/bin/stop
+</span></code></pre></div>
 <h3 id="creating-and-starting-the-karaf-service">Creating and Starting the Karaf Service<a class="headerlink" href="#creating-and-starting-the-karaf-service" title="Permanent link">&para;</a></h3>
 <p>Installing the Karaf wrapper generates several service files that can be used on different types of systems. For Debian and Ubuntu installation we want to enable the <code>karaf.service</code> service so that Karaf is properly started on boot.</p>
-<pre><code class="language-bash">sudo systemctl enable /opt/karaf/bin/karaf.service
-sudo systemctl start karaf
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>/opt/karaf/bin/karaf.service
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>karaf
+</span></code></pre></div>
 <p>We can check if the service started correctly with:</p>
-<pre><code class="language-bash">sudo systemctl status karaf
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>status<span class="w"> </span>karaf
+</span></code></pre></div>
 <p>Press Q to close the status.</p>
 <h2 id="alpaca-10x">Alpaca 1.0.x<a class="headerlink" href="#alpaca-10x" title="Permanent link">&para;</a></h2>
 <h3 id="adding-the-required-karaf-repositories">Adding the Required Karaf Repositories<a class="headerlink" href="#adding-the-required-karaf-repositories" title="Permanent link">&para;</a></h3>
@@ -2801,194 +2797,190 @@ sudo systemctl start karaf
 <p>These repositories are updated consistently, and their updates include revised dependency lists. Commonly, when repositories are out of date or otherwise mismatched, feature installation can result in an <code>Unable to resolve root: missing requirement</code> error; for this reason, this guide recommends using recently-updated versions of these repositories. That being said, if such errors occur despite installing the latest versions of these features, the maintainer of the features repository should be informed.</p>
 </div>
 <p>For the Karaf features we’re going to install, we need a few different repositories to be added to the list:</p>
-<pre><code class="language-bash">/opt/karaf/bin/client repo-add mvn:org.apache.activemq/activemq-karaf/ACTIVEMQ_KARAF_VERSION/xml/features
-/opt/karaf/bin/client repo-add mvn:org.apache.camel.karaf/apache-camel/APACHE_CAMEL_VERSION/xml/features
-/opt/karaf/bin/client repo-add mvn:ca.islandora.alpaca/islandora-karaf/ISLANDORA_KARAF_VERSION/xml/features
-# XXX: This shouldn't be strictly necessary, but appears to be a missing
-# upstream dependency for some fcrepo features.
-/opt/karaf/bin/client repo-add mvn:org.apache.jena/jena-osgi-features/JENA_OSGI_VERSION/xml/features
-</code></pre>
-<ul>
-<li><code>ACTIVEMQ_KARAF_VERSION</code>: The version of ActiveMQ we wrote down at the beginning of this chapter when installing ActiveMQ via <code>apt-get</code></li>
-<li><code>APACHE_CAMEL_VERSION</code>: The latest version of Apache Camel 2.x.x; you can find this listed at the <a href="https://mvnrepository.com/artifact/org.apache.camel.karaf/apache-camel">apache-camel repository page</a> (e.g., 2.25.4 at the time of writing)</li>
-<li><code>ISLANDORA_KARAF_VERSION</code>: The latest version of Islandora Karaf 1.x; you can find this listed at the <a href="https://mvnrepository.com/artifact/ca.islandora.alpaca/islandora-karaf">islandora-karaf repository page</a> (e.g., 1.0.5 at the time of writing)</li>
-<li><code>JENA_OSGI_VERSION</code>: The latest version of the Apache Jena 3.x OSGi features; you can find this listed at the <a href="https://mvnrepository.com/artifact/org.apache.jena/jena-osgi-features">jena-osgi-features repository page</a> (e.g., 3.17.0 at the time of writing)</li>
-</ul>
+<p><div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>/opt/karaf/bin/client<span class="w"> </span>repo-add<span class="w"> </span>mvn:org.apache.activemq/activemq-karaf/ACTIVEMQ_KARAF_VERSION/xml/features
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>/opt/karaf/bin/client<span class="w"> </span>repo-add<span class="w"> </span>mvn:org.apache.camel.karaf/apache-camel/APACHE_CAMEL_VERSION/xml/features
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>/opt/karaf/bin/client<span class="w"> </span>repo-add<span class="w"> </span>mvn:ca.islandora.alpaca/islandora-karaf/ISLANDORA_KARAF_VERSION/xml/features
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="c1"># XXX: This shouldn&#39;t be strictly necessary, but appears to be a missing</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="c1"># upstream dependency for some fcrepo features.</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>/opt/karaf/bin/client<span class="w"> </span>repo-add<span class="w"> </span>mvn:org.apache.jena/jena-osgi-features/JENA_OSGI_VERSION/xml/features
+</span></code></pre></div>
+- <code>ACTIVEMQ_KARAF_VERSION</code>: The version of ActiveMQ we wrote down at the beginning of this chapter when installing ActiveMQ via <code>apt-get</code>
+- <code>APACHE_CAMEL_VERSION</code>: The latest version of Apache Camel 2.x.x; you can find this listed at the <a href="https://mvnrepository.com/artifact/org.apache.camel.karaf/apache-camel">apache-camel repository page</a> (e.g., 2.25.4 at the time of writing)
+- <code>ISLANDORA_KARAF_VERSION</code>: The latest version of Islandora Karaf 1.x; you can find this listed at the <a href="https://mvnrepository.com/artifact/ca.islandora.alpaca/islandora-karaf">islandora-karaf repository page</a> (e.g., 1.0.5 at the time of writing)
+- <code>JENA_OSGI_VERSION</code>: The latest version of the Apache Jena 3.x OSGi features; you can find this listed at the <a href="https://mvnrepository.com/artifact/org.apache.jena/jena-osgi-features">jena-osgi-features repository page</a> (e.g., 3.17.0 at the time of writing)</p>
 <h3 id="configuring-karaf-features">Configuring Karaf Features<a class="headerlink" href="#configuring-karaf-features" title="Permanent link">&para;</a></h3>
 <p>Our installed Karaf features require configuration files to know exactly where to route things coming and going from them.</p>
-<p><code>/opt/karaf/etc/ca.islandora.alpaca.http.client.cfg | karaf:karaf/644</code></p>
-<pre><code>token.value=ISLANDORA_SYN_TOKEN
-</code></pre>
-<ul>
-<li><code>ISLANDORA_SYN_TOKEN</code>: This should be the same token that was established during the installation of Syn in your <code>syn-settings.xml</code> file</li>
-</ul>
-<p><code>/opt/karaf/etc/org.fcrepo.camel.indexing.triplestore.cfg | karaf:karaf/644</code></p>
-<pre><code>input.stream=activemq:topic:fedora
-triplestore.reindex.stream=activemq:queue:triplestore.reindex
-triplestore.baseUrl=http://localhost:8080/blazegraph/namespace/islandora/sparql
-</code></pre>
-<p><code>/opt/karaf/etc/ca.islandora.alpaca.indexing.triplestore.cfg | karaf:karaf/644</code></p>
-<pre><code>error.maxRedeliveries=10
-index.stream=activemq:queue:islandora-indexing-triplestore-index
-delete.stream=activemq:queue:islandora-indexing-triplestore-delete
-triplestore.baseUrl=http://localhost:8080/blazegraph/namespace/islandora/sparql
-</code></pre>
-<p><code>/opt/karaf/etc/ca.islandora.alpaca.indexing.fcrepo.cfg | karaf:karaf/644</code></p>
-<pre><code>error.maxRedeliveries=5
-node.stream=activemq:queue:islandora-indexing-fcrepo-content
-node.delete.stream=activemq:queue:islandora-indexing-fcrepo-delete
-media.stream=activemq:queue:islandora-indexing-fcrepo-media
-file.stream=activemq:queue:islandora-indexing-fcrepo-file
-file.delete.stream=activemq:queue:islandora-indexing-fcrepo-file-delete
-milliner.baseUrl=http://localhost/milliner
-</code></pre>
+<p><code>/opt/karaf/etc/ca.islandora.alpaca.http.client.cfg | karaf:karaf/644</code>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>token.value=ISLANDORA_SYN_TOKEN
+</span></code></pre></div>
+- <code>ISLANDORA_SYN_TOKEN</code>: This should be the same token that was established during the installation of Syn in your <code>syn-settings.xml</code> file</p>
+<p><code>/opt/karaf/etc/org.fcrepo.camel.indexing.triplestore.cfg | karaf:karaf/644</code>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>input.stream=activemq:topic:fedora
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>triplestore.reindex.stream=activemq:queue:triplestore.reindex
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>triplestore.baseUrl=http://localhost:8080/blazegraph/namespace/islandora/sparql
+</span></code></pre></div></p>
+<p><code>/opt/karaf/etc/ca.islandora.alpaca.indexing.triplestore.cfg | karaf:karaf/644</code>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>error.maxRedeliveries=10
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>index.stream=activemq:queue:islandora-indexing-triplestore-index
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>delete.stream=activemq:queue:islandora-indexing-triplestore-delete
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>triplestore.baseUrl=http://localhost:8080/blazegraph/namespace/islandora/sparql
+</span></code></pre></div></p>
+<p><code>/opt/karaf/etc/ca.islandora.alpaca.indexing.fcrepo.cfg | karaf:karaf/644</code>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>error.maxRedeliveries=5
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>node.stream=activemq:queue:islandora-indexing-fcrepo-content
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>node.delete.stream=activemq:queue:islandora-indexing-fcrepo-delete
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>media.stream=activemq:queue:islandora-indexing-fcrepo-media
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>file.stream=activemq:queue:islandora-indexing-fcrepo-file
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>file.delete.stream=activemq:queue:islandora-indexing-fcrepo-file-delete
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>milliner.baseUrl=http://localhost/milliner
+</span></code></pre></div></p>
 <h3 id="blueprinting-karaf-derivative-connectors">Blueprinting Karaf Derivative Connectors<a class="headerlink" href="#blueprinting-karaf-derivative-connectors" title="Permanent link">&para;</a></h3>
 <p>For those services in Crayfish we have set up to provide derivatives to Islandora resources, we need connector blueprints to tell the derivative connector how to route incoming requests, run conversions, and return outgoing derivatives.</p>
 <p>Our blueprints are going to look largely similar between services, with only a few properties changing between them. Largely, these mainly just need to match the ActiveMQ queues we established in the previous configuration, and route to the correct Crayfish service.</p>
-<p><code>/opt/karaf/deploy/ca.islandora.alpaca.connector.ocr.blueprint.xml | karaf:karaf/644</code></p>
-<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;blueprint xmlns=&quot;http://www.osgi.org/xmlns/blueprint/v1.0.0&quot;
-       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
-       xmlns:cm=&quot;http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0&quot;
-       xsi:schemaLocation=&quot;
-       http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0 http://aries.apache.org/schemas/blueprint-cm/blueprint-cm-1.1.0.xsd
-       http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
-       http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd&quot;&gt;
-
-  &lt;cm:property-placeholder id=&quot;properties&quot; persistent-id=&quot;ca.islandora.alpaca.connector.ocr&quot; update-strategy=&quot;reload&quot; &gt;
-    &lt;cm:default-properties&gt;
-      &lt;cm:property name=&quot;error.maxRedeliveries&quot; value=&quot;5&quot;/&gt;
-      &lt;cm:property name=&quot;in.stream&quot; value=&quot;activemq:queue:islandora-connector-ocr&quot;/&gt;
-      &lt;cm:property name=&quot;derivative.service.url&quot; value=&quot;http://localhost/hypercube&quot;/&gt;
-    &lt;/cm:default-properties&gt;
-  &lt;/cm:property-placeholder&gt;
-
-  &lt;reference id=&quot;broker&quot; interface=&quot;org.apache.camel.Component&quot; filter=&quot;(osgi.jndi.service.name=fcrepo/Broker)&quot;/&gt;
-
-  &lt;bean id=&quot;http&quot; class=&quot;org.apache.camel.component.http4.HttpComponent&quot;/&gt;
-  &lt;bean id=&quot;https&quot; class=&quot;org.apache.camel.component.http4.HttpComponent&quot;/&gt;
-
-  &lt;camelContext id=&quot;IslandoraConnectorOCR&quot; xmlns=&quot;http://camel.apache.org/schema/blueprint&quot;&gt;
-    &lt;package&gt;ca.islandora.alpaca.connector.derivative&lt;/package&gt;
-  &lt;/camelContext&gt;
-
-&lt;/blueprint&gt;
-</code></pre>
-<p><code>/opt/karaf/deploy/ca.islandora.alpaca.connector.houdini.blueprint.xml | karaf:karaf/644</code></p>
-<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;blueprint xmlns=&quot;http://www.osgi.org/xmlns/blueprint/v1.0.0&quot;
-       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
-       xmlns:cm=&quot;http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0&quot;
-       xsi:schemaLocation=&quot;
-       http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0 http://aries.apache.org/schemas/blueprint-cm/blueprint-cm-1.1.0.xsd
-       http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
-       http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd&quot;&gt;
-
-  &lt;cm:property-placeholder id=&quot;properties&quot; persistent-id=&quot;ca.islandora.alpaca.connector.houdini&quot; update-strategy=&quot;reload&quot; &gt;
-    &lt;cm:default-properties&gt;
-      &lt;cm:property name=&quot;error.maxRedeliveries&quot; value=&quot;5&quot;/&gt;
-      &lt;cm:property name=&quot;in.stream&quot; value=&quot;activemq:queue:islandora-connector-houdini&quot;/&gt;
-      &lt;cm:property name=&quot;derivative.service.url&quot; value=&quot;http://localhost/houdini/convert&quot;/&gt;
-    &lt;/cm:default-properties&gt;
-  &lt;/cm:property-placeholder&gt;
-
-  &lt;reference id=&quot;broker&quot; interface=&quot;org.apache.camel.Component&quot; filter=&quot;(osgi.jndi.service.name=fcrepo/Broker)&quot;/&gt;
-
-  &lt;bean id=&quot;http&quot; class=&quot;org.apache.camel.component.http4.HttpComponent&quot;/&gt;
-  &lt;bean id=&quot;https&quot; class=&quot;org.apache.camel.component.http4.HttpComponent&quot;/&gt;
-
-  &lt;camelContext id=&quot;IslandoraConnectorHoudini&quot; xmlns=&quot;http://camel.apache.org/schema/blueprint&quot;&gt;
-    &lt;package&gt;ca.islandora.alpaca.connector.derivative&lt;/package&gt;
-  &lt;/camelContext&gt;
-
-&lt;/blueprint&gt;
-</code></pre>
-<p><code>/opt/karaf/deploy/ca.islandora.alpaca.connector.homarus.blueprint.xml | karaf:karaf/644</code></p>
-<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;blueprint xmlns=&quot;http://www.osgi.org/xmlns/blueprint/v1.0.0&quot;
-       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
-       xmlns:cm=&quot;http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0&quot;
-       xsi:schemaLocation=&quot;
-       http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0 http://aries.apache.org/schemas/blueprint-cm/blueprint-cm-1.1.0.xsd
-       http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
-       http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd&quot;&gt;
-
-  &lt;cm:property-placeholder id=&quot;properties&quot; persistent-id=&quot;ca.islandora.alpaca.connector.homarus&quot; update-strategy=&quot;reload&quot; &gt;
-    &lt;cm:default-properties&gt;
-      &lt;cm:property name=&quot;error.maxRedeliveries&quot; value=&quot;5&quot;/&gt;
-      &lt;cm:property name=&quot;in.stream&quot; value=&quot;activemq:queue:islandora-connector-homarus&quot;/&gt;
-      &lt;cm:property name=&quot;derivative.service.url&quot; value=&quot;http://localhost/homarus/convert&quot;/&gt;
-    &lt;/cm:default-properties&gt;
-  &lt;/cm:property-placeholder&gt;
-
-  &lt;reference id=&quot;broker&quot; interface=&quot;org.apache.camel.Component&quot; filter=&quot;(osgi.jndi.service.name=fcrepo/Broker)&quot;/&gt;
-
-  &lt;bean id=&quot;http&quot; class=&quot;org.apache.camel.component.http4.HttpComponent&quot;/&gt;
-  &lt;bean id=&quot;https&quot; class=&quot;org.apache.camel.component.http4.HttpComponent&quot;/&gt;
-
-  &lt;camelContext id=&quot;IslandoraConnectorHomarus&quot; xmlns=&quot;http://camel.apache.org/schema/blueprint&quot;&gt;
-    &lt;package&gt;ca.islandora.alpaca.connector.derivative&lt;/package&gt;
-  &lt;/camelContext&gt;
-
-&lt;/blueprint&gt;
-</code></pre>
-<p><code>/opt/karaf/deploy/ca.islandora.alpaca.connector.fits.blueprint.xml | karaf:karaf/644</code></p>
-<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;blueprint xmlns=&quot;http://www.osgi.org/xmlns/blueprint/v1.0.0&quot;
-       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
-       xmlns:cm=&quot;http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0&quot;
-       xsi:schemaLocation=&quot;
-       http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0 http://aries.apache.org/schemas/blueprint-cm/blueprint-cm-1.1.0.xsd
-       http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
-       http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd&quot;&gt;
-
-  &lt;cm:property-placeholder id=&quot;properties&quot; persistent-id=&quot;ca.islandora.alpaca.connector.fits&quot; update-strategy=&quot;reload&quot; &gt;
-    &lt;cm:default-properties&gt;
-      &lt;cm:property name=&quot;error.maxRedeliveries&quot; value=&quot;5&quot;/&gt;
-      &lt;cm:property name=&quot;in.stream&quot; value=&quot;activemq:queue:islandora-connector-fits&quot;/&gt;
-      &lt;cm:property name=&quot;derivative.service.url&quot; value=&quot;http://localhost/crayfits&quot;/&gt;
-    &lt;/cm:default-properties&gt;
-  &lt;/cm:property-placeholder&gt;
-
-  &lt;reference id=&quot;broker&quot; interface=&quot;org.apache.camel.Component&quot; filter=&quot;(osgi.jndi.service.name=fcrepo/Broker)&quot;/&gt;
-
-  &lt;bean id=&quot;http&quot; class=&quot;org.apache.camel.component.http4.HttpComponent&quot;/&gt;
-  &lt;bean id=&quot;https&quot; class=&quot;org.apache.camel.component.http4.HttpComponent&quot;/&gt;
-
-  &lt;camelContext id=&quot;IslandoraConnectorfits&quot; xmlns=&quot;http://camel.apache.org/schema/blueprint&quot;&gt;
-    &lt;package&gt;ca.islandora.alpaca.connector.derivative&lt;/package&gt;
-  &lt;/camelContext&gt;
-
-&lt;/blueprint&gt;
-</code></pre>
+<p><code>/opt/karaf/deploy/ca.islandora.alpaca.connector.ocr.blueprint.xml | karaf:karaf/644</code>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="nt">&lt;blueprint</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">&quot;http://www.osgi.org/xmlns/blueprint/v1.0.0&quot;</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">       </span><span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">       </span><span class="na">xmlns:cm=</span><span class="s">&quot;http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0&quot;</span>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="w">       </span><span class="na">xsi:schemaLocation=</span><span class="s">&quot;</span>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="s">       http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0 http://aries.apache.org/schemas/blueprint-cm/blueprint-cm-1.1.0.xsd</span>
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="s">       http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd</span>
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="s">       http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>
+</span><span id="__span-15-10"><a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a><span class="w">  </span><span class="nt">&lt;cm:property-placeholder</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;properties&quot;</span><span class="w"> </span><span class="na">persistent-id=</span><span class="s">&quot;ca.islandora.alpaca.connector.ocr&quot;</span><span class="w"> </span><span class="na">update-strategy=</span><span class="s">&quot;reload&quot;</span><span class="w"> </span><span class="nt">&gt;</span>
+</span><span id="__span-15-11"><a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a><span class="w">    </span><span class="nt">&lt;cm:default-properties&gt;</span>
+</span><span id="__span-15-12"><a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a><span class="w">      </span><span class="nt">&lt;cm:property</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;error.maxRedeliveries&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;5&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-15-13"><a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a><span class="w">      </span><span class="nt">&lt;cm:property</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;in.stream&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;activemq:queue:islandora-connector-ocr&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-15-14"><a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a><span class="w">      </span><span class="nt">&lt;cm:property</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;derivative.service.url&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;http://localhost/hypercube&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-15-15"><a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a><span class="w">    </span><span class="nt">&lt;/cm:default-properties&gt;</span>
+</span><span id="__span-15-16"><a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a><span class="w">  </span><span class="nt">&lt;/cm:property-placeholder&gt;</span>
+</span><span id="__span-15-17"><a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a>
+</span><span id="__span-15-18"><a id="__codelineno-15-18" name="__codelineno-15-18" href="#__codelineno-15-18"></a><span class="w">  </span><span class="nt">&lt;reference</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;broker&quot;</span><span class="w"> </span><span class="na">interface=</span><span class="s">&quot;org.apache.camel.Component&quot;</span><span class="w"> </span><span class="na">filter=</span><span class="s">&quot;(osgi.jndi.service.name=fcrepo/Broker)&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-15-19"><a id="__codelineno-15-19" name="__codelineno-15-19" href="#__codelineno-15-19"></a>
+</span><span id="__span-15-20"><a id="__codelineno-15-20" name="__codelineno-15-20" href="#__codelineno-15-20"></a><span class="w">  </span><span class="nt">&lt;bean</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;http&quot;</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;org.apache.camel.component.http4.HttpComponent&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-15-21"><a id="__codelineno-15-21" name="__codelineno-15-21" href="#__codelineno-15-21"></a><span class="w">  </span><span class="nt">&lt;bean</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;https&quot;</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;org.apache.camel.component.http4.HttpComponent&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-15-22"><a id="__codelineno-15-22" name="__codelineno-15-22" href="#__codelineno-15-22"></a>
+</span><span id="__span-15-23"><a id="__codelineno-15-23" name="__codelineno-15-23" href="#__codelineno-15-23"></a><span class="w">  </span><span class="nt">&lt;camelContext</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;IslandoraConnectorOCR&quot;</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">&quot;http://camel.apache.org/schema/blueprint&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-15-24"><a id="__codelineno-15-24" name="__codelineno-15-24" href="#__codelineno-15-24"></a><span class="w">    </span><span class="nt">&lt;package&gt;</span>ca.islandora.alpaca.connector.derivative<span class="nt">&lt;/package&gt;</span>
+</span><span id="__span-15-25"><a id="__codelineno-15-25" name="__codelineno-15-25" href="#__codelineno-15-25"></a><span class="w">  </span><span class="nt">&lt;/camelContext&gt;</span>
+</span><span id="__span-15-26"><a id="__codelineno-15-26" name="__codelineno-15-26" href="#__codelineno-15-26"></a>
+</span><span id="__span-15-27"><a id="__codelineno-15-27" name="__codelineno-15-27" href="#__codelineno-15-27"></a><span class="nt">&lt;/blueprint&gt;</span>
+</span></code></pre></div></p>
+<p><code>/opt/karaf/deploy/ca.islandora.alpaca.connector.houdini.blueprint.xml | karaf:karaf/644</code>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="nt">&lt;blueprint</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">&quot;http://www.osgi.org/xmlns/blueprint/v1.0.0&quot;</span>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">       </span><span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="w">       </span><span class="na">xmlns:cm=</span><span class="s">&quot;http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0&quot;</span>
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="w">       </span><span class="na">xsi:schemaLocation=</span><span class="s">&quot;</span>
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="s">       http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0 http://aries.apache.org/schemas/blueprint-cm/blueprint-cm-1.1.0.xsd</span>
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="s">       http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd</span>
+</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="s">       http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>
+</span><span id="__span-16-10"><a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a><span class="w">  </span><span class="nt">&lt;cm:property-placeholder</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;properties&quot;</span><span class="w"> </span><span class="na">persistent-id=</span><span class="s">&quot;ca.islandora.alpaca.connector.houdini&quot;</span><span class="w"> </span><span class="na">update-strategy=</span><span class="s">&quot;reload&quot;</span><span class="w"> </span><span class="nt">&gt;</span>
+</span><span id="__span-16-11"><a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a><span class="w">    </span><span class="nt">&lt;cm:default-properties&gt;</span>
+</span><span id="__span-16-12"><a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a><span class="w">      </span><span class="nt">&lt;cm:property</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;error.maxRedeliveries&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;5&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-16-13"><a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a><span class="w">      </span><span class="nt">&lt;cm:property</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;in.stream&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;activemq:queue:islandora-connector-houdini&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-16-14"><a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a><span class="w">      </span><span class="nt">&lt;cm:property</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;derivative.service.url&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;http://localhost/houdini/convert&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-16-15"><a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a><span class="w">    </span><span class="nt">&lt;/cm:default-properties&gt;</span>
+</span><span id="__span-16-16"><a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a><span class="w">  </span><span class="nt">&lt;/cm:property-placeholder&gt;</span>
+</span><span id="__span-16-17"><a id="__codelineno-16-17" name="__codelineno-16-17" href="#__codelineno-16-17"></a>
+</span><span id="__span-16-18"><a id="__codelineno-16-18" name="__codelineno-16-18" href="#__codelineno-16-18"></a><span class="w">  </span><span class="nt">&lt;reference</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;broker&quot;</span><span class="w"> </span><span class="na">interface=</span><span class="s">&quot;org.apache.camel.Component&quot;</span><span class="w"> </span><span class="na">filter=</span><span class="s">&quot;(osgi.jndi.service.name=fcrepo/Broker)&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-16-19"><a id="__codelineno-16-19" name="__codelineno-16-19" href="#__codelineno-16-19"></a>
+</span><span id="__span-16-20"><a id="__codelineno-16-20" name="__codelineno-16-20" href="#__codelineno-16-20"></a><span class="w">  </span><span class="nt">&lt;bean</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;http&quot;</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;org.apache.camel.component.http4.HttpComponent&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-16-21"><a id="__codelineno-16-21" name="__codelineno-16-21" href="#__codelineno-16-21"></a><span class="w">  </span><span class="nt">&lt;bean</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;https&quot;</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;org.apache.camel.component.http4.HttpComponent&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-16-22"><a id="__codelineno-16-22" name="__codelineno-16-22" href="#__codelineno-16-22"></a>
+</span><span id="__span-16-23"><a id="__codelineno-16-23" name="__codelineno-16-23" href="#__codelineno-16-23"></a><span class="w">  </span><span class="nt">&lt;camelContext</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;IslandoraConnectorHoudini&quot;</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">&quot;http://camel.apache.org/schema/blueprint&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-16-24"><a id="__codelineno-16-24" name="__codelineno-16-24" href="#__codelineno-16-24"></a><span class="w">    </span><span class="nt">&lt;package&gt;</span>ca.islandora.alpaca.connector.derivative<span class="nt">&lt;/package&gt;</span>
+</span><span id="__span-16-25"><a id="__codelineno-16-25" name="__codelineno-16-25" href="#__codelineno-16-25"></a><span class="w">  </span><span class="nt">&lt;/camelContext&gt;</span>
+</span><span id="__span-16-26"><a id="__codelineno-16-26" name="__codelineno-16-26" href="#__codelineno-16-26"></a>
+</span><span id="__span-16-27"><a id="__codelineno-16-27" name="__codelineno-16-27" href="#__codelineno-16-27"></a><span class="nt">&lt;/blueprint&gt;</span>
+</span></code></pre></div></p>
+<p><code>/opt/karaf/deploy/ca.islandora.alpaca.connector.homarus.blueprint.xml | karaf:karaf/644</code>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="nt">&lt;blueprint</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">&quot;http://www.osgi.org/xmlns/blueprint/v1.0.0&quot;</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="w">       </span><span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="w">       </span><span class="na">xmlns:cm=</span><span class="s">&quot;http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0&quot;</span>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="w">       </span><span class="na">xsi:schemaLocation=</span><span class="s">&quot;</span>
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="s">       http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0 http://aries.apache.org/schemas/blueprint-cm/blueprint-cm-1.1.0.xsd</span>
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="s">       http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd</span>
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="s">       http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>
+</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a><span class="w">  </span><span class="nt">&lt;cm:property-placeholder</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;properties&quot;</span><span class="w"> </span><span class="na">persistent-id=</span><span class="s">&quot;ca.islandora.alpaca.connector.homarus&quot;</span><span class="w"> </span><span class="na">update-strategy=</span><span class="s">&quot;reload&quot;</span><span class="w"> </span><span class="nt">&gt;</span>
+</span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a><span class="w">    </span><span class="nt">&lt;cm:default-properties&gt;</span>
+</span><span id="__span-17-12"><a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a><span class="w">      </span><span class="nt">&lt;cm:property</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;error.maxRedeliveries&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;5&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-17-13"><a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a><span class="w">      </span><span class="nt">&lt;cm:property</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;in.stream&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;activemq:queue:islandora-connector-homarus&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-17-14"><a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a><span class="w">      </span><span class="nt">&lt;cm:property</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;derivative.service.url&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;http://localhost/homarus/convert&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-17-15"><a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a><span class="w">    </span><span class="nt">&lt;/cm:default-properties&gt;</span>
+</span><span id="__span-17-16"><a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a><span class="w">  </span><span class="nt">&lt;/cm:property-placeholder&gt;</span>
+</span><span id="__span-17-17"><a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a>
+</span><span id="__span-17-18"><a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a><span class="w">  </span><span class="nt">&lt;reference</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;broker&quot;</span><span class="w"> </span><span class="na">interface=</span><span class="s">&quot;org.apache.camel.Component&quot;</span><span class="w"> </span><span class="na">filter=</span><span class="s">&quot;(osgi.jndi.service.name=fcrepo/Broker)&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-17-19"><a id="__codelineno-17-19" name="__codelineno-17-19" href="#__codelineno-17-19"></a>
+</span><span id="__span-17-20"><a id="__codelineno-17-20" name="__codelineno-17-20" href="#__codelineno-17-20"></a><span class="w">  </span><span class="nt">&lt;bean</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;http&quot;</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;org.apache.camel.component.http4.HttpComponent&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-17-21"><a id="__codelineno-17-21" name="__codelineno-17-21" href="#__codelineno-17-21"></a><span class="w">  </span><span class="nt">&lt;bean</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;https&quot;</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;org.apache.camel.component.http4.HttpComponent&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-17-22"><a id="__codelineno-17-22" name="__codelineno-17-22" href="#__codelineno-17-22"></a>
+</span><span id="__span-17-23"><a id="__codelineno-17-23" name="__codelineno-17-23" href="#__codelineno-17-23"></a><span class="w">  </span><span class="nt">&lt;camelContext</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;IslandoraConnectorHomarus&quot;</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">&quot;http://camel.apache.org/schema/blueprint&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-17-24"><a id="__codelineno-17-24" name="__codelineno-17-24" href="#__codelineno-17-24"></a><span class="w">    </span><span class="nt">&lt;package&gt;</span>ca.islandora.alpaca.connector.derivative<span class="nt">&lt;/package&gt;</span>
+</span><span id="__span-17-25"><a id="__codelineno-17-25" name="__codelineno-17-25" href="#__codelineno-17-25"></a><span class="w">  </span><span class="nt">&lt;/camelContext&gt;</span>
+</span><span id="__span-17-26"><a id="__codelineno-17-26" name="__codelineno-17-26" href="#__codelineno-17-26"></a>
+</span><span id="__span-17-27"><a id="__codelineno-17-27" name="__codelineno-17-27" href="#__codelineno-17-27"></a><span class="nt">&lt;/blueprint&gt;</span>
+</span></code></pre></div></p>
+<p><code>/opt/karaf/deploy/ca.islandora.alpaca.connector.fits.blueprint.xml | karaf:karaf/644</code>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="nt">&lt;blueprint</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">&quot;http://www.osgi.org/xmlns/blueprint/v1.0.0&quot;</span>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="w">       </span><span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="w">       </span><span class="na">xmlns:cm=</span><span class="s">&quot;http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0&quot;</span>
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="w">       </span><span class="na">xsi:schemaLocation=</span><span class="s">&quot;</span>
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="s">       http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0 http://aries.apache.org/schemas/blueprint-cm/blueprint-cm-1.1.0.xsd</span>
+</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="s">       http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd</span>
+</span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="s">       http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>
+</span><span id="__span-18-10"><a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="w">  </span><span class="nt">&lt;cm:property-placeholder</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;properties&quot;</span><span class="w"> </span><span class="na">persistent-id=</span><span class="s">&quot;ca.islandora.alpaca.connector.fits&quot;</span><span class="w"> </span><span class="na">update-strategy=</span><span class="s">&quot;reload&quot;</span><span class="w"> </span><span class="nt">&gt;</span>
+</span><span id="__span-18-11"><a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a><span class="w">    </span><span class="nt">&lt;cm:default-properties&gt;</span>
+</span><span id="__span-18-12"><a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a><span class="w">      </span><span class="nt">&lt;cm:property</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;error.maxRedeliveries&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;5&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-18-13"><a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a><span class="w">      </span><span class="nt">&lt;cm:property</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;in.stream&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;activemq:queue:islandora-connector-fits&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-18-14"><a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a><span class="w">      </span><span class="nt">&lt;cm:property</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;derivative.service.url&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;http://localhost/crayfits&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-18-15"><a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a><span class="w">    </span><span class="nt">&lt;/cm:default-properties&gt;</span>
+</span><span id="__span-18-16"><a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a><span class="w">  </span><span class="nt">&lt;/cm:property-placeholder&gt;</span>
+</span><span id="__span-18-17"><a id="__codelineno-18-17" name="__codelineno-18-17" href="#__codelineno-18-17"></a>
+</span><span id="__span-18-18"><a id="__codelineno-18-18" name="__codelineno-18-18" href="#__codelineno-18-18"></a><span class="w">  </span><span class="nt">&lt;reference</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;broker&quot;</span><span class="w"> </span><span class="na">interface=</span><span class="s">&quot;org.apache.camel.Component&quot;</span><span class="w"> </span><span class="na">filter=</span><span class="s">&quot;(osgi.jndi.service.name=fcrepo/Broker)&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-18-19"><a id="__codelineno-18-19" name="__codelineno-18-19" href="#__codelineno-18-19"></a>
+</span><span id="__span-18-20"><a id="__codelineno-18-20" name="__codelineno-18-20" href="#__codelineno-18-20"></a><span class="w">  </span><span class="nt">&lt;bean</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;http&quot;</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;org.apache.camel.component.http4.HttpComponent&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-18-21"><a id="__codelineno-18-21" name="__codelineno-18-21" href="#__codelineno-18-21"></a><span class="w">  </span><span class="nt">&lt;bean</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;https&quot;</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;org.apache.camel.component.http4.HttpComponent&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-18-22"><a id="__codelineno-18-22" name="__codelineno-18-22" href="#__codelineno-18-22"></a>
+</span><span id="__span-18-23"><a id="__codelineno-18-23" name="__codelineno-18-23" href="#__codelineno-18-23"></a><span class="w">  </span><span class="nt">&lt;camelContext</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;IslandoraConnectorfits&quot;</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">&quot;http://camel.apache.org/schema/blueprint&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-18-24"><a id="__codelineno-18-24" name="__codelineno-18-24" href="#__codelineno-18-24"></a><span class="w">    </span><span class="nt">&lt;package&gt;</span>ca.islandora.alpaca.connector.derivative<span class="nt">&lt;/package&gt;</span>
+</span><span id="__span-18-25"><a id="__codelineno-18-25" name="__codelineno-18-25" href="#__codelineno-18-25"></a><span class="w">  </span><span class="nt">&lt;/camelContext&gt;</span>
+</span><span id="__span-18-26"><a id="__codelineno-18-26" name="__codelineno-18-26" href="#__codelineno-18-26"></a>
+</span><span id="__span-18-27"><a id="__codelineno-18-27" name="__codelineno-18-27" href="#__codelineno-18-27"></a><span class="nt">&lt;/blueprint&gt;</span>
+</span></code></pre></div></p>
 <h3 id="installing-the-required-karaf-features">Installing the Required Karaf Features<a class="headerlink" href="#installing-the-required-karaf-features" title="Permanent link">&para;</a></h3>
 <p>Before we can configure the features we’re going to use, they need to be installed. Some of these installations may take some time.</p>
-<pre><code class="language-bash">/opt/karaf/bin/client feature:install camel-blueprint
-/opt/karaf/bin/client feature:install activemq-blueprint
-/opt/karaf/bin/client feature:install fcrepo-service-activemq
-# This again should not be strictly necessary, since this isn't the triplestore
-# we're using, but is being included here to resolve the aforementioned
-# missing link in the dependency chain.
-/opt/karaf/bin/client feature:install jena
-/opt/karaf/bin/client feature:install fcrepo-camel
-/opt/karaf/bin/client feature:install fcrepo-indexing-triplestore
-/opt/karaf/bin/client feature:install islandora-http-client
-/opt/karaf/bin/client feature:install islandora-indexing-triplestore
-/opt/karaf/bin/client feature:install islandora-indexing-fcrepo
-/opt/karaf/bin/client feature:install islandora-connector-derivative
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>/opt/karaf/bin/client<span class="w"> </span>feature:install<span class="w"> </span>camel-blueprint
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>/opt/karaf/bin/client<span class="w"> </span>feature:install<span class="w"> </span>activemq-blueprint
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>/opt/karaf/bin/client<span class="w"> </span>feature:install<span class="w"> </span>fcrepo-service-activemq
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="c1"># This again should not be strictly necessary, since this isn&#39;t the triplestore</span>
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="c1"># we&#39;re using, but is being included here to resolve the aforementioned</span>
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="c1"># missing link in the dependency chain.</span>
+</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>/opt/karaf/bin/client<span class="w"> </span>feature:install<span class="w"> </span>jena
+</span><span id="__span-19-8"><a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>/opt/karaf/bin/client<span class="w"> </span>feature:install<span class="w"> </span>fcrepo-camel
+</span><span id="__span-19-9"><a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a>/opt/karaf/bin/client<span class="w"> </span>feature:install<span class="w"> </span>fcrepo-indexing-triplestore
+</span><span id="__span-19-10"><a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a>/opt/karaf/bin/client<span class="w"> </span>feature:install<span class="w"> </span>islandora-http-client
+</span><span id="__span-19-11"><a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a>/opt/karaf/bin/client<span class="w"> </span>feature:install<span class="w"> </span>islandora-indexing-triplestore
+</span><span id="__span-19-12"><a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a>/opt/karaf/bin/client<span class="w"> </span>feature:install<span class="w"> </span>islandora-indexing-fcrepo
+</span><span id="__span-19-13"><a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a>/opt/karaf/bin/client<span class="w"> </span>feature:install<span class="w"> </span>islandora-connector-derivative
+</span></code></pre></div>
 <h3 id="verifying-karaf-components-are-running-optional-but-recommended">Verifying Karaf Components are Running (Optional But Recommended)<a class="headerlink" href="#verifying-karaf-components-are-running-optional-but-recommended" title="Permanent link">&para;</a></h3>
 <p>At this point, Karaf components should be up and running, but it's a good idea to double-check that this is the case. We can do this from within the Karaf client by taking a look at its component list.</p>
-<pre><code class="language-bash"># Until this point, we've been running Karaf commands from outside; we can hop
-# into the client, however, and run commands from directly within.
-/opt/karaf/bin/client
-# This takes us into the Karaf client so we can run commands.
-la | grep islandora
-la | grep fcrepo
-# It may be a good idea to use this to look up to the other components we
-# installed.
-logout
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="c1"># Until this point, we&#39;ve been running Karaf commands from outside; we can hop</span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="c1"># into the client, however, and run commands from directly within.</span>
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>/opt/karaf/bin/client
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="c1"># This takes us into the Karaf client so we can run commands.</span>
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>la<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>islandora
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>la<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>fcrepo
+</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="c1"># It may be a good idea to use this to look up to the other components we</span>
+</span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a><span class="c1"># installed.</span>
+</span><span id="__span-20-9"><a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a><span class="nb">logout</span>
+</span></code></pre></div>
 <p>For the above <code>la | grep</code> commands, components that are running should be listed as <code>Active</code>.</p>
 
   <hr>
@@ -2996,7 +2988,7 @@ logout
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 8, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 11, 2023</span>
       
     
   </small>

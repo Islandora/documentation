@@ -2784,9 +2784,9 @@ file that contains the changes you've made.</p>
 </div>
 <h3 id="compose_http_timeout">COMPOSE_HTTP_TIMEOUT<a class="headerlink" href="#compose_http_timeout" title="Permanent link">&para;</a></h3>
 <p>Sometimes when bringing up containers, you can encounter timeouts with an error like this:</p>
-<pre><code>ERROR: An HTTP request took too long to complete. Retry with --verbose to obtain debug information.
-If you encounter this issue regularly because of slow network conditions, consider setting COMPOSE_HTTP_TIMEOUT to a higher value (current value: XXX).
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>ERROR: An HTTP request took too long to complete. Retry with --verbose to obtain debug information.
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>If you encounter this issue regularly because of slow network conditions, consider setting COMPOSE_HTTP_TIMEOUT to a higher value (current value: XXX).
+</span></code></pre></div>
 <p>By default, this value is set to 480, but if you have slow network conditions and encounter this error, consider bumping it higher.</p>
 <h3 id="compose_project_name">COMPOSE_PROJECT_NAME<a class="headerlink" href="#compose_project_name" title="Permanent link">&para;</a></h3>
 <p>Used for naming services in traefik as well as defining network alias and urls. For example the <code>drupal</code> service will be found at
@@ -2824,7 +2824,7 @@ file that contains the changes you've made.</p>
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 8, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 11, 2023</span>
       
     
   </small>

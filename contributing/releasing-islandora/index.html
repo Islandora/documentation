@@ -2737,20 +2737,18 @@
 <li>You have an account with commit access for Alpaca on GitHub. As a committer, you should already have this level of access.</li>
 <li>You have an oss.sonatype.org account and have requested to be given permission to publish to the ca.islandora groupId by adding a comment to the <a href="https://issues.sonatype.org/browse/OSSRH-18137">Islandora Sonatype Hosting Ticket</a></li>
 <li>Ensure you have a trusted code signing key; <a href="https://wiki.duraspace.org/display/FCREPO/Creating+a+Code+Signing+Key">create</a> if you haven't before and add it to the <a href="https://github.com/Islandora-CLAW/Alpaca/wiki/Alpaca-Release-Process#contributor-keys">contributor keys</a> list below</li>
-<li>Your gradle settings file (<code>~/.gradle/gradle.properties</code>) exists and includes the following:</li>
-</ul>
-<pre><code class="language-properties">ossrhUsername = jiraname
-ossrhPassword = jirapass
-signing.keyId = pubkeyid
-signing.password = keypassphrase
-signing.secretKeyRingFile = /your/home/.gnupg/secring.gpg
-</code></pre>
-<ul>
+<li>Your gradle settings file (<code>~/.gradle/gradle.properties</code>) exists and includes the following:
+<div class="language-properties highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="na">ossrhUsername</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">jiraname</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="na">ossrhPassword</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">jirapass</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="na">signing.keyId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">pubkeyid</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="na">signing.password</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">keypassphrase</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="na">signing.secretKeyRingFile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">/your/home/.gnupg/secring.gpg</span>
+</span></code></pre></div></li>
 <li>Your <code>git</code> is configured (locally or globally) to <a href="https://help.github.com/articles/caching-your-github-password-in-git/">cache github credentials for https</a> or <a href="https://help.github.com/articles/generating-an-ssh-key/">use ssh</a></li>
 </ul>
-<p><strong>Note</strong>: As of GPG 2.1 <code>secring.gpg</code> <a href="https://www.gnupg.org/faq/whats-new-in-2.1.html#nosecring">has been removed</a> so you need to export secret keys to create the secret key ring.</p>
-<pre><code>gpg --export-secret-keys -o secring.gpg
-</code></pre>
+<p><strong>Note</strong>: As of GPG 2.1 <code>secring.gpg</code> <a href="https://www.gnupg.org/faq/whats-new-in-2.1.html#nosecring">has been removed</a> so you need to export secret keys to create the secret key ring.
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>gpg --export-secret-keys -o secring.gpg
+</span></code></pre></div></p>
 <h4 id="steps">Steps:<a class="headerlink" href="#steps" title="Permanent link">&para;</a></h4>
 <p>The following assumes you are using ssh (e.g. git@github.com for authentication).</p>
 <p>It will also work for https if you properly cache your github credentials. The credentials must be cached and valid because Gradle will not prompt you for them.</p>
@@ -2763,13 +2761,13 @@ signing.secretKeyRingFile = /your/home/.gnupg/secring.gpg
 <li><code>git pull origin dev</code></li>
 <li><code>./gradlew release</code></li>
 </ul>
-<p>The script will start but then will ask you to confirm the version to release as.</p>
-<pre><code>??&gt; This release version: [0.3.1]  (WAITING FOR INPUT BELOW)
-&lt;-------------&gt; 0% EXECUTING [13s]
-&gt; :release
-&gt; :alpaca-release:confirmReleaseVersion
-</code></pre>
-<p>You then type in the version (ie. <code>0.4.0</code>) or nothing to use the suggested version (<code>0.3.1</code> in this example) and hit <code>ENTER</code>.</p>
+<p>The script will start but then will ask you to confirm the version to release as.
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>??&gt; This release version: [0.3.1]  (WAITING FOR INPUT BELOW)
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>&lt;-------------&gt; 0% EXECUTING [13s]
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>&gt; :release
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>&gt; :alpaca-release:confirmReleaseVersion
+</span></code></pre></div>
+You then type in the version (ie. <code>0.4.0</code>) or nothing to use the suggested version (<code>0.3.1</code> in this example) and hit <code>ENTER</code>.</p>
 <p>The gradle release task will take care of dropping -SNAPSHOT from the version, uploading artifacts to Maven central for staging, tagging and pushing a release to github, and bumping <code>master</code> of the Alpaca repository up by a point release for the next development iteration.</p>
 <h5 id="documentation">Documentation.<a class="headerlink" href="#documentation" title="Permanent link">&para;</a></h5>
 <p>The release process will also generate documentation at <code>./docs/&lt;new-version&gt;</code>. This will need to be added to the git repository and pushed to the master branch:</p>
@@ -2894,7 +2892,7 @@ completed all the above steps and are absolutely certain the release is ready fo
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 8, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 11, 2023</span>
       
     
   </small>

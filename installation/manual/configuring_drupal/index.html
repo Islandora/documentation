@@ -2611,31 +2611,31 @@
 <p>Some additional settings will need to be established in your default <code>settings.php</code> before Drupal-side configuration can occur.</p>
 <p>The below configuration will establish <code>localhost</code> as a trusted host pattern, but on production sites this will need to be expanded to include the actual host patterns used by the site.</p>
 <p><code>/opt/drupal/web/sites/default/settings.php</code></p>
-<p><strong>Before</strong> (at around line 789):</p>
-<pre><code>'driver' =&gt; 'pgsql',
-);
-</code></pre>
-<p><strong>After</strong>:</p>
-<pre><code>'driver' =&gt; 'pgsql',
-);
-
-$settings['trusted_host_patterns'] = [
-  'localhost',
-];
-
-$settings['flysystem'] = [
-  'fedora' =&gt; [
-    'driver' =&gt; 'fedora',
-    'config' =&gt; [
-      'root' =&gt; 'http://localhost:8080/fcrepo/rest/',
-    ],
-  ],
-];
-</code></pre>
+<p><strong>Before</strong> (at around line 789):
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>&#39;driver&#39; =&gt; &#39;pgsql&#39;,
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>);
+</span></code></pre></div></p>
+<p><strong>After</strong>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>&#39;driver&#39; =&gt; &#39;pgsql&#39;,
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>);
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>$settings[&#39;trusted_host_patterns&#39;] = [
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>  &#39;localhost&#39;,
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>];
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>$settings[&#39;flysystem&#39;] = [
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>  &#39;fedora&#39; =&gt; [
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    &#39;driver&#39; =&gt; &#39;fedora&#39;,
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    &#39;config&#39; =&gt; [
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>      &#39;root&#39; =&gt; &#39;http://localhost:8080/fcrepo/rest/&#39;,
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>    ],
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>  ],
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>];
+</span></code></pre></div></p>
 <p>Once this is done, refresh the cache to take hold of the new settings.</p>
-<pre><code class="language-bash">cd /opt/drupal
-drush -y cr
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nb">cd</span><span class="w"> </span>/opt/drupal
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>drush<span class="w"> </span>-y<span class="w"> </span>cr
+</span></code></pre></div>
 <h2 id="islandora">Islandora<a class="headerlink" href="#islandora" title="Permanent link">&para;</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Skip this by using the Islandora Starter Site</p>
@@ -2646,45 +2646,45 @@ to pick and choose which Islandora modules you use.</p>
 <h3 id="downloading-islandora">Downloading Islandora<a class="headerlink" href="#downloading-islandora" title="Permanent link">&para;</a></h3>
 <p>The Islandora Drupal module contains the core code to create a repository ecosystem in a Drupal environment. It also includes several submodules; of importance to us is <code>islandora_core_feature</code>, which contains the key configurations that allow you to use Islandora features.</p>
 <p>Take note of some of the other comments in the below bash script for an idea of what the other components are expected, and which may be considered optional.</p>
-<pre><code class="language-bash">cd /opt/drupal
-# Since islandora_defaults is near the bottom of the dependency chain, requiring
-# it will get most of the modules and libraries we need to deploy a standard
-# Islandora site.
-sudo -u www-data composer require &quot;drupal/flysystem:^2.0@alpha&quot;
-sudo -u www-data composer require &quot;islandora/islandora:^2.4&quot;
-sudo -u www-data composer require &quot;islandora/controlled_access_terms:^2&quot;
-sudo -u www-data composer require &quot;islandora/openseadragon:^2&quot;
-
-# These can be considered important or required depending on your site's
-# requirements; some of them represent dependencies of Islandora submodules.
-sudo -u www-data composer require &quot;drupal/pdf:1.1&quot;
-sudo -u www-data composer require &quot;drupal/rest_oai_pmh:^2.0@beta&quot;
-sudo -u www-data composer require &quot;drupal/search_api_solr:^4.2&quot;
-sudo -u www-data composer require &quot;drupal/facets:^2&quot;
-sudo -u www-data composer require &quot;drupal/content_browser:^1.0@alpha&quot; ## TODO do we need this?
-sudo -u www-data composer require &quot;drupal/field_permissions:^1&quot;
-sudo -u www-data composer require &quot;drupal/transliterate_filenames:^2.0&quot;
-
-# These tend to be good to enable for a development environment, or just for a
-# higher quality of life when managing Islandora. That being said, devel should
-# NEVER be enabled on a production environment, as it intentionally gives the
-# user tools that compromise the security of a site.
-sudo -u www-data composer require drupal/restui:^1.21
-sudo -u www-data composer require drupal/console:~1.0
-sudo -u www-data composer require drupal/devel:^2.0
-sudo -u www-data composer require drupal/admin_toolbar:^2.0
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">cd</span><span class="w"> </span>/opt/drupal
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="c1"># Since islandora_defaults is near the bottom of the dependency chain, requiring</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="c1"># it will get most of the modules and libraries we need to deploy a standard</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># Islandora site.</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>sudo<span class="w"> </span>-u<span class="w"> </span>www-data<span class="w"> </span>composer<span class="w"> </span>require<span class="w"> </span><span class="s2">&quot;drupal/flysystem:^2.0@alpha&quot;</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>sudo<span class="w"> </span>-u<span class="w"> </span>www-data<span class="w"> </span>composer<span class="w"> </span>require<span class="w"> </span><span class="s2">&quot;islandora/islandora:^2.4&quot;</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>sudo<span class="w"> </span>-u<span class="w"> </span>www-data<span class="w"> </span>composer<span class="w"> </span>require<span class="w"> </span><span class="s2">&quot;islandora/controlled_access_terms:^2&quot;</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>sudo<span class="w"> </span>-u<span class="w"> </span>www-data<span class="w"> </span>composer<span class="w"> </span>require<span class="w"> </span><span class="s2">&quot;islandora/openseadragon:^2&quot;</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="c1"># These can be considered important or required depending on your site&#39;s</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="c1"># requirements; some of them represent dependencies of Islandora submodules.</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>sudo<span class="w"> </span>-u<span class="w"> </span>www-data<span class="w"> </span>composer<span class="w"> </span>require<span class="w"> </span><span class="s2">&quot;drupal/pdf:1.1&quot;</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>sudo<span class="w"> </span>-u<span class="w"> </span>www-data<span class="w"> </span>composer<span class="w"> </span>require<span class="w"> </span><span class="s2">&quot;drupal/rest_oai_pmh:^2.0@beta&quot;</span>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>sudo<span class="w"> </span>-u<span class="w"> </span>www-data<span class="w"> </span>composer<span class="w"> </span>require<span class="w"> </span><span class="s2">&quot;drupal/search_api_solr:^4.2&quot;</span>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>sudo<span class="w"> </span>-u<span class="w"> </span>www-data<span class="w"> </span>composer<span class="w"> </span>require<span class="w"> </span><span class="s2">&quot;drupal/facets:^2&quot;</span>
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>sudo<span class="w"> </span>-u<span class="w"> </span>www-data<span class="w"> </span>composer<span class="w"> </span>require<span class="w"> </span><span class="s2">&quot;drupal/content_browser:^1.0@alpha&quot;</span><span class="w"> </span><span class="c1">## TODO do we need this?</span>
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>sudo<span class="w"> </span>-u<span class="w"> </span>www-data<span class="w"> </span>composer<span class="w"> </span>require<span class="w"> </span><span class="s2">&quot;drupal/field_permissions:^1&quot;</span>
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>sudo<span class="w"> </span>-u<span class="w"> </span>www-data<span class="w"> </span>composer<span class="w"> </span>require<span class="w"> </span><span class="s2">&quot;drupal/transliterate_filenames:^2.0&quot;</span>
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>
+</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="c1"># These tend to be good to enable for a development environment, or just for a</span>
+</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="c1"># higher quality of life when managing Islandora. That being said, devel should</span>
+</span><span id="__span-3-22"><a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a><span class="c1"># NEVER be enabled on a production environment, as it intentionally gives the</span>
+</span><span id="__span-3-23"><a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a><span class="c1"># user tools that compromise the security of a site.</span>
+</span><span id="__span-3-24"><a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a>sudo<span class="w"> </span>-u<span class="w"> </span>www-data<span class="w"> </span>composer<span class="w"> </span>require<span class="w"> </span>drupal/restui:^1.21
+</span><span id="__span-3-25"><a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a>sudo<span class="w"> </span>-u<span class="w"> </span>www-data<span class="w"> </span>composer<span class="w"> </span>require<span class="w"> </span>drupal/console:~1.0
+</span><span id="__span-3-26"><a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a>sudo<span class="w"> </span>-u<span class="w"> </span>www-data<span class="w"> </span>composer<span class="w"> </span>require<span class="w"> </span>drupal/devel:^2.0
+</span><span id="__span-3-27"><a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a>sudo<span class="w"> </span>-u<span class="w"> </span>www-data<span class="w"> </span>composer<span class="w"> </span>require<span class="w"> </span>drupal/admin_toolbar:^2.0
+</span></code></pre></div>
 <h3 id="enabling-downloaded-components">Enabling Downloaded Components<a class="headerlink" href="#enabling-downloaded-components" title="Permanent link">&para;</a></h3>
 <p>Components we've now downloaded using <code>composer require</code> can be enabled simultaneously via <code>drush</code>, which will ensure they are installed in the correct dependent order. Enabling <code>islandora_defaults</code> will also ensure all content types and configurations are set up in Islandora. The installation process for all of these modules will likely take some time.</p>
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
 <p>This list of modules assumes that all of the above components were downloaded using <code>composer require</code>; if this is not the case, you may need to pare down this list manually. It also includes <code>devel</code>, which again, should not be enabled on production sites.</p>
 </div>
-<pre><code class="language-bash">cd /opt/drupal
-drush -y en rdf responsive_image devel syslog serialization basic_auth rest restui search_api_solr facets content_browser pdf admin_toolbar controlled_access_terms_defaults islandora_breadcrumbs islandora_iiif islandora_oaipmh
-# After all of this, rebuild the cache.
-drush -y cr
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nb">cd</span><span class="w"> </span>/opt/drupal
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>drush<span class="w"> </span>-y<span class="w"> </span>en<span class="w"> </span>rdf<span class="w"> </span>responsive_image<span class="w"> </span>devel<span class="w"> </span>syslog<span class="w"> </span>serialization<span class="w"> </span>basic_auth<span class="w"> </span>rest<span class="w"> </span>restui<span class="w"> </span>search_api_solr<span class="w"> </span>facets<span class="w"> </span>content_browser<span class="w"> </span>pdf<span class="w"> </span>admin_toolbar<span class="w"> </span>controlled_access_terms_defaults<span class="w"> </span>islandora_breadcrumbs<span class="w"> </span>islandora_iiif<span class="w"> </span>islandora_oaipmh
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="c1"># After all of this, rebuild the cache.</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>drush<span class="w"> </span>-y<span class="w"> </span>cr
+</span></code></pre></div>
 <h3 id="adding-a-jwt-configuration-to-drupal">Adding a JWT Configuration to Drupal<a class="headerlink" href="#adding-a-jwt-configuration-to-drupal" title="Permanent link">&para;</a></h3>
 <p>To allow our installation to talk to other services via Syn, we need to establish a Drupal-side JWT configuration using the keys we generated at that time.</p>
 <p>Log onto your site as an administrator at <code>/user</code>, then navigate to <code>/admin/config/system/keys/add</code>. Some of the settings here are unimportant, but pay close attention to the <strong>Key type</strong>, which should match the key we created earlier (an RSA key), and the <strong>File location</strong>, which should be the ultimate location of the key we created for Syn on the filesystem, <code>/opt/keys/syn_private.key</code>.</p>
@@ -2710,26 +2710,26 @@ drush -y cr
 <p><img alt="Configuring Flysystem to Use Fedora" src="../../../assets/configuring_flysystem_to_use_fedora.png" /></p>
 <h3 id="giving-the-administrative-user-the-fedoraadmin-role">Giving the Administrative User the <code>fedoraAdmin</code> Role<a class="headerlink" href="#giving-the-administrative-user-the-fedoraadmin-role" title="Permanent link">&para;</a></h3>
 <p>In order for data to be pushed back to Fedora, the site administrative user needs the <code>fedoraAdmin</code> role.</p>
-<pre><code>cd /opt/drupal
-sudo -u www-data drush -y urol &quot;fedoraadmin&quot; islandora
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>cd /opt/drupal
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>sudo -u www-data drush -y urol &quot;fedoraadmin&quot; islandora
+</span></code></pre></div>
 <h3 id="running-feature-migrations">Running Feature Migrations<a class="headerlink" href="#running-feature-migrations" title="Permanent link">&para;</a></h3>
 <p>Finally, to get everything up and running, run the Islandora Core Features and Islandora Defaults migrations.</p>
-<pre><code class="language-bash">cd /opt/drupal
-sudo -u www-data drush -y -l localhost --userid=1 mim --group=islandora
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nb">cd</span><span class="w"> </span>/opt/drupal
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>sudo<span class="w"> </span>-u<span class="w"> </span>www-data<span class="w"> </span>drush<span class="w"> </span>-y<span class="w"> </span>-l<span class="w"> </span>localhost<span class="w"> </span>--userid<span class="o">=</span><span class="m">1</span><span class="w"> </span>mim<span class="w"> </span>--group<span class="o">=</span>islandora
+</span></code></pre></div>
 <h3 id="enabling-eva-views">Enabling EVA Views<a class="headerlink" href="#enabling-eva-views" title="Permanent link">&para;</a></h3>
 <p>Some views provided by Islandora are not enabled by default.</p>
-<pre><code class="language-bash">cd /opt/drupal
-drush -y views:enable display_media
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nb">cd</span><span class="w"> </span>/opt/drupal
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>drush<span class="w"> </span>-y<span class="w"> </span>views:enable<span class="w"> </span>display_media
+</span></code></pre></div>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 8, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 11, 2023</span>
       
     
   </small>

@@ -2428,12 +2428,12 @@
 
 <h2 id="downloading-and-enabling-drupal-modules-and-themes">Downloading and Enabling Drupal Modules and Themes<a class="headerlink" href="#downloading-and-enabling-drupal-modules-and-themes" title="Permanent link">&para;</a></h2>
 <p>Islandora can make use of the majority of Drupal <a href="https://www.drupal.org/project/project_module">modules</a> and <a href="https://www.drupal.org/project/project_theme">themes</a>. Common use cases have been documented in the <a href="/documentation/user-documentation/extending/">Islandora Cookbook</a>. There are several ways to download and install Drupal modules. Please refer to <a href="https://www.drupal.org/docs/extending-drupal">this guide</a> on Drupal.org.</p>
-<p><a href="https://www.drupal.org/docs/develop/using-composer/using-composer-to-install-drupal-and-manage-dependencies">Composer</a> is the recommended method to install and update drupal modules and themes in Islandora.</p>
-<pre><code class="language-shell">$ composer require &quot;&lt;vendor&gt;/&lt;package&gt;:&lt;version&gt;&quot;
-
-# Example
-$ composer require &quot;islandora/jsonld:^2&quot;
-</code></pre>
+<p><a href="https://www.drupal.org/docs/develop/using-composer/using-composer-to-install-drupal-and-manage-dependencies">Composer</a> is the recommended method to install and update drupal modules and themes in Islandora.
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$<span class="w"> </span>composer<span class="w"> </span>require<span class="w"> </span><span class="s2">&quot;&lt;vendor&gt;/&lt;package&gt;:&lt;version&gt;&quot;</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1"># Example</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>$<span class="w"> </span>composer<span class="w"> </span>require<span class="w"> </span><span class="s2">&quot;islandora/jsonld:^2&quot;</span>
+</span></code></pre></div></p>
 <p>In the <a href="https://github.com/Islandora-Devops/islandora-playbook">Islandora playbook</a>, you can add a Drupal module's or theme's machine name to the <code>drupal_composer_dependencies</code> variable <a href="https://github.com/Islandora-Devops/islandora-playbook/blob/dev/inventory/vagrant/group_vars/webserver/drupal.yml">here</a>.
 To enable the Drupal module or theme, add the module machine name to the <code>drupal_enable_modules</code> variable as well.</p>
 <p><img alt="alt text" src="../../assets/install-enable-drupal-modules_drupal_composer_dependencies.png?raw=true" title="drupal_composer_dependencies Screenshot" /></p>
@@ -2450,7 +2450,7 @@ To enable the Drupal module or theme, add the module machine name to the <code>d
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 8, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 11, 2023</span>
       
     
   </small>

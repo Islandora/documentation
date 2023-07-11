@@ -2456,9 +2456,8 @@
 * the default username and db_name are <code>drupal_default</code>
 * your db_password can be found in <code>codebase/web/sites/default/settings.php</code></p>
 <p>Unless you changed the default values, just swap out [password] for your actual db password in the following:</p>
-<pre><code>mysql://drupal_default:[password]@islandora.traefik.me:3306/drupal_default`.
-
-</code></pre>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>mysql://drupal_default:[password]@islandora.traefik.me:3306/drupal_default`.
+</span></code></pre></div>
 <h2 id="running-phpunit">Running PHPUnit<a class="headerlink" href="#running-phpunit" title="Permanent link">&para;</a></h2>
 <p>If you are in the Drupal root directory (<code>codebase</code> on ISLE; the one containing <code>web</code>) and your <code>phpunit.xml</code> file is also in the Drupal root directory, use the following command to run phpunit for a single test file (here, Islandora's DeleteNodeWithMediaAndFile.php):</p>
 <p><code>vendor/bin/phpunit web/modules/contrib/islandora/tests/src/Functional/DeleteNodeWithMediaAndFile.php</code></p>
@@ -2474,7 +2473,7 @@
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 8, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 11, 2023</span>
       
     
   </small>
