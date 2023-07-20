@@ -3,7 +3,7 @@
 To test out Islandora, there is [a Starter-Site based Portainer demo available](https://github.com/Islandora-Devops/sandbox/releases) (Download the .zip file). This demo is loaded with sample content to demonstrate
 features of Islandora and provide a starting point for exploration. Follow the instructions in the README.md.html file provided in the download.
 
-It is recommended that you have a minimum of 4GB of hard drive space available on your machine before getting started. It will take some time to build the image, do not be surprised if it takes a long time. Thanks, and happy building!
+It is recommended that you have a minimum of 4GB of hard drive space available on your machine before getting started. It will take some time to build the image, do not be surprised if it takes a long time. Thanks, and happy building! 
 <br>
 
 Installation Video Tutorial
