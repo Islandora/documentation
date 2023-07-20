@@ -2377,6 +2377,40 @@ features of Islandora and provide a starting point for exploration. Follow the i
 <br></p>
 <h1 id="installation-video-tutorial">Installation Video Tutorial<a class="headerlink" href="#installation-video-tutorial" title="Permanent link">&para;</a></h1>
 <p>The README.md.html is the most up to date version of the installation documentation, but you can also view this video: <a href="https://www.youtube.com/watch?v=xhJft9K-YMU">How to Install Docker Desktop and Set up Starter Site (video tutorial)</a>.</p>
+<h1 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h1>
+<p>These troubleshooting issues and solutions for Docker Desktop have arised from and been used with Windows 10.</p>
+<h2 id="docker-failed-to-start-error-message">"Docker Failed to Start" Error Message<a class="headerlink" href="#docker-failed-to-start-error-message" title="Permanent link">&para;</a></h2>
+<p>For Windows 10, you may receive the "Docker Failed to Start" Error message. To resolve this:</p>
+<ul>
+<li>Download WSL 2 from Step 4 in <a href="https://learn.microsoft.com/en-ca/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package">these instructions</a>, but do not do any other steps in these instructions.</li>
+<li>Under Windows ‘Firewall &amp; Network Protection’, ‘Allow an app through the firewall’, and ‘Change settings’ to select the ‘Private’ box for ‘Virtual Machine Monitoring’.</li>
+<li>Restart computer for all changes to take effect.</li>
+</ul>
+<h2 id="no-content-showing-on-islandoraio">No Content Showing on islandora.io<a class="headerlink" href="#no-content-showing-on-islandoraio" title="Permanent link">&para;</a></h2>
+<p>If no content is showing up in your local installation when on islandora.io in a browser, you may need to wait longer for the deployment process to complete.
+1. Go to ‘containers’, click the ‘logs’ for ‘sandbox-drupal-1’ to see the deployment process. When completed you will see: 
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>#####################
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a># Install Completed #
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>#####################
+</span></code></pre></div>
+* This can take anywhere from 5 minutes to over an hour.</p>
+<h2 id="docker-desktop-and-virtual-machine-vmmem-in-task-manager-taking-up-too-much-cpu-and-ram">Docker Desktop and Virtual Machine (Vmmem in Task Manager) Taking up too much CPU and RAM<a class="headerlink" href="#docker-desktop-and-virtual-machine-vmmem-in-task-manager-taking-up-too-much-cpu-and-ram" title="Permanent link">&para;</a></h2>
+<p>If Docker Desktop and Virtual Machine (Vmmem in Task Manager) are taking up too much CPU and RAM, you can create a .wslconfig file to limit how much of your computers resources are allocated to these processes:
+1. Open Notepad++ and type the following:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>[wsl2]
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>memory=4GB
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>processors=2
+</span></code></pre></div>
+2. Modify the numbers to reflect how much you want to allocate to Docker Desktop (i.e. if you only have 4GB of RAM then allocate 2GB).
+     * Save As and select ‘All File Types’ from the dropdown.
+     * Name the file x.wslconfig and save it.
+     * Go to the location of the saved file and rename it, removing the ‘x’.
+     * The file should look like this:
+<img alt="wslconfigimage" src="https://github.com/Islandora/documentation/assets/122306010/6833bc2b-0151-4053-b902-b764c1e44cc4" />
+3. Put the .wslconfig file in the appropriate location.
+    * In your File Explorer address bar type ‘%UserProfile% and hit enter.
+    * Move the .wslconfig file to this folder.
+4. Restart your computer and start up Docker Desktop. It will now be using only the specified memory and processors.</p>
 
   <hr>
 <div class="md-source-file">
