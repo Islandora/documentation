@@ -84,7 +84,7 @@ nav:
           - '8.x-2.0 Release Notes': 'release_notes/8.x-2.0.md'
           - 'Older Release Notes': 'https://github.com/Islandora/documentation/tree/main/docs/release_notes'
       - 'Install a Demo': 'installation/install-a-demo.md'
-      - 'Docker (ISLE)':
+      - 'ISLE-DC':
           - 'Introduction to ISLE': 'installation/docker-introduction.md'
           - 'Prerequisites': 'installation/docker-prereq.md'
           - Install Islandora:
@@ -98,6 +98,7 @@ nav:
           - 'Available Commands': 'installation/docker-available-commands.md'
           - 'Available Configuration': 'installation/docker-available-configuration.md'
           - 'Troubleshooting' : 'installation/docker-troubleshooting.md'
+      - 'ISLE Site Template': 'installation/site-template.md'
       - 'Ansible Playbook': 'installation/playbook.md'
       - Manual Installation:
         - 'Introduction': 'installation/manual/introduction.md'
