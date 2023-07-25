@@ -218,7 +218,7 @@ nav:
     - 'Updating Drupal': 'technical-documentation/updating_drupal.md'
     - 'Updating a `deb` and adding it to Lyrasis PPA': 'technical-documentation/ppa-documentation.md'
     - 'Adding back ?_format=jsonld': 'technical-documentation/adding_format_jsonld.md'
-  - Migration:
+  - Migration/Batch Loading:
       - 'Migration Overview': 'technical-documentation/migration-overview.md'
       - 'REST API': 'technical-documentation/migration-rest-api.md'
       - 'Migrate API': 'technical-documentation/migration-migrate-api.md'

@@ -1,4 +1,4 @@
-## Islandora Migration Overview
+## Migration and Batch Loading
 
 This [video](https://www.youtube.com/watch?v=95Bnix-z1zY) (Aug 10, 2020) provides an overview of the various options available to migrate data into an Islandora installation.
 
