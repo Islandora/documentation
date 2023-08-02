@@ -133,6 +133,9 @@ Flysystem is a filesystem abstraction library for PHP. Islandora uses Flysystem 
 ## GLAM
 Acronym for "galleries, libraries, archives, and museums".
 
+## Greenfield
+An installation without legacy constraints. Usually refers to a brand new system where users load new content, as opposed to migrating content from a previous system.
+
 ## Imagemagick
 [Imagemagick](https://imagemagick.org/index.php) is an open-source image processing library. In Islandora, Imagemagick is provided by the [Crayfish](#crayfish) [Microservice](#microservice), [Houdini](#houdini).
 
