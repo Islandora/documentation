@@ -67,7 +67,7 @@ Media (file) and tag it as "Transcript". See [Audio](../models/audio.md) and
 [Video](../models/video.md) for setting up transcripts.
 
 !!! note "Standard vs Multi-file media model"
-    This describes the stadard file-media relationship in Islandora. 
+    This describes the standard file-media relationship in Islandora. 
     There is an alternative method of arranging files and their derivatives
     which we call the ["Multi-file media"](../user-documentation/media/#multi-file-media) method.
 
