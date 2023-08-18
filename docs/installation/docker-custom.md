@@ -98,7 +98,7 @@ certificate authority.  As long as the certificates match the `DOMAIN` variable 
 
 | File | Purpose |
 | :---- | :------- |
-| __cert.pem__     | A PEM encoded certificate that also contains the issuer's certificate as well. Most certificate authorities offer "Full Chain" or "With Issuer" certificates that contain everything you need.  Occassionally, you may find yourself needing to manually concatenate your certificate with the issuer certificate by hand. In that case, the certificate for your site goes first, and the issuer's certificate is appended afterwards. |
+| __cert.pem__     | A PEM encoded certificate that also contains the issuer's certificate as well. Most certificate authorities offer "Full Chain" or "With Issuer" certificates that contain everything you need.  Occasionally, you may find yourself needing to manually concatenate your certificate with the issuer certificate by hand. In that case, the certificate for your site goes first, and the issuer's certificate is appended afterwards. |
 | __privkey.pem__  | A PEM encoded private key used to sign your certificate |
 
 
@@ -132,7 +132,7 @@ You'll still get security exceptions when it's working, but you should be able t
 If you are still getting security exceptions, check what certificate is being used through your browser.  Setting `TRAEFIK_LOG_LEVEL=DEBUG` in your `.env` file will help out greatly when debugging Traefik.  You can tail the logs with `docker-compose logs -tf traefik`.
 
 #### traefik.me SSL certificate expired or revoked
-The _*.traefik.me_ certificate that covers `islandora.traefik.me` will need to be redownloaded ocassionally, due to the certificate expiring or possibly being revoked. You can download the updated certificates by performing the following commands:
+The _*.traefik.me_ certificate that covers `islandora.traefik.me` will need to be redownloaded occasionally, due to the certificate expiring or possibly being revoked. You can download the updated certificates by performing the following commands:
 
 ```
 rm certs/cert.pem
@@ -143,9 +143,9 @@ docker-compose restart traefik
 
 !!! note "traefik.me Certificate Note"
 
-    Please note that sometimes the upstream provider of the traefik.me certificate takes a couple of days to update the certificiate after it expires or is accidently revoked.
+    Please note that sometimes the upstream provider of the traefik.me certificate takes a couple of days to update the certificate after it expires or is accidentally revoked.
 
-### Requesting Certifcates through ACME and External Account Binding
+### Requesting Certificates through ACME and External Account Binding
 
 To request certificates through another Certificate Authority (CA) that supports External Accounting Binding through ACME such as InCommon or ZeroSSL you will need to add the following to your `.env` file:
 
@@ -157,7 +157,7 @@ ACME_EAB_KID=
 ACME_EAB_HMAC=
 ```
 
-Where `ACME_SERVER` is the CA server to use, `ACME_EAB_KID` is the key identifer from the External CA, and `ACME_EAB_HMAC` is the HMAC key from the External CA.
+Where `ACME_SERVER` is the CA server to use, `ACME_EAB_KID` is the key identifier from the External CA, and `ACME_EAB_HMAC` is the HMAC key from the External CA.
 
 Once you have added these commands you will need to run the following commands:
 
