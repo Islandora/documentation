@@ -2652,7 +2652,7 @@ create the Drupal Recommended Project:</p>
 <p>Before we can proceed with the actual site installation, we’re going to need to make our new Drupal installation the default web-accessible location Apache serves up. This will include an appropriate <code>ports.conf</code> file, and replacing the default enabled site.</p>
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
-<p>Out of the box, these files will contain support for SSL, which we will not be setting up in this guide (and therefore removing with these overwritten configurations), but which are <strong>absolutely indispensible</strong> to a production site. This guide does not recommend any particular SSL certificate authority or installation method, but you may find <a href="https://www.digitalocean.com/community/tutorials/how-to-install-an-ssl-certificate-from-a-commercial-certificate-authority">DigitalOcean's tutorial</a> helpful.</p>
+<p>Out of the box, these files will contain support for SSL, which we will not be setting up in this guide (and therefore removing with these overwritten configurations), but which are <strong>absolutely indispensable</strong> to a production site. This guide does not recommend any particular SSL certificate authority or installation method, but you may find <a href="https://www.digitalocean.com/community/tutorials/how-to-install-an-ssl-certificate-from-a-commercial-certificate-authority">DigitalOcean's tutorial</a> helpful.</p>
 </div>
 <p><code>/etc/apache2/ports.conf | root:root/644</code>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Listen 80
@@ -2696,7 +2696,7 @@ create the Drupal Recommended Project:</p>
 - <code>DRUPAL_DB_PASSWORD</code>: <code>drupal</code>
     - This should be a secure password; it’s recommended to use a password generator to create this such as the one provided by <a href="https://www.random.org/passwords/">random.org</a></p>
 <h2 id="install-drupal-using-drush">Install Drupal using Drush<a class="headerlink" href="#install-drupal-using-drush" title="Permanent link">&para;</a></h2>
-<p>The Drupal installation process can be done through the GUI in a series of form steps, or can be done quickly using Drush's <code>site-install</code> command. It can be invoked with the full list of parameters (such as <code>--db-url</code> and <code>--site-name</code>), but if parameters are missing, they will be asked of you interactiveley.</p>
+<p>The Drupal installation process can be done through the GUI in a series of form steps, or can be done quickly using Drush's <code>site-install</code> command. It can be invoked with the full list of parameters (such as <code>--db-url</code> and <code>--site-name</code>), but if parameters are missing, they will be asked of you interactively.</p>
 <h3 id="option-1-site-install-the-starter-site-with-existing-configs">Option 1: Site install the Starter Site with existing configs<a class="headerlink" href="#option-1-site-install-the-starter-site-with-existing-configs" title="Permanent link">&para;</a></h3>
 <p>Follow the instructions in the <a href="https://github.com/Islandora/islandora-starter-site/#usage">README of the Islandora Starter Site</a>.
 The steps are not reproduced here to remove redundancy. When this installation is done, you'll have a starter site ready-to-go. Once you set up the external services in the next sections, you'll need to configure Drupal to know where they are.</p>

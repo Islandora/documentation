@@ -748,8 +748,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#requesting-certifcates-through-acme-and-external-account-binding" class="md-nav__link">
-    Requesting Certifcates through ACME and External Account Binding
+  <a href="#requesting-certificates-through-acme-and-external-account-binding" class="md-nav__link">
+    Requesting Certificates through ACME and External Account Binding
   </a>
   
 </li>
@@ -2549,8 +2549,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#requesting-certifcates-through-acme-and-external-account-binding" class="md-nav__link">
-    Requesting Certifcates through ACME and External Account Binding
+  <a href="#requesting-certificates-through-acme-and-external-account-binding" class="md-nav__link">
+    Requesting Certificates through ACME and External Account Binding
   </a>
   
 </li>
@@ -2661,7 +2661,7 @@ certificate authority.  As long as the certificates match the <code>DOMAIN</code
 <tbody>
 <tr>
 <td align="left"><strong>cert.pem</strong></td>
-<td align="left">A PEM encoded certificate that also contains the issuer's certificate as well. Most certificate authorities offer "Full Chain" or "With Issuer" certificates that contain everything you need.  Occassionally, you may find yourself needing to manually concatenate your certificate with the issuer certificate by hand. In that case, the certificate for your site goes first, and the issuer's certificate is appended afterwards.</td>
+<td align="left">A PEM encoded certificate that also contains the issuer's certificate as well. Most certificate authorities offer "Full Chain" or "With Issuer" certificates that contain everything you need.  Occasionally, you may find yourself needing to manually concatenate your certificate with the issuer certificate by hand. In that case, the certificate for your site goes first, and the issuer's certificate is appended afterwards.</td>
 </tr>
 <tr>
 <td align="left"><strong>privkey.pem</strong></td>
@@ -2688,7 +2688,7 @@ ACME_SERVER=https://acme-staging-v02.api.letsencrypt.org/directory
 <h3 id="troubleshooting-certificate-issues">Troubleshooting Certificate Issues<a class="headerlink" href="#troubleshooting-certificate-issues" title="Permanent link">&para;</a></h3>
 <p>If you are still getting security exceptions, check what certificate is being used through your browser.  Setting <code>TRAEFIK_LOG_LEVEL=DEBUG</code> in your <code>.env</code> file will help out greatly when debugging Traefik.  You can tail the logs with <code>docker-compose logs -tf traefik</code>.</p>
 <h4 id="traefikme-ssl-certificate-expired-or-revoked">traefik.me SSL certificate expired or revoked<a class="headerlink" href="#traefikme-ssl-certificate-expired-or-revoked" title="Permanent link">&para;</a></h4>
-<p>The <em>*.traefik.me</em> certificate that covers <code>islandora.traefik.me</code> will need to be redownloaded ocassionally, due to the certificate expiring or possibly being revoked. You can download the updated certificates by performing the following commands:</p>
+<p>The <em>*.traefik.me</em> certificate that covers <code>islandora.traefik.me</code> will need to be redownloaded occasionally, due to the certificate expiring or possibly being revoked. You can download the updated certificates by performing the following commands:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>rm certs/cert.pem
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>rm certs/privkey.pem
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>make download-default-certs
@@ -2696,9 +2696,9 @@ ACME_SERVER=https://acme-staging-v02.api.letsencrypt.org/directory
 </span></code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">traefik.me Certificate Note</p>
-<p>Please note that sometimes the upstream provider of the traefik.me certificate takes a couple of days to update the certificiate after it expires or is accidently revoked.</p>
+<p>Please note that sometimes the upstream provider of the traefik.me certificate takes a couple of days to update the certificate after it expires or is accidentally revoked.</p>
 </div>
-<h3 id="requesting-certifcates-through-acme-and-external-account-binding">Requesting Certifcates through ACME and External Account Binding<a class="headerlink" href="#requesting-certifcates-through-acme-and-external-account-binding" title="Permanent link">&para;</a></h3>
+<h3 id="requesting-certificates-through-acme-and-external-account-binding">Requesting Certificates through ACME and External Account Binding<a class="headerlink" href="#requesting-certificates-through-acme-and-external-account-binding" title="Permanent link">&para;</a></h3>
 <p>To request certificates through another Certificate Authority (CA) that supports External Accounting Binding through ACME such as InCommon or ZeroSSL you will need to add the following to your <code>.env</code> file:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>USE_ACME=true
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>ACME_EMAIL=your-email@example.org
@@ -2706,7 +2706,7 @@ ACME_SERVER=https://acme-staging-v02.api.letsencrypt.org/directory
 </span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>ACME_EAB_KID=
 </span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>ACME_EAB_HMAC=
 </span></code></pre></div>
-<p>Where <code>ACME_SERVER</code> is the CA server to use, <code>ACME_EAB_KID</code> is the key identifer from the External CA, and <code>ACME_EAB_HMAC</code> is the HMAC key from the External CA.</p>
+<p>Where <code>ACME_SERVER</code> is the CA server to use, <code>ACME_EAB_KID</code> is the key identifier from the External CA, and <code>ACME_EAB_HMAC</code> is the HMAC key from the External CA.</p>
 <p>Once you have added these commands you will need to run the following commands:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>make -B docker-compose.yml
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>make up
