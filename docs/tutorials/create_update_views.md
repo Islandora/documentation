@@ -61,7 +61,7 @@ For this example, we create a new view that only shows collections. It will be c
 4.	Name the view and select **Create a block**. Give the block a title and decide how you want it to display (Grid, Table, List, Paging). To progress, select **Save and edit**.
 
     ![Frontpage view collection list information](../assets/frontpage_view_collection_list_info.png)
-5.	Customise the view format and sorting as required.
+5.	Customize the view format and sorting as required.
 6.	Add a _filter criteria_ to only show the Islandora model type of 'Collection' and **Save** the view.
 
     ![Frontpage view collection list details](../assets/frontpage_view_collection_list_details.png)

@@ -205,7 +205,7 @@ See https://www.drupal.org/docs/8/core/modules/media/overview for more informati
 Protocol specification that allows a web client to request an earlier/historic state web resource (if available). Fedora implements the Memento protocol to store and serve versions of content in a Fedora repository.
 
 ## Mirador
-[Mirador](https://projectmirador.org) is a javascript-based zoomable image [Viewer](#viewer). It is related to (and more fully-featured than) [OpenSeadragon](#openseadragon). It has the ability to do zooming, display multiple pages, and display positioned text (e.g. [hOCR](#hocr) or attributions). To render an image through Mirador, it must be provied in a [IIIF Manifest](#iiif-manifest) and the images must be served through a [IIIF](#iiif)-friendly image server such as [Cantaloupe](#cantaloupe).
+[Mirador](https://projectmirador.org) is a javascript-based zoomable image [Viewer](#viewer). It is related to (and more fully-featured than) [OpenSeadragon](#openseadragon). It has the ability to do zooming, display multiple pages, and display positioned text (e.g. [hOCR](#hocr) or attributions). To render an image through Mirador, it must be provided a [IIIF Manifest](#iiif-manifest) and the images must be served through a [IIIF](#iiif)-friendly image server such as [Cantaloupe](#cantaloupe).
 
 ## Microservice
 A software development technique — a variant of the service-oriented architecture (SOA) structural style — that arranges an application as a collection of loosely coupled services. In a microservices' architecture, services are fine-grained and the protocols are lightweight.

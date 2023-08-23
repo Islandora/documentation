@@ -112,7 +112,7 @@ Both are enabled out of the box in the Islandora Starter Site. This will ensure 
 
 "The [Permissions by Term](https://www.drupal.org/project/permissions_by_term) module extends Drupal by functionality for restricting view and edit access to single nodes  via taxonomy terms. [...] Taxonomy term permissions can be coupled to specific user accounts and/or user roles." By default, this module only affects nodes. To enable Permissions by Term for Media and other entities, enable the "Permissions by Entity" submodule.
 
-The Islandora Starter Site includes an empty vocabulary called "Islandora Access", which is intended to hold such taxonomy terms. However, permissions_by_term or a similar mechanism to controll access must be installed and configured on your own.
+The Islandora Starter Site includes an empty vocabulary called "Islandora Access", which is intended to hold such taxonomy terms. However, permissions_by_term or a similar mechanism to control access must be installed and configured on your own.
 
 This module is known to work, and appears to be supported well by the Drupal community.
 

@@ -187,7 +187,7 @@ This document was originally developed by [Alex Kent](https://github.com/alexken
 
 [^1] In the Islandora Starter Site, this is the `field_model` field, which is populated by taxonomy terms in the `islandora_models` taxonomy vocabulary provided by the `islandora_core_feature` submodule of `Islandora/islandora`
 
-[^2] In the Islandora Starter Sitee, this is the `field_member_of` field.
+[^2] In the Islandora Starter Site, this is the `field_member_of` field.
 
 ## Islandora Legacy Objects versus Islandora Resource Nodes
 
