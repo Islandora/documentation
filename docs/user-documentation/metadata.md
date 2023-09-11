@@ -206,9 +206,9 @@ The Typed Relation field is defined in the *controlled_access_terms* module, is 
 
 #### Configurations for the Typed Relation field
 
-The Islandora Starter Site includes a Typed Relation field labelled 'Linked Agent' as part of the Repository Item content type, and populates the available relations from the MARC relators list. ![Screenshot of adding a value into a typed relation field](../assets/metadata_typed_relation_field.png)
+The Islandora Starter Site includes a Typed Relation field labelled 'Contributors' as part of the Repository Item content type, and populates the available relations from the MARC relators list. This field was formerly called "Linked Agent". ![Screenshot of adding a value into a typed relation field](../assets/metadata_typed_relation_field.png)
 
-The list of available relations for this Linked Agent field is configurable at '/admin/structure/types/manage/islandora_object/fields/node.islandora_object.field_linked_agent'.
+The list of available relations for this Contributors field is configurable at '/admin/structure/types/manage/islandora_object/fields/node.islandora_object.field_linked_agent'.
 
 
 !!! islandora "Typed relation tradeoffs"
@@ -217,7 +217,7 @@ The list of available relations for this Linked Agent field is configurable at '
 
 Relations are defined in the format *key\|value*, and the key is used in the RDF mapping (see below).
 
-![Screenshot of the 'Available Relations' configuration text box for the 'Linked Agent' field.](../assets/metadata_available_relations_config.png)
+![Screenshot of the 'Available Relations' configuration text box for the 'Contributor' field.](../assets/metadata_available_relations_config.png)
 
 By default, facets can be created for typed relation fields that will facet based on the linked entity alone, not separating references based on the relationship type.
 
