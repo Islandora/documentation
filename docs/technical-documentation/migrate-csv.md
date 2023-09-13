@@ -31,7 +31,7 @@ This tutorial uses the configurations and code available in the [migrate_islando
 
 Sample CSV and images are also included in the module as a convenience so they are easily available on the Drupal server running the migration. (This is not the recommended method for making files available to Drupal in a real migration.)
 
-The module also contains a Migrate process plugin that transforms strings into associative arrays. This is useful for populating multiple Linked Agent fields. (See "[Typed Relation](../../user-documentation/metadata#typed-relation)" for more information on the Linked Agent field.) It will be available when this module is enabled, and the node migration uses it. It was written generically and will hopefully become part of Migrate Plus, but for now it is here.
+The module also contains a Migrate process plugin that transforms strings into associative arrays. This is useful for populating multiple Contributor (field_linked_agent) fields. (See "[Typed Relation](../../user-documentation/metadata#typed-relation)" for more information on the Contributor field's type.) It will be available when this module is enabled, and the node migration uses it. It was written generically and will hopefully become part of Migrate Plus, but for now it is here.
 
 When you are ready to create your actual migrations, the contents of this repository can function as a template for you to create the YAML files defining your own migrations.
 
@@ -425,7 +425,7 @@ process:
   # Iterate over the array of associative arrays.
   # We create the taxonomy terms here so that we
   # can specify the bundle - other columns which
-  # might feed into Linked Agent may contain
+  # might feed into field_linked_agent may contain
   # corporate bodies or families. The resulting
   # array contains the resulting term id (tid)
   # under the key 'target_id'.
@@ -680,7 +680,7 @@ Within `sub_process`, we cannot access the temporary variables or constants that
   ['target_id' => 44, 'rel_type' => 'relators:pht' ],
 ]
 ```
-The final step will be to assign this array to the Linked Agent field. But first, we repeat the process for another column, which contains names that have a different relator, and a different bundle. Finally, we merge the two temporary variables and pass the result to `field_linked_agent`. We don't have to assign the sub-components of `field_linked_agent` here, because this is already the structured data it is looking for.
+The final step will be to assign this array to the Contributor field (field_linked_agent). But first, we repeat the process for another column, which contains names that have a different relator, and a different bundle. Finally, we merge the two temporary variables and pass the result to `field_linked_agent`. We don't have to assign the sub-components of `field_linked_agent` here, because this is already the structured data it is looking for.
 
 ```yml
   field_linked_agent:
