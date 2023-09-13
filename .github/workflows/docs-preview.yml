@@ -22,6 +22,10 @@ jobs:
       - name: Build docs
         uses: ./.github/actions/build
       - name: Deploy docs preview
+        # XXX: Avoid attempting to do preview things across fork boundaries, as it doesn't work.
+        # See: https://github.com/rossjrw/pr-preview-action/pull/6
+        # Adapted from: https://github.com/orgs/community/discussions/26829#discussioncomment-3253575
+        if: ${{ github.event.pull_request.head.repo.full_name == github.event.pull_request.base.repo.full_name }}
         uses: rossjrw/pr-preview-action@v1
         with:
           source-dir: site
