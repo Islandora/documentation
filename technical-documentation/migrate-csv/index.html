@@ -2775,7 +2775,7 @@
 <p>This tutorial (and Islandora in general) makes heavy use of Features, which is an easy way to ship and install Drupal configuration. However, after enabling a Feature module, the code in that module's directory is no longer "live", as the configuration now resides in the Drupal database. If you change code in the YAML files, it will not take effect until you re-import the Feature. There is a walkthrough in the "Configuration" section of the <a href="https://github.com/Islandora-Devops/migrate_7x_claw">Migrate 7.x to Islandora</a> tutorial.</p>
 </div>
 <p>Sample CSV and images are also included in the module as a convenience so they are easily available on the Drupal server running the migration. (This is not the recommended method for making files available to Drupal in a real migration.)</p>
-<p>The module also contains a Migrate process plugin that transforms strings into associative arrays. This is useful for populating multiple Linked Agent fields. (See "<a href="../../user-documentation/metadata#typed-relation">Typed Relation</a>" for more information on the Linked Agent field.) It will be available when this module is enabled, and the node migration uses it. It was written generically and will hopefully become part of Migrate Plus, but for now it is here.</p>
+<p>The module also contains a Migrate process plugin that transforms strings into associative arrays. This is useful for populating multiple Contributor (field_linked_agent) fields. (See "<a href="../../user-documentation/metadata#typed-relation">Typed Relation</a>" for more information on the Contributor field's type.) It will be available when this module is enabled, and the node migration uses it. It was written generically and will hopefully become part of Migrate Plus, but for now it is here.</p>
 <p>When you are ready to create your actual migrations, the contents of this repository can function as a template for you to create the YAML files defining your own migrations.</p>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p><strong>Why CSV?</strong> CSV files (whether separated by commas, tabs, or other delimiters) are easy to understand and work with, and there's good tooling available for using them with Drupal's <a href="https://www.drupal.org/docs/drupal-apis/migrate-api/migrate-api-overview">Migrate API</a>. The Drupal contrib module <a href="https://www.drupal.org/project/migrate_source_csv">migrate_source_csv</a> provides a source plugin that reads from a CSV file, and <a href="https://www.drupal.org/project/migrate_plus/">migrate_plus</a> provides more tools and flexibility for creating migrations, including the ability to create customized migrations using YAML and package them up as <a href="https://www.drupal.org/project/features/">Features</a>.</p>
@@ -3113,7 +3113,7 @@ If something goes bad during development, sometimes migrations can get stuck in 
 </span><span id="__span-14-97"><a id="__codelineno-14-97" name="__codelineno-14-97" href="#__codelineno-14-97"></a>  # Iterate over the array of associative arrays.
 </span><span id="__span-14-98"><a id="__codelineno-14-98" name="__codelineno-14-98" href="#__codelineno-14-98"></a>  # We create the taxonomy terms here so that we
 </span><span id="__span-14-99"><a id="__codelineno-14-99" name="__codelineno-14-99" href="#__codelineno-14-99"></a>  # can specify the bundle - other columns which
-</span><span id="__span-14-100"><a id="__codelineno-14-100" name="__codelineno-14-100" href="#__codelineno-14-100"></a>  # might feed into Linked Agent may contain
+</span><span id="__span-14-100"><a id="__codelineno-14-100" name="__codelineno-14-100" href="#__codelineno-14-100"></a>  # might feed into field_linked_agent may contain
 </span><span id="__span-14-101"><a id="__codelineno-14-101" name="__codelineno-14-101" href="#__codelineno-14-101"></a>  # corporate bodies or families. The resulting
 </span><span id="__span-14-102"><a id="__codelineno-14-102" name="__codelineno-14-102" href="#__codelineno-14-102"></a>  # array contains the resulting term id (tid)
 </span><span id="__span-14-103"><a id="__codelineno-14-103" name="__codelineno-14-103" href="#__codelineno-14-103"></a>  # under the key &#39;target_id&#39;.
@@ -3346,7 +3346,7 @@ Within <code>sub_process</code>, we cannot access the temporary variables or con
 </span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a><span class="x">  [&#39;target_id&#39; =&gt; 44, &#39;rel_type&#39; =&gt; &#39;relators:pht&#39; ],</span>
 </span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a><span class="x">]</span>
 </span></code></pre></div>
-The final step will be to assign this array to the Linked Agent field. But first, we repeat the process for another column, which contains names that have a different relator, and a different bundle. Finally, we merge the two temporary variables and pass the result to <code>field_linked_agent</code>. We don't have to assign the sub-components of <code>field_linked_agent</code> here, because this is already the structured data it is looking for.</p>
+The final step will be to assign this array to the Contributor field (field_linked_agent). But first, we repeat the process for another column, which contains names that have a different relator, and a different bundle. Finally, we merge the two temporary variables and pass the result to <code>field_linked_agent</code>. We don't have to assign the sub-components of <code>field_linked_agent</code> here, because this is already the structured data it is looking for.</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>  field_linked_agent:
 </span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>    plugin: merge
 </span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>    source:
@@ -3461,7 +3461,7 @@ Your nodes, media, and files would all be gone.  But your subjects and photograp
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">August 23, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">September 13, 2023</span>
       
     
   </small>

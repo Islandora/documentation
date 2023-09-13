@@ -2963,8 +2963,8 @@ seasonal value 2019-22 as defined in the EDTF specification):
 <p>The parts of a field are called properties, so 'entity reference' and 'relation type' are properties of the Typed Relation field type.</p>
 </div>
 <h4 id="configurations-for-the-typed-relation-field">Configurations for the Typed Relation field<a class="headerlink" href="#configurations-for-the-typed-relation-field" title="Permanent link">&para;</a></h4>
-<p>The Islandora Starter Site includes a Typed Relation field labelled 'Linked Agent' as part of the Repository Item content type, and populates the available relations from the MARC relators list. <img alt="Screenshot of adding a value into a typed relation field" src="../../assets/metadata_typed_relation_field.png" /></p>
-<p>The list of available relations for this Linked Agent field is configurable at '/admin/structure/types/manage/islandora_object/fields/node.islandora_object.field_linked_agent'.</p>
+<p>The Islandora Starter Site includes a Typed Relation field labelled 'Contributors' as part of the Repository Item content type, and populates the available relations from the MARC relators list. This field was formerly called "Linked Agent". <img alt="Screenshot of adding a value into a typed relation field" src="../../assets/metadata_typed_relation_field.png" /></p>
+<p>The list of available relations for this Contributors field is configurable at '/admin/structure/types/manage/islandora_object/fields/node.islandora_object.field_linked_agent'.</p>
 <div class="admonition islandora">
 <p class="admonition-title">Typed relation tradeoffs</p>
 <ul>
@@ -2973,7 +2973,7 @@ seasonal value 2019-22 as defined in the EDTF specification):
 </ul>
 </div>
 <p>Relations are defined in the format <em>key|value</em>, and the key is used in the RDF mapping (see below).</p>
-<p><img alt="Screenshot of the 'Available Relations' configuration text box for the 'Linked Agent' field." src="../../assets/metadata_available_relations_config.png" /></p>
+<p><img alt="Screenshot of the 'Available Relations' configuration text box for the 'Contributor' field." src="../../assets/metadata_available_relations_config.png" /></p>
 <p>By default, facets can be created for typed relation fields that will facet based on the linked entity alone, not separating references based on the relationship type.</p>
 <h2 id="getting-metadata-into-fedora-and-a-triple-store">Getting Metadata into Fedora and a Triple-store<a class="headerlink" href="#getting-metadata-into-fedora-and-a-triple-store" title="Permanent link">&para;</a></h2>
 <p>Depending on the needs at your institution, you may or may not be using Fedora with your Islandora installation. You also may or may not be hoping to publish your metadata as RDF triples that can be queried in a triplestore. Both of these functionalities are driven by the JSON-LD module (written for Islandora), which provides a JSON-LD serialization of your content nodes, media nodes, as well as your taxonomy terms. This JSON-LD is what gets ingested by Fedora, and is also what is used to add RDF triples to the <a href="https://islandora.github.io/documentation/installation/manual/installing_fedora_syn_and_blazegraph/">blazegraph triplestore</a> if you choose to use that service.</p>
@@ -3145,7 +3145,7 @@ seasonal value 2019-22 as defined in the EDTF specification):
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">August 23, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">September 13, 2023</span>
       
     
   </small>
