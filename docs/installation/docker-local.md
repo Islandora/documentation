@@ -51,3 +51,7 @@ to install the Drupal site in your `codebase` folder and spin up all the other c
 Enjoy your Islandora instance!  Check out the [basic usage documentation](../docker-basic-usage) to see
 all the endpoints that are available and how to do things like start and stop Islandora. Your passwords,
 including the Drupal admin password, can be found in the `secrets/live` directory after you run `make starter`.
+
+## Demo Content
+
+To populate your site with some demo content, you can run `make demo_content`. This will import some sample objects into your Islandora site.
