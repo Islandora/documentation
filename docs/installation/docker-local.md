@@ -1,4 +1,4 @@
-# Installing a Development Server
+# Installing a Development or Demo Server
 
 When developing locally, your Drupal site resides in your `isle-dc/codebase` folder and is bind-mounted into your
 Drupal container.  This lets you update code using the IDE of your choice on your host machine, and the
