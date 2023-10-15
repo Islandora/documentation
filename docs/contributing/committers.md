@@ -32,7 +32,6 @@ The following is an alphabetized list of the current Islandora committers:
 | Melissa Anez                | LYRASIS                               | manez          |
 | Bryan Brown                 | Florida State University              | bryjbrown      |
 | Jordan Dukart               | discoverygarden                       | jordandukart   |
-| Debbie Flitner              | Arizona State University              | dflitner       |
 | Willow Gillingham           | Born-Digital                          | wgilling       |
 | Jonathan Hunt               | Catalyst.Net                          | kayakr         |
 | Mark Jordan                 | Simon Fraser University               | mjordan        |
@@ -46,9 +45,9 @@ The following is an alphabetized list of the current Islandora committers:
 | Bethany Seeger              | Johns Hopkins University              | bseeger        |
 | Seth Shaw                   | University of Nevada, Las Vegas       | seth-shaw-unlv |
 | Alan Stanley                | Agile Humanities                      | ajstanley      |
+| Yamil Suarez                | Berklee College of Music              | ysuarez        |
 | Adam Vessey                 | discoverygarden                       | adam-vessey    |
 | Jared Whiklo                | University of Manitoba                | whikloj        |
-| Yamil Suarez                | Berklee College of Music              | ysuarez        |
 
 
 ## Emeritus Committers
@@ -57,12 +56,15 @@ The following is an alphabetized list of the prior Islandora committers:
 
 | Name                        | Organization                      |
 |-----------------------------|-----------------------------------|
+| Daniel Aitken               | discoverygarden                   |
 | Aaron Coburn                | Amherst College                   |
+| Jonathan Green              | LYRASIS                           |
+| Debbie Flitner              | Arizona State University          |
 | Diego Pino                  | METRO                             |
 | Nick Ruest                  | York University                   |
 | Eli Zoller                  | Arizona State University          |
-| Daniel Aitken               | discoverygarden                   |
-| Jonathan Green              | LYRASIS                           |
+
+
 
 ## How are you evaluated as a potential committer? 
 
@@ -116,4 +118,4 @@ Checklist for a new committer (can be completed by sponsor or designate):
 * Add to islandora-committers google group.
  Announce the new committer ([template/committerAnnounce.txt](https://raw.githubusercontent.com/Islandora/documentation/main/docs/contributing/templates/committerAnnounce.txt)).
 
-
+For additional information about committers, visit [this Islandora community wiki page](https://github.com/Islandora/islandora-community/wiki/Islandora-Committers).
