@@ -88,7 +88,6 @@ nav:
           - 'Introduction to ISLE': 'installation/docker-introduction.md'
           - 'Prerequisites': 'installation/docker-prereq.md'
           - Install Islandora:
-             - 'Installing a Demo Server': 'installation/docker-demo.md'
              - 'Installing a Development Server': 'installation/docker-local.md'
              - 'Installing a Staging/Production Server': 'installation/docker-custom.md'
           - Maintaining Islandora:
