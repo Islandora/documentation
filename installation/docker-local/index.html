@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://islandora.github.io/documentation/installation/docker-local/">
       
       
-        <link rel="prev" href="../docker-demo/">
+        <link rel="prev" href="../docker-prereq/">
       
       
         <link rel="next" href="../docker-custom/">
@@ -73,7 +73,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#installing-a-development-server" class="md-skip">
+        <a href="#installing-a-development-or-demo-server" class="md-skip">
           Skip to content
         </a>
       
@@ -616,7 +616,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../docker-demo/" class="md-nav__link">
+      <a href="../docker-demo.md" class="md-nav__link">
         Installing a Demo Server
       </a>
     </li>
@@ -666,6 +666,13 @@
         <li class="md-nav__item">
   <a href="#getting-started" class="md-nav__link">
     Getting Started
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#demo-content" class="md-nav__link">
+    Demo Content
   </a>
   
 </li>
@@ -2410,6 +2417,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#demo-content" class="md-nav__link">
+    Demo Content
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2434,7 +2448,7 @@
 
 
 
-<h1 id="installing-a-development-server">Installing a Development Server<a class="headerlink" href="#installing-a-development-server" title="Permanent link">&para;</a></h1>
+<h1 id="installing-a-development-or-demo-server">Installing a Development or Demo Server<a class="headerlink" href="#installing-a-development-or-demo-server" title="Permanent link">&para;</a></h1>
 <p>When developing locally, your Drupal site resides in your <code>isle-dc/codebase</code> folder and is bind-mounted into your
 Drupal container.  This lets you update code using the IDE of your choice on your host machine, and the
 changes are automatically reflected on the Drupal container.</p>
@@ -2468,6 +2482,8 @@ need to set</p>
 <p>Enjoy your Islandora instance!  Check out the <a href="../docker-basic-usage">basic usage documentation</a> to see
 all the endpoints that are available and how to do things like start and stop Islandora. Your passwords,
 including the Drupal admin password, can be found in the <code>secrets/live</code> directory after you run <code>make starter</code>.</p>
+<h2 id="demo-content">Demo Content<a class="headerlink" href="#demo-content" title="Permanent link">&para;</a></h2>
+<p>To populate your site with some demo content, you can run <code>make demo_content</code>. This will import some sample objects into your Islandora site.</p>
 
   <hr>
 <div class="md-source-file">

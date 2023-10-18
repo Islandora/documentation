@@ -116,11 +116,6 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://islandora.github.io/documentation/installation/docker-demo/</loc>
-         <lastmod>2023-10-18</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
          <loc>https://islandora.github.io/documentation/installation/docker-introduction/</loc>
          <lastmod>2023-10-18</lastmod>
          <changefreq>daily</changefreq>
