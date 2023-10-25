@@ -744,6 +744,66 @@
     Updating ISLE
   </a>
   
+    <nav class="md-nav" aria-label="Updating ISLE">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#major-version-updates" class="md-nav__link">
+    Major Version Updates
+  </a>
+  
+    <nav class="md-nav" aria-label="Major Version Updates">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#solr" class="md-nav__link">
+    Solr
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#drupal" class="md-nav__link">
+    Drupal
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mariadb" class="md-nav__link">
+    Mariadb
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#specific-update-notes" class="md-nav__link">
+    Specific Update Notes
+  </a>
+  
+    <nav class="md-nav" aria-label="Specific Update Notes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#version-1x-to-2x" class="md-nav__link">
+    Version 1.x to 2.x
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -2394,6 +2454,66 @@
     Updating ISLE
   </a>
   
+    <nav class="md-nav" aria-label="Updating ISLE">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#major-version-updates" class="md-nav__link">
+    Major Version Updates
+  </a>
+  
+    <nav class="md-nav" aria-label="Major Version Updates">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#solr" class="md-nav__link">
+    Solr
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#drupal" class="md-nav__link">
+    Drupal
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mariadb" class="md-nav__link">
+    Mariadb
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#specific-update-notes" class="md-nav__link">
+    Specific Update Notes
+  </a>
+  
+    <nav class="md-nav" aria-label="Specific Update Notes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#version-1x-to-2x" class="md-nav__link">
+    Version 1.x to 2.x
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -2431,31 +2551,71 @@ see that all this adds up to a significant maintenance burden.</p>
 <p>Now imagine if all that time and effort spent on security updates and getting the newest versions could
 be boiled down to a handful of simple commands.  That's exactly what ISLE does!</p>
 <h2 id="updating-isle">Updating ISLE<a class="headerlink" href="#updating-isle" title="Permanent link">&para;</a></h2>
+<div class="admonition updating your isle-dc repository">
+<p class="admonition-title">Updating</p>
+<p>Before we update ISLE we should pull the most recent version of the isle-dc repository. This ensures that our <code>docker-compose.yml</code> file has any new additions that the new version of ISLE will need.</p>
+<p>You may also want to check your <code>.env</code> file against the <code>sample.env</code> found in the repository to see if there are new variables you wish to make use of.</p>
+</div>
 <p>Updating ISLE is easy.  When a new release is made available, you update the <code>TAG</code> variable in your
 <code>.env</code> file to the latest version. Suppose you are on ISLE 1.0.0, and ISLE 1.1.0 has been released.
 Then we would set</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>TAG=1.1.0
 </span></code></pre></div>
+<p>Before we update our <code>docker-compose.yml</code> file we want to stop the running containers with</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>make down
+</span></code></pre></div>
 <p>We'll then generate a new <code>docker-compose.yml</code> file that includes the new tag with</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>make -B docker-compose.yml
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>make -B docker-compose.yml
 </span></code></pre></div>
 <p>After that, we pull the new containers with</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>make pull
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>make pull
 </span></code></pre></div>
 <p>And finally we deploy the updated containers by running</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>docker-compose up -d
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>make up
 </span></code></pre></div>
 <p>You can check that everything is running at the version you've specified with</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>docker ps -a
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>docker ps -a
 </span></code></pre></div>
 <p>The version that's running can be confirmed by looking at the <code>IMAGE</code> column in the output.</p>
+<h3 id="major-version-updates">Major Version Updates<a class="headerlink" href="#major-version-updates" title="Permanent link">&para;</a></h3>
+<p>Major version updates may require a bit more work after the new containers are up and running, if the new images are 
+running higher major versions of software. For example, if there has been an update to PHP or Solr.</p>
+<h4 id="solr">Solr<a class="headerlink" href="#solr" title="Permanent link">&para;</a></h4>
+<p>When upgrading to a new major version of Solr, you need to regenerate a new set of config files. You will need to do this on both 
+your development site, and your production site.</p>
+<p>First, remove the old solr data. This will remove everything that has been indexed, so we will have to reindex our site in a later step.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>docker compose exec -T solr with-contenv bash -lc &#39;rm -r server/solr/ISLANDORA&#39;
+</span></code></pre></div>
+<p>Next, recreate our solr core with a new set of config files.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>make solr-cores
+</span></code></pre></div>
+<p>Finally, we reindex our site.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>make reindex-solr
+</span></code></pre></div>
+<h4 id="drupal">Drupal<a class="headerlink" href="#drupal" title="Permanent link">&para;</a></h4>
+<p>Drupal updates will be handled by your composer.json file, but you may require a certain version of ISLE in order to have the correct 
+version of PHP. Once you have the correct PHP version installed, you can update Drupal to a new major version in the same way you 
+normally update modules. It may be helpful to reference the Starter Site's composer.json file at 
+https://github.com/Islandora-Devops/islandora-starter-site/blob/main/composer.json</p>
+<p>Once you have done this on your development site, the process for your production site is the same as any other Drupal updates.</p>
+<h4 id="mariadb">Mariadb<a class="headerlink" href="#mariadb" title="Permanent link">&para;</a></h4>
+<p>After updating Mariadb, you may need to run <a href="https://mariadb.com/kb/en/mariadb-upgrade/">mariadb-upgrade</a> inside your mariadb container, to update your system tables. 
+This should be safe to run any time, but it is a good idea to back up your database first, just in case.</p>
+<p>You can run this from your isle directory with
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>docker compose exec mariadb mariadb-upgrade
+</span></code></pre></div></p>
+<h3 id="specific-update-notes">Specific Update Notes<a class="headerlink" href="#specific-update-notes" title="Permanent link">&para;</a></h3>
+<h4 id="version-1x-to-2x">Version 1.x to 2.x<a class="headerlink" href="#version-1x-to-2x" title="Permanent link">&para;</a></h4>
+<p>Upgrading ISLE from 1.x to the next major version requires the TAG be set to 2.0.5 or higher. Once you create your containers 
+you will need to follow the above instructions for Mariadb, Solr, and Drupal.</p>
+<p>ISLE 2.0 bumps PHP up to version 8.1, which allows you to upgrade to Drupal 10.</p>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">October 18, 2023</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">October 25, 2023</span>
       
     
   </small>
