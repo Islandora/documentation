@@ -98,8 +98,13 @@ Once you have done this on your development site, the process for your productio
 
 #### Mariadb
 
-After updating Mariadb, you may need to run [mariadb-upgrade](https://mariadb.com/kb/en/mariadb-upgrade/) to update your system tables. 
+After updating Mariadb, you may need to run [mariadb-upgrade](https://mariadb.com/kb/en/mariadb-upgrade/) inside your mariadb container, to update your system tables. 
 This should be safe to run any time, but it is a good idea to back up your database first, just in case.
+
+You can run this from your isle directory with
+```
+docker compose exec mariadb mariadb-upgrade
+```
 
 ### Specific Update Notes
 
