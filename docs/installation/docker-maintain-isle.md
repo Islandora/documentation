@@ -96,11 +96,16 @@ https://github.com/Islandora-Devops/islandora-starter-site/blob/main/composer.js
 
 Once you have done this on your development site, the process for your production site is the same as any other Drupal updates.
 
+#### Mariadb
+
+After updating Mariadb, you may need to run [mariadb-upgrade](https://mariadb.com/kb/en/mariadb-upgrade/) to update your system tables. 
+This should be safe to run any time, but it is a good idea to back up your database first, just in case.
+
 ### Specific Update Notes
 
 #### Version 1.x to 2.x
 
-Upgrading ISLE from 1.x to the next major version requires the TAG be set to 2.0.3 or higher. Once you create your containers 
-you will need to follow the above instructions for Solr and Drupal.
+Upgrading ISLE from 1.x to the next major version requires the TAG be set to 2.0.5 or higher. Once you create your containers 
+you will need to follow the above instructions for Mariadb, Solr, and Drupal.
 
 ISLE 2.0 bumps PHP up to version 8.1, which allows you to upgrade to Drupal 10.
