@@ -106,11 +106,44 @@ You can run this from your isle directory with
 docker compose exec mariadb mariadb-upgrade
 ```
 
+#### Matomo
+
+Matomo needs it's volume recreated when upgrading to a new version. The only file that needs to be preserved is /var/www/matomo/config/config.ini.php, so you should be able to recreate the volume with the following commands:
+
+Copy the config file from the container to your local machine
+```
+docker compose cp matomo:/var/www/matomo/config/config.ini.php .
+```
+
+Stop your containers and delete the Matomo volume. Replace {COMPOSE_PROJECT_NAME} with the value of that variable in your .env file. You can also find the volume name by running `docker volume ls`
+```
+make down
+docker volume rm {COMPOSE_PROJECT_NAME}_matomo-config-data
+```
+
+Start you containers to recreate the Matomo volume
+```
+make up
+```
+
+Copy the config file back into your new volume and set it's ownership to nginx
+```
+docker compose cp config.ini.php matomo:/var/www/matomo/config/
+docker compose exec matomo chown nginx:nginx /var/www/matomo/config/config.ini.php
+```
+
+Restart your Matomo container
+```
+docker compose restart matomo
+```
+
+Log in to your Matomo dashboard and check if you database needs updates. If so, follow the instructions on screen to update it.
+
 ### Specific Update Notes
 
 #### Version 1.x to 2.x
 
 Upgrading ISLE from 1.x to the next major version requires the TAG be set to 2.0.5 or higher. Once you create your containers 
-you will need to follow the above instructions for Mariadb, Solr, and Drupal.
+you will need to follow the above instructions for Mariadb, Solr, Matomo, and Drupal.
 
 ISLE 2.0 bumps PHP up to version 8.1, which allows you to upgrade to Drupal 10.
