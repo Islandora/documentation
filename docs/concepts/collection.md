@@ -10,7 +10,7 @@ Collections are groups of related content that can be viewed or managed as a uni
 
 Islandora provides:
 
-- a mechanism for grouping nodes under a "Parent" node through the generic "Member Of" relationship field (`field_member_of`). This mechanism is also used by _[Paged Content](../user-documentation/paged-content.md)_ and _Compound Objects_. Islandora on its own does not prescribe any particular [Content Type](../user-documentation/content_types.md), so this field can be configured for any [node bundle](https://www.drupal.org/docs/drupal-apis/entity-api/bundles) intended to represent Islandora resources.
+- a mechanism for grouping nodes under a "Parent" node through the generic "Member Of" relationship field (`field_member_of`). This mechanism is also used by _[Paged Content](../user-documentation/paged-content.md)_ and _Compound Objects_. Islandora on its own does not prescribe any particular [Content Type](../user-documentation/content-types.md), so this field can be configured for any [node bundle](https://www.drupal.org/docs/drupal-apis/entity-api/bundles) intended to represent Islandora resources.
 - a "Children" tab on resources, which provides a management interface to access, re-order, add, or delete the members of a resource based on the Member Of field.
 - a "Model" field (`field_model`) which can take various values including "Collection".
 
@@ -20,8 +20,8 @@ Islandora provides:
 
 Islandora Starter Site provides:
 
-- a [Content Type](../user-documentation/content_types.md) "Repository Item" that uses the `field_member_of` field, so that users may add nodes of this type to a collection (or paged content, or compound resource),
-- A [View](../tutorials/create_update_views.md) showing the members of the collection.
+- a [Content Type](../user-documentation/content-types.md) "Repository Item" that uses the `field_member_of` field, so that users may add nodes of this type to a collection (or paged content, or compound resource),
+- A [View](../tutorials/create-update-views.md) showing the members of the collection.
 - logic (a [Context](../user-documentation/context.md)) such that if a resource is tagged as a "Collection" (in the "Model" field, then a view of its members will show on the collection's page.
 
 For more details, see the tutorial on [How to create and add to a collection](../tutorials/how-to-create-collection.md)

@@ -1,7 +1,7 @@
 # Paged Content
 
 Paged content, such as books, periodicals, photographs with the front and back, etcetera,
- can use the [membership](content_models.md#members) structure provided by Islandora, namely, `field_member_of`.
+ can use the [membership](content-models.md#members) structure provided by Islandora, namely, `field_member_of`.
 This involves creating a resource node for the root record (i.e. the entire book or the photograph)
 and child resource nodes for each sub-component (e.g. "Page 1", "Page 2", etc., or "recto" and "verso")
 with their corresponding media. Each "child" resource node contains a reference to their "parent" resource node

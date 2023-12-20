@@ -88,7 +88,7 @@ another content type for generic repository objects that share a more general se
 A resource node's content type is set on its creation and is immutable.
 The section on [metadata](metadata.md) describes in more detail how fields on Islandora objects work.
 
-Configuring fields (adding, editing, removing) is usually done through the Manage > Content types interface, as is described in the tutorial, [Create/Update a Content Type](content_types.md).
+Configuring fields (adding, editing, removing) is usually done through the Manage > Content types interface, as is described in the tutorial, [Create/Update a Content Type](content-types.md).
 
 Islandora has a notion of a _content model_, which is used to identify what type of content is
 being represented by a node (e.g. an image, a video, a collection of other items, etc...). This is done
@@ -177,7 +177,7 @@ on the **Reorder Children** tab to adjust the order in which they display.
 The following pages expand on the concepts discussed above:
 
 - [Media](media.md)
-- Content Types: [Metadata](metadata.md#content-types) -- [Create / Update a Content Type](content_types.md)
+- Content Types: [Metadata](metadata.md#content-types) -- [Create / Update a Content Type](content-types.md)
 
 ### Copyright and Usage
 
@@ -201,7 +201,7 @@ The typical elements of a resource node:
 
 -   A content type defining metadata fields defined for the node. A content type may include any number of custom fields defined to store descriptive metadata about the object represented by the node. To function as an Islandora resource node, a content type must define two further fields:
     - A field denoting the 'type' of thing represented by the node (image, book, newspaper, etc.). The value of this field is used by Islandora to control views, derivative processing, and other behavior.[^1]
-	- A field in which to record the node's [membership](content_models.md#members) in another node. If populated, this field creates a hierarchical relationship between parent (the node recorded in the field) and child (the node in which the parent is recorded). This may be left empty, but is required for building hierarchies for collections, subcollections, and members of collections, as well as objects (books, "compound objects", etc.) consisting of [paged content](paged-content.md).[^2]
+	- A field in which to record the node's [membership](content-models.md#members) in another node. If populated, this field creates a hierarchical relationship between parent (the node recorded in the field) and child (the node in which the parent is recorded). This may be left empty, but is required for building hierarchies for collections, subcollections, and members of collections, as well as objects (books, "compound objects", etc.) consisting of [paged content](paged-content.md).[^2]
 -   Media files (the actual files of JPEGs, MP3s, .zip, etc.) that get loaded through the form
 -   Derivative files (thumbnails, web-friendly service files, technical metadata, and more)
 

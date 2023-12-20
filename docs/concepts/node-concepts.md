@@ -22,7 +22,7 @@ It also enables a repository manager to create children of nodes directly, indiv
 
 Within a single content type (i.e. metadata profile), Islandora provides the ability to designate 
 some objects as different "types" than others. Key behaviours, such as what [derivatives](derivatives.md) are created
-or what [viewer](../user-documentation/file_viewers.md) is used, can be configured 
+or what [viewer](../user-documentation/file-viewers.md) is used, can be configured 
 (see [Contexts](../user-documentation/context.md)) based on this value. The available values
 are taxonomy terms in the Islandora Models vocabulary, and they are attached to nodes via the special 
 mandatory field, "Model" (`field_model`), which must be present on all Islandora content types.
