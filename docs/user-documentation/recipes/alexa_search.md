@@ -1,1 +1,1 @@
-This content has been moved to (alexa-search.md)[alexa-search.md]
+This content has been moved to [alexa-search.md](alexa-search.md).
