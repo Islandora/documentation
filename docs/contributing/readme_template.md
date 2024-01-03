@@ -1,1 +1,1 @@
-This content has been moved to [readme-template.md](readme-template.md).
+This content has been moved to [readme-template](readme-template.md).

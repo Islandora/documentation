@@ -1,1 +1,1 @@
-This content has been moved to [switch-homepage-to-twig.md](switch-homepage-to-twig.md).
+This content has been moved to [switch-homepage-to-twig](switch-homepage-to-twig.md).

@@ -1,1 +1,1 @@
-This content has been moved to [file-viewers.md](file-viewers.md).
+This content has been moved to [file-viewers](file-viewers.md).

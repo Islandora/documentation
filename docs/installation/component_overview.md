@@ -1,1 +1,1 @@
-This content has been moved to [component-overview.md](component-overview.md).
+This content has been moved to [component-overview](component-overview.md).

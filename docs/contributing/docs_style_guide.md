@@ -1,1 +1,1 @@
-This content has been moved to [docs-style-guide.md](docs-style-guide.md).
+This content has been moved to [docs-style-guide](docs-style-guide.md).

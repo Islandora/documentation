@@ -1,1 +1,1 @@
-This content has been moved to [metadata-harvesting.md](metadata-harvesting.md).
+This content has been moved to [metadata-harvesting](metadata-harvesting.md).

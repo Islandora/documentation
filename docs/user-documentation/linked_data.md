@@ -1,1 +1,1 @@
-This content has been moved to [linked-data.md](linked-data.md).
+This content has been moved to [linked-data](linked-data.md).

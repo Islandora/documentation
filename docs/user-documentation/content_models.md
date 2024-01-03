@@ -1,1 +1,1 @@
-This content has been moved to [content-models.md](content-models.md).
+This content has been moved to [content-models](content-models.md).
