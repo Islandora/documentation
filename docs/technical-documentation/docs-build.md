@@ -35,6 +35,16 @@ You will need to have `mkdocs` software installed locally, as well as a required
     `pip3 install mkdocs-git-revision-date-localized-plugin`
 
 
+- Install plugin to enable redirects:
+
+    Windows / Linux:
+
+    `sudo -H pip install mkdocs-redirects`
+
+    macOS:
+
+    `pip3 install mkdocs-redirects`
+
 
 - Install Material theme:
 
