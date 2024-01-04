@@ -39,6 +39,32 @@ extra_css:
 plugins:
   - search
   - git-revision-date-localized
+  - redirects:
+      redirect_maps:
+        'contributing/create_issues.md': 'contributing/create-issues.md'
+        'contributing/docs_style_guide.md': 'contributing/docs-style-guide.md'
+        'contributing/readme_template.md': 'contributing/readme-template.md'
+        'installation/component_overview.md': 'installation/component-overview.md'
+        'installation/manual/configuring_drupal.md': 'installation/manual/configuring-drupal.md'
+        'installation/manual/installing_composer_drush_and_drupal.md': 'installation/manual/installing-composer-drush-and-drupal.md'
+        'installation/manual/installing_crayfish.md': 'installation/manual/installing-crayfish.md'
+        'installation/manual/installing_fedora_syn_and_blazegraph.md': 'installation/manual/installing-fedora-syn-and-blazegraph.md'
+        'installation/manual/installing_karaf_and_alpaca.md': 'installation/manual/installing-karaf-and-alpaca.md'
+        'installation/manual/installing_solr.md': 'installation/manual/installing-solr.md'
+        'installation/manual/installing_tomcat_and_cantaloupe.md': 'installation/manual/installing-tomcat-and-cantaloupe.md'
+        'installation/manual/preparing_a_webserver.md': 'installation/manual/preparing-a-webserver.md'
+        'technical-documentation/adding_format_jsonld.md': 'technical-documentation/adding-format-jsonld.md'
+        'technical-documentation/alpaca_tips.md': 'technical-documentation/alpaca-tips.md'
+        'technical-documentation/resizing_vm.md': 'technical-documentation/resizing-vm.md'
+        'technical-documentation/updating_drupal.md': 'technical-documentation/updating-drupal.md'
+        'tutorials/create_update_views.md': 'tutorials/create-update-views.md'
+        'tutorials/switch_homepage_to_twig.md': 'tutorials/switch-homepage-to-twig.md'
+        'user-documentation/content_models.md': 'user-documentation/content-models.md'
+        'user-documentation/content_types.md': 'user-documentation/content-types.md'
+        'user-documentation/file_viewers.md': 'user-documentation/file-viewers.md'
+        'user-documentation/linked_data.md': 'user-documentation/linked-data.md'
+        'user-documentation/metadata_harvesting.md': 'user-documentation/metadata-harvesting.md'
+        'user-documentation/recipes/alexa_search.md': 'user-documentation/recipes/alexa-search.md'
 
 extra:
   font:
@@ -81,7 +107,7 @@ nav:
       # 'non-technical' user in mind who wants to test. The Manual installation
       # guides mention that users will need additional knowledge about server administration.
       - 'Release Notes':
-          - '8.x-2.0 Release Notes': 'release_notes/8.x-2.0.md'
+          - '8.x-2.0 Release Notes': 'release-notes/8.x-2.0.md'
           - 'Older Release Notes': 'https://github.com/Islandora/documentation/tree/main/docs/release_notes'
       - 'Install a Demo': 'installation/install-a-demo.md'
       - 'ISLE-DC':
@@ -101,14 +127,14 @@ nav:
       - 'Ansible Playbook': 'installation/playbook.md'
       - Manual Installation:
         - 'Introduction': 'installation/manual/introduction.md'
-        - 'Preparing a LAPP Webserver': 'installation/manual/preparing_a_webserver.md'
-        - 'Installing Composer, Drush, and Drupal': 'installation/manual/installing_composer_drush_and_drupal.md'
-        - 'Installing Tomcat and Cantaloupe': 'installation/manual/installing_tomcat_and_cantaloupe.md'
-        - 'Installing Fedora, Syn, and Blazegraph': 'installation/manual/installing_fedora_syn_and_blazegraph.md'
-        - 'Installing Solr': 'installation/manual/installing_solr.md'
-        - 'Installing Crayfish': 'installation/manual/installing_crayfish.md'
-        - 'Installing Karaf and Alpaca': 'installation/manual/installing_karaf_and_alpaca.md'
-        - 'Configuring Drupal': 'installation/manual/configuring_drupal.md'
+        - 'Preparing a LAPP Webserver': 'installation/manual/preparing-a-webserver.md'
+        - 'Installing Composer, Drush, and Drupal': 'installation/manual/installing-composer-drush-and-drupal.md'
+        - 'Installing Tomcat and Cantaloupe': 'installation/manual/installing-tomcat-and-cantaloupe.md'
+        - 'Installing Fedora, Syn, and Blazegraph': 'installation/manual/installing-fedora-syn-and-blazegraph.md'
+        - 'Installing Solr': 'installation/manual/installing-solr.md'
+        - 'Installing Crayfish': 'installation/manual/installing-crayfish.md'
+        - 'Installing Karaf and Alpaca': 'installation/manual/installing-karaf-and-alpaca.md'
+        - 'Configuring Drupal': 'installation/manual/configuring-drupal.md'
       - 'Installing Modules': 'technical-documentation/install-enable-drupal-modules.md'
           # procedural, sysadmin
           # moved from System Administrator Documentation
@@ -125,13 +151,13 @@ nav:
           # procedural, for people learning what islandora is.
       - 'Create a Collection': 'tutorials/how-to-create-collection.md'
           # procedural, repository managers/ curators
-      - 'Modify or Create a Content Type': 'user-documentation/content_types.md'
+      - 'Modify or Create a Content Type': 'user-documentation/content-types.md'
           # procedural, repository managers
           # add resource page on learning YAML
       - 'Configure Blocks': 'tutorials/blocks.md'
           # procedural, repository managers
           # add/link to conceptual documentation about blocks in Drupal?
-      - 'Create or Update a View': 'tutorials/create_update_views.md'
+      - 'Create or Update a View': 'tutorials/create-update-views.md'
           # procedural, repository managers
           # Add/link to conceptual docs about Views?
       - 'Video Documentation': 'user-documentation/video-docs.md'
@@ -144,15 +170,15 @@ nav:
           # Conceptual, 'site admins/repository managers'
           # move out high-level conceptual information (#architecture section)
       - Describing content:
-          - 'Content models': 'user-documentation/content_models.md'
+          - 'Content models': 'user-documentation/content-models.md'
           # conceptual, all user roles
           # moved from User documentation > Content in Islandora
           - 'Metadata': 'user-documentation/metadata.md'
           # largely conceptual, repository managers/ curators
           # information (e.g. move procedure for setting display hints to
-          - 'Linked data': 'user-documentation/linked_data.md'
+          - 'Linked data': 'user-documentation/linked-data.md'
           # conceptual, repository managers
-          - 'Metadata harvesting': 'user-documentation/metadata_harvesting.md'
+          - 'Metadata harvesting': 'user-documentation/metadata-harvesting.md'
           # conceptual, repository managers
           # add reference documentation for developers
       - Searching content:
@@ -165,7 +191,7 @@ nav:
       - Viewing content:
           - 'Context': 'user-documentation/context.md'
           # conceptual and procedural, repository managers
-          - 'File viewers': 'user-documentation/file_viewers.md'
+          - 'File viewers': 'user-documentation/file-viewers.md'
           # conceptual, understanding a very complex network of config. For repo managers/devs.
           - 'IIIF': 'user-documentation/iiif.md'
           # conceptual/ procedural, repository managers
@@ -193,7 +219,7 @@ nav:
       - 'Extending Islandora': 'user-documentation/extending.md'
           # conceptual, repository managers/ developers
   - Documentation for Developers:
-    - 'Stack Overview': 'installation/component_overview.md'
+    - 'Stack Overview': 'installation/component-overview.md'
           # moved from "Installation" section; alternatively duplicate a simplified version in the overview section
           # also see Architecture Diagram in Developer documentation
           # also see user-intro.md#architecture for the cheeseburger/bento box analogy
@@ -210,13 +236,13 @@ nav:
       - 'Signposting': 'technical-documentation/rest-signposting.md'
     - Alpaca:
       - 'Alpaca Technical Stack': 'alpaca/alpaca-technical-stack.md'
-      - 'Alpaca Tips': 'technical-documentation/alpaca_tips.md'
+      - 'Alpaca Tips': 'technical-documentation/alpaca-tips.md'
     - Tests:
       - 'Testing Notes': 'technical-documentation/testing-notes.md'
-    - 'Resizing a VM': 'technical-documentation/resizing_vm.md'
-    - 'Updating Drupal': 'technical-documentation/updating_drupal.md'
+    - 'Resizing a VM': 'technical-documentation/resizing-vm.md'
+    - 'Updating Drupal': 'technical-documentation/updating-drupal.md'
     - 'Updating a `deb` and adding it to Lyrasis PPA': 'technical-documentation/ppa-documentation.md'
-    - 'Adding back ?_format=jsonld': 'technical-documentation/adding_format_jsonld.md'
+    - 'Adding back ?_format=jsonld': 'technical-documentation/adding-format-jsonld.md'
   - Migration/Batch Loading:
       - 'Migration Overview': 'technical-documentation/migration-overview.md'
       - 'REST API': 'technical-documentation/migration-rest-api.md'
@@ -229,13 +255,13 @@ nav:
       - 'Running Tests': 'technical-documentation/running-automated-tests.md'
       - 'Checking Coding Standards': 'technical-documentation/checking-coding-standards.md'
       - 'Contributing Workflow': 'contributing/contributing-workflow.md'
-      - 'Creating GitHub Issues': 'contributing/create_issues.md'
+      - 'Creating GitHub Issues': 'contributing/create-issues.md'
       - 'Versioning Policy': 'technical-documentation/versioning.md'
       - 'How to release': 'contributing/releasing-islandora.md'
       - 'How to Edit Documentation': 'contributing/editing-docs.md'
       - 'How to Build Documentation': 'technical-documentation/docs-build.md'
           # moved from Developer documentation
-      - 'Documentation Style Guide': 'contributing/docs_style_guide.md'
+      - 'Documentation Style Guide': 'contributing/docs-style-guide.md'
       - 'Committers': 'contributing/committers.md'
       - 'Maintaining the Sandbox': 'contributing/sandbox.md'
   - Glossary: 'user-documentation/glossary.md'

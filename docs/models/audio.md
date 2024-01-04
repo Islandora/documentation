@@ -17,7 +17,7 @@ Islandora Starter Site sets up a context to automatically create this derivative
 * The Audio media is tagged with the "Original File" term (a term with External URI `http://pcdm.org/use#OriginalFile`)
 * The media's parent node is tagged with the "Audio" model (a term with External URI `http://purl.org/coar/resource_type/c_18cc`)
 
-The mimetype formats allowed by Homarus are configured in Homarus itself - see [Installing Crayfish](../installation/manual/installing_crayfish.md#homarus-audiovideo-derivatives)
+The mimetype formats allowed by Homarus are configured in Homarus itself - see [Installing Crayfish](../installation/manual/installing-crayfish.md#homarus-audiovideo-derivatives)
 
 ## Display
 

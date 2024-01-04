@@ -14,7 +14,7 @@ We offer this list for discovery, but do not officially provide support for any 
 
 ## Recipes
 
-- [Amazon Alexa](recipes/alexa_search.md) - This recipe explains how to access Islandora with Amazon Alexa.
+- [Amazon Alexa](recipes/alexa-search.md) - This recipe explains how to access Islandora with Amazon Alexa.
 - [Collection Searching](https://github.com/Islandora-Labs/Islandora-Cookbook/blob/main/recipes/collection_search.md) -
 This recipe provides instructions how to configure a shallow or deep search in a specific collection.
 - [Date Range Slider Facet](https://github.com/Islandora-Labs/Islandora-Cookbook/blob/main/recipes/date_range_slider_facet.md) - This recipe explains how to include a facet for date field(s) that presents itself as a range slider.
