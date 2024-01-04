@@ -15,6 +15,7 @@ mkdocs==1.4.2
 mkdocs-git-revision-date-localized-plugin==1.1.0
 mkdocs-material==9.0.12
 mkdocs-material-extensions==1.1.1
+mkdocs-redirects==1.2.1
 packaging==23.0
 Pygments==2.15.0
 pymdown-extensions==10.0

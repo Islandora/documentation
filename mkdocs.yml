@@ -39,6 +39,32 @@ extra_css:
 plugins:
   - search
   - git-revision-date-localized
+  - redirects:
+      redirect_maps:
+        'contributing/create_issues.md': 'contributing/create-issues.md'
+        'contributing/docs_style_guide.md': 'contributing/docs-style-guide.md'
+        'contributing/readme_template.md': 'contributing/readme-template.md'
+        'installation/component_overview.md': 'installation/component-overview.md'
+        'installation/manual/configuring_drupal.md': 'installation/manual/configuring-drupal.md'
+        'installation/manual/installing_composer_drush_and_drupal.md': 'installation/manual/installing-composer-drush-and-drupal.md'
+        'installation/manual/installing_crayfish.md': 'installation/manual/installing-crayfish.md'
+        'installation/manual/installing_fedora_syn_and_blazegraph.md': 'installation/manual/installing-fedora-syn-and-blazegraph.md'
+        'installation/manual/installing_karaf_and_alpaca.md': 'installation/manual/installing-karaf-and-alpaca.md'
+        'installation/manual/installing_solr.md': 'installation/manual/installing-solr.md'
+        'installation/manual/installing_tomcat_and_cantaloupe.md': 'installation/manual/installing-tomcat-and-cantaloupe.md'
+        'installation/manual/preparing_a_webserver.md': 'installation/manual/preparing-a-webserver.md'
+        'technical-documentation/adding_format_jsonld.md': 'technical-documentation/adding-format-jsonld.md'
+        'technical-documentation/alpaca_tips.md': 'technical-documentation/alpaca-tips.md'
+        'technical-documentation/resizing_vm.md': 'technical-documentation/resizing-vm.md'
+        'technical-documentation/updating_drupal.md': 'technical-documentation/updating-drupal.md'
+        'tutorials/create_update_views.md': 'tutorials/create-update-views.md'
+        'tutorials/switch_homepage_to_twig.md': 'tutorials/switch-homepage-to-twig.md'
+        'user-documentation/content_models.md': 'user-documentation/content-models.md'
+        'user-documentation/content_types.md': 'user-documentation/content-types.md'
+        'user-documentation/file_viewers.md': 'user-documentation/file-viewers.md'
+        'user-documentation/linked_data.md': 'user-documentation/linked-data.md'
+        'user-documentation/metadata_harvesting.md': 'user-documentation/metadata-harvesting.md'
+        'user-documentation/recipes/alexa_search.md': 'user-documentation/recipes/alexa-search.md'
 
 extra:
   font:
