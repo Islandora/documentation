@@ -31,6 +31,7 @@ The following is an alphabetized list of the current Islandora committers:
 |-----------------------------|---------------------------------------|----------------|
 | Melissa Anez                | LYRASIS                               | manez          |
 | Bryan Brown                 | Florida State University              | bryjbrown      |
+| Joe Corall                  | Lehigh University                     | joecorall      |
 | Jordan Dukart               | discoverygarden                       | jordandukart   |
 | Willow Gillingham           | Born-Digital                          | wgilling       |
 | Jonathan Hunt               | Catalyst.Net                          | kayakr         |
