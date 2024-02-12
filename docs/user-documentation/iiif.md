@@ -23,8 +23,10 @@ If you're not using one of our provisioning tools, you will need to:
 
 ## Using IIIF in the Islandora Starter Site
 
-# Contexts
-The Islandora Starter Site uses a Context to automatically use the IIIF Presentation API with the **Mirador viewer** for showing [paged content](../paged-content).
+![Mirador rendering book pages](../assets/iiif-mirador-paged.png)
+
+### Contexts and Mirador (default)
+The Islandora Starter Site uses a Context to automatically use the IIIF Presentation API with the Mirador viewer for showing [paged content](../paged-content).
 
 To use this Context, give your book or newspaper (or other paged content) a model of "Paged Content" or "Publication Issue". To double-check this, in the _Mirador Block - Multipaged items_ Context, you should see those terms used in the "Node has term" condition (you can register more than one term there, and having one of these on your node will activate this Context). Now, when you view a paged content Islandora node, you will see service files of all of its child pages (assuming you have added some child pages to the object) in the Mirador viewer as illustrated above.
 
