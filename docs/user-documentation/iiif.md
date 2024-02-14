@@ -23,12 +23,19 @@ If you're not using one of our provisioning tools, you will need to:
 
 ## Using IIIF in the Islandora Starter Site
 
-The Islandora Starter Site uses a Context to automatically use the IIIF Presentation API for showing [paged content](../paged-content).
+![Mirador rendering book pages](../assets/iiif-mirador-paged.png)
 
+### Contexts and Mirador (default)
+The Islandora Starter Site uses a Context to automatically use the IIIF Presentation API with the Mirador viewer for showing [paged content](../paged-content).
 
-To use this Context, give your book or newspaper (or other paged content) a model of "Paged Content" or "Publication Issue". Then, in the _Paged Content - Openseadragon_ Context, make sure the term used is in the "Node has term" condition (you can register more than one term there). Now, when you view a paged content Islandora node, you will see service files of all of its child pages (assuming you have added some child pages to the object) in the OpenSeadragon viewer as illustrated above.
+To use this Context, give your book or newspaper (or other paged content) a model of "Paged Content" or "Publication Issue". To double-check this, in the _Mirador Block - Multipaged items_ Context, you should see those terms used in the "Node has term" condition (you can register more than one term there, and having one of these on your node will activate this Context). Now, when you view a paged content Islandora node, you will see service files of all of its child pages (assuming you have added some child pages to the object) in the Mirador viewer as illustrated above.
 
-You can change how the paged content images are arranged in the OpenSeadragon viewport by doing the following:
+If you are using the Mirador viewer, it enables a lot of features out of the box, including the strip of thumbnails at the bottom, and there is little to configure. 
+
+### OpenSeadragon Viewer (optional)
+However if you are using the OpenSeadragon viewer, a Context can be set up as above, to show the OpenSeadragon viewer. In the Starter Site, there is currently a _OpenSeadragon Block - Multipaged Items_ Context that is not enabled. You may wish to enable this and disable the Mirador Block - Multipaged items Context.
+
+You can change how individual or paged content images are arranged in the OpenSeadragon viewport by doing the following:
 
 1. Visit `admin/config/media/openseadragon`
 1. Scroll to the bottom, where you will see the "Collection Mode" options.
@@ -41,7 +48,7 @@ You can change how the paged content images are arranged in the OpenSeadragon vi
 
 ## Looking under the hood (and beyond)
 
-If you want to see the raw output of the IIIF API implementations in Islandora, visit a node that is displaying the OpenSeadragon viewer (doesn't matter if it's a single image or a paged content node like a book), and tack "manifest" onto the end of the URL, like `http://myrepo.org/node/23/manifest` and hit enter. You will see the raw JSON that IIIF-compliant viewers use to render the content.
+If you want to see the raw output of the IIIF API implementations in Islandora, visit a node that is displaying the OpenSeadragon viewer (doesn't matter if it's a single image or a paged content node like a book), and tack "manifest" onto the end of the URL, like `http://myrepo.org/node/23/manifest` and hit enter. You will see the raw JSON that IIIF-compliant viewers use to render the content. To see the output for a paged content item that lists all its children, tack `/book-manifest` on the end of the URL.
 
 The really neat thing is, IIIF-compliant viewers don't need to be embedded in Islandora websites. If a viewer on another website knows the URL of a IIIF manifest like the ones that Islandora can produce, that viewer can display the content described in the manifest. Some implementations of IIIF viewers that show off the potential to combine content from multiple IIIF servers include:
 
