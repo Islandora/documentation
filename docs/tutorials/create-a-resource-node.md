@@ -25,22 +25,23 @@ Next, select a content type that is configured with Islandora behaviours. In the
 
 ![Click on Repository Item](../assets/create_node_select_repo_item.png)
 
-You are presented with a form showing a large number of metadata fields. Fill out the ones that are applicable to you.
+At the top of the form, the _Model_ field is a mandatory Islandora field. Select **Image** from the _Model_ drop box. This will enable image display behaviours, and cause image derivatives to be generated once we upload a file.
+
+![Select appropriate model, or format](../assets/create_node_select_model.png)
+
+
+The rest of the form contains a large number of metadata fields, grouped into collapsible sections. Fill out the _Title_ (mandatory) and whichever other fields are applicable to you.
 
 !!! Error "Keep it simple"
     For this tutorial, do not attempt to fill out any fields with an autocomplete symbol - a small circle at the right-hand-side of the text box. ![Avoid autocomplete fields](../assets/create_node_warning_autocomplete.png)
 <!-- We should really include creating/adding a name here or in another tutorial!! It's a source of immediate confusion and frustration! -->
 
 
-Near the bottom of the form, the _System_ section contains mandatory fields that configure Islandora behaviours. Select **Image** from the _Model_ drop box. This will enable image display behaviours, and cause image derivatives to be generated once we upload a file.
-
-![Under system select appropriate model, or format](../assets/create_node_select_model.png)
-
 Then, click **Save**. You have now created a node, and since it is of an Islandora content type, we call it a "resource node."
 
 ![New node created](../assets/create_node_new_node.png)
 
-The new node page displays, with the title, any metadata that we entered, and a _Fedora URI_ which indicates that metadata about this new node has been synced into Fedora. Congratulations, you have created a resource node!
+The new node page displays, with the title, any metadata that we entered, and a _Fedora URI_ which you can click on to see if this new node has been synced into Fedora (this only works if you have permission to access Fedora). Congratulations, you have created a resource node!
 
 ## Step 2: Upload an Original File
 
@@ -67,11 +68,11 @@ We want to add a jpg image, so click on _Image_. You are now presented with a fo
 ![Fill out the media form](../assets/create_node_adding_image.png)
 
 
-This form contains fields for metadata about the file, including "technical metadata". There are three required
+This form contains fields for metadata about the file, including "technical metadata". There are three important
 parts of the form:
 
 1. _Name_, which identifies this media.
-1. _Image_, the file to upload.
+1. _Image_, the file to upload, and its alternative text.
 1. _Media Use_, describing what this file is in the context of its resource node. To trigger derivative
 generation, select the checkbox for _Original File_.
 
@@ -83,9 +84,11 @@ Select the Media you just created, and you will see a page containing that Media
 
 <!-- We should maybe mention that it is living in Fedora? but why doesn't the Fedora URI show up?  -->
 
+<!-- No longer visible since we disable "Standalone media URL", and those fields are not visible in the form.
 Scroll down to see metadata below the uploaded image. The _MIME type_, _File size_, _Width_, and _Height_ were automatically populated when the file was uploaded. The value under _Media of_ is a link back to the resource node.
 
 ![Media page showing metadata](../assets/create_node_media_metadata.png)
+-->
 
 ## Step 3: Verify derivatives were created
 
