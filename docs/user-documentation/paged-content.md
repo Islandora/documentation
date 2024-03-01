@@ -17,18 +17,18 @@ Similar to the collection view showing members of a collection, Islandora provid
  taxonomy terms _Paged Content_ and _Page_ in the _Islandora Model_ vocabulary,
 that can be used to trigger paged
 content behaviors. Islandora Starter Site provides a Context for _Paged Content_
-resource nodes to trigger displaying an OpenSeadragon viewer showing the child
+resource nodes to trigger displaying a Mirador viewer showing the child
 resource nodes' service files.
 
 To enable this, use _Paged Content_ for the Islandora Model of the parent
 resource node and _Page_ for the Islandora Model of the child resource node. After the
 child resource nodes have "service file" media (either generated via the built-in derivative
-creation or added manually), they will be included in the OpenSeadragon paginated
+creation or added manually), they will be included in the Mirador paginated
 viewer displayed on the parent resource node's page.
 (See the [IIIF Documentation](../iiif#using-iiif-in-islandora)
 for more details on controlling the viewer's behavior.)
 
-![Screenshot of a Paged Content resource node displaying the OpenSeadragon viewer with the first child resource node displayed.](../assets/paged_content_openseadragon.png)
+![Screenshot of a Paged Content resource node displaying the Mirador viewer with the first child resource node displayed.](../assets/paged_content_mirador.png)
 
 However, repository managers can use any method they like, such as a Views-based
 list of teasers, a gallery, or a slide-show to display child resource nodes.
