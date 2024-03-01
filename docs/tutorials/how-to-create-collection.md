@@ -4,7 +4,7 @@ This how-to demonstrates creating a collection and adding items to it in the Isl
 
 ## Introduction
 
-In the Islandora Starter Site, nodes that are tagged as "Collection" under System > Model will show a view of their member objects. A member is any object that is "member_of" that object, and can be added via the "Members" tab. This is the mechanism in the Islandora Starter Site, and your individual instances may vary.
+In the Islandora Starter Site, nodes that have "Collection" in their Model field will show a view of their member ("child") objects. A member is any object that is "Member of" that object, and can be added via the "Children" tab. This is the mechanism in the Islandora Starter Site, and your individual instances may vary.
 
 !!! Warning "Collections and Deleting"
     Collections and their members are independent of each other,
@@ -13,27 +13,23 @@ In the Islandora Starter Site, nodes that are tagged as "Collection" under Syste
 
 ## Creating a Collection
 
-When logged in as an administrator, click the _Content_ button under the _Manage_ tab.
+When logged in, click _Manage_ > _Content_ on the admin toolbar. Then, click on _Add content_.
 
-![Click the _Content_ button under the _Manage_ tab](../assets/collections_admin_content_button.png)
-
-Click on _Add content_.
-
-![Click on add content, under tools](../assets/collections_add_content.png)
+![Click on + add content](../assets/collections_add_content.png)
 
 Then click on 'Repository Item' to give your collection the default metadata profile for Islandora.
 
-![Click on Repository Item](../assets/collections_repository_item.jpg)
+![Click on Repository Item](../assets/collections_repository_item.png)
 
 Fill out the form.
 
-Near the end of the form, under System, select Collection from the Model dropdown list.
+At the top of the form, select "Collection" from the _Model_ dropdown list.
 
-![Near end of form, under System, select collection](../assets/collections_system.jpg)
+![Near end of form, under System, select collection](../assets/collections_select_model.png)
 
-Click Save when done.
+When done filling out the form, click _Save_.
 
-![The collection has been created. Now let's add some members to this collection.](../assets/collections_parent_node.jpg)
+![The collection page confirming creation.](../assets/collections_parent_node.png)
 
 The collection has been created. Now let's add some members to this collection.
 
@@ -41,37 +37,36 @@ The collection has been created. Now let's add some members to this collection.
 
 To populate a collection with existing items, return to any existing content and click on its Edit tab. This brings up the form for this item.
 
-![To populate a collection with existing items, return to any existing content and click on its Edit tab.](../assets/collections_edit_photo_collection.jpg)
+![An existing item with its Edit tab highlighted.](../assets/collections_edit_photo_collection.png)
 
-Scroll down to the bottom and the System section. In the Member of section, start typing in the name of the collection this item should belong to. Select the name of the collection
-you want from the autocomplete.
+Scroll down to the bottom of the form to find the System section. In the _Member of_ field, start typing in the name of the collection this item should belong to. Select the name of the collection you want from the autocomplete. It is important that you select it from the dropdown, not just type in the correct title, because selecting it causes the node id to appear beside the title and allows Drupal to create a relationship.
 
-![Scroll down to the bottom and the System section. In the Member of section, start typing in the name of the collection this item should belong to.](../assets/collections_member_of.jpg)
+![Selecting a collection from the Member Of autocomplete.](../assets/collections_member_of.png)
 
-The correct collection is now selected.  Click Save when ready.
+The correct collection is now selected.  Click _Save_ when ready.
 
-![The correct collection is now selected. Click Save when ready.](../assets/collections_member_of_selected.jpg)
+![Snowfall (6) shows in field Member of.](../assets/collections_member_of_selected.png)
 
-To confirm, return to the collection and verify the new item appears in the collection's 'Members' block.
+To confirm, return to the collection and verify the new item appears in the collection's list of members.
 
-![To confirm, return to the collection and verify the new item appears in the collection's 'Members' block.](../assets/collections_snowfall.jpg)
+![The collection page showing a view of members, including the one we added.](../assets/collections_snowfall.png)
 
 ## Add a New Item as a Member of a Collection
 
-To create an item and add it as a member to a collection in one step, visit a collection and click on its `Members` tab. From the
-`Members` tab, you can manage the members of a collection and perform actions on them.
+To create an item and add it as a member to a collection in one step, visit a collection and click on its _Children_ tab. From the
+_Children_ tab, you can manage the members of a collection and perform actions on them.
 
-![From the 'Members' tab, you can manage the members of a collection and perform bulk operations on them.](../assets/resource_nodes_children_tab.png)
+![The "Children" tab in our Snowfall collection](../assets/collections_children_tab.png)
 
-Click on the `+Add member` button, and then select 'Repository Item' to give your new item a Content Type.  Only content types that
+Click on the _+Add Child_ button, and then select _Repository Item_ as your new item's Content Type.  Only content types that
 have the `field_member_of` field will be available from this list.
 
-![Click on the '+Add member' button, and then select 'Repository Item' to give your new item a Content Type.](../assets/collections_select_content_type.png)
+![Selecting "Repository Item" after clicking "Add Child".](../assets/collections_select_content_type.png)
 
-You are taken to the creation form for a Repository Item, but if you scroll down to the `System` section, you should see the widget
-for 'Member Of' is already filled out for you with the appropriate collection.
+You are taken to the creation form for a Repository Item, but if you scroll down to the "System" section, you should see the widget
+for "Member Of" is already filled out for you with the appropriate collection.
 
-![You should see the widget for 'Member Of' is already filled out for you with the appropriate collection.](../assets/collections_member_of_selected.jpg)
+![You should see the widget for 'Member Of' is already filled out for you with the appropriate collection.](../assets/collections_member_of_selected.png)
 
 Click 'Save' at the end of the form to create the new item and add it as a member of the collection.
 
