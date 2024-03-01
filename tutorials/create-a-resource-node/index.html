@@ -2498,18 +2498,18 @@ At the end, you will have metadata in a Drupal node, a file stored in Fedora, an
 <p><img alt="Click on Add Content" src="../../assets/create_node_add_content.png" /></p>
 <p>Next, select a content type that is configured with Islandora behaviours. In the Islandora Starter Site, there is an Islandora content type. It is called <strong>Repository Item</strong>.</p>
 <p><img alt="Click on Repository Item" src="../../assets/create_node_select_repo_item.png" /></p>
-<p>You are presented with a form showing a large number of metadata fields. Fill out the ones that are applicable to you.</p>
+<p>At the top of the form, the <em>Model</em> field is a mandatory Islandora field. Select <strong>Image</strong> from the <em>Model</em> drop box. This will enable image display behaviours, and cause image derivatives to be generated once we upload a file.</p>
+<p><img alt="Select appropriate model, or format" src="../../assets/create_node_select_model.png" /></p>
+<p>The rest of the form contains a large number of metadata fields, grouped into collapsible sections. Fill out the <em>Title</em> (mandatory) and whichever other fields are applicable to you.</p>
 <div class="admonition error">
 <p class="admonition-title">Keep it simple</p>
 <p>For this tutorial, do not attempt to fill out any fields with an autocomplete symbol - a small circle at the right-hand-side of the text box. <img alt="Avoid autocomplete fields" src="../../assets/create_node_warning_autocomplete.png" /></p>
 </div>
 <!-- We should really include creating/adding a name here or in another tutorial!! It's a source of immediate confusion and frustration! -->
 
-<p>Near the bottom of the form, the <em>System</em> section contains mandatory fields that configure Islandora behaviours. Select <strong>Image</strong> from the <em>Model</em> drop box. This will enable image display behaviours, and cause image derivatives to be generated once we upload a file.</p>
-<p><img alt="Under system select appropriate model, or format" src="../../assets/create_node_select_model.png" /></p>
 <p>Then, click <strong>Save</strong>. You have now created a node, and since it is of an Islandora content type, we call it a "resource node."</p>
 <p><img alt="New node created" src="../../assets/create_node_new_node.png" /></p>
-<p>The new node page displays, with the title, any metadata that we entered, and a <em>Fedora URI</em> which indicates that metadata about this new node has been synced into Fedora. Congratulations, you have created a resource node!</p>
+<p>The new node page displays, with the title, any metadata that we entered, and a <em>Fedora URI</em> which you can click on to see if this new node has been synced into Fedora (this only works if you have permission to access Fedora). Congratulations, you have created a resource node!</p>
 <h2 id="step-2-upload-an-original-file">Step 2: Upload an Original File<a class="headerlink" href="#step-2-upload-an-original-file" title="Permanent link">&para;</a></h2>
 <p><img alt="Node page showing Media tab" src="../../assets/create_node_click_media.png" /></p>
 <p>Alas, your node has no files. To upload a file, click on the node's <em>Media</em> tab.</p>
@@ -2528,11 +2528,11 @@ For other image types that require special viewers, such as TIFFs, you would hav
 <em>File</em>. <a href="../../user-documentation/media/">Learn more about Media in Islandora</a>.</p>
 </div>
 <p><img alt="Fill out the media form" src="../../assets/create_node_adding_image.png" /></p>
-<p>This form contains fields for metadata about the file, including "technical metadata". There are three required
+<p>This form contains fields for metadata about the file, including "technical metadata". There are three important
 parts of the form:</p>
 <ol>
 <li><em>Name</em>, which identifies this media.</li>
-<li><em>Image</em>, the file to upload.</li>
+<li><em>Image</em>, the file to upload, and its alternative text.</li>
 <li><em>Media Use</em>, describing what this file is in the context of its resource node. To trigger derivative
 generation, select the checkbox for <em>Original File</em>.</li>
 </ol>
@@ -2541,8 +2541,12 @@ generation, select the checkbox for <em>Original File</em>.</li>
 <p>Select the Media you just created, and you will see a page containing that Media's information and a rendering of the image that you uploaded.</p>
 <!-- We should maybe mention that it is living in Fedora? but why doesn't the Fedora URI show up?  -->
 
-<p>Scroll down to see metadata below the uploaded image. The <em>MIME type</em>, <em>File size</em>, <em>Width</em>, and <em>Height</em> were automatically populated when the file was uploaded. The value under <em>Media of</em> is a link back to the resource node.</p>
-<p><img alt="Media page showing metadata" src="../../assets/create_node_media_metadata.png" /></p>
+<!-- No longer visible since we disable "Standalone media URL", and those fields are not visible in the form.
+Scroll down to see metadata below the uploaded image. The _MIME type_, _File size_, _Width_, and _Height_ were automatically populated when the file was uploaded. The value under _Media of_ is a link back to the resource node.
+
+![Media page showing metadata](../assets/create_node_media_metadata.png)
+-->
+
 <h2 id="step-3-verify-derivatives-were-created">Step 3: Verify derivatives were created<a class="headerlink" href="#step-3-verify-derivatives-were-created" title="Permanent link">&para;</a></h2>
 <p>Now return to the node you created, and you will see the image along with its (minimal) descriptive metadata. The image you are viewing is not the one you uploaded, but a lower-resolution service file that was created and stored in the Drupal public filesystem.</p>
 <p><img alt="The file is now loaded, return to the main site to view" src="../../assets/create_node_finished_node.png" /></p>
@@ -2563,7 +2567,7 @@ generation, select the checkbox for <em>Original File</em>.</li>
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">February 29, 2024</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">March 1, 2024</span>
       
     
   </small>

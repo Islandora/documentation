@@ -2461,7 +2461,7 @@
 <h1 id="how-to-create-and-add-to-a-collection">How to create and add to a Collection<a class="headerlink" href="#how-to-create-and-add-to-a-collection" title="Permanent link">&para;</a></h1>
 <p>This how-to demonstrates creating a collection and adding items to it in the Islandora Starter Site. For more about collections, see <a href="../../concepts/collection/">Concept: Collection</a>.</p>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
-<p>In the Islandora Starter Site, nodes that are tagged as "Collection" under System &gt; Model will show a view of their member objects. A member is any object that is "member_of" that object, and can be added via the "Members" tab. This is the mechanism in the Islandora Starter Site, and your individual instances may vary.</p>
+<p>In the Islandora Starter Site, nodes that have "Collection" in their Model field will show a view of their member ("child") objects. A member is any object that is "Member of" that object, and can be added via the "Children" tab. This is the mechanism in the Islandora Starter Site, and your individual instances may vary.</p>
 <div class="admonition warning">
 <p class="admonition-title">Collections and Deleting</p>
 <p>Collections and their members are independent of each other,
@@ -2469,38 +2469,35 @@ and removing something from a collection does not delete it.
 <strong>Similarly, deleting a collection does not delete its members.</strong></p>
 </div>
 <h2 id="creating-a-collection">Creating a Collection<a class="headerlink" href="#creating-a-collection" title="Permanent link">&para;</a></h2>
-<p>When logged in as an administrator, click the <em>Content</em> button under the <em>Manage</em> tab.</p>
-<p><img alt="Click the _Content_ button under the _Manage_ tab" src="../../assets/collections_admin_content_button.png" /></p>
-<p>Click on <em>Add content</em>.</p>
-<p><img alt="Click on add content, under tools" src="../../assets/collections_add_content.png" /></p>
+<p>When logged in, click <em>Manage</em> &gt; <em>Content</em> on the admin toolbar. Then, click on <em>Add content</em>.</p>
+<p><img alt="Click on + add content" src="../../assets/collections_add_content.png" /></p>
 <p>Then click on 'Repository Item' to give your collection the default metadata profile for Islandora.</p>
-<p><img alt="Click on Repository Item" src="../../assets/collections_repository_item.jpg" /></p>
+<p><img alt="Click on Repository Item" src="../../assets/collections_repository_item.png" /></p>
 <p>Fill out the form.</p>
-<p>Near the end of the form, under System, select Collection from the Model dropdown list.</p>
-<p><img alt="Near end of form, under System, select collection" src="../../assets/collections_system.jpg" /></p>
-<p>Click Save when done.</p>
-<p><img alt="The collection has been created. Now let's add some members to this collection." src="../../assets/collections_parent_node.jpg" /></p>
+<p>At the top of the form, select "Collection" from the <em>Model</em> dropdown list.</p>
+<p><img alt="Near end of form, under System, select collection" src="../../assets/collections_select_model.png" /></p>
+<p>When done filling out the form, click <em>Save</em>.</p>
+<p><img alt="The collection page confirming creation." src="../../assets/collections_parent_node.png" /></p>
 <p>The collection has been created. Now let's add some members to this collection.</p>
 <h2 id="add-existing-items-to-a-collection">Add Existing Items to a Collection<a class="headerlink" href="#add-existing-items-to-a-collection" title="Permanent link">&para;</a></h2>
 <p>To populate a collection with existing items, return to any existing content and click on its Edit tab. This brings up the form for this item.</p>
-<p><img alt="To populate a collection with existing items, return to any existing content and click on its Edit tab." src="../../assets/collections_edit_photo_collection.jpg" /></p>
-<p>Scroll down to the bottom and the System section. In the Member of section, start typing in the name of the collection this item should belong to. Select the name of the collection
-you want from the autocomplete.</p>
-<p><img alt="Scroll down to the bottom and the System section. In the Member of section, start typing in the name of the collection this item should belong to." src="../../assets/collections_member_of.jpg" /></p>
-<p>The correct collection is now selected.  Click Save when ready.</p>
-<p><img alt="The correct collection is now selected. Click Save when ready." src="../../assets/collections_member_of_selected.jpg" /></p>
-<p>To confirm, return to the collection and verify the new item appears in the collection's 'Members' block.</p>
-<p><img alt="To confirm, return to the collection and verify the new item appears in the collection's 'Members' block." src="../../assets/collections_snowfall.jpg" /></p>
+<p><img alt="An existing item with its Edit tab highlighted." src="../../assets/collections_edit_photo_collection.png" /></p>
+<p>Scroll down to the bottom of the form to find the System section. In the <em>Member of</em> field, start typing in the name of the collection this item should belong to. Select the name of the collection you want from the autocomplete. It is important that you select it from the dropdown, not just type in the correct title, because selecting it causes the node id to appear beside the title and allows Drupal to create a relationship.</p>
+<p><img alt="Selecting a collection from the Member Of autocomplete." src="../../assets/collections_member_of.png" /></p>
+<p>The correct collection is now selected.  Click <em>Save</em> when ready.</p>
+<p><img alt="Snowfall (6) shows in field Member of." src="../../assets/collections_member_of_selected.png" /></p>
+<p>To confirm, return to the collection and verify the new item appears in the collection's list of members.</p>
+<p><img alt="The collection page showing a view of members, including the one we added." src="../../assets/collections_snowfall.png" /></p>
 <h2 id="add-a-new-item-as-a-member-of-a-collection">Add a New Item as a Member of a Collection<a class="headerlink" href="#add-a-new-item-as-a-member-of-a-collection" title="Permanent link">&para;</a></h2>
-<p>To create an item and add it as a member to a collection in one step, visit a collection and click on its <code>Members</code> tab. From the
-<code>Members</code> tab, you can manage the members of a collection and perform actions on them.</p>
-<p><img alt="From the 'Members' tab, you can manage the members of a collection and perform bulk operations on them." src="../../assets/resource_nodes_children_tab.png" /></p>
-<p>Click on the <code>+Add member</code> button, and then select 'Repository Item' to give your new item a Content Type.  Only content types that
+<p>To create an item and add it as a member to a collection in one step, visit a collection and click on its <em>Children</em> tab. From the
+<em>Children</em> tab, you can manage the members of a collection and perform actions on them.</p>
+<p><img alt="The &quot;Children&quot; tab in our Snowfall collection" src="../../assets/collections_children_tab.png" /></p>
+<p>Click on the <em>+Add Child</em> button, and then select <em>Repository Item</em> as your new item's Content Type.  Only content types that
 have the <code>field_member_of</code> field will be available from this list.</p>
-<p><img alt="Click on the '+Add member' button, and then select 'Repository Item' to give your new item a Content Type." src="../../assets/collections_select_content_type.png" /></p>
-<p>You are taken to the creation form for a Repository Item, but if you scroll down to the <code>System</code> section, you should see the widget
-for 'Member Of' is already filled out for you with the appropriate collection.</p>
-<p><img alt="You should see the widget for 'Member Of' is already filled out for you with the appropriate collection." src="../../assets/collections_member_of_selected.jpg" /></p>
+<p><img alt="Selecting &quot;Repository Item&quot; after clicking &quot;Add Child&quot;." src="../../assets/collections_select_content_type.png" /></p>
+<p>You are taken to the creation form for a Repository Item, but if you scroll down to the "System" section, you should see the widget
+for "Member Of" is already filled out for you with the appropriate collection.</p>
+<p><img alt="You should see the widget for 'Member Of' is already filled out for you with the appropriate collection." src="../../assets/collections_member_of_selected.png" /></p>
 <p>Click 'Save' at the end of the form to create the new item and add it as a member of the collection.</p>
 <div class="admonition tip">
 <p class="admonition-title">Islandora Quick Lessons</p>
@@ -2512,7 +2509,7 @@ for 'Member Of' is already filled out for you with the appropriate collection.</
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">February 29, 2024</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">March 1, 2024</span>
       
     
   </small>
