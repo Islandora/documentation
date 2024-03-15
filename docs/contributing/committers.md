@@ -29,7 +29,6 @@ The following is an alphabetized list of the current Islandora committers:
 
 | Name                        | Organization                          | Github username |
 |-----------------------------|---------------------------------------|----------------|
-| Melissa Anez                | LYRASIS                               | manez          |
 | Bryan Brown                 | Florida State University              | bryjbrown      |
 | Joe Corall                  | Lehigh University                     | joecorall      |
 | Jordan Dukart               | discoverygarden                       | jordandukart   |
@@ -58,6 +57,7 @@ The following is an alphabetized list of the prior Islandora committers:
 | Name                        | Organization                      |
 |-----------------------------|-----------------------------------|
 | Daniel Aitken               | discoverygarden                   |
+| Melissa Anez                | LYRASIS                           |
 | Aaron Coburn                | Amherst College                   |
 | Jonathan Green              | LYRASIS                           |
 | Debbie Flitner              | Arizona State University          |
