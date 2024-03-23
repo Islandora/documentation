@@ -1,0 +1,3059 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation for Islandora">
+      
+      
+      
+        <link rel="canonical" href="https://islandora.github.io/documentation/installation/manual/installing-karaf-and-alpaca/">
+      
+      
+        <link rel="prev" href="../installing-crayfish/">
+      
+      
+        <link rel="next" href="../configuring-drupal/">
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.12">
+    
+    
+      
+        <title>Installing Karaf and Alpaca - Islandora</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.0d440cfe.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.2505c338.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../css/custom.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="blue">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#installing-karaf-and-alpaca" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Islandora" class="md-header__button md-logo" aria-label="Islandora" data-md-component="logo">
+      
+  <img src="../../../assets/Islandora_logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Islandora
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Installing Karaf and Alpaca
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Islandora/documentation" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Islandora" class="md-nav__button md-logo" aria-label="Islandora" data-md-component="logo">
+      
+  <img src="../../../assets/Islandora_logo.png" alt="logo">
+
+    </a>
+    Islandora
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Islandora/documentation" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        About
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          Concepts
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Concepts
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/node-concepts/" class="md-nav__link">
+        Nodes in Islandora
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/node-media/" class="md-nav__link">
+        Media in Islandora
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/derivatives/" class="md-nav__link">
+        Derivatives
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/rdf/" class="md-nav__link">
+        RDF Repository
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/starter-site/" class="md-nav__link">
+        Islandora Starter Site
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          Behaviours (Models)
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Behaviours (Models)
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concepts/collection/" class="md-nav__link">
+        Collections
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../user-documentation/paged-content/" class="md-nav__link">
+        Paged Content
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../models/audio/" class="md-nav__link">
+        Audio
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../models/video/" class="md-nav__link">
+        Video
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          Installation
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Installation
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+          Release Notes
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_4_1">
+          <span class="md-nav__icon md-icon"></span>
+          Release Notes
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../release-notes/8.x-2.0.md" class="md-nav__link">
+        8.x-2.0 Release Notes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/Islandora/documentation/tree/main/docs/release_notes" class="md-nav__link">
+        Older Release Notes
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../install-a-demo/" class="md-nav__link">
+        Install a Demo
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+          ISLE-DC
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_4_3">
+          <span class="md-nav__icon md-icon"></span>
+          ISLE-DC
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../docker-introduction/" class="md-nav__link">
+        Introduction to ISLE
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../docker-prereq/" class="md-nav__link">
+        Prerequisites
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3_3" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3_3" id="__nav_4_3_3_label" tabindex="0">
+          Install Islandora
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_3_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_4_3_3">
+          <span class="md-nav__icon md-icon"></span>
+          Install Islandora
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../docker-local/" class="md-nav__link">
+        Installing a Development Server
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../docker-custom/" class="md-nav__link">
+        Installing a Staging/Production Server
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3_4" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3_4" id="__nav_4_3_4_label" tabindex="0">
+          Maintaining Islandora
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_3_4_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_4_3_4">
+          <span class="md-nav__icon md-icon"></span>
+          Maintaining Islandora
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../docker-basic-usage/" class="md-nav__link">
+        Basic Usage
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../docker-maintain-drupal/" class="md-nav__link">
+        Maintaining Drupal
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../docker-maintain-isle/" class="md-nav__link">
+        Maintaining ISLE
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../docker-available-commands/" class="md-nav__link">
+        Available Commands
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../docker-available-configuration/" class="md-nav__link">
+        Available Configuration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../docker-troubleshooting/" class="md-nav__link">
+        Troubleshooting
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../site-template/" class="md-nav__link">
+        ISLE Site Template
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../playbook/" class="md-nav__link">
+        Ansible Playbook
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_6" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="0">
+          Manual Installation
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_6_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_4_6">
+          <span class="md-nav__icon md-icon"></span>
+          Manual Installation
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../introduction/" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../preparing-a-webserver/" class="md-nav__link">
+        Preparing a LAPP Webserver
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installing-composer-drush-and-drupal/" class="md-nav__link">
+        Installing Composer, Drush, and Drupal
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installing-tomcat-and-cantaloupe/" class="md-nav__link">
+        Installing Tomcat and Cantaloupe
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installing-fedora-syn-and-blazegraph/" class="md-nav__link">
+        Installing Fedora, Syn, and Blazegraph
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installing-solr/" class="md-nav__link">
+        Installing Solr
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installing-crayfish/" class="md-nav__link">
+        Installing Crayfish
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Installing Karaf and Alpaca
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Installing Karaf and Alpaca
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#in-this-section-we-will-install" class="md-nav__link">
+    In this section, we will install:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#activemq-5" class="md-nav__link">
+    ActiveMQ 5
+  </a>
+  
+    <nav class="md-nav" aria-label="ActiveMQ 5">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installing-activemq" class="md-nav__link">
+    Installing ActiveMQ
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#karaf-4" class="md-nav__link">
+    Karaf 4
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-a-karaf-user" class="md-nav__link">
+    Creating a Karaf User
+  </a>
+  
+    <nav class="md-nav" aria-label="Creating a Karaf User">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#downloading-and-placing-karaf" class="md-nav__link">
+    Downloading and Placing Karaf
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuring-karaf-logging" class="md-nav__link">
+    Configuring Karaf Logging
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-a-setenvsh-script-for-karaf" class="md-nav__link">
+    Creating a setenv.sh Script for Karaf
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#initializing-karaf" class="md-nav__link">
+    Initializing Karaf
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-and-starting-the-karaf-service" class="md-nav__link">
+    Creating and Starting the Karaf Service
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alpaca-10x" class="md-nav__link">
+    Alpaca 1.0.x
+  </a>
+  
+    <nav class="md-nav" aria-label="Alpaca 1.0.x">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#adding-the-required-karaf-repositories" class="md-nav__link">
+    Adding the Required Karaf Repositories
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuring-karaf-features" class="md-nav__link">
+    Configuring Karaf Features
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#blueprinting-karaf-derivative-connectors" class="md-nav__link">
+    Blueprinting Karaf Derivative Connectors
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installing-the-required-karaf-features" class="md-nav__link">
+    Installing the Required Karaf Features
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verifying-karaf-components-are-running-optional-but-recommended" class="md-nav__link">
+    Verifying Karaf Components are Running (Optional But Recommended)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuring-drupal/" class="md-nav__link">
+        Configuring Drupal
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../technical-documentation/install-enable-drupal-modules/" class="md-nav__link">
+        Installing Modules
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+          Walkthroughs
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Walkthroughs
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/create-a-resource-node/" class="md-nav__link">
+        Create a Resource Node
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/how-to-create-collection/" class="md-nav__link">
+        Create a Collection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../user-documentation/content-types/" class="md-nav__link">
+        Modify or Create a Content Type
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/blocks/" class="md-nav__link">
+        Configure Blocks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tutorials/create-update-views/" class="md-nav__link">
+        Create or Update a View
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../user-documentation/video-docs/" class="md-nav__link">
+        Video Documentation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../user-documentation/users/" class="md-nav__link">
+        Create and Manage User Accounts
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+          Using Islandora
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Using Islandora
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../user-documentation/user-intro/" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+          Describing content
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_6_2">
+          <span class="md-nav__icon md-icon"></span>
+          Describing content
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../user-documentation/content-models/" class="md-nav__link">
+        Content models
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../user-documentation/metadata/" class="md-nav__link">
+        Metadata
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../user-documentation/linked-data/" class="md-nav__link">
+        Linked data
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../user-documentation/metadata-harvesting/" class="md-nav__link">
+        Metadata harvesting
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+          Searching content
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_6_3">
+          <span class="md-nav__icon md-icon"></span>
+          Searching content
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../user-documentation/searching/" class="md-nav__link">
+        Searching
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../user-documentation/advanced-search/" class="md-nav__link">
+        Advanced search
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../user-documentation/faceting/" class="md-nav__link">
+        Faceting
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_4" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6_4" id="__nav_6_4_label" tabindex="0">
+          Viewing content
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_4_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_6_4">
+          <span class="md-nav__icon md-icon"></span>
+          Viewing content
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../user-documentation/context/" class="md-nav__link">
+        Context
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../user-documentation/file-viewers/" class="md-nav__link">
+        File viewers
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../user-documentation/iiif/" class="md-nav__link">
+        IIIF
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_5" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6_5" id="__nav_6_5_label" tabindex="0">
+          Handling content files
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_5_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_6_5">
+          <span class="md-nav__icon md-icon"></span>
+          Handling content files
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../user-documentation/media/" class="md-nav__link">
+        Media
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../user-documentation/flysystem/" class="md-nav__link">
+        Flysystem
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../user-documentation/uploading-large-files/" class="md-nav__link">
+        Large files
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../user-documentation/transcripts/" class="md-nav__link">
+        Transcripts
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_6" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6_6" id="__nav_6_6_label" tabindex="0">
+          Administering Islandora
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_6_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_6_6">
+          <span class="md-nav__icon md-icon"></span>
+          Administering Islandora
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../user-documentation/access-control/" class="md-nav__link">
+        Access control
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../user-documentation/jwt-authentication/" class="md-nav__link">
+        JWT authentication
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../user-documentation/usage-stats/" class="md-nav__link">
+        Usage statistics
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../user-documentation/versioning/" class="md-nav__link">
+        Versioning
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../user-documentation/accessibility/" class="md-nav__link">
+        Accessibility
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../user-documentation/multilingual/" class="md-nav__link">
+        Multilingual
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../user-documentation/extending/" class="md-nav__link">
+        Extending Islandora
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+          Documentation for Developers
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          Documentation for Developers
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../component-overview/" class="md-nav__link">
+        Stack Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../technical-documentation/diagram/" class="md-nav__link">
+        Architecture Diagram
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_3" id="__nav_7_3_label" tabindex="0">
+          REST Documentation
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_7_3">
+          <span class="md-nav__icon md-icon"></span>
+          REST Documentation
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../technical-documentation/using-rest-endpoints/" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../technical-documentation/rest-authorization/" class="md-nav__link">
+        Authorization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../technical-documentation/rest-get/" class="md-nav__link">
+        GET
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../technical-documentation/rest-create/" class="md-nav__link">
+        POST/PUT
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../technical-documentation/rest-patch/" class="md-nav__link">
+        PATCH
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../technical-documentation/rest-delete/" class="md-nav__link">
+        DELETE
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../technical-documentation/rest-signposting/" class="md-nav__link">
+        Signposting
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_4" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_4" id="__nav_7_4_label" tabindex="0">
+          Alpaca
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_4_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_7_4">
+          <span class="md-nav__icon md-icon"></span>
+          Alpaca
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../alpaca/alpaca-technical-stack/" class="md-nav__link">
+        Alpaca Technical Stack
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../technical-documentation/alpaca-tips/" class="md-nav__link">
+        Alpaca Tips
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_5" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_5" id="__nav_7_5_label" tabindex="0">
+          Tests
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_5_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_7_5">
+          <span class="md-nav__icon md-icon"></span>
+          Tests
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../technical-documentation/testing-notes/" class="md-nav__link">
+        Testing Notes
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../technical-documentation/resizing-vm/" class="md-nav__link">
+        Resizing a VM
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../technical-documentation/updating-drupal/" class="md-nav__link">
+        Updating Drupal
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../technical-documentation/ppa-documentation/" class="md-nav__link">
+        Updating a `deb` and adding it to Lyrasis PPA
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../technical-documentation/adding-format-jsonld/" class="md-nav__link">
+        Adding back ?_format=jsonld
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+          Migration/Batch Loading
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          Migration/Batch Loading
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../technical-documentation/migration-overview/" class="md-nav__link">
+        Migration Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../technical-documentation/migration-rest-api/" class="md-nav__link">
+        REST API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../technical-documentation/migration-migrate-api/" class="md-nav__link">
+        Migrate API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../technical-documentation/migration-islandora-workbench/" class="md-nav__link">
+        Islandora Workbench
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../technical-documentation/migrate-csv/" class="md-nav__link">
+        CSV
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../technical-documentation/migrate-7x/" class="md-nav__link">
+        Islandora 7
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+          Contributing
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_9">
+          <span class="md-nav__icon md-icon"></span>
+          Contributing
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contributing/CONTRIBUTING/" class="md-nav__link">
+        How to contribute
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../technical-documentation/running-automated-tests/" class="md-nav__link">
+        Running Tests
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../technical-documentation/checking-coding-standards/" class="md-nav__link">
+        Checking Coding Standards
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contributing/contributing-workflow/" class="md-nav__link">
+        Contributing Workflow
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contributing/create-issues/" class="md-nav__link">
+        Creating GitHub Issues
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../technical-documentation/versioning/" class="md-nav__link">
+        Versioning Policy
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contributing/releasing-islandora/" class="md-nav__link">
+        How to release
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contributing/editing-docs/" class="md-nav__link">
+        How to Edit Documentation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../technical-documentation/docs-build/" class="md-nav__link">
+        How to Build Documentation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contributing/docs-style-guide/" class="md-nav__link">
+        Documentation Style Guide
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contributing/committers/" class="md-nav__link">
+        Committers
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contributing/sandbox/" class="md-nav__link">
+        Maintaining the Sandbox
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../user-documentation/glossary/" class="md-nav__link">
+        Glossary
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#in-this-section-we-will-install" class="md-nav__link">
+    In this section, we will install:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#activemq-5" class="md-nav__link">
+    ActiveMQ 5
+  </a>
+  
+    <nav class="md-nav" aria-label="ActiveMQ 5">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installing-activemq" class="md-nav__link">
+    Installing ActiveMQ
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#karaf-4" class="md-nav__link">
+    Karaf 4
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-a-karaf-user" class="md-nav__link">
+    Creating a Karaf User
+  </a>
+  
+    <nav class="md-nav" aria-label="Creating a Karaf User">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#downloading-and-placing-karaf" class="md-nav__link">
+    Downloading and Placing Karaf
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuring-karaf-logging" class="md-nav__link">
+    Configuring Karaf Logging
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-a-setenvsh-script-for-karaf" class="md-nav__link">
+    Creating a setenv.sh Script for Karaf
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#initializing-karaf" class="md-nav__link">
+    Initializing Karaf
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#creating-and-starting-the-karaf-service" class="md-nav__link">
+    Creating and Starting the Karaf Service
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alpaca-10x" class="md-nav__link">
+    Alpaca 1.0.x
+  </a>
+  
+    <nav class="md-nav" aria-label="Alpaca 1.0.x">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#adding-the-required-karaf-repositories" class="md-nav__link">
+    Adding the Required Karaf Repositories
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuring-karaf-features" class="md-nav__link">
+    Configuring Karaf Features
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#blueprinting-karaf-derivative-connectors" class="md-nav__link">
+    Blueprinting Karaf Derivative Connectors
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installing-the-required-karaf-features" class="md-nav__link">
+    Installing the Required Karaf Features
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verifying-karaf-components-are-running-optional-but-recommended" class="md-nav__link">
+    Verifying Karaf Components are Running (Optional But Recommended)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/Islandora/documentation/edit/main/docs/installation/manual/installing-karaf-and-alpaca.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+    </a>
+  
+  
+
+
+
+<h1 id="installing-karaf-and-alpaca">Installing Karaf and Alpaca<a class="headerlink" href="#installing-karaf-and-alpaca" title="Permanent link">&para;</a></h1>
+<div class="admonition warning">
+<p class="admonition-title">Needs Maintenance</p>
+<p>The manual installation documentation is in need of attention. We are aware that some components no longer work as documented here. If you are interested in helping us improve the documentation, please see <a href="../../../contributing/CONTRIBUTING">Contributing</a>.</p>
+</div>
+<h2 id="in-this-section-we-will-install">In this section, we will install:<a class="headerlink" href="#in-this-section-we-will-install" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://activemq.apache.org/">Apache ActiveMQ</a>, a messaging server that will be used to handle communication between Alpaca and other components</li>
+<li><a href="https://karaf.apache.org/">Apache Karaf</a>, the Java application runtime that Alpaca will be deployed in</li>
+<li><a href="https://github.com/Islandora/Alpaca">Islandora/Alpaca</a>, a suite of Java middleware applications that will handle communication between various components of Islandora.</li>
+</ul>
+<h2 id="activemq-5">ActiveMQ 5<a class="headerlink" href="#activemq-5" title="Permanent link">&para;</a></h2>
+<h3 id="installing-activemq">Installing ActiveMQ<a class="headerlink" href="#installing-activemq" title="Permanent link">&para;</a></h3>
+<p>In our case, the default installation method for ActiveMQ via <code>apt-get</code> will suffice.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>activemq
+</span></code></pre></div>
+<p>This will give us:</p>
+<ul>
+<li>A base configuration at <code>/var/lib/activemq/conf</code></li>
+<li>A data storage directory at <code>/var/lib/activemq/data</code></li>
+<li>The base ActiveMQ installation at <code>/usr/share/activemq</code></li>
+<li>An <code>activemq</code> service that will be run on boot</li>
+<li>A user, <code>activemq</code>, who will be in charge of the ActiveMQ service</li>
+</ul>
+<p>Take note of the version of ActiveMQ we're going to be installing. It needs to match a Karaf blueprint we'll create later. Check the version with</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>apt-cache<span class="w"> </span>policy<span class="w"> </span>activemq
+</span></code></pre></div>
+<p>Write down the version listed under <code>Installed:</code>.</p>
+<h2 id="karaf-4">Karaf 4<a class="headerlink" href="#karaf-4" title="Permanent link">&para;</a></h2>
+<h2 id="creating-a-karaf-user">Creating a Karaf User<a class="headerlink" href="#creating-a-karaf-user" title="Permanent link">&para;</a></h2>
+<p>Karaf, as well as its processes and service, will be owned by a user in charge of ensuring this portion of the stack is segregated and that the service is running.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>addgroup<span class="w"> </span>karaf
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>sudo<span class="w"> </span>adduser<span class="w"> </span>karaf<span class="w"> </span>--ingroup<span class="w"> </span>karaf<span class="w"> </span>--home<span class="w"> </span>/opt/karaf<span class="w"> </span>--shell<span class="w"> </span>/usr/bin
+</span></code></pre></div>
+<p>As always, you will be prompted for a password, which you should create at this time. All other options can be left blank.</p>
+<h3 id="downloading-and-placing-karaf">Downloading and Placing Karaf<a class="headerlink" href="#downloading-and-placing-karaf" title="Permanent link">&para;</a></h3>
+<p>Since there’s no <code>apt-get</code> installer for Karaf, we’re going to manually download and install it directly from its binary installer.</p>
+<p><div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">cd</span><span class="w"> </span>/opt
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>sudo<span class="w"> </span>wget<span class="w"> </span>-O<span class="w"> </span>karaf.tar.gz<span class="w"> </span>KARAF_TARBALL_LINK
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>sudo<span class="w"> </span>tar<span class="w"> </span>-xzvf<span class="w"> </span>karaf.tar.gz
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>sudo<span class="w"> </span>chown<span class="w"> </span>-R<span class="w"> </span>karaf:karaf<span class="w"> </span>KARAF_DIRECTORY
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>sudo<span class="w"> </span>mv<span class="w"> </span>KARAF_DIRECTORY/*<span class="w"> </span>/opt/karaf
+</span></code></pre></div>
+- <code>KARAF_TARBALL_LINK</code>: It’s recommended to get the most recent version of Karaf 4.2.x. This will depend on the current version of Karaf, which can be found on the <a href="https://karaf.apache.org/download.html">Karaf downloads page</a> under “Karaf Runtime”. Like Solr, you can’t directly <code>wget</code> these links, but clicking on the <code>.tar.gz</code> link for the binary distribution will bring you to a list of mirrors, as well as provide you with a recommended mirror you can use here.
+- <code>KARAF_DIRECTORY</code>: This will depend on the exact version being used, but will likely be <code>/opt/apache-karaf-VERSION</code>, where <code>VERSION</code> is the current Karaf version number.</p>
+<h3 id="configuring-karaf-logging">Configuring Karaf Logging<a class="headerlink" href="#configuring-karaf-logging" title="Permanent link">&para;</a></h3>
+<p>We’re going to apply some basic logging to our Karaf installation that should suffice for an example. In a production installation, you may want to play around with some of these values for more personally useful logging.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sudo<span class="w"> </span>mkdir<span class="w"> </span>/var/log/karaf
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>sudo<span class="w"> </span>chown<span class="w"> </span>karaf:karaf<span class="w"> </span>/var/log/karaf
+</span></code></pre></div>
+<p><code>/opt/karaf/etc/org.pos4j.pax.logging.cfg | karaf:karaf/644</code>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a># Root logger
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>log4j.rootLogger=INFO, out, osgi:*
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>log4j.throwableRenderer=org.apache.log4j.OsgiThrowableRenderer
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a># File appender
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>log4j.appender.out=org.apache.log4j.RollingFileAppender
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>log4j.appender.out.layout=org.apache.log4j.PatternLayout
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>log4j.appender.out.layout.ConversionPattern=%d{ISO8601} | %-5.5p | %-16.16t | %-32.32c{1} | %X{bundle.id} - %X{bundle.name    } - %X{bundle.version} | %m%n
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>log4j.appender.out.file=/var/log/karaf/karaf.log
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>log4j.appender.out.append=true
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>log4j.appender.out.maxFileSize=1MB
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>log4j.appender.out.maxBackupIndex=10
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a># Camel Logger
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>log4j.appender.camel=org.apache.log4j.RollingFileAppender
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>log4j.appender.camel.layout=org.apache.log4j.PatternLayout
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>log4j.appender.camel.layout.ConversionPattern=%d{ISO8601} | %-5.5p | %-16.16t | %-32.32c{1} | %X{bundle.id} - %X{bundle.na    me} - %X{bundle.version} | %m%n
+</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>log4j.appender.camel.file=/var/log/karaf/camel.log
+</span><span id="__span-5-19"><a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a>log4j.appender.camel.append=false
+</span><span id="__span-5-20"><a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a>log4j.appender.camel.maxFileSize=1MB
+</span><span id="__span-5-21"><a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a>log4j.appender.camel.maxBackupIndex=10
+</span><span id="__span-5-22"><a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a>
+</span><span id="__span-5-23"><a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a>log4j.logger.org.apache.camel=INFO, camel
+</span><span id="__span-5-24"><a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a>
+</span><span id="__span-5-25"><a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a># Islandora Logger
+</span><span id="__span-5-26"><a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a>log4j.appender.islandora=org.apache.log4j.RollingFileAppender
+</span><span id="__span-5-27"><a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a>log4j.appender.islandora.layout=org.apache.log4j.PatternLayout
+</span><span id="__span-5-28"><a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a>log4j.appender.islandora.layout.ConversionPattern=%d{ISO8601} | %-5.5p | %-16.16t | %-32.32c{1} | %X{bundle.id} - %X{bundl    e.name} - %X{bundle.version} | %m%n
+</span><span id="__span-5-29"><a id="__codelineno-5-29" name="__codelineno-5-29" href="#__codelineno-5-29"></a>log4j.appender.islandora.file=/var/log/karaf/islandora.log
+</span><span id="__span-5-30"><a id="__codelineno-5-30" name="__codelineno-5-30" href="#__codelineno-5-30"></a>log4j.appender.islandora.append=false
+</span><span id="__span-5-31"><a id="__codelineno-5-31" name="__codelineno-5-31" href="#__codelineno-5-31"></a>log4j.appender.islandora.maxFileSize=1MB
+</span><span id="__span-5-32"><a id="__codelineno-5-32" name="__codelineno-5-32" href="#__codelineno-5-32"></a>log4j.appender.islandora.maxBackupIndex=10
+</span><span id="__span-5-33"><a id="__codelineno-5-33" name="__codelineno-5-33" href="#__codelineno-5-33"></a>
+</span><span id="__span-5-34"><a id="__codelineno-5-34" name="__codelineno-5-34" href="#__codelineno-5-34"></a>log4j.logger.ca.islandora.camel=INFO, islandora
+</span></code></pre></div></p>
+<h3 id="creating-a-setenvsh-script-for-karaf">Creating a <code>setenv.sh</code> Script for Karaf<a class="headerlink" href="#creating-a-setenvsh-script-for-karaf" title="Permanent link">&para;</a></h3>
+<p>Similar to Tomcat, our Karaf service is going to rely on a <code>setenv</code> shell script to determine environment variables Karaf needs in place when running. For now, this will simply be the path to <code>JAVA_HOME</code>, but this also accepts many other parameters you can find in the default <code>setenv</code> script.</p>
+<p><code>/opt/karaf/bin/setenv | karaf:karaf/755</code>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>#!/bin/sh
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>export JAVA_HOME=&quot;PATH_TO_JAVA_HOME&quot;
+</span></code></pre></div>
+- <code>PATH_TO_JAVA_HOME</code>: This will be the same <code>JAVA_HOME</code> we used when installing Tomcat , and can be found using the same method (i.e., still <code>/usr/lib/jvm/java-11-openjdk-amd64</code> if that's what it was before).</p>
+<h3 id="initializing-karaf">Initializing Karaf<a class="headerlink" href="#initializing-karaf" title="Permanent link">&para;</a></h3>
+<p>We’re going to start Karaf, then run the installer to put our configurations in place and generate a Karaf service. Once these are installed, we’re going to stop Karaf, as from there on out its start/stop management should be handled via that service.</p>
+<p>First we need to enable the default Karaf user in <code>/opt/karaf/etc/users.properties</code>:</p>
+<p><strong>Before</strong>:</p>
+<blockquote>
+<p>32 | # karaf = karaf,_g_:admingroup</p>
+<p>33 | # _g_\:admingroup = group,admin,manager,viewer,systembundles,ssh</p>
+</blockquote>
+<p><strong>After</strong>:</p>
+<blockquote>
+<p>32 | karaf = karaf,_g_:admingroup</p>
+<p>33 | _g_\:admingroup = group,admin,manager,viewer,systembundles,ssh</p>
+</blockquote>
+<p>Save the file and close it, then:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>sudo<span class="w"> </span>-u<span class="w"> </span>karaf<span class="w"> </span>/opt/karaf/bin/start
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="c1"># You may want to wait a bit for Karaf to start.</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="c1"># If you&#39;re not sure whether or not it&#39;s running, you can always run:</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="c1"># ps aux | grep karaf</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="c1"># to see if the server is up and running.</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>/opt/karaf/bin/client<span class="w"> </span>feature:install<span class="w"> </span>wrapper
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>/opt/karaf/bin/client<span class="w"> </span>wrapper:install
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>/opt/karaf/bin/stop
+</span></code></pre></div>
+<h3 id="creating-and-starting-the-karaf-service">Creating and Starting the Karaf Service<a class="headerlink" href="#creating-and-starting-the-karaf-service" title="Permanent link">&para;</a></h3>
+<p>Installing the Karaf wrapper generates several service files that can be used on different types of systems. For Debian and Ubuntu installation we want to enable the <code>karaf.service</code> service so that Karaf is properly started on boot.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>/opt/karaf/bin/karaf.service
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>karaf
+</span></code></pre></div>
+<p>We can check if the service started correctly with:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>status<span class="w"> </span>karaf
+</span></code></pre></div>
+<p>Press Q to close the status.</p>
+<h2 id="alpaca-10x">Alpaca 1.0.x<a class="headerlink" href="#alpaca-10x" title="Permanent link">&para;</a></h2>
+<h3 id="adding-the-required-karaf-repositories">Adding the Required Karaf Repositories<a class="headerlink" href="#adding-the-required-karaf-repositories" title="Permanent link">&para;</a></h3>
+<p>Karaf features can be installed from several different types of sources, but the fastest and easiest way to do so is from existing repository URLs that we can just plug into Karaf to provide us feature lists prepared and ready for installation. Like most interactions with Karaf, we can add these repositories using its built-in <code>client</code>.</p>
+<div class="admonition notice">
+<p class="admonition-title">Notice</p>
+<p>These repositories are updated consistently, and their updates include revised dependency lists. Commonly, when repositories are out of date or otherwise mismatched, feature installation can result in an <code>Unable to resolve root: missing requirement</code> error; for this reason, this guide recommends using recently-updated versions of these repositories. That being said, if such errors occur despite installing the latest versions of these features, the maintainer of the features repository should be informed.</p>
+</div>
+<p>For the Karaf features we’re going to install, we need a few different repositories to be added to the list:</p>
+<p><div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>/opt/karaf/bin/client<span class="w"> </span>repo-add<span class="w"> </span>mvn:org.apache.activemq/activemq-karaf/ACTIVEMQ_KARAF_VERSION/xml/features
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>/opt/karaf/bin/client<span class="w"> </span>repo-add<span class="w"> </span>mvn:org.apache.camel.karaf/apache-camel/APACHE_CAMEL_VERSION/xml/features
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>/opt/karaf/bin/client<span class="w"> </span>repo-add<span class="w"> </span>mvn:ca.islandora.alpaca/islandora-karaf/ISLANDORA_KARAF_VERSION/xml/features
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="c1"># XXX: This shouldn&#39;t be strictly necessary, but appears to be a missing</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="c1"># upstream dependency for some fcrepo features.</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>/opt/karaf/bin/client<span class="w"> </span>repo-add<span class="w"> </span>mvn:org.apache.jena/jena-osgi-features/JENA_OSGI_VERSION/xml/features
+</span></code></pre></div>
+- <code>ACTIVEMQ_KARAF_VERSION</code>: The version of ActiveMQ we wrote down at the beginning of this chapter when installing ActiveMQ via <code>apt-get</code>
+- <code>APACHE_CAMEL_VERSION</code>: The latest version of Apache Camel 2.x.x; you can find this listed at the <a href="https://mvnrepository.com/artifact/org.apache.camel.karaf/apache-camel">apache-camel repository page</a> (e.g., 2.25.4 at the time of writing)
+- <code>ISLANDORA_KARAF_VERSION</code>: The latest version of Islandora Karaf 1.x; you can find this listed at the <a href="https://mvnrepository.com/artifact/ca.islandora.alpaca/islandora-karaf">islandora-karaf repository page</a> (e.g., 1.0.5 at the time of writing)
+- <code>JENA_OSGI_VERSION</code>: The latest version of the Apache Jena 3.x OSGi features; you can find this listed at the <a href="https://mvnrepository.com/artifact/org.apache.jena/jena-osgi-features">jena-osgi-features repository page</a> (e.g., 3.17.0 at the time of writing)</p>
+<h3 id="configuring-karaf-features">Configuring Karaf Features<a class="headerlink" href="#configuring-karaf-features" title="Permanent link">&para;</a></h3>
+<p>Our installed Karaf features require configuration files to know exactly where to route things coming and going from them.</p>
+<p><code>/opt/karaf/etc/ca.islandora.alpaca.http.client.cfg | karaf:karaf/644</code>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>token.value=ISLANDORA_SYN_TOKEN
+</span></code></pre></div>
+- <code>ISLANDORA_SYN_TOKEN</code>: This should be the same token that was established during the installation of Syn in your <code>syn-settings.xml</code> file</p>
+<p><code>/opt/karaf/etc/org.fcrepo.camel.indexing.triplestore.cfg | karaf:karaf/644</code>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>input.stream=activemq:topic:fedora
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>triplestore.reindex.stream=activemq:queue:triplestore.reindex
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>triplestore.baseUrl=http://localhost:8080/blazegraph/namespace/islandora/sparql
+</span></code></pre></div></p>
+<p><code>/opt/karaf/etc/ca.islandora.alpaca.indexing.triplestore.cfg | karaf:karaf/644</code>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>error.maxRedeliveries=10
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>index.stream=activemq:queue:islandora-indexing-triplestore-index
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>delete.stream=activemq:queue:islandora-indexing-triplestore-delete
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>triplestore.baseUrl=http://localhost:8080/blazegraph/namespace/islandora/sparql
+</span></code></pre></div></p>
+<p><code>/opt/karaf/etc/ca.islandora.alpaca.indexing.fcrepo.cfg | karaf:karaf/644</code>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>error.maxRedeliveries=5
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>node.stream=activemq:queue:islandora-indexing-fcrepo-content
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>node.delete.stream=activemq:queue:islandora-indexing-fcrepo-delete
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>media.stream=activemq:queue:islandora-indexing-fcrepo-media
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>file.stream=activemq:queue:islandora-indexing-fcrepo-file
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>file.delete.stream=activemq:queue:islandora-indexing-fcrepo-file-delete
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>milliner.baseUrl=http://localhost/milliner
+</span></code></pre></div></p>
+<h3 id="blueprinting-karaf-derivative-connectors">Blueprinting Karaf Derivative Connectors<a class="headerlink" href="#blueprinting-karaf-derivative-connectors" title="Permanent link">&para;</a></h3>
+<p>For those services in Crayfish we have set up to provide derivatives to Islandora resources, we need connector blueprints to tell the derivative connector how to route incoming requests, run conversions, and return outgoing derivatives.</p>
+<p>Our blueprints are going to look largely similar between services, with only a few properties changing between them. Largely, these mainly just need to match the ActiveMQ queues we established in the previous configuration, and route to the correct Crayfish service.</p>
+<p><code>/opt/karaf/deploy/ca.islandora.alpaca.connector.ocr.blueprint.xml | karaf:karaf/644</code>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="nt">&lt;blueprint</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">&quot;http://www.osgi.org/xmlns/blueprint/v1.0.0&quot;</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">       </span><span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">       </span><span class="na">xmlns:cm=</span><span class="s">&quot;http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0&quot;</span>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="w">       </span><span class="na">xsi:schemaLocation=</span><span class="s">&quot;</span>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="s">       http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0 http://aries.apache.org/schemas/blueprint-cm/blueprint-cm-1.1.0.xsd</span>
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="s">       http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd</span>
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="s">       http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>
+</span><span id="__span-15-10"><a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a><span class="w">  </span><span class="nt">&lt;cm:property-placeholder</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;properties&quot;</span><span class="w"> </span><span class="na">persistent-id=</span><span class="s">&quot;ca.islandora.alpaca.connector.ocr&quot;</span><span class="w"> </span><span class="na">update-strategy=</span><span class="s">&quot;reload&quot;</span><span class="w"> </span><span class="nt">&gt;</span>
+</span><span id="__span-15-11"><a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a><span class="w">    </span><span class="nt">&lt;cm:default-properties&gt;</span>
+</span><span id="__span-15-12"><a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a><span class="w">      </span><span class="nt">&lt;cm:property</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;error.maxRedeliveries&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;5&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-15-13"><a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a><span class="w">      </span><span class="nt">&lt;cm:property</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;in.stream&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;activemq:queue:islandora-connector-ocr&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-15-14"><a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a><span class="w">      </span><span class="nt">&lt;cm:property</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;derivative.service.url&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;http://localhost/hypercube&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-15-15"><a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a><span class="w">    </span><span class="nt">&lt;/cm:default-properties&gt;</span>
+</span><span id="__span-15-16"><a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a><span class="w">  </span><span class="nt">&lt;/cm:property-placeholder&gt;</span>
+</span><span id="__span-15-17"><a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a>
+</span><span id="__span-15-18"><a id="__codelineno-15-18" name="__codelineno-15-18" href="#__codelineno-15-18"></a><span class="w">  </span><span class="nt">&lt;reference</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;broker&quot;</span><span class="w"> </span><span class="na">interface=</span><span class="s">&quot;org.apache.camel.Component&quot;</span><span class="w"> </span><span class="na">filter=</span><span class="s">&quot;(osgi.jndi.service.name=fcrepo/Broker)&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-15-19"><a id="__codelineno-15-19" name="__codelineno-15-19" href="#__codelineno-15-19"></a>
+</span><span id="__span-15-20"><a id="__codelineno-15-20" name="__codelineno-15-20" href="#__codelineno-15-20"></a><span class="w">  </span><span class="nt">&lt;bean</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;http&quot;</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;org.apache.camel.component.http4.HttpComponent&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-15-21"><a id="__codelineno-15-21" name="__codelineno-15-21" href="#__codelineno-15-21"></a><span class="w">  </span><span class="nt">&lt;bean</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;https&quot;</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;org.apache.camel.component.http4.HttpComponent&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-15-22"><a id="__codelineno-15-22" name="__codelineno-15-22" href="#__codelineno-15-22"></a>
+</span><span id="__span-15-23"><a id="__codelineno-15-23" name="__codelineno-15-23" href="#__codelineno-15-23"></a><span class="w">  </span><span class="nt">&lt;camelContext</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;IslandoraConnectorOCR&quot;</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">&quot;http://camel.apache.org/schema/blueprint&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-15-24"><a id="__codelineno-15-24" name="__codelineno-15-24" href="#__codelineno-15-24"></a><span class="w">    </span><span class="nt">&lt;package&gt;</span>ca.islandora.alpaca.connector.derivative<span class="nt">&lt;/package&gt;</span>
+</span><span id="__span-15-25"><a id="__codelineno-15-25" name="__codelineno-15-25" href="#__codelineno-15-25"></a><span class="w">  </span><span class="nt">&lt;/camelContext&gt;</span>
+</span><span id="__span-15-26"><a id="__codelineno-15-26" name="__codelineno-15-26" href="#__codelineno-15-26"></a>
+</span><span id="__span-15-27"><a id="__codelineno-15-27" name="__codelineno-15-27" href="#__codelineno-15-27"></a><span class="nt">&lt;/blueprint&gt;</span>
+</span></code></pre></div></p>
+<p><code>/opt/karaf/deploy/ca.islandora.alpaca.connector.houdini.blueprint.xml | karaf:karaf/644</code>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="nt">&lt;blueprint</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">&quot;http://www.osgi.org/xmlns/blueprint/v1.0.0&quot;</span>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">       </span><span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="w">       </span><span class="na">xmlns:cm=</span><span class="s">&quot;http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0&quot;</span>
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="w">       </span><span class="na">xsi:schemaLocation=</span><span class="s">&quot;</span>
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="s">       http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0 http://aries.apache.org/schemas/blueprint-cm/blueprint-cm-1.1.0.xsd</span>
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="s">       http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd</span>
+</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="s">       http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>
+</span><span id="__span-16-10"><a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a><span class="w">  </span><span class="nt">&lt;cm:property-placeholder</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;properties&quot;</span><span class="w"> </span><span class="na">persistent-id=</span><span class="s">&quot;ca.islandora.alpaca.connector.houdini&quot;</span><span class="w"> </span><span class="na">update-strategy=</span><span class="s">&quot;reload&quot;</span><span class="w"> </span><span class="nt">&gt;</span>
+</span><span id="__span-16-11"><a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a><span class="w">    </span><span class="nt">&lt;cm:default-properties&gt;</span>
+</span><span id="__span-16-12"><a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a><span class="w">      </span><span class="nt">&lt;cm:property</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;error.maxRedeliveries&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;5&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-16-13"><a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a><span class="w">      </span><span class="nt">&lt;cm:property</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;in.stream&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;activemq:queue:islandora-connector-houdini&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-16-14"><a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a><span class="w">      </span><span class="nt">&lt;cm:property</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;derivative.service.url&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;http://localhost/houdini/convert&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-16-15"><a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a><span class="w">    </span><span class="nt">&lt;/cm:default-properties&gt;</span>
+</span><span id="__span-16-16"><a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a><span class="w">  </span><span class="nt">&lt;/cm:property-placeholder&gt;</span>
+</span><span id="__span-16-17"><a id="__codelineno-16-17" name="__codelineno-16-17" href="#__codelineno-16-17"></a>
+</span><span id="__span-16-18"><a id="__codelineno-16-18" name="__codelineno-16-18" href="#__codelineno-16-18"></a><span class="w">  </span><span class="nt">&lt;reference</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;broker&quot;</span><span class="w"> </span><span class="na">interface=</span><span class="s">&quot;org.apache.camel.Component&quot;</span><span class="w"> </span><span class="na">filter=</span><span class="s">&quot;(osgi.jndi.service.name=fcrepo/Broker)&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-16-19"><a id="__codelineno-16-19" name="__codelineno-16-19" href="#__codelineno-16-19"></a>
+</span><span id="__span-16-20"><a id="__codelineno-16-20" name="__codelineno-16-20" href="#__codelineno-16-20"></a><span class="w">  </span><span class="nt">&lt;bean</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;http&quot;</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;org.apache.camel.component.http4.HttpComponent&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-16-21"><a id="__codelineno-16-21" name="__codelineno-16-21" href="#__codelineno-16-21"></a><span class="w">  </span><span class="nt">&lt;bean</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;https&quot;</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;org.apache.camel.component.http4.HttpComponent&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-16-22"><a id="__codelineno-16-22" name="__codelineno-16-22" href="#__codelineno-16-22"></a>
+</span><span id="__span-16-23"><a id="__codelineno-16-23" name="__codelineno-16-23" href="#__codelineno-16-23"></a><span class="w">  </span><span class="nt">&lt;camelContext</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;IslandoraConnectorHoudini&quot;</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">&quot;http://camel.apache.org/schema/blueprint&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-16-24"><a id="__codelineno-16-24" name="__codelineno-16-24" href="#__codelineno-16-24"></a><span class="w">    </span><span class="nt">&lt;package&gt;</span>ca.islandora.alpaca.connector.derivative<span class="nt">&lt;/package&gt;</span>
+</span><span id="__span-16-25"><a id="__codelineno-16-25" name="__codelineno-16-25" href="#__codelineno-16-25"></a><span class="w">  </span><span class="nt">&lt;/camelContext&gt;</span>
+</span><span id="__span-16-26"><a id="__codelineno-16-26" name="__codelineno-16-26" href="#__codelineno-16-26"></a>
+</span><span id="__span-16-27"><a id="__codelineno-16-27" name="__codelineno-16-27" href="#__codelineno-16-27"></a><span class="nt">&lt;/blueprint&gt;</span>
+</span></code></pre></div></p>
+<p><code>/opt/karaf/deploy/ca.islandora.alpaca.connector.homarus.blueprint.xml | karaf:karaf/644</code>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="nt">&lt;blueprint</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">&quot;http://www.osgi.org/xmlns/blueprint/v1.0.0&quot;</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="w">       </span><span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="w">       </span><span class="na">xmlns:cm=</span><span class="s">&quot;http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0&quot;</span>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="w">       </span><span class="na">xsi:schemaLocation=</span><span class="s">&quot;</span>
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="s">       http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0 http://aries.apache.org/schemas/blueprint-cm/blueprint-cm-1.1.0.xsd</span>
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="s">       http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd</span>
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="s">       http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>
+</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a><span class="w">  </span><span class="nt">&lt;cm:property-placeholder</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;properties&quot;</span><span class="w"> </span><span class="na">persistent-id=</span><span class="s">&quot;ca.islandora.alpaca.connector.homarus&quot;</span><span class="w"> </span><span class="na">update-strategy=</span><span class="s">&quot;reload&quot;</span><span class="w"> </span><span class="nt">&gt;</span>
+</span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a><span class="w">    </span><span class="nt">&lt;cm:default-properties&gt;</span>
+</span><span id="__span-17-12"><a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a><span class="w">      </span><span class="nt">&lt;cm:property</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;error.maxRedeliveries&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;5&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-17-13"><a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a><span class="w">      </span><span class="nt">&lt;cm:property</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;in.stream&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;activemq:queue:islandora-connector-homarus&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-17-14"><a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a><span class="w">      </span><span class="nt">&lt;cm:property</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;derivative.service.url&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;http://localhost/homarus/convert&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-17-15"><a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a><span class="w">    </span><span class="nt">&lt;/cm:default-properties&gt;</span>
+</span><span id="__span-17-16"><a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a><span class="w">  </span><span class="nt">&lt;/cm:property-placeholder&gt;</span>
+</span><span id="__span-17-17"><a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a>
+</span><span id="__span-17-18"><a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a><span class="w">  </span><span class="nt">&lt;reference</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;broker&quot;</span><span class="w"> </span><span class="na">interface=</span><span class="s">&quot;org.apache.camel.Component&quot;</span><span class="w"> </span><span class="na">filter=</span><span class="s">&quot;(osgi.jndi.service.name=fcrepo/Broker)&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-17-19"><a id="__codelineno-17-19" name="__codelineno-17-19" href="#__codelineno-17-19"></a>
+</span><span id="__span-17-20"><a id="__codelineno-17-20" name="__codelineno-17-20" href="#__codelineno-17-20"></a><span class="w">  </span><span class="nt">&lt;bean</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;http&quot;</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;org.apache.camel.component.http4.HttpComponent&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-17-21"><a id="__codelineno-17-21" name="__codelineno-17-21" href="#__codelineno-17-21"></a><span class="w">  </span><span class="nt">&lt;bean</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;https&quot;</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;org.apache.camel.component.http4.HttpComponent&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-17-22"><a id="__codelineno-17-22" name="__codelineno-17-22" href="#__codelineno-17-22"></a>
+</span><span id="__span-17-23"><a id="__codelineno-17-23" name="__codelineno-17-23" href="#__codelineno-17-23"></a><span class="w">  </span><span class="nt">&lt;camelContext</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;IslandoraConnectorHomarus&quot;</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">&quot;http://camel.apache.org/schema/blueprint&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-17-24"><a id="__codelineno-17-24" name="__codelineno-17-24" href="#__codelineno-17-24"></a><span class="w">    </span><span class="nt">&lt;package&gt;</span>ca.islandora.alpaca.connector.derivative<span class="nt">&lt;/package&gt;</span>
+</span><span id="__span-17-25"><a id="__codelineno-17-25" name="__codelineno-17-25" href="#__codelineno-17-25"></a><span class="w">  </span><span class="nt">&lt;/camelContext&gt;</span>
+</span><span id="__span-17-26"><a id="__codelineno-17-26" name="__codelineno-17-26" href="#__codelineno-17-26"></a>
+</span><span id="__span-17-27"><a id="__codelineno-17-27" name="__codelineno-17-27" href="#__codelineno-17-27"></a><span class="nt">&lt;/blueprint&gt;</span>
+</span></code></pre></div></p>
+<p><code>/opt/karaf/deploy/ca.islandora.alpaca.connector.fits.blueprint.xml | karaf:karaf/644</code>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="nt">&lt;blueprint</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">&quot;http://www.osgi.org/xmlns/blueprint/v1.0.0&quot;</span>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="w">       </span><span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="w">       </span><span class="na">xmlns:cm=</span><span class="s">&quot;http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0&quot;</span>
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="w">       </span><span class="na">xsi:schemaLocation=</span><span class="s">&quot;</span>
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="s">       http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0 http://aries.apache.org/schemas/blueprint-cm/blueprint-cm-1.1.0.xsd</span>
+</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="s">       http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd</span>
+</span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="s">       http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>
+</span><span id="__span-18-10"><a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="w">  </span><span class="nt">&lt;cm:property-placeholder</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;properties&quot;</span><span class="w"> </span><span class="na">persistent-id=</span><span class="s">&quot;ca.islandora.alpaca.connector.fits&quot;</span><span class="w"> </span><span class="na">update-strategy=</span><span class="s">&quot;reload&quot;</span><span class="w"> </span><span class="nt">&gt;</span>
+</span><span id="__span-18-11"><a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a><span class="w">    </span><span class="nt">&lt;cm:default-properties&gt;</span>
+</span><span id="__span-18-12"><a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a><span class="w">      </span><span class="nt">&lt;cm:property</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;error.maxRedeliveries&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;5&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-18-13"><a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a><span class="w">      </span><span class="nt">&lt;cm:property</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;in.stream&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;activemq:queue:islandora-connector-fits&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-18-14"><a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a><span class="w">      </span><span class="nt">&lt;cm:property</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;derivative.service.url&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;http://localhost/crayfits&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-18-15"><a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a><span class="w">    </span><span class="nt">&lt;/cm:default-properties&gt;</span>
+</span><span id="__span-18-16"><a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a><span class="w">  </span><span class="nt">&lt;/cm:property-placeholder&gt;</span>
+</span><span id="__span-18-17"><a id="__codelineno-18-17" name="__codelineno-18-17" href="#__codelineno-18-17"></a>
+</span><span id="__span-18-18"><a id="__codelineno-18-18" name="__codelineno-18-18" href="#__codelineno-18-18"></a><span class="w">  </span><span class="nt">&lt;reference</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;broker&quot;</span><span class="w"> </span><span class="na">interface=</span><span class="s">&quot;org.apache.camel.Component&quot;</span><span class="w"> </span><span class="na">filter=</span><span class="s">&quot;(osgi.jndi.service.name=fcrepo/Broker)&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-18-19"><a id="__codelineno-18-19" name="__codelineno-18-19" href="#__codelineno-18-19"></a>
+</span><span id="__span-18-20"><a id="__codelineno-18-20" name="__codelineno-18-20" href="#__codelineno-18-20"></a><span class="w">  </span><span class="nt">&lt;bean</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;http&quot;</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;org.apache.camel.component.http4.HttpComponent&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-18-21"><a id="__codelineno-18-21" name="__codelineno-18-21" href="#__codelineno-18-21"></a><span class="w">  </span><span class="nt">&lt;bean</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;https&quot;</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;org.apache.camel.component.http4.HttpComponent&quot;</span><span class="nt">/&gt;</span>
+</span><span id="__span-18-22"><a id="__codelineno-18-22" name="__codelineno-18-22" href="#__codelineno-18-22"></a>
+</span><span id="__span-18-23"><a id="__codelineno-18-23" name="__codelineno-18-23" href="#__codelineno-18-23"></a><span class="w">  </span><span class="nt">&lt;camelContext</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;IslandoraConnectorfits&quot;</span><span class="w"> </span><span class="na">xmlns=</span><span class="s">&quot;http://camel.apache.org/schema/blueprint&quot;</span><span class="nt">&gt;</span>
+</span><span id="__span-18-24"><a id="__codelineno-18-24" name="__codelineno-18-24" href="#__codelineno-18-24"></a><span class="w">    </span><span class="nt">&lt;package&gt;</span>ca.islandora.alpaca.connector.derivative<span class="nt">&lt;/package&gt;</span>
+</span><span id="__span-18-25"><a id="__codelineno-18-25" name="__codelineno-18-25" href="#__codelineno-18-25"></a><span class="w">  </span><span class="nt">&lt;/camelContext&gt;</span>
+</span><span id="__span-18-26"><a id="__codelineno-18-26" name="__codelineno-18-26" href="#__codelineno-18-26"></a>
+</span><span id="__span-18-27"><a id="__codelineno-18-27" name="__codelineno-18-27" href="#__codelineno-18-27"></a><span class="nt">&lt;/blueprint&gt;</span>
+</span></code></pre></div></p>
+<h3 id="installing-the-required-karaf-features">Installing the Required Karaf Features<a class="headerlink" href="#installing-the-required-karaf-features" title="Permanent link">&para;</a></h3>
+<p>Before we can configure the features we’re going to use, they need to be installed. Some of these installations may take some time.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>/opt/karaf/bin/client<span class="w"> </span>feature:install<span class="w"> </span>camel-blueprint
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>/opt/karaf/bin/client<span class="w"> </span>feature:install<span class="w"> </span>activemq-blueprint
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>/opt/karaf/bin/client<span class="w"> </span>feature:install<span class="w"> </span>fcrepo-service-activemq
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="c1"># This again should not be strictly necessary, since this isn&#39;t the triplestore</span>
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="c1"># we&#39;re using, but is being included here to resolve the aforementioned</span>
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="c1"># missing link in the dependency chain.</span>
+</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>/opt/karaf/bin/client<span class="w"> </span>feature:install<span class="w"> </span>jena
+</span><span id="__span-19-8"><a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>/opt/karaf/bin/client<span class="w"> </span>feature:install<span class="w"> </span>fcrepo-camel
+</span><span id="__span-19-9"><a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a>/opt/karaf/bin/client<span class="w"> </span>feature:install<span class="w"> </span>fcrepo-indexing-triplestore
+</span><span id="__span-19-10"><a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a>/opt/karaf/bin/client<span class="w"> </span>feature:install<span class="w"> </span>islandora-http-client
+</span><span id="__span-19-11"><a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a>/opt/karaf/bin/client<span class="w"> </span>feature:install<span class="w"> </span>islandora-indexing-triplestore
+</span><span id="__span-19-12"><a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a>/opt/karaf/bin/client<span class="w"> </span>feature:install<span class="w"> </span>islandora-indexing-fcrepo
+</span><span id="__span-19-13"><a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a>/opt/karaf/bin/client<span class="w"> </span>feature:install<span class="w"> </span>islandora-connector-derivative
+</span></code></pre></div>
+<h3 id="verifying-karaf-components-are-running-optional-but-recommended">Verifying Karaf Components are Running (Optional But Recommended)<a class="headerlink" href="#verifying-karaf-components-are-running-optional-but-recommended" title="Permanent link">&para;</a></h3>
+<p>At this point, Karaf components should be up and running, but it's a good idea to double-check that this is the case. We can do this from within the Karaf client by taking a look at its component list.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="c1"># Until this point, we&#39;ve been running Karaf commands from outside; we can hop</span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="c1"># into the client, however, and run commands from directly within.</span>
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>/opt/karaf/bin/client
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="c1"># This takes us into the Karaf client so we can run commands.</span>
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>la<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>islandora
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>la<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>fcrepo
+</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="c1"># It may be a good idea to use this to look up to the other components we</span>
+</span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a><span class="c1"># installed.</span>
+</span><span id="__span-20-9"><a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a><span class="nb">logout</span>
+</span></code></pre></div>
+<p>For the above <code>la | grep</code> commands, components that are running should be listed as <code>Active</code>.</p>
+
+  <hr>
+<div class="md-source-file">
+  <small>
+    
+      Last update:
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">March 23, 2024</span>
+      
+    
+  </small>
+</div>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      <b>This documentation is user-sourced!</b> Suggestions and comments are welcome in our <u><a href="https://github.com/Islandora/documentation/issues" target="_blank">issue queue</a></u>.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://twitter.com/islandora" target="_blank" rel="noopener" title="twitter.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["content.action.edit"], "search": "../../../assets/javascripts/workers/search.db81ec45.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.4b2c34cd.min.js"></script>
+      
+    
+  </body>
+</html>
