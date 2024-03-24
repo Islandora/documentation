@@ -215,6 +215,11 @@ The list of available relations for this Contributors field is configurable at '
     - If you apply this field to another content type, you can define unique relations available for that instance of the field.
     - However, multiple instances of this field means administrative overhead to maintain the separate lists of relations defined for each instance.
 
+!!! Note "Publishers"
+    Until Mar 2024, the Islandora Starter Site included publishers in the Contributors (`field_linked_agent`) field. The MIG made the decision to make publisher
+    its own text field, in order to make it easier to separate publishers from other contributors, and to prevent clutter in the linked taxonomies. Publishers
+    are often recorded by transcribing what is on the item, rather than formatting the name per Authority rules, so variations on a single name are expected. 
+
 Relations are defined in the format *key\|value*, and the key is used in the RDF mapping (see below).
 
 ![Screenshot of the 'Available Relations' configuration text box for the 'Contributor' field.](../assets/metadata_available_relations_config.png)
