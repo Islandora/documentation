@@ -205,6 +205,16 @@ If you have a domain name, change the default to your domain name. And set the D
 drupal_domain: "myactualdomain.com"
 drupal_site_name: "Example Sitename"
 ```
+Also set your domain in `drupal_trusted_hosts`:
+
+```yml
+drupal_trusted_hosts:
+  - ^localhost$
+  - "{{ hostvars[groups['webserver'][0]].ansible_host }}"
+  - '^myactualdomain\.com$'
+```
+
+Note the backslash which escapes the period (which would otherwise match any character). Because of this escape character, the string needs to be surrounded by single quotes.
 
 #### hosts
 
