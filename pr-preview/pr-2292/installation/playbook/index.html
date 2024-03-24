@@ -2882,9 +2882,16 @@ your own values.</p>
 </span></code></pre></div>
 <h4 id="group_varswebserverdrupalyml">group_vars/webserver/drupal.yml<a class="headerlink" href="#group_varswebserverdrupalyml" title="Permanent link">&para;</a></h4>
 <p>If you have a domain name, change the default to your domain name. And set the Drupal site name to whatever you need it to be.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>drupal_domain: &quot;myactualdomain.com&quot;
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>drupal_domain: &quot;myactualdomain.com&quot;
 </span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>drupal_site_name: &quot;Example Sitename&quot;
 </span></code></pre></div>
+Also set your domain in <code>drupal_trusted_hosts</code>:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>drupal_trusted_hosts:
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>  - ^localhost$
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>  - &quot;{{ hostvars[groups[&#39;webserver&#39;][0]].ansible_host }}&quot;
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>  - &#39;^myactualdomain\.com$&#39;
+</span></code></pre></div>
+<p>Note the backslash which escapes the period (which would otherwise match any character). Because of this escape character, the string needs to be surrounded by single quotes.</p>
 <h4 id="hosts">hosts<a class="headerlink" href="#hosts" title="Permanent link">&para;</a></h4>
 <p>You'll need to put particulars for logging into your server in the <code>inventory/production/hosts</code> file . This example is set up to login as the <code>ansible</code> user (to avoid trying to run Composer as <code>root</code>) and uses
 an SSH key. You'll need to get the details for logging into your remote server from your hosting provider (AWS, Digital Ocean, etc...)
@@ -2892,23 +2899,23 @@ or your systems administrator if you're running the server in-house. See
 <a href="https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html#connecting-to-hosts-behavioral-inventory-parameters">this page</a>
 for more details about what you can put into a
 host file</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>default ansible_host=example.org ansible_port=22 ansible_user=ansible ansible_ssh_private_key_file=&#39;/home/username/.ssh/id_rsa&#39;
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>default ansible_host=example.org ansible_port=22 ansible_user=ansible ansible_ssh_private_key_file=&#39;/home/username/.ssh/id_rsa&#39;
 </span></code></pre></div>
 <h3 id="running-the-remote-installer">Running the remote installer<a class="headerlink" href="#running-the-remote-installer" title="Permanent link">&para;</a></h3>
 <p>First, you'll want to install the ansible roles that are needed for the version of Islandora you are trying to install.  This can be done
 with</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>$<span class="w"> </span>ansible-galaxy<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.yml
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>$<span class="w"> </span>ansible-galaxy<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.yml
 </span></code></pre></div>
 <p>Then, if you are on Ubuntu 22.04, run the following commands:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>$<span class="w"> </span>ansible-playbook<span class="w"> </span>-i<span class="w"> </span>inventory/production<span class="w"> </span>playbook.yml<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;islandora_distro=ubuntu/jammy64&quot;</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;islandora_profile=starter&quot;</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;islandora_build_base_box=true&quot;</span>
-</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>$<span class="w"> </span>ansible-playbook<span class="w"> </span>-i<span class="w"> </span>inventory/production<span class="w"> </span>playbook.yml<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;islandora_distro=ubuntu/jammy64&quot;</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;islandora_profile=starter&quot;</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;islandora_build_base_box=false&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>$<span class="w"> </span>ansible-playbook<span class="w"> </span>-i<span class="w"> </span>inventory/production<span class="w"> </span>playbook.yml<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;islandora_distro=ubuntu/jammy64&quot;</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;islandora_profile=starter&quot;</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;islandora_build_base_box=true&quot;</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>$<span class="w"> </span>ansible-playbook<span class="w"> </span>-i<span class="w"> </span>inventory/production<span class="w"> </span>playbook.yml<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;islandora_distro=ubuntu/jammy64&quot;</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;islandora_profile=starter&quot;</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;islandora_build_base_box=false&quot;</span>
 </span></code></pre></div>
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
 <h3 id="out-of-date-playbooks">Out of date playbooks<a class="headerlink" href="#out-of-date-playbooks" title="Permanent link">&para;</a></h3>
 <p>Ansible caches the code used to provision the environment, so if you've already installed once you may not be getting the latest version
 of things even if you've <code>git pull</code>'d the latest playbook.  The code is stored in <code>roles/external</code>, so if you want to clear it out you can
 remove these before attempting to provision an environment</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>$<span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>roles/external
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>$<span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>roles/external
 </span></code></pre></div>
 <h3 id="port-clashes-for-local-environments">Port clashes for local environments<a class="headerlink" href="#port-clashes-for-local-environments" title="Permanent link">&para;</a></h3>
 <p>When provisioning using a local environment, you should be aware of any ports that are already in use by your computer that are also going to be
@@ -2937,7 +2944,7 @@ ask for help.  If you think you've stumbled across a bug in the installer, pleas
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">March 23, 2024</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">March 24, 2024</span>
       
     
   </small>
