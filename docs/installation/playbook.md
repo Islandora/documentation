@@ -189,6 +189,33 @@ You will have to add the matomo line.
 matomo_site_url: http://example.org
 ```
 
+#### group_vars/webserver/apache.yml
+
+If you have a domain name, change the default to your domain name.
+
+```yml
+ - servername: "myactualddomain.com"
+```
+
+#### group_vars/webserver/drupal.yml
+
+If you have a domain name, change the default to your domain name. And set the Drupal site name to whatever you need it to be.
+
+```yml
+drupal_domain: "myactualdomain.com"
+drupal_site_name: "Example Sitename"
+```
+Also set your domain in `drupal_trusted_hosts`:
+
+```yml
+drupal_trusted_hosts:
+  - ^localhost$
+  - "{{ hostvars[groups['webserver'][0]].ansible_host }}"
+  - '^myactualdomain\.com$'
+```
+
+Note the backslash which escapes the period (which would otherwise match any character). Because of this escape character, the string needs to be surrounded by single quotes.
+
 #### hosts
 
 You'll need to put particulars for logging into your server in the `inventory/production/hosts` file . This example is set up to login as the `ansible` user (to avoid trying to run Composer as `root`) and uses
