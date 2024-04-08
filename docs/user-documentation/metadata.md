@@ -1,5 +1,8 @@
 # Metadata in Islandora
 
+!!! note "Metadata vs Fields in the Starter Site"
+    To learn about the default out-of-the-box metadata fields, see [Starter Site Metadata Configuration](starter-site-metadata-configuration.md). This page describes technical details about how metadata is handled as fields in Drupal and provides a deeper understanding of, and tools for modifying, your metadata configuration.
+
 > 1-minute synopsis: In Islandora, metadata is stored in Drupal, in _fields_ attached to _entities_ (nodes or media). This allows us to interact with metadata (add, edit, remove, display, index in a search engine...) almost entirely using standard Drupal processes. If exporting this metadata to Fedora and/or a triplestore, the values are serialized to RDF using mappings that can be set for each bundle.
 
 !!! note "Drupal 8 Terminology"
