@@ -7,7 +7,7 @@ As described in [Metadata In Islandora](metadata.md), in Islandora metadata is s
 
 This page presents the primary descriptive and administrative metadata fields found in the Islandora Starter site. We will define each field and give its basic configuration. Most of these configurations can be customized after installation, and new fields can be added as per the needs of an individual institution. Fields are grouped in standard MODS order. 
 
-Further information on the metadata configuration can be found in a Google Spreadsheet [[Islandora Starter Site Metadata Configuration](https://docs.google.com/spreadsheets/d/1N37GSwiDl_DSH9-n3BhWLUtjZohOg2udGJJlnZ8BmWQ/edit?usp=sharing)] which parallels the information on this page. It goes into further detail about the configurations connected to each field, provides information on taxonomies and mappings, and can be filtered or sorted in a variety of ways. The document, or the spreadsheet above, can be copied and used as a basis for planning your own configuration customizations as you work on your Islandora site.
+Further information on the metadata configuration can be found in a Google Spreadsheet [Islandora Starter Site Metadata Configuration (Google Sheets)](https://docs.google.com/spreadsheets/d/1N37GSwiDl_DSH9-n3BhWLUtjZohOg2udGJJlnZ8BmWQ/edit?usp=sharing) which parallels the information on this page. It goes into further detail about the configurations connected to each field, provides information on taxonomies and mappings, and can be filtered or sorted in a variety of ways. The document, or the spreadsheet above, can be copied and used as a basis for planning your own configuration customizations as you work on your Islandora site.
 
 
 ## Administrative/System Fields
