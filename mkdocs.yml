@@ -176,6 +176,7 @@ nav:
           - 'Metadata': 'user-documentation/metadata.md'
           # largely conceptual, repository managers/ curators
           # information (e.g. move procedure for setting display hints to
+          - 'Starter Site Metadata Configuration': 'user-documentation/starter-site-metadata-configuration.md'
           - 'Linked data': 'user-documentation/linked-data.md'
           # conceptual, repository managers
           - 'Metadata harvesting': 'user-documentation/metadata-harvesting.md'
