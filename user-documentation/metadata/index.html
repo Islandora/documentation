@@ -1381,6 +1381,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#adding-a-new-field" class="md-nav__link">
+    Adding a new field
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#getting-metadata-into-fedora-and-a-triple-store" class="md-nav__link">
     Getting Metadata into Fedora and a Triple-store
   </a>
@@ -2738,6 +2745,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#adding-a-new-field" class="md-nav__link">
+    Adding a new field
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#getting-metadata-into-fedora-and-a-triple-store" class="md-nav__link">
     Getting Metadata into Fedora and a Triple-store
   </a>
@@ -2976,9 +2990,29 @@ seasonal value 2019-22 as defined in the EDTF specification):
 <li>However, multiple instances of this field means administrative overhead to maintain the separate lists of relations defined for each instance.</li>
 </ul>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Publishers</p>
+<p>Until Mar 2024, the Islandora Starter Site included publishers in the Contributors (<code>field_linked_agent</code>) field. The MIG made the decision to make publisher
+its own text field, in order to make it easier to separate publishers from other contributors, and to prevent clutter in the linked taxonomies. Publishers
+are often recorded by transcribing what is on the item, rather than formatting the name per Authority rules, so variations on a single name are expected. </p>
+</div>
 <p>Relations are defined in the format <em>key|value</em>, and the key is used in the RDF mapping (see below).</p>
 <p><img alt="Screenshot of the 'Available Relations' configuration text box for the 'Contributor' field." src="../../assets/metadata_available_relations_config.png" /></p>
 <p>By default, facets can be created for typed relation fields that will facet based on the linked entity alone, not separating references based on the relationship type.</p>
+<h2 id="adding-a-new-field">Adding a new field<a class="headerlink" href="#adding-a-new-field" title="Permanent link">&para;</a></h2>
+<p>You are free to add new fields to your Islandora content type(s). After you set one up, you may want to configure the following:</p>
+<ul>
+<li><strong>Form Display</strong> - set the field to display (or not) in your form, and set its widget, at  <strong>Administration</strong> >> <strong>Structure</strong> >> <strong>Content types</strong> >> [Your Content Type] >> <strong>Manage form display</strong>. You can also set it to display (or not) to certain users based on Field permissions at <strong>Administration</strong> >> <strong>Structure</strong> >> <strong>Content types</strong> >> [Your Content Type] >> <strong>Manage fields</strong> >> [Your new field].</li>
+<li><strong>Display</strong> - set the field to display (or not) to the public at <strong>Administration</strong> >> <strong>Structure</strong> >> <strong>Content types</strong> >> [Your Content Type] >> <strong>Manage display</strong>. You can also set it to display or not to certain users based on Field permissions at <strong>Administration</strong> >> <strong>Structure</strong> >> <strong>Content types</strong> >> [Your Content Type] >>  <strong>Manage fields</strong> >> [Your new field].</li>
+<li><strong>Solr</strong> - Solr configuration is set at <strong>Administration</strong> >> <strong>Configuration</strong> >> <strong>Search and metadata</strong> >> <strong>Search API</strong> >> [Default Solr content index] >> <strong>Fields</strong>.
+By default, Solr indexes the "Rendered Item" using the display mode "Search index". By default, the "Search index" display mode is not configured separately, so it renders using the "Default" display mode which is the default (or only) tab when configuring Display, above. This means that if you configured your new field to display, then it will be automatically available to fulltext search. But if you want to make a facet, or a fielded search (using Advanced Search), then you need to index the field separately, as either String (for a facet) or fulltext (for a fielded search). To do this, use the "<strong>+ Add field</strong>" button in the Solr configuration and select your field, under the "Content" section. If it is a reference field (such as a taxonomy term field or a related item field) then you may want to "dive down" using the "(+)" buttons to index the name or title of the referenced entity.</li>
+<li><strong>Facet</strong> - to make a facet, index the field as a string field (above). Then, create the facet at  <strong>Administration</strong> >> <strong>Configuration</strong> >> <strong>Search and metadata</strong> >> <strong>Facets</strong>. Finally, configure the facet to display by placing the corresponding block in the desired region.</li>
+<li><strong>Fielded Search</strong> - to make your new field one of the drop-downs in the Advanced Search block, first index it in Solr as fulltext (as above). Find the Advanced Search block and click "Configure" and then drag and drop your new field into the non-hidden section. Save the block config.</li>
+<li><strong>RDF</strong> - In the following section ("Getting Metadata into Fedora and a Triple-Store") we discuss how to index a field using Drupal's RDF mappings. You will want to do this if you are using Fedora or a Triple-store, or if you are using RDF to generate OAI-PMH DC data.</li>
+<li><strong>OAI-PMH MODS</strong> - if you are using OAI-PMH to generate MODS for each object, you can configure how this field displays by setting it in the appropriate View, by default "OAI PMH Item Data". After adding the field, give it a label that matches the <code>rest_oai_pmh</code> module's <a href="https://git.drupalcode.org/project/rest_oai_pmh/-/blob/2.0.x/templates/mods.html.twig"><code>templates/mods.html.twig</code></a>. For example, that template file includes <code>{{ elements.publisher }}</code> so the label in views needs to be exactly <code>publisher</code>. Save the View.</li>
+<li><strong>Citation CSL Mapping</strong> - To let a new field be used in the creation of citations with Citation Select, navigate to the Citation CSL Settings (as of Citation Select version 2.0, this is at  <strong>Administration</strong> >> <strong>Configuration</strong> >> <strong>Citation Select Settings</strong> >> <strong>CSL Mappings</strong>. Select your new field where applicable.</li>
+</ul>
+<p>An example of this, in terms of config changes, is visible in the <a href="https://github.com/Islandora-Devops/islandora-starter-site/compare/1.5.0...1.6.0">changeset of the Starter Site's 1.6.0 version</a> for the Publisher field. However, pulling such a changeset is unlikely to work smoothly and it is recommended to set these configurations manually.</p>
 <h2 id="getting-metadata-into-fedora-and-a-triple-store">Getting Metadata into Fedora and a Triple-store<a class="headerlink" href="#getting-metadata-into-fedora-and-a-triple-store" title="Permanent link">&para;</a></h2>
 <p>Depending on the needs at your institution, you may or may not be using Fedora with your Islandora installation. You also may or may not be hoping to publish your metadata as RDF triples that can be queried in a triplestore. Both of these functionalities are driven by the JSON-LD module (written for Islandora), which provides a JSON-LD serialization of your content nodes, media nodes, as well as your taxonomy terms. This JSON-LD is what gets ingested by Fedora, and is also what is used to add RDF triples to the <a href="https://islandora.github.io/documentation/installation/manual/installing_fedora_syn_and_blazegraph/">blazegraph triplestore</a> if you choose to use that service.</p>
 <p>The JSON-LD serialization for an entity is available by appending <code>_format=jsonld</code> to the entity's URL. Below is an example JSON-LD document representing the RDF serialization of a Repository item node created in a standard islandora-playbook based vagrant VM:</p>
@@ -3149,7 +3183,7 @@ seasonal value 2019-22 as defined in the EDTF specification):
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">April 17, 2024</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">April 18, 2024</span>
       
     
   </small>
