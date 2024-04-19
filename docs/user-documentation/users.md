@@ -20,6 +20,9 @@ Additional user roles can be created and assigned customized permissions, as des
 - This How-To assumes a very basic familiarity with Drupal.
 - This How-To is generally applicable for any Islandora site, but the examples given are taken from an Islandora demo using the (optional) **[Islandora Starter Site](https://github.com/Islandora/islandora-starter-site)** configuration. This configuration is deployed automatically if you build your Islandora site with the appropriate options, using the [Ansible Playbook](../installation/playbook.md), [ISLE with Docker-Compose](../installation/docker-introduction.md).
 
+!!! islandora "Warning"
+    If you are writing to Fedora, your username must not contain spaces.
+
 ## How to Add a User
 1. Log in to Drupal. You will need the _Administrator_ role to manage users.
 1. Click the **Manage** tab from the top toolbar.
