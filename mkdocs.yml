@@ -210,6 +210,7 @@ nav:
           - 'Access control': 'user-documentation/access-control.md'
           - 'JWT authentication': 'user-documentation/jwt-authentication.md'
           # moved from Developer documentation
+          - 'URL Aliases': 'user-documentation/url-aliases.md'
           - 'Usage statistics': 'user-documentation/usage-stats.md'
           # largely conceptual, repository managers
           - 'Versioning': 'user-documentation/versioning.md'
