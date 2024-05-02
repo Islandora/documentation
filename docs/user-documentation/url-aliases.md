@@ -33,4 +33,19 @@ identifiers if you have them!
 
 The default Pathauto pattern for Repository Items is `/islandora/[node:title]`
 with the pathauto configuration trimming the alias at 100 characters.
- 
+
+
+## Preserving Legacy URLs
+
+Sites migrating from Islandora Legacy may wish for their objects to still 
+be available through their old URLs, with the pattern `/islandora/object/[PID]`. 
+
+Options for doing this include:
+
+* Populating `field_pid` with the legacy PID, and using Pathauto to create URL
+aliases of the pattern `/islandora/object/[node:field_pid]`. However, you will
+need to set up something for new objects that don't have Legacy PIDs.
+* Use discoverygarden's ["PID Redirect"](https://github.com/discoverygarden/pid_redirect)
+module, which creates "301 Moved Permanently" redirects from legacy URLs to
+the appropriate node, based on `field_pid`. 
+* Manually managing redirects in your webserver. 
