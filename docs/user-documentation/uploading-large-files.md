@@ -2,7 +2,8 @@
 
 ## Large Files and Drupal
 
-If you want to upload large (> 1GB) files, you'll need to tune the following settings in your `php.ini`:
+If you want to upload large (> 1GB) files, you'll need to tune the following settings in your 
+PHP config (the following assumes Apache and a config file `php.ini`):
 
 - `upload_max_filesize` – The maximum allowed upload file size.
 - `post_max_size` – The maximum allowed POST data size.
