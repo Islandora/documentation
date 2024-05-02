@@ -1545,6 +1545,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../breadcrumbs/" class="md-nav__link">
+        Breadcrumbs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../jwt-authentication/" class="md-nav__link">
         JWT authentication
       </a>
@@ -1602,6 +1616,13 @@
         <li class="md-nav__item">
   <a href="#use-of-url-aliases-in-islandora-starter-site" class="md-nav__link">
     Use of URL aliases in Islandora Starter Site
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preserving-legacy-urls" class="md-nav__link">
+    Preserving Legacy URLs
   </a>
   
 </li>
@@ -2436,6 +2457,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#preserving-legacy-urls" class="md-nav__link">
+    Preserving Legacy URLs
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2484,13 +2512,26 @@ should not be interpreted as prescriptive. You are encouraged to use persistent
 identifiers if you have them!</p>
 <p>The default Pathauto pattern for Repository Items is <code>/islandora/[node:title]</code>
 with the pathauto configuration trimming the alias at 100 characters.</p>
+<h2 id="preserving-legacy-urls">Preserving Legacy URLs<a class="headerlink" href="#preserving-legacy-urls" title="Permanent link">&para;</a></h2>
+<p>Sites migrating from Islandora Legacy may wish for their objects to still 
+be available through their old URLs, with the pattern <code>/islandora/object/[PID]</code>. </p>
+<p>Options for doing this include:</p>
+<ul>
+<li>Populating <code>field_pid</code> with the legacy PID, and using Pathauto to create URL
+aliases of the pattern <code>/islandora/object/[node:field_pid]</code>. However, you will
+need to set up something for new objects that don't have Legacy PIDs.</li>
+<li>Use discoverygarden's <a href="https://github.com/discoverygarden/pid_redirect">"PID Redirect"</a>
+module, which creates "301 Moved Permanently" redirects from legacy URLs to
+the appropriate node, based on <code>field_pid</code>. </li>
+<li>Manually managing redirects in your webserver. </li>
+</ul>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">May 1, 2024</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">May 2, 2024</span>
       
     
   </small>
