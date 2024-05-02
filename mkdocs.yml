@@ -208,6 +208,7 @@ nav:
               # Conceptual and pragmatic, for repository managers.
       - Administering Islandora:
           - 'Access control': 'user-documentation/access-control.md'
+          - 'Breadcrumbs': 'user-documentation/breadcrumbs.md'
           - 'JWT authentication': 'user-documentation/jwt-authentication.md'
           # moved from Developer documentation
           - 'Usage statistics': 'user-documentation/usage-stats.md'
