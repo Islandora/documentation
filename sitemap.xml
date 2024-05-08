@@ -386,6 +386,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://islandora.github.io/documentation/user-documentation/breadcrumbs/</loc>
+         <lastmod>2024-05-08</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://islandora.github.io/documentation/user-documentation/content-models/</loc>
          <lastmod>2024-05-08</lastmod>
          <changefreq>daily</changefreq>
@@ -482,6 +487,11 @@
     </url>
     <url>
          <loc>https://islandora.github.io/documentation/user-documentation/uploading-large-files/</loc>
+         <lastmod>2024-05-08</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://islandora.github.io/documentation/user-documentation/url-aliases/</loc>
          <lastmod>2024-05-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
