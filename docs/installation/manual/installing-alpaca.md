@@ -8,7 +8,7 @@
 - [Apache ActiveMQ](https://activemq.apache.org/), a messaging server that will be used to handle communication between Alpaca and other components
 - [Islandora/Alpaca](https://github.com/Islandora/Alpaca), Java middleware that handle communication between various components of Islandora.
 
-### Installing ActiveMQ
+## Installing ActiveMQ
 
 In our case, the default installation method for ActiveMQ via `apt-get` will suffice.
 
@@ -32,7 +32,7 @@ sudo apt-cache policy activemq
 
 Write down the version listed under `Installed: `.
 
-### Installing Alpaca
+## Installing Alpaca
 
 Install Java 11+ if you haven't already.
 
@@ -43,7 +43,7 @@ cd /opt/alpaca
 curl -L https://repo1.maven.org/maven2/ca/islandora/alpaca/islandora-alpaca-app/2.2.0/islandora-alpaca-app-2.2.0-all.jar -o alpaca.jar
 ```
 
-#### Configuration
+### Configuration
 
 Alpaca is made up of several services, each of these can be enabled or disabled individually.
 
@@ -84,7 +84,7 @@ jms.concurrent-consumers=1
 ```
 This defines how many messages to process simultaneously.
 
-##### islandora-indexing-fcrepo
+#### islandora-indexing-fcrepo
 
 This service manages a Drupal node into a corresponding Fedora resource.
 
@@ -126,7 +126,7 @@ fcrepo.indexer.async-consumer=true
 
 This property allows the concurrent consumers to process concurrently; otherwise, the consumers will wait to the previous message has been processed before executing.
 
-##### islandora-indexing-triplestore
+#### islandora-indexing-triplestore
 
 This service indexes the Drupal node into the configured triplestore
 
@@ -169,7 +169,7 @@ triplestore.indexer.async-consumer=true
 
 This property allows the concurrent consumers to process concurrently; otherwise, the consumers will wait to the previous message has been processed before executing.
 
-### islandora-connector-derivative
+#### islandora-connector-derivative
 
 This service is used to configure an external microservice. This service will deploy multiple copies of its routes
 with different configured inputs and outputs based on properties.
@@ -232,7 +232,7 @@ derivative.fits.max-concurrent-consumers=2
 derivative.fits.async-consumer=false
 ```
 
-##### Customizing HTTP client timeouts
+#### Customizing HTTP client timeouts
 
 You can alter the HTTP client from the defaults for its request, connection and socket timeouts.
 To do this you want to enable the request configurer.
@@ -251,7 +251,7 @@ socket.timeout=-1
 
 The default for all three is `-1` which indicates no timeout.
 
-##### Alter HTTP options
+#### Alter HTTP options
 
 By default, Alpaca uses two settings for the HTTP component, these are
 * disableStreamCache=true
@@ -269,7 +269,7 @@ These will be added to ALL http endpoint requests.
 
 **Note**: We are currently running Camel 3.7.6, some configuration parameters on the above linked page might not be supported.
 
-#### Deploying/Running
+### Deploying/Running
 
 You can see the options by passing the `-h|--help` flag
 
