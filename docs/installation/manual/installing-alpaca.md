@@ -1,8 +1,7 @@
 # Installing ActiveMQ and Alpaca
 
-!!! error "Do not install Karaf"
+!!! note "Karaf no longer needed"
     You no longer need to install Karaf. We no longer do this, we just deploy the java apps. 
-    If you are interested in helping us improve the documentation, please see [Contributing](../../../contributing/CONTRIBUTING).
 
 ## In this section, we will install:
 
