@@ -1,7 +1,8 @@
 # Installing Karaf and Alpaca
 
-!!! warning "Needs Maintenance"
-    The manual installation documentation is in need of attention. We are aware that some components no longer work as documented here. If you are interested in helping us improve the documentation, please see [Contributing](../../../contributing/CONTRIBUTING).
+!!! error "Do not install Karaf"
+    You no longer need to install Karaf. We no longer do this, we just deploy the java apps. 
+    If you are interested in helping us improve the documentation, please see [Contributing](../../../contributing/CONTRIBUTING).
 
 ## In this section, we will install:
 
