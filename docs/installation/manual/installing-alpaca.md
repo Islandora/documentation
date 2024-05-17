@@ -274,7 +274,7 @@ These will be added to ALL http endpoint requests.
 You can see the options by passing the `-h|--help` flag
 
 ```shell
-> java -jar  islandora-alpaca-app/build/libs/islandora-alpaca-app-2.0.0-all.jar -h
+> java -jar /opt/alpaca/alpaca.jar -h
 Usage: alpaca [-hV] [-c=<configurationFilePath>]
   -h, --help      Show this help message and exit.
   -V, --version   Print version information and exit.
@@ -285,13 +285,13 @@ Usage: alpaca [-hV] [-c=<configurationFilePath>]
 Using the `-V|--version` flag will just return the current version of the application.
 
 ```shell
-> java -jar  islandora-alpaca-app/build/libs/islandora-alpaca-app-2.0.0-all.jar -v
+> java -jar /opt/alpaca/alpaca.jar -v
 2.0.0
 ```
 
 To start Alpaca you would pass the external property file with the `-c|--config` flag.
 
-For example if you are using an external properties file located at `/opt/my.properties`,
+For example if you are using an external properties file located at `/opt/alpaca/alpaca.properties`,
 you would run:
 
 ```shell
