@@ -2782,7 +2782,7 @@ add them as a comma separated list of key=value pairs.</p>
 <p><strong>Note</strong>: We are currently running Camel 3.7.6, some configuration parameters on the above linked page might not be supported.</p>
 <h3 id="deployingrunning">Deploying/Running<a class="headerlink" href="#deployingrunning" title="Permanent link">&para;</a></h3>
 <p>You can see the options by passing the <code>-h|--help</code> flag</p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>&gt;<span class="w"> </span>java<span class="w"> </span>-jar<span class="w">  </span>islandora-alpaca-app/build/libs/islandora-alpaca-app-2.0.0-all.jar<span class="w"> </span>-h
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>&gt;<span class="w"> </span>java<span class="w"> </span>-jar<span class="w"> </span>/opt/alpaca/alpaca.jar<span class="w"> </span>-h
 </span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>Usage:<span class="w"> </span>alpaca<span class="w"> </span><span class="o">[</span>-hV<span class="o">]</span><span class="w"> </span><span class="o">[</span>-c<span class="o">=</span>&lt;configurationFilePath&gt;<span class="o">]</span>
 </span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="w">  </span>-h,<span class="w"> </span>--help<span class="w">      </span>Show<span class="w"> </span>this<span class="w"> </span><span class="nb">help</span><span class="w"> </span>message<span class="w"> </span>and<span class="w"> </span>exit.
 </span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="w">  </span>-V,<span class="w"> </span>--version<span class="w">   </span>Print<span class="w"> </span>version<span class="w"> </span>information<span class="w"> </span>and<span class="w"> </span>exit.
@@ -2790,11 +2790,11 @@ add them as a comma separated list of key=value pairs.</p>
 </span><span id="__span-27-6"><a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a><span class="w">                  </span>The<span class="w"> </span>path<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>configuration<span class="w"> </span>file
 </span></code></pre></div>
 <p>Using the <code>-V|--version</code> flag will just return the current version of the application.</p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>&gt;<span class="w"> </span>java<span class="w"> </span>-jar<span class="w">  </span>islandora-alpaca-app/build/libs/islandora-alpaca-app-2.0.0-all.jar<span class="w"> </span>-v
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>&gt;<span class="w"> </span>java<span class="w"> </span>-jar<span class="w"> </span>/opt/alpaca/alpaca.jar<span class="w"> </span>-v
 </span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a><span class="m">2</span>.0.0
 </span></code></pre></div>
 <p>To start Alpaca you would pass the external property file with the <code>-c|--config</code> flag.</p>
-<p>For example if you are using an external properties file located at <code>/opt/my.properties</code>,
+<p>For example if you are using an external properties file located at <code>/opt/alpaca/alpaca.properties</code>,
 you would run:</p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>java<span class="w"> </span>-jar<span class="w"> </span>alpaca.jar<span class="w"> </span>-c<span class="w"> </span>/opt/alpaca/alpaca.properties
 </span></code></pre></div>
