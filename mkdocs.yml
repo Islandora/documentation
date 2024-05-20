@@ -49,7 +49,8 @@ plugins:
         'installation/manual/installing_composer_drush_and_drupal.md': 'installation/manual/installing-composer-drush-and-drupal.md'
         'installation/manual/installing_crayfish.md': 'installation/manual/installing-crayfish.md'
         'installation/manual/installing_fedora_syn_and_blazegraph.md': 'installation/manual/installing-fedora-syn-and-blazegraph.md'
-        'installation/manual/installing_karaf_and_alpaca.md': 'installation/manual/installing-karaf-and-alpaca.md'
+        'installation/manual/installing_karaf_and_alpaca.md': 'installation/manual/installing-alpaca.md'
+        'installation/manual/installing-karaf-and-alpaca.md': 'installation/manual/installing-alpaca.md'
         'installation/manual/installing_solr.md': 'installation/manual/installing-solr.md'
         'installation/manual/installing_tomcat_and_cantaloupe.md': 'installation/manual/installing-tomcat-and-cantaloupe.md'
         'installation/manual/preparing_a_webserver.md': 'installation/manual/preparing-a-webserver.md'
@@ -133,7 +134,7 @@ nav:
         - 'Installing Fedora, Syn, and Blazegraph': 'installation/manual/installing-fedora-syn-and-blazegraph.md'
         - 'Installing Solr': 'installation/manual/installing-solr.md'
         - 'Installing Crayfish': 'installation/manual/installing-crayfish.md'
-        - 'Installing Karaf and Alpaca': 'installation/manual/installing-karaf-and-alpaca.md'
+        - 'Installing Alpaca': 'installation/manual/installing-alpaca.md'
         - 'Configuring Drupal': 'installation/manual/configuring-drupal.md'
       - 'Installing Modules': 'technical-documentation/install-enable-drupal-modules.md'
           # procedural, sysadmin
