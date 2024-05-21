@@ -4,6 +4,14 @@ When developing locally, your Drupal site resides in your `isle-dc/codebase` fol
 Drupal container.  This lets you update code using the IDE of your choice on your host machine, and the
 changes are automatically reflected on the Drupal container.
 
+## Installing ISLE Docker Compose
+
+Use Git to install the ISLE Docker Compose tool:
+
+`git clone https://github.com/islandora-devops/isle-dc`
+
+Tagged versions are available [here](https://github.com/Islandora-Devops/isle-dc/tags).
+
 ## Getting Started
 
 If you don't already have a Drupal site, you'll be given a basic setup using Drupal 9 and the
