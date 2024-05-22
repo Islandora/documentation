@@ -49,3 +49,13 @@ cd islandora_workbench && docker run -it --rm --network="host" -v $(QUOTED_CURDI
 `docker compose exec -T drupal-dev with-contenv bash -lc 'drush --root /var/www/drupal/web -l ${DRUPAL_DEFAULT_SITE_URL} search-api-reindex'
 docker compose exec -T drupal-dev with-contenv bash -lc 'drush --root /var/www/drupal/web -l ${DRUPAL_DEFAULT_SITE_URL} search-api-index'
 ```
+
+## Custom Themes & Modules
+
+You may wish to copy themes and modules into your project directly, instead of using Composer to manage them. For example, if you are creating your own theme instead of using a contributed one.
+
+Isle Site Template provides directories at `drupal/rootfs/var/www/drupal/web/modules/custom` and `drupal/rootfs/var/www/drupal/web/themes/custom` for you to add your custom themes and modules.
+
+These directories are mounted in development, so any changes to them will be shared between your host machine and your Drupal container.
+
+In production, these themes and modules will be included when the Drupal image is built.
