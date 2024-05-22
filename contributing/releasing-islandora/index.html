@@ -2754,6 +2754,7 @@
 <li>PATCH version when you make backwards compatible bug fixes.</li>
 </ul>
 <p><a href="https://islandora.github.io/documentation/technical-documentation/versioning/">Learn more about Islandora's Versioning Policy</a></p>
+<p><strong>Note to module maintainers specifying composer requirements:</strong> please familiarize yourself with the <a href="https://getcomposer.org/doc/articles/versions.md#next-significant-release-operators">Next Significant Release Modifiers</a>  so that module dependencies are as permissive as possible. Most often dependency versions should be tagged using the caret (^) so that bug-fixes and minor releases can be pulled in without updating their module’s composer file.</p>
 <h3 id="how-to-release-java-code">How to Release Java Code<a class="headerlink" href="#how-to-release-java-code" title="Permanent link">&para;</a></h3>
 <p>You will need Java 8 on your system to release java code.  The rest of the work is handled handled by <a href="https://gradle.org/">Gradle</a>, which is included in the Git repositories. If you cannot get Java 8, you can still release Syn using Docker and the <code>openjdk:8-jdk</code> image.  For Alpaca, because of our use of keys, Java 8 is required.</p>
 <h3 id="release-syn">Release Syn<a class="headerlink" href="#release-syn" title="Permanent link">&para;</a></h3>
@@ -2874,13 +2875,14 @@ completed all the above steps and are absolutely certain the release is ready fo
 </tbody>
 </table>
 <h3 id="jsonld">JSONLD<a class="headerlink" href="#jsonld" title="Permanent link">&para;</a></h3>
-<p>Release the <code>jsonld</code> module by creating a new release for it in Github.</p>
+<p>Release the <code>jsonld</code> module by creating a new release for it in Github and on Drupal.org.</p>
 <h3 id="release-openseadragon">Release OpenSeadragon<a class="headerlink" href="#release-openseadragon" title="Permanent link">&para;</a></h3>
-<p>Release the <code>openseadragon</code> module by creating a new release for it in Github.</p>
+<p>Release the <code>openseadragon</code> module by creating a new release for it in Github and on Drupal.org.</p>
 <h3 id="release-islandora-mirador">Release Islandora Mirador<a class="headerlink" href="#release-islandora-mirador" title="Permanent link">&para;</a></h3>
-<p>Release the <code>islandora_mirador</code> module by creating a new release for it in Github.</p>
+<p>Release the <code>islandora_mirador</code> module by creating a new release for it in Github and on Drupal.org.</p>
 <h3 id="release-migrate_islandora_csv">Release migrate_islandora_csv<a class="headerlink" href="#release-migrate_islandora_csv" title="Permanent link">&para;</a></h3>
-<p>Release the <code>migrate_islandora_csv</code> module by creating a new release for it in Github.</p>
+<p>Release the <code>migrate_islandora_csv</code> module by creating a new release for it in Github. This module 
+is minimally maintained on Drupal.org and if you are updating it, consider editing that.</p>
 <h3 id="release-chullo">Release Chullo<a class="headerlink" href="#release-chullo" title="Permanent link">&para;</a></h3>
 <p>Release <code>chullo</code> by creating a new release for it in Github.</p>
 <h3 id="release-crayfish-commons">Release Crayfish-Commons<a class="headerlink" href="#release-crayfish-commons" title="Permanent link">&para;</a></h3>
@@ -2906,19 +2908,9 @@ completed all the above steps and are absolutely certain the release is ready fo
 <li>Commit and push the <code>composer.json</code> and <code>composer.lock</code> files to Github with a commit message of "Preparing for next development iteration".</li>
 </ol>
 <h3 id="release-controlled-access-terms">Release Controlled Access Terms<a class="headerlink" href="#release-controlled-access-terms" title="Permanent link">&para;</a></h3>
-<p>Release controlled_access_terms by slicing a new release for it in Github.</p>
+<p>Release controlled_access_terms by creating a new release for it in Github and on Drupal.org.</p>
 <h3 id="release-islandora">Release Islandora<a class="headerlink" href="#release-islandora" title="Permanent link">&para;</a></h3>
-<p>The <code>islandora</code> module depends on the <code>crayfish-commons</code> library, and must have its dependencies updated before release.</p>
-<ol>
-<li>Bump the dependency on <code>islandora/crayfish-commons</code> in <code>composer.json</code>.</li>
-<li>Run <code>composer update -W</code></li>
-<li>Commit and push the <code>composer.json</code> and <code>composer.lock</code> files to Github.</li>
-<li>Release the module by creating a new release for them in Github.</li>
-<li>Put the dependencies on <code>islandora/crayfish-commons</code> back to <code>dev-dev</code></li>
-<li>Run <code>composer update -W</code> again.</li>
-<li>Commit and push the <code>composer.json</code> and <code>composer.lock</code> files to Github with a commit message of "Preparing for next development iteration".</li>
-</ol>
-<p><strong>Note to module maintainers specifying composer requirements:</strong> please familiarize yourself with the <a href="https://getcomposer.org/doc/articles/versions.md#next-significant-release-operators">Next Significant Release Modifiers</a>  so that module dependencies are as permissive as possible. Most often dependency versions should be tagged using the caret (^) so that bug-fixes and minor releases can be pulled in without updating their module’s composer file.</p>
+<p>Release islandora by creating a new release for it in Github and on Drupal.org.</p>
 <h2 id="undoing-a-release">Undoing a Release<a class="headerlink" href="#undoing-a-release" title="Permanent link">&para;</a></h2>
 <p>Dependencies mean that if you are going to release all of the Islandora ecosystem, <strong>order is very important</strong>. At any point, releases can be deleted, updated, and redone in Github. You can reach out to the community if you have questions. Note that if you want to 'redo' a release, you can follow these steps:</p>
 <ol>
@@ -2934,7 +2926,7 @@ completed all the above steps and are absolutely certain the release is ready fo
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">May 20, 2024</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">May 22, 2024</span>
       
     
   </small>
