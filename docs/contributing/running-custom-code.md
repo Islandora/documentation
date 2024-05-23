@@ -1,11 +1,11 @@
-# Running Custom Code
+# Running Custom Code (Testing a Pull Request)
 
 If you are testing a pull request, or for other reasons need to replace the 
 "official" code with code that's in a PR, or a different branch or fork, this 
 page offers two methods.
 
-This page applies to Drupal module, theme, or recipe code, or any other 
-project that is managed by Composer.
+This documentation applies to Drupal modules, themes, and recipes, or any 
+other project that is managed by Composer.
 
 !!! note "Can't I just `git clone`?"
     When managing a site with Composer, it's very fragile to use commands 
@@ -17,8 +17,8 @@ project that is managed by Composer.
 This method is best for testing pull requests, because getting a patch from 
 a pull request is very easy. If the desired code is not the subject of a 
 PR, you can still use this method but must generate a `.patch` file yourself.
-You may wish to use the other method, as it is more dynamic - see ## Using 
-Composer to require a fork or branch. 
+You may wish to use the other method, as it is more dynamic - see 
+section **Using Composer to require a fork or branch**. 
 
 Run the following commands from within your site's root folder. They will 
 update your `composer.json` file.
