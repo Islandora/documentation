@@ -2,7 +2,8 @@
 
 If you are testing a pull request, or for other reasons need to replace the 
 "official" code with code that's in a PR, or a different branch or fork, this 
-page offers two methods.
+page offers two methods: using Composer Patches, and using Composer to 
+require the branch and/or fork.
 
 This documentation applies to Drupal modules, themes, and recipes, or any 
 other project that is managed by Composer.
@@ -14,8 +15,8 @@ other project that is managed by Composer.
 
 ## Applying a Patch using Composer Patches
 
-This method is best for testing pull requests, because getting a patch from 
-a pull request is very easy. If the desired code is not the subject of a 
+This method is best for testing pull requests, because it's very easy to get a 
+patch from a pull request. If the desired code is not the subject of a 
 PR, you can still use this method but must generate a `.patch` file yourself.
 You may wish to use the other method, as it is more dynamic - see 
 section **Using Composer to require a fork or branch**. 
@@ -30,6 +31,7 @@ composer require cweagans/composer-patches
 ```
 
 For the next step, prepare the following replacement tokens:
+
 * `MY_PACKAGE`: The full Composer name of the package to patch. It 
   takes the form [vendor name]/[project name]. Example: 
   `drupal/controlled_access_terms`
@@ -89,7 +91,7 @@ pull in changes to the code.
 
 This method is best if you don't have a pull request open for the code.
 
-### Add a repository (if necessary)
+### Step 1: Add a repository (if necessary)
 
 If your code is on a fork, then you will need to add a repository to 
 Composer so that it knows where to get your package.
@@ -129,7 +131,7 @@ Your `composer.json` file should now contain
     fork both have an `enable-hocr` branch, then the repository that's first 
     in the list in composer.json will take precedence.
 
-### Require a custom branch
+### Step 2: Require theß custom branch
 
 This step could be as simple as
 ```shell
@@ -137,17 +139,19 @@ composer require MY_PACKAGE:dev-MY_BRANCH_NAME
 ```
 
 with the following replacements:
+
 * `MY_PACKAGE`: the full Composer name of the package. Example: 
 `drupal/islandora`
 * `MY_BRANCH_NAME`: the name of the branch you want to run. Example: 
   `testing-fedora-6`. Note that in the case that your branch name is 
-  "version-like" for example `2.x`, then the `dev` goes at the end, as in `2.
-  x-dev`, instead of preceding the branch name as in the template above.
+  "version-like" for example `2.x`, then the `dev` goes at the end, as in
+  `2.x-dev`, instead of preceding the branch name as in the template above.
+ 
 
 However, if your component is a dependency of another component, then you 
 will probably need to use an alias. This allows your custom code to "act as" 
 a version that will meet the requirements of your other component. For 
-example, if the drupal/islandora_mirador package requires 
+example, if the `drupal/islandora_mirador` package requires 
 `drupal/islandora:^2.4.1`, then using Composer to require the `enable-hocr` 
 branch of `drupal/islandora` will not meet the requirements. Instead, use 
 `as` to provide an alias, to a version that will match the constraints. Note 
@@ -161,17 +165,18 @@ For example:
 composer require "drupal/islandora:dev-enable-hocr as 2.12.1"
 ```
 
-That will install the specified branch and allow it to work with dependencies.
+That will install the specified branch and allow it to work with your
+dependencies.
 
 ## To reset these changes
 
-### using Composer Patches
+### ... using Composer Patches
 
 When you no longer need to be applying the patch, simply remove it from the 
 `patches:` section of `composer.json` (and of course, take care to ensure the 
-json remains valid, by adjusting commas!) and run `composer update MY_PACKAGE`
+json remains valid, by adjusting commas!) and run `composer update MY_PACKAGE`.
 
-### using Composer require
+### ... using Composer require
 
 When you no longer want to pull from a separate branch or fork, reset the 
 version constraint back to what it used to be, or, if your package was not 
