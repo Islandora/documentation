@@ -86,12 +86,12 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://islandora.github.io/documentation/contributing/running-custom-code/</loc>
+         <loc>https://islandora.github.io/documentation/contributing/sandbox/</loc>
          <lastmod>2024-05-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://islandora.github.io/documentation/contributing/sandbox/</loc>
+         <loc>https://islandora.github.io/documentation/contributing/testing-a-pull-request/</loc>
          <lastmod>2024-05-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
