@@ -1,4 +1,4 @@
-# Running Custom Code (Testing a Pull Request)
+# Testing a Pull Request (i.e. Running Custom Code)
 
 If you are testing a pull request, or for other reasons need to replace the 
 "official" code with code that's in a PR, or a different branch or fork, this 
@@ -10,8 +10,8 @@ other project that is managed by Composer.
 
 !!! note "Can't I just `git clone`?"
     When managing a site with Composer, it's very fragile to use commands 
-    like `git clone` to obtain code, as it can be overwritten by a  
-    `composer update`. 
+    like `git clone` to obtain code, as it can be overwritten by 
+    a `composer update`. 
 
 ## Applying a Patch using Composer Patches
 

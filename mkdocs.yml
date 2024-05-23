@@ -255,7 +255,7 @@ nav:
       - 'Islandora 7': 'technical-documentation/migrate-7x.md'
   - Contributing:
       - 'How to contribute': 'contributing/CONTRIBUTING.md'
-      - 'Running custom code': 'contributing/running-custom-code.md'
+      - 'Testing a Pull Request': 'contributing/testing-a-pull-request.md'
       - 'Running Tests': 'technical-documentation/running-automated-tests.md'
       - 'Checking Coding Standards': 'technical-documentation/checking-coding-standards.md'
       - 'Contributing Workflow': 'contributing/contributing-workflow.md'
