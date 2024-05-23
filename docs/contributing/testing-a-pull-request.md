@@ -2,16 +2,19 @@
 
 If you are testing a pull request, or for other reasons need to replace the 
 "official" code with code that's in a PR, or a different branch or fork, this 
-page offers two methods: using Composer Patches, and using Composer to 
-require the branch and/or fork.
+page offers three methods: using Composer Patches, using Composer to 
+require the branch and/or fork or installing source repositories with Composer.
 
 This documentation applies to Drupal modules, themes, and recipes, or any 
 other project that is managed by Composer.
 
 !!! note "Can't I just `git clone`?"
-    When managing a site with Composer, it's very fragile to use commands 
-    like `git clone` to obtain code, as it can be overwritten by 
+    When managing a non-developmental site with Composer, it's very fragile to
+    use commands like `git clone` to obtain code, as it can be overwritten by 
     a `composer update`. 
+
+    For those who are comfortable cloning code onto a development environment, refer to 
+    [Installing source repositories with Composer](#installing-source-repositories-with-composer).
 
 ## Applying a Patch using Composer Patches
 
@@ -131,7 +134,7 @@ Your `composer.json` file should now contain
     fork both have an `enable-hocr` branch, then the repository that's first 
     in the list in composer.json will take precedence.
 
-### Step 2: Require theß custom branch
+### Step 2: Require the custom branch
 
 This step could be as simple as
 ```shell
@@ -168,6 +171,41 @@ composer require "drupal/islandora:dev-enable-hocr as 2.12.1"
 That will install the specified branch and allow it to work with your
 dependencies.
 
+## Installing source repositories with Composer
+
+This method pulls the source repositories directly into your project and will
+allow you to pull in open pull requests by simply following a normal Gitflow.
+
+!!!note
+    If the site has already been installed without using `--prefer-source` you
+    will need to clear `composer`'s cache via `composer clearcache` or including
+    `--no-cache` for any `install` or `reinstall` commands.
+
+### Step 1: Re-install the code from source (if required)
+Assuming that the environment has not been installed from source, reinstall the
+module.
+
+```shell
+composer reinstall MY_PACKAGE --prefer-source
+```
+with the following replacements:
+
+* `MY_PACKAGE`: the full Composer name of the package. Example:
+  `drupal/islandora`
+
+This will pull the code from the source repository and add the repository at the
+same version of the `MY_PACKAGE` that was previously installed and is in the
+lock file.
+
+For example:
+```shell
+composer reinstall "drupal/islandora" --prefer-source --no-cache
+```
+
+### Step 2: Pull the code from the pull request to review.
+Follow Github's [documentation](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/checking-out-pull-requests-locally)
+to pull the code from the pull request to review.
+
 ## To reset these changes
 
 ### ... using Composer Patches
@@ -186,5 +224,10 @@ Then run `composer update MY_PACKAGE`. If you added a repository, it's
 safest to delete the repository, as it could lead to you getting stale 
 branches from a fork rather than the desired active code from the canonical 
 repository.
+
+### ... using source repositories
+
+When you no longer want the custom code present simple reset the branch back to
+the default branch or tag.
 
 More great information is available in the [Composer Documentation](https://getcomposer.org/doc/). 
