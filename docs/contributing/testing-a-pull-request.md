@@ -173,7 +173,7 @@ dependencies.
 
 ## Installing Git repositories with Composer
 
-This method pulls the source (i.e. git) repositories directly into your project
+This method pulls the source (i.e. Git) repositories directly into your project
 and will allow you to pull in open pull requests by simply following a normal
 Git workflow.
 
