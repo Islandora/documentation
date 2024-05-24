@@ -14,7 +14,7 @@ other project that is managed by Composer.
     a `composer update`.
 
     For those who are comfortable cloning code onto a development environment, refer to
-    [Installing source repositories with Composer](#installing-source-repositories-with-composer).
+    [Installing Git repositories with Composer](#installing-git-repositories-with-composer).
 
 ## Applying a Patch using Composer Patches
 
