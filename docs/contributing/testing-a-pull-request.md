@@ -171,7 +171,7 @@ composer require "drupal/islandora:dev-enable-hocr as 2.12.1"
 That will install the specified branch and allow it to work with your
 dependencies.
 
-## Installing git repositories with Composer
+## Installing Git repositories with Composer
 
 This method pulls the source (i.e. git) repositories directly into your project
 and will allow you to pull in open pull requests by simply following a normal
