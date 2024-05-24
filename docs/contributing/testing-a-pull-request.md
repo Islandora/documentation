@@ -21,8 +21,8 @@ other project that is managed by Composer.
 This method is best for testing pull requests, because it's very easy to get a
 patch from a pull request. If the desired code is not the subject of a
 PR, you can still use this method but must generate a `.patch` file yourself.
-You may wish to use the other method, as it is more dynamic - see
-section **Using Composer to require a fork or branch**.
+You may wish to use the [fork or branch](#using-composer-to-require-a-fork-or-branch)
+method, as it is more dynamic.
 
 Run the following commands from within your site's root folder. They will
 update your `composer.json` file.
