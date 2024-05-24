@@ -194,8 +194,8 @@ with the following replacements:
 * `MY_PACKAGE`: the full Composer name of the package. Example:
   `drupal/islandora`
 
-This will pull the code from the source repository (i.e. including the `.
-git` files) and add the package code at the same version of the `MY_PACKAGE`
+This will pull the code from the source repository (i.e. including the `.git`
+files) and add the package code at the same version of the `MY_PACKAGE`
 that was previously installed and is in the lock file.
 
 For example:
