@@ -38,7 +38,7 @@ Docker Compose is a tool to simplify the process of running multiple Docker cont
 
 ### GNU Make
 
-Make allows us to define commands that simplify installing and maintaining our Islandora site. For a complete list of available commands see the Makefile included with ISLE.
+Make allows us to define commands that simplify installing and maintaining our Islandora site. For a complete list of available commands see the Makefile included with ISLE-DC.
 
 ### Composer
 
@@ -58,7 +58,6 @@ Drush is a command line tool for managing your Drupal site. It comes installed i
 - Docker Compose version 2.x+
 - GNU Make 4.0+
 - Git 2.0+
-- [ISLE Docker Compose](https://github.com/islandora-devops/isle-dc)
 - At least 8GB of RAM (ideally 16GB)
 - An administrator account your machine (a.k.a. the host machine)
 - (Mac OS) Apple Developer Tools
@@ -89,11 +88,3 @@ If you need to install Docker, we recommend using the application [Docker Deskto
     - Production or production-like development: 16GB
 
     **Swap**: Swap space is space borrowed from your hard disk drive to serve as makeshift RAM as needed. If you cannot provide as much RAM as you would like, increase this as is reasonable given your free disk space.
-
-## Installing ISLE Docker Compose
-
-Use Git to install the ISLE Docker Compose tool:
-
-`git clone https://github.com/islandora-devops/isle-dc`
-
-Tagged versions are available [here](https://github.com/Islandora-Devops/isle-dc/tags).

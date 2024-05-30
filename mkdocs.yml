@@ -45,6 +45,16 @@ plugins:
         'contributing/docs_style_guide.md': 'contributing/docs-style-guide.md'
         'contributing/readme_template.md': 'contributing/readme-template.md'
         'installation/component_overview.md': 'installation/component-overview.md'
+        'installation/docker-available-commands.md': 'installation/docker/isle-dc/docker-available-commands.md'
+        'installation/docker-available-configuration.md': 'installation/docker/isle-dc/docker-available-configuration.md'
+        'installation/docker-basic-usage.md': 'installation/docker/isle-dc/docker-basic-usage.md'
+        'installation/docker-custom.md': 'installation/docker/isle-dc/docker-custom.md'
+        'installation/docker-introduction.md': 'installation/docker/docker-introduction.md'
+        'installation/docker-local.md': 'installation/docker/isle-dc/docker-local.md'
+        'installation/docker-maintain-drupal.md': 'installation/docker/isle-dc/docker-maintain-drupal.md'
+        'installation/docker-maintain-isle.md': 'installation/docker/isle-dc/docker-maintain-isle.md'
+        'installation/docker-prereq.md': 'installation/docker/docker-prereq.md'
+        'installation/docker-troubleshooting.md': 'installation/docker/isle-dc/docker-troubleshooting.md'
         'installation/manual/configuring_drupal.md': 'installation/manual/configuring-drupal.md'
         'installation/manual/installing_composer_drush_and_drupal.md': 'installation/manual/installing-composer-drush-and-drupal.md'
         'installation/manual/installing_crayfish.md': 'installation/manual/installing-crayfish.md'
@@ -54,6 +64,7 @@ plugins:
         'installation/manual/installing_solr.md': 'installation/manual/installing-solr.md'
         'installation/manual/installing_tomcat_and_cantaloupe.md': 'installation/manual/installing-tomcat-and-cantaloupe.md'
         'installation/manual/preparing_a_webserver.md': 'installation/manual/preparing-a-webserver.md'
+        'installation/site-template.md': 'installation/docker/site-template/site-template.md'
         'technical-documentation/adding_format_jsonld.md': 'technical-documentation/adding-format-jsonld.md'
         'technical-documentation/alpaca_tips.md': 'technical-documentation/alpaca-tips.md'
         'technical-documentation/resizing_vm.md': 'technical-documentation/resizing-vm.md'
@@ -66,6 +77,7 @@ plugins:
         'user-documentation/linked_data.md': 'user-documentation/linked-data.md'
         'user-documentation/metadata_harvesting.md': 'user-documentation/metadata-harvesting.md'
         'user-documentation/recipes/alexa_search.md': 'user-documentation/recipes/alexa-search.md'
+            
 
 extra:
   font:
@@ -111,20 +123,22 @@ nav:
           - '8.x-2.0 Release Notes': 'release-notes/8.x-2.0.md'
           - 'Older Release Notes': 'https://github.com/Islandora/documentation/tree/main/docs/release_notes'
       - 'Install a Demo': 'installation/install-a-demo.md'
-      - 'ISLE-DC':
-          - 'Introduction to ISLE': 'installation/docker-introduction.md'
-          - 'Prerequisites': 'installation/docker-prereq.md'
-          - Install Islandora:
-             - 'Installing a Development Server': 'installation/docker-local.md'
-             - 'Installing a Staging/Production Server': 'installation/docker-custom.md'
-          - Maintaining Islandora:
-            - 'Basic Usage': 'installation/docker-basic-usage.md'
-            - 'Maintaining Drupal': 'installation/docker-maintain-drupal.md'
-            - 'Maintaining ISLE': 'installation/docker-maintain-isle.md'
-          - 'Available Commands': 'installation/docker-available-commands.md'
-          - 'Available Configuration': 'installation/docker-available-configuration.md'
-          - 'Troubleshooting' : 'installation/docker-troubleshooting.md'
-      - 'ISLE Site Template': 'installation/site-template.md'
+      - 'Docker':
+          - 'Introduction to ISLE': 'installation/docker/docker-introduction.md'
+          - 'Prerequisites': 'installation/docker/docker-prereq.md'
+          - 'ISLE-DC':
+              - Installing:
+                 - 'Installing a Development Server': 'installation/docker/isle-dc/docker-local.md'
+                 - 'Installing a Staging/Production Server': 'installation/docker/isle-dc/docker-custom.md'
+              - Maintaining:
+                - 'Basic Usage': 'installation/docker/isle-dc/docker-basic-usage.md'
+                - 'Maintaining Drupal': 'installation/docker/isle-dc/docker-maintain-drupal.md'
+                - 'Maintaining ISLE': 'installation/docker/isle-dc/docker-maintain-isle.md'
+              - 'Available Commands': 'installation/docker/isle-dc/docker-available-commands.md'
+              - 'Available Configuration': 'installation/docker/isle-dc/docker-available-configuration.md'
+              - 'Troubleshooting' : 'installation/docker/isle-dc/docker-troubleshooting.md'
+          - 'ISLE Site Template':
+              - 'Introduction to Site Template': 'installation/docker/site-template/site-template.md'
       - 'Ansible Playbook': 'installation/playbook.md'
       - Manual Installation:
         - 'Introduction': 'installation/manual/introduction.md'
