@@ -50,7 +50,7 @@ To generate new configs perform the following steps:
 
 ### MariaDB
 
-After updating MariaDB, you may need to run `mariadb-upgrade` inside your MariaDB container, to update your system tables. This should be safe to run any time, but it is a good idea to back up your database first, just in case.
+After updating MariaDB, you may need to run [mariadb-upgrade](https://mariadb.com/kb/en/mariadb-upgrade/) inside your MariaDB container, to update your system tables. This should be safe to run any time, but it is a good idea to back up your database first, just in case.
 
 You can run this with
 
@@ -66,7 +66,7 @@ Drupal updates are performed through composer on your development site. Once the
 
 ### Development
 
-Composer commands need to run in your Drupal container. For example:
+Composer commands need to [run in your Drupal container](/documentation/installation/docker/site-template/containers.md). For example:
 
 ​​`docker compose exec drupal-dev composer update -W`
 
