@@ -44,8 +44,8 @@ drupal modules:
 To download/enable just this module, use the following from the command line:
 
 ```bash
-composer require islandora/islandora
-drush en islandora_advanced_search
+composer require drupal/advanced_search
+drush en advanced_search
 ```
 
 ## Configuration
