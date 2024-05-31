@@ -26,7 +26,7 @@ The following Islandora components use semantic versioning:
 * [Crayfish Commons](https://github.com/Islandora/Crayfish-Commons)
 * [Syn](https://github.com/Islandora/Syn)
 * [controlled\_access\_terms](https://github.com/Islandora/controlled_access_terms) (Drupal module)
-* [islandora](https://github.com/Islandora/islandora/tree/8.x-1.x) (Drupal module)
+* [islandora](https://github.com/Islandora/islandora) (Drupal module)
 * [jsonld](https://github.com/Islandora/jsonld) (Drupal module)
 * [openseadragon](https://github.com/Islandora/openseadragon) (Drupal module)
 * [islandora\_mirador](https://github.com/Islandora/islandora_mirador) (Drupal module)
