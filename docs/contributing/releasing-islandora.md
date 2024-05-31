@@ -9,7 +9,7 @@ Islandora is an ecosystem of repositories and follows a [Semantic Versioning App
 
 [Learn more about Islandora's Versioning Policy](https://islandora.github.io/documentation/technical-documentation/versioning/)
 
-
+**Note to module maintainers specifying composer requirements:** please familiarize yourself with the [Next Significant Release Modifiers](https://getcomposer.org/doc/articles/versions.md#next-significant-release-operators)  so that module dependencies are as permissive as possible. Most often dependency versions should be tagged using the caret (^) so that bug-fixes and minor releases can be pulled in without updating their module’s composer file.
 
 ### How to Release Java Code
 
@@ -113,19 +113,20 @@ completed all the above steps and are absolutely certain the release is ready fo
 
 ### JSONLD
 
-Release the `jsonld` module by creating a new release for it in Github.
+Release the `jsonld` module by creating a new release for it in Github and on Drupal.org.
 
 ### Release OpenSeadragon
 
-Release the `openseadragon` module by creating a new release for it in Github.
+Release the `openseadragon` module by creating a new release for it in Github and on Drupal.org.
 
 ### Release Islandora Mirador
 
-Release the `islandora_mirador` module by creating a new release for it in Github.
+Release the `islandora_mirador` module by creating a new release for it in Github and on Drupal.org.
 
 ### Release migrate_islandora_csv
 
-Release the `migrate_islandora_csv` module by creating a new release for it in Github.
+Release the `migrate_islandora_csv` module by creating a new release for it in Github. This module 
+is minimally maintained on Drupal.org and if you are updating it, consider editing that.
 
 ### Release Chullo
 
@@ -157,21 +158,12 @@ Crayfish depends on the `crayfish-commons` library, and must have its dependenci
 
 ### Release Controlled Access Terms
 
-Release controlled_access_terms by slicing a new release for it in Github.
+Release controlled_access_terms by creating a new release for it in Github and on Drupal.org.
 
 ### Release Islandora
 
-The `islandora` module depends on the `crayfish-commons` library, and must have its dependencies updated before release.
+Release islandora by creating a new release for it in Github and on Drupal.org.
 
-1. Bump the dependency on `islandora/crayfish-commons` in `composer.json`.
-2. Run `composer update -W`
-4. Commit and push the `composer.json` and `composer.lock` files to Github.
-5. Release the module by creating a new release for them in Github.
-6. Put the dependencies on `islandora/crayfish-commons` back to `dev-dev`
-7. Run `composer update -W` again.
-8. Commit and push the `composer.json` and `composer.lock` files to Github with a commit message of "Preparing for next development iteration".
-
-**Note to module maintainers specifying composer requirements:** please familiarize yourself with the [Next Significant Release Modifiers](https://getcomposer.org/doc/articles/versions.md#next-significant-release-operators)  so that module dependencies are as permissive as possible. Most often dependency versions should be tagged using the caret (^) so that bug-fixes and minor releases can be pulled in without updating their module’s composer file.
 
 ## Undoing a Release
 
