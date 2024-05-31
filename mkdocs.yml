@@ -267,7 +267,7 @@ nav:
       - 'REST API': 'technical-documentation/migration-rest-api.md'
       - 'Migrate API': 'technical-documentation/migration-migrate-api.md'
       - 'Islandora Workbench': 'technical-documentation/migration-islandora-workbench.md'
-     - 'CSV': 'technical-documentation/migrate-csv.md'
+      - 'CSV': 'technical-documentation/migrate-csv.md'
       - 'Islandora 7': 'technical-documentation/migrate-7x.md'
   - Contributing:
       - 'How to contribute': 'contributing/CONTRIBUTING.md'
