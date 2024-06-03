@@ -41,3 +41,80 @@ docker compose exec -T drupal-dev with-contenv bash -lc 'echo ${DRUPAL_DEFAULT_S
     and
 
     `docker compose exec -T drupal-dev -lc 'YOUR COMMAND'`
+
+
+## Helpful Commands
+
+### Checking logs
+
+You can read logs for a container with:
+
+```
+docker-compose logs service_name
+```
+
+For example, to read nginx logs for Drupal, use `docker-compose logs drupal-dev`.
+
+If you don't know what you're looking for exactly, you can turn on the fire hose and look through all logs by dropping the service name and simply using:
+
+```
+docker-compose logs
+```
+
+### Reindex Solr
+
+You can reindex Solr through the Drupal admin page, or via drush commands by queuing for reindex:
+
+```
+docker compose exec -T drupal-dev with-contenv bash -lc 'drush --root /var/www/drupal/web -l ${DRUPAL_DEFAULT_SITE_URL} search-api-reindex'
+```
+
+then triggering the reindex:
+
+```
+docker compose exec -T drupal-dev with-contenv bash -lc 'drush --root /var/www/drupal/web -l ${DRUPAL_DEFAULT_SITE_URL} search-api-index'
+```
+
+### Reindex Fedora
+
+!!! note
+    This requires the [Views Bulk Operations module](https://www.drupal.org/project/views_bulk_operations)
+
+
+You can reindex all of your Drupal data into Fedora, by running the following commands:
+
+```
+docker compose exec -T drupal-dev with-contenv bash -lc 'drush --root /var/www/drupal/web -l ${DRUPAL_DEFAULT_SITE_URL} vbo-exec non_fedora_files emit_file_event --configuration="queue=islandora-indexing-fcrepo-file-external&event=Update"'
+```
+
+```
+docker compose exec -T drupal-dev with-contenv bash -lc 'drush --root /var/www/drupal/web -l ${DRUPAL_DEFAULT_SITE_URL} vbo-exec all_taxonomy_terms emit_term_event --configuration="queue=islandora-indexing-fcrepo-content&event=Update"'
+```
+
+```
+docker compose exec -T drupal-dev with-contenv bash -lc 'drush --root /var/www/drupal/web -l ${DRUPAL_DEFAULT_SITE_URL} vbo-exec content emit_node_event --configuration="queue=islandora-indexing-fcrepo-content&event=Update"'
+```
+
+```
+docker compose exec -T drupal-dev with-contenv bash -lc 'drush --root /var/www/drupal/web -l ${DRUPAL_DEFAULT_SITE_URL} vbo-exec media emit_media_event --configuration="queue=islandora-indexing-fcrepo-media&event=Update"'
+```
+
+### Reindex Blazegraph
+
+!!! note
+    This requires the [Views Bulk Operations module](https://www.drupal.org/project/views_bulk_operations)
+
+
+You can reindex all of your Drupal data into Blazegraph, by running the following commands:
+
+```
+docker compose exec -T drupal-dev with-contenv bash -lc 'drush --root /var/www/drupal/web -l ${DRUPAL_DEFAULT_SITE_URL} vbo-exec all_taxonomy_terms emit_term_event --configuration="queue=islandora-indexing-triplestore-index&event=Update"'
+```
+
+```
+docker compose exec -T drupal-dev with-contenv bash -lc 'drush --root /var/www/drupal/web -l ${DRUPAL_DEFAULT_SITE_URL} vbo-exec content emit_node_event --configuration="queue=islandora-indexing-triplestore-index&event=Update"'
+```
+
+```
+docker compose exec -T drupal-dev with-contenv bash -lc 'drush --root /var/www/drupal/web -l ${DRUPAL_DEFAULT_SITE_URL} vbo-exec media emit_media_event --configuration="queue=islandora-indexing-triplestore-index&event=Update"'
+```
