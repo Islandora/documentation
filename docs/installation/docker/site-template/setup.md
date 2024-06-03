@@ -36,6 +36,10 @@ The process for setting up a staging site is the same as production, but you wil
 !!! Note
     By default, the `.env` file is stored in the git repository for your site, which means there is only support for one URL. If you are adding a staging site, you may wish to modify this so that you do not accidentally push your staging URL to your git repository.
 
+!!! note "Restricting Access to Staging Servers"
+
+    Using letsencrypt to generate your certs requires port 80 to be accessible on your server. If you would like to keep your site private by limiting access to certain IP addresses, you can still firewall port 443, but you will have to leave port 80 open. If you need to firewall port 80 as well, you will have to either use your own certs or look into another method of generating certs.
+    
 ## Adding Demo Content
 
 If you are spinning up a new site for testing, you can add some demo content to your site by running
