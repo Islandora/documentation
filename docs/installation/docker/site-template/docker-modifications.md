@@ -41,3 +41,8 @@ You may not want to use all the images that are included in the Site Template’
 For example, to remove Fedora, you would delete the services called fcrepo-dev and fcrepo-prod.
 
 Depending on the container you are removing, you may need to delete references to it as well. For example, some containers are referenced by others in the `depends_on` field. You will need to also delete these references, so if you delete the `fedora-dev` service, you will need to remove the rule that `traefik-dev` depends on it.
+
+If you are removing a container which is referenced by Drupal, ensure that you update Drupal as well (e.g. if removing Fedora, ensure your Media's files are not writing to the Fedora filesystem).
+
+After doing `docker compose down`, run `docker compose up -d --remove-orphans` to remove the containers you removed from the docker-compose.yml file. 
+
