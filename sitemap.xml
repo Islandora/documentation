@@ -171,6 +171,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://islandora.github.io/documentation/installation/docker/site-template/updating/</loc>
+         <lastmod>2024-06-03</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://islandora.github.io/documentation/installation/manual/configuring-drupal/</loc>
          <lastmod>2024-06-03</lastmod>
          <changefreq>daily</changefreq>
