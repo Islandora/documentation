@@ -99,6 +99,7 @@ nav:
   # Conceptual, all user roles: should contain high-level information about
   # what everybody needs to know to understand Islandora and interact with it
   # Possibly add page/section: How to use this documentation (containing user role definitions)
+  - Quickstart: 'installation/quickstart.md'
   - Concepts:
       - 'Nodes in Islandora': 'concepts/node-concepts.md'
       - 'Media in Islandora': 'concepts/node-media.md'
