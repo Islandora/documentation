@@ -10,13 +10,13 @@ Before you can use phpunit, you must first install the following:
 
 In ISLE, you need to make the database port available to PHPUnit. To do that, edit `docker-compose.yml` and find the section including `image: islandora/mariadb[version number]`. Shortly below is a `labels:` heading; set the value of the `traefik.enable: ` to `"true"`. Apply the changes made to the `docker_compose.yml` using `docker compose up -d`.
 
-Follow the `Configure PHPUnit` and `Create a directory for HTML output` sections in [Drupal Documentation on running phpunit tests](https://www.drupal.org/docs/automated-testing/phpunit-in-drupal/running-phpunit-tests) to make a `phpunit.xml` file.
+Follow the `Configure PHPUnit` and `Create a directory for HTML output` sections in [Drupal Documentation on running phpunit tests](https://www.drupal.org/docs/automated-testing/phpunit-in-drupal/running-phpunit-tests) to make a `phpunit.xml` file. Note that:
 
-If you place the `phpunit.xml` file in any directory other than `[drupal root]/web/core`, you need to change the 'bootstrap' in the `<phpunit>` tag near the top of the file to point to the relative or absolute location of the `[drupal root]/web/core` folder.
+* If you place the `phpunit.xml` file in any directory other than `[drupal root]/web/core`, you need to change the 'bootstrap' in the `<phpunit>` tag near the top of the file to point to the relative or absolute location of the `[drupal root]/web/core` folder.
 
-When setting the `SIMPLETEST_DB` database credentials in ISLE, 
-* the default username and db_name are `drupal_default`
-* your db_password can be found in `codebase/web/sites/default/settings.php`
+*  When setting the `SIMPLETEST_DB` database credentials in ISLE, 
+    * the default username and db_name are `drupal_default`
+    * your db_password can be found in `codebase/web/sites/default/settings.php`
 
 Unless you changed the default values, just swap out [password] for your actual db password in the following:
 
