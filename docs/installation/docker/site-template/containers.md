@@ -50,15 +50,15 @@ docker compose exec -T drupal-dev with-contenv bash -lc 'echo ${DRUPAL_DEFAULT_S
 You can read logs for a container with:
 
 ```
-docker-compose logs service_name
+docker compose logs service_name
 ```
 
-For example, to read nginx logs for Drupal, use `docker-compose logs drupal-dev`.
+For example, to read nginx logs for Drupal, use `docker compose logs drupal-dev`.
 
 If you don't know what you're looking for exactly, you can turn on the fire hose and look through all logs by dropping the service name and simply using:
 
 ```
-docker-compose logs
+docker compose logs
 ```
 
 ### Reindex Solr
