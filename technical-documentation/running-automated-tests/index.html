@@ -2602,11 +2602,19 @@
 <p>Before you can use phpunit, you must first install the following: </p>
 <p><code>composer require --dev -W phpspec/prophecy-phpunit drupal/core-dev</code></p>
 <p>In ISLE, you need to make the database port available to PHPUnit. To do that, edit <code>docker-compose.yml</code> and find the section including <code>image: islandora/mariadb[version number]</code>. Shortly below is a <code>labels:</code> heading; set the value of the <code>traefik.enable:</code> to <code>"true"</code>. Apply the changes made to the <code>docker_compose.yml</code> using <code>docker compose up -d</code>.</p>
-<p>Follow the <code>Configure PHPUnit</code> and <code>Create a directory for HTML output</code> sections in <a href="https://www.drupal.org/docs/automated-testing/phpunit-in-drupal/running-phpunit-tests">Drupal Documentation on running phpunit tests</a> to make a <code>phpunit.xml</code> file.</p>
+<p>Follow the <code>Configure PHPUnit</code> and <code>Create a directory for HTML output</code> sections in <a href="https://www.drupal.org/docs/automated-testing/phpunit-in-drupal/running-phpunit-tests">Drupal Documentation on running phpunit tests</a> to make a <code>phpunit.xml</code> file. Note that:</p>
+<ul>
+<li>
 <p>If you place the <code>phpunit.xml</code> file in any directory other than <code>[drupal root]/web/core</code>, you need to change the 'bootstrap' in the <code>&lt;phpunit&gt;</code> tag near the top of the file to point to the relative or absolute location of the <code>[drupal root]/web/core</code> folder.</p>
-<p>When setting the <code>SIMPLETEST_DB</code> database credentials in ISLE, 
-* the default username and db_name are <code>drupal_default</code>
-* your db_password can be found in <code>codebase/web/sites/default/settings.php</code></p>
+</li>
+<li>
+<p>When setting the <code>SIMPLETEST_DB</code> database credentials in ISLE, </p>
+<ul>
+<li>the default username and db_name are <code>drupal_default</code></li>
+<li>your db_password can be found in <code>codebase/web/sites/default/settings.php</code></li>
+</ul>
+</li>
+</ul>
 <p>Unless you changed the default values, just swap out [password] for your actual db password in the following:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>mysql://drupal_default:[password]@islandora.traefik.me:3306/drupal_default`.
 </span></code></pre></div>
@@ -2625,7 +2633,7 @@
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">June 3, 2024</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">June 4, 2024</span>
       
     
   </small>
