@@ -18,7 +18,7 @@ Follow the `Configure PHPUnit` and `Create a directory for HTML output` sections
     * the default username and db_name are `drupal_default`
     * your db_password can be found in `codebase/web/sites/default/settings.php`
 
-Unless you changed the default values, just swap out [password] for your actual db password in the following:
+* Unless you changed the default values, just swap out [password] for your actual db password in the following:
 
 ```
 mysql://drupal_default:[password]@islandora.traefik.me:3306/drupal_default`.
