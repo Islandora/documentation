@@ -141,6 +141,7 @@ nav:
               - 'Introduction to Site Template': 'installation/docker/site-template/site-template.md'
               - 'Docker Modifications': 'installation/docker/site-template/docker-modifications.md'
               - 'Updating': 'installation/docker/site-template/updating.md'
+          - 'Converting ISLE-DC to Site Template': 'installation/docker/converting.md'
       - 'Ansible Playbook': 'installation/playbook.md'
       - Manual Installation:
         - 'Introduction': 'installation/manual/introduction.md'
