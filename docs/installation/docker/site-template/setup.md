@@ -14,7 +14,7 @@ ISLE Site Template uses a custom Drupal image that you build on top of the provi
 
 Building your custom Drupal image is done by running
 
-`docker compose --profile dev build`for your development image
+`docker compose --profile dev build` for your development image
 
 or
 
