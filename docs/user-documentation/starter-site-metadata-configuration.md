@@ -264,6 +264,66 @@ Further information on the metadata configuration can be found in a Google Sprea
     </td>
   </tr>
 </table>
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>Representative Image</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >Optionally, use this field to link to a Media that will override the node's thumbnail. This will be used when the DGI Image Discovery module  "discovers" and caches a "representative"  (i.e. thumbnail) image for each object. This field takes precedence over the node's "Islandora thumbnail" (a related media with the "Thumbnail" media use term). See the module's README for the full scope of where images are "discovered". This is a good way to assign a "default" icon for many nodes that don't have actual thumbnail images, as this field allows you to re-use Media, which you can't do with normal Islandora media. 
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_representative_image
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>Entity reference (Media)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required?
+    </td>
+    <td>no <em>(will default to empty if no value is entered)</em>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Create Referenced Entities
+    </td>
+    <td>yes <em>(you can upload files to create and link to a new Media)</em>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Facet
+    </td>
+    <td>none
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Alternatives
+    </td>
+    <td>This field is itself an alternative to the "normal" Islandora thumbnail, and does not need to be used if the Islandora thumbnail suffices.
+    </td>
+  </tr>
+</table>
 
 ## Other Title(s)
 
