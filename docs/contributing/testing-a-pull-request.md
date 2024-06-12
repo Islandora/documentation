@@ -3,7 +3,7 @@
 If you are testing a pull request, or for other reasons need to replace the
 "official" code with code that's in a PR, or a different branch or fork, this
 page offers three methods: using Composer Patches, using Composer to
-require the branch and/or fork or installing source repositories with Composer.
+require the branch and/or fork, or installing source repositories with Composer.
 
 This documentation applies to Drupal modules, themes, and recipes, or any
 other project that is managed by Composer.
