@@ -271,7 +271,7 @@ Further information on the metadata configuration can be found in a Google Sprea
     </td>
   </tr>
   <tr>
-    <td colspan="2" >Optionally, use this field to link to a Media that will be used as the node's thumbnail. This will be displayed when the DGI Image Discovery module is used. This field takes precedence over the node's "Islandora thumbnail" (i.e. a related media with the "Thumbnail" media use term). See the module's [README](https://github.com/discoverygarden/dgi_image_discovery) for the full scope of how images are "discovered". This is a good way to assign a "default" icon for many nodes that don't have actual thumbnail images, as this field allows you to re-use Media, which you can't do with normal Islandora media. 
+    <td colspan="2" >Optionally, use this field to link to a Media that will be used as the node's thumbnail. This will be displayed when the DGI Image Discovery module is used. This field takes precedence over the node's "Islandora thumbnail" (i.e. a related media with the "Thumbnail" media use term). See the module's <a href="https://github.com/discoverygarden/dgi_image_discovery">README</a> for the full scope of how images are "discovered". This is a good way to assign a "default" icon for many nodes that don't have actual thumbnail images, as this field allows you to re-use Media, which you can't do with normal Islandora media. 
     </td>
   </tr>
   <tr>
