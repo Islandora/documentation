@@ -3064,6 +3064,66 @@
     </td>
   </tr>
 </table>
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>Representative Image</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >Optionally, use this field to link to a Media that will be used as the node's thumbnail. This will be displayed when the DGI Image Discovery module is used. This field takes precedence over the node's "Islandora thumbnail" (i.e. a related media with the "Thumbnail" media use term). See the module's <a href="https://github.com/discoverygarden/dgi_image_discovery">README</a> for the full scope of how images are "discovered". This is a good way to assign a "default" icon for many nodes that don't have actual thumbnail images, as this field allows you to re-use Media, which you can't do with normal Islandora media. 
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_representative_image
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>Entity reference (Media)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required?
+    </td>
+    <td>no <em>(will default to using the Islandora thumbnail if no value is entered)</em>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Create Referenced Entities
+    </td>
+    <td>yes <em>(you can upload files to create and link to a new Media)</em>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Facet
+    </td>
+    <td>none
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Alternatives
+    </td>
+    <td>This field is itself an alternative to the "normal" Islandora thumbnail, and does not need to be used if the Islandora thumbnail suffices.
+    </td>
+  </tr>
+</table>
 
 <h2 id="other-titles">Other Title(s)<a class="headerlink" href="#other-titles" title="Permanent link">&para;</a></h2>
 <table>
@@ -5862,7 +5922,7 @@
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">June 6, 2024</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">June 13, 2024</span>
       
     
   </small>
