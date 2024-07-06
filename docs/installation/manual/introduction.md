@@ -81,6 +81,33 @@ function do_something($to_this) {
 ```
 - `THE_NUMBER_TO_ADD_TO_THIS`: 12, perhaps with an explanation of why, or other numbers that may be appropriate
 
+### Account Tracker
+
+We will create several accounts during the installation process. For some items the instructions use *placeholders* in square brackets (`[]`). Create your own and use them in place of these placeholders as appropriate.
+
+- MySQL root account
+  - username: `root`
+  - password: `[mysql_root_password]`
+- MySQL account for Drupal database access
+  - username: `[mysql_drupal]`
+  - password: `[mysql_drupal_password]`
+- MySQL account for Fedora access
+  - username: `[mysql_fedora]`
+  - password: `[mysql_fedora_password]`
+- Tomcat
+  - username: `tomcat`
+  - password: `[tomcat_user_password]`
+- Fedora fedoraAdmin account
+  - username: `fedoraAdmin`
+  - password: `[fedora_admin_password]`
+- Fedora fedoraUser account
+  - username: `fedoraUser`
+  - password: `[fedora_user_password]`
+- ActiveMQ
+  - username: `[activemq_user]`
+  - password: `[activemq_user_password]`
+
+
 ### Troubleshooting
 
 The most common issues you will likely run into when manually provisioning a server are:

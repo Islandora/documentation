@@ -5,10 +5,19 @@
 
 ## In this section, we will install:
 
+- [cURL](https://curl.se/) is used by composer to efficiently download libraries
 - [Composer](https://getcomposer.org/) at its current latest version, the package manager that will allow us to install PHP applications
 - Either the [Islandora Starter Site](https://github.com/Islandora/islandora-starter-site/), or the [Drupal recommended-project](https://www.drupal.org/docs/develop/using-composer/starting-a-site-using-drupal-composer-project-templates#s-drupalrecommended-project), which will install, among other things:
-    - [Drush 10](https://www.drush.org/) at its latest version, the command-line PHP application for running tasks in Drupal
-    - [Drupal 9](https://www.drupal.org/) at its latest version, the content management system Islandora uses for content modelling and front-end display
+    - [Drush](https://www.drush.org/) at its latest version, the command-line PHP application for running tasks in Drupal
+    - [Drupal](https://www.drupal.org/) at its latest version, the content management system Islandora uses for content modelling and front-end display
+
+## Install cURL
+
+cURL may already be installed. Check by running `curl --version`. If it isn't, install it:
+
+```bash
+sudo apt install curl
+```
 
 ## Install Composer
 
@@ -30,14 +39,21 @@ At this point, you have the option of using the [Islandora Starter Site](https:/
 and configurations which function "out of the box," or build a clean stock Drupal via the Drupal Recommended Project and install
 Islandora modules as you desire.
 
-### Option 1: Create a project using the Islandora Starter Site
-
-Navigate to the folder where you want to put your Islandora project (in our case `/var/www`), and
-create the Islandora Starter Site:
+On a default Ubuntu install the `/var/www` directory is owned by root, but we want the webserver to control this space, so we'll give it ownership:
 
 ```bash
-cd /var/www
-composer create-project islandora/islandora-starter-site
+sudo chown -R /var/www
+```
+
+
+### Option 1: Create a project using the Islandora Starter Site
+
+Navigate to the folder where you want to put your Islandora project (in our case `/var/www/html`). You can give your site any name you like, but for these instructions we will simply call it "drupal":
+
+```bash
+cd /var/www/html
+sudo -u www-data mkdir drupal
+sudo -u www-data composer create-project islandora/islandora-starter-site drupal
 ```
 
 This will install all PHP dependencies, including Drush, and scaffold the site.
@@ -46,12 +62,12 @@ Drush is not accessible via `$PATH`, but is available using the command `compose
 
 ### Option 2: Create a basic Drupal Recommended Project
 
-Navigate to the folder where you want to put your Drupal project (in our case `/var/www`), and
+Navigate to the folder where you want to put your Drupal project (in our case `/var/www/html`), and
 create the Drupal Recommended Project:
 
 ```bash
-cd /var/www
-composer create-project drupal/recommended-project my-project
+cd /var/www/html
+sudo -u www-data composer create-project drupal/recommended-project drupal
 ```
 
 
@@ -69,12 +85,13 @@ Listen 80
 
 Remove everything but the "Listen 80" line. You can leave the comments in if you want.
 
-`/etc/apache2/sites-enabled/000-default.conf | root:root/777`
+Create a drupal virtual host:
+`/etc/apache2/sites-available/islandora.conf | root:root/644`
 ```xml
 <VirtualHost *:80>
   ServerName SERVER_NAME
-  DocumentRoot "/opt/drupal/web"
-  <Directory "/opt/drupal/web">
+  DocumentRoot "/var/www/html/drupal/web"
+  <Directory "/var/www/html/drupal/web">
     Options Indexes FollowSymLinks MultiViews
     AllowOverride all
     Require all granted
@@ -87,33 +104,30 @@ Remove everything but the "Listen 80" line. You can leave the comments in if you
 - `SERVER_NAME`: `localhost`
     - For a development environment hosted on your own machine or a VM, `localhost` should suffice. Realistically, this should be the domain or IP address the server will be accessed at.
 
-Restart the Apache 2 service to apply these changes:
+Set permissions and enable the virtual host:
 
 ```bash
 sudo systemctl restart apache2
+sudo a2ensite islandora.conf
+sudo systemctl reload apache2
 ```
-## Prepare the PostgreSQL database
+## Prepare the MySQL database
 
-PostgreSQL roles are directly tied to users. We’re going to ensure a user is in place, create a role for them in PostgreSQL, and create a database for them that we can use to install Drupal.
+We're going to create a user in MySQL for this Drupal site. Then create a database that we can use to install Drupal.
+
+The following values can (and in the case of the password, *should*) be changed to local values.
+
+- `DRUPAL_DATABASE_NAME`: This will be used as the core database that Drupal is installed into
+- `MYSQL_USER_FOR_DRUPAL`: Specifically, this is the user that will connect to the MySQL database being created, not the user that will be logging into Drupal
+- `MYSQL_PASSWORD_FOR_DRUPAL`:  This should be a secure password; it’s recommended to use a password generator to create this such as the one provided by [random.org](https://www.random.org/passwords/)
 
 ```bash
-# Run psql as the postgres user, the only user currently with any PostgreSQL
-# access.
-sudo -u postgres psql
-# Then, run these commands within psql itself:
-create database DRUPAL_DB encoding 'UTF8' LC_COLLATE = 'en_US.UTF-8' LC_CTYPE = 'en_US.UTF-8' TEMPLATE template0;
-create user DRUPAL_DB_USER with encrypted password 'DRUPAL_DB_PASSWORD';
-grant all privileges on database DRUPAL_DB to DRUPAL_DB_USER;
-# Then, quit psql.
-\q
+sudo mysql -u root
+CREATE DATABASE [DRUPAL_DATABASE_NAME];
+CREATE USER '[MYSQL_USER_FOR_DRUPAL]'@'localhost' IDENTIFIED BY '[MYSQL_PASSWORD_FOR_DRUPAL]';
+GRANT ALL PRIVILEGES ON [DRUPAL_DATABASE_NAME].* TO '[MYSQL_USER_FOR_DRUPAL]'@'localhost';
+exit
 ```
-- `DRUPAL_DB`: `drupal9`
-    - This will be used as the core database that Drupal is installed into
-- `DRUPAL_DB_USER`: `drupal`
-    - Specifically, this is the user that will connect to the PostgreSQL database being created, not the user that will be logging into Drupal
-- `DRUPAL_DB_PASSWORD`: `drupal`
-    - This should be a secure password; it’s recommended to use a password generator to create this such as the one provided by [random.org](https://www.random.org/passwords/)
-
 
 ## Install Drupal using Drush
 
@@ -122,13 +136,18 @@ The Drupal installation process can be done through the GUI in a series of form 
 ### Option 1: Site install the Starter Site with existing configs
 
 Follow the instructions in the [README of the Islandora Starter Site](https://github.com/Islandora/islandora-starter-site/#usage).
-The steps are not reproduced here to remove redundancy. When this installation is done, you'll have a starter site ready-to-go. Once you set up the external services in the next sections, you'll need to configure Drupal to know where they are.
+The steps are not reproduced here to remove redundancy. But specifically,
+
+1. Configure the database connection information (see the section above) and fedora flysystem in `/var/www/html/drupal/web/sites/default/settings.php`.
+2. Install the site using `sudo -u www-data composer exec -- drush site:install --existing-config`.
+
+When this installation is done, you'll have a starter site ready-to-go. Once you set up the external services in the next sections, you'll need to configure Drupal to know where they are.
 
 ### Option 2: Site install the basic Drupal Recommended Project
 
 ```bash
 cd /var/www/drupal
-drush -y site-install standard --db-url="pgsql://DRUPAL_DB_USER:DRUPAL_DB_PASSWORD@127.0.0.1:5432/DRUPAL_DB" --site-name="SITE_NAME" --account-name=DRUPAL_LOGIN --account-pass=DRUPAL_PASS
+sudo -u www-data drush -y site-install standard --db-url="mysql://MYSQL_USER_FOR_DRUPAL:MYSQL_PASSWORD_FOR_DRUPAL@127.0.0.1:3306/DRUPAL_DATABASE_NAME" --site-name="SITE_NAME" --account-name=DRUPAL_LOGIN --account-pass=DRUPAL_PASS
 ```
 This uses the same parameters from the above step, as well as:
 

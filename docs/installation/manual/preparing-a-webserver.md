@@ -5,10 +5,28 @@
 
 ## In this section, we will install:
 
+- [Java/OpenJDK](https://openjdk.org/) is the Java runtime environment used by multiple components: Solr, Cantaloupe, Alpaca, Fedora, and Blazegraph.
 - [Apache 2](https://httpd.apache.org/), the webserver that will deliver webpages to end users
-- [PHP 7](https://www.php.net/), the runtime code interpreter that Drupal will use to generate webpages and other services via apache, as well as that Drush and Composer will use to run tasks from the command line
-- Several modules for PHP 7 which are required to run the PHP code that Drupal and other applications will be executing
-- [PostgreSQL 10](https://www.postgresql.org/), the database that Drupal will use for storage (as well as other applications down the line)
+- [PHP 8](https://www.php.net/), the runtime code interpreter that Drupal will use to generate webpages and other services via apache, as well as that Drush and Composer will use to run tasks from the command line
+- Several modules for PHP 8 which are required to run the PHP code that Drupal and other applications will be executing
+- [MySQL](https://www.mysql.com/), the database that Drupal will use for storage (as well as other applications down the line)
+
+## Installing OpenJDK 11
+
+Tomcat runs in a Java runtime environment, so we'll need one to continue. In our case, OpenJDK 11 is open-source, free to use, and can fairly simply be installed using `apt-get`:
+
+```bash
+sudo apt-get -y install openjdk-11-jdk openjdk-11-jre
+```
+
+The installation of OpenJDK via `apt-get` establishes it as the de-facto Java runtime environment to be used on the system, so no further configuration is required.
+
+The resultant location of the java JRE binary (and therefore, the correct value of `JAVA_HOME` when it’s referenced) will vary based on the specifics of the machine it’s being installed on; that being said, you can find its exact location using `update-alternatives`:
+
+```bash
+update-alternatives --list java
+```
+Take a note of this path as we will need it later.
 
 ## Apache 2
 
@@ -52,63 +70,48 @@ sudo usermod -a -G `whoami` www-data
 sudo su `whoami`
 ```
 
-## PHP 7.4
+## PHP 8.x
 
-### Install PHP 7.4
+!! note "Installing Alternate Versions"
+   Although the instructions below will install PHP 8.3, the instructions should work for future versions by replacing the `8.3` with whatever version you are attempting to install.
 
-If you're running Debian 11 you should be able to install PHP 7.4 from the apt packages directly:
+### Install PHP 8.x
+
+If you're running Ununtu 20.04+ you should be able to install PHP 8 from the apt packages directly, although the `ondrej/php` repository provides additional libraries:
 
 ```bash
-sudo apt-get -y install php7.4 php7.4-cli php7.4-common php7.4-curl php7.4-dev php7.4-gd php7.4-imap php7.4-json php7.4-mbstring php7.4-opcache php7.4-xml php7.4-yaml php7.4-zip libapache2-mod-php7.4 php-pgsql php-redis php-xdebug unzip
+sudo apt update
+sudo add-apt-repository ppa:ondrej/php
+sudo apt update
+sudo apt install php8.3 libapache2-mod-php unzip
+sudo apt install php8.3-{cli,common,curl,gd,imap,intl,mysql,opcache,redis,xdebug,xml,yaml,zip}
 ```
 
-If you're running Debian 10, the repository for the PHP 7.4 packages needs to be installed first:
+Restart Apache to make the changes active:
 
 ```bash
-sudo apt-get -y install lsb-release apt-transport-https ca-certificates
-sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
-echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/php.list
-sudo apt-get update
-sudo apt-get -y install php7.4 php7.4-cli php7.4-common php7.4-curl php7.4-dev php7.4-gd php7.4-imap php7.4-json php7.4-mbstring php7.4-opcache php7.4-xml php7.4-yaml php7.4-zip libapache2-mod-php7.4 php-pgsql php-redis php-xdebug unzip
+sudo systemctl restart apache2
 ```
 
-This will install a series of PHP configurations and mods in `/etc/php/7.4`, including:
+Installation directories created: 
 
-- A `mods-available` folder (from which everything is typically enabled by default)
-- A configuration for PHP when run from Apache in the `apache2` folder
-- A configuration for PHP when run from the command line - including when run via Drush - in the `cli` folder
-- `unzip`, which is important for PHP’s zip module to function correctly despite it not being a direct dependency of the module. We will also need to unzip some things later, so this is convenient to have in place early in the installation process.
+- `/etc/php/8.3` (this is where you can edit PHP settings, such as timeouts, as needed for your site)
+- `/usr/bin/php8.3`
 
-## PostgreSQL 11
 
-### Install PostgreSQL 11
+## MySQL
 
-PostgreSQL can generally be easily installed using your operating system’s package manager. It is typically sensible to install the version the system recognizes as up-to-date. We’re simply going to install the database software:
+### Install
 
 ```bash
-sudo apt-get -y install postgresql
+sudo apt install mysql-server
 ```
 
-This will install:
-
-- A user at the system level named `postgres`; this will be the only user, by default, that has permission to run the `psql` binary and have access to Postgres configurations
-- A binary executable at `/usr/bin/psql`, which anyone - even `root` - will get kicked out of the moment they run it, since only the `postgres` user has permission to run any Postgres commands
-- A series of configurations that live in `/etc/postgresql/11/main` which can be used to modify how PostgreSQL works.
-
-### Configure Postgresql 11 For Use With Drupal
-
-A modification needs to be made to the PostgreSQL configuration in order for Drupal to properly install and function. This change can be made to the main configuration file at `/etc/postgresql/11/main/postgresql.conf`:
-
-**Before**:
-> 558 | #bytea_output = ‘hex’                      # hex, escape
-
-**After**:
-> 558 | bytea_output = ‘escape’
-
-(Remove the "# hex, escape" comment and change the value from "hex" to "escape")
-
-The `postgresql` service should be restarted to accept the new configuration:
+There are a few ways to check the MySQL status:
 
 ```bash
-sudo systemctl restart postgresql
+sudo service mysql status  # press "q" to exit
+sudo ss -tap | grep mysql
+sudo service mysql restart
+sudo journalctl -u mysql   # helps troubleshooting
 ```

@@ -4,27 +4,11 @@
     The manual installation documentation is in need of attention. We are aware that some components no longer work as documented here. If you are interested in helping us improve the documentation, please see [Contributing](../../../contributing/CONTRIBUTING).
 
 ## In this section, we will install:
+
 - [Tomcat 9](https://tomcat.apache.org/download-90.cgi), the Java servlet container that will serve up some Java applications on various endpoints, including, importantly, Fedora
 - [Cantaloupe 5](https://cantaloupe-project.github.io/), the image tileserver - running in Tomcat - that will be used to serve up large images in a web-accessible fashion
 
 ## Tomcat 9
-
-### Installing OpenJDK 11
-
-Tomcat runs in a Java runtime environment, so we'll need one to continue. In our case, OpenJDK 11 is open-source, free to use, and can fairly simply be installed using `apt-get`:
-
-```bash
-sudo apt-get -y install openjdk-11-jdk openjdk-11-jre
-```
-
-The installation of OpenJDK via `apt-get` establishes it as the de-facto Java runtime environment to be used on the system, so no further configuration is required.
-
-The resultant location of the java JRE binary (and therefore, the correct value of `JAVA_HOME` when it’s referenced) will vary based on the specifics of the machine it’s being installed on; that being said, you can find its exact location using `update-alternatives`:
-
-```bash
-update-alternatives --list java
-```
-Take a note of this path as we will need it later.
 
 ### Creating a `tomcat` User
 
@@ -109,10 +93,14 @@ Since version 5, Cantaloupe is released as a standalone Java application and is 
 Releases of Cantaloupe live on the [Cantaloupe release page](https://github.com/cantaloupe-project/cantaloupe/releases); the latest version can be found here as a `.zip` file.
 
 ```bash
-sudo wget -O /opt/cantaloupe.zip CANTALOUPE_RELEASE_URL
-sudo unzip /opt/cantaloupe.zip
+cd /opt/
+sudo wget -O cantaloupe.zip CANTALOUPE_RELEASE_URL
+sudo unzip cantaloupe.zip
+sudo mv [CANTALOUPE_VERSION] cantaloupe
+sudo rm cantaloupe.zip
 ```
-- `CANTALOUPE_RELEASE_URL`: It’s recommended we grab the latest version of Cantaloupe 5. This can be found on the above-linked release page, as the `.zip` version; for example, https://github.com/cantaloupe-project/cantaloupe/releases/download/v5.0.3/cantaloupe-5.0.3.zip - make sure **not** to download the source code zip file as that isn't compiled for running out-of-the-box.
+- `CANTALOUPE_RELEASE_URL`: It’s recommended we grab the latest version of Cantaloupe 5. This can be found on the above-linked release page, as the `.zip` version; for example, https://github.com/cantaloupe-project/cantaloupe/releases/download/v5.0.6/cantaloupe-5.0.6.zip - make sure **not** to download the source code zip file as that isn't compiled for running out-of-the-box.
+- `CANTALOUPE_VERSION`: This will depend on the exact version of Cantaloupe downloaded; in the above example release, this would be `cantaloupe-5.0.6`
 
 ### Creating a Cantaloupe Configuration
 
@@ -121,13 +109,49 @@ Cantaloupe pulls its configuration from a file called `cantaloupe.properties`; t
 Creating these files from scratch is *not* recommended; rather, we’re going to take the default cantaloupe configurations and plop them into their own folder so we can work with them.
 
 ```bash
-sudo mkdir /opt/cantaloupe_config
-sudo cp CANTALOUPE_VER/cantaloupe.properties.sample /opt/cantaloupe_config/cantaloupe.properties
-sudo cp CANTALOUPE_VER/delegates.rb.sample /opt/cantaloupe_config/delegates.rb
+cd cantaloupe
+sudo cp cantaloupe.properties.sample cantaloupe.properties
+sudo cp delegates.rb.sample delegates.rb
 ```
-- `CANTALOUPE_VER`: This will depend on the exact version of Cantaloupe downloaded; in the above example release, this would be `cantaloupe-5.0.3`
 
-The out-of-the-box configuration will work fine for our purposes, but it’s highly recommended that you take a look through the `cantaloupe.properties` and see what changes can be made; specifically, logging to actual logfiles isn’t set up by default, so you may want to take a peek at the `log.application.SyslogAppender` or `log.application.RollingFileAppender`, as well as changing the logging level.
+Most of the out-of-the-box configuration will work fine for our purposes. We will change the source lookup and logging, but it’s highly recommended that you take a look through the rest of the `cantaloupe.properties` and see what changes can be made. Review the config block below and change the related portions of yours to match.
+
+`/opt/cantaloupe/cantaloupe.properties`
+```
+##############
+# SOURCES
+##############
+
+source.static = HttpSource
+
+##############
+# HttpSource
+##############
+
+HttpSource.BasicLookupStrategy.url_prefix =
+
+##############
+# LOGGING
+##############
+
+log.application.FileAppender.pathname = /var/log/islandora/cantaloupe-application.log
+
+log.application.RollingFileAppender.enabled = true
+log.application.RollingFileAppender.pathname = /var/log/islandora/cantaloupe-application.log
+log.application.RollingFileAppender.TimeBasedRollingPolicy.filename_pattern = /var/log/islandora/cantaloupe-application-%d{yyyy-MM-dd}.log
+
+log.error.FileAppender.pathname = /var/log/islandora/cantaloupe-error.log
+
+log.error.RollingFileAppender.enabled = true
+log.error.RollingFileAppender.pathname = /var/log/islandora/cantaloupe-error.log
+log.error.RollingFileAppender.TimeBasedRollingPolicy.filename_pattern = /var/log/islandora/cantaloupe-error-%d{yyyy-MM-dd}.log
+
+log.access.FileAppender.pathname = /var/log/islandora/cantaloupe-access.log
+
+log.access.RollingFileAppender.enabled = true
+log.access.RollingFileAppender.pathname = /var/log/islandora/cantaloupe-access.log
+log.access.RollingFileAppender.TimeBasedRollingPolicy.filename_pattern = /var/log/islandora/cantaloupe-access-%d{yyyy-MM-dd}.log
+```
 
 ### Installing and configuring Cantaloupe as a service
 
@@ -139,7 +163,7 @@ Since it is a standalone application, we can configure Cantaloupe as a systemd s
 Description=Cantaloupe
 
 [Service]
-ExecStart=java -cp /opt/CANTALOUPE_VER/CANTALOUPE_VER.jar -Dcantaloupe.config=/opt/cantaloupe_config/cantaloupe.properties -Xmx1500m -Xms1000m edu.illinois.library.cantaloupe.StandaloneEntry
+ExecStart=java -cp /opt/cantaloupe/cantaloupe-CANTALOUPE_VER.jar -Dcantaloupe.config=/opt/cantaloupe/cantaloupe.properties -Xmx1500m -Xms1000m edu.illinois.library.cantaloupe.StandaloneEntry
 SyslogIdentifier=cantaloupe
 
 [Install]
@@ -154,4 +178,11 @@ sudo systemctl enable cantaloupe
 sudo systemctl start cantaloupe
 ```
 
-We can check the service status with `sudo systemctl status cantaloupe | grep Active` and the splash screen of Cantaloupe should be available at http://localhost:8182
+We can check the service status with `sudo systemctl status cantaloupe | grep Active` and the splash screen of Cantaloupe should be available at http://localhost:8182/iiif/2.
+
+If you have trouble connecting, check the status of your port and allow it if necessary:
+
+```bash
+sudo ufw status verbose
+sudo ufw allow 8182/tcp
+```
