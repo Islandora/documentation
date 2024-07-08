@@ -42,7 +42,7 @@ Islandora modules as you desire.
 On a default Ubuntu install the `/var/www` directory is owned by root, but we want the webserver to control this space, so we'll give it ownership:
 
 ```bash
-sudo chown -R /var/www
+sudo chown -R www-data: /var/www
 ```
 
 
