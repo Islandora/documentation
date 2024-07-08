@@ -10,7 +10,9 @@
 
 ## Installing ActiveMQ
 
-In our case, the default installation method for ActiveMQ via `apt-get` will suffice.
+Some users have been able to install ActiveMQ from the standard package repositories. Others, however, have needed to install it manually.
+
+### Option 1: System Provided Packages
 
 ```bash
 sudo apt-get -y install activemq
@@ -32,15 +34,69 @@ sudo apt-cache policy activemq
 
 Write down the version listed under `Installed: `.
 
+### Option 2: Manual Install
+
+Git the latest ActiveMQ 5.x version number from https://archive.apache.org/dist/activemq which will be put in place of `[ACTIVEMQ_VERSION_NUMBER]`.
+
+```bash
+cd /opt
+sudo wget http://archive.apache.org/dist/activemq/[ACTIVEMQ_VERSION_NUMBER]/apache-activemq-[ACTIVEMQ_VERSION_NUMBER]-bin.tar.gz
+sudo tar -xvzf apache-activemq-[ACTIVEMQ_VERSION_NUMBER]-bin.tar.gz
+sudo mv apache-activemq-[ACTIVEMQ_VERSION_NUMBER] /opt/activemq
+sudo addgroup --quiet --system activemq
+sudo adduser --quiet --system --ingroup activemq --no-create-home --disabled-password activemq
+sudo chown -R activemq:activemq /opt/activemq
+sudo rm -R apache-activemq-[ACTIVEMQ_VERSION_NUMBER]-bin.tar.gz
+```
+
+Add ActiveMQ as a service:
+`/etc/systemd/system/activemq.service | root:root/644
+```
+[Unit]
+Description=Apache ActiveMQ
+After=network.target
+
+[Service]
+Type=forking
+User=activemq
+Group=activemq
+
+ExecStart=/opt/activemq/bin/activemq start
+ExecStop=/opt/activemq/bin/activemq stop
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Update the WebConsolePort host property settings in `/opt/activemq/conf/jetty.xml` from `<property name="host" value="127.0.0.1"/>` to `<property name="host" value="0.0.0.0"/>` so that you can access the dashboard from outside the local machine.
+
+Optionally, change the dashboard user credentials in `/opt/activemq/conf/users.properties`.
+
+*Note*
+> Updating the web console port and user properties are potential security holes. It is best to restrict the host setting and create a more secure username/password combination for production.
+
+Set the service to start on machine startup and start it up:
+```bash
+sudo systemctl daemon-reload
+sudo systemctl start activemq
+sudo systemctl enable activemq
+sudo systemctl status activemq
+sudo systemctl restart activemq
+sudo apt-cache policy activemq   # note version number
+```
+
+The service should now be available at `http://localhost:8161/`
+
+
 ## Installing Alpaca
 
 Install Java 11+ if you haven't already.
 
 Make a directory for Alpaca and download the latest version of Alpaca from the [Maven repository](https://repo1.maven.org/maven2/ca/islandora/alpaca/islandora-alpaca-app). E.g.
 ```
-mkdir /opt/alpaca
+sudo mkdir /opt/alpaca
 cd /opt/alpaca
-curl -L https://repo1.maven.org/maven2/ca/islandora/alpaca/islandora-alpaca-app/2.2.0/islandora-alpaca-app-2.2.0-all.jar -o alpaca.jar
+sudo curl -L https://repo1.maven.org/maven2/ca/islandora/alpaca/islandora-alpaca-app/2.2.0/islandora-alpaca-app-2.2.0-all.jar -o alpaca.jar
 ```
 
 ### Configuration
@@ -55,7 +111,7 @@ The properties are:
 
 ```
 # Common options
-error.maxRedeliveries=4
+error.maxRedeliveries=5
 ```
 This defines how many times to retry a message before failing completely.
 
@@ -78,11 +134,6 @@ This defines the login credentials (if required)
 jms.connections=10
 ```
 This defines the pool of connections to the ActiveMQ instance.
-
-```
-jms.concurrent-consumers=1
-```
-This defines how many messages to process simultaneously.
 
 #### islandora-indexing-fcrepo
 
@@ -108,20 +159,20 @@ These define the various queues to listen on for the indexing/deletion
 messages. The part after `queue:` should match your Islandora instance "Actions".
 
 ```
-fcrepo.indexer.milliner.baseUrl=http://localhost:8000/milliner
+fcrepo.indexer.milliner.baseUrl=http://localhost/milliner
 ```
 This defines the location of your Milliner microservice.
 
 ```
-fcrepo.indexer.concurrent-consumers=1
-fcrepo.indexer.max-concurrent-consumers=1
+fcrepo.indexer.concurrent-consumers=-1
+fcrepo.indexer.max-concurrent-consumers=-1
 ```
 These define the default number of concurrent consumers and maximum number of concurrent
 consumers working off your ActiveMQ instance.
 A value of `-1` means no setting is applied.
 
 ```
-fcrepo.indexer.async-consumer=true
+fcrepo.indexer.async-consumer=false
 ```
 
 This property allows the concurrent consumers to process concurrently; otherwise, the consumers will wait to the previous message has been processed before executing.
@@ -134,7 +185,7 @@ It's properties are:
 
 ```
 # Triplestore indexer options
-triplestore.indexer.enabled=false
+triplestore.indexer.enabled=true
 ```
 
 This defines whether the Triplestore indexer is enabled or not.
@@ -154,8 +205,8 @@ triplestore.baseUrl=http://localhost:8080/bigdata/namespace/kb/sparql
 This defines the location of your triplestore's SPARQL update endpoint.
 
 ```
-triplestore.indexer.concurrent-consumers=1
-triplestore.indexer.max-concurrent-consumers=1
+triplestore.indexer.concurrent-consumers=-1
+triplestore.indexer.max-concurrent-consumers=-1
 ```
 
 These define the default number of concurrent consumers and maximum number of concurrent
@@ -164,7 +215,7 @@ A value of `-1` means no setting is applied.
 
 
 ```
-triplestore.indexer.async-consumer=true
+triplestore.indexer.async-consumer=false
 ```
 
 This property allows the concurrent consumers to process concurrently; otherwise, the consumers will wait to the previous message has been processed before executing.
@@ -184,7 +235,7 @@ derivative.<item>.enabled=true
 This defines if the `item` service is enabled.
 
 ```
-derivative.<item>.in.stream=queue:islandora-item-connector.index
+derivative.<item>.in.stream=queue:islandora-item-connector-<item>
 ```
 
 This is the input queue for the derivative microservice.
@@ -197,8 +248,8 @@ derivative.<item>.service.url=http://example.org/derivative/convert
 This is the microservice URL to process the request.
 
 ```
-derivative.<item>.concurrent-consumers=1
-derivative.<item>.max-concurrent-consumers=1
+derivative.<item>.concurrent-consumers=-1
+derivative.<item>.max-concurrent-consumers=-1
 ```
 
 These define the default number of concurrent consumers and maximum number of concurrent
@@ -207,7 +258,7 @@ A value of `-1` means no setting is applied.
 
 
 ```
-derivative.<item>.async-consumer=true
+derivative.<item>.async-consumer=false
 ```
 
 This property allows the concurrent consumers to process concurrently; otherwise, the consumers will wait to the previous message has been processed before executing.
@@ -219,14 +270,14 @@ derivative.systems.installed=houdini,fits
 
 derivative.houdini.enabled=true
 derivative.houdini.in.stream=queue:islandora-connector-houdini
-derivative.houdini.service.url=http://127.0.0.1:8000/houdini/convert
+derivative.houdini.service.url=http://127.0.0.1/houdini/convert
 derivative.houdini.concurrent-consumers=1
 derivative.houdini.max-concurrent-consumers=4
 derivative.houdini.async-consumer=true
 
 derivative.fits.enabled=true
 derivative.fits.in.stream=queue:islandora-connector-fits
-derivative.fits.service.url=http://127.0.0.1:8000/crayfits
+derivative.fits.service.url=http://127.0.0.1/crayfits
 derivative.fits.concurrent-consumers=2
 derivative.fits.max-concurrent-consumers=2
 derivative.fits.async-consumer=false
@@ -306,7 +357,7 @@ Description=Alpaca service
 After=network.target
 
 [Service]
-Type=forking
+Type=simple
 ExecStart=java -jar /opt/alpaca/alpaca.jar -c /opt/alpaca/alpaca.properties
 ExecStop=/bin/kill -15 $MAINPID
 SuccessExitStatus=143
@@ -316,4 +367,4 @@ Restart=always
 WantedBy=default.target
 ```
 
-Now you can start the service by running `systemctl start alpaca` and set it to come up when the system reboots with `systemctl enable alpaca`.
+Now you can start the service by running `sudo systemctl start alpaca` and set it to come up when the system reboots with `sudo systemctl enable alpaca`. Check the status by running `sudo systemctl status alpaca`.
