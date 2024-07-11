@@ -2749,6 +2749,10 @@
 <p><code>docker compose exec -T solr-dev with-contenv bash -lc 'rm -r server/solr/default/*'</code></p>
 </li>
 <li>
+<p>Restart the Solr container</p>
+<p><code>docker compose --profile dev restart solr-dev</code></p>
+</li>
+<li>
 <p>Recreate solr configs for new solr versions</p>
 <p><code>docker compose exec -T drupal-dev with-contenv bash -lc "for_all_sites create_solr_core_with_default_config"</code></p>
 </li>
@@ -2792,7 +2796,7 @@
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 10, 2024</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 11, 2024</span>
       
     
   </small>
