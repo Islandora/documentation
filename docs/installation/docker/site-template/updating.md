@@ -42,11 +42,15 @@ To generate new configs perform the following steps:
 
     `docker compose exec -T solr-dev with-contenv bash -lc 'rm -r server/solr/default/*'`
     
-2. Recreate solr configs for new solr versions
+2. Restart the Solr container
+
+    `docker compose --profile dev restart solr-dev`
+
+3. Recreate solr configs for new solr versions
 
     `docker compose exec -T drupal-dev with-contenv bash -lc "for_all_sites create_solr_core_with_default_config"`
     
-3. Reindex Solr through the admin page or via Drush 
+4. Reindex Solr through the admin page or via Drush 
 
 ### MariaDB
 
