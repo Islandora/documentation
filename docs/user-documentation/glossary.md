@@ -23,7 +23,7 @@ Also API; a connection between computers or between computer programs. It is a t
 Blazegraph is an open source triplestore and graph database. Islandora ships Blazegraph as part of the software stack. Metadata about [Resource nodes](#resource-node) is synchronized between the [Drupal](#drupal) database and Blazegraph. Data in the Blazegraph triple store can be queried using SPARQL.
 
 ## Bundle
-A bundle is the generic name for a sub-type of a [Content Entity](#content-entity) type in [Drupal](#drupal). To illustrate: Node and Taxonomy Term are both names of Content Entity types, and both have sub-types ("bundles"). The bundles of Node are called ["Content Types"](#content-types) and the bundles of [Taxonomy Term](#taxonomy-term) are called ["Vocabularies"](#vocabulary). Each bundle includes its own configurations of what [fields](#field) are present on the bundle and how they are entered and displayed. A bundle is thus part of the [configuration](#configuration) of your site. Some Content Entity Types, such as User, do not have bundles.
+A bundle is the generic name for a sub-type of a [Content Entity](#content-entity) type in [Drupal](#drupal). To illustrate: Node and Taxonomy Term are both names of Content Entity types, and both have sub-types ("bundles"). The bundles of Node are called ["Content Types"](#content-types) and the bundles of [Taxonomy Term](#taxonomy-term) are called ["Vocabularies"](#vocabulary). Each bundle includes its own configurations of what [fields](#field) are present on the bundle and how they are entered and displayed. A bundle is thus part of the [configuration](#configuration) of your site. Some [field](#field)able Content Entity Types, such as User, do not have bundles.
 
 ## Cantaloupe
 [Cantaloupe](https://cantaloupe-project.github.io) is an image server written in Java. It implements the [IIIF](#iiif) Image API, which means it handles deep zooming of large images and other image manipulations. It is required to serve images to some [viewers](#viewers) such as [Mirador](#mirador) and [OpenSeadragon](#openseadragon).
@@ -115,11 +115,45 @@ The Fedora repository functions as the standard _smart storage_ for Islandora.
 
 
 ## Field
-Data of a certain type that is attached to a content entity. For instance, on a Resource Node [content type](#content-type), you might have fields for a title, description, display hints, subjects, and other metadata.
+Data of a certain type that is attached to a content entity. A field is made up of [field storage](#field-storage) which inclues some low-level configuration that is shared across all [field instances](#field-instance), and a field instance, which configures how that field appears on a bundle. Fields also have field [widgets](#widget) that govern data entry, and [field formatters](#field-formatter) which control how the field is displayed to site visitors.
 
 ## Field instance
+A field, configured to show up on a [bundle](#bundle). It is possible to reuse fields on different bundles, and they share the same [field storage](#field-storage) but are different field instances and can have different configurations (such as field name, description, cardinality, required, etc).
+
+For example, the Repository Item Content type has a field instance for Alternative Title, with the following configuration:
+
+* Display name: Alternative Title
+* Help text: (blank)
+* Required: no
+* Translatable: yes
+* Field visibility and permissions: not set
+* Default value: none
+
+## Field formatter
+A field formatter configures how a [field instance](#field-instance) is displayed to site visitors. The formatters available depend on the [field type](#field-type). For example, an EDTF-type field can use the "Default EDTF Formatter", which can be configured (per field instance) to be big- or little-endian, and to show year, month, and day info in a variety of ways. Field Formatters are configured on the "Manage Display" tab of a bundle.
 
 ## Field type
+The type of a [field instance](#field-instance) or [field_storage](#field-storage). Drupal Core defines several field types and modules can define additional field types. The field type determines what [widgets](#widget) and [field formatters](#field-formatter) are available, as well as what configuration options are available in the field instance. Some commonly used field types in Islandora include:
+
+* Text (plain, long)
+    * Allows long text values
+    * Displays the input text
+* Text (formatted, long)
+    * Allows long text values
+    * If a format like “full_html” is set on the field, <p> will  be displayed as a paragraph break rather than <p>
+* Entity reference
+    * Populated by a link to another Drupal/Islandora entity
+    * Configurable behaviors include: what kind of entity can be linked to, how the data entry interface words (drop down menu or autocomplete), general patterns of how these references get displayed (show the referenced thing, show a link to the referenced thing, show unlinked name of the referenced thing). 
+* Typed relation
+    * An extended variation on Entity reference field type
+    * List of available relationship types (labeled “Available Relations”) can be configured per field instance. A code and a display value are recorded for each type (for example: relators:aut|Author). ‘relators’ acts as a linked data namespace. ‘aut’ is the code that, combined with the base namespace URI configured elsewhere, will create the linked data expression of what is recorded in this field ( this node hasAuthor taxonomyTermID )
+* EDTF
+    * Holds a string formatted according to the EDTF standard
+    * What kinds of EDTF features are allowed can be configured in the [widget](#widget) and how the date is presented to site visitors can be configured in the [field formatter](#field-formatter)
+
+
+## Field Storage
+Low-level configuration that determines how the field data is stored in the database. This often includes the maximum length of the data, and whether the field is single-valued or repeatable (though that can often be overridden at the field instance level). Compare: [field instance](#field-instance)
 
 ## FITS
 [File Information Tool Set](https://projects.iq.harvard.edu/fits), a set of software components for identifying, validating and extracting of technical metadata for a wide range of file formats.
@@ -298,3 +332,4 @@ A [Drupal](#drupal) configuration entity that holds [taxonomy terms](#taxonomy-t
 ---
 
 Some definitions adapted from [Wikipedia](https://en.wikipedia.org/) and [Drupal.org](https://www.drupal.org/docs/user_guide/en/glossary.html)
+
