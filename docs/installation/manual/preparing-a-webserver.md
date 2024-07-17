@@ -72,7 +72,7 @@ sudo su `whoami`
 
 ## PHP 8.x
 
-!! note "Installing Alternate Versions"
+!!! note "Installing Alternate Versions"
    Although the instructions below will install PHP 8.3, the instructions should work for future versions by replacing the `8.3` with whatever version you are attempting to install.
 
 ### Install PHP 8.x
