@@ -96,7 +96,7 @@ sudo chown www-data:www-data /var/log/islandora
 
 Each Crayfish component requires one or more `.yaml` file(s) to ensure everything is wired up correctly.
 
-**NOTICE**
+!!! note "Update the defaults to meet your needs"
 
 The following configuration files represent somewhat sensible defaults; you should take consideration of the logging levels in use, as this can vary in desirability from installation to installation. Also note that in all cases, `http` URLs are being used, as this guide does not deal with setting up https support. In a production installation, this should not be the case. These files also assume a connection to a PostgreSQL database; use a `pdo_mysql` driver and the appropriate `3306` port if using MySQL.
 
