@@ -1009,6 +1009,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#installing-openjdk-11" class="md-nav__link">
+    Installing OpenJDK 11
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#apache-2" class="md-nav__link">
     Apache 2
   </a>
@@ -1043,16 +1050,16 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#php-74" class="md-nav__link">
-    PHP 7.4
+  <a href="#php-8x" class="md-nav__link">
+    PHP 8.x
   </a>
   
-    <nav class="md-nav" aria-label="PHP 7.4">
+    <nav class="md-nav" aria-label="PHP 8.x">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#install-php-74" class="md-nav__link">
-    Install PHP 7.4
+  <a href="#install-php-8x" class="md-nav__link">
+    Install PHP 8.x
   </a>
   
 </li>
@@ -1063,23 +1070,16 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#postgresql-11" class="md-nav__link">
-    PostgreSQL 11
+  <a href="#mysql" class="md-nav__link">
+    MySQL
   </a>
   
-    <nav class="md-nav" aria-label="PostgreSQL 11">
+    <nav class="md-nav" aria-label="MySQL">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#install-postgresql-11" class="md-nav__link">
-    Install PostgreSQL 11
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#configure-postgresql-11-for-use-with-drupal" class="md-nav__link">
-    Configure Postgresql 11 For Use With Drupal
+  <a href="#install" class="md-nav__link">
+    Install
   </a>
   
 </li>
@@ -2657,6 +2657,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#installing-openjdk-11" class="md-nav__link">
+    Installing OpenJDK 11
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#apache-2" class="md-nav__link">
     Apache 2
   </a>
@@ -2691,16 +2698,16 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#php-74" class="md-nav__link">
-    PHP 7.4
+  <a href="#php-8x" class="md-nav__link">
+    PHP 8.x
   </a>
   
-    <nav class="md-nav" aria-label="PHP 7.4">
+    <nav class="md-nav" aria-label="PHP 8.x">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#install-php-74" class="md-nav__link">
-    Install PHP 7.4
+  <a href="#install-php-8x" class="md-nav__link">
+    Install PHP 8.x
   </a>
   
 </li>
@@ -2711,23 +2718,16 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#postgresql-11" class="md-nav__link">
-    PostgreSQL 11
+  <a href="#mysql" class="md-nav__link">
+    MySQL
   </a>
   
-    <nav class="md-nav" aria-label="PostgreSQL 11">
+    <nav class="md-nav" aria-label="MySQL">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#install-postgresql-11" class="md-nav__link">
-    Install PostgreSQL 11
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#configure-postgresql-11-for-use-with-drupal" class="md-nav__link">
-    Configure Postgresql 11 For Use With Drupal
+  <a href="#install" class="md-nav__link">
+    Install
   </a>
   
 </li>
@@ -2768,15 +2768,25 @@
 </div>
 <h2 id="in-this-section-we-will-install">In this section, we will install:<a class="headerlink" href="#in-this-section-we-will-install" title="Permanent link">&para;</a></h2>
 <ul>
+<li><a href="https://openjdk.org/">Java/OpenJDK</a> is the Java runtime environment used by multiple components: Solr, Cantaloupe, Alpaca, Fedora, and Blazegraph.</li>
 <li><a href="https://httpd.apache.org/">Apache 2</a>, the webserver that will deliver webpages to end users</li>
-<li><a href="https://www.php.net/">PHP 7</a>, the runtime code interpreter that Drupal will use to generate webpages and other services via apache, as well as that Drush and Composer will use to run tasks from the command line</li>
-<li>Several modules for PHP 7 which are required to run the PHP code that Drupal and other applications will be executing</li>
-<li><a href="https://www.postgresql.org/">PostgreSQL 10</a>, the database that Drupal will use for storage (as well as other applications down the line)</li>
+<li><a href="https://www.php.net/">PHP 8</a>, the runtime code interpreter that Drupal will use to generate webpages and other services via apache, as well as that Drush and Composer will use to run tasks from the command line</li>
+<li>Several modules for PHP 8 which are required to run the PHP code that Drupal and other applications will be executing</li>
+<li><a href="https://www.mysql.com/">MySQL</a>, the database that Drupal will use for storage (as well as other applications down the line)</li>
 </ul>
+<h2 id="installing-openjdk-11">Installing OpenJDK 11<a class="headerlink" href="#installing-openjdk-11" title="Permanent link">&para;</a></h2>
+<p>Tomcat runs in a Java runtime environment, so we'll need one to continue. In our case, OpenJDK 11 is open-source, free to use, and can fairly simply be installed using <code>apt-get</code>:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>openjdk-11-jdk<span class="w"> </span>openjdk-11-jre
+</span></code></pre></div>
+<p>The installation of OpenJDK via <code>apt-get</code> establishes it as the de-facto Java runtime environment to be used on the system, so no further configuration is required.</p>
+<p>The resultant location of the java JRE binary (and therefore, the correct value of <code>JAVA_HOME</code> when it’s referenced) will vary based on the specifics of the machine it’s being installed on; that being said, you can find its exact location using <code>update-alternatives</code>:</p>
+<p><div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>update-alternatives<span class="w"> </span>--list<span class="w"> </span>java
+</span></code></pre></div>
+Take a note of this path as we will need it later.</p>
 <h2 id="apache-2">Apache 2<a class="headerlink" href="#apache-2" title="Permanent link">&para;</a></h2>
 <h3 id="install-apache-2">Install Apache 2<a class="headerlink" href="#install-apache-2" title="Permanent link">&para;</a></h3>
 <p>Apache can typically be installed and configured outright by your operating system’s package manager:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>apache2<span class="w"> </span>apache2-utils
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>apache2<span class="w"> </span>apache2-utils
 </span></code></pre></div>
 <p>This will install:</p>
 <ul>
@@ -2787,62 +2797,47 @@
 </ul>
 <h3 id="enable-apache-mods">Enable Apache Mods<a class="headerlink" href="#enable-apache-mods" title="Permanent link">&para;</a></h3>
 <p>We’re going to enable a couple of Apache mods that Drupal highly recommends installing, and which are de-facto considered required by Islandora:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>a2enmod<span class="w"> </span>ssl
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>sudo<span class="w"> </span>a2enmod<span class="w"> </span>rewrite
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>apache2
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sudo<span class="w"> </span>a2enmod<span class="w"> </span>ssl
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>sudo<span class="w"> </span>a2enmod<span class="w"> </span>rewrite
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>apache2
 </span></code></pre></div>
 <h3 id="add-the-current-user-to-the-www-data-group">Add the Current User to the <code>www-data</code> Group<a class="headerlink" href="#add-the-current-user-to-the-www-data-group" title="Permanent link">&para;</a></h3>
 <p>Since the user we are currently logged in as is going to work quite a bit inside the Drupal directory, we want to give it group permissions to anything the <code>www-data</code> group has access to. When we run <code>composer</code>, <code>www-data</code> will also be caching data in our own home directory, so we want this group modification to go in both directions.</p>
 <p><strong>N.B.</strong> This code block uses <strong>backticks</strong>, not single quotes; this is an important distinction as backticks have special meaning in <code>bash</code>.</p>
 <p><strong>Note</strong> If doing this in the terminal, replace "whoami" with your username and remove the backticks</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>usermod<span class="w"> </span>-a<span class="w"> </span>-G<span class="w"> </span>www-data<span class="w"> </span><span class="sb">`</span>whoami<span class="sb">`</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>sudo<span class="w"> </span>usermod<span class="w"> </span>-a<span class="w"> </span>-G<span class="w"> </span><span class="sb">`</span>whoami<span class="sb">`</span><span class="w"> </span>www-data
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="c1"># Immediately log back in to apply the new group.</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>sudo<span class="w"> </span>su<span class="w"> </span><span class="sb">`</span>whoami<span class="sb">`</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sudo<span class="w"> </span>usermod<span class="w"> </span>-a<span class="w"> </span>-G<span class="w"> </span>www-data<span class="w"> </span><span class="sb">`</span>whoami<span class="sb">`</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>sudo<span class="w"> </span>usermod<span class="w"> </span>-a<span class="w"> </span>-G<span class="w"> </span><span class="sb">`</span>whoami<span class="sb">`</span><span class="w"> </span>www-data
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="c1"># Immediately log back in to apply the new group.</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>sudo<span class="w"> </span>su<span class="w"> </span><span class="sb">`</span>whoami<span class="sb">`</span>
 </span></code></pre></div>
-<h2 id="php-74">PHP 7.4<a class="headerlink" href="#php-74" title="Permanent link">&para;</a></h2>
-<h3 id="install-php-74">Install PHP 7.4<a class="headerlink" href="#install-php-74" title="Permanent link">&para;</a></h3>
-<p>If you're running Debian 11 you should be able to install PHP 7.4 from the apt packages directly:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>php7.4<span class="w"> </span>php7.4-cli<span class="w"> </span>php7.4-common<span class="w"> </span>php7.4-curl<span class="w"> </span>php7.4-dev<span class="w"> </span>php7.4-gd<span class="w"> </span>php7.4-imap<span class="w"> </span>php7.4-json<span class="w"> </span>php7.4-mbstring<span class="w"> </span>php7.4-opcache<span class="w"> </span>php7.4-xml<span class="w"> </span>php7.4-yaml<span class="w"> </span>php7.4-zip<span class="w"> </span>libapache2-mod-php7.4<span class="w"> </span>php-pgsql<span class="w"> </span>php-redis<span class="w"> </span>php-xdebug<span class="w"> </span>unzip
+<h2 id="php-8x">PHP 8.x<a class="headerlink" href="#php-8x" title="Permanent link">&para;</a></h2>
+<p>!! note "Installing Alternate Versions"
+   Although the instructions below will install PHP 8.3, the instructions should work for future versions by replacing the <code>8.3</code> with whatever version you are attempting to install.</p>
+<h3 id="install-php-8x">Install PHP 8.x<a class="headerlink" href="#install-php-8x" title="Permanent link">&para;</a></h3>
+<p>If you're running Ununtu 20.04+ you should be able to install PHP 8 from the apt packages directly, although the <code>ondrej/php</code> repository provides additional libraries:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>sudo<span class="w"> </span>add-apt-repository<span class="w"> </span>ppa:ondrej/php
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>php8.3<span class="w"> </span>libapache2-mod-php<span class="w"> </span>unzip
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>php8.3-<span class="o">{</span>cli,common,curl,gd,imap,intl,mysql,opcache,redis,xdebug,xml,yaml,zip<span class="o">}</span>
 </span></code></pre></div>
-<p>If you're running Debian 10, the repository for the PHP 7.4 packages needs to be installed first:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>lsb-release<span class="w"> </span>apt-transport-https<span class="w"> </span>ca-certificates
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>sudo<span class="w"> </span>wget<span class="w"> </span>-O<span class="w"> </span>/etc/apt/trusted.gpg.d/php.gpg<span class="w"> </span>https://packages.sury.org/php/apt.gpg
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;deb https://packages.sury.org/php/ </span><span class="k">$(</span>lsb_release<span class="w"> </span>-sc<span class="k">)</span><span class="s2"> main&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/apt/sources.list.d/php.list
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>php7.4<span class="w"> </span>php7.4-cli<span class="w"> </span>php7.4-common<span class="w"> </span>php7.4-curl<span class="w"> </span>php7.4-dev<span class="w"> </span>php7.4-gd<span class="w"> </span>php7.4-imap<span class="w"> </span>php7.4-json<span class="w"> </span>php7.4-mbstring<span class="w"> </span>php7.4-opcache<span class="w"> </span>php7.4-xml<span class="w"> </span>php7.4-yaml<span class="w"> </span>php7.4-zip<span class="w"> </span>libapache2-mod-php7.4<span class="w"> </span>php-pgsql<span class="w"> </span>php-redis<span class="w"> </span>php-xdebug<span class="w"> </span>unzip
+<p>Restart Apache to make the changes active:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>apache2
 </span></code></pre></div>
-<p>This will install a series of PHP configurations and mods in <code>/etc/php/7.4</code>, including:</p>
+<p>Installation directories created: </p>
 <ul>
-<li>A <code>mods-available</code> folder (from which everything is typically enabled by default)</li>
-<li>A configuration for PHP when run from Apache in the <code>apache2</code> folder</li>
-<li>A configuration for PHP when run from the command line - including when run via Drush - in the <code>cli</code> folder</li>
-<li><code>unzip</code>, which is important for PHP’s zip module to function correctly despite it not being a direct dependency of the module. We will also need to unzip some things later, so this is convenient to have in place early in the installation process.</li>
+<li><code>/etc/php/8.3</code> (this is where you can edit PHP settings, such as timeouts, as needed for your site)</li>
+<li><code>/usr/bin/php8.3</code></li>
 </ul>
-<h2 id="postgresql-11">PostgreSQL 11<a class="headerlink" href="#postgresql-11" title="Permanent link">&para;</a></h2>
-<h3 id="install-postgresql-11">Install PostgreSQL 11<a class="headerlink" href="#install-postgresql-11" title="Permanent link">&para;</a></h3>
-<p>PostgreSQL can generally be easily installed using your operating system’s package manager. It is typically sensible to install the version the system recognizes as up-to-date. We’re simply going to install the database software:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>postgresql
+<h2 id="mysql">MySQL<a class="headerlink" href="#mysql" title="Permanent link">&para;</a></h2>
+<h3 id="install">Install<a class="headerlink" href="#install" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>mysql-server
 </span></code></pre></div>
-<p>This will install:</p>
-<ul>
-<li>A user at the system level named <code>postgres</code>; this will be the only user, by default, that has permission to run the <code>psql</code> binary and have access to Postgres configurations</li>
-<li>A binary executable at <code>/usr/bin/psql</code>, which anyone - even <code>root</code> - will get kicked out of the moment they run it, since only the <code>postgres</code> user has permission to run any Postgres commands</li>
-<li>A series of configurations that live in <code>/etc/postgresql/11/main</code> which can be used to modify how PostgreSQL works.</li>
-</ul>
-<h3 id="configure-postgresql-11-for-use-with-drupal">Configure Postgresql 11 For Use With Drupal<a class="headerlink" href="#configure-postgresql-11-for-use-with-drupal" title="Permanent link">&para;</a></h3>
-<p>A modification needs to be made to the PostgreSQL configuration in order for Drupal to properly install and function. This change can be made to the main configuration file at <code>/etc/postgresql/11/main/postgresql.conf</code>:</p>
-<p><strong>Before</strong>:</p>
-<blockquote>
-<p>558 | #bytea_output = ‘hex’                      # hex, escape</p>
-</blockquote>
-<p><strong>After</strong>:</p>
-<blockquote>
-<p>558 | bytea_output = ‘escape’</p>
-</blockquote>
-<p>(Remove the "# hex, escape" comment and change the value from "hex" to "escape")</p>
-<p>The <code>postgresql</code> service should be restarted to accept the new configuration:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>postgresql
+<p>There are a few ways to check the MySQL status:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>sudo<span class="w"> </span>service<span class="w"> </span>mysql<span class="w"> </span>status<span class="w">  </span><span class="c1"># press &quot;q&quot; to exit</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>sudo<span class="w"> </span>ss<span class="w"> </span>-tap<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>mysql
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>sudo<span class="w"> </span>service<span class="w"> </span>mysql<span class="w"> </span>restart
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>sudo<span class="w"> </span>journalctl<span class="w"> </span>-u<span class="w"> </span>mysql<span class="w">   </span><span class="c1"># helps troubleshooting</span>
 </span></code></pre></div>
 
   <hr>
@@ -2850,7 +2845,7 @@
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 11, 2024</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 17, 2024</span>
       
     
   </small>

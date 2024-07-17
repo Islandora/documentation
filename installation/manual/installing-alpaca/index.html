@@ -1097,6 +1097,26 @@
     Installing ActiveMQ
   </a>
   
+    <nav class="md-nav" aria-label="Installing ActiveMQ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#option-1-system-provided-packages" class="md-nav__link">
+    Option 1: System Provided Packages
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-2-manual-install" class="md-nav__link">
+    Option 2: Manual Install
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2655,6 +2675,26 @@
     Installing ActiveMQ
   </a>
   
+    <nav class="md-nav" aria-label="Installing ActiveMQ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#option-1-system-provided-packages" class="md-nav__link">
+    Option 1: System Provided Packages
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-2-manual-install" class="md-nav__link">
+    Option 2: Manual Install
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2760,7 +2800,8 @@
 <li><a href="https://github.com/Islandora/Alpaca">Islandora/Alpaca</a>, Java middleware that handle communication between various components of Islandora.</li>
 </ul>
 <h2 id="installing-activemq">Installing ActiveMQ<a class="headerlink" href="#installing-activemq" title="Permanent link">&para;</a></h2>
-<p>In our case, the default installation method for ActiveMQ via <code>apt-get</code> will suffice.</p>
+<p>Some users have been able to install ActiveMQ from the standard package repositories. Others, however, have needed to install it manually.</p>
+<h3 id="option-1-system-provided-packages">Option 1: System Provided Packages<a class="headerlink" href="#option-1-system-provided-packages" title="Permanent link">&para;</a></h3>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>activemq
 </span></code></pre></div>
 <p>This will give us:</p>
@@ -2775,85 +2816,125 @@
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>apt-cache<span class="w"> </span>policy<span class="w"> </span>activemq
 </span></code></pre></div>
 <p>Write down the version listed under <code>Installed:</code>.</p>
+<h3 id="option-2-manual-install">Option 2: Manual Install<a class="headerlink" href="#option-2-manual-install" title="Permanent link">&para;</a></h3>
+<p>Git the latest ActiveMQ 5.x version number from https://archive.apache.org/dist/activemq which will be put in place of <code>[ACTIVEMQ_VERSION_NUMBER]</code>.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nb">cd</span><span class="w"> </span>/opt
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>sudo<span class="w"> </span>wget<span class="w"> </span>http://archive.apache.org/dist/activemq/<span class="o">[</span>ACTIVEMQ_VERSION_NUMBER<span class="o">]</span>/apache-activemq-<span class="o">[</span>ACTIVEMQ_VERSION_NUMBER<span class="o">]</span>-bin.tar.gz
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>sudo<span class="w"> </span>tar<span class="w"> </span>-xvzf<span class="w"> </span>apache-activemq-<span class="o">[</span>ACTIVEMQ_VERSION_NUMBER<span class="o">]</span>-bin.tar.gz
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>sudo<span class="w"> </span>mv<span class="w"> </span>apache-activemq-<span class="o">[</span>ACTIVEMQ_VERSION_NUMBER<span class="o">]</span><span class="w"> </span>/opt/activemq
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>sudo<span class="w"> </span>addgroup<span class="w"> </span>--quiet<span class="w"> </span>--system<span class="w"> </span>activemq
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>sudo<span class="w"> </span>adduser<span class="w"> </span>--quiet<span class="w"> </span>--system<span class="w"> </span>--ingroup<span class="w"> </span>activemq<span class="w"> </span>--no-create-home<span class="w"> </span>--disabled-password<span class="w"> </span>activemq
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>sudo<span class="w"> </span>chown<span class="w"> </span>-R<span class="w"> </span>activemq:activemq<span class="w"> </span>/opt/activemq
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>sudo<span class="w"> </span>rm<span class="w"> </span>-R<span class="w"> </span>apache-activemq-<span class="o">[</span>ACTIVEMQ_VERSION_NUMBER<span class="o">]</span>-bin.tar.gz
+</span></code></pre></div>
+<p>Add ActiveMQ as a service:
+`/etc/systemd/system/activemq.service | root:root/644
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>[Unit]
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>Description=Apache ActiveMQ
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>After=network.target
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>[Service]
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>Type=forking
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>User=activemq
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>Group=activemq
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>ExecStart=/opt/activemq/bin/activemq start
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>ExecStop=/opt/activemq/bin/activemq stop
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>[Install]
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>WantedBy=multi-user.target
+</span></code></pre></div></p>
+<p>Update the WebConsolePort host property settings in <code>/opt/activemq/conf/jetty.xml</code> from <code>&lt;property name="host" value="127.0.0.1"/&gt;</code> to <code>&lt;property name="host" value="0.0.0.0"/&gt;</code> so that you can access the dashboard from outside the local machine.</p>
+<p>Optionally, change the dashboard user credentials in <code>/opt/activemq/conf/users.properties</code>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Security Warning</p>
+<p>Updating the web console port and user properties are potential security holes. It is best to restrict the host setting and create a more secure username/password combination for production.</p>
+</div>
+<p>Set the service to start on machine startup and start it up:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>daemon-reload
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>activemq
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>activemq
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>status<span class="w"> </span>activemq
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>activemq
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>sudo<span class="w"> </span>apt-cache<span class="w"> </span>policy<span class="w"> </span>activemq<span class="w">   </span><span class="c1"># note version number</span>
+</span></code></pre></div></p>
+<p>The service should now be available at <code>http://localhost:8161/</code></p>
 <h2 id="installing-alpaca">Installing Alpaca<a class="headerlink" href="#installing-alpaca" title="Permanent link">&para;</a></h2>
 <p>Install Java 11+ if you haven't already.</p>
 <p>Make a directory for Alpaca and download the latest version of Alpaca from the <a href="https://repo1.maven.org/maven2/ca/islandora/alpaca/islandora-alpaca-app">Maven repository</a>. E.g.
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>mkdir /opt/alpaca
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>cd /opt/alpaca
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>curl -L https://repo1.maven.org/maven2/ca/islandora/alpaca/islandora-alpaca-app/2.2.0/islandora-alpaca-app-2.2.0-all.jar -o alpaca.jar
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>sudo mkdir /opt/alpaca
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>cd /opt/alpaca
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>sudo curl -L https://repo1.maven.org/maven2/ca/islandora/alpaca/islandora-alpaca-app/2.2.0/islandora-alpaca-app-2.2.0-all.jar -o alpaca.jar
 </span></code></pre></div></p>
 <h3 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h3>
 <p>Alpaca is made up of several services, each of these can be enabled or disabled individually.</p>
 <p>Alpaca takes an external file to configure its behaviour.</p>
 <p>Look at the <a href="https://github.com/Islandora/Alpaca/blob/2.x/example.properties"><code>example.properties</code></a> file to see some example settings.</p>
 <p>The properties are:</p>
-<p><div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a># Common options
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>error.maxRedeliveries=4
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a># Common options
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>error.maxRedeliveries=5
 </span></code></pre></div>
 This defines how many times to retry a message before failing completely.</p>
 <p>There are also common ActiveMQ properties to setup the connection.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a># ActiveMQ options
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>jms.brokerUrl=tcp://localhost:61616
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a># ActiveMQ options
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>jms.brokerUrl=tcp://localhost:61616
 </span></code></pre></div>
 <p>This defines the url to the ActiveMQ broker which you installed earlier.</p>
-<p><div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>jms.username=
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>jms.password=
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>jms.username=
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>jms.password=
 </span></code></pre></div>
 This defines the login credentials (if required)</p>
-<p><div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>jms.connections=10
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>jms.connections=10
 </span></code></pre></div>
 This defines the pool of connections to the ActiveMQ instance.</p>
-<p><div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>jms.concurrent-consumers=1
-</span></code></pre></div>
-This defines how many messages to process simultaneously.</p>
 <h4 id="islandora-indexing-fcrepo">islandora-indexing-fcrepo<a class="headerlink" href="#islandora-indexing-fcrepo" title="Permanent link">&para;</a></h4>
 <p>This service manages a Drupal node into a corresponding Fedora resource.</p>
 <p>It's properties are:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a># Fcrepo indexer options
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>fcrepo.indexer.enabled=true
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a># Fcrepo indexer options
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>fcrepo.indexer.enabled=true
 </span></code></pre></div>
 <p>This defines whether the Fedora indexer is enabled or not.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>fcrepo.indexer.node=queue:islandora-indexing-fcrepo-content
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>fcrepo.indexer.delete=queue:islandora-indexing-fcrepo-delete
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>fcrepo.indexer.media=queue:islandora-indexing-fcrepo-media
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>fcrepo.indexer.external=queue:islandora-indexing-fcrepo-file-external
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>fcrepo.indexer.node=queue:islandora-indexing-fcrepo-content
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>fcrepo.indexer.delete=queue:islandora-indexing-fcrepo-delete
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>fcrepo.indexer.media=queue:islandora-indexing-fcrepo-media
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>fcrepo.indexer.external=queue:islandora-indexing-fcrepo-file-external
 </span></code></pre></div>
 <p>These define the various queues to listen on for the indexing/deletion
 messages. The part after <code>queue:</code> should match your Islandora instance "Actions".</p>
-<p><div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>fcrepo.indexer.milliner.baseUrl=http://localhost:8000/milliner
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>fcrepo.indexer.milliner.baseUrl=http://localhost/milliner
 </span></code></pre></div>
 This defines the location of your Milliner microservice.</p>
-<p><div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>fcrepo.indexer.concurrent-consumers=1
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>fcrepo.indexer.max-concurrent-consumers=1
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>fcrepo.indexer.concurrent-consumers=-1
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>fcrepo.indexer.max-concurrent-consumers=-1
 </span></code></pre></div>
 These define the default number of concurrent consumers and maximum number of concurrent
 consumers working off your ActiveMQ instance.
 A value of <code>-1</code> means no setting is applied.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>fcrepo.indexer.async-consumer=true
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>fcrepo.indexer.async-consumer=false
 </span></code></pre></div>
 <p>This property allows the concurrent consumers to process concurrently; otherwise, the consumers will wait to the previous message has been processed before executing.</p>
 <h4 id="islandora-indexing-triplestore">islandora-indexing-triplestore<a class="headerlink" href="#islandora-indexing-triplestore" title="Permanent link">&para;</a></h4>
 <p>This service indexes the Drupal node into the configured triplestore</p>
 <p>It's properties are:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a># Triplestore indexer options
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>triplestore.indexer.enabled=false
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a># Triplestore indexer options
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>triplestore.indexer.enabled=true
 </span></code></pre></div>
 <p>This defines whether the Triplestore indexer is enabled or not.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>triplestore.index.stream=queue:islandora-indexing-triplestore-index
-</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>triplestore.delete.stream=queue:islandora-indexing-triplestore-delete
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>triplestore.index.stream=queue:islandora-indexing-triplestore-index
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>triplestore.delete.stream=queue:islandora-indexing-triplestore-delete
 </span></code></pre></div>
 <p>These define the various queues to listen on for the indexing/deletion
 messages. The part after <code>queue:</code> should match your Islandora instance "Actions".</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>triplestore.baseUrl=http://localhost:8080/bigdata/namespace/kb/sparql
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>triplestore.baseUrl=http://localhost:8080/bigdata/namespace/kb/sparql
 </span></code></pre></div>
 <p>This defines the location of your triplestore's SPARQL update endpoint.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>triplestore.indexer.concurrent-consumers=1
-</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>triplestore.indexer.max-concurrent-consumers=1
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>triplestore.indexer.concurrent-consumers=-1
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>triplestore.indexer.max-concurrent-consumers=-1
 </span></code></pre></div>
 <p>These define the default number of concurrent consumers and maximum number of concurrent
 consumers working off your ActiveMQ instance.
 A value of <code>-1</code> means no setting is applied.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>triplestore.indexer.async-consumer=true
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>triplestore.indexer.async-consumer=false
 </span></code></pre></div>
 <p>This property allows the concurrent consumers to process concurrently; otherwise, the consumers will wait to the previous message has been processed before executing.</p>
 <h4 id="islandora-connector-derivative">islandora-connector-derivative<a class="headerlink" href="#islandora-connector-derivative" title="Permanent link">&para;</a></h4>
@@ -2861,51 +2942,51 @@ A value of <code>-1</code> means no setting is applied.</p>
 with different configured inputs and outputs based on properties.</p>
 <p>The routes to be configured are defined with the property <code>derivative.systems.installed</code> which expects
 a comma separated list. Each item in the list defines a new route and must also define 3 additional properties.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>derivative.&lt;item&gt;.enabled=true
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>derivative.&lt;item&gt;.enabled=true
 </span></code></pre></div>
 <p>This defines if the <code>item</code> service is enabled.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>derivative.&lt;item&gt;.in.stream=queue:islandora-item-connector.index
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>derivative.&lt;item&gt;.in.stream=queue:islandora-item-connector-&lt;item&gt;
 </span></code></pre></div>
 <p>This is the input queue for the derivative microservice.
 The part after <code>queue:</code> should match your Islandora instance "Actions".</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>derivative.&lt;item&gt;.service.url=http://example.org/derivative/convert
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>derivative.&lt;item&gt;.service.url=http://example.org/derivative/convert
 </span></code></pre></div>
 <p>This is the microservice URL to process the request.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>derivative.&lt;item&gt;.concurrent-consumers=1
-</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>derivative.&lt;item&gt;.max-concurrent-consumers=1
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>derivative.&lt;item&gt;.concurrent-consumers=-1
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>derivative.&lt;item&gt;.max-concurrent-consumers=-1
 </span></code></pre></div>
 <p>These define the default number of concurrent consumers and maximum number of concurrent
 consumers working off your ActiveMQ instance.
 A value of <code>-1</code> means no setting is applied.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>derivative.&lt;item&gt;.async-consumer=true
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>derivative.&lt;item&gt;.async-consumer=false
 </span></code></pre></div>
 <p>This property allows the concurrent consumers to process concurrently; otherwise, the consumers will wait to the previous message has been processed before executing.</p>
 <p>For example, with two services defined (houdini and crayfits) my configuration would have</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>derivative.systems.installed=houdini,fits
-</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>
-</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>derivative.houdini.enabled=true
-</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>derivative.houdini.in.stream=queue:islandora-connector-houdini
-</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>derivative.houdini.service.url=http://127.0.0.1:8000/houdini/convert
-</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>derivative.houdini.concurrent-consumers=1
-</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>derivative.houdini.max-concurrent-consumers=4
-</span><span id="__span-23-8"><a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a>derivative.houdini.async-consumer=true
-</span><span id="__span-23-9"><a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a>
-</span><span id="__span-23-10"><a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a>derivative.fits.enabled=true
-</span><span id="__span-23-11"><a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a>derivative.fits.in.stream=queue:islandora-connector-fits
-</span><span id="__span-23-12"><a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a>derivative.fits.service.url=http://127.0.0.1:8000/crayfits
-</span><span id="__span-23-13"><a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a>derivative.fits.concurrent-consumers=2
-</span><span id="__span-23-14"><a id="__codelineno-23-14" name="__codelineno-23-14" href="#__codelineno-23-14"></a>derivative.fits.max-concurrent-consumers=2
-</span><span id="__span-23-15"><a id="__codelineno-23-15" name="__codelineno-23-15" href="#__codelineno-23-15"></a>derivative.fits.async-consumer=false
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>derivative.systems.installed=houdini,fits
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>derivative.houdini.enabled=true
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>derivative.houdini.in.stream=queue:islandora-connector-houdini
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>derivative.houdini.service.url=http://127.0.0.1/houdini/convert
+</span><span id="__span-25-6"><a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>derivative.houdini.concurrent-consumers=1
+</span><span id="__span-25-7"><a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a>derivative.houdini.max-concurrent-consumers=4
+</span><span id="__span-25-8"><a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a>derivative.houdini.async-consumer=true
+</span><span id="__span-25-9"><a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a>
+</span><span id="__span-25-10"><a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a>derivative.fits.enabled=true
+</span><span id="__span-25-11"><a id="__codelineno-25-11" name="__codelineno-25-11" href="#__codelineno-25-11"></a>derivative.fits.in.stream=queue:islandora-connector-fits
+</span><span id="__span-25-12"><a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a>derivative.fits.service.url=http://127.0.0.1/crayfits
+</span><span id="__span-25-13"><a id="__codelineno-25-13" name="__codelineno-25-13" href="#__codelineno-25-13"></a>derivative.fits.concurrent-consumers=2
+</span><span id="__span-25-14"><a id="__codelineno-25-14" name="__codelineno-25-14" href="#__codelineno-25-14"></a>derivative.fits.max-concurrent-consumers=2
+</span><span id="__span-25-15"><a id="__codelineno-25-15" name="__codelineno-25-15" href="#__codelineno-25-15"></a>derivative.fits.async-consumer=false
 </span></code></pre></div>
 <h4 id="customizing-http-client-timeouts">Customizing HTTP client timeouts<a class="headerlink" href="#customizing-http-client-timeouts" title="Permanent link">&para;</a></h4>
 <p>You can alter the HTTP client from the defaults for its request, connection and socket timeouts.
 To do this you want to enable the request configurer.</p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>request.configurer.enabled<span class="o">=</span><span class="nb">true</span>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>request.configurer.enabled<span class="o">=</span><span class="nb">true</span>
 </span></code></pre></div>
 <p>Then set the next 3 timeouts (measured in milliseconds) to the desired timeout.</p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>request.timeout<span class="o">=</span>-1
-</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>connection.timeout<span class="o">=</span>-1
-</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>socket.timeout<span class="o">=</span>-1
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>request.timeout<span class="o">=</span>-1
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>connection.timeout<span class="o">=</span>-1
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>socket.timeout<span class="o">=</span>-1
 </span></code></pre></div>
 <p>The default for all three is <code>-1</code> which indicates no timeout.</p>
 <h4 id="alter-http-options">Alter HTTP options<a class="headerlink" href="#alter-http-options" title="Permanent link">&para;</a></h4>
@@ -2915,51 +2996,54 @@ To do this you want to enable the request configurer.</p>
 <p>If you want to send additional <a href="https://camel.apache.org/components/3.18.x/http-component.html#_query_parameters">configuration parameters</a> or alter the existing defaults. You can 
 add them as a comma separated list of key=value pairs.</p>
 <p>For example
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>http.additional_options<span class="o">=</span><span class="nv">authMethod</span><span class="o">=</span>Basic,authUsername<span class="o">=</span>Jim,authPassword<span class="o">=</span><span class="m">1234</span>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>http.additional_options<span class="o">=</span><span class="nv">authMethod</span><span class="o">=</span>Basic,authUsername<span class="o">=</span>Jim,authPassword<span class="o">=</span><span class="m">1234</span>
 </span></code></pre></div></p>
 <p>These will be added to ALL http endpoint requests.</p>
-<p><strong>Note</strong>: We are currently running Camel 3.7.6, some configuration parameters on the above linked page might not be supported.</p>
+<div class="admonition note">
+<p class="admonition-title">Check Camel Configuration Parameters</p>
+<p>We are currently running Camel 3.7.6, some configuration parameters on the above linked page might not be supported.</p>
+</div>
 <h3 id="deployingrunning">Deploying/Running<a class="headerlink" href="#deployingrunning" title="Permanent link">&para;</a></h3>
 <p>You can see the options by passing the <code>-h|--help</code> flag</p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>&gt;<span class="w"> </span>java<span class="w"> </span>-jar<span class="w"> </span>/opt/alpaca/alpaca.jar<span class="w"> </span>-h
-</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>Usage:<span class="w"> </span>alpaca<span class="w"> </span><span class="o">[</span>-hV<span class="o">]</span><span class="w"> </span><span class="o">[</span>-c<span class="o">=</span>&lt;configurationFilePath&gt;<span class="o">]</span>
-</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="w">  </span>-h,<span class="w"> </span>--help<span class="w">      </span>Show<span class="w"> </span>this<span class="w"> </span><span class="nb">help</span><span class="w"> </span>message<span class="w"> </span>and<span class="w"> </span>exit.
-</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="w">  </span>-V,<span class="w"> </span>--version<span class="w">   </span>Print<span class="w"> </span>version<span class="w"> </span>information<span class="w"> </span>and<span class="w"> </span>exit.
-</span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a><span class="w">  </span>-c,<span class="w"> </span>--config<span class="o">=</span>&lt;configurationFilePath&gt;
-</span><span id="__span-27-6"><a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a><span class="w">                  </span>The<span class="w"> </span>path<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>configuration<span class="w"> </span>file
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>&gt;<span class="w"> </span>java<span class="w"> </span>-jar<span class="w"> </span>/opt/alpaca/alpaca.jar<span class="w"> </span>-h
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>Usage:<span class="w"> </span>alpaca<span class="w"> </span><span class="o">[</span>-hV<span class="o">]</span><span class="w"> </span><span class="o">[</span>-c<span class="o">=</span>&lt;configurationFilePath&gt;<span class="o">]</span>
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a><span class="w">  </span>-h,<span class="w"> </span>--help<span class="w">      </span>Show<span class="w"> </span>this<span class="w"> </span><span class="nb">help</span><span class="w"> </span>message<span class="w"> </span>and<span class="w"> </span>exit.
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a><span class="w">  </span>-V,<span class="w"> </span>--version<span class="w">   </span>Print<span class="w"> </span>version<span class="w"> </span>information<span class="w"> </span>and<span class="w"> </span>exit.
+</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a><span class="w">  </span>-c,<span class="w"> </span>--config<span class="o">=</span>&lt;configurationFilePath&gt;
+</span><span id="__span-29-6"><a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a><span class="w">                  </span>The<span class="w"> </span>path<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>configuration<span class="w"> </span>file
 </span></code></pre></div>
 <p>Using the <code>-V|--version</code> flag will just return the current version of the application.</p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>&gt;<span class="w"> </span>java<span class="w"> </span>-jar<span class="w"> </span>/opt/alpaca/alpaca.jar<span class="w"> </span>-v
-</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a><span class="m">2</span>.0.0
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>&gt;<span class="w"> </span>java<span class="w"> </span>-jar<span class="w"> </span>/opt/alpaca/alpaca.jar<span class="w"> </span>-v
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a><span class="m">2</span>.0.0
 </span></code></pre></div>
 <p>To start Alpaca you would pass the external property file with the <code>-c|--config</code> flag.</p>
 <p>For example if you are using an external properties file located at <code>/opt/alpaca/alpaca.properties</code>,
 you would run:</p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>java<span class="w"> </span>-jar<span class="w"> </span>alpaca.jar<span class="w"> </span>-c<span class="w"> </span>/opt/alpaca/alpaca.properties
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>java<span class="w"> </span>-jar<span class="w"> </span>alpaca.jar<span class="w"> </span>-c<span class="w"> </span>/opt/alpaca/alpaca.properties
 </span></code></pre></div>
 <p>To use systemd to start and stop the service create the file <code>/etc/systemd/system/alpaca.service</code>:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>[Unit]
-</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>Description=Alpaca service
-</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>After=network.target
-</span><span id="__span-30-4"><a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>
-</span><span id="__span-30-5"><a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a>[Service]
-</span><span id="__span-30-6"><a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a>Type=forking
-</span><span id="__span-30-7"><a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a>ExecStart=java -jar /opt/alpaca/alpaca.jar -c /opt/alpaca/alpaca.properties
-</span><span id="__span-30-8"><a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a>ExecStop=/bin/kill -15 $MAINPID
-</span><span id="__span-30-9"><a id="__codelineno-30-9" name="__codelineno-30-9" href="#__codelineno-30-9"></a>SuccessExitStatus=143
-</span><span id="__span-30-10"><a id="__codelineno-30-10" name="__codelineno-30-10" href="#__codelineno-30-10"></a>Restart=always
-</span><span id="__span-30-11"><a id="__codelineno-30-11" name="__codelineno-30-11" href="#__codelineno-30-11"></a>
-</span><span id="__span-30-12"><a id="__codelineno-30-12" name="__codelineno-30-12" href="#__codelineno-30-12"></a>[Install]
-</span><span id="__span-30-13"><a id="__codelineno-30-13" name="__codelineno-30-13" href="#__codelineno-30-13"></a>WantedBy=default.target
+<div class="language-text highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>[Unit]
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>Description=Alpaca service
+</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>After=network.target
+</span><span id="__span-32-4"><a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a>
+</span><span id="__span-32-5"><a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a>[Service]
+</span><span id="__span-32-6"><a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a>Type=simple
+</span><span id="__span-32-7"><a id="__codelineno-32-7" name="__codelineno-32-7" href="#__codelineno-32-7"></a>ExecStart=java -jar /opt/alpaca/alpaca.jar -c /opt/alpaca/alpaca.properties
+</span><span id="__span-32-8"><a id="__codelineno-32-8" name="__codelineno-32-8" href="#__codelineno-32-8"></a>ExecStop=/bin/kill -15 $MAINPID
+</span><span id="__span-32-9"><a id="__codelineno-32-9" name="__codelineno-32-9" href="#__codelineno-32-9"></a>SuccessExitStatus=143
+</span><span id="__span-32-10"><a id="__codelineno-32-10" name="__codelineno-32-10" href="#__codelineno-32-10"></a>Restart=always
+</span><span id="__span-32-11"><a id="__codelineno-32-11" name="__codelineno-32-11" href="#__codelineno-32-11"></a>
+</span><span id="__span-32-12"><a id="__codelineno-32-12" name="__codelineno-32-12" href="#__codelineno-32-12"></a>[Install]
+</span><span id="__span-32-13"><a id="__codelineno-32-13" name="__codelineno-32-13" href="#__codelineno-32-13"></a>WantedBy=default.target
 </span></code></pre></div>
-<p>Now you can start the service by running <code>systemctl start alpaca</code> and set it to come up when the system reboots with <code>systemctl enable alpaca</code>.</p>
+<p>Now you can start the service by running <code>sudo systemctl start alpaca</code> and set it to come up when the system reboots with <code>sudo systemctl enable alpaca</code>. Check the status by running <code>sudo systemctl status alpaca</code>.</p>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 11, 2024</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 17, 2024</span>
       
     
   </small>

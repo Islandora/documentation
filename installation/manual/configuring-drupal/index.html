@@ -2793,11 +2793,11 @@
 <p>The below configuration will establish <code>localhost</code> as a trusted host pattern, but on production sites this will need to be expanded to include the actual host patterns used by the site.</p>
 <p><code>/opt/drupal/web/sites/default/settings.php</code></p>
 <p><strong>Before</strong> (at around line 789):
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>&#39;driver&#39; =&gt; &#39;pgsql&#39;,
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>&#39;driver&#39; =&gt; &#39;mysql&#39;,
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>);
 </span></code></pre></div></p>
 <p><strong>After</strong>:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>&#39;driver&#39; =&gt; &#39;pgsql&#39;,
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>&#39;driver&#39; =&gt; &#39;mysql&#39;,
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>);
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>$settings[&#39;trusted_host_patterns&#39;] = [
@@ -2910,7 +2910,7 @@ to pick and choose which Islandora modules you use.</p>
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 11, 2024</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 17, 2024</span>
       
     
   </small>

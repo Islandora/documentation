@@ -3085,11 +3085,10 @@
 </span></code></pre></div>
 <h3 id="creating-a-database-for-fedora">Creating a Database for Fedora<a class="headerlink" href="#creating-a-database-for-fedora" title="Permanent link">&para;</a></h3>
 <p>The method for creating the database here will closely mimic the method we used to create our database for Drupal.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>-u<span class="w"> </span>postgres<span class="w"> </span>psql
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>create<span class="w"> </span>database<span class="w"> </span>FEDORA_DB<span class="w"> </span>encoding<span class="w"> </span><span class="s1">&#39;UTF8&#39;</span><span class="w"> </span><span class="nv">LC_COLLATE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;en_US.UTF-8&#39;</span><span class="w"> </span><span class="nv">LC_CTYPE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;en_US.UTF-8&#39;</span><span class="w"> </span>TEMPLATE<span class="w"> </span>template0<span class="p">;</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>create<span class="w"> </span>user<span class="w"> </span>FEDORA_DB_USER<span class="w"> </span>with<span class="w"> </span>encrypted<span class="w"> </span>password<span class="w"> </span><span class="s1">&#39;FEDORA_DB_PASSWORD&#39;</span><span class="p">;</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>grant<span class="w"> </span>all<span class="w"> </span>privileges<span class="w"> </span>on<span class="w"> </span>database<span class="w"> </span>FEDORA_DB<span class="w"> </span>to<span class="w"> </span>FEDORA_DB_USER<span class="p">;</span>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="se">\q</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>mysql<span class="w"> </span>-u<span class="w"> </span>root
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>CREATE<span class="w"> </span>DATABASE<span class="w"> </span><span class="o">[</span>FEDORA_DB<span class="o">]</span><span class="p">;</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>CREATE<span class="w"> </span>USER<span class="w"> </span><span class="s1">&#39;[MYSQL_USER_FOR_FEDORA]&#39;</span>@<span class="s1">&#39;localhost&#39;</span><span class="w"> </span>IDENTIFIED<span class="w"> </span>BY<span class="w"> </span><span class="s1">&#39;[MYSQL_PASSWORD_FOR_FEDORA]&#39;</span><span class="p">;</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>GRANT<span class="w"> </span>ALL<span class="w"> </span>PRIVILEGES<span class="w"> </span>ON<span class="w"> </span><span class="o">[</span>FEDORA_DB<span class="o">]</span>.*<span class="w"> </span>TO<span class="w"> </span><span class="s1">&#39;[MYSQL_USER_FOR_FEDORA]&#39;</span>@<span class="s1">&#39;localhost&#39;</span><span class="p">;</span>
 </span></code></pre></div>
 <ul>
 <li><code>FEDORA_DB</code>: <code>fcrepo</code><ul>
@@ -3200,9 +3199,9 @@
 <p><code>FCREPO_DB_USERNAME</code> - The database username</p>
 </li>
 <li><code>FCREPO_DB_PASSWORD</code> - The database password</li>
-<li><code>FCREPO_OCFL_ROOT</code> - Sets the root directory of the OCFL. Defaults to <code>FCREPO_HOME/data/ocfl-root</code> if not set.</li>
-<li><code>FCREPO_TEMP_ROOT</code> - Sets the temp directory used by OCFL. Defaults to <code>FCREPO_HOME/data/temp</code> if not set.</li>
-<li><code>FCREPO_STAGING_ROOT</code> - Sets the staging directory used by OCFL. Defaults to <code>FCREPO_HOME/data/staging</code> if not set.</li>
+<li><code>FCREPO_OCFL_ROOT</code> - Sets the root directory of the OCFL. Defaults to <code>FCREPO_HOME/data/ocfl-root</code> if this line is deleted.</li>
+<li><code>FCREPO_TEMP_ROOT</code> - Sets the temp directory used by OCFL. Defaults to <code>FCREPO_HOME/data/temp</code> if this line is deleted.</li>
+<li><code>FCREPO_STAGING_ROOT</code> - Sets the staging directory used by OCFL. Defaults to <code>FCREPO_HOME/data/staging</code> if this line is deleted.</li>
 <li><code>FCREPO_VELOCITY_LOG</code> - The Fedora HTML template code uses Apache Velocity, which generates a runtime log called velocity.log. Defaults to <code>FCREPO_HOME/logs/velocity</code>. A good choice might be /opt/tomcat/logs/velocity.log</li>
 <li><code>FCREPO_JMS_BASE</code> - This specifies the baseUrl to use when generating JMS messages. You can specify the hostname with or without port and with or without path. If your system is behind a NAT firewall you may need this to avoid your message consumers trying to access the system on an invalid port. If this system property is not set, the host, port and context from the user's request will be used in the emitted JMS messages. If your Alpaca is on the same machine as your Fedora and you use the <code>islandora-indexing-fcrepo</code>, you could use http://localhost:8080/fcrepo/rest. </li>
 </ul>
@@ -3261,10 +3260,9 @@
 <h2 id="syn">Syn<a class="headerlink" href="#syn" title="Permanent link">&para;</a></h2>
 <h3 id="downloading-the-syn-jar-file">Downloading the Syn JAR File<a class="headerlink" href="#downloading-the-syn-jar-file" title="Permanent link">&para;</a></h3>
 <p>A compiled JAR of Syn can be found on the <a href="https://github.com/Islandora/Syn/releases">Syn releases page</a>. We’re going to add this to the list libraries accessible to Tomcat.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>sudo wget -P /opt/tomcat/lib SYN_JAR_URL
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>sudo -u tomcat wget -P /opt/tomcat/lib SYN_JAR_URL
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a># Ensure the library has the correct permissions.
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>sudo chown -R tomcat:tomcat /opt/tomcat/lib
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>sudo chmod -R 640 /opt/tomcat/lib
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>sudo chmod -R 640 /opt/tomcat/lib
 </span></code></pre></div>
 <ul>
 <li><code>SYN_JAR_URL</code>: The latest stable release of the Syn JAR from the <a href="https://github.com/Islandora/Syn/releases">releases page</a>. Specifically, the JAR compiled as <code>-all.jar</code> is required.</li>
@@ -3297,14 +3295,14 @@
 <p><code>/opt/tomcat/conf/context.xml</code></p>
 <p><strong>Before</strong>:</p>
 <blockquote>
-<p>29 |     <code>--&gt;</code></p>
-<p>30 | <code>&lt;/Context&gt;</code></p>
+<p>30 |     <code>--&gt;</code></p>
+<p>31 | <code>&lt;/Context&gt;</code></p>
 </blockquote>
 <p><strong>After</strong>:</p>
 <blockquote>
-<p>29 |    <code>--&gt;</code></p>
-<p>30 |    <code>&lt;Valve className="ca.islandora.syn.valve.SynValve" pathname="/opt/fcrepo/config/syn-settings.xml"/&gt;</code></p>
-<p>31 | <code>&lt;/Context&gt;</code></p>
+<p>30 |    <code>--&gt;</code></p>
+<p>31 |    <code>&lt;Valve className="ca.islandora.syn.valve.SynValve" pathname="/opt/fcrepo/config/syn-settings.xml"/&gt;</code></p>
+<p>32 | <code>&lt;/Context&gt;</code></p>
 </blockquote>
 <h4 id="2-enable-the-syn-valve-for-only-fedora">2. Enable the Syn Valve for only Fedora.<a class="headerlink" href="#2-enable-the-syn-valve-for-only-fedora" title="Permanent link">&para;</a></h4>
 <p>Create a new file at</p>
@@ -3490,16 +3488,7 @@
 </span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>&lt;http://pcdm.org/models#fileOf&gt; &lt;http://www.w3.org/2002/07/owl#inverseOf&gt; &lt;http://pcdm.org/models#hasFile&gt; .
 </span></code></pre></div></p>
 <h3 id="specifying-the-rwstoreproperties-in-java_opts">Specifying the <code>RWStore.properties</code> in <code>JAVA_OPTS</code><a class="headerlink" href="#specifying-the-rwstoreproperties-in-java_opts" title="Permanent link">&para;</a></h3>
-<p>In order to enable our configuration when Tomcat starts, we need to reference the location of <code>RWStore.properties</code> in the <code>JAVA_OPTS</code> environment variable that Tomcat uses.</p>
-<p><code>/opt/tomcat/bin/setenv.sh</code></p>
-<p><strong>Before</strong>:</p>
-<blockquote>
-<p>3 | export JAVA_OPTS="-Djava.awt.headless=true -Dfcrepo.config.file=/opt/fcrepo/config/fcrepo.properties -DconnectionTimeout=-1 -server -Xmx1500m -Xms1000m"</p>
-</blockquote>
-<p><strong>After</strong>:</p>
-<blockquote>
-<p>3 | export JAVA_OPTS="-Djava.awt.headless=true -Dfcrepo.config.file=/opt/fcrepo/config/fcrepo.properties -DconnectionTimeout=-1 -Dcom.bigdata.rdf.sail.webapp.ConfigParams.propertyFile=/opt/blazegraph/conf/RWStore.properties -Dlog4j.configuration=file:/opt/blazegraph/conf/log4j.properties -server -Xmx1500m -Xms1000m"</p>
-</blockquote>
+<p>In order to enable our configuration when Tomcat starts, we need to add the location of <code>RWStore.properties</code> to the existing <code>JAVA_OPTS</code> environment variable that Tomcat uses in <code>/opt/tomcat/bin/setenv.sh</code>: <code>-Dcom.bigdata.rdf.sail.webapp.ConfigParams.propertyFile=/opt/blazegraph/conf/RWStore.properties -Dlog4j.configuration=file:/opt/blazegraph/conf/log4j.properties</code></p>
 <h3 id="restarting-tomcat_1">Restarting Tomcat<a class="headerlink" href="#restarting-tomcat_1" title="Permanent link">&para;</a></h3>
 <p>Finally, restart Tomcat to pick up the changes we’ve made.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>tomcat
@@ -3518,7 +3507,7 @@ If this worked correctly, Blazegraph should respond with some XML letting us kno
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 11, 2024</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 17, 2024</span>
       
     
   </small>

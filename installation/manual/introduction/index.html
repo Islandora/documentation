@@ -1038,6 +1038,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#account-tracker" class="md-nav__link">
+    Account Tracker
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#troubleshooting" class="md-nav__link">
     Troubleshooting
   </a>
@@ -2674,6 +2681,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#account-tracker" class="md-nav__link">
+    Account Tracker
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#troubleshooting" class="md-nav__link">
     Troubleshooting
   </a>
@@ -2777,6 +2791,31 @@
 </span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="cp">?&gt;</span>
 </span></code></pre></div>
 - <code>THE_NUMBER_TO_ADD_TO_THIS</code>: 12, perhaps with an explanation of why, or other numbers that may be appropriate</p>
+<h3 id="account-tracker">Account Tracker<a class="headerlink" href="#account-tracker" title="Permanent link">&para;</a></h3>
+<p>We will create several accounts during the installation process. For some items the instructions use <em>placeholders</em> in square brackets (<code>[]</code>). Create your own and use them in place of these placeholders as appropriate.</p>
+<ul>
+<li>MySQL root account</li>
+<li>username: <code>root</code></li>
+<li>password: <code>[mysql_root_password]</code></li>
+<li>MySQL account for Drupal database access</li>
+<li>username: <code>[mysql_drupal]</code></li>
+<li>password: <code>[mysql_drupal_password]</code></li>
+<li>MySQL account for Fedora access</li>
+<li>username: <code>[mysql_fedora]</code></li>
+<li>password: <code>[mysql_fedora_password]</code></li>
+<li>Tomcat</li>
+<li>username: <code>tomcat</code></li>
+<li>password: <code>[tomcat_user_password]</code></li>
+<li>Fedora fedoraAdmin account</li>
+<li>username: <code>fedoraAdmin</code></li>
+<li>password: <code>[fedora_admin_password]</code></li>
+<li>Fedora fedoraUser account</li>
+<li>username: <code>fedoraUser</code></li>
+<li>password: <code>[fedora_user_password]</code></li>
+<li>ActiveMQ</li>
+<li>username: <code>[activemq_user]</code></li>
+<li>password: <code>[activemq_user_password]</code></li>
+</ul>
 <h3 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h3>
 <p>The most common issues you will likely run into when manually provisioning a server are:</p>
 <ul>
@@ -2790,7 +2829,7 @@
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 11, 2024</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 17, 2024</span>
       
     
   </small>
