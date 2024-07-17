@@ -20,13 +20,13 @@ The below configuration will establish `localhost` as a trusted host pattern, bu
 
 **Before** (at around line 789):
 ```
-'driver' => 'pgsql',
+'driver' => 'mysql',
 );
 ```
 
 **After**:
 ```
-'driver' => 'pgsql',
+'driver' => 'mysql',
 );
 
 $settings['trusted_host_patterns'] = [
