@@ -6,7 +6,7 @@
 !!! notice
     The manual installation guide is not intended to describe *the* Islandora installation but rather *an* Islandora installation. The server created using this guide is not hardened, will not be easily scalable, and the components may not be configured in a way you consider easy to work with. A production instance of Islandora should be installed and maintained by a professional with an understanding of Linux and server administration.
 
-This guide will contain generalized steps on installation and configuration of the various components, but will contain specific example commands for executing these steps on an Ubuntu 18.04 Server.
+This guide will contain generalized steps on installation and configuration of the various components, but will contain specific example commands for executing these steps on an Ubuntu 20.04 Server.
 
 ## Some Prerequisite Knowledge
 
@@ -115,4 +115,4 @@ The most common issues you will likely run into when manually provisioning a ser
 - Files or directories are not owned by the user who needs access to them, and can therefore not be written to. Check the ownership of files using `ls -la`, and ensure their ownership using `chown USER` for files, and `chown -R USER` for directories
 - Replacement variables were left in place in files specified by the guide. Ensure any replacement variables such as server addresses and passwords are swapped out when writing files to the server
 
-For any other issues, don't hesitate to email the [mailing list](mailto:islandora@googlegroups.com) to ask for help. If you think that a part of the installation documentation is incorrect or could be improved, please create an issue in the [documentation issues queue](http://github.com/Islandora/documentation/issues) and give it a `documentation` tag. Bear in mind that this guide is built for Ubuntu 18.04 and attempts to give generalized instructions; you will likely naturally encounter situations where your own environment needs to differ from the guide.
+For any other issues, don't hesitate to email the [mailing list](mailto:islandora@googlegroups.com) to ask for help. If you think that a part of the installation documentation is incorrect or could be improved, please create an issue in the [documentation issues queue](http://github.com/Islandora/documentation/issues) and give it a `documentation` tag. Bear in mind that this guide is built for Ubuntu 20.04 and attempts to give generalized instructions; you will likely naturally encounter situations where your own environment needs to differ from the guide.
