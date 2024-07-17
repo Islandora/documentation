@@ -100,8 +100,8 @@ Each Crayfish component requires one or more `.yaml` file(s) to ensure everythin
 
 The following configuration files represent somewhat sensible defaults; you should take consideration of the logging levels in use, as this can vary in desirability from installation to installation. Also note that in all cases, `http` URLs are being used, as this guide does not deal with setting up https support. In a production installation, this should not be the case. These files also assume a connection to a PostgreSQL database; use a `pdo_mysql` driver and the appropriate `3306` port if using MySQL.
 
-*Note:*
-> For Crayfish microservices use the `lexik_jwt_authentication` package. They are configured to use the `JWT_PUBLIC_KEY` environment variable to find the public key we created earlier (`/opt/keys/syn_public.key`). Later on in this guide we will add the environment variable to the Apache configs, but you may alternatively write the path to the key in the `lexik_jwt_authentication.yaml` file that resides along-side the `security.yaml` files we edit in this section.
+!!! note "Using JWT for Crayfish Authentication"
+    For Crayfish microservices use the `lexik_jwt_authentication` package. They are configured to use the `JWT_PUBLIC_KEY` environment variable to find the public key we created earlier (`/opt/keys/syn_public.key`). Later on in this guide we will add the environment variable to the Apache configs, but you may alternatively write the path to the key in the `lexik_jwt_authentication.yaml` file that resides along-side the `security.yaml` files we edit in this section.
 
 #### Homarus (Audio/Video derivatives)
 
