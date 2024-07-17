@@ -289,9 +289,8 @@ Finally, we need appropriate Apache configurations for Crayfish; these will allo
 
 Each endpoint we need to be able to connect to will get its own `.conf` file, which we will then enable.
 
-**NOTICE**
-
-These configurations would potentially have collisions with Drupal routes, if any are created in Drupal with the same name. If this is a concern, it would likely be better to reserve a subdomain or another port specifically for Crayfish. For the purposes of this installation guide, these endpoints will suffice.
+!!! warning "Possible Route Collisions"
+    These configurations would potentially have collisions with Drupal routes, if any are created in Drupal with the same name. If this is a concern, it would likely be better to reserve a subdomain or another port specifically for Crayfish. For the purposes of this installation guide, these endpoints will suffice.
 
 `/etc/apache2/conf-available/Homarus.conf | root:root/644`
 ```
