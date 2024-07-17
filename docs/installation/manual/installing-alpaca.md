@@ -72,7 +72,7 @@ Update the WebConsolePort host property settings in `/opt/activemq/conf/jetty.xm
 
 Optionally, change the dashboard user credentials in `/opt/activemq/conf/users.properties`.
 
-!!! note "Security Warning"
+!!! warning "Security Warning"
     Updating the web console port and user properties are potential security holes. It is best to restrict the host setting and create a more secure username/password combination for production.
 
 Set the service to start on machine startup and start it up:
