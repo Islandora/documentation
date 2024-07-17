@@ -72,8 +72,8 @@ Update the WebConsolePort host property settings in `/opt/activemq/conf/jetty.xm
 
 Optionally, change the dashboard user credentials in `/opt/activemq/conf/users.properties`.
 
-*Note*
-> Updating the web console port and user properties are potential security holes. It is best to restrict the host setting and create a more secure username/password combination for production.
+!!! note "Security Warning"
+    Updating the web console port and user properties are potential security holes. It is best to restrict the host setting and create a more secure username/password combination for production.
 
 Set the service to start on machine startup and start it up:
 ```bash
@@ -318,7 +318,8 @@ http.additional_options=authMethod=Basic,authUsername=Jim,authPassword=1234
 
 These will be added to ALL http endpoint requests.
 
-**Note**: We are currently running Camel 3.7.6, some configuration parameters on the above linked page might not be supported.
+!!! note "Check Camel Configuration Parameters"
+    We are currently running Camel 3.7.6, some configuration parameters on the above linked page might not be supported.
 
 ### Deploying/Running
 
