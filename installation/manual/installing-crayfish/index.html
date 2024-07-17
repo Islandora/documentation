@@ -3026,8 +3026,10 @@
 <h3 id="creating-apache-configurations-for-crayfish-components">Creating Apache Configurations for Crayfish Components<a class="headerlink" href="#creating-apache-configurations-for-crayfish-components" title="Permanent link">&para;</a></h3>
 <p>Finally, we need appropriate Apache configurations for Crayfish; these will allow other services to connect to Crayfish components via their HTTP endpoints.</p>
 <p>Each endpoint we need to be able to connect to will get its own <code>.conf</code> file, which we will then enable.</p>
-<p><strong>NOTICE</strong></p>
+<div class="admonition warning">
+<p class="admonition-title">Possible Route Collisions</p>
 <p>These configurations would potentially have collisions with Drupal routes, if any are created in Drupal with the same name. If this is a concern, it would likely be better to reserve a subdomain or another port specifically for Crayfish. For the purposes of this installation guide, these endpoints will suffice.</p>
+</div>
 <p><code>/etc/apache2/conf-available/Homarus.conf | root:root/644</code>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>Alias &quot;/homarus&quot; &quot;/opt/crayfish/Homarus/public&quot;
 </span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>&lt;Directory &quot;/opt/crayfish/Homarus/public&quot;&gt;
