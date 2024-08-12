@@ -1,7 +1,7 @@
 # Installing Tomcat and Cantaloupe
 
 !!! warning "Needs Maintenance"
-    The manual installation documentation is in need of attention. We are aware that some components no longer work as documented here. If you are interested in helping us improve the documentation, please see [Contributing](../../../contributing/CONTRIBUTING).
+    The manual installation documentation is in need of attention. We are aware that some components no longer work as documented here. If you are interested in helping us improve the documentation, please see [Contributing](../../contributing/CONTRIBUTING.md).
 
 ## In this section, we will install:
 

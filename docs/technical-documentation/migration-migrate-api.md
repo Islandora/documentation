@@ -31,7 +31,7 @@ Why use the Migrate API?
 - **migrate_7x_claw**
     - <https://github.com/Islandora-Devops/migrate_7x_claw>
       - A tool to get all your Islandora Legacy content migrated over
-    - Documentation section on [migrate_7x_claw](migrate-7x)
+    - Documentation section on [migrate_7x_claw](migrate-7x.md)
 
 #### Recap of migrate_islandora_csv
 

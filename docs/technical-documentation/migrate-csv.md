@@ -2,7 +2,6 @@
 
 * [Summary](#summary)
 * [Introduction](#introduction)
-* [Dependencies](#dependencies)
 * [Overview](#overview)
 * [Installation](#installation)
 * [Ingesting Files](#ingesting-files)
@@ -11,7 +10,7 @@
         * [Process](#process)
         * [Destination](#destination)
         * [The Process Section in Depth](#the-process-section-in-depth)
-    * [Running the File Migration](#Running-the-file-migration)
+    * [Running the File Migration](#running-the-file-migration)
 * [Ingesting Nodes](#ingesting-nodes)
     * [Complex Fields](#complex-fields)
     * [Running the node migration](#running-the-node-migration)
@@ -31,7 +30,7 @@ This tutorial uses the configurations and code available in the [migrate_islando
 
 Sample CSV and images are also included in the module as a convenience so they are easily available on the Drupal server running the migration. (This is not the recommended method for making files available to Drupal in a real migration.)
 
-The module also contains a Migrate process plugin that transforms strings into associative arrays. This is useful for populating multiple Contributor (field_linked_agent) fields. (See "[Typed Relation](../../user-documentation/metadata#typed-relation)" for more information on the Contributor field's type.) It will be available when this module is enabled, and the node migration uses it. It was written generically and will hopefully become part of Migrate Plus, but for now it is here.
+The module also contains a Migrate process plugin that transforms strings into associative arrays. This is useful for populating multiple Contributor (field_linked_agent) fields. (See "[Typed Relation](../user-documentation/metadata.md#typed-relation)" for more information on the Contributor field's type.) It will be available when this module is enabled, and the node migration uses it. It was written generically and will hopefully become part of Migrate Plus, but for now it is here.
 
 When you are ready to create your actual migrations, the contents of this repository can function as a template for you to create the YAML files defining your own migrations.
 
@@ -92,7 +91,7 @@ From your `islandora-playbook` directory, issue the following commands to enable
 - `git clone https://github.com/Islandora/migrate_islandora_csv` to clone down the repository from GitHub.
 - `drush en -y migrate_islandora_csv` to enable the module, installing the migrations as configuration.
 
-Optionally, flush the cache (`drush cr`), so the migrations become visible in the GUI at Manage > Structure > Migrations > migrate_islandora_csv (http://localhost:8000/admin/structure/migrate/manage/migrate_islandora_csv/migrations)
+Optionally, flush the cache (`drush cr`), so the migrations become visible in the [GUI](../user-documentation/glossary.md#gui) at Manage > Structure > Migrations > migrate_islandora_csv (http://localhost:8000/admin/structure/migrate/manage/migrate_islandora_csv/migrations)
 
 Now lets go migrate some files.
 
