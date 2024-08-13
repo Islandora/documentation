@@ -33,9 +33,11 @@ Warning! - All modules are under development.
 * [Islandora RipRap](https://github.com/mjordan/islandora_riprap) - Fixity auditing
 * [Islandora Repository Reports](https://github.com/mjordan/islandora_repository_reports) - Graphical reports on various aspects of an Islandora repository.
 * [Islandora Bagger](https://github.com/mjordan/islandora_bagger) - Utility to generate Bags for objects using Islandora's REST interface using either a command-line tool or via a batch-oriented queue.
-* [Islandora Whole Object](https://github.com/mjordan/islandora_whole_object) - Islandora module that provides some Drupal blocks containing various representations of an Islandora object.
+* [Islandora Citations](https://github.com/discoverygarden/islandora_citations) - An alternative to Citation Select (bundled with Starter Site). It uses CSL to render citations, allows you to set a default (which is rendered on page load), and lets you set the field mappings as a third party setting when editing each field itself. It works with Typed Relation fields (using the relation to set the CSL parameter such as author, editor, or contributor), and also works with Paragraphs.
 * [Islandora RDM](https://github.com/roblib/islandora_rdm) - An entire suite of tools and documentation to turn Islandora into a fully functional Research Data Management platform.
+* [Islandora Whole Object](https://github.com/mjordan/islandora_whole_object) - Islandora module that provides some Drupal blocks containing various representations of an Islandora object.
 * [IP Range Access](https://github.com/mjordan/ip_range_access) - A context condition to check the user's IP address against a range, and provide 403 if not accepted.
+* [Typed Relation with Display Name](https://github.com/rosiel/typed_relation_display_name/) - A field type that's a Typed Relation field plus a display name that is unique to the instantiation. Allows you to transcribe what's on the object, while still linking to a controlled form of a name.
 
 ### Access Control
 
