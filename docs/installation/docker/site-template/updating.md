@@ -70,7 +70,7 @@ Drupal updates are performed through composer on your development site. Once the
 
 ### Development
 
-Composer commands need to [run in your Drupal container](/documentation/installation/docker/site-template/containers.md). For example:
+Composer commands need to [run in your Drupal container](../docker-prereq.md#containers). For example:
 
 ​​`docker compose exec drupal-dev composer update -W`
 

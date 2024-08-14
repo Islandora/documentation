@@ -121,7 +121,7 @@ nav:
       # 'non-technical' user in mind who wants to test. The Manual installation
       # guides mention that users will need additional knowledge about server administration.
       - 'Release Notes':
-          - '8.x-2.0 Release Notes': 'release-notes/8.x-2.0.md'
+          - '8.x-2.0 Release Notes': 'release_notes/8.x-2.0.md'
           - 'Older Release Notes': 'https://github.com/Islandora/documentation/tree/main/docs/release_notes'
       - 'Install a Demo': 'installation/install-a-demo.md'
       - 'Docker':

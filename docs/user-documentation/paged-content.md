@@ -25,7 +25,7 @@ resource node and _Page_ for the Islandora Model of the child resource node. Aft
 child resource nodes have "service file" media (either generated via the built-in derivative
 creation or added manually), they will be included in the Mirador paginated
 viewer displayed on the parent resource node's page.
-(See the [IIIF Documentation](../iiif#using-iiif-in-islandora)
+(See the [IIIF Documentation](iiif.md#using-iiif-in-islandora)
 for more details on controlling the viewer's behavior.)
 
 ![Screenshot of a Paged Content resource node displaying the Mirador viewer with the first child resource node displayed.](../assets/paged_content_mirador.png)

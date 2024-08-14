@@ -1,6 +1,6 @@
 # Removing resources, media and files - DELETE Requests
 
-Deleting is as easy as [getting](./rest-get.md) resources and more difficult than [creating](./rest-create.md) resources.
+Deleting is as easy as [getting](rest-get.md) resources and more difficult than [creating](rest-create.md) resources.
 
 If you can perform a GET request then you have the information required to perform a DELETE request.
 
@@ -15,11 +15,11 @@ Check out the examples below.
 
 If you have restricted access to view your content, you will need to use one of the configured authorization methods to access your content, media and/or files.
 
-These are defined under [Authorization](./using-rest-endpoints.md#authorization) on the overview.
+These are defined under [Authorization](rest-authorization.md) on the overview.
 
 ## Content (Nodes)
 
-You will need your _node id_, you can find more information in the [GET](./rest-get.md#content-nodes) documentation.
+You will need your _node id_, you can find more information in the [GET](rest-get.md#content-nodes) documentation.
 
 A delete is simply the same request as a `GET` but sending a `DELETE` http verb.
 

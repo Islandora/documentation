@@ -102,6 +102,7 @@ This repository is also a Drupal Feature that, when enabled as a module, will cr
 
 Command-line tool for ingesting (and updating) nodes and media from anywhere - you don't need to access to the Drupal server's command line. Provides robust data validation, flexible organization of your input data (can use CSV, Google Sheets, or Excel files) plus creation of taxonomy terms on the fly.
 
+
 ### Content Management
 
 #### Batch editing
@@ -149,6 +150,15 @@ Lets you use sources of content external to Drupal as though they were internal.
 [Paragraphs](https://www.drupal.org/project/paragraphs)
 
 Paragraphs is based on Entity Reference Revisions and allows you to create an on-the-fly entity with structured fields. Paragraphs could be used for complex titles with title type, subtitle, part name, etc. They can be used for grouping fields together that are, as a block, repeatable. 
+
+### Richer Content
+
+#### Displaying equations and formulae
+
+[MathJax](https://www.drupal.org/project/mathjax)
+
+This module is a plug-and-play solution for rendering [LaTeX](https://www.latex-project.org/). It uses a CDN so no library has to be installed on your system, and the processing is done in the user's browser. In terms of Drupal, it provides a text filter that must be enabled in at least one text format (such as Full HTML). With this you can enter mathematical formulae in abstracts! Need to recognize unfamiliar symbols? Try this [LaTeX symbol reference](https://oeis.org/wiki/List_of_LaTeX_mathematical_symbols) thanks to the On-Line Encyclopedia of Integer Sequences.
+
 
 ### Search
 

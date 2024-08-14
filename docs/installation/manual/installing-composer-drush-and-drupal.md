@@ -1,7 +1,7 @@
 # Installing Composer, Drush, and Drupal
 
 !!! warning "Needs Maintenance"
-    The manual installation documentation is in need of attention. We are aware that some components no longer work as documented here. If you are interested in helping us improve the documentation, please see [Contributing](../../../contributing/CONTRIBUTING).
+    The manual installation documentation is in need of attention. We are aware that some components no longer work as documented here. If you are interested in helping us improve the documentation, please see [Contributing](../../contributing/CONTRIBUTING.md).
 
 ## In this section, we will install:
 
@@ -131,7 +131,7 @@ exit
 
 ## Install Drupal using Drush
 
-The Drupal installation process can be done through the GUI in a series of form steps, or can be done quickly using Drush's `site-install` command. It can be invoked with the full list of parameters (such as `--db-url` and `--site-name`), but if parameters are missing, they will be asked of you interactively.
+The Drupal installation process can be done through the [GUI](../../user-documentation/glossary.md#gui) in a series of form steps, or can be done quickly using Drush's `site-install` command. It can be invoked with the full list of parameters (such as `--db-url` and `--site-name`), but if parameters are missing, they will be asked of you interactively.
 
 ### Option 1: Site install the Starter Site with existing configs
 

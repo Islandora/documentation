@@ -8,7 +8,7 @@
 
 You will need to use one of the configured authorization methods to create content, media and/or files.
 
-These are defined under [Authorization](./using-rest-endpoints.md#authorization) on the overview.
+These are defined under [Authorization](rest-authorization.md) on the overview.
 
 ## Content (Nodes)
 
@@ -26,7 +26,7 @@ For the Repository Item content type included in the Islandora Starter Site, the
 
 A good way to make your first POST request is to perform a GET request against an existing node and erase all the extra content.
 
-You can find more information about [GET requests here](./rest-get.md).
+You can find more information about [GET requests here](rest-get.md).
 
 Again we are using the json format.
 
@@ -106,7 +106,7 @@ So the body of the request will be:
 
 If you do provide credentials but don't have permission, you will receive a `403 Forbidden` response.
 
-You can find more information about [Authorization here](./using-rest-endpoints.md#authorization)
+You can find more information about [Authorization here](rest-authorization.md)
 
 &#x1F34E; For example:
 

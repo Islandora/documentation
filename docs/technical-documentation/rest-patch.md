@@ -4,7 +4,7 @@ PATCH requests allow you to update resources in place via a REST call. In this c
 
 Our example node is at `http://localhost:8000/node/3`.
 
-If you perform a [GET](./rest-get.md) against another node or media you can see all of the fields, some of these are calculated (change based on others, i.e. "changed"), some are references to other entities (nodes, media, files in Drupal. i.e. "field_model") and others are pure text fields (i.e. "title").
+If you perform a [GET](rest-get.md) against another node or media you can see all of the fields, some of these are calculated (change based on others, i.e. "changed"), some are references to other entities (nodes, media, files in Drupal. i.e. "field_model") and others are pure text fields (i.e. "title").
 
 The fields will be different between different node types and media types, but the syntax to update them is the same.
 
@@ -16,9 +16,9 @@ The fields will be different between different node types and media types, but t
 
 If you have restricted access to view your content, you will need to use one of the configured authorization methods to access your content, media and/or files.
 
-These are defined under [Authorization](./using-rest-endpoints.md#authorization) on the overview.
+These are defined under [Authorization](rest-authorization.md) on the overview.
 
-This with assume you have already created a [node](./rest-create.md#content-nodes) or [media](./rest-create.md#files-and-media) at some location.
+This with assume you have already created a [node](rest-create.md#content-nodes) or [media](rest-create.md#files-and-media) at some location.
 
 ## Change a text field
 
