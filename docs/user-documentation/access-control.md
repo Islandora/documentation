@@ -27,7 +27,7 @@ Known strategies for implementing access control in Drupal include:
 Drupal's concepts of "published" and "unpublished" for nodes and media apply to Islandora just as they do in Drupal. _Usually_, published content is visible to the entire world (without any authentication), while unpublished content can only be accessed by selected users - usually administrators, other privileged roles, and the user who created the content. This is configurable through the Drupal Permissions interface.
 
 
-All Drupal permissions are granted to _roles_, not individual users. Read more [documentation on Users, roles, and permissions](/https://www.drupal.org/node/120614).
+All Drupal permissions are granted to _roles_, not individual users. Read more [documentation on Users, roles, and permissions](https://www.drupal.org/node/120614).
 
 The extent of the configurability of Drupal Core's access control (excluding revisions) is provided by the following permissions:
 
@@ -98,7 +98,7 @@ The Search API Module, which connects Drupal to Solr, provides configuration so 
 Both are enabled out of the box in the Islandora Starter Site. This will ensure that queries through Drupal never show content that the active user shouldn't see, as well as preventing information about unpublished entities from ever being entered into Solr.
 
 !!! warning "Solr Admin Client"
-    Anyone with access to the Solr Admin Client may see the full contents of the index, regardless of permissions. If this is not desired, you should restrict access to the Solr endpoint and GUI. By default, the Islandora Playbook exposes Solr at `http://localhost:8983/solr/`. ISLE-DC on the other hand can expose or not expose individual services, including Solr. Since [December 2021](https://github.com/Islandora-Devops/isle-dc/commit/996b46cc2b7aa617f1aa3a2b8089268afbcdf9bf) this has been available as an option in the `.env` file and since that time, Solr (and some other services) are not exposed by default.
+    Anyone with access to the Solr Admin Client may see the full contents of the index, regardless of permissions. If this is not desired, you should restrict access to the Solr endpoint and [GUI](glossary.md#gui). By default, the Islandora Playbook exposes Solr at `http://localhost:8983/solr/`. ISLE-DC on the other hand can expose or not expose individual services, including Solr. Since [December 2021](https://github.com/Islandora-Devops/isle-dc/commit/996b46cc2b7aa617f1aa3a2b8089268afbcdf9bf) this has been available as an option in the `.env` file and since that time, Solr (and some other services) are not exposed by default.
 
 
 ## Group (contributed module)
