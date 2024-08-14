@@ -494,7 +494,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../release-notes/8.x-2.0.md" class="md-nav__link">
+      <a href="../../release_notes/8.x-2.0/" class="md-nav__link">
         8.x-2.0 Release Notes
       </a>
     </li>
@@ -2685,7 +2685,7 @@
 <p><a href="https://iiif.io/">IIIF</a> is a set of specifications that provides interoperability of image-based collections across platforms. What this means for a repository platform like Islandora at a general level is that image-based objects such as (still) images and paged content can be managed by Islandora but viewed in external applications, and that Islandora can bring in image-based content from elsewhere to supplement locally managed content. If this intrigues you, see the section "Looking under the hood (and beyond)" below.</p>
 <p>At a practical level, because Islandora supports several of the IIIF specifications, we can:</p>
 <ul>
-<li>Zoom, pan, and rotate images within a IIIF-compliant <a href="../file_viewers">viewer</a> like OpenSeadragon or Mirador<ul>
+<li>Zoom, pan, and rotate images within a IIIF-compliant <a href="../file-viewers/">viewer</a> like OpenSeadragon or Mirador<ul>
 <li>Islandora uses an IIIF-compliant image server (by default, <a href="https://cantaloupe-project.github.io/">Cantaloupe</a>) that utilizes the <a href="https://iiif.io/api/image/2.1/">IIIF Image API</a>. This capability is similar to what Islandora 7.x users experience when they view a Large Image.</li>
 </ul>
 </li>
@@ -2701,14 +2701,14 @@
 <p>If you're not using one of our provisioning tools, you will need to:</p>
 <ul>
 <li>install and configure the Cantaloupe (or another IIIF-compliant) image server</li>
-<li>install a <a href="../file-viewers">viewer</a> module and configure it to point to the IIIF Image server location</li>
+<li>install a <a href="../file-viewers/">viewer</a> module and configure it to point to the IIIF Image server location</li>
 <li>if using the viewer to show single images, configure it as a file formatter in one of the display modes for your media</li>
 <li>if using the viewer to show multi-paged content, install the <a href="https://github.com/Islandora/islandora/tree/2.x/modules/islandora_iiif">Islandora IIIF</a> module and create a IIIF view (see the one in the Starter Site as an example), then configure the viewer's <em>block</em> to show up where desired (see below for details on how it could be configured)</li>
 </ul>
 <h2 id="using-iiif-in-the-islandora-starter-site">Using IIIF in the Islandora Starter Site<a class="headerlink" href="#using-iiif-in-the-islandora-starter-site" title="Permanent link">&para;</a></h2>
 <p><img alt="Mirador rendering book pages" src="../../assets/iiif-mirador-paged.png" /></p>
 <h3 id="contexts-and-mirador-default">Contexts and Mirador (default)<a class="headerlink" href="#contexts-and-mirador-default" title="Permanent link">&para;</a></h3>
-<p>The Islandora Starter Site uses a Context to automatically use the IIIF Presentation API with the Mirador viewer for showing <a href="../paged-content">paged content</a>.</p>
+<p>The Islandora Starter Site uses a Context to automatically use the IIIF Presentation API with the Mirador viewer for showing <a href="../paged-content/">paged content</a>.</p>
 <p>To use this Context, give your book or newspaper (or other paged content) a model of "Paged Content" or "Publication Issue". To double-check this, in the <em>Mirador Block - Multipaged items</em> Context, you should see those terms used in the "Node has term" condition (you can register more than one term there, and having one of these on your node will activate this Context). Now, when you view a paged content Islandora node, you will see service files of all of its child pages (assuming you have added some child pages to the object) in the Mirador viewer as illustrated above.</p>
 <p>If you are using the Mirador viewer, it enables a lot of features out of the box, including the strip of thumbnails at the bottom, and there is little to configure. </p>
 <h3 id="openseadragon-viewer-optional">OpenSeadragon Viewer (optional)<a class="headerlink" href="#openseadragon-viewer-optional" title="Permanent link">&para;</a></h3>

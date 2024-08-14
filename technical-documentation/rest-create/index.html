@@ -494,7 +494,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../release-notes/8.x-2.0.md" class="md-nav__link">
+      <a href="../../release_notes/8.x-2.0/" class="md-nav__link">
         8.x-2.0 Release Notes
       </a>
     </li>
@@ -2645,7 +2645,7 @@
 </ul>
 <h2 id="authorization">Authorization<a class="headerlink" href="#authorization" title="Permanent link">&para;</a></h2>
 <p>You will need to use one of the configured authorization methods to create content, media and/or files.</p>
-<p>These are defined under <a href="../using-rest-endpoints/#authorization">Authorization</a> on the overview.</p>
+<p>These are defined under <a href="../rest-authorization/">Authorization</a> on the overview.</p>
 <h2 id="content-nodes">Content (Nodes)<a class="headerlink" href="#content-nodes" title="Permanent link">&para;</a></h2>
 <p><img alt="REST configuration" src="../../assets/rest-node-configuration.png" /></p>
 <p>The above setup shows a configuration where the JSON format is enabled for GET, PATCH, DELETE, and POST, with authentication types "basic_auth" and "jwt_auth" enabled for each method. Thus, with this configuration, you can perform a POST request against a node at the <code>/node</code> endpoint with a body in the JSON format.</p>
@@ -2715,7 +2715,7 @@
 <p><strong>Note</strong>: You <strong>must</strong> include an <strong>appropriate</strong> Content-type header for the format you're requesting</p>
 <p><strong>Other Note</strong>: You <strong>must</strong> include some authentication credentials to say who you are and so Drupal can check if you are allowed to create this object. Otherwise you will receive a <code>401 Unauthorized</code> response.</p>
 <p>If you do provide credentials but don't have permission, you will receive a <code>403 Forbidden</code> response.</p>
-<p>You can find more information about <a href="../using-rest-endpoints/#authorization">Authorization here</a></p>
+<p>You can find more information about <a href="../rest-authorization/">Authorization here</a></p>
 <p>&#x1F34E; For example:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>curl -i -X POST -u admin:islandora -H&quot;Content-type: application/json&quot; --data &#39;{&quot;type&quot;:[{&quot;target_id&quot;:&quot;islandora_object&quot;,&quot;target_type&quot;:&quot;node_type&quot;}],&quot;title&quot;:[{&quot;value&quot;:&quot;Created a collection with POST&quot;}],&quot;field_model&quot;:[{&quot;target_id&quot;:23,&quot;target_type&quot;:&quot;taxonomy_term&quot;}]}&#39; &#39;http://localhost:8000/node?_format=json&#39;
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>

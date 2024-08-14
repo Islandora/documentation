@@ -494,7 +494,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../release-notes/8.x-2.0.md" class="md-nav__link">
+      <a href="../../release_notes/8.x-2.0/" class="md-nav__link">
         8.x-2.0 Release Notes
       </a>
     </li>
@@ -2774,7 +2774,7 @@
 <h2 id="access-control-in-core-drupal">Access control in Core Drupal<a class="headerlink" href="#access-control-in-core-drupal" title="Permanent link">&para;</a></h2>
 <p><strong>Summary: Core Drupal's access control features include the "published"/"unpublished" states and some basic permissions that can be granted globally or at the bundle level.</strong></p>
 <p>Drupal's concepts of "published" and "unpublished" for nodes and media apply to Islandora just as they do in Drupal. <em>Usually</em>, published content is visible to the entire world (without any authentication), while unpublished content can only be accessed by selected users - usually administrators, other privileged roles, and the user who created the content. This is configurable through the Drupal Permissions interface.</p>
-<p>All Drupal permissions are granted to <em>roles</em>, not individual users. Read more <a href="/https://www.drupal.org/node/120614">documentation on Users, roles, and permissions</a>.</p>
+<p>All Drupal permissions are granted to <em>roles</em>, not individual users. Read more <a href="https://www.drupal.org/node/120614">documentation on Users, roles, and permissions</a>.</p>
 <p>The extent of the configurability of Drupal Core's access control (excluding revisions) is provided by the following permissions:</p>
 <table>
 <thead>
@@ -2871,7 +2871,7 @@
 <p>Both are enabled out of the box in the Islandora Starter Site. This will ensure that queries through Drupal never show content that the active user shouldn't see, as well as preventing information about unpublished entities from ever being entered into Solr.</p>
 <div class="admonition warning">
 <p class="admonition-title">Solr Admin Client</p>
-<p>Anyone with access to the Solr Admin Client may see the full contents of the index, regardless of permissions. If this is not desired, you should restrict access to the Solr endpoint and GUI. By default, the Islandora Playbook exposes Solr at <code>http://localhost:8983/solr/</code>. ISLE-DC on the other hand can expose or not expose individual services, including Solr. Since <a href="https://github.com/Islandora-Devops/isle-dc/commit/996b46cc2b7aa617f1aa3a2b8089268afbcdf9bf">December 2021</a> this has been available as an option in the <code>.env</code> file and since that time, Solr (and some other services) are not exposed by default.</p>
+<p>Anyone with access to the Solr Admin Client may see the full contents of the index, regardless of permissions. If this is not desired, you should restrict access to the Solr endpoint and <a href="../glossary/#gui">GUI</a>. By default, the Islandora Playbook exposes Solr at <code>http://localhost:8983/solr/</code>. ISLE-DC on the other hand can expose or not expose individual services, including Solr. Since <a href="https://github.com/Islandora-Devops/isle-dc/commit/996b46cc2b7aa617f1aa3a2b8089268afbcdf9bf">December 2021</a> this has been available as an option in the <code>.env</code> file and since that time, Solr (and some other services) are not exposed by default.</p>
 </div>
 <h2 id="group-contributed-module">Group (contributed module)<a class="headerlink" href="#group-contributed-module" title="Permanent link">&para;</a></h2>
 <p>"The <a href="https://www.drupal.org/project/group">Group</a> module allows you to create arbitrary collections of your content and users on your site and grant access control permissions on those collections."</p>
