@@ -494,7 +494,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../release-notes/8.x-2.0.md" class="md-nav__link">
+      <a href="../../release_notes/8.x-2.0/" class="md-nav__link">
         8.x-2.0 Release Notes
       </a>
     </li>
@@ -2911,7 +2911,6 @@
 <ul>
 <li><a href="#summary">Summary</a></li>
 <li><a href="#introduction">Introduction</a></li>
-<li><a href="#dependencies">Dependencies</a></li>
 <li><a href="#overview">Overview</a></li>
 <li><a href="#installation">Installation</a></li>
 <li><a href="#ingesting-files">Ingesting Files</a><ul>
@@ -2922,7 +2921,7 @@
 <li><a href="#the-process-section-in-depth">The Process Section in Depth</a></li>
 </ul>
 </li>
-<li><a href="#Running-the-file-migration">Running the File Migration</a></li>
+<li><a href="#running-the-file-migration">Running the File Migration</a></li>
 </ul>
 </li>
 <li><a href="#ingesting-nodes">Ingesting Nodes</a><ul>
@@ -2942,7 +2941,7 @@
 <p>This tutorial (and Islandora in general) makes heavy use of Features, which is an easy way to ship and install Drupal configuration. However, after enabling a Feature module, the code in that module's directory is no longer "live", as the configuration now resides in the Drupal database. If you change code in the YAML files, it will not take effect until you re-import the Feature. There is a walkthrough in the "Configuration" section of the <a href="https://github.com/Islandora-Devops/migrate_7x_claw">Migrate 7.x to Islandora</a> tutorial.</p>
 </div>
 <p>Sample CSV and images are also included in the module as a convenience so they are easily available on the Drupal server running the migration. (This is not the recommended method for making files available to Drupal in a real migration.)</p>
-<p>The module also contains a Migrate process plugin that transforms strings into associative arrays. This is useful for populating multiple Contributor (field_linked_agent) fields. (See "<a href="../../user-documentation/metadata#typed-relation">Typed Relation</a>" for more information on the Contributor field's type.) It will be available when this module is enabled, and the node migration uses it. It was written generically and will hopefully become part of Migrate Plus, but for now it is here.</p>
+<p>The module also contains a Migrate process plugin that transforms strings into associative arrays. This is useful for populating multiple Contributor (field_linked_agent) fields. (See "<a href="../../user-documentation/metadata/#typed-relation">Typed Relation</a>" for more information on the Contributor field's type.) It will be available when this module is enabled, and the node migration uses it. It was written generically and will hopefully become part of Migrate Plus, but for now it is here.</p>
 <p>When you are ready to create your actual migrations, the contents of this repository can function as a template for you to create the YAML files defining your own migrations.</p>
 <h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
 <p><strong>Why CSV?</strong> CSV files (whether separated by commas, tabs, or other delimiters) are easy to understand and work with, and there's good tooling available for using them with Drupal's <a href="https://www.drupal.org/docs/drupal-apis/migrate-api/migrate-api-overview">Migrate API</a>. The Drupal contrib module <a href="https://www.drupal.org/project/migrate_source_csv">migrate_source_csv</a> provides a source plugin that reads from a CSV file, and <a href="https://www.drupal.org/project/migrate_plus/">migrate_plus</a> provides more tools and flexibility for creating migrations, including the ability to create customized migrations using YAML and package them up as <a href="https://www.drupal.org/project/features/">Features</a>.</p>
@@ -2985,7 +2984,7 @@
 - <code>cd /var/www/html/drupal/web/modules/contrib</code> to get to your modules directory.
 - <code>git clone https://github.com/Islandora/migrate_islandora_csv</code> to clone down the repository from GitHub.
 - <code>drush en -y migrate_islandora_csv</code> to enable the module, installing the migrations as configuration.</p>
-<p>Optionally, flush the cache (<code>drush cr</code>), so the migrations become visible in the GUI at Manage &gt; Structure &gt; Migrations &gt; migrate_islandora_csv (http://localhost:8000/admin/structure/migrate/manage/migrate_islandora_csv/migrations)</p>
+<p>Optionally, flush the cache (<code>drush cr</code>), so the migrations become visible in the <a href="../../user-documentation/glossary/#gui">GUI</a> at Manage &gt; Structure &gt; Migrations &gt; migrate_islandora_csv (http://localhost:8000/admin/structure/migrate/manage/migrate_islandora_csv/migrations)</p>
 <p>Now lets go migrate some files.</p>
 <div class="admonition tip">
 <p class="admonition-title">Caution</p>
@@ -3628,7 +3627,7 @@ Your nodes, media, and files would all be gone.  But your subjects and photograp
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">August 13, 2024</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">August 14, 2024</span>
       
     
   </small>
