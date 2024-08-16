@@ -496,7 +496,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../release-notes/8.x-2.0.md" class="md-nav__link">
+      <a href="../../../release_notes/8.x-2.0/" class="md-nav__link">
         8.x-2.0 Release Notes
       </a>
     </li>
@@ -1043,13 +1043,6 @@
   
     <nav class="md-nav" aria-label="Tomcat 9">
       <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#installing-openjdk-11" class="md-nav__link">
-    Installing OpenJDK 11
-  </a>
-  
-</li>
         
           <li class="md-nav__item">
   <a href="#creating-a-tomcat-user" class="md-nav__link">
@@ -2673,13 +2666,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#installing-openjdk-11" class="md-nav__link">
-    Installing OpenJDK 11
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#creating-a-tomcat-user" class="md-nav__link">
     Creating a tomcat User
   </a>
@@ -2780,7 +2766,7 @@
 <h1 id="installing-tomcat-and-cantaloupe">Installing Tomcat and Cantaloupe<a class="headerlink" href="#installing-tomcat-and-cantaloupe" title="Permanent link">&para;</a></h1>
 <div class="admonition warning">
 <p class="admonition-title">Needs Maintenance</p>
-<p>The manual installation documentation is in need of attention. We are aware that some components no longer work as documented here. If you are interested in helping us improve the documentation, please see <a href="../../../contributing/CONTRIBUTING">Contributing</a>.</p>
+<p>The manual installation documentation is in need of attention. We are aware that some components no longer work as documented here. If you are interested in helping us improve the documentation, please see <a href="../../../contributing/CONTRIBUTING/">Contributing</a>.</p>
 </div>
 <h2 id="in-this-section-we-will-install">In this section, we will install:<a class="headerlink" href="#in-this-section-we-will-install" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2788,107 +2774,140 @@
 <li><a href="https://cantaloupe-project.github.io/">Cantaloupe 5</a>, the image tileserver - running in Tomcat - that will be used to serve up large images in a web-accessible fashion</li>
 </ul>
 <h2 id="tomcat-9">Tomcat 9<a class="headerlink" href="#tomcat-9" title="Permanent link">&para;</a></h2>
-<h3 id="installing-openjdk-11">Installing OpenJDK 11<a class="headerlink" href="#installing-openjdk-11" title="Permanent link">&para;</a></h3>
-<p>Tomcat runs in a Java runtime environment, so we'll need one to continue. In our case, OpenJDK 11 is open-source, free to use, and can fairly simply be installed using <code>apt-get</code>:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>openjdk-11-jdk<span class="w"> </span>openjdk-11-jre
-</span></code></pre></div>
-<p>The installation of OpenJDK via <code>apt-get</code> establishes it as the de-facto Java runtime environment to be used on the system, so no further configuration is required.</p>
-<p>The resultant location of the java JRE binary (and therefore, the correct value of <code>JAVA_HOME</code> when it’s referenced) will vary based on the specifics of the machine it’s being installed on; that being said, you can find its exact location using <code>update-alternatives</code>:</p>
-<p><div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>update-alternatives<span class="w"> </span>--list<span class="w"> </span>java
-</span></code></pre></div>
-Take a note of this path as we will need it later.</p>
 <h3 id="creating-a-tomcat-user">Creating a <code>tomcat</code> User<a class="headerlink" href="#creating-a-tomcat-user" title="Permanent link">&para;</a></h3>
 <p>Apache Tomcat, and all its processes, will be owned and managed by a specific user for the purposes of keeping parts of the stack segregated and accountable.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>addgroup<span class="w"> </span>tomcat
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>sudo<span class="w"> </span>adduser<span class="w"> </span>tomcat<span class="w"> </span>--ingroup<span class="w"> </span>tomcat<span class="w"> </span>--home<span class="w"> </span>/opt/tomcat<span class="w"> </span>--shell<span class="w"> </span>/usr/bin
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>addgroup<span class="w"> </span>tomcat
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>sudo<span class="w"> </span>adduser<span class="w"> </span>tomcat<span class="w"> </span>--ingroup<span class="w"> </span>tomcat<span class="w"> </span>--home<span class="w"> </span>/opt/tomcat<span class="w"> </span>--shell<span class="w"> </span>/usr/bin
 </span></code></pre></div>
 <p>You will be prompted to create a password for the <code>tomcat</code> user; all the other information as part of the <code>adduser</code> command can be ignored.</p>
 <h3 id="downloading-and-placing-tomcat-9">Downloading and Placing Tomcat 9<a class="headerlink" href="#downloading-and-placing-tomcat-9" title="Permanent link">&para;</a></h3>
 <p>Tomcat 9 itself can be installed in several different ways; while it’s possible to install via <code>apt-get</code>, this doesn’t give us a great deal of control over exactly how we’re going to run and manage it; as a critical part of the stack, it is beneficial for our purposes to have a good frame of reference for the inner workings of Tomcat.</p>
 <p>We’re going to download the latest version of Tomcat to <code>/opt</code> and set it up so that it runs automatically. Bear in mind that with the following commands, this is going to be entirely relative to the current version of Tomcat 9, which we’ll try to mitigate as we go.</p>
-<p><div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">cd</span><span class="w"> </span>/opt
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>sudo<span class="w"> </span>wget<span class="w"> </span>-O<span class="w"> </span>tomcat.tar.gz<span class="w"> </span>TOMCAT_TARBALL_LINK
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>sudo<span class="w"> </span>tar<span class="w"> </span>-zxvf<span class="w"> </span>tomcat.tar.gz
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>sudo<span class="w"> </span>mv<span class="w"> </span>/opt/TOMCAT_DIRECTORY/*<span class="w"> </span>/opt/tomcat
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>sudo<span class="w"> </span>chown<span class="w"> </span>-R<span class="w"> </span>tomcat:tomcat<span class="w"> </span>/opt/tomcat
+<p><div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">cd</span><span class="w"> </span>/opt
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>sudo<span class="w"> </span>wget<span class="w"> </span>-O<span class="w"> </span>tomcat.tar.gz<span class="w"> </span>TOMCAT_TARBALL_LINK
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>sudo<span class="w"> </span>tar<span class="w"> </span>-zxvf<span class="w"> </span>tomcat.tar.gz
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>sudo<span class="w"> </span>mv<span class="w"> </span>/opt/TOMCAT_DIRECTORY/*<span class="w"> </span>/opt/tomcat
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>sudo<span class="w"> </span>chown<span class="w"> </span>-R<span class="w"> </span>tomcat:tomcat<span class="w"> </span>/opt/tomcat
 </span></code></pre></div>
 - <code>TOMCAT_TARBALL_LINK</code>: No default can be provided here; you should navigate to the <a href="https://tomcat.apache.org/download-90.cgi">Tomcat 9 downloads page</a> and grab the link to the latest <code>.tar.gz</code> file under the “Core” section of “Binary Distributions”. It is highly recommended to grab the latest version of Tomcat 9, as it will come with associated security patches and fixes.
 - <code>TOMCAT_DIRECTORY</code>: This will also depend entirely on the exact version of tomcat downloaded - for example, <code>apache-tomcat-9.0.50</code>. Again, <code>ls /opt</code> can be used to find this.</p>
 <h3 id="creating-a-setenvsh-script">Creating a setenv.sh Script<a class="headerlink" href="#creating-a-setenvsh-script" title="Permanent link">&para;</a></h3>
 <p>When Tomcat runs, some configuration needs to be pre-established as a series of environment variables that will be used by the script that runs it.</p>
 <p><code>/opt/tomcat/bin/setenv.sh | tomcat:tomcat/755</code>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>export CATALINA_HOME=&quot;/opt/tomcat&quot;
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>export JAVA_HOME=&quot;PATH_TO_JAVA_HOME&quot;
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>export JAVA_OPTS=&quot;-Djava.awt.headless=true -server -Xmx1500m -Xms1000m&quot;
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>export CATALINA_HOME=&quot;/opt/tomcat&quot;
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>export JAVA_HOME=&quot;PATH_TO_JAVA_HOME&quot;
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>export JAVA_OPTS=&quot;-Djava.awt.headless=true -server -Xmx1500m -Xms1000m&quot;
 </span></code></pre></div>
 - <code>PATH_TO_JAVA_HOME</code>: This will vary a bit depending on the environment, but will likely live in <code>/usr/lib/jvm</code> somewhere (e.g., <code>/usr/lib/jvm/java-11-openjdk-amd64</code>); again, in an Ubunutu environment you can check a part of this using <code>update-alternatives --list java</code>, which will give you the path to the JRE binary within the Java home. Note that <code>update-alternatives --list java</code> will give you the path to the binary, so for <code>PATH_TO_JAVA_HOME</code> delete the <code>/bin/java</code> at the end to get the Java home directory, so it should look something like this:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>export JAVA_HOME=&quot;/usr/lib/jvm/java-11-openjdk-amd64&quot;
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>export JAVA_HOME=&quot;/usr/lib/jvm/java-11-openjdk-amd64&quot;
 </span></code></pre></div></p>
 <h3 id="creating-the-tomcat-service">Creating the Tomcat Service<a class="headerlink" href="#creating-the-tomcat-service" title="Permanent link">&para;</a></h3>
 <p>Tomcat includes two shell scripts we’re going to make use of - <code>startup.sh</code> and <code>shutdown.sh</code> - which are light wrappers on top of a third script, <code>catalina.sh</code>, which manages spinning up and shutting down the Tomcat server.</p>
 <p>Debian and Ubuntu use <code>systemctl</code> to manage services; we’re going to create a .service file that can run these shell scripts.</p>
 <p><code>/etc/systemd/system/tomcat.service | root:root/755</code>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>[Unit]
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>Description=Tomcat
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>[Service]
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>Type=forking
-</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>ExecStart=/opt/tomcat/bin/startup.sh
-</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>ExecStop=/opt/tomcat/bin/shutdown.sh
-</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>SyslogIdentifier=tomcat
-</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>
-</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>[Install]
-</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>WantedBy=multi-user.target
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>[Unit]
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>Description=Tomcat
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>[Service]
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>Type=forking
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>ExecStart=/opt/tomcat/bin/startup.sh
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>ExecStop=/opt/tomcat/bin/shutdown.sh
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>SyslogIdentifier=tomcat
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>[Install]
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>WantedBy=multi-user.target
 </span></code></pre></div></p>
 <h3 id="enabling-and-starting-tomcat">Enabling and Starting Tomcat<a class="headerlink" href="#enabling-and-starting-tomcat" title="Permanent link">&para;</a></h3>
 <p>We’re going to both <code>enable</code> and <code>start</code> Tomcat. Enabling Tomcat will ensure that it starts on boot, the timing of which is defined by the <code>[Install]</code> section’s <code>WantedBy</code> statement, which specifies what it should start after. This is separate from starting it, which we need to do now in order to get Tomcat up and running without requiring a reboot.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>tomcat
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>tomcat
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>tomcat
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>tomcat
 </span></code></pre></div>
 <p>We can check that Tomcat has started by running <code>sudo systemctl status tomcat | grep Active</code>; we should see that Tomcat is <code>active (running)</code>, which is the correct result of startup.sh finishing its run successfully.</p>
 <h2 id="installing-cantaloupe-5">Installing Cantaloupe 5<a class="headerlink" href="#installing-cantaloupe-5" title="Permanent link">&para;</a></h2>
 <p>Since version 5, Cantaloupe is released as a standalone Java application and is no longer deployed in Tomcat via a .war file. Even so, we can still fine-tune how it runs and even install it as a service.</p>
 <h3 id="downloading-cantaloupe">Downloading Cantaloupe<a class="headerlink" href="#downloading-cantaloupe" title="Permanent link">&para;</a></h3>
 <p>Releases of Cantaloupe live on the <a href="https://github.com/cantaloupe-project/cantaloupe/releases">Cantaloupe release page</a>; the latest version can be found here as a <code>.zip</code> file.</p>
-<p><div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>sudo<span class="w"> </span>wget<span class="w"> </span>-O<span class="w"> </span>/opt/cantaloupe.zip<span class="w"> </span>CANTALOUPE_RELEASE_URL
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>sudo<span class="w"> </span>unzip<span class="w"> </span>/opt/cantaloupe.zip
+<p><div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nb">cd</span><span class="w"> </span>/opt/
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>sudo<span class="w"> </span>wget<span class="w"> </span>-O<span class="w"> </span>cantaloupe.zip<span class="w"> </span>CANTALOUPE_RELEASE_URL
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>sudo<span class="w"> </span>unzip<span class="w"> </span>cantaloupe.zip
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>sudo<span class="w"> </span>mv<span class="w"> </span><span class="o">[</span>CANTALOUPE_VERSION<span class="o">]</span><span class="w"> </span>cantaloupe
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>sudo<span class="w"> </span>rm<span class="w"> </span>cantaloupe.zip
 </span></code></pre></div>
-- <code>CANTALOUPE_RELEASE_URL</code>: It’s recommended we grab the latest version of Cantaloupe 5. This can be found on the above-linked release page, as the <code>.zip</code> version; for example, https://github.com/cantaloupe-project/cantaloupe/releases/download/v5.0.3/cantaloupe-5.0.3.zip - make sure <strong>not</strong> to download the source code zip file as that isn't compiled for running out-of-the-box.</p>
+- <code>CANTALOUPE_RELEASE_URL</code>: It’s recommended we grab the latest version of Cantaloupe 5. This can be found on the above-linked release page, as the <code>.zip</code> version; for example, https://github.com/cantaloupe-project/cantaloupe/releases/download/v5.0.6/cantaloupe-5.0.6.zip - make sure <strong>not</strong> to download the source code zip file as that isn't compiled for running out-of-the-box.
+- <code>CANTALOUPE_VERSION</code>: This will depend on the exact version of Cantaloupe downloaded; in the above example release, this would be <code>cantaloupe-5.0.6</code></p>
 <h3 id="creating-a-cantaloupe-configuration">Creating a Cantaloupe Configuration<a class="headerlink" href="#creating-a-cantaloupe-configuration" title="Permanent link">&para;</a></h3>
 <p>Cantaloupe pulls its configuration from a file called <code>cantaloupe.properties</code>; there are also some other files that can contain instructions for Cantaloupe while it’s running; specifically, we’re going to copy over the <code>delegates.rb</code> file, which can also contain custom configuration. We won’t make use of this file; we’re just copying it over for demonstration purposes.</p>
 <p>Creating these files from scratch is <em>not</em> recommended; rather, we’re going to take the default cantaloupe configurations and plop them into their own folder so we can work with them.</p>
-<p><div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>sudo<span class="w"> </span>mkdir<span class="w"> </span>/opt/cantaloupe_config
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>sudo<span class="w"> </span>cp<span class="w"> </span>CANTALOUPE_VER/cantaloupe.properties.sample<span class="w"> </span>/opt/cantaloupe_config/cantaloupe.properties
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>sudo<span class="w"> </span>cp<span class="w"> </span>CANTALOUPE_VER/delegates.rb.sample<span class="w"> </span>/opt/cantaloupe_config/delegates.rb
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nb">cd</span><span class="w"> </span>cantaloupe
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>sudo<span class="w"> </span>cp<span class="w"> </span>cantaloupe.properties.sample<span class="w"> </span>cantaloupe.properties
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>sudo<span class="w"> </span>cp<span class="w"> </span>delegates.rb.sample<span class="w"> </span>delegates.rb
 </span></code></pre></div>
-- <code>CANTALOUPE_VER</code>: This will depend on the exact version of Cantaloupe downloaded; in the above example release, this would be <code>cantaloupe-5.0.3</code></p>
-<p>The out-of-the-box configuration will work fine for our purposes, but it’s highly recommended that you take a look through the <code>cantaloupe.properties</code> and see what changes can be made; specifically, logging to actual logfiles isn’t set up by default, so you may want to take a peek at the <code>log.application.SyslogAppender</code> or <code>log.application.RollingFileAppender</code>, as well as changing the logging level.</p>
+<p>Most of the out-of-the-box configuration will work fine for our purposes. We will change the source lookup and logging, but it’s highly recommended that you take a look through the rest of the <code>cantaloupe.properties</code> and see what changes can be made. Review the config block below and change the related portions of yours to match.</p>
+<p><code>/opt/cantaloupe/cantaloupe.properties</code>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>##############
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a># SOURCES
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>##############
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>source.static = HttpSource
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>##############
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a># HttpSource
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>##############
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>HttpSource.BasicLookupStrategy.url_prefix =
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>##############
+</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a># LOGGING
+</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>##############
+</span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a>
+</span><span id="__span-8-17"><a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>log.application.FileAppender.pathname = /var/log/islandora/cantaloupe-application.log
+</span><span id="__span-8-18"><a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a>
+</span><span id="__span-8-19"><a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a>log.application.RollingFileAppender.enabled = true
+</span><span id="__span-8-20"><a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a>log.application.RollingFileAppender.pathname = /var/log/islandora/cantaloupe-application.log
+</span><span id="__span-8-21"><a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a>log.application.RollingFileAppender.TimeBasedRollingPolicy.filename_pattern = /var/log/islandora/cantaloupe-application-%d{yyyy-MM-dd}.log
+</span><span id="__span-8-22"><a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a>
+</span><span id="__span-8-23"><a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a>log.error.FileAppender.pathname = /var/log/islandora/cantaloupe-error.log
+</span><span id="__span-8-24"><a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a>
+</span><span id="__span-8-25"><a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a>log.error.RollingFileAppender.enabled = true
+</span><span id="__span-8-26"><a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a>log.error.RollingFileAppender.pathname = /var/log/islandora/cantaloupe-error.log
+</span><span id="__span-8-27"><a id="__codelineno-8-27" name="__codelineno-8-27" href="#__codelineno-8-27"></a>log.error.RollingFileAppender.TimeBasedRollingPolicy.filename_pattern = /var/log/islandora/cantaloupe-error-%d{yyyy-MM-dd}.log
+</span><span id="__span-8-28"><a id="__codelineno-8-28" name="__codelineno-8-28" href="#__codelineno-8-28"></a>
+</span><span id="__span-8-29"><a id="__codelineno-8-29" name="__codelineno-8-29" href="#__codelineno-8-29"></a>log.access.FileAppender.pathname = /var/log/islandora/cantaloupe-access.log
+</span><span id="__span-8-30"><a id="__codelineno-8-30" name="__codelineno-8-30" href="#__codelineno-8-30"></a>
+</span><span id="__span-8-31"><a id="__codelineno-8-31" name="__codelineno-8-31" href="#__codelineno-8-31"></a>log.access.RollingFileAppender.enabled = true
+</span><span id="__span-8-32"><a id="__codelineno-8-32" name="__codelineno-8-32" href="#__codelineno-8-32"></a>log.access.RollingFileAppender.pathname = /var/log/islandora/cantaloupe-access.log
+</span><span id="__span-8-33"><a id="__codelineno-8-33" name="__codelineno-8-33" href="#__codelineno-8-33"></a>log.access.RollingFileAppender.TimeBasedRollingPolicy.filename_pattern = /var/log/islandora/cantaloupe-access-%d{yyyy-MM-dd}.log
+</span></code></pre></div></p>
 <h3 id="installing-and-configuring-cantaloupe-as-a-service">Installing and configuring Cantaloupe as a service<a class="headerlink" href="#installing-and-configuring-cantaloupe-as-a-service" title="Permanent link">&para;</a></h3>
 <p>Since it is a standalone application, we can configure Cantaloupe as a systemd service like we did with Tomcat, so it can start on boot:</p>
 <p><code>/etc/systemd/system/cantaloupe.service | root:root/755</code>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>[Unit]
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>Description=Cantaloupe
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>[Service]
-</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>ExecStart=java -cp /opt/CANTALOUPE_VER/CANTALOUPE_VER.jar -Dcantaloupe.config=/opt/cantaloupe_config/cantaloupe.properties -Xmx1500m -Xms1000m edu.illinois.library.cantaloupe.StandaloneEntry
-</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>SyslogIdentifier=cantaloupe
-</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>
-</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>[Install]
-</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>WantedBy=multi-user.target
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>[Unit]
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>Description=Cantaloupe
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>[Service]
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>ExecStart=java -cp /opt/cantaloupe/cantaloupe-CANTALOUPE_VER.jar -Dcantaloupe.config=/opt/cantaloupe/cantaloupe.properties -Xmx1500m -Xms1000m edu.illinois.library.cantaloupe.StandaloneEntry
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>SyslogIdentifier=cantaloupe
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>[Install]
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>WantedBy=multi-user.target
 </span></code></pre></div>
 - <code>CANTALOUPE_VER</code>: This will depend on the exact version of Cantaloupe downloaded; in the above example release, this would be <code>cantaloupe-5.0.3</code></p>
 <p>We can now enable the service and run it:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>cantaloupe
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>cantaloupe
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>cantaloupe
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>cantaloupe
 </span></code></pre></div>
-<p>We can check the service status with <code>sudo systemctl status cantaloupe | grep Active</code> and the splash screen of Cantaloupe should be available at http://localhost:8182</p>
+<p>We can check the service status with <code>sudo systemctl status cantaloupe | grep Active</code> and the splash screen of Cantaloupe should be available at http://localhost:8182/iiif/2.</p>
+<p>If you have trouble connecting, check the status of your port and allow it if necessary:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>sudo<span class="w"> </span>ufw<span class="w"> </span>status<span class="w"> </span>verbose
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>sudo<span class="w"> </span>ufw<span class="w"> </span>allow<span class="w"> </span><span class="m">8182</span>/tcp
+</span></code></pre></div>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 15, 2024</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">August 16, 2024</span>
       
     
   </small>

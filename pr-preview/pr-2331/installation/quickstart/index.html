@@ -570,7 +570,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../release-notes/8.x-2.0.md" class="md-nav__link">
+      <a href="../../release_notes/8.x-2.0/" class="md-nav__link">
         8.x-2.0 Release Notes
       </a>
     </li>
@@ -2676,18 +2676,18 @@
 <h2 id="sandbox-running-locally">Sandbox running locally<a class="headerlink" href="#sandbox-running-locally" title="Permanent link">&para;</a></h2>
 <p>Alternately, you can use Docker and install the Online Sandbox repository locally, with minimal command-line usage. Note that this method does not support installing modules or themes that are not included with the demo. See the instructions for "Running Locally" in the <a href="https://github.com/Islandora-Devops/sandbox">Sandbox's README</a>.</p>
 <h2 id="ansible-playbook">Ansible Playbook<a class="headerlink" href="#ansible-playbook" title="Permanent link">&para;</a></h2>
-<p>To provision a local Vagrant or remote Ubuntu virtual machine (without Docker), you can use the <a href="https://github.com/Islandora-Devops/islandora-playbook">Islandora Ansible Playbook</a>. The playbook results in all services installed on a single machine, but can be altered to spread services across various machines. This is a full-fledged VM where you can install modules and themes using Composer. This method requires basic command-line usage and it's advantageous if you are familiar with provisioning software on Ubuntu. This Playbook is suitable for local or production use, though local use (through VirtualBox and Vagrant) is not supported yet by Apple hardware (i.e. M1/M2 machines). See documentation: <a href="installation/playbook">Installation - Ansible Playbook</a> for more details.</p>
+<p>To provision a local Vagrant or remote Ubuntu virtual machine (without Docker), you can use the <a href="https://github.com/Islandora-Devops/islandora-playbook">Islandora Ansible Playbook</a>. The playbook results in all services installed on a single machine, but can be altered to spread services across various machines. This is a full-fledged VM where you can install modules and themes using Composer. This method requires basic command-line usage and it's advantageous if you are familiar with provisioning software on Ubuntu. This Playbook is suitable for local or production use, though local use (through VirtualBox and Vagrant) is not supported yet by Apple hardware (i.e. M1/M2 machines). See documentation: <a href="../playbook/">Installation - Ansible Playbook</a> for more details.</p>
 <h2 id="isle-site-template">ISLE Site Template<a class="headerlink" href="#isle-site-template" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Islandora-Devops/isle-site-template">ISLE Site Template</a> uses Docker and is based off images created by <a href="https://github.com/Islandora-Devops/isle-buildkit">ISLE Buildkit</a>, but is a simpler tool than ISLE-DC. This is a full-fledged Docker installation where you can install modules and themes using Composer, either by executing commands in the container or by using the built-in IDE.  It is suitable for local development or production. See documentation: <a href="http://localhost:8111/documentation/installation/docker/site-template/site-template/">Installation - Site Template</a> for more details. </p>
+<p><a href="https://github.com/Islandora-Devops/isle-site-template">ISLE Site Template</a> uses Docker and is based off images created by <a href="https://github.com/Islandora-Devops/isle-buildkit">ISLE Buildkit</a>, but is a simpler tool than ISLE-DC. This is a full-fledged Docker installation where you can install modules and themes using Composer, either by executing commands in the container or by using the built-in IDE.  It is suitable for local development or production. See documentation: <a href="../docker/site-template/site-template/">Installation - Site Template</a> for more details. </p>
 <h2 id="isle-dc">ISLE-DC<a class="headerlink" href="#isle-dc" title="Permanent link">&para;</a></h2>
-<p><a href="https://github.com/Islandora-Devops/isle-dc">ISLE-DC</a> uses Docker and provisions each service in the Islandora stack in a separate container. The containers are also based off of the images in ISLE Buildkit. ISLE-DC uses the <a href="https://www.gnu.org/software/make/">GNU Make</a> tool to provide several shortcuts to performing common management functions. It is suitable for local development or production.  See documentation: <a href="installation/docker-introduction">Installation - Docker ISLE</a> for more details.</p>
+<p><a href="https://github.com/Islandora-Devops/isle-dc">ISLE-DC</a> uses Docker and provisions each service in the Islandora stack in a separate container. The containers are also based off of the images in ISLE Buildkit. ISLE-DC uses the <a href="https://www.gnu.org/software/make/">GNU Make</a> tool to provide several shortcuts to performing common management functions. It is suitable for local development or production.  See documentation: <a href="../docker/isle-dc/docker-local/">Installation - Docker ISLE</a> for more details.</p>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 15, 2024</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">August 16, 2024</span>
       
     
   </small>

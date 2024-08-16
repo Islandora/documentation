@@ -496,7 +496,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../release-notes/8.x-2.0.md" class="md-nav__link">
+      <a href="../../../release_notes/8.x-2.0/" class="md-nav__link">
         8.x-2.0 Release Notes
       </a>
     </li>
@@ -1033,6 +1033,13 @@
           <li class="md-nav__item">
   <a href="#adding-or-replacing-files" class="md-nav__link">
     Adding or Replacing Files
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#account-tracker" class="md-nav__link">
+    Account Tracker
   </a>
   
 </li>
@@ -2674,6 +2681,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#account-tracker" class="md-nav__link">
+    Account Tracker
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#troubleshooting" class="md-nav__link">
     Troubleshooting
   </a>
@@ -2712,13 +2726,13 @@
 <h1 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h1>
 <div class="admonition warning">
 <p class="admonition-title">Needs Maintenance</p>
-<p>The manual installation documentation is in need of attention. We are aware that some components no longer work as documented here. If you are interested in helping us improve the documentation, please see <a href="../../../contributing/CONTRIBUTING">Contributing</a>.</p>
+<p>The manual installation documentation is in need of attention. We are aware that some components no longer work as documented here. If you are interested in helping us improve the documentation, please see <a href="../../../contributing/CONTRIBUTING/">Contributing</a>.</p>
 </div>
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
 <p>The manual installation guide is not intended to describe <em>the</em> Islandora installation but rather <em>an</em> Islandora installation. The server created using this guide is not hardened, will not be easily scalable, and the components may not be configured in a way you consider easy to work with. A production instance of Islandora should be installed and maintained by a professional with an understanding of Linux and server administration.</p>
 </div>
-<p>This guide will contain generalized steps on installation and configuration of the various components, but will contain specific example commands for executing these steps on an Ubuntu 18.04 Server.</p>
+<p>This guide will contain generalized steps on installation and configuration of the various components, but will contain specific example commands for executing these steps on an Ubuntu 20.04 Server.</p>
 <h2 id="some-prerequisite-knowledge">Some Prerequisite Knowledge<a class="headerlink" href="#some-prerequisite-knowledge" title="Permanent link">&para;</a></h2>
 <p>This guide assumes the user has some knowledge:</p>
 <ul>
@@ -2777,20 +2791,45 @@
 </span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="cp">?&gt;</span>
 </span></code></pre></div>
 - <code>THE_NUMBER_TO_ADD_TO_THIS</code>: 12, perhaps with an explanation of why, or other numbers that may be appropriate</p>
+<h3 id="account-tracker">Account Tracker<a class="headerlink" href="#account-tracker" title="Permanent link">&para;</a></h3>
+<p>We will create several accounts during the installation process. For some items the instructions use <em>placeholders</em> in square brackets (<code>[]</code>). Create your own and use them in place of these placeholders as appropriate.</p>
+<ul>
+<li>MySQL root account</li>
+<li>username: <code>root</code></li>
+<li>password: <code>[mysql_root_password]</code></li>
+<li>MySQL account for Drupal database access</li>
+<li>username: <code>[mysql_drupal]</code></li>
+<li>password: <code>[mysql_drupal_password]</code></li>
+<li>MySQL account for Fedora access</li>
+<li>username: <code>[mysql_fedora]</code></li>
+<li>password: <code>[mysql_fedora_password]</code></li>
+<li>Tomcat</li>
+<li>username: <code>tomcat</code></li>
+<li>password: <code>[tomcat_user_password]</code></li>
+<li>Fedora fedoraAdmin account</li>
+<li>username: <code>fedoraAdmin</code></li>
+<li>password: <code>[fedora_admin_password]</code></li>
+<li>Fedora fedoraUser account</li>
+<li>username: <code>fedoraUser</code></li>
+<li>password: <code>[fedora_user_password]</code></li>
+<li>ActiveMQ</li>
+<li>username: <code>[activemq_user]</code></li>
+<li>password: <code>[activemq_user_password]</code></li>
+</ul>
 <h3 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h3>
 <p>The most common issues you will likely run into when manually provisioning a server are:</p>
 <ul>
 <li>Files or directories are not owned by the user who needs access to them, and can therefore not be written to. Check the ownership of files using <code>ls -la</code>, and ensure their ownership using <code>chown USER</code> for files, and <code>chown -R USER</code> for directories</li>
 <li>Replacement variables were left in place in files specified by the guide. Ensure any replacement variables such as server addresses and passwords are swapped out when writing files to the server</li>
 </ul>
-<p>For any other issues, don't hesitate to email the <a href="mailto:islandora@googlegroups.com">mailing list</a> to ask for help. If you think that a part of the installation documentation is incorrect or could be improved, please create an issue in the <a href="http://github.com/Islandora/documentation/issues">documentation issues queue</a> and give it a <code>documentation</code> tag. Bear in mind that this guide is built for Ubuntu 18.04 and attempts to give generalized instructions; you will likely naturally encounter situations where your own environment needs to differ from the guide.</p>
+<p>For any other issues, don't hesitate to email the <a href="mailto:islandora@googlegroups.com">mailing list</a> to ask for help. If you think that a part of the installation documentation is incorrect or could be improved, please create an issue in the <a href="http://github.com/Islandora/documentation/issues">documentation issues queue</a> and give it a <code>documentation</code> tag. Bear in mind that this guide is built for Ubuntu 20.04 and attempts to give generalized instructions; you will likely naturally encounter situations where your own environment needs to differ from the guide.</p>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 15, 2024</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">August 16, 2024</span>
       
     
   </small>
