@@ -4,7 +4,7 @@
 
 At a practical level, because Islandora supports several of the IIIF specifications, we can:
 
-- Zoom, pan, and rotate images within a IIIF-compliant [viewer](../file_viewers) like OpenSeadragon or Mirador
+- Zoom, pan, and rotate images within a IIIF-compliant [viewer](file-viewers.md) like OpenSeadragon or Mirador
     - Islandora uses an IIIF-compliant image server (by default, [Cantaloupe](https://cantaloupe-project.github.io/)) that utilizes the [IIIF Image API](https://iiif.io/api/image/2.1/). This capability is similar to what Islandora 7.x users experience when they view a Large Image.
 - Display thumbnails for all pages of a book or newspaper issue within image viewers
     - IIIF-compliant image viewers such as OpenSeadragon or Mirador can display a "collection" of images such as all the pages of a book or newspaper issue using the [IIIF Presentation API](https://iiif.io/api/presentation/2.1/). For example, here is a screenshot of OpenSeadragon rendering all the pages of a book:
@@ -16,7 +16,7 @@ At a practical level, because Islandora supports several of the IIIF specificati
 If you're not using one of our provisioning tools, you will need to:
 
 - install and configure the Cantaloupe (or another IIIF-compliant) image server
-- install a [viewer](../file-viewers) module and configure it to point to the IIIF Image server location
+- install a [viewer](file-viewers.md) module and configure it to point to the IIIF Image server location
 - if using the viewer to show single images, configure it as a file formatter in one of the display modes for your media
 - if using the viewer to show multi-paged content, install the [Islandora IIIF](https://github.com/Islandora/islandora/tree/2.x/modules/islandora_iiif) module and create a IIIF view (see the one in the Starter Site as an example), then configure the viewer's _block_ to show up where desired (see below for details on how it could be configured)
 
@@ -26,7 +26,7 @@ If you're not using one of our provisioning tools, you will need to:
 ![Mirador rendering book pages](../assets/iiif-mirador-paged.png)
 
 ### Contexts and Mirador (default)
-The Islandora Starter Site uses a Context to automatically use the IIIF Presentation API with the Mirador viewer for showing [paged content](../paged-content).
+The Islandora Starter Site uses a Context to automatically use the IIIF Presentation API with the Mirador viewer for showing [paged content](paged-content.md).
 
 To use this Context, give your book or newspaper (or other paged content) a model of "Paged Content" or "Publication Issue". To double-check this, in the _Mirador Block - Multipaged items_ Context, you should see those terms used in the "Node has term" condition (you can register more than one term there, and having one of these on your node will activate this Context). Now, when you view a paged content Islandora node, you will see service files of all of its child pages (assuming you have added some child pages to the object) in the Mirador viewer as illustrated above.
 

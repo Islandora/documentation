@@ -1,7 +1,7 @@
 # Configuring Drupal
 
 !!! warning "Needs Maintenance"
-    The manual installation documentation is in need of attention. We are aware that some components no longer work as documented here. If you are interested in helping us improve the documentation, please see [Contributing](../../../contributing/CONTRIBUTING).
+    The manual installation documentation is in need of attention. We are aware that some components no longer work as documented here. If you are interested in helping us improve the documentation, please see [Contributing](../../contributing/CONTRIBUTING.md).
 
 After all of the above pieces are in place, installed, configured, started, and otherwise prepared, the last thing we need to do is to finally configure the front-end Drupal instance to wire all the installed components together.
 
@@ -20,13 +20,13 @@ The below configuration will establish `localhost` as a trusted host pattern, bu
 
 **Before** (at around line 789):
 ```
-'driver' => 'pgsql',
+'driver' => 'mysql',
 );
 ```
 
 **After**:
 ```
-'driver' => 'pgsql',
+'driver' => 'mysql',
 );
 
 $settings['trusted_host_patterns'] = [
@@ -53,7 +53,7 @@ drush -y cr
 ## Islandora
 
 !!! note "Skip this by using the Islandora Starter Site"
-    The Islandora Starter Site, which was presented as an option in the ["Installing Composer, Drush, and Drupal"](installing_composer_drush_and_drupal) step,
+    The Islandora Starter Site, which was presented as an option in the ["Installing Composer, Drush, and Drupal"](installing-composer-drush-and-drupal.md) step,
     installs Islandora and other modules and configures them, allowing you to skip this section. You may want to use this manual method in the case where you want
     to pick and choose which Islandora modules you use.
 

@@ -14,7 +14,7 @@ Tagged versions are available [here](https://github.com/Islandora-Devops/isle-dc
 
 ## Getting Started
 
-If you don't already have a Drupal site, you'll be given a basic setup using Drupal 9 and the
+If you don't already have a Drupal site, you'll be given a basic setup using Drupal 10 and the
 [Islandora Starter Site](https://github.com/Islandora-Devops/islandora-starter-site).
 
 If you do already have a Drupal site, use git to clone it into place as the `codebase` folder.
@@ -56,7 +56,7 @@ make starter
 
 to install the Drupal site in your `codebase` folder and spin up all the other containers with it.
 
-Enjoy your Islandora instance!  Check out the [basic usage documentation](../docker-basic-usage) to see
+Enjoy your Islandora instance!  Check out the [basic usage documentation](docker-basic-usage.md) to see
 all the endpoints that are available and how to do things like start and stop Islandora. Your passwords,
 including the Drupal admin password, can be found in the `secrets/live` directory after you run `make starter`.
 

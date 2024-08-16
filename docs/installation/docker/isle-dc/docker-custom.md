@@ -10,7 +10,7 @@ image.
 
 ## Creating your Image
 
-In order to generate that custom Drupal image we need to [set up a development environment](../docker-local). You will do this 
+In order to generate that custom Drupal image we need to [set up a development environment](docker-local.md). You will do this 
 on your development computer, rather than your production server.
 
 Once your development site is set up you will need somewhere to store your custom Drupal image. You should create a private 

@@ -11,6 +11,6 @@ The Islandora Starter Site contains no code, only references to other modules an
 
 To experience the full Islandora Starter Site, it requires access to external services such as Solr,
 Fedora, Alpaca, and Matomo. It is therefore suggested to deploy the Starter Site using one of our
-two deployment platforms: [ISLE-DC](../../installation/docker-local) (using the `make starter` or `make starter_dev` commands), or
-the [Islandora Playbook](../../installation/playbook) (using the `starter` (default) or `starter_dev` option in the Vagrantfile).
+ deployment platforms: [ISLE-DC](../installation/docker/isle-dc/docker-local.md) (using the `make starter` or `make starter_dev` commands), [ISLE Site Template](../installation/docker/site-template/site-template.md), or
+the [Islandora Playbook](../installation/playbook.md) (using the `starter` (default) or `starter_dev` option in the Vagrantfile).
 

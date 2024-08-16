@@ -31,11 +31,10 @@ sudo chown -R tomcat:tomcat /opt/fcrepo
 The method for creating the database here will closely mimic the method we used to create our database for Drupal.
 
 ```bash
-sudo -u postgres psql
-create database FEDORA_DB encoding 'UTF8' LC_COLLATE = 'en_US.UTF-8' LC_CTYPE = 'en_US.UTF-8' TEMPLATE template0;
-create user FEDORA_DB_USER with encrypted password 'FEDORA_DB_PASSWORD';
-grant all privileges on database FEDORA_DB to FEDORA_DB_USER;
-\q
+sudo mysql -u root
+CREATE DATABASE [FEDORA_DB];
+CREATE USER '[MYSQL_USER_FOR_FEDORA]'@'localhost' IDENTIFIED BY '[MYSQL_PASSWORD_FOR_FEDORA]';
+GRANT ALL PRIVILEGES ON [FEDORA_DB].* TO '[MYSQL_USER_FOR_FEDORA]'@'localhost';
 ```
 
 - `FEDORA_DB`: `fcrepo`
@@ -156,9 +155,9 @@ fcrepo.jms.baseUrl=FCREPO_JMS_BASE
 
 * `FCREPO_DB_USERNAME` - The database username
 * `FCREPO_DB_PASSWORD` - The database password
-* `FCREPO_OCFL_ROOT` - Sets the root directory of the OCFL. Defaults to `FCREPO_HOME/data/ocfl-root` if not set.
-* `FCREPO_TEMP_ROOT` - Sets the temp directory used by OCFL. Defaults to `FCREPO_HOME/data/temp` if not set.
-* `FCREPO_STAGING_ROOT` - Sets the staging directory used by OCFL. Defaults to `FCREPO_HOME/data/staging` if not set.
+* `FCREPO_OCFL_ROOT` - Sets the root directory of the OCFL. Defaults to `FCREPO_HOME/data/ocfl-root` if this line is deleted.
+* `FCREPO_TEMP_ROOT` - Sets the temp directory used by OCFL. Defaults to `FCREPO_HOME/data/temp` if this line is deleted.
+* `FCREPO_STAGING_ROOT` - Sets the staging directory used by OCFL. Defaults to `FCREPO_HOME/data/staging` if this line is deleted.
 * `FCREPO_VELOCITY_LOG` - The Fedora HTML template code uses Apache Velocity, which generates a runtime log called velocity.log. Defaults to `FCREPO_HOME/logs/velocity`. A good choice might be /opt/tomcat/logs/velocity.log
 * `FCREPO_JMS_BASE` - This specifies the baseUrl to use when generating JMS messages. You can specify the hostname with or without port and with or without path. If your system is behind a NAT firewall you may need this to avoid your message consumers trying to access the system on an invalid port. If this system property is not set, the host, port and context from the user's request will be used in the emitted JMS messages. If your Alpaca is on the same machine as your Fedora and you use the `islandora-indexing-fcrepo`, you could use http://localhost:8080/fcrepo/rest. 
 
@@ -234,9 +233,8 @@ Once it starts up, Fedora REST API should be available at http://localhost:8080/
 A compiled JAR of Syn can be found on the [Syn releases page](https://github.com/Islandora/Syn/releases). We’re going to add this to the list libraries accessible to Tomcat.
 
 ```
-sudo wget -P /opt/tomcat/lib SYN_JAR_URL
+sudo -u tomcat wget -P /opt/tomcat/lib SYN_JAR_URL
 # Ensure the library has the correct permissions.
-sudo chown -R tomcat:tomcat /opt/tomcat/lib
 sudo chmod -R 640 /opt/tomcat/lib
 ```
 
@@ -279,16 +277,16 @@ There are two options here:
 `/opt/tomcat/conf/context.xml`
 
 **Before**:
-> 29 |     `-->`
-
-> 30 | `</Context>`
-
-**After**:
-> 29 |    `-->`
-
-> 30 |    `<Valve className="ca.islandora.syn.valve.SynValve" pathname="/opt/fcrepo/config/syn-settings.xml"/>`
+> 30 |     `-->`
 
 > 31 | `</Context>`
+
+**After**:
+> 30 |    `-->`
+
+> 31 |    `<Valve className="ca.islandora.syn.valve.SynValve" pathname="/opt/fcrepo/config/syn-settings.xml"/>`
+
+> 32 | `</Context>`
 
 #### 2. Enable the Syn Valve for only Fedora.
 
@@ -515,16 +513,7 @@ com.bigdata.rdf.store.AbstractTripleStore.statementIdentifiers=false
 
 ### Specifying the `RWStore.properties` in `JAVA_OPTS`
 
-In order to enable our configuration when Tomcat starts, we need to reference the location of `RWStore.properties` in the `JAVA_OPTS` environment variable that Tomcat uses.
-
-`/opt/tomcat/bin/setenv.sh`
-
-**Before**:
-> 3 | export JAVA_OPTS="-Djava.awt.headless=true -Dfcrepo.config.file=/opt/fcrepo/config/fcrepo.properties -DconnectionTimeout=-1 -server -Xmx1500m -Xms1000m"
-
-**After**:
-> 3 | export JAVA_OPTS="-Djava.awt.headless=true -Dfcrepo.config.file=/opt/fcrepo/config/fcrepo.properties -DconnectionTimeout=-1 -Dcom.bigdata.rdf.sail.webapp.ConfigParams.propertyFile=/opt/blazegraph/conf/RWStore.properties -Dlog4j.configuration=file:/opt/blazegraph/conf/log4j.properties -server -Xmx1500m -Xms1000m"
-
+In order to enable our configuration when Tomcat starts, we need to add the location of `RWStore.properties` to the existing `JAVA_OPTS` environment variable that Tomcat uses in `/opt/tomcat/bin/setenv.sh`: `-Dcom.bigdata.rdf.sail.webapp.ConfigParams.propertyFile=/opt/blazegraph/conf/RWStore.properties -Dlog4j.configuration=file:/opt/blazegraph/conf/log4j.properties`
 
 ### Restarting Tomcat
 
