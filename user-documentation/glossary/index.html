@@ -2732,8 +2732,22 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#field-formatter" class="md-nav__link">
+    Field formatter
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#field-type" class="md-nav__link">
     Field type
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#field-storage" class="md-nav__link">
+    Field Storage
   </a>
   
 </li>
@@ -3354,8 +3368,22 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#field-formatter" class="md-nav__link">
+    Field formatter
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#field-type" class="md-nav__link">
     Field type
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#field-storage" class="md-nav__link">
+    Field Storage
   </a>
   
 </li>
@@ -3771,7 +3799,7 @@
 <h2 id="blazegraph">Blazegraph<a class="headerlink" href="#blazegraph" title="Permanent link">&para;</a></h2>
 <p>Blazegraph is an open source triplestore and graph database. Islandora ships Blazegraph as part of the software stack. Metadata about <a href="#resource-node">Resource nodes</a> is synchronized between the <a href="#drupal">Drupal</a> database and Blazegraph. Data in the Blazegraph triple store can be queried using SPARQL.</p>
 <h2 id="bundle">Bundle<a class="headerlink" href="#bundle" title="Permanent link">&para;</a></h2>
-<p>A bundle is the generic name for a sub-type of a <a href="#content-entity">Content Entity</a> type in <a href="#drupal">Drupal</a>. To illustrate: Node and Taxonomy Term are both names of Content Entity types, and both have sub-types ("bundles"). The bundles of Node are called <a href="#content-type">"Content Types"</a> and the bundles of <a href="#taxonomy-term">Taxonomy Term</a> are called <a href="#vocabulary">"Vocabularies"</a>. Each bundle includes its own configurations of what <a href="#field">fields</a> are present on the bundle and how they are entered and displayed. A bundle is thus part of the <a href="#configuration">configuration</a> of your site. Some Content Entity Types, such as User, do not have bundles.</p>
+<p>A bundle is the generic name for a sub-type of a <a href="#content-entity">Content Entity</a> type in <a href="#drupal">Drupal</a>. To illustrate: Node and Taxonomy Term are both names of Content Entity types, and both have sub-types ("bundles"). The bundles of Node are called <a href="#content-types">"Content Types"</a> and the bundles of <a href="#taxonomy-term">Taxonomy Term</a> are called <a href="#vocabulary">"Vocabularies"</a>. Each bundle includes its own configurations of what <a href="#field">fields</a> are present on the bundle and how they are entered and displayed. A bundle is thus part of the <a href="#configuration">configuration</a> of your site. Some fieldable Content Entity Types, such as User, do not have bundles.</p>
 <h2 id="cantaloupe">Cantaloupe<a class="headerlink" href="#cantaloupe" title="Permanent link">&para;</a></h2>
 <p><a href="https://cantaloupe-project.github.io">Cantaloupe</a> is an image server written in Java. It implements the <a href="#iiif">IIIF</a> Image API, which means it handles deep zooming of large images and other image manipulations. It is required to serve images to some <a href="#viewer">viewers</a> such as <a href="#mirador">Mirador</a> and <a href="#openseadragon">OpenSeadragon</a>.</p>
 <h2 id="checksum">Checksum<a class="headerlink" href="#checksum" title="Permanent link">&para;</a></h2>
@@ -3827,9 +3855,51 @@
 <h2 id="ffmpeg">FFmpeg<a class="headerlink" href="#ffmpeg" title="Permanent link">&para;</a></h2>
 <p><a href="https://ffmpeg.org/">FFmpeg</a> is a cross-platform audio and video processing software. In Islandora, FFmpeg is provided by the <a href="#crayfish">Crayfish</a> <a href="#microservice">microservice</a>, <a href="#homarus">Homarus</a>.</p>
 <h2 id="field">Field<a class="headerlink" href="#field" title="Permanent link">&para;</a></h2>
-<p>Data of a certain type that is attached to a content entity. For instance, on a Resource Node <a href="#content-type">content type</a>, you might have fields for a title, description, display hints, subjects, and other metadata.</p>
+<p>Data of a certain type that is attached to a content entity. A field is made up of <a href="#field-storage">field storage</a> which inclues some low-level configuration that is shared across all <a href="#field-instance">field instances</a>, and a field instance, which configures how that field appears on a bundle. Fields also have field <a href="#widget">widgets</a> that govern data entry, and <a href="#field-formatter">field formatters</a> which control how the field is displayed to site visitors.</p>
 <h2 id="field-instance">Field instance<a class="headerlink" href="#field-instance" title="Permanent link">&para;</a></h2>
+<p>A field, configured to show up on a <a href="#bundle">bundle</a>. It is possible to reuse fields on different bundles, and they share the same <a href="#field-storage">field storage</a> but are different field instances and can have different configurations (such as field name, description, cardinality, required, etc).</p>
+<p>For example, the Repository Item Content type has a field instance for Alternative Title, with the following configuration:</p>
+<ul>
+<li>Display name: Alternative Title</li>
+<li>Help text: (blank)</li>
+<li>Required: no</li>
+<li>Translatable: yes</li>
+<li>Field visibility and permissions: not set</li>
+<li>Default value: none</li>
+</ul>
+<h2 id="field-formatter">Field formatter<a class="headerlink" href="#field-formatter" title="Permanent link">&para;</a></h2>
+<p>A field formatter configures how a <a href="#field-instance">field instance</a> is displayed to site visitors. The formatters available depend on the <a href="#field-type">field type</a>. For example, an EDTF-type field can use the "Default EDTF Formatter", which can be configured (per field instance) to be big- or little-endian, and to show year, month, and day info in a variety of ways. Field Formatters are configured on the "Manage Display" tab of a bundle.</p>
 <h2 id="field-type">Field type<a class="headerlink" href="#field-type" title="Permanent link">&para;</a></h2>
+<p>The type of a <a href="#field-instance">field instance</a> or <a href="#field-storage">field_storage</a>. Drupal Core defines several field types and modules can define additional field types. The field type determines what <a href="#widget">widgets</a> and <a href="#field-formatter">field formatters</a> are available, as well as what configuration options are available in the field instance. Some commonly used field types in Islandora include:</p>
+<ul>
+<li>Text (plain, long)<ul>
+<li>Allows long text values</li>
+<li>Displays the input text</li>
+</ul>
+</li>
+<li>Text (formatted, long)<ul>
+<li>Allows long text values</li>
+<li>If a format like “full_html” is set on the field, <p> will  be displayed as a paragraph break rather than <p></li>
+</ul>
+</li>
+<li>Entity reference<ul>
+<li>Populated by a link to another Drupal/Islandora entity</li>
+<li>Configurable behaviors include: what kind of entity can be linked to, how the data entry interface words (drop down menu or autocomplete), general patterns of how these references get displayed (show the referenced thing, show a link to the referenced thing, show unlinked name of the referenced thing). </li>
+</ul>
+</li>
+<li>Typed relation<ul>
+<li>An extended variation on Entity reference field type</li>
+<li>List of available relationship types (labeled “Available Relations”) can be configured per field instance. A code and a display value are recorded for each type (for example: relators:aut|Author). ‘relators’ acts as a linked data namespace. ‘aut’ is the code that, combined with the base namespace URI configured elsewhere, will create the linked data expression of what is recorded in this field ( this node hasAuthor taxonomyTermID )</li>
+</ul>
+</li>
+<li>EDTF<ul>
+<li>Holds a string formatted according to the EDTF standard</li>
+<li>What kinds of EDTF features are allowed can be configured in the <a href="#widget">widget</a> and how the date is presented to site visitors can be configured in the <a href="#field-formatter">field formatter</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="field-storage">Field Storage<a class="headerlink" href="#field-storage" title="Permanent link">&para;</a></h2>
+<p>Low-level configuration that determines how the field data is stored in the database. This often includes the maximum length of the data, and whether the field is single-valued or repeatable (though that can often be overridden at the field instance level). Compare: <a href="#field-instance">field instance</a></p>
 <h2 id="fits">FITS<a class="headerlink" href="#fits" title="Permanent link">&para;</a></h2>
 <p><a href="https://projects.iq.harvard.edu/fits">File Information Tool Set</a>, a set of software components for identifying, validating and extracting of technical metadata for a wide range of file formats.</p>
 <h2 id="fixity">Fixity<a class="headerlink" href="#fixity" title="Permanent link">&para;</a></h2>
@@ -3966,7 +4036,7 @@ See also: <a href="#resource-node">Resource Node</a></p>
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">August 15, 2024</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">August 16, 2024</span>
       
     
   </small>
