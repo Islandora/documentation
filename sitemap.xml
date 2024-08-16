@@ -166,6 +166,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://islandora.github.io/documentation/installation/docker/site-template/backup/</loc>
+         <lastmod>2024-08-16</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://islandora.github.io/documentation/installation/docker/site-template/docker-modifications/</loc>
          <lastmod>2024-08-16</lastmod>
          <changefreq>daily</changefreq>
