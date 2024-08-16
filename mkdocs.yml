@@ -143,6 +143,7 @@ nav:
               - 'Creating Your Site': 'installation/docker/site-template/setup.md'
               - 'Docker Modifications': 'installation/docker/site-template/docker-modifications.md'
               - 'Updating': 'installation/docker/site-template/updating.md'
+              - 'Back Up and Restore': 'installation/docker/site-template/backup.md'
       - 'Ansible Playbook': 'installation/playbook.md'
       - Manual Installation:
         - 'Introduction': 'installation/manual/introduction.md'
