@@ -3254,8 +3254,10 @@ This recipe provides instructions how to configure a shallow or deep search in a
 <p><a href="https://www.drupal.org/project/content_type_clone">Content Type Clone</a></p>
 <p>A tool that allows you to clone an existing content type. Can be used to copy and easily make your own version of the Repository Item Content Type with fewer or edited fields, without starting over. Has options to also copy all nodes from the old type to the new, and to delete from the old type when copying.</p>
 <h4 id="prevent-orphaned-entity-relationships">Prevent orphaned entity relationships<a class="headerlink" href="#prevent-orphaned-entity-relationships" title="Permanent link">&para;</a></h4>
-<p><a href="https://www.drupal.org/project/entity_reference_integrity">Entity Reference Integrity</a>
-<a href="https://github.com/discoverygarden/entity_reference_integrity_extra">Entity Reference Integrity Extras</a></p>
+<ul>
+<li><a href="https://www.drupal.org/project/entity_reference_integrity">Entity Reference Integrity</a></li>
+<li><a href="https://github.com/discoverygarden/entity_reference_integrity_extra">Entity Reference Integrity Extras</a></li>
+</ul>
 <p>Normally when deleting content (nodes, taxonomy terms, etc), any content that references the deleted entity isn't altered so you end up with orphan/zombie references, which are visible in the JSON representation but invisible otherwise. With Entity Reference Integrity's submodule (-Enforce), you won't be able to delete content that's referenced from elsewhere, preserving your database integrity.</p>
 <p>Because the Drupal module doesn't play with Typed Relation fields, DGI's -Extras module is useful. </p>
 <h4 id="content-management-workflows">Content Management Workflows<a class="headerlink" href="#content-management-workflows" title="Permanent link">&para;</a></h4>
@@ -3304,7 +3306,7 @@ This recipe provides instructions how to configure a shallow or deep search in a
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">August 16, 2024</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">August 21, 2024</span>
       
     
   </small>
