@@ -121,11 +121,13 @@ A tool that allows you to clone an existing content type. Can be used to copy an
 
 * [Entity Reference Integrity](https://www.drupal.org/project/entity_reference_integrity)
 * [Entity Reference Integrity Extras](https://github.com/discoverygarden/entity_reference_integrity_extra)
+* [Entity Reference Purger](https://www.drupal.org/project/entity_reference_purger)
 
-Normally when deleting content (nodes, taxonomy terms, etc), any content that references the deleted entity isn't altered so you end up with orphan/zombie references, which are visible in the JSON representation but invisible otherwise. With Entity Reference Integrity's submodule (-Enforce), you won't be able to delete content that's referenced from elsewhere, preserving your database integrity.
+Normally when deleting content (nodes, taxonomy terms, etc), any content that references the deleted entity isn't altered so you end up with orphan/zombie references, which are visible in the JSON representation but invisible otherwise. With Entity Reference Integrity's submodule (entity_refefrence_integrity_enforce), you won't be able to delete content that's referenced from elsewhere, preserving your database integrity.
 
-Because the Drupal module doesn't play with Typed Relation fields, DGI's -Extras module is useful. 
+Because the Drupal module doesn't play with Typed Relation fields, DGI's entity_reference_integrity_extras module is useful. 
 
+Alternatively, Entity Reference Purger takes care of deleting the references on entity delete. Warning: it is unknown whether Entity Reference Purger respects whether the user has permission to edit the referencing entity/field. There are open issues that it does not work well with Workflow (see Content Mangagement Workflows below) or translation. The module is not covered by the security badge.
 
 #### Content Management Workflows
 
