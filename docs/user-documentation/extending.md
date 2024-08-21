@@ -119,8 +119,8 @@ A tool that allows you to clone an existing content type. Can be used to copy an
 
 #### Prevent orphaned entity relationships
 
-[Entity Reference Integrity](https://www.drupal.org/project/entity_reference_integrity)
-[Entity Reference Integrity Extras](https://github.com/discoverygarden/entity_reference_integrity_extra)
+* [Entity Reference Integrity](https://www.drupal.org/project/entity_reference_integrity)
+* [Entity Reference Integrity Extras](https://github.com/discoverygarden/entity_reference_integrity_extra)
 
 Normally when deleting content (nodes, taxonomy terms, etc), any content that references the deleted entity isn't altered so you end up with orphan/zombie references, which are visible in the JSON representation but invisible otherwise. With Entity Reference Integrity's submodule (-Enforce), you won't be able to delete content that's referenced from elsewhere, preserving your database integrity.
 
