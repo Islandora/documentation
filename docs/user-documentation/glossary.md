@@ -307,6 +307,9 @@ The term 'Resource node' is specific to Islandora. Typically, Resource nodes in 
 
 For example, a video stored in Islandora will have a Resource node, with metadata stored in [Fields](#field). Attached to the Resource node is a [Media](#media) entity, which encapsulates the preservation-grade file. The Resource node may be linked to further [Media](#media), for instance for a thumbnail, web-friendly derivative, and technical metadata associated with the resource node. The Resource node may also belong to one or more collections.
 
+## Source Field
+A Drupal term for the main file-[type](#field-type) [field](#field) on a [Media](#media). The names of these fields differ across Media Types, such as "Image" (`field_media_image`) on Image media, and "Video File" (`field_media_video_file`) on Video media. While it is possible to add other fields, including file fields, to a Media, the source field is the one configured during the creation of a Media Type. Islandora provides utility functions to get the source field from a Media ([MediaSourceService.php](https://github.com/Islandora/islandora/blob/2.x/src/MediaSource/MediaSourceService.php)).
+
 ## Taxonomy term
 A [Drupal](#drupal) [Content Entity](#content-entity) of the type 'taxonomy term'. Taxonomy terms belong to [vocabularies](#vocabulary) which define what [fields](#field) are available and how they behave. Drupal generally uses [terms contained in taxonomies or vocabularies](#taxonomy-term) to classify content (tag or category). Taxonomy terms are used in Islandora to establish locally controlled vocabularies for describing resources, for instance for standardised spellings of names or subject terms.
 
