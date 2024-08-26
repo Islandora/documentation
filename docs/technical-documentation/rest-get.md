@@ -9,7 +9,7 @@
 
 If you have restricted access to view your content, you will need to use one of the configured authorization methods to access your content, media and/or files.
 
-These are defined under [Authorization](./using-rest-endpoints.md#authorization) on the overview.
+These are defined under [Authorization](rest-authorization.md) on the overview.
 
 ## Content (Nodes)
 

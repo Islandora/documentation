@@ -2,7 +2,7 @@
 
 ## What are viewers?
 
-[Viewers](../user-documentation/glossary#viewer) allow site builders to display files in interactive JavaScript-based widgets, that provide functionality like zooming in/out, turning pages, playing/pausing, viewing in full screen, etc.
+[Viewers](glossary.md#viewer) allow site builders to display files in interactive JavaScript-based widgets, that provide functionality like zooming in/out, turning pages, playing/pausing, viewing in full screen, etc.
 
 In Drupal, a common way to implement a viewer is through a [module](glossary.md#module) that provides a Drupal field formatter that interfaces with the appropriate JavaScript library. The field formatter will work with specific types of Drupal fields (e.g. file fields or image fields, some may even provide their own fields). Some viewer modules in Islandora also provide a block, that can display appropriate files based on the context.
 

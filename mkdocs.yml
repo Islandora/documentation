@@ -99,6 +99,7 @@ nav:
   # Conceptual, all user roles: should contain high-level information about
   # what everybody needs to know to understand Islandora and interact with it
   # Possibly add page/section: How to use this documentation (containing user role definitions)
+  - Quickstart: 'installation/quickstart.md'
   - Concepts:
       - 'Nodes in Islandora': 'concepts/node-concepts.md'
       - 'Media in Islandora': 'concepts/node-media.md'
@@ -120,7 +121,7 @@ nav:
       # 'non-technical' user in mind who wants to test. The Manual installation
       # guides mention that users will need additional knowledge about server administration.
       - 'Release Notes':
-          - '8.x-2.0 Release Notes': 'release-notes/8.x-2.0.md'
+          - '8.x-2.0 Release Notes': 'release_notes/8.x-2.0.md'
           - 'Older Release Notes': 'https://github.com/Islandora/documentation/tree/main/docs/release_notes'
       - 'Install a Demo': 'installation/install-a-demo.md'
       - 'Docker':
@@ -139,8 +140,10 @@ nav:
               - 'Troubleshooting' : 'installation/docker/isle-dc/docker-troubleshooting.md'
           - 'ISLE Site Template':
               - 'Introduction to Site Template': 'installation/docker/site-template/site-template.md'
+              - 'Creating Your Site': 'installation/docker/site-template/setup.md'
               - 'Docker Modifications': 'installation/docker/site-template/docker-modifications.md'
               - 'Updating': 'installation/docker/site-template/updating.md'
+              - 'Back Up and Restore': 'installation/docker/site-template/backup.md'
           - 'Converting ISLE-DC to Site Template': 'installation/docker/converting.md'
       - 'Ansible Playbook': 'installation/playbook.md'
       - Manual Installation:

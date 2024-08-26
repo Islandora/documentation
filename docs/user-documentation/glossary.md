@@ -23,10 +23,10 @@ Also API; a connection between computers or between computer programs. It is a t
 Blazegraph is an open source triplestore and graph database. Islandora ships Blazegraph as part of the software stack. Metadata about [Resource nodes](#resource-node) is synchronized between the [Drupal](#drupal) database and Blazegraph. Data in the Blazegraph triple store can be queried using SPARQL.
 
 ## Bundle
-A bundle is the generic name for a sub-type of a [Content Entity](#content-entity) type in [Drupal](#drupal). To illustrate: Node and Taxonomy Term are both names of Content Entity types, and both have sub-types ("bundles"). The bundles of Node are called ["Content Types"](#content-types) and the bundles of [Taxonomy Term](#taxonomy-term) are called ["Vocabularies"](#vocabulary). Each bundle includes its own configurations of what [fields](#field) are present on the bundle and how they are entered and displayed. A bundle is thus part of the [configuration](#configuration) of your site. Some Content Entity Types, such as User, do not have bundles.
+A bundle is the generic name for a sub-type of a [Content Entity](#content-entity) type in [Drupal](#drupal). To illustrate: Node and Taxonomy Term are both names of Content Entity types, and both have sub-types ("bundles"). The bundles of Node are called ["Content Types"](#content-types) and the bundles of [Taxonomy Term](#taxonomy-term) are called ["Vocabularies"](#vocabulary). Each bundle includes its own configurations of what [fields](#field) are present on the bundle and how they are entered and displayed. A bundle is thus part of the [configuration](#configuration) of your site. Some fieldable Content Entity Types, such as User, do not have bundles.
 
 ## Cantaloupe
-[Cantaloupe](https://cantaloupe-project.github.io) is an image server written in Java. It implements the [IIIF](#iiif) Image API, which means it handles deep zooming of large images and other image manipulations. It is required to serve images to some [viewers](#viewers) such as [Mirador](#mirador) and [OpenSeadragon](#openseadragon).
+[Cantaloupe](https://cantaloupe-project.github.io) is an image server written in Java. It implements the [IIIF](#iiif) Image API, which means it handles deep zooming of large images and other image manipulations. It is required to serve images to some [viewers](#viewer) such as [Mirador](#mirador) and [OpenSeadragon](#openseadragon).
 
 ## Checksum
 Checksums are a sequence of numbers and letters to check data for errors. If you know the checksum of an original file, you can use a checksum utility to confirm your copy is identical. Checksums can be used to check the [Fixity](#fixity) of a file.
@@ -56,24 +56,24 @@ See also: [Content Entity](#content-entity)
 
 Contrast: [Configuration](#configuration)
 
-In [Drupal](#drupal), your content is the total set of things that have been created or uploaded "as content" in your website. This includes all [content entities](#content-entities) - the actual nodes, media, files, taxonomy terms, etc, but does not include anything that is [configuration](#configuration). Content can be exported and imported, but only between sites with exactly the same configuration.
+In [Drupal](#drupal), your content is the total set of things that have been created or uploaded "as content" in your website. This includes all [content entities](#content-entity) - the actual nodes, media, files, taxonomy terms, etc, but does not include anything that is [configuration](#configuration). Content can be exported and imported, but only between sites with exactly the same configuration.
 
-Sometimes, "Content" is used to refer to [Nodes](#nodes) but not other content entities. This is the case when creating a new [View](#view) and one of the options is to make a view of "Content".
+Sometimes, "Content" is used to refer to [Nodes](#node) but not other content entities. This is the case when creating a new [View](#view) and one of the options is to make a view of "Content".
 
 ## Content entity
 See also: [Content](#content)
 
 Contrast: [Configuration entity](#configuration-entity)
 
-In [Drupal](#drupal), content entities are the actual [nodes](#node), [media](#media), [taxonomy terms](#taxonomy-term), users, comments, and files that you've created on your site. For example, you may have 223 nodes, 534 media, 1000 taxonomy terms, 14 users, and 535 files in your site - those counts represent the numbers of content entities present in your site. "Node", "Media", "Taxonomy term" etc. are the high-level "types" of content entities. Some of these types have sub-types which are called [bundles](#bundles).
+In [Drupal](#drupal), content entities are the actual [nodes](#node), [media](#media), [taxonomy terms](#taxonomy-term), users, comments, and files that you've created on your site. For example, you may have 223 nodes, 534 media, 1000 taxonomy terms, 14 users, and 535 files in your site - those counts represent the numbers of content entities present in your site. "Node", "Media", "Taxonomy term" etc. are the high-level "types" of content entities. Some of these types have sub-types which are called [bundles](#bundle).
 
-Content entities should not be confused with [content types](#content-types), which are [bundles](#bundles) of [nodes](#nodes), and are part of a site's [configuration](#configuration).
+Content entities should not be confused with [content types](#content-type), which are [bundles](#bundle) of [nodes](#node), and are part of a site's [configuration](#configuration).
 
 ## Content model
 Deprecated concept used in Islandora Legacy; see [Islandora Model](#islandora-model).
 
 ## Content type
-A type of [Node](#node). Content types are the "[bundles](#bundle)" of Nodes, which are a type of [Content Entity](#content-entity in [Drupal](#drupal). A content type importantly defines a set of [fields](#field) and how they are displayed. While a content type describes a type of content entity, the information that makes up the content type itself is all part of your site's [configuration](#configuration).
+A type of [Node](#node). Content types are the "[bundles](#bundle)" of Nodes, which are a type of [Content Entity](#content-entity) in [Drupal](#drupal). A content type importantly defines a set of [fields](#field) and how they are displayed. While a content type describes a type of content entity, the information that makes up the content type itself is all part of your site's [configuration](#configuration).
 
 The standard Drupal Content types are 'Article' and 'Basic page'. _Islandora Starter Site_ adds 'Repository Item' as a Content type, defining metadata fields typically used to describe digital resources. You can easily create your own content types.
 
@@ -115,11 +115,45 @@ The Fedora repository functions as the standard _smart storage_ for Islandora.
 
 
 ## Field
-Data of a certain type that is attached to a content entity. For instance, on a Resource Node [content type](#content-type), you might have fields for a title, description, display hints, subjects, and other metadata.
+Data of a certain type that is attached to a content entity. A field is made up of [field storage](#field-storage) which inclues some low-level configuration that is shared across all [field instances](#field-instance), and a field instance, which configures how that field appears on a bundle. Fields also have field [widgets](#widget) that govern data entry, and [field formatters](#field-formatter) which control how the field is displayed to site visitors.
 
 ## Field instance
+A field, configured to show up on a [bundle](#bundle). It is possible to reuse fields on different bundles, and they share the same [field storage](#field-storage) but are different field instances and can have different configurations (such as field name, description, cardinality, required, etc).
+
+For example, the Repository Item Content type has a field instance for Alternative Title, with the following configuration:
+
+* Display name: Alternative Title
+* Help text: (blank)
+* Required: no
+* Translatable: yes
+* Field visibility and permissions: not set
+* Default value: none
+
+## Field formatter
+A field formatter configures how a [field instance](#field-instance) is displayed to site visitors. The formatters available depend on the [field type](#field-type). For example, an EDTF-type field can use the "Default EDTF Formatter", which can be configured (per field instance) to be big- or little-endian, and to show year, month, and day info in a variety of ways. Field Formatters are configured on the "Manage Display" tab of a bundle.
 
 ## Field type
+The type of a [field instance](#field-instance) or [field_storage](#field-storage). Drupal Core defines several field types and modules can define additional field types. The field type determines what [widgets](#widget) and [field formatters](#field-formatter) are available, as well as what configuration options are available in the field instance. Some commonly used field types in Islandora include:
+
+* Text (plain, long)
+    * Allows long text values
+    * Displays the input text
+* Text (formatted, long)
+    * Allows long text values
+    * If a format like “full_html” is set on the field, <p> will  be displayed as a paragraph break rather than <p>
+* Entity reference
+    * Populated by a link to another Drupal/Islandora entity
+    * Configurable behaviors include: what kind of entity can be linked to, how the data entry interface words (drop down menu or autocomplete), general patterns of how these references get displayed (show the referenced thing, show a link to the referenced thing, show unlinked name of the referenced thing). 
+* Typed relation
+    * An extended variation on Entity reference field type
+    * List of available relationship types (labeled “Available Relations”) can be configured per field instance. A code and a display value are recorded for each type (for example: relators:aut|Author). ‘relators’ acts as a linked data namespace. ‘aut’ is the code that, combined with the base namespace URI configured elsewhere, will create the linked data expression of what is recorded in this field ( this node hasAuthor taxonomyTermID )
+* EDTF
+    * Holds a string formatted according to the EDTF standard
+    * What kinds of EDTF features are allowed can be configured in the [widget](#widget) and how the date is presented to site visitors can be configured in the [field formatter](#field-formatter)
+
+
+## Field Storage
+Low-level configuration that determines how the field data is stored in the database. This often includes the maximum length of the data, and whether the field is single-valued or repeatable (though that can often be overridden at the field instance level). Compare: [field instance](#field-instance)
 
 ## FITS
 [File Information Tool Set](https://projects.iq.harvard.edu/fits), a set of software components for identifying, validating and extracting of technical metadata for a wide range of file formats.
@@ -132,6 +166,9 @@ Flysystem is a filesystem abstraction library for PHP. Islandora uses Flysystem 
 
 ## GLAM
 Acronym for "galleries, libraries, archives, and museums".
+
+## GUI
+Acronym for "Graphical User Interface". Often refers to taking actions through Drupal's administrative interface in a web browser as opposed to effecting the same changes through Drush or programmatically. 
 
 ## Greenfield
 An installation without legacy constraints. Usually refers to a brand new system where users load new content, as opposed to migrating content from a previous system.
@@ -176,6 +213,25 @@ The Islandora Starter Site is a way to install Drupal that provides a functional
 
 
 ## Islandora model
+
+"Islandora Models" is a taxonomy vocabulary that comes by default with Islandora. As of 2024-08-12, it includes the following terms:
+
+- Audio
+- Binary
+- Collection
+- Compound Object
+- Digital Document
+- Image
+- Newspaper
+- Page
+- Paged Content
+- Publication Issue
+- Video
+
+The Repository Item Content type (part of the Islandora Starter Site) has a “Model” field instance which is an Entity reference field configured to be populated by references to terms in this vocabulary. The “Model” field is one of only two required fields on the Repository Item in the default settings. 
+
+Contexts and other system code (such as themes) may use this field to control the display and behavior of different Repository Item types. 
+
 
 ## Islandora playbook
 A set of human-readable [YAML](#yaml) files, containing instructions for automatically configuring a server environment and installing the different components of the Islandora software stack. The instructions recorded in Playbook are executed by [Ansible](#ansible). The Islandora Playbook for Ansible is one of the installation methods currently supported by the Islandora community.
@@ -251,8 +307,11 @@ The term 'Resource node' is specific to Islandora. Typically, Resource nodes in 
 
 For example, a video stored in Islandora will have a Resource node, with metadata stored in [Fields](#field). Attached to the Resource node is a [Media](#media) entity, which encapsulates the preservation-grade file. The Resource node may be linked to further [Media](#media), for instance for a thumbnail, web-friendly derivative, and technical metadata associated with the resource node. The Resource node may also belong to one or more collections.
 
+## Source Field
+A Drupal term for the main file-[type](#field-type) [field](#field) on a [Media](#media). The names of these fields differ across Media Types, such as "Image" (`field_media_image`) on Image media, and "Video File" (`field_media_video_file`) on Video media. While it is possible to add other fields, including file fields, to a Media, the source field is the one configured during the creation of a Media Type. Islandora provides utility functions to get the source field from a Media ([MediaSourceService.php](https://github.com/Islandora/islandora/blob/2.x/src/MediaSource/MediaSourceService.php)).
+
 ## Taxonomy term
-A [Drupal](#drupal) [Content Entity](#content-entity) of the type 'taxonomy term'. Taxonomy terms belong to [vocabularies](#vocabularies) which define what [fields](#fields) are available and how they behave. Drupal generally uses [terms contained in taxonomies or vocabularies](#taxonomy-term) to classify content (tag or category). Taxonomy terms are used in Islandora to establish locally controlled vocabularies for describing resources, for instance for standardised spellings of names or subject terms.
+A [Drupal](#drupal) [Content Entity](#content-entity) of the type 'taxonomy term'. Taxonomy terms belong to [vocabularies](#vocabulary) which define what [fields](#field) are available and how they behave. Drupal generally uses [terms contained in taxonomies or vocabularies](#taxonomy-term) to classify content (tag or category). Taxonomy terms are used in Islandora to establish locally controlled vocabularies for describing resources, for instance for standardised spellings of names or subject terms.
 
 ## Tesseract
 [Tesseract](https://github.com/tesseract-ocr/tesseract) is an open-source OCR (Optical Character Recognition) software. It can perform OCR in multiple languages. It can produce OCR (plain text) and [hOCR](#hocr) (HTML, which includes positional data). In Islandora, Tesseract is provided by the [Crayfish](#crayfish) [Microservice](#microservice), [Hypercube](#hypercube).
@@ -268,7 +327,7 @@ Software and asset files (images, CSS, PHP code, and/or templates) that determin
 See [Views Bulk Operations](#views-bulk-operations).
 
 ## View
-Drupal Views let you query the database to generate lists of [content](#content-entity), and format them as lists, tables, slideshows, maps, [blocks](#blocks), and many more. The Views UI module, part of Drupal Core, provides a powerful administrator interface for creating and editing views without any code. There is a large ecosystem of extension modules for Views.
+Drupal Views let you query the database to generate lists of [content](#content-entity), and format them as lists, tables, slideshows, maps, blocks, and many more. The Views UI module, part of Drupal Core, provides a powerful administrator interface for creating and editing views without any code. There is a large ecosystem of extension modules for Views.
 
 Views power many of the Islandora features, including [viewers](#viewer), [IIIF Manifests](#iiif-manifest), and search.
 
@@ -298,3 +357,4 @@ A [Drupal](#drupal) configuration entity that holds [taxonomy terms](#taxonomy-t
 ---
 
 Some definitions adapted from [Wikipedia](https://en.wikipedia.org/) and [Drupal.org](https://www.drupal.org/docs/user_guide/en/glossary.html)
+

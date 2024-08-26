@@ -11,14 +11,14 @@
   - [Paging](#paging)
   - [Sorting](#sorting)
 - [Configure Facets](#configure-facets)
-  - [Include / Exclude Facets](#include--exclude-facets)
+  - [Include / Exclude Facets](#include-exclude-facets)
 - [Configure Blocks](#configure-blocks)
   - [Advanced Search Block](#advanced-search-block)
 
 
 ## Introduction
 
-Advanced Search adds additional functionality beyond the [basic Solr search](../user-documentation/searching.md). It enables the use
+Advanced Search adds additional functionality beyond the [basic Solr search](searching.md). It enables the use
 of Ajax with search blocks, facets, and search results.
 
 ![animated gif demonstrating advanced search in action](../assets/advanced_search_demo.gif)
@@ -58,7 +58,7 @@ You can set the following configuration at **Administration** >> **Configuration
 ## Configuring Solr
 
 Please review
-[Configure Search](../user-documentation/searching.md) before continuing. The following assumes you already have a working Solr and the
+[Configure Search](searching.md) before continuing. The following assumes you already have a working Solr and the
 Drupal Search API setup.
 
 ## Configure collection search

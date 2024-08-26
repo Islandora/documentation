@@ -33,7 +33,7 @@ However,
 
 - any field mappings that are not part of the Dublin Core namespace will be filtered out.
 - any field mappings using Dublin Core Terms (e.g. http://purl.org/dc/terms/extent) will be mapped to their Dublin Core Elements equivalents (e.g. http://purl.org/dc/elements/1.1/format)
-- the ability to vary the mappings in [Typed Relation](../../user-documentation/metadata#typed-relation) fields by relationship, used in JSON-LD mappings to Blazegraph and Fedora, is not available. If you want to expose data in a Typed Relation field to OAI-PMH, you must provide a DC mapping for that field in the RDF mapping. By default, the Repository Item RDF mapping does not include a mapping for the Contributors field (field_linked_agent).
+- the ability to vary the mappings in [Typed Relation](metadata.md#typed-relation) fields by relationship, used in JSON-LD mappings to Blazegraph and Fedora, is not available. If you want to expose data in a Typed Relation field to OAI-PMH, you must provide a DC mapping for that field in the RDF mapping. By default, the Repository Item RDF mapping does not include a mapping for the Contributors field (field_linked_agent).
 
 
 !!! tip "Field values not showing up in OAI-DC record?"
