@@ -3047,6 +3047,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#source-field" class="md-nav__link">
+    Source Field
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#taxonomy-term" class="md-nav__link">
     Taxonomy term
   </a>
@@ -3683,6 +3690,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#source-field" class="md-nav__link">
+    Source Field
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#taxonomy-term" class="md-nav__link">
     Taxonomy term
   </a>
@@ -4014,6 +4028,8 @@ See also: <a href="#resource-node">Resource Node</a></p>
 <p>A Resource node is a generic Islandora term for a <a href="#drupal">Drupal</a> <a href="#node">Node</a> that represents a single conceptual item or object stored in an Islandora repository. It acts as a stand-in for all files and metadata associated with that item, and is the place where the item 'lives' as a visitable URI.</p>
 <p>The term 'Resource node' is specific to Islandora. Typically, Resource nodes in an Islandora installation will use a specific <a href="#content-type">Content type</a> for the digital assets stored in the repository.</p>
 <p>For example, a video stored in Islandora will have a Resource node, with metadata stored in <a href="#field">Fields</a>. Attached to the Resource node is a <a href="#media">Media</a> entity, which encapsulates the preservation-grade file. The Resource node may be linked to further <a href="#media">Media</a>, for instance for a thumbnail, web-friendly derivative, and technical metadata associated with the resource node. The Resource node may also belong to one or more collections.</p>
+<h2 id="source-field">Source Field<a class="headerlink" href="#source-field" title="Permanent link">&para;</a></h2>
+<p>A Drupal term for the main file-<a href="#field-type">type</a> <a href="#field">field</a> on a <a href="#media">Media</a>. The names of these fields differ across Media Types, such as "Image" (<code>field_media_image</code>) on Image media, and "Video File" (<code>field_media_video_file</code>) on Video media. While it is possible to add other fields, including file fields, to a Media, the source field is the one configured during the creation of a Media Type. Islandora provides utility functions to get the source field from a Media (<a href="https://github.com/Islandora/islandora/blob/2.x/src/MediaSource/MediaSourceService.php">MediaSourceService.php</a>).</p>
 <h2 id="taxonomy-term">Taxonomy term<a class="headerlink" href="#taxonomy-term" title="Permanent link">&para;</a></h2>
 <p>A <a href="#drupal">Drupal</a> <a href="#content-entity">Content Entity</a> of the type 'taxonomy term'. Taxonomy terms belong to <a href="#vocabulary">vocabularies</a> which define what <a href="#field">fields</a> are available and how they behave. Drupal generally uses <a href="#taxonomy-term">terms contained in taxonomies or vocabularies</a> to classify content (tag or category). Taxonomy terms are used in Islandora to establish locally controlled vocabularies for describing resources, for instance for standardised spellings of names or subject terms.</p>
 <h2 id="tesseract">Tesseract<a class="headerlink" href="#tesseract" title="Permanent link">&para;</a></h2>
@@ -4050,7 +4066,7 @@ See also: <a href="#resource-node">Resource Node</a></p>
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">August 21, 2024</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">August 26, 2024</span>
       
     
   </small>
