@@ -1,6 +1,6 @@
 # Converting ISLE-DC to Site Template
 
-ISLE-DC is being deprecated in favour of using the Isle Site Template for Docker installs of Islandora. The following instructions explain how to convert your ISLE-DC site into the Site Template style of docker-compose.yml.
+The following instructions explain how to convert your ISLE-DC site into the Site Template style of docker-compose.yml.
 
 ## Development Instructions
 
