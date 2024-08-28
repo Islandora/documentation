@@ -3271,9 +3271,11 @@ This recipe provides instructions how to configure a shallow or deep search in a
 <ul>
 <li><a href="https://www.drupal.org/project/entity_reference_integrity">Entity Reference Integrity</a></li>
 <li><a href="https://github.com/discoverygarden/entity_reference_integrity_extra">Entity Reference Integrity Extras</a></li>
+<li><a href="https://www.drupal.org/project/entity_reference_purger">Entity Reference Purger</a></li>
 </ul>
-<p>Normally when deleting content (nodes, taxonomy terms, etc), any content that references the deleted entity isn't altered so you end up with orphan/zombie references, which are visible in the JSON representation but invisible otherwise. With Entity Reference Integrity's submodule (-Enforce), you won't be able to delete content that's referenced from elsewhere, preserving your database integrity.</p>
-<p>Because the Drupal module doesn't play with Typed Relation fields, DGI's -Extras module is useful. </p>
+<p>Normally when deleting content (nodes, taxonomy terms, etc), any content that references the deleted entity isn't altered so you end up with orphan/zombie references, which are visible in the JSON representation but invisible otherwise. With Entity Reference Integrity's submodule (<code>entity_reference_integrity_enforce</code>), you won't be able to delete content that's referenced from elsewhere, preserving your database integrity.</p>
+<p>Because the Drupal module doesn't play with Typed Relation fields, DGI's <code>entity_reference_integrity_extras</code> module is useful. </p>
+<p>Alternatively, Entity Reference Purger takes care of deleting the references on entity delete. Warning: it is unknown whether Entity Reference Purger respects whether the user has permission to edit the referencing entity/field. There are open issues that it does not work well with Workflow (see Content Mangagement Workflows below) or translation. The module is not covered by the security badge.</p>
 <h4 id="content-management-workflows">Content Management Workflows<a class="headerlink" href="#content-management-workflows" title="Permanent link">&para;</a></h4>
 <p><a href="https://www.drupal.org/project/content_moderation">Content moderation</a></p>
 <p>This module lets you set up workflows that "transition" content between "states", which may be published or unpublished. It also allows you to set revisions as mandatory (normally an editor can decide to make an edit without creating a revision, making it very hard to track for auditing).</p>
@@ -3320,7 +3322,7 @@ This recipe provides instructions how to configure a shallow or deep search in a
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">August 26, 2024</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">August 28, 2024</span>
       
     
   </small>
