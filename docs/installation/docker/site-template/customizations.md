@@ -33,3 +33,20 @@ Traefik allows you to modify security settings by doing things like setting a mi
 These files are mounted as volumes in the Traefik containers, so you can modify them as desired.
 
 More information is available in the [Traefik documentation](https://doc.traefik.io/traefik/https/tls/#tls-options)
+
+### Hiding Fedora from the public
+
+By default, your Fedora repository will be exposed to the public at fcrepo.${DOMAIN}. If you don't want the public to be able to access your repository you can add the `traefik-disable` label to the fcrepo-prod service in your docker-compose.yml.
+
+```
+         labels:
+            <<: [*traefik-disable, *fcrepo-labels]
+```
+
+If you do this, you can remove the fcrepo URL from your DNS records.
+
+### Exposing ActiveMQ, Blazegraph, and Solr
+
+By default, these services are hidden by Traefik. If you want to allow access to them, you need to remove the `traefik-disable` label from your docker-compose.yml.
+
+You will also need to add their URL to your DNS record. The URLs are defined in the docker-compose.yml, and by default will be activemq.{DOMAIN}, blazegraph.{DOMAIN}, and solr.{DOMAIN}
