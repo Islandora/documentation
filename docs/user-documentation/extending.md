@@ -66,7 +66,7 @@ A module that informs users who attempt to view deleted content that the resourc
 
 [Views Slideshow](https://www.drupal.org/project/views_slideshow)
 
-Views Slideshow can be used to create a slideshow of any content (not just images) that can appear in a View. Powered by jQuery, it is heavily customizable: you may choose slideshow settings for each View you create. It can be used to create an easy, adjustable slideshow of images from an Islandora repository. Views Slideshow can be seen in action with Islandora objects on the front page [here](http://future.islandora.ca/)
+Views Slideshow can be used to create a slideshow of any content (not just images) that can appear in a View. Powered by jQuery, it is heavily customizable: you may choose slideshow settings for each View you create. It can be used to create an easy, adjustable slideshow of images from an Islandora repository.
 
 #### CSV File Formatter
 
