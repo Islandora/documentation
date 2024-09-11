@@ -39,20 +39,6 @@ The process for setting up a staging site is the same as production, but you wil
 !!! note "Restricting Access to Staging Servers"
 
     Using letsencrypt to generate your certs requires port 80 to be accessible on your server. If you would like to keep your site private by limiting access to certain IP addresses, you can still firewall port 443, but you will have to leave port 80 open. If you need to firewall port 80 as well, you will have to either use your own certs or look into another method of generating certs.
-    
-## Adding Demo Content
-
-If you are spinning up a new site for testing, you can add some demo content to your site by running
-```
-[ -d "islandora_workbench" ] || (git clone https://github.com/mjordan/islandora_workbench)
-cd islandora_workbench ; cd islandora_demo_objects || git clone https://github.com/Islandora-Devops/islandora_demo_objects.git
-$(SED_DASH_I) 's#^host.*#host: $(SITE)/#g' islandora_workbench/islandora_demo_objects/create_islandora_objects.yml
-$(SED_DASH_I) 's/^password.*/password: "$(shell cat secrets/DRUPAL_DEFAULT_ACCOUNT_PASSWORD | sed s#/#\\\\\\\\/#g)"/g' islandora_workbench/islandora_demo_objects/create_islandora_objects.yml
-cd islandora_workbench && docker build -t workbench-docker .
-cd islandora_workbench && docker run -it --rm --network="host" -v $(QUOTED_CURDIR)/islandora_workbench:/workbench --name my-running-workbench workbench-docker bash -lc "./workbench --config /workbench/islandora_demo_objects/create_islandora_objects.yml"
-`docker compose exec -T drupal-dev with-contenv bash -lc 'drush --root /var/www/drupal/web -l ${DRUPAL_DEFAULT_SITE_URL} search-api-reindex'
-docker compose exec -T drupal-dev with-contenv bash -lc 'drush --root /var/www/drupal/web -l ${DRUPAL_DEFAULT_SITE_URL} search-api-index'
-```
 
 ## Custom Themes & Modules
 
