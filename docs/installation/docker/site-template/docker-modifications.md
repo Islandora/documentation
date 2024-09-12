@@ -46,3 +46,24 @@ If you are removing a container which is referenced by Drupal, ensure that you u
 
 After doing `docker compose down`, run `docker compose up -d --remove-orphans` to remove the containers you removed from the docker-compose.yml file. 
 
+## Hiding Fedora From the Public
+
+By default, your Fedora repo will be available to the public at `fcrepo.${DOMAIN}`. If you do not want to expose your Fedora, you can stop this URL from working by disabling it via Traefik in your `docker-compose.yml`. To do this, you need to add the `traefik-disable` label to fcrepo-prod like this,
+
+```
+    fcrepo-prod:
+        <<: [*prod, *fcrepo]
+        environment:
+            <<: [*fcrepo-environment]
+            FCREPO_ALLOW_EXTERNAL_DRUPAL: "https://${DOMAIN}/"
+        labels:
+            <<: [*traefik-disable, *fcrepo-labels]
+```
+
+If you have done this, you can also remove the DNS records that point this URL to your prodcution server.
+
+Finally, you will have to change the URL that Drupal uses to access the Fedora repo. This can be found in your `docker-compose.ym'` in the `environment` section for `drupal-prod`, and should be changed to:
+
+```
+DRUPAL_DEFAULT_FCREPO_URL: "http://fcrepo:8080/fcrepo/rest/"
+```
