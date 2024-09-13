@@ -40,6 +40,27 @@ The process for setting up a staging site is the same as production, but you wil
 
     Using letsencrypt to generate your certs requires port 80 to be accessible on your server. If you would like to keep your site private by limiting access to certain IP addresses, you can still firewall port 443, but you will have to leave port 80 open. If you need to firewall port 80 as well, you will have to either use your own certs or look into another method of generating certs.
 
+## Adding Demo Content
+
+If you are spinning up a new site for testing, you can add some demo content to your site by running
+```
+[ -d "islandora_workbench" ] || (git clone https://github.com/mjordan/islandora_workbench)
+
+[ -d "islandora_workbench/islandora_demo_objects" ] || git clone https://github.com/Islandora-Devops/islandora_demo_objects.git islandora_workbench/islandora_demo_objects
+
+cd islandora_workbench && docker build --build-arg USER_ID=$(id -u) --build-arg GROUP_ID=$(id -g) -t workbench-docker .; cd ..
+
+perl -i -pe 's#^host.*#host: "https://islandora.dev"#g' islandora_workbench/islandora_demo_objects/create_islandora_objects.yml
+
+perl -i -pe 's#^input_dir.*#input_dir: "islandora_demo_objects"#g' islandora_workbench/islandora_demo_objects/create_islandora_objects.yml
+
+perl -i -pe 's#^input_csv.*#input_csv: "create_islandora_objects.csv"#g' islandora_workbench/islandora_demo_objects/create_islandora_objects.yml
+
+grep secure_ssl_only islandora_workbench/islandora_demo_objects/create_islandora_objects.yml || echo 'secure_ssl_only: false' >> islandora_workbench/islandora_demo_objects/create_islandora_objects.yml
+
+cd islandora_workbench && docker run -it --rm --network="host" -v .:/workbench --name my-running-workbench workbench-docker bash -lc "./workbench --config islandora_demo_objects/create_islandora_objects.yml"; cd ..
+```
+
 ## Custom Themes & Modules
 
 You may wish to copy themes and modules into your project directly, instead of using Composer to manage them. For example, if you are creating your own theme instead of using a contributed one.
