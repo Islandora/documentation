@@ -907,6 +907,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#adding-demo-content" class="md-nav__link">
+    Adding Demo Content
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#custom-themes-modules" class="md-nav__link">
     Custom Themes &amp; Modules
   </a>
@@ -2627,6 +2634,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#adding-demo-content" class="md-nav__link">
+    Adding Demo Content
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#custom-themes-modules" class="md-nav__link">
     Custom Themes &amp; Modules
   </a>
@@ -2687,6 +2701,24 @@
 <p class="admonition-title">Restricting Access to Staging Servers</p>
 <p>Using letsencrypt to generate your certs requires port 80 to be accessible on your server. If you would like to keep your site private by limiting access to certain IP addresses, you can still firewall port 443, but you will have to leave port 80 open. If you need to firewall port 80 as well, you will have to either use your own certs or look into another method of generating certs.</p>
 </div>
+<h2 id="adding-demo-content">Adding Demo Content<a class="headerlink" href="#adding-demo-content" title="Permanent link">&para;</a></h2>
+<p>If you are spinning up a new site for testing, you can add some demo content to your site by running
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>[ -d &quot;islandora_workbench&quot; ] || (git clone https://github.com/mjordan/islandora_workbench)
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>[ -d &quot;islandora_workbench/islandora_demo_objects&quot; ] || git clone https://github.com/Islandora-Devops/islandora_demo_objects.git islandora_workbench/islandora_demo_objects
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>cd islandora_workbench &amp;&amp; docker build --build-arg USER_ID=$(id -u) --build-arg GROUP_ID=$(id -g) -t workbench-docker .; cd ..
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>perl -i -pe &#39;s#^host.*#host: &quot;https://islandora.dev&quot;#g&#39; islandora_workbench/islandora_demo_objects/create_islandora_objects.yml
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>perl -i -pe &#39;s#^input_dir.*#input_dir: &quot;islandora_demo_objects&quot;#g&#39; islandora_workbench/islandora_demo_objects/create_islandora_objects.yml
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>perl -i -pe &#39;s#^input_csv.*#input_csv: &quot;create_islandora_objects.csv&quot;#g&#39; islandora_workbench/islandora_demo_objects/create_islandora_objects.yml
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>grep secure_ssl_only islandora_workbench/islandora_demo_objects/create_islandora_objects.yml || echo &#39;secure_ssl_only: false&#39; &gt;&gt; islandora_workbench/islandora_demo_objects/create_islandora_objects.yml
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>cd islandora_workbench &amp;&amp; docker run -it --rm --network=&quot;host&quot; -v .:/workbench --name my-running-workbench workbench-docker bash -lc &quot;./workbench --config islandora_demo_objects/create_islandora_objects.yml&quot;; cd ..
+</span></code></pre></div></p>
 <h2 id="custom-themes-modules">Custom Themes &amp; Modules<a class="headerlink" href="#custom-themes-modules" title="Permanent link">&para;</a></h2>
 <p>You may wish to copy themes and modules into your project directly, instead of using Composer to manage them. For example, if you are creating your own theme instead of using a contributed one.</p>
 <p>Isle Site Template provides directories at <code>drupal/rootfs/var/www/drupal/web/modules/custom</code> and <code>drupal/rootfs/var/www/drupal/web/themes/custom</code> for you to add your custom themes and modules.</p>
@@ -2698,7 +2730,7 @@
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">September 11, 2024</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">September 13, 2024</span>
       
     
   </small>
