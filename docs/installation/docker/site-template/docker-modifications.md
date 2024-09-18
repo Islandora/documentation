@@ -64,6 +64,6 @@ If you have done this, you can also remove the DNS records that point this URL t
 
 Finally, you will have to change the URL that Drupal uses to access the Fedora repo. This can be found in your `docker-compose.yml'` in the `environment` section for `drupal-prod`, and should be changed to:
 
-```
+```yaml
 DRUPAL_DEFAULT_FCREPO_URL: "http://fcrepo:8080/fcrepo/rest/"
 ```
