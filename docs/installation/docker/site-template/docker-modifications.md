@@ -62,7 +62,7 @@ By default, your Fedora repo will be available to the public at `fcrepo.${DOMAIN
 
 If you have done this, you can also remove the DNS records that point this URL to your production server.
 
-Finally, you will have to change the URL that Drupal uses to access the Fedora repo. This can be found in your `docker-compose.yml'` in the `environment` section for `drupal-prod`, and should be changed to:
+Finally, you will have to change the URL that Drupal uses to access the Fedora repo. This can be found in your `docker-compose.yml` in the `environment` section for `drupal-prod`, and should be changed to:
 
 ```yaml
 DRUPAL_DEFAULT_FCREPO_URL: "http://fcrepo:8080/fcrepo/rest/"
