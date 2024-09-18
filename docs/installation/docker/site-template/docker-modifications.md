@@ -50,7 +50,7 @@ After doing `docker compose down`, run `docker compose up -d --remove-orphans` t
 
 By default, your Fedora repo will be available to the public at `fcrepo.${DOMAIN}`. If you do not want to expose your Fedora, you can stop this URL from working by disabling it via Traefik in your `docker-compose.yml`. To do this, you need to add the `traefik-disable` label to `fcrepo-prod` like this,
 
-```
+```yaml
     fcrepo-prod:
         <<: [*prod, *fcrepo]
         environment:
