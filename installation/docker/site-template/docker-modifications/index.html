@@ -920,6 +920,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#hiding-fedora-from-the-public" class="md-nav__link">
+    Hiding Fedora From the Public
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2619,6 +2626,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#hiding-fedora-from-the-public" class="md-nav__link">
+    Hiding Fedora From the Public
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2677,13 +2691,27 @@
 <p>Depending on the container you are removing, you may need to delete references to it as well. For example, some containers are referenced by others in the <code>depends_on</code> field. You will need to also delete these references, so if you delete the <code>fedora-dev</code> service, you will need to remove the rule that <code>traefik-dev</code> depends on it.</p>
 <p>If you are removing a container which is referenced by Drupal, ensure that you update Drupal as well (e.g. if removing Fedora, ensure your Media's files are not writing to the Fedora filesystem).</p>
 <p>After doing <code>docker compose down</code>, run <code>docker compose up -d --remove-orphans</code> to remove the containers you removed from the docker-compose.yml file. </p>
+<h2 id="hiding-fedora-from-the-public">Hiding Fedora From the Public<a class="headerlink" href="#hiding-fedora-from-the-public" title="Permanent link">&para;</a></h2>
+<p>By default, your Fedora repo will be available to the public at <code>fcrepo.${DOMAIN}</code>. If you do not want to expose your Fedora, you can stop this URL from working by disabling it via Traefik in your <code>docker-compose.yml</code>. To do this, you need to add the <code>traefik-disable</code> label to <code>fcrepo-prod</code> like this,</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="w">    </span><span class="nt">fcrepo-prod</span><span class="p">:</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">        </span><span class="nt">&lt;&lt;</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">*prod</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">*fcrepo</span><span class="p p-Indicator">]</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">        </span><span class="nt">environment</span><span class="p">:</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">            </span><span class="nt">&lt;&lt;</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">*fcrepo-environment</span><span class="p p-Indicator">]</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">            </span><span class="nt">FCREPO_ALLOW_EXTERNAL_DRUPAL</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;https://${DOMAIN}/&quot;</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">        </span><span class="nt">labels</span><span class="p">:</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">            </span><span class="nt">&lt;&lt;</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">*traefik-disable</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">*fcrepo-labels</span><span class="p p-Indicator">]</span>
+</span></code></pre></div>
+<p>If you have done this, you can also remove the DNS records that point this URL to your production server.</p>
+<p>Finally, you will have to change the URL that Drupal uses to access the Fedora repo. This can be found in your <code>docker-compose.yml</code> in the <code>environment</code> section for <code>drupal-prod</code>, and should be changed to:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">DRUPAL_DEFAULT_FCREPO_URL</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;http://fcrepo:8080/fcrepo/rest/&quot;</span>
+</span></code></pre></div>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">September 13, 2024</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">September 25, 2024</span>
       
     
   </small>
