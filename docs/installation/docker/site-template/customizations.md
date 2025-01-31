@@ -10,15 +10,24 @@ TODO
 
 TODO
 
-## Nginx customizations
+## Blocking Connections
 
 ### Blocking IP Addresses
 
-TODO
+#### iptables
+
+If your server uses iptables, you can block a range of IP addresses using the following command
+
+`iptables -I DOCKER-USER -s XXX.XXX.XXX.0/24 -j DROP`
 
 ### Blocking by User Agent
 
-TODO
+You can modify how nginx handles certain user agents by modifying `/etc/nginx/shared/drupal.defaults.conf` inside your Drupal container. For example, by adding:
+```
+if ($http_user_agent ~ (Bytespider|ClaudeBot|Sogou|SemrushBot|AcademicBotRTU|PetalBot|GPTBot|DataForSeoBot|test-bot) ) {
+    return 403;
+}
+```
 
 ## Traefik customizations
 
