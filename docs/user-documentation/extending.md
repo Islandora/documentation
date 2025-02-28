@@ -200,6 +200,14 @@ The Content Feedback module allows users and visitors to quickly send feedback m
 
 A tool for automatically submitting the contents of your site to Archive.org. The Wayback Submit module will submit all node types on schedule, according to criteria set by the site admin (only certain node types, only certain views, etc).
 
+#### Implementing Cloudflare Turnstile
+
+[Turnstile](https://www.cloudflare.com/application-services/products/turnstile/)
+
+Turnstile provides an alternative to Captchas for filtering out bot traffic.
+
+Turnstile can be implemented via a [Drupal module](https://www.drupal.org/project/turnstile_protect) or, for sites using Docker, as a [Traefik plugin](https://github.com/libops/captcha-protect).
+
 ## Other resources
 
 - [Drupal Contributed Modules](https://www.drupal.org/docs/8/modules)
