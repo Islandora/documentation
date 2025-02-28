@@ -31,14 +31,40 @@ This documentation assumes you will be building your production image on the pro
 
 ## Adding a Staging Site
 
-The process for setting up a staging site is the same as production, but you will need to change the `DOMAIN` variable in your `.env` file on your staging server, to contain the URL for your staging site.
+The process for setting up a staging site is the same as production, but you will need to use a different URL. Since the URL is set in the .env file, which is checked into your git repository, you may wish to use docker-compose.override.yml for this. In docker-compose.override.yml you will need to override anywhere the `DOMAIN` variable is used, for example:
 
-!!! Note
-    By default, the `.env` file is stored in the git repository for your site, which means there is only support for one URL. If you are adding a staging site, you may wish to modify this so that you do not accidentally push your staging URL to your git repository.
+```
+services:
+    cantaloupe-prod:
+        labels:
+            traefik.http.routers.cantaloupe_http.rule: &traefik-host-cantaloupe-prod Host(`staging-url.com`) && PathPrefix(`/cantaloupe`)
+            traefik.http.routers.cantaloupe_https.rule: *traefik-host-cantaloupe-prod
+    drupal-prod:
+        environment:
+            DRUPAL_DEFAULT_CANTALOUPE_URL: "https://staging-url.com/cantaloupe/iiif/2"
+            DRUPAL_DEFAULT_SITE_URL: "staging-url.com"
+            DRUPAL_DRUSH_URI: "https://staging-url.com"
+        labels:
+            traefik.http.routers.drupal_http.rule: &traefik-host-drupal-prod Host(`staging-url.com`)
+            traefik.http.routers.drupal_https.rule: *traefik-host-drupal-prod
+    fcrepo-prod:
+        environment:
+            FCREPO_ALLOW_EXTERNAL_DRUPAL: "https://staging-url.com"
+        labels:
+            traefik.http.routers.fcrepo_http.rule: &traefik-host-fcrepo-prod Host(`fcrepo.staging-url.com`)
+            traefik.http.routers.fcrepo_https.rule: *traefik-host-fcrepo-prod
+    traefik-prod:
+        networks:
+            default:
+                aliases:
+                    # Allow services to connect on the same name/port as the outside.
+                    - "staging-url.com" # Drupal is at the root domain.
+                    - "fcrepo.staging-url.com"
+```
 
 !!! note "Restricting Access to Staging Servers"
 
-    Using letsencrypt to generate your certs requires port 80 to be accessible on your server. If you would like to keep your site private by limiting access to certain IP addresses, you can still firewall port 443, but you will have to leave port 80 open. If you need to firewall port 80 as well, you will have to either use your own certs or look into another method of generating certs.
+    Using letsencrypt to generate your certs requires port 80 to be accessible on your server. If you would like to keep your site private by limiting access to certain IP addresses, you can still firewall port 443, but you will have to leave port 80 open. Alternatively, you can use [Traefik's IPAllowList middleware](https://doc.traefik.io/traefik/middlewares/http/ipallowlist/) to restrict access to outisde IPs.
 
 ## Adding Demo Content
 
