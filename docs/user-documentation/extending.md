@@ -200,6 +200,16 @@ The Content Feedback module allows users and visitors to quickly send feedback m
 
 A tool for automatically submitting the contents of your site to Archive.org. The Wayback Submit module will submit all node types on schedule, according to criteria set by the site admin (only certain node types, only certain views, etc).
 
+#### Adding anti-bot protection to your site
+
+[Turnstile](https://www.cloudflare.com/application-services/products/turnstile/)
+
+Turnstile provides an alternative to Captchas for filtering out bot traffic.
+
+For sites using ISLE Docker, a traefik plugin -- [captcha-protect](https://github.com/libops/captcha-protect) -- can be added to your drupal service. The plugin supports adding turnstile, recaptcha, or hcaptcha to your site to filter out bad bot traffic.
+
+If you're not using Docker/traefik, Turnstile can be added for anti-bot protection via a Drupal module [drupal/turnstile_protect](https://www.drupal.org/project/turnstile_protect)
+
 ## Other resources
 
 - [Drupal Contributed Modules](https://www.drupal.org/docs/8/modules)
