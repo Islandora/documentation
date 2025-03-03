@@ -2110,6 +2110,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#adding-anti-bot-protection-to-your-site" class="md-nav__link">
+    Adding anti-bot protection to your site
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -3156,6 +3163,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#adding-anti-bot-protection-to-your-site" class="md-nav__link">
+    Adding anti-bot protection to your site
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -3311,6 +3325,11 @@ This recipe provides instructions how to configure a shallow or deep search in a
 <h4 id="sending-your-content-to-archiveorg">Sending your content to Archive.org<a class="headerlink" href="#sending-your-content-to-archiveorg" title="Permanent link">&para;</a></h4>
 <p><a href="https://www.drupal.org/project/wayback_submit_archive">Wayback Submit to Archive.org</a></p>
 <p>A tool for automatically submitting the contents of your site to Archive.org. The Wayback Submit module will submit all node types on schedule, according to criteria set by the site admin (only certain node types, only certain views, etc).</p>
+<h4 id="adding-anti-bot-protection-to-your-site">Adding anti-bot protection to your site<a class="headerlink" href="#adding-anti-bot-protection-to-your-site" title="Permanent link">&para;</a></h4>
+<p><a href="https://www.cloudflare.com/application-services/products/turnstile/">Turnstile</a></p>
+<p>Turnstile provides an alternative to Captchas for filtering out bot traffic.</p>
+<p>For sites using ISLE Docker, a traefik plugin -- <a href="https://github.com/libops/captcha-protect">captcha-protect</a> -- can be added to your drupal service. The plugin supports adding turnstile, recaptcha, or hcaptcha to your site to filter out bad bot traffic.</p>
+<p>If you're not using Docker/traefik, Turnstile can be added for anti-bot protection via a Drupal module <a href="https://www.drupal.org/project/turnstile_protect">drupal/turnstile_protect</a></p>
 <h2 id="other-resources">Other resources<a class="headerlink" href="#other-resources" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="https://www.drupal.org/docs/8/modules">Drupal Contributed Modules</a></li>
@@ -3322,7 +3341,7 @@ This recipe provides instructions how to configure a shallow or deep search in a
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">September 25, 2024</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">March 3, 2025</span>
       
     
   </small>
