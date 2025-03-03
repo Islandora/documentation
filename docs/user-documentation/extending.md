@@ -200,7 +200,7 @@ The Content Feedback module allows users and visitors to quickly send feedback m
 
 A tool for automatically submitting the contents of your site to Archive.org. The Wayback Submit module will submit all node types on schedule, according to criteria set by the site admin (only certain node types, only certain views, etc).
 
-#### Implementing Cloudflare Turnstile
+#### Adding anti-bot protection to your site
 
 [Turnstile](https://www.cloudflare.com/application-services/products/turnstile/)
 
