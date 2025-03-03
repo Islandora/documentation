@@ -206,7 +206,9 @@ A tool for automatically submitting the contents of your site to Archive.org. Th
 
 Turnstile provides an alternative to Captchas for filtering out bot traffic.
 
-Turnstile can be implemented via a [Drupal module](https://www.drupal.org/project/turnstile_protect) or, for sites using Docker, as a [Traefik plugin](https://github.com/libops/captcha-protect).
+For sites using ISLE Docker, a traefik plugin -- [captcha-protect](https://github.com/libops/captcha-protect) -- can be added to your drupal service. The plugin supports adding turnstile, recaptcha, or hcaptcha to your site to filter out bad bot traffic.
+
+If you're not using Docker/traefik, Turnstile can be added for anti-bot protection via a Drupal module [drupal/turnstile_protect](https://www.drupal.org/project/turnstile_protect)
 
 ## Other resources
 
