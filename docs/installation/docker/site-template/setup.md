@@ -64,7 +64,7 @@ services:
 
 !!! note "Restricting Access to Staging Servers"
 
-    Using letsencrypt to generate your certs requires port 80 to be accessible on your server. If you would like to keep your site private by limiting access to certain IP addresses, you can still firewall port 443, but you will have to leave port 80 open. Alternatively, you can use [Traefik's IPAllowList middleware](https://doc.traefik.io/traefik/middlewares/http/ipallowlist/) to restrict access to outisde IPs.
+    Using letsencrypt to generate your certs requires port 80 to be accessible on your server. If you would like to keep your site private by limiting access to certain IP addresses, you can still firewall port 443, but you will have to leave port 80 open. Alternatively, you can use [Traefik's IPAllowList middleware](https://doc.traefik.io/traefik/middlewares/http/ipallowlist/) to restrict access to outside IPs.
 
 ## Adding Demo Content
 
