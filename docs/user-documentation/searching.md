@@ -63,8 +63,7 @@ requirements for sorting and faceting:
 There is a way to include a custom "edtf year" field containing the facets-friendly year (or year ranges) from one or more EDTF fields. This must first be enabled by checking "EDTF Year" under the Processors tab, then can be added on the Field tab (it'll be called "EDTF Creation Date Year (edtf_year)"), and finally can be configured as a facet. See "How should this be tested" on [this pull request](https://github.com/Islandora/controlled_access_terms/pull/68) for instructions on setting it up.
 
 2) Using the **EDTF Date Processor** for Full Date Indexing:
-This allows full date indexing, supporting partial and multiple dates in Solr’s native `DatePoint` format, enabling accurate sorting and filtering.  
-To use this: enable "EDTF Date Processor" under the Processors tab, configure the processor settings and in the Fields tab, add the "EDTF Dates (edtf_dates)" field. See "How should
+This allows full date indexing, supporting partial and multiple dates in Solr’s native `DatePoint` format, enabling accurate sorting and filtering. To use this: enable "EDTF Date Processor" under the Processors tab, configure the processor settings and in the Fields tab, add the "EDTF Dates (edtf_dates)" field. See "How should
 this be tested?" on [this pull request](https://github.com/Islandora/controlled_access_terms/pull/141) for instructions on setting it up.
 
 ## Searching Islandora
