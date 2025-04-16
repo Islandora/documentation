@@ -2799,7 +2799,12 @@
 <h4 id="processors-tab">Processors Tab<a class="headerlink" href="#processors-tab" title="Permanent link">&para;</a></h4>
 <p>The <em>Processors</em> tab allows repository managers to adjust how data and search queries are processed to adjust results. The defaults are acceptable in most cases.</p>
 <h2 id="indexing-edtf-dates">Indexing EDTF Dates<a class="headerlink" href="#indexing-edtf-dates" title="Permanent link">&para;</a></h2>
-<p>EDTF date fields can only be successfully indexed directly as strings. However, there is a way to include a custom "edtf year" field containing the facets-friendly year (or year ranges) from one or more EDTF fields. This must first be enabled by checking "EDTF Year" under the Processors tab, then can be added on the Field tab (it'll be called "EDTF Creation Date Year (edtf_year)"), and finally can be configured as a facet. See "How should this be tested" on <a href="https://github.com/Islandora/controlled_access_terms/pull/68">this pull request</a> for instructions on setting it up.</p>
+<p>EDTF date fields can be indexed in Solr in two primary ways, depending on your 
+requirements for sorting and faceting:</p>
+<p>1) <strong>EDTF Year Processor</strong>:
+There is a way to include a custom "edtf year" field containing the facets-friendly year (or year ranges) from one or more EDTF fields. This must first be enabled by checking "EDTF Year" under the Processors tab, then can be added on the Field tab (it'll be called "EDTF Creation Date Year (edtf_year)"), and finally can be configured as a facet. See "How should this be tested" on <a href="https://github.com/Islandora/controlled_access_terms/pull/68">this pull request</a> for instructions on setting it up.</p>
+<p>2) Using the <strong>EDTF Date Processor</strong> for Full Date Indexing:
+This allows full date indexing, supporting partial and multiple dates in Solr’s native <code>DatePoint</code> format, enabling accurate sorting and filtering. To use this: enable "EDTF Date Processor" under the Processors tab, configure the processor settings and in the Fields tab, add the "EDTF Dates (edtf_dates)" field. See "How should this be tested?" on <a href="https://github.com/Islandora/controlled_access_terms/pull/141">this pull request</a> for instructions on setting it up.</p>
 <h2 id="searching-islandora">Searching Islandora<a class="headerlink" href="#searching-islandora" title="Permanent link">&para;</a></h2>
 <p>Searching using Search API in Drupal is done using Drupal Views. The Islandora Starter Site comes with a search page pre-configured (accessible at '/solr-search/content'). To edit the search page, navigate to '/admin/structure/views/view/solr_search_content'.</p>
 <p>Repository managers may want to change the URL used to access the page, add it to the site navigation, or add a search box. In the 'Page Settings' box in the middle of the page, click on the existing path to open a shadow-box with an edit field. Change the URL as desired, for example, to 'search' and click <strong>Apply</strong>. Then, click the <strong>No menu</strong> link just below it to open the menu settings shadow-box. Selecting 'Normal menu entry' will allow a repository manager to add a menu link text, description, and place it within the site menu tree (the default, <code>&lt;Main navigation&gt;</code> works for most sites). A search box can be added by expanding the <em>Advanced</em> options and changing the <em>Exposed form in block</em> setting and then use the <em>Block Layout</em> interface (found at '/admin/structure/block') to place the block where desired. After making changes to the View's settings, click the <strong>Save</strong> button to ensure the changes are not lost.</p>
@@ -2815,7 +2820,7 @@
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">April 9, 2025</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">April 16, 2025</span>
       
     
   </small>
