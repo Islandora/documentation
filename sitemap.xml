@@ -101,11 +101,6 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://islandora.github.io/documentation/installation/install-a-demo/</loc>
-         <lastmod>2025-05-28</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
          <loc>https://islandora.github.io/documentation/installation/playbook/</loc>
          <lastmod>2025-05-28</lastmod>
          <changefreq>daily</changefreq>
