@@ -2486,6 +2486,40 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#updating-configuration" class="md-nav__link">
+    Updating Configuration
+  </a>
+  
+    <nav class="md-nav" aria-label="Updating Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#with-configuration-importexport" class="md-nav__link">
+    With Configuration Import/Export
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#with-devels-config-editor" class="md-nav__link">
+    With Devel's Config Editor
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#with-drush" class="md-nav__link">
+    With Drush
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2791,6 +2825,40 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#updating-configuration" class="md-nav__link">
+    Updating Configuration
+  </a>
+  
+    <nav class="md-nav" aria-label="Updating Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#with-configuration-importexport" class="md-nav__link">
+    With Configuration Import/Export
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#with-devels-config-editor" class="md-nav__link">
+    With Devel's Config Editor
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#with-drush" class="md-nav__link">
+    With Drush
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2830,6 +2898,19 @@ a <code>composer update</code>.</p>
 <p>For those who are comfortable cloning code onto a development environment, refer to
 <a href="#installing-git-repositories-with-composer">Installing Git repositories with Composer</a>.</p>
 </div>
+<div class="admonition warning changes to configuration">
+<p class="admonition-title">Warning</p>
+<p>If the change that you're testing involves a change to default config 
+that's shipped with a module, and the change does not update it during 
+an update hook, then you will need to load the applicable config
+separately. See "Updating configuration", below.</p>
+</div>
+<div class="admonition note file ownership">
+<p class="admonition-title">Note</p>
+<p>If possible, run the following commands as the user who owns the Drupal filesystem files.
+This may be <code>nginx</code> or <code>www-data</code> but is probably not <code>root</code>. If you're not able to, run 
+<code>chown -R [owning user] [affected files]</code> afterwards to reset the file ownership.</p>
+</div>
 <h2 id="applying-a-patch-using-composer-patches">Applying a Patch using Composer Patches<a class="headerlink" href="#applying-a-patch-using-composer-patches" title="Permanent link">&para;</a></h2>
 <p>This method is best for testing pull requests, because it's very easy to get a
 patch from a pull request. If the desired code is not the subject of a
@@ -2853,7 +2934,8 @@ update your <code>composer.json</code> file.</p>
   Example: <code>Updated config format https://github.com/Islandora/controlled_access_terms/issues/117</code></li>
 <li><code>MY_PATCH_LOCATION</code>: Where to access the patch. See below.</li>
 </ul>
-<p>To get the URL of a patch for a PR, go to the PR's main URL, and append
+<p>The patch can be entered in composer.json as either a URL or as a reference
+to a local file. To get the URL of a patch for a PR, go to the PR's main URL, and append
 <code>.patch</code> to the URL. Make sure that your URL ends with <code>pull/XX.patch</code>
 and not <code>pull/XX/files.patch</code> - the latter will not work.</p>
 <p>If you don't have a PR, you could create a patch using <code>diff</code>. However, this
@@ -2886,6 +2968,10 @@ using Composer:</p>
 <p>The patch should apply, and then you will be running a patched version! If
 you're using a dynamic patch, then running <code>composer update</code> again should
 pull in changes to the code.</p>
+<p>Finally, update your database and clear cache:</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>drush<span class="w"> </span>updb
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>drush<span class="w"> </span>cr
+</span></code></pre></div>
 <h2 id="using-composer-to-require-a-fork-or-branch">Using Composer to require a fork or branch<a class="headerlink" href="#using-composer-to-require-a-fork-or-branch" title="Permanent link">&para;</a></h2>
 <p>This method is best if you don't have a pull request open for the code.</p>
 <h3 id="step-1-add-a-repository-if-necessary">Step 1: Add a repository (if necessary)<a class="headerlink" href="#step-1-add-a-repository-if-necessary" title="Permanent link">&para;</a></h3>
@@ -2900,20 +2986,20 @@ need to add a repository.</p>
   one-liner), e.g. <code>rosiel-islandora</code></li>
 <li><code>REPO_URL</code>: the URL to the repository, e.g. <code>https://github.com/rosiel/islandora</code></li>
 </ul>
-<p><div class="language-shell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Add custom repo</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>composer<span class="w"> </span>config<span class="w"> </span>repo.REPO_NAME<span class="w"> </span>vcs<span class="w"> </span>REPO_URL
+<p><div class="language-shell highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># Add custom repo</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>composer<span class="w"> </span>config<span class="w"> </span>repo.REPO_NAME<span class="w"> </span>vcs<span class="w"> </span>REPO_URL
 </span></code></pre></div>
 Your <code>composer.json</code> file should now contain</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">{</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="err">...</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="nt">&quot;repositories&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="err">...</span>
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">    </span><span class="nt">&quot;REPO_NAME&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;vcs&quot;</span><span class="p">,</span>
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">      </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;REPO_URL&quot;</span>
-</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">  </span><span class="p">}</span>
-</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">{</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="err">...</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="nt">&quot;repositories&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="err">...</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">    </span><span class="nt">&quot;REPO_NAME&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;vcs&quot;</span><span class="p">,</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">      </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;REPO_URL&quot;</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="p">}</span>
 </span></code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Order of precedence of repositories</p>
@@ -2924,7 +3010,7 @@ in the list in composer.json will take precedence.</p>
 </div>
 <h3 id="step-2-require-the-custom-branch">Step 2: Require the custom branch<a class="headerlink" href="#step-2-require-the-custom-branch" title="Permanent link">&para;</a></h3>
 <p>This step could be as simple as
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>composer<span class="w"> </span>require<span class="w"> </span>MY_PACKAGE:dev-MY_BRANCH_NAME
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>composer<span class="w"> </span>require<span class="w"> </span>MY_PACKAGE:dev-MY_BRANCH_NAME
 </span></code></pre></div></p>
 <p>with the following replacements:</p>
 <ul>
@@ -2943,10 +3029,10 @@ example, if the <code>drupal/islandora_mirador</code> package requires
 branch of <code>drupal/islandora</code> will not meet the requirements. Instead, use
 <code>as</code> to provide an alias, to a version that will match the constraints. Note
 the quotes around the package name and version spec. This takes the form:</p>
-<p><div class="language-shell highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>composer<span class="w"> </span>require<span class="w"> </span><span class="s2">&quot;MY_PACKAGE:dev-MY_BRANCH_NAME as ALIAS&quot;</span>
+<p><div class="language-shell highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>composer<span class="w"> </span>require<span class="w"> </span><span class="s2">&quot;MY_PACKAGE:dev-MY_BRANCH_NAME as ALIAS&quot;</span>
 </span></code></pre></div>
 For example:
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>composer<span class="w"> </span>require<span class="w"> </span><span class="s2">&quot;drupal/islandora:dev-enable-hocr as 2.12.1&quot;</span>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>composer<span class="w"> </span>require<span class="w"> </span><span class="s2">&quot;drupal/islandora:dev-enable-hocr as 2.12.1&quot;</span>
 </span></code></pre></div></p>
 <p>That will install the specified branch and allow it to work with your
 dependencies.</p>
@@ -2963,7 +3049,7 @@ will need to clear Composer's cache via <code>composer clearcache</code> or incl
 <h3 id="step-1-re-install-the-code-from-source-if-required">Step 1: Re-install the code from source (if required)<a class="headerlink" href="#step-1-re-install-the-code-from-source-if-required" title="Permanent link">&para;</a></h3>
 <p>Assuming that the environment has not been installed with <code>--prefer-source</code>,
 reinstall the package.</p>
-<p><div class="language-shell highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>composer<span class="w"> </span>reinstall<span class="w"> </span>MY_PACKAGE<span class="w"> </span>--prefer-source
+<p><div class="language-shell highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>composer<span class="w"> </span>reinstall<span class="w"> </span>MY_PACKAGE<span class="w"> </span>--prefer-source
 </span></code></pre></div>
 with the following replacements:</p>
 <ul>
@@ -2974,7 +3060,7 @@ with the following replacements:</p>
 files) and add the package code at the same version of the <code>MY_PACKAGE</code>
 that was previously installed and is in the lock file.</p>
 <p>For example:
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>composer<span class="w"> </span>reinstall<span class="w"> </span><span class="s2">&quot;drupal/islandora&quot;</span><span class="w"> </span>--prefer-source<span class="w"> </span>--no-cache
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>composer<span class="w"> </span>reinstall<span class="w"> </span><span class="s2">&quot;drupal/islandora&quot;</span><span class="w"> </span>--prefer-source<span class="w"> </span>--no-cache
 </span></code></pre></div></p>
 <h3 id="step-2-pull-the-code-from-the-pull-request-to-review">Step 2: Pull the code from the pull request to review.<a class="headerlink" href="#step-2-pull-the-code-from-the-pull-request-to-review" title="Permanent link">&para;</a></h3>
 <p>Follow Github's <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/checking-out-pull-requests-locally">documentation</a>
@@ -2983,6 +3069,10 @@ to pull the code from the pull request to review.</p>
 commits. Note that if you're doing this in a throwaway environment such as a VM
 or a Docker Container, you will need to configure authentication (e.g.
 install an SSH key with Github) before you can push your commits.</p>
+<p>Finally, update your database and clear cache:</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>drush<span class="w"> </span>updb
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>drush<span class="w"> </span>cr
+</span></code></pre></div>
 <h2 id="to-reset-these-changes">To reset these changes<a class="headerlink" href="#to-reset-these-changes" title="Permanent link">&para;</a></h2>
 <h3 id="using-composer-patches">... using Composer Patches<a class="headerlink" href="#using-composer-patches" title="Permanent link">&para;</a></h3>
 <p>When you no longer need to be applying the patch, simply remove it from the
@@ -3001,13 +3091,39 @@ repository.</p>
 <p>When you no longer want the custom code present simply reset the branch back to
 the default branch or tag.</p>
 <p>More great information is available in the <a href="https://getcomposer.org/doc/">Composer Documentation</a>.</p>
+<p>Note that when resetting changes to code, this will not reset changes made to your configuration.
+If your configuration was changed, consider setting it back.</p>
+<h2 id="updating-configuration">Updating Configuration<a class="headerlink" href="#updating-configuration" title="Permanent link">&para;</a></h2>
+<p>The above steps make code available to Drupal. If there is an additional configuration change that's
+needed for what you're testing and it's not addressed by an update hook, then 
+you may need to install the configuration manually.</p>
+<p>Note that these changes to configurations may override settings that you've deliberately set, so please
+back up your original configuration before proceeding! Also, there is no automated way to set configuration
+"back" to what it was, so ensure that you save a copy locally.</p>
+<h3 id="with-configuration-importexport">With Configuration Import/Export<a class="headerlink" href="#with-configuration-importexport" title="Permanent link">&para;</a></h3>
+<p>You can use Drupal's built in configuration import/export feature to export (save a copy of) your original configuration
+and to import the new configuration. This is available at Manage &gt; Configuration &gt; 
+Development &gt; Configuration Synchronization &gt; Export / Import.</p>
+<h3 id="with-devels-config-editor">With Devel's Config Editor<a class="headerlink" href="#with-devels-config-editor" title="Permanent link">&para;</a></h3>
+<p>A slightly faster method is to use the Devel module's Config Editor. It appears (if configured to) on the Devel
+toolbar. Here you can see the current configuration, save a copy, and enter the new desired configuration all 
+in one place.</p>
+<h3 id="with-drush">With Drush<a class="headerlink" href="#with-drush" title="Permanent link">&para;</a></h3>
+<p>Drush does not let you import a single config file, but you could export your entire site's configuration, add the new
+file to it, and re-import the entire site's configuration.</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>drush<span class="w"> </span>config:export<span class="w"> </span>-y
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>cp<span class="w"> </span><span class="o">[</span>PATH_TO_FILE_ABOUT_TO_BE_OVERRIDDEN<span class="o">]</span><span class="w"> </span>~<span class="w"> </span><span class="o">[</span>or<span class="w"> </span>your<span class="w"> </span>desired<span class="w"> </span>location<span class="o">]</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>cp<span class="w"> </span><span class="o">[</span>PATH_TO_CONFIG_FILE<span class="o">]</span><span class="w"> </span>config/sync/<span class="w"> </span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>drush<span class="w"> </span>config:import<span class="w"> </span>-y
+</span></code></pre></div>
+<p>You may need to adjust file permissions (see note at top) if you're not acting as the owner of the Drupal files.</p>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">April 30, 2025</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">May 28, 2025</span>
       
     
   </small>
