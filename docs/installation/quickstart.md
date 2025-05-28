@@ -13,10 +13,6 @@ Anyone can log in to this sandbox as an administrator and explore the interface!
 
 Alternately, with Docker Desktop, you can run a demo locally using Docker's Portainer extension. The command line is not required. See [Docker Portainer Demo](install-a-demo.md) for instructions. Note that this method does not support installing modules or themes that are not included with the demo.
 
-## Sandbox running locally
-
-Alternately, you can use Docker and install the Online Sandbox repository locally, with minimal command-line usage. Note that this method does not support installing modules or themes that are not included with the demo. See the instructions for "Running Locally" in the [Sandbox's README](https://github.com/Islandora-Devops/sandbox).
-  
 ## Ansible Playbook
 
 To provision a local Vagrant or remote Ubuntu virtual machine (without Docker), you can use the [Islandora Ansible Playbook](https://github.com/Islandora-Devops/islandora-playbook). The playbook results in all services installed on a single machine, but can be altered to spread services across various machines. This is a full-fledged VM where you can install modules and themes using Composer. This method requires basic command-line usage and it's advantageous if you are familiar with provisioning software on Ubuntu. This Playbook is suitable for local or production use, though local use (through VirtualBox and Vagrant) is not supported yet by Apple hardware (i.e. M1/M2 machines). See documentation: [Installation - Ansible Playbook](playbook.md) for more details.
