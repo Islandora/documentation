@@ -25,7 +25,7 @@ other project that is managed by Composer.
 !!! note File ownership
     If possible, run the following commands as the user who owns the Drupal filesystem files.
     This may be `nginx` or `www-data` but is probably not `root`. If you're not able to, run 
-    `chown -R [owning user] [affected files]` afterwards to reset the file ownership.jk
+    `chown -R [owning user] [affected files]` afterwards to reset the file ownership.
 
 ## Applying a Patch using Composer Patches
 
