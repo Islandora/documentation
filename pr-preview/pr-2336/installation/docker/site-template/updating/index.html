@@ -13,10 +13,10 @@
         <link rel="canonical" href="https://islandora.github.io/documentation/installation/docker/site-template/updating/">
       
       
-        <link rel="prev" href="../docker-modifications/">
+        <link rel="prev" href="../containers/">
       
       
-        <link rel="next" href="../../../playbook/">
+        <link rel="next" href="../backup/">
       
       <link rel="icon" href="../../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.12">
@@ -496,7 +496,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../release-notes/8.x-2.0.md" class="md-nav__link">
+      <a href="../../../../release_notes/8.x-2.0/" class="md-nav__link">
         8.x-2.0 Release Notes
       </a>
     </li>
@@ -885,6 +885,20 @@
               
   
   
+  
+    <li class="md-nav__item">
+      <a href="../containers/" class="md-nav__link">
+        Working in Your Containers
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
     
   
   
@@ -990,8 +1004,36 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../backup/" class="md-nav__link">
+        Back Up and Restore
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../converting/" class="md-nav__link">
+        Converting ISLE-DC to Site Template
+      </a>
     </li>
   
 
@@ -2769,7 +2811,7 @@
 <h2 id="updating-drupal-modules">Updating Drupal Modules<a class="headerlink" href="#updating-drupal-modules" title="Permanent link">&para;</a></h2>
 <p>Drupal updates are performed through composer on your development site. Once the modules have been added/removed/updated, your <code>composer.json</code> and <code>composer.lock</code> files can be checked into your git repository and you can rebuild your production Drupal container with the new files.</p>
 <h3 id="development">Development<a class="headerlink" href="#development" title="Permanent link">&para;</a></h3>
-<p>Composer commands need to <a href="/documentation/installation/docker/site-template/containers.md">run in your Drupal container</a>. For example:</p>
+<p>Composer commands need to <a href="../../docker-prereq/#containers">run in your Drupal container</a>. For example:</p>
 <p>​​<code>docker compose exec drupal-dev composer update -W</code></p>
 <p>Or </p>
 <p><code>docker compose exec drupal-dev composer require 'drupal/islandora:^2.11'</code></p>
@@ -2796,7 +2838,7 @@
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 29, 2024</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">May 28, 2025</span>
       
     
   </small>

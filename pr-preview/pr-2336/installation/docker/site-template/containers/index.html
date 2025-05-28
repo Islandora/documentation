@@ -10,27 +10,27 @@
       
       
       
-        <link rel="canonical" href="https://islandora.github.io/documentation/technical-documentation/running-automated-tests/">
+        <link rel="canonical" href="https://islandora.github.io/documentation/installation/docker/site-template/containers/">
       
       
-        <link rel="prev" href="../../contributing/testing-a-pull-request/">
+        <link rel="prev" href="../docker-modifications/">
       
       
-        <link rel="next" href="../checking-coding-standards/">
+        <link rel="next" href="../updating/">
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.12">
     
     
       
-        <title>Running Tests - Islandora</title>
+        <title>Working in Your Containers - Islandora</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.0d440cfe.min.css">
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.0d440cfe.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.2505c338.min.css">
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.2505c338.min.css">
       
       
 
@@ -46,9 +46,9 @@
       
     
     
-      <link rel="stylesheet" href="../../css/custom.css">
+      <link rel="stylesheet" href="../../../../css/custom.css">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -73,7 +73,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#running-automated-tests" class="md-skip">
+        <a href="#working-in-your-containers" class="md-skip">
           Skip to content
         </a>
       
@@ -87,9 +87,9 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="Islandora" class="md-header__button md-logo" aria-label="Islandora" data-md-component="logo">
+    <a href="../../../.." title="Islandora" class="md-header__button md-logo" aria-label="Islandora" data-md-component="logo">
       
-  <img src="../../assets/Islandora_logo.png" alt="logo">
+  <img src="../../../../assets/Islandora_logo.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Running Tests
+              Working in Your Containers
             
           </span>
         </div>
@@ -184,9 +184,9 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="Islandora" class="md-nav__button md-logo" aria-label="Islandora" data-md-component="logo">
+    <a href="../../../.." title="Islandora" class="md-nav__button md-logo" aria-label="Islandora" data-md-component="logo">
       
-  <img src="../../assets/Islandora_logo.png" alt="logo">
+  <img src="../../../../assets/Islandora_logo.png" alt="logo">
 
     </a>
     Islandora
@@ -214,7 +214,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href="../../../.." class="md-nav__link">
         About
       </a>
     </li>
@@ -229,7 +229,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/quickstart/" class="md-nav__link">
+      <a href="../../../quickstart/" class="md-nav__link">
         Quickstart
       </a>
     </li>
@@ -271,7 +271,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../concepts/node-concepts/" class="md-nav__link">
+      <a href="../../../../concepts/node-concepts/" class="md-nav__link">
         Nodes in Islandora
       </a>
     </li>
@@ -285,7 +285,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../concepts/node-media/" class="md-nav__link">
+      <a href="../../../../concepts/node-media/" class="md-nav__link">
         Media in Islandora
       </a>
     </li>
@@ -299,7 +299,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../concepts/derivatives/" class="md-nav__link">
+      <a href="../../../../concepts/derivatives/" class="md-nav__link">
         Derivatives
       </a>
     </li>
@@ -313,7 +313,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../concepts/rdf/" class="md-nav__link">
+      <a href="../../../../concepts/rdf/" class="md-nav__link">
         RDF Repository
       </a>
     </li>
@@ -327,7 +327,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../concepts/starter-site/" class="md-nav__link">
+      <a href="../../../../concepts/starter-site/" class="md-nav__link">
         Islandora Starter Site
       </a>
     </li>
@@ -376,7 +376,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../concepts/collection/" class="md-nav__link">
+      <a href="../../../../concepts/collection/" class="md-nav__link">
         Collections
       </a>
     </li>
@@ -390,7 +390,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-documentation/paged-content/" class="md-nav__link">
+      <a href="../../../../user-documentation/paged-content/" class="md-nav__link">
         Paged Content
       </a>
     </li>
@@ -404,7 +404,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../models/audio/" class="md-nav__link">
+      <a href="../../../../models/audio/" class="md-nav__link">
         Audio
       </a>
     </li>
@@ -418,7 +418,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../models/video/" class="md-nav__link">
+      <a href="../../../../models/video/" class="md-nav__link">
         Video
       </a>
     </li>
@@ -438,14 +438,16 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
       
       
       
@@ -454,7 +456,7 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_5">
           <span class="md-nav__icon md-icon"></span>
           Installation
@@ -494,7 +496,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../release_notes/8.x-2.0/" class="md-nav__link">
+      <a href="../../../../release_notes/8.x-2.0/" class="md-nav__link">
         8.x-2.0 Release Notes
       </a>
     </li>
@@ -529,7 +531,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/install-a-demo/" class="md-nav__link">
+      <a href="../../../install-a-demo/" class="md-nav__link">
         Install a Demo
       </a>
     </li>
@@ -541,14 +543,16 @@
               
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3" checked>
       
       
       
@@ -557,7 +561,7 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_3_label" aria-expanded="false">
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_3_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_5_3">
           <span class="md-nav__icon md-icon"></span>
           Docker
@@ -570,7 +574,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/docker/docker-introduction/" class="md-nav__link">
+      <a href="../../docker-introduction/" class="md-nav__link">
         Introduction to ISLE
       </a>
     </li>
@@ -584,7 +588,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/docker/docker-prereq/" class="md-nav__link">
+      <a href="../../docker-prereq/" class="md-nav__link">
         Prerequisites
       </a>
     </li>
@@ -652,7 +656,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/docker/isle-dc/docker-local/" class="md-nav__link">
+      <a href="../../isle-dc/docker-local/" class="md-nav__link">
         Installing a Development Server
       </a>
     </li>
@@ -666,7 +670,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/docker/isle-dc/docker-custom/" class="md-nav__link">
+      <a href="../../isle-dc/docker-custom/" class="md-nav__link">
         Installing a Staging/Production Server
       </a>
     </li>
@@ -714,7 +718,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/docker/isle-dc/docker-basic-usage/" class="md-nav__link">
+      <a href="../../isle-dc/docker-basic-usage/" class="md-nav__link">
         Basic Usage
       </a>
     </li>
@@ -728,7 +732,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/docker/isle-dc/docker-maintain-drupal/" class="md-nav__link">
+      <a href="../../isle-dc/docker-maintain-drupal/" class="md-nav__link">
         Maintaining Drupal
       </a>
     </li>
@@ -742,7 +746,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/docker/isle-dc/docker-maintain-isle/" class="md-nav__link">
+      <a href="../../isle-dc/docker-maintain-isle/" class="md-nav__link">
         Maintaining ISLE
       </a>
     </li>
@@ -763,7 +767,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/docker/isle-dc/docker-available-commands/" class="md-nav__link">
+      <a href="../../isle-dc/docker-available-commands/" class="md-nav__link">
         Available Commands
       </a>
     </li>
@@ -777,7 +781,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/docker/isle-dc/docker-available-configuration/" class="md-nav__link">
+      <a href="../../isle-dc/docker-available-configuration/" class="md-nav__link">
         Available Configuration
       </a>
     </li>
@@ -791,7 +795,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/docker/isle-dc/docker-troubleshooting/" class="md-nav__link">
+      <a href="../../isle-dc/docker-troubleshooting/" class="md-nav__link">
         Troubleshooting
       </a>
     </li>
@@ -810,14 +814,16 @@
               
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3_4" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3_4" checked>
       
       
       
@@ -826,7 +832,7 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_3_4_label" aria-expanded="false">
+      <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_3_4_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_5_3_4">
           <span class="md-nav__icon md-icon"></span>
           ISLE Site Template
@@ -839,7 +845,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/docker/site-template/site-template/" class="md-nav__link">
+      <a href="../site-template/" class="md-nav__link">
         Introduction to Site Template
       </a>
     </li>
@@ -853,7 +859,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/docker/site-template/setup/" class="md-nav__link">
+      <a href="../setup/" class="md-nav__link">
         Creating Your Site
       </a>
     </li>
@@ -867,7 +873,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/docker/site-template/docker-modifications/" class="md-nav__link">
+      <a href="../docker-modifications/" class="md-nav__link">
         Docker Modifications
       </a>
     </li>
@@ -879,11 +885,106 @@
               
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../installation/docker/site-template/containers/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Working in Your Containers
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Working in Your Containers
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#running-commands-in-the-containers" class="md-nav__link">
+    Running Commands in the Containers
+  </a>
+  
+    <nav class="md-nav" aria-label="Running Commands in the Containers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#container-variables" class="md-nav__link">
+    Container Variables
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#helpful-commands" class="md-nav__link">
+    Helpful Commands
+  </a>
+  
+    <nav class="md-nav" aria-label="Helpful Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#checking-logs" class="md-nav__link">
+    Checking logs
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reindex-solr" class="md-nav__link">
+    Reindex Solr
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reindex-fedora" class="md-nav__link">
+    Reindex Fedora
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reindex-blazegraph" class="md-nav__link">
+    Reindex Blazegraph
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -895,7 +996,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/docker/site-template/updating/" class="md-nav__link">
+      <a href="../updating/" class="md-nav__link">
         Updating
       </a>
     </li>
@@ -909,7 +1010,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/docker/site-template/backup/" class="md-nav__link">
+      <a href="../backup/" class="md-nav__link">
         Back Up and Restore
       </a>
     </li>
@@ -930,7 +1031,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/docker/converting/" class="md-nav__link">
+      <a href="../../converting/" class="md-nav__link">
         Converting ISLE-DC to Site Template
       </a>
     </li>
@@ -951,7 +1052,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/playbook/" class="md-nav__link">
+      <a href="../../../playbook/" class="md-nav__link">
         Ansible Playbook
       </a>
     </li>
@@ -992,7 +1093,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/manual/introduction/" class="md-nav__link">
+      <a href="../../../manual/introduction/" class="md-nav__link">
         Introduction
       </a>
     </li>
@@ -1006,7 +1107,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/manual/preparing-a-webserver/" class="md-nav__link">
+      <a href="../../../manual/preparing-a-webserver/" class="md-nav__link">
         Preparing a LAPP Webserver
       </a>
     </li>
@@ -1020,7 +1121,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/manual/installing-composer-drush-and-drupal/" class="md-nav__link">
+      <a href="../../../manual/installing-composer-drush-and-drupal/" class="md-nav__link">
         Installing Composer, Drush, and Drupal
       </a>
     </li>
@@ -1034,7 +1135,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/manual/installing-tomcat-and-cantaloupe/" class="md-nav__link">
+      <a href="../../../manual/installing-tomcat-and-cantaloupe/" class="md-nav__link">
         Installing Tomcat and Cantaloupe
       </a>
     </li>
@@ -1048,7 +1149,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/manual/installing-fedora-syn-and-blazegraph/" class="md-nav__link">
+      <a href="../../../manual/installing-fedora-syn-and-blazegraph/" class="md-nav__link">
         Installing Fedora, Syn, and Blazegraph
       </a>
     </li>
@@ -1062,7 +1163,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/manual/installing-solr/" class="md-nav__link">
+      <a href="../../../manual/installing-solr/" class="md-nav__link">
         Installing Solr
       </a>
     </li>
@@ -1076,7 +1177,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/manual/installing-crayfish/" class="md-nav__link">
+      <a href="../../../manual/installing-crayfish/" class="md-nav__link">
         Installing Crayfish
       </a>
     </li>
@@ -1090,7 +1191,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/manual/installing-alpaca/" class="md-nav__link">
+      <a href="../../../manual/installing-alpaca/" class="md-nav__link">
         Installing Alpaca
       </a>
     </li>
@@ -1104,7 +1205,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/manual/configuring-drupal/" class="md-nav__link">
+      <a href="../../../manual/configuring-drupal/" class="md-nav__link">
         Configuring Drupal
       </a>
     </li>
@@ -1125,7 +1226,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../install-enable-drupal-modules/" class="md-nav__link">
+      <a href="../../../../technical-documentation/install-enable-drupal-modules/" class="md-nav__link">
         Installing Modules
       </a>
     </li>
@@ -1174,7 +1275,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tutorials/create-a-resource-node/" class="md-nav__link">
+      <a href="../../../../tutorials/create-a-resource-node/" class="md-nav__link">
         Create a Resource Node
       </a>
     </li>
@@ -1188,7 +1289,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tutorials/how-to-create-collection/" class="md-nav__link">
+      <a href="../../../../tutorials/how-to-create-collection/" class="md-nav__link">
         Create a Collection
       </a>
     </li>
@@ -1202,7 +1303,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-documentation/content-types/" class="md-nav__link">
+      <a href="../../../../user-documentation/content-types/" class="md-nav__link">
         Modify or Create a Content Type
       </a>
     </li>
@@ -1216,7 +1317,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tutorials/blocks/" class="md-nav__link">
+      <a href="../../../../tutorials/blocks/" class="md-nav__link">
         Configure Blocks
       </a>
     </li>
@@ -1230,7 +1331,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tutorials/create-update-views/" class="md-nav__link">
+      <a href="../../../../tutorials/create-update-views/" class="md-nav__link">
         Create or Update a View
       </a>
     </li>
@@ -1244,7 +1345,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-documentation/video-docs/" class="md-nav__link">
+      <a href="../../../../user-documentation/video-docs/" class="md-nav__link">
         Video Documentation
       </a>
     </li>
@@ -1258,7 +1359,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-documentation/users/" class="md-nav__link">
+      <a href="../../../../user-documentation/users/" class="md-nav__link">
         Create and Manage User Accounts
       </a>
     </li>
@@ -1307,7 +1408,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-documentation/user-intro/" class="md-nav__link">
+      <a href="../../../../user-documentation/user-intro/" class="md-nav__link">
         Introduction
       </a>
     </li>
@@ -1348,7 +1449,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-documentation/content-models/" class="md-nav__link">
+      <a href="../../../../user-documentation/content-models/" class="md-nav__link">
         Content models
       </a>
     </li>
@@ -1362,7 +1463,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-documentation/metadata/" class="md-nav__link">
+      <a href="../../../../user-documentation/metadata/" class="md-nav__link">
         Metadata
       </a>
     </li>
@@ -1376,7 +1477,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-documentation/starter-site-metadata-configuration/" class="md-nav__link">
+      <a href="../../../../user-documentation/starter-site-metadata-configuration/" class="md-nav__link">
         Starter Site Metadata Configuration
       </a>
     </li>
@@ -1390,7 +1491,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-documentation/linked-data/" class="md-nav__link">
+      <a href="../../../../user-documentation/linked-data/" class="md-nav__link">
         Linked data
       </a>
     </li>
@@ -1404,7 +1505,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-documentation/metadata-harvesting/" class="md-nav__link">
+      <a href="../../../../user-documentation/metadata-harvesting/" class="md-nav__link">
         Metadata harvesting
       </a>
     </li>
@@ -1452,7 +1553,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-documentation/searching/" class="md-nav__link">
+      <a href="../../../../user-documentation/searching/" class="md-nav__link">
         Searching
       </a>
     </li>
@@ -1466,7 +1567,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-documentation/advanced-search/" class="md-nav__link">
+      <a href="../../../../user-documentation/advanced-search/" class="md-nav__link">
         Advanced search
       </a>
     </li>
@@ -1480,7 +1581,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-documentation/faceting/" class="md-nav__link">
+      <a href="../../../../user-documentation/faceting/" class="md-nav__link">
         Faceting
       </a>
     </li>
@@ -1528,7 +1629,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-documentation/context/" class="md-nav__link">
+      <a href="../../../../user-documentation/context/" class="md-nav__link">
         Context
       </a>
     </li>
@@ -1542,7 +1643,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-documentation/file-viewers/" class="md-nav__link">
+      <a href="../../../../user-documentation/file-viewers/" class="md-nav__link">
         File viewers
       </a>
     </li>
@@ -1556,7 +1657,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-documentation/iiif/" class="md-nav__link">
+      <a href="../../../../user-documentation/iiif/" class="md-nav__link">
         IIIF
       </a>
     </li>
@@ -1604,7 +1705,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-documentation/media/" class="md-nav__link">
+      <a href="../../../../user-documentation/media/" class="md-nav__link">
         Media
       </a>
     </li>
@@ -1618,7 +1719,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-documentation/flysystem/" class="md-nav__link">
+      <a href="../../../../user-documentation/flysystem/" class="md-nav__link">
         Flysystem
       </a>
     </li>
@@ -1632,7 +1733,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-documentation/uploading-large-files/" class="md-nav__link">
+      <a href="../../../../user-documentation/uploading-large-files/" class="md-nav__link">
         Large files
       </a>
     </li>
@@ -1646,7 +1747,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-documentation/transcripts/" class="md-nav__link">
+      <a href="../../../../user-documentation/transcripts/" class="md-nav__link">
         Transcripts
       </a>
     </li>
@@ -1694,7 +1795,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-documentation/access-control/" class="md-nav__link">
+      <a href="../../../../user-documentation/access-control/" class="md-nav__link">
         Access control
       </a>
     </li>
@@ -1708,7 +1809,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-documentation/breadcrumbs/" class="md-nav__link">
+      <a href="../../../../user-documentation/breadcrumbs/" class="md-nav__link">
         Breadcrumbs
       </a>
     </li>
@@ -1722,7 +1823,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-documentation/jwt-authentication/" class="md-nav__link">
+      <a href="../../../../user-documentation/jwt-authentication/" class="md-nav__link">
         JWT authentication
       </a>
     </li>
@@ -1736,7 +1837,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-documentation/url-aliases/" class="md-nav__link">
+      <a href="../../../../user-documentation/url-aliases/" class="md-nav__link">
         URL Aliases
       </a>
     </li>
@@ -1750,7 +1851,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-documentation/usage-stats/" class="md-nav__link">
+      <a href="../../../../user-documentation/usage-stats/" class="md-nav__link">
         Usage statistics
       </a>
     </li>
@@ -1764,7 +1865,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-documentation/versioning/" class="md-nav__link">
+      <a href="../../../../user-documentation/versioning/" class="md-nav__link">
         Versioning
       </a>
     </li>
@@ -1785,7 +1886,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-documentation/accessibility/" class="md-nav__link">
+      <a href="../../../../user-documentation/accessibility/" class="md-nav__link">
         Accessibility
       </a>
     </li>
@@ -1799,7 +1900,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-documentation/multilingual/" class="md-nav__link">
+      <a href="../../../../user-documentation/multilingual/" class="md-nav__link">
         Multilingual
       </a>
     </li>
@@ -1813,7 +1914,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-documentation/extending/" class="md-nav__link">
+      <a href="../../../../user-documentation/extending/" class="md-nav__link">
         Extending Islandora
       </a>
     </li>
@@ -1862,7 +1963,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/component-overview/" class="md-nav__link">
+      <a href="../../../component-overview/" class="md-nav__link">
         Stack Overview
       </a>
     </li>
@@ -1876,7 +1977,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../diagram/" class="md-nav__link">
+      <a href="../../../../technical-documentation/diagram/" class="md-nav__link">
         Architecture Diagram
       </a>
     </li>
@@ -1917,7 +2018,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../using-rest-endpoints/" class="md-nav__link">
+      <a href="../../../../technical-documentation/using-rest-endpoints/" class="md-nav__link">
         Introduction
       </a>
     </li>
@@ -1931,7 +2032,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rest-authorization/" class="md-nav__link">
+      <a href="../../../../technical-documentation/rest-authorization/" class="md-nav__link">
         Authorization
       </a>
     </li>
@@ -1945,7 +2046,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rest-get/" class="md-nav__link">
+      <a href="../../../../technical-documentation/rest-get/" class="md-nav__link">
         GET
       </a>
     </li>
@@ -1959,7 +2060,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rest-create/" class="md-nav__link">
+      <a href="../../../../technical-documentation/rest-create/" class="md-nav__link">
         POST/PUT
       </a>
     </li>
@@ -1973,7 +2074,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rest-patch/" class="md-nav__link">
+      <a href="../../../../technical-documentation/rest-patch/" class="md-nav__link">
         PATCH
       </a>
     </li>
@@ -1987,7 +2088,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rest-delete/" class="md-nav__link">
+      <a href="../../../../technical-documentation/rest-delete/" class="md-nav__link">
         DELETE
       </a>
     </li>
@@ -2001,7 +2102,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rest-signposting/" class="md-nav__link">
+      <a href="../../../../technical-documentation/rest-signposting/" class="md-nav__link">
         Signposting
       </a>
     </li>
@@ -2049,7 +2150,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../alpaca/alpaca-technical-stack/" class="md-nav__link">
+      <a href="../../../../alpaca/alpaca-technical-stack/" class="md-nav__link">
         Alpaca Technical Stack
       </a>
     </li>
@@ -2063,7 +2164,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../alpaca-tips/" class="md-nav__link">
+      <a href="../../../../technical-documentation/alpaca-tips/" class="md-nav__link">
         Alpaca Tips
       </a>
     </li>
@@ -2111,7 +2212,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../testing-notes/" class="md-nav__link">
+      <a href="../../../../technical-documentation/testing-notes/" class="md-nav__link">
         Testing Notes
       </a>
     </li>
@@ -2132,7 +2233,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../resizing-vm/" class="md-nav__link">
+      <a href="../../../../technical-documentation/resizing-vm/" class="md-nav__link">
         Resizing a VM
       </a>
     </li>
@@ -2146,7 +2247,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../updating-drupal/" class="md-nav__link">
+      <a href="../../../../technical-documentation/updating-drupal/" class="md-nav__link">
         Updating Drupal
       </a>
     </li>
@@ -2160,7 +2261,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ppa-documentation/" class="md-nav__link">
+      <a href="../../../../technical-documentation/ppa-documentation/" class="md-nav__link">
         Updating a `deb` and adding it to Lyrasis PPA
       </a>
     </li>
@@ -2174,7 +2275,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../adding-format-jsonld/" class="md-nav__link">
+      <a href="../../../../technical-documentation/adding-format-jsonld/" class="md-nav__link">
         Adding back ?_format=jsonld
       </a>
     </li>
@@ -2223,7 +2324,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../migration-overview/" class="md-nav__link">
+      <a href="../../../../technical-documentation/migration-overview/" class="md-nav__link">
         Migration Overview
       </a>
     </li>
@@ -2237,7 +2338,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../migration-rest-api/" class="md-nav__link">
+      <a href="../../../../technical-documentation/migration-rest-api/" class="md-nav__link">
         REST API
       </a>
     </li>
@@ -2251,7 +2352,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../migration-migrate-api/" class="md-nav__link">
+      <a href="../../../../technical-documentation/migration-migrate-api/" class="md-nav__link">
         Migrate API
       </a>
     </li>
@@ -2265,7 +2366,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../migration-islandora-workbench/" class="md-nav__link">
+      <a href="../../../../technical-documentation/migration-islandora-workbench/" class="md-nav__link">
         Islandora Workbench
       </a>
     </li>
@@ -2279,7 +2380,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../migrate-csv/" class="md-nav__link">
+      <a href="../../../../technical-documentation/migrate-csv/" class="md-nav__link">
         CSV
       </a>
     </li>
@@ -2293,7 +2394,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../migrate-7x/" class="md-nav__link">
+      <a href="../../../../technical-documentation/migrate-7x/" class="md-nav__link">
         Islandora 7
       </a>
     </li>
@@ -2313,16 +2414,14 @@
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" checked>
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
       
       
       
@@ -2331,7 +2430,7 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="true">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_10">
           <span class="md-nav__icon md-icon"></span>
           Contributing
@@ -2344,7 +2443,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../contributing/CONTRIBUTING/" class="md-nav__link">
+      <a href="../../../../contributing/CONTRIBUTING/" class="md-nav__link">
         How to contribute
       </a>
     </li>
@@ -2358,7 +2457,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../contributing/testing-a-pull-request/" class="md-nav__link">
+      <a href="../../../../contributing/testing-a-pull-request/" class="md-nav__link">
         Testing a Pull Request
       </a>
     </li>
@@ -2370,66 +2469,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Running Tests
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../../../technical-documentation/running-automated-tests/" class="md-nav__link">
         Running Tests
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#setting-up-phpunit" class="md-nav__link">
-    Setting up PhpUnit
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#running-phpunit" class="md-nav__link">
-    Running PHPUnit
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#setting-up-phpunit-in-phpstorm" class="md-nav__link">
-    Setting up PHPUnit in PHPStorm
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -2441,7 +2485,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../checking-coding-standards/" class="md-nav__link">
+      <a href="../../../../technical-documentation/checking-coding-standards/" class="md-nav__link">
         Checking Coding Standards
       </a>
     </li>
@@ -2455,7 +2499,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../contributing/contributing-workflow/" class="md-nav__link">
+      <a href="../../../../contributing/contributing-workflow/" class="md-nav__link">
         Contributing Workflow
       </a>
     </li>
@@ -2469,7 +2513,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../contributing/create-issues/" class="md-nav__link">
+      <a href="../../../../contributing/create-issues/" class="md-nav__link">
         Creating GitHub Issues
       </a>
     </li>
@@ -2483,7 +2527,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../versioning/" class="md-nav__link">
+      <a href="../../../../technical-documentation/versioning/" class="md-nav__link">
         Versioning Policy
       </a>
     </li>
@@ -2497,7 +2541,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../contributing/releasing-islandora/" class="md-nav__link">
+      <a href="../../../../contributing/releasing-islandora/" class="md-nav__link">
         How to release
       </a>
     </li>
@@ -2511,7 +2555,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../contributing/editing-docs/" class="md-nav__link">
+      <a href="../../../../contributing/editing-docs/" class="md-nav__link">
         How to Edit Documentation
       </a>
     </li>
@@ -2525,7 +2569,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../docs-build/" class="md-nav__link">
+      <a href="../../../../technical-documentation/docs-build/" class="md-nav__link">
         How to Build Documentation
       </a>
     </li>
@@ -2539,7 +2583,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../contributing/docs-style-guide/" class="md-nav__link">
+      <a href="../../../../contributing/docs-style-guide/" class="md-nav__link">
         Documentation Style Guide
       </a>
     </li>
@@ -2553,7 +2597,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../contributing/committers/" class="md-nav__link">
+      <a href="../../../../contributing/committers/" class="md-nav__link">
         Committers
       </a>
     </li>
@@ -2567,7 +2611,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../contributing/sandbox/" class="md-nav__link">
+      <a href="../../../../contributing/sandbox/" class="md-nav__link">
         Maintaining the Sandbox
       </a>
     </li>
@@ -2589,7 +2633,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user-documentation/glossary/" class="md-nav__link">
+      <a href="../../../../user-documentation/glossary/" class="md-nav__link">
         Glossary
       </a>
     </li>
@@ -2623,23 +2667,63 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#setting-up-phpunit" class="md-nav__link">
-    Setting up PhpUnit
+  <a href="#running-commands-in-the-containers" class="md-nav__link">
+    Running Commands in the Containers
   </a>
+  
+    <nav class="md-nav" aria-label="Running Commands in the Containers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#container-variables" class="md-nav__link">
+    Container Variables
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#running-phpunit" class="md-nav__link">
-    Running PHPUnit
+  <a href="#helpful-commands" class="md-nav__link">
+    Helpful Commands
+  </a>
+  
+    <nav class="md-nav" aria-label="Helpful Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#checking-logs" class="md-nav__link">
+    Checking logs
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#setting-up-phpunit-in-phpstorm" class="md-nav__link">
-    Setting up PHPUnit in PHPStorm
+        
+          <li class="md-nav__item">
+  <a href="#reindex-solr" class="md-nav__link">
+    Reindex Solr
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reindex-fedora" class="md-nav__link">
+    Reindex Fedora
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reindex-blazegraph" class="md-nav__link">
+    Reindex Blazegraph
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2658,7 +2742,7 @@
                   
 
   
-    <a href="https://github.com/Islandora/documentation/edit/main/docs/technical-documentation/running-automated-tests.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/Islandora/documentation/edit/main/docs/installation/docker/site-template/containers.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
     </a>
@@ -2667,39 +2751,75 @@
 
 
 
-<h1 id="running-automated-tests">Running Automated Tests<a class="headerlink" href="#running-automated-tests" title="Permanent link">&para;</a></h1>
-<p>See the <a href="https://www.drupal.org/docs/automated-testing/phpunit-in-drupal">Drupal Documentation on PHPUnit in Drupal</a>.</p>
-<h2 id="setting-up-phpunit">Setting up PhpUnit<a class="headerlink" href="#setting-up-phpunit" title="Permanent link">&para;</a></h2>
-<p>Before you can use phpunit, you must first install the following: </p>
-<p><code>composer require --dev -W phpspec/prophecy-phpunit drupal/core-dev</code></p>
-<p>In ISLE, you need to make the database port available to PHPUnit. To do that, edit <code>docker-compose.yml</code> and find the section including <code>image: islandora/mariadb[version number]</code>. Shortly below is a <code>labels:</code> heading; set the value of the <code>traefik.enable:</code> to <code>"true"</code>. Apply the changes made to the <code>docker_compose.yml</code> using <code>docker compose up -d</code>.</p>
-<p>Follow the <code>Configure PHPUnit</code> and <code>Create a directory for HTML output</code> sections in <a href="https://www.drupal.org/docs/automated-testing/phpunit-in-drupal/running-phpunit-tests">Drupal Documentation on running phpunit tests</a> to make a <code>phpunit.xml</code> file. Note that:</p>
-<ul>
-<li>
-<p>If you place the <code>phpunit.xml</code> file in any directory other than <code>[drupal root]/web/core</code>, you need to change the 'bootstrap' in the <code>&lt;phpunit&gt;</code> tag near the top of the file to point to the relative or absolute location of the <code>[drupal root]/web/core</code> folder.</p>
-</li>
-<li>
-<p>When setting the <code>SIMPLETEST_DB</code> database credentials in ISLE, </p>
-<ul>
-<li>the default username and db_name are <code>drupal_default</code></li>
-<li>your db_password can be found in <code>codebase/web/sites/default/settings.php</code></li>
-</ul>
-</li>
-<li>
-<p>Unless you changed the default values, just swap out [password] for your actual db password in the following:</p>
-</li>
-</ul>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>mysql://drupal_default:[password]@islandora.traefik.me:3306/drupal_default`.
+<h1 id="working-in-your-containers">Working in Your Containers<a class="headerlink" href="#working-in-your-containers" title="Permanent link">&para;</a></h1>
+<p>When using Docker, we often have to run commands inside the Docker containers. For example, you can run the same Drush commands you would run in a non-Docker environment, but you must run those commands inside the Drupal container.</p>
+<h2 id="running-commands-in-the-containers">Running Commands in the Containers<a class="headerlink" href="#running-commands-in-the-containers" title="Permanent link">&para;</a></h2>
+<p>If you want to work inside a container, you can use Docker Compose to run bash from inside the container. You can get a bash shell inside the Drupal container by running</p>
+<p><code>docker compose exec drupal-dev with-contenv bash</code></p>
+<p>Or you can run your command from the host machine by running</p>
+<p><code>docker compose exec -T drupal-dev with-contenv bash -lc 'YOUR COMMAND'</code></p>
+<p>For example, if you want to perform a Drush cache rebuild you could run</p>
+<p><code>docker compose exec -T drupal-dev with-contenv bash -lc 'drush cr'</code></p>
+<div class="admonition note">
+<p class="admonition-title">Container Names</p>
+<p>The container name drupal-dev is the ‘services’ name as set in your docker-compose.yml. To access the drupal container in production you would replace drupal-dev with drupal-prod.</p>
+<p>You can also access other containers in this way, by replacing drupal-dev with their service name. For example, mariadb-dev or solr-prod.</p>
+</div>
+<p>For more information, see the documentation on <a href="https://docs.docker.com/reference/cli/docker/compose/exec/">docker compose exec</a></p>
+<h3 id="container-variables">Container Variables<a class="headerlink" href="#container-variables" title="Permanent link">&para;</a></h3>
+<p>In some of the commands throughout the ISLE Site Template documentation you will see references to variables like <code>${DRUPAL_DEFAULT_SITE_URL}</code>. These are variables that are provided in the containers by the s6-overlay in <a href="https://github.com/Islandora-Devops/isle-buildkit">Islandora Buildkit</a>.</p>
+<p>If you want to see their values, you can run </p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>docker compose exec -T drupal-dev with-contenv bash -lc &#39;echo ${DRUPAL_DEFAULT_SITE_URL}&#39;
 </span></code></pre></div>
-<h2 id="running-phpunit">Running PHPUnit<a class="headerlink" href="#running-phpunit" title="Permanent link">&para;</a></h2>
-<p>If you are in the Drupal root directory (<code>codebase</code> on ISLE; the one containing <code>web</code>) and your <code>phpunit.xml</code> file is also in the Drupal root directory, use the following command to run phpunit for a single test file (here, Islandora's DeleteNodeWithMediaAndFile.php):</p>
-<p><code>vendor/bin/phpunit web/modules/contrib/islandora/tests/src/Functional/DeleteNodeWithMediaAndFile.php</code></p>
-<p>If your phpunit.xml is in a different directory, such as web/core, then use the -c flag to specify the path to the directory containing phpunit.xml:</p>
-<p><code>vendor/bin/phpunit -c web/core web/modules/contrib/islandora/tests/src/Functional/DeleteNodeWithMediaAndFile.php</code></p>
-<h2 id="setting-up-phpunit-in-phpstorm">Setting up PHPUnit in PHPStorm<a class="headerlink" href="#setting-up-phpunit-in-phpstorm" title="Permanent link">&para;</a></h2>
-<ul>
-<li><a href="https://www.drupal.org/docs/automated-testing/phpunit-in-drupal/running-phpunit-tests-within-phpstorm">Drupal Documentation on running phpunit tests</a></li>
-</ul>
+<div class="admonition note">
+<p class="admonition-title">with-contenv</p>
+<p>Adding <code>with-contenv</code> to your commands gives you access to the s6-overlay environment variables. If you don’t need to use these variables, the commands above can be simplified to</p>
+<p><code>docker compose exec drupal-dev bash</code></p>
+<p>and</p>
+<p><code>docker compose exec -T drupal-dev -lc 'YOUR COMMAND'</code></p>
+</div>
+<h2 id="helpful-commands">Helpful Commands<a class="headerlink" href="#helpful-commands" title="Permanent link">&para;</a></h2>
+<h3 id="checking-logs">Checking logs<a class="headerlink" href="#checking-logs" title="Permanent link">&para;</a></h3>
+<p>You can read logs for a container with:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>docker compose logs service_name
+</span></code></pre></div>
+<p>For example, to read nginx logs for Drupal, use <code>docker compose logs drupal-dev</code>.</p>
+<p>If you don't know what you're looking for exactly, you can turn on the fire hose and look through all logs by dropping the service name and simply using:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>docker compose logs
+</span></code></pre></div>
+<h3 id="reindex-solr">Reindex Solr<a class="headerlink" href="#reindex-solr" title="Permanent link">&para;</a></h3>
+<p>You can reindex Solr through the Drupal admin page, or via drush commands by queuing for reindex:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>docker compose exec -T drupal-dev with-contenv bash -lc &#39;drush --root /var/www/drupal/web -l ${DRUPAL_DEFAULT_SITE_URL} search-api-reindex&#39;
+</span></code></pre></div>
+<p>then triggering the reindex:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>docker compose exec -T drupal-dev with-contenv bash -lc &#39;drush --root /var/www/drupal/web -l ${DRUPAL_DEFAULT_SITE_URL} search-api-index&#39;
+</span></code></pre></div>
+<h3 id="reindex-fedora">Reindex Fedora<a class="headerlink" href="#reindex-fedora" title="Permanent link">&para;</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This requires the <a href="https://www.drupal.org/project/views_bulk_operations">Views Bulk Operations module</a></p>
+</div>
+<p>You can reindex all of your Drupal data into Fedora, by running the following commands:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>docker compose exec -T drupal-dev with-contenv bash -lc &#39;drush --root /var/www/drupal/web -l ${DRUPAL_DEFAULT_SITE_URL} vbo-exec non_fedora_files emit_file_event --configuration=&quot;queue=islandora-indexing-fcrepo-file-external&amp;event=Update&quot;&#39;
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>docker compose exec -T drupal-dev with-contenv bash -lc &#39;drush --root /var/www/drupal/web -l ${DRUPAL_DEFAULT_SITE_URL} vbo-exec all_taxonomy_terms emit_term_event --configuration=&quot;queue=islandora-indexing-fcrepo-content&amp;event=Update&quot;&#39;
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>docker compose exec -T drupal-dev with-contenv bash -lc &#39;drush --root /var/www/drupal/web -l ${DRUPAL_DEFAULT_SITE_URL} vbo-exec content emit_node_event --configuration=&quot;queue=islandora-indexing-fcrepo-content&amp;event=Update&quot;&#39;
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>docker compose exec -T drupal-dev with-contenv bash -lc &#39;drush --root /var/www/drupal/web -l ${DRUPAL_DEFAULT_SITE_URL} vbo-exec media emit_media_event --configuration=&quot;queue=islandora-indexing-fcrepo-media&amp;event=Update&quot;&#39;
+</span></code></pre></div>
+<h3 id="reindex-blazegraph">Reindex Blazegraph<a class="headerlink" href="#reindex-blazegraph" title="Permanent link">&para;</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This requires the <a href="https://www.drupal.org/project/views_bulk_operations">Views Bulk Operations module</a></p>
+</div>
+<p>You can reindex all of your Drupal data into Blazegraph, by running the following commands:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>docker compose exec -T drupal-dev with-contenv bash -lc &#39;drush --root /var/www/drupal/web -l ${DRUPAL_DEFAULT_SITE_URL} vbo-exec all_taxonomy_terms emit_term_event --configuration=&quot;queue=islandora-indexing-triplestore-index&amp;event=Update&quot;&#39;
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>docker compose exec -T drupal-dev with-contenv bash -lc &#39;drush --root /var/www/drupal/web -l ${DRUPAL_DEFAULT_SITE_URL} vbo-exec content emit_node_event --configuration=&quot;queue=islandora-indexing-triplestore-index&amp;event=Update&quot;&#39;
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>docker compose exec -T drupal-dev with-contenv bash -lc &#39;drush --root /var/www/drupal/web -l ${DRUPAL_DEFAULT_SITE_URL} vbo-exec media emit_media_event --configuration=&quot;queue=islandora-indexing-triplestore-index&amp;event=Update&quot;&#39;
+</span></code></pre></div>
 
   <hr>
 <div class="md-source-file">
@@ -2767,10 +2887,10 @@
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["content.action.edit"], "search": "../../assets/javascripts/workers/search.db81ec45.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../../../..", "features": ["content.action.edit"], "search": "../../../../assets/javascripts/workers/search.db81ec45.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.4b2c34cd.min.js"></script>
+      <script src="../../../../assets/javascripts/bundle.4b2c34cd.min.js"></script>
       
     
   </body>

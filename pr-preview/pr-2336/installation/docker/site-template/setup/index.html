@@ -496,7 +496,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../release-notes/8.x-2.0.md" class="md-nav__link">
+      <a href="../../../../release_notes/8.x-2.0/" class="md-nav__link">
         8.x-2.0 Release Notes
       </a>
     </li>
@@ -949,6 +949,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../containers/" class="md-nav__link">
+        Working in Your Containers
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../updating/" class="md-nav__link">
         Updating
       </a>
@@ -957,8 +971,36 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../backup/" class="md-nav__link">
+        Back Up and Restore
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../converting/" class="md-nav__link">
+        Converting ISLE-DC to Site Template
+      </a>
     </li>
   
 
@@ -2664,25 +2706,55 @@
 <p>For more information please see the documentation on <a href="https://docs.docker.com/reference/cli/docker/compose/pull/">docker compose pull</a> and <a href="https://docs.docker.com/reference/cli/docker/compose/build/">docker compose build</a></p>
 </div>
 <h2 id="adding-a-staging-site">Adding a Staging Site<a class="headerlink" href="#adding-a-staging-site" title="Permanent link">&para;</a></h2>
-<p>The process for setting up a staging site is the same as production, but you will need to change the <code>DOMAIN</code> variable in your <code>.env</code> file on your staging server, to contain the URL for your staging site.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>By default, the <code>.env</code> file is stored in the git repository for your site, which means there is only support for one URL. If you are adding a staging site, you may wish to modify this so that you do not accidentally push your staging URL to your git repository.</p>
-</div>
+<p>The process for setting up a staging site is the same as production, but you will need to use a different URL. Since the URL is set in the <code>.env</code> file, which is checked into your git repository, you may wish to use <code>docker-compose.override.yml</code> for this. In <code>docker-compose.override.yml</code> you will need to override anywhere the <code>DOMAIN</code> variable is used, for example:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>services:
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    cantaloupe-prod:
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>        labels:
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>            traefik.http.routers.cantaloupe_http.rule: &amp;traefik-host-cantaloupe-prod Host(`staging-url.com`) &amp;&amp; PathPrefix(`/cantaloupe`)
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>            traefik.http.routers.cantaloupe_https.rule: *traefik-host-cantaloupe-prod
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    drupal-prod:
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>        environment:
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>            DRUPAL_DEFAULT_CANTALOUPE_URL: &quot;https://staging-url.com/cantaloupe/iiif/2&quot;
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>            DRUPAL_DEFAULT_SITE_URL: &quot;staging-url.com&quot;
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>            DRUPAL_DRUSH_URI: &quot;https://staging-url.com&quot;
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>        labels:
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>            traefik.http.routers.drupal_http.rule: &amp;traefik-host-drupal-prod Host(`staging-url.com`)
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>            traefik.http.routers.drupal_https.rule: *traefik-host-drupal-prod
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    fcrepo-prod:
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>        environment:
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>            FCREPO_ALLOW_EXTERNAL_DRUPAL: &quot;https://staging-url.com&quot;
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>        labels:
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>            traefik.http.routers.fcrepo_http.rule: &amp;traefik-host-fcrepo-prod Host(`fcrepo.staging-url.com`)
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>            traefik.http.routers.fcrepo_https.rule: *traefik-host-fcrepo-prod
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>    traefik-prod:
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>        networks:
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>            default:
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>                aliases:
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>                    # Allow services to connect on the same name/port as the outside.
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>                    - &quot;staging-url.com&quot; # Drupal is at the root domain.
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>                    - &quot;fcrepo.staging-url.com&quot;
+</span></code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Restricting Access to Staging Servers</p>
-<p>Using letsencrypt to generate your certs requires port 80 to be accessible on your server. If you would like to keep your site private by limiting access to certain IP addresses, you can still firewall port 443, but you will have to leave port 80 open. If you need to firewall port 80 as well, you will have to either use your own certs or look into another method of generating certs.</p>
+<p>Using letsencrypt to generate your certs requires port 80 to be accessible on your server. If you would like to keep your site private by limiting access to certain IP addresses, you can still firewall port 443, but you will have to leave port 80 open. Alternatively, you can use <a href="https://doc.traefik.io/traefik/middlewares/http/ipallowlist/">Traefik's IPAllowList middleware</a> to restrict access to outside IPs.</p>
 </div>
 <h2 id="adding-demo-content">Adding Demo Content<a class="headerlink" href="#adding-demo-content" title="Permanent link">&para;</a></h2>
 <p>If you are spinning up a new site for testing, you can add some demo content to your site by running
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>[ -d &quot;islandora_workbench&quot; ] || (git clone https://github.com/mjordan/islandora_workbench)
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>cd islandora_workbench ; cd islandora_demo_objects || git clone https://github.com/Islandora-Devops/islandora_demo_objects.git
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>$(SED_DASH_I) &#39;s#^host.*#host: $(SITE)/#g&#39; islandora_workbench/islandora_demo_objects/create_islandora_objects.yml
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>$(SED_DASH_I) &#39;s/^password.*/password: &quot;$(shell cat secrets/DRUPAL_DEFAULT_ACCOUNT_PASSWORD | sed s#/#\\\\\\\\/#g)&quot;/g&#39; islandora_workbench/islandora_demo_objects/create_islandora_objects.yml
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>cd islandora_workbench &amp;&amp; docker build -t workbench-docker .
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>cd islandora_workbench &amp;&amp; docker run -it --rm --network=&quot;host&quot; -v $(QUOTED_CURDIR)/islandora_workbench:/workbench --name my-running-workbench workbench-docker bash -lc &quot;./workbench --config /workbench/islandora_demo_objects/create_islandora_objects.yml&quot;
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>`docker compose exec -T drupal-dev with-contenv bash -lc &#39;drush --root /var/www/drupal/web -l ${DRUPAL_DEFAULT_SITE_URL} search-api-reindex&#39;
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>docker compose exec -T drupal-dev with-contenv bash -lc &#39;drush --root /var/www/drupal/web -l ${DRUPAL_DEFAULT_SITE_URL} search-api-index&#39;
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>[ -d &quot;islandora_workbench&quot; ] || (git clone https://github.com/mjordan/islandora_workbench)
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>[ -d &quot;islandora_workbench/islandora_demo_objects&quot; ] || git clone https://github.com/Islandora-Devops/islandora_demo_objects.git islandora_workbench/islandora_demo_objects
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>cd islandora_workbench &amp;&amp; docker build --build-arg USER_ID=$(id -u) --build-arg GROUP_ID=$(id -g) -t workbench-docker .; cd ..
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>perl -i -pe &#39;s#^host.*#host: &quot;https://islandora.dev&quot;#g&#39; islandora_workbench/islandora_demo_objects/create_islandora_objects.yml
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>perl -i -pe &#39;s#^input_dir.*#input_dir: &quot;islandora_demo_objects&quot;#g&#39; islandora_workbench/islandora_demo_objects/create_islandora_objects.yml
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>perl -i -pe &#39;s#^input_csv.*#input_csv: &quot;create_islandora_objects.csv&quot;#g&#39; islandora_workbench/islandora_demo_objects/create_islandora_objects.yml
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>grep secure_ssl_only islandora_workbench/islandora_demo_objects/create_islandora_objects.yml || echo &#39;secure_ssl_only: false&#39; &gt;&gt; islandora_workbench/islandora_demo_objects/create_islandora_objects.yml
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>cd islandora_workbench &amp;&amp; docker run -it --rm --network=&quot;host&quot; -v .:/workbench --name my-running-workbench workbench-docker bash -lc &quot;./workbench --config islandora_demo_objects/create_islandora_objects.yml&quot;; cd ..
 </span></code></pre></div></p>
 <h2 id="custom-themes-modules">Custom Themes &amp; Modules<a class="headerlink" href="#custom-themes-modules" title="Permanent link">&para;</a></h2>
 <p>You may wish to copy themes and modules into your project directly, instead of using Composer to manage them. For example, if you are creating your own theme instead of using a contributed one.</p>
@@ -2695,7 +2767,7 @@
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 29, 2024</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">May 28, 2025</span>
       
     
   </small>

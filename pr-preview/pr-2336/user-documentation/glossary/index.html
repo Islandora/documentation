@@ -492,7 +492,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../release-notes/8.x-2.0.md" class="md-nav__link">
+      <a href="../../release_notes/8.x-2.0/" class="md-nav__link">
         8.x-2.0 Release Notes
       </a>
     </li>
@@ -879,6 +879,20 @@
   
   
     <li class="md-nav__item">
+      <a href="../../installation/docker/site-template/containers/" class="md-nav__link">
+        Working in Your Containers
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../installation/docker/site-template/updating/" class="md-nav__link">
         Updating
       </a>
@@ -887,8 +901,36 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/docker/site-template/backup/" class="md-nav__link">
+        Back Up and Restore
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/docker/converting/" class="md-nav__link">
+        Converting ISLE-DC to Site Template
+      </a>
     </li>
   
 
@@ -2732,8 +2774,22 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#field-formatter" class="md-nav__link">
+    Field formatter
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#field-type" class="md-nav__link">
     Field type
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#field-storage" class="md-nav__link">
+    Field Storage
   </a>
   
 </li>
@@ -2762,6 +2818,13 @@
         <li class="md-nav__item">
   <a href="#glam" class="md-nav__link">
     GLAM
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gui" class="md-nav__link">
+    GUI
   </a>
   
 </li>
@@ -3007,6 +3070,13 @@
         <li class="md-nav__item">
   <a href="#resource-node" class="md-nav__link">
     Resource Node
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#source-field" class="md-nav__link">
+    Source Field
   </a>
   
 </li>
@@ -3347,8 +3417,22 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#field-formatter" class="md-nav__link">
+    Field formatter
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#field-type" class="md-nav__link">
     Field type
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#field-storage" class="md-nav__link">
+    Field Storage
   </a>
   
 </li>
@@ -3377,6 +3461,13 @@
         <li class="md-nav__item">
   <a href="#glam" class="md-nav__link">
     GLAM
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gui" class="md-nav__link">
+    GUI
   </a>
   
 </li>
@@ -3627,6 +3718,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#source-field" class="md-nav__link">
+    Source Field
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#taxonomy-term" class="md-nav__link">
     Taxonomy term
   </a>
@@ -3757,9 +3855,9 @@
 <h2 id="blazegraph">Blazegraph<a class="headerlink" href="#blazegraph" title="Permanent link">&para;</a></h2>
 <p>Blazegraph is an open source triplestore and graph database. Islandora ships Blazegraph as part of the software stack. Metadata about <a href="#resource-node">Resource nodes</a> is synchronized between the <a href="#drupal">Drupal</a> database and Blazegraph. Data in the Blazegraph triple store can be queried using SPARQL.</p>
 <h2 id="bundle">Bundle<a class="headerlink" href="#bundle" title="Permanent link">&para;</a></h2>
-<p>A bundle is the generic name for a sub-type of a <a href="#content-entity">Content Entity</a> type in <a href="#drupal">Drupal</a>. To illustrate: Node and Taxonomy Term are both names of Content Entity types, and both have sub-types ("bundles"). The bundles of Node are called <a href="#content-types">"Content Types"</a> and the bundles of <a href="#taxonomy-term">Taxonomy Term</a> are called <a href="#vocabulary">"Vocabularies"</a>. Each bundle includes its own configurations of what <a href="#field">fields</a> are present on the bundle and how they are entered and displayed. A bundle is thus part of the <a href="#configuration">configuration</a> of your site. Some Content Entity Types, such as User, do not have bundles.</p>
+<p>A bundle is the generic name for a sub-type of a <a href="#content-entity">Content Entity</a> type in <a href="#drupal">Drupal</a>. To illustrate: Node and Taxonomy Term are both names of Content Entity types, and both have sub-types ("bundles"). The bundles of Node are called <a href="#content-types">"Content Types"</a> and the bundles of <a href="#taxonomy-term">Taxonomy Term</a> are called <a href="#vocabulary">"Vocabularies"</a>. Each bundle includes its own configurations of what <a href="#field">fields</a> are present on the bundle and how they are entered and displayed. A bundle is thus part of the <a href="#configuration">configuration</a> of your site. Some fieldable Content Entity Types, such as User, do not have bundles.</p>
 <h2 id="cantaloupe">Cantaloupe<a class="headerlink" href="#cantaloupe" title="Permanent link">&para;</a></h2>
-<p><a href="https://cantaloupe-project.github.io">Cantaloupe</a> is an image server written in Java. It implements the <a href="#iiif">IIIF</a> Image API, which means it handles deep zooming of large images and other image manipulations. It is required to serve images to some <a href="#viewers">viewers</a> such as <a href="#mirador">Mirador</a> and <a href="#openseadragon">OpenSeadragon</a>.</p>
+<p><a href="https://cantaloupe-project.github.io">Cantaloupe</a> is an image server written in Java. It implements the <a href="#iiif">IIIF</a> Image API, which means it handles deep zooming of large images and other image manipulations. It is required to serve images to some <a href="#viewer">viewers</a> such as <a href="#mirador">Mirador</a> and <a href="#openseadragon">OpenSeadragon</a>.</p>
 <h2 id="checksum">Checksum<a class="headerlink" href="#checksum" title="Permanent link">&para;</a></h2>
 <p>Checksums are a sequence of numbers and letters to check data for errors. If you know the checksum of an original file, you can use a checksum utility to confirm your copy is identical. Checksums can be used to check the <a href="#fixity">Fixity</a> of a file.</p>
 <h2 id="claw">CLAW<a class="headerlink" href="#claw" title="Permanent link">&para;</a></h2>
@@ -3777,17 +3875,17 @@
 <h2 id="content">Content<a class="headerlink" href="#content" title="Permanent link">&para;</a></h2>
 <p>See also: <a href="#content-entity">Content Entity</a></p>
 <p>Contrast: <a href="#configuration">Configuration</a></p>
-<p>In <a href="#drupal">Drupal</a>, your content is the total set of things that have been created or uploaded "as content" in your website. This includes all <a href="#content-entities">content entities</a> - the actual nodes, media, files, taxonomy terms, etc, but does not include anything that is <a href="#configuration">configuration</a>. Content can be exported and imported, but only between sites with exactly the same configuration.</p>
-<p>Sometimes, "Content" is used to refer to <a href="#nodes">Nodes</a> but not other content entities. This is the case when creating a new <a href="#view">View</a> and one of the options is to make a view of "Content".</p>
+<p>In <a href="#drupal">Drupal</a>, your content is the total set of things that have been created or uploaded "as content" in your website. This includes all <a href="#content-entity">content entities</a> - the actual nodes, media, files, taxonomy terms, etc, but does not include anything that is <a href="#configuration">configuration</a>. Content can be exported and imported, but only between sites with exactly the same configuration.</p>
+<p>Sometimes, "Content" is used to refer to <a href="#node">Nodes</a> but not other content entities. This is the case when creating a new <a href="#view">View</a> and one of the options is to make a view of "Content".</p>
 <h2 id="content-entity">Content entity<a class="headerlink" href="#content-entity" title="Permanent link">&para;</a></h2>
 <p>See also: <a href="#content">Content</a></p>
 <p>Contrast: <a href="#configuration-entity">Configuration entity</a></p>
-<p>In <a href="#drupal">Drupal</a>, content entities are the actual <a href="#node">nodes</a>, <a href="#media">media</a>, <a href="#taxonomy-term">taxonomy terms</a>, users, comments, and files that you've created on your site. For example, you may have 223 nodes, 534 media, 1000 taxonomy terms, 14 users, and 535 files in your site - those counts represent the numbers of content entities present in your site. "Node", "Media", "Taxonomy term" etc. are the high-level "types" of content entities. Some of these types have sub-types which are called <a href="#bundles">bundles</a>.</p>
-<p>Content entities should not be confused with <a href="#content-types">content types</a>, which are <a href="#bundles">bundles</a> of <a href="#nodes">nodes</a>, and are part of a site's <a href="#configuration">configuration</a>.</p>
+<p>In <a href="#drupal">Drupal</a>, content entities are the actual <a href="#node">nodes</a>, <a href="#media">media</a>, <a href="#taxonomy-term">taxonomy terms</a>, users, comments, and files that you've created on your site. For example, you may have 223 nodes, 534 media, 1000 taxonomy terms, 14 users, and 535 files in your site - those counts represent the numbers of content entities present in your site. "Node", "Media", "Taxonomy term" etc. are the high-level "types" of content entities. Some of these types have sub-types which are called <a href="#bundle">bundles</a>.</p>
+<p>Content entities should not be confused with <a href="#content-type">content types</a>, which are <a href="#bundle">bundles</a> of <a href="#node">nodes</a>, and are part of a site's <a href="#configuration">configuration</a>.</p>
 <h2 id="content-model">Content model<a class="headerlink" href="#content-model" title="Permanent link">&para;</a></h2>
 <p>Deprecated concept used in Islandora Legacy; see <a href="#islandora-model">Islandora Model</a>.</p>
 <h2 id="content-type">Content type<a class="headerlink" href="#content-type" title="Permanent link">&para;</a></h2>
-<p>A type of <a href="#node">Node</a>. Content types are the "<a href="#bundle">bundles</a>" of Nodes, which are a type of <a href="#content-entity in [Drupal](#drupal). A content type importantly defines a set of [fields](#field) and how they are displayed. While a content type describes a type of content entity, the information that makes up the content type itself is all part of your site's [configuration](#configuration">Content Entity</a>.</p>
+<p>A type of <a href="#node">Node</a>. Content types are the "<a href="#bundle">bundles</a>" of Nodes, which are a type of <a href="#content-entity">Content Entity</a> in <a href="#drupal">Drupal</a>. A content type importantly defines a set of <a href="#field">fields</a> and how they are displayed. While a content type describes a type of content entity, the information that makes up the content type itself is all part of your site's <a href="#configuration">configuration</a>.</p>
 <p>The standard Drupal Content types are 'Article' and 'Basic page'. <em>Islandora Starter Site</em> adds 'Repository Item' as a Content type, defining metadata fields typically used to describe digital resources. You can easily create your own content types.</p>
 <h2 id="context">Context<a class="headerlink" href="#context" title="Permanent link">&para;</a></h2>
 <p>An "if-this-then-that" configuration created using the Drupal <a href="https://www.drupal.org/project/context">Context</a> contrib module. Islandora extends the capabilities of Context by adding custom Conditions, custom Reactions, and by evaluating context at specific times to allow Contexts to be used for derivatives, indexing, and display.</p>
@@ -3813,9 +3911,51 @@
 <h2 id="ffmpeg">FFmpeg<a class="headerlink" href="#ffmpeg" title="Permanent link">&para;</a></h2>
 <p><a href="https://ffmpeg.org/">FFmpeg</a> is a cross-platform audio and video processing software. In Islandora, FFmpeg is provided by the <a href="#crayfish">Crayfish</a> <a href="#microservice">microservice</a>, <a href="#homarus">Homarus</a>.</p>
 <h2 id="field">Field<a class="headerlink" href="#field" title="Permanent link">&para;</a></h2>
-<p>Data of a certain type that is attached to a content entity. For instance, on a Resource Node <a href="#content-type">content type</a>, you might have fields for a title, description, display hints, subjects, and other metadata.</p>
+<p>Data of a certain type that is attached to a content entity. A field is made up of <a href="#field-storage">field storage</a> which inclues some low-level configuration that is shared across all <a href="#field-instance">field instances</a>, and a field instance, which configures how that field appears on a bundle. Fields also have field <a href="#widget">widgets</a> that govern data entry, and <a href="#field-formatter">field formatters</a> which control how the field is displayed to site visitors.</p>
 <h2 id="field-instance">Field instance<a class="headerlink" href="#field-instance" title="Permanent link">&para;</a></h2>
+<p>A field, configured to show up on a <a href="#bundle">bundle</a>. It is possible to reuse fields on different bundles, and they share the same <a href="#field-storage">field storage</a> but are different field instances and can have different configurations (such as field name, description, cardinality, required, etc).</p>
+<p>For example, the Repository Item Content type has a field instance for Alternative Title, with the following configuration:</p>
+<ul>
+<li>Display name: Alternative Title</li>
+<li>Help text: (blank)</li>
+<li>Required: no</li>
+<li>Translatable: yes</li>
+<li>Field visibility and permissions: not set</li>
+<li>Default value: none</li>
+</ul>
+<h2 id="field-formatter">Field formatter<a class="headerlink" href="#field-formatter" title="Permanent link">&para;</a></h2>
+<p>A field formatter configures how a <a href="#field-instance">field instance</a> is displayed to site visitors. The formatters available depend on the <a href="#field-type">field type</a>. For example, an EDTF-type field can use the "Default EDTF Formatter", which can be configured (per field instance) to be big- or little-endian, and to show year, month, and day info in a variety of ways. Field Formatters are configured on the "Manage Display" tab of a bundle.</p>
 <h2 id="field-type">Field type<a class="headerlink" href="#field-type" title="Permanent link">&para;</a></h2>
+<p>The type of a <a href="#field-instance">field instance</a> or <a href="#field-storage">field_storage</a>. Drupal Core defines several field types and modules can define additional field types. The field type determines what <a href="#widget">widgets</a> and <a href="#field-formatter">field formatters</a> are available, as well as what configuration options are available in the field instance. Some commonly used field types in Islandora include:</p>
+<ul>
+<li>Text (plain, long)<ul>
+<li>Allows long text values</li>
+<li>Displays the input text</li>
+</ul>
+</li>
+<li>Text (formatted, long)<ul>
+<li>Allows long text values</li>
+<li>If a format like “full_html” is set on the field, <p> will  be displayed as a paragraph break rather than <p></li>
+</ul>
+</li>
+<li>Entity reference<ul>
+<li>Populated by a link to another Drupal/Islandora entity</li>
+<li>Configurable behaviors include: what kind of entity can be linked to, how the data entry interface words (drop down menu or autocomplete), general patterns of how these references get displayed (show the referenced thing, show a link to the referenced thing, show unlinked name of the referenced thing). </li>
+</ul>
+</li>
+<li>Typed relation<ul>
+<li>An extended variation on Entity reference field type</li>
+<li>List of available relationship types (labeled “Available Relations”) can be configured per field instance. A code and a display value are recorded for each type (for example: relators:aut|Author). ‘relators’ acts as a linked data namespace. ‘aut’ is the code that, combined with the base namespace URI configured elsewhere, will create the linked data expression of what is recorded in this field ( this node hasAuthor taxonomyTermID )</li>
+</ul>
+</li>
+<li>EDTF<ul>
+<li>Holds a string formatted according to the EDTF standard</li>
+<li>What kinds of EDTF features are allowed can be configured in the <a href="#widget">widget</a> and how the date is presented to site visitors can be configured in the <a href="#field-formatter">field formatter</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="field-storage">Field Storage<a class="headerlink" href="#field-storage" title="Permanent link">&para;</a></h2>
+<p>Low-level configuration that determines how the field data is stored in the database. This often includes the maximum length of the data, and whether the field is single-valued or repeatable (though that can often be overridden at the field instance level). Compare: <a href="#field-instance">field instance</a></p>
 <h2 id="fits">FITS<a class="headerlink" href="#fits" title="Permanent link">&para;</a></h2>
 <p><a href="https://projects.iq.harvard.edu/fits">File Information Tool Set</a>, a set of software components for identifying, validating and extracting of technical metadata for a wide range of file formats.</p>
 <h2 id="fixity">Fixity<a class="headerlink" href="#fixity" title="Permanent link">&para;</a></h2>
@@ -3824,6 +3964,8 @@
 <p>Flysystem is a filesystem abstraction library for PHP. Islandora uses Flysystem to swap about different backend filesystem applications. Islandora provides a custom Flysystem adapter for <a href="#fedora-repository-software">Fedora</a>.</p>
 <h2 id="glam">GLAM<a class="headerlink" href="#glam" title="Permanent link">&para;</a></h2>
 <p>Acronym for "galleries, libraries, archives, and museums".</p>
+<h2 id="gui">GUI<a class="headerlink" href="#gui" title="Permanent link">&para;</a></h2>
+<p>Acronym for "Graphical User Interface". Often refers to taking actions through Drupal's administrative interface in a web browser as opposed to effecting the same changes through Drush or programmatically. </p>
 <h2 id="greenfield">Greenfield<a class="headerlink" href="#greenfield" title="Permanent link">&para;</a></h2>
 <p>An installation without legacy constraints. Usually refers to a brand new system where users load new content, as opposed to migrating content from a previous system.</p>
 <h2 id="imagemagick">Imagemagick<a class="headerlink" href="#imagemagick" title="Permanent link">&para;</a></h2>
@@ -3850,6 +3992,22 @@
 <h2 id="islandora-starter-site">Islandora Starter Site<a class="headerlink" href="#islandora-starter-site" title="Permanent link">&para;</a></h2>
 <p>The Islandora Starter Site is a way to install Drupal that provides a functional Islandora "out of the box." It was created from Islandora Defaults [now defunct] by discoverygarden inc, an Islandora vendor. The <a href="#islandora-install-profile">Islandora Install Profile</a> and the Starter Site share the same function (though they approach it differently) and it is not possible to use both.</p>
 <h2 id="islandora-model">Islandora model<a class="headerlink" href="#islandora-model" title="Permanent link">&para;</a></h2>
+<p>"Islandora Models" is a taxonomy vocabulary that comes by default with Islandora. As of 2024-08-12, it includes the following terms:</p>
+<ul>
+<li>Audio</li>
+<li>Binary</li>
+<li>Collection</li>
+<li>Compound Object</li>
+<li>Digital Document</li>
+<li>Image</li>
+<li>Newspaper</li>
+<li>Page</li>
+<li>Paged Content</li>
+<li>Publication Issue</li>
+<li>Video</li>
+</ul>
+<p>The Repository Item Content type (part of the Islandora Starter Site) has a “Model” field instance which is an Entity reference field configured to be populated by references to terms in this vocabulary. The “Model” field is one of only two required fields on the Repository Item in the default settings. </p>
+<p>Contexts and other system code (such as themes) may use this field to control the display and behavior of different Repository Item types. </p>
 <h2 id="islandora-playbook">Islandora playbook<a class="headerlink" href="#islandora-playbook" title="Permanent link">&para;</a></h2>
 <p>A set of human-readable <a href="#yaml">YAML</a> files, containing instructions for automatically configuring a server environment and installing the different components of the Islandora software stack. The instructions recorded in Playbook are executed by <a href="#ansible">Ansible</a>. The Islandora Playbook for Ansible is one of the installation methods currently supported by the Islandora community.</p>
 <h2 id="isle">ISLE<a class="headerlink" href="#isle" title="Permanent link">&para;</a></h2>
@@ -3898,8 +4056,10 @@ See also: <a href="#resource-node">Resource Node</a></p>
 <p>A Resource node is a generic Islandora term for a <a href="#drupal">Drupal</a> <a href="#node">Node</a> that represents a single conceptual item or object stored in an Islandora repository. It acts as a stand-in for all files and metadata associated with that item, and is the place where the item 'lives' as a visitable URI.</p>
 <p>The term 'Resource node' is specific to Islandora. Typically, Resource nodes in an Islandora installation will use a specific <a href="#content-type">Content type</a> for the digital assets stored in the repository.</p>
 <p>For example, a video stored in Islandora will have a Resource node, with metadata stored in <a href="#field">Fields</a>. Attached to the Resource node is a <a href="#media">Media</a> entity, which encapsulates the preservation-grade file. The Resource node may be linked to further <a href="#media">Media</a>, for instance for a thumbnail, web-friendly derivative, and technical metadata associated with the resource node. The Resource node may also belong to one or more collections.</p>
+<h2 id="source-field">Source Field<a class="headerlink" href="#source-field" title="Permanent link">&para;</a></h2>
+<p>A Drupal term for the main file-<a href="#field-type">type</a> <a href="#field">field</a> on a <a href="#media">Media</a>. The names of these fields differ across Media Types, such as "Image" (<code>field_media_image</code>) on Image media, and "Video File" (<code>field_media_video_file</code>) on Video media. While it is possible to add other fields, including file fields, to a Media, the source field is the one configured during the creation of a Media Type. Islandora provides utility functions to get the source field from a Media (<a href="https://github.com/Islandora/islandora/blob/2.x/src/MediaSource/MediaSourceService.php">MediaSourceService.php</a>).</p>
 <h2 id="taxonomy-term">Taxonomy term<a class="headerlink" href="#taxonomy-term" title="Permanent link">&para;</a></h2>
-<p>A <a href="#drupal">Drupal</a> <a href="#content-entity">Content Entity</a> of the type 'taxonomy term'. Taxonomy terms belong to <a href="#vocabularies">vocabularies</a> which define what <a href="#fields">fields</a> are available and how they behave. Drupal generally uses <a href="#taxonomy-term">terms contained in taxonomies or vocabularies</a> to classify content (tag or category). Taxonomy terms are used in Islandora to establish locally controlled vocabularies for describing resources, for instance for standardised spellings of names or subject terms.</p>
+<p>A <a href="#drupal">Drupal</a> <a href="#content-entity">Content Entity</a> of the type 'taxonomy term'. Taxonomy terms belong to <a href="#vocabulary">vocabularies</a> which define what <a href="#field">fields</a> are available and how they behave. Drupal generally uses <a href="#taxonomy-term">terms contained in taxonomies or vocabularies</a> to classify content (tag or category). Taxonomy terms are used in Islandora to establish locally controlled vocabularies for describing resources, for instance for standardised spellings of names or subject terms.</p>
 <h2 id="tesseract">Tesseract<a class="headerlink" href="#tesseract" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/tesseract-ocr/tesseract">Tesseract</a> is an open-source OCR (Optical Character Recognition) software. It can perform OCR in multiple languages. It can produce OCR (plain text) and <a href="#hocr">hOCR</a> (HTML, which includes positional data). In Islandora, Tesseract is provided by the <a href="#crayfish">Crayfish</a> <a href="#microservice">Microservice</a>, <a href="#hypercube">Hypercube</a>.</p>
 <h2 id="theme">Theme<a class="headerlink" href="#theme" title="Permanent link">&para;</a></h2>
@@ -3909,7 +4069,7 @@ See also: <a href="#resource-node">Resource Node</a></p>
 <h2 id="vbo">VBO<a class="headerlink" href="#vbo" title="Permanent link">&para;</a></h2>
 <p>See <a href="#views-bulk-operations">Views Bulk Operations</a>.</p>
 <h2 id="view">View<a class="headerlink" href="#view" title="Permanent link">&para;</a></h2>
-<p>Drupal Views let you query the database to generate lists of <a href="#content-entity">content</a>, and format them as lists, tables, slideshows, maps, <a href="#blocks">blocks</a>, and many more. The Views UI module, part of Drupal Core, provides a powerful administrator interface for creating and editing views without any code. There is a large ecosystem of extension modules for Views.</p>
+<p>Drupal Views let you query the database to generate lists of <a href="#content-entity">content</a>, and format them as lists, tables, slideshows, maps, blocks, and many more. The Views UI module, part of Drupal Core, provides a powerful administrator interface for creating and editing views without any code. There is a large ecosystem of extension modules for Views.</p>
 <p>Views power many of the Islandora features, including <a href="#viewer">viewers</a>, <a href="#iiif-manifest">IIIF Manifests</a>, and search.</p>
 <h2 id="view-mode">View Mode<a class="headerlink" href="#view-mode" title="Permanent link">&para;</a></h2>
 <p>A View Mode is a way that a piece of Drupal <a href="#content-entity">content</a> can be rendered. View modes let you create alternate configurations for what <a href="#field">fields</a> get displayed, in what order, and rendered in what field formatters. View modes are created under Manage &gt; Display Modes &gt; View Modes, but are configured at the <a href="#bundle">bundle</a> level (after first enabling that view mode to have its own configuration). If the requested view mode does not have a custom configuration, then the "Default" view mode will be used.</p>
@@ -3934,7 +4094,7 @@ See also: <a href="#resource-node">Resource Node</a></p>
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 29, 2024</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">May 28, 2025</span>
       
     
   </small>
