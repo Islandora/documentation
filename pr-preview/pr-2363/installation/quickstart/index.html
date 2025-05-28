@@ -270,13 +270,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#ansible-playbook" class="md-nav__link">
-    Ansible Playbook
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#isle-site-template" class="md-nav__link">
     ISLE Site Template
   </a>
@@ -286,6 +279,13 @@
         <li class="md-nav__item">
   <a href="#isle-dc" class="md-nav__link">
     ISLE-DC
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ansible-playbook" class="md-nav__link">
+    Ansible Playbook
   </a>
   
 </li>
@@ -2621,13 +2621,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#ansible-playbook" class="md-nav__link">
-    Ansible Playbook
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#isle-site-template" class="md-nav__link">
     ISLE Site Template
   </a>
@@ -2637,6 +2630,13 @@
         <li class="md-nav__item">
   <a href="#isle-dc" class="md-nav__link">
     ISLE-DC
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ansible-playbook" class="md-nav__link">
+    Ansible Playbook
   </a>
   
 </li>
@@ -2671,12 +2671,12 @@
 <p>Try Islandora without installing anything at <a href="https://sandbox.islandora.ca/">sandbox.islandora.ca</a>.
 <a href="https://github.com/Islandora/documentation/wiki/Sandbox.Islandora.ca-online-credentials">Login credentials</a> for the sandbox can be found on our Wiki.</p>
 <p>Anyone can log in to this sandbox as an administrator and explore the interface! However, this site is refreshed every night so your changes will not be permanent. This site uses the Islandora Starter Site. This sandbox includes some sample content and configuration (such as views and blocks) to increase its usefulness as a sandbox. .</p>
-<h2 id="ansible-playbook">Ansible Playbook<a class="headerlink" href="#ansible-playbook" title="Permanent link">&para;</a></h2>
-<p>To provision a local Vagrant or remote Ubuntu virtual machine (without Docker), you can use the <a href="https://github.com/Islandora-Devops/islandora-playbook">Islandora Ansible Playbook</a>. The playbook results in all services installed on a single machine, but can be altered to spread services across various machines. This is a full-fledged VM where you can install modules and themes using Composer. This method requires basic command-line usage and it's advantageous if you are familiar with provisioning software on Ubuntu. This Playbook is suitable for local or production use, though local use (through VirtualBox and Vagrant) is not supported yet by Apple hardware (i.e. M1/M2 machines). See documentation: <a href="../playbook/">Installation - Ansible Playbook</a> for more details.</p>
 <h2 id="isle-site-template">ISLE Site Template<a class="headerlink" href="#isle-site-template" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/Islandora-Devops/isle-site-template">ISLE Site Template</a> uses Docker and is based off images created by <a href="https://github.com/Islandora-Devops/isle-buildkit">ISLE Buildkit</a>, but is a simpler tool than ISLE-DC. This is a full-fledged Docker installation where you can install modules and themes using Composer, either by executing commands in the container or by using the built-in IDE.  It is suitable for local development or production. See documentation: <a href="../docker/site-template/site-template/">Installation - Site Template</a> for more details. </p>
 <h2 id="isle-dc">ISLE-DC<a class="headerlink" href="#isle-dc" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/Islandora-Devops/isle-dc">ISLE-DC</a> uses Docker and provisions each service in the Islandora stack in a separate container. The containers are also based off of the images in ISLE Buildkit. ISLE-DC uses the <a href="https://www.gnu.org/software/make/">GNU Make</a> tool to provide several shortcuts to performing common management functions. It is suitable for local development or production.  See documentation: <a href="../docker/isle-dc/docker-local/">Installation - Docker ISLE</a> for more details.</p>
+<h2 id="ansible-playbook">Ansible Playbook<a class="headerlink" href="#ansible-playbook" title="Permanent link">&para;</a></h2>
+<p>To provision a local Vagrant or remote Ubuntu virtual machine (without Docker), you can use the <a href="https://github.com/Islandora-Devops/islandora-playbook">Islandora Ansible Playbook</a>. The playbook results in all services installed on a single machine, but can be altered to spread services across various machines. This is a full-fledged VM where you can install modules and themes using Composer. This method requires basic command-line usage and it's advantageous if you are familiar with provisioning software on Ubuntu. This Playbook is suitable for local or production use, though local use (through VirtualBox and Vagrant) is not supported yet by Apple hardware (i.e. M1/M2 machines). See documentation: <a href="../playbook/">Installation - Ansible Playbook</a> for more details.</p>
 
   <hr>
 <div class="md-source-file">
