@@ -1,114 +1,364 @@
 # Metadata in Islandora
 
-!!! note "Metadata vs Fields in the Starter Site"
-    To learn about the default out-of-the-box metadata fields, see [Starter Site Metadata Configuration](starter-site-metadata-configuration.md). This page describes technical details about how metadata is handled as fields in Drupal and provides a deeper understanding of, and tools for modifying, your metadata configuration.
+!!! note "See also: Fields in the Starter Site"
+    This page describes technical details about how metadata is handled as 
+fields in Drupal and provides a deeper understanding of, and tools for 
+modifying, your metadata configuration. If you want to learn about what 
+metadata fields come out-of-the-box with Islandora, see [Starter Site Metadata 
+Configuration](starter-site-metadata-configuration.md). 
 
-> 1-minute synopsis: In Islandora, metadata is stored in Drupal, in _fields_ attached to _entities_ (nodes or media). This allows us to interact with metadata (add, edit, remove, display, index in a search engine...) almost entirely using standard Drupal processes. If exporting this metadata to Fedora and/or a triplestore, the values are serialized to RDF using mappings that can be set for each bundle.
+> 1-minute synopsis: In Islandora, metadata is stored natively in Drupal, in 
+> _fields_.
+> Drupal fields are configured per _content type_ (and per _media type_ for 
+> media and per 
+> _vocabulary_ for taxonomy terms ). Fields have different _field types_ which 
+> determine how you can interact with them (e.g. what content is allowed, how the values 
+> can be displayed). Almost all of our interactions with metadata use standard 
+> Drupalisms, though Islandora does add a few specialized field types and 
+> methods of serialization. 
 
-!!! note "Drupal 8 Terminology"
-    In Drupal 8, Fields can be attached to _bundles_ (sometimes called _entity sub-types_ -- e.g. Content types, Media types, Vocabularies) or _entities_ (e.g. Users). For more on Fields, see ["2.3 Content Entities and Fields"](https://www.drupal.org/docs/user_guide/en/planning-data-types.html) and ["6.3 Adding Basic Fields to a Content Type"](https://www.drupal.org/docs/user_guide/en/structure-fields.html) in the Official Drupal Guide.
+!!! note "Drupal Terminology"
+    In Drupal, a generic term for things that can have fields is 
+_bundle_ (synonymously, _entity sub-type_). For example, "Repository 
+Item" (a content type), "Image" (a Media type), and "Genre" (a Vocabulary) 
+are bundles. Rarely, fields are attached directly to _entity types_ when the 
+entity type does not have bundles (e.g. Users). For more on Fields, see 
+["2.3 Content Entities and Fields"](https://www.drupal.org/docs/user_guide/en/planning-data-types.html), ["6.3 Adding Basic Fields 
+to a Content Type"](https://www.drupal.org/docs/user_guide/en/structure-fields.html), and ["Introduction to Entity API in Drupal 8"](https://www.drupal.org/docs/drupal-apis/entity-api/introduction-to-entity-api-in-drupal-8) in the Official Drupal 
+Guide.
 
 <!-- Next revision: check status of changing 'bundles' to 'entity sub-types' (https://www.drupal.org/project/drupal/issues/1380720). -->
 
-As described in the [resource nodes section](content-models.md#resource-nodes), Islandora digital objects are comprised of _Drupal nodes_ for descriptive metadata, _Drupal media_ for technical metadata, and _Drupal files_ for the binary objects. This section describes how Islandora uses and extends Drupal fields to manage descriptive metadata.
+!!! note Metadata - Structural, Descriptive and Technical
+    As described in the [resource nodes section](content-models.
+md#resource-nodes), Islandora digital objects are comprised of _Drupal 
+nodes_ for structural and descriptive metadata, _Drupal media_ for technical 
+metadata, 
+and _Drupal files_ for the binary objects. This section focuses on 
+structural and descriptive metadata on nodes, but the same concepts apply to 
+technical metadata fields on Media types.
 
-## Content Types
+## Metadata profiles in Drupal: Content Types, Media Types, and Vocabularies
+### Content Types
 
-In Drupal, Nodes come in different subtypes called [Content Types](glossary.md#content-type). These let you define a type of content ("Article" and "Basic Page" are Drupal defaults and "Repository Item" is an Islandora specific example), the set of metadata fields that are attached to that content, and how those fields can be edited and displayed. Each content type is essentially a metadata profile that can be used for a piece of web content, or to describe a digital resource. You can create your own content types for your Islandora project or use a pre-defined one like Repository Item from the Islandora Starter Site. We will go over the metadata specific aspects of Content Types below, but see [our tutorial for a fuller walk-through of creating a content type](content-types.md#create-a-content-type).
+When we create a piece of content in Drupal (such as via the "Add Content" 
+links), the thing we create is a _node_. Even before creating a node, we must 
+select a _content 
+type_.  A content type, generically 
+known as a _bundle_ or _node sub-type_, includes: 
+* basic properties like name (display name and machine name)
+* field definitions
+* form configurations
+* display configurations. 
+Each content type determines what fields are available, how (meta)data can be 
+  entered and validated, and how (meta)data is displayed, so it is essentially a metadata profile. 
 
-Not all content types in your Drupal site need be [Islandora Resource Nodes](content-models.md#resource-nodes). Making a content type a Resource Node will associate Islandora specific behaviours (such as syncing to Fedora or causing derivatives to be generated) with it. The decision to make a content an Islandora resource node is left to the discretion of the site manager. In Islandora, a "resource node" is usually considered a descriptive record for "a thing", and is conceptually similar to an "Islandora Object" in 7.x, i.e. a "Fedora Object" in Fedora 3.x and below. Read more on configuring a content type to be treated as a Resource Node.
+!!! tip "You cannot change an entity's bundle."
+Once a node is created, its content type cannot be changed. The same
+holds for media and taxonomy terms and their respective bundles.
+However, you can create a new node of the
+intended content type, map the field values (programmatically or by
+copy-and-paste), and update any media or children that refer to the old
+node to refer to the new one.
 
-### Fields
+The content types 
+available out-of-the-box in Islandora are "Article", "Page", and "Repository 
+Item" - the first two are part of Drupal's Standard Install and contain 
+fields for generic web content, while "Repository 
+Item" was created by the Islandora community as a starting point for you to 
+customize your repository content.
 
-The administrator will define the fields that are associated with a specific content type . The same fields can be applied to different content type , but the field display and editing configurations are unique to each content type. The names and definitions of these fields are specific to Drupal and do not have to correspond to an outside metadata schema. You will give each field a Label, Machine Name, and a specific [Field Type](#field-types), like Text, Integer, EDTF, or Entity Reference (see below). Specific to the Field Type you will then define the maximum length of the field, the number of values it can contain, and what taxonomies it might link to.
+!!! note "Do I need to make a custom content type?"
+    The Repository Item content type was designed to be flexible and 
+    extensible. It is possible to have an entire repository (with 
+    heterogenous content) using only Repository Item - and may sites do. To 
+    assist with this, the Repository Item content type has a field, "Model", 
+    that 
+    can be used to configure custom behaviours (i.e. view modes, viewers, etc) 
+    based on the type of item: for instance, whether it is a collection, a 
+    digital document, or an audio file. You can also extend Repository Item 
+    with whatever fields you like, or remove the fields that are present 
+    (except the fields that are structural). 
+    You can also create a custom content type (or multiple). As long as they
+    have the 
+    field with machine name `field_member_of` then they can be used 
+    to hold Islandora content. If you're using multiple content types with 
+    Islandora, consider that sharing fields across content types makes it 
+    easier to use field-based features in search and Views. See [our tutorial 
+for a fuller walk-through of creating a content type](content-types.md#create-a-content-type).
 
-Fields can be added under **Administration** >> **Structure** >> **Content types** >> _Your Content Type's Name_ >> **Manage fields** (/admin/structure/types/your_type/fields). This tab will list all Fields, their Label, Machine Name, Field Type, and give you the option to make what edits to the definition of that field that you can.
+### Media Types
 
-Certain decisions must be made when fields are created, and before any content is added, because they can not be changed later. Field Type can not be changed, so you wouldn't be able to change a text field to a taxonomy field after creation. The field's machine name also can't be changed. The number of values allowed in a field or its maximum length or type of item to reference (in the case of Entity reference fields) can not be changed after content has been added. You can, however, always add new fields to a content type, even after content has been added.
+Media types are bundles (like content types, but) for Media. A media type is a 
+collection of fields (along with one special field, usually a file field, 
+that is known as the "storage"). We use fields on media types to store 
+technical 
+metadata such as the height and width of images, mimetype, and file size. If 
+you like, you can add additional metadata fields to media. 
 
-!!! islandora "7.x Migration Note: What About My MODS XML?"
-    Even when using the Islandora Starter Site, there is no "official" metadata schema in Islandora. Where Islandora 7.x used MODS, and took advantage of its hierarchical/extensible structure, Drupal Fields are a flat structure working with distinct, individual elements. You can base your fields on those in MODS, or any other schema, but that structure is up to you. The Metadata Interest Group has developed a sample [MODS-Drupal-RDF mapping](https://docs.google.com/spreadsheets/d/18u2qFJ014IIxlVpM3JXfDEFccwBZcoFsjbBGpvL0jJI/edit?pli=1#gid=0), which provides a structure upon which you can build your Drupal fields. It is used by the Repository Item content type in the Islandora Starter Site.
+### Vocabularies
 
+Vocabularies are bundles for taxonomy terms (sometimes just called "terms"). 
+Unlike nodes or media, terms within vocabularies have an ordering, and can have hierarchical structure, but do not need to. 
 
-!!! tip "you cannot change the Content Type of a node"
-    Once a node is created, its content type cannot be changed. Just as you are unable to change many aspects of a Field once it has been created, once a node has been created it is now permanently of that content type and the fields associated with it. At that point your only option would be to create a new node of the intended content type, map the field values (programmatically or by copy-paste), and update any media or children that refer to the old node to refer to the new one.
+Vocabularies allow you to
+add additional descriptive metadata fields to the controlled terms in your 
+repository (e.g. People, Genres, Subjects, ...). One example is the Person 
+vocabulary, which out-of-the-box lets you store and display birth dates, death 
+dates, and alternate names.
 
-
-The Islandora Starter Site provides a **Repository Item** content type that can be used as a structure to build your collection around, or it can be used as a sample to see how fields in content types work. It pre-defines fields, including **Alternative Title** and **Date Issued** that could be of use in many digital repositories. The full list of fields and their field types can be seen in the screenshot below.
-
-![Screenshot of the "Manage fields" page for the "Repository Item" content type from Islandora Starter Site.](../assets/metadata_content_type_screenshot.png)
-
-!!! tip "Titles Aren't Conventionally-Configurable Fields"
-    The field *title* is built-in to each content type by default, and can be referenced in views, templates, and indexing like other fields, but it cannot be configured like other fields. The only aspect you can change about *title* is its label. It has a built-in maximum length of 255 characters which cannot be changed. If your content requires longer titles we recommend you create a separate "long_title" field to store the full title and reserve the default title field for a display title.
-    There is a contributed module called [Node Title Length](https://www.drupal.org/project/title_length), which allows an administrator to configure the length of the title field in the core node table. However, this only works on nodes (not media or other entities) and involves meddling in a core Drupal database schema, which makes some people uneasy.
-
-
-### Content Entry Form/Manage Form Display
-
-After creating the Fields for a content type you'll be able to manage the form used by content creators to create Nodes of that content type. On the **Manage form display** tab you'll be able to edit this form by arranging the order of the fields, choose what Widget will define the entry options for a field, and then set certain settings for that Widget. Fields are arranged by dragging the cross to the left of the **Label**. They can also be removed from the form, but not the content type, by dragging them to the bottom of the list under the **Disabled** heading. Widgets are defined by Field Type, so an Entity reference field could use auto complete, a select list, or even checkboxes, and are chosen from a drop-down list. The widget settings are accessed through the gear on the far right of a row and may allow you to set the size of an entry field, whether the field *Label* is displayed, or if you use placeholder text.
-
-
-### Content Display/Manage Display
-
-The **Manage display** tab is where you will make decisions about how to
-display the metadata. Order is arranged as above, and can again be
-dragged to the **Disabled** section to hide the field from display. You can
-choose whether a field's label is displayed above the value, in-line, or
-hidden.
-
-## Vocabularies
-
-See also: [MIG Presentation on Taxonomies](https://docs.google.com/presentation/d/1LfpU6H4qxXtnYQPFntwMNtsgtU30yzp2MxwKKAllUOc/edit?usp=sharing) by Kristina Spurgin, 2021-07-19
-
-In Drupal, _Taxonomy Vocabularies_ (or simply _Vocabularies_) are also entity subtypes that define a set of fields and their configurations. Whereas instances of content types are called _nodes_, items in a vocabulary are called _taxonomy terms_ (or simply _terms_). Traditionally, taxonomy terms are used to classify content in Drupal. For instance, the Article content type includes a field `field_tags` that can refer to terms in the Tags vocabulary.
-
-There are two ways that users can interact with taxonomies: they can be "closed," e.g. a fixed list to pick from in a dropdown, or "open," e.g. `field_tags` where users can enter new terms, which are created on the fly. This is not set on the _vocabulary_ itself, but in the configuration of the field (typically on a node). Terms within vocabularies have an ordering, and can have hierarchical structure, but do not need to.
-
-Islandora (through the Islandora Core Feature) creates the 'Islandora Models' vocabulary which includes the terms 'Audio', 'Binary', 'Collection', 'Compound Object', 'Digital Document', 'Image', 'Newspaper', 'Page', 'Paged Content', 'Publication Issue', and 'Video'. Islandora Starter Site provides contexts that cause certain actions (e.g. derivatives to happen, or blocks to appear) based on which term is used.
-
-<!-- Is it possible to add your own terms to this vocabulary? Is it recommended? -->
-
-<!-- field_model is a "special field" in terms of the RDF mapping, because the drupal URI gets replaced by the 'external URI' but I'm not sure if this is where to mention this.-->
-
-The Controlled Access Terms module provides additional vocabularies:
-
-- Corporate Body
-- Country
-- Family
-- Form
-- Genre
-- Geographic Location
-- Language
-- Person
-- Resource Types
-- Subject
-
-Each of these vocabularies has its own set of fields allowing repositories to further describe them. The Repository Item content type has fields that can reference terms in these vocabularies. See 'Entity Reference fields' in the 'Field Types' section below.
-
-The vocabularies provided by default are a starting point, and a repository administrator can create whatever vocabularies are desired.
+There are two ways that users can interact with taxonomies: they can be "closed," e.g. a fixed list to pick from in a dropdown, or "open," e.g. `field_tags` where users can enter new terms, which are created on the fly. This is not set on the _vocabulary_ itself, but in the configuration of the field (typically on a node).
 
 !!! warning "Large Taxonomy Vocabularies"
-    The Drupal Taxonomy UI is known to break down when your vocabularies get large (e.g. over 20,000 terms). Jonathan Hunt created the [CCA Taxonomy Manager](https://github.com/catalyst/cca_taxonomy_manager) module for SFU to solve this problem.
+The Drupal Taxonomy UI is known to break down when your vocabularies get large (e.g. over 20,000 terms). Jonathan Hunt created the [CCA Taxonomy Manager](https://github.com/catalyst/cca_taxonomy_manager) module for SFU to solve this problem.
+
+!!! tip
+    See also: [MIG Presentation on Taxonomies](https://docs.google.com/presentation/d/1LfpU6H4qxXtnYQPFntwMNtsgtU30yzp2MxwKKAllUOc/edit?usp=sharing) by Kristina Spurgin, 2021-07-19
+
+## Fields
+
+### What are fields?
+
+Fields are places where you can store (meta)data. Each content type (or 
+media type, or vocabulary) defines and configures a set of fields. These are 
+usually configured by a high-permissioned user, such as a site administrator, 
+or a manager responsible for metadata. This 
+section will go deeper into these fields.
+
+Each field has a machine name, such as `field_identifier`, and a [Field Type](#field-types), such 
+as 'text'. These properties, along with any type-specific storage options 
+(such as field length for text-type fields), 
+are integral to the field, cannot be changed once created, and are constant 
+across any instances where that field is used.
+
+It is possible to re-use the same field across multiple bundles (but they 
+must be of the same entity type - for example, you cannot re-use a node 
+field on a media or taxonomy term). One example of a field that is re-used 
+is the "Media of" field (`field_media_of`), which is used by all media types 
+that come with Islandora.
+
+Fields also have a display name (such as "Identifier") and display and form configurations; these are configured per bundle, so that a field with the 
+same machine name may have a different display name on different content 
+types, and may display differently.
+
+The names and definitions of fields are entirely within Drupal and do not 
+have to correspond to an outside metadata schema. 
+
+#### Fields vs. XML and migrating from MODS
+
+While you can store MODS as an XML file in a media in Islandora, to get 
+the most out of Islandora we recommend extracting your metadata values into 
+Drupal fields. This allows rich editing, indexing, and views-building 
+features. The [fields configured on the Repository Item content type]
+(starter-site-metadata-configuration.md) that 
+comes with the Islandora Starter Site 
+were designed with a [mapping from MODS](https://docs.google.com/spreadsheets/d/18u2qFJ014IIxlVpM3JXfDEFccwBZcoFsjbBGpvL0jJI/edit?pli=1#gid=0) in mind. You're free to use it as-is or 
+modify it as desired.
+
+Drupal fields aren't themselves part of any XML schema, so 
+it's no longer viable to say that your Islandora data is "stored in MODS."
+However, you can map fields into a variety of XML and RDF formats 
+including MODS - see 
+["Serialization"](#serialization). These mappings are lossy.
+
+MODS has a lot of features that are not part of the Starter Site 
+metadata configuration, and some are difficult to implement:
+* Use of `type` and `displayLabel` attributes: this can be replicated for 
+individual fields using Paragraphs. Additional theming would be required to 
+display them in a useful way.
+* Hierarchical nesting of `<relatedItem>`: This can be modelled with 
+related items as their own nodes. However, this inflates the repository 
+item count.
+* Custom ordering of fields: The ordering of elements in XML is flexible 
+and can be meaningful. In Drupal fields, you can retain the ordering within 
+one field but the presentation order of fields is set for all nodes of a 
+  content 
+type.
+* Human readability and sense-making: It is important to have a good 
+data dictionary/metadata profile that explains what your fields are used 
+for. The _description_ property of fields can help with this.
+
+### Adding, Editing, or Deleting Fields
+
+Fields can be modified under **Administration** >> **Structure** >> **Content 
+types** >> _Your Content Type's Name_ >> **Manage fields** 
+(`/admin/structure/types/your_type/fields`). This tab will list all Fields, 
+their Label, Machine Name, Field Type. From this page you can make what 
+edits to the existing fields that you can.
+
+#### Adding fields
+To make a new field, you will need to give it a Label, Machine name (usually 
+automatically generated), and choose a [Field Type](#field-types). 
+
+!!! note "Useful field types are under 'Reference'"
+    Common field types such as *Taxonomy Term*, *Media*, and *Node* fields 
+    are found under the generic term "Reference" (formerly "Entity Reference". 
+Once selected, you will be able to choose the type of entity to reference 
+(such as nodes, media, or taxonomy terms)
+
+Next, depending on the field type, you will then define the 
+maximum length of the field, the number of values it can contain, and/or what 
+taxonomies it might link to.
+
+!!! tip "You cannot change intrinsic properties of fields."
+    As soon as you have created a field, you cannot change the machine name or 
+    type. Additionally, once content has been added, you cannot change 
+    additional properties such as the 
+    number of values allowed in the field or the field 
+    length. However, you can add new 
+    fields to a content type, even after content is added. 
+
+#### Deleting Fields
+
+It is possible to delete fields. Deleting a field from a bundle instantly 
+deletes all content in that 
+field (unless the content is a reference to an entity in its own right - the 
+referenced entity will persist). This means that:
+* if you have a text field and delete it, all content in that text field is 
+  gone including from all revisions.
+* if you have a reference field such as a taxonomy term field, and you 
+  delete the field, then you may have now-unused taxonomy terms that still  exist in a vocabulary even though no enties (or revisions) make reference to them.
+
+
+### Form Display ("Manage form display")
+
+Bundles let you configure how fields display in the edit form, which 
+may be used by content editors for data entry (though you may use Islandora 
+Workbench or Migrate to do data entry). This configuration happens on the 
+bundle's 
+**Manage form display** tab. Here, you can arrange the order of fields, make 
+fields not display on the form, choose what Widget will define the 
+entry options for a field, and then set certain settings for that Widget.
+
+!!! note "Widgets"
+    "Widget" is the name of a configurable editable form element in Drupal. 
+Compare: 
+**formatter**, which is for display.
+
+Widgets are defined by Field Type, so an Entity reference field could use 
+autocomplete, a select list, or even checkboxes. The widget used is chosen 
+from a 
+drop-down list. The widget settings are accessed through the gear on the far 
+right of a row and may allow you to set the size of an entry field, whether 
+the field *Label* is displayed, or if you use placeholder text, for example.
+
+!!! tip "Using the drag-and-drop interface"
+    Drupal uses drag-and-drop interfaces in many places. Clicking to the
+    left of the label will allow you to drag the item into a new position. There
+    is usually a section at the bottom for elements that are not enabled. If you
+    don't want to drag, there is a link at the top right of the drag-and-drop
+    table to "Show row weights". This allows you to enter digits instead of
+    clicking and dragging.
+
+!!! tip "Configuring who can edit specific fields"
+    With the **Field Permissions** module (enabled with the Starter Site), 
+    you can configure that only certain roles may edit a specific field.
+
+### Content Display ("Manage display")
+
+The **Manage display** tab for a content type (media type, vocabulary) is where 
+you will make decisions about how to
+display the metadata. Order is arranged using another drag-and-drop 
+interface (see note "Using the drag-and-drop interface", above), and fields can 
+again be
+dragged to the **Disabled** section to hide the field from display. You can
+choose the formatter, applicable options, and whether a field's label is 
+displayed above the value, in-line, or hidden.
+
+!!! note "Formatters"
+"Formatter" is the name of a configurable field display element in Drupal. 
+Compare: **widget**, which is for editable forms.
+
+!!! tip "Configuring who can view specific fields"
+    With the **Field Permissions** module (enabled with the Starter Site),
+    you can configure that only certain roles may view a specific field.
 
 ## Field Types
 
-Fields are where descriptive and administrative metadata about Drupal entities is stored. There are different *types* of fields including boolean, datetime, entity reference, integer, string, text, and text_with_summary. These field types also have *widgets* (controlling how data is entered) and *formatters* (controlling how data is displayed). The [Drupal 8 documentation on FieldTypes, FieldWidgets, and FieldFormatters](https://www.drupal.org/docs/8/api/entity-api/fieldtypes-fieldwidgets-and-fieldformatters) includes a list of the core field types with brief definitions, along with a list of core widgets and formatters. [Custom field types can be created](https://www.drupal.org/docs/creating-custom-modules/creating-custom-field-types-widgets-and-formatters) to represent data in ways not provided by these core options.
+Field types in Drupal determine what kind of data can be stored, and what 
+widgets (see note "Widgets", above) and formatters (see note "Formatters", 
+above) are available. 
 
-More field types, formatters, and widgets are available in various modules. For example, the controlled_access_terms module provides two additional field types designed specifically for use with Islandora: ETDF, and Typed Relation. These and the Entity Reference field type are described in more detail below, since they are of particular interest for Islandora users.
+Drupal comes with a number of built-in field types including boolean, 
+datetime, entity reference, integer, string, text, and text_with_summary. 
+More field types, formatters, and widgets are available in various modules. 
+The [Drupal 8 documentation on FieldTypes, FieldWidgets, and FieldFormatters]
+(https://www.drupal.org/docs/8/api/entity-api/fieldtypes-fieldwidgets-and
+-fieldformatters) includes a list of the core field types with brief 
+definitions, along with a list of core widgets and formatters. There is also 
+documentation for [creating custom field types, widgets, and formatters](https://www.drupal.org/docs/creating-custom-modules/creating-custom-field-types-widgets-and-formatters)
+
+Here we will describe a selection of field types of particular interest for 
+Islandora users:
+* Entity Reference (from Drupal Core)
+* Authority Link (from the **Controlled Access Terms** module)
+* EDTF (from the **Controlled Access Terms** module)
+* Typed Relation (from the **Controlled Access Terms** module)
+
+### Entity Reference
+
+Entity Reference fields are a special type of field built into Drupal Core 
+that creates relationships between entities such as nodes, media, and 
+taxonomy terms. The field's configuration options include (but are not limited to):
+
+- Which kind of entity can be referenced (*only one type of entity to reference 
+  can be defined per field, and this cannot be changed once data has been 
+  created*)
+- The allowed number of values (limited or unlimited)
+- Whether to use Views for filtering
+- Whether to allow users to create new referenced entities while inputting data, if they don't already exist
+
+The *Repository Item* content type, provided by the Islandora Starter Site, 
+includes several entity reference fields that reference vocabularies defined 
+by the Islandora Core Feature and Controlled Access Terms Defaults modules.
+
+#### Configurations for Entity Reference fields
+
+The screenshots below show how you can configure an entity reference field (in this case the Subject field on the Repository Item content type).
+
+![Screenshot of the storage settings for an entity reference field](../assets/metadata_entity_reference_config.png)
+
+Fig. 1: "Field Storage" settings for an entity reference field where you set 
+whether the 
+field 
+will reference "Content" (nodes), taxonomy terms, or any other type of 
+Drupal entity
+
+![Screenshot of the reference type settings for an entity reference field, showing which vocabularies the autocomplete utility should query when editors are entering data.](../assets/metadata_entity_reference_config_vocabs.png)
+Fig. 2: Reference type settings for an entity reference field where you select which vocabularies can be referenced
+
+!!! tip "Data Consistency"
+Selecting which vocabularies can be referenced by an entity reference field 
+does not impose constraints on the underlying database, so it is 
+possible to load references to other vocabularies without being stopped or 
+warned when ingesting data through [various migration methods](..
+/technical-documentation/migration-overview.md). However, this will result 
+in content that cannot be edited/saved in the GUI without removing the 
+offending term. 
+
 
 ### Authority Link
 
-The Authority Link data type configures fields to hold two associated values:
+The Authority Link field type configures a field to 
+hold two associated values:
 
-- An external source authority (selected from a pre-configured list of external authority options).
-- A link for a specific term from the selected external source authority.
+- An external source authority (selected from a pre-configured list of 
+  external authority options),
+- A link (URI) to a specific term from the selected external source authority
 
-Within Islandora, this data type is used by a metadata field in Taxonomy Vocabularies called Authority Sources to capture equivalent representations of terms from external authority sources.
+Within the Islandora Starter Site, this field type is used by the "Authority 
+Sources" (`field_authority_link`) field, which is shared by in various 
+Vocabularies including Person, Family, Subject, and Geographic Location. It 
+is multivalued so can hold multiple URIs that you believe to be equivalent 
+to the same concept.
 
 !!! tip
-    The term external authority source refers to both controlled vocabularies like Art & Architecture Thesaurus or FAST as well as Name Authority Files like Library of Congress Name Authority File or VIAF.
+    The term **external authority source** refers to both controlled 
+vocabularies like Art & Architecture Thesaurus or FAST as well as Name Authority Files like Library of Congress Name Authority File or VIAF.
 
-For instance, if you are creating a term called Red squirrels within the default Taxonomy Vocabulary Subject, you may want to include the URI for Tamiasciurus from the FAST (Faceted Application of Subject Terminology) vocabulary. If you configured the field Authority Sources to list FAST (Faceted Application of Subject Terminology) as an external source authority option, you can select this source and add the associated URI (http://id.worldcat.org/fast/1142424).
+For instance, if you are creating a term called "Red squirrels" within the 
+"Subject"  Vocabulary, you may want to include the URI for 
+"Tamiasciurus" from the FAST (Faceted Application of Subject Terminology) vocabulary. If you configured the field Authority Sources to list FAST (Faceted Application of Subject Terminology) as an external source authority option, you can select this source and add the associated URI (http://id.worldcat.org/fast/1142424).
 
 ![Screenshot of filling out an Authority Sources field.](https://user-images.githubusercontent.com/32551917/182199562-46b6cc29-1a49-425c-8332-fbfff5eb44c6.png)
 
@@ -121,34 +371,6 @@ The key is the stored value (typically an abbreviation representing the authorit
 
 By default, this field is repeatable. To change this, edit the "Field settings" and change Allowed numbers of values from "Unlimited" to "Limited" and enter the number of allowable values. This will apply to every instance of the Authority Sources field across your Taxonomy Vocabularies. You cannot change the repeatability of Authority Sources after data has been entered in the field.
 
-### Entity Reference
-
-Entity Reference fields are a special type of field built into Drupal core that creates relationships between entities. The field's configuration options include (but are not limited to):
-
-- Which kind of entity can be referenced (*only one type of item to reference can be defined per field*)
-- The allowed number of values (limited or unlimited)
-- Whether to use Views for filtering
-- Whether to allow users to create new referenced entities while inputting data, if they don't already exist
-
-The *Repository Item* content type, provided by the Islandora Starter Site, includes several entity reference fields that reference vocabularies defined by the *islandora* and *controlled_access_terms* modules.
-
-#### Configurations for Entity Reference field
-
-The screenshots below show how you can configure an entity reference field (in this case the Subject field on the Repository Item content type).
-
-!!! tip
-    Note that once the type of entity to reference has been defined, and data has been created, it cannot be changed.
-
-Storage settings for entity reference field where you set whether the field will reference content nodes or taxonomy terms:
-
-![Screenshot of the storage settings for an entity reference field](../assets/metadata_entity_reference_config.png)
-
-Reference type settings for entity reference field where you select which vocabularies the autocomplete utility should query when editors are entering data:
-
-![Screenshot of the reference type settings for an entity reference field, showing which vocabularies the autocomplete utility should query when editors are entering data.](../assets/metadata_entity_reference_config_vocabs.png)
-
-!!! tip "Data Consistency"
-    Selecting which vocabularies can be referenced from an entity reference field only affects which vocabularies will be searched when a user types into the autocomplete field in the Drupal form for adding a new item. These settings do not impose constraints on the underlying database, so it is still possible to load references to other vocabularies without being stopped or warned when ingesting data through [various migration methods](../technical-documentation/migration-overview.md).
 
 ### EDTF
 
@@ -229,11 +451,39 @@ Relations are defined in the format *key\|value*, and the key is used in the RDF
 
 By default, facets can be created for typed relation fields that will facet based on the linked entity alone, not separating references based on the relationship type.
 
-## Adding a new field
+## Structural Metadata
+### Vocabularies
 
-You are free to add new fields to your Islandora content type(s). After you set one up, you may want to configure the following:
+Islandora (through the Islandora Core Feature) creates the 'Islandora Models' vocabulary which includes the terms 'Audio', 'Binary', 'Collection', 'Compound Object', 'Digital Document', 'Image', 'Newspaper', 'Page', 'Paged Content', 'Publication Issue', and 'Video'. Islandora Starter Site provides contexts that cause certain actions (e.g. derivatives to happen, or blocks to appear) based on which term is used.
 
-* **Form Display** - set the field to display (or not) in your form, and set its widget, at  **Administration** \>\> **Structure** \>\> **Content types** \>\> [Your Content Type] \>\> **Manage form display**. You can also set it to display (or not) to certain users based on Field permissions at **Administration** \>\> **Structure** \>\> **Content types** \>\> [Your Content Type] \>\> **Manage fields** \>\> [Your new field].
+<!-- Is it possible to add your own terms to this vocabulary? Is it recommended? -->
+
+<!-- field_model is a "special field" in terms of the RDF mapping, because the drupal URI gets replaced by the 'external URI' but I'm not sure if this is where to mention this.-->
+
+The Controlled Access Terms module provides additional vocabularies:
+
+- Corporate Body
+- Country
+- Family
+- Form
+- Genre
+- Geographic Location
+- Language
+- Person
+- Resource Types
+- Subject
+
+Each of these vocabularies has its own set of fields allowing repositories to further describe them. The Repository Item content type has fields that can reference terms in these vocabularies. See 'Entity Reference fields' in the 'Field Types' section below.
+
+The vocabularies provided by default are a starting point, and a repository administrator can create whatever vocabularies are desired.
+
+## Configure Field Integrations
+
+Fields integrate with many other parts of Drupal. Consider the following 
+when you add/edit/delete a field:
+
+* **Form Display** - set a field to display (or not) in your form, and set 
+  its widget, at  **Administration** \>\> **Structure** \>\> **Content types** \>\> [Your Content Type] \>\> **Manage form display**. You can also set it to display (or not) to certain users based on Field permissions at **Administration** \>\> **Structure** \>\> **Content types** \>\> [Your Content Type] \>\> **Manage fields** \>\> [Your new field].
 * **Display** - set the field to display (or not) to the public at **Administration** \>\> **Structure** \>\> **Content types** \>\> [Your Content Type] \>\> **Manage display**. You can also set it to display or not to certain users based on Field permissions at **Administration** \>\> **Structure** \>\> **Content types** \>\> [Your Content Type] \>\>  **Manage fields** \>\> [Your new field].
 * **Solr** - Solr configuration is set at **Administration** \>\> **Configuration** \>\> **Search and metadata** \>\> **Search API** \>\> [Default Solr content index] \>\> **Fields**.
 By default, Solr indexes the "Rendered Item" using the display mode "Search index". By default, the "Search index" display mode is not configured separately, so it renders using the "Default" display mode which is the default (or only) tab when configuring Display, above. This means that if you configured your new field to display, then it will be automatically available to fulltext search. But if you want to make a facet, or a fielded search (using Advanced Search), then you need to index the field separately, as either String (for a facet) or fulltext (for a fielded search). To do this, use the "**+ Add field**" button in the Solr configuration and select your field, under the "Content" section. If it is a reference field (such as a taxonomy term field or a related item field) then you may want to "dive down" using the "(+)" buttons to index the name or title of the referenced entity.
