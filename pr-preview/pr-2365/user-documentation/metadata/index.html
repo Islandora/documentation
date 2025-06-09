@@ -3220,51 +3220,59 @@
 <h1 id="metadata-in-islandora">Metadata in Islandora<a class="headerlink" href="#metadata-in-islandora" title="Permanent link">&para;</a></h1>
 <div class="admonition note">
 <p class="admonition-title">See also: Fields in the Starter Site</p>
-<p>This page describes technical details about how metadata is handled as </p>
-</div>
-<p>fields in Drupal and provides a deeper understanding of, and tools for 
+<p>This page describes technical details about how metadata is handled as 
+fields in Drupal and provides a deeper understanding of, and tools for 
 modifying, your metadata configuration. If you want to learn about what 
 metadata fields come out-of-the-box with Islandora, see <a href="../starter-site-metadata-configuration/">Starter Site Metadata 
 Configuration</a>. </p>
+</div>
 <blockquote>
 <p>1-minute synopsis: In Islandora, metadata is stored natively in Drupal, in 
 <em>fields</em>.
 Drupal fields are configured per <em>content type</em> (and per <em>media type</em> for 
 media and per 
 <em>vocabulary</em> for taxonomy terms ). Fields have different <em>field types</em> which 
-determine how you can interact with them (e.g. what content is allowed, how the values 
+determine how you can interact with them (e.g. what content is allowed, 
+and how the values 
 can be displayed). Almost all of our interactions with metadata use standard 
 Drupalisms, though Islandora does add a few specialized field types and 
 methods of serialization. </p>
 </blockquote>
 <div class="admonition note">
 <p class="admonition-title">Drupal Terminology</p>
-<p>In Drupal, a generic term for things that can have fields is </p>
-</div>
-<p><em>bundle</em> (synonymously, <em>entity sub-type</em>). For example, "Repository 
-Item" (a content type), "Image" (a Media type), and "Genre" (a Vocabulary) 
-are bundles. Rarely, fields are attached directly to <em>entity types</em> when the 
+<p>In Drupal, a generic term for things that can have fields is 
+<em>bundle</em> (synonymously, <em>entity sub-type</em>). There are more specific terms 
+depending on the entity type, i.e.<br />
+bundles of nodes are "content types", bundles of Media are "media types", and 
+bundles of taxonomy terms are "vocabularies". Examples of bundles include: 
+"Repository 
+Item" (a content type), "Image" (a Media type), 
+and "Genre" (a Vocabulary). Rarely, fields are attached directly to <em>entity types</em> when 
+the 
 entity type does not have bundles (e.g. Users). For more on Fields, see 
 <a href="https://www.drupal.org/docs/user_guide/en/planning-data-types.html">"2.3 Content Entities and Fields"</a>, <a href="https://www.drupal.org/docs/user_guide/en/structure-fields.html">"6.3 Adding Basic Fields 
 to a Content Type"</a>, and <a href="https://www.drupal.org/docs/drupal-apis/entity-api/introduction-to-entity-api-in-drupal-8">"Introduction to Entity API in Drupal 8"</a> in the Official Drupal 
 Guide.</p>
+</div>
 <!-- Next revision: check status of changing 'bundles' to 'entity sub-types' (https://www.drupal.org/project/drupal/issues/1380720). -->
 
 <p>!!! note Metadata - Structural, Descriptive and Technical
-    As described in the <a href="../content-models/#resource-nodes">resource nodes section</a>, Islandora digital objects are comprised of <em>Drupal 
-nodes</em> for structural and descriptive metadata, <em>Drupal media</em> for technical 
-metadata, 
-and <em>Drupal files</em> for the binary objects. This section focuses on 
-structural and descriptive metadata on nodes, but the same concepts apply to 
-technical metadata fields on Media types.</p>
+    As described in the <a href="../content-models/#resource-nodes">resource nodes section</a>, 
+    Islandora digital objects are comprised of <em>Drupal 
+    nodes</em> for structural and descriptive metadata, <em>Drupal media</em> for 
+    technical metadata, 
+    and <em>Drupal files</em> for the binary objects. This section focuses on 
+    structural and descriptive metadata on nodes, but the same concepts apply to 
+    technical metadata fields on Media types.</p>
 <h2 id="metadata-profiles-in-drupal-content-types-media-types-and-vocabularies">Metadata profiles in Drupal: Content Types, Media Types, and Vocabularies<a class="headerlink" href="#metadata-profiles-in-drupal-content-types-media-types-and-vocabularies" title="Permanent link">&para;</a></h2>
 <h3 id="content-types">Content Types<a class="headerlink" href="#content-types" title="Permanent link">&para;</a></h3>
-<p>When we create a piece of content in Drupal (such as via the "Add Content" 
+<p>When we create a piece of content in Drupal (such as via the 
+"Add Content" 
 links), the thing we create is a <em>node</em>. Even before creating a node, we must 
 select a <em>content 
-type</em>.  A content type, generically 
-known as a <em>bundle</em> or <em>node sub-type</em>, includes: 
-* basic properties like name (display name and machine name)
+type</em> for that node.  A content type, generically 
+known as a <em>bundle</em> or <em>node sub-type</em>, is a set of configurations that 
+determine how that type of content behaves. It includes: 
 * field definitions
 * form configurations
 * display configurations. 
@@ -3272,13 +3280,13 @@ Each content type determines what fields are available, how (meta)data can be
   entered and validated, and how (meta)data is displayed, so it is essentially a metadata profile. </p>
 <div class="admonition tip">
 <p class="admonition-title">You cannot change an entity's bundle.</p>
-</div>
-<p>Once a node is created, its content type cannot be changed. The same
-holds for media and taxonomy terms and their respective bundles.
+<p>Once a node is created, its content type cannot be easily changed. The same
+holds for media and taxonomy terms and their respective bundles. 
 However, you can create a new node of the
 intended content type, map the field values (programmatically or by
 copy-and-paste), and update any media or children that refer to the old
-node to refer to the new one.</p>
+node to refer to the new one. </p>
+</div>
 <p>The content types 
 available out-of-the-box in Islandora are "Article", "Page", and "Repository 
 Item" - the first two are part of Drupal's Standard Install and contain 
@@ -3323,8 +3331,8 @@ dates, and alternate names.</p>
 <p>There are two ways that users can interact with taxonomies: they can be "closed," e.g. a fixed list to pick from in a dropdown, or "open," e.g. <code>field_tags</code> where users can enter new terms, which are created on the fly. This is not set on the <em>vocabulary</em> itself, but in the configuration of the field (typically on a node).</p>
 <div class="admonition warning">
 <p class="admonition-title">Large Taxonomy Vocabularies</p>
-</div>
 <p>The Drupal Taxonomy UI is known to break down when your vocabularies get large (e.g. over 20,000 terms). Jonathan Hunt created the <a href="https://github.com/catalyst/cca_taxonomy_manager">CCA Taxonomy Manager</a> module for SFU to solve this problem.</p>
+</div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>See also: <a href="https://docs.google.com/presentation/d/1LfpU6H4qxXtnYQPFntwMNtsgtU30yzp2MxwKKAllUOc/edit?usp=sharing">MIG Presentation on Taxonomies</a> by Kristina Spurgin, 2021-07-19</p>
@@ -3393,10 +3401,10 @@ automatically generated), and choose a <a href="#field-types">Field Type</a>. </
 <div class="admonition note">
 <p class="admonition-title">Useful field types are under 'Reference'</p>
 <p>Common field types such as <em>Taxonomy Term</em>, <em>Media</em>, and <em>Node</em> fields 
-are found under the generic term "Reference" (formerly "Entity Reference". </p>
-</div>
-<p>Once selected, you will be able to choose the type of entity to reference 
+are found under the generic term "Reference" (formerly "Entity Reference". 
+Once selected, you will be able to choose the type of entity to reference 
 (such as nodes, media, or taxonomy terms)</p>
+</div>
 <p>Next, depending on the field type, you will then define the 
 maximum length of the field, the number of values it can contain, and/or what 
 taxonomies it might link to.</p>
@@ -3428,10 +3436,9 @@ fields not display on the form, choose what Widget will define the
 entry options for a field, and then set certain settings for that Widget.</p>
 <div class="admonition note">
 <p class="admonition-title">Widgets</p>
-<p>"Widget" is the name of a configurable editable form element in Drupal. </p>
+<p>"Widget" is the name of a configurable editable form element in Drupal. 
+Compare: <strong>formatter</strong>, which is for display.</p>
 </div>
-<p>Compare: 
-<strong>formatter</strong>, which is for display.</p>
 <p>Widgets are defined by Field Type, so an Entity reference field could use 
 autocomplete, a select list, or even checkboxes. The widget used is chosen 
 from a 
@@ -3463,9 +3470,9 @@ choose the formatter, applicable options, and whether a field's label is
 displayed above the value, in-line, or hidden.</p>
 <div class="admonition note">
 <p class="admonition-title">Formatters</p>
-</div>
 <p>"Formatter" is the name of a configurable field display element in Drupal. 
 Compare: <strong>widget</strong>, which is for editable forms.</p>
+</div>
 <div class="admonition tip">
 <p class="admonition-title">Configuring who can view specific fields</p>
 <p>With the <strong>Field Permissions</strong> module (enabled with the Starter Site),
@@ -3516,13 +3523,13 @@ Drupal entity</p>
 Fig. 2: Reference type settings for an entity reference field where you select which vocabularies can be referenced</p>
 <div class="admonition tip">
 <p class="admonition-title">Data Consistency</p>
-</div>
 <p>Selecting which vocabularies can be referenced by an entity reference field 
 does not impose constraints on the underlying database, so it is 
 possible to load references to other vocabularies without being stopped or 
 warned when ingesting data through <a href="../../technical-documentation/migration-overview/">various migration methods</a>. However, this will result 
 in content that cannot be edited/saved in the GUI without removing the 
 offending term. </p>
+</div>
 <h3 id="authority-link">Authority Link<a class="headerlink" href="#authority-link" title="Permanent link">&para;</a></h3>
 <p>The Authority Link field type is defined in the <em>Controlled Access Terms</em> 
 module and is a field that holds two associated values:</p>
@@ -3539,9 +3546,9 @@ is multivalued so can hold multiple URIs that you believe to be equivalent
 to the same concept.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>The term <strong>external authority source</strong> refers to both controlled </p>
+<p>The term <strong>external authority source</strong> refers to both controlled<br />
+vocabularies like Art &amp; Architecture Thesaurus or FAST as well as Name Authority Files like Library of Congress Name Authority File or VIAF.</p>
 </div>
-<p>vocabularies like Art &amp; Architecture Thesaurus or FAST as well as Name Authority Files like Library of Congress Name Authority File or VIAF.</p>
 <p>For instance, if you are creating a term called "Red squirrels" within the 
 "Subject"  Vocabulary, you may want to include the URI for 
 "Tamiasciurus" from the FAST (Faceted Application of Subject Terminology) 
@@ -3591,10 +3598,12 @@ little-endian, and presenting months as numbers, abbreviations, or spelling mont
 string is valid EDTF
 format. As part of this, the components must be within appropriate ranges
 (years are four digits unless prefixed with Y; months must be within 1-12 or
-21-41, and day values must be within 1-31. However, a date that falls
-outside what we actually consider valid dates, such as 1999-02-31, will pass this basic validation.
-There is a second, strict validation option in the widget that can be
-enabled and ensures that dates provided are strictly valid: this would disallow 1999-02-31.</p>
+21-41, and day values must be within 1-31). However, a date that falls
+outside what we actually consider "real" dates, such as 1999-02-31, will 
+pass this basic validation.
+There is a second, "strict" validation option in the widget that can be
+enabled and ensures that dates provided are really valid, and would 
+disallow 1999-02-31.</p>
 </div>
 <p>Example of valid inputs in a multivalued EDTF Date field (including the
 seasonal value 2019-22 as defined in the EDTF specification):
@@ -3619,7 +3628,7 @@ choose to allow date intervals (i.e. date ranges), but doing this prevents
 the widget from accepting any values that include times. If you'd like a 
 single field that contains date intervals as well as date-time values 
 (though not within a single value as that would not be valid EDTF), 
-your're welcome to file an improvement request (and link it here!)</p>
+you're welcome to file an improvement request (and link it here!)</p>
 </div>
 <h4 id="configuration-for-the-default-edtf-formatter">Configuration for the Default EDTF Formatter<a class="headerlink" href="#configuration-for-the-default-edtf-formatter" title="Permanent link">&para;</a></h4>
 <p>There is only one formatter available for EDTF fields, the "Default EDTF
