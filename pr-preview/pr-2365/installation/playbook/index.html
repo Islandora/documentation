@@ -182,7 +182,9 @@
                     
 
 
-<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="Islandora" class="md-nav__button md-logo" aria-label="Islandora" data-md-component="logo">
       
@@ -2739,203 +2741,6 @@
               </div>
             
             
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#basic-usage-vagrant" class="md-nav__link">
-    Basic Usage (Vagrant):
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#requirements-vagrant" class="md-nav__link">
-    Requirements (Vagrant)
-  </a>
-  
-    <nav class="md-nav" aria-label="Requirements (Vagrant)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#installing-git-and-ansible-on-macos" class="md-nav__link">
-    Installing Git and Ansible on MacOS
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#installing-a-local-development-environment-vagrant" class="md-nav__link">
-    Installing a local development environment (Vagrant)
-  </a>
-  
-    <nav class="md-nav" aria-label="Installing a local development environment (Vagrant)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#clone-the-playbook" class="md-nav__link">
-    Clone the playbook
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#create-the-base-box" class="md-nav__link">
-    Create the Base Box
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#provision-the-islandora-code" class="md-nav__link">
-    Provision the Islandora code
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#rebuilding-your-islandora-development-box" class="md-nav__link">
-    Rebuilding your Islandora development box
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#refreshing-your-base-box" class="md-nav__link">
-    Refreshing your base box.
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#deploying-to-a-remote-environment" class="md-nav__link">
-    Deploying to a remote environment
-  </a>
-  
-    <nav class="md-nav" aria-label="Deploying to a remote environment">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#group_varsallpasswordsyml" class="md-nav__link">
-    group_vars/all/passwords.yml
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#group_varswebserverapacheyml" class="md-nav__link">
-    group_vars/webserver/apache.yml
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#group_varswebservergeneralyml" class="md-nav__link">
-    group_vars/webserver/general.yml
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#group_varswebserverapacheyml_1" class="md-nav__link">
-    group_vars/webserver/apache.yml
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#group_varswebserverdrupalyml" class="md-nav__link">
-    group_vars/webserver/drupal.yml
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#hosts" class="md-nav__link">
-    hosts
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#running-the-remote-installer" class="md-nav__link">
-    Running the remote installer
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#troubleshooting" class="md-nav__link">
-    Troubleshooting
-  </a>
-  
-    <nav class="md-nav" aria-label="Troubleshooting">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#out-of-date-playbooks" class="md-nav__link">
-    Out of date playbooks
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#port-clashes-for-local-environments" class="md-nav__link">
-    Port clashes for local environments
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#help" class="md-nav__link">
-    Help
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-                  </div>
-                </div>
-              </div>
-            
           
           
             <div class="md-content" data-md-component="content">
@@ -3214,7 +3019,7 @@ ask for help.  If you think you've stumbled across a bug in the installer, pleas
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["content.action.edit"], "search": "../../assets/javascripts/workers/search.db81ec45.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.action.edit", "toc.integrate"], "search": "../../assets/javascripts/workers/search.db81ec45.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
       <script src="../../assets/javascripts/bundle.4b2c34cd.min.js"></script>
