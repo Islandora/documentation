@@ -331,23 +331,24 @@ Fig. 2: Reference type settings for an entity reference field where you select w
 Selecting which vocabularies can be referenced by an entity reference field 
 does not impose constraints on the underlying database, so it is 
 possible to load references to other vocabularies without being stopped or 
-warned when ingesting data through [various migration methods](..
-/technical-documentation/migration-overview.md). However, this will result 
+warned when ingesting data through [various migration methods](../technical-documentation/migration-overview.md). However, this will result 
 in content that cannot be edited/saved in the GUI without removing the 
 offending term. 
 
 
 ### Authority Link
 
-The Authority Link field type configures a field to 
-hold two associated values:
+The Authority Link field type is defined in the *Controlled Access Terms* 
+module and is a field that holds two associated values:
 
-- An external source authority (selected from a pre-configured list of 
+- An external authority source (selected from a configurable list of 
   external authority options),
-- A link (URI) to a specific term from the selected external source authority
+- A link (URI) to a specific term from the selected external authority source
+
+![Screenshot of filling out an Authority Sources field.](https://user-images.githubusercontent.com/32551917/182199562-46b6cc29-1a49-425c-8332-fbfff5eb44c6.png)
 
 Within the Islandora Starter Site, this field type is used by the "Authority 
-Sources" (`field_authority_link`) field, which is shared by in various 
+Sources" (`field_authority_link`) field, which is used in various 
 Vocabularies including Person, Family, Subject, and Geographic Location. It 
 is multivalued so can hold multiple URIs that you believe to be equivalent 
 to the same concept.
@@ -358,35 +359,68 @@ vocabularies like Art & Architecture Thesaurus or FAST as well as Name Authority
 
 For instance, if you are creating a term called "Red squirrels" within the 
 "Subject"  Vocabulary, you may want to include the URI for 
-"Tamiasciurus" from the FAST (Faceted Application of Subject Terminology) vocabulary. If you configured the field Authority Sources to list FAST (Faceted Application of Subject Terminology) as an external source authority option, you can select this source and add the associated URI (http://id.worldcat.org/fast/1142424).
+"Tamiasciurus" from the FAST (Faceted Application of Subject Terminology) 
+vocabulary. If you configured the field Authority Sources to list FAST 
+(Faceted Application of Subject Terminology) as an external authority source 
+option, you can select this source and add the associated URI (http://id.worldcat.org/fast/1142424).
 
-![Screenshot of filling out an Authority Sources field.](https://user-images.githubusercontent.com/32551917/182199562-46b6cc29-1a49-425c-8332-fbfff5eb44c6.png)
 
-#### Configurations for Authority Sources field
+#### Configurations for Authority Link fields
 
-Each Taxonomy Vocabulary can have different external source authority options for its Authority Sources field. To configure the Authority Sources field to change these options, navigate to Home-->Administration-->Structure-->Taxonomy-->Edit *Taxonomy Vocabulary Name*-->*Taxonomy Vocabulary Name* and select "Edit" for the Authority Sources field. Then enter your options in the Authority Sources text box, entering one value per line in the format key|label.
+Each instance of an Authority Link field can have 
+different external authority source options. To configure an Authority Link 
+field to change these options, navigate to the Manage Fields screen (e.g. 
+Administration>>Structure>>Taxonomy>>*Taxonomy Vocabulary Name*>>Manage Fields) 
+and select "Edit" for the Authority Link field (such as 
+"Authority Sources"). 
+Then enter your 
+options in the text box, entering one value per line in the format `key|label`.
 The key is the stored value (typically an abbreviation representing the authority source). The label will be used in displayed values and editing forms.
 
 ![Screenshot of the Authority Sources text box shown when editing the Authority Sources field.](https://user-images.githubusercontent.com/32551917/182200917-9d29fa07-3e4f-4850-a9c5-9bc270cc0c85.png)
 
-By default, this field is repeatable. To change this, edit the "Field settings" and change Allowed numbers of values from "Unlimited" to "Limited" and enter the number of allowable values. This will apply to every instance of the Authority Sources field across your Taxonomy Vocabularies. You cannot change the repeatability of Authority Sources after data has been entered in the field.
+By default, the Authority Sources field is repeatable. To change this, edit the 
+"Field 
+settings" and change Allowed numbers of values from "Unlimited" to "Limited" 
+and enter the number of allowable values. If you are re-using the same field 
+in multiple vocabularies, this will apply across all instances of this field.
+You cannot restrict the repeatability of a field in a way that would 
+disallow existing data in the field.
 
 
 ### EDTF
 
-The EDTF field type is defined in the *controlled_access_terms* module, and designed for recording dates in [Extended Date Time Format](https://www.loc.gov/standards/datetime/edtf.html), which is a format based off of the hyphenated form of ISO 8601 (e.g. 1991-02-03 or 1991-02-03T10:00:00), but also allows expressions of different granularity and uncertainty. The Default EDTF widget has a validator that only allows strings that conform to the EDTF standard. The Default EDTF formatter allows these date strings to be displayed in a variety of human-readable ways, including big- or little-endian, and presenting months as numbers, abbreviations, or spelling month names out in full. Close review of the [EDTF Specifications](https://www.loc.gov/standards/datetime/edtf.html) is recommended when configuring this field type.
+The EDTF field type is defined in the *Controlled Access Terms* module, and 
+designed for recording dates in [Extended Date Time Format](https://www.loc.
+gov/standards/datetime/edtf.html), which is a format based off of the 
+hyphenated form of ISO 8601 (e.g. `1991-02-03` or `1991-02-03T10:00:00Z`), but 
+also allows expressions of different granularity and uncertainty. The 
+Default EDTF widget has an optional validator that only allows strings that 
+conform 
+to the EDTF standard. The Default EDTF formatter allows these date strings 
+to be displayed in a variety of human-readable ways, including big- or 
+little-endian, and presenting months as numbers, abbreviations, or spelling month names out in full. Close review of the [EDTF Specifications](https://www.loc.gov/standards/datetime/edtf.html) is recommended when configuring this field type.
 
 !!! tip "Endianness"
-    Big-endian = year, month, day. Little-endian = day, month, year. Middle-endian = month, day, year.
+    * Big-endian = year, month, day (e.g. 1988-02-03 or 1988 Feb 3). 
+    * Little-endian = day, month, year (e.g. 03-02-1988 or 3 February 1988). 
+    * Middle-endian = month, day, year (2/3/1988 or Feb. 3, 1988).
 
-!!! bug "Known EDTF Bug"
-    When configuring the EDTF widget for a field in a content type, you can choose to allow date intervals (aka date ranges), but doing this prevents the widget from accepting values that include times. (The EDTF standard states that date intervals cannot contain times, but the field should be able to accept either a valid EDTF range *or* a valid EDTF datetime, so this is a bug.)
+!!! note "Validation"
+    The EDTF Widget always validates whether the input 
+    string is valid EDTF
+    format. As part of this, the components must be within appropriate ranges
+    (years are four digits unless prefixed with Y; months must be within 1-12 or
+    21-41, and day values must be within 1-31. However, a date that falls
+    outside what we actually consider valid dates, such as 1999-02-31, will pass this basic validation.
+    There is a second, strict validation option in the widget that can be
+    enabled and ensures that dates provided are strictly valid: this would disallow 1999-02-31.
 
 Example of valid inputs in a multivalued EDTF Date field (including the
 seasonal value 2019-22 as defined in the EDTF specification):
 ![Screenshot of valid dates ('2019', '2019-11', '2019-22', and '2019-02-02T02:22:22Z') in an EDTF form widget.](../assets/metadata_edtf_valid.png)
 
-Example of the same EDTF dates displayed using little-endian format:
+Example of the same EDTF dates formatted using little-endian format:
 ![Screenshot of dates displayed as '2019', 'November 2019', 'Summer 2019', and '2 February 2019 02:22:22Z'.](../assets/metadata_edtf_display.png)
 
 EDTF field values cannot include textual representations of dates, as shown below in this example of a valid EDTF value ('1943-05') and an invalid value ('May 1943') with the corresponding error message. Use the formatter configurations detailed further below to achieve textual display of dates.
@@ -395,32 +429,88 @@ EDTF field values cannot include textual representations of dates, as shown belo
 
 #### Configuration for the Default EDTF Widget
 
-This configuration can be set per field by clicking the **gear** icon next to any field defined with EDTF field type at **Administration** \>\> **Structure** \>\> **Content types** \>\> **Repository Item** \>\> **Manage form display** (admin/structure/types/manage/islandora_object/form-display)
+There is only one widget available for EDTF fields, the "Default EDTF 
+Widget". If you create an alternate widget, please share it with the community! 
+
+To configure the selected widget for a field on the Manage Form Display page 
+for any bundle, click the gear icon at the far right. 
 
 ![Screenshot of the gear icon on the EDTF Widget display settings](../assets/metadata_edtf_field_settings_gear.png)
 
-Configuration options include strictness level of date validation, allowing date intervals and allowing date sets.
-![Screenshot of the gear icon on the EDTF Widget display settings](../assets/metadata_edtf_widget_settings.png)
+Configuration options include enabling strict date validation, allowing date 
+intervals and allowing date sets.
+![Screenshot of the configuration of the EDTF Widget](../assets/metadata_edtf_widget_settings.png)
+
+!!! note "Ranges or Times - your choice"
+    When configuring the EDTF widget, you can
+    choose to allow date intervals (i.e. date ranges), but doing this prevents
+    the widget from accepting any values that include times. If you'd like a 
+    single field that contains date intervals as well as date-time values 
+    (though not within a single value as that would not be valid EDTF), 
+    your're welcome to file an improvement request (and link it here!)
+
+
 
 #### Configuration for the Default EDTF Formatter
 
-This configuration can be set per field by clicking the gear icon next to any field defined with EDTF field type at **Administration** \>\> **Structure** \>\> **Content types** \>\> **Repository Item** \>\> **Manage display** (admin/structure/types/manage/islandora_object/display)
+There is only one formatter available for EDTF fields, the "Default EDTF
+Formatter". If you create an alternate formatter, please share it with the 
+community!
+
+To configure the selected formatter for a field on the Manage Display page
+for any bundle, click the gear icon at the far right.
 
 ![Screenshot of the gear icon on the EDTF formatter settings](../assets/metadata_edtf_field_formatter_gear.png)
 
-Example of how the EDTF formatter settings can change the display of an EDTF value:
-![Combined screenshots displaying the EDTF default formatter settings, default on top and modified settings below, with an example formatted EDTF value displayed for each.](../assets/metadata_edtf_formatters.png)
+By selecting the appropriate configuration options for "Date separator", 
+"Date Order", "Month Format", "Day Format", and "Year Format" you can 
+configure a date to display in various ways.
 
-#### Configuration for indexing and sorting EDTF fields in search results
+![The Default EDTF Formatter settings pane](../assets/metadata_edtf_formatters.png)
 
-By default, EDTF date values are indexed in Solr as string values. The entered value (not the displayed value) is indexed.
+#### Indexing and sorting EDTF fields in search results
+
+When indexing EDTF date fields in Solr, the entered value (not the 
+displayed value) is indexed, and it is indexed by default as a string. See 
+heading ["Date Facets and the EDTF Year Processor"](#date-facets-and-the-edtf-year-processor) 
+for an alternate method of indexing EDTF fields.
 
 !!! Solr EDTF limitations
-    The Solr string data type requires the full field value to match the query in order to count as a match. This means that searching for 2014 will not retrieve a record where the recorded date value is 2014-11-02.
+    The Solr string data type requires the full field value to match the 
+    query in order to count as a match. This means that searching for 2014 will 
+    not retrieve a record where the recorded date value is 2014-11-02. Changing 
+    the Solr data type to fulltext will allow partial matches, but it will prevent 
+    the field from being used as a facet.
 
-EDTF date fields may be configured as sort fields in your search results Views. By default, this results in a simple ordering by the literal EDTF date string.
+Sorting on EDTF date fields may be configured in your search 
+results Views. This results in a simple ordering by the literal EDTF date 
+string.  A field with multiple or unlimited number of allowed 
+values may be set as a sort field. In this case, the first occurrence of the 
+field value is used as the sorting value.
 
-An EDTF date field with multiple or unlimited number of allowed values may be set as a sort field. In this case, the first occurrence of the field value is used as the sorting value.
+##### "EDTF Year" Processor
+
+The Controlled Access Terms module provides a search API processor, called 
+"EDTF Year", that allows you to index the year values of one or more EDTF 
+fields as integers. This allows for year-only date facets. Multiple fields 
+(such as 
+Date Created, Date Issued, 
+etc) can be indexed together into a single field. 
+Only the 
+year, not month or day information, will be 
+indexed. Multiple years will be indexed for a single EDTF value if the value 
+is a range (that spans years) or if some year digits are unspecified. 
+
+In the Islandora Starter Site, this field comes enabled 
+and configured. To configure this field anew, first enable the processor by 
+selecting the "EDTF Year" checkbox on the 
+"Processors" tab of your search index (e.g. 
+dmin/config/search/search-api/index/default_solr_index/processors) scroll 
+down to the bottom of the Processors page to the "Processor Settings" and 
+under the "EDTF Year" vertical tab, select the fields you would like indexed 
+as well as various options.  , and then 
+"Add field" on the 
+"Fields" tab and select 
 
 ### Typed Relation
 
