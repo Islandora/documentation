@@ -1,50 +1,39 @@
 # Metadata in Islandora
 
-!!! note "See also: Fields in the Starter Site"
-    This page describes technical details about how metadata is handled as 
-    fields in Drupal and provides a deeper understanding of, and tools for 
-    modifying, your metadata configuration. If you want to learn about what 
+## 1-minute synopsis
+
+In Islandora, metadata is stored natively in Drupal, in
+_fields_.
+Drupal fields are configured per _content type_ (and per _media type_ for
+media and per
+_vocabulary_ for taxonomy terms ). Fields have different _field types_ which
+determine how you can interact with them (e.g. what content is allowed,
+and how the values
+can be displayed). Almost all of our interactions with metadata use standard
+Drupalisms, though Islandora does add a few specialized field types and
+methods of serialization.
+
+
+!!! info "See also: Fields in the Starter Site"
+    If you want to learn about what 
     metadata fields come out-of-the-box with Islandora, see [Starter Site Metadata 
     Configuration](starter-site-metadata-configuration.md). 
 
-> 1-minute synopsis: In Islandora, metadata is stored natively in Drupal, in 
-> _fields_.
-> Drupal fields are configured per _content type_ (and per _media type_ for 
-> media and per 
-> _vocabulary_ for taxonomy terms ). Fields have different _field types_ which 
-> determine how you can interact with them (e.g. what content is allowed, 
-> and how the values 
-> can be displayed). Almost all of our interactions with metadata use standard 
-> Drupalisms, though Islandora does add a few specialized field types and 
-> methods of serialization. 
 
-!!! note "Drupal Terminology"
-    In Drupal, a generic term for things that can have fields is 
-    _bundle_ (synonymously, _entity sub-type_). There are more specific terms 
+
+## Bundles: Metadata Profiles
+
+!!! tip "'Bundle'"
+    In Drupal, a generic term for things that can have fields is
+    [_bundle_](glossary.md#bundle) (synonymously, _entity sub-type_). There are more specific terms
     depending on the entity type, i.e.  
-    bundles of nodes are "content types", bundles of Media are "media types", and 
-    bundles of taxonomy terms are "vocabularies". Examples of bundles include: 
-    "Repository 
-    Item" (a content type), "Image" (a Media type), 
-    and "Genre" (a Vocabulary). Rarely, fields are attached directly to _entity types_ when 
-    the 
-    entity type does not have bundles (e.g. Users). For more on Fields, see 
-    ["2.3 Content Entities and Fields"](https://www.drupal.org/docs/user_guide/en/planning-data-types.html), ["6.3 Adding Basic Fields 
-    to a Content Type"](https://www.drupal.org/docs/user_guide/en/structure-fields.html), and ["Introduction to Entity API in Drupal 8"](https://www.drupal.org/docs/drupal-apis/entity-api/introduction-to-entity-api-in-drupal-8) in the Official Drupal 
-    Guide.
+    bundles of nodes are "content types", bundles of Media are "media types", and
+    bundles of taxonomy terms are "vocabularies". Rarely, fields are attached directly to _entity types_ when
+    the entity type does not have bundles (e.g. User).
 
 <!-- Next revision: check status of changing 'bundles' to 'entity sub-types' (https://www.drupal.org/project/drupal/issues/1380720). -->
 
-!!! note Metadata - Structural, Descriptive and Technical
-    As described in the [resource nodes section](content-models.md#resource-nodes), 
-    Islandora digital objects are comprised of _Drupal 
-    nodes_ for structural and descriptive metadata, _Drupal media_ for 
-    technical metadata, 
-    and _Drupal files_ for the binary objects. This section focuses on 
-    structural and descriptive metadata on nodes, but the same concepts apply to 
-    technical metadata fields on Media types.
 
-## Metadata profiles in Drupal: Content Types, Media Types, and Vocabularies
 ### Content Types
 
 When we create a piece of content in Drupal (such as via the 
@@ -54,9 +43,11 @@ select a _content
 type_ for that node.  A content type, generically 
 known as a _bundle_ or _node sub-type_, is a set of configurations that 
 determine how that type of content behaves. It includes: 
+
 * field definitions
 * form configurations
-* display configurations. 
+* display configurations.
+
 Each content type determines what fields are available, how (meta)data can be 
   entered and validated, and how (meta)data is displayed, so it is essentially a metadata profile. 
 
@@ -75,7 +66,7 @@ fields for generic web content, while "Repository
 Item" was created by the Islandora community as a starting point for you to 
 customize your repository content.
 
-!!! note "Do I need to make a custom content type?"
+!!! question "Do I need to make a custom content type?"
     The Repository Item content type was designed to be flexible and 
     extensible. It is possible to have an entire repository (with 
     heterogenous content) using only Repository Item - and may sites do. To 
@@ -91,8 +82,7 @@ customize your repository content.
     field with machine name `field_member_of` then they can be used 
     to hold Islandora content. If you're using multiple content types with 
     Islandora, consider that sharing fields across content types makes it 
-    easier to use field-based features in search and Views. See [our tutorial 
-for a fuller walk-through of creating a content type](content-types.md#create-a-content-type).
+    easier to use field-based features in search and Views. See [our tutorial for a fuller walk-through of creating a content type](content-types.md#create-a-content-type).
 
 ### Media Types
 
@@ -105,7 +95,7 @@ you like, you can add additional metadata fields to media.
 
 ### Vocabularies
 
-Vocabularies are bundles for taxonomy terms (sometimes just called "terms"). 
+Vocabularies are bundles for taxonomy terms. 
 Unlike nodes or media, terms within vocabularies have an ordering, and can have hierarchical structure, but do not need to. 
 
 Vocabularies allow you to
@@ -119,16 +109,16 @@ There are two ways that users can interact with taxonomies: they can be "closed,
 !!! warning "Large Taxonomy Vocabularies"
     The Drupal Taxonomy UI is known to break down when your vocabularies get large (e.g. over 20,000 terms). Jonathan Hunt created the [CCA Taxonomy Manager](https://github.com/catalyst/cca_taxonomy_manager) module for SFU to solve this problem.
 
-!!! tip
+!!! info
     See also: [MIG Presentation on Taxonomies](https://docs.google.com/presentation/d/1LfpU6H4qxXtnYQPFntwMNtsgtU30yzp2MxwKKAllUOc/edit?usp=sharing) by Kristina Spurgin, 2021-07-19
 
 ## Fields
 
 ### What are fields?
 
-Fields are places where you can store (meta)data. Each content type (or 
-media type, or vocabulary) defines and configures a set of fields. These are 
-usually configured by a high-permissioned user, such as a site administrator, 
+Fields are places where you can store (meta)data. Each bundle (content type, 
+media type, or vocabulary) defines and configures a set of fields. Bundles are usually managed
+by a high-permissioned user, such as a site administrator, 
 or a manager responsible for metadata. This 
 section will go deeper into these fields.
 
@@ -144,32 +134,33 @@ field on a media or taxonomy term). One example of a field that is re-used
 is the "Media of" field (`field_media_of`), which is used by all media types 
 that come with Islandora.
 
-Fields also have a display name (such as "Identifier") and display and form configurations; these are configured per bundle, so that a field with the 
+Fields also have a label (such as "Identifier") and display and form configurations; these are configured per bundle, so that a field with the 
 same machine name may have a different display name on different content 
 types, and may display differently.
 
 The names and definitions of fields are entirely within Drupal and do not 
 have to correspond to an outside metadata schema. 
 
-#### Fields vs. XML and migrating from MODS
+#### Migrating from MODS
 
-While you can store MODS as an XML file in a media in Islandora, to get 
+While you can store MODS (or any other metadata file) as an XML file in a media in Islandora, to get 
 the most out of Islandora we recommend extracting your metadata values into 
 Drupal fields. This allows rich editing, indexing, and views-building 
-features. The [fields configured on the Repository Item content type]
-(starter-site-metadata-configuration.md) that 
+features. The [fields configured on the Repository Item content type](starter-site-metadata-configuration.md) that 
 comes with the Islandora Starter Site 
 were designed with a [mapping from MODS](https://docs.google.com/spreadsheets/d/18u2qFJ014IIxlVpM3JXfDEFccwBZcoFsjbBGpvL0jJI/edit?pli=1#gid=0) in mind. You're free to use it as-is or 
 modify it as desired.
 
-Drupal fields aren't themselves part of any XML schema, so 
-it's no longer viable to say that your Islandora data is "stored in MODS."
-However, you can map fields into a variety of XML and RDF formats 
-including MODS - see 
-["Serialization"](#serialization). These mappings are lossy.
+!!! warning 
+    Drupal fields aren't themselves part of any XML schema, so 
+    it's no longer viable to say that your Islandora data "uses" or "conforms to" MODS.
+    However, you can map fields into a variety of XML and RDF formats 
+    including MODS - see 
+    ["Serialization"](#serialization). These mappings are lossy.
 
-MODS has a lot of features that are not part of the Starter Site 
+MODS has many features that are not part of the Starter Site 
 metadata configuration, and some are difficult to implement:
+
 * Use of `type` and `displayLabel` attributes: this can be replicated for 
 individual fields using Paragraphs. Additional theming would be required to 
 display them in a useful way.
@@ -197,9 +188,9 @@ edits to the existing fields that you can.
 To make a new field, you will need to give it a Label, Machine name (usually 
 automatically generated), and choose a [Field Type](#field-types). 
 
-!!! note "Useful field types are under 'Reference'"
-    Common field types such as *Taxonomy Term*, *Media*, and *Node* fields 
-    are found under the generic term "Reference" (formerly "Entity Reference". 
+!!! tip "Use the 'Reference' field type to link other content"
+    Commonly you want a field that links to a *Taxonomy Term*, *Media*, or *Node*. These 
+    are found under the generic term "Reference" (formerly "Entity Reference"). 
     Once selected, you will be able to choose the type of entity to reference 
     (such as nodes, media, or taxonomy terms)
 
@@ -207,7 +198,7 @@ Next, depending on the field type, you will then define the
 maximum length of the field, the number of values it can contain, and/or what 
 taxonomies it might link to.
 
-!!! tip "You cannot change intrinsic properties of fields."
+!!! warning "You cannot change intrinsic properties of fields."
     As soon as you have created a field, you cannot change the machine name or 
     type. Additionally, once content has been added, you cannot change 
     additional properties such as the 
@@ -221,48 +212,51 @@ It is possible to delete fields. Deleting a field from a bundle instantly
 deletes all content in that 
 field (unless the content is a reference to an entity in its own right - the 
 referenced entity will persist). This means that:
+
 * if you have a text field and delete it, all content in that text field is 
   gone including from all revisions.
 * if you have a reference field such as a taxonomy term field, and you 
   delete the field, then you may have now-unused taxonomy terms that still  exist in a vocabulary even though no enties (or revisions) make reference to them.
 
 
-### Form Display ("Manage form display")
+### Manage form display
 
-Bundles let you configure how fields display in the edit form, which 
-may be used by content editors for data entry (though you may use Islandora 
-Workbench or Migrate to do data entry). This configuration happens on the 
+Bundles let you configure how fields display in the create/edit form, which 
+may be used by content editors for data entry. This configuration happens on the 
 bundle's 
-**Manage form display** tab. Here, you can arrange the order of fields, make 
-fields not display on the form, choose what Widget will define the 
-entry options for a field, and then set certain settings for that Widget.
+**Manage form display** tab. Here, you can arrange the order of fields, hide fields,
+choose what Widget to use for each field, and configure settings for those Widgets.
 
-!!! note "Widgets"
+!!! info "Widgets"
     "Widget" is the name of a configurable editable form element in Drupal. 
     Compare: **formatter**, which is for display.
 
-Widgets are defined by Field Type, so an Entity reference field could use 
-autocomplete, a select list, or even checkboxes. The widget used is chosen 
-from a 
-drop-down list. The widget settings are accessed through the gear on the far 
-right of a row and may allow you to set the size of an entry field, whether 
-the field *Label* is displayed, or if you use placeholder text, for example.
+The Manage Form Display page presents a table listing all fields. Each field
+will present a drop-down list where you can choose from the compatible widgets.
+For instance, an Entity reference field could use 
+autocomplete, a select list, or even checkboxes. Once a widget is selected, its 
+settings are accessed through the gear on the far 
+right of a row. Settings vary per widget, and may include the size of an entry field, or if you use placeholder text, for example.
 
 !!! tip "Using the drag-and-drop interface"
-    Drupal uses drag-and-drop interfaces in many places. Clicking to the
+    Drupal uses drag-and-drop interfaces in many places. Clicking the up-down icon to the
     left of the label will allow you to drag the item into a new position. There
-    is usually a section at the bottom for elements that are not enabled. If you
+    is usually a section at the bottom for elements that are not enabled. 
+
+    If you
     don't want to drag, there is a link at the top right of the drag-and-drop
-    table to "Show row weights". This allows you to enter digits instead of
+    table to "**Show row weights**". This allows you to enter digits instead of
     clicking and dragging.
 
 !!! tip "Configuring who can edit specific fields"
     With the **Field Permissions** module (enabled with the Starter Site), 
-    you can configure that only certain roles may edit a specific field.
+    you can configure that only certain roles may edit a specific field. This
+    does not happen on the "Manage Display" page; rather, it is accessed from
+    the "Manage Fields" page.
 
-### Content Display ("Manage display")
+### Manage display
 
-The **Manage display** tab for a content type (media type, vocabulary) is where 
+The **Manage display** tab for a bundle (content type, media type, or vocabulary) is where 
 you will make decisions about how to
 display the metadata. Order is arranged using another drag-and-drop 
 interface (see note "Using the drag-and-drop interface", above), and fields can 
@@ -277,7 +271,21 @@ displayed above the value, in-line, or hidden.
 
 !!! tip "Configuring who can view specific fields"
     With the **Field Permissions** module (enabled with the Starter Site),
-    you can configure that only certain roles may view a specific field.
+    you can configure that only certain roles may view a specific field. This
+    does not happen on the "Manage Form Display" page; rather, it is accessed from
+    the "Manage Fields" page. 
+
+### Field Report
+
+The [**Field Report**](https://www.drupal.org/project/field_report) contributed module, included with the Islandora Starter Site, provides
+an overview of the configuration of fields on each bundle. It can be accessed at
+**Reports** >> **Field List** >> **Field Report** (`/admin/reports/fields/field-report`).
+
+!!! tip
+    The Field Report module does not list the repeatability, cardinality, or target bundles of fields. 
+    The Robertson Library at UPEI developed a forked version,  [Metadata Field Report](https://github.com/roblib/metadata_field_report), that does this and also provides
+    a downloadable CSV of the field configurations for each bundle.
+
 
 ## Field Types
 
@@ -285,21 +293,20 @@ Field types in Drupal determine what kind of data can be stored, and what
 widgets (see note "Widgets", above) and formatters (see note "Formatters", 
 above) are available. 
 
-Drupal comes with a number of built-in field types including boolean, 
-datetime, entity reference, integer, string, text, and text_with_summary. 
+Drupal comes with a number of built-in field types including _boolean_, 
+_datetime_, _entity reference_, _integer_, _string_, _text_, and _text_with_summary_. 
 More field types, formatters, and widgets are available in various modules. 
-The [Drupal 8 documentation on FieldTypes, FieldWidgets, and FieldFormatters]
-(https://www.drupal.org/docs/8/api/entity-api/fieldtypes-fieldwidgets-and
--fieldformatters) includes a list of the core field types with brief 
+The [Drupal 8 documentation on FieldTypes, FieldWidgets, and FieldFormatters](https://www.drupal.org/docs/8/api/entity-api/fieldtypes-fieldwidgets-and-fieldformatters) includes a list of the core field types with brief 
 definitions, along with a list of core widgets and formatters. There is also 
-documentation for [creating custom field types, widgets, and formatters](https://www.drupal.org/docs/creating-custom-modules/creating-custom-field-types-widgets-and-formatters)
+documentation for [creating custom field types, widgets, and formatters](https://www.drupal.org/docs/creating-custom-modules/creating-custom-field-types-widgets-and-formatters).
 
 Here we will describe a selection of field types of particular interest for 
 Islandora users:
-* Entity Reference (from Drupal Core)
-* Authority Link (from the **Controlled Access Terms** module)
-* EDTF (from the **Controlled Access Terms** module)
-* Typed Relation (from the **Controlled Access Terms** module)
+
+* Entity Reference (from Drupal Core) - for linking to other content or controlled terms
+* Authority Link (from the **Controlled Access Terms** module) - for storing URIs
+* EDTF (from the **Controlled Access Terms** module) - for storing dates
+* Typed Relation (from the **Controlled Access Terms** module) - for storing contributors and their roles
 
 ### Entity Reference
 
@@ -318,7 +325,7 @@ The *Repository Item* content type, provided by the Islandora Starter Site,
 includes several entity reference fields that reference vocabularies defined 
 by the Islandora Core Feature and Controlled Access Terms Defaults modules.
 
-#### Configurations for Entity Reference fields
+#### Configuration for Entity Reference fields
 
 The screenshots below show how you can configure an entity reference field (in this case the Subject field on the Repository Item content type).
 
@@ -341,7 +348,6 @@ Fig. 2: Reference type settings for an entity reference field where you select w
     in content that cannot be edited/saved in the GUI without removing the 
     offending term. 
 
-
 ### Authority Link
 
 The Authority Link field type is defined in the *Controlled Access Terms* 
@@ -360,8 +366,7 @@ is multivalued so can hold multiple URIs that you believe to be equivalent
 to the same concept.
 
 !!! tip
-    The term **external authority source** refers to both controlled  
-    vocabularies like Art & Architecture Thesaurus or FAST as well as Name Authority Files like Library of Congress Name Authority File or VIAF.
+    The term **external authority source** refers to both controlled vocabularies like Art & Architecture Thesaurus or FAST as well as Name Authority Files like Library of Congress Name Authority File or VIAF.
 
 For instance, if you are creating a term called "Red squirrels" within the 
 "Subject"  Vocabulary, you may want to include the URI for 
@@ -371,7 +376,7 @@ vocabulary. If you configured the field Authority Sources to list FAST
 option, you can select this source and add the associated URI (http://id.worldcat.org/fast/1142424).
 
 
-#### Configurations for Authority Link fields
+#### Configuration for Authority Link fields
 
 Each instance of an Authority Link field can have 
 different external authority source options. To configure an Authority Link 
