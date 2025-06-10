@@ -2694,7 +2694,7 @@
 <h2 id="adding-a-staging-site">Adding a Staging Site<a class="headerlink" href="#adding-a-staging-site" title="Permanent link">&para;</a></h2>
 <p>The process for setting up a staging site is the same as production, but you will need to use a different URL. You have two options:</p>
 <ol>
-<li>You can override the <code>DOMAIN</code> environment variable on your staging server</li>
+<li>You can override the <code>DOMAIN</code> environment variable on your staging server by editing its <code>.env</code> file</li>
 <li>Use <code>docker-compose.override.yml</code> for this. In <code>docker-compose.override.yml</code> you will need to override anywhere the <code>DOMAIN</code> variable is used, for example:</li>
 </ol>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>services:
