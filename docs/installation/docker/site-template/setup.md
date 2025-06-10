@@ -31,7 +31,10 @@ This documentation assumes you will be building your production image on the pro
 
 ## Adding a Staging Site
 
-The process for setting up a staging site is the same as production, but you will need to use a different URL. Since the URL is set in the `.env` file, which is checked into your git repository, you may wish to use `docker-compose.override.yml` for this. In `docker-compose.override.yml` you will need to override anywhere the `DOMAIN` variable is used, for example:
+The process for setting up a staging site is the same as production, but you will need to use a different URL. You have two options:
+
+1. You can override the `DOMAIN` environment variable on your staging server
+2. Use `docker-compose.override.yml` for this. In `docker-compose.override.yml` you will need to override anywhere the `DOMAIN` variable is used, for example:
 
 ```
 services:
