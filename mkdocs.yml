@@ -20,6 +20,7 @@ theme:
   language: 'en'
   features:
     - content.action.edit
+    - toc.integrate
   icon:
     edit: material/pencil
 markdown_extensions:
