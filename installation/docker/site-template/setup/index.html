@@ -2692,7 +2692,11 @@
 <p>For more information please see the documentation on <a href="https://docs.docker.com/reference/cli/docker/compose/pull/">docker compose pull</a> and <a href="https://docs.docker.com/reference/cli/docker/compose/build/">docker compose build</a></p>
 </div>
 <h2 id="adding-a-staging-site">Adding a Staging Site<a class="headerlink" href="#adding-a-staging-site" title="Permanent link">&para;</a></h2>
-<p>The process for setting up a staging site is the same as production, but you will need to use a different URL. Since the URL is set in the <code>.env</code> file, which is checked into your git repository, you may wish to use <code>docker-compose.override.yml</code> for this. In <code>docker-compose.override.yml</code> you will need to override anywhere the <code>DOMAIN</code> variable is used, for example:</p>
+<p>The process for setting up a staging site is the same as production, but you will need to use a different URL. You have two options:</p>
+<ol>
+<li>You can override the <code>DOMAIN</code> environment variable on your staging server by editing its <code>.env</code> file</li>
+<li>Use <code>docker-compose.override.yml</code> for this. In <code>docker-compose.override.yml</code> you will need to override anywhere the <code>DOMAIN</code> variable is used, for example:</li>
+</ol>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>services:
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    cantaloupe-prod:
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>        labels:
@@ -2753,7 +2757,7 @@
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">June 25, 2025</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 2, 2025</span>
       
     
   </small>
