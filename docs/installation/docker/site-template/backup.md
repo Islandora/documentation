@@ -145,7 +145,7 @@ docker compose exec -T drupal-dev with-contenv bash -lc 'tar zcvf /tmp/private-f
 Then copied to the host machine:
 
 ```
-docker compose cp drupal-prod:/tmp/private-files.tgz [path/on/host/private-files.tgz]
+docker compose cp drupal-dev:/tmp/private-files.tgz [path/on/host/private-files.tgz]
 ```
 
 
