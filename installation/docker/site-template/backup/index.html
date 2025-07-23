@@ -2956,7 +2956,7 @@
 <div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>docker compose exec -T drupal-dev with-contenv bash -lc &#39;tar zcvf /tmp/private-files.tgz -C /var/www/drupal/private .&#39;
 </span></code></pre></div>
 <p>Then copied to the host machine:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>docker compose cp drupal-prod:/tmp/private-files.tgz [path/on/host/private-files.tgz]
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>docker compose cp drupal-dev:/tmp/private-files.tgz [path/on/host/private-files.tgz]
 </span></code></pre></div>
 <h3 id="restore_2">Restore<a class="headerlink" href="#restore_2" title="Permanent link">&para;</a></h3>
 <p>Drupal files can be restored from a tgz file by copying them into the Drupal container:</p>
@@ -3010,7 +3010,7 @@
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 2, 2025</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 23, 2025</span>
       
     
   </small>
