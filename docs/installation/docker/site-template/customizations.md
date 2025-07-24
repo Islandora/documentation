@@ -16,7 +16,7 @@ If your server uses iptables, you can block a range of IP addresses using the fo
 
 You can modify how nginx handles certain user agents by modifying `/etc/nginx/shared/drupal.defaults.conf` inside your Drupal container. For example, by adding:
 ```
-if ($http_user_agent ~ (Bytespider|ClaudeBot|Sogou|SemrushBot|AcademicBotRTU|PetalBot|GPTBot|DataForSeoBot|test-bot) ) {
+if ($http_user_agent ~ (OAI-SearchBot|ChatGPT|Scrapy|ImagesiftBot|YandexBot|Bytespider|ClaudeBot|Sogou|SemrushBot|AcademicBotRTU|PetalBot|GPTBot|DataForSeoBot|test-bot) ) {
     return 403;
 }
 ```
