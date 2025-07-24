@@ -35,7 +35,7 @@ Why use the Migrate API?
 - Updating metadata is as simple as:
 `drush mim node --update`
 
-Two tools that use the Migrate API are [migrate_islandora_csv](migrate-csv.md) and [migrate_7x_claw](migrate-7x).
+Two tools that use the Migrate API are [migrate_islandora_csv](migrate-csv.md) and [migrate_7x_claw](migrate-7x.md).
 
 Visit the [Migrate API](migration-migrate-api.md) migration documentation section for more details.
 

@@ -16,11 +16,11 @@ This screenshot shows the setup for resources, you can see the various HTTP meth
 
 ![REST configuration](../assets/rest-node-configuration.png)
 
-1. [Authorization](./rest-authorization.md)
-1. [Getting resources - GET](./rest-get.md)
-1. [Creating resources - POST/PUT](./rest-create.md)
-1. [Updating resources - PATCH](./rest-patch.md)
-1. [Deleting resources - DELETE](./rest-delete.md)
+1. [Authorization](rest-authorization.md)
+1. [Getting resources - GET](rest-get.md)
+1. [Creating resources - POST/PUT](rest-create.md)
+1. [Updating resources - PATCH](rest-patch.md)
+1. [Deleting resources - DELETE](rest-delete.md)
 
 ## Further Reading
 
