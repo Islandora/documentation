@@ -40,7 +40,7 @@ By default, your Fedora repository will be exposed to the public at fcrepo.${DOM
             <<: [*traefik-disable, *fcrepo-labels]
 ```
 
-If you do this, you can remove the fcrepo URL from your DNS records.
+If you do this, you can remove the fcrepo domain from your DNS records.
 
 ### Exposing ActiveMQ, Blazegraph, and Solr
 
