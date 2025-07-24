@@ -2,14 +2,6 @@
 
 The following sections describe optional customizations you can make to further modify your Islandora site.
 
-## Modifying settings.php
-
-TODO
-
-## Modifying robots.txt
-
-TODO
-
 ## Blocking Connections
 
 ### Blocking IP Addresses
@@ -30,10 +22,6 @@ if ($http_user_agent ~ (Bytespider|ClaudeBot|Sogou|SemrushBot|AcademicBotRTU|Pet
 ```
 
 ## Traefik customizations
-
-### Using Your Certs Instead of LetsEncrypt
-
-TODO
 
 ### TLS Settings
 
