@@ -18,6 +18,16 @@ If you really want to upload large files, you should consider some alternatives 
 - Using the [TUS file upload protocol](https://www.drupal.org/project/tus) module, which will let you upload large files in forms.
 - Using [flysystem](https://www.drupal.org/project/flysystem)'s ftp and sftp plugins to make files available if you can run an FTP server.
 
+### Traefik
+
+If you are using Traefik as a reverse proxy (eg. you are running Isle-DC or Isle Site Template) and you have increased your PHP/nginx timeouts, you will also need to increase Traefik's default timeout. You can do this in the "command" section of your `docker-compose.yml` by adding
+```
+command: >-
+      ...
+      --entryPoints.https.transport.respondingTimeouts.readTimeout=3600
+      ...
+```
+
 ## Large Files and Fedora
 
 If loading large (e.g. range 30-45 GB) files into Fedora, you may need to change the 
@@ -36,4 +46,3 @@ max.request.size.MB=2000
 # Maximum size of an uploaded file kept in memory. Otherwise temporarily persisted to disk.
 max.in.memory.file.size.MB=4
 ```
-
