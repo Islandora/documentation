@@ -1,0 +1,15 @@
+To: islandora@googlegroups.com, islandora-dev@googlegroups.com
+Subject: New committer: [New Committer]
+
+Body:
+================================
+The Islandora committers have asked [New Committer] to become a committer and we are pleased to announce that they have accepted.
+
+### add specific details here ###
+
+Further details of the rights and responsibilities of being a Islandora committer can be found here:
+http://islandora.github.io/documentation/contributing/committers/
+
+Regards,
+
+================================
