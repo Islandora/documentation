@@ -29,10 +29,8 @@ The following is an alphabetized list of the current Islandora committers:
 
 | Name                        | Organization                          | Github username |
 |-----------------------------|---------------------------------------|----------------|
-| Bryan Brown                 | Florida State University              | bryjbrown      |
 | Joe Corall                  | Lehigh University                     | joecorall      |
 | Jordan Dukart               | discoverygarden                       | jordandukart   |
-| Willow Gillingham           | Born-Digital                          | wgilling       |
 | Jonathan Hunt               | Catalyst.Net                          | kayakr         |
 | Mark Jordan                 | Simon Fraser University               | mjordan        |
 | Danny Lamb                  | Born-Digital                          | dannylamb      |
@@ -42,12 +40,10 @@ The following is an alphabetized list of the current Islandora committers:
 | Annie Oelschlager           | Northern Illinois University          | aOelschlager   |
 | Alexander O'Neill           | Born-Digital                          | alxp           |
 | Don Richards                | Johns Hopkins University              | DonRichards    |
-| Bethany Seeger              | Johns Hopkins University              | bseeger        |
 | Seth Shaw                   | University of Nevada, Las Vegas       | seth-shaw-unlv |
 | Alan Stanley                | Agile Humanities                      | ajstanley      |
 | Yamil Suarez                | Berklee College of Music              | ysuarez        |
 | Adam Vessey                 | discoverygarden                       | adam-vessey    |
-| Jared Whiklo                | University of Manitoba                | whikloj        |
 
 
 ## Emeritus Committers
@@ -58,11 +54,15 @@ The following is an alphabetized list of the prior Islandora committers:
 |-----------------------------|-----------------------------------|
 | Daniel Aitken               | discoverygarden                   |
 | Melissa Anez                | LYRASIS                           |
+| Bryan Brown                 | Florida State University          |
 | Aaron Coburn                | Amherst College                   |
+| Willow Gillingham           | Born-Digital                      |
 | Jonathan Green              | LYRASIS                           |
 | Debbie Flitner              | Arizona State University          |
 | Diego Pino                  | METRO                             |
 | Nick Ruest                  | York University                   |
+| Bethany Seeger              | Johns Hopkins University          |
+| Jared Whiklo                | University of Manitoba            |
 | Eli Zoller                  | Arizona State University          |
 
 
