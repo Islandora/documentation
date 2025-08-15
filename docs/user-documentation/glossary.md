@@ -351,6 +351,12 @@ A [Drupal](#drupal) configuration entity that holds [taxonomy terms](#taxonomy-t
 ## Weight
 [Drupal](#drupal) field that stores an integer value on an entity, allowing to represent the relative order of the entity in relation to other entities of the same type or subtype. Used by Islandora to store the order of components in compound objects, for instance pages in paged content items (books, serials).
 
+## White Screen of Death 
+The White Screen of Death (WSoD) refers to the situation when the Islandora site (or any other web application) encounters a [significant error condition](https://en.wikipedia.org/wiki/System_crash_screen#White). This results in the web browser displaying a blank white page instead of the intended content. This term is based on the older term, Blue Screen of Death, for when an MS Windows would have a hard crash.
+
+## WSoD
+See [White Screen of Death](#white-screen-of-death)
+
 ## YAML
 [YAML](https://yaml.org/) is a human-readable data-serialization language. It is commonly used for configuration files and in applications where data is being stored or transmitted. Software applications like [Drupal](#drupal) or [Ansible](#ansible) store configuration information in YAML files for easy transportability of a configuration.
 
