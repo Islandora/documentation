@@ -29,7 +29,8 @@ The following is an alphabetized list of the current Islandora committers:
 
 | Name                        | Organization                          | Github username |
 |-----------------------------|---------------------------------------|----------------|
-| Joe Corall                  | Lehigh University                     | joecorall      |
+| Joe Corall                  | Lehigh University                     | joshdentremont |     |
+| Josh d'Entremont            | Acadia University                     | joecorall      |
 | Jordan Dukart               | discoverygarden                       | jordandukart   |
 | Jonathan Hunt               | Catalyst.Net                          | kayakr         |
 | Mark Jordan                 | Simon Fraser University               | mjordan        |
