@@ -12,15 +12,6 @@ If your server uses iptables, you can block a range of IP addresses using the fo
 
 `iptables -I DOCKER-USER -s XXX.XXX.XXX.0/24 -j DROP`
 
-### Blocking by User Agent
-
-You can modify how nginx handles certain user agents by modifying `/etc/nginx/shared/drupal.defaults.conf` inside your Drupal container. For example, by adding:
-```
-if ($http_user_agent ~ (OAI-SearchBot|ChatGPT|Scrapy|ImagesiftBot|YandexBot|Bytespider|ClaudeBot|Sogou|SemrushBot|AcademicBotRTU|PetalBot|GPTBot|DataForSeoBot|test-bot) ) {
-    return 403;
-}
-```
-
 ## Traefik customizations
 
 ### TLS Settings
