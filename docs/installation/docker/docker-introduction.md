@@ -1,4 +1,4 @@
-# Introduction to ISLE
+# Deploying Islandora with Docker (ISLE)
 
 ## What is ISLE?
 
