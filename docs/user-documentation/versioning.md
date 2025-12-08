@@ -6,7 +6,16 @@ The answer to these questions is two-fold, and largely yes. The architecture of 
     Looking for information about versions of Islandora itself? The latest Islandora follows [semantic versioning](https://semver.org/). Previously, Islandora's versions were tied to the version of Drupal and numbered in order of release, such as [Islandora 6.x-13.1](https://wiki.lyrasis.org/display/ISLANDORA6131/Islandora) or [Islandora 7.x-1.13](https://wiki.lyrasis.org/display/ISLANDORA/Start). [More information](../technical-documentation/versioning.md).
 
 ## Drupal Revisioning
-Drupal provides a concept of revisions which allows you to track the differences between multiple versions of your content and revert to older ones. The list of revisions for a node, media, or taxonomy term are available at the entity's page, with `/revisions` appended to the URL. There are [Drupal docs](https://www.drupal.org/docs/8/administering-a-drupal-8-site/node-revisions) on revisioning.
+Drupal provides a concept of revisions which allows you to track the 
+differences between multiple versions of your content and revert to older ones. 
+The list of revisions for a node, media, or taxonomy term are available at the 
+entity's page, with `/revisions` appended to the URL. There are 
+[Drupal docs](https://www.drupal.org/docs/8/administering-a-drupal-8-site/node-revisions) on revisioning.
+
+!!! note "Caution when modifying content types"
+    Modifying fields takes effect across all 
+    revisions. Notably, when you delete a field from Drupal, all data in 
+    that field across all revisions is lost!
 
 ## Fedora and Memento
 Fedora implements the [Memento](http://mementoweb.org/about/) specification for versioning resources, which is a time-based HTTP framework. Fedora provides [documentation](https://wiki.lyrasis.org/display/FEDORA5x/Versioning) as well as an [API implementation](https://wiki.lyrasis.org/display/FEDORA5x/RESTful+HTTP+API+-+Versioning).
