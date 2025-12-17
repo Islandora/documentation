@@ -131,7 +131,7 @@ Alternatively, Entity Reference Purger takes care of deleting the references on 
 
 #### Content Management Workflows
 
-[Content moderation](https://www.drupal.org/project/content_moderation)
+[Content moderation](https://www.drupal.org/docs/8/core/modules/content-moderation/overview)
 
 This module lets you set up workflows that "transition" content between "states", which may be published or unpublished. It also allows you to set revisions as mandatory (normally an editor can decide to make an edit without creating a revision, making it very hard to track for auditing).
 
