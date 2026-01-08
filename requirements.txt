@@ -30,5 +30,5 @@ regex==2022.10.31
 requests==2.32.4
 six==1.16.0
 smmap==5.0.0
-urllib3==2.6.0
+urllib3==2.6.3
 watchdog==2.2.1
