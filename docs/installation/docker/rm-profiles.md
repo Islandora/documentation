@@ -86,31 +86,27 @@ Otherwise, be sure your `DOMAIN` value in `.env` is `islandora.traefik.me`.
 
 Now, bring up your services. In a development environment, after running `make up` your ISLE site should be available at `http://$DOMAIN`.
 
-
-## 5 - Cleanup (optionally revert)
-
-Switch to your main branch
-
-```
-git checkout main
-```
-
-If the changes didn't apply smoothly you can simply checkout back out main branch and delete the git branch we created
+If you don't like the new setup, it's not working, or the changes didn't apply cleanly, you can [reach out for help](https://www.islandora.ca/contact-us#comms-channels) or simply delete the git branch that was created to revert the changes
 
 !!! warning
     This will delete any config settings made in previous steps
     ```
+    make down
+    git checkout main
     git branch -D rm-compose-profiles
     ```
 
-Instead, if you like this new setup and all looks well, merge the `rm-compose-profiles` git branch into main
+## 5 - Save changes and cleanup
+
+If you like this new setup and all looks well, merge the `rm-compose-profiles` git branch into main
 
 ```
+git checkout main
 git merge rm-compose-profiles
 git push origin main
 ```
 
-Finally, remove the git remote we made
+Remove the git remote we made to merge in the latest changes locally
 
 ```
 git remote remove ist
