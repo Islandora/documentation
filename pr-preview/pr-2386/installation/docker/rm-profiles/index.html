@@ -2917,13 +2917,10 @@
 </span></code></pre></div>
 <h2 id="6-deploy-to-production">6 - Deploy to production<a class="headerlink" href="#6-deploy-to-production" title="Permanent link">&para;</a></h2>
 <p>If you committed the changes, deploy to production by:</p>
-<p>First, update .env with the new <code>.env</code> values. If you're using letsencrypt it will probably look like</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>URI_SCHEME=https
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>TLS_PROVIDER=&quot;letencrypt&quot;
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>ACME_URL=https://acme-v02.api.letsencrypt.org/directory
-</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>ACME_EMAIL=postmaster@example.com
+<p>If you're using letsencrypt run this make helper to switch to <code>https</code>:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>make traefik-https-mkcert
 </span></code></pre></div>
-<p>If you're using your own TLS certs, it'll probably look like</p>
+<p>If you're using your own TLS certs, make sure <code>.env</code> has</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>URI_SCHEME=https
 </span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>TLS_PROVIDER=&quot;self-managed&quot;
 </span></code></pre></div>
