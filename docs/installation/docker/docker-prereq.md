@@ -38,7 +38,7 @@ Docker Compose is a tool to simplify the process of running multiple Docker cont
 
 ### GNU Make
 
-Make allows us to define commands that simplify installing and maintaining our Islandora site. For a complete list of available commands see the Makefile included with ISLE-DC.
+Make allows us to define commands that simplify installing and maintaining our Islandora site. For a complete list of available commands see the Makefile included with ISLE Site Template.
 
 ### Composer
 

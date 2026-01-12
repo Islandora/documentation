@@ -44,9 +44,9 @@ Once you have converted the development instance of your site, moving it to prod
 
     1. Run the generate secrets script included with the site template, or copy your secrets from your existing site if you want them to be the same
     2. Add custom modules or themes, if you have some that are not included in your composer.json
-    3. Build your Drupal container with `docker compose --profile prod build`
-    4. Pull in the remaining containers with `docker compose --profile prod pull --ignore-buildable --ignore-pull-failures`
-    5. Start the containers with `docker compose --profile prod up -d`
+    3. Build your Drupal container with `docker compose build`
+    4. Pull in the remaining containers with `docker compose pull --ignore-buildable --ignore-pull-failures`
+    5. Start the containers with `docker compose up -d`
 
 3. Import the backups from your ISLE-DC site that you made in the development instructions above
 
@@ -56,7 +56,7 @@ Once you have converted the development instance of your site, moving it to prod
 
 The main difference between ISLE-DC and the Site Template is the way the docker-compose.yml file is generated. In ISLE-DC we generate it based on your .env variables and a make command, but in Site Template it is ready to go out of the box. 
 
-This means that in ISLE-DC you had separate docker-compose.yml files for development and production, but in site template there is one file for both, which contains instructions for a “dev” and “prod” profile. The end result is the same set of containers, but instead of running `docker compose up` you would run `docker compose --profile dev up`
+This means that in ISLE-DC you had separate docker-compose.yml files for development and production, but in site template there is one file for both.
 
 ### Environment Variables
 

@@ -1,5 +1,8 @@
 # Maintaining Your ISLE Infrastructure
 
+!!! warning
+    isle-dc is deprecated in favor of [isle-site-template](/documentation/installation/docker/site-template/site-template.md).
+
 You will regularly be updating your Drupal site as security patches and module updates are released.
 Less often, you will also need to update the rest of your Islandora installation.  ISLE makes this easy.
 In fact, it was specifically designed to streamline this process.
