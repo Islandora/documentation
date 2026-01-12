@@ -31,10 +31,10 @@ git checkout ist/main -- docker-compose.yml
 
 ### 2.b - Attempt to merge
 
-If you have made changes since copying the repo, you can attempt to convert it using `sitectl`. Install sitectl and run the `sitectl isle migrate merge-compose-profiles` command
+If you have made changes to docker-compose.yml since copying the repo, you can attempt to convert it using `sitectl`. Install sitectl and run the `sitectl isle migrate merge-compose-profiles` command
 
 ```
-brew tap libops/homebrew
+brew tap libops/homebrew https://github.com/libops/homebrew
 brew install libops/homebrew/sitectl-isle
 sitectl isle migrate merge-compose-profiles -i docker-compose.yml -o docker-compose.yml -f
 ```
