@@ -116,16 +116,13 @@ git remote remove ist
 
 If you committed the changes, deploy to production by:
 
-First, update .env with the new `.env` values. If you're using letsencrypt it will probably look like
+If you're using letsencrypt run this make helper to switch to `https`:
 
 ```
-URI_SCHEME=https
-TLS_PROVIDER="letencrypt"
-ACME_URL=https://acme-v02.api.letsencrypt.org/directory
-ACME_EMAIL=postmaster@example.com
+make traefik-https-mkcert
 ```
 
-If you're using your own TLS certs, it'll probably look like
+If you're using your own TLS certs, make sure `.env` has
 
 ```
 URI_SCHEME=https
