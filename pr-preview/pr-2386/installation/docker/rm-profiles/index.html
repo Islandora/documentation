@@ -2866,8 +2866,8 @@
 <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>git checkout ist/main -- docker-compose.yml
 </span></code></pre></div>
 <h3 id="2b-attempt-to-merge">2.b - Attempt to merge<a class="headerlink" href="#2b-attempt-to-merge" title="Permanent link">&para;</a></h3>
-<p>If you have made changes since copying the repo, you can attempt to convert it using <code>sitectl</code>. Install sitectl and run the <code>sitectl isle migrate merge-compose-profiles</code> command</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>brew tap libops/homebrew
+<p>If you have made changes to docker-compose.yml since copying the repo, you can attempt to convert it using <code>sitectl</code>. Install sitectl and run the <code>sitectl isle migrate merge-compose-profiles</code> command</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>brew tap libops/homebrew https://github.com/libops/homebrew
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>brew install libops/homebrew/sitectl-isle
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>sitectl isle migrate merge-compose-profiles -i docker-compose.yml -o docker-compose.yml -f
 </span></code></pre></div>
