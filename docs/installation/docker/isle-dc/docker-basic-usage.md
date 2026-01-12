@@ -1,7 +1,7 @@
 # Basic Usage
 
 !!! warning
-    isle-dc is deprecated in favor of [isle-site-template](/documentation/installation/docker/site-template/site-template.md).
+    isle-dc is deprecated in favor of [isle-site-template](/documentation/installation/docker/site-template/site-template/).
 
 After you've finished installing Islandora using ISLE, here's some useful information to keep close at hand
 about running your site.

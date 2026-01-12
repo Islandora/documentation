@@ -1,7 +1,7 @@
 # Troubleshooting
 
 !!! warning
-    isle-dc is deprecated in favor of [isle-site-template](/documentation/installation/docker/site-template/site-template.md).
+    isle-dc is deprecated in favor of [isle-site-template](/documentation/installation/docker/site-template/site-template/).
 
 ### Make command not found
 

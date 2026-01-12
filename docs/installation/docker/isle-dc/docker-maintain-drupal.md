@@ -1,7 +1,7 @@
 # Maintaining Your Drupal Site
 
 !!! warning
-    isle-dc is deprecated in favor of [isle-site-template](/documentation/installation/docker/site-template/site-template.md).
+    isle-dc is deprecated in favor of [isle-site-template](/documentation/installation/docker/site-template/site-template/).
 
 Drupal has a dedicated security team, and regularly produces updates to address security issues
 that are discovered.  You should always keep your Drupal site up to date so that you are
