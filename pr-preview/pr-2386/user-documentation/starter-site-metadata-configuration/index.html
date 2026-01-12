@@ -1,0 +1,6131 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation for Islandora">
+      
+      
+      
+        <link rel="canonical" href="https://islandora.github.io/documentation/user-documentation/starter-site-metadata-configuration/">
+      
+      
+        <link rel="prev" href="../metadata/">
+      
+      
+        <link rel="next" href="../linked-data/">
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.0.12">
+    
+    
+      
+        <title>Starter Site Metadata Configuration - Islandora</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0d440cfe.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.2505c338.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../css/custom.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="blue">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#islandora-starter-site-metadata-configuration" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Islandora" class="md-header__button md-logo" aria-label="Islandora" data-md-component="logo">
+      
+  <img src="../../assets/Islandora_logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Islandora
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Starter Site Metadata Configuration
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Islandora/documentation" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Islandora" class="md-nav__button md-logo" aria-label="Islandora" data-md-component="logo">
+      
+  <img src="../../assets/Islandora_logo.png" alt="logo">
+
+    </a>
+    Islandora
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Islandora/documentation" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        About
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/quickstart/" class="md-nav__link">
+        Quickstart
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          Concepts
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Concepts
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/node-concepts/" class="md-nav__link">
+        Nodes in Islandora
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/node-media/" class="md-nav__link">
+        Media in Islandora
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/derivatives/" class="md-nav__link">
+        Derivatives
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/rdf/" class="md-nav__link">
+        RDF Repository
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/starter-site/" class="md-nav__link">
+        Islandora Starter Site
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          Behaviours (Models)
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Behaviours (Models)
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/collection/" class="md-nav__link">
+        Collections
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../paged-content/" class="md-nav__link">
+        Paged Content
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../models/audio/" class="md-nav__link">
+        Audio
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../models/video/" class="md-nav__link">
+        Video
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+          Installation
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Installation
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_1" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5_1" id="__nav_5_1_label" tabindex="0">
+          Release Notes
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_1_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_5_1">
+          <span class="md-nav__icon md-icon"></span>
+          Release Notes
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release_notes/8.x-2.0/" class="md-nav__link">
+        8.x-2.0 Release Notes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://github.com/Islandora/documentation/tree/main/docs/release_notes" class="md-nav__link">
+        Older Release Notes
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+          Docker
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_5_2">
+          <span class="md-nav__icon md-icon"></span>
+          Docker
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/docker/docker-introduction/" class="md-nav__link">
+        Introduction to ISLE
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/docker/docker-prereq/" class="md-nav__link">
+        Prerequisites
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2_3" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5_2_3" id="__nav_5_2_3_label" tabindex="0">
+          ISLE Site Template
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_2_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_5_2_3">
+          <span class="md-nav__icon md-icon"></span>
+          ISLE Site Template
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/docker/site-template/site-template/" class="md-nav__link">
+        Introduction to Site Template
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/docker/site-template/setup/" class="md-nav__link">
+        Creating Your Site
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/docker/site-template/docker-modifications/" class="md-nav__link">
+        Docker Modifications
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/docker/site-template/containers/" class="md-nav__link">
+        Working in Your Containers
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/docker/site-template/updating/" class="md-nav__link">
+        Updating
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/docker/site-template/backup/" class="md-nav__link">
+        Back Up and Restore
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/docker/site-template/customizations/" class="md-nav__link">
+        Customizations
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/docker/converting/" class="md-nav__link">
+        Converting ISLE-DC to Site Template
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/docker/rm-profiles/" class="md-nav__link">
+        Removing compose profiles from Site Template
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2_6" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5_2_6" id="__nav_5_2_6_label" tabindex="0">
+          ISLE-DC (deprecated)
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_2_6_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_5_2_6">
+          <span class="md-nav__icon md-icon"></span>
+          ISLE-DC (deprecated)
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2_6_1" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5_2_6_1" id="__nav_5_2_6_1_label" tabindex="0">
+          Installing
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_5_2_6_1_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_5_2_6_1">
+          <span class="md-nav__icon md-icon"></span>
+          Installing
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/docker/isle-dc/docker-local/" class="md-nav__link">
+        Installing a Development Server
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/docker/isle-dc/docker-custom/" class="md-nav__link">
+        Installing a Staging/Production Server
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2_6_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5_2_6_2" id="__nav_5_2_6_2_label" tabindex="0">
+          Maintaining
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_5_2_6_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_5_2_6_2">
+          <span class="md-nav__icon md-icon"></span>
+          Maintaining
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/docker/isle-dc/docker-basic-usage/" class="md-nav__link">
+        Basic Usage
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/docker/isle-dc/docker-maintain-drupal/" class="md-nav__link">
+        Maintaining Drupal
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/docker/isle-dc/docker-maintain-isle/" class="md-nav__link">
+        Maintaining ISLE
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/docker/isle-dc/docker-available-commands/" class="md-nav__link">
+        Available Commands
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/docker/isle-dc/docker-available-configuration/" class="md-nav__link">
+        Available Configuration
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/docker/isle-dc/docker-troubleshooting/" class="md-nav__link">
+        Troubleshooting
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/playbook/" class="md-nav__link">
+        Ansible Playbook
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5_4" id="__nav_5_4_label" tabindex="0">
+          Manual Installation
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_4_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_5_4">
+          <span class="md-nav__icon md-icon"></span>
+          Manual Installation
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/manual/introduction/" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/manual/preparing-a-webserver/" class="md-nav__link">
+        Preparing a LAPP Webserver
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/manual/installing-composer-drush-and-drupal/" class="md-nav__link">
+        Installing Composer, Drush, and Drupal
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/manual/installing-tomcat-and-cantaloupe/" class="md-nav__link">
+        Installing Tomcat and Cantaloupe
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/manual/installing-fedora-syn-and-blazegraph/" class="md-nav__link">
+        Installing Fedora, Syn, and Blazegraph
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/manual/installing-solr/" class="md-nav__link">
+        Installing Solr
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/manual/installing-crayfish/" class="md-nav__link">
+        Installing Crayfish
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/manual/installing-alpaca/" class="md-nav__link">
+        Installing Alpaca
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/manual/configuring-drupal/" class="md-nav__link">
+        Configuring Drupal
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../technical-documentation/install-enable-drupal-modules/" class="md-nav__link">
+        Installing Modules
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+          Walkthroughs
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Walkthroughs
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/create-a-resource-node/" class="md-nav__link">
+        Create a Resource Node
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/how-to-create-collection/" class="md-nav__link">
+        Create a Collection
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../content-types/" class="md-nav__link">
+        Modify or Create a Content Type
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/blocks/" class="md-nav__link">
+        Configure Blocks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/create-update-views/" class="md-nav__link">
+        Create or Update a View
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../video-docs/" class="md-nav__link">
+        Video Documentation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../users/" class="md-nav__link">
+        Create and Manage User Accounts
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+          Using Islandora
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          Using Islandora
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user-intro/" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_2" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_2" id="__nav_7_2_label" tabindex="0">
+          Describing content
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_2_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_7_2">
+          <span class="md-nav__icon md-icon"></span>
+          Describing content
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../content-models/" class="md-nav__link">
+        Content models
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../metadata/" class="md-nav__link">
+        Metadata
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Starter Site Metadata Configuration
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Starter Site Metadata Configuration
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#administrativesystem-fields" class="md-nav__link">
+    Administrative/System Fields
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#other-titles" class="md-nav__link">
+    Other Title(s)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contributors" class="md-nav__link">
+    Contributors
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#type-and-genre" class="md-nav__link">
+    Type and Genre
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#origin-information" class="md-nav__link">
+    Origin Information
+  </a>
+  
+    <nav class="md-nav" aria-label="Origin Information">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#date-fields" class="md-nav__link">
+    Date Fields
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#language" class="md-nav__link">
+    Language
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#physical-description" class="md-nav__link">
+    Physical Description
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#descriptions" class="md-nav__link">
+    Description(s)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#subjects" class="md-nav__link">
+    Subject(s)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#coordinates" class="md-nav__link">
+    Coordinates
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#classification" class="md-nav__link">
+    Classification
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#identifiers" class="md-nav__link">
+    Identifier(s)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#access-conditions" class="md-nav__link">
+    Access Conditions
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../linked-data/" class="md-nav__link">
+        Linked data
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../metadata-harvesting/" class="md-nav__link">
+        Metadata harvesting
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_3" id="__nav_7_3_label" tabindex="0">
+          Searching content
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_7_3">
+          <span class="md-nav__icon md-icon"></span>
+          Searching content
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../searching/" class="md-nav__link">
+        Searching
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../advanced-search/" class="md-nav__link">
+        Advanced search
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../faceting/" class="md-nav__link">
+        Faceting
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_4" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_4" id="__nav_7_4_label" tabindex="0">
+          Viewing content
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_4_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_7_4">
+          <span class="md-nav__icon md-icon"></span>
+          Viewing content
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../context/" class="md-nav__link">
+        Context
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../file-viewers/" class="md-nav__link">
+        File viewers
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../iiif/" class="md-nav__link">
+        IIIF
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_5" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_5" id="__nav_7_5_label" tabindex="0">
+          Handling content files
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_5_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_7_5">
+          <span class="md-nav__icon md-icon"></span>
+          Handling content files
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../media/" class="md-nav__link">
+        Media
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../flysystem/" class="md-nav__link">
+        Flysystem
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../uploading-large-files/" class="md-nav__link">
+        Large files
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../transcripts/" class="md-nav__link">
+        Transcripts
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_6" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_6" id="__nav_7_6_label" tabindex="0">
+          Administering Islandora
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_6_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_7_6">
+          <span class="md-nav__icon md-icon"></span>
+          Administering Islandora
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../access-control/" class="md-nav__link">
+        Access control
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../breadcrumbs/" class="md-nav__link">
+        Breadcrumbs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../jwt-authentication/" class="md-nav__link">
+        JWT authentication
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../url-aliases/" class="md-nav__link">
+        URL Aliases
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../usage-stats/" class="md-nav__link">
+        Usage statistics
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../versioning/" class="md-nav__link">
+        Versioning
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../accessibility/" class="md-nav__link">
+        Accessibility
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multilingual/" class="md-nav__link">
+        Multilingual
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_9" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_9" id="__nav_7_9_label" tabindex="0">
+          Extending Islandora
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_9_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_7_9">
+          <span class="md-nav__icon md-icon"></span>
+          Extending Islandora
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../extending/" class="md-nav__link">
+        Extending
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_9_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_9_2" id="__nav_7_9_2_label" tabindex="0">
+          Recipes
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_7_9_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_7_9_2">
+          <span class="md-nav__icon md-icon"></span>
+          Recipes
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recipes/datacite/" class="md-nav__link">
+        Automatically Minting DOIs with DataCite
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+          Documentation for Developers
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          Documentation for Developers
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/component-overview/" class="md-nav__link">
+        Stack Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../technical-documentation/diagram/" class="md-nav__link">
+        Architecture Diagram
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_3" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8_3" id="__nav_8_3_label" tabindex="0">
+          REST Documentation
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_8_3">
+          <span class="md-nav__icon md-icon"></span>
+          REST Documentation
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../technical-documentation/using-rest-endpoints/" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../technical-documentation/rest-authorization/" class="md-nav__link">
+        Authorization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../technical-documentation/rest-get/" class="md-nav__link">
+        GET
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../technical-documentation/rest-create/" class="md-nav__link">
+        POST/PUT
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../technical-documentation/rest-patch/" class="md-nav__link">
+        PATCH
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../technical-documentation/rest-delete/" class="md-nav__link">
+        DELETE
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../technical-documentation/rest-signposting/" class="md-nav__link">
+        Signposting
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_4" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8_4" id="__nav_8_4_label" tabindex="0">
+          Alpaca
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_4_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_8_4">
+          <span class="md-nav__icon md-icon"></span>
+          Alpaca
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../alpaca/alpaca-technical-stack/" class="md-nav__link">
+        Alpaca Technical Stack
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../technical-documentation/alpaca-tips/" class="md-nav__link">
+        Alpaca Tips
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_5" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8_5" id="__nav_8_5_label" tabindex="0">
+          Tests
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_5_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_8_5">
+          <span class="md-nav__icon md-icon"></span>
+          Tests
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../technical-documentation/testing-notes/" class="md-nav__link">
+        Testing Notes
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../technical-documentation/resizing-vm/" class="md-nav__link">
+        Resizing a VM
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../technical-documentation/updating-drupal/" class="md-nav__link">
+        Updating Drupal
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../technical-documentation/ppa-documentation/" class="md-nav__link">
+        Updating a `deb` and adding it to Lyrasis PPA
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../technical-documentation/adding-format-jsonld/" class="md-nav__link">
+        Adding back ?_format=jsonld
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+          Migration/Batch Loading
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_9">
+          <span class="md-nav__icon md-icon"></span>
+          Migration/Batch Loading
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../technical-documentation/migration-overview/" class="md-nav__link">
+        Migration Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../technical-documentation/migration-rest-api/" class="md-nav__link">
+        REST API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../technical-documentation/migration-migrate-api/" class="md-nav__link">
+        Migrate API
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../technical-documentation/migration-islandora-workbench/" class="md-nav__link">
+        Islandora Workbench
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../technical-documentation/migrate-csv/" class="md-nav__link">
+        CSV
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../technical-documentation/migrate-7x/" class="md-nav__link">
+        Islandora 7
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+          Contributing
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_10">
+          <span class="md-nav__icon md-icon"></span>
+          Contributing
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/CONTRIBUTING/" class="md-nav__link">
+        How to contribute
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/testing-a-pull-request/" class="md-nav__link">
+        Testing a Pull Request
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../technical-documentation/running-automated-tests/" class="md-nav__link">
+        Running Tests
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../technical-documentation/checking-coding-standards/" class="md-nav__link">
+        Checking Coding Standards
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/contributing-workflow/" class="md-nav__link">
+        Contributing Workflow
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/create-issues/" class="md-nav__link">
+        Creating GitHub Issues
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../technical-documentation/versioning/" class="md-nav__link">
+        Versioning Policy
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/releasing-islandora/" class="md-nav__link">
+        How to release
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/editing-docs/" class="md-nav__link">
+        How to Edit Documentation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../technical-documentation/docs-build/" class="md-nav__link">
+        How to Build Documentation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/docs-style-guide/" class="md-nav__link">
+        Documentation Style Guide
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/committers/" class="md-nav__link">
+        Committers
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/sandbox/" class="md-nav__link">
+        Maintaining the Sandbox
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../glossary/" class="md-nav__link">
+        Glossary
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#administrativesystem-fields" class="md-nav__link">
+    Administrative/System Fields
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#other-titles" class="md-nav__link">
+    Other Title(s)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contributors" class="md-nav__link">
+    Contributors
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#type-and-genre" class="md-nav__link">
+    Type and Genre
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#origin-information" class="md-nav__link">
+    Origin Information
+  </a>
+  
+    <nav class="md-nav" aria-label="Origin Information">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#date-fields" class="md-nav__link">
+    Date Fields
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#language" class="md-nav__link">
+    Language
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#physical-description" class="md-nav__link">
+    Physical Description
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#descriptions" class="md-nav__link">
+    Description(s)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#subjects" class="md-nav__link">
+    Subject(s)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#coordinates" class="md-nav__link">
+    Coordinates
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#classification" class="md-nav__link">
+    Classification
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#identifiers" class="md-nav__link">
+    Identifier(s)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#access-conditions" class="md-nav__link">
+    Access Conditions
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/Islandora/documentation/edit/main/docs/user-documentation/starter-site-metadata-configuration.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+    </a>
+  
+  
+
+
+
+<h1 id="islandora-starter-site-metadata-configuration">Islandora Starter Site Metadata Configuration<a class="headerlink" href="#islandora-starter-site-metadata-configuration" title="Permanent link">&para;</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>As described in <a href="../metadata/">Metadata In Islandora</a>, in Islandora metadata is stored in Drupal, in fields attached to entities. Provided by the Islandora Starter Site, the “Repository Item” content type contains a set of default fields to describe the digital objects an Islandora repository might contain. This set of fields is based on MODS fields commonly used in Islandora 7, and is not intended to be "the standard" metadata profile, rather, a starting point for institutions designing their own repository.</p>
+<p>This page presents the primary descriptive and administrative metadata fields found in the Islandora Starter site. We will define each field and give its basic configuration. Most of these configurations can be customized after installation, and new fields can be added as per the needs of an individual institution. Fields are grouped in standard MODS order. </p>
+<p>Further information on the metadata configuration can be found in a Google Spreadsheet <a href="https://docs.google.com/spreadsheets/d/1N37GSwiDl_DSH9-n3BhWLUtjZohOg2udGJJlnZ8BmWQ/edit?usp=sharing">Islandora Starter Site Metadata Configuration (Google Sheets)</a> which parallels the information on this page. It goes into further detail about the configurations connected to each field, provides information on taxonomies and mappings, and can be filtered or sorted in a variety of ways. The document, or the spreadsheet above, can be copied and used as a basis for planning your own configuration customizations as you work on your Islandora site.</p>
+<h2 id="administrativesystem-fields">Administrative/System Fields<a class="headerlink" href="#administrativesystem-fields" title="Permanent link">&para;</a></h2>
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>Title</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >The name given to the resource. Title is a system field and as such its configurations can not be adjusted. It is the only field that is required by the system.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>title
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>Text (plain)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+    <td><strong>yes</strong>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Maximum Length
+    </td>
+    <td>255<em> (character length is set by system but can be changed with a contrib module, see below)</em>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      CSL Citation Mapping
+    </td>
+    <td>title
+    </td>
+  </tr>
+  <tr>
+    <td>
+      RDF Mapping
+    </td>
+    <td>dcterms:title
+    </td>
+  </tr>
+  <tr>
+    <td>
+      XPath MODS
+    </td>
+    <td>mods/titleInfo/title
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Transformation
+    </td>
+    <td>
+      To create a single string out of the subelements of &lt;titleInfo>, we suggest to use the &lt;titleInfo> section of the LOC MODS-DC transform<a href="https://www.loc.gov/standards/mods/v3/MODS3-5_DC_XSLT1-0.xsl"> https://www.loc.gov/standards/mods/v3/MODS3-5_DC_XSLT1-0.xsl</a>. In words, it says to:
+      <ul>
+        <li>Take the value of &lt;nonSort>
+        <li>If there was a &lt;nonSort>, add a space
+        <li>Add the value of &lt;title>
+        <li>If there is a &lt;subtitle>, add a space-colon-space and the value of (the first) &lt;subtitle>
+        <li>If there is a &lt;partNumber>, add a period-space and the value of (the first) &lt;partNumber>
+        <li>
+          If there is a &lt;partName>, add a period-space and the value of (the first) &lt;partName>.
+          <p>
+            It is worth noting that the subtitle, partNumber, and partName elements are technically repeatable, but this transform only uses the first value encountered. If you have repeating subelements, information will be lost.
+        </li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td rowspan="2" >
+      Drupal Module Integration
+    </td>
+    <td>The <a href="https://www.drupal.org/project/title_length">Title Length</a> module allows you to extend the length of the title to 500 characters (possibly more).
+    </td>
+  </tr>
+  <tr>
+    <td>The <a href="https://www.drupal.org/project/views_natural_sort">Views Natural Sort</a> module allows you to sort a view by titles while skipping a configurable list of non-sorting characters ("A", "The", "L'", etc.). It's not as precise as nonSort, but does most of the job. 
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Alternatives
+    </td>
+    <td><a href="https://www.drupal.org/project/paragraphs">Paragraphs</a> are a way to model a multi-part title (nonSort, title, subtitle, partName, partNumber, etc). Combine paragraphs with (automatic entity label? automatic nodetitles?) to not have to enter your title information twice. (Who to contact with experience about this?)
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>Member of</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >This item's parent item in Islandora. Usually this will be a collection, book ("Paged Content"),or compound object.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_member_of
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>Entity reference
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+    <td>no <em>(will default to empty if no value is entered)</em>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>yes
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Create Referenced Entities
+    </td>
+    <td>no <em>(can only be connected to existing entities)</em>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Facet
+    </td>
+    <td>Member Of
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Alternatives
+    </td>
+    <td>You could arrange your content with <a href="https://www.drupal.org/project/entity_hierarchy">Entity Reference Hierarchy</a>, which is a very scalable way of representing large hierarchy trees. However, you'd have to re-work a number of hard-coded elements in the islandora module.
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>Model</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >
+      The internal-to-Islandora category of the resource. Affects how the item is displayed/viewed.
+      <p>
+        This field is actionable by Islandora and was designed to trigger derivatives and view modes through the use of <a href="https://islandora.github.io/documentation/user-documentation/context/">Contexts</a>. It is a controlled list and new values should only be added when required (i.e. new behaviors are made available and these values are created to trigger them).
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_model
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>Entity reference
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+    <td><strong>yes</strong>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Taxonomies
+    </td>
+    <td>
+      Islandora Models <em>(pre-populated/controlled)</em>
+      <ul>
+        <li>Audio
+        <li>Binary
+        <li>Collection
+        <li>Compound Object
+        <li>Digital Document
+        <li>Image
+        <li>Newspaper
+        <li>Page
+        <li>Paged Content
+        <li>Publication Issue
+        <li>Video</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Create Referenced Entities
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      CSL Citation Mapping
+    </td>
+    <td>type
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Alternatives
+    </td>
+    <td>You could model your different types as separate content types. This way, they could have different sets of metadata fields.
+    </td>
+  </tr>
+</table>
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>Representative Image</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >Optionally, use this field to link to a Media that will be used as the node's thumbnail. This will be displayed when the DGI Image Discovery module is used. This field takes precedence over the node's "Islandora thumbnail" (i.e. a related media with the "Thumbnail" media use term). See the module's <a href="https://github.com/discoverygarden/dgi_image_discovery">README</a> for the full scope of how images are "discovered". This is a good way to assign a "default" icon for many nodes that don't have actual thumbnail images, as this field allows you to re-use Media, which you can't do with normal Islandora media. 
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_representative_image
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>Entity reference (Media)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required?
+    </td>
+    <td>no <em>(will default to using the Islandora thumbnail if no value is entered)</em>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Create Referenced Entities
+    </td>
+    <td>yes <em>(you can upload files to create and link to a new Media)</em>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Facet
+    </td>
+    <td>none
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Alternatives
+    </td>
+    <td>This field is itself an alternative to the "normal" Islandora thumbnail, and does not need to be used if the Islandora thumbnail suffices.
+    </td>
+  </tr>
+</table>
+
+<h2 id="other-titles">Other Title(s)<a class="headerlink" href="#other-titles" title="Permanent link">&para;</a></h2>
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>Full Title</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >If the full resource title is longer than 255 characters and you truncated it in the required Title field above, record the full title here.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_full_title
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>Text (plain, long)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      RDF Mapping
+    </td>
+    <td>rdau:P60515
+    </td>
+  </tr>
+  <tr>
+    <td>
+      XPath MODS
+    </td>
+    <td>mods/titleInfo/title[1] + subfields[1] where [1] means first of their name (<em>see possible concatenation under Title</em>)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Alternatives
+    </td>
+    <td>as mentioned under Title, the <a href="https://www.drupal.org/project/title_length">Title Length</a> module extends the length of the title and could make this field irrelevant.
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>Alternative Title</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >
+      Varying form of the title if it contributes to the further identification of the item.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_alt_title
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>Text (plain)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Maximum Length
+    </td>
+    <td>255
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>yes
+    </td>
+  </tr>
+  <tr>
+    <td>
+      RDF Mapping
+    </td>
+    <td>dcterms:alternative
+    </td>
+  </tr>
+  <tr>
+    <td>XPath For MODS
+    </td>
+    <td>mods/titleInfo[@type="alternative" or @type="abbreviated" or @type="uniform"]
+    </td>
+  </tr>
+  <tr>
+    <td>Alternatives
+    </td>
+    <td>If you need to keep the information about what type of alternative title is being recorded, you could create multiple specific alternative title fields, or create a compound element using Paragraphs.
+    </td>
+  </tr>
+</table>
+
+<h2 id="contributors">Contributors<a class="headerlink" href="#contributors" title="Permanent link">&para;</a></h2>
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>Contributors<em> (formerly Linked Agent)</em></h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >
+      Names of entities having some relationship to the resource, and, optionally, the relationship to the resource. If a relationship is not specified, it will be recorded as <a href="https://id.loc.gov/vocabulary/relators/asn.html">Associated Name</a> in the system's linked data representation.
+      <p>
+        This field does not allow creating names of entities on the fly. First create a term in either the person, family, or corporate body taxonomies, then link it here.
+      <p>
+        Field name changed from "Linked Agent" 09/23.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_linked_agent
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>Typed Relation [link to https://islandora.github.io/documentation/user-documentation/metadata/#typed-relation] 
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Maximum Length
+    </td>
+    <td>255 (system limit for Taxonomy terms)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>yes
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Taxonomies
+    </td>
+    <td>Corporate Body; Family; Person
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Create Referenced Entities
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Relators
+    </td>
+    <td>Starter Site includes 269 terms from the <a href="https://www.loc.gov/marc/relators/relaterm.html">MARC Relators</a> list. Further terms from the list, or custom terms, can be added in the configuration for this field. Publisher has been removed from this list to encourage use of the Publisher field.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      CSL Citation Mapping
+    </td>
+    <td>author ; contributor ; editor
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Facet
+    </td>
+    <td>Creators and Contributors
+    </td>
+  </tr>
+  <tr>
+    <td>
+      RDF Mapping
+    </td>
+    <td>dcterms:contributor
+    </td>
+  </tr>
+  <tr>
+    <td>XPath For MODS
+    </td>
+    <td>
+      mods/name/namePart + role/roleTerm > relator
+      <p>
+        mods/name[@type="personal"]/namePart > "Person" taxonomy
+      <p>
+        mods/name[@type="corporate"]/namePart > "Corporate Body" taxonomy
+      <p>
+        mods/name[@type="family"]/namePart > "Family" taxonomy
+    </td>
+  </tr>
+  <tr>
+    <td>Alternatives
+    </td>
+    <td>Create custom facets using the "Typed Relation filtered by type" Search API processor. This would allow you to separate out, for instance, creator|author|photographer from the other types of relators as a Search API field/facet.
+    </td>
+  </tr>
+</table>
+
+<h2 id="type-and-genre">Type and Genre<a class="headerlink" href="#type-and-genre" title="Permanent link">&para;</a></h2>
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>Type</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >The general nature or genre of the content of the resource. To describe the digital or physical format of the resource, use Form instead. In contrast with Model, which is system-actionable, this field is designed to record the Type purely as a metadata element.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_resource_type
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>Entity reference [link to <a href="https://islandora.github.io/documentation/user-documentation/metadata/#entity-reference">https://islandora.github.io/documentation/user-documentation/metadata/#entity-reference</a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Maximum Length
+    </td>
+    <td>255 (system limit for Taxonomy terms)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Taxonomies
+    </td>
+    <td>Resource Types <em>(pre-populated with hierarchical <a href="https://id.loc.gov/vocabulary/resourceTypes.html">LOC Resource Type Scheme</a> terms)</em>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Create Referenced Entities
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Facet
+    </td>
+    <td>Resource Type
+    </td>
+  </tr>
+  <tr>
+    <td>
+      RDF Mapping
+    </td>
+    <td>dcterms:type
+    </td>
+  </tr>
+  <tr>
+    <td>XPath For MODS
+    </td>
+    <td>mods/typeOfResource, mods/typeOfResource[@collection=yes]
+    </td>
+  </tr>
+  <tr>
+    <td>Alternatives
+    </td>
+    <td>You may be required to use the Dublin Core types (for compatibility/harvesting); in that case you can replace the current Type vocabulary contents with the desired values.
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>Genre</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >A term or terms that designate a category characterizing a particular style, form, or content, such as artistic, musical, literary composition, etc.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_genre
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>Entity reference
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Maximum Length
+    </td>
+    <td>255 (system limit for Taxonomy terms)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>yes
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Taxonomies
+    </td>
+    <td>Genre
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Create Referenced Entities
+    </td>
+    <td>yes
+    </td>
+  </tr>
+  <tr>
+    <td>
+      CSL Citation Mapping
+    </td>
+    <td>genre
+    </td>
+  </tr>
+  <tr>
+    <td>
+      RDF Mapping
+    </td>
+    <td>dcterms:type
+    </td>
+  </tr>
+  <tr>
+    <td>XPath For MODS
+    </td>
+    <td>mods/genre; mods/subject/genre
+    </td>
+  </tr>
+</table>
+
+<h2 id="origin-information">Origin Information<a class="headerlink" href="#origin-information" title="Permanent link">&para;</a></h2>
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>Place Published</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >Plain text field to describe the place of publication in full or transcribed from an item \
+      \
+      See also the entity reference field Place Published Country.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_place_published
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>Text (plain)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Maximum Length
+    </td>
+    <td>255
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>yes
+    </td>
+  </tr>
+  <tr>
+    <td>
+      CSL Citation Mapping
+    </td>
+    <td>publisher-place
+    </td>
+  </tr>
+  <tr>
+    <td>
+      RDF Mapping
+    </td>
+    <td>relators:pup
+    </td>
+  </tr>
+  <tr>
+    <td>XPath For MODS
+    </td>
+    <td>mods/originInfo/place/placeTerm [@type = 'text'] OR [not(@type)]
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>Country of Publication</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >Entity reference field to singularly describe the country (or jurisdiction) of publication. Connected to the unpopulated Country taxonomy by default, which can be used for terms or codes from <a href="https://www.loc.gov/marc/countries/countries_code.html">MARC Code List for Countries</a> or elsewhere. Disabled, by default, on Metadata Display and Metadata Form.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_place_published_country
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>Entity reference
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Maximum Length
+    </td>
+    <td>255 (system limit for Taxonomy terms)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Taxonomies
+    </td>
+    <td>Country
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Create Referenced Entities
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      RDF Mapping
+    </td>
+    <td>relators:pup
+    </td>
+  </tr>
+  <tr>
+    <td>XPath For MODS
+    </td>
+    <td>mods/originInfo/place/placeTerm[@type="code"]
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>Publisher</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >New field added 04/2024. Previously the Contributors/Linked agent field (with a relator value of Publisher) was used for this content.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_publisher
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>Text (plain)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Maximum Length
+    </td>
+    <td>500
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>yes
+    </td>
+  </tr>
+  <tr>
+    <td>
+      CSL Citation Mapping
+    </td>
+    <td>publisher
+    </td>
+  </tr>
+  <tr>
+    <td>
+      RDF Mapping
+    </td>
+    <td>
+    </td>
+  </tr>
+  <tr>
+    <td>XPath For MODS
+    </td>
+    <td>mods/originInfo/publisher
+    </td>
+  </tr>
+</table>
+
+<h3 id="date-fields">Date Fields<a class="headerlink" href="#date-fields" title="Permanent link">&para;</a></h3>
+<p>All date fields use the Drupal EDTF field type and must follow <a href="https://www.loc.gov/standards/datetime/">EDTF</a> formatting. For more information on this format and how it works with Islandora see <a href="https://islandora.github.io/documentation/user-documentation/metadata/#edtf">https://islandora.github.io/documentation/user-documentation/metadata/#edtf</a> </p>
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>Date Issued</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >Date of formal issuance of the resource. This includes publication dates.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_edtf_date_issued
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>EDTF
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Maximum Length
+    </td>
+    <td>128
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>yes
+    </td>
+  </tr>
+  <tr>
+    <td>
+      CSL Citation Mapping
+    </td>
+    <td>issued
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Facet
+    </td>
+    <td>Year<em> (string converted to a simple year value for field_edtf_year and then used for Year facet. A range is converted to multiple years.)</em>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      RDF Mapping
+    </td>
+    <td>dcterms:issued
+    </td>
+  </tr>
+  <tr>
+    <td>XPath For MODS
+    </td>
+    <td>mods/originInfo/dateIssued
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>Date Created</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >Date of creation of the resource
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_edtf_date_created
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>EDTF
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Maximum Length
+    </td>
+    <td>128
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>yes
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Facet
+    </td>
+    <td>Year<em> (string converted to a simple year value for field_edtf_year and then used for Year facet. A range is converted to multiple years.)</em>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      RDF Mapping
+    </td>
+    <td>dcterms:created
+    </td>
+  </tr>
+  <tr>
+    <td>XPath For MODS
+    </td>
+    <td>mods/originInfo/dateCreated
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>Date (Unspecified)</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >A date without a type or relationship to the resource specified
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_edtf_date
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>EDTF
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Maximum Length
+    </td>
+    <td>128
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>yes
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Facet
+    </td>
+    <td>Year<em> (string converted to a simple year value for field_edtf_year and then used for Year facet. A range is converted to multiple years.)</em>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      RDF Mapping
+    </td>
+    <td>dcterms:date
+    </td>
+  </tr>
+  <tr>
+    <td>XPath For MODS
+    </td>
+    <td>mods/originInfo/dateOther
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>Copyright Date</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >Date of copyright of the resource.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_copyright_date
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>EDTF
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Maximum Length
+    </td>
+    <td>128
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>yes
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Facet
+    </td>
+    <td>Year<em> (string converted to a simple year value for field_edtf_year and then used for Year facet. A range is converted to multiple years.)</em>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      RDF Mapping
+    </td>
+    <td>dcterms:dateCopyrighted
+    </td>
+  </tr>
+  <tr>
+    <td>XPath For MODS
+    </td>
+    <td>mods/originInfo/copyrightDate
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>Date Valid</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >Date (often a range) of validity of a resource.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_date_valid
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>EDTF
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Maximum Length
+    </td>
+    <td>128
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>yes
+    </td>
+  </tr>
+  <tr>
+    <td>
+      RDF Mapping
+    </td>
+    <td>dcterms:valid
+    </td>
+  </tr>
+  <tr>
+    <td>XPath For MODS
+    </td>
+    <td>mods/originInfo/dateValid
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>Date Captured</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >The date on which the resource was digitized or a subsequent snapshot was taken.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_date_captured
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>EDTF
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Maximum Length
+    </td>
+    <td>128
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>yes
+    </td>
+  </tr>
+  <tr>
+    <td>
+      RDF Mapping
+    </td>
+    <td>premis:creation
+    </td>
+  </tr>
+  <tr>
+    <td>XPath For MODS
+    </td>
+    <td>mods/originInfo/dateCaptured
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>Date Modified</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >Date on which the original resource being represented in Islandora was changed. <em>Typically modification dates of digital representations of the resource stored in Islandora will be recorded on the relevant Media instead of here. This field is not populated automatically by any Drupal functionality.</em>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_date_modified
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>EDTF
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Maximum Length
+    </td>
+    <td>128
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>yes
+    </td>
+  </tr>
+  <tr>
+    <td>
+      RDF Mapping
+    </td>
+    <td>dcterms:modified
+    </td>
+  </tr>
+  <tr>
+    <td>XPath For MODS
+    </td>
+    <td>mods/originInfo/dateModified
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>Edition Statement</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >Information identifying the version of the resource.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_edition
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>Text (plain)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Maximum Length
+    </td>
+    <td>255
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>yes
+    </td>
+  </tr>
+  <tr>
+    <td>
+      RDF Mapping
+    </td>
+    <td>rdau:P60329
+    </td>
+  </tr>
+  <tr>
+    <td>XPath For MODS
+    </td>
+    <td>mods/originInfo/edition
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>Mode of Issuance</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >A term that designates how the resource is issued. MODS standards limit the values of this field to monographic, single unit, multipart monograph, continuing, serial, and integrating resource, but there are no such limitations in Islandora and the “Issuance Mode” vocabulary is empty on initial installation.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_mode_of_issuance
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>Entity reference
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Maximum Length
+    </td>
+    <td>255 (system limit for Taxonomy terms)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>yes
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Taxonomies
+    </td>
+    <td>Issuance Mode
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Create Referenced Entities
+    </td>
+    <td>yes
+    </td>
+  </tr>
+  <tr>
+    <td>
+      RDF Mapping
+    </td>
+    <td>rdau:P60051
+    </td>
+  </tr>
+  <tr>
+    <td>XPath For MODS
+    </td>
+    <td>mods/originInfo/issuance
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>Frequency</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >The publication frequency, in textual form. Can be based on <a href="https://www.loc.gov/standards/valuelist/marcfrequency.html">MARC Frequency</a> terms.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_frequency
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>Entity reference
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Maximum Length
+    </td>
+    <td>255 (system limit for Taxonomy terms)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>yes
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Taxonomies
+    </td>
+    <td>Frequency
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Create Referenced Entities
+    </td>
+    <td>yes
+    </td>
+  </tr>
+  <tr>
+    <td>
+      RDF Mapping
+    </td>
+    <td>rdau:P60538
+    </td>
+  </tr>
+  <tr>
+    <td>XPath For MODS
+    </td>
+    <td>mods/originInfo/frequency
+    </td>
+  </tr>
+</table>
+
+<h2 id="language">Language<a class="headerlink" href="#language" title="Permanent link">&para;</a></h2>
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>Language</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >
+      Language of the resource content. Can be based on a languages vocabulary such as ISO 639-2.<a href="https://www.loc.gov/marc/languages/">MARC Code List for Languages</a>.
+      <p>
+        <em>This field is not connected to Drupal system language fields or related to Drupal translation functionality.</em>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_language
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>Entity reference
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Maximum Length
+    </td>
+    <td>255 (system limit for Taxonomy terms)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>yes
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Taxonomies
+    </td>
+    <td>Language
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Create Referenced Entities
+    </td>
+    <td>yes
+    </td>
+  </tr>
+  <tr>
+    <td>
+      CSL Citation Mapping
+    </td>
+    <td>language
+    </td>
+  </tr>
+  <tr>
+    <td>
+      RDF Mapping
+    </td>
+    <td>dcterms:language
+    </td>
+  </tr>
+  <tr>
+    <td>XPath For MODS
+    </td>
+    <td>mods/language/languageTerm[@type = 'text'] or [@type = 'code'] mapped to text per iso639-2b
+    </td>
+  </tr>
+</table>
+
+<h2 id="physical-description">Physical Description<a class="headerlink" href="#physical-description" title="Permanent link">&para;</a></h2>
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>Form</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >The physical format of the original resource being described. If the resource is a physical object, the physical form is recorded here. If the resource is born-digital, the original digital form is recorded here. Details of the formats of resource representations stored in Islandora should be recorded on the relevant Media files. 
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_physical_form
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>Entity reference
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Maximum Length
+    </td>
+    <td>255 (system limit for Taxonomy terms)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>yes
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Taxonomies
+    </td>
+    <td>Physical Form
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Create Referenced Entities
+    </td>
+    <td>yes
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Facet
+    </td>
+    <td>Physical Form
+    </td>
+  </tr>
+  <tr>
+    <td>
+      RDF Mapping
+    </td>
+    <td>dcterms:format
+    </td>
+  </tr>
+  <tr>
+    <td>XPath For MODS
+    </td>
+    <td>mods/physicalDescription/form
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>Extent</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >The size or duration of the resource in its original form. Extent of representations of the resource stored in Islandora should be recorded on the relevant Media files.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_extent
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>Text (plain)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Maximum Length
+    </td>
+    <td>255
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>yes
+    </td>
+  </tr>
+  <tr>
+    <td>
+      RDF Mapping
+    </td>
+    <td>dcterms:extent
+    </td>
+  </tr>
+  <tr>
+    <td>XPath For MODS
+    </td>
+    <td>mods/physicalDescription/extent
+    </td>
+  </tr>
+</table>
+
+<h2 id="descriptions">Description(s)<a class="headerlink" href="#descriptions" title="Permanent link">&para;</a></h2>
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>Description</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >Description of the resource. Description may include but is not limited to: an abstract, a table of contents (alternately its own field), a graphical representation, or a free-text account of the resource.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_description
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>Text (plain, long)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      CSL Citation Mapping
+    </td>
+    <td>abstract
+    </td>
+  </tr>
+  <tr>
+    <td>
+      RDF Mapping
+    </td>
+    <td>dcterms:description
+    </td>
+  </tr>
+  <tr>
+    <td>XPath For MODS
+    </td>
+    <td>mods/abstract<em> (xpath could also map to Abstract; do not map same values to both)</em>
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>Abstract</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >Supplementary to the Description field, for including descriptions that more fit the definition of Abstract as it refers to ETDs, journal articles, or other scholarly publications.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_abstract
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>Text (formatted, long)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      RDF Mapping
+    </td>
+    <td>dcterms:abstract
+    </td>
+  </tr>
+  <tr>
+    <td>XPath For MODS
+    </td>
+    <td>mods/abstract<em> (xpath could also map to Description; do not map same values to both)</em>
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>Table of Contents</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >Supplemental to Description, for breaking out specific Table of Contents information separate from a summary description of the object. Allows formatting.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_table_of_contents
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>Text (formatted, long)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      RDF Mapping
+    </td>
+    <td>dcterms:tableOfContents
+    </td>
+  </tr>
+  <tr>
+    <td>XPath For MODS
+    </td>
+    <td>mods/tableOfContents
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>Note</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >General textual information relating to a resource, not described in other fields.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_note
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>Text (formatted, long)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>yes
+    </td>
+  </tr>
+  <tr>
+    <td>
+      RDF Mapping
+    </td>
+    <td>skos:note
+    </td>
+  </tr>
+  <tr>
+    <td>XPath For MODS
+    </td>
+    <td>mods/note (with [@displayLabel] or [@type] prepended with ': ' to the note)
+    </td>
+  </tr>
+</table>
+
+<h2 id="subjects">Subject(s)<a class="headerlink" href="#subjects" title="Permanent link">&para;</a></h2>
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>Subject</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >
+      General subjects which may be constructed from topical, geographic, temporal, and genre subdivisions. If you wish to manage these types of subjects separately, use the more specific Subject fields below.
+      <p>
+      <p>
+        This field can be used if you are storing composed subject strings rather than component headings/subdivisions in their own fields.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_subject_general
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>Entity reference
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Maximum Length
+    </td>
+    <td>255 (system limit for Taxonomy terms)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>yes
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Taxonomies
+    </td>
+    <td>Corporate Body; Family; Geographic Location; Person; Subject
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Create Referenced Entities
+    </td>
+    <td>yes
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Store New Items In
+    </td>
+    <td>Subject
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Facet
+    </td>
+    <td>Subject
+    </td>
+  </tr>
+  <tr>
+    <td>
+      RDF Mapping
+    </td>
+    <td>dcterms:subject
+    </td>
+  </tr>
+  <tr>
+    <td>XPath For MODS
+    </td>
+    <td>mods/subject
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>Subject (Topical)</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >For use when using separate fields to record topical, geographic, name, and temporal terms. Topical subject terms would be recorded here.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_subject
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>Entity reference
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Maximum Length
+    </td>
+    <td>255 (system limit for Taxonomy terms)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>yes
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Taxonomies
+    </td>
+    <td>Subject
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Create Referenced Entities
+    </td>
+    <td>yes
+    </td>
+  </tr>
+  <tr>
+    <td>
+      RDF Mapping
+    </td>
+    <td>dcterms:subject
+    </td>
+  </tr>
+  <tr>
+    <td>XPath For MODS
+    </td>
+    <td>mods/subject/topic
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>Subject (Geographic)</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >For use when using separate fields to record topical, geographic, name, and temporal terms. Geographic subject terms would be recorded here.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_geographic_subject
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>Entity reference
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Maximum Length
+    </td>
+    <td>255 (system limit for Taxonomy terms)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>yes
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Taxonomies
+    </td>
+    <td>Geographic Location
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Create Referenced Entities
+    </td>
+    <td>yes
+    </td>
+  </tr>
+  <tr>
+    <td>
+      RDF Mapping
+    </td>
+    <td>dcterms:spatial
+    </td>
+  </tr>
+  <tr>
+    <td>XPath For MODS
+    </td>
+    <td>mods/subject/geographic
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>Subject (Name)</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >For use when using separate fields to record topical, geographic, name, and temporal terms. Names of individuals, organizations, or families would be recorded here.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_subjects_name
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>Entity reference
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Maximum Length
+    </td>
+    <td>255 (system limit for Taxonomy terms)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>yes
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Taxonomies
+    </td>
+    <td>Corporate Body; Family; Person
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Create Referenced Entities
+    </td>
+    <td>yes
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Store New Items In
+    </td>
+    <td>Person
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Facet
+    </td>
+    <td>Subject (name)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      RDF Mapping
+    </td>
+    <td>dcterms:subject
+    </td>
+  </tr>
+  <tr>
+    <td>XPath For MODS
+    </td>
+    <td>mods/subject/name/namePart
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>Subject (Temporal)</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >For use when using separate fields to record topical, geographic, name, and temporal terms. Temporal subject terms would be recorded here.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_temporal_subject
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>Entity reference
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Maximum Length
+    </td>
+    <td>255 (system limit for Taxonomy terms)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>yes
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Taxonomies
+    </td>
+    <td>Temporal Subjects
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Create Referenced Entities
+    </td>
+    <td>yes
+    </td>
+  </tr>
+  <tr>
+    <td>
+      CSL Citation Mapping
+    </td>
+    <td>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Facet
+    </td>
+    <td>Temporal Subject
+    </td>
+  </tr>
+  <tr>
+    <td>
+      RDF Mapping
+    </td>
+    <td>dcterms:temporal
+    </td>
+  </tr>
+  <tr>
+    <td>XPath For MODS
+    </td>
+    <td>mods/subject/temporal
+    </td>
+  </tr>
+</table>
+
+<h2 id="coordinates">Coordinates<a class="headerlink" href="#coordinates" title="Permanent link">&para;</a></h2>
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>Coordinates</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >Must be formatted either in decimal (51.47879) or sexagesimal format (51° 28' 43.644")
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_coordinates
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>Geolocation
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>yes
+    </td>
+  </tr>
+  <tr>
+    <td>
+      RDF Mapping
+    </td>
+    <td>dcterms:spatial
+    </td>
+  </tr>
+  <tr>
+    <td>XPath For MODS
+    </td>
+    <td>mods/subject/cartographics/coordinates
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>Coordinates (Text)</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >A plain text field meant as an alternative to the Coordinates field, for values that do not meet the requirements of the Drupal geolocation field type.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_coordinates_text
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>Text (plain)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Maximum Length
+    </td>
+    <td>255
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>yes
+    </td>
+  </tr>
+  <tr>
+    <td>
+      RDF Mapping
+    </td>
+    <td>dcterms:spatial
+    </td>
+  </tr>
+  <tr>
+    <td>XPath For MODS
+    </td>
+    <td>mods/subject/cartographics/coordinates
+    </td>
+  </tr>
+</table>
+
+<h2 id="classification">Classification<a class="headerlink" href="#classification" title="Permanent link">&para;</a></h2>
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>Dewey Classification</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >Classification based on the Dewey Decimal system.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_dewey_classification
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>Text (plain)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Maximum Length
+    </td>
+    <td>255
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>yes
+    </td>
+  </tr>
+  <tr>
+    <td>
+      RDF Mapping
+    </td>
+    <td>dc11:subject
+    </td>
+  </tr>
+  <tr>
+    <td>XPath For MODS
+    </td>
+    <td>mods/classification[@authority="ddc"]
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>Library of Congress Classification</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >Classification based on the Library of Congress Classification system.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_lcc_classification
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>Text (plain)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Maximum Length
+    </td>
+    <td>255
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>yes
+    </td>
+  </tr>
+  <tr>
+    <td>
+      RDF Mapping
+    </td>
+    <td>dc11:subject
+    </td>
+  </tr>
+  <tr>
+    <td>XPath For MODS
+    </td>
+    <td>mods/classification[@authority="lcc"]
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>Classification (Other)</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >Classification based on any system that does not have a dedicated field.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_classification
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>Text (plain)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Maximum Length
+    </td>
+    <td>255
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>yes
+    </td>
+  </tr>
+  <tr>
+    <td>
+      RDF Mapping
+    </td>
+    <td>dc11:subject
+    </td>
+  </tr>
+  <tr>
+    <td>XPath For MODS
+    </td>
+    <td>mods/classification
+    </td>
+  </tr>
+</table>
+
+<h2 id="identifiers">Identifier(s)<a class="headerlink" href="#identifiers" title="Permanent link">&para;</a></h2>
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>Identifier</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >A unique standard number or code that distinctively identifies a resource.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_identifier
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>Text (plain)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Maximum Length
+    </td>
+    <td>255
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>yes
+    </td>
+  </tr>
+  <tr>
+    <td>
+      RDF Mapping
+    </td>
+    <td>dcterms:identifier
+    </td>
+  </tr>
+  <tr>
+    <td>XPath For MODS
+    </td>
+    <td>mods/identifier[not(@type)]
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>ISBN</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >An International Standard Book Number (ISBN) identifier.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_isbn
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>Text (plain)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Maximum Length
+    </td>
+    <td>255
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>yes
+    </td>
+  </tr>
+  <tr>
+    <td>
+      RDF Mapping
+    </td>
+    <td>dbpedia:isbn
+    </td>
+  </tr>
+  <tr>
+    <td>XPath For MODS
+    </td>
+    <td>mods/identifier[@type="isbn"]
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>OCLC Number</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >An identifier assigned by an OCLC system, such as WorldCat.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_oclc_number
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>Text (plain)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Maximum Length
+    </td>
+    <td>255
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>yes
+    </td>
+  </tr>
+  <tr>
+    <td>
+      RDF Mapping
+    </td>
+    <td>dbpedia:oclc
+    </td>
+  </tr>
+  <tr>
+    <td>XPath For MODS
+    </td>
+    <td>mods/identifier[@type="oclc"]
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>Local Identifier</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >Identifier from any locally managed system.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_local_identifier
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>Text (plain)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Maximum Length
+    </td>
+    <td>255
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>yes
+    </td>
+  </tr>
+  <tr>
+    <td>
+      RDF Mapping
+    </td>
+    <td>dcterms:identifier
+    </td>
+  </tr>
+  <tr>
+    <td>XPath For MODS
+    </td>
+    <td>mods/identifier[@type="local"]
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>PID</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >
+      PID of this object in Islandora 7.x (applies to migrated objects only)
+      <p>
+        Disabled, by default, in Metadata Display.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_pid
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>Text (plain)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Maximum Length
+    </td>
+    <td>255
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>no
+    </td>
+  </tr>
+</table>
+
+<h2 id="access-conditions">Access Conditions<a class="headerlink" href="#access-conditions" title="Permanent link">&para;</a></h2>
+<table>
+  <tr>
+    <td colspan="2" >
+      <h3>Rights</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" >Free text field for information about restrictions imposed on, and/or rights to, access to a resource, particularly a digital resource. It is not connected to any access control functionality within Drupal.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Machine Name
+    </td>
+    <td>field_rights
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Drupal Field Type
+    </td>
+    <td>Text (formatted, long)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Required
+    </td>
+    <td>no
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Repeatable
+    </td>
+    <td>yes
+    </td>
+  </tr>
+  <tr>
+    <td>
+      RDF Mapping
+    </td>
+    <td>dc11:rights
+    </td>
+  </tr>
+  <tr>
+    <td>XPath For MODS
+    </td>
+    <td>mods/accessCondition
+    </td>
+  </tr>
+</table>
+
+  <hr>
+<div class="md-source-file">
+  <small>
+    
+      Last update:
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">January 12, 2026</span>
+      
+    
+  </small>
+</div>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      <b>This documentation is user-sourced!</b> Suggestions and comments are welcome in our <u><a href="https://github.com/Islandora/documentation/issues" target="_blank">issue queue</a></u>.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://twitter.com/islandora" target="_blank" rel="noopener" title="twitter.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.action.edit"], "search": "../../assets/javascripts/workers/search.db81ec45.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.4b2c34cd.min.js"></script>
+      
+    
+  </body>
+</html>
