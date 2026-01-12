@@ -816,8 +816,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#5-cleanup-optionally-revert" class="md-nav__link">
-    5 - Cleanup (optionally revert)
+  <a href="#5-save-changes-and-cleanup" class="md-nav__link">
+    5 - Save changes and cleanup
   </a>
   
 </li>
@@ -2810,8 +2810,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#5-cleanup-optionally-revert" class="md-nav__link">
-    5 - Cleanup (optionally revert)
+  <a href="#5-save-changes-and-cleanup" class="md-nav__link">
+    5 - Save changes and cleanup
   </a>
   
 </li>
@@ -2897,40 +2897,40 @@
 </span></code></pre></div>
 <p>Otherwise, be sure your <code>DOMAIN</code> value in <code>.env</code> is <code>islandora.traefik.me</code>.</p>
 <p>Now, bring up your services. In a development environment, after running <code>make up</code> your ISLE site should be available at <code>http://$DOMAIN</code>.</p>
-<h2 id="5-cleanup-optionally-revert">5 - Cleanup (optionally revert)<a class="headerlink" href="#5-cleanup-optionally-revert" title="Permanent link">&para;</a></h2>
-<p>Switch to your main branch</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>git checkout main
-</span></code></pre></div>
-<p>If the changes didn't apply smoothly you can simply checkout back out main branch and delete the git branch we created</p>
+<p>If you don't like the new setup, it's not working, or the changes didn't apply cleanly, you can <a href="https://www.islandora.ca/contact-us#comms-channels">reach out for help</a> or simply delete the git branch that was created to revert the changes</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This will delete any config settings made in previous steps
-<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>git branch -D rm-compose-profiles
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>make down
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>git checkout main
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>git branch -D rm-compose-profiles
 </span></code></pre></div></p>
 </div>
-<p>Instead, if you like this new setup and all looks well, merge the <code>rm-compose-profiles</code> git branch into main</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>git merge rm-compose-profiles
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>git push origin main
+<h2 id="5-save-changes-and-cleanup">5 - Save changes and cleanup<a class="headerlink" href="#5-save-changes-and-cleanup" title="Permanent link">&para;</a></h2>
+<p>If you like this new setup and all looks well, merge the <code>rm-compose-profiles</code> git branch into main</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>git checkout main
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>git merge rm-compose-profiles
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>git push origin main
 </span></code></pre></div>
-<p>Finally, remove the git remote we made</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>git remote remove ist
+<p>Remove the git remote we made to merge in the latest changes locally</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>git remote remove ist
 </span></code></pre></div>
 <h2 id="6-deploy-to-production">6 - Deploy to production<a class="headerlink" href="#6-deploy-to-production" title="Permanent link">&para;</a></h2>
 <p>If you committed the changes, deploy to production by:</p>
 <p>First, update .env with the new <code>.env</code> values. If you're using letsencrypt it will probably look like</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>URI_SCHEME=https
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>TLS_PROVIDER=&quot;letencrypt&quot;
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>ACME_URL=https://acme-v02.api.letsencrypt.org/directory
-</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>ACME_EMAIL=postmaster@example.com
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>URI_SCHEME=https
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>TLS_PROVIDER=&quot;letencrypt&quot;
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>ACME_URL=https://acme-v02.api.letsencrypt.org/directory
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>ACME_EMAIL=postmaster@example.com
 </span></code></pre></div>
 <p>If you're using your own TLS certs, it'll probably look like</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>URI_SCHEME=https
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>TLS_PROVIDER=&quot;self-managed&quot;
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>URI_SCHEME=https
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>TLS_PROVIDER=&quot;self-managed&quot;
 </span></code></pre></div>
 <p>Next, bring down the site, pull in the changes, and bring everything back up</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>docker compose --profile prod down
-</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>git pull origin main
-</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>make up
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>docker compose --profile prod down
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>git pull origin main
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>make up
 </span></code></pre></div>
 <p>Your site should be online now using the new setup!</p>
 
