@@ -58,6 +58,17 @@ The main difference between ISLE-DC and the Site Template is the way the docker-
 
 This means that in ISLE-DC you had separate docker-compose.yml files for development and production, but in site template there is one file for both.
 
+In your dev environment, bring in the new config from ISLE Site Template
+
+```
+cd path/to/your/isle/dc
+git checkout -B isle-site-template
+git remote add ist https://github.com/islandora-devops/isle-site-template
+git fetch ist
+make down
+git checkout ist/main -- conf sample.env scripts docker-compose.dev.yml docker-compose.yml
+```
+
 ### Environment Variables
 
 You should compare the `environment` sections of your docker-compose.yml files. You may have some variables set in your ISLE-DC docker-compose.yml that will need to be added to the docker-compose.yml in the new Site Template site.
@@ -77,11 +88,8 @@ Because ISLE-DC and Site Template use the same containers, much of what is in an
 
 Commands to build a site, like `make starter` and `make production` are not necessary with the Site Template, so they can be removed from your Makefile.
 
-Many of the other commands specify which containers to run commands in, for example `docker compose exec drupal`, but in the Site Template environment you need to specify -dev or -prod, so that would be changed to `docker compose exec drupal-dev` or `docker compose exec drupal-prod`.
+Many of the other commands specify which containers to run commands in, for example `docker compose exec drupal`.
 
 ## Other Customizations
 
 If you have modified your ISLE-DC repository, those modifications will need to be evaluated on a case-by-case basis. This includes editing the Dockerfile and environment variables mentioned above, as well as any other customizations you may have made, such as to settings.php, robots.txt, nginx configs, etc.
-
-
-
