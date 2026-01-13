@@ -889,7 +889,8 @@
     3 - Review
   </a>
   
-</li>
+    <nav class="md-nav" aria-label="3 - Review">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#environment-variables" class="md-nav__link">
@@ -898,25 +899,24 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
+          <li class="md-nav__item">
   <a href="#converting-the-makefile" class="md-nav__link">
     Converting the Makefile
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#other-customizations" class="md-nav__link">
     Other Customizations
   </a>
   
-    <nav class="md-nav" aria-label="Other Customizations">
-      <ul class="md-nav__list">
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#4-test" class="md-nav__link">
@@ -3012,7 +3012,8 @@
     3 - Review
   </a>
   
-</li>
+    <nav class="md-nav" aria-label="3 - Review">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#environment-variables" class="md-nav__link">
@@ -3021,25 +3022,24 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
+          <li class="md-nav__item">
   <a href="#converting-the-makefile" class="md-nav__link">
     Converting the Makefile
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#other-customizations" class="md-nav__link">
     Other Customizations
   </a>
   
-    <nav class="md-nav" aria-label="Other Customizations">
-      <ul class="md-nav__list">
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#4-test" class="md-nav__link">
@@ -3263,7 +3263,7 @@ Replace: <code>ISLANDORA_TAG=</code></p>
 <p>Familiarize yourself with the new make command helpers</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>make help
 </span></code></pre></div>
-<h3 id="environment-variables">Environment Variables<a class="headerlink" href="#environment-variables" title="Permanent link">&para;</a></h3>
+<h4 id="environment-variables">Environment Variables<a class="headerlink" href="#environment-variables" title="Permanent link">&para;</a></h4>
 <p>Ensure the new values you see in <code>sample.env</code> are set in your <code>.env</code>. Namely</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>URI_SCHEME=http
 </span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>TLS_PROVIDER=&quot;self-managed&quot;
@@ -3273,11 +3273,11 @@ Replace: <code>ISLANDORA_TAG=</code></p>
 <p>In the git diff, compare the <code>environment</code> sections of your docker-compose.yml files. You may have some variables set in your ISLE-DC docker-compose.yml that will need to be added to the docker-compose.yml in the new Site Template site.</p>
 <p>For example, the <a href="https://github.com/Islandora-Devops/isle-buildkit/blob/main/nginx/README.md">ISLE Buildkit Nginx README</a> lists the available variables for Nginx that you may have changed on your Drupal containers to do things like increase the timeout time for PHP or the max POST size PHP will accept.</p>
 <p>And then adjust sample.env as needed.</p>
-<h2 id="converting-the-makefile">Converting the Makefile<a class="headerlink" href="#converting-the-makefile" title="Permanent link">&para;</a></h2>
+<h4 id="converting-the-makefile">Converting the Makefile<a class="headerlink" href="#converting-the-makefile" title="Permanent link">&para;</a></h4>
 <p>Because ISLE-DC and Site Template use the same containers, much of what is in an ISLE-DC Makefile will work within the site template environment. The main differences that need to be addressed are with the way new sites are built, and the name of the containers. </p>
 <p>Commands to build a site, like <code>make starter</code> and <code>make production</code> are not necessary with the Site Template, so they can be removed from your Makefile.</p>
 <p>Many of the other commands specify which containers to run commands in, for example <code>docker compose exec drupal</code>.</p>
-<h2 id="other-customizations">Other Customizations<a class="headerlink" href="#other-customizations" title="Permanent link">&para;</a></h2>
+<h4 id="other-customizations">Other Customizations<a class="headerlink" href="#other-customizations" title="Permanent link">&para;</a></h4>
 <p>If you have modified your repository, those modifications will need to be evaluated on a case-by-case basis. This includes editing the Dockerfile and environment variables mentioned above, as well as any other customizations you may have made, such as to settings.php, robots.txt, nginx configs, etc.</p>
 <h3 id="4-test">4 - Test<a class="headerlink" href="#4-test" title="Permanent link">&para;</a></h3>
 <p>If you want to keep running TLS in your dev environment you can run this make helper to switch to <code>https</code>:</p>
