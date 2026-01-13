@@ -230,7 +230,7 @@ Familiarize yourself with the new make command helpers
 make help
 ```
 
-### Environment Variables
+#### Environment Variables
 
 Ensure the new values you see in `sample.env` are set in your `.env`. Namely
 
@@ -247,7 +247,7 @@ For example, the [ISLE Buildkit Nginx README](https://github.com/Islandora-Devop
 
 And then adjust sample.env as needed.
 
-## Converting the Makefile
+#### Converting the Makefile
 
 Because ISLE-DC and Site Template use the same containers, much of what is in an ISLE-DC Makefile will work within the site template environment. The main differences that need to be addressed are with the way new sites are built, and the name of the containers. 
 
@@ -255,7 +255,7 @@ Commands to build a site, like `make starter` and `make production` are not nece
 
 Many of the other commands specify which containers to run commands in, for example `docker compose exec drupal`.
 
-## Other Customizations
+#### Other Customizations
 
 If you have modified your repository, those modifications will need to be evaluated on a case-by-case basis. This includes editing the Dockerfile and environment variables mentioned above, as well as any other customizations you may have made, such as to settings.php, robots.txt, nginx configs, etc.
 
