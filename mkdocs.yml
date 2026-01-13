@@ -134,8 +134,7 @@ nav:
               - 'Updating': 'installation/docker/site-template/updating.md'
               - 'Back Up and Restore': 'installation/docker/site-template/backup.md'
               - 'Customizations' : 'installation/docker/site-template/customizations.md'
-          - 'Converting ISLE-DC to Site Template': 'installation/docker/converting.md'
-          - 'Removing compose profiles from Site Template': 'installation/docker/rm-profiles.md'
+          - 'Converting to modern Site Template': 'installation/docker/converting.md'
           - 'ISLE-DC (deprecated)':
               - Installing:
                  - 'Installing a Development Server': 'installation/docker/isle-dc/docker-local.md'
