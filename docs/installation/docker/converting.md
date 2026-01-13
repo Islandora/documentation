@@ -1,21 +1,28 @@
 # Converting to modern ISLE Site Template
 
-This guide is intended to helper migrate ISLE-DC sites or ISLE Site Template sites that use docker compose profiles to manage a `dev` and `prod` profile for docker services.
+This guide is intended to help convert ISLE-DC sites or ISLE Site Template sites that use docker compose profiles to manage a `dev` and `prod` profile for docker services.
 
-Migrating your docker-compose is completely optional. If you are happy with your setup, you can ignore this conversion guide. However, if you'd like to align with the latest community version, the following instructions explain how to convert your site into the Site Template style of docker-compose.yml.
+Converting your docker-compose is completely optional. If you are happy with your setup, you can ignore this conversion guide. However, if you'd like to align with the supported community version, the following instructions explain how to convert your site.
 
 ## Major changes
 
-If you're trying to decide whether you want to migrate, these are the major changes from older versions of ISLE Site Template and ISLE-DC. If any of these address issues you've had with your setup, you may want to consider migrating.
+If you're trying to decide whether you want to convert, these are the major changes from older versions of ISLE Site Template and ISLE-DC. If any of these address issues you've had with your setup, you may want to consider converting.
+
+### docker-compose.yml
 
 The major change from isle-dc is `docker-compose.yml` is now tracked in version control, so both development and production have the same `docker-compose.yml` and any changes are tracked in git.
 
-The main difference between ISLE-DC and the Site Template is the way the docker-compose.yml file is generated. In ISLE-DC we generate it based on your .env variables and a make command, but in Site Template it is ready to go out of the box. 
-
 This means that in ISLE-DC you had separate docker-compose.yml files for development and production, but in site template there is one file for both.
 
-### Default HTTP
-The default dev environment use `http` rather than `https`. Running `https` in development environments has proven difficult. Additionally, in production some institutions have TLS terminated in front of ISLE (having ISLE act as a backend on a frontend reverse proxy) so having better support around switching from TLS to HTTP seemed warranted. To help with this there are some new `make` commands to allow switching between http, tls-mkcert, and tls-letsencrypt easier.
+Older versions of ISLE Site Template used docker compose profiles to manage a `dev` and `prod` profile for docker services. This has been consolidated into a single set of services that can be managed with `make` commands.
+
+### codebase now in ./drupal/rootfs/var/www/drupal
+
+ISLE-DC had the Drupal codebase in `./codebase`. The new location is `./drupal/rootfs/var/www/drupal`
+
+### Default to HTTP 
+
+The default dev environment uses `http` rather than `https`. Running `https` in development environments has proven difficult to support for various host setups. For example, in production some institutions have TLS terminated in front of ISLE (having ISLE act as a backend on a frontend reverse proxy) so having better support around switching from TLS to HTTP seemed warranted. To help with this there are some new `make` commands to allow switching between http, tls-mkcert, and tls-letsencrypt easier.
 
 ### Default domain
 
@@ -23,11 +30,11 @@ Using `http` also forced moving away from `islandora.dev`... HSTS rules in Googl
 
 ### traefik labels to YML
 
-Traefik labels have moved from docker compose and into [dynamic template](https://doc.traefik.io/traefik/reference/install-configuration/providers/others/file/) to make configuring traefik easier. The configuration will be found in `./conf/traefik`
+Traefik labels have moved from docker compose YML and into [dynamic traefik templates](https://doc.traefik.io/traefik/reference/install-configuration/providers/others/file/) to make configuring traefik easier and more centralized. The traefik configuration is found in `./conf/traefik`
 
 ### smart port allocation
 
-`make up` tries to bring up ISLE on port 80/443 but if those ports are bound by some other process than the compose project it tries to bind to another port. The URL is then automatically opened in the web browser. This is mostly useful in a development environment where other sites might be occupying those ports.
+In development environments (i.e. `DEVELOPMENT_ENVIRONMENT==true`) `make up` tries to bring up ISLE on port 80/443 but if those ports are bound by some other process than the compose project it tries to bind to another port. The URL is then automatically opened in the web browser. This is mostly useful in a development environment where other sites might be occupying those ports.
 
 ### make status
 
@@ -35,7 +42,7 @@ Added a command to help identify misconfigured docker-compose.yml + .env combina
 
 ### URLs
 
-The Site Template also handles the URLs for microservices differently. You will need to follow the instructions in the Site Template README to allow access to your microservices as a subdomain. For example, `solr.mydomain.com`. 
+The Site Template handles the URLs for microservices differently than ISLE-DC did. You will need to follow the instructions in the Site Template README to allow access to your microservices as a subdomain. For example, `solr.mydomain.com`. 
 
 !!! Note "Subdomains"
     If you are already using a subdomain and can’t use URLs like `solr.mysubdomain.mydomain.com`, you can change this in the Traefik section of the docker-compose.yml file, by changing the aliases from `solr.{DOMAIN}` to something else, like `solr-{DOMAIN}`. You will also need to change this in a few other spots in your docker-compose.yml. You can find them by searching for `.{DOMAIN}`
@@ -47,7 +54,7 @@ The Site Template also handles the URLs for microservices differently. You will 
 
 ### 1. Bring in the new config
 
-There are two different options to convert docker-compose. If you're converting from ISLE-DC, choose 1.a. If you're migrating from the older version of ISLE Site Template, follow 1.b
+There are two different options to convert docker-compose. If you're converting from ISLE-DC, choose 1.a. If you're converting from the older version of ISLE Site Template, follow 1.b
 
 #### 1.a ISLE-DC
 
@@ -176,11 +183,13 @@ make down
 
 ### 2 - Remove compose profiles (ISLE Site Template only)
 
-You now have two options to convert docker-compose. Choose either 2.a or 2.b
+If you're converting from ISLE-DC you can skip this step.
+
+You have two options to convert docker-compose. Choose either 2.a or 2.b
 
 #### 2.a - Vanilla overwrite
 
-If you're only removing the compose profiles (i.e. you're migrating from and older version of ISLE Site Template) and you've made no changes to docker-compose.yml since you made your own copy of isle-site-template you can simply overwrite the docker-compose.yml with the latest version 
+If you've made no changes to docker-compose.yml since you made your own copy of isle-site-template you can simply overwrite the docker-compose.yml with the latest version 
 
 ```
 git checkout ist/main -- docker-compose.yml
@@ -233,7 +242,7 @@ ACME_URL=https://acme-v02.api.letsencrypt.org/directory
 ACME_EMAIL=postmaster@example.com
 ```
 
-You should compare the `environment` sections of your docker-compose.yml files. You may have some variables set in your ISLE-DC docker-compose.yml that will need to be added to the docker-compose.yml in the new Site Template site.
+In the git diff, compare the `environment` sections of your docker-compose.yml files. You may have some variables set in your ISLE-DC docker-compose.yml that will need to be added to the docker-compose.yml in the new Site Template site.
 
 For example, the [ISLE Buildkit Nginx README](https://github.com/Islandora-Devops/isle-buildkit/blob/main/nginx/README.md) lists the available variables for Nginx that you may have changed on your Drupal containers to do things like increase the timeout time for PHP or the max POST size PHP will accept.
 
@@ -249,7 +258,7 @@ Many of the other commands specify which containers to run commands in, for exam
 
 ## Other Customizations
 
-If you have modified your ISLE-DC repository, those modifications will need to be evaluated on a case-by-case basis. This includes editing the Dockerfile and environment variables mentioned above, as well as any other customizations you may have made, such as to settings.php, robots.txt, nginx configs, etc.
+If you have modified your repository, those modifications will need to be evaluated on a case-by-case basis. This includes editing the Dockerfile and environment variables mentioned above, as well as any other customizations you may have made, such as to settings.php, robots.txt, nginx configs, etc.
 
 ### 4 - Test
 
@@ -263,9 +272,10 @@ Otherwise, be sure your `DOMAIN` value in `.env` is `islandora.traefik.me` and b
 
 Now, bring up your services. In a development environment, after running `make up` your ISLE site should be available at `${URI_SCHEME}://${DOMAIN}` (the actual value will print after running make up depending on your settings).
 
-If you don't like the new setup, it's not working, or the changes didn't apply cleanly, you can [reach out for help](https://www.islandora.ca/contact-us#comms-channels) (in the #isle slack channel) or simply delete the git branch that was created to revert the changes.
-
 !!! warning
+
+    If you don't like the new setup, it's not working, or the changes didn't apply cleanly, you can [reach out for help](https://www.islandora.ca/contact-us#comms-channels) (in the #isle slack channel) or simply delete the git branch that was created to revert the changes.
+
     This will delete any config settings made in previous steps
     ```
     make down
@@ -281,7 +291,6 @@ If you like this new setup and all looks well, merge the `convert-site-template`
 git checkout main
 git merge convert-site-template
 git push origin main
-git remote remove ist
 ```
 
 ### 6 - Deploy to production
