@@ -175,7 +175,6 @@ cd path/to/your/site/template
 git checkout -B convert-site-template
 git remote add ist https://github.com/islandora-devops/isle-site-template
 git fetch ist
-if [ -f Makefile ]; then cat Makefile >> custom.Makefile; fi
 git checkout ist/main -- conf Makefile sample.env scripts docker-compose.dev.yml
 docker compose --profile dev down
 make down
