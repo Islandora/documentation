@@ -762,8 +762,22 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#default-http" class="md-nav__link">
-    Default HTTP
+  <a href="#docker-composeyml" class="md-nav__link">
+    docker-compose.yml
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#codebase-now-in-drupalrootfsvarwwwdrupal" class="md-nav__link">
+    codebase now in ./drupal/rootfs/var/www/drupal
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#default-to-http" class="md-nav__link">
+    Default to HTTP
   </a>
   
 </li>
@@ -2871,8 +2885,22 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#default-http" class="md-nav__link">
-    Default HTTP
+  <a href="#docker-composeyml" class="md-nav__link">
+    docker-compose.yml
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#codebase-now-in-drupalrootfsvarwwwdrupal" class="md-nav__link">
+    codebase now in ./drupal/rootfs/var/www/drupal
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#default-to-http" class="md-nav__link">
+    Default to HTTP
   </a>
   
 </li>
@@ -3064,25 +3092,28 @@
 
 
 <h1 id="converting-to-modern-isle-site-template">Converting to modern ISLE Site Template<a class="headerlink" href="#converting-to-modern-isle-site-template" title="Permanent link">&para;</a></h1>
-<p>This guide is intended to helper migrate ISLE-DC sites or ISLE Site Template sites that use docker compose profiles to manage a <code>dev</code> and <code>prod</code> profile for docker services.</p>
-<p>Migrating your docker-compose is completely optional. If you are happy with your setup, you can ignore this conversion guide. However, if you'd like to align with the latest community version, the following instructions explain how to convert your site into the Site Template style of docker-compose.yml.</p>
+<p>This guide is intended to help convert ISLE-DC sites or ISLE Site Template sites that use docker compose profiles to manage a <code>dev</code> and <code>prod</code> profile for docker services.</p>
+<p>Converting your docker-compose is completely optional. If you are happy with your setup, you can ignore this conversion guide. However, if you'd like to align with the supported community version, the following instructions explain how to convert your site.</p>
 <h2 id="major-changes">Major changes<a class="headerlink" href="#major-changes" title="Permanent link">&para;</a></h2>
-<p>If you're trying to decide whether you want to migrate, these are the major changes from older versions of ISLE Site Template and ISLE-DC. If any of these address issues you've had with your setup, you may want to consider migrating.</p>
+<p>If you're trying to decide whether you want to convert, these are the major changes from older versions of ISLE Site Template and ISLE-DC. If any of these address issues you've had with your setup, you may want to consider converting.</p>
+<h3 id="docker-composeyml">docker-compose.yml<a class="headerlink" href="#docker-composeyml" title="Permanent link">&para;</a></h3>
 <p>The major change from isle-dc is <code>docker-compose.yml</code> is now tracked in version control, so both development and production have the same <code>docker-compose.yml</code> and any changes are tracked in git.</p>
-<p>The main difference between ISLE-DC and the Site Template is the way the docker-compose.yml file is generated. In ISLE-DC we generate it based on your .env variables and a make command, but in Site Template it is ready to go out of the box. </p>
 <p>This means that in ISLE-DC you had separate docker-compose.yml files for development and production, but in site template there is one file for both.</p>
-<h3 id="default-http">Default HTTP<a class="headerlink" href="#default-http" title="Permanent link">&para;</a></h3>
-<p>The default dev environment use <code>http</code> rather than <code>https</code>. Running <code>https</code> in development environments has proven difficult. Additionally, in production some institutions have TLS terminated in front of ISLE (having ISLE act as a backend on a frontend reverse proxy) so having better support around switching from TLS to HTTP seemed warranted. To help with this there are some new <code>make</code> commands to allow switching between http, tls-mkcert, and tls-letsencrypt easier.</p>
+<p>Older versions of ISLE Site Template used docker compose profiles to manage a <code>dev</code> and <code>prod</code> profile for docker services. This has been consolidated into a single set of services that can be managed with <code>make</code> commands.</p>
+<h3 id="codebase-now-in-drupalrootfsvarwwwdrupal">codebase now in ./drupal/rootfs/var/www/drupal<a class="headerlink" href="#codebase-now-in-drupalrootfsvarwwwdrupal" title="Permanent link">&para;</a></h3>
+<p>ISLE-DC had the Drupal codebase in <code>./codebase</code>. The new location is <code>./drupal/rootfs/var/www/drupal</code></p>
+<h3 id="default-to-http">Default to HTTP<a class="headerlink" href="#default-to-http" title="Permanent link">&para;</a></h3>
+<p>The default dev environment uses <code>http</code> rather than <code>https</code>. Running <code>https</code> in development environments has proven difficult to support for various host setups. For example, in production some institutions have TLS terminated in front of ISLE (having ISLE act as a backend on a frontend reverse proxy) so having better support around switching from TLS to HTTP seemed warranted. To help with this there are some new <code>make</code> commands to allow switching between http, tls-mkcert, and tls-letsencrypt easier.</p>
 <h3 id="default-domain">Default domain<a class="headerlink" href="#default-domain" title="Permanent link">&para;</a></h3>
 <p>Using <code>http</code> also forced moving away from <code>islandora.dev</code>... HSTS rules in Google Chrome in particular do not allow accessing <code>*.dev</code> domains over http. So the default development domain is now <code>islandora.traefik.me</code></p>
 <h3 id="traefik-labels-to-yml">traefik labels to YML<a class="headerlink" href="#traefik-labels-to-yml" title="Permanent link">&para;</a></h3>
-<p>Traefik labels have moved from docker compose and into <a href="https://doc.traefik.io/traefik/reference/install-configuration/providers/others/file/">dynamic template</a> to make configuring traefik easier. The configuration will be found in <code>./conf/traefik</code></p>
+<p>Traefik labels have moved from docker compose YML and into <a href="https://doc.traefik.io/traefik/reference/install-configuration/providers/others/file/">dynamic traefik templates</a> to make configuring traefik easier and more centralized. The traefik configuration is found in <code>./conf/traefik</code></p>
 <h3 id="smart-port-allocation">smart port allocation<a class="headerlink" href="#smart-port-allocation" title="Permanent link">&para;</a></h3>
-<p><code>make up</code> tries to bring up ISLE on port 80/443 but if those ports are bound by some other process than the compose project it tries to bind to another port. The URL is then automatically opened in the web browser. This is mostly useful in a development environment where other sites might be occupying those ports.</p>
+<p>In development environments (i.e. <code>DEVELOPMENT_ENVIRONMENT==true</code>) <code>make up</code> tries to bring up ISLE on port 80/443 but if those ports are bound by some other process than the compose project it tries to bind to another port. The URL is then automatically opened in the web browser. This is mostly useful in a development environment where other sites might be occupying those ports.</p>
 <h3 id="make-status">make status<a class="headerlink" href="#make-status" title="Permanent link">&para;</a></h3>
 <p>Added a command to help identify misconfigured docker-compose.yml + .env combinations.</p>
 <h3 id="urls">URLs<a class="headerlink" href="#urls" title="Permanent link">&para;</a></h3>
-<p>The Site Template also handles the URLs for microservices differently. You will need to follow the instructions in the Site Template README to allow access to your microservices as a subdomain. For example, <code>solr.mydomain.com</code>. </p>
+<p>The Site Template handles the URLs for microservices differently than ISLE-DC did. You will need to follow the instructions in the Site Template README to allow access to your microservices as a subdomain. For example, <code>solr.mydomain.com</code>. </p>
 <div class="admonition note">
 <p class="admonition-title">Subdomains</p>
 <p>If you are already using a subdomain and can’t use URLs like <code>solr.mysubdomain.mydomain.com</code>, you can change this in the Traefik section of the docker-compose.yml file, by changing the aliases from <code>solr.{DOMAIN}</code> to something else, like <code>solr-{DOMAIN}</code>. You will also need to change this in a few other spots in your docker-compose.yml. You can find them by searching for <code>.{DOMAIN}</code></p>
@@ -3093,7 +3124,7 @@
 <p>This doc assummes you default git branch is called <code>main</code>. Adjust the commands below if that's not the case</p>
 </div>
 <h3 id="1-bring-in-the-new-config">1. Bring in the new config<a class="headerlink" href="#1-bring-in-the-new-config" title="Permanent link">&para;</a></h3>
-<p>There are two different options to convert docker-compose. If you're converting from ISLE-DC, choose 1.a. If you're migrating from the older version of ISLE Site Template, follow 1.b</p>
+<p>There are two different options to convert docker-compose. If you're converting from ISLE-DC, choose 1.a. If you're converting from the older version of ISLE Site Template, follow 1.b</p>
 <h4 id="1a-isle-dc">1.a ISLE-DC<a class="headerlink" href="#1a-isle-dc" title="Permanent link">&para;</a></h4>
 <ol>
 <li>Bring in the latest isle-site-template:
@@ -3207,9 +3238,10 @@ Replace: <code>ISLANDORA_TAG=</code></p>
 </span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>make down
 </span></code></pre></div>
 <h3 id="2-remove-compose-profiles-isle-site-template-only">2 - Remove compose profiles (ISLE Site Template only)<a class="headerlink" href="#2-remove-compose-profiles-isle-site-template-only" title="Permanent link">&para;</a></h3>
-<p>You now have two options to convert docker-compose. Choose either 2.a or 2.b</p>
+<p>If you're converting from ISLE-DC you can skip this step.</p>
+<p>You have two options to convert docker-compose. Choose either 2.a or 2.b</p>
 <h4 id="2a-vanilla-overwrite">2.a - Vanilla overwrite<a class="headerlink" href="#2a-vanilla-overwrite" title="Permanent link">&para;</a></h4>
-<p>If you're only removing the compose profiles (i.e. you're migrating from and older version of ISLE Site Template) and you've made no changes to docker-compose.yml since you made your own copy of isle-site-template you can simply overwrite the docker-compose.yml with the latest version </p>
+<p>If you've made no changes to docker-compose.yml since you made your own copy of isle-site-template you can simply overwrite the docker-compose.yml with the latest version </p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>git checkout ist/main -- docker-compose.yml
 </span></code></pre></div>
 <h4 id="2b-attempt-to-merge">2.b - Attempt to merge<a class="headerlink" href="#2b-attempt-to-merge" title="Permanent link">&para;</a></h4>
@@ -3239,7 +3271,7 @@ Replace: <code>ISLANDORA_TAG=</code></p>
 </span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>ACME_URL=https://acme-v02.api.letsencrypt.org/directory
 </span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>ACME_EMAIL=postmaster@example.com
 </span></code></pre></div>
-<p>You should compare the <code>environment</code> sections of your docker-compose.yml files. You may have some variables set in your ISLE-DC docker-compose.yml that will need to be added to the docker-compose.yml in the new Site Template site.</p>
+<p>In the git diff, compare the <code>environment</code> sections of your docker-compose.yml files. You may have some variables set in your ISLE-DC docker-compose.yml that will need to be added to the docker-compose.yml in the new Site Template site.</p>
 <p>For example, the <a href="https://github.com/Islandora-Devops/isle-buildkit/blob/main/nginx/README.md">ISLE Buildkit Nginx README</a> lists the available variables for Nginx that you may have changed on your Drupal containers to do things like increase the timeout time for PHP or the max POST size PHP will accept.</p>
 <p>And then adjust sample.env as needed.</p>
 <h2 id="converting-the-makefile">Converting the Makefile<a class="headerlink" href="#converting-the-makefile" title="Permanent link">&para;</a></h2>
@@ -3247,16 +3279,16 @@ Replace: <code>ISLANDORA_TAG=</code></p>
 <p>Commands to build a site, like <code>make starter</code> and <code>make production</code> are not necessary with the Site Template, so they can be removed from your Makefile.</p>
 <p>Many of the other commands specify which containers to run commands in, for example <code>docker compose exec drupal</code>.</p>
 <h2 id="other-customizations">Other Customizations<a class="headerlink" href="#other-customizations" title="Permanent link">&para;</a></h2>
-<p>If you have modified your ISLE-DC repository, those modifications will need to be evaluated on a case-by-case basis. This includes editing the Dockerfile and environment variables mentioned above, as well as any other customizations you may have made, such as to settings.php, robots.txt, nginx configs, etc.</p>
+<p>If you have modified your repository, those modifications will need to be evaluated on a case-by-case basis. This includes editing the Dockerfile and environment variables mentioned above, as well as any other customizations you may have made, such as to settings.php, robots.txt, nginx configs, etc.</p>
 <h3 id="4-test">4 - Test<a class="headerlink" href="#4-test" title="Permanent link">&para;</a></h3>
 <p>If you want to keep running TLS in your dev environment you can run this make helper to switch to <code>https</code>:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>make traefik-https-mkcert
 </span></code></pre></div>
 <p>Otherwise, be sure your <code>DOMAIN</code> value in <code>.env</code> is <code>islandora.traefik.me</code> and be aware your dev site is available at http://islandora.traefik.me</p>
 <p>Now, bring up your services. In a development environment, after running <code>make up</code> your ISLE site should be available at <code>${URI_SCHEME}://${DOMAIN}</code> (the actual value will print after running make up depending on your settings).</p>
-<p>If you don't like the new setup, it's not working, or the changes didn't apply cleanly, you can <a href="https://www.islandora.ca/contact-us#comms-channels">reach out for help</a> (in the #isle slack channel) or simply delete the git branch that was created to revert the changes.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
+<p>If you don't like the new setup, it's not working, or the changes didn't apply cleanly, you can <a href="https://www.islandora.ca/contact-us#comms-channels">reach out for help</a> (in the #isle slack channel) or simply delete the git branch that was created to revert the changes.</p>
 <p>This will delete any config settings made in previous steps
 <div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>make down
 </span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>git checkout main
@@ -3268,7 +3300,6 @@ Replace: <code>ISLANDORA_TAG=</code></p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>git checkout main
 </span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>git merge convert-site-template
 </span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>git push origin main
-</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>git remote remove ist
 </span></code></pre></div>
 <h3 id="6-deploy-to-production">6 - Deploy to production<a class="headerlink" href="#6-deploy-to-production" title="Permanent link">&para;</a></h3>
 <p>If you committed the changes, deploy to production by:</p>
