@@ -3232,10 +3232,9 @@ Replace: <code>ISLANDORA_TAG=</code></p>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>git checkout -B convert-site-template
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>git remote add ist https://github.com/islandora-devops/isle-site-template
 </span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>git fetch ist
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>if [ -f Makefile ]; then cat Makefile &gt;&gt; custom.Makefile; fi
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>git checkout ist/main -- conf Makefile sample.env scripts docker-compose.dev.yml
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>docker compose --profile dev down
-</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>make down
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>git checkout ist/main -- conf Makefile sample.env scripts docker-compose.dev.yml
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>docker compose --profile dev down
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>make down
 </span></code></pre></div>
 <h3 id="2-remove-compose-profiles-isle-site-template-only">2 - Remove compose profiles (ISLE Site Template only)<a class="headerlink" href="#2-remove-compose-profiles-isle-site-template-only" title="Permanent link">&para;</a></h3>
 <p>If you're converting from ISLE-DC you can skip this step.</p>
