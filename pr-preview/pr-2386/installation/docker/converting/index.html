@@ -16,14 +16,14 @@
         <link rel="prev" href="../site-template/customizations/">
       
       
-        <link rel="next" href="../rm-profiles/">
+        <link rel="next" href="../isle-dc/docker-local/">
       
       <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.0.12">
     
     
       
-        <title>Converting ISLE-DC to Site Template - Islandora</title>
+        <title>Converting to modern Site Template - Islandora</title>
       
     
     
@@ -73,7 +73,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#converting-isle-dc-to-site-template" class="md-skip">
+        <a href="#converting-to-modern-isle-site-template" class="md-skip">
           Skip to content
         </a>
       
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Converting ISLE-DC to Site Template
+              Converting to modern Site Template
             
           </span>
         </div>
@@ -730,12 +730,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Converting ISLE-DC to Site Template
+          Converting to modern Site Template
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Converting ISLE-DC to Site Template
+        Converting to modern Site Template
       </a>
       
         
@@ -754,30 +754,44 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#development-instructions" class="md-nav__link">
-    Development Instructions
+  <a href="#major-changes" class="md-nav__link">
+    Major changes
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#production-instructions" class="md-nav__link">
-    Production Instructions
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#converting-your-docker-composeyml" class="md-nav__link">
-    Converting Your docker-compose.yml
-  </a>
-  
-    <nav class="md-nav" aria-label="Converting Your docker-compose.yml">
+    <nav class="md-nav" aria-label="Major changes">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#environment-variables" class="md-nav__link">
-    Environment Variables
+  <a href="#default-http" class="md-nav__link">
+    Default HTTP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#default-domain" class="md-nav__link">
+    Default domain
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#traefik-labels-to-yml" class="md-nav__link">
+    traefik labels to YML
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#smart-port-allocation" class="md-nav__link">
+    smart port allocation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#make-status" class="md-nav__link">
+    make status
   </a>
   
 </li>
@@ -785,6 +799,87 @@
           <li class="md-nav__item">
   <a href="#urls" class="md-nav__link">
     URLs
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conversion-process" class="md-nav__link">
+    Conversion process
+  </a>
+  
+    <nav class="md-nav" aria-label="Conversion process">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-bring-in-the-new-config" class="md-nav__link">
+    1. Bring in the new config
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Bring in the new config">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1a-isle-dc" class="md-nav__link">
+    1.a ISLE-DC
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1b-isle-site-template" class="md-nav__link">
+    1.b ISLE Site Template
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-remove-compose-profiles-isle-site-template-only" class="md-nav__link">
+    2 - Remove compose profiles (ISLE Site Template only)
+  </a>
+  
+    <nav class="md-nav" aria-label="2 - Remove compose profiles (ISLE Site Template only)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2a-vanilla-overwrite" class="md-nav__link">
+    2.a - Vanilla overwrite
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2b-attempt-to-merge" class="md-nav__link">
+    2.b - Attempt to merge
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-review" class="md-nav__link">
+    3 - Review
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#environment-variables" class="md-nav__link">
+    Environment Variables
   </a>
   
 </li>
@@ -806,6 +901,33 @@
     Other Customizations
   </a>
   
+    <nav class="md-nav" aria-label="Other Customizations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#4-test" class="md-nav__link">
+    4 - Test
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-save-changes-and-cleanup" class="md-nav__link">
+    5 - Save changes and cleanup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-deploy-to-production" class="md-nav__link">
+    6 - Deploy to production
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -822,37 +944,23 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../rm-profiles/" class="md-nav__link">
-        Removing compose profiles from Site Template
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
     
     <li class="md-nav__item md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2_6" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2_5" >
       
       
       
-        <label class="md-nav__link" for="__nav_5_2_6" id="__nav_5_2_6_label" tabindex="0">
+        <label class="md-nav__link" for="__nav_5_2_5" id="__nav_5_2_5_label" tabindex="0">
           ISLE-DC (deprecated)
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_2_6_label" aria-expanded="false">
-        <label class="md-nav__title" for="__nav_5_2_6">
+      <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_5_2_5_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_5_2_5">
           <span class="md-nav__icon md-icon"></span>
           ISLE-DC (deprecated)
         </label>
@@ -869,17 +977,17 @@
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2_6_1" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2_5_1" >
       
       
       
-        <label class="md-nav__link" for="__nav_5_2_6_1" id="__nav_5_2_6_1_label" tabindex="0">
+        <label class="md-nav__link" for="__nav_5_2_5_1" id="__nav_5_2_5_1_label" tabindex="0">
           Installing
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_5_2_6_1_label" aria-expanded="false">
-        <label class="md-nav__title" for="__nav_5_2_6_1">
+      <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_5_2_5_1_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_5_2_5_1">
           <span class="md-nav__icon md-icon"></span>
           Installing
         </label>
@@ -931,17 +1039,17 @@
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2_6_2" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2_5_2" >
       
       
       
-        <label class="md-nav__link" for="__nav_5_2_6_2" id="__nav_5_2_6_2_label" tabindex="0">
+        <label class="md-nav__link" for="__nav_5_2_5_2" id="__nav_5_2_5_2_label" tabindex="0">
           Maintaining
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_5_2_6_2_label" aria-expanded="false">
-        <label class="md-nav__title" for="__nav_5_2_6_2">
+      <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_5_2_5_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_5_2_5_2">
           <span class="md-nav__icon md-icon"></span>
           Maintaining
         </label>
@@ -2755,30 +2863,44 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#development-instructions" class="md-nav__link">
-    Development Instructions
+  <a href="#major-changes" class="md-nav__link">
+    Major changes
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#production-instructions" class="md-nav__link">
-    Production Instructions
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#converting-your-docker-composeyml" class="md-nav__link">
-    Converting Your docker-compose.yml
-  </a>
-  
-    <nav class="md-nav" aria-label="Converting Your docker-compose.yml">
+    <nav class="md-nav" aria-label="Major changes">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#environment-variables" class="md-nav__link">
-    Environment Variables
+  <a href="#default-http" class="md-nav__link">
+    Default HTTP
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#default-domain" class="md-nav__link">
+    Default domain
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#traefik-labels-to-yml" class="md-nav__link">
+    traefik labels to YML
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#smart-port-allocation" class="md-nav__link">
+    smart port allocation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#make-status" class="md-nav__link">
+    make status
   </a>
   
 </li>
@@ -2786,6 +2908,87 @@
           <li class="md-nav__item">
   <a href="#urls" class="md-nav__link">
     URLs
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conversion-process" class="md-nav__link">
+    Conversion process
+  </a>
+  
+    <nav class="md-nav" aria-label="Conversion process">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-bring-in-the-new-config" class="md-nav__link">
+    1. Bring in the new config
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Bring in the new config">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1a-isle-dc" class="md-nav__link">
+    1.a ISLE-DC
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1b-isle-site-template" class="md-nav__link">
+    1.b ISLE Site Template
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-remove-compose-profiles-isle-site-template-only" class="md-nav__link">
+    2 - Remove compose profiles (ISLE Site Template only)
+  </a>
+  
+    <nav class="md-nav" aria-label="2 - Remove compose profiles (ISLE Site Template only)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2a-vanilla-overwrite" class="md-nav__link">
+    2.a - Vanilla overwrite
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2b-attempt-to-merge" class="md-nav__link">
+    2.b - Attempt to merge
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-review" class="md-nav__link">
+    3 - Review
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#environment-variables" class="md-nav__link">
+    Environment Variables
   </a>
   
 </li>
@@ -2806,6 +3009,33 @@
   <a href="#other-customizations" class="md-nav__link">
     Other Customizations
   </a>
+  
+    <nav class="md-nav" aria-label="Other Customizations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#4-test" class="md-nav__link">
+    4 - Test
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-save-changes-and-cleanup" class="md-nav__link">
+    5 - Save changes and cleanup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-deploy-to-production" class="md-nav__link">
+    6 - Deploy to production
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2833,103 +3063,238 @@
 
 
 
-<h1 id="converting-isle-dc-to-site-template">Converting ISLE-DC to Site Template<a class="headerlink" href="#converting-isle-dc-to-site-template" title="Permanent link">&para;</a></h1>
-<p>The following instructions explain how to convert your ISLE-DC site into the Site Template style of docker-compose.yml.</p>
-<h2 id="development-instructions">Development Instructions<a class="headerlink" href="#development-instructions" title="Permanent link">&para;</a></h2>
-<p>ISLE-DC and the Site Template both use <a href="https://github.com/Islandora-Devops/isle-buildkit">isle-builkit</a> images to spin up an Islandora site. Since the images are the same, you can transfer an ISLE-DC site to a Site Template setup by doing the following:</p>
-<ol>
-<li>
-<p>Follow the instructions in the <a href="https://github.com/Islandora-Devops/isle-site-template">Site Template README</a> to create a new site from the Islandora Starter Site</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Use the same TAG in your Site Template .env that you used in ISLE-DC, so you have the same set of containers.</p>
-</div>
-</li>
-<li>
-<p>Replace the Starter Site's composer.json and composer.lock files with yours, and install the correct Drupal modules using Composer</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>You may need to make some modifications to your composer.json file. Specifically, the <code>scripts</code> and <code>drupal-scaffold</code> sections may have changed.</p>
-<p>You can look at the <a href="https://github.com/Islandora-Devops/islandora-starter-site/blob/main/composer.json">most recent starter site composer.json</a> for comparison.</p>
-<p>If you have custom modules and/or themes that are not installed via Composer you will need to install those as well.</p>
-</div>
-</li>
-<li>
-<p>Compare your old Dockerfile with <a href="https://github.com/Islandora-Devops/isle-site-template/blob/main/drupal/Dockerfile">the one in the Site Template repository</a>. If you have made customizations, you may want to replicate them in the new Dockerfile.</p>
-</li>
-<li>
-<p>Backup your ISLE-DC site's Fedora, Drupal database, and public/private files.</p>
-</li>
-<li>
-<p>Import your backups to the new Site Template site.</p>
-</li>
-<li>
-<p>Delete your Solr core, and regenerate new configs.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Site Template uses a different core name than ISLE-DC did</p>
-</div>
-</li>
-<li>
-<p>Commit and push your git repository so it is ready for production.</p>
-</li>
-</ol>
-<h2 id="production-instructions">Production Instructions<a class="headerlink" href="#production-instructions" title="Permanent link">&para;</a></h2>
-<p>Once you have converted the development instance of your site, moving it to production requires the following:</p>
-<ol>
-<li>
-<p>Clone the git repository that you set up in the development instructions above</p>
-</li>
-<li>
-<p>Prepare your images/containers as described in the Site Template README</p>
-<ol>
-<li>Run the generate secrets script included with the site template, or copy your secrets from your existing site if you want them to be the same</li>
-<li>Add custom modules or themes, if you have some that are not included in your composer.json</li>
-<li>Build your Drupal container with <code>docker compose build</code></li>
-<li>Pull in the remaining containers with <code>docker compose pull --ignore-buildable --ignore-pull-failures</code></li>
-<li>Start the containers with <code>docker compose up -d</code></li>
-</ol>
-</li>
-<li>
-<p>Import the backups from your ISLE-DC site that you made in the development instructions above</p>
-</li>
-<li>
-<p>Delete your Solr core, and regenerate new configs.</p>
-</li>
-</ol>
-<h2 id="converting-your-docker-composeyml">Converting Your docker-compose.yml<a class="headerlink" href="#converting-your-docker-composeyml" title="Permanent link">&para;</a></h2>
+<h1 id="converting-to-modern-isle-site-template">Converting to modern ISLE Site Template<a class="headerlink" href="#converting-to-modern-isle-site-template" title="Permanent link">&para;</a></h1>
+<p>This guide is intended to helper migrate ISLE-DC sites or ISLE Site Template sites that use docker compose profiles to manage a <code>dev</code> and <code>prod</code> profile for docker services.</p>
+<p>Migrating your docker-compose is completely optional. If you are happy with your setup, you can ignore this conversion guide. However, if you'd like to align with the latest community version, the following instructions explain how to convert your site into the Site Template style of docker-compose.yml.</p>
+<h2 id="major-changes">Major changes<a class="headerlink" href="#major-changes" title="Permanent link">&para;</a></h2>
+<p>If you're trying to decide whether you want to migrate, these are the major changes from older versions of ISLE Site Template and ISLE-DC. If any of these address issues you've had with your setup, you may want to consider migrating.</p>
+<p>The major change from isle-dc is <code>docker-compose.yml</code> is now tracked in version control, so both development and production have the same <code>docker-compose.yml</code> and any changes are tracked in git.</p>
 <p>The main difference between ISLE-DC and the Site Template is the way the docker-compose.yml file is generated. In ISLE-DC we generate it based on your .env variables and a make command, but in Site Template it is ready to go out of the box. </p>
 <p>This means that in ISLE-DC you had separate docker-compose.yml files for development and production, but in site template there is one file for both.</p>
-<p>In your dev environment, bring in the new config from ISLE Site Template</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>cd path/to/your/isle/dc
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>git checkout -B isle-site-template
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>git remote add ist https://github.com/islandora-devops/isle-site-template
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>git fetch ist
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>make down
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>git checkout ist/main -- conf sample.env scripts docker-compose.dev.yml docker-compose.yml
-</span></code></pre></div>
-<h3 id="environment-variables">Environment Variables<a class="headerlink" href="#environment-variables" title="Permanent link">&para;</a></h3>
-<p>You should compare the <code>environment</code> sections of your docker-compose.yml files. You may have some variables set in your ISLE-DC docker-compose.yml that will need to be added to the docker-compose.yml in the new Site Template site.</p>
-<p>For example, the <a href="https://github.com/Islandora-Devops/isle-buildkit/blob/main/nginx/README.md">ISLE Buildkit Nginx README</a> lists the available variables for Nginx that you may have changed on your Drupal containers to do things like increase the timeout time for PHP or the max POST size PHP will accept.</p>
+<h3 id="default-http">Default HTTP<a class="headerlink" href="#default-http" title="Permanent link">&para;</a></h3>
+<p>The default dev environment use <code>http</code> rather than <code>https</code>. Running <code>https</code> in development environments has proven difficult. Additionally, in production some institutions have TLS terminated in front of ISLE (having ISLE act as a backend on a frontend reverse proxy) so having better support around switching from TLS to HTTP seemed warranted. To help with this there are some new <code>make</code> commands to allow switching between http, tls-mkcert, and tls-letsencrypt easier.</p>
+<h3 id="default-domain">Default domain<a class="headerlink" href="#default-domain" title="Permanent link">&para;</a></h3>
+<p>Using <code>http</code> also forced moving away from <code>islandora.dev</code>... HSTS rules in Google Chrome in particular do not allow accessing <code>*.dev</code> domains over http. So the default development domain is now <code>islandora.traefik.me</code></p>
+<h3 id="traefik-labels-to-yml">traefik labels to YML<a class="headerlink" href="#traefik-labels-to-yml" title="Permanent link">&para;</a></h3>
+<p>Traefik labels have moved from docker compose and into <a href="https://doc.traefik.io/traefik/reference/install-configuration/providers/others/file/">dynamic template</a> to make configuring traefik easier. The configuration will be found in <code>./conf/traefik</code></p>
+<h3 id="smart-port-allocation">smart port allocation<a class="headerlink" href="#smart-port-allocation" title="Permanent link">&para;</a></h3>
+<p><code>make up</code> tries to bring up ISLE on port 80/443 but if those ports are bound by some other process than the compose project it tries to bind to another port. The URL is then automatically opened in the web browser. This is mostly useful in a development environment where other sites might be occupying those ports.</p>
+<h3 id="make-status">make status<a class="headerlink" href="#make-status" title="Permanent link">&para;</a></h3>
+<p>Added a command to help identify misconfigured docker-compose.yml + .env combinations.</p>
 <h3 id="urls">URLs<a class="headerlink" href="#urls" title="Permanent link">&para;</a></h3>
 <p>The Site Template also handles the URLs for microservices differently. You will need to follow the instructions in the Site Template README to allow access to your microservices as a subdomain. For example, <code>solr.mydomain.com</code>. </p>
 <div class="admonition note">
 <p class="admonition-title">Subdomains</p>
 <p>If you are already using a subdomain and can’t use URLs like <code>solr.mysubdomain.mydomain.com</code>, you can change this in the Traefik section of the docker-compose.yml file, by changing the aliases from <code>solr.{DOMAIN}</code> to something else, like <code>solr-{DOMAIN}</code>. You will also need to change this in a few other spots in your docker-compose.yml. You can find them by searching for <code>.{DOMAIN}</code></p>
 </div>
+<h2 id="conversion-process">Conversion process<a class="headerlink" href="#conversion-process" title="Permanent link">&para;</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This doc assummes you default git branch is called <code>main</code>. Adjust the commands below if that's not the case</p>
+</div>
+<h3 id="1-bring-in-the-new-config">1. Bring in the new config<a class="headerlink" href="#1-bring-in-the-new-config" title="Permanent link">&para;</a></h3>
+<p>There are two different options to convert docker-compose. If you're converting from ISLE-DC, choose 1.a. If you're migrating from the older version of ISLE Site Template, follow 1.b</p>
+<h4 id="1a-isle-dc">1.a ISLE-DC<a class="headerlink" href="#1a-isle-dc" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Bring in the latest isle-site-template:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git clone https://github.com/islandora-devops/isle-site-template
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>cd isle-site-template
+</span></code></pre></div></li>
+<li>Copy your drupal codebase into it
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>rm -rf drupal/rootfs/var/www/drupal
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>cp -r /path/to/isle/dc/codebase drupal/rootfs/var/www/drupal
+</span></code></pre></div></li>
+<li>Update <code>docker-compose.yml</code> doing a find replace.
+Find: <code>drupal-public-files</code>
+Replace: <code>drupal-sites-data</code></li>
+</ol>
+<p>Find: <code>DRUPAL_DEFAULT_SOLR_CORE: default</code>
+Replace: <code>DRUPAL_DEFAULT_SOLR_CORE=ISLANDORA</code>
+4. Copy <code>.env</code>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>cp -r /path/to/isle/dc/codebase/.env .
+</span></code></pre></div>
+5. Update <code>.env</code>
+Find: <code>TAG=</code>
+Replace: <code>ISLANDORA_TAG=</code></p>
+<p>These deprecated environment variables can be removed from your <code>.env</code> that was copied from your ISLE-DC install</p>
+<p>??? Deprecated environment variable names
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>ACME_KEY_TYPE
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>ACTIVEMQ_MEMORY_LIMIT
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>ACTIVEMQ_PORT
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>ALPACA_FITS_TIMEOUT
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>ALPACA_HOMARUS_TIMEOUT
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>ALPACA_HOUDINI_TIMEOUT
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>ALPACA_MEMORY_LIMIT
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>ALPACA_OCR_TIMEOUT
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>BLAZEGRAPH_MEMORY_LIMIT
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>BLAZEGRAPH_PORT
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>CANTALOUPE_DELEGATE_SCRIPT_ENABLED
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>CANTALOUPE_DELEGATE_SCRIPT_PATHNAME
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>CANTALOUPE_HTTPSOURCE_LOOKUP_STRATEGY
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>CANTALOUPE_MEMORY_LIMIT
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>CODEBASE_PACKAGE
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>COMPOSE_HTTP_TIMEOUT
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>CRAYFITS_MEMORY_LIMIT
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>CUSTOM_IMAGE_NAME
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>CUSTOM_IMAGE_NAMESPACE
+</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a>CUSTOM_IMAGE_TAG
+</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a>DISABLE_SYN
+</span><span id="__span-3-22"><a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a>DRUPAL_DATABASE_SERVICE
+</span><span id="__span-3-23"><a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a>DRUPAL_INSTALL_PROFILE
+</span><span id="__span-3-24"><a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a>DRUPAL_MEMORY_LIMIT
+</span><span id="__span-3-25"><a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a>ENVIRONMENT
+</span><span id="__span-3-26"><a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a>EXPOSE_ACTIVEMQ
+</span><span id="__span-3-27"><a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a>EXPOSE_BLAZEGRAPH
+</span><span id="__span-3-28"><a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a>EXPOSE_CANTALOUPE
+</span><span id="__span-3-29"><a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a>EXPOSE_DRUPAL
+</span><span id="__span-3-30"><a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a>EXPOSE_FEDORA
+</span><span id="__span-3-31"><a id="__codelineno-3-31" name="__codelineno-3-31" href="#__codelineno-3-31"></a>EXPOSE_MYSQL
+</span><span id="__span-3-32"><a id="__codelineno-3-32" name="__codelineno-3-32" href="#__codelineno-3-32"></a>EXPOSE_POSTGRES
+</span><span id="__span-3-33"><a id="__codelineno-3-33" name="__codelineno-3-33" href="#__codelineno-3-33"></a>EXPOSE_SOLR
+</span><span id="__span-3-34"><a id="__codelineno-3-34" name="__codelineno-3-34" href="#__codelineno-3-34"></a>EXPOSE_TRAEFIK_DASHBOARD
+</span><span id="__span-3-35"><a id="__codelineno-3-35" name="__codelineno-3-35" href="#__codelineno-3-35"></a>FCREPO_DATABASE_SERVICE
+</span><span id="__span-3-36"><a id="__codelineno-3-36" name="__codelineno-3-36" href="#__codelineno-3-36"></a>FCREPO_MEMORY_LIMIT
+</span><span id="__span-3-37"><a id="__codelineno-3-37" name="__codelineno-3-37" href="#__codelineno-3-37"></a>FEDORA_6
+</span><span id="__span-3-38"><a id="__codelineno-3-38" name="__codelineno-3-38" href="#__codelineno-3-38"></a>FEDORA_PORT
+</span><span id="__span-3-39"><a id="__codelineno-3-39" name="__codelineno-3-39" href="#__codelineno-3-39"></a>FITS_MEMORY_LIMIT
+</span><span id="__span-3-40"><a id="__codelineno-3-40" name="__codelineno-3-40" href="#__codelineno-3-40"></a>HOMARUS_MEMORY_LIMIT
+</span><span id="__span-3-41"><a id="__codelineno-3-41" name="__codelineno-3-41" href="#__codelineno-3-41"></a>HOUDINI_MEMORY_LIMIT
+</span><span id="__span-3-42"><a id="__codelineno-3-42" name="__codelineno-3-42" href="#__codelineno-3-42"></a>HYPERCUBE_MEMORY_LIMIT
+</span><span id="__span-3-43"><a id="__codelineno-3-43" name="__codelineno-3-43" href="#__codelineno-3-43"></a>IDE_MEMORY_LIMIT
+</span><span id="__span-3-44"><a id="__codelineno-3-44" name="__codelineno-3-44" href="#__codelineno-3-44"></a>INCLUDE_ETCD_SERVICE
+</span><span id="__span-3-45"><a id="__codelineno-3-45" name="__codelineno-3-45" href="#__codelineno-3-45"></a>INCLUDE_TRAEFIK_SERVICE
+</span><span id="__span-3-46"><a id="__codelineno-3-46" name="__codelineno-3-46" href="#__codelineno-3-46"></a>INCLUDE_WATCHTOWER_SERVICE
+</span><span id="__span-3-47"><a id="__codelineno-3-47" name="__codelineno-3-47" href="#__codelineno-3-47"></a>INSTALL_EXISTING_CONFIG
+</span><span id="__span-3-48"><a id="__codelineno-3-48" name="__codelineno-3-48" href="#__codelineno-3-48"></a>MARIADB_MEMORY_LIMIT
+</span><span id="__span-3-49"><a id="__codelineno-3-49" name="__codelineno-3-49" href="#__codelineno-3-49"></a>MILLINER_MEMORY_LIMIT
+</span><span id="__span-3-50"><a id="__codelineno-3-50" name="__codelineno-3-50" href="#__codelineno-3-50"></a>MYSQL_PORT
+</span><span id="__span-3-51"><a id="__codelineno-3-51" name="__codelineno-3-51" href="#__codelineno-3-51"></a>PHP_MAJOR_VERSION
+</span><span id="__span-3-52"><a id="__codelineno-3-52" name="__codelineno-3-52" href="#__codelineno-3-52"></a>PHP_MAX_EXECUTION_TIME
+</span><span id="__span-3-53"><a id="__codelineno-3-53" name="__codelineno-3-53" href="#__codelineno-3-53"></a>PHP_MEMORY_LIMIT
+</span><span id="__span-3-54"><a id="__codelineno-3-54" name="__codelineno-3-54" href="#__codelineno-3-54"></a>PHP_MINOR_VERSION
+</span><span id="__span-3-55"><a id="__codelineno-3-55" name="__codelineno-3-55" href="#__codelineno-3-55"></a>PHP_POST_MAX_SIZE
+</span><span id="__span-3-56"><a id="__codelineno-3-56" name="__codelineno-3-56" href="#__codelineno-3-56"></a>PHP_UPLOAD_MAX_FILESIZE
+</span><span id="__span-3-57"><a id="__codelineno-3-57" name="__codelineno-3-57" href="#__codelineno-3-57"></a>POSTGRES_PORT
+</span><span id="__span-3-58"><a id="__codelineno-3-58" name="__codelineno-3-58" href="#__codelineno-3-58"></a>PROJECT_DRUPAL_DOCKERFILE
+</span><span id="__span-3-59"><a id="__codelineno-3-59" name="__codelineno-3-59" href="#__codelineno-3-59"></a>PUBLIC_FILES_TAR_DUMP_PATH
+</span><span id="__span-3-60"><a id="__codelineno-3-60" name="__codelineno-3-60" href="#__codelineno-3-60"></a>RECAST_MEMORY_LIMIT
+</span><span id="__span-3-61"><a id="__codelineno-3-61" name="__codelineno-3-61" href="#__codelineno-3-61"></a>RESTART_POLICY
+</span><span id="__span-3-62"><a id="__codelineno-3-62" name="__codelineno-3-62" href="#__codelineno-3-62"></a>SITE
+</span><span id="__span-3-63"><a id="__codelineno-3-63" name="__codelineno-3-63" href="#__codelineno-3-63"></a>SOLR_MEMORY_LIMIT
+</span><span id="__span-3-64"><a id="__codelineno-3-64" name="__codelineno-3-64" href="#__codelineno-3-64"></a>SOLR_PORT
+</span><span id="__span-3-65"><a id="__codelineno-3-65" name="__codelineno-3-65" href="#__codelineno-3-65"></a>TAG
+</span><span id="__span-3-66"><a id="__codelineno-3-66" name="__codelineno-3-66" href="#__codelineno-3-66"></a>TRAEFIK_DASHBOARD_PORT
+</span><span id="__span-3-67"><a id="__codelineno-3-67" name="__codelineno-3-67" href="#__codelineno-3-67"></a>TRAEFIK_LOG_LEVEL
+</span><span id="__span-3-68"><a id="__codelineno-3-68" name="__codelineno-3-68" href="#__codelineno-3-68"></a>TRAEFIK_MEMORY_LIMIT
+</span><span id="__span-3-69"><a id="__codelineno-3-69" name="__codelineno-3-69" href="#__codelineno-3-69"></a>USE_ACME
+</span><span id="__span-3-70"><a id="__codelineno-3-70" name="__codelineno-3-70" href="#__codelineno-3-70"></a>USE_SECRETS
+</span><span id="__span-3-71"><a id="__codelineno-3-71" name="__codelineno-3-71" href="#__codelineno-3-71"></a>WATCHTOWER_MEMORY_LIMIT
+</span></code></pre></div>
+6. Bring in the changes to your ISLE-DC git repo</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>rm -rf .git
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>cp -r path/to/isle/dc/.git .
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>git checkout -B convert-site-template
+</span></code></pre></div>
+<h4 id="1b-isle-site-template">1.b ISLE Site Template<a class="headerlink" href="#1b-isle-site-template" title="Permanent link">&para;</a></h4>
+<p>In your dev environment, bring in the new config from ISLE Site Template</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>cd path/to/your/site/template
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>git checkout -B convert-site-template
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>git remote add ist https://github.com/islandora-devops/isle-site-template
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>git fetch ist
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>if [ -f Makefile ]; then cat Makefile &gt;&gt; custom.Makefile; fi
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>git checkout ist/main -- conf Makefile sample.env scripts docker-compose.dev.yml
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>docker compose --profile dev down
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>make down
+</span></code></pre></div>
+<h3 id="2-remove-compose-profiles-isle-site-template-only">2 - Remove compose profiles (ISLE Site Template only)<a class="headerlink" href="#2-remove-compose-profiles-isle-site-template-only" title="Permanent link">&para;</a></h3>
+<p>You now have two options to convert docker-compose. Choose either 2.a or 2.b</p>
+<h4 id="2a-vanilla-overwrite">2.a - Vanilla overwrite<a class="headerlink" href="#2a-vanilla-overwrite" title="Permanent link">&para;</a></h4>
+<p>If you're only removing the compose profiles (i.e. you're migrating from and older version of ISLE Site Template) and you've made no changes to docker-compose.yml since you made your own copy of isle-site-template you can simply overwrite the docker-compose.yml with the latest version </p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>git checkout ist/main -- docker-compose.yml
+</span></code></pre></div>
+<h4 id="2b-attempt-to-merge">2.b - Attempt to merge<a class="headerlink" href="#2b-attempt-to-merge" title="Permanent link">&para;</a></h4>
+<p>If you've made changes to docker-compose.yml since copying the repo, you can attempt to convert it using <code>sitectl</code>. Install sitectl and run the <code>sitectl isle migrate merge-compose-profiles</code> command</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>brew tap libops/homebrew https://github.com/libops/homebrew
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>brew install libops/homebrew/sitectl-isle
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>sitectl isle migrate merge-compose-profiles -i docker-compose.yml -o docker-compose.yml -f
+</span></code></pre></div>
+<p>This will overwrite your <code>docker-compose.yml</code> with the new profiles-less version.</p>
+<h3 id="3-review">3 - Review<a class="headerlink" href="#3-review" title="Permanent link">&para;</a></h3>
+<p>Very carefully review your changes locally</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>git diff
+</span></code></pre></div>
+<p>Or if you prefer viewing the diff in your git provider</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>git add .
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>git commit -m &quot;Removing profiles&quot;
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>git push origin convert-site-template
+</span></code></pre></div>
+<p>Ensure your services have the same environment variables, secrets, volumes your old services had. </p>
+<p>Familiarize yourself with the new make command helpers</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>make help
+</span></code></pre></div>
+<h3 id="environment-variables">Environment Variables<a class="headerlink" href="#environment-variables" title="Permanent link">&para;</a></h3>
+<p>Ensure the new values you see in <code>sample.env</code> are set in your <code>.env</code>. Namely</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>URI_SCHEME=http
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>TLS_PROVIDER=&quot;self-managed&quot;
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>ACME_URL=https://acme-v02.api.letsencrypt.org/directory
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>ACME_EMAIL=postmaster@example.com
+</span></code></pre></div>
+<p>You should compare the <code>environment</code> sections of your docker-compose.yml files. You may have some variables set in your ISLE-DC docker-compose.yml that will need to be added to the docker-compose.yml in the new Site Template site.</p>
+<p>For example, the <a href="https://github.com/Islandora-Devops/isle-buildkit/blob/main/nginx/README.md">ISLE Buildkit Nginx README</a> lists the available variables for Nginx that you may have changed on your Drupal containers to do things like increase the timeout time for PHP or the max POST size PHP will accept.</p>
+<p>And then adjust sample.env as needed.</p>
 <h2 id="converting-the-makefile">Converting the Makefile<a class="headerlink" href="#converting-the-makefile" title="Permanent link">&para;</a></h2>
 <p>Because ISLE-DC and Site Template use the same containers, much of what is in an ISLE-DC Makefile will work within the site template environment. The main differences that need to be addressed are with the way new sites are built, and the name of the containers. </p>
 <p>Commands to build a site, like <code>make starter</code> and <code>make production</code> are not necessary with the Site Template, so they can be removed from your Makefile.</p>
 <p>Many of the other commands specify which containers to run commands in, for example <code>docker compose exec drupal</code>.</p>
 <h2 id="other-customizations">Other Customizations<a class="headerlink" href="#other-customizations" title="Permanent link">&para;</a></h2>
 <p>If you have modified your ISLE-DC repository, those modifications will need to be evaluated on a case-by-case basis. This includes editing the Dockerfile and environment variables mentioned above, as well as any other customizations you may have made, such as to settings.php, robots.txt, nginx configs, etc.</p>
+<h3 id="4-test">4 - Test<a class="headerlink" href="#4-test" title="Permanent link">&para;</a></h3>
+<p>If you want to keep running TLS in your dev environment you can run this make helper to switch to <code>https</code>:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>make traefik-https-mkcert
+</span></code></pre></div>
+<p>Otherwise, be sure your <code>DOMAIN</code> value in <code>.env</code> is <code>islandora.traefik.me</code> and be aware your dev site is available at http://islandora.traefik.me</p>
+<p>Now, bring up your services. In a development environment, after running <code>make up</code> your ISLE site should be available at <code>${URI_SCHEME}://${DOMAIN}</code> (the actual value will print after running make up depending on your settings).</p>
+<p>If you don't like the new setup, it's not working, or the changes didn't apply cleanly, you can <a href="https://www.islandora.ca/contact-us#comms-channels">reach out for help</a> (in the #isle slack channel) or simply delete the git branch that was created to revert the changes.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This will delete any config settings made in previous steps
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>make down
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>git checkout main
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>git branch -D convert-site-template
+</span></code></pre></div></p>
+</div>
+<h3 id="5-save-changes-and-cleanup">5 - Save changes and cleanup<a class="headerlink" href="#5-save-changes-and-cleanup" title="Permanent link">&para;</a></h3>
+<p>If you like this new setup and all looks well, merge the <code>convert-site-template</code> git branch into main</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>git checkout main
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>git merge convert-site-template
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>git push origin main
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>git remote remove ist
+</span></code></pre></div>
+<h3 id="6-deploy-to-production">6 - Deploy to production<a class="headerlink" href="#6-deploy-to-production" title="Permanent link">&para;</a></h3>
+<p>If you committed the changes, deploy to production by:</p>
+<p>Pull down the changes</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>git pull origin main
+</span></code></pre></div>
+<p>If you're using letsencrypt run this make helper to switch to <code>https</code> in your prod environment:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>make traefik-https-letsencrypt
+</span></code></pre></div>
+<p>If you're not using letsencrypt but instead are using your own TLS certs, make sure <code>.env</code> has</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>URI_SCHEME=https
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>TLS_PROVIDER=&quot;self-managed&quot;
+</span></code></pre></div>
+<p>Next, bring down the site, pull in the changes, and bring everything back up</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>make down
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>docker compose --profile prod down
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>make up
+</span></code></pre></div>
+<p>Your site should be online now using the new setup!</p>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">January 12, 2026</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">January 13, 2026</span>
       
     
   </small>
