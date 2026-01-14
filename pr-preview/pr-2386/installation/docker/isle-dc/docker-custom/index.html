@@ -2973,12 +2973,12 @@ certificate authority.  As long as the certificates match the <code>DOMAIN</code
 </span></code></pre></div>
 <p>Be sure to replace <code>your-email@example.org</code> with the email address you've associated with Let's Encrypt.</p>
 <p>The way this is setup, is it performs an HTTP Challenge to verify you are in control of the domain. So your system will need to be accessible at <code>http://DOMAIN/</code>.</p>
-<p>??? warning  "Let's Encrypt Rate Limit"
-    If you aren't careful, you can hit Let's Encrypt's rate limit, and you'll be locked out for up to a week!  If you want to use their staging server instead while testing things out, add the following to your .env file</p>
-<div class="language-text highlight"><pre><span></span><code>```
-ACME_SERVER=https://acme-staging-v02.api.letsencrypt.org/directory
-```
-</code></pre></div>
+<details class="warning">
+<summary>Let's Encrypt Rate Limit</summary>
+<p>If you aren't careful, you can hit Let's Encrypt's rate limit, and you'll be locked out for up to a week!  If you want to use their staging server instead while testing things out, add the following to your .env file</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>ACME_SERVER=https://acme-staging-v02.api.letsencrypt.org/directory
+</span></code></pre></div>
+</details>
 <p>You'll still get security exceptions when it's working, but you should be able to check the certificate from the browser and confirm you are getting it from the staging server.</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>
 </span></code></pre></div>
