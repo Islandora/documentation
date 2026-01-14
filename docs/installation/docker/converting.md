@@ -85,6 +85,7 @@ Replace: `ISLANDORA_TAG=`
 These deprecated environment variables can be removed from your `.env` that was copied from your ISLE-DC install
 
 ??? note
+
     ```
     ACME_KEY_TYPE
     ACTIVEMQ_MEMORY_LIMIT
