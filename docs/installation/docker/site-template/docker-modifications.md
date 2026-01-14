@@ -24,23 +24,25 @@ Please see the README for the different buildkit images to see what is available
 - [Milliner](https://github.com/Islandora-Devops/isle-buildkit/tree/main/milliner)
 - [Solr](https://github.com/Islandora-Devops/isle-buildkit/tree/main/solr)
 
-You can add these environment variables to your docker-compose.yml in order to change their values. For example, if you want to increase the PHP memory limit in your production Drupal container, you can do so like this:
+You can add these environment variables to your docker-compose.yml in order to change their values. For example, if you want to increase the PHP memory limit in your Drupal container, you can do so like this:
 
+```yaml
+services:
+  drupal:
+    environment:
+      PHP_MEMORY_LIMIT: 1G
 ```
-    drupal-prod:
-        <<: [*prod, *drupal]
-        Environment:
-            PHP_MEMORY_LIMIT: 1G
-```
+
+Or use a `docker-compose.override.yml` file to keep your customizations separate from the main configuration.
 
 
 ## Removing Services
 
-You may not want to use all the images that are included in the Site Template’s `docker-compose.yml`. You can remove containers by deleting their sections in the docker-compose.yml file.
+You may not want to use all the images that are included in the Site Template's `docker-compose.yml`. You can remove containers by deleting their service definitions in the docker-compose.yml file.
 
-For example, to remove Fedora, you would delete the services called fcrepo-dev and fcrepo-prod.
+For example, to remove Fedora, you would delete the `fcrepo` service.
 
-Depending on the container you are removing, you may need to delete references to it as well. For example, some containers are referenced by others in the `depends_on` field. You will need to also delete these references, so if you delete the `fedora-dev` service, you will need to remove the rule that `traefik-dev` depends on it.
+Depending on the container you are removing, you may need to delete references to it as well. For example, some containers are referenced by others in the `depends_on` field. You will need to also delete these references.
 
 If you are removing a container which is referenced by Drupal, ensure that you update Drupal as well (e.g. if removing Fedora, ensure your Media's files are not writing to the Fedora filesystem).
 
@@ -48,22 +50,16 @@ After doing `docker compose down`, run `docker compose up -d --remove-orphans` t
 
 ## Hiding Fedora From the Public
 
-By default, your Fedora repo will be available to the public at `fcrepo.${DOMAIN}`. If you do not want to expose your Fedora, you can stop this URL from working by disabling it via Traefik in your `docker-compose.yml`. To do this, you need to add the `traefik-disable` label to `fcrepo-prod` like this,
+By default, your Fedora repo will be available to the public at `fcrepo.${DOMAIN}`. If you do not want to expose your Fedora, you can stop this URL from working by disabling it via Traefik in your `docker-compose.yml` or `docker-compose.override.yml`.
 
-```yaml
-    fcrepo-prod:
-        <<: [*prod, *fcrepo]
-        environment:
-            <<: [*fcrepo-environment]
-            FCREPO_ALLOW_EXTERNAL_DRUPAL: "https://${DOMAIN}/"
-        labels:
-            <<: [*traefik-disable, *fcrepo-labels]
-```
+You can modify the Traefik routing configuration in the `traefik/dynamic` directory to disable external access to Fedora while keeping it accessible internally to other services.
 
-If you have done this, you can also remove the DNS records that point this URL to your production server.
+If you have done this, you can also remove the DNS records that point this URL to your server.
 
-Finally, you will have to change the URL that Drupal uses to access the Fedora repo. This can be found in your `docker-compose.yml` in the `environment` section for `drupal-prod`, and should be changed to:
+Finally, ensure that Drupal is configured to access Fedora using the internal Docker network hostname:
 
 ```yaml
 DRUPAL_DEFAULT_FCREPO_URL: "http://fcrepo:8080/fcrepo/rest/"
 ```
+
+This is typically the default configuration, allowing Drupal to access Fedora internally even when external access is disabled.
