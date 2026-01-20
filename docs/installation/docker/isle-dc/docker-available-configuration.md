@@ -1,5 +1,8 @@
 # Available Configuration
 
+!!! warning
+    isle-dc is deprecated in favor of [isle-site-template](/documentation/installation/docker/site-template/site-template/).
+
 ISLE Docker Compose has a single configuration file, `.env`. Within it, here
 is all the values you can set and their effects. This list is subjectively sorted
 in order of importance and usefulness.

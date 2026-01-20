@@ -27,6 +27,7 @@ markdown_extensions:
   - footnotes
   - toc:
         permalink: True
+  - pymdownx.details
   - pymdownx.highlight:
       anchor_linenums: true
       line_spans: __span
@@ -126,7 +127,16 @@ nav:
       - 'Docker':
           - 'Introduction to ISLE': 'installation/docker/docker-introduction.md'
           - 'Prerequisites': 'installation/docker/docker-prereq.md'
-          - 'ISLE-DC':
+          - 'ISLE Site Template':
+              - 'Introduction to Site Template': 'installation/docker/site-template/site-template.md'
+              - 'Creating Your Site': 'installation/docker/site-template/setup.md'
+              - 'Docker Modifications': 'installation/docker/site-template/docker-modifications.md'
+              - 'Working in Your Containers': 'installation/docker/site-template/containers.md'
+              - 'Updating': 'installation/docker/site-template/updating.md'
+              - 'Back Up and Restore': 'installation/docker/site-template/backup.md'
+              - 'Customizations' : 'installation/docker/site-template/customizations.md'
+          - 'Converting to modern Site Template': 'installation/docker/converting.md'
+          - 'ISLE-DC (deprecated)':
               - Installing:
                  - 'Installing a Development Server': 'installation/docker/isle-dc/docker-local.md'
                  - 'Installing a Staging/Production Server': 'installation/docker/isle-dc/docker-custom.md'
@@ -137,15 +147,6 @@ nav:
               - 'Available Commands': 'installation/docker/isle-dc/docker-available-commands.md'
               - 'Available Configuration': 'installation/docker/isle-dc/docker-available-configuration.md'
               - 'Troubleshooting' : 'installation/docker/isle-dc/docker-troubleshooting.md'
-          - 'ISLE Site Template':
-              - 'Introduction to Site Template': 'installation/docker/site-template/site-template.md'
-              - 'Creating Your Site': 'installation/docker/site-template/setup.md'
-              - 'Docker Modifications': 'installation/docker/site-template/docker-modifications.md'
-              - 'Working in Your Containers': 'installation/docker/site-template/containers.md'
-              - 'Updating': 'installation/docker/site-template/updating.md'
-              - 'Back Up and Restore': 'installation/docker/site-template/backup.md'
-              - 'Customizations' : 'installation/docker/site-template/customizations.md'
-          - 'Converting ISLE-DC to Site Template': 'installation/docker/converting.md'
 
       - 'Ansible Playbook': 'installation/playbook.md'
       - Manual Installation:
@@ -242,8 +243,8 @@ nav:
       - 'Accessibility': 'user-documentation/accessibility.md'
       - 'Multilingual': 'user-documentation/multilingual.md'
           # conceptual/ procedural/ reference, repository managers
-      - 'Extending Islandora': 
-          - 'Extending':'user-documentation/extending.md'
+      - 'Extending Islandora':
+          - 'Extending': 'user-documentation/extending.md'
           # conceptual, repository managers/ developers
           - 'Recipes':
               - 'Automatically Minting DOIs with DataCite': 'user-documentation/recipes/datacite.md'

@@ -1,5 +1,8 @@
 # Troubleshooting
 
+!!! warning
+    isle-dc is deprecated in favor of [isle-site-template](/documentation/installation/docker/site-template/site-template/).
+
 ### Make command not found
 
 If you get the error `bash: make: command not found` then you need to install GNU make. Run `sudo apt update` and `sudo apt install make` to install.

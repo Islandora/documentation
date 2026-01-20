@@ -1,23 +1,23 @@
 # Backups & Transferring Data Between Sites
 
-The following instructions describe how to back up and restore an islandora site. This is also used to transfer data between a development and production site, or to sync a staging site with a production site.
+The following instructions describe how to back up and restore an Islandora site. This is also used to transfer data between a development and production site, or to sync a staging site with a production site.
 
-Note that containers are named with a suffix of -dev or -prod depending on your environment. For example, backing up your development site’s Drupal database requires running the command on the drupal-dev container, but backing up the production site’s database requires running the command on the drupal-prod container. The following instructions are mostly written for development sites, but the same commands will work on production containers.
+Container names are based on the service names defined in your `docker-compose.yml` file. For example, the Drupal container is typically named `drupal`, the MariaDB container is `mariadb`, etc. The following instructions use these standard service names.
 
 Before attempting the following commands, you should familiarize yourself with [running commands inside a container](/documentation/installation/docker/site-template/containers.md) and with [docker compose cp](https://docs.docker.com/reference/cli/docker/compose/cp/)
 
 
 ## Drupal Configuration
 
-The typical use case of this is to export your drupal configuration files out of your development site’s Drupal database and onto the host machine. This process lets you check your configuration into your git repository so you can import it into your production site.
+The typical use case of this is to export your Drupal configuration files out of your development site's Drupal database and onto the host machine. This process lets you check your configuration into your git repository so you can import it into your production site.
 
 
 ### Export
 
-To export your development config run:
+To export your config run:
 
 ```
-docker compose exec -T drupal-dev drush -l default config:export -y
+docker compose exec drupal drush config:export -y
 ```
 
 Then commit and push your git repo so the new config files are included.
@@ -29,15 +29,15 @@ To import your config to a production or staging site you first need to `git pul
 
 ```
 git pull
-docker compose --profile prod build
-docker compose --profile prod down
-docker compose --profile prod up -d
+docker compose build
+docker compose down drupal
+docker compose up -d
 ```
 
 Once this is done, your config files will be included in the container. You can then import them by running
 
 ```
-docker compose exec -T drupal-prod drush -l default config:import -y
+docker compose exec drupal drush config:import -y
 ```
 
 
@@ -53,13 +53,17 @@ These instructions can also be used to move your content from production to stag
 Backing up the Drupal database involves doing a database dump in the drupal container:
 
 ```
-docker compose exec -T drupal-dev with-contenv bash -lc 'mysqldump -u ${DRUPAL_DEFAULT_DB_USER} -p${DRUPAL_DEFAULT_DB_PASSWORD} -h mariadb ${DRUPAL_DEFAULT_DB_NAME} > /tmp/dump.sql'
+docker compose exec drupal \
+    bash -lc "drush sql-dump -y \
+    --skip-tables-list=cache,cache_*,watchdog \
+    --structure-tables-list=cache,cache_*,watchdog \
+    --result-file=/tmp/drupal.sql"
 ```
 
 and then copying that dump from the container to the host machine:
 
 ```
-docker compose cp drupal-dev:/tmp/dump.sql [path/on/host/dump.sql]
+docker compose cp drupal:/tmp/drupal.sql [path/on/host/drupal.sql]
 ```
 
 
@@ -68,19 +72,19 @@ docker compose cp drupal-dev:/tmp/dump.sql [path/on/host/dump.sql]
 Restoring from a database dump requires copying the dump file into the drupal container:
 
 ```
-docker compose cp [path-to/dump.sql] drupal-dev:/tmp/dump.sql
+docker compose cp [path-to/drupal.sql] drupal:/tmp/drupal.sql
 ```
 
 Then replacing the database with the dump:
 
 ```
-docker compose exec -T drupal-dev with-contenv bash -lc 'chown root:root /tmp/dump.sql && mysql -u ${DRUPAL_DEFAULT_DB_USER} -p${DRUPAL_DEFAULT_DB_PASSWORD} -h mariadb ${DRUPAL_DEFAULT_DB_NAME} < /tmp/dump.sql'
+docker compose exec drupal drush sqlq --debug --file /tmp/drupal.sql'
 ```
 
 And finally, rebuilding the Drupal cache:
 
 ```
-docker compose exec drupal-dev drush cr
+docker compose exec drupal drush cr
 ```
 
 
@@ -96,13 +100,16 @@ These instructions can also be used to move your content from production to stag
 Drupal public files can be compressed to a tgz file in the Drupal container:
 
 ```
-docker compose exec -T drupal-dev with-contenv bash -lc 'tar zcvf /tmp/public-files.tgz -C /var/www/drupal/web/sites/default/files .'
+docker compose exec drupal \
+  drush archive:dump \
+  --files \
+  --destination=/tmp/files.tar.gz
 ```
 
 Then copied to the host machine:
 
 ```
-docker compose cp drupal-dev:/tmp/public-files.tgz  [path/on/host/public-files.tgz]
+docker compose cp drupal:/tmp/files.tar.gz [path/on/host/files.tar.gz]
 ```
 
 
@@ -111,20 +118,22 @@ docker compose cp drupal-dev:/tmp/public-files.tgz  [path/on/host/public-files.t
 Drupal files can be restored from a tgz file by copying them into the Drupal container:
 
 ```
-docker compose cp public-files.tgz drupal-dev:/tmp/public-files.tgz
+docker compose cp files.tar.gz drupal:/tmp/files.tar.gz
 ```
 
 Then placed in the correct directory inside the Drupal volume:
 
 ```
-docker compose exec -T drupal-dev with-contenv bash -lc 'tar zxvf /tmp/public-files.tgz -C /var/www/drupal/web/sites/default/files && chown -R nginx:nginx /var/www/drupal/web/sites/default/files && rm /tmp/public-files.tgz'
+docker compose exec drupal tar zxvf /tmp/files.tar.gz -C /var/www/drupal/web/sites/default/files
+docker compose exec drupal chown -R nginx:nginx /var/www/drupal/web/sites/default/files
+docker compose exec drupal rm /tmp/files.tar.gz
 ```
 
 !!! note
     This will overwrite existing files if they have the same filename, but does not remove existing files otherwise. If you want to make sure that the public files directory does not contain anything but the newly imported files, you will want to empty the directory before copying the new files in.
-    
+
     ```
-    docker compose exec -T drupal-dev with-contenv bash -lc 'rm -r /var/www/drupal/web/sites/default/files/*'
+    docker compose exec drupal with-contenv bash -lc 'rm -r /var/www/drupal/web/sites/default/files/*'
     ```
 
 
@@ -133,19 +142,18 @@ docker compose exec -T drupal-dev with-contenv bash -lc 'tar zxvf /tmp/public-fi
 These instructions can also be used to move your content from production to staging or development.
 
 
-
 ### Back Up
 
-Drupal public files can be compressed to a tgz file in the Drupal container:
+Drupal private files can be compressed to a tgz file in the Drupal container:
 
 ```
-docker compose exec -T drupal-dev with-contenv bash -lc 'tar zcvf /tmp/private-files.tgz -C /var/www/drupal/private .'
+docker compose exec drupal tar zcvf /tmp/private-files.tgz -C /var/www/drupal/private .
 ```
 
 Then copied to the host machine:
 
 ```
-docker compose cp drupal-dev:/tmp/private-files.tgz [path/on/host/private-files.tgz]
+docker compose cp drupal:/tmp/private-files.tgz [path/on/host/private-files.tgz]
 ```
 
 
@@ -154,20 +162,22 @@ docker compose cp drupal-dev:/tmp/private-files.tgz [path/on/host/private-files.
 Drupal files can be restored from a tgz file by copying them into the Drupal container:
 
 ```
-docker compose cp private-files.tgz drupal-dev:/tmp/private-files.tgz
+docker compose cp private-files.tgz drupal:/tmp/private-files.tgz
 ```
 
 Then placed in the correct directory inside the Drupal volume:
 
 ```
-docker compose exec -T drupal-dev with-contenv bash -lc 'tar zxvf /tmp/private-files.tgz -C /var/www/drupal/private && chown -R nginx:nginx /var/www/drupal/private && rm /tmp/private-files.tgz'
+docker compose exec drupal tar zxvf /tmp/private-files.tgz -C /var/www/drupal/private
+docker compose exec drupal chown -R nginx:nginx /var/www/drupal/private
+docker compose exec drupal rm /tmp/private-files.tgz
 ```
 
 !!! note
     This will overwrite existing files if they have the same filename, but does not remove existing files otherwise. If you want to make sure that the private files directory does not contain anything but the newly imported files, you will want to empty the directory before copying the new files in.
-    
+
     ```
-    docker compose exec -T drupal-dev with-contenv bash -lc 'rm -r /var/www/drupal/private/*'
+    docker compose exec drupal with-contenv bash -lc 'rm -r /var/www/drupal/private/*'
     ```
 
 
@@ -183,13 +193,13 @@ Fedora 6 uses a file structure called [OCFL](https://ocfl.io/) to store files an
 To back up Fedora we create a .tgz file from the ocfl-root directory in the Fedora container:
 
 ```
-docker compose exec -T fcrepo-dev with-contenv bash -lc 'tar zcvf /tmp/fcrepo-export.tgz -C /data/home/data/ocfl-root/ .'
+docker compose exec fcrepo tar zcvf /tmp/fcrepo-export.tgz -C /data/home/data/ocfl-root/ .
 ```
 
 Then we copy that file to the host machine:
 
 ```
-docker compose cp fcrepo-dev:/tmp/fcrepo-export.tgz [path/on/host/fcrepo-export.tgz]
+docker compose cp fcrepo:/tmp/fcrepo-export.tgz [path/on/host/fcrepo-export.tgz]
 ```
 
 
@@ -198,30 +208,32 @@ docker compose cp fcrepo-dev:/tmp/fcrepo-export.tgz [path/on/host/fcrepo-export.
 To restore our fedora database we need to copy the backup into the Fedora container:
 
 ```
-docker compose cp [path-to/fcrepo-export.tgz] fcrepo-dev:/tmp/fcrepo-export.tgz
+docker compose cp [path-to/fcrepo-export.tgz] fcrepo:/tmp/fcrepo-export.tgz
 ```
 
 Empty the existing ocfl-root directory:
 ```
-docker compose exec -T fcrepo-dev bash -lc 'rm -r /data/home/data/ocfl-root/*'
+docker compose exec fcrepo bash -lc 'rm -r /data/home/data/ocfl-root/*'
 ```
 
 Put our backup files in the ocfl-root directory:
 
 ```
-docker compose exec -T fcrepo-dev with-contenv bash -lc 'tar zxvf /tmp/fcrepo-export.tgz -C /data/home/data/ocfl-root/ && chown -R tomcat:tomcat /data/home/data/ocfl-root/ && rm /tmp/fcrepo-export.tgz'
+docker compose exec fcrepo tar zxvf /tmp/fcrepo-export.tgz -C /data/home/data/ocfl-root/
+docker compose exec fcrepo chown -R tomcat:tomcat /data/home/data/ocfl-root/
+docker compose exec fcrepo rm /tmp/fcrepo-export.tgz
 ```
 
 Drop the existing Fedora database:
 
 ```
-docker compose exec -T mariadb-dev bash -lc 'mysql -e "drop database fcrepo;"'
+docker compose exec mariadb mariadb -e "drop database fcrepo;"
 ```
 
 Restart Fedora to reinitialize the database from the ocfl-root directory:
 
 ```
-docker compose --profile dev restart fcrepo-dev
+docker compose restart fcrepo
 ```
 
 !!! note

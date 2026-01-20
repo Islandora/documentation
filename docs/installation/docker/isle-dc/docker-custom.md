@@ -1,5 +1,8 @@
 # Installing a Production/Staging Server
 
+!!! warning
+    isle-dc is deprecated in favor of [isle-site-template](/documentation/installation/docker/site-template/site-template/).
+
 If you are deploying Islandora on a server that is publicly accessible, there are extra precautions you should take for
 performance and security reasons.
 

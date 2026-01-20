@@ -61,6 +61,7 @@ The following is an alphabetized list of the prior Islandora committers:
 | Jonathan Green              | LYRASIS                           |
 | Debbie Flitner              | Arizona State University          |
 | Diego Pino                  | METRO                             |
+| Paul Pound                  | University of Prince Edward Island|
 | Nick Ruest                  | York University                   |
 | Bethany Seeger              | Johns Hopkins University          |
 | Jared Whiklo                | University of Manitoba            |

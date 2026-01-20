@@ -12,4 +12,4 @@ ISLE's architecture using [Docker](https://www.docker.com/) separates out the "s
 
 ISLE is a suite of Docker containers that run the various components of Islandora: drupal, fedora, solr, alpaca, crayfish, matomo, etc. The individual containers are created (and automatically pushed to [Docker Hub](https://hub.docker.com/u/islandora)) by [ISLE BuildKit](https://github.com/Islandora-Devops/isle-buildkit).
 
-In order to deploy the containers, however, you need to use a container orchestration tool.  The ISLE project provides tools for running and maintaining the containers using docker-compose with [ISLE Docker Compose](https://github.com/Islandora-Devops/isle-dc) or [ISLE Site Template](https://github.com/Islandora-Devops/isle-site-template).
+In order to deploy the containers, however, you need to use a container orchestration tool.  The ISLE project provides tools for running and maintaining the containers using docker-compose with [ISLE Site Template](https://github.com/Islandora-Devops/isle-site-template).

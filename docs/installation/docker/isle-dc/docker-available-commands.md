@@ -1,5 +1,8 @@
 # Available Commands
 
+!!! warning
+    isle-dc is deprecated in favor of [isle-site-template](/documentation/installation/docker/site-template/site-template/).
+
 There's a lot of useful commands available to you from within the `isle-dc` folder.
 
 ## Rebuild docker-compose.yml
