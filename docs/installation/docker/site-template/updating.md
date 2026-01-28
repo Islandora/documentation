@@ -4,6 +4,12 @@ The following sections describe how to keep your Islandora install up to date wi
 
 ## Updating Isle Buildkit (Islandora Docker Images)
 
+!!! note
+
+    [Isle Buildkit](https://github.com/Islandora-Devops/isle-buildkit) is updated frequently, so it is common to find yourself several versions behind. The process of updating laid out below is the same no matter how many versions behind you are. For example, you can update from version 4.x.x to 6.x.x, skipping 5.x.x entirely.
+
+    You can read the [release notes for each version](https://github.com/Islandora-Devops/isle-buildkit/releases) to see what features were added or removed. Major changes are listed below to point out anything out of the ordinary that needs to be addressed.
+
 Updating to a new version of Isle Buildkit is done by setting the ISLANDORA_TAG variable in your .env file. Once you have updated the .env file, you need to pull the new Islandora images, and rebuild your custom Drupal image from the specified Drupal image.
 
 For example, to upgrade from Buildkit 2.0.0 to 3.0.0 you would do the following steps:
@@ -26,7 +32,7 @@ For example, to upgrade from Buildkit 2.0.0 to 3.0.0 you would do the following 
 
     `docker compose up -d` or `make up`
 
-Once you have upgraded your images, you may need to perform extra steps for Solr and MariaDB, depending on whether these have new versions in the new images.
+Once you have upgraded your images, you may need to perform extra steps for Solr and MariaDB, depending on whether these have new versions in the new images. If you are unsure, there is no harm in performing these extra steps even if they are not necessary.
 
 ### Solr
 
@@ -55,6 +61,29 @@ After updating MariaDB, you may need to run [mariadb-upgrade](https://mariadb.co
 You can run this with
 
 `docker compose exec mariadb mariadb-upgrade`
+
+### Major version updates
+
+When doing major version updates, such as updating from version 4.x.x to 5.x.x, you will often need to follow the steps for Solr and MariaDB above, as well as the one time changes listed here.
+
+#### 6.0.0
+
+For most sites this update will not cause any problems. If you have overridden your Alpaca properties or created custom derivative actions you should read the [Version 6.0.0 release notes](https://github.com/Islandora-Devops/isle-buildkit/releases/tag/6.0.0) to see if you need to update your customizations.
+
+#### 5.0.0
+
+If you are updating from a version prior to 5.0.0 you may have a service called `ide` (Code Server) in your `docker-compose.yml`. If this is the case you will need to remove that service. You can see an example of this change in this [Isle Site Template commit](https://github.com/Islandora-Devops/isle-site-template/pull/82/files#diff-e45e45baeda1c1e73482975a664062aa56f20c03dd9d64a827aba57775bed0d3) that dealt with this change.
+
+!!! note
+    This only applies to sites running a static `docker-compose.yml`. If you are pulling updates to your `docker-compose.yml` from a project like Isle-DC this should already be done for you.
+
+#### 4.0.0
+
+If you are updating from a version prior to 4.0.0 you may have a service called `matomo` in your `docker-compose.yml`. If this is the case you will need to remove that service. You can see an example of this change in this [Isle Site Template commit](https://github.com/Islandora-Devops/isle-site-template/commit/874847f98b23f085429754113f9579af2e6856d6) that dealt with this change.
+
+!!! note
+    This only applies to sites running a static `docker-compose.yml`. If you are pulling updates to your `docker-compose.yml` from a project like Isle-DC this should already be done for you.
+
 
 ## Updating Traefik
 
