@@ -2944,6 +2944,7 @@
 <p>In order to access the admin UIs for these services you have two options: SSH Port Forwarding or Modifying Traefik's Dynamic Templates</p>
 <h4 id="ssh-port-forwarding">SSH Port Forwarding<a class="headerlink" href="#ssh-port-forwarding" title="Permanent link">&para;</a></h4>
 <p>The most secure way to access these services' admin UI is by using SSH Port Forwarding. This approach requires no configuration changes, and ensures access over the network is secure.</p>
+<p>For all the commands below, change <code>your.isle.site</code> to the domain you use to SSH into your machine.</p>
 <p>First, you need to get the docker network IP for your service. Set <code>SERVICE</code> to <code>activemq</code>, <code>blazegraph</code>, or <code>solr</code></p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>SERVICE=solr
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>IP=$(ssh your.isle.site &quot;docker inspect -f &#39;{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}&#39; \$(docker ps -q --filter &#39;name=$SERVICE&#39;) | awk &#39;{print \$2}&#39;&quot;)
