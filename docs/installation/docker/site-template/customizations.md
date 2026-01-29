@@ -46,11 +46,51 @@ DRUPAL_DEFAULT_FCREPO_URL: "http://fcrepo:8080/fcrepo/rest/"
 
 ### Exposing ActiveMQ, Blazegraph, and Solr
 
-By default in production environments, these services are hidden from public access. The visibility is controlled through Traefik configuration in the `traefik/dynamic` directory.
+By default in production environments, the admin UIs for ActiveMQ, Blazegraph, and Solr are not network accessible. These services are blocked from network access as a security precaution.
 
-To expose these services:
-1. Modify the Traefik dynamic configuration to enable routing for these services
-2. Add their URLs to your DNS records (e.g., `activemq.${DOMAIN}`, `blazegraph.${DOMAIN}`, `solr.${DOMAIN}`)
-3. Consider adding authentication middleware to protect these administrative interfaces
+In order to access the admin UIs for these services you have two options: SSH Port Forwarding or Modifying Traefik's Dynamic Templates
 
-For local development with `DEVELOPMENT_ENVIRONMENT=true`, these services are typically accessible at subdomain URLs for convenience.
+#### SSH Port Forwarding
+
+The most secure way to access these services' admin UI is by using SSH Port Forwarding. This approach requires no configuration changes, and ensures access over the network is secure.
+
+First, you need to get the docker network IP for your service. Set `SERVICE1 to `activemq`, `blazegraph`, or `solr`
+
+```
+SERVICE=solr
+IP=$(ssh your.isle.site "docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' \$(docker ps -q --filter 'name=$SERVICE') | awk '{print \$2}'")
+```
+
+For ActiveMQ you need to know the value in your compose project secret in `./secrets/ACTIVEMQ_WEB_ADMIN_PASSWORD` to login via the browser
+
+```
+SECRET_PATH=$(ssh your.isle.site "docker inspect \$(docker ps -q --filter 'name=activemq') --format '{{range .Mounts}}{{.Source}}{{\"\n\"}}{{end}}' | grep ACTIVEMQ_WEB_ADMIN_PASSWORD")
+ssh your.isle.site "cat $SECRET_PATH"
+```
+
+Finally, you're ready to setup port forwarding. For solr, `SERVICE_PORT` is 8983. For ActiveMQ it should be `SERVICE_PORT=8161`. For Blazegraph it's `SERVICE_PORT=8080`
+
+```
+SERVICE_PORT=8983
+ssh your.isle.site -L 8080:$IP:$SERVICE_PORT
+```
+
+Then open http://localhost:8080 and you'll be viewing the service's admin UI. For ActiveMQ you can enter `admin` for the username and the value printed in the terminal for the password.
+
+#### Modifying Traefik's Dynamic Templates
+
+ISLE Site Template uses [Traefik's Go Templating](https://doc.traefik.io/traefik/reference/routing-configuration/other-providers/file/#go-templating) in the [./conf/traefik/dynamic](https://github.com/Islandora-Devops/isle-site-template/blob/main/conf/traefik/) directory to manage exposing different services on the host network.
+
+ActiveMQ, Blazegraph, and Solr are disabled by default in production since they are wrapped in a conditional that checks whether `DEVELOPMENT_ENVIRONMENT=true` in your docker compose project's `.env` file.
+
+```
+{{- if (eq (env "DEVELOPMENT_ENVIRONMENT") "true") }}
+...
+{{- end }}
+```
+
+To expose ActiveMQ, Blazegraph, and/or Solr, you can alter the respective service's traefik config in the [./conf/traefik/dynamic](https://github.com/Islandora-Devops/isle-site-template/blob/main/conf/traefik/) directory. Removing the `{{- if (eq (env "DEVELOPMENT_ENVIRONMENT") "true") }}` conditional (and its closing `{{- end }}`) would be enough to expose the respective service to the network, assumming the respective DNS is configured (i.e. there are valid DNS records for `activemq.${DOMAIN}`, `blazegraph.${DOMAIN}`, `solr.${DOMAIN}` that resolve to your ISLE deployment).
+
+This change can be a disruptive operation since changing the config will likely require bringing the traefik service down, and subsequently offline, in order to ensure the config has been set in traefik. That action will also take your site offline during the restart. If the config change is not valid, there is a risk traefik will not come online and would result in a site outage. So it's best practice to make these traefik config changes on your local machine, test to ensure they are working, and deploy the updated config to your production environment.
+
+Given this change is a code deployment, and not a live edit in a production environment, you will want to explore additional options to secure the service. e.g. using Traefik's [basicAuth](https://doc.traefik.io/traefik/reference/routing-configuration/http/middlewares/basicauth/) or [IPAllowList](https://doc.traefik.io/traefik/reference/routing-configuration/http/middlewares/ipallowlist/) so once your change is in place, your services are still protected.
