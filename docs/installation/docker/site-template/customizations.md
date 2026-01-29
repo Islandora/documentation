@@ -54,28 +54,30 @@ In order to access the admin UIs for these services you have two options: SSH Po
 
 The most secure way to access these services' admin UI is by using SSH Port Forwarding. This approach requires no configuration changes, and ensures access over the network is secure.
 
-First, you need to get the docker network IP for your service. Set `SERVICE1 to `activemq`, `blazegraph`, or `solr`
+First, you need to get the docker network IP for your service. Set `SERVICE` to `activemq`, `blazegraph`, or `solr`
 
 ```
 SERVICE=solr
 IP=$(ssh your.isle.site "docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' \$(docker ps -q --filter 'name=$SERVICE') | awk '{print \$2}'")
 ```
 
-For ActiveMQ you need to know the value in your compose project secret in `./secrets/ACTIVEMQ_WEB_ADMIN_PASSWORD` to login via the browser
+For ActiveMQ you need to know the value in your compose project secret in `./secrets/ACTIVEMQ_WEB_ADMIN_PASSWORD` to login via the browser. Running the two command below should print that password in your terminal. You'll want to copy that value for later.
 
 ```
 SECRET_PATH=$(ssh your.isle.site "docker inspect \$(docker ps -q --filter 'name=activemq') --format '{{range .Mounts}}{{.Source}}{{\"\n\"}}{{end}}' | grep ACTIVEMQ_WEB_ADMIN_PASSWORD")
 ssh your.isle.site "cat $SECRET_PATH"
 ```
 
-Finally, you're ready to setup port forwarding. For solr, `SERVICE_PORT` is 8983. For ActiveMQ it should be `SERVICE_PORT=8161`. For Blazegraph it's `SERVICE_PORT=8080`
+Finally, you're ready to setup port forwarding. If port 8080 is available on your local machine, you can map that port to the remote service. If 8080 isn't available on your machine, use another available port (e.g. `8888`) and change `8080` to the port you want to use.
+
+For solr, `SERVICE_PORT=8983`. For ActiveMQ it should be `SERVICE_PORT=8161`. For Blazegraph it's `SERVICE_PORT=8080`
 
 ```
 SERVICE_PORT=8983
 ssh your.isle.site -L 8080:$IP:$SERVICE_PORT
 ```
 
-Then open http://localhost:8080 and you'll be viewing the service's admin UI. For ActiveMQ you can enter `admin` for the username and the value printed in the terminal for the password.
+Then open [http://localhost:8080](http://localhost:8080) and you'll be viewing the service's admin UI. For ActiveMQ you can enter `admin` for the username and the value printed in the terminal for the password.
 
 #### Modifying Traefik's Dynamic Templates
 
