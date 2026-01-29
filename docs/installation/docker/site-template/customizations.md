@@ -54,6 +54,8 @@ In order to access the admin UIs for these services you have two options: SSH Po
 
 The most secure way to access these services' admin UI is by using SSH Port Forwarding. This approach requires no configuration changes, and ensures access over the network is secure.
 
+For all the commands below, change `your.isle.site` to the domain you use to SSH into your machine.
+
 First, you need to get the docker network IP for your service. Set `SERVICE` to `activemq`, `blazegraph`, or `solr`
 
 ```
