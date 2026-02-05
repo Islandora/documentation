@@ -56,13 +56,13 @@ The most secure way to access these services' admin UI is by using SSH Port Forw
 
 ##### Set environment variables
 
-First, set the environment variable `SSH_DESTINATION` to the domain or IP you use to SSH into your machine. If you use a specific username to login, include that.
+First, in your command line terminal, set the environment variable `SSH_DESTINATION` to the domain or IP you use to SSH into your machine. If you use a specific username to login, include that. Paste this with your updated value into your terminal:
 
 ```
 SSH_DESTINATION=you@your.isle.site
 ```
 
-You'll also need to use an available port on your local machine. If port 8080 is available on your local machine, you can map that port to the remote service. If 8080 isn't available on your machine, use another available port (e.g. 8888) and set `LOCAL_PORT` accordingly.
+You'll also need to use an available port on your local machine. If port 8080 is available on your local machine, you can map that port to the remote service. If 8080 isn't available on your machine, use another available port (e.g. 8888) and set `LOCAL_PORT` accordingly in your terminal.
 
 ```
 LOCAL_PORT=8080
@@ -100,7 +100,7 @@ SERVICE_PORT=8983
 
 ##### Start a port forwarding session
 
-Now that you've set the proper environment variables, you're ready to setup port forwarding.
+Now that you've set the proper environment variables in your command line terminal, you're ready to setup port forwarding.
 
 ```
 IP=$(ssh $SSH_DESTINATION "docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' \$(docker ps -q --filter 'name=$SERVICE')")
