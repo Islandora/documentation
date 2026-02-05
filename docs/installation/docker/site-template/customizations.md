@@ -113,6 +113,8 @@ The service will be available as long as the SSH session remains active. When yo
 
 #### Modifying Traefik's Dynamic Templates
 
+If SSH Port Forwarding is not an option for you, ISLE Site Template also is setup to allow accessing these services' admin UI with custom domains.
+
 ISLE Site Template uses [Traefik's Go Templating](https://doc.traefik.io/traefik/reference/routing-configuration/other-providers/file/#go-templating) in the [./conf/traefik/dynamic](https://github.com/Islandora-Devops/isle-site-template/blob/main/conf/traefik/) directory to manage exposing different services on the host network.
 
 ActiveMQ, Blazegraph, and Solr are disabled by default in production since they are wrapped in a conditional that checks whether `DEVELOPMENT_ENVIRONMENT=true` in your docker compose project's `.env` file.
