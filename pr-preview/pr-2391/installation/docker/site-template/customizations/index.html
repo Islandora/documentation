@@ -3039,10 +3039,10 @@
 <h4 id="ssh-port-forwarding">SSH Port Forwarding<a class="headerlink" href="#ssh-port-forwarding" title="Permanent link">&para;</a></h4>
 <p>The most secure way to access these services' admin UI is by using SSH Port Forwarding. This approach requires no configuration changes, and ensures access over the network is secure.</p>
 <h5 id="set-environment-variables">Set environment variables<a class="headerlink" href="#set-environment-variables" title="Permanent link">&para;</a></h5>
-<p>First, set the environment variable <code>SSH_DESTINATION</code> to the domain or IP you use to SSH into your machine. If you use a specific username to login, include that.</p>
+<p>First, in your command line terminal, set the environment variable <code>SSH_DESTINATION</code> to the domain or IP you use to SSH into your machine. If you use a specific username to login, include that. Paste this with your updated value into your terminal:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>SSH_DESTINATION=you@your.isle.site
 </span></code></pre></div>
-<p>You'll also need to use an available port on your local machine. If port 8080 is available on your local machine, you can map that port to the remote service. If 8080 isn't available on your machine, use another available port (e.g. 8888) and set <code>LOCAL_PORT</code> accordingly.</p>
+<p>You'll also need to use an available port on your local machine. If port 8080 is available on your local machine, you can map that port to the remote service. If 8080 isn't available on your machine, use another available port (e.g. 8888) and set <code>LOCAL_PORT</code> accordingly in your terminal.</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>LOCAL_PORT=8080
 </span></code></pre></div>
 <p>Now specify the docker service and the port you need to access by setting the <code>SERVICE</code> and <code>SERVICE_PORT</code> environment variables. We'll use these in the port forwarding command below. Below are the pair values for ActiveMQ, Blazegraph, and Solr.</p>
@@ -3063,7 +3063,7 @@
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>SERVICE_PORT=8983
 </span></code></pre></div>
 <h5 id="start-a-port-forwarding-session">Start a port forwarding session<a class="headerlink" href="#start-a-port-forwarding-session" title="Permanent link">&para;</a></h5>
-<p>Now that you've set the proper environment variables, you're ready to setup port forwarding.</p>
+<p>Now that you've set the proper environment variables in your command line terminal, you're ready to setup port forwarding.</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>IP=$(ssh $SSH_DESTINATION &quot;docker inspect -f &#39;{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}&#39; \$(docker ps -q --filter &#39;name=$SERVICE&#39;)&quot;)
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>ssh $SSH_DESTINATION -L $LOCAL_PORT:$IP:$SERVICE_PORT
 </span></code></pre></div>
@@ -3085,7 +3085,7 @@
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">January 29, 2026</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">February 5, 2026</span>
       
     
   </small>
