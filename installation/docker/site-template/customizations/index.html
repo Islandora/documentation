@@ -801,6 +801,73 @@
     Exposing ActiveMQ, Blazegraph, and Solr
   </a>
   
+    <nav class="md-nav" aria-label="Exposing ActiveMQ, Blazegraph, and Solr">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ssh-port-forwarding" class="md-nav__link">
+    SSH Port Forwarding
+  </a>
+  
+    <nav class="md-nav" aria-label="SSH Port Forwarding">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#set-environment-variables" class="md-nav__link">
+    Set environment variables
+  </a>
+  
+    <nav class="md-nav" aria-label="Set environment variables">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#activemq" class="md-nav__link">
+    ActiveMQ
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#blazegraph" class="md-nav__link">
+    Blazegraph
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#solr" class="md-nav__link">
+    Solr
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#start-a-port-forwarding-session" class="md-nav__link">
+    Start a port forwarding session
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modifying-traefiks-dynamic-templates" class="md-nav__link">
+    Modifying Traefik's Dynamic Templates
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
       </ul>
@@ -2842,6 +2909,73 @@
     Exposing ActiveMQ, Blazegraph, and Solr
   </a>
   
+    <nav class="md-nav" aria-label="Exposing ActiveMQ, Blazegraph, and Solr">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ssh-port-forwarding" class="md-nav__link">
+    SSH Port Forwarding
+  </a>
+  
+    <nav class="md-nav" aria-label="SSH Port Forwarding">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#set-environment-variables" class="md-nav__link">
+    Set environment variables
+  </a>
+  
+    <nav class="md-nav" aria-label="Set environment variables">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#activemq" class="md-nav__link">
+    ActiveMQ
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#blazegraph" class="md-nav__link">
+    Blazegraph
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#solr" class="md-nav__link">
+    Solr
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#start-a-port-forwarding-session" class="md-nav__link">
+    Start a port forwarding session
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modifying-traefiks-dynamic-templates" class="md-nav__link">
+    Modifying Traefik's Dynamic Templates
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
       </ul>
@@ -2900,19 +3034,59 @@
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">DRUPAL_DEFAULT_FCREPO_URL</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;http://fcrepo:8080/fcrepo/rest/&quot;</span>
 </span></code></pre></div>
 <h3 id="exposing-activemq-blazegraph-and-solr">Exposing ActiveMQ, Blazegraph, and Solr<a class="headerlink" href="#exposing-activemq-blazegraph-and-solr" title="Permanent link">&para;</a></h3>
-<p>By default in production environments, these services are hidden from public access. The visibility is controlled through Traefik configuration in the <code>traefik/dynamic</code> directory.</p>
-<p>To expose these services:
-1. Modify the Traefik dynamic configuration to enable routing for these services
-2. Add their URLs to your DNS records (e.g., <code>activemq.${DOMAIN}</code>, <code>blazegraph.${DOMAIN}</code>, <code>solr.${DOMAIN}</code>)
-3. Consider adding authentication middleware to protect these administrative interfaces</p>
-<p>For local development with <code>DEVELOPMENT_ENVIRONMENT=true</code>, these services are typically accessible at subdomain URLs for convenience.</p>
+<p>By default in production environments, the admin UIs for ActiveMQ, Blazegraph, and Solr are not network accessible. These services are blocked from network access as a security precaution.</p>
+<p>In order to access the admin UIs for these services you have two options: SSH Port Forwarding or Modifying Traefik's Dynamic Templates</p>
+<h4 id="ssh-port-forwarding">SSH Port Forwarding<a class="headerlink" href="#ssh-port-forwarding" title="Permanent link">&para;</a></h4>
+<p>The most secure way to access these services' admin UI is by using SSH Port Forwarding. This approach requires no configuration changes, and ensures access over the network is secure.</p>
+<h5 id="set-environment-variables">Set environment variables<a class="headerlink" href="#set-environment-variables" title="Permanent link">&para;</a></h5>
+<p>First, in your command line terminal, set the environment variable <code>SSH_DESTINATION</code> to the domain or IP you use to SSH into your machine. If you use a specific username to login, include that. Paste this with your updated value into your terminal:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>SSH_DESTINATION=you@your.isle.site
+</span></code></pre></div>
+<p>You'll also need to use an available port on your local machine. If port 8080 is available on your local machine, you can map that port to the remote service. If 8080 isn't available on your machine, use another available port (e.g. 8888) and set <code>LOCAL_PORT</code> accordingly in your terminal.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>LOCAL_PORT=8080
+</span></code></pre></div>
+<p>Now specify the docker service and the port you need to access by setting the <code>SERVICE</code> and <code>SERVICE_PORT</code> environment variables. We'll use these in the port forwarding command below. Below are the pair values for ActiveMQ, Blazegraph, and Solr.</p>
+<h6 id="activemq">ActiveMQ<a class="headerlink" href="#activemq" title="Permanent link">&para;</a></h6>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>SERVICE=activemq
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>SERVICE_PORT=8161
+</span></code></pre></div>
+<p>If you're connecting to ActiveMQ you need to know the value in your compose project secret in <code>./secrets/ACTIVEMQ_WEB_ADMIN_PASSWORD</code> to login via the browser. Running the two commands below should print that password in your terminal. You'll want to copy that value for later.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>SECRET_PATH=$(ssh $SSH_DESTINATION &quot;docker inspect \$(docker ps -q --filter &#39;name=activemq&#39;) --format &#39;{{range .Mounts}}{{.Source}}{{\&quot;\n\&quot;}}{{end}}&#39; | grep ACTIVEMQ_WEB_ADMIN_PASSWORD&quot;)
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>ssh $SSH_DESTINATION &quot;cat $SECRET_PATH; echo&quot;
+</span></code></pre></div>
+<h6 id="blazegraph">Blazegraph<a class="headerlink" href="#blazegraph" title="Permanent link">&para;</a></h6>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>SERVICE=blazegraph
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>SERVICE_PORT=8080
+</span></code></pre></div>
+<h6 id="solr">Solr<a class="headerlink" href="#solr" title="Permanent link">&para;</a></h6>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>SERVICE=solr
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>SERVICE_PORT=8983
+</span></code></pre></div>
+<h5 id="start-a-port-forwarding-session">Start a port forwarding session<a class="headerlink" href="#start-a-port-forwarding-session" title="Permanent link">&para;</a></h5>
+<p>Now that you've set the proper environment variables in your command line terminal, you're ready to setup port forwarding.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>IP=$(ssh $SSH_DESTINATION &quot;docker inspect -f &#39;{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}&#39; \$(docker ps -q --filter &#39;name=$SERVICE&#39;)&quot;)
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>ssh $SSH_DESTINATION -L $LOCAL_PORT:$IP:$SERVICE_PORT
+</span></code></pre></div>
+<p>Then open <a href="http://localhost:8080">http://localhost:8080</a> and you'll be viewing the service's admin UI. For ActiveMQ you can enter <code>admin</code> for the username and the value printed in the terminal for the password.</p>
+<p>The service will be available as long as the SSH session remains active. When you're done, you can close your browser tab that is accessing the service port, and then exit out of your SSH session and it will close the port forwarding session, too.</p>
+<h4 id="modifying-traefiks-dynamic-templates">Modifying Traefik's Dynamic Templates<a class="headerlink" href="#modifying-traefiks-dynamic-templates" title="Permanent link">&para;</a></h4>
+<p>If SSH Port Forwarding is not an option for you, ISLE Site Template also is setup to allow accessing these services' admin UI with custom domains.</p>
+<p>ISLE Site Template uses <a href="https://doc.traefik.io/traefik/reference/routing-configuration/other-providers/file/#go-templating">Traefik's Go Templating</a> in the <a href="https://github.com/Islandora-Devops/isle-site-template/blob/main/conf/traefik/">./conf/traefik/dynamic</a> directory to manage exposing different services on the host network.</p>
+<p>ActiveMQ, Blazegraph, and Solr are disabled by default in production since they are wrapped in a conditional that checks whether <code>DEVELOPMENT_ENVIRONMENT=true</code> in your docker compose project's <code>.env</code> file.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>{{- if (eq (env &quot;DEVELOPMENT_ENVIRONMENT&quot;) &quot;true&quot;) }}
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>...
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>{{- end }}
+</span></code></pre></div>
+<p>To expose ActiveMQ, Blazegraph, and/or Solr, you can alter the respective service's traefik config in the <a href="https://github.com/Islandora-Devops/isle-site-template/blob/main/conf/traefik/">./conf/traefik/dynamic</a> directory. Removing the <code>{{- if (eq (env "DEVELOPMENT_ENVIRONMENT") "true") }}</code> conditional (and its closing <code>{{- end }}</code>) would be enough to expose the respective service to the network, assumming the respective DNS is configured (i.e. there are valid DNS records for <code>activemq.${DOMAIN}</code>, <code>blazegraph.${DOMAIN}</code>, <code>solr.${DOMAIN}</code> that resolve to your ISLE deployment).</p>
+<p>This change can be a disruptive operation since changing the config will likely require bringing the traefik service down, and subsequently offline, in order to ensure the config has been set in traefik. That action will also take your site offline during the restart. If the config change is not valid, there is a risk traefik will not come online and would result in a site outage. So it's best practice to make these traefik config changes on your local machine, test to ensure they are working, and deploy the updated config to your production environment.</p>
+<p>Given this change is a code deployment, and not a live edit in a production environment, you will want to explore additional options to secure the service. e.g. using Traefik's <a href="https://doc.traefik.io/traefik/reference/routing-configuration/http/middlewares/basicauth/">basicAuth</a> or <a href="https://doc.traefik.io/traefik/reference/routing-configuration/http/middlewares/ipallowlist/">IPAllowList</a> so once your change is in place, your services are still protected.</p>
 
   <hr>
 <div class="md-source-file">
   <small>
     
       Last update:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">January 28, 2026</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">February 11, 2026</span>
       
     
   </small>
