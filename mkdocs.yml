@@ -102,12 +102,12 @@ nav:
   # Possibly add page/section: How to use this documentation (containing user role definitions)
   - Quickstart: 'installation/quickstart.md'
   - Concepts:
-      - 'Nodes in Islandora': 'concepts/node-concepts.md'
-      - 'Media in Islandora': 'concepts/node-media.md'
-      - 'Derivatives': 'concepts/derivatives.md'
-      - 'RDF Repository': 'concepts/rdf.md'
-      - 'Islandora Starter Site': 'concepts/starter-site.md'
-  - Behaviours (Models):
+    - 'Nodes in Islandora': 'concepts/node-concepts.md'
+    - 'Media in Islandora': 'concepts/node-media.md'
+    - 'Derivatives': 'concepts/derivatives.md'
+    - 'RDF Repository': 'concepts/rdf.md'
+    - 'Islandora Starter Site': 'concepts/starter-site.md'
+    - Islandora Models (Types of Content):
       - 'Collections': 'concepts/collection.md'
       - 'Paged Content': 'user-documentation/paged-content.md'
               # conceptual and procedural, repository managers/ curators
@@ -156,6 +156,7 @@ nav:
         - 'Installing Crayfish': 'installation/manual/installing-crayfish.md'
         - 'Installing Alpaca': 'installation/manual/installing-alpaca.md'
         - 'Configuring Drupal': 'installation/manual/configuring-drupal.md'
+      - 'Updating Drupal': 'technical-documentation/updating-drupal.md'
   - Site Administrator and Repository Manager Resources:
     - Using Islandora:
       - 'Introduction': 'user-documentation/user-intro.md'
@@ -244,6 +245,13 @@ nav:
       - 'Create and Manage User Accounts': 'user-documentation/users.md'
           # procedural, repository managers
           # add reference information on user roles that come with Islandora/Islandora Defaults out of the box
+    - Migration/Batch Loading:
+      - 'Migration Overview': 'technical-documentation/migration-overview.md'
+      - 'REST API': 'technical-documentation/migration-rest-api.md'
+      - 'Migrate API': 'technical-documentation/migration-migrate-api.md'
+      - 'Islandora Workbench': 'technical-documentation/migration-islandora-workbench.md'
+      - 'CSV': 'technical-documentation/migrate-csv.md'
+      - 'Islandora 7': 'technical-documentation/migrate-7x.md'
   - Developer Resources:
     - 'Stack Overview': 'installation/component-overview.md'
           # moved from "Installation" section; alternatively duplicate a simplified version in the overview section
@@ -266,16 +274,8 @@ nav:
     - Tests:
       - 'Testing Notes': 'technical-documentation/testing-notes.md'
     - 'Resizing a VM': 'technical-documentation/resizing-vm.md'
-    - 'Updating Drupal': 'technical-documentation/updating-drupal.md'
     - 'Updating a `deb` and adding it to Lyrasis PPA': 'technical-documentation/ppa-documentation.md'
     - 'Adding back ?_format=jsonld': 'technical-documentation/adding-format-jsonld.md'
-  - Migration/Batch Loading:
-      - 'Migration Overview': 'technical-documentation/migration-overview.md'
-      - 'REST API': 'technical-documentation/migration-rest-api.md'
-      - 'Migrate API': 'technical-documentation/migration-migrate-api.md'
-      - 'Islandora Workbench': 'technical-documentation/migration-islandora-workbench.md'
-      - 'CSV': 'technical-documentation/migrate-csv.md'
-      - 'Islandora 7': 'technical-documentation/migrate-7x.md'
   - Contribute to Islandora:
       - 'How to contribute': 'contributing/CONTRIBUTING.md'
       - 'Testing a Pull Request': 'contributing/testing-a-pull-request.md'
