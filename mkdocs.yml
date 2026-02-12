@@ -156,34 +156,8 @@ nav:
         - 'Installing Crayfish': 'installation/manual/installing-crayfish.md'
         - 'Installing Alpaca': 'installation/manual/installing-alpaca.md'
         - 'Configuring Drupal': 'installation/manual/configuring-drupal.md'
-  - Walkthroughs:
-      # Audience for this section is someone who is extremely new to doing
-      # the kinds of things that we are introducing. This is someone's first
-      # foray into this domain so each tutorial should accomplish something
-      # satisfying, and work 100% of the time.
-
-      # Tutorials are not conceptual. They tell you exactly what to do without
-      # explaining why, and let the user decide if they want to look deeper at
-      # what these concepts are.
-      - 'Create a Resource Node': 'tutorials/create-a-resource-node.md'
-          # procedural, for people learning what islandora is.
-      - 'Create a Collection': 'tutorials/how-to-create-collection.md'
-          # procedural, repository managers/ curators
-      - 'Modify or Create a Content Type': 'user-documentation/content-types.md'
-          # procedural, repository managers
-          # add resource page on learning YAML
-      - 'Configure Blocks': 'tutorials/blocks.md'
-          # procedural, repository managers
-          # add/link to conceptual documentation about blocks in Drupal?
-      - 'Create or Update a View': 'tutorials/create-update-views.md'
-          # procedural, repository managers
-          # Add/link to conceptual docs about Views?
-      - 'Video Documentation': 'user-documentation/video-docs.md'
-          # mostly procedural, repository managers
-      - 'Create and Manage User Accounts': 'user-documentation/users.md'
-          # procedural, repository managers
-          # add reference information on user roles that come with Islandora/Islandora Defaults out of the box
-  - Using Islandora:
+  - Using Islandora for site administrators and repository managers:
+    - Using Islandora:
       - 'Introduction': 'user-documentation/user-intro.md'
           # Conceptual, 'site admins/repository managers'
           # move out high-level conceptual information (#architecture section)
@@ -243,6 +217,33 @@ nav:
           - 'Recipes':
               - 'Automatically Minting DOIs with DataCite': 'user-documentation/recipes/datacite.md'
               - 'Remotely-hosted Media in Islandora': 'user-documentation/recipes/remote-media.md'
+    - Tutorials:
+      # Audience for this section is someone who is extremely new to doing
+      # the kinds of things that we are introducing. This is someone's first
+      # foray into this domain so each tutorial should accomplish something
+      # satisfying, and work 100% of the time.
+
+      # Tutorials are not conceptual. They tell you exactly what to do without
+      # explaining why, and let the user decide if they want to look deeper at
+      # what these concepts are.
+      - 'Create a Resource Node': 'tutorials/create-a-resource-node.md'
+          # procedural, for people learning what islandora is.
+      - 'Create a Collection': 'tutorials/how-to-create-collection.md'
+          # procedural, repository managers/ curators
+      - 'Modify or Create a Content Type': 'user-documentation/content-types.md'
+          # procedural, repository managers
+          # add resource page on learning YAML
+      - 'Configure Blocks': 'tutorials/blocks.md'
+          # procedural, repository managers
+          # add/link to conceptual documentation about blocks in Drupal?
+      - 'Create or Update a View': 'tutorials/create-update-views.md'
+          # procedural, repository managers
+          # Add/link to conceptual docs about Views?
+      - 'Video Documentation': 'user-documentation/video-docs.md'
+          # mostly procedural, repository managers
+      - 'Create and Manage User Accounts': 'user-documentation/users.md'
+          # procedural, repository managers
+          # add reference information on user roles that come with Islandora/Islandora Defaults out of the box
   - Documentation for Developers:
     - 'Stack Overview': 'installation/component-overview.md'
           # moved from "Installation" section; alternatively duplicate a simplified version in the overview section
