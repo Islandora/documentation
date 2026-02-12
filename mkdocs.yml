@@ -116,7 +116,7 @@ nav:
       - 'Video': 'models/video.md'
   
 
-  - Installation:
+  - Installation and Software Maintenance:
       # Procedural, different user roles: clarify who the audience is for a
       # particular recipe. The ISLE documentation page was written with a
       # 'non-technical' user in mind who wants to test. The Manual installation
@@ -156,7 +156,7 @@ nav:
         - 'Installing Crayfish': 'installation/manual/installing-crayfish.md'
         - 'Installing Alpaca': 'installation/manual/installing-alpaca.md'
         - 'Configuring Drupal': 'installation/manual/configuring-drupal.md'
-  - Using Islandora for site administrators and repository managers:
+  - Site Administrator and Repository Manager Resources:
     - Using Islandora:
       - 'Introduction': 'user-documentation/user-intro.md'
           # Conceptual, 'site admins/repository managers'
@@ -244,7 +244,7 @@ nav:
       - 'Create and Manage User Accounts': 'user-documentation/users.md'
           # procedural, repository managers
           # add reference information on user roles that come with Islandora/Islandora Defaults out of the box
-  - Documentation for Developers:
+  - Developer Resources:
     - 'Stack Overview': 'installation/component-overview.md'
           # moved from "Installation" section; alternatively duplicate a simplified version in the overview section
           # also see Architecture Diagram in Developer documentation
@@ -276,7 +276,7 @@ nav:
       - 'Islandora Workbench': 'technical-documentation/migration-islandora-workbench.md'
       - 'CSV': 'technical-documentation/migrate-csv.md'
       - 'Islandora 7': 'technical-documentation/migrate-7x.md'
-  - Contributing:
+  - Contribute to Islandora:
       - 'How to contribute': 'contributing/CONTRIBUTING.md'
       - 'Testing a Pull Request': 'contributing/testing-a-pull-request.md'
       - 'Running Tests': 'technical-documentation/running-automated-tests.md'
