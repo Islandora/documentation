@@ -102,12 +102,12 @@ nav:
   # Possibly add page/section: How to use this documentation (containing user role definitions)
   - Quickstart: 'installation/quickstart.md'
   - Concepts:
-      - 'Nodes in Islandora': 'concepts/node-concepts.md'
-      - 'Media in Islandora': 'concepts/node-media.md'
-      - 'Derivatives': 'concepts/derivatives.md'
-      - 'RDF Repository': 'concepts/rdf.md'
-      - 'Islandora Starter Site': 'concepts/starter-site.md'
-  - Behaviours (Models):
+    - 'Nodes in Islandora': 'concepts/node-concepts.md'
+    - 'Media in Islandora': 'concepts/node-media.md'
+    - 'Derivatives': 'concepts/derivatives.md'
+    - 'RDF Repository': 'concepts/rdf.md'
+    - 'Islandora Starter Site': 'concepts/starter-site.md'
+    - Islandora Models (Types of Content):
       - 'Collections': 'concepts/collection.md'
       - 'Paged Content': 'user-documentation/paged-content.md'
               # conceptual and procedural, repository managers/ curators
@@ -116,14 +116,11 @@ nav:
       - 'Video': 'models/video.md'
   
 
-  - Installation:
+  - Installation and Software Maintenance:
       # Procedural, different user roles: clarify who the audience is for a
       # particular recipe. The ISLE documentation page was written with a
       # 'non-technical' user in mind who wants to test. The Manual installation
       # guides mention that users will need additional knowledge about server administration.
-      - 'Release Notes':
-          - '8.x-2.0 Release Notes': 'release_notes/8.x-2.0.md'
-          - 'Older Release Notes': 'https://github.com/Islandora/documentation/tree/main/docs/release_notes'
       - 'Docker':
           - 'Introduction to ISLE': 'installation/docker/docker-introduction.md'
           - 'Prerequisites': 'installation/docker/docker-prereq.md'
@@ -159,37 +156,9 @@ nav:
         - 'Installing Crayfish': 'installation/manual/installing-crayfish.md'
         - 'Installing Alpaca': 'installation/manual/installing-alpaca.md'
         - 'Configuring Drupal': 'installation/manual/configuring-drupal.md'
-      - 'Installing Modules': 'technical-documentation/install-enable-drupal-modules.md'
-          # procedural, sysadmin
-          # moved from System Administrator Documentation
-  - Walkthroughs:
-      # Audience for this section is someone who is extremely new to doing
-      # the kinds of things that we are introducing. This is someone's first
-      # foray into this domain so each tutorial should accomplish something
-      # satisfying, and work 100% of the time.
-
-      # Tutorials are not conceptual. They tell you exactly what to do without
-      # explaining why, and let the user decide if they want to look deeper at
-      # what these concepts are.
-      - 'Create a Resource Node': 'tutorials/create-a-resource-node.md'
-          # procedural, for people learning what islandora is.
-      - 'Create a Collection': 'tutorials/how-to-create-collection.md'
-          # procedural, repository managers/ curators
-      - 'Modify or Create a Content Type': 'user-documentation/content-types.md'
-          # procedural, repository managers
-          # add resource page on learning YAML
-      - 'Configure Blocks': 'tutorials/blocks.md'
-          # procedural, repository managers
-          # add/link to conceptual documentation about blocks in Drupal?
-      - 'Create or Update a View': 'tutorials/create-update-views.md'
-          # procedural, repository managers
-          # Add/link to conceptual docs about Views?
-      - 'Video Documentation': 'user-documentation/video-docs.md'
-          # mostly procedural, repository managers
-      - 'Create and Manage User Accounts': 'user-documentation/users.md'
-          # procedural, repository managers
-          # add reference information on user roles that come with Islandora/Islandora Defaults out of the box
-  - Using Islandora:
+      - 'Updating Drupal': 'technical-documentation/updating-drupal.md'
+  - Site Administrator and Repository Manager Resources:
+    - Using Islandora:
       - 'Introduction': 'user-documentation/user-intro.md'
           # Conceptual, 'site admins/repository managers'
           # move out high-level conceptual information (#architecture section)
@@ -249,7 +218,41 @@ nav:
           - 'Recipes':
               - 'Automatically Minting DOIs with DataCite': 'user-documentation/recipes/datacite.md'
               - 'Remotely-hosted Media in Islandora': 'user-documentation/recipes/remote-media.md'
-  - Documentation for Developers:
+    - Tutorials:
+      # Audience for this section is someone who is extremely new to doing
+      # the kinds of things that we are introducing. This is someone's first
+      # foray into this domain so each tutorial should accomplish something
+      # satisfying, and work 100% of the time.
+
+      # Tutorials are not conceptual. They tell you exactly what to do without
+      # explaining why, and let the user decide if they want to look deeper at
+      # what these concepts are.
+      - 'Create a Resource Node': 'tutorials/create-a-resource-node.md'
+          # procedural, for people learning what islandora is.
+      - 'Create a Collection': 'tutorials/how-to-create-collection.md'
+          # procedural, repository managers/ curators
+      - 'Modify or Create a Content Type': 'user-documentation/content-types.md'
+          # procedural, repository managers
+          # add resource page on learning YAML
+      - 'Configure Blocks': 'tutorials/blocks.md'
+          # procedural, repository managers
+          # add/link to conceptual documentation about blocks in Drupal?
+      - 'Create or Update a View': 'tutorials/create-update-views.md'
+          # procedural, repository managers
+          # Add/link to conceptual docs about Views?
+      - 'Video Documentation': 'user-documentation/video-docs.md'
+          # mostly procedural, repository managers
+      - 'Create and Manage User Accounts': 'user-documentation/users.md'
+          # procedural, repository managers
+          # add reference information on user roles that come with Islandora/Islandora Defaults out of the box
+    - Migration/Batch Loading:
+      - 'Migration Overview': 'technical-documentation/migration-overview.md'
+      - 'REST API': 'technical-documentation/migration-rest-api.md'
+      - 'Migrate API': 'technical-documentation/migration-migrate-api.md'
+      - 'Islandora Workbench': 'technical-documentation/migration-islandora-workbench.md'
+      - 'CSV': 'technical-documentation/migrate-csv.md'
+      - 'Islandora 7': 'technical-documentation/migrate-7x.md'
+  - Developer Resources:
     - 'Stack Overview': 'installation/component-overview.md'
           # moved from "Installation" section; alternatively duplicate a simplified version in the overview section
           # also see Architecture Diagram in Developer documentation
@@ -271,17 +274,9 @@ nav:
     - Tests:
       - 'Testing Notes': 'technical-documentation/testing-notes.md'
     - 'Resizing a VM': 'technical-documentation/resizing-vm.md'
-    - 'Updating Drupal': 'technical-documentation/updating-drupal.md'
     - 'Updating a `deb` and adding it to Lyrasis PPA': 'technical-documentation/ppa-documentation.md'
     - 'Adding back ?_format=jsonld': 'technical-documentation/adding-format-jsonld.md'
-  - Migration/Batch Loading:
-      - 'Migration Overview': 'technical-documentation/migration-overview.md'
-      - 'REST API': 'technical-documentation/migration-rest-api.md'
-      - 'Migrate API': 'technical-documentation/migration-migrate-api.md'
-      - 'Islandora Workbench': 'technical-documentation/migration-islandora-workbench.md'
-      - 'CSV': 'technical-documentation/migrate-csv.md'
-      - 'Islandora 7': 'technical-documentation/migrate-7x.md'
-  - Contributing:
+  - Contribute to Islandora:
       - 'How to contribute': 'contributing/CONTRIBUTING.md'
       - 'Testing a Pull Request': 'contributing/testing-a-pull-request.md'
       - 'Running Tests': 'technical-documentation/running-automated-tests.md'

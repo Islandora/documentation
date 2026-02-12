@@ -4,13 +4,18 @@
 
 This section describes how to update Drupal and its modules using Composer. If you installed Islandora using the Islandora Playbook or ISLE, then your Drupal was installed by Composer, so it is best practice to continue using Composer for updates. The method on this section is not specific to Islandora, and does not (yet) include how to update Islandora Features.
 
-!!! tip "How to upgrade Drupal in ISLE" 
-    For specific instructions on how to upgrade Drupal core and the Drupal modules installed within ISLE, please refer to the documentation page: [Maintaining Your Drupal Site](https://islandora.github.io/documentation/installation/docker-maintain-drupal/)
 
 ### What is Composer
 It is recommended by Drupal.org and the Islandora community to use Composer with Drupal for various tasks.
 
 "[Composer](https://getcomposer.org/) is a [dependency manager](https://en.wikipedia.org/wiki/Package_manager) for PHP. Drupal core uses Composer to manage core dependencies like Symfony components and Guzzle." [[Source](https://www.drupal.org/docs/develop/using-composer/using-composer-with-drupal)]
+
+
+### How to upgrade Drupal in ISLE
+
+If your Drupal site is running inside a Docker container, the commands on this page need to run inside the container. You can do this by prepending `docker compose exec drupal` to the commands. For example, `docker compose exec drupal composer update` or `docker compose exec drupal drush updatedb`.
+
+For more information, please refer to the documentation page: [Maintaining Your Drupal Site](/documentation/installation/docker/site-template/updating/#updating-drupal-modules)
 
 ## Always create backs ups (DB and files) before updating
 
@@ -21,10 +26,45 @@ It is recommended by Drupal.org and the Islandora community to use Composer with
 
 **Warning:** Always revert to a backup if you get a fatal error in the update process.
 
+
+## Downloading and Enabling Drupal Modules and Themes
+
+Islandora can make use of the majority of Drupal [modules](https://www.drupal.org/project/project_module) and [themes](https://www.drupal.org/project/project_theme). Common use cases have been documented in the [Islandora Cookbook](../user-documentation/extending.md). There are several ways to download and install Drupal modules. Please refer to [this guide](https://www.drupal.org/docs/extending-drupal) on Drupal.org.
+
+[Composer](https://www.drupal.org/docs/develop/using-composer/using-composer-to-install-drupal-and-manage-dependencies) is the recommended method to install and update drupal modules and themes in Islandora. Drupal modules provided by Islandora can be accessed at the `drupal/` namespace.
+```shell
+$ composer require "<vendor>/<package>:<version>"
+
+# Example
+$ composer require "drupal/jsonld:^2"
+```
+
+In the [Islandora playbook](https://github.com/Islandora-Devops/islandora-playbook), you can add a Drupal module's or theme's machine name to the `drupal_composer_dependencies` variable [here](https://github.com/Islandora-Devops/islandora-playbook/blob/dev/inventory/vagrant/group_vars/webserver/drupal.yml).
+To enable the Drupal module or theme, add the module machine name to the `drupal_enable_modules` variable as well.
+
+![alt text](../assets/install-enable-drupal-modules_drupal_composer_dependencies.png?raw=true "drupal_composer_dependencies Screenshot")
+
+For modules that require additional steps, additional tasks may need to be added to the Ansible playbook. Re-provisioning your instance via Ansible will install the module.
+
+
+## Video Walkthroughs: Modules & Installing modules with Composer
+
+Click the image below to open the **introduction to Modules** video tutorial on the Islandora Youtube channel. 
+
+[![Drupal 101: Modules](https://img.youtube.com/vi/mvX3cnNeOns/0.jpg)](https://www.youtube.com/watch?v=mvX3cnNeOns)
+
+Click the image below to open the **Installing modules with Composer** video tutorial on the Islandora Youtube channel. 
+
+[![Drupal 101: Installing modules with Composer](https://img.youtube.com/vi/otl-pPPGdR8/0.jpg)](https://www.youtube.com/watch?v=otl-pPPGdR8)
+
+See more videos from the Drupal 101 series [here.](https://www.youtube.com/watch?v=meRNdBxaiTE&list=PL4seFC7ELUtogpsYoN8WZLLOjJVRZFGTZ)
+
+
 ## Updating Drupal Core
 Over time new versions of Drupal “core” are released, and Islandora users are encouraged to install official Drupal core updates and security patches. On the other hand “alpha” and “beta" versions of Drupal core should only be installed by advanced users for testing purposes.
 
 The Islandora community STRONGLY recommends that the "Composer" method of upgrading Drupal core be used with Islandora as mentioned [here](https://www.drupal.org/docs/8/update/update-core-via-composer).
+
 
 ### Here is an overview of the steps for updating Drupal core using Composer
 
@@ -61,6 +101,7 @@ If you want to know all packages that will be updated by the update command, use
 
 For stepwise update instructions visit this page:
 https://www.drupal.org/docs/8/update/update-core-via-composer#s-stepwise-update-instructions
+
 
 ## Updating Drupal Modules
 
