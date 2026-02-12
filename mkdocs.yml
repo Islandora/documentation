@@ -156,9 +156,6 @@ nav:
         - 'Installing Crayfish': 'installation/manual/installing-crayfish.md'
         - 'Installing Alpaca': 'installation/manual/installing-alpaca.md'
         - 'Configuring Drupal': 'installation/manual/configuring-drupal.md'
-      - 'Installing Modules': 'technical-documentation/install-enable-drupal-modules.md'
-          # procedural, sysadmin
-          # moved from System Administrator Documentation
   - Walkthroughs:
       # Audience for this section is someone who is extremely new to doing
       # the kinds of things that we are introducing. This is someone's first

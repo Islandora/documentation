@@ -111,9 +111,12 @@ Running database updates is also done in the container like this:
 
     You should backup your database before running database updates
 
-If you are enabling or uninstalling modules, you will also need to export your Drupal configuration.
+If you are enabling or uninstalling modules, you will also need to export your Drupal configuration with `drush cex` in order to import the changes to your production site.
 
 Once you have finished your composer changes you can commit and push your repository with the new `composer.json` and `composer.lock` changes.
+
+!!! note
+    For more information on using composer, please refer to the documentation page: [Maintaining Your Drupal Site](/documentation/technical-documentation/updating-drupal/)
 
 ### Deploying to Production
 
@@ -129,6 +132,8 @@ Then you stop and start your containers to get the new image:
 
 `docker compose up -d` or `make up`
 
-And if necessary, run database updates:
+And if necessary, run database updates and import your Drupal configuration:
 
 `docker compose exec drupal drush updb`
+and
+`docker compose exec drupal drush cim`
