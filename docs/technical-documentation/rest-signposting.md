@@ -13,6 +13,8 @@ the entity linked in the header.  So making GET and HEAD requests anonymously wi
 what an authenticated user would see.  For example, anonymous users don't have the `view media` permission, so they will not
 see the link headers for media associated with a node.
 
+Islandora site administrators can choose to turn off the Signposting feature. To turn this feature on or off, go to **Configuration >> Islandora >> Core Settings** (`/admin/config/islandora/core`). There you will find a checkbox labeled **Allow header links.** If checked, Islandora provided links will be added in the HTTP headers. After making a change to this check box, you must click on the **Save configuration** button then clear the Drupal cache to see the change take effect.
+
 ## Link Headers Provided by Islandora
 
 ### Alternate Representations
