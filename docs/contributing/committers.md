@@ -33,6 +33,7 @@ The following is an alphabetized list of the current Islandora committers:
 | Josh d'Entremont            | Acadia University                     | joshdentremont |
 | Jordan Dukart               | discoverygarden                       | jordandukart   |
 | Jonathan Hunt               | Catalyst.Net                          | kayakr         |
+| Kyle Huynh                  | University of Toronto Scarborough     | kylehuynh205   |
 | Mark Jordan                 | Simon Fraser University               | mjordan        |
 | Danny Lamb                  | Born-Digital                          | dannylamb      |
 | Natkeeran Ledchumykanthan   | University of Toronto Scarborough     | natkeeran      |
