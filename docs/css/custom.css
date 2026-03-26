@@ -28,3 +28,10 @@
     stroke-dashoffset: -100;
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .mermaid * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

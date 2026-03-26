@@ -1,6 +1,6 @@
 ---
 name: Build
-description: Setup to run and run mkdocs
+description: Setup to install dependencies and build docs with zensical
 runs:
   using: "composite"
   steps:
@@ -14,4 +14,4 @@ runs:
       run: pip install -r requirements.txt
     - name: Build docs
       shell: bash
-      run: mkdocs build
+      run: zensical build

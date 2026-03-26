@@ -43,7 +43,7 @@ markdown_extensions:
 extra_css:
   - css/custom.css
 extra_javascript:
-  - js/mermaid.mjs
+  - js/diagram-animation.js
 plugins:
   - search
   - git-revision-date-localized
