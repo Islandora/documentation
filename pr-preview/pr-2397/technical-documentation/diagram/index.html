@@ -3697,6 +3697,39 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#site-serving-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Site Serving Path
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#event-driven-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Event Driven System
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#event-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Event Example
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#components" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4753,6 +4786,39 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#site-serving-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Site Serving Path
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#event-driven-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Event Driven System
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#event-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Event Example
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#components" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4815,6 +4881,62 @@
 
 
 <h1 id="islandora-architecture-diagram">Islandora Architecture Diagram<a class="headerlink" href="#islandora-architecture-diagram" title="Permanent link">&para;</a></h1>
+<h2 id="site-serving-path">Site Serving Path<a class="headerlink" href="#site-serving-path" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>flowchart TD
+    user([Client / Browser])
+    user ==&gt; nginx
+    user --&gt; cantaloupe[Cantaloupe\nIIIF Image Server]
+
+    subgraph webserver[Nginx Web Server]
+        nginx[Nginx]
+        drupal[Drupal]
+        nginx ==&gt; drupal
+    end
+
+    drupal --&gt; mariadb[(Mariadb)]
+    drupal --&gt; solr[(Solr)]
+    drupal --&gt; cantaloupe[Cantaloupe\nIIIF Image Server]
+    drupal -.-&gt;|download files| fedora[(Fedora\nFile Storage)]</code></pre>
+<h2 id="event-driven-system">Event Driven System<a class="headerlink" href="#event-driven-system" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>flowchart TD
+    drupal([Islandora Drupal Website])
+
+    drupal ==&gt;|publishes drupal entity event| activemq
+
+    subgraph broker[Message Broker]
+        activemq[ActiveMQ]
+        alpaca[Alpaca]
+        activemq ==&gt; alpaca
+        note[\"Alpaca forwards the message to the\nappropriate service based on its config"/]
+    end
+
+
+    subgraph microservices[scyllaridae microservices]
+        fits[FITS]
+        homarus[Homarus]
+        houdini[Houdini]
+        hypercube[Hypercube]
+
+        s[\"scyllaridae generates a derivative and saves the message to the\nappropriate service based on its config"/]
+
+    end
+
+    alpaca ==&gt; fits
+    alpaca ==&gt; homarus
+    alpaca ==&gt; houdini
+    alpaca ==&gt; hypercube
+    alpaca ==&gt; milliner
+
+    fits -.-&gt;|derivative saved to| alpaca
+    homarus -.-&gt;|derivative saved to| alpaca
+    houdini -.-&gt;|derivative saved to| alpaca
+    hypercube -.-&gt;|derivative saved to| alpaca
+alpaca -.-&gt;|ok| drupal
+    fedora[(Fedora)]
+    milliner -.-&gt;|syncs resource to| fedora
+    blazegraph[(blazegraph)]
+    alpaca -.-&gt;|sends RDF| blazegraph</code></pre>
+<h2 id="event-example">Event Example<a class="headerlink" href="#event-example" title="Permanent link">&para;</a></h2>
 <pre class="mermaid"><code>flowchart TD
     drupal([fa:fa-drupal Islandora Drupal Website])
 
@@ -4846,7 +4968,6 @@
     class e3 flow3;
     class e4 flow4;
     class e5 flow5;</code></pre>
-<p>Diagram prepared by <a href="https://github.com/bseeger">Bethany Seeger</a> based on work done by <a href="https://github.com/g7morris">Gavin Morris</a></p>
 <h2 id="components">Components<a class="headerlink" href="#components" title="Permanent link">&para;</a></h2>
 <h3 id="islandora">Islandora<a class="headerlink" href="#islandora" title="Permanent link">&para;</a></h3>
 <p>The following components are microservices developed and maintained by the Islandora community. They are bundled under <a href="https://github.com/Islandora/Crayfish">Islandora Crayfish</a>:</p>
