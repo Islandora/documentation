@@ -1,8 +1,104 @@
 # Islandora Architecture Diagram
 
+## Site Serving Path
+
+### Page Request
+
 ```mermaid
 flowchart TD
-    drupal([fa:fa-drupal Islandora Drupal Website])
+    user([Client / Browser])
+    user e1@==>|HTTP request| nginx
+
+    subgraph webserver[Nginx Web Server]
+        nginx[Nginx] e2@==>|forward request| drupal[Drupal]
+    end
+
+    drupal e3@-->|query| mariadb[(MariaDB)]
+    drupal e4@-->|query| solr[(Solr)]
+    drupal e5@-->|image request| cantaloupe[Cantaloupe\nIIIF Image Server]
+
+    mariadb e6@-.->|data| drupal
+    solr e7@-.->|results| drupal
+    cantaloupe e8@-.->|image| drupal
+    drupal e9@-.->|HTML response| nginx
+    nginx e10@-.->|HTML response| user
+
+    classDef flow0 stroke-dasharray: 9,5,stroke-dashoffset: 900,animation: dashFlash 8s 0s linear infinite;
+    classDef flow1 stroke-dasharray: 9,5,stroke-dashoffset: 900,animation: dashFlash 8s 1s linear infinite;
+    classDef flow2 stroke-dasharray: 9,5,stroke-dashoffset: 900,animation: dashFlash 8s 2s linear infinite;
+    classDef flow3 stroke-dasharray: 9,5,stroke-dashoffset: 900,animation: dashFlash 8s 3s linear infinite;
+    classDef flow4 stroke-dasharray: 9,5,stroke-dashoffset: 900,animation: dashFlash 8s 4s linear infinite;
+    classDef flow5 stroke-dasharray: 9,5,stroke-dashoffset: 900,animation: dashFlash 8s 5s linear infinite;
+
+    class e1 flow0;
+    class e2 flow1;
+    class e3 flow2;
+    class e4 flow2;
+    class e5 flow2;
+    class e6 flow3;
+    class e7 flow3;
+    class e8 flow3;
+    class e9 flow4;
+    class e10 flow5;
+```
+
+### IIIF Image Request
+
+```mermaid
+flowchart TD
+    user([Client / Browser])
+    user --> cantaloupe[Cantaloupe\nIIIF Image Server]
+    cantaloupe -.->|fetch source file| fedora[(Fedora\nFile Storage)]
+```
+
+## Event Driven System
+
+```mermaid
+flowchart TD
+    drupal([Islandora Drupal Website])
+
+    drupal ==>|publishes drupal entity event| activemq
+
+    subgraph broker[Message Broker]
+        activemq[ActiveMQ]
+        alpaca[Alpaca]
+        activemq ==> alpaca
+        note[\"Alpaca forwards the message to the\nappropriate service based on its config"/]
+    end
+
+
+    subgraph microservices[scyllaridae microservices]
+        fits[FITS]
+        homarus[Homarus]
+        houdini[Houdini]
+        hypercube[Hypercube]
+
+        s[\"scyllaridae generates a derivative and saves the message to the\nappropriate service based on its config"/]
+
+    end
+
+    alpaca ==> fits
+    alpaca ==> homarus
+    alpaca ==> houdini
+    alpaca ==> hypercube
+    alpaca ==> milliner
+
+    fits -.->|derivative saved to| alpaca
+    homarus -.->|derivative saved to| alpaca
+    houdini -.->|derivative saved to| alpaca
+    hypercube -.->|derivative saved to| alpaca
+alpaca -.->|ok| drupal
+    fedora[(Fedora)]
+    milliner -.->|syncs resource to| fedora
+    blazegraph[(blazegraph)]
+    alpaca -.->|sends RDF| blazegraph
+```
+
+## Event Example
+
+```mermaid
+flowchart TD
+    drupal([Islandora Drupal Website])
 
     drupal e1@==>|publishes entity event| activemq
 
@@ -33,8 +129,6 @@ flowchart TD
     class e4 flow4;
     class e5 flow5;
 ```
-
-Diagram prepared by [Bethany Seeger](https://github.com/bseeger) based on work done by [Gavin Morris](https://github.com/g7morris)
 
 ## Components
 

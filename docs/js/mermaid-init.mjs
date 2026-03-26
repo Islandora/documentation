@@ -1,17 +1,31 @@
-import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
-import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0/dist/mermaid-layout-elk.esm.min.mjs";
+import mermaid from "https://unpkg.com/mermaid@11.13.0/dist/mermaid.esm.min.mjs";
 
-mermaid.registerLayoutLoaders(elkLayouts);
 mermaid.initialize({
   startOnLoad: false,
   securityLevel: "loose",
-  layout: "elk",
 });
+
+const parseFlowSteps = (source) => {
+  const flowSteps = {};
+  const pattern = /^\s*class\s+([^;]+?)\s+flow(\d+)\s*;/gm;
+  let match;
+
+  while ((match = pattern.exec(source)) !== null) {
+    const ids = match[1].split(",").map((id) => id.trim()).filter(Boolean);
+    const step = parseInt(match[2], 10);
+    ids.forEach((id) => {
+      flowSteps[id] = step;
+    });
+  }
+
+  return flowSteps;
+};
 
 const renderDiagram = async (container, index) => {
   if (container.dataset.mermaidRendered === "true") {
     return;
   }
+  container.dataset.mermaidRendered = "true";
 
   const code = container.querySelector("code");
   const source = code ? code.textContent : container.textContent;
@@ -19,8 +33,10 @@ const renderDiagram = async (container, index) => {
     return;
   }
 
+  const flowSteps = parseFlowSteps(source);
   const renderTarget = document.createElement("div");
   renderTarget.className = "mermaid";
+  renderTarget.__islandoraFlowSteps = flowSteps;
 
   try {
     const result = await mermaid.render(`islandora-mermaid-${index}`, source);
@@ -43,3 +59,6 @@ if (document.readyState === "loading") {
 } else {
   renderAll();
 }
+
+// Required for Zensical/Material to find the mermaid instance.
+window.mermaid = mermaid;
