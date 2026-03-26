@@ -2731,38 +2731,37 @@
 
 
 <h1 id="islandora-architecture-diagram">Islandora Architecture Diagram<a class="headerlink" href="#islandora-architecture-diagram" title="Permanent link">&para;</a></h1>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>flowchart TD
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    drupal([fa:fa-drupal Islandora Drupal Website])
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    drupal e1@==&gt;|publishes entity event| activemq
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    subgraph broker[Message Broker]
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>        activemq[ActiveMQ]
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>        alpaca[Alpaca]
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>        activemq e2@==&gt; alpaca
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    end
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
-</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    alpaca e3@==&gt; houdini
-</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>
-</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    subgraph microservices[scyllaridae microservices]
-</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>        houdini[Houdini]
-</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>    end
-</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>
-</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>    houdini e4@-.-&gt;|derivative stream| alpaca
-</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>    alpaca e5@-.-&gt;|saves derivative &amp; responds ok| drupal
-</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>
-</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>    classDef flow1 stroke-dasharray: 9,5,stroke-dashoffset: 900,animation: dash 3s linear infinite;
-</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>    classDef flow2 stroke-dasharray: 9,5,stroke-dashoffset: 900,animation: dash 3s 1s linear infinite;
-</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>    classDef flow3 stroke-dasharray: 9,5,stroke-dashoffset: 900,animation: dash 3s 2s linear infinite;
-</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>    classDef flow4 stroke-dasharray: 9,5,stroke-dashoffset: 900,animation: dash 3s 3s linear infinite;
-</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>    classDef flow5 stroke-dasharray: 9,5,stroke-dashoffset: 900,animation: dash 3s 4s linear infinite;
-</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>
-</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>    class e1 flow1;
-</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>    class e2 flow2;
-</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>    class e3 flow3;
-</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>    class e4 flow4;
-</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>    class e5 flow5;
-</span></code></pre></div>
+<pre class="mermaid"><code>flowchart TD
+    drupal([fa:fa-drupal Islandora Drupal Website])
+
+    drupal e1@==&gt;|publishes entity event| activemq
+
+    subgraph broker[Message Broker]
+        activemq[ActiveMQ]
+        alpaca[Alpaca]
+        activemq e2@==&gt; alpaca
+    end
+
+    alpaca e3@==&gt; houdini
+
+    subgraph microservices[scyllaridae microservices]
+        houdini[Houdini]
+    end
+
+    houdini e4@-.-&gt;|derivative stream| alpaca
+    alpaca e5@-.-&gt;|saves derivative &amp; responds ok| drupal
+
+    classDef flow1 stroke-dasharray: 9,5,stroke-dashoffset: 900,animation: dash 3s linear infinite;
+    classDef flow2 stroke-dasharray: 9,5,stroke-dashoffset: 900,animation: dash 3s 1s linear infinite;
+    classDef flow3 stroke-dasharray: 9,5,stroke-dashoffset: 900,animation: dash 3s 2s linear infinite;
+    classDef flow4 stroke-dasharray: 9,5,stroke-dashoffset: 900,animation: dash 3s 3s linear infinite;
+    classDef flow5 stroke-dasharray: 9,5,stroke-dashoffset: 900,animation: dash 3s 4s linear infinite;
+
+    class e1 flow1;
+    class e2 flow2;
+    class e3 flow3;
+    class e4 flow4;
+    class e5 flow5;</code></pre>
 <p>Diagram prepared by <a href="https://github.com/bseeger">Bethany Seeger</a> based on work done by <a href="https://github.com/g7morris">Gavin Morris</a></p>
 <h2 id="components">Components<a class="headerlink" href="#components" title="Permanent link">&para;</a></h2>
 <h3 id="islandora">Islandora<a class="headerlink" href="#islandora" title="Permanent link">&para;</a></h3>
