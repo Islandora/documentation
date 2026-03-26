@@ -22,3 +22,9 @@
   --text: #f5fffa;
 }
 
+/** mermaid animation helper for architecture diagram **/
+@keyframes dash {
+  to {
+    stroke-dashoffset: -100;
+  }
+}

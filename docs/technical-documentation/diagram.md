@@ -1,6 +1,38 @@
 # Islandora Architecture Diagram
 
-![Detailed diagram of the Islandora platform and its components](../assets/diagram.png)
+```mermaid
+flowchart TD
+    drupal([fa:fa-drupal Islandora Drupal Website])
+
+    drupal e1@==>|publishes entity event| activemq
+
+    subgraph broker[Message Broker]
+        activemq[ActiveMQ]
+        alpaca[Alpaca]
+        activemq e2@==> alpaca
+    end
+
+    alpaca e3@==> houdini
+
+    subgraph microservices[scyllaridae microservices]
+        houdini[Houdini]
+    end
+
+    houdini e4@-.->|derivative stream| alpaca
+    alpaca e5@-.->|saves derivative & responds ok| drupal
+
+    classDef flow1 stroke-dasharray: 9,5,stroke-dashoffset: 900,animation: dash 3s linear infinite;
+    classDef flow2 stroke-dasharray: 9,5,stroke-dashoffset: 900,animation: dash 3s 1s linear infinite;
+    classDef flow3 stroke-dasharray: 9,5,stroke-dashoffset: 900,animation: dash 3s 2s linear infinite;
+    classDef flow4 stroke-dasharray: 9,5,stroke-dashoffset: 900,animation: dash 3s 3s linear infinite;
+    classDef flow5 stroke-dasharray: 9,5,stroke-dashoffset: 900,animation: dash 3s 4s linear infinite;
+
+    class e1 flow1;
+    class e2 flow2;
+    class e3 flow3;
+    class e4 flow4;
+    class e5 flow5;
+```
 
 Diagram prepared by [Bethany Seeger](https://github.com/bseeger) based on work done by [Gavin Morris](https://github.com/g7morris)
 
