@@ -1,321 +1,321 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
       <url>
-        <loc>https://islandora.github.io/documentation/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/installation/quickstart/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/installation/quickstart/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/concepts/node-concepts/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/concepts/node-concepts/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/concepts/node-media/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/concepts/node-media/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/concepts/derivatives/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/concepts/derivatives/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/concepts/rdf/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/concepts/rdf/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/concepts/starter-site/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/concepts/starter-site/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/concepts/collection/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/concepts/collection/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/user-documentation/paged-content/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/user-documentation/paged-content/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/models/audio/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/models/audio/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/models/video/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/models/video/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/installation/docker/docker-introduction/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/installation/docker/docker-introduction/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/installation/docker/docker-prereq/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/installation/docker/docker-prereq/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/installation/docker/site-template/site-template/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/installation/docker/site-template/site-template/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/installation/docker/site-template/setup/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/installation/docker/site-template/setup/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/installation/docker/site-template/docker-modifications/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/installation/docker/site-template/docker-modifications/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/installation/docker/site-template/containers/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/installation/docker/site-template/containers/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/installation/docker/site-template/updating/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/installation/docker/site-template/updating/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/installation/docker/site-template/backup/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/installation/docker/site-template/backup/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/installation/docker/site-template/customizations/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/installation/docker/site-template/customizations/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/installation/docker/converting/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/installation/docker/converting/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/installation/docker/isle-dc/docker-local/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/installation/docker/isle-dc/docker-local/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/installation/docker/isle-dc/docker-custom/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/installation/docker/isle-dc/docker-custom/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/installation/docker/isle-dc/docker-basic-usage/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/installation/docker/isle-dc/docker-basic-usage/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/installation/docker/isle-dc/docker-maintain-drupal/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/installation/docker/isle-dc/docker-maintain-drupal/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/installation/docker/isle-dc/docker-maintain-isle/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/installation/docker/isle-dc/docker-maintain-isle/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/installation/docker/isle-dc/docker-available-commands/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/installation/docker/isle-dc/docker-available-commands/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/installation/docker/isle-dc/docker-available-configuration/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/installation/docker/isle-dc/docker-available-configuration/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/installation/docker/isle-dc/docker-troubleshooting/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/installation/docker/isle-dc/docker-troubleshooting/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/installation/playbook/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/installation/playbook/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/installation/manual/introduction/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/installation/manual/introduction/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/installation/manual/preparing-a-webserver/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/installation/manual/preparing-a-webserver/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/installation/manual/installing-composer-drush-and-drupal/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/installation/manual/installing-composer-drush-and-drupal/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/installation/manual/installing-tomcat-and-cantaloupe/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/installation/manual/installing-tomcat-and-cantaloupe/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/installation/manual/installing-fedora-syn-and-blazegraph/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/installation/manual/installing-fedora-syn-and-blazegraph/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/installation/manual/installing-solr/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/installation/manual/installing-solr/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/installation/manual/installing-crayfish/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/installation/manual/installing-crayfish/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/installation/manual/installing-alpaca/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/installation/manual/installing-alpaca/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/installation/manual/configuring-drupal/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/installation/manual/configuring-drupal/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/technical-documentation/updating-drupal/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/technical-documentation/updating-drupal/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/user-documentation/user-intro/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/user-documentation/user-intro/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/user-documentation/content-models/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/user-documentation/content-models/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/user-documentation/metadata/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/user-documentation/metadata/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/user-documentation/starter-site-metadata-configuration/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/user-documentation/starter-site-metadata-configuration/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/user-documentation/linked-data/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/user-documentation/linked-data/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/user-documentation/metadata-harvesting/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/user-documentation/metadata-harvesting/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/user-documentation/searching/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/user-documentation/searching/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/user-documentation/advanced-search/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/user-documentation/advanced-search/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/user-documentation/faceting/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/user-documentation/faceting/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/user-documentation/context/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/user-documentation/context/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/user-documentation/file-viewers/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/user-documentation/file-viewers/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/user-documentation/iiif/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/user-documentation/iiif/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/user-documentation/media/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/user-documentation/media/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/user-documentation/flysystem/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/user-documentation/flysystem/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/user-documentation/uploading-large-files/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/user-documentation/uploading-large-files/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/user-documentation/transcripts/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/user-documentation/transcripts/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/user-documentation/access-control/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/user-documentation/access-control/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/user-documentation/breadcrumbs/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/user-documentation/breadcrumbs/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/user-documentation/jwt-authentication/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/user-documentation/jwt-authentication/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/user-documentation/url-aliases/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/user-documentation/url-aliases/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/user-documentation/usage-stats/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/user-documentation/usage-stats/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/user-documentation/versioning/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/user-documentation/versioning/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/user-documentation/accessibility/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/user-documentation/accessibility/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/user-documentation/multilingual/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/user-documentation/multilingual/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/user-documentation/extending/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/user-documentation/extending/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/user-documentation/recipes/datacite/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/user-documentation/recipes/datacite/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/user-documentation/recipes/remote-media/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/user-documentation/recipes/remote-media/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/tutorials/create-a-resource-node/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/tutorials/create-a-resource-node/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/tutorials/how-to-create-collection/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/tutorials/how-to-create-collection/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/user-documentation/content-types/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/user-documentation/content-types/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/tutorials/blocks/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/tutorials/blocks/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/tutorials/create-update-views/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/tutorials/create-update-views/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/user-documentation/video-docs/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/user-documentation/video-docs/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/user-documentation/users/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/user-documentation/users/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/technical-documentation/migration-overview/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/technical-documentation/migration-overview/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/technical-documentation/migration-rest-api/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/technical-documentation/migration-rest-api/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/technical-documentation/migration-migrate-api/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/technical-documentation/migration-migrate-api/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/technical-documentation/migration-islandora-workbench/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/technical-documentation/migration-islandora-workbench/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/technical-documentation/migrate-csv/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/technical-documentation/migrate-csv/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/technical-documentation/migrate-7x/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/technical-documentation/migrate-7x/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/installation/component-overview/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/installation/component-overview/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/technical-documentation/diagram/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/technical-documentation/diagram/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/technical-documentation/using-rest-endpoints/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/technical-documentation/using-rest-endpoints/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/technical-documentation/rest-authorization/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/technical-documentation/rest-authorization/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/technical-documentation/rest-get/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/technical-documentation/rest-get/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/technical-documentation/rest-create/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/technical-documentation/rest-create/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/technical-documentation/rest-patch/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/technical-documentation/rest-patch/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/technical-documentation/rest-delete/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/technical-documentation/rest-delete/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/technical-documentation/rest-signposting/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/technical-documentation/rest-signposting/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/alpaca/alpaca-technical-stack/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/alpaca/alpaca-technical-stack/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/technical-documentation/alpaca-tips/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/technical-documentation/alpaca-tips/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/technical-documentation/testing-notes/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/technical-documentation/testing-notes/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/technical-documentation/adding-format-jsonld/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/technical-documentation/adding-format-jsonld/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/contributing/testing-a-pull-request/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/contributing/testing-a-pull-request/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/technical-documentation/running-automated-tests/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/technical-documentation/running-automated-tests/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/technical-documentation/checking-coding-standards/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/technical-documentation/checking-coding-standards/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/contributing/contributing-workflow/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/contributing/contributing-workflow/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/contributing/create-issues/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/contributing/create-issues/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/technical-documentation/versioning/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/technical-documentation/versioning/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/contributing/releasing-islandora/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/contributing/releasing-islandora/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/contributing/editing-docs/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/contributing/editing-docs/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/technical-documentation/docs-build/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/technical-documentation/docs-build/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/contributing/docs-style-guide/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/contributing/docs-style-guide/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/contributing/committers/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/contributing/committers/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/contributing/sandbox/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/contributing/sandbox/</loc>
       </url>
       <url>
-        <loc>https://islandora.github.io/documentation/user-documentation/glossary/</loc>
+        <loc>https://islandora.github.io/documentation/pr-preview/pr-2397/user-documentation/glossary/</loc>
       </url>
 </urlset>
