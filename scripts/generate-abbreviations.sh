@@ -47,6 +47,11 @@ pluralize() {
     return
   fi
 
+  if [[ $value =~ [^aeiouAEIOU]y$ ]]; then
+    printf '%sies\n' "${value::-1}"
+    return
+  fi
+
   printf '%ss\n' "$value"
 }
 

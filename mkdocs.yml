@@ -321,12 +321,7 @@ nav:
       - 'Islandora 7': 'technical-documentation/migrate-7x.md'
   - Developer Resources:
     - 'Stack Overview': 'installation/component-overview.md'
-          # moved from "Installation" section; alternatively duplicate a simplified version in the overview section
-          # also see Architecture Diagram in Developer documentation
-          # also see user-intro.md#architecture for the cheeseburger/bento box analogy
-          # Conceptual/ reference, all user roles/ sys admins/ developers:
-          # procedural information should be moved out installation guides
-    - 'Architecture Diagram': 'technical-documentation/diagram.md'
+    - 'Islandora Architecture': 'technical-documentation/diagram.md'
     - REST Documentation:
       - 'Introduction': 'technical-documentation/using-rest-endpoints.md'
       - 'Authorization': 'technical-documentation/rest-authorization.md'
@@ -338,10 +333,7 @@ nav:
     - Alpaca:
       - 'Alpaca Technical Stack': 'alpaca/alpaca-technical-stack.md'
       - 'Alpaca Tips': 'technical-documentation/alpaca-tips.md'
-    - Tests:
-      - 'Testing Notes': 'technical-documentation/testing-notes.md'
-    - 'Resizing a VM': 'technical-documentation/resizing-vm.md'
-    - 'Updating a `deb` and adding it to Lyrasis PPA': 'technical-documentation/ppa-documentation.md'
+    - Tests: 'technical-documentation/testing-notes.md'
     - 'Adding back ?_format=jsonld': 'technical-documentation/adding-format-jsonld.md'
   - Contribute to Islandora:
       - 'How to contribute': 'contributing/CONTRIBUTING.md'

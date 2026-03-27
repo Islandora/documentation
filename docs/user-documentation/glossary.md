@@ -2,6 +2,9 @@
 
 The following glossary of terms addresses an Islandora context. When comparing new Islandora and Fedora to older versions it may also be helpful to reference [the Islandora 7 Glossary](https://wiki.duraspace.org/display/ISLANDORA/APPENDIX+E+-+Glossary).
 
+## ActiveMQ
+Apache ActiveMQ is a JMS compliant Messaging Queue. Messaging client can make use of JMS to send messages.
+
 ## Alpaca
 Islandora's event-driven middleware based on [Apache Camel](http://camel.apache.org/) that handles communication between various components of Islandora, for instance synchronizing [Drupal](#drupal) data with a [Fedora](#fedora-repository-software) repository and the [Blazegraph](#blazegraph) triple store.
 
@@ -80,6 +83,10 @@ The standard Drupal Content types are 'Article' and 'Basic page'. _Islandora Sta
 ## Context
 An "if-this-then-that" configuration created using the Drupal [Context](https://www.drupal.org/project/context) contrib module. Islandora extends the capabilities of Context by adding custom Conditions, custom Reactions, and by evaluating context at specific times to allow Contexts to be used for derivatives, indexing, and display.
 
+## Composer
+Composer is a tool for dependency management in PHP. It allows you to declare the libraries your project depends on and it will manage (install/update) them for you.
+
+[https://getcomposer.org/](https://getcomposer.org/)
 
 ## Crayfish
 A collection of Islandora [microservices](#microservice). Some microservices are built specifically for use with a [Fedora](#fedora-repository-software) repository, while others are just for general use within Islandora.
@@ -101,6 +108,12 @@ The files, themes, profile, and modules included with the standard project softw
 
 ## Drupal Roles
 Roles are a way of assigning specific permissions to a group of users. Any user assigned to a role will have the same permissions as all other users assigned to that role. This allows you to control which users have permission to view, edit, or delete content in [Drupal](#drupal). Islandora provides a special role called _fedoraAdmin_ that is required to have actions in Drupal reflected in [Fedora](#fedora-repository-software).
+
+## Drush
+
+Drush is a command line shell and Unix scripting interface for Drupal. Drush core ships with lots of [useful commands](https://www.drush.org/13.x/commands/all/) and [generators](https://www.drush.org/13.x/generators/all/). Similarly, it runs update.php, executes SQL queries, runs content migrations, and misc utilities like cron or cache rebuild. Drush can be extended by [3rd party commandfiles](https://www.drupal.org/project/project_module?f[2]=im_vid_3%3A4654).
+
+[https://www.drush.org/](https://www.drush.org/)
 
 ## Entity
 A [Drupal](#drupal) term for an item of either content or configuration data. Examples include [Nodes](#node) (content items), Blocks, [Taxonomy terms](#taxonomy-term), and definitions of [content types](#content-type); the first three are [content entities](#content-entity), and the last is a [configuration entity](#configuration-entity). In common usage, the term often refers to Drupal content entities like [Nodes](#node) or [Taxonomy terms](#taxonomy-term).
@@ -174,21 +187,19 @@ Acronym for "Graphical User Interface". Often refers to taking actions through D
 An installation without legacy constraints. Usually refers to a brand new system where users load new content, as opposed to migrating content from a previous system.
 
 ## Imagemagick
-[Imagemagick](https://imagemagick.org/index.php) is an open-source image processing library. In Islandora, Imagemagick is provided by the [Crayfish](#crayfish) [Microservice](#microservice), [Houdini](#houdini).
+[Imagemagick](https://imagemagick.org/index.php) is an open-source image processing library. In Islandora, Imagemagick is provided by the [scyllaridae](#scyllaridae) [Microservice](#microservice), [Houdini](#houdini).
 
 ## hOCR
 [hOCR](https://kba.github.io/hocr-spec/1.2/) is an open standard for representing OCR (Optical Character Recognition) results, including text positioning, as HTML. hOCR can be produced by [Tesseract](#tesseract), and can be displayed as an overlay on an image by [Mirador](#mirador).
 
-
 ## Homarus
-Homarus is a [microservice](#microservice) wrapper for [FFMpeg](#ffmpeg). It is part of [Crayfish](#crayfish).
+Homarus is a [microservice](#microservice) wrapper of [FFMpeg](#ffmpeg) for generating video and audio derivatives. It is implemented using [scyllaridae](#scyllaridae).
 
 ## Houdini
-Houdini is a [microservice](#microservice) wrapper for [Imagemagick](#imagemagick). It is part of [Crayfish](#crayfish).
-
+Houdini is a [microservice](#microservice) wrapper of [Imagemagick](#imagemagick) for generating image-based derivatives, including thumbnails. It is implemented using [scyllaridae](#scyllaridae).
 
 ## Hypercube
-Hypercube is a [microservice](#microservice) wrapper for [Tesseract](#tesseract). It is part of [Crayfish](#crayfish).
+Hypercube is a [microservice](#microservice) wrapper of [Tesseract](#tesseract) for optical character recognition (OCR) and [hOCR](#hOCR). It is implemented using [scyllaridae](#scyllaridae).
 
 ## IIIF
 The [International Image Interoperability Framework](https://iiif.io/). Generally pronounced "triple-eye-eff." A set of open standards and APIs that help archives, libraries, and museums make the most of their digitized collections with deep zoom, annotation capabilities, and more, and also the community of users and developers that support the framework.
@@ -248,6 +259,10 @@ In computing, linked data is structured data which is interlinked with other dat
 ## Manifest
 See [IIIF Manifest](#iiif-manifest).
 
+## MariaDB
+MariaDB Server is one of the most popular database servers in the world. It’s made by the original developers of MySQL and guaranteed to stay open source. Notable users include Wikipedia, WordPress.com and Google.
+
+[https://mariadb.org/](https://mariadb.org/)
 
 ## Matomo
 [Matomo](https://matomo.org/), formerly called Piwik, is a software for tracking visits to websites. It is an open source alternative to Google Analytics and allows the generation of website usage reports.
@@ -266,8 +281,17 @@ Protocol specification that allows a web client to request an earlier/historic s
 ## Microservice
 A software development technique — a variant of the service-oriented architecture (SOA) structural style — that arranges an application as a collection of loosely coupled services. In a microservices' architecture, services are fine-grained and the protocols are lightweight.
 
+## Milliner
+
+A microservice that converts Drupal entities into Fedora resources.
+
 ## Module
 Software (usually PHP, JavaScript, and/or CSS) that extends site features and adds functionality. [Drupal](#drupal) modules conform to a specific structure allowing them to integrate with the Drupal architecture.
+
+## NGINX
+nginx ("engine x") is an HTTP web server, reverse proxy, content cache, load balancer, TCP/UDP proxy server, and mail proxy server. Originally written by [Igor Sysoev](http://sysoev.ru/en/) and distributed under the [2-clause BSD License](https://nginx.org/LICENSE). Enterprise distributions, commercial support and training are [available from F5, Inc.](https://nginx.org/en/enterprise.html)
+
+[https://nginx.org/](https://nginx.org/)
 
 ## Node
 Usually refers to a piece of Drupal [Content](#content-entity) of the type 'Node'. This includes actual pages, articles, and [Resource nodes](#resource-node). Nodes must belong to a specific node bundle, called a ["Content Type"](#content-type).
@@ -283,6 +307,11 @@ Open source describes a method of software development that promotes access to t
 
 ## OpenSeadragon
 [OpenSeadragon](https://openseadragon.github.io/) is javascript-based zoomable image [Viewer](#viewer). It has the ability to do zooming and display multiple pages. To render an image through OpenSeadragon, it must be provided in a [IIIF Manifest](#iiif-manifest).
+
+## PostgreSQL
+PostgreSQL is a powerful, open source object-relational database system with over 35 years of active development that has earned it a strong reputation for reliability, feature robustness, and performance.
+
+[https://www.postgresql.org/](https://www.postgresql.org/)
 
 ## PR
 See [Pull request](#pull-request)
@@ -307,6 +336,14 @@ The term 'Resource node' is specific to Islandora. Typically, Resource nodes in 
 
 For example, a video stored in Islandora will have a Resource node, with metadata stored in [Fields](#field). Attached to the Resource node is a [Media](#media) entity, which encapsulates the preservation-grade file. The Resource node may be linked to further [Media](#media), for instance for a thumbnail, web-friendly derivative, and technical metadata associated with the resource node. The Resource node may also belong to one or more collections.
 
+## Solr
+An open-source enterprise-search platform. Solr is the default search and discover layer of Islandora, and a key component in some methods for [migration to Islandora from Islandora Legacy](https://github.com/Islandora-devops/migrate_7x_claw)
+
+[https://lucene.apache.org/solr/](https://lucene.apache.org/solr/)
+
+## scyllaridae
+A framework for building Islandora [microservices](#microservice).
+
 ## Source Field
 A Drupal term for the main file-[type](#field-type) [field](#field) on a [Media](#media). The names of these fields differ across Media Types, such as "Image" (`field_media_image`) on Image media, and "Video File" (`field_media_video_file`) on Video media. While it is possible to add other fields, including file fields, to a Media, the source field is the one configured during the creation of a Media Type. Islandora provides utility functions to get the source field from a Media ([MediaSourceService.php](https://github.com/Islandora/islandora/blob/2.x/src/MediaSource/MediaSourceService.php)).
 
@@ -316,9 +353,19 @@ A [Drupal](#drupal) [Content Entity](#content-entity) of the type 'taxonomy term
 ## Tesseract
 [Tesseract](https://github.com/tesseract-ocr/tesseract) is an open-source OCR (Optical Character Recognition) software. It can perform OCR in multiple languages. It can produce OCR (plain text) and [hOCR](#hocr) (HTML, which includes positional data). In Islandora, Tesseract is provided by the [Crayfish](#crayfish) [Microservice](#microservice), [Hypercube](#hypercube).
 
-
 ## Theme
 Software and asset files (images, CSS, PHP code, and/or templates) that determine the style and layout of the site. The [Drupal](#drupal) project distinguishes between core and contributed themes.
+
+## Tomcat
+An open-source implementation of the Java Servlet, JavaServer Pages, Java Expression Language and WebSocket technologies. Tomcat provides a "pure Java" HTTP web server environment in which Java code can run.
+
+[http://tomcat.apache.org/](http://tomcat.apache.org/)
+
+## Traefik
+
+Traefik is a leading modern open source reverse proxy and ingress controller that makes deploying services and APIs easy. Traefik integrates with your existing infrastructure components and configures itself automatically and dynamically.
+
+[https://traefik.io/traefik](https://traefik.io/traefik)
 
 ## Vagrant
 [Vagrant](https://www.vagrantup.com/) is an open-source software product for building and maintaining portable virtual software development environments (virtual machines). The [Islandora Playbook](#islandora-playbook) includes a 'vagrantfile', a set of instructions that allows users to create a local virtual machine environment which will subsequently run [Ansible](#ansible) to execute the configuration and installation steps recorded in the [Islandora Playbook](#islandora-playbook).

@@ -94,6 +94,9 @@ const attachExpandBehavior = (container) => {
   container.setAttribute("role", "button");
   container.setAttribute("aria-label", "Open Mermaid diagram in a larger view");
   container.title = "Click to enlarge diagram";
+  container.__islandoraOpenLightbox = () => {
+    openLightbox(container);
+  };
 
   container.addEventListener("click", (event) => {
     if (event.target.closest(".mermaid-controls, button, a")) {
