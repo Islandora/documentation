@@ -96,7 +96,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#pre-10-installations" class="md-skip">
+        <a href="#adding-_formatjsonld-to-your-uris" class="md-skip">
           Skip to content
         </a>
       
@@ -4146,17 +4146,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#pre-10-installations" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Pre-1.0 installations.
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#adding-_formatjsonld-to-your-uris" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4654,17 +4643,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#pre-10-installations" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Pre-1.0 installations.
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#adding-_formatjsonld-to-your-uris" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4711,12 +4689,7 @@
 <p>Drupal requires the use of a <code>_format</code> query parameter to get alternate representations of a node/media.</p>
 <p>By default, Islandora deploys with the <a href="https://github.com/Islandora/jsonld">jsonld</a> module and the <a href="https://github.com/Islandora/Crayfish/tree/main/Milliner">Milliner</a> microservice. These two components are configured to strip this <code>_format</code> query parameter off of the end of URIs.</p>
 <p>This means that when your content is indexed in Fedora, the triplestore, etc... it's URI will
-be something like <code>http://localhost:8000/node/1</code> and not <code>http://localhost:8000/node/1?_format=jsonld</code>.</p>
-<h2 id="pre-10-installations">Pre-1.0 installations.<a class="headerlink" href="#pre-10-installations" title="Permanent link">&para;</a></h2>
-<p>If you are using a <strong>very</strong> early version of Islandora "8" (pre-release), then you may have URIs with <code>_format=jsonld</code> at the end of them.</p>
-<p>If you update to newer code, you will need to ensure that your site is configured to add <code>?_format=jsonld</code>
-back to the URLs if you want to maintain consistency.</p>
-<p>If you <strong>don't</strong> do this, you can end up with two copies of your objects in your Fedora repository (one with and one without <code>?_format=jsonld</code>). You will also have two sets of triples in your triplestore.</p>
+be something like <code>http://islandora.traefik.me/node/1</code> and not <code>http://islandora.traefik.me/node/1?_format=jsonld</code>.</p>
 <h2 id="adding-_formatjsonld-to-your-uris">Adding ?_format=jsonld to your URIs<a class="headerlink" href="#adding-_formatjsonld-to-your-uris" title="Permanent link">&para;</a></h2>
 <p>To turn the <code>?_format</code> parameter back on:</p>
 <ul>

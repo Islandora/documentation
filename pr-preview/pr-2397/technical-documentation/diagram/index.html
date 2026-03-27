@@ -3732,22 +3732,33 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#site-serving-path" class="md-nav__link">
+  <a href="#islandora-is-a-drupal-website" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Site Serving Path
+        Islandora is a Drupal Website
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Site Serving Path">
+    <nav class="md-nav" aria-label="Islandora is a Drupal Website">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#iiif-manifests" class="md-nav__link">
+  <a href="#iiif-integration" class="md-nav__link">
     <span class="md-ellipsis">
       
-        IIIF manifests
+        IIIF Integration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fedora-flysystem-adapter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fedora Flysystem Adapter
       
     </span>
   </a>
@@ -3760,24 +3771,41 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#event-driven-system" class="md-nav__link">
+  <a href="#microservices" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Event Driven System
+        Microservices
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Microservices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#derivative-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Derivative Events
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#event-example" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#index-events" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Event Example
+        Index Events
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -4727,22 +4755,33 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#site-serving-path" class="md-nav__link">
+  <a href="#islandora-is-a-drupal-website" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Site Serving Path
+        Islandora is a Drupal Website
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Site Serving Path">
+    <nav class="md-nav" aria-label="Islandora is a Drupal Website">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#iiif-manifests" class="md-nav__link">
+  <a href="#iiif-integration" class="md-nav__link">
     <span class="md-ellipsis">
       
-        IIIF manifests
+        IIIF Integration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fedora-flysystem-adapter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fedora Flysystem Adapter
       
     </span>
   </a>
@@ -4755,24 +4794,41 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#event-driven-system" class="md-nav__link">
+  <a href="#microservices" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Event Driven System
+        Microservices
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Microservices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#derivative-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Derivative Events
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#event-example" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#index-events" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Event Example
+        Index Events
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -4847,11 +4903,17 @@
 
 
 <h1 id="islandora-architecture">Islandora Architecture<a class="headerlink" href="#islandora-architecture" title="Permanent link">&para;</a></h1>
-<h2 id="site-serving-path">Site Serving Path<a class="headerlink" href="#site-serving-path" title="Permanent link">&para;</a></h2>
+<p>At its core, Islandora is a <a data-preview="" href="../../user-documentation/glossary/#drupal">Drupal</a> website that leverages a suite of <a data-preview="" href="../../user-documentation/glossary/#microservice">Microservices</a>. To help illustrate this, different site operations are described below.</p>
+<ul>
+<li>The diagram under <a href="#islandora-is-a-drupal-website">Islandora is a Drupal Website</a> describes how a typical web page is displayed when a site visitor arrives at an Islandora repository on the internet. How most HTML responses are generated for Islandora sites are identical to any Drupal website that integrates with <a data-preview="" href="../../user-documentation/glossary/#solr">Solr</a>. The exception being Islandora's <a data-preview="" href="../../user-documentation/glossary/#iiif">IIIF</a> integration, which is explained in a bit more detail in <a href="#iiif-integration">IIIF Integration</a></li>
+<li>The diagrams under <a href="#microservices">Microservices</a> explain how events are emitted from an Islandora Drupal website and processed by Islandora's event driven architecture</li>
+<li><a href="#components">Components</a> is a list of software used in the Islandora tech stack</li>
+</ul>
+<h2 id="islandora-is-a-drupal-website">Islandora is a Drupal Website<a class="headerlink" href="#islandora-is-a-drupal-website" title="Permanent link">&para;</a></h2>
 <p>When a client visits an Islandora website, the request flow looks like a typical <a data-preview="" href="../../user-documentation/glossary/#drupal">Drupal</a> request.
-The request is received by an nginx web server, which forwards the request to <code>php-fpm</code> process that points to a Drupal codebase.
-Drupal bootstraps and queries the backend database (Islandora ships with <code>mariadb</code>).
-If the request was for a search page, Drupal make also query <code>solr</code> to include search results in the HTML response.
+The request is received by <a data-preview="" href="../../user-documentation/glossary/#nginx">NGINX</a>, which forwards the request to <a data-preview="" href="../../user-documentation/glossary/#drupal">Drupal</a>.
+Drupal bootstraps and queries <a data-preview="" href="../../user-documentation/glossary/#mariadb">MariaDB</a> to generate an HTML response.
+If the request was for a search page, Drupal may also query <a data-preview="" href="../../user-documentation/glossary/#solr">Solr</a> to include search results in the HTML response.</p>
 <pre class="mermaid"><code>flowchart TD
     user([Client / Browser])
     user e1@--&gt;|HTTP request| nginx
@@ -4878,13 +4940,13 @@ If the request was for a search page, Drupal make also query <code>solr</code> t
     class e8 flow3;
     class e9 flow4;
     class e10 flow5;
-</code></pre></p>
-<h3 id="iiif-manifests">IIIF manifests<a class="headerlink" href="#iiif-manifests" title="Permanent link">&para;</a></h3>
-<p>For some <a data-preview="" href="../../user-documentation/glossary/#resource-node">Resource Node</a>s in Islandora, the HTML response may include a <a data-preview="" href="../../user-documentation/glossary/#iiif-manifest">IIIF Manifest</a>. This typically happens when showing items that have image media. For those requests, Islandora's IIIF module may also query the <a data-preview="" href="../../user-documentation/glossary/#cantaloupe">Cantaloupe</a> IIIF server for metadata needed to generate a <a data-preview="" href="../../user-documentation/glossary/#iiif-manifest">IIIF Manifest</a>. The HTML response will then download the images from Cantaloupe to allow a IIIF viewer (e.g. <a data-preview="" href="../../user-documentation/glossary/#openseadragon">OpenSeadragon</a> or <a data-preview="" href="../../user-documentation/glossary/#mirador">Mirador</a>) to render the image in the browser.</p>
-<p>In addition to <a href="##site-serving-path">the typical drupal request flow</a>, Drupal may also query Cantaloupe for basic image metadata (e.g. width/height) which are needed to complete a valid <a data-preview="" href="../../user-documentation/glossary/#iiif-manifest">IIIF Manifest</a> response. The client web browser will then read that IIIF Manifest using Javascript and the IIIF viewer will <code>GET</code> the images referenced in the IIIF Manifest directly from the IIIF server.</p>
+</code></pre>
+<h3 id="iiif-integration">IIIF Integration<a class="headerlink" href="#iiif-integration" title="Permanent link">&para;</a></h3>
+<p>For some <a data-preview="" href="../../user-documentation/glossary/#resource-node">Resource Nodes</a> in Islandora, the HTML response may include a link to a <a data-preview="" href="../../user-documentation/glossary/#iiif-manifest">IIIF Manifest</a> that is dynamically generated by Drupal for the given node. This typically happens when rendering <a data-preview="" href="../../user-documentation/glossary/#resource-node">Resource Nodes</a> that have image <a data-preview="" href="../../user-documentation/glossary/#media">media</a>. For these types of requests, Islandora's <a data-preview="" href="../../user-documentation/glossary/#iiif">IIIF</a> module may also query the <a data-preview="" href="../../user-documentation/glossary/#cantaloupe">Cantaloupe</a> IIIF server for metadata needed to generate the <a data-preview="" href="../../user-documentation/glossary/#iiif-manifest">IIIF Manifest</a>. The IIIF viewer configured on the Islandora site (e.g. <a data-preview="" href="../../user-documentation/glossary/#openseadragon">OpenSeadragon</a> or <a data-preview="" href="../../user-documentation/glossary/#mirador">Mirador</a>) will communicate with Cantaloupe to render the image(s) included in the IIIF Manifest.</p>
+<p>All this to say, in addition to <a href="#islandora-is-a-drupal-website">the typical drupal request flow</a>, Drupal may also query Cantaloupe for basic image metadata (e.g. height/width) which are needed to generate a valid <a data-preview="" href="../../user-documentation/glossary/#iiif-manifest">IIIF Manifest</a>. The client's web browser will then read that IIIF Manifest using Javascript and the IIIF viewer will <code>GET</code> the images referenced in the IIIF Manifest from <a data-preview="" href="../../user-documentation/glossary/#cantaloupe">Cantaloupe</a>.</p>
 <pre class="mermaid"><code>flowchart TD
     user([Client / Browser])
-    user e1@--&gt;|HTTP request| nginx
+    user e1@--&gt;|GET IIIF Manifest| nginx
 
     subgraph webserver[Nginx Web Server]
         nginx[Nginx] e2@--&gt;|forward request| drupal[Drupal]
@@ -4908,18 +4970,27 @@ If the request was for a search page, Drupal make also query <code>solr</code> t
     class e8 flow7;
     class e9 flow8;
 </code></pre>
-<h2 id="event-driven-system">Event Driven System<a class="headerlink" href="#event-driven-system" title="Permanent link">&para;</a></h2>
-<p>When you create, update, or delete Drupal <a data-preview="" href="../../user-documentation/glossary/#entity">entities</a>, Drupal emits an event message which is emitted to <a data-preview="" href="../../user-documentation/glossary/#activemq">ActiveMQ</a> and put on ActiveMQ's queue.</p>
+<h3 id="fedora-flysystem-adapter">Fedora Flysystem Adapter<a class="headerlink" href="#fedora-flysystem-adapter" title="Permanent link">&para;</a></h3>
+<p>Islandora uses <a data-preview="" href="../../user-documentation/glossary/#flysystem">Flysystem</a> and the <a href="https://www.drupal.org/project/flysystem">associated Drupal module</a> to store Drupal managed files in <a data-preview="" href="../../user-documentation/glossary/#fedora-repository-software">Fedora (Repository Software)</a>.</p>
+<p>You can read more about this in <a href="../../user-documentation/flysystem/">Islandora's Flysystem documentation</a>.</p>
+<h2 id="microservices">Microservices<a class="headerlink" href="#microservices" title="Permanent link">&para;</a></h2>
+<p>In addition to all the tools Drupal provides, Islandora extends the Drupal site's capabilities using an event-driven, distributed architecture of <a data-preview="" href="../../user-documentation/glossary/#microservice">Microservices</a>. When a repository manager creates, updates, or deletes Drupal <a data-preview="" href="../../user-documentation/glossary/#entity">entities</a>, the Islandora Drupal module generates an event message which is put on Islandora's <a data-preview="" href="../../user-documentation/glossary/#activemq">ActiveMQ</a> queue.</p>
+<p>There are two different types of events Islandora emits:</p>
+<ul>
+<li><a data-preview="" href="../../user-documentation/glossary/#derivative">Derivative</a> Events - these types of events create <a data-preview="" href="../../user-documentation/glossary/#derivative">derivatives</a> from files uploaded to Islandora</li>
+<li>Index Events - these types of events create an indexed representation of a <a data-preview="" href="../../user-documentation/glossary/#resource-node">Resource Node</a> in a system external to <a data-preview="" href="../../user-documentation/glossary/#drupal">Drupal</a></li>
+</ul>
+<h3 id="derivative-events">Derivative Events<a class="headerlink" href="#derivative-events" title="Permanent link">&para;</a></h3>
+<p>Below is a full diagram of the different microservices Islandora provides. You can see as an animation in the diagram what happens when an Islandora repository manager uploads an image to their Islandora repository. First, Drupal emits an event to generate a thumbnail for that image. That event is put on the <a data-preview="" href="../../user-documentation/glossary/#activemq">ActiveMQ</a> event queue, <a data-preview="" href="../../user-documentation/glossary/#alpaca">alpaca</a> reads the message from the queue, and forwards the event to the configured service. In the case of a thumbnail, <a data-preview="" href="../../user-documentation/glossary/#houdini">houdini</a> handles generating the thumbnail for the uploaded image. <a data-preview="" href="../../user-documentation/glossary/#houdini">Houdini</a> creates the thumbnail and alpaca saves the thumbnail in Drupal.</p>
 <pre class="mermaid"><code>flowchart TD
     drupal([Islandora Drupal Website])
 
-    drupal ==&gt;|publishes drupal entity event| activemq
+    drupal e1@--&gt;|publishes drupal entity event| activemq
 
     subgraph broker[Message Broker]
         activemq[ActiveMQ]
         alpaca[Alpaca]
-        activemq ==&gt; alpaca
-        note[\"Alpaca forwards the message to the\nappropriate service based on its config"/]
+        activemq e2@--&gt;|alpaca receives event| alpaca
     end
 
 
@@ -4928,47 +4999,48 @@ If the request was for a search page, Drupal make also query <code>solr</code> t
         homarus[Homarus]
         houdini[Houdini]
         hypercube[Hypercube]
-
-        s[\"scyllaridae generates a derivative and saves the message to the\nappropriate service based on its config"/]
-
     end
 
-    alpaca ==&gt; fits
-    alpaca ==&gt; homarus
-    alpaca ==&gt; houdini
-    alpaca ==&gt; hypercube
-    alpaca ==&gt; milliner
+    alpaca --&gt; fits
+    alpaca --&gt; homarus
+    alpaca e3@--&gt; houdini
+    alpaca --&gt; hypercube
 
-    fits -.-&gt;|derivative saved to| alpaca
-    homarus -.-&gt;|derivative saved to| alpaca
-    houdini -.-&gt;|derivative saved to| alpaca
-    hypercube -.-&gt;|derivative saved to| alpaca
-alpaca -.-&gt;|ok| drupal
-    fedora[(Fedora)]
-    milliner -.-&gt;|syncs resource to| fedora
-    blazegraph[(blazegraph)]
-    alpaca -.-&gt;|sends RDF| blazegraph</code></pre>
-<h2 id="event-example">Event Example<a class="headerlink" href="#event-example" title="Permanent link">&para;</a></h2>
-<p>As an example, when an Islandora Repository manager uploades an image to their Islandora repository, an event is emitted to generate a thumbnail for that image. That event is put on the event queue, alpaca reads the message from the queue, and forwards the event to the configured service. In the case of a thumbnail, <a data-preview="" href="../../user-documentation/glossary/#houdini">houdini</a> handles generating the thumbnail for the uploaded image </p>
+    fits -.-&gt;|derivative streamed back| alpaca
+    homarus -.-&gt;|derivative streamed back| alpaca
+    houdini e4@-.-&gt;|derivative streamed back| alpaca
+    hypercube -.-&gt;|derivative streamed back| alpaca
+    alpaca e5@-.-&gt;|alpaca saves the derivative| drupal
+
+    class e1 flow0;
+    class e2 flow1;
+    class e3 flow2;
+    class e4 flow3;
+    class e5 flow4;</code></pre>
+<h3 id="index-events">Index Events<a class="headerlink" href="#index-events" title="Permanent link">&para;</a></h3>
+<p>There are two systems that are populated using Islandora Index Events: <a data-preview="" href="../../user-documentation/glossary/#blazegraph">Blazegraph</a> and <a data-preview="" href="../../user-documentation/glossary/#fedora-repository-software">Fedora (Repository Software)</a>.</p>
+<ul>
+<li>For <a data-preview="" href="../../user-documentation/glossary/#blazegraph">Blazegraph</a>, <a data-preview="" href="../../user-documentation/glossary/#alpaca">Alpaca</a> is fully implemented to be able to index content from Drupal directly into Blazegraph using <a data-preview="" href="../../user-documentation/glossary/#rdf">RDF</a>.</li>
+<li>For <a data-preview="" href="../../user-documentation/glossary/#fedora-repository-software">Fedora (Repository Software)</a> an intermediate service is used called <a data-preview="" href="../../user-documentation/glossary/#milliner">Milliner</a> to store the metadata in Fedora.</li>
+</ul>
 <pre class="mermaid"><code>flowchart TD
     drupal([Islandora Drupal Website])
 
-    drupal e1@==&gt;|publishes entity event| activemq
+    drupal e1@--&gt;|publishes drupal entity event| activemq
 
     subgraph broker[Message Broker]
         activemq[ActiveMQ]
         alpaca[Alpaca]
-        activemq e2@==&gt; alpaca
+        activemq e2@--&gt;|alpaca receives event| alpaca
     end
 
-    alpaca e3@==&gt; houdini
 
-    subgraph microservices[scyllaridae microservice]
-        houdini[Houdini]
-    end
+    alpaca e3@--&gt; milliner
 
-    houdini e4@-.-&gt;|derivative stream| alpaca
-    alpaca e5@-.-&gt;|saves derivative &amp; responds ok| drupal
+    fedora[(Fedora)]
+    milliner e4@-.-&gt;|syncs resource to| fedora
+    blazegraph[(blazegraph)]
+    alpaca -.-&gt;|sends RDF| blazegraph
 
     class e1 flow0;
     class e2 flow1;
@@ -4977,13 +5049,16 @@ alpaca -.-&gt;|ok| drupal
     class e5 flow4;</code></pre>
 <h2 id="components">Components<a class="headerlink" href="#components" title="Permanent link">&para;</a></h2>
 <h3 id="islandora">Islandora<a class="headerlink" href="#islandora" title="Permanent link">&para;</a></h3>
-<p>The following components are microservices developed and maintained by the Islandora community. They are bundled under <a href="https://github.com/Islandora/Crayfish">Islandora Crayfish</a>:</p>
+<p>The following components are microservices developed and maintained by the Islandora community. They are bundled under <a data-preview="" href="../../user-documentation/glossary/#scyllaridae">scyllaridae</a> and <a href="https://github.com/Islandora/Crayfish">Islandora Crayfish</a>:</p>
 <ul>
-<li><a data-preview="" href="../../user-documentation/glossary/#fits">FITS</a></li>
+<li><a data-preview="" href="../../user-documentation/glossary/#scyllaridae">scyllaridae</a><ul>
+<li><a data-preview="" href="../../user-documentation/glossary/#crayfits">Crayfits</a></li>
 <li><a data-preview="" href="../../user-documentation/glossary/#homarus">Homarus</a></li>
 <li><a data-preview="" href="../../user-documentation/glossary/#houdini">Houdini</a></li>
 <li><a data-preview="" href="../../user-documentation/glossary/#hypercube">Hypercube</a></li>
-<li><a data-preview="" href="../../user-documentation/glossary/#milliner">Milliner</a></li>
+</ul>
+</li>
+<li><a data-preview="" href="../../user-documentation/glossary/#milliner">Milliner</a> (uses <a data-preview="" href="../../user-documentation/glossary/#crayfish">Crayfish</a>)</li>
 </ul>
 <h3 id="other-open-source">Other Open Source<a class="headerlink" href="#other-open-source" title="Permanent link">&para;</a></h3>
 <p>The following components are deployed with Islandora, but are developed and maintained by other open source projects:</p>
@@ -4997,6 +5072,7 @@ alpaca -.-&gt;|ok| drupal
 <li><a data-preview="" href="../../user-documentation/glossary/#blazegraph">Blazegraph</a></li>
 <li><a data-preview="" href="../../user-documentation/glossary/#cantaloupe">Cantaloupe</a></li>
 <li><a data-preview="" href="../../user-documentation/glossary/#drupal">Drupal</a></li>
+<li><a data-preview="" href="../../user-documentation/glossary/#fits">FITS</a></li>
 <li><a data-preview="" href="../../user-documentation/glossary/#fedora-repository-software">Fedora (Repository Software)</a></li>
 <li><a data-preview="" href="../../user-documentation/glossary/#mariadb">MariaDB</a></li>
 <li>Triplestore - See <a data-preview="" href="../../user-documentation/glossary/#blazegraph">Blazegraph</a>.</li>
