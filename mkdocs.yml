@@ -1,6 +1,4 @@
 site_name: Islandora
-site_dir: site
-docs_dir: docs
 site_description: Documentation for Islandora
 
 dev_addr: 'localhost:8111'
@@ -9,36 +7,94 @@ site_url: https://islandora.github.io/documentation/
 edit_uri: 'edit/main/docs/'
 
 theme:
-  name: 'material'
-  palette:
-    primary: 'green'
-    accent: 'blue'
-  font:
-    text: 'Roboto'
-    code: 'Roboto Mono'
-  logo: 'assets/Islandora_logo.png'
-  language: 'en'
+  name: material
   features:
     - content.action.edit
+    - content.action.view
+    - content.code.annotate
+    - content.code.copy
+    - content.code.select
+    - content.footnote.tooltips
+    - content.tabs.link
+    - content.tooltips
+    - search.highlight
+  palette:
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: lucide/sun-moon
+        name: Switch to light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: lucide/sun
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: orange
+      toggle:
+        icon: lucide/moon-star
+        name: Switch to system preference
   icon:
-    edit: material/pencil
+    tag:
+      default: lucide/hash
+  logo: 'assets/Islandora_logo.png'
+
 markdown_extensions:
+  - abbr
   - admonition
+  - attr_list
+  - def_list
   - footnotes
+  - md_in_html
   - toc:
-        permalink: True
+      permalink: true
+  - zensical.extensions.preview:
+      targets:
+        include:
+          - user-documentation/glossary.md
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
   - pymdownx.details
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:zensical.extensions.emoji.to_svg
+      emoji_index: !!python/name:zensical.extensions.emoji.twemoji
   - pymdownx.highlight:
       anchor_linenums: true
       line_spans: __span
       pygments_lang_class: true
   - pymdownx.inlinehilite
-  - pymdownx.snippets
+  - pymdownx.keys
+  - pymdownx.magiclink:
+      normalize_issue_symbols: true
+      repo_url_shorthand: true
+      user: zensical
+      repo: zensical
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.snippets:
+      auto_append:
+        - includes/abbreviations.md
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid
           class: mermaid
           format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+      combine_header_slug: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
 
 extra_css:
   - css/custom.css
@@ -47,6 +103,7 @@ extra_javascript:
   - js/diagram-animation.js
 plugins:
   - search
+  - tags
   - git-revision-date-localized
   - redirects:
       redirect_maps:
@@ -89,17 +146,19 @@ plugins:
             
 
 extra:
-  font:
-    text: 'Roboto'
-    code: 'Roboto Mono'
-  author:
-    twitter: 'islandora'
-  palette:
-    primary: 'red'
-    accent: 'red'
+  scope: /
+  annotate:
+    json: [.s2]
+  status:
+    new: Recently added
+    deprecated: Deprecated
   social:
-    - icon: fontawesome/brands/twitter
-      link: 'https://twitter.com/islandora'
+    - icon: fontawesome/brands/github
+      link: https://github.com/islandora
+    - icon: fontawesome/brands/bluesky
+      link: https://bsky.app/profile/islandora.bsky.social
+  tags:
+    default: default
 
 copyright: <b>This documentation is user-sourced!</b> Suggestions and comments are welcome in our <u><a href="https://github.com/Islandora/documentation/issues" target="_blank">issue queue</a></u>.
 

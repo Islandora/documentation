@@ -2,8 +2,10 @@
 
 ## Site Serving Path
 
-### Page Request
-
+When a client visits an Islandora website, the request flow looks like a typical Drupal request.
+The request is received by an nginx web server, which forwards the request to `php-fpm` process that points to a Drupal codebase.
+Drupal bootstraps and queries the backend database (Islandora ships with `mariadb`).
+If the request was for a search page, Drupal make also query `solr` to include search results in the HTML response.
 ```mermaid
 flowchart TD
     user([Client / Browser])
@@ -15,20 +17,11 @@ flowchart TD
 
     drupal e3@-->|query| mariadb[(MariaDB)]
     drupal e4@-->|query| solr[(Solr)]
-    drupal e5@-->|image request| cantaloupe[Cantaloupe\nIIIF Image Server]
 
     mariadb e6@-.->|data| drupal
     solr e7@-.->|results| drupal
-    cantaloupe e8@-.->|image| drupal
     drupal e9@-.->|HTML response| nginx
     nginx e10@-.->|HTML response| user
-
-    classDef flow0 stroke-dasharray: 9,5,stroke-dashoffset: 900,animation: dashFlash 8s 0s linear infinite;
-    classDef flow1 stroke-dasharray: 9,5,stroke-dashoffset: 900,animation: dashFlash 8s 1s linear infinite;
-    classDef flow2 stroke-dasharray: 9,5,stroke-dashoffset: 900,animation: dashFlash 8s 2s linear infinite;
-    classDef flow3 stroke-dasharray: 9,5,stroke-dashoffset: 900,animation: dashFlash 8s 3s linear infinite;
-    classDef flow4 stroke-dasharray: 9,5,stroke-dashoffset: 900,animation: dashFlash 8s 4s linear infinite;
-    classDef flow5 stroke-dasharray: 9,5,stroke-dashoffset: 900,animation: dashFlash 8s 5s linear infinite;
 
     class e1 flow0;
     class e2 flow1;
@@ -40,15 +33,41 @@ flowchart TD
     class e8 flow3;
     class e9 flow4;
     class e10 flow5;
+
 ```
 
-### IIIF Image Request
+
+### IIIF manifests
+
+For some items in Islandora, the HTML response may include a [IIIF Manifest]. This typically happens when showing items that have image media. For those requests, Islandora's IIIF module may also query the [Cantaloupe] IIIF server for metadata needed to generate a IIIF manifest. The HTML response will then reference the location of the images in the IIIF server to allow a IIIF viewer to render the image in the browser. Practically what this means is in addition to the typical drupal request flow, Drupal may also query the IIIF server for basic image metadata (e.g. width/height) which are needed in the IIIF manifest response. The client web browser will then read that manifest using Javascript and the IIIF viewer will `GET` the images referenced in the IIIF manifest directly from the IIIF server.
 
 ```mermaid
 flowchart TD
     user([Client / Browser])
-    user --> cantaloupe[Cantaloupe\nIIIF Image Server]
-    cantaloupe -.->|fetch source file| fedora[(Fedora\nFile Storage)]
+    user e1@==>|HTTP request| nginx
+
+    subgraph webserver[Nginx Web Server]
+        nginx[Nginx] e2@==>|forward request| drupal[Drupal]
+    end
+
+    drupal e3@-->|GET /info.json| cantaloupe[Cantaloupe IIIF Image Server]
+
+    cantaloupe e4@-->|info.json| drupal
+    drupal e5@-.->|HTML response| nginx
+    nginx e6@-.->|HTML response| user
+    user e7@-->|GET /image.png| cantaloupe
+    cantaloupe e8@-.->|image.png| user
+
+    class e1 flow0;
+    class e2 flow1;
+    class e3 flow2;
+    class e4 flow3;
+    class e5 flow4;
+    class e6 flow5;
+    class e7 flow6;
+    class e8 flow7;
+    class e9 flow8;
+
 ```
 
 ## Event Driven System
@@ -96,6 +115,8 @@ alpaca -.->|ok| drupal
 
 ## Event Example
 
+As an example, when an Islandora Repository manager uploades an image to Islandora, an event is emitted to generate a thumbnail for that image. That event is put on the event queue, alpaca reads the message from the queue, and forwards the event to the configured service. In the case of a thumbnail, houdini handles generating the thumbnail for the uploaded image 
+
 ```mermaid
 flowchart TD
     drupal([Islandora Drupal Website])
@@ -110,24 +131,18 @@ flowchart TD
 
     alpaca e3@==> houdini
 
-    subgraph microservices[scyllaridae microservices]
+    subgraph microservices[scyllaridae microservice]
         houdini[Houdini]
     end
 
     houdini e4@-.->|derivative stream| alpaca
     alpaca e5@-.->|saves derivative & responds ok| drupal
 
-    classDef flow1 stroke-dasharray: 9,5,stroke-dashoffset: 900,animation: dash 3s linear infinite;
-    classDef flow2 stroke-dasharray: 9,5,stroke-dashoffset: 900,animation: dash 3s 1s linear infinite;
-    classDef flow3 stroke-dasharray: 9,5,stroke-dashoffset: 900,animation: dash 3s 2s linear infinite;
-    classDef flow4 stroke-dasharray: 9,5,stroke-dashoffset: 900,animation: dash 3s 3s linear infinite;
-    classDef flow5 stroke-dasharray: 9,5,stroke-dashoffset: 900,animation: dash 3s 4s linear infinite;
-
-    class e1 flow1;
-    class e2 flow2;
-    class e3 flow3;
-    class e4 flow4;
-    class e5 flow5;
+    class e1 flow0;
+    class e2 flow1;
+    class e3 flow2;
+    class e4 flow3;
+    class e5 flow4;
 ```
 
 ## Components

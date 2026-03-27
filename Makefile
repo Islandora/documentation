@@ -1,4 +1,7 @@
-.PHONY: docs docs-build
+.PHONY: docs docs-build abbreviations
+
+abbreviations:
+	./scripts/generate-abbreviations.sh
 
 docs-build:
 	docker build -t islandora-docs .
