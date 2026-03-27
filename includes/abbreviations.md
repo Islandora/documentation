@@ -40,6 +40,7 @@
 [Composers]: ../user-documentation/glossary.md#composer
 [Crayfish]: ../user-documentation/glossary.md#crayfish
 [Crayfishs]: ../user-documentation/glossary.md#crayfish
+[Crayfits]: ../user-documentation/glossary.md#crayfits
 [Datastream]: ../user-documentation/glossary.md#datastream
 [Datastreams]: ../user-documentation/glossary.md#datastream
 [Derivative]: ../user-documentation/glossary.md#derivative

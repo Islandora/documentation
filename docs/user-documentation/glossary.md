@@ -91,6 +91,10 @@ Composer is a tool for dependency management in PHP. It allows you to declare th
 ## Crayfish
 A collection of Islandora [microservices](#microservice). Some microservices are built specifically for use with a [Fedora](#fedora-repository-software) repository, while others are just for general use within Islandora.
 
+## Crayfits
+Crayfits is a [microservice](#microservice) wrapper of [FITS](#fits) for identifying, validating and extracting of technical metadata for a wide range of file formats.
+
+
 ## Datastream
 Deprecated terminology, refers to how [Fedora 3](#fedora-repository-software)/Islandora Legacy stored files as part of a resource ('object') in the [Fedora](#fedora-repository-software) repository. Replaced by [Drupal Media entities](https://www.drupal.org/docs/8/core/modules/media/overview), which 'wraps' [Files](https://www.drupal.org/docs/8/core/modules/file/overview) in an intermediate structure. This allows Fields to be attached to files, for instance for storing technical metadata.
 
