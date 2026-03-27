@@ -3704,10 +3704,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#the-webserver-stack-apache-php-and-mysqlpostgresql" class="md-nav__link">
+  <a href="#the-webserver-stack-traefik-nginx-php-and-mariadbpostgresql" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The Webserver Stack - Apache, PHP, and MySQL/PostgreSQL
+        The Webserver Stack - Traefik, NGINX, PHP, and MariaDB/PostgreSQL
       
     </span>
   </a>
@@ -3737,10 +3737,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#the-back-end-file-management-repository-fedora-syn-and-blazegraph" class="md-nav__link">
+  <a href="#the-back-end-file-management-repository-fedora-and-blazegraph" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The Back-End File Management Repository - Fedora, Syn, and Blazegraph
+        The Back-End File Management Repository - Fedora and Blazegraph
       
     </span>
   </a>
@@ -3759,10 +3759,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#the-asynchronous-background-services-crayfish" class="md-nav__link">
+  <a href="#the-asynchronous-background-services-scyllaridae" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The Asynchronous Background Services - Crayfish
+        The Asynchronous Background Services - scyllaridae
       
     </span>
   </a>
@@ -4726,10 +4726,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#the-webserver-stack-apache-php-and-mysqlpostgresql" class="md-nav__link">
+  <a href="#the-webserver-stack-traefik-nginx-php-and-mariadbpostgresql" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The Webserver Stack - Apache, PHP, and MySQL/PostgreSQL
+        The Webserver Stack - Traefik, NGINX, PHP, and MariaDB/PostgreSQL
       
     </span>
   </a>
@@ -4759,10 +4759,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#the-back-end-file-management-repository-fedora-syn-and-blazegraph" class="md-nav__link">
+  <a href="#the-back-end-file-management-repository-fedora-and-blazegraph" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The Back-End File Management Repository - Fedora, Syn, and Blazegraph
+        The Back-End File Management Repository - Fedora and Blazegraph
       
     </span>
   </a>
@@ -4781,10 +4781,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#the-asynchronous-background-services-crayfish" class="md-nav__link">
+  <a href="#the-asynchronous-background-services-scyllaridae" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The Asynchronous Background Services - Crayfish
+        The Asynchronous Background Services - scyllaridae
       
     </span>
   </a>
@@ -4853,33 +4853,33 @@
 <li>Components that can't easily be swapped out but are not necessarily required (such as using Solr as the site's internal search engine)</li>
 <li>Components which do not have official alternatives and are not necessarily required, but will likely exist on the vast majority of Islandora installations (such as Alpaca and Crayfish)</li>
 </ul>
-<h2 id="the-webserver-stack-apache-php-and-mysqlpostgresql">The Webserver Stack - Apache, PHP, and MySQL/PostgreSQL<a class="headerlink" href="#the-webserver-stack-apache-php-and-mysqlpostgresql" title="Permanent link">&para;</a></h2>
-<p>Combined together, Apache, PHP, and MySQL/PostgreSQL comprise a LAMP or LAPP server used to provide end-user-facing components - namely, the website.</p>
-<p><strong>Apache</strong> is the webserver that will serve up webpages to the public. It will also manage some internal functionality provided by Crayfish, and will expose Cantaloupe to the public. We’ll be making changes to the VirtualHost entry, enabling some modules, and modifying the ports configuration. The VirtualHost entry will eventually be modified when we need to expose other services like Cantaloupe to the public.</p>
-<p><strong>PHP</strong> is the runtime interpreter for all the code Drupal and Crayfish need to be processed. By default, installing PHP 7.2 will give us a command-line interpreter, as well as an interpreter for Apache. We’re going to install several PHP modules required and/or useful for the components that make use of PHP.</p>
-<p><strong>MySQL</strong> and <strong>PostgreSQL</strong> are database management systems that we will use to store information for many different components like Drupal and Fedora. By default, the Ansible playbook installs MySQL, though this can be switched to PostgreSQL. The manual installation guide recommends and walks through installing and using PostgreSQL.</p>
+<h2 id="the-webserver-stack-traefik-nginx-php-and-mariadbpostgresql">The Webserver Stack - Traefik, NGINX, PHP, and MariaDB/PostgreSQL<a class="headerlink" href="#the-webserver-stack-traefik-nginx-php-and-mariadbpostgresql" title="Permanent link">&para;</a></h2>
+<p>Combined together, Apache, PHP, and MariaDB/PostgreSQL comprise a LAMP or LAPP server used to provide end-user-facing components - namely, the website.</p>
+<p><strong><a data-preview="" href="../../user-documentation/glossary/#traefik">Traefik</a></strong> acts as the Islandora stack's front-end proxy. It will terminate TLS and routes requests to services in the Islandora stack i.e. Drupal, Cantaloupe, and Fedora.</p>
+<p><strong><a data-preview="" href="../../user-documentation/glossary/#nginx">NGINX</a></strong> is the webserver that will serve up webpages to the public.</p>
+<p><strong>PHP</strong> is the runtime interpreter for all the code Drupal needs to be processed. By default, installing PHP 8.3 will give us a command-line interpreter, as well as an interpreter for NGINX. </p>
+<p><strong><a data-preview="" href="../../user-documentation/glossary/#mariadb">MariaDB</a></strong> and <strong><a data-preview="" href="../../user-documentation/glossary/#postgresql">PostgreSQL</a></strong> are database management systems that we will use to store information for many different components like Drupal and Fedora. By default, the [ISLE Site Template] installs MariaDB, though this can be switched to PostgreSQL.</p>
 <h2 id="the-front-facing-cdm-composer-drush-and-drupal">The Front-Facing CDM - Composer, Drush, and Drupal<a class="headerlink" href="#the-front-facing-cdm-composer-drush-and-drupal" title="Permanent link">&para;</a></h2>
-<p>Composer will be used to install both Drupal and Drush simultaneously using Islandora's fork of the <a href="https://github.com/Islandora/drupal-project">drupal-project</a> repository.</p>
-<p><strong>Composer</strong> is an installer and dependency manager for PHP projects. We're going to need it to install components for any PHP code we need to make use of, including Drupal and Crayfish.</p>
-<p><strong>Drush</strong> and <strong>Drupal</strong> are installed simultaneously using <a href="https://github.com/Islandora/drupal-project">drupal-project</a>. Drupal will serve up webpages and manage Islandora content, and Drush will help us get some things done from the command-line.</p>
+<p>Composer will be used to install both Drupal and Drush simultaneously using <a data-preview="" href="../../user-documentation/glossary/#islandora-starter-site">Islandora Starter Site</a></p>
+<p><strong><a data-preview="" href="../../user-documentation/glossary/#composer">Composer</a></strong> is an installer and dependency manager for PHP projects. We're going to need it to install components for Drupal.</p>
+<p><strong><a data-preview="" href="../../user-documentation/glossary/#drush">Drush</a></strong> and <strong><a data-preview="" href="../../user-documentation/glossary/#drupal">Drupal</a></strong> are installed simultaneously using <a data-preview="" href="../../user-documentation/glossary/#composer">Composer</a>. Drupal will serve up webpages and manage Islandora content, and Drush will help us get some things done from the command-line.</p>
 <h2 id="the-web-application-server-tomcat-and-cantaloupe">The Web Application Server - Tomcat and Cantaloupe<a class="headerlink" href="#the-web-application-server-tomcat-and-cantaloupe" title="Permanent link">&para;</a></h2>
-<p>Several applets will be deployed via their <code>.war</code> files into Tomcat, including Fedora and Cantaloupe.</p>
-<p><strong>Tomcat</strong> serves up webpages and other kinds of content much like Apache, but is specifically designed to deploy Java applications as opposed to running PHP code.</p>
-<p><strong>Cantaloupe</strong> is an image tileserver that Islandora will connect to and use to serve up extremely large images in a way that doesn't have an adverse effect on the overall system.</p>
-<h2 id="the-back-end-file-management-repository-fedora-syn-and-blazegraph">The Back-End File Management Repository - Fedora, Syn, and Blazegraph<a class="headerlink" href="#the-back-end-file-management-repository-fedora-syn-and-blazegraph" title="Permanent link">&para;</a></h2>
+<p>Several applets will be deployed via their <code>.war</code> files into Tomcat, including <a data-preview="" href="../../user-documentation/glossary/#fedora-repository-software">Fedora (Repository Software)</a> and <a data-preview="" href="../../user-documentation/glossary/#cantaloupe">Cantaloupe</a>.</p>
+<p><strong><a data-preview="" href="../../user-documentation/glossary/#tomcat">Tomcat</a></strong> serves up webpages and other kinds of content much like NGINX, but is specifically designed to deploy Java applications as opposed to running PHP code.</p>
+<p><strong><a data-preview="" href="../../user-documentation/glossary/#cantaloupe">Cantaloupe</a></strong> is an image tileserver that Islandora will connect to and use to serve up extremely large images in a way that doesn't have an adverse effect on the overall system.</p>
+<h2 id="the-back-end-file-management-repository-fedora-and-blazegraph">The Back-End File Management Repository - Fedora and Blazegraph<a class="headerlink" href="#the-back-end-file-management-repository-fedora-and-blazegraph" title="Permanent link">&para;</a></h2>
 <p>Fedora will be installed in its own section, rather than as part of the Tomcat installation, as the installation process is rather involved and requires some authorization pieces to be set up in order to connect them back to Drupal and other components.</p>
-<p><strong>Fedora</strong> is the default backend repository that Islandora content will be synchronized with and stored in. A great deal of configuration will be required to get it up and running, including ensuring a database is created and accessible.</p>
-<p><strong>Syn</strong> is the authorization piece that allows Fedora to connect to other components.</p>
-<p><strong>Blazegraph</strong> will store representative graph data about the repository that can be queried using SPARQL. Some configuration will also be required to link it back to Fedora, as well as to ensure it is being properly indexed.</p>
+<p><strong><a data-preview="" href="../../user-documentation/glossary/#fedora-repository-software">Fedora (Repository Software)</a></strong> is the default backend repository that Islandora content will be synchronized with and stored in. A great deal of configuration will be required to get it up and running, including ensuring a database is created and accessible.</p>
+<p><strong><a data-preview="" href="../../user-documentation/glossary/#blazegraph">Blazegraph</a></strong> will store representative graph data about the repository that can be queried using SPARQL. Some configuration will also be required to link it back to Fedora, as well as to ensure it is being properly indexed.</p>
 <h2 id="the-search-engine-solr-and-search_api_solr">The Search Engine - Solr and search_api_solr<a class="headerlink" href="#the-search-engine-solr-and-search_api_solr" title="Permanent link">&para;</a></h2>
 <p>The installation of Solr itself is rather straightforward, but a configuration will have to be generated and applied from the Drupal side.</p>
-<p><strong>Solr</strong> will be installed as a standalone application. Nothing of particular importance needs to happen here; the configuration will be applied when <code>search_api_solr</code> is installed.</p>
+<p><strong><a data-preview="" href="../../user-documentation/glossary/#solr">Solr</a></strong> will be installed as a standalone application. Nothing of particular importance needs to happen here; the configuration will be applied when <code>search_api_solr</code> is installed.</p>
 <p><strong>search_api_solr</strong> is the Drupal module that implements the Solr API for Drupal-side searches. After installing and configuring the module, the <code>drush solr-gsc</code> command will be used to generate Solr configs, and these configs will be moved to the Solr configuration location.</p>
-<h2 id="the-asynchronous-background-services-crayfish">The Asynchronous Background Services - Crayfish<a class="headerlink" href="#the-asynchronous-background-services-crayfish" title="Permanent link">&para;</a></h2>
-<p><strong>Crayfish</strong> is a series of microservices that perform different asynchronous tasks kicked off by Islandora. It contains a series of submodules that will be installed via Composer. Later, these configured components will be connected to Alpaca.</p>
+<h2 id="the-asynchronous-background-services-scyllaridae">The Asynchronous Background Services - scyllaridae<a class="headerlink" href="#the-asynchronous-background-services-scyllaridae" title="Permanent link">&para;</a></h2>
+<p><strong><a data-preview="" href="../../user-documentation/glossary/#scyllaridae">scyllaridae</a></strong> is a series of microservices that perform different asynchronous tasks kicked off by Islandora. It contains a series of submodules that will be installed via Composer. Later, these configured components will be connected to Alpaca.</p>
 <h2 id="the-broker-connecting-everything-karaf-and-alpaca">The Broker Connecting Everything - Karaf and Alpaca<a class="headerlink" href="#the-broker-connecting-everything-karaf-and-alpaca" title="Permanent link">&para;</a></h2>
 <p><strong>Karaf</strong>’s job is similar to Tomcat, except where Tomcat is a web-accessible endpoint for Java applets, Karaf is simply meant to be a container for system-level applets to communicate via its OSGI. Alpaca is one such applet; it will broker messages between Fedora and Drupal, and between Drupal and various derivative generation applications.</p>
-<p><strong>Alpaca</strong> contains Karaf services to manage moving information between Islandora, Fedora, and Blazegraph as well as kicking off derivative services in Crayfish. These will be configured to broker between Drupal and Fedora using an ActiveMQ queue.</p>
+<p><strong><a data-preview="" href="../../user-documentation/glossary/#alpaca">Alpaca</a></strong> contains Karaf services to manage moving information between Islandora, Fedora, and Blazegraph as well as kicking off derivative services in Crayfish. These will be configured to broker between Drupal and Fedora using an ActiveMQ queue.</p>
 <h2 id="finalized-drupal-configurations">Finalized Drupal Configurations<a class="headerlink" href="#finalized-drupal-configurations" title="Permanent link">&para;</a></h2>
 <p><strong>Drupal configuration</strong> exists as a series of .yaml files that can either be created in a feature, or exported from Drupal using the <code>content_sync</code> module. It can also be manually entered in via the UI. We're going to place configuration in a few different ways; Some content will be synchronized onto the site, and some core configurations from the main Islandora module will need to be run in order to facilitate ingest.</p>
 
