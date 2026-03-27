@@ -22,7 +22,7 @@ Combined together, Apache, PHP, and MariaDB/PostgreSQL comprise a LAMP or LAPP s
 
 **[MariaDB]** and **[PostgreSQL]** are database management systems that we will use to store information for many different components like Drupal and Fedora. By default, the [ISLE Site Template] installs MariaDB, though this can be switched to PostgreSQL.
 
-## The Front-Facing CDM - Composer, Drush, and Drupal
+## Composer, Drush, and Drupal
 
 Composer will be used to install both Drupal and Drush simultaneously using [Islandora Starter Site]
 
