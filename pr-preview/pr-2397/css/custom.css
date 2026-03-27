@@ -49,6 +49,56 @@
   100%  { stroke-dashoffset: 900; }
 }
 
+.mermaid-expandable {
+  cursor: zoom-in;
+}
+
+.mermaid-expandable:focus-visible {
+  outline: 2px solid var(--md-accent-fg-color);
+  outline-offset: 0.3rem;
+}
+
+.mermaid-lightbox {
+  background: transparent;
+  border: 0;
+  max-width: min(96vw, 1400px);
+  padding: 0;
+  width: 96vw;
+}
+
+.mermaid-lightbox::backdrop {
+  background: rgba(0, 0, 0, 0.72);
+}
+
+.mermaid-lightbox__frame {
+  background: var(--md-default-bg-color);
+  border-radius: 0.6rem;
+  box-shadow: var(--md-shadow-z3);
+  max-height: 90vh;
+  overflow: hidden;
+}
+
+.mermaid-lightbox__close {
+  appearance: none;
+  background: transparent;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  cursor: pointer;
+  display: block;
+  margin: 1rem 1rem 0 auto;
+  padding: 0.35rem 0.75rem;
+}
+
+.mermaid-lightbox__body {
+  overflow: auto;
+  padding: 1rem;
+}
+
+.mermaid-lightbox__body svg {
+  display: block;
+  margin: 0 auto;
+}
+
 /** Play / Pause / Restart controls injected below animated diagrams **/
 .mermaid-controls {
   display: flex;
