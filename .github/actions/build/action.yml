@@ -1,17 +1,13 @@
 ---
 name: Build
 description: Setup to install dependencies and build docs with zensical
+inputs:
+  site_url:
+    description: 'Override site_url (e.g. for PR previews)'
+    required: false
+    default: "https://islandora.github.io/documentation/"
 runs:
   using: "composite"
   steps:
-    - name: Setup build environment
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.x'
-        cache: 'pip'
-    - name: Install build requirements
+    - run: make build SITE_URL="${{ inputs.site_url }}"
       shell: bash
-      run: pip install -r requirements.txt
-    - name: Build docs
-      shell: bash
-      run: zensical build

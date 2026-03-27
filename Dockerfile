@@ -8,5 +8,5 @@ RUN apk add --no-cache git && \
 
 EXPOSE 8080
 
-ENTRYPOINT ["zensical", "serve"]
-CMD ["--dev-addr", "0.0.0.0:8080"]
+ENTRYPOINT ["zensical"]
+CMD ["serve", "--dev-addr", "0.0.0.0:8080"]

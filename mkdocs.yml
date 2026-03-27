@@ -3,12 +3,14 @@ site_description: Documentation for Islandora
 
 dev_addr: 'localhost:8111'
 repo_url: https://github.com/Islandora/documentation
-site_url: https://islandora.github.io/documentation/
+site_url: !ENV [SITE_URL, 'https://islandora.github.io/documentation/']
 edit_uri: 'edit/main/docs/'
 
 theme:
   name: material
   features:
+    - navigation.instant
+    - navigation.instant.prefetch
     - content.action.edit
     - content.action.view
     - content.code.annotate
