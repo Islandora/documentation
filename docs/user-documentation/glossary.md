@@ -94,7 +94,6 @@ A collection of Islandora [microservices](#microservice). Some microservices are
 ## Crayfits
 Crayfits is a [microservice](#microservice) wrapper of [FITS](#fits) for identifying, validating and extracting of technical metadata for a wide range of file formats.
 
-
 ## Datastream
 Deprecated terminology, refers to how [Fedora 3](#fedora-repository-software)/Islandora Legacy stored files as part of a resource ('object') in the [Fedora](#fedora-repository-software) repository. Replaced by [Drupal Media entities](https://www.drupal.org/docs/8/core/modules/media/overview), which 'wraps' [Files](https://www.drupal.org/docs/8/core/modules/file/overview) in an intermediate structure. This allows Fields to be attached to files, for instance for storing technical metadata.
 
@@ -103,6 +102,9 @@ A version of a file which is derived from an uploaded file. For example, a thumb
 
 ## Docker
 [Docker](https://www.docker.com/) is a platform that use OS-level virtualization to deliver software in packages called containers. Islandora uses Docker as part of [ISLE](#isle), a suite of Docker containers that run the various components of Islandora.
+
+## Docker Compose
+[Docker Compose](https://docs.docker.com/compose/) is a tool for defining and running multi-container applications. It is the key to unlocking a streamlined and efficient development and deployment experience.
 
 ## Drupal
 Drupal is an open source web content management system (CMS) written in PHP. Known for being extremely flexible and extensible, Drupal is supported by a community of over 630,000 users and developers. Drupal sites can be customized and themed in a wide variety of ways. Drupal sites must include [Drupal Core](#drupal-core) and usually involve additional, Contributed code.
@@ -114,7 +116,6 @@ The files, themes, profile, and modules included with the standard project softw
 Roles are a way of assigning specific permissions to a group of users. Any user assigned to a role will have the same permissions as all other users assigned to that role. This allows you to control which users have permission to view, edit, or delete content in [Drupal](#drupal). Islandora provides a special role called _fedoraAdmin_ that is required to have actions in Drupal reflected in [Fedora](#fedora-repository-software).
 
 ## Drush
-
 Drush is a command line shell and Unix scripting interface for Drupal. Drush core ships with lots of [useful commands](https://www.drush.org/13.x/commands/all/) and [generators](https://www.drush.org/13.x/generators/all/). Similarly, it runs update.php, executes SQL queries, runs content migrations, and misc utilities like cron or cache rebuild. Drush can be extended by [3rd party commandfiles](https://www.drupal.org/project/project_module?f[2]=im_vid_3%3A4654).
 
 [https://www.drush.org/](https://www.drush.org/)
@@ -253,6 +254,15 @@ A set of human-readable [YAML](#yaml) files, containing instructions for automat
 
 ## ISLE
 ISLE, or ISLandora Enterprise, is a community initiative to ease the installation and maintenance of Islandora by using [Docker](#docker). ISLE is one of the installation methods currently supported by the Islandora community.
+
+## ISLE Site Template
+[ISLE Site Template](https://github.com/Islandora-Devops/isle-site-template) is a [Docker Compose] project provided in [a GitHub Template](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template). The project is used for building and customizing your institution's Islandora installation, for use as both a development and production environment.
+
+Creating a GitHub repository from a template is similar to [forking a git repository](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo), but there are important differences:
+
+- A new GitHub fork includes the entire commit history of the parent git repository, while a git repository created from a template starts with a single commit.
+- A GitHub fork can be a temporary way to contribute code to an existing project, while creating a git repository from a template starts a **new** project quickly.
+
 
 ## JSON-LD
 [JSON-LD (JavaScript Object Notation for Linked Data)](https://json-ld.org/) is a method of encoding [linked data](#linked-data) using JSON.

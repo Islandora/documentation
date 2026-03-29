@@ -47,6 +47,8 @@
 [Derivatives]: ../user-documentation/glossary.md#derivative
 [Docker]: ../user-documentation/glossary.md#docker
 [Dockers]: ../user-documentation/glossary.md#docker
+[Docker Compose]: ../user-documentation/glossary.md#docker-compose
+[Docker Composes]: ../user-documentation/glossary.md#docker-compose
 [Drupal]: ../user-documentation/glossary.md#drupal
 [Drupals]: ../user-documentation/glossary.md#drupal
 [Drupal Core]: ../user-documentation/glossary.md#drupal-core
@@ -108,6 +110,8 @@
 [Islandora playbooks]: ../user-documentation/glossary.md#islandora-playbook
 [ISLE]: ../user-documentation/glossary.md#isle
 [ISLEs]: ../user-documentation/glossary.md#isle
+[ISLE Site Template]: ../user-documentation/glossary.md#isle-site-emplate
+[ISLE Site Templates]: ../user-documentation/glossary.md#isle-site-emplate
 [JSON-LD]: ../user-documentation/glossary.md#json-ld
 [JSON-LDs]: ../user-documentation/glossary.md#json-ld
 [Linked data]: ../user-documentation/glossary.md#linked-data

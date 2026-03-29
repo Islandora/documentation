@@ -9,9 +9,9 @@ This list includes four different kinds of components:
 - Components that can't easily be swapped out but are not necessarily required (such as using Solr as the site's internal search engine)
 - Components which do not have official alternatives and are not necessarily required, but will likely exist on the vast majority of Islandora installations (such as Alpaca and Crayfish)
 
-## The Webserver Stack - Traefik, NGINX, PHP, and MariaDB/PostgreSQL
+## The Webserver Stack - Traefik, NGINX, PHP, and MariaDB (or PostgreSQL)
 
-Combined together, [Traefik], [NGINX], PHP, and [MariaDB] or [PostgreSQL] comprise a solution stack used to provide end-user-facing components - namely, the website.```
+Combined together, [Traefik], [NGINX], PHP, and [MariaDB] (or [PostgreSQL]) comprise a solution stack used to provide end-user-facing components - namely, the website.```
 
 **[Traefik]** acts as the Islandora stack's front-end proxy. It will terminate TLS and routes requests to services in the Islandora stack i.e. Drupal, Cantaloupe, and Fedora.
 
