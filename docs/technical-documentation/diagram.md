@@ -200,5 +200,5 @@ The following components are deployed with Islandora, but are developed and main
 * [MariaDB]
 * [NGINX]
 * [PostgreSQL]
-* Triplestore - See [Blazegraph]
 * [Traefik]
+* Triplestore - See [Blazegraph]
