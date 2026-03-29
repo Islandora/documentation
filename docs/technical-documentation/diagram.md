@@ -198,4 +198,7 @@ The following components are deployed with Islandora, but are developed and main
 * [FITS]
 * [Fedora (Repository Software)]
 * [MariaDB]
-* Triplestore - See [Blazegraph].
+* [NGINX]
+* [PostgreSQL]
+* Triplestore - See [Blazegraph]
+* [Traefik]
