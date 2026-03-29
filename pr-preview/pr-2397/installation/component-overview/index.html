@@ -3704,10 +3704,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#the-webserver-stack-traefik-nginx-php-and-mariadbpostgresql" class="md-nav__link">
+  <a href="#the-webserver-stack-traefik-nginx-php-and-mariadb-or-postgresql" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The Webserver Stack - Traefik, NGINX, PHP, and MariaDB/PostgreSQL
+        The Webserver Stack - Traefik, NGINX, PHP, and MariaDB (or PostgreSQL)
       
     </span>
   </a>
@@ -4726,10 +4726,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#the-webserver-stack-traefik-nginx-php-and-mariadbpostgresql" class="md-nav__link">
+  <a href="#the-webserver-stack-traefik-nginx-php-and-mariadb-or-postgresql" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The Webserver Stack - Traefik, NGINX, PHP, and MariaDB/PostgreSQL
+        The Webserver Stack - Traefik, NGINX, PHP, and MariaDB (or PostgreSQL)
       
     </span>
   </a>
@@ -4853,12 +4853,12 @@
 <li>Components that can't easily be swapped out but are not necessarily required (such as using Solr as the site's internal search engine)</li>
 <li>Components which do not have official alternatives and are not necessarily required, but will likely exist on the vast majority of Islandora installations (such as Alpaca and Crayfish)</li>
 </ul>
-<h2 id="the-webserver-stack-traefik-nginx-php-and-mariadbpostgresql">The Webserver Stack - Traefik, NGINX, PHP, and MariaDB/PostgreSQL<a class="headerlink" href="#the-webserver-stack-traefik-nginx-php-and-mariadbpostgresql" title="Permanent link">&para;</a></h2>
-<p>Combined together, <a data-preview="" href="../../user-documentation/glossary/#traefik">Traefik</a>, <a data-preview="" href="../../user-documentation/glossary/#nginx">NGINX</a>, PHP, and <a data-preview="" href="../../user-documentation/glossary/#mariadb">MariaDB</a> or <a data-preview="" href="../../user-documentation/glossary/#postgresql">PostgreSQL</a> comprise a solution stack used to provide end-user-facing components - namely, the website.```</p>
+<h2 id="the-webserver-stack-traefik-nginx-php-and-mariadb-or-postgresql">The Webserver Stack - Traefik, NGINX, PHP, and MariaDB (or PostgreSQL)<a class="headerlink" href="#the-webserver-stack-traefik-nginx-php-and-mariadb-or-postgresql" title="Permanent link">&para;</a></h2>
+<p>Combined together, <a data-preview="" href="../../user-documentation/glossary/#traefik">Traefik</a>, <a data-preview="" href="../../user-documentation/glossary/#nginx">NGINX</a>, PHP, and <a data-preview="" href="../../user-documentation/glossary/#mariadb">MariaDB</a> (or <a data-preview="" href="../../user-documentation/glossary/#postgresql">PostgreSQL</a>) comprise a solution stack used to provide end-user-facing components - namely, the website.```</p>
 <p><strong><a data-preview="" href="../../user-documentation/glossary/#traefik">Traefik</a></strong> acts as the Islandora stack's front-end proxy. It will terminate TLS and routes requests to services in the Islandora stack i.e. Drupal, Cantaloupe, and Fedora.</p>
 <p><strong><a data-preview="" href="../../user-documentation/glossary/#nginx">NGINX</a></strong> is the webserver that will serve up webpages to the public.</p>
 <p><strong>PHP</strong> is the runtime interpreter for all the code Drupal needs to be processed. By default, installing PHP 8.3 will give us a command-line interpreter, as well as an interpreter for NGINX. </p>
-<p><strong><a data-preview="" href="../../user-documentation/glossary/#mariadb">MariaDB</a></strong> and <strong><a data-preview="" href="../../user-documentation/glossary/#postgresql">PostgreSQL</a></strong> are database management systems that we will use to store information for many different components like Drupal and Fedora. By default, the [ISLE Site Template] installs MariaDB, though this can be switched to PostgreSQL.</p>
+<p><strong><a data-preview="" href="../../user-documentation/glossary/#mariadb">MariaDB</a></strong> and <strong><a data-preview="" href="../../user-documentation/glossary/#postgresql">PostgreSQL</a></strong> are database management systems that we will use to store information for many different components like Drupal and Fedora. By default, the <a data-preview="" href="../../user-documentation/glossary/#isle-site-emplate">ISLE Site Template</a> installs MariaDB, though this can be switched to PostgreSQL.</p>
 <h2 id="composer-drush-and-drupal">Composer, Drush, and Drupal<a class="headerlink" href="#composer-drush-and-drupal" title="Permanent link">&para;</a></h2>
 <p>Composer will be used to install both Drupal and Drush simultaneously using <a data-preview="" href="../../user-documentation/glossary/#islandora-starter-site">Islandora Starter Site</a></p>
 <p><strong><a data-preview="" href="../../user-documentation/glossary/#composer">Composer</a></strong> is an installer and dependency manager for PHP projects. We're going to need it to install components for Drupal.</p>
