@@ -4854,7 +4854,7 @@
 <li>Components which do not have official alternatives and are not necessarily required, but will likely exist on the vast majority of Islandora installations (such as Alpaca and Crayfish)</li>
 </ul>
 <h2 id="the-webserver-stack-traefik-nginx-php-and-mariadbpostgresql">The Webserver Stack - Traefik, NGINX, PHP, and MariaDB/PostgreSQL<a class="headerlink" href="#the-webserver-stack-traefik-nginx-php-and-mariadbpostgresql" title="Permanent link">&para;</a></h2>
-<p>Combined together, Apache, PHP, and MariaDB/PostgreSQL comprise a LAMP or LAPP server used to provide end-user-facing components - namely, the website.</p>
+<p>Combined together, <a data-preview="" href="../../user-documentation/glossary/#traefik">Traefik</a>, <a data-preview="" href="../../user-documentation/glossary/#nginx">NGINX</a>, PHP, and <a data-preview="" href="../../user-documentation/glossary/#mariadb">MariaDB</a> or <a data-preview="" href="../../user-documentation/glossary/#postgresql">PostgreSQL</a> comprise a solution stack used to provide end-user-facing components - namely, the website.```</p>
 <p><strong><a data-preview="" href="../../user-documentation/glossary/#traefik">Traefik</a></strong> acts as the Islandora stack's front-end proxy. It will terminate TLS and routes requests to services in the Islandora stack i.e. Drupal, Cantaloupe, and Fedora.</p>
 <p><strong><a data-preview="" href="../../user-documentation/glossary/#nginx">NGINX</a></strong> is the webserver that will serve up webpages to the public.</p>
 <p><strong>PHP</strong> is the runtime interpreter for all the code Drupal needs to be processed. By default, installing PHP 8.3 will give us a command-line interpreter, as well as an interpreter for NGINX. </p>
