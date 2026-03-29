@@ -11,7 +11,7 @@ This list includes four different kinds of components:
 
 ## The Webserver Stack - Traefik, NGINX, PHP, and MariaDB/PostgreSQL
 
-Combined together, Apache, PHP, and MariaDB/PostgreSQL comprise a LAMP or LAPP server used to provide end-user-facing components - namely, the website.
+Combined together, [Traefik], [NGINX], PHP, and [MariaDB] or [PostgreSQL] comprise a solution stack used to provide end-user-facing components - namely, the website.```
 
 **[Traefik]** acts as the Islandora stack's front-end proxy. It will terminate TLS and routes requests to services in the Islandora stack i.e. Drupal, Cantaloupe, and Fedora.
 
