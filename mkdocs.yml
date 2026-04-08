@@ -21,24 +21,8 @@ theme:
     - content.tooltips
     - search.highlight
   palette:
-    - media: "(prefers-color-scheme)"
-      toggle:
-        icon: lucide/sun-moon
-        name: Switch to light mode
-    - media: "(prefers-color-scheme: light)"
-      scheme: default
-      primary: indigo
-      accent: indigo
-      toggle:
-        icon: lucide/sun
-        name: Switch to dark mode
-    - media: "(prefers-color-scheme: dark)"
-      scheme: slate
-      primary: indigo
-      accent: orange
-      toggle:
-        icon: lucide/moon-star
-        name: Switch to system preference
+    primary: green
+    accent: blue
   icon:
     tag:
       default: lucide/hash
