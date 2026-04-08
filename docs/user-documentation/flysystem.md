@@ -1,6 +1,6 @@
 # Flysystem
 
-Islandora uses [Flysystem](https://github.com/thephpleague/flysystem) and the [associated Drupal module](https://www.drupal.org/project/flysystem) to persist binary files to Fedora instead of keeping a copy in both Drupal and Fedora.
+Islandora uses [Flysystem] and the [associated Drupal module](https://www.drupal.org/project/flysystem) to persist binary files to Fedora instead of keeping a copy in both Drupal and [Fedora (Repository Software)].
 
 ## Background
 
