@@ -110,8 +110,8 @@
 [Islandora playbooks]: ../user-documentation/glossary.md#islandora-playbook
 [ISLE]: ../user-documentation/glossary.md#isle
 [ISLEs]: ../user-documentation/glossary.md#isle
-[ISLE Site Template]: ../user-documentation/glossary.md#isle-site-emplate
-[ISLE Site Templates]: ../user-documentation/glossary.md#isle-site-emplate
+[ISLE Site Template]: ../user-documentation/glossary.md#isle-site-template
+[ISLE Site Templates]: ../user-documentation/glossary.md#isle-site-template
 [JSON-LD]: ../user-documentation/glossary.md#json-ld
 [JSON-LDs]: ../user-documentation/glossary.md#json-ld
 [Linked data]: ../user-documentation/glossary.md#linked-data
