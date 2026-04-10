@@ -35,7 +35,3 @@ kinds of commands that will be a key part of running and maintaining Islandora.
       configuration, service settings, Drupal modules, themes, and site configuration. Your
       custom Drupal codebase is part of the repository and gets built into a custom Docker
       image. 
-
-[ISLE Site Template]: ../../../user-documentation/glossary.md#isle-site-template
-[Docker Compose]: ../../../user-documentation/glossary.md#docker-compose
-[Islandora Starter Site]: ../../../user-documentation/glossary.md#islandora-starter-site
