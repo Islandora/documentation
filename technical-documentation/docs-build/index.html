@@ -4770,7 +4770,7 @@
 <blockquote>
 <p>The Snippets extension can be used to implement a simple glossary by moving all abbreviations in a dedicated file, and auto-append this file to all pages.</p>
 </blockquote>
-<p>Our docs are configured so any term in <a href="https://islandora.github.io/documentation/user-documentation/glossary/">Islandora's Glossary</a> can be referenced in any markdown file by wrapping the term in brackets <code>[]</code>. Adding brackets to a term will add a rich snippet for the term when someone hovers their mouse over the word. A snippet provides the definition of a term without needing to look it up in the glossary.</p>
+<p>Our docs are configured so any term in <a data-preview="" href="https://islandora.github.io/documentation/user-documentation/glossary/">Islandora's Glossary</a> can be referenced in any markdown file by wrapping the term in brackets <code>[]</code>. Adding brackets to a term will add a rich snippet for the term when someone hovers their mouse over the word. A snippet provides the definition of a term without needing to look it up in the glossary.</p>
 <p>If you a create a new term in <code>glossary.md</code> you can run the following <code>make</code> helper to get the snippets to work properly. Namely, it populates <code>./includes/abbreviations.md</code> with the correct markdown to the glossary terms so docs can reference them. This also runs in GitHub Actions before deploying incase this step is forgotten by a docs editor.</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>make abbreviations
 </span></code></pre></div>
