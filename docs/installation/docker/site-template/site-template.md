@@ -2,8 +2,8 @@
 
 ## What is the ISLE Site Template?
 
-The [ISLE Site Template][ISLE Site Template] is a system for installing
-Islandora on Docker. As with ISLE-DC, it uses [Docker Compose][Docker Compose]
+The [ISLE Site Template] is a system for installing
+Islandora on Docker. As with ISLE-DC, it uses [Docker Compose]
 to orchestrate the installation of all the different services (Docker
 containers) that make up Islandora. Unlike ISLE-DC, in ISLE Site Template you
 use Docker Compose commands directly, helping you to get familiar with the
@@ -15,7 +15,7 @@ kinds of commands that will be a key part of running and maintaining Islandora.
     * Click the green "Use this template" button on the [ISLE Site Template][ISLE Site Template]
       repository to create your own copy. This creates a new repository in your GitHub account
       with the same directory structure and files, including a pre-installed copy of the
-      [Islandora Starter Site][Islandora Starter Site].
+      [Islandora Starter Site].
 
 2. **Clone your new repository**
     * After creating your repository from the template, clone it to your local machine or server.
@@ -35,7 +35,3 @@ kinds of commands that will be a key part of running and maintaining Islandora.
       configuration, service settings, Drupal modules, themes, and site configuration. Your
       custom Drupal codebase is part of the repository and gets built into a custom Docker
       image. 
-
-[ISLE Site Template]: https://github.com/Islandora-Devops/isle-site-template
-[Docker Compose]: https://docs.docker.com/compose/ 
-[Islandora Starter Site]: https://github.com/Islandora-Devops/islandora-starter-site

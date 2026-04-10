@@ -29,6 +29,7 @@ theme:
   logo: 'assets/Islandora_logo.png'
 
 markdown_extensions:
+  - zensical_hooks
   - abbr
   - admonition
   - attr_list
@@ -80,7 +81,6 @@ markdown_extensions:
   - pymdownx.tasklist:
       custom_checkbox: true
   - pymdownx.tilde
-
 
 extra_css:
   - css/custom.css
