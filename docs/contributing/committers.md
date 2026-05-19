@@ -42,7 +42,6 @@ The following is an alphabetized list of the current Islandora committers:
 | Annie Oelschlager           | Northern Illinois University          | aOelschlager   |
 | Alexander O'Neill           | Born-Digital                          | alxp           |
 | Don Richards                | Johns Hopkins University              | DonRichards    |
-| Seth Shaw                   | University of Nevada, Las Vegas       | seth-shaw-unlv |
 | Alan Stanley                | Agile Humanities                      | ajstanley      |
 | Yamil Suarez                | Berklee College of Music              | ysuarez        |
 | Adam Vessey                 | discoverygarden                       | adam-vessey    |
@@ -65,6 +64,7 @@ The following is an alphabetized list of the prior Islandora committers:
 | Paul Pound                  | University of Prince Edward Island|
 | Nick Ruest                  | York University                   |
 | Bethany Seeger              | Johns Hopkins University          |
+| Seth Shaw                   | University of Nevada, Las Vegas & Arizona State University |
 | Jared Whiklo                | University of Manitoba            |
 | Eli Zoller                  | Arizona State University          |
 
