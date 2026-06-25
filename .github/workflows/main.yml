@@ -7,6 +7,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Create or Update Project Card
-        uses: peter-evans/create-or-update-project-card@v2
+        uses: peter-evans/create-or-update-project-card@v3
         with:
           project-name: Islandora Issues Queue
