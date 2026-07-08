@@ -26,7 +26,7 @@ The default dev environment uses `http` rather than `https`. Running `https` in 
 
 ### Default domain
 
-Using `http` also forced moving away from `islandora.dev`... HSTS rules in Google Chrome in particular do not allow accessing `*.dev` domains over http. So the default development domain is now `islandora.traefik.me`
+Using `http` also forced moving away from `islandora.dev`... HSTS rules in Google Chrome in particular do not allow accessing `*.dev` domains over http. So the default development domain is now `islandora.io`
 
 ### traefik labels to YML
 
@@ -268,7 +268,7 @@ If you want to keep running TLS in your dev environment you can run this make he
 make traefik-https-mkcert
 ```
 
-Otherwise, be sure your `DOMAIN` value in `.env` is `islandora.traefik.me` and be aware your dev site is available at http://islandora.traefik.me
+Otherwise, be sure your `DOMAIN` value in `.env` is `islandora.io` and be aware your dev site is available at http://islandora.io
 
 Now, bring up your services. In a development environment, after running `make up` your ISLE site should be available at `${URI_SCHEME}://${DOMAIN}` (the actual value will print after running make up depending on your settings).
 
