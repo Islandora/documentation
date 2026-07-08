@@ -5226,7 +5226,7 @@
 <h3 id="default-to-http">Default to HTTP<a class="headerlink" href="#default-to-http" title="Permanent link">&para;</a></h3>
 <p>The default dev environment uses <code>http</code> rather than <code>https</code>. Running <code>https</code> in development environments has proven difficult to support for various host setups. For example, in production some institutions have TLS terminated in front of ISLE (having ISLE act as a backend on a frontend reverse proxy) so having better support around switching from TLS to HTTP seemed warranted. To help with this there are some new <code>make</code> commands to allow switching between http, tls-mkcert, and tls-letsencrypt easier.</p>
 <h3 id="default-domain">Default domain<a class="headerlink" href="#default-domain" title="Permanent link">&para;</a></h3>
-<p>Using <code>http</code> also forced moving away from <code>islandora.dev</code>... HSTS rules in Google Chrome in particular do not allow accessing <code>*.dev</code> domains over http. So the default development domain is now <code>islandora.traefik.me</code></p>
+<p>Using <code>http</code> also forced moving away from <code>islandora.dev</code>... HSTS rules in Google Chrome in particular do not allow accessing <code>*.dev</code> domains over http. So the default development domain is now <code>islandora.io</code></p>
 <h3 id="traefik-labels-to-yml">traefik labels to YML<a class="headerlink" href="#traefik-labels-to-yml" title="Permanent link">&para;</a></h3>
 <p>Traefik labels have moved from docker compose YML and into <a href="https://doc.traefik.io/traefik/reference/install-configuration/providers/others/file/">dynamic traefik templates</a> to make configuring traefik easier and more centralized. The traefik configuration is found in <code>./conf/traefik</code></p>
 <h3 id="smart-port-allocation">smart port allocation<a class="headerlink" href="#smart-port-allocation" title="Permanent link">&para;</a></h3>
@@ -5408,7 +5408,7 @@ Replace: <code>ISLANDORA_TAG=</code></p>
 <p>If you want to keep running TLS in your dev environment you can run this make helper to switch to <code>https</code>:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>make traefik-https-mkcert
 </span></code></pre></div>
-<p>Otherwise, be sure your <code>DOMAIN</code> value in <code>.env</code> is <code>islandora.traefik.me</code> and be aware your dev site is available at <a href="http://islandora.traefik.me">http://islandora.traefik.me</a></p>
+<p>Otherwise, be sure your <code>DOMAIN</code> value in <code>.env</code> is <code>islandora.io</code> and be aware your dev site is available at <a href="http://islandora.io">http://islandora.io</a></p>
 <p>Now, bring up your services. In a development environment, after running <code>make up</code> your ISLE site should be available at <code>${URI_SCHEME}://${DOMAIN}</code> (the actual value will print after running make up depending on your settings).</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
