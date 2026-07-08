@@ -18,7 +18,7 @@ The `make up` command handles:
 - Building the custom Drupal Docker image
 - Starting all services with smart port allocation
 
-By default, your site will be available at `http://islandora.traefik.me` (which resolves to 127.0.0.1).
+By default, your site will be available at `http://islandora.io` (which resolves to 127.0.0.1).
 
 ## Custom Drupal Image
 
@@ -55,32 +55,7 @@ If you need more fine-grained control, you can create a `docker-compose.override
 
 If you are spinning up a new site for testing, you can add some demo content to your site by running
 ```
-[ -d "islandora_workbench" ] || (git clone https://github.com/mjordan/islandora_workbench)
-
-[ -d "islandora_workbench/islandora_demo_objects" ] || git clone https://github.com/Islandora-Devops/islandora_demo_objects.git islandora_workbench/islandora_demo_objects
-
-docker build \
-  --build-arg USER_ID=$(id -u) \
-  --build-arg GROUP_ID=$(id -g) \
-  -t workbench-docker:latest \
-  islandora_workbench
-
-perl -i -pe 's#^host.*#host: "http://islandora.traefik.me"#g' islandora_workbench/islandora_demo_objects/create_islandora_objects.yml
-
-perl -i -pe 's#^input_dir.*#input_dir: "islandora_demo_objects"#g' islandora_workbench/islandora_demo_objects/create_islandora_objects.yml
-
-perl -i -pe 's#^input_csv.*#input_csv: "create_islandora_objects.csv"#g' islandora_workbench/islandora_demo_objects/create_islandora_objects.yml
-
-grep secure_ssl_only islandora_workbench/islandora_demo_objects/create_islandora_objects.yml || echo 'secure_ssl_only: false' >> islandora_workbench/islandora_demo_objects/create_islandora_objects.yml
-
-pushd islandora_workbench
-docker run -it --rm \
-  --network="host" \
-  -v .:/workbench \
-  --name my-running-workbench \
-  workbench-docker:latest \
-  bash -lc "./workbench --config islandora_demo_objects/create_islandora_objects.yml"
-popd
+make demo-objects
 ```
 
 ## Custom Themes & Modules
