@@ -4773,7 +4773,7 @@
 - Generating necessary secrets and certificates
 - Building the custom Drupal Docker image
 - Starting all services with smart port allocation</p>
-<p>By default, your site will be available at <code>http://islandora.traefik.me</code> (which resolves to 127.0.0.1).</p>
+<p>By default, your site will be available at <code>http://islandora.io</code> (which resolves to 127.0.0.1).</p>
 <h2 id="custom-drupal-image">Custom Drupal Image<a class="headerlink" href="#custom-drupal-image" title="Permanent link">&para;</a></h2>
 <p>ISLE Site Template uses a custom Drupal image that you build on top of the provided Islandora Drupal image. This means you will not be running the islandora/drupal image directly, but the provided Dockerfile will use it to build your image.</p>
 <div class="admonition note">
@@ -4798,32 +4798,7 @@
 </div>
 <h2 id="adding-demo-content">Adding Demo Content<a class="headerlink" href="#adding-demo-content" title="Permanent link">&para;</a></h2>
 <p>If you are spinning up a new site for testing, you can add some demo content to your site by running
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>[ -d &quot;islandora_workbench&quot; ] || (git clone https://github.com/mjordan/islandora_workbench)
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>[ -d &quot;islandora_workbench/islandora_demo_objects&quot; ] || git clone https://github.com/Islandora-Devops/islandora_demo_objects.git islandora_workbench/islandora_demo_objects
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>docker build \
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>  --build-arg USER_ID=$(id -u) \
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>  --build-arg GROUP_ID=$(id -g) \
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>  -t workbench-docker:latest \
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>  islandora_workbench
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>perl -i -pe &#39;s#^host.*#host: &quot;http://islandora.traefik.me&quot;#g&#39; islandora_workbench/islandora_demo_objects/create_islandora_objects.yml
-</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
-</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>perl -i -pe &#39;s#^input_dir.*#input_dir: &quot;islandora_demo_objects&quot;#g&#39; islandora_workbench/islandora_demo_objects/create_islandora_objects.yml
-</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>
-</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>perl -i -pe &#39;s#^input_csv.*#input_csv: &quot;create_islandora_objects.csv&quot;#g&#39; islandora_workbench/islandora_demo_objects/create_islandora_objects.yml
-</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>
-</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>grep secure_ssl_only islandora_workbench/islandora_demo_objects/create_islandora_objects.yml || echo &#39;secure_ssl_only: false&#39; &gt;&gt; islandora_workbench/islandora_demo_objects/create_islandora_objects.yml
-</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>
-</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>pushd islandora_workbench
-</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>docker run -it --rm \
-</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>  --network=&quot;host&quot; \
-</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>  -v .:/workbench \
-</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>  --name my-running-workbench \
-</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>  workbench-docker:latest \
-</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>  bash -lc &quot;./workbench --config islandora_demo_objects/create_islandora_objects.yml&quot;
-</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>popd
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>make demo-objects
 </span></code></pre></div></p>
 <h2 id="custom-themes-modules">Custom Themes &amp; Modules<a class="headerlink" href="#custom-themes-modules" title="Permanent link">&para;</a></h2>
 <p>You may wish to copy themes and modules into your project directly, instead of using Composer to manage them. For example, if you are creating your own theme instead of using a contributed one.</p>
