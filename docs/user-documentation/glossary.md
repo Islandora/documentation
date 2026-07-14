@@ -356,7 +356,7 @@ An open-source enterprise-search platform. Solr is the default search and discov
 [https://lucene.apache.org/solr/](https://lucene.apache.org/solr/)
 
 ## scyllaridae
-A framework for building Islandora [microservices](#microservice).
+A framework for building Islandora [microservices](#microservice). For more information visit the Scyllaridae [documentation site](https://islandora.github.io/scyllaridae/).
 
 ## Source Field
 A Drupal term for the main file-[type](#field-type) [field](#field) on a [Media](#media). The names of these fields differ across Media Types, such as "Image" (`field_media_image`) on Image media, and "Video File" (`field_media_video_file`) on Video media. While it is possible to add other fields, including file fields, to a Media, the source field is the one configured during the creation of a Media Type. Islandora provides utility functions to get the source field from a Media ([MediaSourceService.php](https://github.com/Islandora/islandora/blob/2.x/src/MediaSource/MediaSourceService.php)).
