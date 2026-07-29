@@ -330,6 +330,7 @@ nav:
       - 'Creating GitHub Issues': 'contributing/create-issues.md'
       - 'Versioning Policy': 'technical-documentation/versioning.md'
       - 'How to release': 'contributing/releasing-islandora.md'
+      - 'Rotating Drupal.org GitLab Access Tokens': 'contributing/rotating-drupal-gitlab-access-tokens.md'
       - 'How to Edit Documentation': 'contributing/editing-docs.md'
       - 'How to Build Documentation': 'technical-documentation/docs-build.md'
           # moved from Developer documentation
