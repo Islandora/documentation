@@ -10,36 +10,36 @@
       
       
       
-        <link rel="canonical" href="https://islandora.github.io/documentation/installation/docker/site-template/backup/">
+        <link rel="canonical" href="https://islandora.github.io/documentation/contributing/rotating-drupal-gitlab-access-tokens/">
       
       
-        <link rel="prev" href="../updating/">
+        <link rel="prev" href="../releasing-islandora/">
       
       
-        <link rel="next" href="../customizations/">
+        <link rel="next" href="../editing-docs/">
       
       
         
       
       
-      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="zensical-0.0.29">
     
     
       
-        <title>Backups & Transferring Data Between Sites - Islandora</title>
+        <title>Rotating Drupal.org GitLab Access Tokens - Islandora</title>
       
     
     
       
         
       
-      <link rel="stylesheet" href="../../../../assets/stylesheets/modern/main.6f2fbb28.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/modern/main.6f2fbb28.min.css">
       
         
           
         
-        <link rel="stylesheet" href="../../../../assets/stylesheets/modern/palette.dfe2e883.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/modern/palette.dfe2e883.min.css">
       
       
 
@@ -69,7 +69,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../../css/custom.css">
+      <link rel="stylesheet" href="../../css/custom.css">
     
     <script>__md_scope=new URL("/",location),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,a=__md_scope)=>JSON.parse(t.getItem(a.pathname+"."+e)),__md_set=(e,t,a=localStorage,_=__md_scope)=>{try{a.setItem(_.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
     
@@ -96,7 +96,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#backups-transferring-data-between-sites" class="md-skip">
+        <a href="#rotating-drupalorg-gitlab-access-tokens" class="md-skip">
           Skip to content
         </a>
       
@@ -112,9 +112,9 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../../.." title="Islandora" class="md-header__button md-logo" aria-label="Islandora" data-md-component="logo">
+    <a href="../.." title="Islandora" class="md-header__button md-logo" aria-label="Islandora" data-md-component="logo">
       
-  <img src="../../../../assets/Islandora_logo.png" alt="Islandora">
+  <img src="../../assets/Islandora_logo.png" alt="Islandora">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer" aria-label="Navigation">
@@ -131,7 +131,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Backups &amp; Transferring Data Between Sites
+              Rotating Drupal.org GitLab Access Tokens
             
           </span>
         </div>
@@ -206,9 +206,9 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../../.." title="Islandora" class="md-nav__button md-logo" aria-label="Islandora" data-md-component="logo">
+    <a href="../.." title="Islandora" class="md-nav__button md-logo" aria-label="Islandora" data-md-component="logo">
       
-  <img src="../../../../assets/Islandora_logo.png" alt="Islandora">
+  <img src="../../assets/Islandora_logo.png" alt="Islandora">
 
     </a>
     Islandora
@@ -235,7 +235,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../.." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         
   
   
@@ -262,7 +262,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../quickstart/" class="md-nav__link">
+      <a href="../../installation/quickstart/" class="md-nav__link">
         
   
   
@@ -336,7 +336,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../concepts/node-concepts/" class="md-nav__link">
+      <a href="../../concepts/node-concepts/" class="md-nav__link">
         
   
   
@@ -364,7 +364,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../concepts/node-media/" class="md-nav__link">
+      <a href="../../concepts/node-media/" class="md-nav__link">
         
   
   
@@ -392,7 +392,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../concepts/derivatives/" class="md-nav__link">
+      <a href="../../concepts/derivatives/" class="md-nav__link">
         
   
   
@@ -420,7 +420,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../concepts/rdf/" class="md-nav__link">
+      <a href="../../concepts/rdf/" class="md-nav__link">
         
   
   
@@ -448,7 +448,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../concepts/starter-site/" class="md-nav__link">
+      <a href="../../concepts/starter-site/" class="md-nav__link">
         
   
   
@@ -523,7 +523,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../concepts/collection/" class="md-nav__link">
+      <a href="../../concepts/collection/" class="md-nav__link">
         
   
   
@@ -551,7 +551,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../user-documentation/paged-content/" class="md-nav__link">
+      <a href="../../user-documentation/paged-content/" class="md-nav__link">
         
   
   
@@ -579,7 +579,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../models/audio/" class="md-nav__link">
+      <a href="../../models/audio/" class="md-nav__link">
         
   
   
@@ -607,7 +607,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../models/video/" class="md-nav__link">
+      <a href="../../models/video/" class="md-nav__link">
         
   
   
@@ -647,20 +647,18 @@
       
   
   
-    
   
   
-  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
         
           
           <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
@@ -681,7 +679,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
@@ -696,20 +694,18 @@
                 
   
   
-    
   
   
-  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1" >
         
           
           <label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
@@ -730,7 +726,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4_1">
             <span class="md-nav__icon md-icon"></span>
             
@@ -748,7 +744,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../docker-introduction/" class="md-nav__link">
+      <a href="../../installation/docker/docker-introduction/" class="md-nav__link">
         
   
   
@@ -776,7 +772,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../docker-prereq/" class="md-nav__link">
+      <a href="../../installation/docker/docker-prereq/" class="md-nav__link">
         
   
   
@@ -801,20 +797,18 @@
                 
   
   
-    
   
   
-  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_3" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_3" >
         
           
           <label class="md-nav__link" for="__nav_4_1_3" id="__nav_4_1_3_label" tabindex="0">
@@ -835,7 +829,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_1_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_1_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4_1_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -853,7 +847,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../site-template/" class="md-nav__link">
+      <a href="../../installation/docker/site-template/site-template/" class="md-nav__link">
         
   
   
@@ -881,7 +875,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../setup/" class="md-nav__link">
+      <a href="../../installation/docker/site-template/setup/" class="md-nav__link">
         
   
   
@@ -909,7 +903,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../docker-modifications/" class="md-nav__link">
+      <a href="../../installation/docker/site-template/docker-modifications/" class="md-nav__link">
         
   
   
@@ -937,7 +931,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../containers/" class="md-nav__link">
+      <a href="../../installation/docker/site-template/containers/" class="md-nav__link">
         
   
   
@@ -965,7 +959,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../updating/" class="md-nav__link">
+      <a href="../../installation/docker/site-template/updating/" class="md-nav__link">
         
   
   
@@ -990,37 +984,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Back Up and Restore
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="././" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../installation/docker/site-template/backup/" class="md-nav__link">
         
   
   
@@ -1036,222 +1003,6 @@
   
 
       </a>
-      
-        
-
-
-<nav class="md-nav md-nav--secondary" aria-label="On this page">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      On this page
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#drupal-configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Drupal Configuration
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Drupal Configuration">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#export" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Export
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#import" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Import
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#drupal-database" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Drupal Database
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Drupal Database">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#back-up" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Back Up
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#restore" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Restore
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#drupal-public-files" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Drupal Public Files
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Drupal Public Files">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#back-up_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Back Up
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#restore_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Restore
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#drupal-private-files" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Drupal Private Files
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Drupal Private Files">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#back-up_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Back Up
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#restore_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Restore
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#fedora" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Fedora
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Fedora">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#back-up_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Back Up
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#restore_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Restore
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1264,7 +1015,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../customizations/" class="md-nav__link">
+      <a href="../../installation/docker/site-template/customizations/" class="md-nav__link">
         
   
   
@@ -1300,7 +1051,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../converting/" class="md-nav__link">
+      <a href="../../installation/docker/converting/" class="md-nav__link">
         
   
   
@@ -1422,7 +1173,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../isle-dc/docker-local/" class="md-nav__link">
+      <a href="../../installation/docker/isle-dc/docker-local/" class="md-nav__link">
         
   
   
@@ -1450,7 +1201,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../isle-dc/docker-custom/" class="md-nav__link">
+      <a href="../../installation/docker/isle-dc/docker-custom/" class="md-nav__link">
         
   
   
@@ -1533,7 +1284,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../isle-dc/docker-basic-usage/" class="md-nav__link">
+      <a href="../../installation/docker/isle-dc/docker-basic-usage/" class="md-nav__link">
         
   
   
@@ -1561,7 +1312,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../isle-dc/docker-maintain-drupal/" class="md-nav__link">
+      <a href="../../installation/docker/isle-dc/docker-maintain-drupal/" class="md-nav__link">
         
   
   
@@ -1589,7 +1340,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../isle-dc/docker-maintain-isle/" class="md-nav__link">
+      <a href="../../installation/docker/isle-dc/docker-maintain-isle/" class="md-nav__link">
         
   
   
@@ -1625,7 +1376,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../isle-dc/docker-available-commands/" class="md-nav__link">
+      <a href="../../installation/docker/isle-dc/docker-available-commands/" class="md-nav__link">
         
   
   
@@ -1653,7 +1404,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../isle-dc/docker-available-configuration/" class="md-nav__link">
+      <a href="../../installation/docker/isle-dc/docker-available-configuration/" class="md-nav__link">
         
   
   
@@ -1681,7 +1432,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../isle-dc/docker-troubleshooting/" class="md-nav__link">
+      <a href="../../installation/docker/isle-dc/docker-troubleshooting/" class="md-nav__link">
         
   
   
@@ -1725,7 +1476,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../playbook/" class="md-nav__link">
+      <a href="../../installation/playbook/" class="md-nav__link">
         
   
   
@@ -1800,7 +1551,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../manual/introduction/" class="md-nav__link">
+      <a href="../../installation/manual/introduction/" class="md-nav__link">
         
   
   
@@ -1828,7 +1579,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../manual/preparing-a-webserver/" class="md-nav__link">
+      <a href="../../installation/manual/preparing-a-webserver/" class="md-nav__link">
         
   
   
@@ -1856,7 +1607,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../manual/installing-composer-drush-and-drupal/" class="md-nav__link">
+      <a href="../../installation/manual/installing-composer-drush-and-drupal/" class="md-nav__link">
         
   
   
@@ -1884,7 +1635,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../manual/installing-tomcat-and-cantaloupe/" class="md-nav__link">
+      <a href="../../installation/manual/installing-tomcat-and-cantaloupe/" class="md-nav__link">
         
   
   
@@ -1912,7 +1663,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../manual/installing-fedora-syn-and-blazegraph/" class="md-nav__link">
+      <a href="../../installation/manual/installing-fedora-syn-and-blazegraph/" class="md-nav__link">
         
   
   
@@ -1940,7 +1691,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../manual/installing-solr/" class="md-nav__link">
+      <a href="../../installation/manual/installing-solr/" class="md-nav__link">
         
   
   
@@ -1968,7 +1719,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../manual/installing-crayfish/" class="md-nav__link">
+      <a href="../../installation/manual/installing-crayfish/" class="md-nav__link">
         
   
   
@@ -1996,7 +1747,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../manual/installing-alpaca/" class="md-nav__link">
+      <a href="../../installation/manual/installing-alpaca/" class="md-nav__link">
         
   
   
@@ -2024,7 +1775,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../manual/configuring-drupal/" class="md-nav__link">
+      <a href="../../installation/manual/configuring-drupal/" class="md-nav__link">
         
   
   
@@ -2060,7 +1811,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../technical-documentation/updating-drupal/" class="md-nav__link">
+      <a href="../../technical-documentation/updating-drupal/" class="md-nav__link">
         
   
   
@@ -2189,7 +1940,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../user-documentation/user-intro/" class="md-nav__link">
+      <a href="../../user-documentation/user-intro/" class="md-nav__link">
         
   
   
@@ -2264,7 +2015,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../user-documentation/content-models/" class="md-nav__link">
+      <a href="../../user-documentation/content-models/" class="md-nav__link">
         
   
   
@@ -2292,7 +2043,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../user-documentation/metadata/" class="md-nav__link">
+      <a href="../../user-documentation/metadata/" class="md-nav__link">
         
   
   
@@ -2320,7 +2071,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../user-documentation/starter-site-metadata-configuration/" class="md-nav__link">
+      <a href="../../user-documentation/starter-site-metadata-configuration/" class="md-nav__link">
         
   
   
@@ -2348,7 +2099,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../user-documentation/linked-data/" class="md-nav__link">
+      <a href="../../user-documentation/linked-data/" class="md-nav__link">
         
   
   
@@ -2376,7 +2127,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../user-documentation/metadata-harvesting/" class="md-nav__link">
+      <a href="../../user-documentation/metadata-harvesting/" class="md-nav__link">
         
   
   
@@ -2459,7 +2210,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../user-documentation/searching/" class="md-nav__link">
+      <a href="../../user-documentation/searching/" class="md-nav__link">
         
   
   
@@ -2487,7 +2238,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../user-documentation/advanced-search/" class="md-nav__link">
+      <a href="../../user-documentation/advanced-search/" class="md-nav__link">
         
   
   
@@ -2515,7 +2266,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../user-documentation/faceting/" class="md-nav__link">
+      <a href="../../user-documentation/faceting/" class="md-nav__link">
         
   
   
@@ -2598,7 +2349,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../user-documentation/context/" class="md-nav__link">
+      <a href="../../user-documentation/context/" class="md-nav__link">
         
   
   
@@ -2626,7 +2377,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../user-documentation/file-viewers/" class="md-nav__link">
+      <a href="../../user-documentation/file-viewers/" class="md-nav__link">
         
   
   
@@ -2654,7 +2405,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../user-documentation/iiif/" class="md-nav__link">
+      <a href="../../user-documentation/iiif/" class="md-nav__link">
         
   
   
@@ -2737,7 +2488,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../user-documentation/media/" class="md-nav__link">
+      <a href="../../user-documentation/media/" class="md-nav__link">
         
   
   
@@ -2765,7 +2516,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../user-documentation/flysystem/" class="md-nav__link">
+      <a href="../../user-documentation/flysystem/" class="md-nav__link">
         
   
   
@@ -2793,7 +2544,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../user-documentation/uploading-large-files/" class="md-nav__link">
+      <a href="../../user-documentation/uploading-large-files/" class="md-nav__link">
         
   
   
@@ -2821,7 +2572,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../user-documentation/transcripts/" class="md-nav__link">
+      <a href="../../user-documentation/transcripts/" class="md-nav__link">
         
   
   
@@ -2904,7 +2655,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../user-documentation/access-control/" class="md-nav__link">
+      <a href="../../user-documentation/access-control/" class="md-nav__link">
         
   
   
@@ -2932,7 +2683,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../user-documentation/breadcrumbs/" class="md-nav__link">
+      <a href="../../user-documentation/breadcrumbs/" class="md-nav__link">
         
   
   
@@ -2960,7 +2711,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../user-documentation/jwt-authentication/" class="md-nav__link">
+      <a href="../../user-documentation/jwt-authentication/" class="md-nav__link">
         
   
   
@@ -2988,7 +2739,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../user-documentation/url-aliases/" class="md-nav__link">
+      <a href="../../user-documentation/url-aliases/" class="md-nav__link">
         
   
   
@@ -3016,7 +2767,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../user-documentation/usage-stats/" class="md-nav__link">
+      <a href="../../user-documentation/usage-stats/" class="md-nav__link">
         
   
   
@@ -3044,7 +2795,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../user-documentation/versioning/" class="md-nav__link">
+      <a href="../../user-documentation/versioning/" class="md-nav__link">
         
   
   
@@ -3080,7 +2831,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../user-documentation/accessibility/" class="md-nav__link">
+      <a href="../../user-documentation/accessibility/" class="md-nav__link">
         
   
   
@@ -3108,7 +2859,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../user-documentation/multilingual/" class="md-nav__link">
+      <a href="../../user-documentation/multilingual/" class="md-nav__link">
         
   
   
@@ -3183,7 +2934,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../user-documentation/extending/" class="md-nav__link">
+      <a href="../../user-documentation/extending/" class="md-nav__link">
         
   
   
@@ -3258,7 +3009,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../user-documentation/recipes/datacite/" class="md-nav__link">
+      <a href="../../user-documentation/recipes/datacite/" class="md-nav__link">
         
   
   
@@ -3286,7 +3037,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../user-documentation/recipes/remote-media/" class="md-nav__link">
+      <a href="../../user-documentation/recipes/remote-media/" class="md-nav__link">
         
   
   
@@ -3385,7 +3136,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../tutorials/create-a-resource-node/" class="md-nav__link">
+      <a href="../../tutorials/create-a-resource-node/" class="md-nav__link">
         
   
   
@@ -3413,7 +3164,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../tutorials/how-to-create-collection/" class="md-nav__link">
+      <a href="../../tutorials/how-to-create-collection/" class="md-nav__link">
         
   
   
@@ -3441,7 +3192,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../user-documentation/content-types/" class="md-nav__link">
+      <a href="../../user-documentation/content-types/" class="md-nav__link">
         
   
   
@@ -3469,7 +3220,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../tutorials/blocks/" class="md-nav__link">
+      <a href="../../tutorials/blocks/" class="md-nav__link">
         
   
   
@@ -3497,7 +3248,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../tutorials/create-update-views/" class="md-nav__link">
+      <a href="../../tutorials/create-update-views/" class="md-nav__link">
         
   
   
@@ -3525,7 +3276,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../user-documentation/video-docs/" class="md-nav__link">
+      <a href="../../user-documentation/video-docs/" class="md-nav__link">
         
   
   
@@ -3553,7 +3304,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../user-documentation/users/" class="md-nav__link">
+      <a href="../../user-documentation/users/" class="md-nav__link">
         
   
   
@@ -3636,7 +3387,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../technical-documentation/migration-overview/" class="md-nav__link">
+      <a href="../../technical-documentation/migration-overview/" class="md-nav__link">
         
   
   
@@ -3664,7 +3415,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../technical-documentation/migration-rest-api/" class="md-nav__link">
+      <a href="../../technical-documentation/migration-rest-api/" class="md-nav__link">
         
   
   
@@ -3692,7 +3443,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../technical-documentation/migration-migrate-api/" class="md-nav__link">
+      <a href="../../technical-documentation/migration-migrate-api/" class="md-nav__link">
         
   
   
@@ -3720,7 +3471,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../technical-documentation/migration-islandora-workbench/" class="md-nav__link">
+      <a href="../../technical-documentation/migration-islandora-workbench/" class="md-nav__link">
         
   
   
@@ -3748,7 +3499,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../technical-documentation/migrate-csv/" class="md-nav__link">
+      <a href="../../technical-documentation/migrate-csv/" class="md-nav__link">
         
   
   
@@ -3776,7 +3527,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../technical-documentation/migrate-7x/" class="md-nav__link">
+      <a href="../../technical-documentation/migrate-7x/" class="md-nav__link">
         
   
   
@@ -3866,7 +3617,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../component-overview/" class="md-nav__link">
+      <a href="../../installation/component-overview/" class="md-nav__link">
         
   
   
@@ -3894,7 +3645,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../technical-documentation/diagram/" class="md-nav__link">
+      <a href="../../technical-documentation/diagram/" class="md-nav__link">
         
   
   
@@ -3969,7 +3720,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../technical-documentation/using-rest-endpoints/" class="md-nav__link">
+      <a href="../../technical-documentation/using-rest-endpoints/" class="md-nav__link">
         
   
   
@@ -3997,7 +3748,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../technical-documentation/rest-authorization/" class="md-nav__link">
+      <a href="../../technical-documentation/rest-authorization/" class="md-nav__link">
         
   
   
@@ -4025,7 +3776,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../technical-documentation/rest-get/" class="md-nav__link">
+      <a href="../../technical-documentation/rest-get/" class="md-nav__link">
         
   
   
@@ -4053,7 +3804,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../technical-documentation/rest-create/" class="md-nav__link">
+      <a href="../../technical-documentation/rest-create/" class="md-nav__link">
         
   
   
@@ -4081,7 +3832,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../technical-documentation/rest-patch/" class="md-nav__link">
+      <a href="../../technical-documentation/rest-patch/" class="md-nav__link">
         
   
   
@@ -4109,7 +3860,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../technical-documentation/rest-delete/" class="md-nav__link">
+      <a href="../../technical-documentation/rest-delete/" class="md-nav__link">
         
   
   
@@ -4137,7 +3888,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../technical-documentation/rest-signposting/" class="md-nav__link">
+      <a href="../../technical-documentation/rest-signposting/" class="md-nav__link">
         
   
   
@@ -4220,7 +3971,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../alpaca/alpaca-technical-stack/" class="md-nav__link">
+      <a href="../../alpaca/alpaca-technical-stack/" class="md-nav__link">
         
   
   
@@ -4248,7 +3999,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../technical-documentation/alpaca-tips/" class="md-nav__link">
+      <a href="../../technical-documentation/alpaca-tips/" class="md-nav__link">
         
   
   
@@ -4284,7 +4035,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../technical-documentation/testing-notes/" class="md-nav__link">
+      <a href="../../technical-documentation/testing-notes/" class="md-nav__link">
         
   
   
@@ -4312,7 +4063,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../technical-documentation/adding-format-jsonld/" class="md-nav__link">
+      <a href="../../technical-documentation/adding-format-jsonld/" class="md-nav__link">
         
   
   
@@ -4344,18 +4095,20 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
         
           
           <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
@@ -4376,7 +4129,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             
@@ -4394,7 +4147,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../contributing/CONTRIBUTING.md" class="md-nav__link">
+      <a href="../CONTRIBUTING.md" class="md-nav__link">
         
   
   
@@ -4422,7 +4175,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../contributing/testing-a-pull-request/" class="md-nav__link">
+      <a href="../testing-a-pull-request/" class="md-nav__link">
         
   
   
@@ -4450,7 +4203,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../technical-documentation/running-automated-tests/" class="md-nav__link">
+      <a href="../../technical-documentation/running-automated-tests/" class="md-nav__link">
         
   
   
@@ -4478,7 +4231,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../technical-documentation/checking-coding-standards/" class="md-nav__link">
+      <a href="../../technical-documentation/checking-coding-standards/" class="md-nav__link">
         
   
   
@@ -4506,7 +4259,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../contributing/contributing-workflow/" class="md-nav__link">
+      <a href="../contributing-workflow/" class="md-nav__link">
         
   
   
@@ -4534,7 +4287,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../contributing/create-issues/" class="md-nav__link">
+      <a href="../create-issues/" class="md-nav__link">
         
   
   
@@ -4562,7 +4315,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../technical-documentation/versioning/" class="md-nav__link">
+      <a href="../../technical-documentation/versioning/" class="md-nav__link">
         
   
   
@@ -4590,7 +4343,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../contributing/releasing-islandora/" class="md-nav__link">
+      <a href="../releasing-islandora/" class="md-nav__link">
         
   
   
@@ -4615,10 +4368,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../../../contributing/rotating-drupal-gitlab-access-tokens/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rotating Drupal.org GitLab Access Tokens
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
         
   
   
@@ -4634,6 +4414,71 @@
   
 
       </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#required-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Required access
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#projects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Projects
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rotate-an-access-token" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rotate an access token
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verify-the-mirrors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verify the mirrors
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -4646,7 +4491,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../contributing/editing-docs/" class="md-nav__link">
+      <a href="../editing-docs/" class="md-nav__link">
         
   
   
@@ -4674,7 +4519,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../technical-documentation/docs-build/" class="md-nav__link">
+      <a href="../../technical-documentation/docs-build/" class="md-nav__link">
         
   
   
@@ -4702,7 +4547,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../contributing/docs-style-guide/" class="md-nav__link">
+      <a href="../docs-style-guide/" class="md-nav__link">
         
   
   
@@ -4730,7 +4575,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../contributing/committers/" class="md-nav__link">
+      <a href="../committers/" class="md-nav__link">
         
   
   
@@ -4758,7 +4603,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../contributing/sandbox/" class="md-nav__link">
+      <a href="../sandbox/" class="md-nav__link">
         
   
   
@@ -4793,7 +4638,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../user-documentation/glossary/" class="md-nav__link">
+      <a href="../../user-documentation/glossary/" class="md-nav__link">
         
   
   
@@ -4841,197 +4686,46 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#drupal-configuration" class="md-nav__link">
+  <a href="#required-access" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Drupal Configuration
+        Required access
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Drupal Configuration">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#export" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Export
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#import" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Import
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#drupal-database" class="md-nav__link">
+  <a href="#projects" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Drupal Database
+        Projects
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Drupal Database">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#back-up" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Back Up
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#restore" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Restore
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#drupal-public-files" class="md-nav__link">
+  <a href="#rotate-an-access-token" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Drupal Public Files
+        Rotate an access token
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Drupal Public Files">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#back-up_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Back Up
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#restore_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Restore
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#drupal-private-files" class="md-nav__link">
+  <a href="#verify-the-mirrors" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Drupal Private Files
+        Verify the mirrors
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Drupal Private Files">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#back-up_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Back Up
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#restore_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Restore
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#fedora" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Fedora
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Fedora">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#back-up_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Back Up
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#restore_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Restore
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -5050,7 +4744,7 @@
                 
                   
   
-    <a href="https://github.com/Islandora/documentation/edit/main/docs/installation/docker/site-template/backup.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+    <a href="https://github.com/Islandora/documentation/edit/main/docs/contributing/rotating-drupal-gitlab-access-tokens.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-file-pen" viewBox="0 0 24 24"><path d="M12.659 22H18a2 2 0 0 0 2-2V8a2.4 2.4 0 0 0-.706-1.706l-3.588-3.588A2.4 2.4 0 0 0 14 2H6a2 2 0 0 0-2 2v9.34"/><path d="M14 2v5a1 1 0 0 0 1 1h5M10.378 12.622a1 1 0 0 1 3 3.003L8.36 20.637a2 2 0 0 1-.854.506l-2.867.837a.5.5 0 0 1-.62-.62l.836-2.869a2 2 0 0 1 .506-.853z"/></svg>
     </a>
@@ -5059,145 +4753,121 @@
     
       
     
-    <a href="https://github.com/Islandora/documentation/raw/main/docs/installation/docker/site-template/backup.md" title="View source of this page" class="md-content__button md-icon">
+    <a href="https://github.com/Islandora/documentation/raw/main/docs/contributing/rotating-drupal-gitlab-access-tokens.md" title="View source of this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-file-code-2" viewBox="0 0 24 24"><path d="M4 12.15V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.706.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2h-3.35"/><path d="M14 2v5a1 1 0 0 0 1 1h5M5 16l-3 3 3 3M9 22l3-3-3-3"/></svg>
     </a>
   
 
 
-<h1 id="backups-transferring-data-between-sites">Backups &amp; Transferring Data Between Sites<a class="headerlink" href="#backups-transferring-data-between-sites" title="Permanent link">&para;</a></h1>
-<p>The following instructions describe how to back up and restore an Islandora site. This is also used to transfer data between a development and production site, or to sync a staging site with a production site.</p>
-<p>Container names are based on the service names defined in your <code>docker-compose.yml</code> file. For example, the Drupal container is typically named <code>drupal</code>, the MariaDB container is <code>mariadb</code>, etc. The following instructions use these standard service names.</p>
-<p>Before attempting the following commands, you should familiarize yourself with <a href="/documentation/installation/docker/site-template/containers.md">running commands inside a container</a> and with <a href="https://docs.docker.com/reference/cli/docker/compose/cp/">docker compose cp</a></p>
-<h2 id="drupal-configuration">Drupal Configuration<a class="headerlink" href="#drupal-configuration" title="Permanent link">&para;</a></h2>
-<p>The typical use case of this is to export your Drupal configuration files out of your development site's Drupal database and onto the host machine. This process lets you check your configuration into your git repository so you can import it into your production site.</p>
-<h3 id="export">Export<a class="headerlink" href="#export" title="Permanent link">&para;</a></h3>
-<p>To export your config run:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>docker compose exec drupal drush config:export -y
-</span></code></pre></div>
-<p>Then commit and push your git repo so the new config files are included.</p>
-<h3 id="import">Import<a class="headerlink" href="#import" title="Permanent link">&para;</a></h3>
-<p>To import your config to a production or staging site you first need to <code>git pull</code> the config files you pushed from your development site, then rebuild and restart your custom Drupal container.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>git pull
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>docker compose build
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>docker compose down drupal
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>docker compose up -d
-</span></code></pre></div>
-<p>Once this is done, your config files will be included in the container. You can then import them by running</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>docker compose exec drupal drush config:import -y
-</span></code></pre></div>
-<h2 id="drupal-database">Drupal Database<a class="headerlink" href="#drupal-database" title="Permanent link">&para;</a></h2>
-<p>The Drupal database contains all your Drupal settings and content. If you want to move configuration settings from development to production you should use the Drupal Configuration instructions above.</p>
-<p>These instructions can also be used to move your content from production to staging or development.</p>
-<h3 id="back-up">Back Up<a class="headerlink" href="#back-up" title="Permanent link">&para;</a></h3>
-<p>Backing up the Drupal database involves doing a database dump in the drupal container:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>docker compose exec drupal \
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    bash -lc &quot;drush sql-dump -y \
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    --skip-tables-list=cache,cache_*,watchdog \
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    --structure-tables-list=cache,cache_*,watchdog \
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    --result-file=/tmp/drupal.sql&quot;
-</span></code></pre></div>
-<p>and then copying that dump from the container to the host machine:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>docker compose cp drupal:/tmp/drupal.sql [path/on/host/drupal.sql]
-</span></code></pre></div>
-<h3 id="restore">Restore<a class="headerlink" href="#restore" title="Permanent link">&para;</a></h3>
-<p>Restoring from a database dump requires copying the dump file into the drupal container:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>docker compose cp [path-to/drupal.sql] drupal:/tmp/drupal.sql
-</span></code></pre></div>
-<p>Then replacing the database with the dump:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>docker compose exec drupal drush sqlq --debug --file /tmp/drupal.sql&#39;
-</span></code></pre></div>
-<p>And finally, rebuilding the Drupal cache:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>docker compose exec drupal drush cr
-</span></code></pre></div>
-<h2 id="drupal-public-files">Drupal Public Files<a class="headerlink" href="#drupal-public-files" title="Permanent link">&para;</a></h2>
-<p>Drupal's public files contain any files used on static pages. This is also where your Islandora derivatives are stored, which includes FITS, thumbnails, etc.</p>
-<p>These instructions can also be used to move your content from production to staging or development.</p>
-<h3 id="back-up_1">Back Up<a class="headerlink" href="#back-up_1" title="Permanent link">&para;</a></h3>
-<p>Drupal public files can be compressed to a tgz file in the Drupal container:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>docker compose exec drupal \
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>  drush archive:dump \
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>  --files \
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>  --destination=/tmp/files.tar.gz
-</span></code></pre></div>
-<p>Then copied to the host machine:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>docker compose cp drupal:/tmp/files.tar.gz [path/on/host/files.tar.gz]
-</span></code></pre></div>
-<h3 id="restore_1">Restore<a class="headerlink" href="#restore_1" title="Permanent link">&para;</a></h3>
-<p>Drupal files can be restored from a tgz file by copying them into the Drupal container:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>docker compose cp files.tar.gz drupal:/tmp/files.tar.gz
-</span></code></pre></div>
-<p>Then placed in the correct directory inside the Drupal volume:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>docker compose exec drupal tar zxvf /tmp/files.tar.gz -C /var/www/drupal/web/sites/default/files
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>docker compose exec drupal chown -R nginx:nginx /var/www/drupal/web/sites/default/files
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>docker compose exec drupal rm /tmp/files.tar.gz
-</span></code></pre></div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>This will overwrite existing files if they have the same filename, but does not remove existing files otherwise. If you want to make sure that the public files directory does not contain anything but the newly imported files, you will want to empty the directory before copying the new files in.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>docker compose exec drupal with-contenv bash -lc &#39;rm -r /var/www/drupal/web/sites/default/files/*&#39;
-</span></code></pre></div>
+<h1 id="rotating-drupalorg-gitlab-access-tokens">Rotating Drupal.org GitLab Access Tokens<a class="headerlink" href="#rotating-drupalorg-gitlab-access-tokens" title="Permanent link">&para;</a></h1>
+<p>Islandora develops its Drupal modules on GitHub and mirrors them to Drupal.org
+GitLab for distribution in the <code>drupal/*</code> Composer namespace. Each mirror uses a
+Drupal.org GitLab project access token stored in its GitHub repository as the
+Actions secret <code>GITLAB_PASSWORD</code>.</p>
+<p>Each project access token has an expiration date and is currently rotated about
+once a year. Follow the expiration date shown in GitLab and rotate the tokens for
+all six projects when Drupal.org GitLab sends an expiration reminder.</p>
+<h2 id="required-access">Required access<a class="headerlink" href="#required-access" title="Permanent link">&para;</a></h2>
+<p>The committer performing the rotation needs:</p>
+<ul>
+<li>Maintainer or Owner access to each project on Drupal.org GitLab.</li>
+<li>Permission to update Actions secrets in each GitHub repository.</li>
+</ul>
+<p>Coordinate with the other committers before starting so that only one person
+rotates the tokens.</p>
+<div class="admonition warning">
+<p class="admonition-title">Handle each token as a secret</p>
+<p>Rotating a token immediately invalidates the old token, and GitLab displays
+the new token only once. Complete both the GitLab and GitHub steps for one
+project before moving to the next project. Never save the token in an issue,
+chat message, or other shared location, and never reuse a project's token for
+another project.</p>
 </div>
-<h2 id="drupal-private-files">Drupal Private Files<a class="headerlink" href="#drupal-private-files" title="Permanent link">&para;</a></h2>
-<p>These instructions can also be used to move your content from production to staging or development.</p>
-<h3 id="back-up_2">Back Up<a class="headerlink" href="#back-up_2" title="Permanent link">&para;</a></h3>
-<p>Drupal private files can be compressed to a tgz file in the Drupal container:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>docker compose exec drupal tar zcvf /tmp/private-files.tgz -C /var/www/drupal/private .
-</span></code></pre></div>
-<p>Then copied to the host machine:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>docker compose cp drupal:/tmp/private-files.tgz [path/on/host/private-files.tgz]
-</span></code></pre></div>
-<h3 id="restore_2">Restore<a class="headerlink" href="#restore_2" title="Permanent link">&para;</a></h3>
-<p>Drupal files can be restored from a tgz file by copying them into the Drupal container:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>docker compose cp private-files.tgz drupal:/tmp/private-files.tgz
-</span></code></pre></div>
-<p>Then placed in the correct directory inside the Drupal volume:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>docker compose exec drupal tar zxvf /tmp/private-files.tgz -C /var/www/drupal/private
-</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>docker compose exec drupal chown -R nginx:nginx /var/www/drupal/private
-</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>docker compose exec drupal rm /tmp/private-files.tgz
-</span></code></pre></div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>This will overwrite existing files if they have the same filename, but does not remove existing files otherwise. If you want to make sure that the private files directory does not contain anything but the newly imported files, you will want to empty the directory before copying the new files in.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>docker compose exec drupal with-contenv bash -lc &#39;rm -r /var/www/drupal/private/*&#39;
-</span></code></pre></div>
-</div>
-<h2 id="fedora">Fedora<a class="headerlink" href="#fedora" title="Permanent link">&para;</a></h2>
-<p>Fedora 6 uses a file structure called <a href="https://ocfl.io/">OCFL</a> to store files and metadata. The Fedora database is built based on this OCFL file structure, so we don't actually back up our fedora database. Instead, we back up the files and let Fedora rebuild the database based on them.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>These instructions involve moving the entirety of your Fedora data. For small sites this is fine, but you may find this becomes cumbersome as your site grows. You may wish to bind your oclf-root directory as a volume to eliminate the need to run the docker compose cp commands. </p>
-</div>
-<h3 id="back-up_3">Back Up<a class="headerlink" href="#back-up_3" title="Permanent link">&para;</a></h3>
-<p>To back up Fedora we create a .tgz file from the ocfl-root directory in the Fedora container:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>docker compose exec fcrepo tar zcvf /tmp/fcrepo-export.tgz -C /data/home/data/ocfl-root/ .
-</span></code></pre></div>
-<p>Then we copy that file to the host machine:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>docker compose cp fcrepo:/tmp/fcrepo-export.tgz [path/on/host/fcrepo-export.tgz]
-</span></code></pre></div>
-<h3 id="restore_3">Restore<a class="headerlink" href="#restore_3" title="Permanent link">&para;</a></h3>
-<p>To restore our fedora database we need to copy the backup into the Fedora container:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>docker compose cp [path-to/fcrepo-export.tgz] fcrepo:/tmp/fcrepo-export.tgz
-</span></code></pre></div>
-<p>Empty the existing ocfl-root directory:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>docker compose exec fcrepo bash -lc &#39;rm -r /data/home/data/ocfl-root/*&#39;
-</span></code></pre></div></p>
-<p>Put our backup files in the ocfl-root directory:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>docker compose exec fcrepo tar zxvf /tmp/fcrepo-export.tgz -C /data/home/data/ocfl-root/
-</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>docker compose exec fcrepo chown -R tomcat:tomcat /data/home/data/ocfl-root/
-</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>docker compose exec fcrepo rm /tmp/fcrepo-export.tgz
-</span></code></pre></div>
-<p>Drop the existing Fedora database:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>docker compose exec mariadb mariadb -e &quot;drop database fcrepo;&quot;
-</span></code></pre></div>
-<p>Restart Fedora to reinitialize the database from the ocfl-root directory:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>docker compose restart fcrepo
-</span></code></pre></div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>It may take a while for the database to be restored. In the meantime, you may see error messages that say Fedora is not connected.</p>
-</div>
+<h2 id="projects">Projects<a class="headerlink" href="#projects" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Module</th>
+<th>GitHub repository</th>
+<th>Drupal.org GitLab project</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Islandora</td>
+<td><a href="https://github.com/Islandora/islandora">Islandora/islandora</a></td>
+<td><a href="https://git.drupalcode.org/project/islandora">project/islandora</a></td>
+</tr>
+<tr>
+<td>Islandora Mirador</td>
+<td><a href="https://github.com/Islandora/islandora_mirador">Islandora/islandora_mirador</a></td>
+<td><a href="https://git.drupalcode.org/project/islandora_mirador">project/islandora_mirador</a></td>
+</tr>
+<tr>
+<td>OpenSeadragon</td>
+<td><a href="https://github.com/Islandora/openseadragon">Islandora/openseadragon</a></td>
+<td><a href="https://git.drupalcode.org/project/openseadragon">project/openseadragon</a></td>
+</tr>
+<tr>
+<td>Controlled Access Terms</td>
+<td><a href="https://github.com/Islandora/controlled_access_terms">Islandora/controlled_access_terms</a></td>
+<td><a href="https://git.drupalcode.org/project/controlled_access_terms">project/controlled_access_terms</a></td>
+</tr>
+<tr>
+<td>Advanced Search</td>
+<td><a href="https://github.com/Islandora/advanced_search">Islandora/advanced_search</a></td>
+<td><a href="https://git.drupalcode.org/project/advanced_search">project/advanced_search</a></td>
+</tr>
+<tr>
+<td>JSON-LD REST Services</td>
+<td><a href="https://github.com/Islandora/jsonld">Islandora/jsonld</a></td>
+<td><a href="https://git.drupalcode.org/project/jsonld">project/jsonld</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="rotate-an-access-token">Rotate an access token<a class="headerlink" href="#rotate-an-access-token" title="Permanent link">&para;</a></h2>
+<p>Repeat this procedure for every row in the <a href="#projects">project list</a>:</p>
+<ol>
+<li>Sign in to <a href="https://git.drupalcode.org/">Drupal.org GitLab</a> and open the
+   project's Drupal.org GitLab link.</li>
+<li>Select <strong>Settings</strong> &gt;&gt; <strong>Access tokens</strong>.</li>
+<li>In <em>Active project access tokens</em>, identify the token used by the GitHub
+   mirror. Verify its recorded name, role, scopes, and recent use before selecting
+   <strong>Rotate</strong> (the circular-arrows action). If more than one token is active and
+   the mirror token cannot be identified, confirm it with another committer
+   rather than guessing.</li>
+<li>Select <strong>Rotate</strong> in the confirmation dialog.</li>
+<li>Copy the new token immediately. Keep this page open until the matching GitHub
+   secret has been updated.</li>
+<li>Open the project's matching GitHub repository from the table above.</li>
+<li>Select <strong>Settings</strong> &gt;&gt; <strong>Secrets and variables</strong> &gt;&gt; <strong>Actions</strong>.</li>
+<li>Under <em>Repository secrets</em>, select the edit action for <code>GITLAB_PASSWORD</code>.</li>
+<li>Paste the new token into the <em>Secret</em> field and select <strong>Update secret</strong>.</li>
+<li>Confirm that GitHub shows a current update time for <code>GITLAB_PASSWORD</code>.</li>
+<li>Return to GitLab and confirm that the replacement token is active. Note its
+   expiration date.</li>
+<li>In GitHub <strong>Actions</strong>, rerun the most recent branch-based mirror workflow, if
+   that option is available, and confirm that it succeeds. The workflow is
+   defined in <code>.github/workflows/gitlab-mirror.yml</code>.</li>
+<li>Continue with the next project.</li>
+</ol>
+<p>If the new token is lost before the GitHub secret is updated, rotate the active
+token again. Do not leave the repository configured with an old or incomplete
+token.</p>
+<h2 id="verify-the-mirrors">Verify the mirrors<a class="headerlink" href="#verify-the-mirrors" title="Permanent link">&para;</a></h2>
+<p>After all six secrets have been updated:</p>
+<ul>
+<li>Confirm that every project in the table was completed.</li>
+<li>For any project whose workflow could not be rerun immediately, confirm that the
+  next normal branch or tag push completes the mirror workflow successfully.</li>
+<li>Confirm that the tested branch or tag appears in the matching Drupal.org GitLab
+  project.</li>
+</ul>
+<p>For details about the interfaces used in this procedure, see GitLab's
+<a href="https://docs.gitlab.com/user/project/settings/project_access_tokens/">project access token documentation</a>
+and GitHub's documentation for
+<a href="https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-secrets">using secrets in GitHub Actions</a>.</p>
 
 
 
@@ -5282,14 +4952,14 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate":{"json":[".s2"]},"base":"../../../..","features":["navigation.instant","navigation.instant.prefetch","content.action.edit","content.action.view","content.code.annotate","content.code.copy","content.code.select","content.footnote.tooltips","content.tabs.link","content.tooltips","search.highlight"],"search":"../../../../assets/javascripts/workers/search.e2d2d235.min.js","tags":{"default":"default"},"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":null}</script>
+      <script id="__config" type="application/json">{"annotate":{"json":[".s2"]},"base":"../..","features":["navigation.instant","navigation.instant.prefetch","content.action.edit","content.action.view","content.code.annotate","content.code.copy","content.code.select","content.footnote.tooltips","content.tabs.link","content.tooltips","search.highlight"],"search":"../../assets/javascripts/workers/search.e2d2d235.min.js","tags":{"default":"default"},"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":null}</script>
     
     
-      <script src="../../../../assets/javascripts/bundle.c2b142ea.min.js"></script>
+      <script src="../../assets/javascripts/bundle.c2b142ea.min.js"></script>
       
-        <script src="../../../../js/mermaid-init.mjs" type="module"></script>
+        <script src="../../js/mermaid-init.mjs" type="module"></script>
       
-        <script src="../../../../js/diagram-animation.js"></script>
+        <script src="../../js/diagram-animation.js"></script>
       
     
   </body>
