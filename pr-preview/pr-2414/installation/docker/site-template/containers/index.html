@@ -4864,7 +4864,7 @@
 <p>For example, if you want to perform a Drush cache rebuild you could run</p>
 <p><code>docker compose exec drupal drush cr</code></p>
 <p>If your commands rely on bash expression like wildcard expandsions or referencing variables defined inside the container you'll need to wrap you command in <code>bash -lc ""</code></p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>docker compose exec drupal bash -lc &quot;ls **/*.php&quot;
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>docker compose exec drupal bash -lc "ls **/*.php"
 </span></code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Container Names</p>
@@ -4875,7 +4875,7 @@
 <h3 id="container-variables">Container Variables<a class="headerlink" href="#container-variables" title="Permanent link">&para;</a></h3>
 <p>In some of the commands throughout the ISLE Site Template documentation you will see references to variables like <code>${DRUPAL_DEFAULT_SITE_URL}</code>. These are variables that are provided in the containers by the s6-overlay in <a href="https://github.com/Islandora-Devops/isle-buildkit">Islandora Buildkit</a>.</p>
 <p>If you want to see their values, you can run</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>docker compose exec drupal echo ${DRUPAL_DEFAULT_SITE_URL}&#39;
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>docker compose exec drupal echo ${DRUPAL_DEFAULT_SITE_URL}'
 </span></code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">with-contenv</p>
@@ -4908,19 +4908,19 @@
 <p>You can reindex all of your Drupal data into Fedora, by running the following commands:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>docker compose exec drupal \
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>  drush vbo-exec non_fedora_files emit_file_event  \
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>    --configuration=&quot;queue=islandora-indexing-fcrepo-file-external&amp;event=Update&quot;
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>    --configuration="queue=islandora-indexing-fcrepo-file-external&amp;event=Update"
 </span></code></pre></div>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>docker compose exec drupal \
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>  drush vbo-exec all_taxonomy_terms emit_term_event \ 
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>    --configuration=&quot;queue=islandora-indexing-fcrepo-content&amp;event=Update&quot;
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>    --configuration="queue=islandora-indexing-fcrepo-content&amp;event=Update"
 </span></code></pre></div>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>docker compose exec drupal \
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>  drush vbo-exec content emit_node_event \
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    --configuration=&quot;queue=islandora-indexing-fcrepo-content&amp;event=Update&quot;
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    --configuration="queue=islandora-indexing-fcrepo-content&amp;event=Update"
 </span></code></pre></div>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>docker compose exec drupal \
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>  drush vbo-exec media emit_media_event \
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>    --configuration=&quot;queue=islandora-indexing-fcrepo-media&amp;event=Update&quot;
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>    --configuration="queue=islandora-indexing-fcrepo-media&amp;event=Update"
 </span></code></pre></div>
 <h3 id="reindex-blazegraph">Reindex Blazegraph<a class="headerlink" href="#reindex-blazegraph" title="Permanent link">&para;</a></h3>
 <div class="admonition note">
@@ -4930,15 +4930,15 @@
 <p>You can reindex all of your Drupal data into Blazegraph, by running the following commands:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>docker compose exec drupal \
 </span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>  drush vbo-exec all_taxonomy_terms emit_term_event \
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>    --configuration=&quot;queue=islandora-indexing-triplestore-index&amp;event=Update&quot;
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>    --configuration="queue=islandora-indexing-triplestore-index&amp;event=Update"
 </span></code></pre></div>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>docker compose exec drupal \
 </span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>  drush vbo-exec content emit_node_event \
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>    --configuration=&quot;queue=islandora-indexing-triplestore-index&amp;event=Update&quot;
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>    --configuration="queue=islandora-indexing-triplestore-index&amp;event=Update"
 </span></code></pre></div>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>docker compose exec drupal \
 </span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>  drush vbo-exec media emit_media_event \
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>    --configuration=&quot;queue=islandora-indexing-triplestore-index&amp;event=Update&quot;
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>    --configuration="queue=islandora-indexing-triplestore-index&amp;event=Update"
 </span></code></pre></div>
 
 

@@ -4916,7 +4916,7 @@ running higher major versions of software. For example, if there has been an upd
 <p>When upgrading to a new major version of Solr, you need to regenerate a new set of config files. You will need to do this on both 
 your development site, and your production site.</p>
 <p>First, remove the old solr data. This will remove everything that has been indexed, so we will have to reindex our site in a later step.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>docker compose exec -T solr with-contenv bash -lc &#39;rm -r server/solr/ISLANDORA&#39;
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>docker compose exec -T solr with-contenv bash -lc 'rm -r server/solr/ISLANDORA'
 </span></code></pre></div>
 <p>Next, recreate our solr core with a new set of config files.</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>make solr-cores

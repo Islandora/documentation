@@ -5112,7 +5112,7 @@ changes. You can put patches in a folder in your root directory such as <code>[C
 <p>This one-liner, with the substitutions above, will add the patch to your
 <code>composer.json</code>:</p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Add patch to composer.json</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>composer<span class="w"> </span>config<span class="w"> </span>extra.patches<span class="w"> </span>--merge<span class="w"> </span>--json<span class="w"> </span><span class="s1">&#39;{&quot;MY_PACKAGE&quot;: {&quot;MY_ISSUE_TITLE&quot;: &quot;MY_PATCH_LOCATION&quot;}}&#39;</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>composer<span class="w"> </span>config<span class="w"> </span>extra.patches<span class="w"> </span>--merge<span class="w"> </span>--json<span class="w"> </span><span class="s1">'{"MY_PACKAGE": {"MY_ISSUE_TITLE": "MY_PATCH_LOCATION"}}'</span>
 </span></code></pre></div>
 <p>Or you could manually edit <code>composer.json</code> so it contains the following
 (<code>...</code> denotes omitted content):
@@ -5121,8 +5121,8 @@ changes. You can put patches in a folder in your root directory such as <code>[C
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="err">ex</span><span class="kc">tra</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="err">...</span><span class="w">   </span>
 </span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span><span class="err">pa</span><span class="kc">t</span><span class="err">ches</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">      </span><span class="nt">&quot;MY_PACKAGE&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">        </span><span class="nt">&quot;MY_ISSUE_TITLE&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MY_PATCH_LOCATION&quot;</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">      </span><span class="nt">"MY_PACKAGE"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">        </span><span class="nt">"MY_ISSUE_TITLE"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MY_PATCH_LOCATION"</span>
 </span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">      </span><span class="p">}</span>
 </span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">    </span><span class="p">}</span>
 </span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">  </span><span class="p">}</span>
@@ -5159,11 +5159,11 @@ need to add a repository.</p>
 Your <code>composer.json</code> file should now contain</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">{</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="err">...</span>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="nt">&quot;repositories&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="nt">"repositories"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 </span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="err">...</span>
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">    </span><span class="nt">&quot;REPO_NAME&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;vcs&quot;</span><span class="p">,</span>
-</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">      </span><span class="nt">&quot;url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;REPO_URL&quot;</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">    </span><span class="nt">"REPO_NAME"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">      </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"vcs"</span><span class="p">,</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">      </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"REPO_URL"</span>
 </span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">    </span><span class="p">}</span>
 </span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="p">}</span>
@@ -5196,10 +5196,10 @@ example, if the <code>drupal/islandora_mirador</code> package requires
 branch of <code>drupal/islandora</code> will not meet the requirements. Instead, use
 <code>as</code> to provide an alias, to a version that will match the constraints. Note
 the quotes around the package name and version spec. This takes the form:</p>
-<p><div class="language-shell highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>composer<span class="w"> </span>require<span class="w"> </span><span class="s2">&quot;MY_PACKAGE:dev-MY_BRANCH_NAME as ALIAS&quot;</span>
+<p><div class="language-shell highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>composer<span class="w"> </span>require<span class="w"> </span><span class="s2">"MY_PACKAGE:dev-MY_BRANCH_NAME as ALIAS"</span>
 </span></code></pre></div>
 For example:
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>composer<span class="w"> </span>require<span class="w"> </span><span class="s2">&quot;drupal/islandora:dev-enable-hocr as 2.12.1&quot;</span>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>composer<span class="w"> </span>require<span class="w"> </span><span class="s2">"drupal/islandora:dev-enable-hocr as 2.12.1"</span>
 </span></code></pre></div></p>
 <p>That will install the specified branch and allow it to work with your
 dependencies.</p>
@@ -5227,7 +5227,7 @@ with the following replacements:</p>
 files) and add the package code at the same version of the <code>MY_PACKAGE</code>
 that was previously installed and is in the lock file.</p>
 <p>For example:
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>composer<span class="w"> </span>reinstall<span class="w"> </span><span class="s2">&quot;drupal/islandora&quot;</span><span class="w"> </span>--prefer-source<span class="w"> </span>--no-cache
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>composer<span class="w"> </span>reinstall<span class="w"> </span><span class="s2">"drupal/islandora"</span><span class="w"> </span>--prefer-source<span class="w"> </span>--no-cache
 </span></code></pre></div></p>
 <h3 id="step-2-pull-the-code-from-the-pull-request-to-review">Step 2: Pull the code from the pull request to review.<a class="headerlink" href="#step-2-pull-the-code-from-the-pull-request-to-review" title="Permanent link">&para;</a></h3>
 <p>Follow Github's <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/checking-out-pull-requests-locally">documentation</a>

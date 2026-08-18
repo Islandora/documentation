@@ -4782,7 +4782,7 @@
 <p>You can modify the Traefik routing configuration in the <code>traefik/dynamic</code> directory to disable external access to Fedora while keeping it accessible internally to other services.</p>
 <p>If you have done this, you can also remove the DNS records that point this URL to your server.</p>
 <p>Finally, ensure that Drupal is configured to access Fedora using the internal Docker network hostname:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">DRUPAL_DEFAULT_FCREPO_URL</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;http://fcrepo:8080/fcrepo/rest/&quot;</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">DRUPAL_DEFAULT_FCREPO_URL</span><span class="p">:</span><span class="w"> </span><span class="s">"http://fcrepo:8080/fcrepo/rest/"</span>
 </span></code></pre></div>
 <p>This is typically the default configuration, allowing Drupal to access Fedora internally even when external access is disabled.</p>
 

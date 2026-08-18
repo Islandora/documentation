@@ -4782,30 +4782,30 @@
 <p>Again we are using the json format.</p>
 <p>&#x1F34E; For example <code>curl -X GET 'http://localhost:8000/node/3?_format=json</code></p>
 <p>Look for the <strong>type</strong> element</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>&quot;type&quot; : [
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>"type" : [
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  {
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    &quot;target_id&quot; : &quot;islandora_object&quot;,
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    &quot;target_type&quot; : &quot;node_type&quot;,
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    &quot;target_uuid&quot; : &quot;62189bec-3ef3-4196-b847-b17e5ce61fd5&quot;
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    "target_id" : "islandora_object",
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    "target_type" : "node_type",
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    "target_uuid" : "62189bec-3ef3-4196-b847-b17e5ce61fd5"
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>  }
 </span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>]
 </span></code></pre></div>
 <p>In our example "islandora_object" is the machine name of the content type "Repository Item". If you have created a new type you will have a different target_id.</p>
 <p>You will not need the <code>target_uuid</code>.</p>
 <p>Next look for the <strong>title</strong> element</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>&quot;title&quot; : [
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>"title" : [
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>  {
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    &quot;value&quot; : &quot;An example Islandora object&quot;
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    "value" : "An example Islandora object"
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>  }
 </span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>]
 </span></code></pre></div>
 <p>Lastly look for the <strong>field_model</strong> element</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>&quot;field_model&quot;: [
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>"field_model": [
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>  {
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    &quot;target_id&quot;: 24,
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    &quot;target_type&quot;: &quot;taxonomy_term&quot;,
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    &quot;target_uuid&quot;: &quot;e7560b68-e95a-4e76-9671-2a3041cd9800&quot;,
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    &quot;url&quot;: &quot;\\/taxonomy\\/term\\/24&quot;
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    "target_id": 24,
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    "target_type": "taxonomy_term",
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    "target_uuid": "e7560b68-e95a-4e76-9671-2a3041cd9800",
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    "url": "\\/taxonomy\\/term\\/24"
 </span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>  }
 </span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>]
 </span></code></pre></div>
@@ -4814,21 +4814,21 @@
 <p><strong>Note</strong>: Taxonomy terms may vary between instances and you should verify the correct number for your installation.</p>
 <p>So the body of the request will be:
 <div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>{
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>  &quot;type&quot;: [
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>  "type": [
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    {
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>      &quot;target_id&quot;: &quot;islandora_object&quot;,
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>      &quot;target_type&quot;: &quot;node_type&quot;
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>      "target_id": "islandora_object",
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>      "target_type": "node_type"
 </span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    }
 </span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>  ],
-</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>  &quot;title&quot;: [
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>  "title": [
 </span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>    {
-</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>      &quot;value&quot;: &quot;Created a collection with POST&quot;
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>      "value": "Created a collection with POST"
 </span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>    }
 </span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>  ],
-</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>  &quot;field_model&quot;: [
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>  "field_model": [
 </span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>    {
-</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>      &quot;target_id&quot;: 23,
-</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>      &quot;target_type&quot;: &quot;taxonomy_term&quot;
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>      "target_id": 23,
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>      "target_type": "taxonomy_term"
 </span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>    }
 </span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>  ]
 </span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>}
@@ -4838,7 +4838,7 @@
 <p>If you do provide credentials but don't have permission, you will receive a <code>403 Forbidden</code> response.</p>
 <p>You can find more information about <a href="../rest-authorization/">Authorization here</a></p>
 <p>&#x1F34E; For example:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>curl -i -X POST -u admin:islandora -H&quot;Content-type: application/json&quot; --data &#39;{&quot;type&quot;:[{&quot;target_id&quot;:&quot;islandora_object&quot;,&quot;target_type&quot;:&quot;node_type&quot;}],&quot;title&quot;:[{&quot;value&quot;:&quot;Created a collection with POST&quot;}],&quot;field_model&quot;:[{&quot;target_id&quot;:23,&quot;target_type&quot;:&quot;taxonomy_term&quot;}]}&#39; &#39;http://localhost:8000/node?_format=json&#39;
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>curl -i -X POST -u admin:islandora -H"Content-type: application/json" --data '{"type":[{"target_id":"islandora_object","target_type":"node_type"}],"title":[{"value":"Created a collection with POST"}],"field_model":[{"target_id":23,"target_type":"taxonomy_term"}]}' 'http://localhost:8000/node?_format=json'
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>HTTP/1.1 201 Created
 </span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>Date: Tue, 05 Mar 2019 18:07:00 GMT
@@ -4856,7 +4856,7 @@
 </span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>Content-Length: 1564
 </span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>Content-Type: application/json
 </span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>
-</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>{&quot;nid&quot;:[{&quot;value&quot;:3}],&quot;uuid&quot;:[{&quot;value&quot;:&quot;3f618cdc-3f2a-4e77-b932-9ff1d461a57a&quot;}],&quot;vid&quot;:[{&quot;value&quot;:3}],&quot;langcode&quot;:[{&quot;value&quot;:&quot;en&quot;}],&quot;type&quot;:[{&quot;target_id&quot;:&quot;islandora_object&quot;,&quot;target_type&quot;:&quot;node_type&quot;,&quot;target_uuid&quot;:&quot;62189bec-3ef3-4196-b847-b17e5ce61fd5&quot;}],&quot;revision_timestamp&quot;:[{&quot;value&quot;:&quot;2019-03-05T18:07:00+00:00&quot;,&quot;format&quot;:&quot;Y-m-d\\TH:i:sP&quot;}],&quot;revision_uid&quot;:[{&quot;target_id&quot;:1,&quot;target_type&quot;:&quot;user&quot;,&quot;target_uuid&quot;:&quot;46a47057-de2d-4ce2-87ae-dbe4551209b8&quot;,&quot;url&quot;:&quot;\/user\/1&quot;}],&quot;revision_log&quot;:[],&quot;status&quot;:[{&quot;value&quot;:true}],&quot;title&quot;:[{&quot;value&quot;:&quot;Created a collection with POST&quot;}],&quot;uid&quot;:[{&quot;target_id&quot;:1,&quot;target_type&quot;:&quot;user&quot;,&quot;target_uuid&quot;:&quot;46a47057-de2d-4ce2-87ae-dbe4551209b8&quot;,&quot;url&quot;:&quot;\/user\/1&quot;}],&quot;created&quot;:[{&quot;value&quot;:&quot;2019-03-05T18:07:00+00:00&quot;,&quot;format&quot;:&quot;Y-m-d\\TH:i:sP&quot;}],&quot;changed&quot;:[{&quot;value&quot;:&quot;2019-03-05T18:07:00+00:00&quot;,&quot;format&quot;:&quot;Y-m-d\\TH:i:sP&quot;}],&quot;promote&quot;:[{&quot;value&quot;:true}],&quot;sticky&quot;:[{&quot;value&quot;:false}],&quot;default_langcode&quot;:[{&quot;value&quot;:true}],&quot;revision_translation_affected&quot;:[{&quot;value&quot;:true}],&quot;content_translation_source&quot;:[{&quot;value&quot;:&quot;und&quot;}],&quot;content_translation_outdated&quot;:[{&quot;value&quot;:false}],&quot;field_access_terms&quot;:[],&quot;field_alternative_title&quot;:[],&quot;field_description&quot;:[],&quot;field_display_hints&quot;:[],&quot;field_edtf_date&quot;:[],&quot;field_edtf_date_created&quot;:[],&quot;field_edtf_date_issued&quot;:[],&quot;field_extent&quot;:[{&quot;value&quot;:&quot;1 item&quot;}],&quot;field_identifier&quot;:[],&quot;field_linked_agent&quot;:[],&quot;field_member_of&quot;:[],&quot;field_model&quot;:[{&quot;target_id&quot;:23,&quot;target_type&quot;:&quot;taxonomy_term&quot;,&quot;target_uuid&quot;:&quot;6a3b293d-4617-417b-99d2-23d75b57f7c2&quot;,&quot;url&quot;:&quot;\/taxonomy\/term\/23&quot;}],&quot;field_pid&quot;:[],&quot;field_resource_type&quot;:[],&quot;field_rights&quot;:[],&quot;field_subject&quot;:[]}
+</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>{"nid":[{"value":3}],"uuid":[{"value":"3f618cdc-3f2a-4e77-b932-9ff1d461a57a"}],"vid":[{"value":3}],"langcode":[{"value":"en"}],"type":[{"target_id":"islandora_object","target_type":"node_type","target_uuid":"62189bec-3ef3-4196-b847-b17e5ce61fd5"}],"revision_timestamp":[{"value":"2019-03-05T18:07:00+00:00","format":"Y-m-d\\TH:i:sP"}],"revision_uid":[{"target_id":1,"target_type":"user","target_uuid":"46a47057-de2d-4ce2-87ae-dbe4551209b8","url":"\/user\/1"}],"revision_log":[],"status":[{"value":true}],"title":[{"value":"Created a collection with POST"}],"uid":[{"target_id":1,"target_type":"user","target_uuid":"46a47057-de2d-4ce2-87ae-dbe4551209b8","url":"\/user\/1"}],"created":[{"value":"2019-03-05T18:07:00+00:00","format":"Y-m-d\\TH:i:sP"}],"changed":[{"value":"2019-03-05T18:07:00+00:00","format":"Y-m-d\\TH:i:sP"}],"promote":[{"value":true}],"sticky":[{"value":false}],"default_langcode":[{"value":true}],"revision_translation_affected":[{"value":true}],"content_translation_source":[{"value":"und"}],"content_translation_outdated":[{"value":false}],"field_access_terms":[],"field_alternative_title":[],"field_description":[],"field_display_hints":[],"field_edtf_date":[],"field_edtf_date_created":[],"field_edtf_date_issued":[],"field_extent":[{"value":"1 item"}],"field_identifier":[],"field_linked_agent":[],"field_member_of":[],"field_model":[{"target_id":23,"target_type":"taxonomy_term","target_uuid":"6a3b293d-4617-417b-99d2-23d75b57f7c2","url":"\/taxonomy\/term\/23"}],"field_pid":[],"field_resource_type":[],"field_rights":[],"field_subject":[]}
 </span></code></pre></div>
 <p>The parts of the above request are:</p>
 <ol>
@@ -4884,7 +4884,7 @@
 <p>&#x1F34E; For example:</p>
 <p>With a local file called <code>my-image.png</code> that I wanted to link to a node with ID <code>3</code>.</p>
 <p>I am using the taxonomy term "Original file", which on my machine is <code>16</code></p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>&gt; curl -i -X PUT -u admin:islandora -H&quot;Content-type: image/png&quot; --data-binary &quot;@my-image.png&quot; -H&quot;Content-Location: public://images/my-image.png&quot; &#39;http://localhost:8000/node/3/media/image/16&#39;
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>&gt; curl -i -X PUT -u admin:islandora -H"Content-type: image/png" --data-binary "@my-image.png" -H"Content-Location: public://images/my-image.png" 'http://localhost:8000/node/3/media/image/16'
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>HTTP/1.1 100 Continue
 </span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>

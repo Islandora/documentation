@@ -4810,11 +4810,11 @@
 <p>The Fedora Flysystem adapter does not use Gemini to map the relationship between Drupal URIs and Fedora URIs, so they are indexed separately using the "files_in_fedora" Context which triggers the "Index Fedora File in Gemini" and "Delete Fedora File in Gemini" actions as appropriate.</p>
 <h3 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h3>
 <p>The fedora file system is configured in the site's <code>settings.php</code> file. An example configuration can be seen in the islandora-playbook web server role's <a href="https://github.com/Islandora-Devops/islandora-playbook/blob/dev/roles/internal/webserver-app/tasks/drupal.yml#L12-L19">drupal tasks</a>:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$settings[&#39;flysystem&#39;] = [
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  &#39;fedora&#39; =&gt; [
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    &#39;driver&#39; =&gt; &#39;fedora&#39;,
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    &#39;config&#39; =&gt; [
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>      &#39;root&#39; =&gt; &#39;http://localhost:8080/fcrepo/rest/&#39;,
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$settings['flysystem'] = [
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  'fedora' =&gt; [
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    'driver' =&gt; 'fedora',
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    'config' =&gt; [
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>      'root' =&gt; 'http://localhost:8080/fcrepo/rest/',
 </span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    ],
 </span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>  ],
 </span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>];

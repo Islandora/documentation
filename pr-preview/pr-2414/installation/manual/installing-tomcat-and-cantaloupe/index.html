@@ -4971,12 +4971,12 @@
 <h3 id="creating-a-setenvsh-script">Creating a setenv.sh Script<a class="headerlink" href="#creating-a-setenvsh-script" title="Permanent link">&para;</a></h3>
 <p>When Tomcat runs, some configuration needs to be pre-established as a series of environment variables that will be used by the script that runs it.</p>
 <p><code>/opt/tomcat/bin/setenv.sh | tomcat:tomcat/755</code>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>export CATALINA_HOME=&quot;/opt/tomcat&quot;
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>export JAVA_HOME=&quot;PATH_TO_JAVA_HOME&quot;
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>export JAVA_OPTS=&quot;-Djava.awt.headless=true -server -Xmx1500m -Xms1000m&quot;
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>export CATALINA_HOME="/opt/tomcat"
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>export JAVA_HOME="PATH_TO_JAVA_HOME"
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>export JAVA_OPTS="-Djava.awt.headless=true -server -Xmx1500m -Xms1000m"
 </span></code></pre></div>
 - <code>PATH_TO_JAVA_HOME</code>: This will vary a bit depending on the environment, but will likely live in <code>/usr/lib/jvm</code> somewhere (e.g., <code>/usr/lib/jvm/java-11-openjdk-amd64</code>); again, in an Ubunutu environment you can check a part of this using <code>update-alternatives --list java</code>, which will give you the path to the JRE binary within the Java home. Note that <code>update-alternatives --list java</code> will give you the path to the binary, so for <code>PATH_TO_JAVA_HOME</code> delete the <code>/bin/java</code> at the end to get the Java home directory, so it should look something like this:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>export JAVA_HOME=&quot;/usr/lib/jvm/java-11-openjdk-amd64&quot;
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
 </span></code></pre></div></p>
 <h3 id="creating-the-tomcat-service">Creating the Tomcat Service<a class="headerlink" href="#creating-the-tomcat-service" title="Permanent link">&para;</a></h3>
 <p>Tomcat includes two shell scripts we’re going to make use of - <code>startup.sh</code> and <code>shutdown.sh</code> - which are light wrappers on top of a third script, <code>catalina.sh</code>, which manages spinning up and shutting down the Tomcat server.</p>

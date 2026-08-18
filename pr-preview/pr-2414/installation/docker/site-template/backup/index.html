@@ -5093,10 +5093,10 @@
 <h3 id="back-up">Back Up<a class="headerlink" href="#back-up" title="Permanent link">&para;</a></h3>
 <p>Backing up the Drupal database involves doing a database dump in the drupal container:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>docker compose exec drupal \
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    bash -lc &quot;drush sql-dump -y \
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    bash -lc "drush sql-dump -y \
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    --skip-tables-list=cache,cache_*,watchdog \
 </span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    --structure-tables-list=cache,cache_*,watchdog \
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    --result-file=/tmp/drupal.sql&quot;
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    --result-file=/tmp/drupal.sql"
 </span></code></pre></div>
 <p>and then copying that dump from the container to the host machine:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>docker compose cp drupal:/tmp/drupal.sql [path/on/host/drupal.sql]
@@ -5106,7 +5106,7 @@
 <div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>docker compose cp [path-to/drupal.sql] drupal:/tmp/drupal.sql
 </span></code></pre></div>
 <p>Then replacing the database with the dump:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>docker compose exec drupal drush sqlq --debug --file /tmp/drupal.sql&#39;
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>docker compose exec drupal drush sqlq --debug --file /tmp/drupal.sql'
 </span></code></pre></div>
 <p>And finally, rebuilding the Drupal cache:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>docker compose exec drupal drush cr
@@ -5136,7 +5136,7 @@
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This will overwrite existing files if they have the same filename, but does not remove existing files otherwise. If you want to make sure that the public files directory does not contain anything but the newly imported files, you will want to empty the directory before copying the new files in.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>docker compose exec drupal with-contenv bash -lc &#39;rm -r /var/www/drupal/web/sites/default/files/*&#39;
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>docker compose exec drupal with-contenv bash -lc 'rm -r /var/www/drupal/web/sites/default/files/*'
 </span></code></pre></div>
 </div>
 <h2 id="drupal-private-files">Drupal Private Files<a class="headerlink" href="#drupal-private-files" title="Permanent link">&para;</a></h2>
@@ -5160,7 +5160,7 @@
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This will overwrite existing files if they have the same filename, but does not remove existing files otherwise. If you want to make sure that the private files directory does not contain anything but the newly imported files, you will want to empty the directory before copying the new files in.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>docker compose exec drupal with-contenv bash -lc &#39;rm -r /var/www/drupal/private/*&#39;
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>docker compose exec drupal with-contenv bash -lc 'rm -r /var/www/drupal/private/*'
 </span></code></pre></div>
 </div>
 <h2 id="fedora">Fedora<a class="headerlink" href="#fedora" title="Permanent link">&para;</a></h2>
@@ -5181,7 +5181,7 @@
 <div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>docker compose cp [path-to/fcrepo-export.tgz] fcrepo:/tmp/fcrepo-export.tgz
 </span></code></pre></div>
 <p>Empty the existing ocfl-root directory:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>docker compose exec fcrepo bash -lc &#39;rm -r /data/home/data/ocfl-root/*&#39;
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>docker compose exec fcrepo bash -lc 'rm -r /data/home/data/ocfl-root/*'
 </span></code></pre></div></p>
 <p>Put our backup files in the ocfl-root directory:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>docker compose exec fcrepo tar zxvf /tmp/fcrepo-export.tgz -C /data/home/data/ocfl-root/
@@ -5189,7 +5189,7 @@
 </span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>docker compose exec fcrepo rm /tmp/fcrepo-export.tgz
 </span></code></pre></div>
 <p>Drop the existing Fedora database:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>docker compose exec mariadb mariadb -e &quot;drop database fcrepo;&quot;
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>docker compose exec mariadb mariadb -e "drop database fcrepo;"
 </span></code></pre></div>
 <p>Restart Fedora to reinitialize the database from the ocfl-root directory:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>docker compose restart fcrepo

@@ -5102,7 +5102,7 @@
 <p>By default, your Fedora repository will be exposed to the public at <code>fcrepo.${DOMAIN}</code>. If you don't want the public to be able to access your repository, you can modify the Traefik routing configuration in the <code>traefik/dynamic</code> directory to disable external access while keeping internal access for other services.</p>
 <p>If you do this, you can remove the fcrepo subdomain from your DNS records.</p>
 <p>Finally, ensure that Drupal is configured to access Fedora using the internal Docker network hostname:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">DRUPAL_DEFAULT_FCREPO_URL</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;http://fcrepo:8080/fcrepo/rest/&quot;</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">DRUPAL_DEFAULT_FCREPO_URL</span><span class="p">:</span><span class="w"> </span><span class="s">"http://fcrepo:8080/fcrepo/rest/"</span>
 </span></code></pre></div>
 <h3 id="exposing-activemq-blazegraph-and-solr">Exposing ActiveMQ, Blazegraph, and Solr<a class="headerlink" href="#exposing-activemq-blazegraph-and-solr" title="Permanent link">&para;</a></h3>
 <p>By default in production environments, the admin UIs for ActiveMQ, Blazegraph, and Solr are not network accessible. These services are blocked from network access as a security precaution.</p>
@@ -5122,8 +5122,8 @@
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>SERVICE_PORT=8161
 </span></code></pre></div>
 <p>If you're connecting to ActiveMQ you need to know the value in your compose project secret in <code>./secrets/ACTIVEMQ_WEB_ADMIN_PASSWORD</code> to login via the browser. Running the two commands below should print that password in your terminal. You'll want to copy that value for later.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>SECRET_PATH=$(ssh $SSH_DESTINATION &quot;docker inspect \$(docker ps -q --filter &#39;name=activemq&#39;) --format &#39;{{range .Mounts}}{{.Source}}{{\&quot;\n\&quot;}}{{end}}&#39; | grep ACTIVEMQ_WEB_ADMIN_PASSWORD&quot;)
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>ssh $SSH_DESTINATION &quot;cat $SECRET_PATH; echo&quot;
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>SECRET_PATH=$(ssh $SSH_DESTINATION "docker inspect \$(docker ps -q --filter 'name=activemq') --format '{{range .Mounts}}{{.Source}}{{\"\n\"}}{{end}}' | grep ACTIVEMQ_WEB_ADMIN_PASSWORD")
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>ssh $SSH_DESTINATION "cat $SECRET_PATH; echo"
 </span></code></pre></div>
 <h6 id="blazegraph">Blazegraph<a class="headerlink" href="#blazegraph" title="Permanent link">&para;</a></h6>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>SERVICE=blazegraph
@@ -5135,7 +5135,7 @@
 </span></code></pre></div>
 <h5 id="start-a-port-forwarding-session">Start a port forwarding session<a class="headerlink" href="#start-a-port-forwarding-session" title="Permanent link">&para;</a></h5>
 <p>Now that you've set the proper environment variables in your command line terminal, you're ready to setup port forwarding.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>IP=$(ssh $SSH_DESTINATION &quot;docker inspect -f &#39;{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}&#39; \$(docker ps -q --filter &#39;name=$SERVICE&#39;)&quot;)
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>IP=$(ssh $SSH_DESTINATION "docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' \$(docker ps -q --filter 'name=$SERVICE')")
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>ssh $SSH_DESTINATION -L $LOCAL_PORT:$IP:$SERVICE_PORT
 </span></code></pre></div>
 <p>Then open <a href="http://localhost:8080">http://localhost:8080</a> and you'll be viewing the service's admin UI. For ActiveMQ you can enter <code>admin</code> for the username and the value printed in the terminal for the password.</p>
@@ -5144,7 +5144,7 @@
 <p>If SSH Port Forwarding is not an option for you, ISLE Site Template also is setup to allow accessing these services' admin UI with custom domains.</p>
 <p>ISLE Site Template uses <a href="https://doc.traefik.io/traefik/reference/routing-configuration/other-providers/file/#go-templating">Traefik's Go Templating</a> in the <a href="https://github.com/Islandora-Devops/isle-site-template/blob/main/conf/traefik/">./conf/traefik/dynamic</a> directory to manage exposing different services on the host network.</p>
 <p>ActiveMQ, Blazegraph, and Solr are disabled by default in production since they are wrapped in a conditional that checks whether <code>DEVELOPMENT_ENVIRONMENT=true</code> in your docker compose project's <code>.env</code> file.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>{{- if (eq (env &quot;DEVELOPMENT_ENVIRONMENT&quot;) &quot;true&quot;) }}
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>{{- if (eq (env "DEVELOPMENT_ENVIRONMENT") "true") }}
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>...
 </span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>{{- end }}
 </span></code></pre></div>
