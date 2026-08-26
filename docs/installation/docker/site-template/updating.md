@@ -74,7 +74,11 @@ Update Solr and MariaDB as specified above. In addition, the following changes n
 7.0.0 updates fedora from 6 to 7, so the image has been renamed from `fcrepo6` to `fcrepo` . To update this, in your `docker-compose.yml` find the line `image: ${ISLANDORA_REPOSITORY}/fcrepo6:${ISLANDORA_TAG}` and remove the 6, making it `image: ${ISLANDORA_REPOSITORY}/fcrepo:${ISLANDORA_TAG}`.
 
 ##### Blazegraph
-Blazegraph has been removed so you will need to remove it from your `docker-compose.yml`. You should remove the following:
+Blazegraph is no longer being updated, so you can either pin it to version 6.4.3 to continue using it, or remove it entirely.
+
+To pin it, update your `docker-compose.yml` to change the line `image: islandora/blazegraph:${ISLANDORA_TAG}` to `image: islandora/blazegraph:6.4.3@sha256:015e308ae0a296cdb87c83c10da976ed970d2bfa971290aa1147593df8cf445d`
+
+To remove it from your `docker-compose.yml`. You should remove the following:
 - the volume called `blazegraph-data`
 - the `blazegraph` service(s) (you may have `blazegraph-dev` and `blazegraph-prod` depending on when you set up your site)
 - the `blazegraph` network alias (this may be called `blazegraph.islandora.dev` or `blazegraph.${DOMAIN}`)
