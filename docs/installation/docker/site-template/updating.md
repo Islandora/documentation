@@ -71,7 +71,7 @@ When doing major version updates, such as updating from version 4.x.x to 5.x.x, 
 Update Solr and MariaDB as specified above. In addition, the following changes need to be made to Fedora and Blazegraph.
 
 ##### Fedora
-7.0.0 updates fedora from 6 to 7, so the image has been renamed from `fcrepo6` to `fcrepo` . To update this, in your `docker-compose.yml` find the line `image: ${ISLANDORA_REPOSITORY}/fcrepo6:${ISLANDORA_TAG}` and remove the 6, making it `image: ${ISLANDORA_REPOSITORY}/fcrepo:${ISLANDORA_TAG}`.
+7.0.0 updates fedora from 6 to 7, so the image has been renamed from `fcrepo6` to `fcrepo` . To update this, in your `docker-compose.yml` find the line `image: islandora/fcrepo6:${ISLANDORA_TAG}` and remove the 6, making it `image: islandora/fcrepo:${ISLANDORA_TAG}`.
 
 ##### Blazegraph
 Blazegraph is no longer being updated, so you can either pin it to version 6.4.3 to continue using it, or remove it entirely.
