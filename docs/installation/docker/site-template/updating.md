@@ -66,6 +66,20 @@ You can run this with
 
 When doing major version updates, such as updating from version 4.x.x to 5.x.x, you will often need to follow the steps for Solr and MariaDB above, as well as the one time changes listed here.
 
+#### 7.0.0
+
+Update Solr and MariaDB as specified above. In addition, the following changes need to be made to Fedora and Blazegraph.
+
+##### Fedora
+7.0.0 updates fedora from 6 to 7, so the image has been renamed from `fcrepo6` to `fcrepo` . To update this, in your `docker-compose.yml` find the line `image: ${ISLANDORA_REPOSITORY}/fcrepo6:${ISLANDORA_TAG}` and remove the 6, making it `image: ${ISLANDORA_REPOSITORY}/fcrepo:${ISLANDORA_TAG}`.
+
+##### Blazegraph
+Blazegraph has been removed so you will need to remove it from your `docker-compose.yml`. You should remove the following:
+- the volume called `blazegraph-data`
+- the `blazegraph` service(s) (you may have `blazegraph-dev` and `blazegraph-prod` depending on when you set up your site)
+- the `blazegraph` network alias (this may be called `blazegraph.islandora.dev` or `blazegraph.${DOMAIN}`)
+- any other blazegraph references you may have in your `docker-compose.yml` or override files
+
 #### 6.0.0
 
 For most sites this update will not cause any problems. If you have overridden your Alpaca properties or created custom derivative actions you should read the [Version 6.0.0 release notes](https://github.com/Islandora-Devops/isle-buildkit/releases/tag/6.0.0) to see if you need to update your customizations.
