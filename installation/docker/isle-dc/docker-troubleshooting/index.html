@@ -4823,7 +4823,7 @@
 <p>If you notice some Docker containers drop (exited(0)), and (in Docker Desktop) the isle-dc app icon is yellow instead of green, try increasing the resources allocated to Docker (see note above).</p>
 <h3 id="connection-timed-out-mac">Connection timed out (Mac).<a class="headerlink" href="#connection-timed-out-mac" title="Permanent link">&para;</a></h3>
 <p>If you are using Docker Desktop for Mac, and get timeout errors when spinning up the containers (during <code>docker-compose up -d</code> or during <code>make local</code>) such as this:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>ERROR: for isle-dc_mariadb_1  UnixHTTPConnectionPool(host=&#39;localhost&#39;, port=None): Read timed out. (read timeout=480)
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>ERROR: for isle-dc_mariadb_1  UnixHTTPConnectionPool(host='localhost', port=None): Read timed out. (read timeout=480)
 </span></code></pre></div>
 <p>you can try quitting Docker completely (make sure there is no whale icon in your top toolbar - may need to select "Quit" from the whale icon itself) and then restart Docker.</p>
 <h3 id="504-bad-gateway">504 Bad Gateway<a class="headerlink" href="#504-bad-gateway" title="Permanent link">&para;</a></h3>

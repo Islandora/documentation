@@ -5083,21 +5083,21 @@
 <h4 id="homarus-audiovideo-derivatives">Homarus (Audio/Video derivatives)<a class="headerlink" href="#homarus-audiovideo-derivatives" title="Permanent link">&para;</a></h4>
 <p>Enable JSON Web Token (JWT) based access to the service by updating the security settings. Edit <code>/opt/crayfish/Homarus/config/packages/security.yaml</code> to set firewalls: main: anonymous to <code>false</code> and uncomment the <code>provider</code> and <code>jwt</code> lines further down in that section.</p>
 <p>Edit <code>/opt/crayfish/Homarus/config/packages/monolog.yaml</code> to point to the new logging directory:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>        homarus:
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>            type: rotating_file
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>            path: /var/logs/islandora/Homarus.log
+<div class="language-yml highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="w">        </span><span class="nt">homarus</span><span class="p">:</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">            </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rotating_file</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">            </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/logs/islandora/Homarus.log</span>
 </span></code></pre></div>
 <p>Edit the commons config to update it with Fedora's location (if necessary) and enable the apix middleware in <code>/opt/crayfish/Homarus/config/packages/crayfish_commons.yaml</code>:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>crayfish_commons:
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>  fedora_base_uri: &#39;http://localhost:8080/fcrepo/rest&#39;
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>  apix_middleware_enabled: true
+<div class="language-yml highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nt">crayfish_commons</span><span class="p">:</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="nt">fedora_base_uri</span><span class="p">:</span><span class="w"> </span><span class="s">'http://localhost:8080/fcrepo/rest'</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span><span class="nt">apix_middleware_enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </span></code></pre></div>
 <h4 id="houdini-image-derivatives">Houdini (Image derivatives)<a class="headerlink" href="#houdini-image-derivatives" title="Permanent link">&para;</a></h4>
 <p>Currently the Houdini microservice uses a different system (Symfony) than the other microservices, this requires different configuration.</p>
 <p><code>/opt/crayfish/Houdini/config/services.yaml | www-data:www-data/644</code>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># This file is the entry point to configure your own services.</span>
 </span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="c1"># Files in the packages/ subdirectory configure your dependencies.</span>
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="c1"># Put parameters here that don&#39;t need to change on each machine where the app is deployed</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="c1"># Put parameters here that don't need to change on each machine where the app is deployed</span>
 </span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="c1"># https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration</span>
 </span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="nt">parameters</span><span class="p">:</span>
 </span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">    </span><span class="nt">app.executable</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/usr/bin/convert</span>
@@ -5117,25 +5117,25 @@
 </span><span id="__span-10-20"><a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a><span class="w">    </span><span class="c1"># makes classes in src/ available to be used as services</span>
 </span><span id="__span-10-21"><a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a><span class="w">    </span><span class="c1"># this creates a service per class whose id is the fully-qualified class name</span>
 </span><span id="__span-10-22"><a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a><span class="w">    </span><span class="nt">App\Islandora\Houdini\</span><span class="p">:</span>
-</span><span id="__span-10-23"><a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a><span class="w">        </span><span class="nt">resource</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;../src/*&#39;</span>
-</span><span id="__span-10-24"><a id="__codelineno-10-24" name="__codelineno-10-24" href="#__codelineno-10-24"></a><span class="w">        </span><span class="nt">exclude</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}&#39;</span>
+</span><span id="__span-10-23"><a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a><span class="w">        </span><span class="nt">resource</span><span class="p">:</span><span class="w"> </span><span class="s">'../src/*'</span>
+</span><span id="__span-10-24"><a id="__codelineno-10-24" name="__codelineno-10-24" href="#__codelineno-10-24"></a><span class="w">        </span><span class="nt">exclude</span><span class="p">:</span><span class="w"> </span><span class="s">'../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'</span>
 </span><span id="__span-10-25"><a id="__codelineno-10-25" name="__codelineno-10-25" href="#__codelineno-10-25"></a>
 </span><span id="__span-10-26"><a id="__codelineno-10-26" name="__codelineno-10-26" href="#__codelineno-10-26"></a><span class="w">    </span><span class="c1"># controllers are imported separately to make sure services can be injected</span>
-</span><span id="__span-10-27"><a id="__codelineno-10-27" name="__codelineno-10-27" href="#__codelineno-10-27"></a><span class="w">    </span><span class="c1"># as action arguments even if you don&#39;t extend any base controller class</span>
+</span><span id="__span-10-27"><a id="__codelineno-10-27" name="__codelineno-10-27" href="#__codelineno-10-27"></a><span class="w">    </span><span class="c1"># as action arguments even if you don't extend any base controller class</span>
 </span><span id="__span-10-28"><a id="__codelineno-10-28" name="__codelineno-10-28" href="#__codelineno-10-28"></a><span class="w">    </span><span class="nt">App\Islandora\Houdini\Controller\HoudiniController</span><span class="p">:</span>
 </span><span id="__span-10-29"><a id="__codelineno-10-29" name="__codelineno-10-29" href="#__codelineno-10-29"></a><span class="w">        </span><span class="nt">public</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 </span><span id="__span-10-30"><a id="__codelineno-10-30" name="__codelineno-10-30" href="#__codelineno-10-30"></a><span class="w">        </span><span class="nt">bind</span><span class="p">:</span>
-</span><span id="__span-10-31"><a id="__codelineno-10-31" name="__codelineno-10-31" href="#__codelineno-10-31"></a><span class="w">            </span><span class="nt">$formats</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;%app.formats.valid%&#39;</span>
-</span><span id="__span-10-32"><a id="__codelineno-10-32" name="__codelineno-10-32" href="#__codelineno-10-32"></a><span class="w">            </span><span class="nt">$default_format</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;%app.formats.default%&#39;</span>
-</span><span id="__span-10-33"><a id="__codelineno-10-33" name="__codelineno-10-33" href="#__codelineno-10-33"></a><span class="w">            </span><span class="nt">$executable</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;%app.executable%&#39;</span>
-</span><span id="__span-10-34"><a id="__codelineno-10-34" name="__codelineno-10-34" href="#__codelineno-10-34"></a><span class="w">        </span><span class="nt">tags</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;controller.service_arguments&#39;</span><span class="p p-Indicator">]</span>
+</span><span id="__span-10-31"><a id="__codelineno-10-31" name="__codelineno-10-31" href="#__codelineno-10-31"></a><span class="w">            </span><span class="nt">$formats</span><span class="p">:</span><span class="w"> </span><span class="s">'%app.formats.valid%'</span>
+</span><span id="__span-10-32"><a id="__codelineno-10-32" name="__codelineno-10-32" href="#__codelineno-10-32"></a><span class="w">            </span><span class="nt">$default_format</span><span class="p">:</span><span class="w"> </span><span class="s">'%app.formats.default%'</span>
+</span><span id="__span-10-33"><a id="__codelineno-10-33" name="__codelineno-10-33" href="#__codelineno-10-33"></a><span class="w">            </span><span class="nt">$executable</span><span class="p">:</span><span class="w"> </span><span class="s">'%app.executable%'</span>
+</span><span id="__span-10-34"><a id="__codelineno-10-34" name="__codelineno-10-34" href="#__codelineno-10-34"></a><span class="w">        </span><span class="nt">tags</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">'controller.service_arguments'</span><span class="p p-Indicator">]</span>
 </span><span id="__span-10-35"><a id="__codelineno-10-35" name="__codelineno-10-35" href="#__codelineno-10-35"></a>
 </span><span id="__span-10-36"><a id="__codelineno-10-36" name="__codelineno-10-36" href="#__codelineno-10-36"></a><span class="w">    </span><span class="c1"># add more service definitions when explicit configuration is needed</span>
 </span><span id="__span-10-37"><a id="__codelineno-10-37" name="__codelineno-10-37" href="#__codelineno-10-37"></a><span class="w">    </span><span class="c1"># please note that last definitions always *replace* previous ones</span>
 </span></code></pre></div></p>
 <p><code>/opt/crayfish/Houdini/config/packages/crayfish_commons.yaml | www-data:www-data/644</code>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nt">crayfish_commons</span><span class="p">:</span>
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span><span class="nt">fedora_base_uri</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;http://localhost:8080/fcrepo/rest&#39;</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span><span class="nt">fedora_base_uri</span><span class="p">:</span><span class="w"> </span><span class="s">'http://localhost:8080/fcrepo/rest'</span>
 </span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">  </span><span class="nt">syn_config</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/opt/fcrepo/config/syn-settings.xml</span>
 </span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">  </span><span class="nt">syn_enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span>
 </span></code></pre></div></p>
@@ -5207,21 +5207,21 @@
 <h4 id="hypercube-ocr">Hypercube (OCR)<a class="headerlink" href="#hypercube-ocr" title="Permanent link">&para;</a></h4>
 <p>Enable JSON Web Token (JWT) based access to the service by updating the security settings. Edit <code>/opt/crayfish/Hypercube/config/packages/security.yaml</code> to set firewalls: main: anonymous to <code>false</code> and uncomment the <code>provider</code> and <code>jwt</code> lines further down in that section.</p>
 <p>Edit <code>/opt/crayfish/Hypercube/config/packages/monolog.yaml</code> to point to the new logging directory:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>        hypercube:
-</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>            type: rotating_file
-</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>            path: /var/logs/islandora/Hypercube.log
+<div class="language-yml highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="w">        </span><span class="nt">hypercube</span><span class="p">:</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">            </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rotating_file</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">            </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/logs/islandora/Hypercube.log</span>
 </span></code></pre></div>
 <p>Edit the commons config to update it with Fedora's location (if necessary) and enable the apix middleware in <code>/opt/crayfish/Hypercube/config/packages/crayfish_commons.yaml</code>:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>crayfish_commons:
-</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>  fedora_base_uri: &#39;http://localhost:8080/fcrepo/rest&#39;
-</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>  apix_middleware_enabled: true
+<div class="language-yml highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nt">crayfish_commons</span><span class="p">:</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">  </span><span class="nt">fedora_base_uri</span><span class="p">:</span><span class="w"> </span><span class="s">'http://localhost:8080/fcrepo/rest'</span>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">  </span><span class="nt">apix_middleware_enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 </span></code></pre></div>
 <h4 id="milliner-fedora-indexing">Milliner (Fedora indexing)<a class="headerlink" href="#milliner-fedora-indexing" title="Permanent link">&para;</a></h4>
 <p>Enable JSON Web Token (JWT) based access to the service by updating the security settings. Edit <code>/opt/crayfish/Milliner/config/packages/security.yaml</code> to set firewalls: main: anonymous to <code>false</code> and uncomment the <code>provider</code> and <code>jwt</code> lines further down in that section.</p>
 <p>Edit <code>/opt/crayfish/Milliner/config/packages/monolog.yaml</code> to point to the new logging directory:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>        milliner:
-</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>            type: rotating_file
-</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>            path: /var/logs/islandora/Milliner.log
+<div class="language-yml highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="w">        </span><span class="nt">milliner</span><span class="p">:</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="w">            </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rotating_file</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="w">            </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/var/logs/islandora/Milliner.log</span>
 </span></code></pre></div>
 <p>Edit the commons config to update it with Fedora's location (if necessary) and enable the apix middleware in <code>/opt/crayfish/Milliner/config/packages/crayfish_commons.yaml</code>:</p>
 <h3 id="creating-apache-configurations-for-crayfish-components">Creating Apache Configurations for Crayfish Components<a class="headerlink" href="#creating-apache-configurations-for-crayfish-components" title="Permanent link">&para;</a></h3>
@@ -5232,53 +5232,53 @@
 <p>These configurations would potentially have collisions with Drupal routes, if any are created in Drupal with the same name. If this is a concern, it would likely be better to reserve a subdomain or another port specifically for Crayfish. For the purposes of this installation guide, these endpoints will suffice.</p>
 </div>
 <p><code>/etc/apache2/conf-available/Homarus.conf | root:root/644</code>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>Alias &quot;/homarus&quot; &quot;/opt/crayfish/Homarus/public&quot;
-</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>&lt;Directory &quot;/opt/crayfish/Homarus/public&quot;&gt;
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>Alias "/homarus" "/opt/crayfish/Homarus/public"
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>&lt;Directory "/opt/crayfish/Homarus/public"&gt;
 </span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>  FallbackResource /homarus/index.php
 </span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>  Require all granted
 </span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>  DirectoryIndex index.php
 </span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>  SetEnv JWT_PUBLIC_KEY /opt/keys/syn_public.key
-</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>  SetEnvIf Authorization &quot;(.*)&quot; HTTP_AUTHORIZATION=$1
+</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>  SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
 </span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>&lt;/Directory&gt;
 </span></code></pre></div></p>
 <p><code>/etc/apache2/conf-available/Houdini.conf | root:root/644</code>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>Alias &quot;/houdini&quot; &quot;/opt/crayfish/Houdini/public&quot;
-</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>&lt;Directory &quot;/opt/crayfish/Houdini/public&quot;&gt;
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>Alias "/houdini" "/opt/crayfish/Houdini/public"
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>&lt;Directory "/opt/crayfish/Houdini/public"&gt;
 </span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>  FallbackResource /houdini/index.php
 </span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>  Require all granted
 </span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>  DirectoryIndex index.php
 </span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>  SetEnv JWT_PUBLIC_KEY /opt/keys/syn_public.key
-</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>  SetEnvIf Authorization &quot;(.*)&quot; HTTP_AUTHORIZATION=$1
+</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>  SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
 </span><span id="__span-19-8"><a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>&lt;/Directory&gt;
 </span></code></pre></div></p>
 <p><code>/etc/apache2/conf-available/Hypercube.conf | root:root/644</code>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>Alias &quot;/hypercube&quot; &quot;/opt/crayfish/Hypercube/public&quot;
-</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>&lt;Directory &quot;/opt/crayfish/Hypercube/public&quot;&gt;
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>Alias "/hypercube" "/opt/crayfish/Hypercube/public"
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>&lt;Directory "/opt/crayfish/Hypercube/public"&gt;
 </span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>  FallbackResource /hypercube/index.php
 </span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>  Require all granted
 </span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>  DirectoryIndex index.php
 </span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>  SetEnv JWT_PUBLIC_KEY /opt/keys/syn_public.key
-</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a>  SetEnvIf Authorization &quot;(.*)&quot; HTTP_AUTHORIZATION=$1
+</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a>  SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
 </span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a>&lt;/Directory&gt;
 </span></code></pre></div></p>
 <p><code>/etc/apache2/conf-available/Milliner.conf | root:root/644</code>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>Alias &quot;/milliner&quot; &quot;/opt/crayfish/Milliner/public&quot;
-</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>&lt;Directory &quot;/opt/crayfish/Milliner/public&quot;&gt;
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>Alias "/milliner" "/opt/crayfish/Milliner/public"
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>&lt;Directory "/opt/crayfish/Milliner/public"&gt;
 </span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>  FallbackResource /milliner/index.php
 </span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>  Require all granted
 </span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>  DirectoryIndex index.php
 </span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>  SetEnv JWT_PUBLIC_KEY /opt/keys/syn_public.key
-</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>  SetEnvIf Authorization &quot;(.*)&quot; HTTP_AUTHORIZATION=$1
+</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>  SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
 </span><span id="__span-21-8"><a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>&lt;/Directory&gt;
 </span></code></pre></div></p>
 <p><code>/etc/apache2/conf-available/CrayFits.conf | root:root/644</code>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>Alias &quot;/crayfits&quot; &quot;/opt/crayfish/CrayFits/public&quot;
-</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>&lt;Directory &quot;/opt/crayfish/CrayFits/public&quot;&gt;
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>Alias "/crayfits" "/opt/crayfish/CrayFits/public"
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>&lt;Directory "/opt/crayfish/CrayFits/public"&gt;
 </span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>  FallbackResource /crayfits/index.php
 </span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>  Require all granted
 </span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>  DirectoryIndex index.php
 </span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>  SetEnv JWT_PUBLIC_KEY /opt/keys/syn_public.key
-</span><span id="__span-22-7"><a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>  SetEnvIf Authorization &quot;(.*)&quot; HTTP_AUTHORIZATION=$1
+</span><span id="__span-22-7"><a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>  SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
 </span><span id="__span-22-8"><a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>&lt;/Directory&gt;
 </span></code></pre></div></p>
 <h3 id="enabling-each-crayfish-component-apache-configuration">Enabling Each Crayfish Component Apache Configuration<a class="headerlink" href="#enabling-each-crayfish-component-apache-configuration" title="Permanent link">&para;</a></h3>

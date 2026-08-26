@@ -5213,7 +5213,7 @@ Second, build a VM using the islandora base box:
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Use xcode-select to install command line components, including git</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>$<span class="w"> </span>xcode-select<span class="w"> </span>--install
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="c1"># Install homebrew</span>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>$<span class="w"> </span>/usr/bin/ruby<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://raw.githubusercontent.com/Homebrew/install/master/install<span class="k">)</span><span class="s2">&quot;</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>$<span class="w"> </span>/usr/bin/ruby<span class="w"> </span>-e<span class="w"> </span><span class="s2">"</span><span class="k">$(</span>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://raw.githubusercontent.com/Homebrew/install/master/install<span class="k">)</span><span class="s2">"</span>
 </span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c1"># Use homebrew to install ansible</span>
 </span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>$<span class="w"> </span>brew<span class="w"> </span>install<span class="w"> </span>ansible
 </span></code></pre></div>
@@ -5240,7 +5240,7 @@ Second, build a VM using the islandora base box:
 </span></code></pre></div></p>
 <p>Then, get rid of the existing VM since we've saved what we need:
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>$<span class="w"> </span>vagrant<span class="w"> </span>destroy
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">     </span>default:<span class="w"> </span>Are<span class="w"> </span>you<span class="w"> </span>sure<span class="w"> </span>you<span class="w"> </span>want<span class="w"> </span>to<span class="w"> </span>destroy<span class="w"> </span>the<span class="w"> </span><span class="s1">&#39;default&#39;</span><span class="w"> </span>VM?<span class="w"> </span><span class="o">[</span>y/N<span class="o">]</span><span class="w"> </span><span class="nv">y</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">     </span>default:<span class="w"> </span>Are<span class="w"> </span>you<span class="w"> </span>sure<span class="w"> </span>you<span class="w"> </span>want<span class="w"> </span>to<span class="w"> </span>destroy<span class="w"> </span>the<span class="w"> </span><span class="s1">'default'</span><span class="w"> </span>VM?<span class="w"> </span><span class="o">[</span>y/N<span class="o">]</span><span class="w"> </span><span class="nv">y</span>
 </span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="o">==</span>&gt;<span class="w"> </span>default:<span class="w"> </span>Forcing<span class="w"> </span>shutdown<span class="w"> </span>of<span class="w"> </span>VM...
 </span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="o">==</span>&gt;<span class="w"> </span>default:<span class="w"> </span>Destroying<span class="w"> </span>VM<span class="w"> </span>and<span class="w"> </span>associated<span class="w"> </span>drives...
 </span></code></pre></div></p>
@@ -5260,7 +5260,7 @@ This will create a new development environment on the existing islandora_base bo
 <h3 id="refreshing-your-base-box">Refreshing your base box.<a class="headerlink" href="#refreshing-your-base-box" title="Permanent link">&para;</a></h3>
 <p>If you want to use the Playbook to rebuild the base box (e.g. if this playbook now includes updated versions of PHP or Apache), then you will need to take some extra steps to ensure that Vagrant sees your new base box. </p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>vagrant<span class="w"> </span>destroy<span class="w">  </span><span class="c1"># Delete your existing VM</span>
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>vagrant<span class="w"> </span>box<span class="w"> </span>remove<span class="w"> </span>islandora_base<span class="w">  </span><span class="c1"># clear Vagrant&#39;s cached version of islandora_base</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>vagrant<span class="w"> </span>box<span class="w"> </span>remove<span class="w"> </span>islandora_base<span class="w">  </span><span class="c1"># clear Vagrant's cached version of islandora_base</span>
 </span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="nv">ISLANDORA_BUILD_BASE</span><span class="o">=</span><span class="nb">true</span><span class="w"> </span>vagrant<span class="w"> </span>up<span class="w"> </span><span class="c1"># and proceed to package the box, as above.</span>
 </span></code></pre></div>
 <p>This is because once you use the base box once, it is stored in the vagrant box list under your home directory. While subsequent builds of <code>ISLANDORA_BUILD_BASE=true vagrant up</code> will build a new box and you can package it, but that file does not update the cached box and consequently you still get the old base box when you try build a VM. See <a href="https://developer.hashicorp.com/vagrant/docs/cli/box"><code>vagrant box</code> documentation</a> for more useful commands for managing base boxes.</p>
@@ -5287,47 +5287,47 @@ just add it.  Ansible will then use the value you provide instead of relying on 
 <p>We're using <code>changeme</code> to represent passwords and assume the server will be available at <code>example.org</code>, but you'll want to provide
 your own values.</p>
 <h4 id="group_varsallpasswordsyml">group_vars/all/passwords.yml<a class="headerlink" href="#group_varsallpasswordsyml" title="Permanent link">&para;</a></h4>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a># Drupal
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>drupal_db_password: changeme
-</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>drupal_account_pass: changeme
+<div class="language-yml highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1"># Drupal</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="nt">drupal_db_password</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">changeme</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="nt">drupal_account_pass</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">changeme</span>
 </span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>
-</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a># MySQL/Postgres
-</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>islandora_db_root_password: changeme
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="c1"># MySQL/Postgres</span>
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="nt">islandora_db_root_password</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">changeme</span>
 </span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>
-</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a># Tomcat
-</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>islandora_tomcat_password: changeme
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="c1"># Tomcat</span>
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="nt">islandora_tomcat_password</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">changeme</span>
 </span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>
-</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a># Syn
-</span><span id="__span-13-12"><a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a>islandora_syn_token: changeme
+</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="c1"># Syn</span>
+</span><span id="__span-13-12"><a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a><span class="nt">islandora_syn_token</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">changeme</span>
 </span><span id="__span-13-13"><a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a>
-</span><span id="__span-13-14"><a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a># Cantaloupe
-</span><span id="__span-13-15"><a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a>cantaloupe_admin_password: changeme
+</span><span id="__span-13-14"><a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a><span class="c1"># Cantaloupe</span>
+</span><span id="__span-13-15"><a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a><span class="nt">cantaloupe_admin_password</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">changeme</span>
 </span><span id="__span-13-16"><a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a>
-</span><span id="__span-13-17"><a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a># Fedora
-</span><span id="__span-13-18"><a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a>fcrepo_db_password: changeme
+</span><span id="__span-13-17"><a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a><span class="c1"># Fedora</span>
+</span><span id="__span-13-18"><a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a><span class="nt">fcrepo_db_password</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">changeme</span>
 </span></code></pre></div>
 <h4 id="group_varswebserverapacheyml">group_vars/webserver/apache.yml<a class="headerlink" href="#group_varswebserverapacheyml" title="Permanent link">&para;</a></h4>
 <p>This is where we specify that the webserver is listening on the default port 80, instead of the development machine port 8000.
-<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>apache_listen_port: 80
+<div class="language-yml highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nt">apache_listen_port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span>
 </span></code></pre></div></p>
 <h4 id="group_varswebservergeneralyml">group_vars/webserver/general.yml<a class="headerlink" href="#group_varswebservergeneralyml" title="Permanent link">&para;</a></h4>
 <p>You will have to add the matomo line.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>matomo_site_url: http://example.org
+<div class="language-yml highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nt">matomo_site_url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://example.org</span>
 </span></code></pre></div>
 <h4 id="group_varswebserverapacheyml_1">group_vars/webserver/apache.yml<a class="headerlink" href="#group_varswebserverapacheyml_1" title="Permanent link">&para;</a></h4>
 <p>If you have a domain name, change the default to your domain name.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a> - servername: &quot;myactualddomain.com&quot;
+<div class="language-yml highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="w"> </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">servername</span><span class="p">:</span><span class="w"> </span><span class="s">"myactualddomain.com"</span>
 </span></code></pre></div>
 <h4 id="group_varswebserverdrupalyml">group_vars/webserver/drupal.yml<a class="headerlink" href="#group_varswebserverdrupalyml" title="Permanent link">&para;</a></h4>
 <p>If you have a domain name, change the default to your domain name. And set the Drupal site name to whatever you need it to be.</p>
-<p><div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>drupal_domain: &quot;myactualdomain.com&quot;
-</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>drupal_site_name: &quot;Example Sitename&quot;
+<p><div class="language-yml highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="nt">drupal_domain</span><span class="p">:</span><span class="w"> </span><span class="s">"myactualdomain.com"</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="nt">drupal_site_name</span><span class="p">:</span><span class="w"> </span><span class="s">"Example</span><span class="nv"> </span><span class="s">Sitename"</span>
 </span></code></pre></div>
 Also set your domain in <code>drupal_trusted_hosts</code>:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>drupal_trusted_hosts:
-</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>  - ^localhost$
-</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>  - &quot;{{ hostvars[groups[&#39;webserver&#39;][0]].ansible_host }}&quot;
-</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>  - &#39;^myactualdomain\.com$&#39;
+<div class="language-yml highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="nt">drupal_trusted_hosts</span><span class="p">:</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">^localhost$</span>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"{{</span><span class="nv"> </span><span class="s">hostvars[groups['webserver'][0]].ansible_host</span><span class="nv"> </span><span class="s">}}"</span>
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">'^myactualdomain\.com$'</span>
 </span></code></pre></div>
 <p>Note the backslash which escapes the period (which would otherwise match any character). Because of this escape character, the string needs to be surrounded by single quotes.</p>
 <h4 id="hosts">hosts<a class="headerlink" href="#hosts" title="Permanent link">&para;</a></h4>
@@ -5337,7 +5337,7 @@ or your systems administrator if you're running the server in-house. See
 <a href="https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html#connecting-to-hosts-behavioral-inventory-parameters">this page</a>
 for more details about what you can put into a
 host file</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>default ansible_host=example.org ansible_port=22 ansible_user=ansible ansible_ssh_private_key_file=&#39;/home/username/.ssh/id_rsa&#39;
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>default ansible_host=example.org ansible_port=22 ansible_user=ansible ansible_ssh_private_key_file='/home/username/.ssh/id_rsa'
 </span></code></pre></div>
 <h3 id="running-the-remote-installer">Running the remote installer<a class="headerlink" href="#running-the-remote-installer" title="Permanent link">&para;</a></h3>
 <p>First, you'll want to install the ansible roles that are needed for the version of Islandora you are trying to install.  This can be done
@@ -5345,8 +5345,8 @@ with</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>$<span class="w"> </span>ansible-galaxy<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.yml
 </span></code></pre></div>
 <p>Then, if you are on Ubuntu 22.04, run the following commands:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>$<span class="w"> </span>ansible-playbook<span class="w"> </span>-i<span class="w"> </span>inventory/production<span class="w"> </span>playbook.yml<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;islandora_distro=ubuntu/jammy64&quot;</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;islandora_profile=starter&quot;</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;islandora_build_base_box=true&quot;</span>
-</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>$<span class="w"> </span>ansible-playbook<span class="w"> </span>-i<span class="w"> </span>inventory/production<span class="w"> </span>playbook.yml<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;islandora_distro=ubuntu/jammy64&quot;</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;islandora_profile=starter&quot;</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;islandora_build_base_box=false&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>$<span class="w"> </span>ansible-playbook<span class="w"> </span>-i<span class="w"> </span>inventory/production<span class="w"> </span>playbook.yml<span class="w"> </span>-e<span class="w"> </span><span class="s2">"islandora_distro=ubuntu/jammy64"</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">"islandora_profile=starter"</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">"islandora_build_base_box=true"</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>$<span class="w"> </span>ansible-playbook<span class="w"> </span>-i<span class="w"> </span>inventory/production<span class="w"> </span>playbook.yml<span class="w"> </span>-e<span class="w"> </span><span class="s2">"islandora_distro=ubuntu/jammy64"</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">"islandora_profile=starter"</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">"islandora_build_base_box=false"</span>
 </span></code></pre></div>
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
 <h3 id="out-of-date-playbooks">Out of date playbooks<a class="headerlink" href="#out-of-date-playbooks" title="Permanent link">&para;</a></h3>

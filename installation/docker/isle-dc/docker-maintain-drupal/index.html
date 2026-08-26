@@ -4821,7 +4821,7 @@ likely do not have PHP or Composer on your machine, and even if you do, you want
 using the exact same version that your Docker container is using.  So to ensure all the versions of things line
 up, we use Docker to execute Drush and Composer from the Drupal container.  The general template for
 running a command in your Drupal container looks like this:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>docker compose exec -T drupal with-contenv bash -lc &#39;YOUR COMMAND&#39;
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>docker compose exec -T drupal with-contenv bash -lc 'YOUR COMMAND'
 </span></code></pre></div>
 <p>You can also just shell into the Drupal container and run commands as well,
 just be aware that if you shut down your container for any reason, you'll lose your
@@ -4834,7 +4834,7 @@ bits.</p>
 of the Drupal container is the Drupal root (a.k.a. <code>codebase</code>), so you don't need to <code>cd</code>
 into any other directory before running the command.  The following command will update
 all modules and their dependencies that are not pinned to specific versions.</p>
-<p><div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>docker compose exec -T drupal with-contenv bash -lc &quot;su nginx -s /bin/bash -c &#39;composer update -W&#39;&quot;
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>docker compose exec -T drupal with-contenv bash -lc "su nginx -s /bin/bash -c 'composer update -W'"
 </span></code></pre></div>
 Note that we run this command as the nginx user. By default, commands are run as root, which 
 can cause some ownership issues when running Composer. By running this as nginx, we ensure
@@ -4854,7 +4854,7 @@ you don't want to be stuck with an unusable database and no plan B.</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>make drupal-database-dump DEST=/path/to/dump.sql
 </span></code></pre></div>
 <p>Now you can safely update the Drupal database with Drush via</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>docker compose exec -T drupal with-contenv bash -lc &#39;drush updb&#39;
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>docker compose exec -T drupal with-contenv bash -lc 'drush updb'
 </span></code></pre></div>
 <p>If for any reason, something goes wrong, you can Restore the Drupal database at any time by running</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>make drupal-database-import SRC=/path/to/dump.sql
