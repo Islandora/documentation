@@ -308,6 +308,8 @@ nav:
   - Developer Resources:
     - 'Stack Overview': 'installation/component-overview.md'
     - 'Islandora Architecture': 'technical-documentation/diagram.md'
+    - 'Islandora Events': 'technical-documentation/islandora-events.md'
+    - 'Scaling Islandora Events': 'technical-documentation/scaling.md'
     - REST Documentation:
       - 'Introduction': 'technical-documentation/using-rest-endpoints.md'
       - 'Authorization': 'technical-documentation/rest-authorization.md'
