@@ -18,8 +18,8 @@ To edit documentation in Islandora, you must:
 - be willing to learn [Markdown](http://en.wikipedia.org/wiki/Markdown) - a good [Markdown cheat sheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) can help.
     - for example, you may use Markdown syntax to create links and section headings.
 - follow the [Islandora Documentation Style Guide](docs-style-guide.md).
-- have either an individual [Contributor License Agreement](https://github.com/Islandora/islandora/wiki/Contributor-License-Agreements) (CLA) on file with the Islandora Foundation, or work for an organization that has a corporate Contributor License Agreement on file with the Islandora Foundation.
-    - for information on how to fill out and submit a Contributor License Agreement (CLA) for yourself and/or your organization visit the [License Agreements](https://islandora.github.io/documentation/contributing/CONTRIBUTING/#license-agreements) section of the "How to contribute" documentation page.
+- have either an individual [Contributor License Agreement](https://github.com/Islandora/islandora-community/wiki/Contributor-License-Agreements) (CLA) on file with the Islandora Foundation, or work for an organization that has a corporate Contributor License Agreement on file with the Islandora Foundation.
+    - for information on how to fill out and submit a Contributor License Agreement (CLA) for yourself and/or your organization visit the [License Agreements](https://github.com/Islandora/documentation/blob/main/CONTRIBUTING.md) section of the "How to contribute" documentation page.
 - by participating in the Islandora Community, you are agreeing to act according to the [Islandora Code of Conduct](https://www.islandora.ca/code-of-conduct).
 
 ## How to edit documentation using a web browser
