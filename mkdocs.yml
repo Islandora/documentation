@@ -198,7 +198,6 @@ nav:
               - 'Available Configuration': 'installation/docker/isle-dc/docker-available-configuration.md'
               - 'Troubleshooting' : 'installation/docker/isle-dc/docker-troubleshooting.md'
 
-      - 'Ansible Playbook': 'installation/playbook.md'
       - Manual Installation:
         - 'Introduction': 'installation/manual/introduction.md'
         - 'Preparing a LAPP Webserver': 'installation/manual/preparing-a-webserver.md'

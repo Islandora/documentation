@@ -2,8 +2,6 @@
 [ActiveMQs]: ../user-documentation/glossary.md#activemq
 [Alpaca]: ../user-documentation/glossary.md#alpaca
 [Alpacas]: ../user-documentation/glossary.md#alpaca
-[Ansible]: ../user-documentation/glossary.md#ansible
-[Ansibles]: ../user-documentation/glossary.md#ansible
 [Apache]: ../user-documentation/glossary.md#apache
 [Apaches]: ../user-documentation/glossary.md#apache
 [API]: ../user-documentation/glossary.md#api
@@ -106,8 +104,6 @@
 [Islandora Starter Sites]: ../user-documentation/glossary.md#islandora-starter-site
 [Islandora model]: ../user-documentation/glossary.md#islandora-model
 [Islandora models]: ../user-documentation/glossary.md#islandora-model
-[Islandora playbook]: ../user-documentation/glossary.md#islandora-playbook
-[Islandora playbooks]: ../user-documentation/glossary.md#islandora-playbook
 [ISLE]: ../user-documentation/glossary.md#isle
 [ISLEs]: ../user-documentation/glossary.md#isle
 [ISLE Site Template]: ../user-documentation/glossary.md#isle-site-template
@@ -176,8 +172,6 @@
 [Tomcats]: ../user-documentation/glossary.md#tomcat
 [Traefik]: ../user-documentation/glossary.md#traefik
 [Traefiks]: ../user-documentation/glossary.md#traefik
-[Vagrant]: ../user-documentation/glossary.md#vagrant
-[Vagrants]: ../user-documentation/glossary.md#vagrant
 [VBO]: ../user-documentation/glossary.md#vbo
 [VBOs]: ../user-documentation/glossary.md#vbo
 [View]: ../user-documentation/glossary.md#view

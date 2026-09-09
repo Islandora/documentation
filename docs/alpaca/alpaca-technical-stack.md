@@ -20,7 +20,5 @@ $ ./activemq start
 
 When ActiveMQ gets started, go to http://localhost:8161/admin/. You can login using admin:admin.
 
-Note that ActiveMQ in Islandora playbook does not have a UI.
-
 ## References
 * [ActiveMQ Introduction](http://tech.lalitbhatt.net/2014/08/activemq-introduction.html)

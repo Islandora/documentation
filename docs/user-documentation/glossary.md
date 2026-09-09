@@ -8,9 +8,6 @@ Apache ActiveMQ is a JMS compliant Messaging Queue. Messaging client can make us
 ## Alpaca
 Islandora's event-driven middleware based on [Apache Camel](http://camel.apache.org/) that handles communication between various components of Islandora, for instance synchronizing [Drupal](#drupal) data with a [Fedora](#fedora-repository-software) repository and the [Blazegraph](#blazegraph) triple store.
 
-## Ansible
-Open source software for provisioning, configuration management and application deployment. In the context of Islandora, Ansible can be used to install and maintain the Islandora software stack more conveniently and efficiently on a server or group of servers. The configuration and installation instructions are captured in a human-readable list of tasks, called 'Playbook'. The [Islandora Playbook](#islandora-playbook) for Ansible is one of the installation methods currently supported by the Islandora community.
-
 ## Apache
 Refers to the [Apache Software Foundation](https://www.apache.org/), a not-for-profit organization supporting various open source software development projects. The Islandora software stack consists of different components that are developed under the umbrella of the Apache Software Foundation, for instance [Apache ActiveMQ](https://activemq.apache.org/), [Apache Camel](http://camel.apache.org/), the [Apache HTTP server (webserver)](https://httpd.apache.org/), [Apache Karaf](https://karaf.apache.org/), [Apache Solr](https://solr.apache.org/), and [Apache Tomcat](https://tomcat.apache.org/).
 
@@ -249,9 +246,6 @@ The Repository Item Content type (part of the Islandora Starter Site) has a “M
 Contexts and other system code (such as themes) may use this field to control the display and behavior of different Repository Item types. 
 
 
-## Islandora playbook
-A set of human-readable [YAML](#yaml) files, containing instructions for automatically configuring a server environment and installing the different components of the Islandora software stack. The instructions recorded in Playbook are executed by [Ansible](#ansible). The Islandora Playbook for Ansible is one of the installation methods currently supported by the Islandora community.
-
 ## ISLE
 ISLE, or ISLandora Enterprise, is a community initiative to ease the installation and maintenance of Islandora by using [Docker](#docker). ISLE is one of the installation methods currently supported by the Islandora community.
 
@@ -381,9 +375,6 @@ Traefik is a leading modern open source reverse proxy and ingress controller tha
 
 [https://traefik.io/traefik](https://traefik.io/traefik)
 
-## Vagrant
-[Vagrant](https://www.vagrantup.com/) is an open-source software product for building and maintaining portable virtual software development environments (virtual machines). The [Islandora Playbook](#islandora-playbook) includes a 'vagrantfile', a set of instructions that allows users to create a local virtual machine environment which will subsequently run [Ansible](#ansible) to execute the configuration and installation steps recorded in the [Islandora Playbook](#islandora-playbook).
-
 ## VBO
 See [Views Bulk Operations](#views-bulk-operations).
 
@@ -419,7 +410,7 @@ The White Screen of Death (WSoD) refers to the situation when the Islandora site
 See [White Screen of Death](#white-screen-of-death)
 
 ## YAML
-[YAML](https://yaml.org/) is a human-readable data-serialization language. It is commonly used for configuration files and in applications where data is being stored or transmitted. Software applications like [Drupal](#drupal) or [Ansible](#ansible) store configuration information in YAML files for easy transportability of a configuration.
+[YAML](https://yaml.org/) is a human-readable data-serialization language. It is commonly used for configuration files and in applications where data is being stored or transmitted. Software applications like [Drupal](#drupal) to store configuration information in YAML files for easy transportability of a configuration.
 
 ---
 

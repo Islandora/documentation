@@ -10,7 +10,4 @@ configures them in a way that is illustrative and useful.
 The Islandora Starter Site contains no code, only references to other modules and lots of Drupal configuration. A very motivated person could re-create the Starter Site just by installing and configuring modules. This means there's nothing tying you to using the Starter Site. There's also nothing tying you to doing things in a particular way. Also, it means that you won't be getting any "updates" - there's no code to update.
 
 To experience the full Islandora Starter Site, it requires access to external services such as Solr,
-Fedora, Alpaca, and Matomo. It is therefore suggested to deploy the Starter Site using one of our
- deployment platforms: [ISLE-DC](../installation/docker/isle-dc/docker-local.md) (using the `make starter` or `make starter_dev` commands), [ISLE Site Template](../installation/docker/site-template/site-template.md), or
-the [Islandora Playbook](../installation/playbook.md) (using the `starter` (default) or `starter_dev` option in the Vagrantfile).
-
+Fedora and Alpaca. It is therefore suggested to deploy the Starter Site using [ISLE Site Template](../installation/docker/site-template/site-template.md).
