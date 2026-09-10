@@ -1,0 +1,24 @@
+To: [Invitee]
+
+Subject:
+===================================
+Invitation to become Islandora committer: [Invitee]
+===================================
+
+Body:
+===================================
+Hello [Invitee],
+
+The Islandora Committers Team hereby offers you committer privileges to the Islandora project. These privileges are offered on the understanding that you'll use them reasonably and with common sense. We like to work on trust rather than unnecessary constraints.
+
+Being a committer does not require you to participate any more than you already do. It does tend to make one even more committed. You will probably find that you spend more time here. Of course, you can decline and instead remain as a contributor, participating as you do now. The specific rights and responsibilities of being an Islandora committer can be found here:
+http://islandora.github.io/documentation/contributing/committers/
+
+A. This personal invitation is a chance for you to accept or decline in private. Either way, please let us know.
+
+B. If you are accepting, the next step is to submit your signed iCLA found at the link below to community@islandora.ca:
+https://github.com/Islandora/islandora/wiki/Contributor-License-Agreements
+
+Best regards,
+(on behalf of the Islandora Committers)
+===================================
