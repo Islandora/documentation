@@ -31,17 +31,14 @@ The following is an alphabetized list of the current Islandora committers:
 |-----------------------------|---------------------------------------|----------------|
 | Joe Corall                  | Lehigh University                     | joecorall      |
 | Josh d'Entremont            | Acadia University                     | joshdentremont |
-| Jordan Dukart               | discoverygarden                       | jordandukart   |
 | Jonathan Hunt               | Catalyst.Net                          | kayakr         |
 | Kyle Huynh                  | University of Toronto Scarborough     | kylehuynh205   |
 | Mark Jordan                 | Simon Fraser University               | mjordan        |
 | Danny Lamb                  | Born-Digital                          | dannylamb      |
 | Natkeeran Ledchumykanthan   | University of Toronto Scarborough     | natkeeran      |
 | Rosie Le Faive              | University of Prince Edward Island    | rosiel         |
-| Gavin Morris                | Born-Digital                          | g7morris       | 
 | Annie Oelschlager           | Northern Illinois University          | aOelschlager   |
 | Alexander O'Neill           | Born-Digital                          | alxp           |
-| Don Richards                | Johns Hopkins University              | DonRichards    |
 | Alan Stanley                | Agile Humanities                      | ajstanley      |
 | Yamil Suarez                | Berklee College of Music              | ysuarez        |
 | Adam Vessey                 | discoverygarden                       | adam-vessey    |
@@ -67,6 +64,9 @@ The following is an alphabetized list of the prior Islandora committers:
 | Seth Shaw                   | University of Nevada, Las Vegas & Arizona State University |
 | Jared Whiklo                | University of Manitoba            |
 | Eli Zoller                  | Arizona State University          |
+| Jordan Dukart               | discoverygarden                   |
+| Gavin Morris                | Born-Digital                      |
+| Don Richards                | Johns Hopkins University          |
 
 
 
