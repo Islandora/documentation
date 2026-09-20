@@ -1,5 +1,12 @@
 # Alpaca Tips
 
+!!! warning "Deprecated guidance"
+    This page documents the legacy ActiveMQ/Alpaca stack. For current
+    Islandora deployments, use
+    [Islandora Events](islandora-events.md) instead.
+
+[Alpaca](https://github.com/Islandora/Alpaca) is event-driven middleware based on [Apache Camel](https://camel.apache.org/) for Islandora
+
 [Alpaca] ships with four event-driven components
 
 - [islandora-connector-derivative](#islandora-connector-derivative)

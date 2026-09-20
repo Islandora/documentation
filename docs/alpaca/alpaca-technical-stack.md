@@ -1,4 +1,11 @@
 # Alpaca Technical Stack
+
+!!! warning "Deprecated guidance"
+    This page documents the legacy ActiveMQ/Alpaca stack. For current
+    Islandora deployments, use
+    [Islandora Events](../technical-documentation/islandora-events.md)
+    instead.
+
 As of version 2.0.0, Alpaca contains several tools bundled into a single runnable [jar](https://en.wikipedia.org/wiki/JAR_(file_format)) file. The different tools can be enabled/disabled depending on the configuration you define.
 
 ## [Gradle](https://docs.gradle.org/current/userguide/tutorial_using_tasks.html)
