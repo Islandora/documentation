@@ -1,0 +1,15 @@
+To: islandora-committers@googlegroups.com
+Subject: Vote new committer: [Candidate]
+
+Body:
+=============================
+[ add the reasons behind your nomination here ]
+
+Please respond with a +1, 0, or -1, and any rationale you would like to provide.
+
+Voting ends one week from today, i.e. midnight UTC on YYYY-MM-DD
+http://www.timeanddate.com/counters/customcounter.html?year=YYYY&month=MM&day=DD
+
+Regards,
+[Self]
+=============================
