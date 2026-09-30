@@ -1280,34 +1280,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="2 - Remove compose profiles (ISLE Site Template only)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#2a-vanilla-overwrite" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2.a - Vanilla overwrite
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2b-attempt-to-merge" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2.b - Attempt to merge
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
         
           <li class="md-nav__item">
@@ -5063,34 +5035,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="2 - Remove compose profiles (ISLE Site Template only)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#2a-vanilla-overwrite" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2.a - Vanilla overwrite
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2b-attempt-to-merge" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2.b - Attempt to merge
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
         
           <li class="md-nav__item">
@@ -5363,37 +5307,28 @@ Replace: <code>ISLANDORA_TAG=</code></p>
 </span></code></pre></div>
 <h3 id="2-remove-compose-profiles-isle-site-template-only">2 - Remove compose profiles (ISLE Site Template only)<a class="headerlink" href="#2-remove-compose-profiles-isle-site-template-only" title="Permanent link">&para;</a></h3>
 <p>If you're converting from ISLE-DC you can skip this step.</p>
-<p>You have two options to convert docker-compose. Choose either 2.a or 2.b</p>
-<h4 id="2a-vanilla-overwrite">2.a - Vanilla overwrite<a class="headerlink" href="#2a-vanilla-overwrite" title="Permanent link">&para;</a></h4>
-<p>If you've made no changes to docker-compose.yml since you made your own copy of isle-site-template you can simply overwrite the docker-compose.yml with the latest version </p>
+<p>If you've made no changes to docker-compose.yml since you made your own copy of isle-site-template you can simply overwrite the docker-compose.yml with the latest version</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>git checkout ist/main -- docker-compose.yml
 </span></code></pre></div>
-<h4 id="2b-attempt-to-merge">2.b - Attempt to merge<a class="headerlink" href="#2b-attempt-to-merge" title="Permanent link">&para;</a></h4>
-<p>If you've made changes to docker-compose.yml since copying the repo, you can attempt to convert it using <code>sitectl</code>. Install sitectl and run the <code>sitectl isle migrate merge-compose-profiles</code> command</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>brew tap libops/homebrew https://github.com/libops/homebrew
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>brew install libops/homebrew/sitectl-isle
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>sitectl isle migrate merge-compose-profiles -i docker-compose.yml -o docker-compose.yml -f
-</span></code></pre></div>
-<p>This will overwrite your <code>docker-compose.yml</code> with the new profiles-less version.</p>
 <h3 id="3-review">3 - Review<a class="headerlink" href="#3-review" title="Permanent link">&para;</a></h3>
 <p>Very carefully review your changes locally</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>git diff
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>git diff
 </span></code></pre></div>
 <p>Or if you prefer viewing the diff in your git provider</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>git add .
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>git commit -m "Removing profiles"
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>git push origin convert-site-template
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>git add .
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>git commit -m "Removing profiles"
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>git push origin convert-site-template
 </span></code></pre></div>
 <p>Ensure your services have the same environment variables, secrets, volumes your old services had. </p>
 <p>Familiarize yourself with the new make command helpers</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>make help
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>make help
 </span></code></pre></div>
 <h4 id="environment-variables">Environment Variables<a class="headerlink" href="#environment-variables" title="Permanent link">&para;</a></h4>
 <p>Ensure the new values you see in <code>sample.env</code> are set in your <code>.env</code>. Namely</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>URI_SCHEME=http
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>TLS_PROVIDER="self-managed"
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>ACME_URL=https://acme-v02.api.letsencrypt.org/directory
-</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>ACME_EMAIL=postmaster@example.com
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>URI_SCHEME=http
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>TLS_PROVIDER="self-managed"
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>ACME_URL=https://acme-v02.api.letsencrypt.org/directory
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>ACME_EMAIL=postmaster@example.com
 </span></code></pre></div>
 <p>In the git diff, compare the <code>environment</code> sections of your docker-compose.yml files. You may have some variables set in your ISLE-DC docker-compose.yml that will need to be added to the docker-compose.yml in the new Site Template site.</p>
 <p>For example, the <a href="https://github.com/Islandora-Devops/isle-buildkit/blob/main/nginx/README.md">ISLE Buildkit Nginx README</a> lists the available variables for Nginx that you may have changed on your Drupal containers to do things like increase the timeout time for PHP or the max POST size PHP will accept.</p>
@@ -5406,7 +5341,7 @@ Replace: <code>ISLANDORA_TAG=</code></p>
 <p>If you have modified your repository, those modifications will need to be evaluated on a case-by-case basis. This includes editing the Dockerfile and environment variables mentioned above, as well as any other customizations you may have made, such as to settings.php, robots.txt, nginx configs, etc.</p>
 <h3 id="4-test">4 - Test<a class="headerlink" href="#4-test" title="Permanent link">&para;</a></h3>
 <p>If you want to keep running TLS in your dev environment you can run this make helper to switch to <code>https</code>:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>make traefik-https-mkcert
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>make traefik-https-mkcert
 </span></code></pre></div>
 <p>Otherwise, be sure your <code>DOMAIN</code> value in <code>.env</code> is <code>islandora.io</code> and be aware your dev site is available at <a href="http://islandora.io">http://islandora.io</a></p>
 <p>Now, bring up your services. In a development environment, after running <code>make up</code> your ISLE site should be available at <code>${URI_SCHEME}://${DOMAIN}</code> (the actual value will print after running make up depending on your settings).</p>
@@ -5414,33 +5349,33 @@ Replace: <code>ISLANDORA_TAG=</code></p>
 <p class="admonition-title">Warning</p>
 <p>If you don't like the new setup, it's not working, or the changes didn't apply cleanly, you can <a href="https://www.islandora.ca/contact-us#comms-channels">reach out for help</a> (in the #isle slack channel) or simply delete the git branch that was created to revert the changes.</p>
 <p>This will delete any config settings made in previous steps
-<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>make down
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>git checkout main
-</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>git branch -D convert-site-template
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>make down
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>git checkout main
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>git branch -D convert-site-template
 </span></code></pre></div></p>
 </div>
 <h3 id="5-save-changes-and-cleanup">5 - Save changes and cleanup<a class="headerlink" href="#5-save-changes-and-cleanup" title="Permanent link">&para;</a></h3>
 <p>If you like this new setup and all looks well, merge the <code>convert-site-template</code> git branch into main</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>git checkout main
-</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>git merge convert-site-template
-</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>git push origin main
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>git checkout main
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>git merge convert-site-template
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>git push origin main
 </span></code></pre></div>
 <h3 id="6-deploy-to-production">6 - Deploy to production<a class="headerlink" href="#6-deploy-to-production" title="Permanent link">&para;</a></h3>
 <p>If you committed the changes, deploy to production by:</p>
 <p>Pull down the changes</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>git pull origin main
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>git pull origin main
 </span></code></pre></div>
 <p>If you're using letsencrypt run this make helper to switch to <code>https</code> in your prod environment:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>make traefik-https-letsencrypt
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>make traefik-https-letsencrypt
 </span></code></pre></div>
 <p>If you're not using letsencrypt but instead are using your own TLS certs, make sure <code>.env</code> has</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>URI_SCHEME=https
-</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>TLS_PROVIDER="self-managed"
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>URI_SCHEME=https
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>TLS_PROVIDER="self-managed"
 </span></code></pre></div>
 <p>Next, bring down the site, pull in the changes, and bring everything back up</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>make down
-</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>docker compose --profile prod down
-</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>make up
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>make down
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>docker compose --profile prod down
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>make up
 </span></code></pre></div>
 <p>Your site should be online now using the new setup!</p>
 
