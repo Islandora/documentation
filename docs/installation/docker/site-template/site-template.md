@@ -26,7 +26,7 @@ kinds of commands that will be a key part of running and maintaining Islandora.
       and bringing up all services.
 
 4. **Default configuration**
-    * By default, the environment runs over HTTP at `islandora.traefik.me` (which resolves to
+    * By default, the environment runs over HTTP at `islandora.io` (which resolves to
       127.0.0.1) for easier local development. You can switch to HTTPS using make commands
       for development (`make traefik-https-mkcert`) or production (`make traefik-https-letsencrypt`).
 
