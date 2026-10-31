@@ -17,7 +17,7 @@ http://islandora.github.io/documentation/contributing/committers/
 A. This personal invitation is a chance for you to accept or decline in private. Either way, please let us know.
 
 B. If you are accepting, the next step is to submit your signed iCLA found at the link below to community@islandora.ca:
-https://github.com/Islandora/islandora/wiki/Contributor-License-Agreements
+https://github.com/Islandora/islandora-community/wiki/Contributor-License-Agreements
 
 Best regards,
 (on behalf of the Islandora Committers)
