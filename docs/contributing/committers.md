@@ -116,10 +116,19 @@ Upon receiving a nomination:
 Checklist for a new committer (can be completed by sponsor or designate):
 
 * Complete the CLA form. Ensure the entry shows up on our public sheet linked on our [Contributer License Agreements wiki page.](https://github.com/Islandora/islandora-community/wiki/Contributor-License-Agreements)
-* Add to the Islandora Committer team of the Github Islandora organization.
-* Assign to the appropriate GitHub teams, ensuring updates are reflected in the community wiki documentation. 
-* Add to the Committer team of GitHub Islandora-Labs organization.
+* Add to the Committer team of GitHub Islandora organizations:
+	* https://github.com/orgs/Islandora/people
+	* https://github.com/orgs/Islandora-Devops/people
+	* https://github.com/orgs/Islandora-Labs/people
+* Add as a maintainer to the Drupal modules:
+	* [drupal/advanced_search](https://www.drupal.org/node/3377281/maintainers)
+	* [drupal/controlled_access_terms](https://www.drupal.org/node/3065445/maintainers)
+	* [drupal/islandora](https://www.drupal.org/node/1791628/maintainers)
+	* [drupal/islandora_mirador](https://www.drupal.org/node/3377287/maintainers)
+	* [drupal/jsonld](https://www.drupal.org/node/1542894/maintainers)
+	* [drupal/openseadragon](https://www.drupal.org/node/2989925/maintainers)
 * Add to islandora-committers google group.
- Announce the new committer ([template/committerAnnounce.txt](https://raw.githubusercontent.com/Islandora/documentation/main/docs/contributing/templates/committerAnnounce.txt)).
+	* https://groups.google.com/g/islandora-committers/members
+* Announce the new committer ([template/committerAnnounce.txt](https://raw.githubusercontent.com/Islandora/documentation/main/docs/contributing/templates/committerAnnounce.txt)).
 
 For additional information about committers, visit [this Islandora community wiki page](https://github.com/Islandora/islandora-community/wiki/Islandora-Committers).
