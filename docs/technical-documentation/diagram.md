@@ -88,7 +88,11 @@ You can read more about this in [Islandora's Flysystem documentation](../user-do
 
 ## Microservices
 
-In addition to all the tools Drupal provides, Islandora extends the Drupal site's capabilities using an event-driven, distributed architecture of [Microservices]. When a repository manager creates, updates, or deletes Drupal [entities], the Islandora Drupal module generates an event message which is put on Islandora's [ActiveMQ] queue.
+In addition to all the tools Drupal provides, Islandora extends the Drupal
+site's capabilities using an event-driven architecture of [Microservices].
+When a repository manager creates, updates, or deletes Drupal [entities],
+Islandora records durable work in Drupal and dispatches a message through
+Symfony Messenger for asynchronous processing.
 
 There are two different types of events Islandora emits:
 
@@ -97,20 +101,24 @@ There are two different types of events Islandora emits:
 
 ### Derivative Events
 
-Below is a full diagram of the different microservices Islandora provides. You can see as an animation in the diagram what happens when an Islandora repository manager uploads an image to their Islandora repository. First, Drupal emits an event to generate a thumbnail for that image. That event is put on the [ActiveMQ] event queue, [alpaca] reads the message from the queue, and forwards the event to the configured service. In the case of a thumbnail, [houdini] handles generating the thumbnail for the uploaded image. [Houdini] creates the thumbnail and alpaca saves the thumbnail in Drupal.
+Below is a simplified diagram of the derivative flow. Drupal queues a
+derivative job, a Messenger worker receives it, and the worker invokes the
+configured derivative service. By default, worker processes run in the Drupal
+deployment. CPU-intensive or memory-intensive derivative work can also be
+distributed to external services. See [Scaling Islandora Events](scaling.md)
+for the deployment patterns and operator guidance.
 
 ```mermaid
 flowchart TD
     drupal([Islandora Drupal Website])
 
-    drupal e1@-->|publishes drupal entity event| activemq
+    drupal e1@-->|queues derivative job + ledger record| messenger
 
-    subgraph broker[Message Broker]
-        activemq[ActiveMQ]
-        alpaca[Alpaca]
-        activemq e2@-->|alpaca receives event| alpaca
+    subgraph runtime[Drupal Messenger Runtime]
+        messenger[Symfony Messenger + sm_ledger]
+        worker[Derivative Worker]
+        messenger e2@-->|worker receives derivative message| worker
     end
-
 
     subgraph microservices[scyllaridae microservices]
         fits[FITS]
@@ -119,16 +127,17 @@ flowchart TD
         hypercube[Hypercube]
     end
 
-    alpaca --> fits
-    alpaca --> homarus
-    alpaca e3@--> houdini
-    alpaca --> hypercube
+    worker --> fits
+    worker --> homarus
+    worker e3@--> houdini
+    worker --> hypercube
 
-    fits -.->|derivative streamed back| alpaca
-    homarus -.->|derivative streamed back| alpaca
-    houdini e4@-.->|derivative streamed back| alpaca
-    hypercube -.->|derivative streamed back| alpaca
-    alpaca e5@-.->|alpaca saves the derivative| drupal
+    fits -.->|derivative streamed back| worker
+    homarus -.->|derivative streamed back| worker
+    houdini e4@-.->|derivative streamed back| worker
+    hypercube -.->|derivative streamed back| worker
+
+    worker e5@-.->|worker saves derivative + updates ledger| drupal
 
     class e1 flow0;
     class e2 flow1;
@@ -139,30 +148,37 @@ flowchart TD
 
 ### Index Events
 
-There are two systems that are populated using Islandora Index Events: [Blazegraph] and [Fedora (Repository Software)].
-
-- For [Blazegraph], [Alpaca] is fully implemented to be able to index content from Drupal directly into Blazegraph using [RDF].
-- For [Fedora (Repository Software)] an intermediate service is used called [Milliner] to store the metadata in Fedora.
+Drupal dispatches indexing work through Symfony Messenger-backed workers that
+write directly to [Blazegraph] and [Fedora (Repository Software)]. Like the
+derivative flow, the worker runtime can stay in the Drupal deployment or be
+scaled out by moving transport or downstream execution to separate services.
+See [Scaling Islandora Events](scaling.md) for those scaling patterns.
 
 ```mermaid
 flowchart TD
     drupal([Islandora Drupal Website])
 
-    drupal e1@-->|publishes drupal entity event| activemq
+    drupal e1@-->|queues index job + ledger record| messenger
 
-    subgraph broker[Message Broker]
-        activemq[ActiveMQ]
-        alpaca[Alpaca]
-        activemq e2@-->|alpaca receives event| alpaca
+    subgraph runtime[Drupal Messenger Runtime]
+        messenger[Symfony Messenger + sm_ledger]
+        worker[Index Worker]
+        messenger e2@-->|worker receives index message| worker
     end
 
+    fedora_indexer[Fedora indexer]
+    blazegraph_indexer[Blazegraph indexer]
 
-    alpaca e3@--> milliner
+    worker e3@--> fedora_indexer
+    worker --> blazegraph_indexer
 
     fedora[(Fedora)]
-    milliner e4@-.->|syncs resource to| fedora
-    blazegraph[(blazegraph)]
-    alpaca -.->|sends RDF| blazegraph
+    fedora_indexer e4@-.->|syncs resource to| fedora
+
+    triplestore[(Blazegraph)]
+    blazegraph_indexer -.->|writes RDF to| triplestore
+
+    worker e5@-.->|worker updates ledger| drupal
 
     class e1 flow0;
     class e2 flow1;
@@ -182,14 +198,12 @@ The following components are microservices developed and maintained by the Islan
     * [Homarus]
     * [Houdini]
     * [Hypercube]
-* [Milliner] (uses [Crayfish])
 
 ### Other Open Source
 
 The following components are deployed with Islandora, but are developed and maintained by other open source projects:
 
 * [Apache]
-    * [ActiveMQ]
     * [Tomcat]
     * [Solr]
 * [Blazegraph]
@@ -197,8 +211,7 @@ The following components are deployed with Islandora, but are developed and main
 * [Drupal]
 * [FITS]
 * [Fedora (Repository Software)]
-* [MariaDB]
+* [MariaDB] or [PostgreSQL]
 * [NGINX]
-* [PostgreSQL]
 * [Traefik]
 * Triplestore - See [Blazegraph]

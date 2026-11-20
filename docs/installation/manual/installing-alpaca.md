@@ -1,5 +1,11 @@
 # Installing ActiveMQ and Alpaca
 
+!!! warning "Deprecated guidance"
+    This page documents the legacy ActiveMQ/Alpaca stack. For current
+    Islandora deployments, use
+    [Islandora Events](../../technical-documentation/islandora-events.md)
+    instead.
+
 !!! note "Karaf no longer needed"
     You no longer need to install Karaf. We no longer do this, we just deploy the java apps. 
 
