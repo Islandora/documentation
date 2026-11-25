@@ -34,6 +34,7 @@ The following is an alphabetized list of the current Islandora committers:
 | Jonathan Hunt               | Catalyst.Net                          | kayakr         |
 | Kyle Huynh                  | University of Toronto Scarborough     | kylehuynh205   |
 | Mark Jordan                 | Simon Fraser University               | mjordan        |
+| Tommy Keswick               | Cherry Hill                           | t4k            |
 | Danny Lamb                  | Born-Digital                          | dannylamb      |
 | Natkeeran Ledchumykanthan   | University of Toronto Scarborough     | natkeeran      |
 | Rosie Le Faive              | University of Prince Edward Island    | rosiel         |
